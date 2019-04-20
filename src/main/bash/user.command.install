@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# Minimize the number of dependencies as the context of this program is not known and is used for bootstrapping.
+cp $1 ~/bin/
+chmod -R +x ~/bin/*
+echo Command $1 installed.

@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+"""
+# TODO Replacement is missing.
+# TODO Create tests.
+# TODO PERFORMANCE compile to C via https://cython.org/.
+__author__ = 'Mārtiņš Avots'
+import argparse
+import os
+from pathlib import Path
+from pathlib import PosixPath
+import shutil
+import re
+def currentFolder():
+	return Path.cwd()
+class Command:
+	def __init__(self
+			, commandPath
+			, targetFolder = Path.home().joinpath('bin')
+			):
+		commandPosixPath = PosixPath(commandPath)
+		self.name = commandPosixPath.name
+		self.sourceFolder = commandPosixPath.parent
+		self.targetFolder = targetFolder
+		self.managedCommandNaming = "commandName = '" + self.name + "'"
+	def install(self):
+		executionCounter = 0
+		targetFile = self.targetFolder.joinpath(self.name)
+		if targetFile.exists():
+			while True:
+				targetFile = self.targetFolder.joinpath(self.name + '.' + str(executionCounter))
+				executionCounter+=1
+				if not targetFile.exists():
+					break
+		shutil.copy(self.sourceFolder.joinpath(self.name), targetFile)
+		print(self.name + ' installed.')
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description='Installs command to ~/bin and integrates commands already present.') # TODO If command already present, check if it is a manager. If this is not the case, throw an error.
+	parser.add_argument('commandToInstall', type=str, help='The name of the command that is installed.')
+	Command(parser.parse_args().commandToInstall).install()

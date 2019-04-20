@@ -1,0 +1,5 @@
+#!/bin/bash
+# SOURCE https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within
+# According to https://meta.stackexchange.com/questions/271080/the-mit-license-clarity-on-using-code-on-stack-overflow-and-stack-exchange
+# the following code seems to be licensed under the creative commons CC-BY-SA (https://creativecommons.org/licenses/by-sa/).
+echo $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )

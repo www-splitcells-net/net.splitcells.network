@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+. command.managed.is.true
+command.managed.execute disjunction system.update
+# TODO system.restart

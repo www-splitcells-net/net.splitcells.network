@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+import re
+pattern = re.compile('^\s*Defaults\s+timestamp_timeout=-1\s*$')
+def enableSudoTimeout(sudoersPath = '/etc/sudoers'):
+	passwordTimesOut = True
+	with open(sudoersPath) as sudoersContent:
+		for line in sudoersContent:
+			if pattern.match(line):
+				passwordTimesOut = False
+				break;
+	if passwordTimesOut:
+		print("Disabling password memory timeout for sudo.")
+		with open(sudoersPath, "a") as sudoers:
+			sudoers.write("\nDefaults timestamp_timeout=-1\n")
+	else:
+		print("Password memory timeout for sudo already disabled.")
+if __name__ == '__main__':
+	'''On Fedora this action does only effect new shell sessions'''
+	enableSudoTimeout()
