@@ -18,7 +18,7 @@ We do not want to have to provide secondary technical information beforehand wit
 We want a common dictionary for common tasks.
 
 We avoid remembering implementation specific commands for common tasks.
-## Problem
+## Challange
 When administrating systems one has to consider many things.
 Some of these may be even unknown by the administrator because no problems were occurring during the task.
 
