@@ -5,6 +5,9 @@
 	<groupId>net.splitcells</groupId>
 	<artifactId>os.state.interface</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>os.state.interface</name>
+	<description>A framework providing a workflow for computer system administration and usage.</description>
+	<url>https://gitlab.com/splitcells/os.state.interface</url>
 	<build>
 		<resources>
 			<resource>
