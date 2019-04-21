@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Prevent sudo timeout
+# Prevent sudo timeout.
+# TODO Document how this is used.
 sudo -v # ask for sudo password up-front
 while true; do
   # Update user's timestamp without running a command
