@@ -1,5 +1,6 @@
 ## Tasks
 1. Move tasks to other projects if suitable.
+1. [Publish to Maven Central.](https://www.eviltester.com/2016/10/how-to-create-and-release-jar-to-maven.html)
 ### Fixings
 1. Create install script.
 1. Manage modules.
