@@ -15,4 +15,7 @@
 			</resource>
 		</resources>
 	</build>
+	<scm>
+		<url>https://gitlab.com/splitcells/os.state.interface.git</url>
+	</scm>
 </project>
