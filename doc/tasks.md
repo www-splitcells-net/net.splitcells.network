@@ -126,6 +126,8 @@
 1. http://tldp.org
 1. List of distributions and distribution linkers:
    1. https://www.fsfla.org/ikiwiki/selibre/linux-libre/freed-ora.en.html
+1. https://github.com/Linuxbrew/brew
+   1. https://blog.eduardovalle.com/2015/10/15/installing-software-without-root/
 # Ideas
 1. GUI
 1. text to speech interface
