@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-# Prevent sudo timeout.
+# SOURCE: https://serverfault.com/questions/266039/temporarily-increasing-sudos-timeout-for-the-duration-of-an-install-script
+# According to https://meta.stackexchange.com/questions/271080/the-mit-license-clarity-on-using-code-on-stack-overflow-and-stack-exchange
+# and the fact that the source was created on May 4 '11 at 23:37
+# the following code seems to be licensed under the creative commons CC-BY-SA (https://creativecommons.org/licenses/by-sa/).
+#
+# Prevents sudo timeout.
+# TODO Check if this does work.
 # TODO Document how this is used.
 sudo -v # ask for sudo password up-front
 while true; do
