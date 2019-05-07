@@ -1,5 +1,5 @@
 # Operation System State Interface
-1. This project is still in experimental state.
+1. This project is still in an experimental state.
 1. Note that there is no guaranty that the scripts are correct or that they do no harm.
 
 ## Manifesto
@@ -32,8 +32,25 @@ Additionally, an update via dnf on Fedora might not update all software componen
 Also different Systems may have different functionality.
 
 This problem affects other systems like Windows and Mac OS as well.
-## Solution
-__TODO__
+## Solutions
+
+### Language
+In many cases the user does know, what he wants.
+In other cases the user can find out his needs by answering questions.
+This projects provides a dictionary in order to be able to articulate precisely his needs on a high level.
+Secondly the words are organized in a structure in order to easily find the right commands to be executed without looking at documentation i.e.:
+ssh.key.generate ~ Generate and store ssh keys if not already present for the current user. Also sets appropriate access rights for these keys. 
+
+### Terminal based Dependency Injection
+On different systems different programs need to be executed in order to achieve the same thing.
+In most cases the user does not have any interest about this detail, but he still has to use these programs.
+This framework provides simple terminal commands that execute the required code depending on the current system.
+
+The programs called by this framework can be developed independently or used on its own as long as some rules are meet.
+Also the programs are mostly not provided by this framework, but are copied into an existing installation of this framework.
+
+In other words the detailed technical know-how of managing operation systems is not provided by this framework.
+
 ## Project Structure
 1. [Objectives of this Project](./doc/objectives.md)
 1. [Why are things done a certain way?](./doc/reasoning.md)
