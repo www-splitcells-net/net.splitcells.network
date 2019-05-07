@@ -12,5 +12,7 @@ def enableSudoTimeout(sudoersPath = '/etc/sudoers'):
 	with open(sudoersPath, "wt") as sudoersFile:
 		sudoersFile.write(sudoersUpdate)
 if __name__ == '__main__':
-	'''On Fedora this action does only effect new shell sessions'''
+	'''This command should generally not be used as it creates a security risk.
+	This command enables the timeout of the sudo password query for all sessions.
+	On Fedora this action does only effect new shell sessions.'''
 	enableSudoTimeout()

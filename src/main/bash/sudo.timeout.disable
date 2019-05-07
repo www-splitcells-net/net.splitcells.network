@@ -18,5 +18,7 @@ def enableSudoTimeout(sudoersPath = '/etc/sudoers'):
 	else:
 		print("Password memory timeout for sudo already disabled.")
 if __name__ == '__main__':
-	'''On Fedora this action does only effect new shell sessions'''
+	'''This command should generally not be used as it creates a security risk.
+	This command disables the timeout of the sudo password query for all sessions.
+	On Fedora this action does only effect new shell sessions.'''
 	enableSudoTimeout()
