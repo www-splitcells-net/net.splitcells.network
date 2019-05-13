@@ -4,4 +4,5 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 . command.managed.is.true
 command.managed.execute disjunction system.update
+command.managed.execute conjunction system.adaptations.update
 # TODO system.restart
