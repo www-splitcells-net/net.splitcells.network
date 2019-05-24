@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# This command states whether certain things that should be possible, cannot be done, because the system has a certain state.
+# Examples:
+# * Check if system.update can be executed by checking, if internet connectivity is available or if some updates are locally available (i.e. downloaded previously).
+# * Measure network package round trip time for pings etc., in order to test if web browsing is impaired. 
+# * Warning that system.shutdown should not be done because updates are being installed.
+. command.managed.is.true
+command.managed.execute conjunction system.state
