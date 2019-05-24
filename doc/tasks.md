@@ -93,6 +93,7 @@
       1. Install as user and not as root in order to minimize side effects.
       1. Support start of flatpack application via command that would be provided for this application if it was installed by native package manager.
    1. snap
+   1. Support Nix package manager: https://nixos.org/releases/nix/nix-1.8/manual/
    1. Support custom packaing system priorities.
 1. tag based installation
    1. managing and mixing personal configurations
