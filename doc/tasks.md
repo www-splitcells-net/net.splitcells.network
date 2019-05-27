@@ -1,4 +1,5 @@
 ## Tasks
+1. [Release this project as COPR module.](https://fedoraproject.org/wiki/Packit)
 1. Move tasks to other projects if suitable.
 1. [Publish to Maven Central.](https://www.eviltester.com/2016/10/how-to-create-and-release-jar-to-maven.html)
 ### Fixings
