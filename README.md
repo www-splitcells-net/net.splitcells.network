@@ -42,6 +42,7 @@ Secondly the words are organized in a structure in order to easily find the righ
 ssh.key.generate ~ Generate and store ssh keys if not already present for the current user. Also sets appropriate access rights for these keys. 
 
 ### Terminal based Dependency Injection
+(I kind of think, that I'm using the false term for this.)
 On different systems different programs need to be executed in order to achieve the same thing.
 In most cases the user does not have any interest about this detail, but he still has to use these programs.
 This framework provides simple terminal commands that execute the required code depending on the current system.
