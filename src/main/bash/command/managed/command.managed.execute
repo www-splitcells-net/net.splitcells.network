@@ -16,6 +16,10 @@ def executeCommand(command):
 	returnCode = subprocess.call(command) # This call raises an error if the command is not found.
 	return returnCode == 0
 def managedCommandExecution(type, command): # RENAME
+	"""If the system does not change significantly and this method is called with the same arguments, the same commands should be executed.
+	Keep in mind that the commands that will be executed next in a given stage, are largely determined by the return value of the previously executed commands' return values.
+	Otherwise, more resources are used than necessary (i.e. system.update commands that require restarts).
+	"""
 	executionCounter = 0
 	managedCommand = commandAt(command, executionCounter)
 	# TODO disjunction
