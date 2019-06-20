@@ -133,3 +133,7 @@
 # Ideas
 1. GUI
 1. text to speech interface
+# Open Source Support
+1. https://fedoramagazine.org/check-out-the-new-askfedora/
+
+This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
