@@ -1,7 +1,7 @@
 ## Tasks
 1. [Release this project as COPR module.](https://fedoraproject.org/wiki/Packit)
 1. Move tasks to other projects if suitable.
-1. [Publish to Maven Central.](https://www.eviltester.com/2016/10/how-to-create-and-release-jar-to-maven.html)
+1. [Make this a published Python project.](https://medium.com/python-pandemonium/better-python-dependency-and-package-management-b5d8ea29dff1)
 ### Fixings
 1. Create install script.
 1. Manage modules.
