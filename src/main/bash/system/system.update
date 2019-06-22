@@ -6,4 +6,5 @@ command_managed_id='76253177527041244611000010346315433424'
 	. command.managed.define
 command.managed.execute disjunction system.update
 command.managed.execute conjunction system.adaptations.update
-# TODO system.restart
+# If an update requires a system restart this is managed by the appropriate program.
+# Therefore, an restart is not required for all system updates.
