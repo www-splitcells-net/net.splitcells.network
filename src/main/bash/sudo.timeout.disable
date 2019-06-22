@@ -3,6 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 import re
+import argparse
 pattern = re.compile('^\s*Defaults\s+timestamp_timeout=-1\s*$')
 def enableSudoTimeout(sudoersPath = '/etc/sudoers'):
 	passwordTimesOut = True
@@ -21,4 +22,10 @@ if __name__ == '__main__':
 	'''This command should generally not be used as it creates a security risk.
 	This command disables the timeout of the sudo password query for all sessions.
 	On Fedora this action does only effect new shell sessions.'''
-	enableSudoTimeout()
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--declare-id', action='store_true') # This defines a command line flag.
+	parsedArgs = parser.parse_args()
+	if parsedArgs.declare_id:
+		print(85101834268009033729726431490423368)
+	else:
+		enableSudoTimeout()

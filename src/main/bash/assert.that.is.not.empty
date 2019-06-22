@@ -3,6 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # TODO Remove echo if variable is present. As it creates noise that is unnecessary in most cases.
+command_managed_id='76253177527041244611000010346315433424'
+	. command.managed.define
 if [ -n "$1" ];
  then echo "var is set to '$1'";
  else echo "var is unset"; exit 1;

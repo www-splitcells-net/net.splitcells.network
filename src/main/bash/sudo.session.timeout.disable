@@ -7,6 +7,8 @@
 # Prevents sudo timeout.
 # TODO Check if this does work.
 # TODO Document how this is used.
+command_managed_id='76253177527041244611000010346315433424'
+	. command.managed.define
 sudo -v # ask for sudo password up-front
 while true; do
   # Update user's timestamp without running a command

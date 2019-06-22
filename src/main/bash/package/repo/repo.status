@@ -4,5 +4,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 command_managed_id='76253177527041244611000010346315433424'
 	. command.managed.define
-# The package in question needs to removed everywhere.
-command.managed.execute conjunction package.remove $1
+command.managed.execute disjunction repo.status

@@ -8,5 +8,6 @@
 # * Check if system.update can be executed by checking, if internet connectivity is available or if some updates are locally available (i.e. downloaded previously).
 # * Measure network package round trip time for pings etc., in order to test if web browsing is impaired. 
 # * Warning that system.shutdown should not be done because updates are being installed.
-. command.managed.is.true
+command_managed_id='76253177527041244611000010346315433424'
+	. command.managed.define
 command.managed.execute conjunction system.state

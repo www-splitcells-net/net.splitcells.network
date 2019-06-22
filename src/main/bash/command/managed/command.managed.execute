@@ -6,6 +6,7 @@
 # TODO calculate return code
 import subprocess
 import sys
+import argparse
 from pathlib import Path
 # TODO FIXME If file not present in path this script should continue.
 # TODO listener scripts
@@ -31,4 +32,7 @@ def commandAt(command, number):
 	rVal[0] = rVal[0] + '.' + str(number)
 	return rVal
 if __name__ == '__main__':
-	managedCommandExecution(sys.argv[1], sys.argv[2:]) # The first (0) command is the this script itself.
+	if sys.argv[1] == '--declare-id':
+		print(85101834268009033729726431490423368)
+	else:
+		managedCommandExecution(sys.argv[1], sys.argv[2:]) # The first (0) command is the this script itself.
