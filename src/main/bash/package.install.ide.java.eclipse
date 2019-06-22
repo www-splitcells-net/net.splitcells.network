@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+command_managed_id='1826512691231543595115453312674332106'
+	. command.managed.define
+# Flatpak is licensed under LGPL so runtime linking is ok.
+	# Eclipse is licensed under EPL and seems only to require to the publication of EPL code. EPL explanation https://resources.whitesourcesoftware.com/blog-whitesource/top-10-eclipse-public-license-questions-answered
+	# Lombok is licensed under the permissive MIT license.
+	# Gnome is licensed under GPL but there is no interaction with it directly other than installing it.
+	# TODO Check license of installed Eclipse plugins. 
+# One can only upgrade eclipse plugins dependencies by uninstalling and installing them.
+package.install flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo # Default repo
+	# TODO Put this into package.install flatpak which does not exist yet.
+	flatpak install --system -y flathub org.gnome.Sdk//3.32 # Eclipse requires this.
+	# TODO Is it possible to install via --user instead of --system? 
+flatpak remote-add --user --if-not-exists eclipse-nightly http://eclipse.matbooth.co.uk/flatpak/nightly/eclipse.flatpakrepo
+	flatpak install --user -y eclipse-nightly org.eclipse.Sdk//4.12 # TODO Master is not used, because there are too many updates, which creates problems for slow internet connections.
+# Install common plugins.
+	# TODO Install Eclipse Marketplace client: org.eclipse.epp.mpc.feature.group.
+	# TODO Install terminal views.
+	# TODO Install EasyShell: de.anbos.eclipse.easyshell.feature
+	# TODO Manage Eclipse configuration via https://wiki.eclipse.org/Eclipse_Oomph_Authoring#What_is_Oomph.3F
+		# and https://marketplace.eclipse.org/content/yatta-launcher-eclipse?mpc=true&mpc_state=
+	# Install maven integration.
+		# TODO Install m2e connectors.
+		package.ide.java.eclipse.plugin.uninstall org.eclipse.m2e.feature
+		package.ide.java.eclipse.plugin.uninstall org.eclipse.egit
+		package.ide.java.eclipse.plugin.uninstall org.eclipse.egit.ui
+		flatpak run org.eclipse.Sdk \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/2019-06 \
+			-repository http://download.eclipse.org/eclipse/updates/4.12 \
+			-installIU org.eclipse.m2e.feature.feature.group \
+			-installIU org.eclipse.egit \
+			-installIU org.eclipse.egit.ui \
+# Install Lombok support
+	mkdir -p ~/opt
+	if [ ! -f ~/opt/lombok.jar ]; then
+		echo Lombok not found.
+		cd ~/opt
+    	wget https://projectlombok.org/downloads/lombok.jar
+	fi
+	eclipseIniPath=/home/$(whoami)/.local/share/flatpak/app/org.eclipse.Sdk/current/active/files/eclipse/eclipse.ini
+	lombokJavaAgent=-javaagent:/home/$(whoami)/opt/lombok.jar
+	if eval grep -F -- "'"$lombokJavaAgent"'" $eclipseIniPath; then
+		echo "Lombok agent already installed."
+	else
+		echo $lombokJavaAgent >> $eclipseIniPath
+	fi
+	echo You may need to clean and rebuild all projects in order to remove Lombok related errors.
