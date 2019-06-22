@@ -1,0 +1,1 @@
+Only files with permissive or non viral licenses are allowed.
