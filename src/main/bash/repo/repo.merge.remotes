@@ -4,8 +4,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 command_managed_id='76253177527041244611000010346315433424'
 	. command.managed.define
-repo.commit
-repo.pull
-repo.commit
-repo.merge.remotes
-repo.push
+command.managed.execute disjunction repo.merge.remotes
