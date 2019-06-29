@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+command_managed_id='209923439685228393266416388323888800'
+	. command.managed.define
+sudo.at.current.env "docker images | grep -v 'REPOSITORY.*TAG.*IMAGE ID.*CREATED.*SIZE' | awk '{print \$1}'| xargs sudo docker pull"
+	# Does not work if no docker images are present.
+	# TODO Try without sudo first.
