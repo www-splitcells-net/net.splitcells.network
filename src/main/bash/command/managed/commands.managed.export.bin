@@ -2,6 +2,4 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-# TODO Remove this command as the functionality will be implemented with "command.managed.define" instead.
-command_managed_id='76253177527041244611000010346315433424'
-	. command.managed.define
+export PATH="$PATH:~/bin/net.splitcells.os.state.interface.commands.managed"
