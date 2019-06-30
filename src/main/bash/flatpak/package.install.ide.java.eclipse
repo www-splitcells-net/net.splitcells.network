@@ -10,6 +10,7 @@ command_managed_id='1826512691231543595115453312674332106'
 	# Gnome is licensed under GPL but there is no interaction with it directly other than installing it.
 	# TODO Check license of installed Eclipse plugins. 
 # One can only upgrade eclipse plugins dependencies by uninstalling and installing them.
+# TODO Maybe use yatta: https://marketplace.eclipse.org/content/yatta-launcher-eclipse#group-details
 package.install flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo # Default repo
 	# TODO Put this into package.install flatpak which does not exist yet.
