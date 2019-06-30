@@ -16,26 +16,37 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 	flatpak install --system -y flathub org.gnome.Sdk//3.32 # Eclipse requires this.
 	# TODO Is it possible to install via --user instead of --system? 
 flatpak remote-add --user --if-not-exists eclipse-nightly http://eclipse.matbooth.co.uk/flatpak/nightly/eclipse.flatpakrepo
-	flatpak install --user -y eclipse-nightly org.eclipse.Sdk//4.12 # TODO Master is not used, because there are too many updates, which creates problems for slow internet connections.
+	flatpak install --user -y eclipse-nightly org.eclipse.Sdk//master # TODO Only update once each week as otherwise there will be to much resource usage.
 # Install common plugins.
-	# TODO Install Eclipse Marketplace client: org.eclipse.epp.mpc.feature.group.
-	# TODO Install terminal views.
-	# TODO Install EasyShell: de.anbos.eclipse.easyshell.feature
 	# TODO Manage Eclipse configuration via https://wiki.eclipse.org/Eclipse_Oomph_Authoring#What_is_Oomph.3F
 		# and https://marketplace.eclipse.org/content/yatta-launcher-eclipse?mpc=true&mpc_state=
 	# Install maven integration.
 		# TODO Install m2e connectors.
-		package.ide.java.eclipse.plugin.uninstall org.eclipse.m2e.feature
-		package.ide.java.eclipse.plugin.uninstall org.eclipse.egit
-		package.ide.java.eclipse.plugin.uninstall org.eclipse.egit.ui
 		flatpak run org.eclipse.Sdk \
 			-application org.eclipse.equinox.p2.director \
 			-noSplash \
 			-repository http://download.eclipse.org/releases/2019-06 \
 			-repository http://download.eclipse.org/eclipse/updates/4.12 \
 			-installIU org.eclipse.m2e.feature.feature.group \
+		flatpak run org.eclipse.Sdk \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/2019-06 \
+			-repository http://download.eclipse.org/eclipse/updates/4.12 \
 			-installIU org.eclipse.egit \
-			-installIU org.eclipse.egit.ui \
+			-installIU org.eclipse.egit.ui
+		flatpak run org.eclipse.Sdk \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/2019-06 \
+			-repository http://download.eclipse.org/eclipse/updates/4.12 \
+			-installIU org.eclipse.epp.mpc.feature.group
+		flatpak run org.eclipse.Sdk \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/2019-06 \
+			-repository http://download.eclipse.org/eclipse/updates/4.12 \
+			-installIU de.anbos.eclipse.easyshell.feature
 # Install Lombok support
 	mkdir -p ~/opt
 	if [ ! -f ~/opt/lombok.jar ]; then
