@@ -7,4 +7,5 @@ command_managed_id='76253177527041244611000010346315433424'
 repo.commit
 repo.pull
 repo.commit
+repo.pull.remotes
 repo.push
