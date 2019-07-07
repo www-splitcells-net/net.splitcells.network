@@ -5,3 +5,4 @@
 command_managed_id='76253177527041244611000010346315433424'
 	. command.managed.define
 command.managed.execute conjunction user.start
+user.data.synchronize
