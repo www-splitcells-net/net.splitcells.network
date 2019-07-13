@@ -3,8 +3,6 @@
 # According to https://meta.stackexchange.com/questions/271080/the-mit-license-clarity-on-using-code-on-stack-overflow-and-stack-exchange
 # and the fact that the source was last edited on Jul 14 at 4:57
 # the following code seems to be licensed under the creative commons CC-BY-SA (https://creativecommons.org/licenses/by-sa/).
-command_managed_id='76253177527041244611000010346315433424'
-	. command.managed.define
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
   DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
