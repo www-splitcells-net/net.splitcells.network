@@ -2,8 +2,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-command_managed_id='1826512691231543595115453312674332106'
-	. command.managed.define
+
 # Flatpak is licensed under LGPL so runtime linking is ok.
 	# Eclipse is licensed under EPL and seems only to require to the publication of EPL code. EPL explanation https://resources.whitesourcesoftware.com/blog-whitesource/top-10-eclipse-public-license-questions-answered
 	# Lombok is licensed under the permissive MIT license.

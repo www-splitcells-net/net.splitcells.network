@@ -2,7 +2,6 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-command_managed_id='19384141571089399051798711391906418978'
-	. command.managed.define
+
 # BSD seems to have a pkill implementation that is licensed under the BSD: https://www.freebsd.org/cgi/man.cgi?query=pkill&sektion=1
 pkill -SIGTERM -f $1

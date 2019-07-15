@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-command_managed_id='1826512691231543595115453312674332106'
-	. command.managed.define
 # i3 seems to be licensed under the BSD license.
 	. this.requires i3-msg
     i3-msg reload
