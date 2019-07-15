@@ -2,5 +2,8 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-user.data.synchronize & disown # These task should be done in parallel as otherwise the first command may block the other commands.
 command.managed.execute conjunction user.start
+user.data.synchronize
+	# "user.data.synchronize" may implicitly or softly depend on "user.start" (i.e. when it starts a service).
+	# The other way around may be also the case,
+	# but it is assumed that programs stared by "user.start" can wait for "user.data.synchronize" to happen.
