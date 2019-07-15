@@ -3,6 +3,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 command.managed.execute conjunction user.start
+	# "user.start" commands should take little time for execution.
+	# Make sure that no command blocks indefinitely.
+	# i.e. do not just execute "gnome-control-center" as it blocks until the program is closed.
+	# Use at least "gnome-control-center & disown". 
 user.data.synchronize
 	# "user.data.synchronize" may implicitly or softly depend on "user.start" (i.e. when it starts a service).
 	# The other way around may be also the case,
