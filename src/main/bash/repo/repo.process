@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# $@: Should only contain managed commands as there may be different repositories.
+optionalRepoConf="./.repo"
+if test -f "./.repo"; then
+	if grep -q 'repo.type=meta' "$optionalRepoConf"; then
+		if grep -q 'repo.structure=flat' "$optionalRepoConf"; then
+			folders.current.process "$@"
+		fi
+	fi
+else
+	$@
+fi

@@ -3,5 +3,5 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Synchronize repository against all remotes.
-repo.process 'repo.commit && repo.pull && repo.commit && repo.push'
+# The primary purpose of this script is, to minimize the amount of unimportant console output.
+$@ > /dev/null

@@ -3,7 +3,6 @@
 License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
-# TODO Replacement is missing.
 # TODO Create tests.
 # TODO PERFORMANCE compile to C via https://cython.org/.
 __author__ = 'Mārtiņš Avots'
@@ -39,10 +38,6 @@ class Command:
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Installs command to ~/bin and integrates commands already present.') # TODO If command already present, check if it is a manager. If this is not the case, throw an error.
 	parser.add_argument('commandToInstall', nargs='?', type=str, help='The name of the command that is installed.')
-	parser.add_argument('--declare-id', action='store_true') # This defines a command line flag.
 	parsedArgs = parser.parse_args()
-	if parsedArgs.declare_id:
-		print(85101834268009033729726431490423368)
-	else:
-		Command(parsedArgs.commandToInstall).install()
+	Command(parsedArgs.commandToInstall).install()
 	
