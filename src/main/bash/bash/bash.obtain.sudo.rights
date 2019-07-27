@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-command_managed_id='293001363692861168513978271422415029853'
-	. command.managed.define
 . this.requires sudo
 echo "Obtaining root rights via sudo."
 sudo echo "Root rights obtained via sudo."

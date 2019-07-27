@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-command_managed_id='1826512691231543595115453312674332106'
-	. command.managed.define
 # Linking seems to be allowed: https://github.com/chjj/compton/blob/master/LICENSE
 . this.requires compton
 compton --invert-color-include 'name != "4363737895678"'
