@@ -4,16 +4,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Synchronize repository against all remotes.
-optionalRepoConf="./.repo"
-if test -f "./.repo"; then
-	if grep -q 'repo.type=meta' "$optionalRepoConf"; then
-		if grep -q 'repo.structure=flat' "$optionalRepoConf"; then
-			folders.current.process repo.synchronize
-		fi
-	fi
-else
-	repo.commit
-	repo.pull
-	repo.commit
-	repo.push
-fi
+repo.process 'repo.commit; repo.pull; repo.commit; repo.push'
