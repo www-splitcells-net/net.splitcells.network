@@ -4,6 +4,7 @@
    A copy of this license can be found [here](../license/license.mpl.2.0.txt).
 1. Documentation and similar files are generally licensed under under the Creative Commons Attribution-ShareAlike 4.0 International Public License by default.
    A copy of this license can be found [here](../license/license.cc.by.sa.4.txt).
+1. Other licenses may be used as well.
 1. The licensing of the files should  not be in conflict with each other.
    Therefore, GPL licenses are not used.
    Also the license of one file should not affect the license of another file.
