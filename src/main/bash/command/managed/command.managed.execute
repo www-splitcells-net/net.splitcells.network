@@ -20,6 +20,10 @@ def managedCommandExecution(type, command): # RENAME
 	"""If the system does not change significantly and this method is called with the same arguments, the same commands should be executed.
 	Keep in mind that the commands that will be executed next in a given stage, are largely determined by the return value of the previously executed commands' return values.
 	Otherwise, more resources are used than necessary (i.e. system.update commands that require restarts).
+	
+	Each executed command should take a finite amount of time, as otherwise managed commands may not be executed correctly.
+	(i.e. "system.update": if one update command waits for new updates, it is also blocking other update commands.
+	It is preferred that each executed command takes up a small amount of time.
 	"""
 	executionCounter = 0
 	managedCommand = commandAt(command, executionCounter)
