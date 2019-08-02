@@ -1,0 +1,5 @@
+1. Licensing is done on a per file basis in this project. See "doc/licensing.md".
+1. Source code is generally licensed under the Mozilla Public License Version 2.0 by default.
+   A copy of this license can be found [here](../license/license.mpl.2.0.txt).
+1. Documentation and similar files are generally licensed under under the Creative Commons Attribution-ShareAlike 4.0 International Public License by default.
+   A copy of this license can be found [here](../license/license.cc.by.sa.4.txt).

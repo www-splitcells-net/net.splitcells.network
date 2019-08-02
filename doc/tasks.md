@@ -4,6 +4,7 @@
 1. [Make this a published Python project.](https://medium.com/python-pandemonium/better-python-dependency-and-package-management-b5d8ea29dff1)
 1. Faster update process via increment updates.
 1. Backup ~/bin folder during install.
+1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL code.
 1. Create and use method to only partly implement a feature.
    The script user should be informed if the missing part is required in the user's case.
 ### Fixings

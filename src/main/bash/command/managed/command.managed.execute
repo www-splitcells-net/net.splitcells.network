@@ -27,13 +27,24 @@ def managedCommandExecution(type, command): # RENAME
 	"""
 	executionCounter = 0
 	managedCommand = commandAt(command, executionCounter)
-	# TODO disjunction
-	while not executeCommand(managedCommand) or type == 'conjunction': # TODO Execution ends with exception, which is a false return value.
+	executedSuccessfully = True
+	while commandExists(managedCommand[0]):
+		executedSuccessfully = executeCommand(managedCommand)
+		if type == 'disjunction' and executedSuccessfully:
+			return
+		if type == 'conjunction' and not executedSuccessfully:
+			raise Exception(managedCommand)
 		executionCounter+=1
 		managedCommand = commandAt(command, executionCounter)
+	if not executedSuccessfully:
+		raise Exception(managedCommand)
 def commandAt(command, number):
 	rVal = command.copy()
 	rVal[0] = rVal[0] + '.' + str(number)
 	return rVal
+def commandExists(commandName):
+	"""Check whether `name` is on PATH."""
+	from distutils.spawn import find_executable
+	return find_executable(commandName) is not None
 if __name__ == '__main__':
 	managedCommandExecution(sys.argv[1], sys.argv[2:]) # The first (0) command is the this script itself.
