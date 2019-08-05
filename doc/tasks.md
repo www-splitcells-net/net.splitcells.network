@@ -95,6 +95,7 @@
    1. snap
    1. Support Nix package manager: https://nixos.org/releases/nix/nix-1.8/manual/
    1. Support custom packaing system priorities.
+   1. Back-Ends chapter in https://en.wikipedia.org/wiki/PackageKit list some other package managers.
 1. tag based installation
    1. managing and mixing personal configurations
    1. tags like https://www.heise.de/ix/heft/15-nach-12-4117289.html?artikelseite=&view= and other distros
