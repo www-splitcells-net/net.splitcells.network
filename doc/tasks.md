@@ -1,4 +1,6 @@
 ## Tasks
+1. Define installation order.
+1. Define "this.requires" which allows to disable certain commands and to exit scripts in a standard way if some commands are missing.
 1. Do not use error codes as normal return values.
 1. Move tasks to other projects if suitable.
 1. [Make this a published Python project.](https://medium.com/python-pandemonium/better-python-dependency-and-package-management-b5d8ea29dff1)
@@ -7,6 +9,8 @@
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL code.
 1. Create and use method to only partly implement a feature.
    The script user should be informed if the missing part is required in the user's case.
+1. Make managed commands with same name easier to identify.
+   Expand existing naming convention: [object].[adjective].[verb].[adverb].via.[identifier].like.[identifier].[number to differentiate duplicate names]
 ### Fixings
 1. Check licensing issues.
    1. https://www.gnu.org/licenses/gpl-faq.html#MereAggregation
