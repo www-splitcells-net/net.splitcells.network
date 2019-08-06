@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-export PATH="$HOME/bin/net.splitcells.os.state.interface.commands.managed:$PATH"
-export PATH="$HOME/bin/net.splitcells.os.state.interface.commands.disabled:$PATH"
 
+mkdir -p ~/bin/net.splitcells.os.state.interface.commands.disabled
+cp $1 ~/bin/net.splitcells.os.state.interface.commands.disabled/

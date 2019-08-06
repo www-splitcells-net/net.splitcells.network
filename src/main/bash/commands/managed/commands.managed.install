@@ -8,5 +8,6 @@ if [ $? -ne 0 ]; then
 	echo '# Export path to net.splitcells.os.state.interface scripts.' >> ~/.profile
 	echo 'PATH="$HOME/bin/net.splitcells.os.state.interface.commands.managed:$PATH' >> ~/.profile
 	echo 'PATH="$HOME/bin:$PATH' >> ~/.profile
+	echo 'PATH="$HOME/bin/net.splitcells.os.state.interface.commands.disabled:$PATH' >> ~/.profile
 	echo '' >> ~/.profile
 fi
