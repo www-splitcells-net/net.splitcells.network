@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+find ~/bin/net.splitcells.os.state.interface.commands.managed  -maxdepth 1 -type f -delete
+repoList=~/.config/net.splitcells.os.state.interface/repositories
+hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
+bootstrapRepoProperty=$(head -n 1 $repoList)
+if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
+	bootstrapRepo=$(echo $bootstrapRepoProperty | cut -c6-)
+	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install
+	echo $installer
+	chmod +x $installer
+	$installer $installer
+	chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+fi
+while IFS= read -r property
+do
+	echo Installing "'$property'".
+	if hasPrefix 'repo=' "$property"; then
+		propertyValue=$(echo $property | cut -c6-)
+		cd $propertyValue
+		echo $propertyValue
+		cd src # It is assumed, that all repositories are source code projects.
+		find . -mindepth 1 -type f -exec command.managed.install {} \;
+		chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+	else
+		echo Unknown property "'$property'" in "'$repoList'".
+		exit 1
+	fi
+done < "$repoList"
