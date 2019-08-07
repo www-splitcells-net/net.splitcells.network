@@ -4,4 +4,3 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 export PATH="$HOME/bin/net.splitcells.os.state.interface.commands.managed:$PATH"
 export PATH="$HOME/bin/net.splitcells.os.state.interface.commands.disabled:$PATH"
-
