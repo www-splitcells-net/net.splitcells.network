@@ -7,5 +7,5 @@ touch $repoList
 if grep -q $1 "$repoList"; then
 	echo Repository $1 is already present.
 else
-	echo "repo=$1" >> ~/.config/net.splitcells.os.state.interface/repository
+	echo "repo=$1" >> $repoList
 fi
