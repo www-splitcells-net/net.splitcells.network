@@ -1,9 +1,6 @@
 ## Tasks
 1. Define installation order.
-1. Define "this.requires" which allows to disable certain commands and to exit scripts in a standard way if some commands are missing.
-1. Do not use error codes as normal return values.
 1. Move tasks to other projects if suitable.
-1. [Make this a published Python project.](https://medium.com/python-pandemonium/better-python-dependency-and-package-management-b5d8ea29dff1)
 1. Faster update process via increment updates.
 1. Backup ~/bin folder during install.
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL code.
