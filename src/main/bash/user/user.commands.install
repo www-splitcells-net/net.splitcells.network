@@ -4,6 +4,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 # Minimize the number of dependencies as the context of this program is not known and is used for bootstrapping.
+# TODO Remove this command in order to minimize source code size.
 cd $1
 mkdir -p ~/bin
 	cp ./* ~/bin/
