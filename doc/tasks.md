@@ -20,7 +20,7 @@
 1. Actively support Linux users in order to advertise this and related projects.
 1. Create community guidelines and contribution agreement.
 1. Create/find text based ticket system.
-1. Define break points.
+1. Define break points of this project.
 ### Todos
 1. Support easy detection if a script should support host system, but does not do it 
    yet. An extra log message type in system-d seems to be suitable for this.
