@@ -1,11 +1,12 @@
 ## Tasks
+1. Document user cases and project architecture.
 1. Define installation order.
 1. Move tasks to other projects if suitable.
 1. Faster update process via increment updates.
-1. Backup ~/bin folder during install.
-1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL code.
+1. Backup ~/bin/* folders during install via source control.
+1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
 1. Create and use method to only partly implement a feature.
-   The script user should be informed if the missing part is required in the user's case.
+   The script user should be informed, if the missing part is required in the user's case.
 1. Make managed commands with same name easier to identify.
    Expand existing naming convention: [object].[adjective].[verb].[adverb].via.[identifier].like.[identifier].[number to differentiate duplicate names]
 ### Fixings
@@ -14,7 +15,6 @@
    1. https://opensource.stackexchange.com/questions/6271/calling-gpld-programs-from-a-shell-script
    1. https://www.gnu.org/licenses/gpl-faq.html#GPLPlugins
    1. http://www.epiclaw.net/2012/01/31/combining-or-linking-proprietary-software-unmodified-code-licensed-under-gplv2
-1. Create graph for user activities.
 ### Strategies
 1. Actively support Linux users in order to advertise this and related projects.
 1. Create community guidelines and contribution agreement.
