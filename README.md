@@ -39,9 +39,10 @@ This problem affects other systems like Windows and Mac OS as well.
 ### Language
 In many cases the user does know, what he wants.
 In other cases the user can find out his needs by answering questions.
-This projects provides a dictionary in order to be able to articulate precisely his needs on a high level.
+This projects provides a dictionary in order to be able to articulate precisely ones needs on a high level.
 Secondly the words are organized in a structure in order to easily find the right commands to be executed without looking at documentation i.e.:
-ssh.key.generate ~ Generate and store ssh keys if not already present for the current user. Also sets appropriate access rights for these keys. 
+ssh.key.generate ~ Generate and store ssh keys if not already present for the current user.
+Also sets appropriate access rights for these keys. 
 
 ### Terminal based Dependency Injection
 (I kind of think, that I'm using the false term for this.)
