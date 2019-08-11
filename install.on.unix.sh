@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-setupEnvironment=./src/main/bash/command/managed/command.managed.environment.configure
-chmod +x $setupEnvironment
-$setupEnvironment
-
 commandRepoRegister=./src/main/bash/command/managed/command.repository.register
 chmod +x $commandRepoRegister
 $commandRepoRegister $(pwd)
