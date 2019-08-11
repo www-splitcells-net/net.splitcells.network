@@ -4,3 +4,4 @@
 1. Document on which system the code was tested.
 # External Code Guidelines
 1. [Advanced Bash-Scripting Guide](http://www.ing.iac.es/~docs/external/bash/abs-guide/)
+   TODO Check if this guide is suitable.
