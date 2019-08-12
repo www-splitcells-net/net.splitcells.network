@@ -3,7 +3,4 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-repo.process 'repo.commit && repo.pull && repo.commit && repo.push'
-# TODO Support meta repo.
-	# TODO Test this code.
-	# repo.process "repo.commit && repo.pull.from $@ && repo.commit repo.push.to $@"
+repo.process repo.commit && repo.process repo.pull.from $@ && repo.process repo.commit && repo.process repo.push.to $@
