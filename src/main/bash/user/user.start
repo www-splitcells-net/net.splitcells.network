@@ -11,3 +11,5 @@ user.data.synchronize
 	# "user.data.synchronize" may implicitly or softly depend on "user.start" (i.e. when it starts a service).
 	# The other way around may be also the case,
 	# but it is assumed that programs stared by "user.start" can wait for "user.data.synchronize" to happen.
+user.configure
+system.configure
