@@ -10,6 +10,7 @@
    The script user should be informed, if the missing part is required in the user's case.
 1. Make managed commands with same name easier to identify.
    Expand existing naming convention: [object].[adjective].[verb].[adverb].via.[identifier].like.[identifier].[number to differentiate duplicate names]
+1. Continous integration
 ### Fixings
 1. Check licensing issues.
    1. https://www.gnu.org/licenses/gpl-faq.html#MereAggregation
