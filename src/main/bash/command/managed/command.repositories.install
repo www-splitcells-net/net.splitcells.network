@@ -14,7 +14,7 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	$installer $installer
 	chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
 	
-	setupEnvironment=./src/main/bash/command/managed/command.managed.environment.configure
+	setupEnvironment=$bootstrapRepo/src/main/bash/command/managed/command.managed.environment.configure
 	chmod +x $setupEnvironment
 	$setupEnvironment
 fi

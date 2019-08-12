@@ -2,7 +2,9 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-repoList=~/.config/net.splitcells.os.state.interface/repositories
+configFolder=~/.config/net.splitcells.os.state.interface
+mkdir -p $configFolder
+repoList=$configFolder/repositories
 touch $repoList
 if grep -q $1 "$repoList"; then
 	echo Repository $1 is already present.
