@@ -4,15 +4,22 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # $@: Should only contain managed commands as there may be different repositories.
-# Currently also pipes are not supported.
 
 optionalRepoConf="./.repo"
+subrepo=''
 if test -f "./.repo"; then
 	if grep -q 'repo.type=meta' "$optionalRepoConf"; then
 		if grep -q 'repo.structure=flat' "$optionalRepoConf"; then
-			folders.current.process "$@"
+			folders.current|while read childFolder; do
+				subrepo=$childFolder
+				echo Processing "'"$childFolder"'".
+				cd $childFolder
+				eval "$@"
+				cd ..
+			done
 		fi
 	fi
 else
-	$@
+	echo Processing "'"$(pwd)"'".
+	eval "$@" # Through the bash command, pipes are supported.
 fi
