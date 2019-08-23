@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+if [ -x "$(command -v $1)" ]; then
+	:; # empty command
+else
+	exit 1
+fi
