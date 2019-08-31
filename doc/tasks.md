@@ -25,6 +25,10 @@
 ### Todos
 1. Support easy detection if a script should support host system, but does not do it 
    yet. An extra log message type in system-d seems to be suitable for this.
+1. testing
+   1. https://spin.atomicobject.com/2016/01/11/command-line-interface-testing-tools/
+   1. https://github.com/debarshiray/toolbox
+   1. https://github.com/debarshiray/libpod
 1. dependencies backup concept
    1. Use git subtrees instead git submodules: https://www.atlassian.com/blog/git/alternatives-to-git-submodule-git-subtree
 1. version planning via https://semver.org/ and https://github.com/semver/semver
