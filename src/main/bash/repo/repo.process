@@ -5,6 +5,38 @@
 
 # $@: Should only contain managed commands as there may be different repositories.
 
+case $1 in "ssh://"*)
+	echo Connecting to '"'$1'"'.
+	if ssh $1 "test -f $2/.repo"; then
+		if ssh $1 "grep -q 'repo.type=meta' $2/.repo"; then
+			if ssh $1 "grep -q 'repo.structure=flat' $2/.repo"; then
+				sshChildren=$(ssh $1 "cd $2; find . -mindepth 1 -maxdepth 1 -type d")
+				for childFolder in $sshChildren
+				do
+					# Ommiting quotes in for loop header causes it to iterate over the lines of the string.
+					echo meta repo found
+					subrepo=$childFolder
+					echo $subrepo
+					echo Processing child "'"$childFolder"'".
+					if ssh $1 "test -f $2/$subrepo/.repo"; then
+					mkdir -p $childFolder
+						cd $childFolder
+						repo.process $1 $2/$subrepo "${@:3}"
+						cd ..
+					else
+						echo "${@:3}" "$1" "$2"/$subrepo
+						eval "${@:3}" "$1" "$2"/$subrepo
+					fi
+				done
+			fi
+		fi
+	else
+		echo Processing "'"$(pwd)"'".
+		eval "${@:3}" "$1":"$2"/$subrepo
+	fi
+	exit
+esac
+
 optionalRepoConf="./.repo"
 subrepo=''
 if test -f "./.repo"; then
