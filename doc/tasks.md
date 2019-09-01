@@ -23,6 +23,7 @@
 1. Create/find text based ticket system.
 1. Define break points of this project.
 ### Todos
+1. [Create a manually curated changelog where the relevant changes are summarized.](https://github.com/olivierlacan/keep-a-changelog)
 1. Support easy detection if a script should support host system, but does not do it 
    yet. An extra log message type in system-d seems to be suitable for this.
 1. testing
