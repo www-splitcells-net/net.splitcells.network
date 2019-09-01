@@ -83,6 +83,8 @@
 1. List of distributions and distribution linkers:
    1. https://www.fsfla.org/ikiwiki/selibre/linux-libre/freed-ora.en.html
 1. Filesystem/harddrive checking. See fsck.
+1. Manage dotfiles and other dotfiles repos
+   1. example: https://github.com/ajmalsiddiqui/dotfiles
 # Ideas
 1. GUI
 1. text to speech interface
