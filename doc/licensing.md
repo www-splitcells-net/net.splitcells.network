@@ -9,3 +9,6 @@
    Therefore, GPL licenses are not used.
    Also the license of one file should not affect the license of another file.
    In other words, a program/file of any license should be able to link to any file in this repository.
+
+# General Licensing Notes
+1. [The installer of GPL software seems to not have to be licensed under GPL.](https://www.gnu.org/licenses/gpl-faq.html#GPLCompatInstaller)
