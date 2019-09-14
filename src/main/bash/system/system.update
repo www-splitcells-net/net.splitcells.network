@@ -2,7 +2,6 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-command.managed.execute disjunction system.update
-command.managed.execute conjunction system.adaptations.update
+command.managed.execute conjunction system.update
 # If an update requires a system restart this is managed by the appropriate program.
 # Therefore, an restart is not required for all system updates.
