@@ -24,6 +24,8 @@
 1. Define break points of this project.
 ### Todos
 1. Creation of adhoc managed commands.
+1. Define managed system.upgrade command.
+1. Command to show open ports.
 1. [Create a manually curated changelog where the relevant changes are summarized.](https://github.com/olivierlacan/keep-a-changelog)
 1. Support easy detection if a script should support host system, but does not do it 
    yet. An extra log message type in system-d seems to be suitable for this.
@@ -55,6 +57,7 @@
    1. file structure
    1. Linux
       1. Fedora
+         1. https://fedoramagazine.org/what-is-silverblue/
       1. Ubuntu
       1. https://github.com/Linuxbrew/brew (install script: https://gist.github.com/kurobeats/670841aa2aa6de0711675ec8ff1d346f)
          1. https://blog.eduardovalle.com/2015/10/15/installing-software-without-root/
@@ -87,6 +90,7 @@
 1. Filesystem/harddrive checking. See fsck.
 1. Manage dotfiles and other dotfiles repos
    1. example: https://github.com/ajmalsiddiqui/dotfiles
+   1. example: https://github.com/mathiasbynens/dotfiles
 # Ideas
 1. GUI
 1. text to speech interface
