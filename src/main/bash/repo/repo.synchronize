@@ -4,4 +4,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Synchronize repository against all remotes.
-repo.process 'repo.commit && repo.pull && repo.commit && repo.push'
+repo.process 'repo.commit.all && repo.pull && repo.commit.all && repo.push'
