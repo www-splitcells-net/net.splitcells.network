@@ -169,3 +169,6 @@ buildNumber.properties
 
 .DS_Store
 .idea
+
+# Modules installed via npm.
+node_modules/
