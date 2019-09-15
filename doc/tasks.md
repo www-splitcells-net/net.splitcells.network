@@ -24,7 +24,6 @@
 1. Define break points of this project.
 ### Todos
 1. Creation of adhoc managed commands.
-1. Define managed system.upgrade command.
 1. Command to show open ports.
 1. [Create a manually curated changelog where the relevant changes are summarized.](https://github.com/olivierlacan/keep-a-changelog)
 1. Support easy detection if a script should support host system, but does not do it 
@@ -91,6 +90,7 @@
 1. Manage dotfiles and other dotfiles repos
    1. example: https://github.com/ajmalsiddiqui/dotfiles
    1. example: https://github.com/mathiasbynens/dotfiles
+1. Configurable bin folder location.
 # Ideas
 1. GUI
 1. text to speech interface

@@ -1,6 +1,8 @@
 # Change Log
 ## v1.1.0
 Some changes are not listed as CHANGLOG was created after them.
+### Minor Changes
+Introduce echo levels.
 ### Major Changes
 * Renamed command "user.task.daily" to "user.task".
 * Renamed command "repo.commit" to "repo.commit.all".
