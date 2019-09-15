@@ -23,6 +23,7 @@
 1. Create/find text based ticket system.
 1. Define break points of this project.
 ### Todos
+1. Support automatic releases: https://github.com/release-it/release-it
 1. Creation of adhoc managed commands.
 1. Command to show open ports.
 1. [Create a manually curated changelog where the relevant changes are summarized.](https://github.com/olivierlacan/keep-a-changelog)
