@@ -22,5 +22,8 @@
   "devDependencies": {
     "release-it": "^12.3.6"
   },
-  "homepage": "https://gitlab.com/splitcells/net.splitcells.os.state.interface#readme"
+  "homepage": "https://gitlab.com/splitcells/net.splitcells.os.state.interface#readme",
+  "gitlab": {
+    "release": true
+  }
 }
