@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release" : "release-it"
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
     "url": "https://gitlab.com/splitcells/net.splitcells.os.state.interface/issues"
   },
   "devDependencies": {
-    "release-it": "*"
+    "release-it": "^12.3.6"
   },
   "homepage": "https://gitlab.com/splitcells/net.splitcells.os.state.interface#readme"
 }
