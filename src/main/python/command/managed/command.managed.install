@@ -34,7 +34,9 @@ class Command:
 				if not targetFile.exists():
 					break
 		shutil.copy(self.sourceFolder.joinpath(self.name), targetFile)
-		print(self.name + ' installed.')
+		if 'current_echo_level' in os.environ:
+			if int(os.environ['current_echo_level']) >= 5:
+				print(self.name + ' installed.')
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Installs command to ~/bin and integrates commands already present.') # TODO If command already present, check if it is a manager. If this is not the case, throw an error.
 	parser.add_argument('commandToInstall', nargs='?', type=str, help='The name of the command that is installed.')
