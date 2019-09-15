@@ -5,7 +5,7 @@
 mkdir -p ~/bin/net.splitcells.os.state.interface.commands.managed
 mkdir -p ~/.config/net.splitcells.os.state.interface
 
-grep -q -F "# Export path to net.splitcells.os.state.interface scripts." ~/.profile
+grep -q -F '# Export path to net.splitcells.os.state.interface scripts.' ~/.profile
 if [ $? -ne 0 ]; then
 	echo '# Export path to net.splitcells.os.state.interface scripts.' >> ~/.profile
 	echo 'PATH="$HOME/bin/net.splitcells.os.state.interface.commands.managed:$PATH"' >> ~/.profile
@@ -14,4 +14,20 @@ if [ $? -ne 0 ]; then
 	echo '' >> ~/.profile
 	echo You may need to restart the computer in order to access the installed programs.
 	echo At the very least you need to open a new terminal in order to access these programs.
+fi
+grep -q -F '# Define current echo level variable in order to configure console verbosity.' ~/.profile
+if [ $? -ne 0 ]; then
+	echo '# Define current log level variable in order to configure console verbosity.' >> ~/.profile
+	echo 'export current_echo_level=4' >> ~/.profile
+	echo '' >> ~/.profile
+fi
+grep -q -F '# Define echo levels in order to configure console verbosity nicely.' ~/.profile
+if [ $? -ne 0 ]; then
+	echo '# Define log levels in order to configure console verbosity nicely.' >> ~/.profile
+	echo 'export critical_echo_level=1' >> ~/.profile
+	echo 'export error_echo_level=2' >> ~/.profile
+	echo 'export warning_echo_level=3' >> ~/.profile
+	echo 'export info_echo_level=4' >> ~/.profile
+	echo 'export debug_echo_level=5' >> ~/.profile
+	echo '' >> ~/.profile
 fi
