@@ -3,9 +3,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+if [ -x "$(command -v $1)" ]; then
+	echo.debug Software is already installed.
+	exit
+fi
 # Use package specific installer if present.
 if [ -x "$(command -v package.install.$1)" ]; then
-	echo executing package.install.$1
+	echo.debug executing package.install.$1
 	. package.install.$1
 	if [ "$?" -eq "0" ]; then
 		exit
