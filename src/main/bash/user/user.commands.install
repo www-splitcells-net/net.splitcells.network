@@ -9,4 +9,4 @@ cd $1
 mkdir -p ~/bin
 	cp ./* ~/bin/
 	chmod -R +x ~/bin/*
-echo Commands at $1 installed.
+echo.debug Commands at $1 installed.
