@@ -28,6 +28,7 @@
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
+1. Use MPL 2.0 where possible in order to make this project usable by (A/L) GPL 2 and 3 projects.
 1. Create tutorials.
 1. Support automatic releases: https://github.com/release-it/release-it
    Setup development environment script in terminal:
