@@ -54,6 +54,11 @@ flatpak remote-add --user --if-not-exists eclipse-nightly http://eclipse.matboot
 			-noSplash \
 			-repository http://download.eclipse.org/releases/latest \
 			-installIU org.eclipse.eclemma.feature.feature.group	# Java execution coverage
+		flatpak run org.eclipse.Sdk \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/latest \
+			-installIU eu.musoft.eclipse.xpath.evaluation.plugin.feature.group	# XPath Evaluation # TODO Move this into other script?
 # Install Lombok support
 	mkdir -p ~/opt
 	if [ ! -f ~/opt/lombok.jar ]; then
