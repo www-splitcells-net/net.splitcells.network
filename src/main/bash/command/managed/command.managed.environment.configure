@@ -17,13 +17,13 @@ if [ $? -ne 0 ]; then
 fi
 grep -q -F '# Define current echo level variable in order to configure console verbosity.' ~/.profile
 if [ $? -ne 0 ]; then
-	echo '# Define current log level variable in order to configure console verbosity.' >> ~/.profile
+	echo '# Define current echo level variable in order to configure console verbosity.' >> ~/.profile
 	echo 'export current_echo_level=4' >> ~/.profile
 	echo '' >> ~/.profile
 fi
 grep -q -F '# Define echo levels in order to configure console verbosity nicely.' ~/.profile
 if [ $? -ne 0 ]; then
-	echo '# Define log levels in order to configure console verbosity nicely.' >> ~/.profile
+	echo '# Define echo levels in order to configure console verbosity nicely.' >> ~/.profile
 	echo 'export critical_echo_level=1' >> ~/.profile
 	echo 'export error_echo_level=2' >> ~/.profile
 	echo 'export warning_echo_level=3' >> ~/.profile
