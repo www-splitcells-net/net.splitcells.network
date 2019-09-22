@@ -18,11 +18,17 @@
    1. https://www.gnu.org/licenses/gpl-faq.html#GPLPlugins
    1. http://www.epiclaw.net/2012/01/31/combining-or-linking-proprietary-software-unmodified-code-licensed-under-gplv2
 ### Strategies
+1. file.partition.manager
+   1. gnome-disks
+   1. gparted
+1. General advertisment.
 1. Actively support Linux users in order to advertise this and related projects.
 1. Create community guidelines and contribution agreement.
 1. Create/find text based ticket system.
 1. Define break points of this project.
+1. Fork Wars
 ### Todos
+1. Create tutorials.
 1. Support automatic releases: https://github.com/release-it/release-it
    Setup development environment script in terminal:
    1. "package.install npm"
