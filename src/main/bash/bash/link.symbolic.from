@@ -3,8 +3,26 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 if [ "$2" != "to" ]; then
-  echo "The second argument is invalid: $2"
-  echo 'It should be "to"'
-  exit
+	echo "The second argument is invalid: $2"
+	echo 'It should be "to"'
+	exit
 fi
-run.and.print ln -s ${@:3} $1 # BSD seems to have a ln implementation.
+if [ "$(readlink -- "$1")" = $(echo $3) ]; then
+	exit
+else
+	if [ -d "$1" ]; then
+		echo.error "'"$1"'" exists, but is not a symbolic link. It is a directory instead.
+		exit 1
+	fi
+	if [ -f "$1" ]; then
+		echo.error "'"$1"'" exists, but is not a symbolic link. It is a file instead.
+		exit 1
+	fi
+	if [ -L ${$1} ] ; then
+		echo.error "'"$1"'" is already a symbolic link that does to a different location:
+		echo.error Current target location is "'""$(readlink -- "$1")""'".
+		echo.error Wanted target location is "'"$3"'".
+		exit 1
+	fi
+	ln -s ${@:3} $1 # BSD seems to have a ln implementation.
+fi
