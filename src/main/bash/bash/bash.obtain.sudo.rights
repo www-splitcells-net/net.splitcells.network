@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-. this.requires sudo
 echo "Obtaining root rights via sudo."
 sudo echo "Root rights obtained via sudo."
