@@ -105,6 +105,8 @@
    1. example: https://github.com/ajmalsiddiqui/dotfiles
    1. example: https://github.com/mathiasbynens/dotfiles
 1. Configurable bin folder location.
+1. Show current execution state by showing only last echo in terminal.
+   Use the same technique that is used for terminal animations.
 # Ideas
 1. GUI
 1. text to speech interface
