@@ -108,6 +108,7 @@
 1. Configurable bin folder location.
 1. Show current execution state by showing only last echo in terminal.
    Use the same technique that is used for terminal animations.
+1. Solving name conflicts in PATH via something like containers/sandboxes.
 # Ideas
 1. GUI
 1. text to speech interface
