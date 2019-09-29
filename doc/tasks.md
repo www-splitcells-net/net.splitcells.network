@@ -72,14 +72,24 @@
    1. Linux
       1. Fedora
          1. https://fedoramagazine.org/what-is-silverblue/
+         1. yum
+         1. rpm
       1. Ubuntu
       1. https://github.com/Linuxbrew/brew (install script: https://gist.github.com/kurobeats/670841aa2aa6de0711675ec8ff1d346f)
          1. https://blog.eduardovalle.com/2015/10/15/installing-software-without-root/
+      1. dpkg
+      1. portage
+      1. zypper
+      1. pkgng
+      1. cave
+      1. pkg_tools
+      1. sun_tools
    1. Ansible
    1. Windows
       1. chocolate
    1. Mac
       1. homebrew
+      1. macports
 1. support for different package managers
    1. For programs installted by flatpack, an appropriate start command should be created automatically.
    1. Support Nix package manager: https://nixos.org/releases/nix/nix-1.8/manual/
@@ -112,6 +122,7 @@
 # Ideas
 1. GUI
 1. text to speech interface
+1. Random quotes in order to improve emotional state of user.
 # Open Source Support
 1. https://fedoramagazine.org/check-out-the-new-askfedora/
 
