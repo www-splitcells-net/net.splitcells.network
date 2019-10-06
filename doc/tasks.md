@@ -29,7 +29,6 @@
 1. Fork Wars
 ### Todos
 1. Use MPL 2.0 where possible in order to make this project usable by (A/L) GPL 2 and 3 projects.
-1. Create tutorials.
 1. Support automatic releases: https://github.com/release-it/release-it
    Setup development environment script in terminal:
    1. "package.install npm"
@@ -38,6 +37,7 @@
    1. Change directory in this reposiotry: cd <...>
    1. "release-it v1.2.6 --no-npm.publish --git.pushRepo=web --git.changelog='echo Test testing release note.'"
    1. Support parallel repo on Github.
+1. Create tutorials.
 1. Creation of adhoc managed commands.
 1. Command to show open ports.
 1. [Create a manually curated changelog where the relevant changes are summarized.](https://github.com/olivierlacan/keep-a-changelog)
