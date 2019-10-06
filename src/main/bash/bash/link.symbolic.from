@@ -18,7 +18,7 @@ else
 		echo.error "'"$1"'" exists, but is not a symbolic link. It is a file instead.
 		exit 1
 	fi
-	if [ -L ${$1} ] ; then
+	if [ -L "$1" ] ; then
 		echo.error "'"$1"'" is already a symbolic link that does to a different location:
 		echo.error Current target location is "'""$(readlink -- "$1")""'".
 		echo.error Wanted target location is "'"$3"'".
