@@ -124,6 +124,8 @@
 1. text to speech interface
 1. Random quotes in order to improve emotional state of user.
 # Open Source Support
-1. https://fedoramagazine.org/check-out-the-new-askfedora/
+1. Fedora
+   1. https://fedoramagazine.org/check-out-the-new-askfedora/
+   1. https://fedoramagazine.org/fedora-projects-for-hacktoberfest/
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
