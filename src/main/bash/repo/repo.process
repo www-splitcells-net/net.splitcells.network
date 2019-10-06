@@ -3,7 +3,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# $@: Should only contain managed commands as there may be different repositories.
+# Multiple modes:
+# remote-host path commands
+# $@: Should only contain managed commands as there may be different repositories
 
 case $1 in "ssh://"*)
 	echo.debug Connecting to '"'$1'"'.
