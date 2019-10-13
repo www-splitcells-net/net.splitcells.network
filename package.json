@@ -27,7 +27,7 @@
     "npm" : false,
     "gitlab": {
       "release": true,
-      "origin": "https://gitlab.com/splitcells/net.splitcells.os.state.interface"
+      "origin": "https://gitlab.com/splitcells/net.splitcells.os.state.interface.git"
     }
   }
 }
