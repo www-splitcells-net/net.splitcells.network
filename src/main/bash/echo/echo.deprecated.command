@@ -2,6 +2,4 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-echo.deprecated.command "repo.pull.from" The command "'repo.pull'" will be extended with a appropriate option in order to support the same feature.
-repo.process "command.managed.execute disjunction repo.pull.from $@"
+echo Command "'$1'" is deprecated: ${@:2}
