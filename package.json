@@ -10,10 +10,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "release": "release-it"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/splitcells/net.splitcells.os.state.interface.git"
-  },
   "author": "Martins Avots",
   "license": "SEE LICENSE IN each file",
   "bugs": {
@@ -26,9 +22,8 @@
   "release-it": {
     "npm" : false,
     "gitlab": {
-      "release": true,
-      "origin": "https://gitlab.com/splitcells/net.splitcells.os.state.interface.git"
-    }
+      "release": true
+     }
   }
 }
 
