@@ -12,6 +12,8 @@ case $1 in "ssh://"*)
 	if ssh $1 "test -f $2/.repo"; then
 		if ssh $1 "grep -q 'repo.type=meta' $2/.repo"; then
 			if ssh $1 "grep -q 'repo.structure=flat' $2/.repo"; then
+				echo.debug "${@:3}" "$1" "$2"
+				eval "${@:3}" "$1" "$2"
 				sshChildren=$(ssh $1 "cd $2; find . -mindepth 1 -maxdepth 1 -type d")
 				for childFolder in $sshChildren
 				do
@@ -20,14 +22,16 @@ case $1 in "ssh://"*)
 					subrepo=$childFolder
 					echo.debug $subrepo
 					echo.debug Processing child "'"$childFolder"'".
-					if ssh $1 "test -f $2/$subrepo/.repo"; then
-					mkdir -p $childFolder
-						cd $childFolder
-						repo.process $1 $2/$subrepo "${@:3}"
-						cd ..
-					else
+						mkdir -p $subrepo
+						cd $subrepo
 						echo.debug "${@:3}" "$1" "$2"/$subrepo
 						eval "${@:3}" "$1" "$2"/$subrepo
+						cd ..
+					if ssh $1 "test -f $2/$subrepo/.repo"; then
+						cd $subrepo
+						echo $(pwd)
+						repo.process $1 $2/$subrepo "${@:3}"
+						cd ..
 					fi
 				done
 			fi
