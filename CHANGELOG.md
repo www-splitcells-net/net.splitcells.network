@@ -1,4 +1,6 @@
 # Change Log
+## v1.2.1-1.2.7
+### Testing release with
 ## v1.2.0
 ### Minor Changes
 1. Use echo levels for every command.

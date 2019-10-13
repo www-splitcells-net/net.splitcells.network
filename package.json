@@ -20,13 +20,15 @@
     "url": "https://gitlab.com/splitcells/net.splitcells.os.state.interface/issues"
   },
   "devDependencies": {
-    "release-it": "^12.3.6"
+    "release-it": "^12.4.3"
   },
   "homepage": "https://gitlab.com/splitcells/net.splitcells.os.state.interface#readme",
   "release-it": {
+    "npm" : false,
     "gitlab": {
       "release": true,
       "web": "https://gitlab.com/splitcells/net.splitcells.os.state.interface"
     }
   }
 }
+
