@@ -35,7 +35,7 @@
    1. Install automatic release module : " npm install --global release-it"
    1. Setup personal token: https://github.com/release-it/release-it#gitlab-releases
    1. Change directory in this reposiotry: cd <...>
-   1. "release-it v1.2.6 --git.pushRepo=web --git.changelog='echo Test testing release note.'"
+   1. "npm run release v1.2.8 --git.changelog='echo Test testing release note.'"
    1. Support parallel repo on Github.
 1. Create tutorials.
 1. Creation of adhoc managed commands.
