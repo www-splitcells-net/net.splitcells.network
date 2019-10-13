@@ -43,8 +43,5 @@ do
 		cd src # It is assumed, that all repositories are source code projects.
 		find . -mindepth 1 -type f -exec command.managed.install {} \;
 		chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
-	else
-		echo Unknown property "'$property'" in "'$repoList'".
-		exit 1
 	fi
 done < "$repoList"
