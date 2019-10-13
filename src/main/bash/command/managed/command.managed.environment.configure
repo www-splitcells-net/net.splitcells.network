@@ -23,11 +23,13 @@ if [ $? -ne 0 ]; then
 fi
 grep -q -F '# Define echo levels in order to configure console verbosity nicely.' ~/.profile
 if [ $? -ne 0 ]; then
+	# TODO Partial update: check if one of the following lines is missing (only left side of assignment) and add the missing one to correct position.
 	echo '# Define echo levels in order to configure console verbosity nicely.' >> ~/.profile
 	echo 'export critical_echo_level=1' >> ~/.profile
 	echo 'export error_echo_level=2' >> ~/.profile
 	echo 'export warning_echo_level=3' >> ~/.profile
 	echo 'export info_echo_level=4' >> ~/.profile
 	echo 'export debug_echo_level=5' >> ~/.profile
+	echo 'export tracing_echo_level=6' >> ~/.profile
 	echo '' >> ~/.profile
 fi
