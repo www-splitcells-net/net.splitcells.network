@@ -4,4 +4,5 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Synchronize repository against all remotes.
+# TODO Clone missing sub repositories via "repo.clone.into.current".
 repo.process 'repo.commit.all && repo.pull && repo.commit.all && repo.push'
