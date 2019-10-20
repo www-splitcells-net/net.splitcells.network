@@ -1,4 +1,12 @@
 # Change Log
+## v1.3
+### Major Changes
+1. Echo filtering for managed command execution.
+1. Remove command "run.and.show.only.errors".
+   This command is not used.
+1. Add command "run.and.show.if.failed".
+### Minor Changes
+1. Bugfixes
 ## v1.2.1-1.2.7
 ### Testing release with
 ## v1.2.0

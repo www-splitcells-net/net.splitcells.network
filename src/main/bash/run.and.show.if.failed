@@ -2,6 +2,11 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-# The primary purpose of this script is, to minimize the amount of unimportant console output.
-$@ > /dev/null
+echo.debug Executing '"'$@'"'.
+output=$($@ > /dev/null)
+if [ "$?" -eq "0" ]; then
+	exit 0
+else
+	echo.error $output
+	exit 1
+fi
