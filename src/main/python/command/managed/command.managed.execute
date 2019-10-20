@@ -37,16 +37,17 @@ def managedCommandExecution(type, command): # RENAME
 	while commandExists(managedCommand[0]):
 		executedSuccessfully, stdout, stderr = executeCommand(managedCommand)
 		executedCommands.append(' '.join(managedCommand))
-		stderrs.append(stderr)
-		stdouts.append(stdout)
 		if type == 'disjunction' and executedSuccessfully:
 			break
 		if type == 'conjunction' and not executedSuccessfully:
 			executedSuccessfully = False
 			break
+		stderrs.append(stderr)
+		stdouts.append(stdout)
 		executionCounter+=1
 		managedCommand = commandAt(command, executionCounter)
-	if not executedSuccessfully or type == 'conjunction':
+	# TODO Print output during the execution and not afterwards.
+	if not executedSuccessfully:
 		subprocess.call(['echo.error', 'Could not execute "' + ' '.join(command) + '":'])
 		for i in range(0, len(stdouts)):
 			# TODO Print command stderr and stdout like if it would be printed without this program.
@@ -66,6 +67,14 @@ def managedCommandExecution(type, command): # RENAME
 				sys.stdout.write(line.decode(sys.stdout.encoding))
 			for line in iter(stderrs[-1].readline, b''):
 				sys.stdout.write(line.decode(sys.stdout.encoding))
+		else:
+			for i in range(0, len(stdouts)):
+				# TODO Print command stderr and stdout like if it would be printed without this program.
+				for line in iter(stdouts[i].readline, b''):
+					sys.stdout.write(line.decode(sys.stdout.encoding))
+				for line in iter(stderrs[i].readline, b''):
+					sys.stdout.write(line.decode(sys.stdout.encoding))
+	sys.stdout.flush()
 	return executedSuccessfully
 def commandAt(command, number):
 	rVal = command.copy()
