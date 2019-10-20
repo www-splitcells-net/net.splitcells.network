@@ -14,8 +14,11 @@ def executeCommand(command):
 	"""Returns whether the next commands needs to be executed."""
 	# TODO Check if command exsists.
 	subprocess.call(['echo.debug', 'Executing ' + ' '.join(command)])
-	returnCode = subprocess.call(command) # This call raises an error if the command is not found.
-	return returnCode == 0
+	process = subprocess.Popen(command,
+		stdout=subprocess.PIPE,
+		stderr=subprocess.PIPE)
+	process.wait()
+	return (process.returncode == 0, process.stdout, process.stderr)
 def managedCommandExecution(type, command): # RENAME
 	"""If the system does not change significantly and this method is called with the same arguments, the same commands should be executed.
 	Keep in mind that the commands that will be executed next in a given stage, are largely determined by the return value of the previously executed commands' return values.
@@ -28,8 +31,14 @@ def managedCommandExecution(type, command): # RENAME
 	executionCounter = 0
 	managedCommand = commandAt(command, executionCounter)
 	executedSuccessfully = True
+	executedCommands = list()
+	stdouts = list()
+	stderrs = list()
 	while commandExists(managedCommand[0]):
-		executedSuccessfully = executeCommand(managedCommand)
+		executedSuccessfully, stdout, stderr = executeCommand(managedCommand)
+		executedCommands.append(' '.join(managedCommand))
+		stderrs.append(stderr)
+		stdouts.append(stdout)
 		if type == 'disjunction' and executedSuccessfully:
 			break
 		if type == 'conjunction' and not executedSuccessfully:
@@ -37,8 +46,26 @@ def managedCommandExecution(type, command): # RENAME
 			break
 		executionCounter+=1
 		managedCommand = commandAt(command, executionCounter)
-	if not executedSuccessfully:
-		subprocess.call(['echo.error', 'Could not execute ' + ' '.join(command)])
+	if not executedSuccessfully or type == 'conjunction':
+		subprocess.call(['echo.error', 'Could not execute "' + ' '.join(command) + '":'])
+		for i in range(0, len(stdouts)):
+			# TODO Print command stderr and stdout like if it would be printed without this program.
+			print("\nExecuting \"" + executedCommands[i] + '"')
+			print("\n" + "   " + "Output:")
+			for line in iter(stdouts[i].readline, b''):
+				sys.stdout.write("   " + "   " + line.decode(sys.stdout.encoding))
+			print("\n" + "   " + "Error Output:")
+			for line in iter(stderrs[i].readline, b''):
+				sys.stdout.write("   " + "   " + line.decode(sys.stdout.encoding))
+		sys.stdout.flush() # If flush is not done, the output of "subprocess.call" is not printed in right order.
+		subprocess.call(['echo.error', 'Could not execute "' + ' '.join(command) + '".'])
+	else:
+		if type == 'disjunction':
+			# TODO Print command stderr and stdout like if it would be printed without this program.
+			for line in iter(stdouts[-1].readline, b''):
+				sys.stdout.write(line.decode(sys.stdout.encoding))
+			for line in iter(stderrs[-1].readline, b''):
+				sys.stdout.write(line.decode(sys.stdout.encoding))
 	return executedSuccessfully
 def commandAt(command, number):
 	rVal = command.copy()
