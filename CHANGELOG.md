@@ -4,6 +4,7 @@
 1. Rename command "echo.tracing" to "echo.trace".
 ### Patches
 1. Correct parameter propagation of "repo.pull.from".
+1. Correct parameter propagation in "repo.pull.from" and "repo.push.to".
 ## v1.6.1
 ### Patches
 1. HOTFIX: Fix bug in logging of "command.managed.execute".
