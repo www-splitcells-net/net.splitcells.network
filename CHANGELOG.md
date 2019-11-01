@@ -42,7 +42,7 @@
 Establish release process.
 ### Minor Changes
 1. Use echo levels for every command.
-### Bugfixes
+### Patches
 1. Prevent duplicate variable export in ".profile" after multiple installations.
 ## v1.1.0
 Some changes are not listed as CHANGLOG was created after them.
