@@ -2,6 +2,8 @@
 ## v1.7.0
 ### Major Changes
 1. Rename command "echo.tracing" to "echo.trace".
+### Minor Changes
+1. Update internal documentation of some commands.
 ### Patches
 1. Correct parameter propagation of "repo.pull.from".
 1. Correct parameter propagation in "repo.pull.from" and "repo.push.to".

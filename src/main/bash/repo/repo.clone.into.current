@@ -8,4 +8,5 @@
 # $1 = host
 # $2 = path in host
 
+# TODO Support repo aggregations.
 command.managed.execute disjunction repo.clone.into.current $@

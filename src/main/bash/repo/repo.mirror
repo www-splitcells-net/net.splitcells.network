@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Creates a mirror of a source repository.
+# The difference between a repository clone and a mirror is, that a mirror is not intended to work independently.
+# A mirror just copies an other repository.
+# The source repositories URL is stored in the mirror and may be changed to different URL.
+# The source repository may also be changed completely.
+# The main purpose of a mirror is to save storage compared to clone.
+# Note that it is not guaranteed that storage is used more efficient by an mirror than a clone.
+# This depends on the implementation.
+
+repo.process command.managed.execute disjunction repo.mirror $@
