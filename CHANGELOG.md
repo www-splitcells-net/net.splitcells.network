@@ -22,17 +22,19 @@
 1. Filtered echo is now visible on the last line in the console.
    It is deleted by the next echo.
    This way one can follow the execution progress without filling output with unimportant information.
-## v1.3
+## v1.3.0
 ### Major Changes
 1. Echo filtering for managed command execution.
 1. Remove command "run.and.show.only.errors".
    This command is not used.
 1. Add command "run.and.show.if.failed".
+1. Rename command "echo.tracing" to "echo.trace".
 ### Minor Changes
 1. Bugfixes
 ## v1.2.1-1.2.7
-### Testing release with
+1. Testing release with
 ## v1.2.0
+Establish release process.
 ### Minor Changes
 1. Use echo levels for every command.
 ### Bugfixes
@@ -40,9 +42,9 @@
 ## v1.1.0
 Some changes are not listed as CHANGLOG was created after them.
 ### Major Changes
-1. Renamed command "user.task.daily" to "user.task".
-1. Renamed command "repo.commit" to "repo.commit.all".
-1. Renamed command "system.adaptations.update" to "system.update".
+1. Rename command "user.task.daily" to "user.task".
+1. Rename command "repo.commit" to "repo.commit.all".
+1. Rename command "system.adaptations.update" to "system.update".
 ### Minor Changes
 Introduce echo levels.
 ## v1.0.1
