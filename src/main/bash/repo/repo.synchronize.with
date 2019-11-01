@@ -3,4 +3,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-repo.process "repo.commit.all && repo.pull.from $1/\$subrepo && repo.commit.all && repo.push.to $1/\$subrepo"
+# Synchronize repository against all remotes.
+# TODO Clone missing repositories via "repo.clone.into.current".
+repo.commit.all
+repo.pull.from $@
+repo.commit.all
+repo.push.to $@

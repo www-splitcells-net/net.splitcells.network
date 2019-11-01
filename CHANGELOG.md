@@ -5,6 +5,7 @@
 ### Minor Changes
 1. Update internal documentation of some commands.
 ### Patches
+1. Correct parameter propagation in "repo.pull.from", "repo.push.to" and "repo.synchronize.with".
 1. Correct parameter propagation of "repo.pull.from".
 1. Correct parameter propagation in "repo.pull.from" and "repo.push.to".
 ## v1.6.1
