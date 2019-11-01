@@ -1,4 +1,9 @@
 # Change Log
+## v1.7.0
+### Major Changes
+1. Rename command "echo.tracing" to "echo.trace".
+### Patches
+1. Correct parameter propagation of "repo.pull.from".
 ## v1.6.1
 ### Patches
 1. HOTFIX: Fix bug in logging of "command.managed.execute".
@@ -28,7 +33,6 @@
 1. Remove command "run.and.show.only.errors".
    This command is not used.
 1. Add command "run.and.show.if.failed".
-1. Rename command "echo.tracing" to "echo.trace".
 ### Minor Changes
 1. Bugfixes
 ## v1.2.1-1.2.7
@@ -51,4 +55,3 @@ Introduce echo levels.
 Fix issues found during first installation on other Fedora installation.
 ## v1.0.0
 First usable version created.
- 
