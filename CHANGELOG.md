@@ -1,4 +1,10 @@
 # Change Log
+## v1.6.0
+### Patches
+1. Force quoting command scripts.
+## v1.5.0
+### Major Changes
+1. Filter 
 ## v1.5.0
 ### Major Changes
 1. Create release script.
