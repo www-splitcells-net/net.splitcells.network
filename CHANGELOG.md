@@ -1,6 +1,9 @@
 # Change Log
+## v1.5.0
+### Major Changes
+1. Create release script.
 ## v1.4.0
-## Minor Changes
+### Minor Changes
 1. Introduce new configuration guide line.
 1. Filtered echo is now visible on the last line in the console.
    It is deleted by the next echo.
