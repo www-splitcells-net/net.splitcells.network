@@ -3,6 +3,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 echo.debug Executing '"'$1'"'.
+
+# TODO Does not work with colors and animations.
+
 if [ "$#" -ne 1 ]; then
 	echo.error "Please quote commands that need to be executed."
 	exit 1
