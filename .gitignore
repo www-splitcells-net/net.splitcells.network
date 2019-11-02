@@ -171,3 +171,5 @@ buildNumber.properties
 
 # Modules installed via npm.
 node_modules/
+package-lock.json
+
