@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 # TODO Currently this value is not configureable.
 # TODO Provide template for configuration command.
-echo 0.5
+echo 0
