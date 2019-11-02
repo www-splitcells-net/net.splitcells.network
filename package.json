@@ -20,10 +20,9 @@
   },
   "homepage": "https://gitlab.com/splitcells/net.splitcells.os.state.interface#readme",
   "release-it": {
-    "npm" : false,
+    "npm": false,
     "gitlab": {
       "release": true
-     }
+    }
   }
 }
-

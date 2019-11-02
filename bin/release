@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+echo Preparing release infrastructure.
+package.install npm
+npm install release-it
+
+echo Please enter release notes.
+echo If your are done, enter "§".
+echo You can enter multiple lines.
+
+releaseNotes=$(read -d "§" line; echo "$line")
+npm run release --git.changelog="$releaseNotes"
