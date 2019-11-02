@@ -10,6 +10,6 @@ else
 	if [ $current_echo_level -ge $tracing_echo_level ]; then
 		echo $@
 	else
-		echo.line.current.set $@
+		echo.line.current.set "$@"
 	fi
 fi

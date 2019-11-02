@@ -6,5 +6,5 @@ if [ $current_echo_level -ge $error_echo_level ]; then
 	echo.line.current.clear
 	echo $@
 else
-	echo.line.current.set $@
+	echo.line.current.set "$@"
 fi
