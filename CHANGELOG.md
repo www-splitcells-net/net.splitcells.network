@@ -1,4 +1,9 @@
 # Change Log
+## v1.3.1
+## Minor Changes
+1. Introduce new configuration guide line.
+1. Filtered echo is now visible on the last line in the console.
+   It is deleted by the next echo,
 ## v1.3
 ### Major Changes
 1. Echo filtering for managed command execution.
