@@ -1,7 +1,11 @@
 # Change Log
 ## v1.6.0
+### Minor Changes
+1. Create "read.text" command that reads multiple line strings from stdin.
 ### Patches
+1. Filter output of release process.
 1. Force quoting command scripts.
+1. Prevent wait time trough echo filtering by default.
 ## v1.5.0
 ### Major Changes
 1. Filter 
