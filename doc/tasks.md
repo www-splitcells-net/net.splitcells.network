@@ -29,6 +29,8 @@
 1. Fork Wars
 ### Todos
 1. Use MPL 2.0 where possible in order to make this project usable by (A/L) GPL 2 and 3 projects.
+1. Unify configuration system.
+   "config.console.time.between.lines.in.text" and the echo variables use different style of configuration management.
 1. Do not exit repo.synchhronize etc. with error if remote repository is not available. Just bring a warning.
 1. Support automatic releases: https://github.com/release-it/release-it
    Setup development environment script in terminal:
