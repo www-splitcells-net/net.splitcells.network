@@ -2,5 +2,5 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-printf "\r"
-echo "$@" | xargs -n 1 -d '\n' echo.filtered
+printf "$@"
+sleep $(config.console.time.between.lines.in.text)

@@ -2,12 +2,9 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-echo.debug Preparing release infrastructure.
-run.and.show.if.failed "package.install npm"
-npm install release-it # TODO "run.and.show.if.failed" is not compatible with animations.
 
+echo $@
 echo If your are done, enter "§".
 echo You can enter multiple lines.
 
-releaseNotes=$(read.text "Please enter release notes.")
-npm run release --git.changelog="$releaseNotes"
+echo $(read -d "§" line; echo "$line")
