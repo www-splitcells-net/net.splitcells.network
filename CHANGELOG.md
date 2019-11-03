@@ -1,4 +1,8 @@
 # Change Log
+## v1.6.1
+### Patches
+1. HOTFIX: Fix bug in logging of "command.managed.execute".
+   The bug caused the echo not being shown after execution and ending the command with an error.
 ## v1.6.0
 ### Minor Changes
 1. Create "read.text" command that reads multiple line strings from stdin.

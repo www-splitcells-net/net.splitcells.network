@@ -37,13 +37,13 @@ def managedCommandExecution(type, command): # RENAME
 	while commandExists(managedCommand[0]):
 		executedSuccessfully, stdout, stderr = executeCommand(managedCommand)
 		executedCommands.append(' '.join(managedCommand))
+		stderrs.append(stderr)
+		stdouts.append(stdout)
 		if type == 'disjunction' and executedSuccessfully:
 			break
 		if type == 'conjunction' and not executedSuccessfully:
 			executedSuccessfully = False
 			break
-		stderrs.append(stderr)
-		stdouts.append(stdout)
 		executionCounter+=1
 		managedCommand = commandAt(command, executionCounter)
 	# TODO Print output during the execution and not afterwards.
