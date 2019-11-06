@@ -11,6 +11,17 @@ This Changelog is inspired by [keepachangelog.com]()https://keepachangelog.com/e
 1. Correct parameter propagation of "repo.pull.from".
 1. Correct parameter propagation in "repo.pull.from" and "repo.push.to".
 1. Correct stderr piping in "run.and.show.if.failed".
+1. Clear current line content with empty space in "echo.line.current.set".
+   Previously the command just reset the cursor position.
+   If this command was called twice with a longer string argument in the first call 
+   compared to the second call, the part of the first call would be still visible.
+   
+   i.e.
+   echo.line.current.set "Marvin has a pen."
+   echo.line.current.set "Alice"
+   
+   Would result into:
+   "Alice has a pen."
 ## v1.6.1
 ### Patches
 1. HOTFIX: Fix bug in logging of "command.managed.execute".
