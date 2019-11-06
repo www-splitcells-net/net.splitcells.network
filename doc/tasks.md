@@ -115,6 +115,50 @@
 1. Show current execution state by showing only last echo in terminal.
    Use the same technique that is used for terminal animations.
 1. Solving name conflicts in PATH via something like containers/sandboxes.
+1. Alternative rights management for command execution aka. alternative to sudo:
+   1. Not all system support sudo like commands out of the box (i.e. Windows).
+      It may be possible to provide an sudo command for all operation systems.
+   1. Sudo has no protection against an infiltrated user.
+      Depending on the situation, this is a problem or not.
+      1. Generally speaking it is not advised to give direct root access to any person except, 
+         if there is 
+         only one owner of the system.
+         Also, root login from remote should be disabled by default.
+         In this situation the system administrators get sudo rights and is only used 
+         in order to configure and maintain the system.
+         It is not used for other tasks.
+         If an administrator is hacked than the system is hacked as well.
+         Generally speaking this seems to be something one cannot defend against.
+      1. There is a normal user that has sudo rights.
+         This is often the case, if the user of the system is also its owner.
+         (i.e. You buy a laptop and install your tools and do your job with it.)
+         In this case it is enough if you of one the user programs hacks 
+         the user. Either by being a malware or by being exploited by an attacker.
+         
+         There are now multiple ways to gain root access:
+         1. The attacker can get the necassary access keys and can execute programs with root rights via sudo.
+         1. The attacker can manipulate user scripts, that the user executes via sudo.
+            If the user does not notice it, the attacker effectively gains root rights.
+         
+         There seem to be generally speaking 2 tactics in order to defend against this:
+         1. Application isolation: this way the access keys of the user can be secured.
+            Note that the GUI needs to support this feature.
+            This currently seems to be done by [Qube OS](https://www.qubes-os.org/).
+         1. Instead of executing commands via sudo, sudo only request the command execution.
+            This new command would send the request to an administration user with the required rights.
+            In order to execute the request the administration user has to be logged 
+            into the account and explicitly allow its execution after a review.
+            Both, the normal user and the administrator user, could be accessed by 
+            the same person.
+            This process ensures that the process command creation, review and execution 
+            is separated.
+            This mainly helps to notice unexpected commands being requested to be executed 
+            by root.
+            
+            Note that this process needs to be thought through if implemented and does not help, if 
+            the user do not do their job.
+            I.e. such command request should never execute programs of the user that is requesting the execution,
+            because this way, it is not possible or hard to detect malicious via a review.
 # Ideas
 1. GUI
 1. text to speech interface
