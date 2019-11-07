@@ -14,7 +14,7 @@ case $1 in "ssh://"*)
 			if ssh $1 "grep -q 'repo.structure=flat' $2/.repo"; then
 				echo.debug "${@:3}" "$1" "$2"
 				eval "${@:3}" "$1" "$2"
-				sshChildren=$(ssh $1 "cd $2; find . -mindepth 1 -maxdepth 1 -type d")
+				sshChildren=$(ssh $1 "cd $2; find . -mindepth 1 -maxdepth 1 -type d -not -name '.*' -prune")
 				for childFolder in $sshChildren
 				do
 					# Ommiting quotes in for loop header causes it to iterate over the lines of the string.
