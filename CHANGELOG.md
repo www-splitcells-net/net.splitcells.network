@@ -1,5 +1,5 @@
 # Changelog
-This Changelog is inspired by [keepachangelog.com]()https://keepachangelog.com/en/1.0.0/).
+This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
 ## Unreleased
 ### Major Changes
 1. Rename command "echo.tracing" to "echo.trace".
