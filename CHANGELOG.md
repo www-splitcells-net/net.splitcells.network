@@ -1,6 +1,8 @@
 # Changelog
 This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
-## Unreleased
+Please, create a one sentence summary for each release.
+## v1.7.0
+Fix issues found by usage.
 ### Major Changes
 1. Rename command "echo.tracing" to "echo.trace".
 1. Remove echo filtering from "command.managed.execute".
