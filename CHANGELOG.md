@@ -1,6 +1,10 @@
 # Changelog
 This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
 Please, create a one sentence summary for each release.
+## Unreleased
+### Minor Changes
+1. Adapt to console width in "echo.line.current.set".
+   This prevents the line reset to print too much or too less.
 ## v1.7.0
 Fix issues found by usage.
 ### Major Changes
@@ -28,7 +32,6 @@ Fix issues found by usage.
    Would result into:
    "Alice has a pen."
 1. Make release configuration public in order to simplify release process on different computers.
-1. Adapt to console width in "echo.line.current.set".
 ## v1.6.1
 ### Patches
 1. HOTFIX: Fix bug in logging of "command.managed.execute".
