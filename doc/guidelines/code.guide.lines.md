@@ -1,4 +1,7 @@
 # Code Guidelines
+## Programming Language
+1. Use Thompson Shell(sh) for simple scripts.
+   Use Python 3 for programs with any complexity.
 ## Configuration
    1. Configuration values should be accessed via commands and not via i.e. variables.
      This way Programs can rely on the configuration values without being set.
