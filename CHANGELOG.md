@@ -4,6 +4,7 @@ This Changelog is inspired by [keepachangelog.com]()https://keepachangelog.com/e
 ### Major Changes
 1. Rename command "echo.tracing" to "echo.trace".
 1. Remove echo filtering from "command.managed.execute".
+1. Abort repository processing on first error.
 ### Minor Changes
 1. Update internal documentation of some commands.
 ### Patches

@@ -7,6 +7,10 @@
 # remote-host path commands
 # $@: Should only contain managed commands as there may be different repositories
 
+set -e
+	# If repository processing is not aborted during execution by default, the user might notice very late that there was a an error as he waits until the end of the command.
+	# Also note that these way the exit code is determined correctly.
+
 case $1 in "ssh://"*)
 	echo.debug Connecting to '"'$1'"'.
 	if ssh $1 "test -f $2/.repo"; then
