@@ -28,6 +28,7 @@ Fix issues found by usage.
    Would result into:
    "Alice has a pen."
 1. Make release configuration public in order to simplify release process on different computers.
+1. Adapt to console width in "echo.line.current.set".
 ## v1.6.1
 ### Patches
 1. HOTFIX: Fix bug in logging of "command.managed.execute".

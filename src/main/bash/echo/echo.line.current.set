@@ -4,5 +4,5 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Clear current line with 120 whitespaces.
-	printf "\r                                                                                                                       \r"
+	printf "\r$(repeat ' ' times $(tput cols))\r"
 echo "$@" | xargs -n 1 -d '\n' echo.filtered
