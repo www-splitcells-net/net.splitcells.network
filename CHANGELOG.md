@@ -25,6 +25,7 @@ This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en
    
    Would result into:
    "Alice has a pen."
+1. Make release configuration public in order to simplify release process on different computers.
 ## v1.6.1
 ### Patches
 1. HOTFIX: Fix bug in logging of "command.managed.execute".
