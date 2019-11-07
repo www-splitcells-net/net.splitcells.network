@@ -18,7 +18,9 @@ This Changelog is inspired by [keepachangelog.com]()https://keepachangelog.com/e
    compared to the second call, the part of the first call would be still visible.
    
    i.e.
+   
    echo.line.current.set "Marvin has a pen."
+   
    echo.line.current.set "Alice"
    
    Would result into:
