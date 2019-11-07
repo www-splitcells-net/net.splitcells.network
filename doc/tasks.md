@@ -32,7 +32,6 @@
 1. Unify configuration system.
    "config.console.time.between.lines.in.text" and the echo variables use different style of configuration management.
 1. Do not exit repo.synchhronize etc. with error if remote repository is not available. Just bring a warning.
-1. Support parallel repo on Github.
 1. Create tutorials.
 1. Creation of adhoc managed commands.
 1. Command to show open ports.
@@ -163,6 +162,11 @@
 1. GUI
 1. text to speech interface
 1. Random quotes in order to improve emotional state of user.
+1. Support multiple repositories in parallel like Github.
+   1. Use taskwarrior with import and export scripts for ticket management via markdown 
+      in this repository.
+   1. Use configuration in repository for taskwarrior. See "https://taskwarrior.org/docs/configuration.html".
+   1. Use bugwarrior in order to import tickets from other repositories.
 # Open Source Support
 1. Fedora
    1. https://fedoramagazine.org/check-out-the-new-askfedora/
