@@ -7,6 +7,10 @@
 # remote-host path commands
 # $@: Should only contain managed commands as there may be different repositories
 
+function relevantFolders {
+	find . -mindepth 1 -maxdepth 1 -type d -not -name '.*' -prune
+}
+
 set -e
 	# If repository processing is not aborted during execution by default, the user might notice very late that there was a an error as he waits until the end of the command.
 	# Also note that these way the exit code is determined correctly.
@@ -26,17 +30,16 @@ case $1 in "ssh://"*)
 					subrepo=$childFolder
 					echo.debug $subrepo
 					echo.debug Processing child "'"$childFolder"'".
-						mkdir -p $subrepo
-						cd $subrepo
+					mkdir -p $subrepo
+					cd $subrepo
+					if ssh $1 "test -f $2/$subrepo/.repo"; then
+						echo.debug $(pwd)
+						repo.process $1 $2/$subrepo "${@:3}"
+					else
 						echo.debug "${@:3}" "$1" "$2"/$subrepo
 						eval "${@:3}" "$1" "$2"/$subrepo
-						cd ..
-					if ssh $1 "test -f $2/$subrepo/.repo"; then
-						cd $subrepo
-						echo $(pwd)
-						repo.process $1 $2/$subrepo "${@:3}"
-						cd ..
 					fi
+					cd ..
 				done
 			fi
 		fi
@@ -52,9 +55,9 @@ subrepo=''
 if test -f "./.repo"; then
 	if grep -q 'repo.type=meta' "$optionalRepoConf"; then
 		if grep -q 'repo.structure=flat' "$optionalRepoConf"; then
-			folders.current|while read childFolder; do
+			relevantFolders|while read childFolder; do
 				subrepo=$childFolder
-				echo Processing "'"$childFolder"'".
+				echo.debug Processing "'"$childFolder"'".
 				cd $childFolder
 				eval "$@"
 				cd ..

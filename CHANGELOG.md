@@ -7,6 +7,11 @@ Please, create a one sentence summary for each release.
    This prevents the line reset to print too much or too less.
 ### Patches
 1. Make "echo.deprecated.command" compatible with "echo.filtered".
+1. Fix bugs in "repo.process" found by usage.
+   1. Prevent folders being processed twice.
+   1. Only use the echo commands of this project.
+   1. Ignore hidden folders if the remote is not ssh.
+      Before that, this was only done for remotes accessed via remotes.
 ## v1.7.0
 Fix issues found by usage.
 ### Major Changes
