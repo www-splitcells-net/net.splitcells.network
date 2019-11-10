@@ -5,6 +5,8 @@ Please, create a one sentence summary for each release.
 ### Minor Changes
 1. Adapt to console width in "echo.line.current.set".
    This prevents the line reset to print too much or too less.
+### Patches
+1. Make "echo.deprecated.command" compatible with "echo.filtered".
 ## v1.7.0
 Fix issues found by usage.
 ### Major Changes
