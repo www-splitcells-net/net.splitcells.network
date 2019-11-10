@@ -162,7 +162,15 @@
             because this way, it is not possible or hard to detect malicious via a review.
 1. Support system testing for Linux.
    1. Phoronix
+1. Configurable installation folders:
+   1. bin folder for installed programs.
+   1. Config folder, for configuration and update procedures.
 # Ideas
+1. Consider requiring using the project specific bin folder to the PATH explicitly.
+   Either by adding this step via console configuration or by executing a command.
+   The second option is interesting, as this results in a system that does not need 
+   any intrusive change to the user or system in order to use this project.
+   In this case one would just need a folder with this project's programs set as executable.
 1. GUI
 1. text to speech interface
 1. Random quotes in order to improve emotional state of user.
