@@ -2,6 +2,7 @@
 This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
 Please, create a one sentence summary for each release.
 ## Unreleased
+Fix issues.
 ### Patches
 1. Adapt to console width in "echo.line.current.set".
    This prevents the line reset to print too much or too less.
