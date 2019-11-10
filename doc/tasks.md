@@ -1,7 +1,7 @@
 ## Tasks
 ### Current Tasks
+1. Use MPL 2.0 where possible in order to make this project usable by (A/L) GPL 2 and 3 projects.
 1. Document user cases and project architecture.
-1. Define installation order.
 1. Move tasks to other projects if suitable.
 1. Faster update process via increment updates.
 1. Backup ~/bin/* folders during install via source control.
@@ -10,6 +10,7 @@
    The script user should be informed, if the missing part is required in the user's case.
 1. Make managed commands with same name easier to identify.
    Expand existing naming convention: [object].[adjective].[verb].[adverb].via.[identifier].like.[identifier].[number to differentiate duplicate names]
+1. Test Gitlab security settings.
 1. Continous integration
 ### Fixings
 1. Check licensing issues.
@@ -28,7 +29,6 @@
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
-1. Use MPL 2.0 where possible in order to make this project usable by (A/L) GPL 2 and 3 projects.
 1. Unify configuration system.
    "config.console.time.between.lines.in.text" and the echo variables use different style of configuration management.
 1. Do not exit repo.synchhronize etc. with error if remote repository is not available. Just bring a warning.
@@ -79,6 +79,8 @@
       1. cave
       1. pkg_tools
       1. sun_tools
+      1. Guix (try their video tutorial)
+      1. Nix
    1. Ansible
    1. Windows
       1. chocolate
@@ -158,6 +160,8 @@
             the user do not do their job.
             I.e. such command request should never execute programs of the user that is requesting the execution,
             because this way, it is not possible or hard to detect malicious via a review.
+1. Support system testing for Linux.
+   1. Phoronix
 # Ideas
 1. GUI
 1. text to speech interface
