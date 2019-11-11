@@ -6,7 +6,7 @@ mkdir -p ~/bin/net.splitcells.os.state.interface.commands.managed
 mkdir -p ~/.config/net.splitcells.os.state.interface
 
 grep -q -F '# Export path to net.splitcells.os.state.interface scripts.' ~/.profile
-if [ $? -ne 0 ]; then
+if [ "$?" -ne "0" ]; then
 	echo '# Export path to net.splitcells.os.state.interface scripts.' >> ~/.profile
 	echo 'PATH="$HOME/bin/net.splitcells.os.state.interface.commands.managed:$PATH"' >> ~/.profile
 	echo 'PATH="$HOME/bin:$PATH"' >> ~/.profile
@@ -16,13 +16,13 @@ if [ $? -ne 0 ]; then
 	echo At the very least you need to open a new terminal in order to access these programs.
 fi
 grep -q -F '# Define current echo level variable in order to configure console verbosity.' ~/.profile
-if [ $? -ne 0 ]; then
+if [ "$?" -ne "0" ]; then
 	echo '# Define current echo level variable in order to configure console verbosity.' >> ~/.profile
 	echo 'export current_echo_level=4' >> ~/.profile
 	echo '' >> ~/.profile
 fi
 grep -q -F '# Define echo levels in order to configure console verbosity nicely.' ~/.profile
-if [ $? -ne 0 ]; then
+if [ "$?" -ne "0" ]; then
 	# TODO Partial update: check if one of the following lines is missing (only left side of assignment) and add the missing one to correct position.
 	echo '# Define echo levels in order to configure console verbosity nicely.' >> ~/.profile
 	echo 'export critical_echo_level=1' >> ~/.profile

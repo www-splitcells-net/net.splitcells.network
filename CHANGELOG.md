@@ -12,6 +12,7 @@ Fix issues.
    1. Only use the echo commands of this project.
    1. Ignore hidden folders if the remote is not ssh.
       Before that, this was only done for remotes accessed via remotes.
+1. Fix duplicate writings of console configuration settings.
 ## v1.7.0
 Fix issues found by usage.
 ### Major Changes
