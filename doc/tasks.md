@@ -1,7 +1,7 @@
 ## Tasks
 ### Current Tasks
 1. Use MPL 2.0 where possible in order to make this project usable by (A/L) GPL 2 and 3 projects.
-1. Fix text auf automatic releases.
+1. Fix description created by automatic releases.
 1. Document user cases and project architecture.
 1. Move tasks to other projects if suitable.
 1. Faster update process via increment updates.
