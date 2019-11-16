@@ -2,6 +2,10 @@
 ### Current Tasks
 1. Use MPL 2.0 where possible in order to make this project usable by (A/L) GPL 2 and 3 projects.
 1. Fix description created by automatic releases.
+1. Implement tests:
+   1. Test injection in order to test implementations of managed commands.
+   1. Test without additional rights.
+   1. Test with sudo rights.
 1. Document user cases and project architecture.
 1. Move tasks to other projects if suitable.
 1. Faster update process via increment updates.
@@ -20,9 +24,6 @@
    1. https://www.gnu.org/licenses/gpl-faq.html#GPLPlugins
    1. http://www.epiclaw.net/2012/01/31/combining-or-linking-proprietary-software-unmodified-code-licensed-under-gplv2
 ### Strategies
-1. file.partition.manager
-   1. gnome-disks
-   1. gparted
 1. General advertisment.
 1. Actively support Linux users in order to advertise this and related projects.
 1. Create community guidelines and contribution agreement.
@@ -30,6 +31,13 @@
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
+1. Define and document document "repo.*" command arguments.
+   1. Remotes paths should always contain of 3 (protocol, host, file path) elements as different systems have slightly 
+      different syntax
+   1. No subrepo variable in path.
+1. file.partition.manager
+   1. gnome-disks
+   1. gparted
 1. Unify configuration system.
    "config.console.time.between.lines.in.text" and the echo variables use different style of configuration management.
 1. Do not exit repo.synchhronize etc. with error if remote repository is not available. Just bring a warning.
