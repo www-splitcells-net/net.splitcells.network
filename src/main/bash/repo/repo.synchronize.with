@@ -5,7 +5,6 @@
 
 # Synchronize repository against all remotes.
 # TODO Clone missing repositories via "repo.clone.into.current".
-repo.commit.all
-repo.pull.from $@
-repo.commit.all
-repo.push.to $@
+# TODO Use temporary remote instead of main.
+repo.remote.set "$@"
+repo.synchronize
