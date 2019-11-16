@@ -3,6 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+# TODO FIXME This script is really broken.
+
 # Multiple modes:
 # remote-host path commands
 # $@: Should only contain managed commands as there may be different repositories
@@ -52,14 +54,15 @@ esac
 
 optionalRepoConf="./.repo"
 subrepo=''
+eval $@ # Through the bash command, pipes are supported.
 if test -f "./.repo"; then
 	if grep -q 'repo.type=meta' "$optionalRepoConf"; then
 		if grep -q 'repo.structure=flat' "$optionalRepoConf"; then
 			relevantFolders|while read childFolder; do
-				subrepo=$childFolder
+				subrepo=$childFolder/\$subrepo
 				echo.debug Processing "'"$childFolder"'".
 				cd $childFolder
-				eval "$@"
+				eval repo.process $@
 				cd ..
 			done
 		fi
