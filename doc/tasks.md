@@ -1,6 +1,5 @@
 ## Tasks
 ### Current Tasks
-1. Use MPL 2.0 where possible in order to make this project usable by (A/L) GPL 2 and 3 projects.
 1. Fix description created by automatic releases.
 1. Implement tests:
    1. Test injection in order to test implementations of managed commands.

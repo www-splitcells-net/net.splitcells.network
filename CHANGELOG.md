@@ -5,6 +5,7 @@ Please, create a one sentence summary for each release.
 ## Unreleased
 ## Major Changes
 1. Set main remote during synchronization with foreign remote.
+1. Use MPL 2.0 for every program. Some programs with other licenses were moved to "net.splitcells.os.state.interface.lib".
 ### Minor Changes
 1. Support same features for processing of local and remote repositories.
 1. Create "repo.mirror.into.current".
