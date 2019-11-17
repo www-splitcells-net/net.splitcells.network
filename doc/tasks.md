@@ -189,6 +189,7 @@
       in this repository.
    1. Use configuration in repository for taskwarrior. See "https://taskwarrior.org/docs/configuration.html".
    1. Use bugwarrior in order to import tickets from other repositories.
+1. Compatibility layer for service managers like systemd.
 # Open Source Support
 1. Fedora
    1. https://fedoramagazine.org/check-out-the-new-askfedora/
