@@ -3,6 +3,13 @@ This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Please, create a one sentence summary for each release.
 ## Unreleased
+## Major Changes
+1. Set main remote during synchronization with foreign remote.
+### Minor Changes
+1. Support same features for processing of local and remote repositories.
+1. Create "repo.mirror.into.current".
+   This can be used in order to make mirrors of complex mirrors.
+1. Support complex repositories for "repo.remote.set".
 ## Version 1.7.1
 Fix issues.
 ### Patches
