@@ -14,6 +14,8 @@ Please, create a one sentence summary for each release.
 1. Create "repo.mirror.into.current".
    This can be used in order to make mirrors of complex mirrors.
 1. Support complex repositories for "repo.remote.set".
+### Patches
+1. Clean up last line in echo before exit of managed command.
 ## Version 1.7.1
 Fix issues.
 ### Patches
