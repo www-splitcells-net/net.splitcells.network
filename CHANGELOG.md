@@ -6,6 +6,9 @@ Please, create a one sentence summary for each release.
 ## Major Changes
 1. Set main remote during synchronization with foreign remote.
 1. Use MPL 2.0 for every program. Some programs with other licenses were moved to "net.splitcells.os.state.interface.lib".
+1. Correct command names:
+   1. Rename "exit.on.error" to "sh.session.exit.on.error".
+   1. Rename "exit.with.error" to "sh.session.exit.with.error".
 ### Minor Changes
 1. Support same features for processing of local and remote repositories.
 1. Create "repo.mirror.into.current".

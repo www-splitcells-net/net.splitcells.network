@@ -1,7 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-set -e
-	# Execute this command in a shell like ". exit.on.error".
-	# Otherwise this command has no effect in the current shell.
+
+exit 1
