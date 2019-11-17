@@ -6,6 +6,8 @@
    1. Test injection in order to test implementations of managed commands.
    1. Test without additional rights.
    1. Test with sudo rights.
+   1. Use [toolbox](https://github.com/containers/toolbox).
+      1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
 1. Document user cases and project architecture.
 1. Move tasks to other projects if suitable.
 1. Faster update process via increment updates.
