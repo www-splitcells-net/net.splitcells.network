@@ -36,6 +36,8 @@
    1. Remotes paths should always contain of 3 (protocol, host, file path) elements as different systems have slightly 
       different syntax
    1. No subrepo variable in path.
+1. Create commands for fast path navigation via console.
+   1. Select command output's i-th line and use it for other command.
 1. file.partition.manager
    1. gnome-disks
    1. gparted
