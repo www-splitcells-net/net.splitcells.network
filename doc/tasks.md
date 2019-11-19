@@ -177,6 +177,11 @@
 1. Configurable installation folders:
    1. bin folder for installed programs.
    1. Config folder, for configuration and update procedures.
+1. Make filtered echos more practical:
+   1. Document: Filtered echo are printed in order to be able, to view the process.
+   1. They should be not present in console after its commands execution has ended.
+      Do not print more symbols during a filtered echo in order to prevent creating a new line.
+   1. Support colors.
 # Ideas
 1. Consider requiring using the project specific bin folder to the PATH explicitly.
    Either by adding this step via console configuration or by executing a command.
