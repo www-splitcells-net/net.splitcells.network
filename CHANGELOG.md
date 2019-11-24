@@ -3,6 +3,7 @@ This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Please, create a one sentence summary for each release.
 ## Unreleased
+## Version 2.0.0
 ## Major Changes
 1. Set main remote during synchronization with foreign remote.
 1. Use MPL 2.0 for every program. Some programs with other licenses were moved to "net.splitcells.os.state.interface.lib".
