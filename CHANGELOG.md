@@ -16,6 +16,7 @@ Please, create a one sentence summary for each release.
 1. Support complex repositories for "repo.remote.set".
 ### Patches
 1. Clean up last line in echo before exit of managed command.
+1. Do only print argument literally for echo commands.
 ## Version 1.7.1
 Fix issues.
 ### Patches
