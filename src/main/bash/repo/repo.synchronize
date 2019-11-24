@@ -5,4 +5,4 @@
 
 # Synchronize repository against all remotes.
 # TODO Clone missing sub repositories via "repo.clone.into.current".
-repo.process 'repo.commit.all && repo.pull && repo.commit.all && repo.push'
+repo.commit.all && repo.pull && repo.commit.all && repo.push
