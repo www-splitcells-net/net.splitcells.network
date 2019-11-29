@@ -3,7 +3,9 @@ This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Please, create a one sentence summary for each release.
 ## Unreleased
-## Patches
+### Minor Changes
+1. Log at debug level the arguments of "run.and.show.if.failed".
+### Patches
 1. Prevent argument interpretation in "echo.filtered".
 ## Version 2.0.0
 ## Major Changes

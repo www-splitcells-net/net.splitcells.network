@@ -13,6 +13,7 @@ if __name__ == '__main__':
 	if not len(sys.argv) == 2:
 		subprocess.call(['echo.debug', 'Please quote commands that need to be executed. Arguments that were provided: ' + ' '.join(sys.argv[1:])])
 		sys.exit(1)
+	subprocess.call(['echo.debug', 'Executing "' + sys.argv[1] + '"'])
 	process = subprocess.Popen(sys.argv[1],
 		shell=True,
 		stdout=subprocess.PIPE,
