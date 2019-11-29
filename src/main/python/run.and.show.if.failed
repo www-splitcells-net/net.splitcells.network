@@ -6,6 +6,7 @@ import subprocess
 import sys
 from threading import Thread
 def readAndOutput(stream):
+	# TODO Cache output and echo, it if task fails.
 	with stream:
 		for line in iter(stream.readline, b''):
 			subprocess.call(['echo.debug', line.decode(sys.stdout.encoding)])
