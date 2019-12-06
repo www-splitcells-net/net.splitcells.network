@@ -7,6 +7,7 @@
    1. Test with sudo rights.
    1. Use [toolbox](https://github.com/containers/toolbox).
       1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
+      1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
 1. Document user cases and project architecture.
 1. Move tasks to other projects if suitable.
 1. Faster update process via increment updates.
