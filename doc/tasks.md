@@ -1,6 +1,7 @@
 ## Tasks
 ### Current Tasks
 1. Fix description created by automatic releases.
+1. Create compatibility system for major changes.
 1. Implement tests:
    1. Test injection in order to test implementations of managed commands.
    1. Test without additional rights.
