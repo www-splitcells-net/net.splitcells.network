@@ -46,3 +46,4 @@ do
 		chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
 	fi
 done < "$repoList"
+echo.line.current.clear
