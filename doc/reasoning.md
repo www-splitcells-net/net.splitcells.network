@@ -16,12 +16,6 @@ Also I find it quite hard to change the state of the system fast and easy in Ans
 Note that for most sh consoles autocomplete support for the command 'package.install' could be implemented as well with a reasonable amount of resources.
 In contrast this seems to be a complex task for the Ansible command.
 
-# Program Compatibility
-
-It assumed that every program, that can be accessed by the current user are compatible with each other.
-If a program cannot be access by the current user, but root is able to access this program, it is assumed that the program is not compatible with the system.
-Incompatible programs are not handled.
-
 # Why is there no GUI?
 
 The primary purpose of this project is to provide administrative functionality.
