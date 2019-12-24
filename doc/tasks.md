@@ -20,6 +20,8 @@
    Expand existing naming convention: [object].[adjective].[verb].[adverb].via.[identifier].like.[identifier].[number to differentiate duplicate names]
 1. Test Gitlab security settings.
 1. Continous integration
+1. Ticket managment inside git repository:
+   1. https://github.com/augmentable-dev/tickgit
 ### Fixings
 1. Check licensing issues.
    1. https://www.gnu.org/licenses/gpl-faq.html#MereAggregation
@@ -199,6 +201,8 @@
    1. Use configuration in repository for taskwarrior. See "https://taskwarrior.org/docs/configuration.html".
    1. Use bugwarrior in order to import tickets from other repositories.
 1. Compatibility layer for service managers like systemd.
+1. Create repository backup.
+   The idea is to have a backup plan/infrastructure for dependencies because the internet is an every changing world.
 # Open Source Support
 1. Fedora
    1. https://fedoramagazine.org/check-out-the-new-askfedora/
