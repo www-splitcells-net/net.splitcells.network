@@ -1,7 +1,6 @@
 ## Tasks
 ### Current Tasks
 1. Fix description created by automatic releases.
-1. Create compatibility system for major changes.
 1. Implement tests:
    1. Test injection in order to test implementations of managed commands.
    1. Test without additional rights.
@@ -9,13 +8,9 @@
    1. Use [toolbox](https://github.com/containers/toolbox).
       1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
-1. Document user cases and project architecture.
+1. Document use cases and project architecture.
 1. Move tasks to other projects if suitable.
-1. Faster update process via increment updates.
-1. Backup ~/bin/* folders during install via source control.
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
-1. Create and use method to only partly implement a feature.
-   The script user should be informed, if the missing part is required in the user's case.
 1. Make managed commands with same name easier to identify.
    Expand existing naming convention: [object].[adjective].[verb].[adverb].via.[identifier].like.[identifier].[number to differentiate duplicate names]
 1. Test Gitlab security settings.
@@ -186,6 +181,10 @@
    1. They should be not present in console after its commands execution has ended.
       Do not print more symbols during a filtered echo in order to prevent creating a new line.
    1. Support colors.
+1. Create compatibility system for major changes.
+   This task is not important as long there as long as legacy code is not present.
+1. Faster update process via increment updates.
+1. Backup ~/bin/* folders during install via source control.
 # Ideas
 1. Consider requiring using the project specific bin folder to the PATH explicitly.
    Either by adding this step via console configuration or by executing a command.
