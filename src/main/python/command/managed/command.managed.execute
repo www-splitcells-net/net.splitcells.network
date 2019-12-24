@@ -59,10 +59,11 @@ def commandExists(commandName):
 	from distutils.spawn import find_executable
 	return find_executable(commandName) is not None
 if __name__ == '__main__':
+	wasExecutedSuccessfully = managedCommandExecution(sys.argv[1], sys.argv[2:])
 	subprocess.call(['echo.line.current.clear'])
 		# Managed commands are sometimes mixed with other commands, that do not follow the conventions of this project.
 		# The last console line is cleared, in case the last echo was filtered and is still displayed.
-	if managedCommandExecution(sys.argv[1], sys.argv[2:]): # The first (0) command is the this script itself.
+	if wasExecutedSuccessfully:
 		sys.exit(0)
 	else:
 		sys.exit(1)

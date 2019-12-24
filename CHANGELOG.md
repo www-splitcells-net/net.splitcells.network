@@ -6,6 +6,8 @@ Please, create a one sentence summary for each release.
 ### Minor Changes
 1. Log at debug level the arguments of "run.and.show.if.failed".
 ### Patches
+1. Clear current output line after a managed command was executed.
+### Patches
 #### Command "echo.filtered"
 1. Prevent argument interpretation in "echo.filtered".
 1. Prevent line wrapping, if the filtered echo of a command is longer than the terminal width.
