@@ -17,13 +17,8 @@
 1. Continous integration
 1. Ticket managment inside git repository:
    1. https://github.com/augmentable-dev/tickgit
-### Fixings
-1. Check licensing issues.
-   1. https://www.gnu.org/licenses/gpl-faq.html#MereAggregation
-   1. https://opensource.stackexchange.com/questions/6271/calling-gpld-programs-from-a-shell-script
-   1. https://www.gnu.org/licenses/gpl-faq.html#GPLPlugins
-   1. http://www.epiclaw.net/2012/01/31/combining-or-linking-proprietary-software-unmodified-code-licensed-under-gplv2
-### Strategies
+### Things needed to be fixed.
+### Strategies needed to be defined.
 1. General advertisment.
 1. Actively support Linux users in order to advertise this and related projects.
 1. Create community guidelines and contribution agreement.
