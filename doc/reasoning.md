@@ -1,4 +1,4 @@
-# Why no Ansible etc. integration?
+# Why no Ansible etc.?
 The framework's aim is to require as little as possible and to be compatible to as 
 many things as possible.
 Therefore, this framework could be integrated via wrapper programs into Ansible.
@@ -19,13 +19,13 @@ In contrast this seems to be a complex task for the Ansible command.
 # Program Compatibility
 
 It assumed that every program, that can be accessed by the current user are compatible with each other.
-If a program cannot be access by the current, but root is able to access this program, it is assumed that the program is not compatible with the system.
-Incompatible programs are only handled, if the user explicitly wants it.
+If a program cannot be access by the current user, but root is able to access this program, it is assumed that the program is not compatible with the system.
+Incompatible programs are not handled.
 
 # Why is there no GUI?
 
 The primary purpose of this project is to provide administrative functionality.
 While a GUI could be certainly helpful, it currently would require too much resource.
-Also note there would be no problem, to add a GUI in the future.
+Also note there is no problem, to add a GUI in the future, as the API of this project is quite simple.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
