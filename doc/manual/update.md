@@ -2,10 +2,10 @@
 There are 2 options, in order to update or reinstall the program via the console.
 Both can be executed at any location.
 
-## First Option: Just Reinstall the Program
+## First Option: Reinstall program and configure user's bin folder.
 In order to just reinstall this program, one has to execute the following command in the console:
 ```sh
-command.repositories.install
+user.bin.configure
 ```
 
 ## Second Option: Reapply All User Configurations
