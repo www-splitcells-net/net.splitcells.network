@@ -1,5 +1,17 @@
 ## Tasks
 ### Current Tasks
+1. Manage contributions.
+   1. Proof identities.
+      1. Require all commits to be signed.
+      1. Store public keys in this repositories, so that is trivial to check public keys to the signatures.
+         Note that this does not ensure that the commits are correct, because an attacker could change the public keys in the repository as well.
+         The public keys in this repository would therefore not be trustworthy.
+         Their primary goal is to ensure that the contribution process is adhered.
+      1. Check presence of signatures automatically.
+      1. Require upload of public keys via second channel to the repository owner.
+   1. Use and check https://developercertificate.org/.
+      1. DCO is better than CLA if one is sure that the license does not have to be changed.
+   1. Document this process so that other can reproduce it easily.
 1. Fix description created by automatic releases.
 1. Implement tests:
    1. Test injection in order to test implementations of managed commands.
