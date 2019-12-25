@@ -14,6 +14,9 @@
    1. Document this process so that other can reproduce it easily.
 1. Fix description created by automatic releases.
 1. Document commands.
+1. Create general open source project template.
+   This is not part of this project.
+   It is part of 'splitcells.net'.
 1. Implement tests:
    1. Test injection in order to test implementations of managed commands.
    1. Test without additional rights.
