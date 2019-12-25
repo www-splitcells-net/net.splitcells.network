@@ -13,6 +13,7 @@
       1. DCO is better than CLA if one is sure that the license does not have to be changed.
    1. Document this process so that other can reproduce it easily.
 1. Fix description created by automatic releases.
+1. Document commands.
 1. Implement tests:
    1. Test injection in order to test implementations of managed commands.
    1. Test without additional rights.
@@ -20,7 +21,6 @@
    1. Use [toolbox](https://github.com/containers/toolbox).
       1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
-1. Document use cases and project architecture.
 1. Move tasks to other projects if suitable.
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
 1. Make managed commands with same name easier to identify.
