@@ -2,7 +2,7 @@
 1. This project is still in an experimental state.
 1. Note that there is no guaranty that the scripts are correct or that they do no harm.
 
-[Setup Instructions](./doc/setup.md)
+[Manual](./manual/index.md)
 
 ## Manifesto
 We want to install programs.
