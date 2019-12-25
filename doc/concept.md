@@ -14,6 +14,7 @@ Additionally, an update via dnf on Fedora might not update all software componen
 Also different Systems may have different functionality.
 
 This problem affects other systems like Windows and Mac OS as well.
+
 ## Solutions
 
 ### Language
@@ -34,5 +35,7 @@ The programs called by this framework can be developed independently or used on 
 Also the programs are mostly not provided by this framework, but are copied into an existing installation of this framework.
 
 In other words the detailed technical know-how of managing operation systems is not provided by this framework.
+
+
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
