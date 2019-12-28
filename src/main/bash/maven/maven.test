@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+# 1$ = Simple or fully qualified name of the test class.
+
+mvn -Dtest=$1 test
