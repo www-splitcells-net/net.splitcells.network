@@ -8,8 +8,8 @@ The name of a command is a dot-separated list of words.
 This list describes a path inside a concept hierarchy from a general starting point to the desired destination.
 
 Example:
-Natural description: I want to see how much communication there is between my computer and the network.
-Command: system.network.usage
+* Natural description: I want to see how much communication there is between my computer and the network.
+* Command: system.network.usage
 
 ## Grammar
 
