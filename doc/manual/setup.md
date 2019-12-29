@@ -7,3 +7,5 @@ cd net.splitcells.os.state.interface
 chmod +x ./install.on.unix.sh
 ./install.on.unix.sh
 ```
+
+This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.

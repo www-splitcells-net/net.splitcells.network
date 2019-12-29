@@ -13,3 +13,4 @@ Generally it is recommended to reinstall this program and to reapply all user co
 ```sh
 user.configure
 ```
+This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
