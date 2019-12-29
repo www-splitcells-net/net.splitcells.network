@@ -13,7 +13,7 @@ Command: system.network.usage
 
 ## Grammar
 
-Grammar can be viewed via [Railroad Diagram Generato](https://www.bottlecaps.de/rr/ui).
+Grammar can be viewed via [Railroad Diagram Generator](https://www.bottlecaps.de/rr/ui).
 
 ```
 Grammar ::= object*viaTool?identifier?
