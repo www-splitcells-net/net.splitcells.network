@@ -26,8 +26,6 @@
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
 1. Move tasks to other projects if suitable.
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
-1. Make managed commands with same name easier to identify.
-   Expand existing naming convention: [object].[adjective].[verb].[adverb].via.[identifier].like.[identifier].[number to differentiate duplicate names]
 1. Test Gitlab security settings.
 1. Continous integration
 1. Ticket managment inside git repository:
