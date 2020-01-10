@@ -2,14 +2,10 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-if [ -z "$current_echo_level" ]
-then
+
+echo.line.current.clear
+if [ $(echo.level.config) -ge $(echo.level.warning) ]; then
 	echo $@
 else
-	echo.line.current.clear
-	if [ $current_echo_level -ge $warning_echo_level ]; then
-		echo $@
-	else
-		echo.line.current.set "$@"
-	fi
+	echo.line.current.set "$@"
 fi

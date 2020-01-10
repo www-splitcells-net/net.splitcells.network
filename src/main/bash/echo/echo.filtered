@@ -5,4 +5,4 @@
 
 # TODO Only print as many characters, as there is space in one line, in order to prevent line wrapping and therefore additional lines.
 printf '%s' "$@"
-sleep $(config.console.time.between.lines.in.text)
+sleep $(shell.time.between.lines.in.text.config)

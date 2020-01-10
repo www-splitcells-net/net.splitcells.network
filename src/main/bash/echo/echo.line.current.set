@@ -3,11 +3,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-terminal_width=$(terminal.width)
+shell_width=$(shell.width)
 # Clear current line.
 	# Sets the cursor to the beginning of the line.
 	# Overwrites all symbols in current line, by print as many symbols as the console is wide.
 	# Setting the cursor to the beginning of the line, so that next print can write to the start of this line.
-	printf "\r$(repeat ' ' times $terminal_width)\r"
+	printf "\r$(repeat ' ' times $shell_width)\r"
 #echo "$@" | xargs -n 1 -d '\n' echo.filtered
-echo "$@" | cut -c -"$terminal_width" | xargs -n 1 -d '\n' echo.filtered
+echo "$@" | cut -c -"$shell_width" | xargs -n 1 -d '\n' echo.filtered
