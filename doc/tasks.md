@@ -49,7 +49,7 @@
    1. gnome-disks
    1. gparted
 1. Unify configuration system.
-   "config.console.time.between.lines.in.text" and the echo variables use different style of configuration management.
+   "shell.time.between.lines.in.text.config" and the echo variables use different style of configuration management.
 1. Do not exit repo.synchhronize etc. with error if remote repository is not available. Just bring a warning.
 1. Create tutorials.
 1. Creation of adhoc managed commands.
