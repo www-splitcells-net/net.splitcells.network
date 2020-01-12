@@ -3,6 +3,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+# Configures the current user.
+# The main difference with "package.install" is the fact, that "user.configure" works without arguments.
+
 user.bin.configure
 command.managed.execute conjunction user.configure
 user.data.synchronize # User configuration update may add new data peers.

@@ -3,6 +3,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+# Installs a piece of software, in order to provide new commands or functionality.
+# The installed object may or may not be active without further actions.
+
 if [ -x "$(command -v $1)" ]; then
 	echo.debug Software is already installed.
 	exit
