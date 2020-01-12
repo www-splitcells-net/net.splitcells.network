@@ -137,7 +137,9 @@
 1. Show current execution state by showing only last echo in terminal.
    Use the same technique that is used for terminal animations.
 1. Solving name conflicts in PATH via something like containers/sandboxes.
-1. Alternative rights management for command execution aka. alternative to sudo:
+1. Maybe the best would be, to just document this and to use existing solutions.
+   In other words, the rights management is only done via the operation system.
+   Alternative rights management for command execution aka. alternative to sudo:
    1. Not all system support sudo like commands out of the box (i.e. Windows).
       It may be possible to provide an sudo command for all operation systems.
    1. Sudo has no protection against an infiltrated user.
