@@ -33,11 +33,11 @@ Please, create a one sentence summary for each release.
 1. Some documentation updates.
 ### Patches
 1. Clear current output line after a managed command was executed.
-#### Command "echo.filtered"
-1. Prevent argument interpretation in "echo.filtered".
-1. Prevent line wrapping, if the filtered echo of a command is longer than the terminal width.
-   This is done by limiting the output of filtered echos to the width of the terminal.
-   In other words: if there is nothing to be reported during the execution of the command, no output is visible after the commands execution.
+1. Command "echo.filtered"
+   1. Prevent argument interpretation in "echo.filtered".
+   1. Prevent line wrapping, if the filtered echo of a command is longer than the terminal width.
+      This is done by limiting the output of filtered echos to the width of the terminal.
+      In other words: if there is nothing to be reported during the execution of the command, no output is visible after the commands execution.
 ## Version 2.0.0
 ## Major Changes
 1. Set main remote during synchronization with foreign remote.
