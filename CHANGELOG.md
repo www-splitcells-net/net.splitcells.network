@@ -22,7 +22,7 @@ Please, create a one sentence summary for each release.
    
    tracing_echo_level -> echo.level.trace
    
-1. Use only word 'shell' for terminal:
+1. Use only word 'shell' for terminal.
    Replaced commands:
    
    terminal width -> shell.width
