@@ -39,6 +39,8 @@
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
+1. Create a dictionary for bash in order to be able to quickly lookup functionality.
+   1. Revert Search
 1. Define and document document "repo.*" command arguments.
    1. Remotes paths should always contain of 3 (protocol, host, file path) elements as different systems have slightly 
       different syntax
