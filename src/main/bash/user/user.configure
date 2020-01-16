@@ -5,6 +5,7 @@
 
 # Configures the current user.
 # The main difference with "package.install" is the fact, that "user.configure" works without arguments.
+# This command may or may not required extend rights.
 
 user.bin.configure
 command.managed.execute conjunction user.configure

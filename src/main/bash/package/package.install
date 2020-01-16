@@ -5,9 +5,10 @@
 
 # Installs a piece of software, in order to provide new commands or functionality.
 # The installed object may or may not be active without further actions.
+# This command may or may not require extended rights.
 
 if [ -x "$(command -v $1)" ]; then
-	echo.debug Software is already installed.
+	echo.debug Command \"$1\" found in current path. This means that the package \"$1\" is already installed.
 	exit
 fi
 # Use package specific installer if present.
