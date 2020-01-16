@@ -7,16 +7,26 @@ Please, create a one sentence summary for each release.
 1. Remove variables inside profile.
    Use commands in order to get configuration values instead.
    Repalced variables and their new commands:
+   
    current_echo_level -> echo.level.config
+   
    critical_echo_level -> echo.level.critical
+   
    error_echo_level -> echo.level.error
+   
    warning_echo_level -> echo.level.warning
+   
    info_echo_level -> echo.level.info
+   
    debug_echo_level -> echo.level.debug
+   
    tracing_echo_level -> echo.level.trace
+   
 1. Use only word 'shell' for terminal:
    Replaced commands:
+   
    terminal width -> shell.width
+   
    terminal.time.between.lines.in.text.config -> shell.time.between.lines.in.text.config
 ### Minor Changes
 1. Log at debug level the arguments of "run.and.show.if.failed".
