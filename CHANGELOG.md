@@ -38,6 +38,7 @@ Please, create a one sentence summary for each release.
    1. Prevent line wrapping, if the filtered echo of a command is longer than the terminal width.
       This is done by limiting the output of filtered echos to the width of the terminal.
       In other words: if there is nothing to be reported during the execution of the command, no output is visible after the commands execution.
+1. Documentation improvements.
 ## Version 2.0.0
 ## Major Changes
 1. Set main remote during synchronization with foreign remote.

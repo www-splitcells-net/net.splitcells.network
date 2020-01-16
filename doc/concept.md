@@ -1,6 +1,7 @@
 # Concept
 
 * [Introduction](./concept/introduction.md)
+* [Terminal based Dependency Injection](./concept/terminal.based.dependency.injection.md)
 
 ## Components
 * [Bare Command](./concept/bare.command.md)

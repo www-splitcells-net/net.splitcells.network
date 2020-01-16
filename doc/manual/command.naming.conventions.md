@@ -1,6 +1,6 @@
 # Command Naming Convention
 
-At the heart of this project is a convention how commands are named.
+At the heart of this project is a convention determining how commands are named.
 Without such a convention it would be harder to find new commands and remember the names of every day commands.
 
 The gist of the convention is:

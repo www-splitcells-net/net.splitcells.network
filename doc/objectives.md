@@ -8,9 +8,9 @@ This project provides a framework in order to support the following main goals:
 1. Help the user to deal with technical details.
 1. Minimize the number of required dependencies.
    The number of optional dependencies is irrelevant and should be provided by other projects.
-1. Provide a dependency management mechanism in order to support the administration of complex and different systems.
+1. Provide a dependency management mechanism in order to support the tasks on different systems.
    This is done via dependency injection on the command line level.
-1. This framework provides a workflow and dictionary in order make its usage and development simple.
+1. Provide a workflow and dictionary in order make its usage and development simple.
 ## Secondary Objectives
 This project provides a framework in order to also support the following secondary goals:
 1. Provide reasonable defaults for complex tasks as most users just want to use the system.
@@ -19,8 +19,7 @@ This project provides a framework in order to also support the following seconda
 1. Let the user actively agree to changes that might cause problems.
    The user should thereby informed of possible problems that might occur.
 ## Non Objectives
-1. This framework only provides a minimal set of administration scripts.
-   Additional function should be provided by other projects that depend on this project
-   in order to make the organization easier.
+1. This framework only provides a minimal a framework for system administration.
+   System specific programs are provided by other projects.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.

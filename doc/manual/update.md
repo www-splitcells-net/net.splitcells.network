@@ -7,10 +7,12 @@ In order to just reinstall this program, one has to execute the following comman
 ```sh
 user.bin.configure
 ```
+The first option is faster than the second.
 
 ## Second Option: Reapply All User Configurations
 Generally it is recommended to reinstall this program and to reapply all user configurations during an update of this program:
 ```sh
 user.configure
 ```
+
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.

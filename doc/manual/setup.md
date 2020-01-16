@@ -8,4 +8,6 @@ chmod +x ./install.on.unix.sh
 ./install.on.unix.sh
 ```
 
+The newly created folder should not be moved, after the execution of "./install.on.unix.sh".
+
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
