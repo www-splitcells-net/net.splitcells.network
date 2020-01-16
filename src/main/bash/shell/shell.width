@@ -7,3 +7,7 @@ stty -a <"/dev/pts/1" | # Get all terminal settings
 	grep -o 'columns [^"]*' | # Get the line containing the number of columns and omit the line's part before the width information.
 	cut -c 9- | # Remove the prefix 'columns ', which is right before the number of columns..
 	grep -oE '^[0-9]*' # Remove the every character after the number of columns.
+if [ $? -ne 0 ]; then
+	echo "80"
+	exit 0
+fi

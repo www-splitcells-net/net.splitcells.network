@@ -39,6 +39,7 @@ Please, create a one sentence summary for each release.
       This is done by limiting the output of filtered echos to the width of the terminal.
       In other words: if there is nothing to be reported during the execution of the command, no output is visible after the commands execution.
 1. Documentation improvements.
+1. Provide fall back value for "shell.width", if it could not be determined.
 ## Version 2.0.0
 ## Major Changes
 1. Set main remote during synchronization with foreign remote.
