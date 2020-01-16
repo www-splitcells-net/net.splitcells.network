@@ -33,7 +33,6 @@ Please, create a one sentence summary for each release.
 1. Some documentation updates.
 ### Patches
 1. Clear current output line after a managed command was executed.
-### Patches
 #### Command "echo.filtered"
 1. Prevent argument interpretation in "echo.filtered".
 1. Prevent line wrapping, if the filtered echo of a command is longer than the terminal width.
