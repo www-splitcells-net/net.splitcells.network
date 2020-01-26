@@ -54,6 +54,7 @@
    1. gparted
 1. Unify configuration system.
    "shell.time.between.lines.in.text.config" and the echo variables use different style of configuration management.
+1. Create configuration command template like "command.managed.execute".
 1. Do not exit repo.synchhronize etc. with error if remote repository is not available. Just bring a warning.
 1. Create tutorials.
 1. Creation of adhoc managed commands.
@@ -196,7 +197,8 @@
       Do not print more symbols during a filtered echo in order to prevent creating a new line.
    1. Support colors.
 1. Create compatibility system for major changes.
-   This task is not important as long there as long as legacy code is not present.
+   1. This task is not important as long there as long as legacy code is not present.
+   1. Document the tactic regarding compatibility on "README.md".
 1. Faster update process via increment updates.
 1. Backup ~/bin/* folders during install via source control.
 # Ideas
