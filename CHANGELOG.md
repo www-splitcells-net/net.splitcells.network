@@ -31,6 +31,7 @@ Please, create a one sentence summary for each release.
 ### Minor Changes
 1. Log at debug level the arguments of "run.and.show.if.failed".
 1. Some documentation updates.
+1. "echo.line.current.set": Create warning when echo filtering does not work.
 ### Patches
 1. Clear current output line after a managed command was executed.
 1. Command "echo.filtered"
