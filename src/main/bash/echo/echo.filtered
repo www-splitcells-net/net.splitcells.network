@@ -4,5 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # TODO Only print as many characters, as there is space in one line, in order to prevent line wrapping and therefore additional lines.
+# TODO The name seems to be incorrect.
 printf '%s' "$@"
 sleep $(shell.time.between.lines.in.text.config)
