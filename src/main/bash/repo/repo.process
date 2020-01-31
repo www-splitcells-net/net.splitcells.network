@@ -36,7 +36,6 @@ case $1 in "ssh://"*)
 					cd $subrepo
 					if ssh $1 "test -f $2/$subrepo/.repo"; then
 						echo.debug $(pwd)
-						cd $subrepo
 						repo.process $1 $2/$subrepo "${@:3}"
 					else
 						echo.debug "${@:3}" "$1" "$2"/$subrepo
