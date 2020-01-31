@@ -42,6 +42,7 @@ Please, create a one sentence summary for each release.
       In other words: if there is nothing to be reported during the execution of the command, no output is visible after the commands execution.
 1. Documentation improvements.
 1. Provide fall back value for "shell.width", if it could not be determined.
+1. Make "shell.width" more portable.
 ## Version 2.0.0
 ## Major Changes
 1. Set main remote during synchronization with foreign remote.

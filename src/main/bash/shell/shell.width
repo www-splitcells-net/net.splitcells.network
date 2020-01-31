@@ -3,13 +3,19 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# FIXME Does not work, if multiple displays are present and terminal is moved between these.
-
-stty -a <"/dev/pts/1" | # Get all terminal settings
+if [ -x "$(command -v tput)" ]; then
+	echo $(tput cols)
+	exit
+fi
+if test -f "/dev/pts/1"; then # FIXME Does not work, if multiple displays are present and terminal is moved between these.
+	stty -a <"/dev/pts/1" | # Get all terminal settings
 	grep -o 'columns [^"]*' | # Get the line containing the number of columns and omit the line's part before the width information.
 	cut -c 9- | # Remove the prefix 'columns ', which is right before the number of columns..
 	grep -oE '^[0-9]*' # Remove the every character after the number of columns.
-if [ $? -ne 0 ]; then
-	echo "80"
-	exit 0
+	exit
 fi
+if [ -z "$COLUMNS" ]; then
+	echo "$COLUMNS"
+	exit
+fi
+exit 1
