@@ -13,7 +13,7 @@ from pathlib import Path
 def executeCommand(command):
 	"""Returns whether the next commands needs to be executed."""
 	# TODO Check if command exsists.
-	subprocess.call(['echo.debug', 'Executing ' + ' '.join(command)])
+	subprocess.call(['echo.debug', 'Executing \"' + ' '.join(command) + '\".'])
 	returnCode = subprocess.call(command) # This call raises an error if the command is not found.
 	return returnCode == 0
 def managedCommandExecution(type, command): # RENAME
@@ -48,7 +48,7 @@ def managedCommandExecution(type, command): # RENAME
 		executionCounter+=1
 		managedCommand = commandAt(command, executionCounter)
 	if not executedSuccessfully:
-		subprocess.call(['echo.error', 'Could not execute ' + ' '.join(command)])
+		subprocess.call(['echo.error', 'Could not execute \"' + ' '.join(command) + '\".'])
 	return executedSuccessfully
 def commandAt(command, number):
 	rVal = command.copy()
