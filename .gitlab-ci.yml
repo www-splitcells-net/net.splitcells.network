@@ -5,6 +5,4 @@ test:
   script:
     - chmod +x ~/.profile
     - . ~/.profile
-    - mkdir -p target/test
-    - cd target/test
-    - echo $PATH
+    - ./bin/test

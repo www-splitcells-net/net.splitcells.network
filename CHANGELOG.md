@@ -40,6 +40,7 @@ Please, create a one sentence summary for each release.
 1. Update "package.install" documentation according to usage experience.
 1. Update "user.configure" documentation.
 1. Define CI pipeline for gitlab.
+1. Create test suite.
 ### Patches
 1. Clear current output line after a managed command was executed.
 1. Command "echo.filtered"
