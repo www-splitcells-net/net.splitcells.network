@@ -1,6 +1,8 @@
 before_script:
-  - chmod +x ./bin/install
-  - ./bin/install
+  - chmod +x ./configure
+  - ./configure
+  - make
+  - make install
 test:
   script:
     - chmod +x ~/.profile
