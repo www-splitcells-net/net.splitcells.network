@@ -4,5 +4,6 @@ before_script:
 rspec:
   script:
     - chmod +x ~/.profile
-    - ~/.profile
+    - . ~/.profile
+    - echo $PATH
     - repo.clone.into.current.test
