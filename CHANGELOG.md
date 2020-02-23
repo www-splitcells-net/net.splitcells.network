@@ -29,10 +29,16 @@ Please, create a one sentence summary for each release.
    
    terminal.time.between.lines.in.text.config -> shell.time.between.lines.in.text.config
 ### Minor Changes
+1. Place all project programs in bin folder and make project make compatible.
+1. Define optional default user specific repository.
 1. Log at debug level the arguments of "run.and.show.if.failed".
 1. Some documentation updates.
 1. "echo.line.current.set": Create warning when echo filtering does not work.
 1. Create "user.management.auto.config" option.
+1. Create test for "repo.clone.into.current.test".
+1. Create "repo.create" command.
+1. Update "package.install" documentation according to usage experience.
+1. Update "user.configure" documentation.
 ### Patches
 1. Clear current output line after a managed command was executed.
 1. Command "echo.filtered"
@@ -44,6 +50,7 @@ Please, create a one sentence summary for each release.
 1. Provide fall back value for "shell.width", if it could not be determined.
 1. Make "shell.width" more portable.
 1. Correctly visit child repos in "repo.process" by removing duplicate "cd $subrepo".
+1. Unify quoting of command names in logging.
 ## Version 2.0.0
 ## Major Changes
 1. Set main remote during synchronization with foreign remote.
