@@ -44,6 +44,7 @@
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
+1. Fix "shell.width" in non-interactive mode.
 1. Create a dictionary for bash in order to be able to quickly lookup functionality.
    1. Revert Search
 1. Define and document document "repo.*" command arguments.
