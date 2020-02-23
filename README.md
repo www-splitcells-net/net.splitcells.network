@@ -4,9 +4,9 @@
 
 ## Getting Started
 1. [Setup Instructions](./doc/manual/setup.md)
-1. [Introduction](./doc/concept.md)
 1. [Manual](./doc/manual.md)
 1. [Manifesto](./doc/manifesto.md)
+1. [Concept Introduction](./doc/concept.md)
 1. [Alternatives](./doc/alternatives.md)
 
 ## Project Structure
