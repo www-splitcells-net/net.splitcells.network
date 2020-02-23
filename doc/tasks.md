@@ -18,7 +18,12 @@
    This is not part of this project.
    It is part of 'splitcells.net'.
 1. Implement tests:
+   Tests are implemented as normal commands.
+   They are executed in a sandbox.
    1. Test injection in order to test implementations of managed commands.
+      1. Format for test command name: all commands ending with ".test".
+      1. Create command which executes all tests.
+      1. Find or create a test framework. 
    1. Test without additional rights.
    1. Test with sudo rights.
    1. Use [toolbox](https://github.com/containers/toolbox).
