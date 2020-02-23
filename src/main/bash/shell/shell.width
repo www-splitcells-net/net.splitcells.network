@@ -4,9 +4,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 if [ -z $PS1 ]
+then
 	echo 100
 	exit
-then
 fi
 if [ -x "$(command -v tput)" ]; then
 	echo $(tput cols)
