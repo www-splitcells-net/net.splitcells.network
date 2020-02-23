@@ -46,4 +46,8 @@ do
 		chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
 	fi
 done < "$repoList"
+if test -d "$HOME/.config/net.splitcells.os.state.interface/src"; then
+	cd "$HOME/.config/net.splitcells.os.state.interface/src"
+	find . -mindepth 1 -type f -exec command.managed.install {} \;
+fi
 echo.line.current.clear
