@@ -20,8 +20,6 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	$setupEnvironment
 	
 	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install
-	echo $(pwd)
-	echo $installer
 	chmod +x $installer
 	$installer $installer
 	chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*

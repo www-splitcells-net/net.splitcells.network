@@ -1,9 +1,11 @@
 before_script:
   - chmod +x ./bin/install
   - ./bin/install
-rspec:
+test:
   script:
     - chmod +x ~/.profile
     - . ~/.profile
+    - mkdir -p target/test
+    - cd target/test
     - echo $PATH
     - repo.clone.into.current.test
