@@ -6,12 +6,10 @@
 1. [Setup Instructions](./doc/manual/setup.md)
 1. [Manual](./doc/manual.md)
 1. [Manifesto](./doc/manifesto.md)
-1. [Concept Introduction](./doc/concept.md)
 1. [Alternatives](./doc/alternatives.md)
 
 ## Project Structure
 1. [Manifesto](./doc/manifesto.md)
-1. [Manual](./doc/manual.md)
 1. [Objectives of this Project](./doc/objectives.md)
 1. [Concepts](./doc/concept.md)
 1. [Why are things done a certain way?](./doc/reasoning.md)
