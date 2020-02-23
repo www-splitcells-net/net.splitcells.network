@@ -15,3 +15,4 @@ if [ "$?" -ne "0" ]; then
 	echo You may need to restart the computer in order to access the installed programs.
 	echo At the very least you need to open a new terminal in order to access these programs.
 fi
+chmod +x ~/.profile
