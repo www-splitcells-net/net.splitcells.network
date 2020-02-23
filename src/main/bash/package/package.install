@@ -7,6 +7,14 @@
 # The installed object may or may not be active without further actions.
 # This command may or may not require extended rights.
 
+# Package names should be a dot separated list of words.
+# The Regex pattern package names in this case is "[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*".
+# It is preferred, that package names start with a related domain name where each entry
+# is present in reverse order.
+# If the package has a related URL the path of the URL in the original order
+# should be used. 
+# This way packages can be organized in an hierarchy and name conflicts can be omitted.
+
 if [ -x "$(command -v $1)" ]; then
 	echo.debug Command \"$1\" found in current path. This means that the package \"$1\" is already installed.
 	exit
@@ -17,6 +25,8 @@ if [ -x "$(command -v package.install.$1)" ]; then
 	. package.install.$1
 	if [ "$?" -eq "0" ]; then
 		exit
+	else
+		exit 1
 	fi
 fi
 command.managed.execute disjunction package.install $1
