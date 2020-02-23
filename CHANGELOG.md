@@ -39,6 +39,7 @@ Please, create a one sentence summary for each release.
 1. Create "repo.create" command.
 1. Update "package.install" documentation according to usage experience.
 1. Update "user.configure" documentation.
+1. Define CI pipeline for gitlab.
 ### Patches
 1. Clear current output line after a managed command was executed.
 1. Command "echo.filtered"
