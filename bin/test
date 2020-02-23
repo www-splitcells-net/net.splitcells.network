@@ -6,4 +6,5 @@ projectFolder=$(pwd)
 	mkdir -p target/test
 	cd target/test
 command.managed.execute.test
-rm -rf $projectFolder/target/test
+cd $projectFolder # Leave current folder before it is deleted.
+	rm -rf $projectFolder/target/test
