@@ -37,14 +37,17 @@ def managedCommandExecution(type, command): # RENAME
 	"""
 	executionCounter = 0
 	managedCommand = commandAt(command, executionCounter)
-	executedSuccessfully = True
+	executedSuccessfully = False
 	while commandExists(managedCommand[0]):
 		executedSuccessfully = executeCommand(managedCommand)
 		if type == 'disjunction' and executedSuccessfully:
+			executedSuccessfully = True
 			break
 		if type == 'conjunction' and not executedSuccessfully:
 			executedSuccessfully = False
 			break
+		if type == 'conjunction' and executedSuccessfully:
+			executedSuccessfully = True
 		executionCounter+=1
 		managedCommand = commandAt(command, executionCounter)
 	if not executedSuccessfully:

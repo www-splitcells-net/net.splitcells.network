@@ -52,6 +52,7 @@ Please, create a one sentence summary for each release.
 1. Make "shell.width" more portable.
 1. Correctly visit child repos in "repo.process" by removing duplicate "cd $subrepo".
 1. Unify quoting of command names in logging.
+1. Create error, if there is no implementation of a managed command.
 ## Version 2.0.0
 ## Major Changes
 1. Set main remote during synchronization with foreign remote.
