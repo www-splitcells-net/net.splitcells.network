@@ -3,4 +3,5 @@ before_script:
   - make install
 rspec:
   script:
+    - ~/.profile
     - repo.clone.into.current.test
