@@ -26,6 +26,7 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	$installer $installer
 	chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
 fi
+export PATH=$installer:$PATH
 while IFS= read -r property
 do
 	if [ ! -z "$current_echo_level" ]
