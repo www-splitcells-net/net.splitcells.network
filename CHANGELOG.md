@@ -28,6 +28,9 @@ Please, create a one sentence summary for each release.
    terminal width -> shell.width
    
    terminal.time.between.lines.in.text.config -> shell.time.between.lines.in.text.config
+1. "package.install": Use program specific installer first,
+   in order to install program even if starter
+   script is already present.
 ### Minor Changes
 1. Place all project programs in bin folder and make project make compatible.
 1. Define optional default user specific repository.
