@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+mvn exec:java -Dexec.mainClass="$1"
