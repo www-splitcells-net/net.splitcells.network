@@ -26,6 +26,8 @@
       1. Find or create a test framework. 
    1. Test without additional rights.
    1. Test with sudo rights.
+   1. Fix Gitlab Test and ensure that test failures are automatically found,
+      which is currently not the case.
    1. Use [toolbox](https://github.com/containers/toolbox).
       1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
