@@ -42,6 +42,7 @@ Please, create a one sentence summary for each release.
 1. Define CI pipeline for gitlab.
 1. Create test suite.
 ### Patches
+1. "run.and.show.if.failed": Clear current echo line after command is executed.
 1. Clear current output line after a managed command was executed.
 1. Command "echo.filtered"
    1. Prevent argument interpretation in "echo.filtered".

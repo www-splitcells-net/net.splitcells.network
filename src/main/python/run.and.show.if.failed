@@ -19,6 +19,15 @@ if __name__ == '__main__':
 		shell=True,
 		stdout=subprocess.PIPE,
 		stderr=subprocess.PIPE)
-	Thread(target=readAndOutput, args=[process.stdout]).start()
-	Thread(target=readAndOutput, args=[process.stderr]).start()
-	sys.exit(process.wait())
+	#
+	outputThread = Thread(target=readAndOutput, args=[process.stdout])
+	errorThread = Thread(target=readAndOutput, args=[process.stderr])
+	outputThread.start()
+	errorThread.start()
+	#
+	exitCode=process.wait()
+	outputThread.join()
+	errorThread.join()
+	#
+	subprocess.run(['echo.line.current.clear'])
+	sys.exit(exitCode)
