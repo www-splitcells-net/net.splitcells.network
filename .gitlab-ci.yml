@@ -1,4 +1,4 @@
-image: python:3.5
+image: python:3.7
 before_script:
   - chmod +x ./configure
   - ./configure
@@ -9,4 +9,3 @@ test:
     - chmod +x ~/.profile
     - . ~/.profile
     - ./bin/test
-    # TOFIX "tput: No value for $TERM and no -T specified"
