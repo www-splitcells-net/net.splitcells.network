@@ -8,5 +8,5 @@ test:
   script:
     - chmod +x ~/.profile
     - . ~/.profile
-    - bash -x ./bin/test
+    - ./bin/test
     # TOFIX "tput: No value for $TERM and no -T specified"
