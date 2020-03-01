@@ -173,3 +173,5 @@ buildNumber.properties
 node_modules/
 package-lock.json
 
+# This folder is created by the Gitlab CI runner.
+builds/
