@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+if [ "1" -eq "$(system.is.Ubuntu)" ]; then
+	sudo apt install -y openssh-server
+	sudo systemctl is-active --quiet ssh
+	if [ "0" -ne "$?" ]; then
+		echo.error "SSH serve could not be started."
+		exit 1
+	fi
+	# TODO Check PasswordAuthentication configuration.
+fi
+# Check if SSH server runs and only allows authentication without password by connecting to the SSH server.
+	loginLog=$(ssh -o PasswordAuthentication=yes -vvv "$USER@localhost" exit 2>&1 >/dev/null)
+	if [ "0" -eq "$?" ]; then
+		echo 1
+	fi
+	if [ "$loginlog" == *'No more authentication methods to try.'* ]; then
+		echo.error "Login with password is enabled, but should be disabled."
+		exit 1
+		exit
+	fi
+echo.error This operation system is not supported.
+exit 1
