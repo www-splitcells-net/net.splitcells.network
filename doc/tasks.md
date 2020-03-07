@@ -46,7 +46,10 @@
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
-1. Fix "shell.width" in non-interactive mode.
+1. Create shell for blind usage.
+   1. Things need to be considered:
+      1. Way to speak currently entered command without executing it.
+1. Support managed commands with no implementation like "user.configure".
 1. Create a dictionary for bash in order to be able to quickly lookup functionality.
    1. Revert Search
 1. Define and document document "repo.*" command arguments.
