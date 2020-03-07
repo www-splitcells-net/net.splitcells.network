@@ -20,8 +20,10 @@
 if [ -x "$(command -v package.install.$1)" ]; then
 	echo.debug executing package.install.$1
 	package.install.$1
-		# TODO If this does not work try executing as managed command.
 		# TODO Hide echo if command failed.
+	if [ "$?" -eq "0" ]; then
+		exit
+	fi
 fi
 if [ -x "$(command -v $1)" ]; then
 	echo.debug Command \"$1\" found in current path. This means that the package \"$1\" is already installed.
