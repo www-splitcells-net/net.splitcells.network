@@ -5,20 +5,24 @@
 import subprocess
 import sys
 from threading import Thread
+isRunning = True
 def readAndOutput(stream):
 	# TODO Cache output and echo, it if task fails.
 	with stream:
 		for line in iter(stream.readline, b''):
-			subprocess.call(['echo.debug', line.decode(sys.stdout.encoding)])
+			if isRunning:
+				subprocess.call(['echo.debug', line.decode(sys.stdout.encoding)])
+			else:
+				return
 if __name__ == '__main__':
 	if not len(sys.argv) == 2:
 		subprocess.call(['echo.debug', 'Please quote commands that need to be executed. Arguments that were provided: ' + ' '.join(sys.argv[1:])])
 		sys.exit(1)
 	subprocess.call(['echo.debug', 'Executing \"' + sys.argv[1] + '\".'])
 	process = subprocess.Popen(sys.argv[1],
-		shell=True,
-		stdout=subprocess.PIPE,
-		stderr=subprocess.PIPE)
+		shell = True,
+		stdout = subprocess.PIPE,
+		stderr = subprocess.PIPE)
 	#
 	outputThread = Thread(target=readAndOutput, args=[process.stdout])
 	errorThread = Thread(target=readAndOutput, args=[process.stderr])
@@ -26,6 +30,7 @@ if __name__ == '__main__':
 	errorThread.start()
 	#
 	exitCode=process.wait()
+	isRunning = False
 	outputThread.join()
 	errorThread.join()
 	#

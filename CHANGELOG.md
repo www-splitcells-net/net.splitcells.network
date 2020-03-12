@@ -8,6 +8,7 @@ Please, create a one sentence summary for each release.
    represent meaning of program.
 ### Patches
 1. Add some tests.
+1. Improve performance of "run.and.show.if.failed".
 ## Version 3.0.0
 ### Major Changes
 1. Remove variables inside profile.
