@@ -9,6 +9,7 @@ Please, create a one sentence summary for each release.
 ### Patches
 1. Add some tests.
 1. Improve performance of "run.and.show.if.failed".
+1. "run.and.show.if.failed" echo command output, if command exited with error.
 ## Version 3.0.0
 ### Major Changes
 1. Remove variables inside profile.

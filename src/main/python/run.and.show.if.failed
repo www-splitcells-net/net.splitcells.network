@@ -6,12 +6,16 @@ import subprocess
 import sys
 from threading import Thread
 isRunning = True
+output=""
 def readAndOutput(stream):
 	# TODO Cache output and echo, it if task fails.
 	with stream:
 		for line in iter(stream.readline, b''):
 			if isRunning:
-				subprocess.call(['echo.debug', line.decode(sys.stdout.encoding)])
+				global output
+				lineStr = line.decode(sys.stdout.encoding)
+				output += lineStr
+				subprocess.call(['echo.debug', lineStr])
 			else:
 				return
 if __name__ == '__main__':
@@ -30,9 +34,15 @@ if __name__ == '__main__':
 	errorThread.start()
 	#
 	exitCode=process.wait()
-	isRunning = False
-	outputThread.join()
-	errorThread.join()
+	
 	#
-	subprocess.run(['echo.line.current.clear'])
+	if exitCode == 0:
+		isRunning = False
+		outputThread.join()
+		errorThread.join()
+		subprocess.run(['echo.line.current.clear'])
+	else:
+		outputThread.join()
+		errorThread.join()
+		print(output)
 	sys.exit(exitCode)
