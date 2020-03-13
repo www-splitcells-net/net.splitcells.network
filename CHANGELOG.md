@@ -2,6 +2,7 @@
 This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Please, create a one sentence summary for each release.
+Releases are generally speaking, created monthly.
 ## Unreleased
 ### Major Changes
 1. Rename "ssh.key.generate" to "user.ssh.key.generate" in order to better
