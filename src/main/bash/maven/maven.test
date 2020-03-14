@@ -2,4 +2,8 @@
 
 # 1$ = Simple or fully qualified name of the test class.
 
-mvn -Dtest=$1 test
+firstArg="$1"
+shift
+allArgsExceptFirst=$@
+
+mvn -Dtest=$firstArg test $allArgsExceptFirst
