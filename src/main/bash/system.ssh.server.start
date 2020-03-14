@@ -9,6 +9,8 @@ if [ "1" -eq "$(system.is.Ubuntu)" ]; then
 		exit 1
 	fi
 	# TODO Check PasswordAuthentication configuration.
+else
+	echo.error This operation system is not supported.
 fi
 # Check if SSH server runs and only allows authentication without password by connecting to the SSH server.
 	loginLog=$(ssh -o PasswordAuthentication=yes -vvv "$USER@localhost" exit 2>&1 >/dev/null)
@@ -20,5 +22,4 @@ fi
 		exit 1
 		exit
 	fi
-echo.error This operation system is not supported.
 exit 1
