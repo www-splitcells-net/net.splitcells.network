@@ -42,7 +42,7 @@ do
 		propertyValue=$(echo $property | cut -c6-)
 		cd $propertyValue
 		cd src # It is assumed, that all repositories are source code projects.
-		find . -type f | sort -n | xargs -r -n 1 echo $installer
+		find . -type f | sort -n | xargs -r -n 1 $installer
 		chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
 	fi
 done < "$repoList"
