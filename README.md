@@ -7,6 +7,7 @@
 1. [Manual](./doc/manual.md)
 1. [Manifesto](./doc/manifesto.md)
 1. [Alternatives](./doc/alternatives.md)
+1. [Interesting Shell Software](./doc/shell.software.md)
 
 ## Project Structure
 1. [Objectives of this Project](./doc/objectives.md)
@@ -27,7 +28,5 @@
 1. [Dictionary](doc/guide.lines/dictionary.md)
 1. [File Extension](doc/guide.lines/file.extensions.md)
 1. __TODO__ Define publication methods.
-
-
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
