@@ -18,6 +18,7 @@ This project provides a framework in order to also support the following seconda
    Logging all executed commands to the console is a way to start this.
 1. Let the user actively agree to changes that might cause problems.
    The user should thereby informed of possible problems that might occur.
+1. Do not change the system or the user without being explicitly tolde by the user to do it.
 ## Non Objectives
 1. This framework only provides a minimal a framework for system administration.
    System specific programs are provided by other projects.

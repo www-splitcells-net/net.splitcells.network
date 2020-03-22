@@ -7,6 +7,8 @@ Releases are generally speaking, created monthly.
 ### Major Changes
 1. Rename "ssh.key.generate" to "user.ssh.key.generate" in order to better
    represent meaning of program.
+1. Add new secondary objective:
+   "Do not change the system or the user without being explicitly tolde by the user to do it."
 ### Patches
 1. "run.and.show.if.failed": Omit duplicate lines in output in error case.
 1. "command.repositories.install": Install commands in alphabetic order.
