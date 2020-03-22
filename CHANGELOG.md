@@ -8,6 +8,7 @@ Releases are generally speaking, created monthly.
 1. Rename "ssh.key.generate" to "user.ssh.key.generate" in order to better
    represent meaning of program.
 ### Patches
+1. "command.repositories.install": Install commands in alphabetic order.
 1. Add some tests.
 1. Improve performance of "run.and.show.if.failed".
 1. "run.and.show.if.failed" echo command output, if command exited with error.
