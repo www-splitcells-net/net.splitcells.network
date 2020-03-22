@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+run.and.show.if.failed "sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo"
+run.and.show.if.failed "flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Community"
