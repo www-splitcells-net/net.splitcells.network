@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+run.and.show.if.failed sudo pip3 install $1
+
