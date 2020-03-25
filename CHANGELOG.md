@@ -10,6 +10,7 @@ Releases are generally speaking, created monthly.
 1. Add new secondary objective:
    "Do not change the system or the user without being explicitly tolde by the user to do it."
 1. Document some interesting third party shell software.
+1. "command.mananged.environment.configure": Ensure that bash configuration is always active in graphical shell.
 ### Patches
 1. "run.and.show.if.failed": Omit duplicate lines in output in error case.
 1. "command.repositories.install": Install commands in alphabetic order.
