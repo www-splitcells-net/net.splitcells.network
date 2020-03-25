@@ -42,7 +42,7 @@ if __name__ == '__main__':
 		errorThread.join()
 		subprocess.run(['echo.line.current.clear'])
 	else:
-		subprocess.run(['echo.line.current.clear']):
+		subprocess.run(['echo.line.current.clear'])
 		outputThread.join()
 		errorThread.join()
 		print(output)
