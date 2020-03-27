@@ -7,8 +7,9 @@ Releases are generally speaking, created monthly.
 ### Major Changes
 1. Rename "ssh.key.generate" to "user.ssh.key.generate" in order to better
    represent meaning of program.
-1. Add new secondary objective:
-   "Do not change the system or the user without being explicitly tolde by the user to do it."
+1. Add new secondary objectives:
+   1. "Do not change the system or the user without being explicitly tolde by the user to do it."
+   1. "1. Minimize the effects on the state of the system by this framework."
 1. Document some interesting third party shell software.
 1. "command.mananged.environment.configure": Ensure that bash configuration is always active in graphical shell.
 ### Patches
