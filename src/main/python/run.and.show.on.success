@@ -48,5 +48,5 @@ if __name__ == '__main__':
 		outputThread.join()
 		errorThread.join()
 		subprocess.run(['echo.line.current.clear'])
-		print(output)
+		print(output, end="")
 	sys.exit(exitCode)
