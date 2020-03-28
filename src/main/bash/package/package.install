@@ -19,8 +19,7 @@
 # In this case you cannot check via PATH environment, if the program is already installed.
 if [ -x "$(command -v package.install.$1)" ]; then
 	echo.debug executing package.install.$1
-	package.install.$1
-		# TODO Hide echo if command failed.
+	run.and.show.on.success package.install.$1
 	if [ "$?" -eq "0" ]; then
 		exit
 	fi

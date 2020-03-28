@@ -10,14 +10,17 @@ Releases are generally speaking, created monthly.
 1. Add new secondary objectives:
    1. "Do not change the system or the user without being explicitly tolde by the user to do it."
    1. "1. Minimize the effects on the state of the system by this framework."
-1. Document some interesting third party shell software.
 1. "command.mananged.environment.configure": Ensure that bash configuration is always active in graphical shell.
+## Minor Changes
+1. Document some interesting third party shell software.
+1. Create command "run.and.show.on.success".
 ### Patches
 1. "run.and.show.if.failed": Omit duplicate lines in output in error case.
 1. "command.repositories.install": Install commands in alphabetic order.
 1. Add some tests.
 1. Improve performance of "run.and.show.if.failed".
 1. "run.and.show.if.failed" echo command output, if command exited with error.
+1. "package.install": fix output for software specific installation programs.
 ## Version 3.0.0
 ### Major Changes
 1. Remove variables inside profile.
