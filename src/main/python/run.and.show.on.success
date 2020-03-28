@@ -43,10 +43,10 @@ if __name__ == '__main__':
 		isRunning = False
 		outputThread.join()
 		errorThread.join()
-		subprocess.run(['echo.line.current.clear'])
 	else:
 		outputThread.join()
 		errorThread.join()
 		subprocess.run(['echo.line.current.clear'])
 		print(output, end="")
+	subprocess.run(['echo.line.current.clear'])
 	sys.exit(exitCode)
