@@ -64,6 +64,9 @@
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
+1. Create installation script for Windows.
+   1. Installation of Git Bash.
+   1. Installation of Choco.
 1. Create shell for blind usage.
    1. Things need to be considered:
       1. Way to speak currently entered command without executing it.
