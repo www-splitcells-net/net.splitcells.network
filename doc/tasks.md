@@ -233,6 +233,7 @@
    1. Document the tactic regarding compatibility on "README.md".
 1. Faster update process via increment updates.
 1. Backup ~/bin/* folders during install via source control.
+1. Document why such long command names are used.
 # Ideas
 1. Consider requiring using the project specific bin folder to the PATH explicitly.
    Either by adding this step via console configuration or by executing a command.
@@ -250,6 +251,14 @@
 1. Compatibility layer for service managers like systemd.
 1. Create repository backup.
    The idea is to have a backup plan/infrastructure for dependencies because the internet is an every changing world.
+1. Support different installation architectures
+   1. Scripts related to a topic or program are located in a a specific folder, where there are no other scripts.
+      Thereby, multiple versions of the scripts can be supported in a system at once.
+   1. Support installation as a package of a package manager.
+1. Support partial installation of repository.
+   In this case only scripts related to a topic or program are installed.
+   This requires that the repository has a certain structure.
+1. Text to speech: text navigation by sentence, natural subclauses and pattern matchers.
 # Open Source Support
 1. Fedora
    1. https://fedoramagazine.org/check-out-the-new-askfedora/
