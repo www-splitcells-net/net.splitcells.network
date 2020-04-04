@@ -20,8 +20,11 @@ This project provides a framework in order to also support the following seconda
    The user should thereby informed of possible problems that might occur.
 1. Do not change the system or the user without being explicitly told by the user to do it.
 1. Minimize the effects on the state of the system by this framework.
+1. Make this framework as portable as possible.
 ## Non Objectives
 1. This framework only provides a minimal a framework for system administration.
    System specific programs are provided by other projects.
+## Conclusions Based on Objectives
+1. We try to be only dependent on the thompson shell (sh) and Python 3.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
