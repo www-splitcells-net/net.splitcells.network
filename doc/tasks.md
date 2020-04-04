@@ -259,6 +259,7 @@
    In this case only scripts related to a topic or program are installed.
    This requires that the repository has a certain structure.
 1. Text to speech: text navigation by sentence, natural subclauses and pattern matchers.
+1. Alternative echo concept: just use stdout for general information and stderr for errors.
 # Open Source Support
 1. Fedora
    1. https://fedoramagazine.org/check-out-the-new-askfedora/
