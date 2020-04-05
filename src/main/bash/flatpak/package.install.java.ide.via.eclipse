@@ -12,49 +12,44 @@
 # TODO Maybe use yatta: https://marketplace.eclipse.org/content/yatta-launcher-eclipse#group-details
 package.install flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo # Default repo
-	# TODO Put this into package.install flatpak which does not exist yet.
-	flatpak install --system -y flathub org.gnome.Sdk//3.32 # Eclipse requires this.
-	# TODO Is it possible to install via --user instead of --system?
-flatpak remote-add --user --if-not-exists eclipse-nightly http://eclipse.matbooth.co.uk/flatpak/nightly/eclipse.flatpakrepo
-	flatpak install --user -y eclipse-nightly org.eclipse.Sdk//master # TODO Only update once each week as otherwise there will be to much resource usage.
-	# This repository seems to be hosted by Red Hat.
+flatpak install -y flathub org.eclipse.Java
 # Install common plugins.
 	# TODO Manage Eclipse configuration via https://wiki.eclipse.org/Eclipse_Oomph_Authoring#What_is_Oomph.3F
 		# and https://marketplace.eclipse.org/content/yatta-launcher-eclipse?mpc=true&mpc_state=
 	# Install maven integration.
 		# TODO Install m2e connectors.
-		flatpak run org.eclipse.Sdk \
+		flatpak run org.eclipse.Java \
 			-application org.eclipse.equinox.p2.director \
 			-noSplash \
 			-repository http://download.eclipse.org/releases/latest \
 			-installIU org.eclipse.m2e.feature.feature.group # Maven integration
-		flatpak run org.eclipse.Sdk \
+		flatpak run org.eclipse.Java \
 			-application org.eclipse.equinox.p2.director \
 			-noSplash \
 			-repository http://download.eclipse.org/releases/latest \
 			-installIU com.ianbrandt.tools.m2e.mdp.feature.feature.group # Maven connector
-		flatpak run org.eclipse.Sdk \
+		flatpak run org.eclipse.Java \
 			-application org.eclipse.equinox.p2.director \
 			-noSplash \
 			-repository http://download.eclipse.org/releases/latest \
 			-installIU org.eclipse.egit \
 			-installIU org.eclipse.egit.ui # Git integration
-		flatpak run org.eclipse.Sdk \
+		flatpak run org.eclipse.Java \
 			-application org.eclipse.equinox.p2.director \
 			-noSplash \
 			-repository http://download.eclipse.org/releases/latest \
 			-installIU org.eclipse.epp.mpc.feature.group # Marketplace clinet
-		flatpak run org.eclipse.Sdk \
+		flatpak run org.eclipse.Java \
 			-application org.eclipse.equinox.p2.director \
 			-noSplash \
 			-repository http://download.eclipse.org/releases/latest \
 			-installIU de.anbos.eclipse.easyshell.feature.feature.group # Open files and projects via i.e terminals in Package Explorer
-		flatpak run org.eclipse.Sdk \
+		flatpak run org.eclipse.Java \
 			-application org.eclipse.equinox.p2.director \
 			-noSplash \
 			-repository http://download.eclipse.org/releases/latest \
 			-installIU org.eclipse.eclemma.feature.feature.group	# Java execution coverage
-		flatpak run org.eclipse.Sdk \
+		flatpak run org.eclipse.Java \
 			-application org.eclipse.equinox.p2.director \
 			-noSplash \
 			-repository http://download.eclipse.org/releases/latest \
@@ -66,7 +61,7 @@ flatpak remote-add --user --if-not-exists eclipse-nightly http://eclipse.matboot
 		cd ~/opt
     	wget https://projectlombok.org/downloads/lombok.jar
 	fi
-	eclipseIniPath=/home/$(whoami)/.local/share/flatpak/app/org.eclipse.Sdk/current/active/files/eclipse/eclipse.ini
+	eclipseIniPath=/home/$(whoami)/.local/share/flatpak/app/org.eclipse.Java/current/active/files/eclipse/eclipse.ini
 	lombokJavaAgent=-javaagent:/home/$(whoami)/opt/lombok.jar
 	if eval grep -F -- "'"$lombokJavaAgent"'" $eclipseIniPath; then
 		echo "Lombok agent already installed."
