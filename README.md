@@ -3,9 +3,9 @@
 1. Note that there is no guaranty that the scripts are correct or that they do no harm.
 
 ## Getting Started
+1. [Manifesto](./doc/manifesto.md)
 1. [Setup Instructions](./doc/manual/setup.md)
 1. [Manual](./doc/manual.md)
-1. [Manifesto](./doc/manifesto.md)
 1. [Alternatives](./doc/alternatives.md)
 1. [Interesting Shell Software](./doc/shell.software.md)
 
