@@ -3,6 +3,8 @@ In order to install this program following instructions have to be executed in t
 Note that thereby a folder will be created in the current location.
 The newly created folder should not be moved, after the setup.
 
+There are 2 ways to install this program.
+
 ## Most Compatible Setup Instructions
 ```sh
 git clone https://gitlab.com/splitcells/net.splitcells.os.state.interface.git
@@ -20,5 +22,9 @@ chmod +x ./configure
 make
 make install
 ```
+
+# End Note
+
+Congratulations!
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
