@@ -21,6 +21,7 @@ Releases are generally speaking, created monthly.
 1. Improve performance of "run.and.show.if.failed".
 1. "run.and.show.if.failed" echo command output, if command exited with error.
 1. "package.install": fix output for software specific installation programs.
+1. "repo.remote.set": correct command line argument order.
 ## Version 3.0.0
 ### Major Changes
 1. Remove variables inside profile.
