@@ -1,0 +1,35 @@
+#!/bin/bash
+# TODOC Licensed under MIT
+# TODOC Setup commands to make this script usable, because of custom commands.
+if [ "1" -eq "$(system.is.Fedora)" ]
+then
+	# It is assumed that the version of Fedora is at least 30.
+	# It is only tested on Fedora 31.
+	sudo dnf install git meson wlc-devel mesa-libEGL-devel mesa-libGLES-devel libdrm-devel mesa-libgbm-devel libinput-devel libxkbcommon-devel libevdev-devel pixman-devel wayland-protocols-devel
+		# The version of meson needs to be at least 0.53.2 because of "https://github.com/mesonbuild/meson/pull/6614".
+			# TODO Check Version numbers automatically.
+	# Clone and update repositories.
+		mkdir -p ~/opt
+		# Clone and update sway repository 
+			if [ ! -d "$HOME/opt/sway/.git" ] ; then
+				git clone https://github.com/swaywm/sway.git
+			fi
+			cd sway
+			git pull --rebase
+		# Clone and update wlroots repository.
+			mkdir -p subprojects
+			cd subprojects
+			if [ ! -d "$HOME/opt/sway/subprojects/wlroots/.git" ] ; then
+				git clone https://github.com/swaywm/wlroots.git
+			fi
+			cd wlroots
+			git pull --rebase
+	# Build wlroots.
+		cd ~/opt/sway/subprojects/wlroots
+		meson build
+		ninja -C build
+	# Build sway.
+		cd ~/opt/sway
+		meson build
+		ninja -C build
+fi

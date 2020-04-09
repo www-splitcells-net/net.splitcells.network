@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+# TODO Create script to disable passwordless authentication:
+	# Replace string "PasswordAuthentication yes" by "PasswordAuthentication no" in /etc/ssh/sshd_config.
 if [ "1" -eq "$(system.is.Ubuntu)" ]; then
 	sudo apt install -y openssh-server
 	sudo systemctl disable ssh
@@ -9,17 +12,22 @@ if [ "1" -eq "$(system.is.Ubuntu)" ]; then
 		exit 1
 	fi
 	# TODO Check PasswordAuthentication configuration.
+elif [ "1" -eq "$(system.is.Fedora)" ]; then
+	sudo dnf install -y openssh-server
+	sudo systemctl start sshd.service
 else
 	echo.error This operation system is not supported.
 fi
-# Check if SSH server runs and only allows authentication without password by connecting to the SSH server.
+echo Check if SSH server runs and only allows authentication without password by connecting to the SSH server.
+echo There should be no prompt for a password during this test.
 	loginLog=$(ssh -o PasswordAuthentication=yes -vvv "$USER@localhost" exit 2>&1 >/dev/null)
 	if [ "0" -eq "$?" ]; then
-		echo 1
+		echo.error "Login with password is enabled, but should be disabled."
+		exit 1
 	fi
 	if [ "$loginlog" == *'No more authentication methods to try.'* ]; then
 		echo.error "Login with password is enabled, but should be disabled."
 		exit 1
-		exit
 	fi
-exit 1
+echo SSH server test completed.
+exit 0
