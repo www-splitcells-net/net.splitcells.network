@@ -5,6 +5,10 @@ The newly created folder should not be moved, after the setup.
 
 There are 2 ways to install this program.
 
+## Requirements
+
+Currently a bash compatible terminal and Python >= 3.7 is required.
+
 ## Most Compatible Setup Instructions
 ```sh
 git clone https://gitlab.com/splitcells/net.splitcells.os.state.interface.git
