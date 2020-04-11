@@ -27,5 +27,6 @@ This project provides a framework in order to also support the following seconda
 ## Conclusions Based on Objectives
 1. We try to be only dependent on the thompson shell (sh) and Python 3.
    Currently some scripts also use bash.
+1. We support multiple CI systems (Github and Gitlab) in order to test different environments.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
