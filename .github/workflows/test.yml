@@ -33,6 +33,6 @@ jobs:
         ./configure
         make
         make install
-        chmod +x ~/.profile
-        . ~/.profile
+        chmod +x ~/.bashrc
+        . ~/.bashrc
         ./bin/test
