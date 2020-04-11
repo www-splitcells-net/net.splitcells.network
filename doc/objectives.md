@@ -22,9 +22,10 @@ This project provides a framework in order to also support the following seconda
 1. Minimize the effects on the state of the system by this framework.
 1. Make this framework as portable as possible.
 ## Non Objectives
-1. This framework only provides a minimal a framework for system administration.
+1. This framework only provides a minimal framework for system administration.
    System specific programs are provided by other projects.
 ## Conclusions Based on Objectives
 1. We try to be only dependent on the thompson shell (sh) and Python 3.
+   Currently some scripts also use bash.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
