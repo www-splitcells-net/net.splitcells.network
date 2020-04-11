@@ -35,4 +35,5 @@ jobs:
         make install
         chmod +x ~/.bashrc
         . ~/.bashrc
+        cat ~/.bashrc
         ./bin/test
