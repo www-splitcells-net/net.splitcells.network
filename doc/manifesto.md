@@ -9,6 +9,6 @@ We want to declare our goals.
 We do not want to have to provide secondary technical information beforehand without knowing where to look.
 
 We want a common dictionary for common tasks.
-We avoid remembering implementation specific commands for common tasks.W
+We avoid remembering implementation specific commands for common tasks.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
