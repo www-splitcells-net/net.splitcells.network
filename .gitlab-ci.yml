@@ -6,6 +6,6 @@ before_script:
   - make install
 test:
   script:
-    - chmod +x ~/.profile
-    - . ~/.profile
+    - chmod +x ~/.bashrc
+    - . ~/.bashrc
     - ./bin/test
