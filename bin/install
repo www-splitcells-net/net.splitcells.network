@@ -15,7 +15,7 @@ echo
 	# We create a empty line in order to visually separate the execution output from the result output.
 echo OS state interface installed.
 echo
-echo Execute "'". ~/.profile"'" in order to access
+echo Execute "'". ~/.bashrc"'" in order to access
 echo the installed programs on this terminal.
 echo
 echo You may need to restart the computer in order to access
