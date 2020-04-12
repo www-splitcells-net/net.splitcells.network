@@ -6,7 +6,7 @@ configFolder=~/.config/net.splitcells.os.state.interface
 mkdir -p $configFolder
 repoList=$configFolder/repositories
 touch $repoList
-if grep -q $1 "$repoList"; then
+if grep -q "^repo=$1$" "$repoList"; then
 	if [ ! -z "$current_echo_level" ]
 	then
 		if [ -x "$(command -v echo.debug)" ]; then

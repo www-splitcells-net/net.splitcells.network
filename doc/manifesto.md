@@ -11,4 +11,7 @@ We do not want to have to provide secondary technical information beforehand wit
 We want a common dictionary for common tasks.
 We avoid remembering implementation specific commands for common tasks.
 
+
+[So Lets get started.](./manual/setup.md)
+
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.

@@ -27,8 +27,33 @@ make
 make install
 ```
 
-# End Note
+# Extend Functionality
 
 Congratulations!
+Now you can do nothing!
+On a more serious ;)
+This framework primarily provides a set of commands in order to do things independent from technical details.
+This set of commands define an interface, but does not contain the concrete implementation for these commands.
+
+For this additional repositories has to be installed.
+These provide the implementations for the different operation systems.
+
+This can be done in the following ways in the terminal:
+```sh
+# Find and download a repository that fits for this framework.
+git clone <URL>
+# Enter the newly downloaded repository.
+cd <New clone of repository>
+# Register the new repository.
+command.repository.register $(pwd)
+# Install the new repository.
+user.bin.configure
+```
+
+# End Your Adventure
+
+So you decided that enough is enough?
+You want to get rid of the program?
+[Go on.](./unistall.md)
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
