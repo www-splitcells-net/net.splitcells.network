@@ -1,4 +1,6 @@
 ## Tasks
+Tasks at the top have generally a higher priority than task at the button.
+This does not mean, that tasks are processed according to the priority order.
 ### Current Tasks
 1. Manage contributions.
    1. TODO Create commands the execute each task.
