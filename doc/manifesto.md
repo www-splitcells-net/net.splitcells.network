@@ -12,6 +12,6 @@ We want a common dictionary for common tasks.
 We avoid remembering implementation specific commands for common tasks.
 
 
-[So Lets get started.](./manual/setup.md)
+[So lets get started.](./manual/setup.md)
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
