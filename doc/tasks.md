@@ -248,6 +248,7 @@ The priority of a task is just a guideline.
    In this case one would just need a folder with this project's programs set as executable.
 1. GUI
 1. text to speech interface
+   1. Input commands via voice: https://github.com/osprey-voice/osprey
 1. Random quotes in order to improve emotional state of user.
 1. Support multiple repositories in parallel like Github.
    1. Use taskwarrior with import and export scripts for ticket management via markdown 
