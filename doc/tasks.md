@@ -67,8 +67,8 @@ The priority of a task is just a guideline.
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
+1. Creeate command to synchronize all repositories.
 1. Document, why bashrc is used.
-1. Support Orca screen reader usage.
 1. Dependency injection based configuration system.
 1. Create installation script for Windows.
    1. Installation of Git Bash.
@@ -249,6 +249,7 @@ The priority of a task is just a guideline.
 1. GUI
 1. text to speech interface
    1. Input commands via voice: https://github.com/osprey-voice/osprey
+   1. Support Orca screen reader usage.
 1. Random quotes in order to improve emotional state of user.
 1. Support multiple repositories in parallel like Github.
    1. Use taskwarrior with import and export scripts for ticket management via markdown 
