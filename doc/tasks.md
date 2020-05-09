@@ -67,6 +67,7 @@ The priority of a task is just a guideline.
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
+1. Document, why bashrc is used.
 1. Support Orca screen reader usage.
 1. Dependency injection based configuration system.
 1. Create installation script for Windows.
