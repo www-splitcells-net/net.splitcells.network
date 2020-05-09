@@ -17,6 +17,7 @@ Releases are generally speaking, created monthly.
 1. Setup CI for Github.
 1. Migrate to Github as main repository while still supporting Gitlab.
 ### Patches
+1. "command.managed.execute": Clear current line after execution end.
 1. "run.and.show.if.failed": Omit duplicate lines in output in error case.
 1. "command.repositories.install": Install commands in alphabetic order.
 1. Add some tests.

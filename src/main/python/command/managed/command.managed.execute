@@ -14,6 +14,7 @@ def executeCommand(command):
 	"""Returns whether the next commands needs to be executed."""
 	# TODO Check if command exsists.
 	subprocess.call(['echo.debug', 'Executing \"' + ' '.join(command) + '\".'])
+	subprocess.call('echo.line.current.clear')
 	returnCode = subprocess.call(command) # This call raises an error if the command is not found.
 	return returnCode == 0
 def managedCommandExecution(type, command): # RENAME
