@@ -7,17 +7,12 @@ mkdir -p $configFolder
 repoList=$configFolder/repositories
 touch $repoList
 if grep -q "^repo=$1$" "$repoList"; then
-	if [ ! -z "$current_echo_level" ]
-	then
-		if [ -x "$(command -v echo.debug)" ]; then
-			echo.debug Repository $1 is already present.
-		else
-			if [ $current_echo_level -ge $debug_echo_level ]; then
-				echo Repository $1 is already present.
-			fi
-		fi
+	if [ -x "$(command -v echo.debug)" ]; then
+		echo.debug Repository $1 is already present.
 	else
-		echo Repository $1 is already present.
+		if [ $current_echo_level -ge $debug_echo_level ]; then
+			echo Repository $1 is already present.
+		fi
 	fi
 else
 	echo "repo=$1" >> $repoList

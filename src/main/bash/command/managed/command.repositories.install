@@ -14,29 +14,32 @@ hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
 bootstrapRepoProperty=$(head -n 1 $repoList)
 if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	bootstrapRepo=$(echo $bootstrapRepoProperty | cut -c6-)
-	cd $bootstrapRepo
+		cd $bootstrapRepo
 	setupEnvironment=$bootstrapRepo/src/main/bash/command/managed/command.managed.environment.configure
-	chmod +x $setupEnvironment
-	$setupEnvironment
-	
+		chmod +x $setupEnvironment
+		$setupEnvironment
+	chmod +x $bootstrapRepo/src/main/bash/echo/*
+		PATH=$bootstrapRepo/src/main/bash/echo:$PATH
+	chmod +x $bootstrapRepo/src/main/bash/echo/level/*
+		PATH=$bootstrapRepo/src/main/bash/echo/level:$PATH
+	chmod +x $bootstrapRepo/src/main/python/*
+		PATH=$bootstrapRepo/src/main/python:$PATH
+	chmod +x $bootstrapRepo/src/main/bash/shell/*
+		PATH=$bootstrapRepo/src/main/bash/shell:$PATH
+	export PATH
 	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install
-	chmod +x $installer
-	$installer $installer
+		chmod +x $installer
+		$installer $installer
 	chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
 fi
 while IFS= read -r property
 do
-	if [ ! -z "$current_echo_level" ]
-	then
-		if [ -x "$(command -v echo.debug)" ]; then
-			echo.debug Installing "'$property'".
-		else
-			if [ $current_echo_level -ge $debug_echo_level ]; then
-				echo Installing "'$property'".
-			fi
-		fi
+	if [ -x "$(command -v echo.debug)" ]; then
+		echo.debug Installing "'$property'".
 	else
-		echo Installing "'$property'".
+		if [ $current_echo_level -ge $debug_echo_level ]; then
+			echo Installing "'$property'".
+		fi
 	fi
 	if hasPrefix 'repo=' "$property"; then
 		propertyValue=$(echo $property | cut -c6-)
