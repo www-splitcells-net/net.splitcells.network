@@ -12,6 +12,7 @@ Releases are generally speaking, created monthly.
    1. "1. Minimize the effects on the state of the system by this framework."
 1. "command.mananged.environment.configure": Ensure that bash configuration is always active in graphical shell.
 ## Minor Changes
+1. "user.": Create command to list all user's computer addresses.
 1. Document some interesting third party shell software.
 1. Create command "run.and.show.on.success".
 1. Setup CI for Github.
