@@ -7,6 +7,9 @@ import sys
 from threading import Thread
 isRunning = True
 output=""
+
+# TODO performance problems.
+
 def readAndOutput(stream):
 	# TODO Cache output and echo, it if task fails.
 	with stream:
