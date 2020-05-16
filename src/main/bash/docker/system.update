@@ -2,6 +2,12 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-sudo.at.current.env "docker images | grep -v 'REPOSITORY.*TAG.*IMAGE ID.*CREATED.*SIZE' | awk '{print \$1}'| xargs sudo docker pull"
-	# Does not work if no docker images are present.
-	# TODO Try without sudo first.
+
+# TODO Try without sudo first.
+
+if [ -z "$(sudo docker images --quiet)" ]
+then
+      echo.debug "All docker images are already up to date, because there are no images."
+else
+      sudo.at.current.env "docker images | grep -v 'REPOSITORY.*TAG.*IMAGE ID.*CREATED.*SIZE' | awk '{print \$1}'| xargs sudo docker pull"
+fi 
