@@ -4,10 +4,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Exits the current shell, if a required command is not present.
-# If this is the case an error is signaled, because the given task can not be completed.
+# If this is the case no error is signaled, because in this case it correct for command completion to do nothing.
 
 if [ -x "$(command -v $1)" ]; then
 	:; # empty command
 else
-	exit 1
+	exit 0
 fi
