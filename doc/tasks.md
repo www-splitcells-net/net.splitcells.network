@@ -3,36 +3,6 @@ Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
-1. Manage contributions.
-   1. TODO Create commands the execute each task.
-   1. TODO Add repo verification to optional CI process.
-   1. Based on signed pull requests.
-       1. Pull request has to be based on signed tag.
-   1. Proof identities.
-      1. Create script to create gpg key.
-      1. Implement script to create valid pull requests.
-      1. Implement script to check foreign pull requests.
-      1. Check presence of signatures automatically for the foreign parent commit of the merge via script.
-         Store public keys in this repositories, so that is trivial to check public keys to the signatures.
-         Note that this does not ensure that the commits are correct, because an attacker could change the public keys in the repository as well.
-         The public keys in this repository would therefore not be trustworthy.
-         Their primary goal is to ensure that the contribution process is adhered.
-         1. Trust a public key: https://yanhan.github.io/posts/2014-03-04-gpg-how-to-trust-imported-key.html
-         1. Create script that checks the signatures based on the keystore of the local user.
-            1. git tag | xargs git verify-tag
-         1. Create script that checks the signatures based on the public keys in this repo in order to check consistency.
-      1. Require upload of public keys via second channel.
-         1. Create a script for the upload.
-   1. Use and check https://developercertificate.org/.
-      1. DCO is better than CLA if one is sure that the license does not have to be changed.
-   1. Document this process so that other can reproduce it easily.
-   1. Helpful literature:
-       1. Git
-          1. https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work
-          1. https://mikegerwitz.com/2012/05/a-git-horror-story-repository-integrity-with-signed-commits
-       1. Linux Kernel
-          1. https://www.kernel.org/doc/html/v4.17/maintainer/pull-requests.html
-          1. https://www.kernel.org/doc/html/v4.17/process/submitting-patches.html
 1. Fix description created by automatic releases.
 1. Document commands.
 1. Create general open source project template.
@@ -240,6 +210,39 @@ The priority of a task is just a guideline.
 1. Faster update process via increment updates.
 1. Backup ~/bin/* folders during install via source control.
 1. Document why such long command names are used.
+1. Manage contributions, if project gets big.
+   1. TODO Create commands the execute each task.
+   1. TODO Add repo verification to optional CI process.
+   1. Based on signed pull requests.
+       1. Pull request has to be based on signed tag.
+   1. Proof identities.
+      1. Create script to create gpg key.
+      1. Implement script to create valid pull requests.
+      1. Implement script to check foreign pull requests.
+      1. Check presence of signatures automatically for the foreign parent commit of the merge via script.
+         Store public keys in this repositories, so that is trivial to check public keys to the signatures.
+         Note that this does not ensure that the commits are correct, because an attacker could change the public keys in the repository as well.
+         The public keys in this repository would therefore not be trustworthy.
+         Their primary goal is to ensure that the contribution process is adhered.
+         1. Trust a public key: https://yanhan.github.io/posts/2014-03-04-gpg-how-to-trust-imported-key.html
+         1. Create script that checks the signatures based on the keystore of the local user.
+            1. git tag | xargs git verify-tag
+         1. Create script that checks the signatures based on the public keys in this repo in order to check consistency.
+      1. Require upload of public keys via second channel.
+         1. Create a script for the upload.
+   1. Use and check https://developercertificate.org/.
+      1. DCO is better than CLA if one is sure that the license does not have to be changed.
+   1. Document this process so that other can reproduce it easily.
+   1. Helpful literature:
+       1. Git
+          1. https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work
+          1. https://mikegerwitz.com/2012/05/a-git-horror-story-repository-integrity-with-signed-commits
+       1. Linux Kernel
+          1. https://www.kernel.org/doc/html/v4.17/maintainer/pull-requests.html
+          1. https://www.kernel.org/doc/html/v4.17/process/submitting-patches.html
+   1. Ideas:
+      1. https://opensource.stackexchange.com/questions/668/are-there-reusable-clas
+      1. http://www.apache.org/licenses/#clas
 # Ideas
 1. Consider requiring using the project specific bin folder to the PATH explicitly.
    Either by adding this step via console configuration or by executing a command.

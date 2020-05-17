@@ -13,6 +13,7 @@
 1. [Manual](./doc/manual.md)
 1. [Alternatives](./doc/alternatives.md)
 1. [Interesting Shell Software](./doc/shell.software.md)
+1. [Contributing](doc/process/contribute.md)
 
 ## Project Structure
 1. [Objectives of this Project](./doc/objectives.md)
@@ -23,13 +24,8 @@
 1. [Licensing](doc/licensing.md)
 1. [Open Tasks](doc/tasks.md)
 
-## __TODO__ Contributing
-   1. __TODO__ Contributor License Agreement
-      1. https://opensource.stackexchange.com/questions/668/are-there-reusable-clas
-      1. http://www.apache.org/licenses/#clas
-
 ## Guide Lines
-1. [Intended Development Workflow Using this Framework](doc/development.workflow.md)
+1. [Intended Development Workflow Using this Framework](doc/process/development.workflow.md)
 1. [Dictionary](doc/guide.lines/dictionary.md)
 1. [File Extension](doc/guide.lines/file.extensions.md)
 1. __TODO__ Define publication methods.
