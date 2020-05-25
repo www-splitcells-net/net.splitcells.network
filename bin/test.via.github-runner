@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+sudo groupadd docker
+sudo usermod -aG docker $USER
+package.install grubby
+sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
+
