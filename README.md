@@ -4,8 +4,8 @@
 
 ## Status
 
-* Github ![CI](https://github.com/splitcells/os.state.interface/workflows/CI/badge.svg?branch=master)
-* Gitlab ![CI](https://gitlab.com/splitcells/net.splitcells.os.state.interface/badges/master/pipeline.svg)
+* Github: ![CI](https://github.com/splitcells/os.state.interface/workflows/CI/badge.svg?branch=master)
+* Gitlab: ![CI](https://gitlab.com/splitcells/net.splitcells.os.state.interface/badges/master/pipeline.svg)
 
 ## Getting Started
 1. [Manifesto](./doc/manifesto.md)
