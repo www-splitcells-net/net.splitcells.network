@@ -11,7 +11,7 @@ Releases are generally speaking, created monthly.
    1. "Do not change the system or the user without being explicitly tolde by the user to do it."
    1. "1. Minimize the effects on the state of the system by this framework."
 1. "command.mananged.environment.configure": Ensure that bash configuration is always active in graphical shell.
-## Minor Changes
+### Minor Changes
 1. Setup contribution guide lines.
 1. "this.active.if.presence.of": Create command in order to test, if environment has required command.
 1. "system.resource.usage.overview": Create command for resource usage overview.
