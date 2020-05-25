@@ -3,6 +3,9 @@ Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
+1. Automatic "system.update" via "user.weekly" if "system.config.management.automatic" is set to true.
+   Default for "system.management.automatic" is false. 
+1. Visualize concept hierarchy on a website.
 1. Fix description created by automatic releases.
 1. Document commands.
 1. Create general open source project template.
@@ -99,6 +102,7 @@ The priority of a task is just a guideline.
    1. Linux
       1. Fedora
          1. https://fedoramagazine.org/what-is-silverblue/
+             1. https://fedoramagazine.org/pieces-of-fedora-silverblue/
          1. yum
          1. rpm
       1. Ubuntu
@@ -116,6 +120,7 @@ The priority of a task is just a guideline.
    1. Ansible
    1. Windows
       1. chocolate
+      1. https://scoop.sh/
    1. Mac
       1. homebrew
       1. macports
@@ -271,6 +276,7 @@ The priority of a task is just a guideline.
    This requires that the repository has a certain structure.
 1. Text to speech: text navigation by sentence, natural subclauses and pattern matchers.
 1. Alternative echo concept: just use stdout for general information and stderr for errors.
+1. Create alternative autocomplete command, which shows possible commands in tree format.
 # Open Source Support
 1. Fedora
    1. https://fedoramagazine.org/check-out-the-new-askfedora/
