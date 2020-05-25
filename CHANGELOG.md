@@ -21,7 +21,7 @@ Releases are generally speaking, created monthly.
 1. Create command "run.and.show.on.success".
 1. Setup CI for Github.
 1. Migrate to Github as main repository while still supporting Gitlab.
-1. Support command to enable framework in non interactive shells: '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin'
+1. Support command to enable framework in non interactive shells: '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin' 
 ### Patches
 1. Improving debug logging during first installation.
 1. "command.managed.execute": Clear current line after execution end.
@@ -32,6 +32,7 @@ Releases are generally speaking, created monthly.
 1. "run.and.show.if.failed" echo command output, if command exited with error.
 1. "package.install": fix output for software specific installation programs.
 1. "repo.remote.set": correct command line argument order.
+1. Solve performance problems of "run.and.show.on.success" and "run.and.show.if.failed".
 ## Version 3.0.0
 ### Major Changes
 1. Remove variables inside profile.
