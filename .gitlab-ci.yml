@@ -6,6 +6,5 @@ before_script:
   - make install
 test:
   script:
-    - chmod +x ~/.bashrc
-    - . ~/.bashrc
+    - . $HOME/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin
     - ./bin/test

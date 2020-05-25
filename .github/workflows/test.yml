@@ -37,8 +37,5 @@ jobs:
         # make install
         chmod +x ./bin/install
         ./bin/install
-        chmod +x ~/.bashrc
-        . ~/.bashrc
-        cat ~/.bashrc
         . $HOME/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin
         ./bin/test
