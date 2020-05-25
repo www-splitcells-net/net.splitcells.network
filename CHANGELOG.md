@@ -21,6 +21,7 @@ Releases are generally speaking, created monthly.
 1. Create command "run.and.show.on.success".
 1. Setup CI for Github.
 1. Migrate to Github as main repository while still supporting Gitlab.
+1. Support command to enable framework in non interactive shells: '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin'
 ### Patches
 1. Improving debug logging during first installation.
 1. "command.managed.execute": Clear current line after execution end.

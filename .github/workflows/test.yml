@@ -28,12 +28,17 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Install this framework and run tests.
       run: |
+        # TODO apt install -y python3 # Check if Python3 is present.
         cd $GITHUB_WORKSPACE
-        chmod +x ./configure
-        ./configure
-        make
-        make install
+        # TODO TOFIX Make is not present on image ubuntu-latest which is provided by act.
+        # chmod +x ./configure
+        # ./configure
+        # make
+        # make install
+        chmod +x ./bin/install
+        ./bin/install
         chmod +x ~/.bashrc
         . ~/.bashrc
         cat ~/.bashrc
+        . $HOME/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin
         ./bin/test
