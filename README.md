@@ -15,6 +15,10 @@ Note that there is no guaranty that the scripts are correct or that they do no h
 1. [Interesting Shell Software](./doc/shell.software.md)
 1. [Contributing](doc/process/contribute.md)
 
+## Communication Channels
+1. [Twitter](https://twitter.com/splitcells)
+1. [mastodon](https://mastodon.host/@splitcells)
+
 ## Project Structure
 1. [Objectives of this Project](./doc/objectives.md)
 1. [Concepts](./doc/concept.md)
