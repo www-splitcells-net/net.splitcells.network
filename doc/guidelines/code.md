@@ -23,6 +23,12 @@
       The caller can do this.
       This simplifies and unifies logging across all programs.
    1. Logging/echoing should not have a large performance impact.
+   1. Log format:
+      1. Every log message should be only one line and not multiple.
+      1. It has to start with the log message followed by ": " and the parameters of the log message
+         (i.e. "Could not install package: git"). 
+         This makes it easier to parse log messages via tools
+         because a simple string based prefix search on lines shows all messages of a certain type.
 1. Each implemented feature should be used by someone.
    Otherwise the feature should be deprecated.
 1. Document on which system the code was tested.
