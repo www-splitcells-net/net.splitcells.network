@@ -2,4 +2,10 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+if [ "$(flatpak search $1)" == "No matches found" ]
+then
+	echo Unknown flatpak package: $1
+	exit 1
+fi
 flatpak install -y flathub $1

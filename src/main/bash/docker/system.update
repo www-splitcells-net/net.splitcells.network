@@ -7,7 +7,7 @@
 
 if [ -z "$(sudo docker images --quiet)" ]
 then
-      echo.debug "All docker images are already up to date, because there are no images."
+	echo "All docker images are already up to date, because there are no images."
 else
-      sudo.at.current.env "docker images | grep -v 'REPOSITORY.*TAG.*IMAGE ID.*CREATED.*SIZE' | awk '{print \$1}'| xargs sudo docker pull"
+	sudo.at.current.env "docker images | grep -v 'REPOSITORY.*TAG.*IMAGE ID.*CREATED.*SIZE' | awk '{print \$1}'| xargs sudo docker pull"
 fi 
