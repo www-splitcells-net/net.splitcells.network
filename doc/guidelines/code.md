@@ -10,7 +10,7 @@
    1. Configuration commands start with "config.".
 ## Echoing/Logging
    1. There is a difference between echoing/logging and debugging
-      Debugging should be done by command specific methods
+      Debugging should be done by command specific methods.
       (i.e. Using "set -x" for bash scripts or passing output verbosity options to programs).
    1. There are only the echo/log levels stdout and stderr.
    1. If everything works and the task is completed, nothing should be written to stderr.
