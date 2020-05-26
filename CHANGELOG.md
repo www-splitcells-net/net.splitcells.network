@@ -5,6 +5,7 @@ Please, create a one sentence summary for each release.
 Releases are generally speaking, created monthly.
 ## Unreleased
 ### Major Changes
+1. Remove all logging levels in order to greatly simplify code.
 1. Rename "ssh.key.generate" to "user.ssh.key.generate" in order to better
    represent meaning of program.
 1. Add new secondary objectives:
