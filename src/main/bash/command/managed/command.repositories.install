@@ -20,8 +20,6 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 		$setupEnvironment
 	chmod +x $bootstrapRepo/src/main/bash/echo/*
 		PATH=$bootstrapRepo/src/main/bash/echo:$PATH
-	chmod +x $bootstrapRepo/src/main/bash/echo/level/*
-		PATH=$bootstrapRepo/src/main/bash/echo/level:$PATH
 	chmod +x $bootstrapRepo/src/main/python/*
 		PATH=$bootstrapRepo/src/main/python:$PATH
 	chmod +x $bootstrapRepo/src/main/bash/shell/*
@@ -34,13 +32,7 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 fi
 while IFS= read -r property
 do
-	if [ -x "$(command -v echo.debug)" ]; then
-		echo.debug Installing "'$property'".
-	else
-		if [ $current_echo_level -ge $debug_echo_level ]; then
-			echo Installing "'$property'".
-		fi
-	fi
+	echo Installing "'$property'".
 	if hasPrefix 'repo=' "$property"; then
 		propertyValue=$(echo $property | cut -c6-)
 		cd $propertyValue
@@ -53,4 +45,3 @@ if test -d "$HOME/.config/net.splitcells.os.state.interface/src"; then
 	cd "$HOME/.config/net.splitcells.os.state.interface/src"
 	find . -mindepth 1 -type f -exec command.managed.install {} \;
 fi
-echo.line.current.clear

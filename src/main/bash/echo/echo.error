@@ -4,8 +4,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 echo.line.current.clear
-if [ $(echo.level.config) -ge $(echo.level.error) ]; then
-	echo $@
-else
-	echo.line.current.set "$@"
-fi
+echo.filtered "$@"

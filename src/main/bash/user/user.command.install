@@ -6,4 +6,4 @@
 # Minimize the number of dependencies as the context of this program is not known and is used for bootstrapping.
 cp $1 ~/bin/
 chmod -R +x ~/bin/*
-echo.debug Command $1 installed.
+echo Command $1 installed.

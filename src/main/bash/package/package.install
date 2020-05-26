@@ -18,14 +18,14 @@
 # Use package specific installer if present first, in case this framework imports a starter script for this program.
 # In this case you cannot check via PATH environment, if the program is already installed.
 if [ -x "$(command -v package.install.$1)" ]; then
-	echo.debug executing package.install.$1
-	run.and.show.on.success package.install.$1
+	echo executing package.install.$1
+	package.install.$1
 	if [ "$?" -eq "0" ]; then
 		exit
 	fi
 fi
 if [ -x "$(command -v $1)" ]; then
-	echo.debug Command \"$1\" found in current path. This means that the package \"$1\" is already installed.
+	echo Command \"$1\" found in current path. This means that the package \"$1\" is already installed.
 	echo.line.current.clear
 	exit
 fi

@@ -4,7 +4,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 folders.current|while read childFolder; do
 	cd $childFolder
-	echo.debug $(pwd)
+	echo Processing '"'$(pwd)'"'.
 	bash -c "$@"
 	cd ..
 done

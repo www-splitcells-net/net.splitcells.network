@@ -18,27 +18,27 @@ set -e
 	# Also note that these way the exit code is determined correctly.
 
 case $1 in "ssh://"*)
-	echo.debug Connecting to '"'$1'"'.
+	echo Connecting to '"'$1'"'.
 	if ssh $1 "test -f $2/.repo"; then
 		if ssh $1 "grep -q 'repo.type=meta' $2/.repo"; then
 			if ssh $1 "grep -q 'repo.structure=flat' $2/.repo"; then
-				echo.debug "${@:3}" "$1" "$2"
+				echo "${@:3}" "$1" "$2"
 				eval "${@:3}" "$1" "$2"
 				sshChildren=$(ssh $1 "cd $2; find . -mindepth 1 -maxdepth 1 -type d -not -name '.*' -prune")
 				for childFolder in $sshChildren
 				do
 					# Ommiting quotes in for loop header causes it to iterate over the lines of the string.
-					echo.debug meta repo found
+					echo meta repo found
 					subrepo=$childFolder
-					echo.debug $subrepo
-					echo.debug Processing child "'"$childFolder"'".
+					echo $subrepo
+					echo Processing child "'"$childFolder"'".
 					mkdir -p $subrepo
 					cd $subrepo
 					if ssh $1 "test -f $2/$subrepo/.repo"; then
-						echo.debug $(pwd)
+						echo $(pwd)
 						repo.process $1 $2/$subrepo "${@:3}"
 					else
-						echo.debug "${@:3}" "$1" "$2"/$subrepo
+						echo "${@:3}" "$1" "$2"/$subrepo
 						eval "${@:3}" "$1" "$2"/$subrepo
 					fi
 					cd ..
@@ -46,7 +46,7 @@ case $1 in "ssh://"*)
 			fi
 		fi
 	else
-		echo.debug Processing "'"$(pwd)"'".
+		echo Processing "'"$(pwd)"'".
 		eval "${@:3}" "$1":"$2"/$subrepo
 	fi
 	exit
@@ -60,7 +60,7 @@ if test -f "./.repo"; then
 		if grep -q 'repo.structure=flat' "$optionalRepoConf"; then
 			relevantFolders|while read childFolder; do
 				subrepo=$childFolder/\$subrepo
-				echo.debug Processing "'"$childFolder"'".
+				echo Processing "'"$childFolder"'".
 				cd $childFolder
 				eval repo.process $@
 				cd ..
@@ -68,6 +68,6 @@ if test -f "./.repo"; then
 		fi
 	fi
 else
-	echo.debug Processing "'"$(pwd)"'".
+	echo Processing "'"$(pwd)"'".
 	eval "$@" # Through the bash command, pipes are supported.
 fi

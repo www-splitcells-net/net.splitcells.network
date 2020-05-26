@@ -10,7 +10,7 @@ hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
 while IFS= read -r property
 do
 	if hasPrefix 'repo=' "$property"; then
-		echo.debug Updating "'$property'".
+		echo Updating "'$property'".
 		propertyValue=$(echo $property | cut -c6-)
 		cd $propertyValue
 		repu.pull

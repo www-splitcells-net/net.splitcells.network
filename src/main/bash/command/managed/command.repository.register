@@ -2,18 +2,13 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 configFolder=~/.config/net.splitcells.os.state.interface
 mkdir -p $configFolder
 repoList=$configFolder/repositories
 touch $repoList
 if grep -q "^repo=$1$" "$repoList"; then
-	if [ -x "$(command -v echo.debug)" ]; then
-		echo.debug Repository $1 is already present.
-	else
-		if [ $current_echo_level -ge $debug_echo_level ]; then
-			echo Repository $1 is already present.
-		fi
-	fi
+	echo Repository "'"$1"'" is already registered.
 else
 	echo "repo=$1" >> $repoList
 fi

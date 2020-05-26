@@ -13,8 +13,7 @@ from pathlib import Path
 def executeCommand(command):
 	"""Returns whether the next commands needs to be executed."""
 	# TODO Check if command exsists.
-	subprocess.call(['echo.debug', 'Executing \"' + ' '.join(command) + '\".'])
-	subprocess.call('echo.line.current.clear')
+	print('Executing \"' + ' '.join(command) + '\".')
 	returnCode = subprocess.call(command) # This call raises an error if the command is not found.
 	return returnCode == 0
 def managedCommandExecution(type, command): # RENAME
@@ -52,7 +51,7 @@ def managedCommandExecution(type, command): # RENAME
 		executionCounter+=1
 		managedCommand = commandAt(command, executionCounter)
 	if not executedSuccessfully:
-		subprocess.call(['echo.error', 'Could not execute \"' + ' '.join(command) + '\".'])
+		print('Could not execute \"' + ' '.join(command) + '\".', file=sys.stderr)
 	return executedSuccessfully
 def commandAt(command, number):
 	rVal = command.copy()
@@ -64,7 +63,6 @@ def commandExists(commandName):
 	return find_executable(commandName) is not None
 if __name__ == '__main__':
 	wasExecutedSuccessfully = managedCommandExecution(sys.argv[1], sys.argv[2:])
-	subprocess.call(['echo.line.current.clear'])
 		# Managed commands are sometimes mixed with other commands, that do not follow the conventions of this project.
 		# The last console line is cleared, in case the last echo was filtered and is still displayed.
 	if wasExecutedSuccessfully:
