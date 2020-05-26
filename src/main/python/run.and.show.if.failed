@@ -9,6 +9,8 @@ from time import time
 isRunning = True
 output=list()
 
+# TODO Print stderr via "echo.error".
+
 def readAndOutput(stream):
 	lastEchoTime = -1
 	with stream:
