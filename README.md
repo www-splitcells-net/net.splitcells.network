@@ -1,1 +1,2 @@
-# pom.java.defaults
+# Standard Maven Pom for Java Projects
+
