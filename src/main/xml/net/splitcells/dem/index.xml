@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<n:val xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+       xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+       xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+       xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+       xmlns:n="http://splitcells.net/natural.xsd"
+       xmlns:e="http://splitcells.net/sen.xsd" name="dem">
+    <d:name>Dependency Manager</d:name>
+    <d:project>
+        <d:optimization>
+            <d:scheduling>
+                <d:queues>
+                    <d:priority>
+                        <d:toDo>Deprecate usage of java.util.List</d:toDo>
+                        <d:toDo>
+                            Use fuzzy testing.
+                            <d:toDo xl:href="https://www.heise.de/developer/meldung/Fuzzing-fuer-alle-Google-verwandelt-ClusterFuzz-in-ein-Open-Source-Projekt-4301744.html"/>
+                        </d:toDo>
+                    </d:priority>
+                </d:queues>
+            </d:scheduling>
+            <d:unscheduled>
+                <d:toDo>Why are certain things done? i.e. object factory with static
+                    interface
+                </d:toDo>
+                <d:toDo>Split class functionality into different independent classes for dependency,
+                    configuration and resource management.
+                </d:toDo>
+                <d:idea>Implement static interface.</d:idea>
+                <d:toDo>
+                    Standardize usage of down and up casting.
+                    <:toDo>Covariance and Contravariance</:toDo>
+                </d:toDo>
+            </d:unscheduled>
+            <d:objective>
+                <d:objective>Provide an environment for programs that acts as an generic interface
+                    and abstracts away implementation details of the environment.
+                    Environment is implemented via interfaces and object, but only accessed via interfaces.
+                    Implement side effects like input and output only over this environment.
+                    <d:toDo>Implement path, file and network connection system.</d:toDo>
+                </d:objective>
+                <d:objective>Minimize complexity.
+                    <d:objective>Maximize compatibility to other programming paradigms
+                        and make it therefore easy to translate
+                        automatically or manually to other languages.
+                        <d:solution>Work with only one state variable.
+                            <d:solution>Support different types of environment object variable.
+                                <d:solution>Support environment object access via a variable that is
+                                    passed through everywhere.
+                                </d:solution>
+                                <d:solution>Support environment object access via a static variable.</d:solution>
+                                <d:solution>Support environment object access via thread local variable.</d:solution>
+                            </d:solution>
+                        </d:solution>
+                        <d:solution>Use no inheritance.</d:solution>
+                        <d:solution>Use dependency injection via static methods.</d:solution>
+                    </d:objective>
+                    <d:solution>Minimize side effects.</d:solution>
+                    <d:solution>Split everything into core, merger, sheath, environment.
+                        <d:solution>No explicit splitting in order to safe development resources.
+                            It is enough to ensure, that it is possible to split everything at any given time,
+                            with an acceptable amount of resources.
+                        </d:solution>
+                    </d:solution>
+                </d:objective>
+            </d:objective>
+        </d:optimization>
+        <n:val name="logging">
+            <d:solution>There is no differences between logs and console output.
+            </d:solution>
+            <d:toFix>End of log does not contain closing tag.</d:toFix>
+        </n:val>
+        <n:val name="side-effects">
+            <d:toDo>Create program system as effect system.
+                <d:toDo>Create event processor.
+                    <d:toDo>Create event queue at processor.</d:toDo>
+                </d:toDo>
+                <d:toDo>Event processor executor.</d:toDo>
+            </d:toDo>
+            <s:article>
+                <s:chapter>
+                    <s:title>Side Effects</s:title>
+                    <s:paragraph>Secondary side effects are parts of the programs which are undefined.
+                        Primary side effects are modeled side effects that are explicitly caused by the program.
+                    </s:paragraph>
+                    <s:paragraph>Configuration of secondary effects are done with
+                        secondary effects or the executor of the programs.
+                        Configuration of primary effects are done via program arguments or the executor.
+                    </s:paragraph>
+                    <s:chapter>
+                        <s:title>Program Dependencies</s:title>
+                        <s:paragraph>There are runtime dependencies and compile time dependencies.
+                            Runtime dependencies are arguments and configurations
+                            for primary and secondary side effects.
+                        </s:paragraph>
+                    </s:chapter>
+                </s:chapter>
+            </s:article>
+        </n:val>
+        <n:val name="support">
+            <n:val name="programming.languages">
+                <d:toDo>Transpile Java programs to Javascript and execute inside website.
+                    <d:toDo xl:href="https://www.mirkosertic.de/blog/2017/06/compiling-bytecode-to-javascript/"/>
+                    <d:toDo xl:href="https://github.com/appcypher/awesome-wasm-langs#java"/>
+                    <d:toDo xl:href="https://github.com/konsoletyper/teavm"/>
+                    <d:toDo xl:href="https://github.com/i-net-software/JWebAssembly"/>
+                    <d:toDo xl:href="https://github.com/mirkosertic/Bytecoder"/>
+                </d:toDo>
+            </n:val>
+        </n:val>
+    </d:project>
+</n:val>
