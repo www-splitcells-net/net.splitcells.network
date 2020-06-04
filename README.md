@@ -1,2 +1,1 @@
-# Standard Maven Pom for Java Projects
-
+# Standard Maven Pom for Java Projects for splitcells.net
