@@ -37,10 +37,11 @@
                 <d:idea>Implement static interface.</d:idea>
                 <d:toDo>
                     Standardize usage of down and up casting.
-                    <:toDo>Covariance and Contravariance</:toDo>
+                    <d:toDo>Covariance and Contravariance</d:toDo>
                 </d:toDo>
             </d:unscheduled>
             <d:objective>
+                <d:objective>Support automatic refactoring.</d:objective>
                 <d:objective>Provide an environment for programs that acts as an generic interface
                     and abstracts away implementation details of the environment.
                     Environment is implemented via interfaces and object, but only accessed via interfaces.
@@ -72,6 +73,7 @@
                     </d:solution>
                 </d:objective>
             </d:objective>
+            <n:val name="history" xl:href="./history.xml"/>
         </d:optimization>
         <n:val name="logging">
             <d:solution>There is no differences between logs and console output.
