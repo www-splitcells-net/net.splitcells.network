@@ -11,6 +11,10 @@
             <d:scheduling>
                 <d:queues>
                     <d:priority>
+                        <d:toDo>Fix up code guide lines and transfer to this project.
+                            <d:toDo xl:href="http://splitcells.net/net/splitcells/martins/avots/website//2018/04/29/experimental-code-guidelines.html"/>
+                            <d:toDo xl:href="http://splitcells.net/net/splitcells/martins/avots/website//2018/05/05/xslt-code-guidelines.html"/>
+                        </d:toDo>
                         <d:toDo>Make unit tests.</d:toDo>
                         <d:toDo>Deprecate usage of java.util.List.</d:toDo>
                         <d:toDo xl:href="https://www.heise.de/developer/meldung/Fuzzing-fuer-alle-Google-verwandelt-ClusterFuzz-in-ein-Open-Source-Projekt-4301744.html">
