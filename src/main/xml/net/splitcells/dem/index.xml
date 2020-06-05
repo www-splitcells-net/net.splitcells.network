@@ -12,10 +12,13 @@
                 <d:queues>
                     <d:priority>
                         <d:toDo>Make unit tests.</d:toDo>
-                        <d:toDo>Deprecate usage of java.util.List</d:toDo>
-                        <d:toDo>
+                        <d:toDo>Deprecate usage of java.util.List.</d:toDo>
+                        <d:toDo xl:href="https://www.heise.de/developer/meldung/Fuzzing-fuer-alle-Google-verwandelt-ClusterFuzz-in-ein-Open-Source-Projekt-4301744.html">
                             Use fuzzy testing.
-                            <d:toDo xl:href="https://www.heise.de/developer/meldung/Fuzzing-fuer-alle-Google-verwandelt-ClusterFuzz-in-ein-Open-Source-Projekt-4301744.html"/>
+                        </d:toDo>
+                        <d:toDo>Simple aspect oriented programming.
+                            <d:toDo>Check consistency.</d:toDo>
+                            <d:toDo>Implement test injection.</d:toDo>
                         </d:toDo>
                     </d:priority>
                 </d:queues>
