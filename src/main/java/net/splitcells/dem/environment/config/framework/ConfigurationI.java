@@ -1,9 +1,14 @@
 package net.splitcells.dem.environment.config.framework;
 
+import net.splitcells.dem.environment.resource.Resource;
+import net.splitcells.dem.resource.communication.Flushable;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -115,7 +120,13 @@ public class ConfigurationI implements Configuration {
     }
 
     @Override
-    public Map<Object, Object> config_store() {
-        return config_store;
+    public <T> void process(Class<? extends T> type, Function<T, T> processor) {
+        config_store.entrySet().forEach(entry -> {
+            if (type.isAssignableFrom((Class<?>) entry.getKey())) {
+                entry.setValue(
+                        processor.apply(((T) entry.getValue()))
+                );
+            }
+        });
     }
 }

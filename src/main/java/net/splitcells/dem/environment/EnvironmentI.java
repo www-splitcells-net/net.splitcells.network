@@ -14,6 +14,7 @@ import net.splitcells.dem.resource.host.OutputPath;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import static net.splitcells.dem.environment.config.framework.ConfigurationI.configuration;
 
@@ -43,8 +44,8 @@ public class EnvironmentI implements Environment {
     }
 
     @Override
-    public Map<Object, Object> config_store() {
-        return config.config_store();
+    public <T> void process(Class<? extends T> type, Function<T, T> processor) {
+        config.process(type, processor);
     }
 
     @Override
@@ -54,27 +55,19 @@ public class EnvironmentI implements Environment {
         configValue(OutputPath.class);
     }
 
-    /**
-     * HACK Remove duplicate code with close().
-     */
     @Override
     public void flush() {
-        config.config_store().entrySet().forEach(entry -> {
-            if (Resource.class.isAssignableFrom((Class<?>) entry.getKey())) {
-                ((Flushable) entry.getValue()).flush();
-            }
+        config.process(Flushable.class, r -> {
+            r.flush();
+            return r;
         });
     }
 
-    /**
-     * HACK duplicate code with flush()
-     */
     @Override
     public void close() {
-        config.config_store().entrySet().forEach(entry -> {
-            if (Resource.class.isAssignableFrom((Class<?>) entry.getKey())) {
-                ((Closeable) entry.getValue()).close();
-            }
+        config.process(Closeable.class, r -> {
+            r.close();
+            return r;
         });
     }
 
