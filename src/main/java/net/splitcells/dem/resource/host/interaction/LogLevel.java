@@ -3,7 +3,7 @@ package net.splitcells.dem.resource.host.interaction;
 import net.splitcells.dem.data.order.Ordered;
 import net.splitcells.dem.data.order.Ordering;
 
-import static net.splitcells.dem.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.data.order.Ordering.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

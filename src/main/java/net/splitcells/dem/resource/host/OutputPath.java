@@ -1,7 +1,7 @@
 package net.splitcells.dem.resource.host;
 
-import net.splitcells.dem.config.ProgramName;
-import net.splitcells.dem.environment.config.OptionI;
+import net.splitcells.dem.environment.config.ProgramName;
+import net.splitcells.dem.environment.config.framework.OptionI;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

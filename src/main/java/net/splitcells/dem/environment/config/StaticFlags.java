@@ -1,4 +1,4 @@
-package net.splitcells.dem.config;
+package net.splitcells.dem.environment.config;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 

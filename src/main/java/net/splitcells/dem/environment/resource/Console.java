@@ -1,6 +1,6 @@
 package net.splitcells.dem.environment.resource;
 
-import net.splitcells.dem.config.StartTime;
+import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.resource.host.OutputPath;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;

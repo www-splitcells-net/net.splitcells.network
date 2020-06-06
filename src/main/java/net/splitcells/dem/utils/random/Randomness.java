@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.abs;
-import static net.splitcells.dem.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public interface Randomness extends BasicRndSrc {

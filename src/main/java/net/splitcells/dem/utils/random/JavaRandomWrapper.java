@@ -2,7 +2,7 @@ package net.splitcells.dem.utils.random;
 
 import java.util.Random;
 
-import static net.splitcells.dem.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JavaRandomWrapper implements Randomness, RndSrcCrypt {

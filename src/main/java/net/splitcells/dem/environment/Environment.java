@@ -1,6 +1,6 @@
 package net.splitcells.dem.environment;
 
-import net.splitcells.dem.environment.config.Configuration;
+import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 

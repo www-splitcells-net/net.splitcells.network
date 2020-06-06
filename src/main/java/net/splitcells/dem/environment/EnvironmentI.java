@@ -1,12 +1,12 @@
 package net.splitcells.dem.environment;
 
-import net.splitcells.dem.config.IsDeterministic;
-import net.splitcells.dem.config.ProgramLocalIdentity;
-import net.splitcells.dem.config.ProgramRepresentative;
-import net.splitcells.dem.config.StartTime;
-import net.splitcells.dem.environment.config.Configuration;
-import net.splitcells.dem.environment.config.ConfigurationI;
-import net.splitcells.dem.environment.config.Option;
+import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.environment.config.ProgramLocalIdentity;
+import net.splitcells.dem.environment.config.ProgramRepresentative;
+import net.splitcells.dem.environment.config.StartTime;
+import net.splitcells.dem.environment.config.framework.Configuration;
+import net.splitcells.dem.environment.config.framework.ConfigurationI;
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;

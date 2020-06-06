@@ -1,4 +1,4 @@
-package net.splitcells.dem.environment.config;
+package net.splitcells.dem.environment.config.framework;
 
 import java.util.function.Supplier;
 

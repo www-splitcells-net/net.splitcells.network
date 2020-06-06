@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 import static java.nio.file.Files.createDirectories;
 import static java.util.Arrays.asList;
-import static net.splitcells.dem.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public final class Paths {

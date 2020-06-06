@@ -1,6 +1,6 @@
 package net.splitcells.dem.utils.random;
 
-import net.splitcells.dem.config.IsDeterministic;
+import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.data.atom.Bool;
 
 import java.util.Optional;

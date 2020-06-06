@@ -1,6 +1,6 @@
 package net.splitcells.dem.resource.communication.interaction;
 
-import net.splitcells.dem.config.ProgramName;
+import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.data.set.SetWA;
 import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.lang.Xml;

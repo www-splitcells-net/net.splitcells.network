@@ -1,6 +1,6 @@
 package net.splitcells.dem.environment;
 
-import net.splitcells.dem.environment.config.ConfigurationV;
+import net.splitcells.dem.environment.config.framework.ConfigurationV;
 import net.splitcells.dem.resource.communication.Closeable;
 
 /**

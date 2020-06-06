@@ -1,7 +1,7 @@
-package net.splitcells.dem.config;
+package net.splitcells.dem.environment.config;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.environment.config.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionI;
 
 import java.time.format.DateTimeFormatter;
 

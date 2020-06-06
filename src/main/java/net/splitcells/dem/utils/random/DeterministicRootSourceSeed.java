@@ -1,6 +1,6 @@
 package net.splitcells.dem.utils.random;
 
-import net.splitcells.dem.environment.config.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionI;
 
 public class DeterministicRootSourceSeed extends OptionI<Long> {
 

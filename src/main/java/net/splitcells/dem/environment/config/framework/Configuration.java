@@ -1,4 +1,4 @@
-package net.splitcells.dem.environment.config;
+package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.lang.annotations.Private;
 import net.splitcells.dem.lang.annotations.Returns_this;
