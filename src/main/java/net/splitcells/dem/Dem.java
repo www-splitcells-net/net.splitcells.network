@@ -1,8 +1,8 @@
 package net.splitcells.dem;
 
-import net.splitcells.dem.environment.config.DependencyManager;
-import net.splitcells.dem.environment.config.DependencyManagerI;
-import net.splitcells.dem.environment.config.DependencyManagerV;
+import net.splitcells.dem.environment.Environment;
+import net.splitcells.dem.environment.EnvironmentI;
+import net.splitcells.dem.environment.EnvironmentV;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
 
 import java.util.function.Consumer;
@@ -20,7 +20,7 @@ public final class Dem {
      * Thread locals are required in order to implement a tree of programs as a cactus stack (https://wiki.c2.com/?CactusStack).
      * It generally allows to execute multiple instances of a Dem program, without having interference between them.
      */
-    private static final InheritableThreadLocal<DependencyManager> CURRENT = new InheritableThreadLocal<DependencyManager>();
+    private static final InheritableThreadLocal<Environment> CURRENT = new InheritableThreadLocal<Environment>();
 
     public static void process(Runnable program) {
         process(program, m -> {
@@ -35,14 +35,14 @@ public final class Dem {
      * <p>
      * TODO Support cactus stacking.
      */
-    public static void process(Runnable program, Consumer<DependencyManager> configurator) {
+    public static void process(Runnable program, Consumer<Environment> configurator) {
         Thread root = new Thread(() -> {
             initializeProcess(program.getClass(), configurator);
             try {
                 // TOFIX Does not write log file on short programs that throws an exception.
                 program.run();
             } finally {
-                m().close();
+                environment().close();
                 CURRENT.remove();
             }
         });
@@ -58,9 +58,9 @@ public final class Dem {
     /**
      * REFACTOR name
      */
-    private static DependencyManager initializeProcess(Class<?> programRepresentative,
-                                                       Consumer<DependencyManager> configurator) {
-        final var rVal = new DependencyManagerI(programRepresentative);
+    private static Environment initializeProcess(Class<?> programRepresentative,
+                                                 Consumer<Environment> configurator) {
+        final var rVal = new EnvironmentI(programRepresentative);
         // IDEA Invalidate write access to configuration through down casting after configuration via a wrapper.
         configurator.accept(rVal);
         CURRENT.set(rVal);
@@ -68,8 +68,8 @@ public final class Dem {
     }
 
     @Deprecated
-    public static DependencyManagerV ensuredInitialized(Consumer<DependencyManager> configurator) {
-        DependencyManagerV rVal;
+    public static EnvironmentV ensuredInitialized(Consumer<Environment> configurator) {
+        EnvironmentV rVal;
         if (CURRENT.get() == null) {
             rVal = initializeProcess(callerClass(1), configurator);
         } else {
@@ -78,14 +78,14 @@ public final class Dem {
         return rVal;
     }
 
-    private static void configureByEnvironment(DependencyManager dem) {
+    private static void configureByEnvironment(Environment dem) {
         if ("true".equals(System.getProperty("net.splitcells.mode.build"))) {
             dem.withConfigValue(MessageFilter.class, logMessage -> logMessage.priority().greaterThanOrEqual(UNKNOWN_ERROR));
         }
     }
 
-    public static DependencyManagerV ensuredInitialized() {
-        DependencyManagerV rVal;
+    public static EnvironmentV ensuredInitialized() {
+        EnvironmentV rVal;
         if (CURRENT.get() == null) {
             rVal = initializeProcess(callerClass(1), dem -> {
                 configureByEnvironment(dem);
@@ -102,7 +102,7 @@ public final class Dem {
      * WARNING by default.
      *
      */
-    public static DependencyManagerV m() {
+    public static EnvironmentV environment() {
         if (null == CURRENT.get()) {
             return ensuredInitialized();
         }

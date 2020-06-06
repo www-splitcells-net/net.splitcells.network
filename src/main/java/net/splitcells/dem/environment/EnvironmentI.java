@@ -1,9 +1,12 @@
-package net.splitcells.dem.environment.config;
+package net.splitcells.dem.environment;
 
 import net.splitcells.dem.config.IsDeterministic;
 import net.splitcells.dem.config.ProgramLocalIdentity;
 import net.splitcells.dem.config.ProgramRepresentative;
 import net.splitcells.dem.config.StartTime;
+import net.splitcells.dem.environment.config.Configuration;
+import net.splitcells.dem.environment.config.ConfigurationI;
+import net.splitcells.dem.environment.config.Option;
 import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
@@ -11,11 +14,11 @@ import net.splitcells.dem.resource.host.OutputPath;
 
 import java.util.function.BiConsumer;
 
-public class DependencyManagerI implements DependencyManager {
+public class EnvironmentI implements Environment {
 
 	private ConfigurationI config = new ConfigurationI();
 
-	public DependencyManagerI(Class<?> programRepresentative) {
+	public EnvironmentI(Class<?> programRepresentative) {
 		configValue(StartTime.class);
 		withConfigValue(ProgramRepresentative.class, programRepresentative);
 	}

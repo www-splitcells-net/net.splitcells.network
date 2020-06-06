@@ -1,7 +1,7 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.data.atom.Bool;
-import net.splitcells.dem.environment.config.DependencyManager;
+import net.splitcells.dem.environment.Environment;
 
 import java.util.Map;
 import java.util.Optional;
@@ -10,7 +10,7 @@ public class MapFI_configured implements MapF {
 
 	private MapF mapF = new MapFI();
 
-	public MapFI_configured(DependencyManager m) {
+	public MapFI_configured(Environment m) {
 	}
 
 	@Override

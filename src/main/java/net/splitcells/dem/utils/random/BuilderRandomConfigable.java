@@ -5,15 +5,15 @@ import net.splitcells.dem.data.atom.Bool;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.Dem.m;
+import static net.splitcells.dem.Dem.environment;
 
 public class BuilderRandomConfigable implements RndSrcF {
 
     private RndSrcF builderRandom;
 
     protected BuilderRandomConfigable() {
-        if (m().configValue(IsDeterministic.class).isEmpty() || m().configValue(IsDeterministic.class).get().is_true()) {
-            deterministic_builder(m().configValue(DeterministicRootSourceSeed.class));
+        if (environment().configValue(IsDeterministic.class).isEmpty() || environment().configValue(IsDeterministic.class).get().is_true()) {
+            deterministic_builder(environment().configValue(DeterministicRootSourceSeed.class));
         } else {
             builderRandom = new RndSrcStandardF();
         }
@@ -29,7 +29,7 @@ public class BuilderRandomConfigable implements RndSrcF {
 
     public void update_determinism(Optional<Bool> arg) {
         if (arg.isEmpty() || arg.get().is_true()) {
-            deterministic_builder(m().configValue(DeterministicRootSourceSeed.class));
+            deterministic_builder(environment().configValue(DeterministicRootSourceSeed.class));
         } else if (arg.isPresent() && arg.get().is_false()) {
             this.builderRandom = new RndSrcStandardF();
         } else {

@@ -1,13 +1,14 @@
-package net.splitcells.dem.environment.config;
+package net.splitcells.dem.environment;
 
+import net.splitcells.dem.environment.config.Configuration;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
 /**
  * 
  */
-public interface DependencyManager
-		extends DependencyManagerV, Configuration, Closeable, Flushable {
+public interface Environment
+		extends EnvironmentV, Configuration, Closeable, Flushable {
 
 	/**
 	 * It is not allowed to be called multiple times.

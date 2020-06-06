@@ -8,8 +8,8 @@ import java.time.format.DateTimeFormatter;
 public class ProgramLocalIdentity extends OptionI<String> {
 
 	public ProgramLocalIdentity() {
-		super(() -> Dem.m().configValue(ProgramName.class)
-				+ Dem.m().configValue(StartTime.class).format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.m.s.n"))//
+		super(() -> Dem.environment().configValue(ProgramName.class)
+				+ Dem.environment().configValue(StartTime.class).format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.m.s.n"))//
 		);
 	}
 

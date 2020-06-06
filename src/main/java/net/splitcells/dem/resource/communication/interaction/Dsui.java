@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 
 import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
-import static net.splitcells.dem.Dem.m;
+import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
@@ -38,7 +38,7 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
     public static Dsui dsui(Sender<String> output, Predicate<LogMessage<Node>> messageFilter) {
         Element execution = element(//
                 rElement(DEN, "execution"), //
-                element(DEN, "name", m().configValue(ProgramName.class)), //
+                element(DEN, "name", environment().configValue(ProgramName.class)), //
                 textNode(ENTRY_POINT));
         return dsui(output, execution, messageFilter);
     }

@@ -4,11 +4,11 @@ import net.splitcells.dem.environment.config.OptionI;
 
 import java.nio.file.Path;
 
-import static net.splitcells.dem.Dem.m;
+import static net.splitcells.dem.Dem.environment;
 
 public class DocumentsPath extends OptionI<Path> {
 	public DocumentsPath() {
-		super(() -> m().configValue(OutputPath.class)//
+		super(() -> environment().configValue(OutputPath.class)//
 				.resolve("documents"));
 	}
 }

@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.time.format.DateTimeFormatter;
 
-import static net.splitcells.dem.Dem.m;
+import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.resource.host.Files.createDirectory;
 
@@ -17,12 +17,12 @@ public final class Console extends ResourceI<Sender<String>> {
 
     public Console() {
         super(() -> {
-            if (m().configValue(IsEchoToFile.class)) {
+            if (environment().configValue(IsEchoToFile.class)) {
                 var consolePath
-                        = m().configValue(OutputPath.class)
+                        = environment().configValue(OutputPath.class)
                         .resolve("console")
                         .resolve(
-                                m().configValue(StartTime.class)
+                                environment().configValue(StartTime.class)
                                         .format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss.nnnn")));
                 createDirectory(consolePath);
                 try {
@@ -40,6 +40,6 @@ public final class Console extends ResourceI<Sender<String>> {
     }
 
     public static Sender<String> console() {
-        return m().configValue(Console.class);
+        return environment().configValue(Console.class);
     }
 }
