@@ -22,9 +22,13 @@ public class EnvironmentI implements Environment {
 
     private final Configuration config = configuration();
 
-    public EnvironmentI(Class<?> programRepresentative) {
-        configValue(StartTime.class);
-        withConfigValue(ProgramRepresentative.class, programRepresentative);
+    public static Environment create(Class<?> programRepresentative) {
+        return new EnvironmentI(programRepresentative);
+    }
+
+    private EnvironmentI(Class<?> programRepresentative) {
+        config.configValue(StartTime.class);
+        config.withConfigValue(ProgramRepresentative.class, programRepresentative);
     }
 
     @Override
@@ -33,26 +37,15 @@ public class EnvironmentI implements Environment {
     }
 
     @Override
-    public <T> Configuration withConfigValue(Class<? extends Option<T>> key, T value) {
-        config.withConfigValue(key, value);
-        return this;
-    }
-
-    @Override
-    public <T> void subscribe(Class<? extends Option<T>> option, BiConsumer<Object, Object> consumer) {
-        config.subscribe(option, consumer);
-    }
-
-    @Override
-    public <T> void process(Class<? extends T> type, Function<T, T> processor) {
-        config.process(type, processor);
-    }
-
-    @Override
     public void init() {
-        configValue(ProgramLocalIdentity.class);
-        configValue(IsDeterministic.class);
-        configValue(OutputPath.class);
+        config.configValue(ProgramLocalIdentity.class);
+        config.configValue(IsDeterministic.class);
+        config.configValue(OutputPath.class);
+    }
+
+    @Override
+    public Configuration config() {
+        return config;
     }
 
     @Override

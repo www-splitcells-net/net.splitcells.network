@@ -60,7 +60,7 @@ public final class Dem {
      */
     private static Environment initializeProcess(Class<?> programRepresentative,
                                                  Consumer<Environment> configurator) {
-        final var rVal = new EnvironmentI(programRepresentative);
+        final var rVal = EnvironmentI.create(programRepresentative);
         // IDEA Invalidate write access to configuration through down casting after configuration via a wrapper.
         configurator.accept(rVal);
         CURRENT.set(rVal);
@@ -80,7 +80,11 @@ public final class Dem {
 
     private static void configureByEnvironment(Environment dem) {
         if ("true".equals(System.getProperty("net.splitcells.mode.build"))) {
-            dem.withConfigValue(MessageFilter.class, logMessage -> logMessage.priority().greaterThanOrEqual(UNKNOWN_ERROR));
+            dem
+                    .config()
+                    .withConfigValue
+                            (MessageFilter.class
+                                    , logMessage -> logMessage.priority().greaterThanOrEqual(UNKNOWN_ERROR));
         }
     }
 
@@ -100,7 +104,6 @@ public final class Dem {
      * TODO If the user does not care, how it is initialized he does not care about
      * output. But this only is true for certain output. Logging level should be
      * WARNING by default.
-     *
      */
     public static EnvironmentV environment() {
         if (null == CURRENT.get()) {
