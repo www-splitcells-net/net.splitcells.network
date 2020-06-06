@@ -24,6 +24,7 @@
                             <d:toDo>Check consistency.</d:toDo>
                             <d:toDo>Implement test injection.</d:toDo>
                         </d:toDo>
+                        <d:toDo>Clean up ConfigurationI.</d:toDo>
                     </d:priority>
                 </d:queues>
             </d:scheduling>

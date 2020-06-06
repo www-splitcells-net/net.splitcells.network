@@ -12,62 +12,70 @@ import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.dem.resource.host.OutputPath;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
+
+import static net.splitcells.dem.environment.config.framework.ConfigurationI.configuration;
 
 public class EnvironmentI implements Environment {
 
-	private ConfigurationI config = new ConfigurationI();
+    private final Configuration config = configuration();
 
-	public EnvironmentI(Class<?> programRepresentative) {
-		configValue(StartTime.class);
-		withConfigValue(ProgramRepresentative.class, programRepresentative);
-	}
+    public EnvironmentI(Class<?> programRepresentative) {
+        configValue(StartTime.class);
+        withConfigValue(ProgramRepresentative.class, programRepresentative);
+    }
 
-	@Override
-	public <T> T configValue(Class<? extends Option<T>> key) {
-		return config.configValue(key);
-	}
+    @Override
+    public <T> T configValue(Class<? extends Option<T>> key) {
+        return config.configValue(key);
+    }
 
-	@Override
-	public <T> Configuration withConfigValue(Class<? extends Option<T>> key, T value) {
-		config.withConfigValue(key, value);
-		return this;
-	}
+    @Override
+    public <T> Configuration withConfigValue(Class<? extends Option<T>> key, T value) {
+        config.withConfigValue(key, value);
+        return this;
+    }
 
-	@Override
-	public <T> void subscribe(Class<? extends Option<T>> option, BiConsumer<Object, Object> consumer) {
-		config.subscribe(option, consumer);
-	}
+    @Override
+    public <T> void subscribe(Class<? extends Option<T>> option, BiConsumer<Object, Object> consumer) {
+        config.subscribe(option, consumer);
+    }
 
-	@Override
-	public void init() {
-		configValue(ProgramLocalIdentity.class);
-		configValue(IsDeterministic.class);
-		configValue(OutputPath.class);
-	}
+    @Override
+    public Map<Object, Object> config_store() {
+        return config.config_store();
+    }
 
-	/**
-	 * HACK Remove duplicate code with close().
-	 */
-	@Override
-	public void flush() {
-		config.config_store.entrySet().forEach(entry -> {
-			if (Resource.class.isAssignableFrom((Class<?>) entry.getKey())) {
-				((Flushable) entry.getValue()).flush();
-			}
-		});
-	}
+    @Override
+    public void init() {
+        configValue(ProgramLocalIdentity.class);
+        configValue(IsDeterministic.class);
+        configValue(OutputPath.class);
+    }
 
-	/**
-	 * HACK duplicate code with flush()
-	 */
-	@Override
-	public void close() {
-		config.config_store.entrySet().forEach(entry -> {
-			if (Resource.class.isAssignableFrom((Class<?>) entry.getKey())) {
-				((Closeable) entry.getValue()).close();
-			}
-		});
-	}
+    /**
+     * HACK Remove duplicate code with close().
+     */
+    @Override
+    public void flush() {
+        config.config_store().entrySet().forEach(entry -> {
+            if (Resource.class.isAssignableFrom((Class<?>) entry.getKey())) {
+                ((Flushable) entry.getValue()).flush();
+            }
+        });
+    }
+
+    /**
+     * HACK duplicate code with flush()
+     */
+    @Override
+    public void close() {
+        config.config_store().entrySet().forEach(entry -> {
+            if (Resource.class.isAssignableFrom((Class<?>) entry.getKey())) {
+                ((Closeable) entry.getValue()).close();
+            }
+        });
+    }
 
 }

@@ -20,13 +20,17 @@ public class ConfigurationI implements Configuration {
      * <p>
      * HACK Make private
      */
-    public final Map<Object, Object> config_store;
+    private final Map<Object, Object> config_store;
     /**
      * TODOC old actor value, new actor value
      */
     private final Map<Class<?>, Set<BiConsumer<Object, Object>>> subscribers;
 
-    public ConfigurationI() {
+    public static Configuration configuration() {
+        return new ConfigurationI();
+    }
+
+    private ConfigurationI() {
         config_consistency_enforcers = map();
         config_store = map();
         subscribers = map();
@@ -108,5 +112,10 @@ public class ConfigurationI implements Configuration {
         }
         assert !this.subscribers.get(option).contains(consumer);
         this.subscribers.get(option).add(consumer);
+    }
+
+    @Override
+    public Map<Object, Object> config_store() {
+        return config_store;
     }
 }
