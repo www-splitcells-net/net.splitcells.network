@@ -91,10 +91,11 @@
         <dependency>
             <!-- Library for Functional Programming -->
             <!-- http://www.vavr.io/vavr-docs/ -->
+            <!-- Javadoc: https://www.javadoc.io/static/io.vavr/vavr/0.10.3/allclasses-noframe.html -->
             <!-- vavr-test is not used, because JUnit 5 also supports property based testing. -->
             <groupId>io.vavr</groupId>
             <artifactId>vavr</artifactId>
-            <version>0.9.0</version>
+            <version>0.10.3</version>
         </dependency>
         <dependency>
             <!-- XSL Processor -->
