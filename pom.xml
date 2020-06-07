@@ -10,6 +10,15 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>commons-io</groupId>
