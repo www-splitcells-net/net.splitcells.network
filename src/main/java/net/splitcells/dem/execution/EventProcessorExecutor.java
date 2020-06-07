@@ -25,7 +25,7 @@ public class EventProcessorExecutor implements Closeable, Flushable {
         executor = Optional.of(
                 new Thread(() -> {
                     while (enabled) {
-                        this.executeNextTask();
+                        executeNextTask();
                     }
                 }));
         executor.get().start();
@@ -35,6 +35,7 @@ public class EventProcessorExecutor implements Closeable, Flushable {
         enabled = false;
         try {
             if (executor.isPresent()) {
+                executor.get().interrupt();
                 executor.get().join();
             }
         } catch (InterruptedException e) {
@@ -43,11 +44,11 @@ public class EventProcessorExecutor implements Closeable, Flushable {
         executor = Optional.empty();
     }
 
-    public synchronized void executeNextTask() {
+    public void executeNextTask() {
         try {
             tasks.take().processEvents();
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            // Nothing is done.
         }
     }
 
@@ -57,11 +58,21 @@ public class EventProcessorExecutor implements Closeable, Flushable {
 
     @Override
     public synchronized void close() {
+        flush();
         stopAndWaitForExit();
     }
 
+    /**
+     * HACK This blocks all incoming events.
+     */
     @Override
-    public void flush() {
-
+    public synchronized void flush() {
+        try {
+            while (!tasks.isEmpty()) {
+                Thread.sleep(500L);
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

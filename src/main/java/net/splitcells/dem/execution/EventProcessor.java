@@ -1,5 +1,5 @@
 package net.splitcells.dem.execution;
 
-public interface EventProcessor<T> {
+public interface EventProcessor {
     void processEvents();
 }
