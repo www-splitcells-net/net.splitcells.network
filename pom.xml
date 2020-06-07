@@ -476,8 +476,27 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- Prevent ClassNotFoundException inside "org.apache.maven.plugins:maven-site-plugin" during "mvn site". -->
+                        <!-- This needs to be placed into each POM inheriting from this POM for "mvn site" to work without getting ClassNotFoundException. -->
+                        <!-- See: https://stackoverflow.com/questions/51091539/maven-site-plugins-3-3-java-lang-classnotfoundexception-org-apache-maven-doxia/51108927#51108927 -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.7.1</version>
+                    </plugin>
+                </plugins>
+            </build>
             <reporting>
                 <plugins>
+                    <plugin>
+                        <!-- Prevent ClassNotFoundException inside "org.apache.maven.plugins:maven-site-plugin" during "mvn site". -->
+                        <!-- See: https://stackoverflow.com/questions/51091539/maven-site-plugins-3-3-java-lang-classnotfoundexception-org-apache-maven-doxia/51108927#51108927 -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-project-info-reports-plugin</artifactId>
+                        <version>3.0.0</version>
+                    </plugin>
                     <!-- javancss-maven-plugin does not work. -->
                     <!-- Note that this is not located in the build element of Maven, as otherwise the source folders are not found: http://maven.apache.org/guides/mini/guide-configuring-plugins.html#Using_the_reporting_Tag_VS_build_Tag -->
                     <plugin>
