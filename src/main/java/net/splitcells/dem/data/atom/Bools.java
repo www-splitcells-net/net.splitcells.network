@@ -9,7 +9,7 @@ public class Bools {
         throw constructorIllegal();
     }
     public static void require(boolean arg) {
-        if (arg) {
+        if (!arg) {
             throw new AssertionError();
         }
     }
