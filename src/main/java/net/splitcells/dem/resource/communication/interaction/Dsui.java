@@ -38,7 +38,7 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
     public static Dsui dsui(Sender<String> output, Predicate<LogMessage<Node>> messageFilter) {
         Element execution = element(//
                 rElement(DEN, "execution"), //
-                element(DEN, "name", environment().configValue(ProgramName.class)), //
+                element(DEN, "name", environment().config().configValue(ProgramName.class)), //
                 textNode(ENTRY_POINT));
         return dsui(output, execution, messageFilter);
     }

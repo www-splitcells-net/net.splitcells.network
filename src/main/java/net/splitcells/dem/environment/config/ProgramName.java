@@ -8,7 +8,7 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 public class ProgramName extends OptionI<String> {
 
 	public ProgramName() {
-		super(() -> simplifiedName(Dem.environment().configValue(ProgramRepresentative.class)));
+		super(() -> simplifiedName(Dem.environment().config().configValue(ProgramRepresentative.class)));
 	}
 
 }

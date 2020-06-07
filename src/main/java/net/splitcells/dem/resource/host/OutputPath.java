@@ -16,7 +16,7 @@ public class OutputPath extends OptionI<Path> {
 	public OutputPath() {
 		super(() -> Paths.get("."//
 				, "target"//
-				, environment().configValue(ProgramName.class)//
+				, environment().config().configValue(ProgramName.class)//
 		));
 	}
 

@@ -9,10 +9,10 @@ import static net.splitcells.dem.resource.communication.interaction.Dsui.dsui;
 
 public class Domsole extends ResourceI<Dsui> {
     public Domsole() {
-        super(() -> dsui(environment().configValue(Console.class), environment().configValue(MessageFilter.class)));
+        super(() -> dsui(environment().config().configValue(Console.class), environment().config().configValue(MessageFilter.class)));
     }
 
     public static Dsui domsole() {
-        return environment().configValue(Domsole.class);
+        return environment().config().configValue(Domsole.class);
     }
 }

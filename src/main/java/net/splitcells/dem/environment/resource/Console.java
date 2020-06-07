@@ -17,12 +17,12 @@ public final class Console extends ResourceI<Sender<String>> {
 
     public Console() {
         super(() -> {
-            if (environment().configValue(IsEchoToFile.class)) {
+            if (environment().config().configValue(IsEchoToFile.class)) {
                 var consolePath
-                        = environment().configValue(OutputPath.class)
+                        = environment().config().configValue(OutputPath.class)
                         .resolve("console")
                         .resolve(
-                                environment().configValue(StartTime.class)
+                                environment().config().configValue(StartTime.class)
                                         .format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss.nnnn")));
                 createDirectory(consolePath);
                 try {
@@ -40,6 +40,6 @@ public final class Console extends ResourceI<Sender<String>> {
     }
 
     public static Sender<String> console() {
-        return environment().configValue(Console.class);
+        return environment().config().configValue(Console.class);
     }
 }

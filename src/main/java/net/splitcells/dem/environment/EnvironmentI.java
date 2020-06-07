@@ -32,11 +32,6 @@ public class EnvironmentI implements Environment {
     }
 
     @Override
-    public <T> T configValue(Class<? extends Option<T>> key) {
-        return config.configValue(key);
-    }
-
-    @Override
     public void init() {
         config.configValue(ProgramLocalIdentity.class);
         config.configValue(IsDeterministic.class);
