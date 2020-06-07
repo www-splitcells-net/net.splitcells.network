@@ -56,11 +56,16 @@ public interface Files {
         writeToFile(path, toPrettyString(node));
     }
 
-    static void writeToFile(Path path, String string) {
+    static void writeToFile(Path path, byte[] content) {
         try (final var writer = new FileOutputStream(path.toFile())) {
-            writer.write(string.getBytes());
+            writer.write(content);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Deprecated
+    static void writeToFile(Path path, String string) {
+        writeToFile(path, string.getBytes());
     }
 }
