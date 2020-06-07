@@ -8,6 +8,9 @@ import java.util.function.Supplier;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.execution.EventProcessorExecutor.eventProcessorExecutor;
 
+/**
+ * Provides an event based effect system, that can be used by programs without side effects.
+ */
 public class EventProcessorExecution extends ResourceI<EventProcessorExecutor> {
     public EventProcessorExecution() {
         super(() -> {
