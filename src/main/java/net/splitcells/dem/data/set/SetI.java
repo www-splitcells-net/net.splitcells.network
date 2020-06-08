@@ -12,11 +12,12 @@ public class SetI<T> implements Set<T> {
         return new SetI();
     }
 
-    private final java.util.Set values;
+    private final java.util.Set<T> values;
 
     private SetI() {
         values = new HashSet<>();
     }
+
     @Override
     public int size() {
         return values.size();
@@ -50,6 +51,11 @@ public class SetI<T> implements Set<T> {
     @Override
     public boolean add(T t) {
         return values.add(t);
+    }
+
+    @Override
+    public void ensureContains(T e) {
+        values.add(e);
     }
 
     @Override

@@ -7,6 +7,17 @@ import static java.util.Arrays.asList;
 
 public interface Set<T> extends java.util.Set<T> {
 
+	@Deprecated
+	default boolean add(T e) {
+		if (contains(e)) {
+			throw new IllegalArgumentException("Element " + e + " already present in " + this);
+		}
+		ensureContains(e);
+		return true;
+	}
+
+	void ensureContains(T e);
+
 	default void addAll(T... objects) {
 		Arrays.stream(objects).forEach(e -> add(e));
 	}

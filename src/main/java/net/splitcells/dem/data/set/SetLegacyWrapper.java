@@ -52,6 +52,11 @@ public class SetLegacyWrapper<T> implements Set<T> {
 		return this.content.add(arg0);
 	}
 
+	@Override
+	public void ensureContains(T e) {
+		content.add(e);
+	}
+
 	@SuppressWarnings("all")
 	public boolean remove(final Object arg0) {
 		return this.content.remove(arg0);
