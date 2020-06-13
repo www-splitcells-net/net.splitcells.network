@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+notify-send $@
+	# notify-send seems to be licensed under LGPL.
+	# This command was tested on Fedora.
