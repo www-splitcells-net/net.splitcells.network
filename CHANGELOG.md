@@ -25,7 +25,7 @@ Releases are generally speaking, created monthly.
 1. Support command to enable framework in non interactive shells: '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin'
 1. "system.info": Create command to show system info overview.
 1. "system.shutdown" & "user.programs.close.gracefully": Create commands to shutdown system.
-1. "trash.empty": Create command to empty trash.
+1. "user.trash.empty": Create command to empty trash.
 1. "user.messages.add": Create command to send message to user.
 ### Patches
 1. Improving debug logging during first installation.
