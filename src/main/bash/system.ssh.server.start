@@ -20,7 +20,7 @@ else
 fi
 echo Check if SSH server runs and only allows authentication without password by connecting to the SSH server.
 echo There should be no prompt for a password during this test.
-	loginLog=$(ssh -o PasswordAuthentication=yes -vvv "$USER@localhost" exit 2>&1 >/dev/null)
+	loginLog=$(ssh -o PasswordAuthentication=yes -o PubkeyAuthentication=no -vvv "$USER@localhost" exit 2>&1 >/dev/null)
 	if [ "0" -eq "$?" ]; then
 		echo.error "Login with password is enabled, but should be disabled."
 		exit 1
