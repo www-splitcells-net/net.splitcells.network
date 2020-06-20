@@ -15,7 +15,7 @@ Also different Systems may have different functionality.
 
 This problem affects other systems like Windows and Mac OS as well.
 
-# Terminal based Dependency Injection aka. Leaky Abstraction
+# Leaky Abstractions aka. Terminal based Dependency Injection
 (I kind of think, that I'm using the false term for this.)
 On different systems different programs need to be executed in order to achieve the same thing on an abstract level.
 For instance, the user might want to install a new program or just check if everything is fine.
