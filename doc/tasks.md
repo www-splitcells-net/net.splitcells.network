@@ -3,8 +3,6 @@ Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
-1. Install CoreCtrl.
-1. Add optional bit rot detection to repository commands.
 1. Manage power settings: improved performance and increased battery life
 1. Automatic "system.update" via "user.weekly" if "system.config.management.automatic" is set to true.
    Default for "system.management.automatic" is false. 
