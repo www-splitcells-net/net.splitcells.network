@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+git remote add github git@github.com:www-splitcells-net/net.splitcells.os.state.interface.lib.git
+git remote add gitlab git@gitlab.com:splitcells/net.splitcells.os.state.interface.lib.git
