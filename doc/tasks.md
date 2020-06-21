@@ -5,6 +5,23 @@ The priority of a task is just a guideline.
 ### Current Tasks
 1. "run.and.show.if.failed": store final output in error case in temporary file and just show link
    to file in order to not clutter output.
+   1. Use "echo.error".
+   1. Make "echo.error" easier to spot for the user.
+1. Improve repo commands.
+   1. Change meta repo.
+      1. Document repo functionality.
+         1. Document why improvement is done.
+      1. Use ".repo" and bin folder for repo specifc config and commands.
+      1. Consider using external software for meta repo.
+         Make home brown meta repo structure easy to migrate to other structures/software.
+   1. Create command "repo.validate".
+      1. Check if all local sub repositories are registred and notify not registred repos.
+      1. Check if all remote sub repositories are present.
+   1. Provide 2 "repo.process" command with different paradigms.
+      1. "repo.process": Process repositories based on remote sub repos (this is implemented and should be deprecated because its complex).
+      1. "repo.process.2": Process repositories based on local sub repos (this is most important one and not implemented).
+         1. Move repo.process.2 to this project from os.state.interface.lib.
+   1. Avots: Move private git implementations to public project.
 1. Manage power settings: improved performance and increased battery life
 1. Automatic "system.update" via "user.weekly" if "system.config.management.automatic" is set to true.
    Default for "system.management.automatic" is false. 
