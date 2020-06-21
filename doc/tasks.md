@@ -3,6 +3,8 @@ Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
+1. "run.and.show.if.failed": store final output in error case in temporary file and just show link
+   to file in order to not clutter output.
 1. Manage power settings: improved performance and increased battery life
 1. Automatic "system.update" via "user.weekly" if "system.config.management.automatic" is set to true.
    Default for "system.management.automatic" is false. 
