@@ -18,6 +18,7 @@ public interface Sets {
         );
     }
 
+    @SafeVarargs
     static <T> Set<T> merge(Collection<T>... collections) {
         final var rVal = Sets.<T>setOfUniques();
         for (Collection<T> collection : collections) {
