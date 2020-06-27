@@ -1,7 +1,10 @@
 # Code Guidelines
 ## Programming Language
-1. Use Thompson Shell(sh) for simple scripts.
-   Use Python 3 for programs with any complexity.
+1. Use Thompson Shell(sh) for simple scripts that just execute 
+   and wire together commands.
+   Use Python 3 for programs with any complexity or processing.
+   Shells are not suited for programming.
+   Shells are suited for interactions, simple configurations and simple mappings.
 ## Configuration
    1. Configuration values should be accessed via commands and not via i.e. variables.
      This way Programs can rely on the configuration values without being set.
