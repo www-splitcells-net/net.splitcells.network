@@ -15,9 +15,6 @@ Releases are generally speaking, created monthly.
 ### Minor Changes
 1. Setup contribution guide lines.
 1. "this.active.if.presence.of": Create command in order to test, if environment has required command.
-1. "system.resource.usage.overview": Create command for resource usage overview.
-1. "shell.execute.as.background.task": Create command that executes tasks in the background that are closed when the current console is closed.
-1. "user.": Create command to list all user's computer addresses.
 1. Document some interesting third party shell software.
 1. Create command "run.and.show.on.success".
 1. Setup CI for Github.
@@ -28,6 +25,8 @@ Releases are generally speaking, created monthly.
 1. "user.trash.empty": Create command to empty trash.
 1. "user.messages.add": Create command to send message to user.
 1. "system.managed.automatically.by.user.assert": Create command to configure additional default configurations.
+1. "user.weekly": Create command for weekly execution with additional task that is disabled
+   by default.
 ### Patches
 1. Improving debug logging during first installation.
 1. "command.managed.execute": Clear current line after execution end.

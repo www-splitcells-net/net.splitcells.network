@@ -22,9 +22,6 @@ The priority of a task is just a guideline.
       1. "repo.process.2": Process repositories based on local sub repos (this is most important one and not implemented).
          1. Move repo.process.2 to this project from os.state.interface.lib.
    1. Avots: Move private git implementations to public project.
-1. Manage power settings: improved performance and increased battery life
-1. Automatic "system.update" via "user.weekly" if "system.config.management.automatic" is set to true.
-   Default for "system.management.automatic" is false. 
 1. Visualize concept hierarchy on a website.
 1. Fix description created by automatic releases.
 1. Document commands.
