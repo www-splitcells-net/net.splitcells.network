@@ -27,6 +27,7 @@ Releases are generally speaking, created monthly.
 1. "system.shutdown" & "user.programs.close.gracefully": Create commands to shutdown system.
 1. "user.trash.empty": Create command to empty trash.
 1. "user.messages.add": Create command to send message to user.
+1. "system.managed.automatically.by.user.assert": Create command to configure additional default configurations.
 ### Patches
 1. Improving debug logging during first installation.
 1. "command.managed.execute": Clear current line after execution end.

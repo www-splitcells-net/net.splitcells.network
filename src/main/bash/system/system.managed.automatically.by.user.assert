@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Exits with 0, if the system should be managed automatically.
+
+# If the system is not managed automatically commands of this framework (i.e. "system.configure")
+# will do only things, that the user explicitly enabled.
+# Especially, it is ensured that the system is not changed without the explicit order
+# or configuration of the user.
+
+# If the system is managed automatically commands of this framework may may
+# apply some changes to the system automatically.
+# In other words, commands of the frameworks will apply some default configurations.
+# For instance, the execution of "user.configure" will also update the system.
+
+command.managed.execute conjunction system.managed.automatically.by.user.assert
