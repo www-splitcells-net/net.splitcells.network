@@ -1,0 +1,33 @@
+package net.splitcells.gel.kodols.dati.tabula;
+
+import net.splitcells.dem.lang.dom.Domable;
+import org.w3c.dom.Node;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.textNode;
+
+public interface RindaRādītājs extends Domable {
+    Tabula konteksts();
+
+    int indekss();
+
+    default Optional<Rinda> interpretē() {
+        return interpretē(konteksts());
+    }
+
+    Optional<Rinda> interpretē(Tabula context);
+
+    @Override
+    default Node toDom() {
+        final var dom = element(RindaRādītājs.class.getSimpleName());
+        final var rinda = interpretē();
+        if (rinda.isPresent()) {
+            dom.appendChild(rinda.get().toDom());
+        } else {
+            dom.appendChild(element("indekss", textNode(indekss() + "")));
+        }
+        return dom;
+    }
+}
