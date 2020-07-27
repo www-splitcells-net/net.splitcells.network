@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.gel.kodols.ierobežojums.tips.PriekšVisiem;
-import net.splitcells.gel.martins.avots.ierobežojums.tips.PriekšVisiemF;
+import net.splitcells.gel.kodols.ierobežojums.tips.PriekšVisiemF;
 import net.splitcells.gel.kodols.ierobežojums.tips.Tad;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;

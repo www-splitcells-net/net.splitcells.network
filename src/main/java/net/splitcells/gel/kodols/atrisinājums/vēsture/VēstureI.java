@@ -6,7 +6,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
 import static net.splitcells.gel.kodols.Valoda.PIEŠĶIRŠANAS;
 import static net.splitcells.gel.kodols.Valoda.VĒSTURE;
-import static net.splitcells.gel.martins.avots.dati.datubāze.DatuBāzeIRef.datuBāze;
+import static net.splitcells.gel.kodols.dati.datubāze.DatuBāzes.datuBāze;
 import static net.splitcells.gel.kodols.atrisinājums.vēsture.notikums.PiešķiršanaMaiņaTips.PAPILDINĀJUMS;
 import static net.splitcells.gel.kodols.atrisinājums.vēsture.notikums.PiešķiršanaMaiņaTips.NOŅEMŠANA;
 import static net.splitcells.gel.kodols.atrisinājums.vēsture.notikums.Piešķiršana.piešķiršana;

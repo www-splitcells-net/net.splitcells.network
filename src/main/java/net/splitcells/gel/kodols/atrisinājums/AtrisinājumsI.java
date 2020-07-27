@@ -3,6 +3,7 @@ package net.splitcells.gel.kodols.atrisinājums;
 import net.splitcells.dem.utils.Not_implemented_yet;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.gel.kodols.atrisinājums.vēsture.Vēstures;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.kodols.dati.tabula.kolonna.Kolonna;
@@ -16,7 +17,6 @@ import net.splitcells.gel.kodols.problēma.Problēma;
 import net.splitcells.gel.kodols.problēma.atvasināts.AtvasinātsAtrisinājums;
 import net.splitcells.gel.kodols.novērtējums.struktūra.RefleksijaNovērtējums;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.Vēsture;
-import net.splitcells.gel.martins.avots.atrisinājums.vēsture.VēstureRef;
 
 import java.util.function.Function;
 
@@ -28,7 +28,7 @@ public class AtrisinājumsI implements Atrisinājums {
 
 	public AtrisinājumsI(Problēma problēma) {
 		this.problēma = problēma;
-		vēsture = VēstureRef.vēsture(this);
+		vēsture = Vēstures.vēsture(this);
 	}
 
 	@Override

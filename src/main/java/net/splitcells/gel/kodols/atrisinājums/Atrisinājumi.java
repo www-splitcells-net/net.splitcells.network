@@ -5,7 +5,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.gel.kodols.Valoda.*;
 import static net.splitcells.gel.kodols.dati.piešķiršanas.PiešķiršanasI.piešķiršanas;
 
-import static net.splitcells.gel.martins.avots.dati.datubāze.DatuBāzeIRef.datuBāze;
+import static net.splitcells.gel.kodols.dati.datubāze.DatuBāzes.datuBāze;
 
 import java.util.Arrays;
 

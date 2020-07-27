@@ -14,7 +14,7 @@ import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.novērtējums.struktūra.RefleksijaNovērtējums;
 import net.splitcells.gel.kodols.atrisinājums.Atrisinājums;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.Vēsture;
-import net.splitcells.gel.martins.avots.atrisinājums.vēsture.VēstureRef;
+import net.splitcells.gel.kodols.atrisinājums.vēsture.Vēstures;
 import org.w3c.dom.Node;
 
 import java.util.Set;
@@ -45,12 +45,12 @@ public class AtvasinātsAtrisinājums implements Atrisinājums {
     protected AtvasinātsAtrisinājums(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = atvasināšana;
-        vēsture = VēstureRef.vēsture(this);
+        vēsture = Vēstures.vēsture(this);
     }
 
     protected AtvasinātsAtrisinājums(Piešķiršanas piešķiršanas) {
         this.piešķiršanas = piešķiršanas;
-        vēsture = VēstureRef.vēsture(this);
+        vēsture = Vēstures.vēsture(this);
     }
 
     @Override

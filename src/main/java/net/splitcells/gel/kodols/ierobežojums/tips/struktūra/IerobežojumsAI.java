@@ -13,7 +13,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
-import static net.splitcells.gel.martins.avots.dati.datubāze.DatuBāzeIRef.datuBāze;
+import static net.splitcells.gel.kodols.dati.datubāze.DatuBāzes.datuBāze;
 import static net.splitcells.gel.kodols.kopīgs.Vārdi.ARGUMENTI;
 import static net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaNovērtējums.rindasNovērtējums;
 import static net.splitcells.gel.kodols.ierobežojums.Ziņojums.report;
