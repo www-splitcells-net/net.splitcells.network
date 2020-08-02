@@ -11,11 +11,10 @@ The priority of a task is just a guideline.
    1. Change meta repo.
    1. Create command "repo.verify".
       1. Check if all remote sub repositories are present.
-   1. Provide 2 "repo.process" command with different paradigms.
+   1. Provide second "repo.process" command for new layout.
       1. "repo.process": Process repositories based on remote sub repos (this is implemented and should be deprecated because its complex).
       1. "repo.process.2": Process repositories based on local sub repos (this is most important one and not implemented).
-         1. Move repo.process.2 to this project from os.state.interface.lib.
-   1. Avots: Move private git implementations to public project.
+      1. If new layout is present during call of "repo.process" use "repo.process.2".
 1. Visualize concept hierarchy on a website.
 1. Fix description created by automatic releases.
 1. Document commands.
