@@ -14,6 +14,7 @@ Releases are generally speaking, created monthly.
 1. "command.mananged.environment.configure": Ensure that bash configuration is always active in graphical shell only.
 1. Migrate to new repository layout.
    1. Create command "repo.verify".
+   1. Create command "repo.process.2".
 ### Minor Changes
 1. Setup contribution guide lines.
 1. "this.active.if.presence.of": Create command in order to test, if environment has required command.
