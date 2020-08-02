@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+import configparser
+import subprocess
+from pathlib import Path
+import json
+import os
+
+subprocess.run('command.managed.execute conjunction repo.verify', shell='True')
+	# TODO Check for errors.
+print(Path('.').resolve())
+subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
+if subListPath.is_file():
+	with open(subListPath, 'r') as subListFile:
+		repoList=json.load(subListFile)
+		for subName in repoList['subs'].keys():
+			subRepoPath=Path('./' + subName)
+			if not subRepoPath.is_dir():
+				print('Folder of subrepository "' + str(subRepoPath) + '" is missing.')
+		for currentSubDir in Path('.').iterdir():
+			if not currentSubDir.name.startswith('.'):
+				if not currentSubDir.name in repoList['subs']:
+					print('Unknown subrepository "' + currentSubDir.name + '" is present.')
+		for subName in repoList['subs'].keys():
+			subprocess.run('cd ' + subName + '; repo.verify', shell='True')
+				# TODO Check for errors.
