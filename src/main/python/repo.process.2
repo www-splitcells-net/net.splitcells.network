@@ -13,8 +13,9 @@ from pathlib import Path
 # TODO Support host.
 
 def execute(relativePath, host, command):
-	print(Path('.').resolve())
-	print(command)
+	print(relativePath)
+	command = command.replace('$subRepo', '')
+	print('	' + command)
 	subprocess.call(command, shell='True')
 def process(relativePath, host, command):
 	execute(relativePath, host, command)
@@ -24,9 +25,10 @@ def process(relativePath, host, command):
 			repoList=json.load(subListFile)
 			for subName in repoList['subs'].keys():
 				r='/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.os.state.interface/src/main/python/repo.process.2'
-				subRepoCommand = 'cd ' + subName + ' ; ' + r + ' --command=' + command # + ' --host=' + host + ' --relativePath=' + relativePath
-				print(subRepoCommand)
-				subprocess.call(subRepoCommand, shell='True')
+				subRepoScript = 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath + '/' + subName
+				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
+				print('	' + subRepoScript)
+				subprocess.call(subRepoScript, shell='True')
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='TODO')
 	parser.add_argument('--relative-path', dest='relativePath', default='./')
