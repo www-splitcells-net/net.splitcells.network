@@ -2,7 +2,7 @@ package net.splitcells.gel.kodols.dati.tabula.kolonna;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.kodols.dati.uzmeklēšana.UzmeklēšanaI.uzmeklē;
+import static net.splitcells.gel.kodols.dati.uzmeklēšana.Uzmeklēšanas.uzmeklē;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;

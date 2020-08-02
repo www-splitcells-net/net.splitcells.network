@@ -3,7 +3,7 @@ package net.splitcells.gel.kodols.atrisinājums;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.gel.kodols.Valoda.*;
-import static net.splitcells.gel.kodols.dati.piešķiršanas.PiešķiršanasI.piešķiršanas;
+import static net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanass.piešķiršanas;
 
 import static net.splitcells.gel.kodols.dati.datubāze.DatuBāzes.datuBāze;
 

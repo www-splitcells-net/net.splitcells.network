@@ -7,14 +7,6 @@ import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 
 public interface DatuBāze extends Tabula {
 
-	static DatuBāze database(List<Atribūts<?>> atribūti) {
-		return new DatuBāzeI(atribūti);
-	}
-
-	static DatuBāze database(Atribūts<?>... atribūti) {
-		return new DatuBāzeI(atribūti);
-	}
-
 	Rinda pieliktUnPārtulkot(List<? extends Object> values);
 
 	Rinda pielikt(Rinda rinda);

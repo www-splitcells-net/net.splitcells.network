@@ -15,10 +15,6 @@ import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 public class UzmeklēšanaI<T> implements Uzmeklēšana<T> {
     private final UzmeklēšanasTabula tukšaUzmeklēšanasTabula;
 
-    public static <R> Uzmeklēšana<R> uzmeklē(Tabula tabula, Atribūts<R> atribūts) {
-        return new UzmeklēšanaI<>(tabula, atribūts);
-    }
-
     protected final Tabula tabula;
     protected final Map<T, UzmeklēšanasTabula> saturs = map();
     protected final Atribūts<T> atribūts;

@@ -52,10 +52,6 @@ public class PiešķiršanasI implements Piešķiršanas {
     protected final Map<Integer, Set<Integer>> lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu = map();
     protected final Map<Integer, Set<Integer>> lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu = map();
 
-    public static Piešķiršanas piešķiršanas(String vārds, DatuBāze prāsibas, DatuBāze piedāvājumi) {
-        return new PiešķiršanasI(vārds, prāsibas, piedāvājumi);
-    }
-
     @Deprecated
     public PiešķiršanasI(String vārds, DatuBāze prasības, DatuBāze piedāvājumi) {
         this.vārds = vārds;

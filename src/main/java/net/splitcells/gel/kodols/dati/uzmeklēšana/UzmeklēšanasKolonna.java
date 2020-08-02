@@ -1,7 +1,7 @@
 package net.splitcells.gel.kodols.dati.uzmeklēšana;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.kodols.dati.uzmeklēšana.UzmeklēšanaI.uzmeklē;
+import static net.splitcells.gel.kodols.dati.uzmeklēšana.Uzmeklēšanas.uzmeklē;
 
 import java.util.Collection;
 import java.util.Iterator;

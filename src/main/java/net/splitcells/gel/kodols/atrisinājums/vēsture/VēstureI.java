@@ -20,10 +20,10 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
-import net.splitcells.gel.kodols.dati.piešķiršanas.PiešķiršanasI;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
 import net.splitcells.gel.kodols.dati.datubāze.NoņemšanasKlausītājs;
+import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanass;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.dati.tabula.kolonna.Kolonna;
@@ -42,7 +42,7 @@ public class VēstureI implements Vēsture {
     private Piešķiršanas piešķiršanas;
 
     protected VēstureI(Atrisinājums atrisinājums) {
-        piešķiršanas = PiešķiršanasI.piešķiršanas
+        piešķiršanas = Piešķiršanass.piešķiršanas
                 (VĒSTURE.apraksts()
                         , datuBāze(PIEŠĶIRŠANAS.apraksts(), PIEŠĶIRŠANA_ID, PIEŠĶIRŠANAS_NOTIKUMS)
                         , datuBāze(PIEŠĶIRŠANAS.apraksts(), REFLEKSIJAS_DATI));
