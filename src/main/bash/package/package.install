@@ -18,7 +18,7 @@
 # Use package specific installer if present first, in case this framework imports a starter script for this program.
 # In this case you cannot check via PATH environment, if the program is already installed.
 if [ -x "$(command -v package.install.$1)" ]; then
-	echo executing package.install.$1
+	echo Executing package.install.$1
 	package.install.$1
 	if [ "$?" -eq "0" ]; then
 		exit
