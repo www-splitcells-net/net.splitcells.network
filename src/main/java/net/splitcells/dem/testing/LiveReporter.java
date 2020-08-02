@@ -23,6 +23,9 @@ public class LiveReporter implements TestExecutionListener {
 
 	public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
 		if (SUCCESSFUL != testExecutionResult.getStatus()) {
+			if (testExecutionResult.getThrowable().isPresent()) {
+				testExecutionResult.getThrowable().get().printStackTrace();
+			}
 			System.out.println("Failed: " + testIdentifier.getUniqueId());
 		}
 	}
