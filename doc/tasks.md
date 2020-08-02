@@ -9,13 +9,7 @@ The priority of a task is just a guideline.
    1. Make "echo.error" easier to spot for the user.
 1. Improve repo commands.
    1. Change meta repo.
-      1. Document repo functionality.
-         1. Document why improvement is done.
-      1. Use ".repo" and bin folder for repo specifc config and commands.
-      1. Consider using external software for meta repo.
-         Make home brown meta repo structure easy to migrate to other structures/software.
-   1. Create command "repo.validate".
-      1. Check if all local sub repositories are registred and notify not registred repos.
+   1. Create command "repo.verify".
       1. Check if all remote sub repositories are present.
    1. Provide 2 "repo.process" command with different paradigms.
       1. "repo.process": Process repositories based on remote sub repos (this is implemented and should be deprecated because its complex).
