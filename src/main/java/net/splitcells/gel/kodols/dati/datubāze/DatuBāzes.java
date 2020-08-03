@@ -38,7 +38,7 @@ public class DatuBāzes extends ResourceI<DatuBāzesVeidotajs> {
     }
 
     public static DatuBāze datuBāze(List<Atribūts<?>> atribūti) {
-        return new DatuBāzeI(atribūti);
+        return environment().config().configValue(DatuBāzes.class).datuBāze(atribūti);
 
     }
 }

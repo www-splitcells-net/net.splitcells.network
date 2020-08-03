@@ -8,12 +8,17 @@ import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
-public interface DatuBāzesVeidotajs  extends Closeable, Flushable {
+public interface DatuBāzesVeidotajs extends Closeable, Flushable {
     DatuBāze datuBāze(String vārds, Atribūts<? extends Object>... atribūti);
 
     DatuBāze datuBāze(Atribūts<? extends Object>... atribūti);
 
-    DatuBāze database(List<Atribūts<?>> atribūti);
+    @Deprecated
+    default DatuBāze database(List<Atribūts<?>> atribūti) {
+        return datuBāze(atribūti);
+    }
+
+    DatuBāze datuBāze(List<Atribūts<?>> atribūti);
 
     DatuBāze datuBāze(List<Atribūts<? extends Object>> atribūti, List<List<Object>> rindasVertības);
 

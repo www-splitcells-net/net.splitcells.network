@@ -19,7 +19,7 @@ public class DatuBāzesIVeidotajs implements DatuBāzesVeidotajs {
     }
 
     @Override
-    public DatuBāze database(List<Atribūts<?>> atribūti) {
+    public DatuBāze datuBāze(List<Atribūts<?>> atribūti) {
         return new DatuBāzeI(atribūti);
     }
 
