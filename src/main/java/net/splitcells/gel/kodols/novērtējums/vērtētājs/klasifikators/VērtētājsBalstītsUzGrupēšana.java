@@ -43,7 +43,7 @@ public class VērtētājsBalstītsUzGrupēšana implements Vērtētājs {
                 novērtejumuNotikums.papildinājumi()
                         .put(line
                                 , lokalsNovērtejums()
-                                        .arIzdalīšanaUz(bērni)
+                                        .arIzdalīšanaUz(localRating.izdalīUz())
                                         .arNovērtējumu(bezMaksas())
                                         .arRadītuGrupasId
                                                 (localRating.radītsIerobežojumuGrupaId())));
