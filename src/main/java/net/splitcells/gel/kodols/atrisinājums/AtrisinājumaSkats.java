@@ -12,7 +12,7 @@ import net.splitcells.gel.kodols.problēma.ProblēmasSkats;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;
-import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.VērtētājsBasedGrupēšana;
+import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.VērtētājsBalstītsUzGrupēšana;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.Vēsture;
 import org.w3c.dom.Element;
 
@@ -43,7 +43,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
                             (priekšVisiiemIerobežojums.grupešana())
                             .withAppended(
                                     priekšVisiiemIerobežojums.grupešana()
-                                            .casted(VērtētājsBasedGrupēšana.class)
+                                            .casted(VērtētājsBalstītsUzGrupēšana.class)
                                             .map(e -> prieksVisiemAtribūtuNoGrupetājs(e.grupetājs()))
                                             .orElseGet(() -> list())
                             );

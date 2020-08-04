@@ -21,14 +21,14 @@ import net.splitcells.gel.kodols.dati.tabula.Tabula;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.NovērtējumsNotikums;
 
-public class VērtētājsBasedGrupēšana implements Vērtētājs {
-    public static VērtētājsBasedGrupēšana raterBasedGrouping(Vērtētājs grouping) {
-        return new VērtētājsBasedGrupēšana(grouping);
+public class VērtētājsBalstītsUzGrupēšana implements Vērtētājs {
+    public static VērtētājsBalstītsUzGrupēšana raterBasedGrouping(Vērtētājs grouping) {
+        return new VērtētājsBalstītsUzGrupēšana(grouping);
     }
 
     private final Vērtētājs grupetājs;
 
-    protected VērtētājsBasedGrupēšana(Vērtētājs grupetājs) {
+    protected VērtētājsBalstītsUzGrupēšana(Vērtētājs grupetājs) {
         this.grupetājs = grupetājs;
     }
 
@@ -79,7 +79,7 @@ public class VērtētājsBasedGrupēšana implements Vērtētājs {
 
     @Override
     public Class<? extends Vērtētājs> type() {
-        return VērtētājsBasedGrupēšana.class;
+        return VērtētājsBalstītsUzGrupēšana.class;
     }
 
     public Vērtētājs grupetājs() {

@@ -19,7 +19,7 @@ import net.splitcells.gel.kodols.ierobežojums.tips.PriekšVisiemF;
 import net.splitcells.gel.kodols.ierobežojums.tips.Tad;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;
-import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.VērtētājsBasedGrupēšana;
+import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.VērtētājsBalstītsUzGrupēšana;
 import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
 
@@ -52,9 +52,9 @@ public class JautājumsI implements Jautājums {
                 .skatsUsBerniem().stream()
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
                 .filter(child -> child.arguments().size() == 1)
-                .filter(child -> child.arguments().get(0).getClass().equals(VērtētājsBasedGrupēšana.class))
+                .filter(child -> child.arguments().get(0).getClass().equals(VērtētājsBalstītsUzGrupēšana.class))
                 .filter(child -> {
-                    final var grupēšana = (VērtētājsBasedGrupēšana) child.arguments().get(0);
+                    final var grupēšana = (VērtētājsBalstītsUzGrupēšana) child.arguments().get(0);
                     return grupēšana.arguments().get(0).equals(vērtētājs);
                 }).reduce(ensureSingle());
         final var radītasGrupas = Sets.<GrupaId>setOfUniques();

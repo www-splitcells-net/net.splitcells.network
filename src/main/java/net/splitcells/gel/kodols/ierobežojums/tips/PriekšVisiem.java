@@ -1,6 +1,6 @@
 package net.splitcells.gel.kodols.ierobežojums.tips;
 
-import static net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.VērtētājsBasedGrupēšana.raterBasedGrouping;
+import static net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.VērtētājsBalstītsUzGrupēšana.raterBasedGrouping;
 import static net.splitcells.gel.kodols.ierobežojums.argumentācija.valoda.PriekšVisiemArgumentācija.priekšVisiemArgumentācija;
 
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
