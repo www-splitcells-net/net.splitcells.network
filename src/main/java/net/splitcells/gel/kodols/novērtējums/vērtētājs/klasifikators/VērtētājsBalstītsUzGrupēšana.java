@@ -39,14 +39,14 @@ public class VērtētājsBalstītsUzGrupēšana implements Vērtētājs {
         final var novērtejumuNotikums = novērtejumuNotikums();
         final var rBase = grupetājs.vērtē_pēc_padildinājumu(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu);
         novērtejumuNotikums.noņemšana().addAll(rBase.noņemšana());
-        rBase.papildinājumi().forEach((line, localRating) ->
+        rBase.papildinājumi().forEach((rinda, vietējiasNovērtējums) ->
                 novērtejumuNotikums.papildinājumi()
-                        .put(line
+                        .put(rinda
                                 , lokalsNovērtejums()
-                                        .arIzdalīšanaUz(localRating.izdalīUz())
+                                        .arIzdalīšanaUz(vietējiasNovērtējums.izdalīUz())
                                         .arNovērtējumu(bezMaksas())
                                         .arRadītuGrupasId
-                                                (localRating.radītsIerobežojumuGrupaId())));
+                                                (vietējiasNovērtējums.radītsIerobežojumuGrupaId())));
         return novērtejumuNotikums;
     }
 
