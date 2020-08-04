@@ -84,8 +84,11 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 .filter(grupa -> grupa.isPresent())
                 .map(grupa -> grupa.get())
                 .map(ierobežojums ->
-                        ierobežojums.rindasAbstrāde()
-                                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).vertības().stream()
+                        ierobežojums
+                                .rindasAbstrāde()
+                                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .vertības()
+                                .stream()
                                 // DARĪT Šis nestrāda ar IerobežojumuGrupasBalstītsRemontsTests.
                                 .filter(grupa -> !ierobežojums.neievērotaji(grupa).isEmpty())
                                 .map(grupa -> ierobežojums.rindasAbstrāde().kolonnaSkats(RINDA).vertības())
