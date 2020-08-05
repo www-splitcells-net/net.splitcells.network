@@ -45,9 +45,7 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, NoņemšanasK
     static List<List<Ierobežojums>> piešķiršanasGruppas(List<Ierobežojums> momentānaTaka) {
         final var ierobežojums = momentānaTaka.lastValue().get();
         final List<List<Ierobežojums>> piešķiršanasGruppas = list();
-        if (PriekšVisiem.class.equals(ierobežojums.type())) {
-            piešķiršanasGruppas.add(momentānaTaka);
-        }
+        piešķiršanasGruppas.add(momentānaTaka);
         piešķiršanasGruppas.addAll(
                 ierobežojums.skatsUsBerniem().stream()
                         .map(child -> piešķiršanasGruppas(listWithValuesOf(momentānaTaka).withAppended(child)))
