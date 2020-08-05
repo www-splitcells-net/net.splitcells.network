@@ -79,7 +79,6 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
 
     public List<OptimizācijasNotikums> izbrīvoPieškiršanasNoMazākoGrupu(AtrisinājumaSkats atrisinājums) {
         final var pieškiršanasGrupas = piešķiršanasGruppas(atrisinājums.ierobežojums());
-
         return pieškiršanasGrupas.lastValue()
                 .map(grupa -> grupa.lastValue())
                 .filter(grupa -> grupa.isPresent())
