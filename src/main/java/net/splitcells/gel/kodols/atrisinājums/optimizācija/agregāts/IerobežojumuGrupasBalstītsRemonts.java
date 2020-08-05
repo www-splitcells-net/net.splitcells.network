@@ -31,7 +31,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
 
     @Override
     public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
-        izbrīvoPieškiršanas(atrisinājums);
+        izbrīvoPieškiršanasNoMazākoGrupu(atrisinājums);
         return pārdale(atrisinājums);
     }
 
@@ -77,9 +77,10 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         throw not_implemented_yet();
     }
 
-    public List<OptimizācijasNotikums> izbrīvoPieškiršanas(AtrisinājumaSkats atrisinājums) {
+    public List<OptimizācijasNotikums> izbrīvoPieškiršanasNoMazākoGrupu(AtrisinājumaSkats atrisinājums) {
         final var pieškiršanasGrupas = piešķiršanasGruppas(atrisinājums.ierobežojums());
-        return pieškiršanasGrupas.stream()
+
+        return pieškiršanasGrupas.lastValue()
                 .map(grupa -> grupa.lastValue())
                 .filter(grupa -> grupa.isPresent())
                 .map(grupa -> grupa.get())
@@ -93,7 +94,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                                 .filter(grupa -> !ierobežojums.neievērotaji(grupa).isEmpty())
                                 .map(grupa -> ierobežojums.rindasAbstrāde().kolonnaSkats(RINDA).vertības())
                                 .collect(toSetOfUniques()))
-                .reduce((l, r) -> merge(l, r))
+                //.reduce((l, r) -> merge(l, r))
                 .stream()
                 .flatMap(straumeNoRindasSarakstiem -> straumeNoRindasSarakstiem.stream())
                 .flatMap(rindas -> rindas.stream())
