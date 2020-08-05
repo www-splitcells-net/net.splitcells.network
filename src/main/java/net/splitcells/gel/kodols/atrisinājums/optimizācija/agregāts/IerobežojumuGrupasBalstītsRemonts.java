@@ -97,9 +97,10 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 .stream()
                 .flatMap(straumeNoRindasSarakstiem -> straumeNoRindasSarakstiem.stream())
                 .flatMap(rindas -> rindas.stream())
-                .map(rinda -> optimizacijasNotikums(NOŅEMŠANA
-                        , atrisinājums.prasība_no_piešķiršana(rinda).toLinePointer()
-                        , atrisinājums.piedāvājums_no_piešķiršana(rinda).toLinePointer()))
+                .map(rinda -> optimizacijasNotikums
+                        (NOŅEMŠANA
+                                , atrisinājums.prasība_no_piešķiršana(rinda).toLinePointer()
+                                , atrisinājums.piedāvājums_no_piešķiršana(rinda).toLinePointer()))
                 .collect(toList());
     }
 }
