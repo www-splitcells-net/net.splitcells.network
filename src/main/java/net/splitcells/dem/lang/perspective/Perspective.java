@@ -26,6 +26,16 @@ import static org.assertj.core.api.Assertions.assertThat;
  * done via name spaces.
  * <p>
  * IDEA Create alternative to XSL.
+ * <p></p>
+ * A perspective is like an variable. An variable may only hold one value,
+ * that may be a list of values. A perspective holds a value and a list of perspectives.
+ * In other words, a Perspective is an structure for variables.
+ * <p></p>
+ * It has a name in a certain scope which is the namespace.
+ * The name is only valid in this scope and may restrict the possible values of the perspective.
+ * In other words the namespace may have an type encoded in it, that is described externally.
+ * A perspective has a value, if it only contains exactly one value.
+ * A perspective has children, if it contains multiple values.
  */
 public interface Perspective extends Domable {
 
