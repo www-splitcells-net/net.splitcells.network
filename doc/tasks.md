@@ -4,7 +4,8 @@ This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
 1. Create last version with unnecessary mayor changes.
-   In order to do this, the old repo interface has to be replaced with the new one.
+   1. In order to do this, the old repo interface has to be replaced with the new one.
+   1. Fix stderr filtering.
 1. "run.and.show.if.failed" and similar: do not filter stderr echo.
 1. "run.and.show.if.failed": store final output in error case in temporary file and just show link
    to file in order to not clutter output.
