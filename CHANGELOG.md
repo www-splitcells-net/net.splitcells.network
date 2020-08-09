@@ -15,6 +15,8 @@ Releases are generally speaking, created monthly.
 1. Migrate to new repository layout.
    1. Create command "repo.verify".
    1. Create command "repo.process.2".
+1. "echo.error" now just echos to stderr.
+   Other commands do not filter echoed errors correctly anymore.
 ### Minor Changes
 1. Setup contribution guide lines.
 1. "this.active.if.presence.of": Create command in order to test, if environment has required command.
