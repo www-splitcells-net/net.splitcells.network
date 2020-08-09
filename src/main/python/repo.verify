@@ -7,6 +7,7 @@ import subprocess
 from pathlib import Path
 import json
 import os
+import sys
 
 subprocess.run('command.managed.execute conjunction repo.verify', shell='True')
 	# TODO Check for errors.
@@ -19,6 +20,8 @@ if subListPath.is_file():
 			subRepoPath=Path('./' + subName)
 			if not subRepoPath.is_dir():
 				print('Folder of subrepository "' + str(subRepoPath) + '" is missing.')
+				# TODO Echo to stderr.
+				sys.exit(1)
 		for currentSubDir in Path('.').iterdir():
 			if not currentSubDir.name.startswith('.'):
 				if not currentSubDir.name in repoList['subs']:
