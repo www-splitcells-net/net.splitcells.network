@@ -24,5 +24,6 @@ if subListPath.is_file():
 				if not currentSubDir.name in repoList['subs']:
 					print('Unknown subrepository "' + currentSubDir.name + '" is present.')
 		for subName in repoList['subs'].keys():
-			subprocess.run('cd ' + subName + '; repo.verify', shell='True')
-				# TODO Check for errors.
+			if Path('./' + subName).is_dir():
+				subprocess.run('cd ' + subName + '; repo.verify', shell='True')
+					# TODO Check for errors.
