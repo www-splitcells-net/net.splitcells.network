@@ -121,14 +121,12 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
         if (!endingMessage.contains(Dsui.ENTRY_POINT)) {
             throw new IllegalArgumentException(endingMessage);
         }
+        baseOutput.append(endingMessage.split(Dsui.ENTRY_POINT)[1]);
+
         contentOutput.flush();
         contentOutput.close();
 
-        baseOutput.append(endingMessage.split(Dsui.ENTRY_POINT)[1]);
-        baseOutput.flush();
-        baseOutput.close();
-
-        isClosed = false;
+        isClosed = true;
     }
 
     @Override
