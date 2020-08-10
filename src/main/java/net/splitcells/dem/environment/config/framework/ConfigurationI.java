@@ -1,6 +1,7 @@
 package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.environment.resource.Resource;
+import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
 import java.util.Map;
@@ -118,11 +119,11 @@ public class ConfigurationI implements Configuration {
         assert !this.subscribers.get(option).contains(consumer);
         this.subscribers.get(option).add(consumer);
     }
-
+    
     @Override
     public <T> void process(Class<? extends T> type, Function<T, T> processor) {
         config_store.entrySet().forEach(entry -> {
-            if (type.isAssignableFrom((Class<?>) entry.getKey())) {
+            if (type.isAssignableFrom(entry.getValue().getClass())) {
                 entry.setValue(
                         processor.apply(((T) entry.getValue()))
                 );
