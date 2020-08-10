@@ -53,10 +53,12 @@ public class EnvironmentI implements Environment {
 
     @Override
     public void close() {
-        config.process(Closeable.class, r -> {
-            r.close();
-            return r;
-        });
+        config.process
+                (Closeable.class
+                        , r -> {
+                            r.close();
+                            return r;
+                        });
     }
 
 }
