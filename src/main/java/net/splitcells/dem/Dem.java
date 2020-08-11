@@ -3,10 +3,19 @@ package net.splitcells.dem;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
+import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.resource.host.interaction.Domsole;
+import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintWriter;
+import java.util.Optional;
 import java.util.function.Consumer;
 
+import static net.splitcells.dem.lang.Xml.textNode;
+import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 
@@ -21,7 +30,6 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
  * This is done, by having 1 and only one variable representing the state of the environment
  * and passing it through everywhere.
  * <p/>
- *
  */
 public final class Dem {
     /**
@@ -50,6 +58,24 @@ public final class Dem {
             try {
                 // TOFIX Does not write log file on short programs that throws an exception.
                 program.run();
+            } catch (Throwable t) {
+                // TOFIX Additional namespace decleration should not be needed.
+                final var error = Xml.rElement(DEN, "error");
+                final var stackTrace = Xml.element(DEN, "stack-trace");
+                final var errorMessage = Xml.element(DEN, "message");
+                {
+                    final var stackTraceValue = new ByteArrayOutputStream();
+                    t.printStackTrace(new PrintWriter(stackTraceValue));
+                    stackTrace.appendChild(textNode(new String(stackTraceValue.toByteArray())));
+                }
+                errorMessage.appendChild(textNode(t.getMessage()));
+                {
+                    // TOFIX Error message and stack trace are empty.
+                    error.appendChild(errorMessage);
+                    error.appendChild(stackTrace);
+                }
+                Domsole.domsole().append(error, Optional.empty(), LogLevel.CRITICAL);
+                throw t;
             } finally {
                 environment().close();
                 CURRENT.remove();
