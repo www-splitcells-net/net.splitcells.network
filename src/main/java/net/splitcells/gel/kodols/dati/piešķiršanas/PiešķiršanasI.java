@@ -32,7 +32,7 @@ public class PiešķiršanasI implements Piešķiršanas {
     protected final DatuBāze piešķiršanas;
 
     protected final List<PapildinājumsKlausītājs> papildinājumsKlausītājs = list();
-    protected final List<NoņemšanasKlausītājs> preNoņemšanaAbonēšanas = list();
+    protected final List<NoņemšanasKlausītājs> primsNoņemšanaAbonēšanas = list();
     protected final List<NoņemšanasKlausītājs> afterNoņemšanaAbonēšanas = list();
 
     protected final DatuBāze piedāvājumi;
@@ -204,7 +204,7 @@ public class PiešķiršanasI implements Piešķiršanas {
     public void noņemt(Rinda piešķiršana) {
         final var prasība = prasība_no_piešķiršana(piešķiršana);
         final var piedāvājums = piedāvājums_no_piešķiršana(piešķiršana);
-        preNoņemšanaAbonēšanas.forEach(listener -> listener.rēgistrē_noņemšanas(piešķiršana));
+        primsNoņemšanaAbonēšanas.forEach(listener -> listener.rēgistrē_noņemšanas(piešķiršana));
         piešķiršanas.noņemt(piešķiršana);
         // TODO Make following code a remove subscription to allocations.
         {
@@ -268,7 +268,7 @@ public class PiešķiršanasI implements Piešķiršanas {
 
     @Override
     public void abonē_uz_iepriekšNoņemšana(NoņemšanasKlausītājs noņemšanasKlausītājs) {
-        preNoņemšanaAbonēšanas.add(noņemšanasKlausītājs);
+        primsNoņemšanaAbonēšanas.add(noņemšanasKlausītājs);
     }
 
     @Override
