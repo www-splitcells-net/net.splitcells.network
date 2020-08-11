@@ -24,8 +24,8 @@ public interface Rinda extends Domable {
     <T> T vērtība(Atribūts<T> atribūts);
 
     int indekss();
-
-    default RindaRādītājs toLinePointer() {
+    
+    default RindaRādītājs uzRindaRādītājs() {
         return rindasRādītājs(konteksts(), indekss());
     }
 

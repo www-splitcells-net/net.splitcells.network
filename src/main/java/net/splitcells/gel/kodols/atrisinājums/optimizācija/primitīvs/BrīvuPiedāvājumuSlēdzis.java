@@ -66,13 +66,13 @@ public class BrīvuPiedāvājumuSlēdzis implements Optimizācija {
         if (atrisinājums.prasība_lietots().navTukšs() && atrisinājums.piedāvājums_nelietots().navTukšs()) {
             final int atlase = nejaušiba.integer(0, atrisinājums.prasības_nelietotas().izmērs() - 1);
             final var lietotaPrasība = atrisinājums.prasība_lietots().gūtRinda(atlase);
-            final var lietotasPrasībasRādītājs = lietotaPrasība.toLinePointer();
+            final var lietotasPrasībasRādītājs = lietotaPrasība.uzRindaRādītājs();
             if (apstrādatasPrasības.contains(lietotasPrasībasRādītājs)) {
                 return list();
             }
             final var pieškiršana = atrisinājums.piešķiršanas_no_prasības(lietotaPrasība).iterator().next();
             final var lietotsPiedāvājums = atrisinājums.piedāvājums_no_piešķiršana(pieškiršana);
-            final var lietotsPiedāvājumuRādītājs = lietotsPiedāvājums.toLinePointer();
+            final var lietotsPiedāvājumuRādītājs = lietotsPiedāvājums.uzRindaRādītājs();
             if (apstrādatiPiedāvājumi.contains(lietotsPiedāvājumuRādītājs)) {
                 return list();
             }
@@ -85,12 +85,12 @@ public class BrīvuPiedāvājumuSlēdzis implements Optimizācija {
                                     PIEŠĶIRŠANA
                                     , atrisinājums.prasība_lietots()
                                             .gūtJēluRindas(lietotaPrasība.indekss())
-                                            .toLinePointer()
+                                            .uzRindaRādītājs()
                                     , atrisinājums
                                             .piedāvājumi_lietoti()
                                             .gūtJēluRindas
                                                     (nejaušiba.integer(0, atrisinājums.piedāvājums_nelietots().izmērs()))
-                                            .toLinePointer()
+                                            .uzRindaRādītājs()
                             ));
         }
         return list();

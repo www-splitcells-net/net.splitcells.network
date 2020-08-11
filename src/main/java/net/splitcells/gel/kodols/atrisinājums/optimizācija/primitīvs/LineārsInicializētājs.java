@@ -25,8 +25,8 @@ public class LineārsInicializētājs implements Optimizācija {
             return list(
                     optimizacijasNotikums
                             (PIEŠĶIRŠANA
-                                    , solution.prasības_nelietotas().gūtRindas().get(0).toLinePointer()
-                                    , solution.piedāvājums_nelietots().gūtRindas().get(0).toLinePointer()));
+                                    , solution.prasības_nelietotas().gūtRindas().get(0).uzRindaRādītājs()
+                                    , solution.piedāvājums_nelietots().gūtRindas().get(0).uzRindaRādītājs()));
 
         }
         return list();

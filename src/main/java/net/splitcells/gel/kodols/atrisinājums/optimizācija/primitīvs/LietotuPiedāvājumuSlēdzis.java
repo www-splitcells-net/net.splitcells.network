@@ -70,13 +70,13 @@ public class LietotuPiedāvājumuSlēdzis implements Optimizācija {
             final var lietotaPrasībaB = atrisinājums.prasība_lietots().gūtRinda(atlaseB);
             final var vecaPieſkirſanaB = atrisinājums.piešķiršanas_no_prasības(lietotaPrasībaB).iterator().next();
             final var lietotsPiedāvājumsB = atrisinājums.piedāvājums_no_piešķiršana(vecaPieſkirſanaB);
-            final var lietotasParsībasARāditājs = lietotaPrasībaA.toLinePointer();
-            final var lietotasPrasībasBRāditājs = lietotaPrasībaB.toLinePointer();
+            final var lietotasParsībasARāditājs = lietotaPrasībaA.uzRindaRādītājs();
+            final var lietotasPrasībasBRāditājs = lietotaPrasībaB.uzRindaRādītājs();
             if (apstrādatiPrasības.containsAny(lietotasParsībasARāditājs, lietotasPrasībasBRāditājs)) {
                 return list();
             }
-            final var lietotasPiedāvājumuARāditājs = lietotaPiedāvājumsA.toLinePointer();
-            final var lietotasPiedāvājumuBRāditājs = lietotsPiedāvājumsB.toLinePointer();
+            final var lietotasPiedāvājumuARāditājs = lietotaPiedāvājumsA.uzRindaRādītājs();
+            final var lietotasPiedāvājumuBRāditājs = lietotsPiedāvājumsB.uzRindaRādītājs();
             if (apstrādatiPiedāvājumi.containsAny(lietotasPiedāvājumuARāditājs, lietotasPiedāvājumuBRāditājs)) {
                 return list();
             }

@@ -116,8 +116,8 @@ public class VēstureI implements Vēsture {
         if (notikumuTips.equals(PAPILDINĀJUMS)) {
             try {
                 final var pieškiršanas = atrisinājums.piešķiršanasNo
-                        (notikumuKoNoņemnt.demand().toLinePointer().interpretē(atrisinājums.prasība()).get()
-                                , notikumuKoNoņemnt.supply().toLinePointer().interpretē(atrisinājums.piedāvājums()).get());
+                        (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(atrisinājums.prasība()).get()
+                                , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(atrisinājums.piedāvājums()).get());
                 assertThat(pieškiršanas).hasSize(1);
                 pieškiršanas.forEach(e -> atrisinājums.noņemt(e));
             } catch (Throwable t) {
@@ -125,8 +125,8 @@ public class VēstureI implements Vēsture {
             }
         } else if (notikumuTips.equals(NOŅEMŠANA)) {
             atrisinājums.piešķirt
-                    (notikumuKoNoņemnt.demand().toLinePointer().interpretē(atrisinājums.prasība()).get()
-                            , notikumuKoNoņemnt.supply().toLinePointer().interpretē(atrisinājums.piedāvājums()).get());
+                    (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(atrisinājums.prasība()).get()
+                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(atrisinājums.piedāvājums()).get());
         } else {
             throw new UnsupportedOperationException();
         }

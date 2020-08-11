@@ -26,8 +26,8 @@ public class LineārsAtņemtājs implements Optimizācija {
                     list(
                             optimizacijasNotikums
                                     (NOŅEMŠANA
-                                            , solution.prasība_lietots().gūtRindas().get(0).toLinePointer()
-                                            , solution.piedāvājumi_lietoti().gūtRindas().get(0).toLinePointer()));
+                                            , solution.prasība_lietots().gūtRindas().get(0).uzRindaRādītājs()
+                                            , solution.piedāvājumi_lietoti().gūtRindas().get(0).uzRindaRādītājs()));
 
         }
         return list();
