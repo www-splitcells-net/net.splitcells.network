@@ -46,4 +46,9 @@ public class Piešķiršana implements Domable {
                 (Xml.element(PIEDĀVĀJUMS.apraksts()).appendChild(piedāvājums.toDom()));
         return piešķiršana;
     }
+
+    @Override
+    public String toString() {
+        return Xml.toPrettyString(toDom());
+    }
 }
