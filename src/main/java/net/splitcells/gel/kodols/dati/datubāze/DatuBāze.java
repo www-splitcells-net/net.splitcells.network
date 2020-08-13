@@ -3,7 +3,6 @@ package net.splitcells.gel.kodols.dati.datubāze;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.dati.tabula.Tabula;
-import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 
 public interface DatuBāze extends Tabula {
 
@@ -23,7 +22,7 @@ public interface DatuBāze extends Tabula {
 		pielikt(jaunaRinda);
 	}
 
-	default <T extends PapildinājumsKlausītājs & NoņemšanasKlausītājs> void sinhronizē(T klausītājs) {
+	default <T extends PapildinājumsKlausītājs & PirmsNoņemšanasKlausītājs> void sinhronizē(T klausītājs) {
 		abonē_uz_papildinājums(klausītājs);
 		// TOCHECK TODOC Inform link after removal.
 		abonē_uy_pēcNoņemšana(klausītājs);
@@ -31,7 +30,7 @@ public interface DatuBāze extends Tabula {
 
 	void abonē_uz_papildinājums(PapildinājumsKlausītājs papildinājumuKlausītājs);
 
-	void abonē_uz_iepriekšNoņemšana(NoņemšanasKlausītājs noņemšanasKlausītājs);
+	void abonē_uz_iepriekšNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs);
 
-	void abonē_uy_pēcNoņemšana(NoņemšanasKlausītājs noņemšanasKlausītājs);
+	void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs);
 }

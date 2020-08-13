@@ -40,8 +40,8 @@ public class DatuBāzeI implements DatuBāze {
     protected final ListView<Rinda> jēlasRindasSkats = listView(jēlasRindas);
     protected int izmers;
     protected final List<PapildinājumsKlausītājs> papildinājumsKlausītājs = list();
-    protected final List<NoņemšanasKlausītājs> pirmsNoņemšanaKlausītājs = list();
-    protected final List<NoņemšanasKlausītājs> pēcNoņemšanaAbonēšanas = list();
+    protected final List<PirmsNoņemšanasKlausītājs> pirmsNoņemšanaKlausītājs = list();
+    protected final List<PirmsNoņemšanasKlausītājs> pēcNoņemšanaAbonēšanas = list();
     protected final net.splitcells.dem.data.set.Set<Integer> indekssiNelitoti = setOfUniques();
 
 
@@ -103,8 +103,8 @@ public class DatuBāzeI implements DatuBāze {
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(NoņemšanasKlausītājs noņemšanasKlausītājs) {
-        pirmsNoņemšanaKlausītājs.add(noņemšanasKlausītājs);
+    public void abonē_uz_iepriekšNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+        pirmsNoņemšanaKlausītājs.add(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
@@ -169,7 +169,7 @@ public class DatuBāzeI implements DatuBāze {
     @Override
     public void noņemt(int rindasIndekss) {
         final var noņemšanaNo = jēlasRindas.get(rindasIndekss);
-        pirmsNoņemšanaKlausītājs.forEach(klausītājs -> klausītājs.rēgistrē_noņemšanas(noņemšanaNo));
+        pirmsNoņemšanaKlausītājs.forEach(klausītājs -> klausītājs.rēgistrē_pirms_noņemšanas(noņemšanaNo));
         kolonnas.forEach(kolonna -> {
             kolonna.set(rindasIndekss, null);
         });
@@ -177,7 +177,7 @@ public class DatuBāzeI implements DatuBāze {
         jēlasRindas.set(rindasIndekss, null);
         indekssiNelitoti.add(rindasIndekss);
         --izmers;
-        pēcNoņemšanaAbonēšanas.forEach(klausītājs -> klausītājs.rēgistrē_noņemšanas(noņemšanaNo));
+        pēcNoņemšanaAbonēšanas.forEach(klausītājs -> klausītājs.rēgistrē_pirms_noņemšanas(noņemšanaNo));
     }
 
     @Override
@@ -191,7 +191,7 @@ public class DatuBāzeI implements DatuBāze {
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(NoņemšanasKlausītājs listener) {
+    public void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs listener) {
         pēcNoņemšanaAbonēšanas.add(listener);
     }
 

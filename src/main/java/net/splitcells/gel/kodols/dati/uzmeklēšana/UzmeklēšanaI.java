@@ -80,7 +80,9 @@ public class UzmeklēšanaI<T> implements Uzmeklēšana<T> {
         if (!agregātsSaturs.containsKey(predikāts)) {
             final var uzmeklēšana = uzmeklēšanasTabula(tabula, predikāts.toString());
             agregātsSaturs.put(predikāts, uzmeklēšana);
-            tabula.jēlaRindasSkats().stream()
+            tabula
+                    .jēlaRindasSkats()
+                    .stream()
                     .filter(e -> e != null)
                     .forEach(e -> {
                         if (predikāts.test(e.vērtība(atribūts))) {

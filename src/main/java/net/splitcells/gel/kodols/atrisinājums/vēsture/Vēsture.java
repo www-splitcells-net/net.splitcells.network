@@ -4,12 +4,12 @@ import static net.splitcells.gel.kodols.dati.tabula.atribūts.AtribūtsI.atribut
 
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
-import net.splitcells.gel.kodols.dati.datubāze.NoņemšanasKlausītājs;
+import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.notikums.Piešķiršana;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.refleksija.RefleksijaSkats;
 
-public interface Vēsture extends Piešķiršanas, PapildinājumsKlausītājs, NoņemšanasKlausītājs {
+public interface Vēsture extends Piešķiršanas, PapildinājumsKlausītājs, PirmsNoņemšanasKlausītājs {
     Atribūts<Integer> PIEŠĶIRŠANA_ID = atributs(Integer.class, "pieškiršana-id");
     Atribūts<Piešķiršana> PIEŠĶIRŠANAS_NOTIKUMS = atributs(Piešķiršana.class, "pieškiršana-notikums");
     Atribūts<RefleksijaSkats> REFLEKSIJAS_DATI = atributs(RefleksijaSkats.class, "refleksijas-dati");

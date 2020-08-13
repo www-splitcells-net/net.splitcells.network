@@ -22,7 +22,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
-import net.splitcells.gel.kodols.dati.datubāze.NoņemšanasKlausītājs;
+import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanass;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
@@ -68,7 +68,7 @@ public class VēstureI implements Vēsture {
     }
 
     @Override
-    public void rēgistrē_noņemšanas(Rinda noņemtAtrisinājums) {
+    public void rēgistrē_pirms_noņemšanas(Rinda noņemtAtrisinājums) {
         final var refleksijasDati = refleksijasDatī();
         refleksijasDati.ar(PilnsNovērtejums.class
                 , pilnsNovērtejums(atrisinājums.ierobežojums().novērtējums()));
@@ -159,13 +159,13 @@ public class VēstureI implements Vēsture {
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(NoņemšanasKlausītājs noņemšanasKlausītājs) {
-        piešķiršanas.abonē_uz_iepriekšNoņemšana(noņemšanasKlausītājs);
+    public void abonē_uz_iepriekšNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+        piešķiršanas.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(NoņemšanasKlausītājs noņemšanasKlausītājs) {
-        piešķiršanas.abonē_uy_pēcNoņemšana(noņemšanasKlausītājs);
+    public void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+        piešķiršanas.abonē_uy_pēcNoņemšana(pirmsNoņemšanasKlausītājs);
     }
 
     @Override

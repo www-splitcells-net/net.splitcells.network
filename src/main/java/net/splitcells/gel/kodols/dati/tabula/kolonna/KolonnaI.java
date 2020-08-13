@@ -175,7 +175,7 @@ public class KolonnaI<T> implements Kolonna<T> {
 	}
 
 	@Override
-	public void rēgistrē_noņemšanas(Rinda noņemšana) {
+	public void rēgistrē_pirms_noņemšanas(Rinda noņemšana) {
 		uzmeklēšana.ifPresent(i -> i.reģistē_noņemšana(noņemšana.vērtība(atribūts), noņemšana.indekss()));
 	}
 }

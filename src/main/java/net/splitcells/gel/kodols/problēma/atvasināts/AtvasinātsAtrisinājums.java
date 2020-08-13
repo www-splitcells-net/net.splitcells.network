@@ -8,7 +8,7 @@ import net.splitcells.gel.kodols.dati.tabula.kolonna.Kolonna;
 import net.splitcells.gel.kodols.dati.tabula.kolonna.KolonnaSkats;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
-import net.splitcells.gel.kodols.dati.datubāze.NoņemšanasKlausītājs;
+import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.novērtējums.struktūra.RefleksijaNovērtējums;
@@ -159,12 +159,12 @@ public class AtvasinātsAtrisinājums implements Atrisinājums {
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(NoņemšanasKlausītājs noņemšanasKlausītājs) {
-        piešķiršanas.abonē_uz_iepriekšNoņemšana(noņemšanasKlausītājs);
+    public void abonē_uz_iepriekšNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+        piešķiršanas.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(NoņemšanasKlausītājs klausītājs) {
+    public void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs klausītājs) {
         piešķiršanas.abonē_uy_pēcNoņemšana(klausītājs);
     }
 

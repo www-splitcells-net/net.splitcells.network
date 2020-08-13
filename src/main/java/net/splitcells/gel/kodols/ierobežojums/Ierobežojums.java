@@ -16,7 +16,6 @@ import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.gel.kodols.ierobežojums.tips.PriekšVisiem;
 import net.splitcells.gel.kodols.dati.tabula.Tabula;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
@@ -27,7 +26,7 @@ import net.splitcells.dem.utils.reflection.PubliclyTyped;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaFiltrs;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
-import net.splitcells.gel.kodols.dati.datubāze.NoņemšanasKlausītājs;
+import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.novērtējums.struktūra.VietējieNovērtējums;
@@ -35,7 +34,7 @@ import net.splitcells.gel.kodols.novērtējums.struktūra.RefleksijaNovērtējum
 import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
 import net.splitcells.gel.kodols.ierobežojums.argumentācija.Argumentācija;
 
-public interface Ierobežojums extends PapildinājumsKlausītājs, NoņemšanasKlausītājs, IerobežojumuRakstnieks, Discoverable, PubliclyTyped<Ierobežojums>, PubliclyConstructed<Domable>, Domable {
+public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemšanasKlausītājs, IerobežojumuRakstnieks, Discoverable, PubliclyTyped<Ierobežojums>, PubliclyConstructed<Domable>, Domable {
     Atribūts<Rinda> RINDA = atributs(Rinda.class, "rinda");
     Atribūts<java.util.List<Ierobežojums>> IZDALĪŠANA_UZ = listAttribute(Ierobežojums.class, "idalīšana uz");
     Atribūts<GrupaId> IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "ienākošie ierobežojumu grupas id");
@@ -113,7 +112,7 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, NoņemšanasK
 
     void rēgistrē_noņemšana(GrupaId grupaId, Rinda rinda);
 
-    default void rēgistrē_noņemšanas(Rinda rinda) {
+    default void rēgistrē_pirms_noņemšanas(Rinda rinda) {
         rēgistrē_noņemšana(injekcijasGrupa(), rinda);
     }
 

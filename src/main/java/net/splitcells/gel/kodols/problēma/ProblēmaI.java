@@ -2,7 +2,7 @@ package net.splitcells.gel.kodols.problēma;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.kodols.dati.datubāze.NoņemšanasKlausītājs;
+import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
@@ -153,7 +153,7 @@ public class ProblēmaI implements Problēma {
     }
 
     @Override
-    public <T extends PapildinājumsKlausītājs & NoņemšanasKlausītājs> void sinhronizē(final T klausītājs) {
+    public <T extends PapildinājumsKlausītājs & PirmsNoņemšanasKlausītājs> void sinhronizē(final T klausītājs) {
         this.piešķiršanas.<T>sinhronizē(klausītājs);
     }
 
@@ -163,12 +163,12 @@ public class ProblēmaI implements Problēma {
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(final NoņemšanasKlausītājs noņemšanasKlausītājs) {
-        this.piešķiršanas.abonē_uz_iepriekšNoņemšana(noņemšanasKlausītājs);
+    public void abonē_uz_iepriekšNoņemšana(final PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+        this.piešķiršanas.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(final NoņemšanasKlausītājs klausītājs) {
+    public void abonē_uy_pēcNoņemšana(final PirmsNoņemšanasKlausītājs klausītājs) {
         this.piešķiršanas.abonē_uy_pēcNoņemšana(klausītājs);
     }
 

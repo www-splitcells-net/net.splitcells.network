@@ -10,7 +10,7 @@ import net.splitcells.gel.kodols.dati.tabula.kolonna.Kolonna;
 import net.splitcells.gel.kodols.dati.tabula.kolonna.KolonnaSkats;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
-import net.splitcells.gel.kodols.dati.datubāze.NoņemšanasKlausītājs;
+import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.problēma.Problēma;
@@ -167,7 +167,7 @@ public class AtrisinājumsI implements Atrisinājums {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public <T extends PapildinājumsKlausītājs & NoņemšanasKlausītājs> void sinhronizē(final T klausītājs) {
+	public <T extends PapildinājumsKlausītājs & PirmsNoņemšanasKlausītājs> void sinhronizē(final T klausītājs) {
 		this.problēma.sinhronizē(klausītājs);
 	}
 
@@ -177,12 +177,12 @@ public class AtrisinājumsI implements Atrisinājums {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void abonē_uz_iepriekšNoņemšana(final NoņemšanasKlausītājs noņemšanasKlausītājs) {
-		this.problēma.abonē_uz_iepriekšNoņemšana(noņemšanasKlausītājs);
+	public void abonē_uz_iepriekšNoņemšana(final PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+		this.problēma.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void abonē_uy_pēcNoņemšana(final NoņemšanasKlausītājs listener) {
+	public void abonē_uy_pēcNoņemšana(final PirmsNoņemšanasKlausītājs listener) {
 		this.problēma.abonē_uy_pēcNoņemšana(listener);
 	}
 

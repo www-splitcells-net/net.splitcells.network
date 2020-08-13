@@ -174,7 +174,7 @@ public class UzmeklēšanasKolonna<T> implements Kolonna<T> {
     }
 
     @Override
-    public void rēgistrē_noņemšanas(Rinda removal) {
+    public void rēgistrē_pirms_noņemšanas(Rinda removal) {
         uzmeklēšana.ifPresent(l -> l.reģistē_noņemšana(removal.vērtība(atribūts), removal.indekss()));
     }
 

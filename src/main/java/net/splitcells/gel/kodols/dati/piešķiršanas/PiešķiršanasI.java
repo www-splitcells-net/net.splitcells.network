@@ -23,7 +23,7 @@ import net.splitcells.gel.kodols.dati.tabula.kolonna.Kolonna;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāzeI;
-import net.splitcells.gel.kodols.dati.datubāze.NoņemšanasKlausītājs;
+import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 
@@ -32,8 +32,8 @@ public class PiešķiršanasI implements Piešķiršanas {
     protected final DatuBāze piešķiršanas;
 
     protected final List<PapildinājumsKlausītājs> papildinājumsKlausītājs = list();
-    protected final List<NoņemšanasKlausītājs> primsNoņemšanaAbonēšanas = list();
-    protected final List<NoņemšanasKlausītājs> afterNoņemšanaAbonēšanas = list();
+    protected final List<PirmsNoņemšanasKlausītājs> primsNoņemšanaAbonēšanas = list();
+    protected final List<PirmsNoņemšanasKlausītājs> afterNoņemšanaAbonēšanas = list();
 
     protected final DatuBāze piedāvājumi;
     protected final DatuBāze piedāvājumi_lietoti;
@@ -204,7 +204,7 @@ public class PiešķiršanasI implements Piešķiršanas {
     public void noņemt(Rinda piešķiršana) {
         final var prasība = prasība_no_piešķiršana(piešķiršana);
         final var piedāvājums = piedāvājums_no_piešķiršana(piešķiršana);
-        primsNoņemšanaAbonēšanas.forEach(pirmsNoņemšanasKlausītājs -> pirmsNoņemšanasKlausītājs.rēgistrē_noņemšanas(piešķiršana));
+        primsNoņemšanaAbonēšanas.forEach(pirmsNoņemšanasKlausītājs -> pirmsNoņemšanasKlausītājs.rēgistrē_pirms_noņemšanas(piešķiršana));
         piešķiršanas.noņemt(piešķiršana);
         // TODO Make following code a remove subscription to allocations.
         {
@@ -243,7 +243,7 @@ public class PiešķiršanasI implements Piešķiršanas {
             piedāvājumi_lietoti.noņemt(piedāvājums);
             piedāvājumi_nelietoti.pielikt(piedāvājums);
         }
-        afterNoņemšanaAbonēšanas.forEach(listener -> listener.rēgistrē_noņemšanas(piešķiršana));
+        afterNoņemšanaAbonēšanas.forEach(listener -> listener.rēgistrē_pirms_noņemšanas(piešķiršana));
     }
 
     @Override
@@ -267,8 +267,8 @@ public class PiešķiršanasI implements Piešķiršanas {
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(NoņemšanasKlausītājs noņemšanasKlausītājs) {
-        primsNoņemšanaAbonēšanas.add(noņemšanasKlausītājs);
+    public void abonē_uz_iepriekšNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+        primsNoņemšanaAbonēšanas.add(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
@@ -286,8 +286,8 @@ public class PiešķiršanasI implements Piešķiršanas {
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(NoņemšanasKlausītājs noņemšanasKlausītājs) {
-        afterNoņemšanaAbonēšanas.add(noņemšanasKlausītājs);
+    public void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+        afterNoņemšanaAbonēšanas.add(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
