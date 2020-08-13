@@ -86,14 +86,14 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 .stream()
                 .filter(e -> !e.isEmpty())
                 .collect(toList());
-        return izbrīvoPieškiršanasNoGrupu(atrisinājums, pieškiršanasGrupas.lastValue());
+        return pieškiršanasGrupas
+                .lastValue()
+                .map(pēdejaPieškiršanasGrupa -> izbrīvoPieškiršanasNoGrupu(atrisinājums, pēdejaPieškiršanasGrupa))
+                .orElse(list());
     }
 
-    protected List<OptimizācijasNotikums> izbrīvoPieškiršanasNoGrupu(AtrisinājumaSkats atrisinājums, Optional<List<Ierobežojums>> ierobežojumuTaka) {
-        return ierobežojumuTaka
-                .map(grupa -> grupa.lastValue())
-                .filter(grupa -> grupa.isPresent())
-                .map(grupa -> grupa.get())
+    protected List<OptimizācijasNotikums> izbrīvoPieškiršanasNoGrupu(AtrisinājumaSkats atrisinājums, List<Ierobežojums> ierobežojumuTaka) {
+        return ierobežojumuTaka.lastValue()
                 .map(ierobežojums ->
                         ierobežojums
                                 .rindasAbstrāde()
