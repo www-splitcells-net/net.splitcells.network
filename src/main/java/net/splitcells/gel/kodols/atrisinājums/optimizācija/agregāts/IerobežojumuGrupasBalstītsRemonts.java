@@ -2,9 +2,11 @@ package net.splitcells.gel.kodols.atrisinājums.optimizācija.agregāts;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.gel.kodols.ierobežojums.GrupaId;
+import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.tips.PriekšVisiem;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.atrisinājums.AtrisinājumaSkats;
@@ -12,6 +14,8 @@ import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.*;
@@ -78,8 +82,15 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
     }
 
     public List<OptimizācijasNotikums> izbrīvoPieškiršanasNoMazākoGrupu(AtrisinājumaSkats atrisinājums) {
-        final var pieškiršanasGrupas = piešķiršanasGruppas(atrisinājums.ierobežojums());
-        return pieškiršanasGrupas.lastValue()
+        final var pieškiršanasGrupas = piešķiršanasGruppas(atrisinājums.ierobežojums())
+                .stream()
+                .filter(e -> !e.isEmpty())
+                .collect(toList());
+        return izbrīvoPieškiršanasNoGrupu(atrisinājums, pieškiršanasGrupas.lastValue());
+    }
+
+    protected List<OptimizācijasNotikums> izbrīvoPieškiršanasNoGrupu(AtrisinājumaSkats atrisinājums, Optional<List<Ierobežojums>> ierobežojumuTaka) {
+        return ierobežojumuTaka
                 .map(grupa -> grupa.lastValue())
                 .filter(grupa -> grupa.isPresent())
                 .map(grupa -> grupa.get())
