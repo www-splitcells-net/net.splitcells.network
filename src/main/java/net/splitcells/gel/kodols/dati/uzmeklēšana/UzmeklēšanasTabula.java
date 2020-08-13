@@ -4,19 +4,14 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.gel.kodols.dati.uzmeklēšana.UzmeklēšanasKolonna.lookupColumn;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
 import org.w3c.dom.Element;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.kodols.dati.tabula.kolonna.Kolonna;
@@ -101,13 +96,13 @@ public class UzmeklēšanasTabula implements Tabula {
     }
 
     public void noņemt_reģistrāciju(Rinda rinda) {
+        kolonnas.forEach(column -> column.rēgistrē_pirms_noņemšanas(rinda));
         saturs.remove(rinda.indekss());
         range(0, kolonnas.size()).forEach(i -> {
             // HACK
             final var column = (UzmeklēšanasKolonna<Object>) kolonnas.get(i);
             column.set(rinda.indekss(), null);
         });
-        kolonnas.forEach(column -> column.rēgistrē_noņemšanas(rinda));
     }
 
     @Override
