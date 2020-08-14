@@ -20,7 +20,7 @@ public class LiveReporter implements TestExecutionListener {
 
     @Override
     public void executionSkipped(TestIdentifier testIdentifier, String reason) {
-        System.out.print("Skipped: " + testIdentifier.getUniqueId());
+        System.out.println("Skipped: " + testIdentifier.getUniqueId());
     }
 
     @Override
