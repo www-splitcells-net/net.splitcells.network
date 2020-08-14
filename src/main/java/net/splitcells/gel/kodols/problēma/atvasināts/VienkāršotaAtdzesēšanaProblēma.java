@@ -9,6 +9,7 @@ import net.splitcells.gel.kodols.novērtējums.tips.Optimālums;
 
 import java.util.function.Function;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.kodols.ierobežojums.tips.Atvasināšana.atvasināšana;
 
@@ -23,7 +24,7 @@ public class VienkāršotaAtdzesēšanaProblēma extends AtvasinātsAtrisinājum
     }
 
     protected VienkāršotaAtdzesēšanaProblēma(Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<Integer, Float> temperatureFunction) {
-        super(piešķiršanas);
+        super(() -> list(), piešķiršanas);
         ierobežojums = atvasināšana(originalIerobežojums,
                 new Function<>() {
                     private final Randomness randomness = randomness();

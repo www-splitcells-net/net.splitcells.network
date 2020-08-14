@@ -2,6 +2,7 @@ package net.splitcells.gel.kodols.problēma;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.gel.kodols.Valoda;
 import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
@@ -18,6 +19,7 @@ import net.splitcells.gel.kodols.atrisinājums.AtrisinājumsI;
 
 import java.util.function.Function;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.gel.kodols.problēma.atvasināts.AtvasinātsAtrisinājums.atvasinātaProblema;
 
@@ -59,7 +61,7 @@ public class ProblēmaI implements Problēma {
 
     @Override
     public AtvasinātsAtrisinājums atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> konversija) {
-        return atvasinātaProblema(piešķiršanas, ierobežojums, konversija);
+        return atvasinātaProblema(() -> list(), piešķiršanas, ierobežojums, konversija);
     }
 
     @Override

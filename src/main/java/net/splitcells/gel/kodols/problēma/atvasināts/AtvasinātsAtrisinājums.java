@@ -2,6 +2,7 @@ package net.splitcells.gel.kodols.problēma.atvasināts;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.kodols.dati.tabula.kolonna.Kolonna;
@@ -29,28 +30,31 @@ public class AtvasinātsAtrisinājums implements Atrisinājums {
     protected Ierobežojums ierobežojums;
     private final Piešķiršanas piešķiršanas;
     private final Vēsture vēsture;
-
-    public static AtvasinātsAtrisinājums atvasinātaProblema(Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
-        return new AtvasinātsAtrisinājums(piešķiršanas, originalIerobežojums, atvasināšana(originalIerobežojums, atvasinātsFunkcija));
+    private final Discoverable konteksts;
+    
+    public static AtvasinātsAtrisinājums atvasinātaProblema(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
+        return new AtvasinātsAtrisinājums(konteksts, piešķiršanas, originalIerobežojums, atvasināšana(originalIerobežojums, atvasinātsFunkcija));
     }
 
-    protected AtvasinātsAtrisinājums(Piešķiršanas piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
-        this(piešķiršanas, oriģinālaisIerobežojums, atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
+    protected AtvasinātsAtrisinājums(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
+        this(konteksts, piešķiršanas, oriģinālaisIerobežojums, atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
     }
 
-    public static AtvasinātsAtrisinājums atvasinātsProblēma(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
-        return new AtvasinātsAtrisinājums(piešķiršanas, ierobežojums, atvasināšana);
+    public static AtvasinātsAtrisinājums atvasinātsProblēma(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+        return new AtvasinātsAtrisinājums(konteksts, piešķiršanas, ierobežojums, atvasināšana);
     }
 
-    protected AtvasinātsAtrisinājums(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+    protected AtvasinātsAtrisinājums(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = atvasināšana;
         vēsture = Vēstures.vēsture(this);
+        this.konteksts = konteksts;
     }
 
-    protected AtvasinātsAtrisinājums(Piešķiršanas piešķiršanas) {
+    protected AtvasinātsAtrisinājums(Discoverable konteksts, Piešķiršanas piešķiršanas) {
         this.piešķiršanas = piešķiršanas;
         vēsture = Vēstures.vēsture(this);
+        this.konteksts = konteksts;
     }
 
     @Override
@@ -210,7 +214,7 @@ public class AtvasinātsAtrisinājums implements Atrisinājums {
 
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
-        throw not_implemented_yet();
+        return konteksts.path().withAppended(AtvasinātsAtrisinājums.class.getSimpleName());
     }
 
     @Override
