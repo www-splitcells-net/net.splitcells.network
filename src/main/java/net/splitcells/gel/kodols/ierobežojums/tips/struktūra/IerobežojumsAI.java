@@ -291,9 +291,9 @@ public abstract class IerobežojumsAI implements Ierobežojums {
                     .gūtRindas()
                     .forEach(line -> novērtējumi.appendChild(line.toDom()));
         }
-        skatsUsBerniem().forEach(bērni ->
+        skatsUsBerniem().forEach(bērns ->
                 dom.appendChild(
-                        bērni.toDom(
+                        bērns.toDom(
                                 setOfUniques(radījums
                                         .kolonnaSkats(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                         .vertības()))));
