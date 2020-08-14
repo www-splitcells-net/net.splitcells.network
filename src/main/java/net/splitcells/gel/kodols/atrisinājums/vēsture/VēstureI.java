@@ -4,8 +4,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
-import static net.splitcells.gel.kodols.Valoda.PIEŠĶIRŠANAS;
-import static net.splitcells.gel.kodols.Valoda.VĒSTURE;
+import static net.splitcells.gel.kodols.Valoda.*;
 import static net.splitcells.gel.kodols.dati.datubāze.DatuBāzes.datuBāze;
 import static net.splitcells.gel.kodols.atrisinājums.vēsture.notikums.PiešķiršanaMaiņaTips.PAPILDINĀJUMS;
 import static net.splitcells.gel.kodols.atrisinājums.vēsture.notikums.PiešķiršanaMaiņaTips.NOŅEMŠANA;
@@ -19,6 +18,7 @@ import static org.assertj.core.api.Assertions.not;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.gel.kodols.Valoda;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
@@ -31,6 +31,7 @@ import net.splitcells.gel.kodols.dati.tabula.kolonna.KolonnaSkats;
 import net.splitcells.gel.kodols.atrisinājums.Atrisinājums;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.refleksija.tips.PiešķiršanaNovērtējums;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.refleksija.tips.PilnsNovērtejums;
+import net.splitcells.gel.kodols.kopīgs.Vārdi;
 import org.w3c.dom.Node;
 
 import java.util.Set;
@@ -44,8 +45,14 @@ public class VēstureI implements Vēsture {
     protected VēstureI(Atrisinājums atrisinājums) {
         piešķiršanas = Piešķiršanass.piešķiršanas
                 (VĒSTURE.apraksts()
-                        , datuBāze(PIEŠĶIRŠANAS.apraksts(), PIEŠĶIRŠANA_ID, PIEŠĶIRŠANAS_NOTIKUMS)
-                        , datuBāze(PIEŠĶIRŠANAS.apraksts(), REFLEKSIJAS_DATI));
+                        , datuBāze
+                                (NOTIKUMS.apraksts()
+                                        , () -> atrisinājums.path().withAppended(VĒSTURE.apraksts())
+                                        , PIEŠĶIRŠANA_ID, PIEŠĶIRŠANAS_NOTIKUMS)
+                        , datuBāze
+                                (RADĪJUMS.apraksts()
+                                        , () -> atrisinājums.path().withAppended(VĒSTURE.apraksts())
+                                        , REFLEKSIJAS_DATI));
         this.atrisinājums = atrisinājums;
         atrisinājums.abonē_uz_papildinājums(this);
         atrisinājums.abonē_uz_iepriekšNoņemšana(this);

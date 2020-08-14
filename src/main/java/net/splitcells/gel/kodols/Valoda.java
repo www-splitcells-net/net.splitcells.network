@@ -20,6 +20,8 @@ public enum Valoda {
     , TIPS("tips")
     , PARSĪBA("parsība")
     , SOLU_TIPS("soluTips")
+    , RADĪJUMS("radījums")
+    , NOTIKUMS("notikums")
     ;
     private final String apraksts;
 
