@@ -307,7 +307,6 @@ public class PiešķiršanasI implements Piešķiršanas {
     @Override
     public Set<Rinda> piešķiršanas_no_prasības(Rinda prasība) {
         final Set<Rinda> piešķiršanas_no_prasības = setOfUniques();
-        assert lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(prasība.indekss());
         lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu
                 .get(prasība.indekss())
                 .forEach(piešķiršanasIndekss ->
