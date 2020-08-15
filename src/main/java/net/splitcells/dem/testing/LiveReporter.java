@@ -30,13 +30,13 @@ public class LiveReporter implements TestExecutionListener {
 				System.out.println("Succeeded: " + testIdentifier.getUniqueId());
 			}
         } else {
+            System.out.println("Failed: " + testIdentifier.getUniqueId());
             if (testExecutionResult.getThrowable().isPresent()) {
                 testExecutionResult.getThrowable().get().printStackTrace();
                 if (testExecutionResult.getThrowable().get().getCause() != null) {
                     testExecutionResult.getThrowable().get().getCause().printStackTrace();
                 }
             }
-            System.out.println("Failed: " + testIdentifier.getUniqueId());
         }
     }
 }
