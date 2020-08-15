@@ -93,7 +93,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
 
     @Override
     public void rēgistrē_noņemšana(GrupaId ienākošaGrupaId, Rinda noņemšana) {
-        apstrāda_rindas_primsNoņemšana(rindas.jēlaRindasSkats().get(noņemšana.indekss()));
+        apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
         rindasApstrāde.piešķiršanas_no_prasības(noņemšana).forEach(rindasApstrāde::noņemt);
         // JAUDA
         rindas.jēlaRindasSkats().stream()
@@ -103,7 +103,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
                 .forEach(rindas::noņemt);
     }
 
-    protected void apstrāda_rindas_primsNoņemšana(Rinda noņemšana) {
+    protected void apstrāda_rindas_primsNoņemšana(GrupaId ienākošaGrupaId, Rinda noņemšana) {
         rindasApstrāde.piedāvājums_nelietots().jēlaRindasSkats().stream()
                 .filter(e -> e != null)
                 .forEach(nelitotsPiedāvājums -> radījums.noņemt(nelitotsPiedāvājums));

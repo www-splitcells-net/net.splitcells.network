@@ -58,15 +58,18 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
     }
 
     @Override
-    protected void apstrāda_rindas_primsNoņemšana(Rinda noņemšana) {
-        final GrupaId incomingGrupaId = noņemšana.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
+    protected void apstrāda_rindas_primsNoņemšana(GrupaId ienākošaGrupaId, Rinda noņemšana) {
         apstrādeNovērtējumiNotikums(
                 vērtētājs.vērtē_pirms_noņemšana(
-                        rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(incomingGrupaId)
-                        , noņemšana
+                        rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)
+                        , rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .uzmeklēšana(ienākošaGrupaId)
+                                .kolonnaSkats(RINDA)
+                                .uzmeklēšana(noņemšana)
+                                .gūtRinda(0)
                         , bērni
-                        , rindasApstrāde.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(incomingGrupaId)));
-        super.apstrāda_rindas_primsNoņemšana(noņemšana);
+                        , rindasApstrāde.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)));
+        super.apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
     }
 
     @Override
