@@ -96,7 +96,13 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     @Override
     public void rēgistrē_noņemšana(GrupaId ienākošaGrupaId, Rinda noņemšana) {
         apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
-        rindasApstrāde.piešķiršanas_no_prasības(noņemšana).forEach(rindasApstrāde::noņemt);
+        rindasApstrāde
+                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                .uzmeklēšana(ienākošaGrupaId)
+                .kolonnaSkats(RINDA)
+                .uzmeklēšana(noņemšana)
+                .gūtRindas()
+                .forEach(rindasApstrāde::noņemt);
         // JAUDA
         rindas.jēlaRindasSkats().stream()
                 .filter(e -> e != null)
