@@ -121,15 +121,11 @@ public class VēstureI implements Vēsture {
                 .vērtība(PIEŠĶIRŠANAS_NOTIKUMS);
         final var notikumuTips = notikumuKoNoņemnt.tips();
         if (notikumuTips.equals(PAPILDINĀJUMS)) {
-            try {
-                final var pieškiršanas = atrisinājums.piešķiršanasNo
-                        (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(atrisinājums.prasība()).get()
-                                , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(atrisinājums.piedāvājums()).get());
-                assertThat(pieškiršanas).hasSize(1);
-                pieškiršanas.forEach(e -> atrisinājums.noņemt(e));
-            } catch (Throwable t) {
-                throw new RuntimeException(t);
-            }
+            final var pieškiršanas = atrisinājums.piešķiršanasNo
+                    (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(atrisinājums.prasība()).get()
+                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(atrisinājums.piedāvājums()).get());
+            assertThat(pieškiršanas).hasSize(1);
+            pieškiršanas.forEach(e -> atrisinājums.noņemt(e));
         } else if (notikumuTips.equals(NOŅEMŠANA)) {
             atrisinājums.piešķirt
                     (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(atrisinājums.prasība()).get()
