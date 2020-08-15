@@ -14,6 +14,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.gel.kodols.dati.datubāze.DatuBāzes.datuBāze;
+import static net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanass.piešķiršanas;
 import static net.splitcells.gel.kodols.kopīgs.Vārdi.ARGUMENTI;
 import static net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaNovērtējums.rindasNovērtējums;
 import static net.splitcells.gel.kodols.ierobežojums.Ziņojums.report;
@@ -27,6 +28,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanass;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaFiltrs;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
@@ -69,7 +71,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     protected IerobežojumsAI(GrupaId injekcijasGrupas, String vārds) {
         this.injekcijasGrupas = injekcijasGrupas;
         rindas = datuBāze(vārds + ".rindas", this, RINDA, IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
-        rindasApstrāde = new PiešķiršanasI("rindasApstrāde", rindas, radījums);
+        rindasApstrāde = piešķiršanas("rindasApstrāde", rindas, radījums);
         rindasApstrāde.abonē_uz_papildinājums(this::izdalīt_papildinajumu);
         rindasApstrāde.abonē_uz_iepriekšNoņemšana(this::izdalīt_noņemšana);
         rindas.abonē_uz_papildinājums(this::apstrāde_rindu_papildinajumu);

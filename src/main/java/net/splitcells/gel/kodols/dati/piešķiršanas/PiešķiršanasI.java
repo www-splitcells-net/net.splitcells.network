@@ -53,7 +53,7 @@ public class PiešķiršanasI implements Piešķiršanas {
     protected final Map<Integer, Set<Integer>> lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu = map();
 
     @Deprecated
-    public PiešķiršanasI(String vārds, DatuBāze prasības, DatuBāze piedāvājumi) {
+    protected PiešķiršanasI(String vārds, DatuBāze prasības, DatuBāze piedāvājumi) {
         this.vārds = vārds;
         piešķiršanas = new DatuBāzeI("piešķiršanas", this, concat(prasības.nosaukumuSkats(), piedāvājumi.nosaukumuSkats()));
         // DARĪT Noņemiet kodu un komentāru dublēšanos.
