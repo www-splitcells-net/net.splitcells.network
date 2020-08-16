@@ -93,6 +93,20 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 .orElseGet(() -> list());
     }
 
+    public List<List<OptimizācijasNotikums>> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupam(AtrisinājumaSkats atrisinājums) {
+        final var pieškiršanasGrupas = piešķiršanasGruppas(atrisinājums.ierobežojums())
+                .stream()
+                .filter(e -> !e.isEmpty())
+                .collect(toList());
+        // DARĪT Ir tas sakārtots?
+        return pieškiršanasGrupas
+                .reverse()
+                .stream()
+                .map(pēdejaPieškiršanasGrupa -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, pēdejaPieškiršanasGrupa))
+                .filter(grupasIzbrīvošanu -> !grupasIzbrīvošanu.isEmpty())
+                .collect(toList());
+    }
+
     protected List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums, List<Ierobežojums> ierobežojumuTaka) {
         return ierobežojumuTaka.lastValue()
                 .map(ierobežojums ->
