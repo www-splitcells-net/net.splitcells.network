@@ -6,25 +6,36 @@ The priority of a task is just a guideline.
 1. Create last version with unnecessary mayor changes.
    1. In order to do this, the old repo interface has to be replaced with the new one.
    1. Fix stderr filtering.
+1. Improve repo commands.
+   1. Provide second "repo.process" command for new layout.
+      1. "repo.process": Process repositories based on remote sub repos (this is implemented and should be deprecated because its complex).
+      1. "repo.process.2": Process repositories based on local sub repos (this is most important one and not implemented).
+      1. If new layout is present during call of "repo.process" use "repo.process.2".
+      1. Reimplement all repo commands:
+         1. repo.clone
+         1. repo.clone.into.current
+         1. repo.clone.into.current.test
+         1. repo.commit.all DONE
+         1. repo.commit.changed DONE
+         1. repo.create
+         1. repo.mirror
+         1. repo.mirror.into.current
+         1. repo.pull
+         1. repo.pull.from
+         1. repo.push
+         1. repo.push.to
+         1. repo.remote.set
+         1. repo.status
+         1. repo.synchronize
+         1. repo.synchronize.with
+      1. Replace "repo.process" with "repo.process.2" and move old command to deprecated folder.
 1. "run.and.show.if.failed" and similar: do not filter stderr echo.
 1. "run.and.show.if.failed": store final output in error case in temporary file and just show link
    to file in order to not clutter output.
    1. Use "echo.error".
    1. Make "echo.error" easier to spot for the user.
-1. Improve repo commands.
-   1. Change meta repo.
-   1. Create command "repo.verify".
-      1. Check if all remote sub repositories are present.
-   1. Provide second "repo.process" command for new layout.
-      1. "repo.process": Process repositories based on remote sub repos (this is implemented and should be deprecated because its complex).
-      1. "repo.process.2": Process repositories based on local sub repos (this is most important one and not implemented).
-      1. If new layout is present during call of "repo.process" use "repo.process.2".
-1. Visualize concept hierarchy on a website.
 1. Fix description created by automatic releases.
 1. Document commands.
-1. Create general open source project template.
-   This is not part of this project.
-   It is part of 'splitcells.net'.
 1. Implement tests:
    Tests are implemented as normal commands.
    They are executed in a sandbox.
