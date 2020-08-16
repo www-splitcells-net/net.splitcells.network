@@ -2,7 +2,6 @@ package net.splitcells.gel.kodols.atrisinājums.optimizācija.agregāts;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.gel.kodols.ierobežojums.GrupaId;
@@ -14,8 +13,6 @@ import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;
-
-import java.util.Optional;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.*;
@@ -35,7 +32,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
 
     @Override
     public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
-        izbrīvoPieškiršanasNoMazākoGrupu(atrisinājums);
+        izbrīvoNeievērotajuGrupuNoMazākoIerobežojumuGrupu(atrisinājums);
         return pārdale(atrisinājums);
     }
 
@@ -81,7 +78,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         throw not_implemented_yet();
     }
 
-    public List<OptimizācijasNotikums> izbrīvoPieškiršanasNoMazākoGrupu(AtrisinājumaSkats atrisinājums) {
+    public List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoMazākoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums) {
         final var pieškiršanasGrupas = piešķiršanasGruppas(atrisinājums.ierobežojums())
                 .stream()
                 .filter(e -> !e.isEmpty())
@@ -90,13 +87,13 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         return pieškiršanasGrupas
                 .reverse()
                 .stream()
-                .map(pēdejaPieškiršanasGrupa -> izbrīvoPieškiršanasNoGrupu(atrisinājums, pēdejaPieškiršanasGrupa))
+                .map(pēdejaPieškiršanasGrupa -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, pēdejaPieškiršanasGrupa))
                 .filter(grupasIzbrīvošanu -> !grupasIzbrīvošanu.isEmpty())
                 .findFirst()
                 .orElseGet(() -> list());
     }
 
-    protected List<OptimizācijasNotikums> izbrīvoPieškiršanasNoGrupu(AtrisinājumaSkats atrisinājums, List<Ierobežojums> ierobežojumuTaka) {
+    protected List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums, List<Ierobežojums> ierobežojumuTaka) {
         return ierobežojumuTaka.lastValue()
                 .map(ierobežojums ->
                         ierobežojums
