@@ -1,6 +1,7 @@
 package net.splitcells.gel.kodols.atrisinājums;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.kodols.atrisinājums.OptimizācijasParametri.optimizācijasParametri;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.PIEŠĶIRŠANA;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.NOŅEMŠANA;
 
@@ -64,16 +65,35 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
     }
 
     @Returns_this
+    default Atrisinājums optimizē(List<OptimizācijasNotikums> notikumi, OptimizācijasParametri optimizācijasParametri) {
+        notikumi.forEach(e -> optimizē(e, optimizācijasParametri));
+        return this;
+    }
+
+    @Returns_this
     default Atrisinājums optimizē(OptimizācijasNotikums notikums) {
+        return optimizē(notikums, optimizācijasParametri());
+    }
+
+    @Returns_this
+    default Atrisinājums optimizē(OptimizācijasNotikums notikums, OptimizācijasParametri optimizācijasParametri) {
         if (notikums.soluTips().equals(PIEŠĶIRŠANA)) {
             this.piešķirt(
                     notikums.prasība().interpretē(prasības_nelietotas()).get(),
                     notikums.piedāvājums().interpretē(piedāvājums_nelietots()).get());
         } else if (notikums.soluTips().equals(NOŅEMŠANA)) {
-            noņemt(piešķiršanasNo(
-                    notikums.prasība().interpretē(prasība_lietots()).get(),
-                    notikums.piedāvājums().interpretē(piedāvājumi_lietoti()).get()
-            ).iterator().next());
+            final var prasībaPriekšNoņemšanas = notikums.prasība().interpretē(prasība_lietots());
+            final var piedāvājumuPriekšNoņemšanas = notikums.piedāvājums().interpretē(piedāvājumi_lietoti());
+            if (optimizācijasParametri.getDubultuNoņemšanaAtļauts()) {
+                if (prasībaPriekšNoņemšanas.isEmpty() && piedāvājumuPriekšNoņemšanas.isEmpty()) {
+                    return this;
+                }
+            }
+            noņemt(piešķiršanasNo
+                    (prasībaPriekšNoņemšanas.get()
+                            , piedāvājumuPriekšNoņemšanas.get())
+                    .iterator()
+                    .next());
         } else {
             throw new UnsupportedOperationException();
         }
