@@ -13,11 +13,8 @@ import static net.splitcells.dem.Dem.environment;
  */
 public class OutputPath extends OptionI<Path> {
 
-	public OutputPath() {
-		super(() -> Paths.get("."//
-				, "target"//
-				, environment().config().configValue(ProgramName.class)//
-		));
-	}
+    public OutputPath() {
+        super(() -> Paths.get("./target", environment().config().configValue(ProgramName.class).split("\\.")));
+    }
 
 }
