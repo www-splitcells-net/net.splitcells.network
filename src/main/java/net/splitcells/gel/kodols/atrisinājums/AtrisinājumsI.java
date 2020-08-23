@@ -62,13 +62,13 @@ public class AtrisinājumsI implements Atrisinājums {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Atrisinājums uzProblēma() {
-		return this.problēma.uzProblēma();
+	public Atrisinājums uzAtrisinājumu() {
+		return this.problēma.uzAtrisinājumu();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Atrisinājums kāProblēma() {
-		return this.problēma.kāProblēma();
+	public Atrisinājums kāAtrisinājums() {
+		return this.problēma.kāAtrisinājums();
 	}
 
 	@Override

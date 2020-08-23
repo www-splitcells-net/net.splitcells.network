@@ -68,12 +68,12 @@ public class AtvasinātsAtrisinājums implements Atrisinājums {
     }
 
     @Override
-    public Atrisinājums uzProblēma() {
+    public Atrisinājums uzAtrisinājumu() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Atrisinājums kāProblēma() {
+    public Atrisinājums kāAtrisinājums() {
         throw not_implemented_yet();
     }
 

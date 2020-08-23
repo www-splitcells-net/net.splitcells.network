@@ -47,12 +47,12 @@ public class ProblēmaI implements Problēma {
     }
 
     @Override
-    public Atrisinājums uzProblēma() {
+    public Atrisinājums uzAtrisinājumu() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Atrisinājums kāProblēma() {
+    public Atrisinājums kāAtrisinājums() {
         if (kāAtrisinājums == null) {
             kāAtrisinājums = new AtrisinājumsI(this);
         }
