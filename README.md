@@ -4,4 +4,4 @@
 [Šeit](./src/main/java/net/splitcells/gel/kodols/Gel.java) ir galvenais objekts.
 Šis projekts ir licencēts saskaņā ar [MPL 2.0](./LICENSE.txt).
 
-![Ģenēriskai Piešķirtānas Simbols](http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/thumbnail/medium/white.project.logo.generic.allocator.jpg)
+![Ģenēriskai Piešķirtānas Simbols](http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/white.project.logo.generic.allocator.jpg)
