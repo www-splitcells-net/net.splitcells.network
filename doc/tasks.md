@@ -16,7 +16,7 @@ The priority of a task is just a guideline.
          1. repo.clone.into.current
          1. repo.clone.into.current.test
          1. repo.commit.all DONE
-         1. repo.commit.changed DONE
+         1. repo.commit.changed
          1. repo.create
          1. repo.mirror
          1. repo.mirror.into.current
