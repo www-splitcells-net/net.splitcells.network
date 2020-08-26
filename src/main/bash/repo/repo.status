@@ -4,4 +4,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # TODO Support for meta repos.
-command.managed.execute disjunction repo.status
+repo.process --command 'command.managed.execute disjunction repo.status'
