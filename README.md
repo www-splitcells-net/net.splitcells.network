@@ -1,8 +1,12 @@
 # Operation System State Interface
 
-Note that there is no guaranty that the scripts are correct or that they do no harm.
+<div align="center">
+	<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/bird_s.banner.jpg" width="200">
+	</div>
 
 ## Status
+
+Note that there is no guaranty that the scripts are correct or that they do no harm.
 
 There will be one release that is going to be a major version with breaking changes.
 After that the experimenting development phase will end and a sustainable development model will be adapted.
