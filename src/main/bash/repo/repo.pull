@@ -4,4 +4,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Pull information from all remotes.
-repo.process 'command.managed.execute disjunction repo.pull'
+repo.process --command 'command.managed.execute disjunction repo.pull'

@@ -20,7 +20,7 @@ The priority of a task is just a guideline.
          1. repo.create
          1. repo.mirror
          1. repo.mirror.into.current
-         1. repo.pull
+         1. repo.pull DONE
          1. repo.pull.from
          1. repo.push
          1. repo.push.to
