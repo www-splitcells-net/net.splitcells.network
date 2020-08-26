@@ -1,8 +1,8 @@
-# Operation System State Interface
-
 <div align="center">
 	<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/bird_s.banner.jpg" width="200">
 	</div>
+
+# Operation System State Interface
 
 ## Status
 
