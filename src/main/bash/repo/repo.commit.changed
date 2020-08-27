@@ -5,4 +5,4 @@
 
 # Commit only changed files. Untracked files are ignored.
 
-repo.process 'command.managed.execute disjunction repo.commit.changed'
+repo.process --command 'command.managed.execute disjunction repo.commit.changed'

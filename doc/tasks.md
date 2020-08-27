@@ -14,10 +14,10 @@ The priority of a task is just a guideline.
       1. Reimplement all repo commands:
          1. repo.clone
          1. repo.clone.into.current
-         1. repo.clone.into.current.test
+         1. repo.clone.into.current.test NOT_NEED_TO_BE_CHANGED
          1. repo.commit.all DONE
          1. repo.commit.changed
-         1. repo.create
+         1. repo.create NOT_NEED_TO_BE_CHANGED
          1. repo.mirror
          1. repo.mirror.into.current
          1. repo.pull DONE
