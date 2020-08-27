@@ -24,9 +24,9 @@ The priority of a task is just a guideline.
          1. repo.pull.from
          1. repo.push DONE
          1. repo.push.to
-         1. repo.remote.set
+         1. repo.remote.set IMPLEMENTED
          1. repo.status DONE
-         1. repo.synchronize
+         1. repo.synchronize NOT_NEED_TO_BE_CHANGED
          1. repo.synchronize.with
       1. Replace "repo.process" with "repo.process.2" and move old command to deprecated folder.
 1. "run.and.show.if.failed" and similar: do not filter stderr echo.

@@ -4,4 +4,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # TODO Support for meta repos.
-repo.process "$@" command.managed.execute disjunction repo.remote.set
+repo.process --command "command.managed.execute disjunction repo.remote.set $@/\$subRepo"
