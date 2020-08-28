@@ -11,6 +11,8 @@ from pathlib import Path
 
 # TODO Support relative path.
 # TODO Support host.
+# TODO By default abort on first error.
+# TODO Add switch in order to skip already present folders.
 
 def execute(relativePath, host, command):
 	print(relativePath)
@@ -21,11 +23,12 @@ def process(relativePath, host, command):
 	execute(relativePath, host, command)
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 	if subListPath.is_file():
+		# TODO Check if "!/.net.splitcells.os.state.interface.repo/" is present in gitignore. If not pr
 		with open(subListPath, 'r') as subListFile:
 			repoList=json.load(subListFile)
 			for subName in repoList['subs'].keys():
 				r='/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.os.state.interface/src/main/python/repo.process'
-				subRepoScript = 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath + '/' + subName
+				subRepoScript = 'mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 				print('	' + subRepoScript)
 				subprocess.call(subRepoScript, shell='True')

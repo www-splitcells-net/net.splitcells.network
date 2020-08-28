@@ -16,8 +16,7 @@ Changes to this are not considered major changes.
    1. "Minimize the effects on the state of the system by this framework."
 1. "command.mananged.environment.configure": Ensure that bash configuration is always active in graphical shell only.
 1. Migrate to new repository layout.
-   1. Create command "repo.verify".
-   1. Create command "repo.process.2".
+1. Create command "repo.verify".
 1. "echo.error" now just echos to stderr.
    Other commands do not filter echoed errors correctly anymore.
 ### Minor Changes

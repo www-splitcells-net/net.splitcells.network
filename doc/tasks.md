@@ -3,24 +3,6 @@ Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
-1. Create last version with unnecessary mayor changes.
-   1. Migrate all repo commands to new version.
-      1. repo.clone IMPLEMENTED
-      1. repo.clone.into.current IMPLEMENTED
-      1. repo.clone.into.current.test NOT_NEED_TO_BE_CHANGED
-      1. repo.commit.all DONE
-      1. repo.commit.changed DONE
-      1. repo.create NOT_NEED_TO_BE_CHANGED
-      1. repo.mirror DONE
-      1. repo.mirror.into.current IMPLEMENTED
-      1. repo.pull DONE
-      1. repo.pull.from IMPLEMENTED
-      1. repo.push DONE
-      1. repo.push.to IMPLEMENTED
-      1. repo.remote.set IMPLEMENTED
-      1. repo.status DONE
-      1. repo.synchronize NOT_NEED_TO_BE_CHANGED
-      1. repo.synchronize.with IMPLEMENTED
 1. "run.and.show.if.failed" and similar: do not filter stderr echo.
 1. "run.and.show.if.failed": store final output in error case in temporary file and just show link
    to file in order to not clutter output.
