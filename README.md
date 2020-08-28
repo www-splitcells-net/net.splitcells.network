@@ -8,8 +8,8 @@
 
 Note that there is no guaranty that the scripts are correct or that they do no harm.
 
-There will be one release that is going to be a major version with breaking changes.
-After that the experimenting development phase will end and a sustainable development model will be adapted.
+Starting with version 4.0.0 major change, that are not backwards compatible, will only be done,
+in order to fix errors as long as it is justifiable.
 
 * Github: ![CI](https://github.com/splitcells/os.state.interface/workflows/CI/badge.svg?branch=master)
 * Gitlab: ![CI](https://gitlab.com/splitcells/net.splitcells.os.state.interface/badges/master/pipeline.svg)
