@@ -12,4 +12,4 @@
 # Note that it is not guaranteed that storage is used more efficient by an mirror than a clone.
 # This depends on the implementation.
 
-repo.process command.managed.execute disjunction repo.mirror $@
+repo.process --command 'command.managed.execute disjunction repo.mirror '$@'/$subRepo'

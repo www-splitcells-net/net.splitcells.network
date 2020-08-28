@@ -3,6 +3,9 @@ This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Please, create a one sentence summary for each release.
 Releases are generally speaking, created monthly.
+
+The concrete echo format of each command is not stable.
+Changes to this are not considered major changes.
 ## Unreleased
 ### Major Changes
 1. Remove all logging levels in order to greatly simplify code.

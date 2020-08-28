@@ -5,8 +5,4 @@
 
 # Clones a repository into the current folder.
 
-# $1 = host
-# $2 = path in host
-
-# TODO Support repo aggregations.
-command.managed.execute disjunction repo.clone $@
+repo.process --command 'command.managed.execute disjunction repo.clone '$@'/$subRepo'

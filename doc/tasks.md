@@ -4,31 +4,23 @@ This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
 1. Create last version with unnecessary mayor changes.
-   1. In order to do this, the old repo interface has to be replaced with the new one.
-   1. Fix stderr filtering.
-1. Improve repo commands.
-   1. Provide second "repo.process" command for new layout.
-      1. "repo.process": Process repositories based on remote sub repos (this is implemented and should be deprecated because its complex).
-      1. "repo.process.2": Process repositories based on local sub repos (this is most important one and not implemented).
-      1. If new layout is present during call of "repo.process" use "repo.process.2".
-      1. Reimplement all repo commands:
-         1. repo.clone
-         1. repo.clone.into.current
-         1. repo.clone.into.current.test NOT_NEED_TO_BE_CHANGED
-         1. repo.commit.all DONE
-         1. repo.commit.changed
-         1. repo.create NOT_NEED_TO_BE_CHANGED
-         1. repo.mirror
-         1. repo.mirror.into.current
-         1. repo.pull DONE
-         1. repo.pull.from
-         1. repo.push DONE
-         1. repo.push.to
-         1. repo.remote.set IMPLEMENTED
-         1. repo.status DONE
-         1. repo.synchronize NOT_NEED_TO_BE_CHANGED
-         1. repo.synchronize.with
-      1. Replace "repo.process" with "repo.process.2" and move old command to deprecated folder.
+   1. Migrate all repo commands to new version.
+      1. repo.clone IMPLEMENTED
+      1. repo.clone.into.current IMPLEMENTED
+      1. repo.clone.into.current.test NOT_NEED_TO_BE_CHANGED
+      1. repo.commit.all DONE
+      1. repo.commit.changed DONE
+      1. repo.create NOT_NEED_TO_BE_CHANGED
+      1. repo.mirror DONE
+      1. repo.mirror.into.current IMPLEMENTED
+      1. repo.pull DONE
+      1. repo.pull.from IMPLEMENTED
+      1. repo.push DONE
+      1. repo.push.to IMPLEMENTED
+      1. repo.remote.set IMPLEMENTED
+      1. repo.status DONE
+      1. repo.synchronize NOT_NEED_TO_BE_CHANGED
+      1. repo.synchronize.with IMPLEMENTED
 1. "run.and.show.if.failed" and similar: do not filter stderr echo.
 1. "run.and.show.if.failed": store final output in error case in temporary file and just show link
    to file in order to not clutter output.

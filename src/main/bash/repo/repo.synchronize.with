@@ -3,8 +3,4 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Synchronize repository against all remotes.
-# TODO Clone missing repositories via "repo.clone.into.current".
-# TODO Use temporary remote instead of main.
-repo.remote.set "$@"
-repo.synchronize
+repo.commit.all && repo.pull.from "$@" && repo.commit.all && repo.push.to "$@"
