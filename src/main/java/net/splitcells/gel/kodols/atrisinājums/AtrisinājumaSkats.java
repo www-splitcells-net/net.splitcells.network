@@ -30,11 +30,11 @@ import static net.splitcells.gel.kodols.novērtējums.tips.Cena.cena;
 
 public interface AtrisinājumaSkats extends ProblēmasSkats {
 
-    default List<List<Ierobežojums>> brīvasGrupas() {
-        return brīvasGrupas(ierobežojums(), list());
+    default List<List<Ierobežojums>> prasībasGrupas() {
+        return prasībasGrupas(ierobežojums(), list());
     }
 
-    default List<List<Ierobežojums>> brīvasGrupas(Ierobežojums ierobežojums, List<Ierobežojums> vecākuTaka) {
+    default List<List<Ierobežojums>> prasībasGrupas(Ierobežojums ierobežojums, List<Ierobežojums> vecākuTaka) {
         final var ierobežojumuTaka = vecākuTaka.shallowCopy().withAppended(ierobežojums);
         final List<List<Ierobežojums>> brīvasGrupas = list();
         ierobežojums.casted(PriekšVisiem.class)
@@ -54,7 +54,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
                     }
                 });
         ierobežojums.skatsUsBerniem().stream()
-                .map(bērns -> brīvasGrupas(bērns, ierobežojumuTaka))
+                .map(bērns -> prasībasGrupas(bērns, ierobežojumuTaka))
                 .forEach(brīvasGrupas::addAll);
         return brīvasGrupas;
     }

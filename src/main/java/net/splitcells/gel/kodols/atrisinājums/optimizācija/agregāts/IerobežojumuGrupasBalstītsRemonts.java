@@ -37,7 +37,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
     }
 
     protected List<OptimizācijasNotikums> pārdale(AtrisinājumaSkats atrisinājums) {
-        final var brīvasGrupas = atrisinājums.brīvasGrupas();
+        final var brīvasGrupas = atrisinājums.prasībasGrupas();
 
         final var atlasītasBrīvasGrupas = brīvasGrupas.stream()
                 .collect(toList());
@@ -87,9 +87,9 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         return pieškiršanasGrupas
                 .reverse()
                 .stream()
+                .findFirst()
                 .map(pēdejaPieškiršanasGrupa -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, pēdejaPieškiršanasGrupa))
                 .filter(grupasIzbrīvošanu -> !grupasIzbrīvošanu.isEmpty())
-                .findFirst()
                 .orElseGet(() -> list());
     }
 
