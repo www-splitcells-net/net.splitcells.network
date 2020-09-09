@@ -53,7 +53,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         return optimizāija;
     }
 
-    protected List<OptimizācijasNotikums> pārdale(AtrisinājumaSkats atrisinājums, Map<GrupaId, Set<Rinda>> brīvasPrasībasGrupas) {
+    public List<OptimizācijasNotikums> pārdale(AtrisinājumaSkats atrisinājums, Map<GrupaId, Set<Rinda>> brīvasPrasībasGrupas) {
         List<OptimizācijasNotikums> pārdale = list();
         final var nelietotiPiedāvājumi = atrisinājums.piedāvājums_nelietots().gūtRindas();
         brīvasPrasībasGrupas.entrySet().forEach(grupa -> {
@@ -72,7 +72,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         return pārdale;
     }
 
-    protected Map<GrupaId, Set<Rinda>> prāsībasGrupēšana(Optional<List<Ierobežojums>> ierobežojumuGrupēšāna, AtrisinājumaSkats atrisinājums) {
+    public Map<GrupaId, Set<Rinda>> prāsībasGrupēšana(Optional<List<Ierobežojums>> ierobežojumuGrupēšāna, AtrisinājumaSkats atrisinājums) {
         return ierobežojumuGrupēšāna
                 .map(grupēšanasTaka -> grupēšanasTaka
                         .lastValue()
@@ -99,14 +99,14 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 .orElseGet(() -> map());
     }
 
-    protected Optional<List<Ierobežojums>> neievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums) {
+    public Optional<List<Ierobežojums>> neievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums) {
         return piešķiršanasGruppas(atrisinājums.ierobežojums())
                 .stream()
                 .filter(e -> !e.isEmpty())
                 .findFirst();
     }
 
-    protected Optional<List<OptimizācijasNotikums>> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupam
+    public Optional<List<OptimizācijasNotikums>> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupam
             (Optional<List<Ierobežojums>> neievērotajuGrupuNoIerobežojumuGrupu, AtrisinājumaSkats atrisinājums) {
         return neievērotajuGrupuNoIerobežojumuGrupu
                 .stream()
@@ -116,7 +116,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 .findFirst();
     }
 
-    protected List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums, List<Ierobežojums> ierobežojumuTaka) {
+    public List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums, List<Ierobežojums> ierobežojumuTaka) {
         return ierobežojumuTaka.lastValue()
                 .map(ierobežojums ->
                         ierobežojums
