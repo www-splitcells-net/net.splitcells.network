@@ -1,12 +1,16 @@
 package net.splitcells.gel.kodols.atrisinājums;
 
+import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.host.Files.createDirectory;
+import static net.splitcells.dem.resource.host.Files.writeToFile;
 import static net.splitcells.gel.kodols.atrisinājums.OptimizācijasParametri.optimizācijasParametri;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.PIEŠĶIRŠANA;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.NOŅEMŠANA;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.resource.host.DocumentsPath;
 import net.splitcells.gel.kodols.problēma.Problēma;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
@@ -98,5 +102,12 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
             throw new UnsupportedOperationException();
         }
         return this;
+    }
+
+    default void veidoAnalīzu() {
+            createDirectory(environment().config().configValue(DocumentsPath.class));
+            final var path = this.path().stream().reduce((kreisi, labi)  -> kreisi + "." + labi);
+            writeToFile(environment().config().configValue(DocumentsPath.class).resolve(path + ".atrisinājums.ierobežojums.toDom.xml"), ierobežojums().toDom());
+            writeToFile(environment().config().configValue(DocumentsPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), ierobežojums().grafiks());
     }
 }
