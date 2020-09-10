@@ -45,9 +45,18 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
     @Override
     public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
         final var neievērotajuGrupuNoIerobežojumuGrupu = neievērotajuGrupuNoIerobežojumuGrupu(atrisinājums);
-        final var prasībasGrupēšana = prāsībasGrupēšana(neievērotajuGrupuNoIerobežojumuGrupu, atrisinājums);
+        final var prasībasGrupēšana = neievērotajuGrupuNoIerobežojumuGrupu
+                .map(e -> e
+                        .lastValue()
+                        .map(f -> prāsībasGrupēšana(f, atrisinājums))
+                        .orElseGet(() -> map())
+                ).orElseGet(() -> map());
         final var optimizāija =
-                neievērotajuGrupuNoIerobežojumuGrupu.map(e -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, e))
+                neievērotajuGrupuNoIerobežojumuGrupu
+                        .map(e -> e
+                                .lastValue()
+                                .map(f -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, f))
+                                .orElseGet(() -> list()))
                         .orElseGet(() -> list());
         optimizāija.withAppended(pārdale(atrisinājums, prasībasGrupēšana));
         return optimizāija;
@@ -72,31 +81,24 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         return pārdale;
     }
 
-    public Map<GrupaId, Set<Rinda>> prāsībasGrupēšana(Optional<List<Ierobežojums>> ierobežojumuGrupēšāna, AtrisinājumaSkats atrisinājums) {
-        return ierobežojumuGrupēšāna
-                .map(grupēšanasTaka -> grupēšanasTaka
-                        .lastValue()
-                        .map(grupēšana -> {
-                            final Map<GrupaId, Set<Rinda>> prāsībasGrupēšana = map();
-                            grupēšana
-                                    .rindasAbstrāde()
-                                    .gūtRindas()
-                                    .stream()
-                                    .map(abstrāde -> pair(abstrāde.vērtība(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID), abstrāde.vērtība(RINDA)))
-                                    .forEach(abstrāde -> {
-                                        final Set<Rinda> grupa;
-                                        if (!prāsībasGrupēšana.containsKey(abstrāde.getKey())) {
-                                            grupa = Sets.setOfUniques();
-                                            prāsībasGrupēšana.put(abstrāde.getKey(), grupa);
-                                        } else {
-                                            grupa = prāsībasGrupēšana.get(abstrāde.getKey());
-                                        }
-                                        grupa.with(abstrāde.getValue());
-                                    });
-                            return prāsībasGrupēšana;
-                        })
-                        .orElseGet(() -> map()))
-                .orElseGet(() -> map());
+    public Map<GrupaId, Set<Rinda>> prāsībasGrupēšana(Ierobežojums ierobežojumuGrupēšāna, AtrisinājumaSkats atrisinājums) {
+        final Map<GrupaId, Set<Rinda>> prāsībasGrupēšana = map();
+        ierobežojumuGrupēšāna
+                .rindasAbstrāde()
+                .gūtRindas()
+                .stream()
+                .map(abstrāde -> pair(abstrāde.vērtība(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID), abstrāde.vērtība(RINDA)))
+                .forEach(abstrāde -> {
+                    final Set<Rinda> grupa;
+                    if (!prāsībasGrupēšana.containsKey(abstrāde.getKey())) {
+                        grupa = Sets.setOfUniques();
+                        prāsībasGrupēšana.put(abstrāde.getKey(), grupa);
+                    } else {
+                        grupa = prāsībasGrupēšana.get(abstrāde.getKey());
+                    }
+                    grupa.with(abstrāde.getValue());
+                });
+        return prāsībasGrupēšana;
     }
 
     public Optional<List<Ierobežojums>> neievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums) {
@@ -106,32 +108,21 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 .findFirst();
     }
 
-    public Optional<List<OptimizācijasNotikums>> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupam
-            (Optional<List<Ierobežojums>> neievērotajuGrupuNoIerobežojumuGrupu, AtrisinājumaSkats atrisinājums) {
-        return neievērotajuGrupuNoIerobežojumuGrupu
+    public List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums, Ierobežojums ierobežojums) {
+        final var ienākošasGrupas = setOfUniques
+                (ierobežojums
+                        .rindasAbstrāde()
+                        .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                        .vertības());
+        return ienākošasGrupas
                 .stream()
-                .map(pēdejaPieškiršanasGrupa
-                        -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, pēdejaPieškiršanasGrupa))
-                .filter(grupasIzbrīvošanu -> !grupasIzbrīvošanu.isEmpty())
-                .findFirst();
-    }
-
-    public List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums, List<Ierobežojums> ierobežojumuTaka) {
-        return ierobežojumuTaka.lastValue()
-                .map(ierobežojums ->
-                        ierobežojums
-                                .rindasAbstrāde()
-                                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
-                                .vertības()
-                                .stream()
-                                // DARĪT Šis nestrāda ar IerobežojumuGrupasBalstītsRemontsTests.
-                                .filter(grupa -> !ierobežojums.neievērotaji(grupa).isEmpty())
-                                .map(grupa -> ierobežojums.rindasAbstrāde().kolonnaSkats(RINDA).vertības())
-                                .collect(toSetOfUniques()))
+                // DARĪT Šis nestrāda ar IerobežojumuGrupasBalstītsRemontsTests.
+                .filter(grupa -> !ierobežojums.neievērotaji(grupa).isEmpty())
+                .map(grupa -> ierobežojums.rindasAbstrāde().kolonnaSkats(RINDA).vertības())
+                .collect(toSetOfUniques())
                 //.reduce((l, r) -> merge(l, r))
                 .stream()
                 .flatMap(straumeNoRindasSarakstiem -> straumeNoRindasSarakstiem.stream())
-                .flatMap(rindas -> rindas.stream())
                 .map(rinda -> optimizacijasNotikums
                         (NOŅEMŠANA
                                 , atrisinājums.prasība_no_piešķiršana(rinda).uzRindaRādītājs()
