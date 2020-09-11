@@ -27,7 +27,7 @@ def process(relativePath, host, command):
 		with open(subListPath, 'r') as subListFile:
 			repoList=json.load(subListFile)
 			for subName in repoList['subs'].keys():
-				r='/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.os.state.interface/src/main/python/repo.process'
+				r='repo.process'
 				subRepoScript = 'mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 				print('	' + subRepoScript)
