@@ -51,13 +51,12 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                         .map(f -> prāsībasGrupēšana(f, atrisinājums))
                         .orElseGet(() -> map())
                 ).orElseGet(() -> map());
-        final var optimizāija =
-                neievērotajuGrupuNoIerobežojumuGrupu
-                        .map(e -> e
-                                .lastValue()
-                                .map(f -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, f))
-                                .orElseGet(() -> list()))
-                        .orElseGet(() -> list());
+        final var optimizāija = neievērotajuGrupuNoIerobežojumuGrupu
+                .map(e -> e
+                        .lastValue()
+                        .map(f -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, f))
+                        .orElseGet(() -> list()))
+                .orElseGet(() -> list());
         optimizāija.withAppended(pārdale(atrisinājums, prasībasGrupēšana));
         return optimizāija;
     }
