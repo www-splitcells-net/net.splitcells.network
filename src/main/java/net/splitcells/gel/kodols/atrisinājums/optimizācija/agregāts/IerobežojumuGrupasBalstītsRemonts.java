@@ -115,11 +115,9 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                         .vertības());
         return ienākošasGrupas
                 .stream()
-                // DARĪT Šis nestrāda ar IerobežojumuGrupasBalstītsRemontsTests.
                 .filter(grupa -> !ierobežojums.neievērotaji(grupa).isEmpty())
                 .map(grupa -> ierobežojums.rindasAbstrāde().kolonnaSkats(RINDA).vertības())
                 .collect(toSetOfUniques())
-                //.reduce((l, r) -> merge(l, r))
                 .stream()
                 .flatMap(straumeNoRindasSarakstiem -> straumeNoRindasSarakstiem.stream())
                 .map(rinda -> optimizacijasNotikums
