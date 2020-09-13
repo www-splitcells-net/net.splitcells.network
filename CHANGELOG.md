@@ -7,6 +7,10 @@ Releases are generally speaking, created monthly.
 The concrete echo format of each command is not stable.
 Changes to this are not considered major changes.
 ## Version 4.0.0
+Starting with this version, major changes,
+that are not backwards compatible,
+will only be done,
+in order to fix errors as long as it is justifiable.
 ### Major Changes
 1. Remove all logging levels in order to greatly simplify code.
 1. Rename "ssh.key.generate" to "user.ssh.key.generate" in order to better

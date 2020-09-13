@@ -1,4 +1,9 @@
 # Code Guidelines
+## Backward Compatibility
+Starting with this version, major changes,
+that are not backwards compatible,
+will only be done,
+in order to fix errors as long as it is justifiable.
 ## Programming Language
 1. Use Thompson Shell(sh) for simple scripts that just execute
    and wire together commands.

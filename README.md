@@ -6,11 +6,6 @@
 
 ## Status
 
-Note that there is no guaranty that the scripts are correct or that they do no harm.
-
-Starting with version 4.0.0 major change, that are not backwards compatible, will only be done,
-in order to fix errors as long as it is justifiable.
-
 * Github: ![CI](https://github.com/splitcells/os.state.interface/workflows/CI/badge.svg?branch=master)
 * Gitlab: ![CI](https://gitlab.com/splitcells/net.splitcells.os.state.interface/badges/master/pipeline.svg)
 
