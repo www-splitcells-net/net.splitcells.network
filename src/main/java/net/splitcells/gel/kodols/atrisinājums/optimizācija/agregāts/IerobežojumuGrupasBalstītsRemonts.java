@@ -4,42 +4,52 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.data.set.map.Maps;
-import net.splitcells.dem.data.set.map.Pair;
 import net.splitcells.dem.utils.random.Randomness;
-import net.splitcells.dem.utils.random.RandomnessSource;
-import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.ierobežojums.GrupaId;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
-import net.splitcells.gel.kodols.ierobežojums.tips.PriekšVisiem;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.atrisinājums.AtrisinājumaSkats;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
-import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam;
-import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.data.set.map.Maps.toMap;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.*;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Pair.pair;
+import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums.optimizacijasNotikums;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.NOŅEMŠANA;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.PIEŠĶIRŠANA;
 import static net.splitcells.gel.kodols.ierobežojums.Ierobežojums.*;
 
 public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
-    public static IerobežojumuGrupasBalstītsRemonts ierobežojumGrupaBalstītsRemonts() {
-        return new IerobežojumuGrupasBalstītsRemonts();
+
+    public static IerobežojumuGrupasBalstītsRemonts ierobežojumGrupaBalstītsRemonts
+            (Function<List<List<Ierobežojums>>, Optional<List<Ierobežojums>>> pieškiršanasAtlasītajs) {
+        return new IerobežojumuGrupasBalstītsRemonts(pieškiršanasAtlasītajs);
     }
 
-    private final Randomness randomness = RandomnessSource.randomness();
+    public static IerobežojumuGrupasBalstītsRemonts ierobežojumGrupaBalstītsRemonts() {
+        return new IerobežojumuGrupasBalstītsRemonts
+                (piešķiršanasGruppas -> piešķiršanasGruppas
+                        .stream()
+                        .filter(piešķiršanasGruppasTaka -> !piešķiršanasGruppasTaka
+                                .lastValue()
+                                .get()
+                                .neievērotaji()
+                                .isEmpty())
+                        .findFirst());
+    }
 
-    protected IerobežojumuGrupasBalstītsRemonts() {
+    private final Randomness randomness = randomness();
+    private final Function<List<List<Ierobežojums>>, Optional<List<Ierobežojums>>> pieškiršanasAtlasītajs;
+
+    protected IerobežojumuGrupasBalstītsRemonts(Function<List<List<Ierobežojums>>, Optional<List<Ierobežojums>>> pieškiršanasAtlasītajs) {
+        this.pieškiršanasAtlasītajs = pieškiršanasAtlasītajs;
     }
 
     @Override
@@ -101,10 +111,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
     }
 
     public Optional<List<Ierobežojums>> neievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums) {
-        return piešķiršanasGruppas(atrisinājums.ierobežojums())
-                .stream()
-                .filter(e -> !e.isEmpty())
-                .findFirst();
+        return pieškiršanasAtlasītajs.apply(piešķiršanasGruppas(atrisinājums.ierobežojums()));
     }
 
     public List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums, Ierobežojums ierobežojums) {
