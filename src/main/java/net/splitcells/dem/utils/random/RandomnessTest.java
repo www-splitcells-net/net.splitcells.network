@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.Randomness.assertPlausibility;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,5 +46,15 @@ public class RandomnessTest {
     @Test
     public void testAssertPlausibilityWithImplausible() {
         assertThrows(Error.class, () -> assertPlausibility(.1f, 100, 30));
+    }
+
+    @Test
+    public void test_chooseOneOf_on_empty_list() {
+        assertThrows(IllegalArgumentException.class, () -> randomness().chooseOneOf(list()));
+    }
+
+    @Test
+    public void test_removeOneOf_on_empty_list() {
+        assertThrows(IllegalArgumentException.class, () -> randomness().removeOneOf(list()));
     }
 }

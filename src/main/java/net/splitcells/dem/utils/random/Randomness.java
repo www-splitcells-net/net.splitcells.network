@@ -36,10 +36,16 @@ public interface Randomness extends BasicRndSrc {
     Random asRandom();
 
     default <T> T chooseOneOf(List<T> arg) {
+        if (arg.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         return arg.get(asRandom().nextInt(arg.size()));
     }
 
     default <T> T removeOneOf(List<T> arg) {
+        if (arg.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         return arg.remove(asRandom().nextInt(arg.size()));
     }
 
