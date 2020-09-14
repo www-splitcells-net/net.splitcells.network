@@ -61,14 +61,14 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
 
     @Override
     public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
-        final var neievērotajuGrupuNoIerobežojumuGrupu = grupuNoIerobežojumuGrupu(atrisinājums);
-        final var prasībasGrupēšana = neievērotajuGrupuNoIerobežojumuGrupu
+        final var neievērotajuGrupuNoIerobežojumuGrupešanu = grupuNoIerobežojumuGrupu(atrisinājums);
+        final var prasībasGrupēšana = neievērotajuGrupuNoIerobežojumuGrupešanu
                 .map(e -> e
                         .lastValue()
                         .map(f -> prāsībasGrupēšana(f, atrisinājums))
                         .orElseGet(() -> map())
                 ).orElseGet(() -> map());
-        final var optimizāija = neievērotajuGrupuNoIerobežojumuGrupu
+        final var optimizāija = neievērotajuGrupuNoIerobežojumuGrupešanu
                 .map(e -> e
                         .lastValue()
                         .map(f -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, f))
