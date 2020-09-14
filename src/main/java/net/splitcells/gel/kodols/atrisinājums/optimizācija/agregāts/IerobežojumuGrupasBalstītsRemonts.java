@@ -34,15 +34,22 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
     }
 
     public static IerobežojumuGrupasBalstītsRemonts ierobežojumGrupaBalstītsRemonts() {
+        final var randomness = randomness();
         return new IerobežojumuGrupasBalstītsRemonts
-                (piešķiršanasGruppas -> piešķiršanasGruppas
-                        .stream()
-                        .filter(piešķiršanasGruppasTaka -> !piešķiršanasGruppasTaka
-                                .lastValue()
-                                .get()
-                                .neievērotaji()
-                                .isEmpty())
-                        .findFirst());
+                (piešķiršanasGruppas -> {
+                    final var kandidāti = piešķiršanasGruppas
+                            .stream()
+                            .filter(piešķiršanasGruppasTaka -> !piešķiršanasGruppasTaka
+                                    .lastValue()
+                                    .get()
+                                    .neievērotaji()
+                                    .isEmpty())
+                            .collect(toList());
+                    if (kandidāti.isEmpty()) {
+                        return Optional.empty();
+                    }
+                    return Optional.of(randomness.chooseOneOf(kandidāti));
+                });
     }
 
     private final Randomness randomness = randomness();
