@@ -4,7 +4,6 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.kodols.ierobežojums.GrupaId;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
@@ -104,11 +103,11 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                         .map(f -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, f))
                         .orElseGet(() -> list()))
                 .orElseGet(() -> list());
-        optimizāija.withAppended(pārdale(atrisinājums, prasībasGrupēšana));
+        optimizāija.withAppended(pārdali(atrisinājums, prasībasGrupēšana));
         return optimizāija;
     }
 
-    public List<OptimizācijasNotikums> pārdale(AtrisinājumaSkats atrisinājums, Map<GrupaId, Set<Rinda>> brīvasPrasībasGrupas) {
+    public List<OptimizācijasNotikums> pārdali(AtrisinājumaSkats atrisinājums, Map<GrupaId, Set<Rinda>> brīvasPrasībasGrupas) {
         return pārdalītājs.apply(brīvasPrasībasGrupas).optimizē(atrisinājums);
     }
 
