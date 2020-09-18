@@ -35,7 +35,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
 
     public static IerobežojumuGrupasBalstītsRemonts ierobežojumGrupaBalstītsRemonts
             (Function<List<List<Ierobežojums>>, Optional<List<Ierobežojums>>> pieškiršanasAtlasītajs) {
-        return new IerobežojumuGrupasBalstītsRemonts(pieškiršanasAtlasītajs, NEJAUŠS_PĀRDALĪTĀJS);
+        return new IerobežojumuGrupasBalstītsRemonts(pieškiršanasAtlasītajs, nejāuhšsPārdalītājs());
     }
 
     public static IerobežojumuGrupasBalstītsRemonts ierobežojumGrupaBalstītsRemonts() {
@@ -54,30 +54,36 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                         return Optional.empty();
                     }
                     return Optional.of(randomness.chooseOneOf(kandidāti));
-                }, NEJAUŠS_PĀRDALĪTĀJS);
+                }, nejāuhšsPārdalītājs());
     }
 
-    private static final Function<Map<GrupaId, Set<Rinda>>, Optimizācija> NEJAUŠS_PĀRDALĪTĀJS
-            = brīvasPrasībasGrupas -> atrisinājums -> {
+    private static final Function<Map<GrupaId, Set<Rinda>>, Optimizācija> nejāuhšsPārdalītājs() {
         final var randomness = randomness();
-        List<OptimizācijasNotikums> pārdale = list();
-        final var nelietotiPiedāvājumi = atrisinājums.piedāvājums_nelietots().gūtRindas();
-        brīvasPrasībasGrupas.entrySet().forEach(grupa -> {
-            grupa.getValue().forEach(prāsiba -> {
-                if (nelietotiPiedāvājumi.isEmpty()) {
-                    return;
-                }
-                pārdale.add
-                        (optimizacijasNotikums
-                                (PIEŠĶIRŠANA
-                                        , prāsiba.uzRindaRādītājs()
-                                        , nelietotiPiedāvājumi
-                                                .remove(randomness.integer(0, nelietotiPiedāvājumi.size() - 1))
-                                                .uzRindaRādītājs()));
+        return indeksuBalstītsPārdalītājs(i -> randomness.integer(0, i));
+    }
+
+    public static final Function<Map<GrupaId, Set<Rinda>>, Optimizācija> indeksuBalstītsPārdalītājs
+            (Function<Integer, Integer> indeksuAtlasītajs) {
+        return brīvasPrasībasGrupas -> atrisinājums -> {
+            final List<OptimizācijasNotikums> pārdale = list();
+            final var nelietotiPiedāvājumi = atrisinājums.piedāvājums_nelietots().gūtRindas();
+            brīvasPrasībasGrupas.entrySet().forEach(grupa -> {
+                grupa.getValue().forEach(prāsiba -> {
+                    if (nelietotiPiedāvājumi.isEmpty()) {
+                        return;
+                    }
+                    pārdale.add
+                            (optimizacijasNotikums
+                                    (PIEŠĶIRŠANA
+                                            , prāsiba.uzRindaRādītājs()
+                                            , nelietotiPiedāvājumi
+                                                    .remove((int) indeksuAtlasītajs.apply(nelietotiPiedāvājumi.size() - 1))
+                                                    .uzRindaRādītājs()));
+                });
             });
-        });
-        return pārdale;
-    };
+            return pārdale;
+        };
+    }
 
     private final Function<List<List<Ierobežojums>>, Optional<List<Ierobežojums>>> pieškiršanasAtlasītajs;
     private final Function<Map<GrupaId, Set<Rinda>>, Optimizācija> pārdalītājs;
