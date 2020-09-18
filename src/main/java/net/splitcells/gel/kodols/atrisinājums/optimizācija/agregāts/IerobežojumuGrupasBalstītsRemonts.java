@@ -67,12 +67,13 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 if (nelietotiPiedāvājumi.isEmpty()) {
                     return;
                 }
-                pārdale.add(
-                        optimizacijasNotikums(
-                                PIEŠĶIRŠANA
-                                , prāsiba.uzRindaRādītājs()
-                                , nelietotiPiedāvājumi.remove(randomness.integer(0, nelietotiPiedāvājumi.size() - 1)).uzRindaRādītājs()
-                        ));
+                pārdale.add
+                        (optimizacijasNotikums
+                                (PIEŠĶIRŠANA
+                                        , prāsiba.uzRindaRādītājs()
+                                        , nelietotiPiedāvājumi
+                                                .remove(randomness.integer(0, nelietotiPiedāvājumi.size() - 1))
+                                                .uzRindaRādītājs()));
             });
         });
         return pārdale;
