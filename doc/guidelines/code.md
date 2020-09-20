@@ -1,9 +1,10 @@
 # Code Guidelines
 ## Backward Compatibility
-Starting with this version, major changes,
+Starting with version 4.0, major changes,
 that are not backwards compatible,
 will only be done,
 in order to fix errors as long as it is justifiable.
+This does only apply to documented or tested parts of the API.
 ## Programming Language
 1. Use Thompson Shell(sh) for simple scripts that just execute
    and wire together commands.
