@@ -25,7 +25,7 @@ def execute(relativePath, host, command):
 	return True
 def process(relativePath, host, command):
 	if not execute(relativePath, host, command):
-		return
+		return False
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 	if subListPath.is_file():
 		# TODO Check if "!/.net.splitcells.os.state.interface.repo/" is present in gitignore. If not pr
@@ -33,17 +33,20 @@ def process(relativePath, host, command):
 			repoList=json.load(subListFile)
 			for subName in repoList['subs'].keys():
 				r='repo.process'
-				subRepoScript = 'mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
+				# TODO Do not rely on Bash specific command syntax.
+				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 				print('	' + subRepoScript)
 				returnCode = subprocess.call(subRepoScript, shell='True')
 				if returnCode != 0:
 					print('Error processing sub repository with return code ' + str(returnCode) + '.')
-					return
+					return False
+	return True
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='TODO')
 	parser.add_argument('--relative-path', dest='relativePath', default='./')
 	parser.add_argument('--host', dest='host', default="''")
 	parser.add_argument('--command', dest='command', required=True)
 	parsedArgs = parser.parse_args()
-	process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command)
+	if not process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command):
+		exit(1)
