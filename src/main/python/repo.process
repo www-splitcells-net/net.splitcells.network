@@ -18,9 +18,14 @@ def execute(relativePath, host, command):
 	print(relativePath)
 	command = command.replace('$subRepo', '')
 	print('	' + command)
-	subprocess.call(command, shell='True')
+	returnCode = subprocess.call(command, shell='True')
+	if returnCode != 0:
+		print('Error processing repository with return code ' + str(returnCode) + '.')
+		return False
+	return True
 def process(relativePath, host, command):
-	execute(relativePath, host, command)
+	if not execute(relativePath, host, command):
+		return
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 	if subListPath.is_file():
 		# TODO Check if "!/.net.splitcells.os.state.interface.repo/" is present in gitignore. If not pr
@@ -31,7 +36,10 @@ def process(relativePath, host, command):
 				subRepoScript = 'mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 				print('	' + subRepoScript)
-				subprocess.call(subRepoScript, shell='True')
+				returnCode = subprocess.call(subRepoScript, shell='True')
+				if returnCode != 0:
+					print('Error processing sub repository with return code ' + str(returnCode) + '.')
+					return
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='TODO')
 	parser.add_argument('--relative-path', dest='relativePath', default='./')
