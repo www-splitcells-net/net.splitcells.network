@@ -8,7 +8,7 @@ The concrete echo format of each command is not stable.
 Changes to this are not considered major changes.
 ## Unreleased
 ### Major Changes
-1. repo.process: Exit command on first error by default.
+1. Exit 'repo.process' on first error by default.
 ## Version 4.0.0
 Starting with this version, major changes,
 that are not backwards compatible,
