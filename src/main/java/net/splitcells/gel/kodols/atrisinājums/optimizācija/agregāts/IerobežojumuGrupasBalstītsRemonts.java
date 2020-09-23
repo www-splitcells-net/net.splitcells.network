@@ -104,6 +104,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                         .map(f -> prāsībasGrupēšana(f, atrisinājums))
                         .orElseGet(() -> map()))
                 .orElseGet(() -> map());
+        prasībasGrupēšana.put(null, setOfUniques(atrisinājums.prasības_nelietotas().gūtRindas()));
         final var optimizāija = grupuNoIerobežojumuGrupu
                 .map(e -> e
                         .lastValue()
