@@ -43,10 +43,6 @@ public class TestSuiteI implements TestSuite {
         reporter.publishEntry(END_TIME.keyString(), END_TIME.currentValue());
     }
 
-    public static <T> void report(TestReporter reporter, ReportEntryKey<T> key, T value) {
-        throw not_implemented_yet();
-    }
-
     protected void test(Stream<DynamicTest> tests) {
         tests.forEach(test -> {
             try {
