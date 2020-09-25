@@ -57,19 +57,15 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
         this.messageFilter = messageFilter;
         baseOutput = requireNonNull(output);
         this.root = requireNonNull(root);
-        // HACK Create real Dem headless mode.
-        if (!"true".equals(System.getProperty("net.splitcells.mode.build"))) {
-            {
-                // HACK
-                String tmp = Xml.toDocumentString(root);
-                if (!tmp.contains(Dsui.ENTRY_POINT)) {
-                    throw new IllegalArgumentException(tmp);
-                }
-                // FIXME Remove last line if only whitespace.
-                baseOutput.append(tmp.split(Dsui.ENTRY_POINT)[0]);
+        {
+            // HACK
+            String tmp = Xml.toDocumentString(root);
+            if (!tmp.contains(Dsui.ENTRY_POINT)) {
+                throw new IllegalArgumentException(tmp);
             }
+            // FIXME Remove last line if only whitespace.
+            baseOutput.append(tmp.split(Dsui.ENTRY_POINT)[0]);
         }
-        // HACK style
         contentOutput = Sender.extend(baseOutput, "   ", "");
     }
 
