@@ -13,6 +13,7 @@ public class NameSpaces {
     public static final NameSpace STRING = nameSpace("str", "http://splitcells.net/string.xsd");
     public static final NameSpace NAME_SPACE = nameSpace("ns", "http://splitcells.net/namespace.xsd");
     public static final NameSpace DEN = nameSpace("d", "http://splitcells.net/den.xsd");
+    public static final NameSpace GEL = nameSpace("d", "http://splitcells.net/gel.xsd");
     public static final NameSpace SEW = nameSpace("s", "http://splitcells.net/sew.xsd");
     public static final String LINK = "link";
     public static final String URL = "url";
