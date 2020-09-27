@@ -32,7 +32,7 @@ import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
 import org.w3c.dom.Node;
 
 public class MinimālsAttālums<T> implements Vērtētājs {
-    public static MinimālsAttālums<Integer> minIntDistance(Atribūts<Integer> atribūts, double minimumDistance) {
+    public static MinimālsAttālums<Integer> minimālsIntAttālums(Atribūts<Integer> atribūts, double minimumDistance) {
         return minimālsAttālums(atribūts, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
     }
 
