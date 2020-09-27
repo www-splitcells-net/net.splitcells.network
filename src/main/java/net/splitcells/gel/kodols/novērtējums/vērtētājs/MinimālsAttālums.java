@@ -273,8 +273,8 @@ public class MinimālsAttālums<T> implements Vērtētājs {
         return contextes.stream().map(Discoverable::path).collect(toList());
     }
 
-    private List<Rinda> sorted(Tabula lines) {
-        return lines.jēlaRindasSkats().stream()
+    private List<Rinda> sorted(Tabula rindas) {
+        return rindas.jēlaRindasSkats().stream()
                 .filter(e -> e != null)
                 .sorted((a, b) -> {
                             try {
