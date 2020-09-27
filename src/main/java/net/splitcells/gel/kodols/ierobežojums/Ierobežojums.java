@@ -2,6 +2,7 @@ package net.splitcells.gel.kodols.ierobežojums;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.kodols.kopīgs.Vārdi.ARGUMENTI;
@@ -110,10 +111,10 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemš
         reģistrē_papildinājums(injekcijasGrupa(), rinda);
     }
 
-    void rēgistrē_noņemšana(GrupaId grupaId, Rinda rinda);
+    void rēgistrē_pirms_noņemšanas(GrupaId grupaId, Rinda rinda);
 
     default void rēgistrē_pirms_noņemšanas(Rinda rinda) {
-        rēgistrē_noņemšana(injekcijasGrupa(), rinda);
+        rēgistrē_pirms_noņemšanas(injekcijasGrupa(), rinda);
     }
 
     List<Ierobežojums> skatsUsBerniem();
@@ -163,7 +164,7 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemš
     }
 
     default Element grafiks() {
-        final var grafiks = Xml.element(type().getSimpleName());
+        final var grafiks = Xml.rElement(GEL, type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> grafiks.appendChild(Xml.element(ARGUMENTI, arg.toDom())));
         }

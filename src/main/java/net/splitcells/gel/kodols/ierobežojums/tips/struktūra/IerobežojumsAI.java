@@ -4,15 +4,10 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static net.splitcells.dem.lang.Xml.element;
-import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.gel.kodols.dati.datubāze.DatuBāzes.datuBāze;
 import static net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanass.piešķiršanas;
 import static net.splitcells.gel.kodols.kopīgs.Vārdi.ARGUMENTI;
@@ -28,7 +23,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanass;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaFiltrs;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
@@ -44,7 +38,6 @@ import net.splitcells.gel.kodols.ierobežojums.GrupaId;
 import net.splitcells.gel.kodols.ierobežojums.Jautājums;
 import net.splitcells.gel.kodols.ierobežojums.JautājumsI;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
-import net.splitcells.gel.kodols.dati.piešķiršanas.PiešķiršanasI;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.dati.tabula.Tabula;
@@ -94,7 +87,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     protected abstract void apstrāde_rindu_papildinajumu(Rinda papildinājums);
 
     @Override
-    public void rēgistrē_noņemšana(GrupaId ienākošaGrupaId, Rinda noņemšana) {
+    public void rēgistrē_pirms_noņemšanas(GrupaId ienākošaGrupaId, Rinda noņemšana) {
         apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
         rindasApstrāde
                 .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
@@ -126,7 +119,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
 
     protected void izdalīt_noņemšana(Rinda noņemšana) {
         noņemšana.vērtība(IZDALĪŠANA_UZ).forEach(child ->
-                child.rēgistrē_noņemšana
+                child.rēgistrē_pirms_noņemšanas
                         (noņemšana.vērtība(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                 , noņemšana.vērtība(RINDA)));
     }

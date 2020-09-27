@@ -276,7 +276,16 @@ public class MinimālsAttālums<T> implements Vērtētājs {
     private List<Rinda> sorted(Tabula lines) {
         return lines.jēlaRindasSkats().stream()
                 .filter(e -> e != null)
-                .sorted((a, b) -> comparator.compare(a.vērtība(RINDA).vērtība(atribūts), b.vērtība(RINDA).vērtība(atribūts)))
+                .sorted((a, b) -> {
+                            try {
+                                return comparator.compare
+                                        (a.vērtība(RINDA).vērtība(atribūts)
+                                                , b.vērtība(RINDA).vērtība(atribūts));
+                            } catch (RuntimeException e) {
+                                throw e;
+                            }
+                        }
+                )
                 .collect(toList());
     }
 

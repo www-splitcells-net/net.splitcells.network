@@ -79,7 +79,7 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public void rēgistrē_noņemšana(GrupaId grupaId, Rinda rinda) {
+    public void rēgistrē_pirms_noņemšanas(GrupaId grupaId, Rinda rinda) {
         throw not_implemented_yet();
     }
 
