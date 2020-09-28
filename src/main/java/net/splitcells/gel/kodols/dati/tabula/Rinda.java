@@ -35,6 +35,10 @@ public interface Rinda extends Domable {
         return indekss() == arg.indekss() && konteksts().equals(arg.konteksts());
     }
 
+    default boolean irDerīgs() {
+        return null != konteksts().jēlaRindasSkats().get(indekss());
+    }
+
     default List<String> toStringList() {
         return listWithValuesOf
                 (konteksts().nosaukumuSkats().stream()

@@ -112,7 +112,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     public void rēgistrē_pirms_noņemšanas(GrupaId ienākošaGrupaId, Rinda noņemšana) {
         // DARĪT Kustēt uz ārpuses projektu.
         if (ENFORCING_UNIT_CONSISTENCY) {
-            Assertions.assertThat(this.rindas.jēlaRindasSkats().get(noņemšana.indekss()) != null).isTrue();
+            Assertions.assertThat(noņemšana.irDerīgs()).isTrue();
         }
         apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
         rindasApstrāde
