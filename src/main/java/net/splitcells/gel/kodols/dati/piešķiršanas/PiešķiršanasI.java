@@ -286,7 +286,7 @@ public class PiešķiršanasI implements Piešķiršanas {
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+    public void abonē_uz_pēcNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
         pēcNoņemšanaAbonēšanas.add(pirmsNoņemšanasKlausītājs);
     }
 

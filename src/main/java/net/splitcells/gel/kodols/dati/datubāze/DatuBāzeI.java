@@ -191,7 +191,7 @@ public class DatuBāzeI implements DatuBāze {
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs listener) {
+    public void abonē_uz_pēcNoņemšana(PirmsNoņemšanasKlausītājs listener) {
         pēcNoņemšanaAbonēšanas.add(listener);
     }
 

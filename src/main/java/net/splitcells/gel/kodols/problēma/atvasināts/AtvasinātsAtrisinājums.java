@@ -168,8 +168,8 @@ public class AtvasinātsAtrisinājums implements Atrisinājums {
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs klausītājs) {
-        piešķiršanas.abonē_uy_pēcNoņemšana(klausītājs);
+    public void abonē_uz_pēcNoņemšana(PirmsNoņemšanasKlausītājs klausītājs) {
+        piešķiršanas.abonē_uz_pēcNoņemšana(klausītājs);
     }
 
     @Override

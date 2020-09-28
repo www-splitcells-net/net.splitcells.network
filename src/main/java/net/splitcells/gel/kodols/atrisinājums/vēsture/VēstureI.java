@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.not;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.gel.kodols.Valoda;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
@@ -31,7 +30,6 @@ import net.splitcells.gel.kodols.dati.tabula.kolonna.KolonnaSkats;
 import net.splitcells.gel.kodols.atrisinājums.Atrisinājums;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.refleksija.tips.PiešķiršanaNovērtējums;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.refleksija.tips.PilnsNovērtejums;
-import net.splitcells.gel.kodols.kopīgs.Vārdi;
 import org.w3c.dom.Node;
 
 import java.util.Set;
@@ -167,8 +165,8 @@ public class VēstureI implements Vēsture {
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
-        piešķiršanas.abonē_uy_pēcNoņemšana(pirmsNoņemšanasKlausītājs);
+    public void abonē_uz_pēcNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+        piešķiršanas.abonē_uz_pēcNoņemšana(pirmsNoņemšanasKlausītājs);
     }
 
     @Override

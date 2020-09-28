@@ -182,8 +182,8 @@ public class AtrisinājumsI implements Atrisinājums {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void abonē_uy_pēcNoņemšana(final PirmsNoņemšanasKlausītājs listener) {
-		this.problēma.abonē_uy_pēcNoņemšana(listener);
+	public void abonē_uz_pēcNoņemšana(final PirmsNoņemšanasKlausītājs listener) {
+		this.problēma.abonē_uz_pēcNoņemšana(listener);
 	}
 
 	@java.lang.SuppressWarnings("all")

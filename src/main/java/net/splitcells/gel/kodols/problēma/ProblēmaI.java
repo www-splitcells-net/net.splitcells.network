@@ -2,7 +2,6 @@ package net.splitcells.gel.kodols.problēma;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.kodols.Valoda;
 import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
@@ -170,8 +169,8 @@ public class ProblēmaI implements Problēma {
     }
 
     @Override
-    public void abonē_uy_pēcNoņemšana(final PirmsNoņemšanasKlausītājs klausītājs) {
-        this.piešķiršanas.abonē_uy_pēcNoņemšana(klausītājs);
+    public void abonē_uz_pēcNoņemšana(final PirmsNoņemšanasKlausītājs klausītājs) {
+        this.piešķiršanas.abonē_uz_pēcNoņemšana(klausītājs);
     }
 
     @Override
