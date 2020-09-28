@@ -24,8 +24,7 @@ public interface DatuBāze extends Tabula {
 
 	default <T extends PapildinājumsKlausītājs & PirmsNoņemšanasKlausītājs> void sinhronizē(T klausītājs) {
 		abonē_uz_papildinājums(klausītājs);
-		// TOCHECK TODOC Inform link after removal.
-		abonē_uz_pēcNoņemšana(klausītājs);
+		abonē_uz_iepriekšNoņemšana(klausītājs);
 	}
 
 	void abonē_uz_papildinājums(PapildinājumsKlausītājs papildinājumuKlausītājs);
