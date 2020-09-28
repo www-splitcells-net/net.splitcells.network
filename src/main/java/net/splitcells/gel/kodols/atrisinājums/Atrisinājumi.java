@@ -6,6 +6,7 @@ import static net.splitcells.gel.kodols.Valoda.*;
 import static net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanass.piešķiršanas;
 
 import static net.splitcells.gel.kodols.dati.datubāze.DatuBāzes.datuBāze;
+import static net.splitcells.gel.kodols.problēma.ProblēmaI.problēma;
 
 import java.util.Arrays;
 
@@ -43,7 +44,7 @@ public class Atrisinājumi implements Definē_prasības_nosaukumu, DefinēPrasī
         final var piedāvājumuDatuBaže = datuBāze(PIEDĀVĀJUMI.apraksts(), null, piedāvājumu_atribūti);
         prasības.forEach(prasība -> prasībasDatuBaže.pieliktUnPārtulkot(prasība));
         piedāvājumi.forEach(piedāvājums -> piedāvājumuDatuBaže.pieliktUnPārtulkot(piedāvājums));
-        return new ProblēmaI(
+        return problēma(
                 piešķiršanas(
                         Atrisinājums.class.getSimpleName()
                         , prasībasDatuBaže

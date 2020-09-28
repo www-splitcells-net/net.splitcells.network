@@ -28,8 +28,11 @@ public class ProblēmaI implements Problēma {
     private final Piešķiršanas piešķiršanas;
     protected Atrisinājums kāAtrisinājums;
 
-    @Deprecated
-    public ProblēmaI(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
+    public static Problēma problēma(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
+        return new ProblēmaI(piešķiršanas, ierobežojums);
+    }
+
+    protected ProblēmaI(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = ierobežojums;
         sinhronizē(ierobežojums);
