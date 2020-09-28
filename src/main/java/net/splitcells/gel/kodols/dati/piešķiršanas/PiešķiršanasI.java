@@ -33,7 +33,7 @@ public class PiešķiršanasI implements Piešķiršanas {
 
     protected final List<PapildinājumsKlausītājs> papildinājumsKlausītājs = list();
     protected final List<PirmsNoņemšanasKlausītājs> primsNoņemšanaAbonēšanas = list();
-    protected final List<PirmsNoņemšanasKlausītājs> afterNoņemšanaAbonēšanas = list();
+    protected final List<PirmsNoņemšanasKlausītājs> pēcNoņemšanaAbonēšanas = list();
 
     protected final DatuBāze piedāvājumi;
     protected final DatuBāze piedāvājumi_lietoti;
@@ -243,7 +243,7 @@ public class PiešķiršanasI implements Piešķiršanas {
             piedāvājumi_lietoti.noņemt(piedāvājums);
             piedāvājumi_nelietoti.pielikt(piedāvājums);
         }
-        afterNoņemšanaAbonēšanas.forEach(listener -> listener.rēgistrē_pirms_noņemšanas(piešķiršana));
+        pēcNoņemšanaAbonēšanas.forEach(listener -> listener.rēgistrē_pirms_noņemšanas(piešķiršana));
     }
 
     @Override
@@ -287,7 +287,7 @@ public class PiešķiršanasI implements Piešķiršanas {
 
     @Override
     public void abonē_uy_pēcNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
-        afterNoņemšanaAbonēšanas.add(pirmsNoņemšanasKlausītājs);
+        pēcNoņemšanaAbonēšanas.add(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
