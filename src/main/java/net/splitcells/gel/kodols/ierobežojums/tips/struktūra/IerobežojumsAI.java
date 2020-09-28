@@ -3,11 +3,16 @@ package net.splitcells.gel.kodols.ierobežojums.tips.struktūra;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.Xml.textNode;
+import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
 import static net.splitcells.gel.kodols.dati.datubāze.DatuBāzes.datuBāze;
 import static net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanass.piešķiršanas;
 import static net.splitcells.gel.kodols.kopīgs.Vārdi.ARGUMENTI;
@@ -28,6 +33,7 @@ import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaNovēr
 import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.MaršrutēšanaNovērtējums;
 import net.splitcells.gel.kodols.novērtējums.struktūra.RefleksijaNovērtējumsI;
+import org.assertj.core.api.Assertions;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.set.list.List;
@@ -81,6 +87,22 @@ public abstract class IerobežojumsAI implements Ierobežojums {
 
     @Override
     public void reģistrē_papildinājums(GrupaId ienākošieGrupasId, Rinda papildinajums) {
+        // DARĪT Kustēt uz ārpuses projektu.
+        if (TRACING) {
+            domsole().append
+                    (element("reģistrē_papildinajums." + Ierobežojums.class.getSimpleName()
+                            , element("papildinajums", papildinajums.toDom())
+                            , element("ienākošieGrupasId", textNode(ienākošieGrupasId.toString()))
+                            )
+                            , this
+                            , DEBUG);
+        }
+        // DARĪT Kustēt uz ārpuses projektu.
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            if (papildinajums.indekss() < rindas.jēlaRindasSkats().size()) {
+                assertThat(rindas.jēlaRindasSkats().get(papildinajums.indekss())).isNull();
+            }
+        }
         rindas.pieliktUnPārtulkot(list(papildinajums, ienākošieGrupasId));
     }
 
@@ -88,6 +110,10 @@ public abstract class IerobežojumsAI implements Ierobežojums {
 
     @Override
     public void rēgistrē_pirms_noņemšanas(GrupaId ienākošaGrupaId, Rinda noņemšana) {
+        // DARĪT Kustēt uz ārpuses projektu.
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            Assertions.assertThat(this.rindas.jēlaRindasSkats().get(noņemšana.indekss()) != null).isTrue();
+        }
         apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
         rindasApstrāde
                 .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
