@@ -23,6 +23,16 @@ public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
         , Domable {
     NovērtējumsNotikums vērtē_pēc_padildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu);
 
+    /**
+     * @see Ierobežojums#rēgistrē_pirms_noņemšanas(Rinda)
+     * 
+     * @param rindas
+     * @param noņemšana
+     * @param bērni
+     * @param novērtējumsPirmsNoņemšana
+     * @return
+     */
+    @Deprecated
     NovērtējumsNotikums vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana);
 
     @Override

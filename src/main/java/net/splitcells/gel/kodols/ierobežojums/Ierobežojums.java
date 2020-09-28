@@ -113,6 +113,7 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemš
 
     void rēgistrē_pirms_noņemšanas(GrupaId grupaId, Rinda rinda);
 
+    @Deprecated
     default void rēgistrē_pirms_noņemšanas(Rinda rinda) {
         rēgistrē_pirms_noņemšanas(injekcijasGrupa(), rinda);
     }
