@@ -100,9 +100,14 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         }
         // DARĪT Kustēt uz ārpuses projektu.
         if (ENFORCING_UNIT_CONSISTENCY) {
-            if (papildinajums.indekss() < rindas.jēlaRindasSkats().size()) {
-                assertThat(rindas.jēlaRindasSkats().get(papildinajums.indekss())).isNull();
-            }
+            assertThat(
+                    rindas
+                            .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                            .uzmeklēšana(ienākošieGrupasId)
+                            .kolonnaSkats(RINDA)
+                            .uzmeklēšana(papildinajums)
+                            .gūtRindas()
+            ).isEmpty();
         }
         rindas.pieliktUnPārtulkot(list(papildinajums, ienākošieGrupasId));
     }
@@ -195,7 +200,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
                 .get()
                 .kāReflektētsNovērtējums();
     }
-    
+
     protected MaršrutēšanaNovērtējums atlasītNovērtetāMaršrutēšana
             (GrupaId grupaId, Predicate<Rinda> apstrādsRindasAtlasītajs) {
         final var novērtetāMaršrutēšana = MaršrutēšanaNovērtējums.veidot();
@@ -364,7 +369,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     protected abstract Argumentācija vietēijaArgumentācija(Ziņojums ziņojums);
 
     protected Optional<Argumentācija> vietēijaArgumentācija
-    (Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
+            (Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
         final var vietējaArgumentācijas
                 = rindasApstrāde
                 .kolonnaSkats(RINDA)
