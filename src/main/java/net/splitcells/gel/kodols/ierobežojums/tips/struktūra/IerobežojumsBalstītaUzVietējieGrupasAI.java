@@ -12,6 +12,7 @@ import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.NovērtējumsNotikums;
 
+@Deprecated
 public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends IerobežojumsAI {
     protected final Vērtētājs vērtētājs;
 

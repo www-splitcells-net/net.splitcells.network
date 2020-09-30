@@ -53,6 +53,7 @@ import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
 import net.splitcells.gel.kodols.ierobežojums.argumentācija.Argumentācija;
 import net.splitcells.gel.kodols.ierobežojums.argumentācija.ArgumentācijaAI;
 
+@Deprecated
 public abstract class IerobežojumsAI implements Ierobežojums {
     private final GrupaId injekcijasGrupas;
     protected final net.splitcells.dem.data.set.list.List<Ierobežojums> bērni = list();
