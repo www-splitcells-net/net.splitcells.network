@@ -1,4 +1,4 @@
-package net.splitcells.gel.kodols.atrisinājums.optimizācija.agregāts;
+package net.splitcells.gel.kodols.atrisinājums.optimizācija.primitīvs;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
