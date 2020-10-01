@@ -47,7 +47,7 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_padildinājumu
+    public NovērtējumsNotikums vērtē_pēc_papildinājumu
             (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final var grupēšanasVertība = papildinājums.vērtība(RINDA).vērtība(arg);
         final var ienākošasGrupasId = papildinājums.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);

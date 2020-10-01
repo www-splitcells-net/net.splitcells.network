@@ -38,7 +38,7 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
     public void apstrāde_rindu_papildinajumu(Rinda papildinājums) {
         final var ienākošaGrupa = papildinājums.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         apstrādeNovērtējumiNotikums(
-                vērtētājs.vērtē_pēc_padildinājumu(
+                vērtētājs.vērtē_pēc_papildinājumu(
                         rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(ienākošaGrupa)
                         , papildinājums

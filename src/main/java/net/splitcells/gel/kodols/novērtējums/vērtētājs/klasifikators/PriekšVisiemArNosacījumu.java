@@ -39,7 +39,7 @@ public class PriekšVisiemArNosacījumu<T> implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_padildinājumu
+    public NovērtējumsNotikums vērtē_pēc_papildinājumu
             (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final List<Ierobežojums> mērķBērni;
         if (nosacījums.test(papildinājums.vērtība(RINDA))) {

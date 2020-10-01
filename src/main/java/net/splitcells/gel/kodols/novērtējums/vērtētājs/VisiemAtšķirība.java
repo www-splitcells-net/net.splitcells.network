@@ -52,7 +52,7 @@ public class VisiemAtšķirība<T> implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_padildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final T vertība = papildinājums.vērtība(RINDA).vērtība(atribūts);
         final var grupa = rindas.kolonnaSkats(RINDA).uzmeklēšana(predikāts(vertība));
         final var novērtejumuNotikums = novērtejumuNotikums();

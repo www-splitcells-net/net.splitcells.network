@@ -33,7 +33,7 @@ public class NemainīgsVērtētājs implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_padildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = novērtejumuNotikums();
         novērtejumuNotikums.papildinājumi().put(
                 papildinājums

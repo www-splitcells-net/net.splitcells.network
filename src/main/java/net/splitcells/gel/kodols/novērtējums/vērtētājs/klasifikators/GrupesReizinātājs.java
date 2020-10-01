@@ -53,13 +53,13 @@ public class GrupesReizinātājs implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_padildinājumu
+    public NovērtējumsNotikums vērtē_pēc_papildinājumu
             (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = novērtejumuNotikums();
         List<GrupaId> grupešanaNoPapildinajmiem = listWithValuesOf(
                 grupetaji.stream()
                         .map(grupetajs -> grupetajs
-                                .vērtē_pēc_padildinājumu(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu))
+                                .vērtē_pēc_papildinājumu(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu))
                         .map(nn -> nn.papildinājumi())
                         .flatMap(papildinajums -> papildinajums.values().stream())
                         .map(papildumuNovērtējums -> papildumuNovērtējums.radītsIerobežojumuGrupaId())

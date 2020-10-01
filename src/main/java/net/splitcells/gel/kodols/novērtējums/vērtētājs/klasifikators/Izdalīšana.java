@@ -33,7 +33,7 @@ public class Izdalīšana implements Vērtētājs {
     private final List<Discoverable> konteksti = list();
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_padildinājumu
+    public NovērtējumsNotikums vērtē_pēc_papildinājumu
             (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final NovērtējumsNotikums novērtejumuNotikums = novērtejumuNotikums();
         novērtejumuNotikums.papildinājumi().put

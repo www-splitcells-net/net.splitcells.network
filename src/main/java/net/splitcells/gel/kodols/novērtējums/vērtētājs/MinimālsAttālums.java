@@ -126,7 +126,7 @@ public class MinimālsAttālums<T> implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_padildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = novērtejumuNotikums();
         final var sakārtotasRindas = sorted(rindas);
         // JAUDA
@@ -152,8 +152,12 @@ public class MinimālsAttālums<T> implements Vērtētājs {
             while (-1 < sakārtotasRindas.size() - 2 - i) {
                 final var oriģinālaKreisaRinda = sakārtotasRindas.get(sakārtotasRindas.size() - 2 - i);
                 if (!ievēro(oriģinālaKreisaRinda, papildinājums) || i == 0) {
-                    novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaKreisaRinda, bērni//
-                            , Optional.of(novērtējumsPirmsPapildinājumu.uzmeklēVienādus(Ierobežojums.RINDA, oriģinālaKreisaRinda).vērtība(NOVĒRTĒJUMS)));
+                    try {
+                        novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaKreisaRinda, bērni//
+                                , Optional.of(novērtējumsPirmsPapildinājumu.uzmeklēVienādus(Ierobežojums.RINDA, oriģinālaKreisaRinda).vērtība(NOVĒRTĒJUMS)));
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     ++i;
                 } else {
                     break;
@@ -165,7 +169,7 @@ public class MinimālsAttālums<T> implements Vērtētājs {
             while (sakārtotasRindas.size() > sakārtotasIndeksi + 1 + i) {
                 final var oriģinālaRindaLaba = sakārtotasRindas.get(sakārtotasIndeksi + 1);
                 if (!ievēro(papildinājums, oriģinālaRindaLaba)) {
-                    novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaRindaLaba, bērni//
+                    novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaRindaLaba, bērni
                             , Optional.of(novērtējumsPirmsPapildinājumu.uzmeklēVienādus(Ierobežojums.RINDA, oriģinālaRindaLaba).vērtība(NOVĒRTĒJUMS)));
                     ++i;
                 } else {

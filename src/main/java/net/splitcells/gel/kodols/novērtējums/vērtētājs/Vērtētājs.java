@@ -21,7 +21,7 @@ public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
         , PubliclyConstructed<Domable>
         , DiscoverableFromMultiplePathsSetter
         , Domable {
-    NovērtējumsNotikums vērtē_pēc_padildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu);
+    NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu);
 
     /**
      * @see Ierobežojums#rēgistrē_pirms_noņemšanas(Rinda)

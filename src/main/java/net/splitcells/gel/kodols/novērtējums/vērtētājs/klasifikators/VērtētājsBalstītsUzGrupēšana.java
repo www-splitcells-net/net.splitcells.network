@@ -35,9 +35,9 @@ public class VērtētājsBalstītsUzGrupēšana implements Vērtētājs {
     private final List<Discoverable> kontekts = list();
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_padildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = novērtejumuNotikums();
-        final var rBase = grupetājs.vērtē_pēc_padildinājumu(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu);
+        final var rBase = grupetājs.vērtē_pēc_papildinājumu(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu);
         novērtejumuNotikums.noņemšana().addAll(rBase.noņemšana());
         rBase.papildinājumi().forEach((rinda, vietējiasNovērtējums) ->
                 novērtejumuNotikums.papildinājumi()
