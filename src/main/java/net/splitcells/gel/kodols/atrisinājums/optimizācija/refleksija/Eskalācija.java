@@ -11,11 +11,12 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 
 public class Eskalācija implements Optimizācija {
 
-    private final Function<Integer, Optimizācija> optimzācijas;
-
     public static Eskalācija eskalācija(Function<Integer, Optimizācija> optimzācijas) {
         return new Eskalācija(optimzācijas);
     }
+
+    private final Function<Integer, Optimizācija> optimzācijas;
+    private int eskalācijasLīmens = 0;
 
     private Eskalācija(Function<Integer, Optimizācija> optimzācijas) {
         this.optimzācijas = optimzācijas;
@@ -25,6 +26,11 @@ public class Eskalācija implements Optimizācija {
     public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
         final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
         final var sanknesVēsturesIndekss = atrisinājums.vēsture().momentansIndekss();
-        return optimzācijas.apply(1).optimizē(atrisinājums);
+        if (eskalācijasLīmens < 0) {
+            return list();
+        }
+        final var optimizācija = optimzācijas.apply(eskalācijasLīmens).optimizē(atrisinājums);
+        eskalācijasLīmens -= 1;
+        return optimizācija;
     }
 }
