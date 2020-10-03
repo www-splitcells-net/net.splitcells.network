@@ -13,15 +13,15 @@
   "author": "Martins Avots",
   "license": "SEE LICENSE IN each file",
   "bugs": {
-    "url": "https://gitlab.com/splitcells/net.splitcells.os.state.interface/issues"
+    "url": "https://github.com/www-splitcells-net/net.splitcells.os.state.interface/issues"
   },
   "devDependencies": {
     "release-it": "^12.6.3"
   },
-  "homepage": "https://gitlab.com/splitcells/net.splitcells.os.state.interface#readme",
+  "homepage": "https://github.com/www-splitcells-net/net.splitcells.os.state.interface",
   "release-it": {
     "npm": false,
-    "gitlab": {
+    "github": {
       "release": true
     }
   },
