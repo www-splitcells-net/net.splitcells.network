@@ -5,9 +5,4 @@
 echo Preparing release infrastructure.
 run.and.show.if.failed "package.install npm"
 npm install release-it
-
-echo If your are done, enter "§".
-echo You can enter multiple lines.
-
-releaseNotes=$(read.text "Please enter release notes.")
-npm run release --github.releaseNotes="echo \"$releaseNotes\""
+npm run release
