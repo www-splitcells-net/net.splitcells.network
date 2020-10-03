@@ -8,6 +8,11 @@ The concrete echo format of each command is not stable.
 Changes to this are not considered major changes.
 ## Unreleased
 ### Major Changes
+1. Verify folder structure before repository content.
+   Move folder check functionality of 'repo.verify' to 'repo.verify.folder.structure'.
+   'repo.verify' still calls 'repo.verify.folder.structure'.
+   'repo.verify' know first verifies the folder structure of the complete repository recursively.
+   This speeds up the checking process, if a folder is missing.
 1. Exit 'repo.process' on first error by default.
 ## Version 4.0.0
 Starting with this version, major changes,
