@@ -3,10 +3,6 @@ Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
-1. "run.and.show.if.failed": store final output in error case in temporary file and just show link
-   to file in order to not clutter output.
-   1. Use "echo.error".
-   1. Make "echo.error" easier to spot for the user.
 1. Fix description created by automatic releases.
 1. Document commands.
 1. Implement tests:
