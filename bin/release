@@ -10,4 +10,4 @@ echo If your are done, enter "§".
 echo You can enter multiple lines.
 
 releaseNotes=$(read.text "Please enter release notes.")
-npm run release --github.releaseNotes="$releaseNotes"
+npm run release --github.releaseNotes="echo \"$releaseNotes\""
