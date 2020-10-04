@@ -63,7 +63,7 @@ public class PriekšVisiemVērtībasKombinācija implements Vērtētājs {
             grupas.get(ienākošasGrupasId).put(grupasVertības
                     , GrupaId.grupa(
                             grupasVertības.stream()
-                                    .map(value -> value.toString()).reduce((a, b) -> a + b)
+                                    .map(value -> value.toString()).reduce((a, b) -> a + "," + b)
                                     .orElse("tukšs")));
         }
         final var novērtejumuNotikums = novērtejumuNotikums();
