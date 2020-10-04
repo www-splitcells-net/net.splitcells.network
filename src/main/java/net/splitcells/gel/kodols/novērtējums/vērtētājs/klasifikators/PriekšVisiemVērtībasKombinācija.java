@@ -104,9 +104,9 @@ public class PriekšVisiemVērtībasKombinācija implements Vērtētājs {
 
     @Override
     public Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
-        final var reasoning = Xml.element("for-all-combinations");
+        final var reasoning = Xml.element(getClass().getSimpleName());
         {
-            final var attributeDescription = Xml.element("attributes");
+            final var attributeDescription = Xml.element("atribūts");
             reasoning.appendChild(attributeDescription);
             atribūts.forEach(att -> attributeDescription.appendChild(att.toDom()));
         }
