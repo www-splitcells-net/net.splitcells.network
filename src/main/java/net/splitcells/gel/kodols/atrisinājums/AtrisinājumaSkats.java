@@ -96,7 +96,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
 
     default void veidotAnalīzu(Path mērķis) {
         createDirectory(mērķis);
-        writeToFile(mērķis.resolve("analīye.fods"), uzFodsTabuluAnalīzu());
+        writeToFile(mērķis.resolve("analīze.fods"), uzFodsTabuluAnalīzu());
         writeToFile(mērķis.resolve("ierebežojumu.grafs.xml"), ierobežojums().grafiks());
         writeToFile(mērķis.resolve("ierebežojumu.novērtejums.xml"), ierobežojums().novērtējums().toDom());
         writeToFile(mērķis.resolve("ierebežojumu.stāvoklis.xml"), ierobežojums().toDom());
