@@ -2,7 +2,6 @@
 This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Please, create a one sentence summary for each release.
-Releases are generally speaking, created monthly.
 
 The concrete echo format of each command is not stable.
 Changes to this are not considered major changes.
