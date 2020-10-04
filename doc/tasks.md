@@ -20,10 +20,6 @@ The priority of a task is just a guideline.
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
 1. Move tasks to other projects if suitable.
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
-1. Test Gitlab security settings.
-1. Continous integration
-1. Ticket managment inside git repository:
-   1. https://github.com/augmentable-dev/tickgit
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
 1. General advertisment.
