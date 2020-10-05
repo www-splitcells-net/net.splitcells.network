@@ -20,6 +20,12 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPacka
  */
 public class Test {
     public static void main(String... arg) {
+        if (!test()) {
+            System.exit(1);
+        }
+    }
+    public static boolean test() {
+        // TODO REMOVE
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
@@ -29,11 +35,10 @@ public class Test {
         final var failureDetector = failureDetector();
         testExecutor.discover(testDiscovery);
         testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
-        if (failureDetector.hasWatchedErrors()) {
-            System.exit(1);
-        }
+        return !failureDetector.hasWatchedErrors();
     }
-    public static void testMethod(Class<?> type, String methodeName) {
+    
+    public static boolean testMethod(Class<?> type, String methodeName) {
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
@@ -43,8 +48,6 @@ public class Test {
         final var failureDetector = failureDetector();
         testExecutor.discover(testDiscovery);
         testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
-        if (failureDetector.hasWatchedErrors()) {
-            System.exit(1);
-        }
+        return !failureDetector.hasWatchedErrors();
     }
 }
