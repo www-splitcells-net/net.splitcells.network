@@ -9,7 +9,7 @@ import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.atrisinājums.AtrisinājumaSkats;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
-import net.splitcells.gel.kodols.atrisinājums.optimizācija.notikums.OptimizācijasNotikums;
+import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -20,7 +20,7 @@ import static net.splitcells.dem.data.set.Sets.*;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.kodols.atrisinājums.optimizācija.notikums.OptimizācijasNotikums.optimizacijasNotikums;
+import static net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums.optimizacijasNotikums;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.NOŅEMŠANA;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.PIEŠĶIRŠANA;
 import static net.splitcells.gel.kodols.ierobežojums.Ierobežojums.*;

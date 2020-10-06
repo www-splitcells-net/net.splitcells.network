@@ -1,7 +1,6 @@
-package net.splitcells.gel.kodols.atrisinājums.optimizācija.notikums;
+package net.splitcells.gel.kodols.atrisinājums.optimizācija;
 
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips;
 import net.splitcells.gel.kodols.dati.tabula.RindaRādītājs;
 import org.w3c.dom.Node;
 
@@ -38,7 +37,7 @@ public final class OptimizācijasNotikums implements Domable {
     public RindaRādītājs prasība() {
         return prasība;
     }
-
++
     @Override
     public Node toDom() {
         final var dom = element(getClass().getSimpleName());

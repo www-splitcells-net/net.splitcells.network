@@ -7,14 +7,14 @@ import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.kodols.dati.tabula.RindaRādītājs;
 import net.splitcells.gel.kodols.atrisinājums.AtrisinājumaSkats;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
-import net.splitcells.gel.kodols.atrisinājums.optimizācija.notikums.OptimizācijasNotikums;
+import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
 
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.kodols.atrisinājums.optimizācija.notikums.OptimizācijasNotikums.optimizacijasNotikums;
+import static net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums.optimizacijasNotikums;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.PIEŠĶIRŠANA;
 import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.NOŅEMŠANA;
 

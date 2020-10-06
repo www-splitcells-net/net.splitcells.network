@@ -13,7 +13,7 @@ import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.resource.host.DocumentsPath;
 import net.splitcells.gel.kodols.problēma.Problēma;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
-import net.splitcells.gel.kodols.atrisinājums.optimizācija.notikums.OptimizācijasNotikums;
+import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijaTiešsaistē;
 
 import java.util.function.Function;
