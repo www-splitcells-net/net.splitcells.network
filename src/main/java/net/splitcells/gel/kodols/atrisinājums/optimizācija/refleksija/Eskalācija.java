@@ -1,11 +1,10 @@
 package net.splitcells.gel.kodols.atrisinājums.optimizācija.refleksija;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.kodols.atrisinājums.AtrisinājumaSkats;
 import net.splitcells.gel.kodols.atrisinājums.Atrisinājums;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijaTiešsaistē;
-import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
+import net.splitcells.gel.kodols.atrisinājums.optimizācija.notikums.OptimizācijasNotikums;
 
 import java.util.Optional;
 import java.util.function.Function;

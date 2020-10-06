@@ -3,7 +3,7 @@ package net.splitcells.gel.kodols.atrisinājums.optimizācija.refleksija;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.kodols.atrisinājums.AtrisinājumaSkats;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
-import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
+import net.splitcells.gel.kodols.atrisinājums.optimizācija.notikums.OptimizācijasNotikums;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;

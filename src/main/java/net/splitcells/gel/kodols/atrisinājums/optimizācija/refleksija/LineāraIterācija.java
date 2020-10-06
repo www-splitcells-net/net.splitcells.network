@@ -3,12 +3,9 @@ package net.splitcells.gel.kodols.atrisinājums.optimizācija.refleksija;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.kodols.atrisinājums.AtrisinājumaSkats;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
-import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
+import net.splitcells.gel.kodols.atrisinājums.optimizācija.notikums.OptimizācijasNotikums;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.gel.kodols.atrisinājums.optimizācija.primitīvs.LineārsAtņemtājs.linearDeallocator;
-import static net.splitcells.gel.kodols.atrisinājums.optimizācija.primitīvs.LineārsInicializētājs.lineārsInicializētājs;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LineāraIterācija implements Optimizācija {
