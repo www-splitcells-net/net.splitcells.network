@@ -29,8 +29,6 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
  * It just gives tools in order to minimize side effects.
  * This is done, by having 1 and only one variable representing the state of the environment
  * and passing it through everywhere.
- * <p/>
- * TODO IDEA Dem programs are constructors of linked values.
  */
 public final class Dem {
     /**
