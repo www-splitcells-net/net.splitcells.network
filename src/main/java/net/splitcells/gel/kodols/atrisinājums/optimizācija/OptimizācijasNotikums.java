@@ -37,7 +37,7 @@ public final class OptimizācijasNotikums implements Domable {
     public RindaRādītājs prasība() {
         return prasība;
     }
-+
+
     @Override
     public Node toDom() {
         final var dom = element(getClass().getSimpleName());
