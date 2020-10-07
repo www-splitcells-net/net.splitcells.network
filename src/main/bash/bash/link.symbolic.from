@@ -24,5 +24,5 @@ else
 		echo.error Wanted target location is "'"$3"'".
 		exit 1
 	fi
-	ln -s ${@:3} $1 # BSD seems to have a ln implementation.
+	ln -s "${@:3}" "$1" # BSD seems to have a ln implementation.
 fi
