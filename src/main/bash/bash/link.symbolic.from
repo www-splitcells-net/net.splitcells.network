@@ -7,7 +7,7 @@ if [ "$2" != "to" ]; then
 	echo 'It should be "to"'
 	exit
 fi
-if [ "$(readlink -- "$1")" = $(echo $3) ]; then
+if [ "$(readlink -- "$1")" = "$(echo $3)" ]; then
 	exit
 else
 	if [ -d "$1" ]; then
