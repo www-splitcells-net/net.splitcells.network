@@ -8,7 +8,7 @@ import static net.splitcells.dem.Dem.environment;
 
 public class DocumentsPath extends OptionI<Path> {
 	public DocumentsPath() {
-		super(() -> environment().config().configValue(OutputPath.class)//
+		super(() -> environment().config().configValue(ProcessPath.class)//
 				.resolve("documents"));
 	}
 }

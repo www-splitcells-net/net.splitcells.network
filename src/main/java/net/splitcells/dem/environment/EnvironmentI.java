@@ -5,16 +5,9 @@ import net.splitcells.dem.environment.config.ProgramLocalIdentity;
 import net.splitcells.dem.environment.config.ProgramRepresentative;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.environment.config.framework.Configuration;
-import net.splitcells.dem.environment.config.framework.ConfigurationI;
-import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
-import net.splitcells.dem.resource.host.OutputPath;
-
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
+import net.splitcells.dem.resource.host.ProcessPath;
 
 import static net.splitcells.dem.environment.config.framework.ConfigurationI.configuration;
 
@@ -35,7 +28,7 @@ public class EnvironmentI implements Environment {
     public void init() {
         config.configValue(ProgramLocalIdentity.class);
         config.configValue(IsDeterministic.class);
-        config.configValue(OutputPath.class);
+        config.configValue(ProcessPath.class);
     }
 
     @Override

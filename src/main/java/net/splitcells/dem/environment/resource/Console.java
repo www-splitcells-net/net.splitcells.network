@@ -2,7 +2,7 @@ package net.splitcells.dem.environment.resource;
 
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.resource.communication.Sender;
-import net.splitcells.dem.resource.host.OutputPath;
+import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 
 import java.io.FileNotFoundException;
@@ -19,7 +19,7 @@ public final class Console extends ResourceI<Sender<String>> {
         super(() -> {
             if (environment().config().configValue(IsEchoToFile.class)) {
                 var consolePath
-                        = environment().config().configValue(OutputPath.class)
+                        = environment().config().configValue(ProcessPath.class)
                         .resolve("console")
                         .resolve(
                                 environment().config().configValue(StartTime.class)
