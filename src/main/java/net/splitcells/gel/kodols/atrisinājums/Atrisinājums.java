@@ -11,10 +11,10 @@ import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.NO�
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.resource.host.DocumentsPath;
+import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
 import net.splitcells.gel.kodols.problēma.Problēma;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
-import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijaTiešsaistē;
 
 import java.util.function.Function;
 
@@ -22,11 +22,6 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
 
     @Returns_this
     default Atrisinājums optimizē(Optimizācija optimizācija) {
-        return optimizēArFunkciju(s -> optimizācija.optimizē(s));
-    }
-
-    @Returns_this
-    default Atrisinājums optimizē(OptimizācijaTiešsaistē optimizācija) {
         return optimizēArFunkciju(s -> optimizācija.optimizē(s));
     }
 
@@ -44,11 +39,6 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
 
     @Returns_this
     default Atrisinājums optimizēVienreis(Optimizācija optimizācija) {
-        return optimizeArFunkcijuVienreis(s -> optimizācija.optimizē(s));
-    }
-
-    @Returns_this
-    default Atrisinājums optimizēVienreis(OptimizācijaTiešsaistē optimizācija) {
         return optimizeArFunkcijuVienreis(s -> optimizācija.optimizē(s));
     }
 
@@ -105,9 +95,17 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
     }
 
     default void veidoAnalīzu() {
-            createDirectory(environment().config().configValue(DocumentsPath.class));
-            final var path = this.path().stream().reduce((kreisi, labi)  -> kreisi + "." + labi);
-            writeToFile(environment().config().configValue(DocumentsPath.class).resolve(path + ".atrisinājums.ierobežojums.toDom.xml"), ierobežojums().toDom());
-            writeToFile(environment().config().configValue(DocumentsPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), ierobežojums().grafiks());
+        createDirectory(environment().config().configValue(DocumentsPath.class));
+        final var path = this.path().stream().reduce((kreisi, labi) -> kreisi + "." + labi);
+        writeToFile(environment().config().configValue(DocumentsPath.class).resolve(path + ".atrisinājums.ierobežojums.toDom.xml"), ierobežojums().toDom());
+        writeToFile(environment().config().configValue(DocumentsPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), ierobežojums().grafiks());
+    }
+
+    default Novērtējums novērtējums(List<OptimizācijasNotikums> notikumi) {
+        final var sanknesVēsturesIndekss = vēsture().momentansIndekss();
+        optimizē(notikumi);
+        final var novērtējums = ierobežojums().novērtējums();
+        vēsture().atiestatUz(sanknesVēsturesIndekss);
+        return novērtējums;
     }
 }

@@ -2,11 +2,10 @@ package net.splitcells.gel.kodols.atrisinājums.optimizācija.refleksija.kalnā.
 
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.kodols.atrisinājums.AtrisinājumaSkats;
 import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
-import net.splitcells.gel.kodols.atrisinājums.Atrisinājums;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
-import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijaTiešsaistē;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -15,7 +14,7 @@ import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 
-public class KalnāKāpējs implements OptimizācijaTiešsaistē {
+public class KalnāKāpējs implements Optimizācija {
 
     public static KalnāKāpējs funkcionālsKalnāKāpējs(Optimizācija optimizācija, int i) {
         return new KalnāKāpējs(optimizācija, new Supplier<Boolean>() {
@@ -39,7 +38,7 @@ public class KalnāKāpējs implements OptimizācijaTiešsaistē {
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(Atrisinājums atrisinājums) {
+    public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
         final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
         final var sanknesVēsturesIndekss = atrisinājums.vēsture().momentansIndekss();
         Optional<Novērtējums> labakaisKaimiņuNovērtējums = Optional.empty();
@@ -59,8 +58,7 @@ public class KalnāKāpējs implements OptimizācijaTiešsaistē {
                                         , LogLevel.TRACE)
                         );
             }
-            atrisinājums.optimizē(ieteikumi);
-            final var momentansNovērtējums = atrisinājums.ierobežojums().novērtējums();
+            final var momentansNovērtējums = atrisinājums.novērtējums(ieteikumi);
             if (labakaisKaimiņuNovērtējums.isEmpty()
                     || momentansNovērtējums.labākNekā(labakaisKaimiņuNovērtējums.get())) {
                 labakaisKaimiņuNovērtējums = Optional.of(momentansNovērtējums);

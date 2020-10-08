@@ -4,10 +4,12 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.host.DocumentsPath;
+import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.tips.PriekšVisiem;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
+import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
 import net.splitcells.gel.kodols.problēma.ProblēmasSkats;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam;
@@ -181,5 +183,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
         }
         return tabulasRinda;
     }
+
+    Novērtējums novērtējums(List<OptimizācijasNotikums> notikumi);
 }
 
