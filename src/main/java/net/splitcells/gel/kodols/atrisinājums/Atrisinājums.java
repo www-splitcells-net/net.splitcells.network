@@ -10,7 +10,7 @@ import static net.splitcells.gel.kodols.atrisinājums.optimizācija.SoluTips.NO�
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.Returns_this;
-import net.splitcells.dem.resource.host.DocumentsPath;
+import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
 import net.splitcells.gel.kodols.problēma.Problēma;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
@@ -95,10 +95,10 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
     }
 
     default void veidoAnalīzu() {
-        createDirectory(environment().config().configValue(DocumentsPath.class));
+        createDirectory(environment().config().configValue(ProcessPath.class));
         final var path = this.path().stream().reduce((kreisi, labi) -> kreisi + "." + labi);
-        writeToFile(environment().config().configValue(DocumentsPath.class).resolve(path + ".atrisinājums.ierobežojums.toDom.xml"), ierobežojums().toDom());
-        writeToFile(environment().config().configValue(DocumentsPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), ierobežojums().grafiks());
+        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.toDom.xml"), ierobežojums().toDom());
+        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), ierobežojums().grafiks());
     }
 
     default Novērtējums novērtējums(List<OptimizācijasNotikums> notikumi) {
