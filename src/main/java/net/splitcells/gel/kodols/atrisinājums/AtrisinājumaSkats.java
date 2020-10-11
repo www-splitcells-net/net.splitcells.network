@@ -3,7 +3,7 @@ package net.splitcells.gel.kodols.atrisinājums;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.resource.host.DocumentsPath;
+import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.tips.PriekšVisiem;
@@ -85,7 +85,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
     }
 
     default void veidotStandartaAnalīze() {
-        final var standardDokumentuMapu = environment().config().configValue(DocumentsPath.class);
+        final var standardDokumentuMapu = environment().config().configValue(ProcessPath.class);
         createDirectory(standardDokumentuMapu);
         final var analīzuKonteiners = standardDokumentuMapu
                 .resolve(
