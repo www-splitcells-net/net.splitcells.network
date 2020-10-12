@@ -9,7 +9,10 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -93,6 +96,14 @@ public interface Tabula extends Discoverable, Domable {
      * PĀRSAUKT
      */
     Rinda uzmeklēVienādus(Atribūts<Rinda> atribūts, Rinda other);
+
+    default Stream<Rinda> uzmeklēVienādus(List<Object> vertības) {
+        return gūtRindas().stream()
+                .filter(rinda ->
+                        IntStream.range(0, nosaukumuSkats().size())
+                                .mapToObj(i -> Objects.equals(vertības.get(i), rinda.vērtība(nosaukumuSkats().get(i))))
+                                .reduce(true, (a, b) -> a && b));
+    }
 
     default Element uzFods() {
         final var fods = rElement(FODS_OFFICE, "document");
