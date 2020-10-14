@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -195,6 +196,15 @@ public final class Xml {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             return factory.newDocumentBuilder().parse(file.toFile());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Document parse(InputStream document) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            return factory.newDocumentBuilder().parse(document);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
