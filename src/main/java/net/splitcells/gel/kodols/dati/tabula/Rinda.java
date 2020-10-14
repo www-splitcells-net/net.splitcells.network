@@ -1,8 +1,6 @@
 package net.splitcells.gel.kodols.dati.tabula;
 
-import static java.util.stream.Collectors.toList;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.gel.kodols.dati.tabula.RindaRādītājsI.rindasRādītājs;
 
 import net.splitcells.dem.lang.dom.Domable;
@@ -46,4 +44,11 @@ public interface Rinda extends Domable {
                         .collect(toList()));
     }
 
+    default List<Object> vērtības() {
+        return konteksts()
+                .nosaukumuSkats()
+                .stream()
+                .map(nosaukums -> vērtība(nosaukums))
+                .collect(toList());
+    }
 }
