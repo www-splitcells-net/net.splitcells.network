@@ -39,6 +39,15 @@ public class ClassesRelated {
         return superClass.isAssignableFrom(subClass);
     }
 
+	/**
+	 * Loads the resources of a class, typically located in the src/main/resources of the projects source.
+	 * Note that only the resources of {@param clazz}'s project will be ready.
+	 * If there is a project with the same {@param resourceName} in the same package, this resource is ignored.
+	 *
+	 * @param clazz
+	 * @param resourceName
+	 * @return
+	 */
 	public static InputStream resourceOfClass(Class<?> clazz, String resourceName) {
 		return clazz.getClassLoader().getResourceAsStream(resourceName);
 	}
