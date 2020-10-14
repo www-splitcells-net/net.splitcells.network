@@ -2,6 +2,7 @@ package net.splitcells.dem.utils.reflection;
 
 import net.splitcells.dem.utils.ConstructorIllegal;
 
+import java.io.InputStream;
 import java.util.List;
 
 import static net.splitcells.dem.utils.reflection.ClassRelatedI.classRelated;
@@ -37,4 +38,8 @@ public class ClassesRelated {
     public static boolean isSubClass(Class<?> superClass, Class<?> subClass) {
         return superClass.isAssignableFrom(subClass);
     }
+
+	public static InputStream resourceOfClass(Class<?> clazz, String resourceName) {
+		return clazz.getClassLoader().getResourceAsStream(resourceName);
+	}
 }

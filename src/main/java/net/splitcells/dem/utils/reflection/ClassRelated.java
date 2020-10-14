@@ -15,8 +15,4 @@ public interface ClassRelated {
 
 	String simplifiedName(Class<?> arg);
 
-	default InputStream resourceOfClass(Class<?> clazz, String resourceName) {
-		return clazz.getClassLoader().getResourceAsStream(resourceName);
-	}
-
 }
