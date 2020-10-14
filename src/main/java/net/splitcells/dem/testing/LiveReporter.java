@@ -1,5 +1,6 @@
 package net.splitcells.dem.testing;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -18,6 +19,15 @@ public class LiveReporter implements TestExecutionListener {
 
     private LiveReporter() {
 
+    }
+
+    /**
+     * TODO Make this somehow optional.
+     * @param testIdentifier
+     */
+    @Override
+    public void executionStarted(TestIdentifier testIdentifier) {
+        System.out.println("Executed: " + testIdentifier.getUniqueId());
     }
 
     @Override
