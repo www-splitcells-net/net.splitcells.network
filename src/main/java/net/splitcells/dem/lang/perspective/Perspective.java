@@ -61,6 +61,11 @@ public interface Perspective extends Domable {
                 .withValue(perspective(value, STRING)));
     }
 
+    default Perspective withValues(Perspective... args) {
+        children().addAll(list(args));
+        return this;
+    }
+
     default Perspective withValues(Perspective arg, Perspective... args) {
         children().add(arg);
         children().addAll(list(args));

@@ -227,5 +227,7 @@ public final class Xml {
     
     public static Element getDirectChildElementByName(Element element) {
         final var nodeList = element.getChildNodes();
+        // TODO
+        throw new RuntimeException();
     }
 }

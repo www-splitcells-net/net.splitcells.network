@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<d:execution xmlns:d="http://splitcells.net/den.xsd">
+   <d:name>net.splitcells.dem.DemTest</d:name>
+   <d:test xmlns:d="http://splitcells.net/den.xsd"/>
+   <d:error xmlns:d="http://splitcells.net/den.xsd">
+      <d:message>INVALID_CHARACTER_ERR: An invalid or illegal XML character is specified.</d:message>
+      <d:stack-trace/>
+   </d:error>

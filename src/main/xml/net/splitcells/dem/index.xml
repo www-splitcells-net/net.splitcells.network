@@ -11,8 +11,7 @@
             <d:scheduling>
                 <d:queues>
                     <d:priority>
-                        <d:toDo>Store abstract syntax trees in Java, because XML's schema system is inferioir and has
-                            great configuration costs.
+                        <d:toDo>Store abstract syntax trees in Java, because XML's schema system is inferioir and has great configuration costs.
                             <d:toDo>Implement schema/builder in Java for DEN namespace.</d:toDo>
                             <d:toDo>Deprecate XML Util code completely and document why it cannot be removed.</d:toDo>
                         </d:toDo>

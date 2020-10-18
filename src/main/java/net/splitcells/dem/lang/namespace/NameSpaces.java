@@ -1,6 +1,9 @@
 package net.splitcells.dem.lang.namespace;
 
+import net.splitcells.dem.lang.perspective.Perspective;
+
 import static net.splitcells.dem.lang.namespace.NameSpace.nameSpace;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public class NameSpaces {
@@ -25,5 +28,9 @@ public class NameSpaces {
 
     private NameSpaces() {
         throw constructorIllegal();
+    }
+    
+    public static Perspective string(String value) {
+        return perspective(value, STRING);
     }
 }

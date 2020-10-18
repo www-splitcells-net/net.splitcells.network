@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<d:execution xmlns:d="http://splitcells.net/den.xsd">
+   <d:name>net.splitcells.dem.DemTest</d:name>
+   <d:test xmlns:d="http://splitcells.net/den.xsd"/>
+   <d:project xmlns:d="http://splitcells.net/den.xsd">
+      <d:name>Dependency-manager</d:name>
+   </d:project>
+   <d:error xmlns:d="http://splitcells.net/den.xsd">
+      <d:message/>
+      <d:stack-trace/>
+   </d:error>
+</d:execution>
