@@ -1,4 +1,5 @@
 #!/bin/bash
+echo.error TODO
 package.install brightnessctl
 package.install pulseaudio-utils
 package.install playerctl

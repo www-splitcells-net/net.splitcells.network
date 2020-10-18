@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+# TODOC Licensed under MIT
+if [ "1" -eq "$(system.is.Ubuntu)" ]
+then
+	echo.error TODO https://github.com/luispabon/sway-ubuntu-build#tldr
+	sudo apt -y install docker.io make golang-go
+	mkdir -p ~/opt
+		cd ~/opt
+		git clone --recurse-submodules -j8 https://github.com/luispabon/sway-ubuntu-build.git
+		cd sway-ubuntu-build
+	echo Fix repo URLs.
+		git submodule set-url ./swaylock/ https://github.com/swaywm/swaylock.git
+		git submodule sync --recursive
+		echo.error TODO Create script in order to use official repo.
+		exit 1
+	make build-image
+else
+	echo.error Operation System not supported.
+	exit 1
+fi

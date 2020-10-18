@@ -1,4 +1,5 @@
 #!/bin/bash
+# TODO Make sure this works or remove it.
 # TODOC Licensed under MIT
 # TODOC Setup commands to make this script usable, because of custom commands.
 if [ "1" -eq "$(system.is.Fedora)" ]
@@ -32,4 +33,19 @@ then
 		cd ~/opt/sway
 		meson build
 		ninja -C build
+	exit
+fi
+if [ "1" -eq "$(system.is.Ubuntu)" ]
+then
+	# Source: https://github.com/luispabon/sway-ubuntu-build
+	cd ~/Document/projects
+	git clone https://github.com/luispabon/sway-ubuntu-build.git
+		cd sway-ubuntu-build
+		git submodule update --force --recursive --init --remote
+			# TOFIX Failed to recurse into submodule path 'wf-shell'
+		git submodule update --force --recursive --remote
+	sudo apt -y install docker.io make golang-go # CURRENT
+	make yolo
+		# TOFIX make: *** No rule to make target 'scdoc-build', needed by 'build-everything'.  Stop.
+		# TOFIX make build-image # get the docker image for builds done
 fi
