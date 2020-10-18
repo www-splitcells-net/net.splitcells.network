@@ -16,6 +16,7 @@ public class DemTest {
     public static void main(String... args) {
         Dem.process(() -> {
             Domsole.domsole().append(Xml.rElement(NameSpaces.DEN, "test"), Optional.empty(), LogLevel.CRITICAL);
+            // TODO Is this used?
             throw new RuntimeException();
         }, (env) -> {
             env.config()
