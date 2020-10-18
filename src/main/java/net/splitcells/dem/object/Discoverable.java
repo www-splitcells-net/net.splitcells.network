@@ -15,5 +15,9 @@ public interface Discoverable {
         return () -> path;
     }
 
+    /**
+     * TODO Use {@link net.splitcells.dem.data.set.list.ListView}.
+     * @return
+     */
     List<String> path();
 }
