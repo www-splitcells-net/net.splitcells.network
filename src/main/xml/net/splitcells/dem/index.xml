@@ -13,7 +13,8 @@
                     <d:priority>
                         <d:toDo>Store abstract syntax trees in Java, because XML's schema system is inferioir and has
                             great configuration costs.
-                            <d:toDo>Implement schema/builder in Java for</d:toDo>
+                            <d:toDo>Implement schema/builder in Java for DEN namespace.</d:toDo>
+                            <d:toDo>Deprecate XML Util code completely and document why it cannot be removed.</d:toDo>
                         </d:toDo>
                         <d:toDo>Document the objectives of the reflection package.</d:toDo>
                         <d:toDo>Fix up code guide lines and transfer to this project.
