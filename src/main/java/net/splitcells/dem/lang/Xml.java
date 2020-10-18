@@ -224,4 +224,8 @@ public final class Xml {
         }
         return result.getWriter().toString();
     }
+    
+    public static Element getDirectChildElementByName(Element element) {
+        final var nodeList = element.getChildNodes();
+    }
 }
