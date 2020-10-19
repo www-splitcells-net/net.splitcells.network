@@ -9,6 +9,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 /**
  * Instances of this class represent the content of XML/JSON like files.
  * XSD Schema functionality can be created via special classes, that wrap perspectives.
+ * As long as this code is not really used, it stays deprecated.
  * <p>
  * This currently not used. Real XML files are used instead, because XML provides things in
  * order support needed functionality: it supports namespaces, XSL, XSD and XPATH.
@@ -17,10 +18,12 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  * The best way to solve this, is to automatically apply schema validation any time that XML files are processed.
  * <p>
  * This class will probably be a replacement for XML, if it does cause more problems.
+ * If and when this is the case, already present XML files can be translated via XSL to the appropriate Java code.
  * <p>
  * Extending classes should always provide an empty constructor,
  * because this is just data and not something like a template.
  */
+@Deprecated
 public abstract class PerspectiveDocument implements Discoverable {
 
     private final List<String> path;
