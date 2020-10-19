@@ -27,7 +27,7 @@ import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 
 /**
  * Currently XML is used as the base of all documents.
- * If it is not suitable anymore, it will be replaces by {@link net.splitcells.dem.lang.perspective.PerspectiveDocument}.
+ * If it is not suitable anymore, it will be replaced by {@link net.splitcells.dem.lang.perspective.PerspectiveDocument}.
  */
 public final class Xml {
     private static final Transformer TRANSFORMER = Xml.newTransformer();
