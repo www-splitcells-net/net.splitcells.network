@@ -37,24 +37,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * A perspective has a value, if it only contains exactly one value.
  * A perspective has children, if it contains multiple values.
  */
-public interface Perspective extends Domable {
-
-    NameSpace nameSpace();
-
-    String name();
-
-    default Optional<Perspective> value() {
-        if (children().size() == 1) {
-            return Optional.of(children().get(0));
-        }
-        return Optional.empty();
-    }
+public interface Perspective extends PerspectiveView {
 
     List<Perspective> children();
-
-    default boolean nameIs(String value, NameSpace nameSpace) {
-        return nameSpace().equals(nameSpace) && name().equals(value);
-    }
 
     default Perspective withProperty(String name, NameSpace nameSpace, String value) {
         return withValue(perspective(name, nameSpace)

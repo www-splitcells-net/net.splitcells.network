@@ -1,6 +1,7 @@
 package net.splitcells.dem.lang.perspective;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
@@ -11,11 +12,8 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 /**
  * This class defines the Den namespace.
- * As long as this code is not really used, it stays deprecated.
- * This class is not up to date. See {@link PerspectiveDocument};
  */
-@Deprecated
-public class Den implements Domable {
+public class Den implements PerspectiveView {
 
     public static Den project(Perspective... args) {
         final var project = den("project");
@@ -149,7 +147,7 @@ public class Den implements Domable {
         return name;
     }
 
-    public static Den todo(String value) {
+    public static Den toDo(String value) {
         final var name = den("todo");
         name.getPerspective().withChild(string(value));
         return name;
@@ -167,6 +165,21 @@ public class Den implements Domable {
 
     private Perspective getPerspective() {
         return perspective;
+    }
+
+    @Override
+    public NameSpace nameSpace() {
+        return perspective.nameSpace();
+    }
+
+    @Override
+    public String name() {
+        return perspective.name();
+    }
+
+    @Override
+    public ListView<Perspective> children() {
+        return perspective.children();
     }
 
     @Override

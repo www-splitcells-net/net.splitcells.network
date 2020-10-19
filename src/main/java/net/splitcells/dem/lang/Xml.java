@@ -25,6 +25,10 @@ import static javax.xml.transform.OutputKeys.INDENT;
 import static javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 
+/**
+ * Currently XML is used as the base of all documents.
+ * If it is not suitable anymore, it will be replaces by {@link net.splitcells.dem.lang.perspective.PerspectiveDocument}.
+ */
 public final class Xml {
     private static final Transformer TRANSFORMER = Xml.newTransformer();
     private static final Transformer UNDECLARED_TRANSFORMER = Xml.newTransformer();
@@ -224,7 +228,7 @@ public final class Xml {
         }
         return result.getWriter().toString();
     }
-    
+
     public static Element getDirectChildElementByName(Element element) {
         final var nodeList = element.getChildNodes();
         // TODO
