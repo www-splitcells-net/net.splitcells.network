@@ -13,7 +13,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 /**
  * This class defines the Den namespace.
  */
-public class Den implements PerspectiveView {
+public final class Den implements PerspectiveView {
 
     public static Den project(Perspective... args) {
         final var project = den("project");
