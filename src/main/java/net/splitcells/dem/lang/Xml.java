@@ -201,18 +201,16 @@ public final class Xml {
     }
 
     public static Document parse(Path file) {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
-            return factory.newDocumentBuilder().parse(file.toFile());
+            return ROOT_DOCUMENT_BUILDER.parse(file.toFile());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public static Document parse(InputStream document) {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
-            return factory.newDocumentBuilder().parse(document);
+            return ROOT_DOCUMENT_BUILDER.parse(document);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -235,17 +233,21 @@ public final class Xml {
 
     public static Element directChildElementByName(Element element, String name, NameSpace nameSpace) {
         final var nodeList = element.getChildNodes();
-        final var directChildrenByName = IntStream.range(0, nodeList.getLength())
-                .mapToObj(i -> nodeList.item(i))
-                .filter(node -> node.getNodeType() == ELEMENT_NODE)
-                .map(node -> (Element) node)
-                .filter(node -> node.getNamespaceURI().equals(nameSpace.uri()))
-                .filter(node -> node.getNodeType() == ELEMENT_NODE)
-                .filter(node -> node.getLocalName().equals(name))
+        final var directChildrenByName = directChildElementsByName(element, name, nameSpace)
                 .collect(Lists.toList());
         if (directChildrenByName.size() != 1) {
             throw new IllegalArgumentException("Illegal Number of fitting children. Only one fitting child is allowed: " + directChildrenByName.size());
         }
         return directChildrenByName.get(0);
+    }
+
+    public static Stream<Element> directChildElementsByName(Element element, String name, NameSpace nameSpace) {
+        final var nodeList = element.getChildNodes();
+        return IntStream.range(0, nodeList.getLength())
+                .mapToObj(i -> nodeList.item(i))
+                .filter(node -> node.getNodeType() == ELEMENT_NODE)
+                .map(node -> (Element) node)
+                .filter(node -> nameSpace.uri().equals(node.getNamespaceURI()))
+                .filter(node -> node.getLocalName().equals(name));
     }
 }
