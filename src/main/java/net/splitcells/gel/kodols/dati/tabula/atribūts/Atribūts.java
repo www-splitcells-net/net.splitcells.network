@@ -13,5 +13,9 @@ public interface Atribūts<T> extends Domable {
     }
 
     Bool irGadījumsNo(Object arg);
-
+    
+    default T deserializēVērtību(String vērtība) {
+        throw new UnsupportedOperationException();
+    }
+    
 }

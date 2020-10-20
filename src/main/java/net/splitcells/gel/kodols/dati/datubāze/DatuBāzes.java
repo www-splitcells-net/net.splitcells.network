@@ -6,6 +6,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.Vēstures;
 import net.splitcells.gel.kodols.atrisinājums.vēsture.VēsturesVeidotajs;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
+import org.w3c.dom.Element;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -40,5 +41,9 @@ public class DatuBāzes extends ResourceI<DatuBāzesVeidotajs> {
     public static DatuBāze datuBāze(List<Atribūts<?>> atribūti) {
         return environment().config().configValue(DatuBāzes.class).datuBāze(atribūti);
 
+    }
+
+    public static DatuBāze datuBāzeNoFods(List<Atribūts<?>> atribūti, Element fods) {
+        return environment().config().configValue(DatuBāzes.class).datuBāzeNoFods(atribūti, fods);
     }
 }
