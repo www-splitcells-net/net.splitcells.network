@@ -1,5 +1,6 @@
 package net.splitcells.dem.lang;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.utils.ConstructorIllegal;
 import org.w3c.dom.Attr;
@@ -17,6 +18,8 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
@@ -24,6 +27,7 @@ import static java.util.stream.Collectors.toList;
 import static javax.xml.transform.OutputKeys.INDENT;
 import static javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static org.w3c.dom.Node.ELEMENT_NODE;
 
 /**
  * Currently XML is used as the base of all documents.
@@ -229,9 +233,19 @@ public final class Xml {
         return result.getWriter().toString();
     }
 
-    public static Element getDirectChildElementByName(Element element) {
+    public static Element getDirectChildElementByName(Element element, NameSpace nameSpace, String name) {
         final var nodeList = element.getChildNodes();
-        // TODO
-        throw new RuntimeException();
+        final var directChildrenByName = IntStream.range(0, nodeList.getLength())
+                .mapToObj(i -> nodeList.item(i))
+                .filter(node -> node.getNodeType() == ELEMENT_NODE)
+                .map(node -> (Element) node)
+                .filter(node -> node.getNamespaceURI().equals(nameSpace.uri()))
+                .filter(node -> node.getNodeType() == ELEMENT_NODE)
+                .filter(node -> node.getLocalName().equals(name))
+                .collect(Lists.toList());
+        if (directChildrenByName.size() != 1) {
+            throw new IllegalArgumentException("Illegal Number of fitting children. Only one fitting child is allowed: " + directChildrenByName.size());
+        }
+        return directChildrenByName.get(0);
     }
 }
