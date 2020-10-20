@@ -233,7 +233,7 @@ public final class Xml {
         return result.getWriter().toString();
     }
 
-    public static Element getDirectChildElementByName(Element element, NameSpace nameSpace, String name) {
+    public static Element directChildElementByName(Element element, NameSpace nameSpace, String name) {
         final var nodeList = element.getChildNodes();
         final var directChildrenByName = IntStream.range(0, nodeList.getLength())
                 .mapToObj(i -> nodeList.item(i))
