@@ -15,9 +15,18 @@ public final class AtribūtsI<T> implements Atribūts<T> {
 
     private final Class<T> tips;
     private final String vārds;
+    private final Function<String, T> deserializācija;
 
     public static <T> Atribūts<T> atribūts(Class<T> tips) {
         return new AtribūtsI<>(tips, tips.getSimpleName());
+    }
+
+    public static Atribūts<Integer> integerAtributs(String vārds) {
+        return new AtribūtsI<>(Integer.class, vārds, arg -> Integer.valueOf(arg));
+    }
+
+    public static Atribūts<String> stringAtributs(String vārds) {
+        return new AtribūtsI<>(String.class, vārds, arg -> arg);
     }
 
     public static <T> Atribūts<T> atributs(Class<T> tips, String vārds) {
@@ -25,8 +34,15 @@ public final class AtribūtsI<T> implements Atribūts<T> {
     }
 
     private AtribūtsI(Class<T> tips, String vārds) {
+        this(tips, vārds, arg -> {
+            throw new UnsupportedOperationException();
+        });
+    }
+
+    private AtribūtsI(Class<T> tips, String vārds, Function<String, T> deserializācija) {
         this.tips = tips;
         this.vārds = vārds;
+        this.deserializācija = deserializācija;
     }
 
     @Override
@@ -54,6 +70,6 @@ public final class AtribūtsI<T> implements Atribūts<T> {
 
     @Override
     public T deserializēVērtību(String vērtība) {
-        throw new UnsupportedOperationException();
+        return deserializācija.apply(vērtība);
     }
 }
