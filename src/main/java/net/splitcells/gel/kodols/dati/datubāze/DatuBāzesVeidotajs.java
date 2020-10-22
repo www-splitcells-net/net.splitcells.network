@@ -44,6 +44,7 @@ public interface DatuBāzesVeidotajs extends Closeable, Flushable {
             final var speardsheet = directChildElementByName(body, "spreadsheet", FODS_OFFICE);
             final var table = directChildElementByName(speardsheet, "table", FODS_TABLE);
             directChildElementsByName(table, "table-row", FODS_TABLE)
+                    .skip(1)
                     .map(row -> rindaNoFodsRow(atribūti, row))
                     .forEach(rindasVērtības -> datuBāzeNoFods.pieliktUnPārtulkot(rindasVērtības));
         }
@@ -53,7 +54,6 @@ public interface DatuBāzesVeidotajs extends Closeable, Flushable {
     private static List<Object> rindaNoFodsRow(List<Atribūts<?>> atribūti, Element row) {
         final var tableCells = directChildElementsByName(row, "table-cell", FODS_TABLE)
                 .collect(toList());
-        tableCells.remove(0);
         return range(0, atribūti.size())
                 .mapToObj(i -> atribūti.get(i).deserializēVērtību(
                         Xml.directChildElements(tableCells.get(i))
