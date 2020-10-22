@@ -53,6 +53,7 @@ public interface DatuBāzesVeidotajs extends Closeable, Flushable {
     private static List<Object> rindaNoFodsRow(List<Atribūts<?>> atribūti, Element row) {
         final var tableCells = directChildElementsByName(row, "table-cell", FODS_TABLE)
                 .collect(toList());
+        tableCells.remove(0);
         return range(0, atribūti.size())
                 .mapToObj(i -> atribūti.get(i).deserializēVērtību(
                         Xml.directChildElements(tableCells.get(i))
