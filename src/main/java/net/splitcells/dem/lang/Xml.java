@@ -254,7 +254,7 @@ public final class Xml {
     }
 
     public static Stream<Element> directChildElements(Element element) {
-        return directChildElements(element)
+        return directChildNodes(element)
                 .filter(node -> node.getNodeType() == ELEMENT_NODE)
                 .map(node -> (Element) node);
     }
