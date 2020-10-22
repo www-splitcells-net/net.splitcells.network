@@ -39,15 +39,13 @@ public interface DatuBāzesVeidotajs extends Closeable, Flushable {
 
     default DatuBāze datuBāzeNoFods(List<Atribūts<?>> atribūti, Element fods) {
         final var datuBāzeNoFods = datuBāze(atribūti);
-        {
-            final var body = directChildElementByName(fods, "body", FODS_OFFICE);
-            final var speardsheet = directChildElementByName(body, "spreadsheet", FODS_OFFICE);
-            final var table = directChildElementByName(speardsheet, "table", FODS_TABLE);
-            directChildElementsByName(table, "table-row", FODS_TABLE)
-                    .skip(1)
-                    .map(row -> rindaNoFodsRow(atribūti, row))
-                    .forEach(rindasVērtības -> datuBāzeNoFods.pieliktUnPārtulkot(rindasVērtības));
-        }
+        final var body = directChildElementByName(fods, "body", FODS_OFFICE);
+        final var speardsheet = directChildElementByName(body, "spreadsheet", FODS_OFFICE);
+        final var table = directChildElementByName(speardsheet, "table", FODS_TABLE);
+        directChildElementsByName(table, "table-row", FODS_TABLE)
+                .skip(1)
+                .map(row -> rindaNoFodsRow(atribūti, row))
+                .forEach(rindasVērtības -> datuBāzeNoFods.pieliktUnPārtulkot(rindasVērtības));
         return datuBāzeNoFods;
     }
 
