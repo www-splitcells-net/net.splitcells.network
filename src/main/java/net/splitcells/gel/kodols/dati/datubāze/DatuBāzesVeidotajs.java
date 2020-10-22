@@ -54,7 +54,7 @@ public interface DatuBāzesVeidotajs extends Closeable, Flushable {
     private static List<Object> rindaNoFodsRow(List<Atribūts<?>> atribūti, Element row) {
         final var tableCells = directChildElementsByName(row, "table-cell", FODS_TABLE)
                 .collect(toList());
-        return range(0, tableCells.size())
+        return range(0, atribūti.size())
                 .mapToObj(i -> atribūti.get(i).deserializēVērtību(tableCells.get(i).getNodeValue()))
                 .collect(toList());
     }
