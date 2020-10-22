@@ -242,12 +242,16 @@ public final class Xml {
     }
 
     public static Stream<Element> directChildElementsByName(Element element, String name, NameSpace nameSpace) {
-        final var nodeList = element.getChildNodes();
-        return IntStream.range(0, nodeList.getLength())
-                .mapToObj(i -> nodeList.item(i))
+        return directChildNodes(element)
                 .filter(node -> node.getNodeType() == ELEMENT_NODE)
                 .map(node -> (Element) node)
                 .filter(node -> nameSpace.uri().equals(node.getNamespaceURI()))
                 .filter(node -> node.getLocalName().equals(name));
+    }
+
+    public static Stream<Node> directChildNodes(Element element) {
+        final var nodeList = element.getChildNodes();
+        return IntStream.range(0, nodeList.getLength())
+                .mapToObj(i -> nodeList.item(i));
     }
 }
