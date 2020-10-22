@@ -16,8 +16,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.Xml.directChildElementByName;
 import static net.splitcells.dem.lang.Xml.directChildElementsByName;
-import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_OFFICE;
-import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
+import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 
 public interface DatuBāzesVeidotajs extends Closeable, Flushable {
     DatuBāze datuBāze(String vārds, Atribūts<? extends Object>... atribūti);
@@ -55,7 +54,12 @@ public interface DatuBāzesVeidotajs extends Closeable, Flushable {
         final var tableCells = directChildElementsByName(row, "table-cell", FODS_TABLE)
                 .collect(toList());
         return range(0, atribūti.size())
-                .mapToObj(i -> atribūti.get(i).deserializēVērtību(tableCells.get(i).getNodeValue()))
+                .mapToObj(i -> atribūti.get(i).deserializēVērtību(
+                        Xml.directChildElements(tableCells.get(i))
+                                .filter(e -> FODS_TEXT.uri().equals(e.getNamespaceURI()))
+                                .findFirst()
+                                .get()
+                                .getTextContent()))
                 .collect(toList());
     }
 }
