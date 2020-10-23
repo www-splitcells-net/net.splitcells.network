@@ -8,19 +8,23 @@ from pathlib import Path
 import json
 import os
 import sys
-returnCode = subprocess.call('repo.verify.folder.structure', shell='True')
-	# Check first folder structure in order to speed up this command, in case a folder is missing.
-	# TODO Check for errors.
-if returnCode != 0:
-	sys.exit(1)
-subprocess.run('command.managed.execute conjunction repo.verify', shell='True')
-	# TODO Check for errors.
 print(Path('.').resolve())
 subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 if subListPath.is_file():
 	with open(subListPath, 'r') as subListFile:
 		repoList=json.load(subListFile)
 		for subName in repoList['subs'].keys():
+			subRepoPath=Path('./' + subName)
+			if not subRepoPath.is_dir():
+				print('Folder of subrepository "' + str(subRepoPath) + '" is missing.')
+				# TODO Echo to stderr.
+				sys.exit(1)
+		for currentSubDir in Path('.').iterdir():
+			if not currentSubDir.name.startswith('.'):
+				if not currentSubDir.name in repoList['subs']:
+					print('Unknown subrepository "' + currentSubDir.name + '" is present.')
+					sys.exit(1)
+		for subName in repoList['subs'].keys():
 			if Path('./' + subName).is_dir():
-				subprocess.run('cd ' + subName + '; repo.verify', shell='True')
+				subprocess.run('cd ' + subName + '; repo.verify.folder.structure', shell='True')
 					# TODO Check for errors.

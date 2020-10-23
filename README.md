@@ -37,3 +37,8 @@
 1. __TODO__ Define publication methods.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
+
+## Credits
+
+Big thanks to the following projects:
+* [Release It!](https://github.com/release-it/release-it) 🚀 for simplifying releases.

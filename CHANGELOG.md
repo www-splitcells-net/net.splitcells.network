@@ -2,12 +2,18 @@
 This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Please, create a one sentence summary for each release.
-Releases are generally speaking, created monthly.
 
 The concrete echo format of each command is not stable.
 Changes to this are not considered major changes.
 ## Unreleased
+## Version 4.0.1
+Release project in order to test release process.
 ### Major Changes
+1. Verify folder structure before repository content.
+   Move folder check functionality of 'repo.verify' to 'repo.verify.folder.structure'.
+   'repo.verify' still calls 'repo.verify.folder.structure'.
+   'repo.verify' now first verifies the folder structure of the complete repository recursively.
+   This speeds up the checking process, if a folder is missing.
 1. Exit 'repo.process' on first error by default.
 ## Version 4.0.0
 Starting with this version, major changes,

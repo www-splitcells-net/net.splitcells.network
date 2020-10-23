@@ -3,12 +3,6 @@ Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
-1. "run.and.show.if.failed" and similar: do not filter stderr echo.
-1. "run.and.show.if.failed": store final output in error case in temporary file and just show link
-   to file in order to not clutter output.
-   1. Use "echo.error".
-   1. Make "echo.error" easier to spot for the user.
-1. Fix description created by automatic releases.
 1. Document commands.
 1. Implement tests:
    Tests are implemented as normal commands.
@@ -26,10 +20,6 @@ The priority of a task is just a guideline.
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
 1. Move tasks to other projects if suitable.
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
-1. Test Gitlab security settings.
-1. Continous integration
-1. Ticket managment inside git repository:
-   1. https://github.com/augmentable-dev/tickgit
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
 1. General advertisment.
