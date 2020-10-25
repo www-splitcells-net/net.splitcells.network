@@ -46,9 +46,9 @@ public class DatuBāzes extends ResourceI<DatuBāzesVeidotajs> {
         return environment().config().configValue(DatuBāzes.class).datuBāzeNoFods(atribūti, fods);
     }
 
-    public static List<Atribūts<Object>> objektuAtribūti(List<Atribūts<?>> atribūti) {
+    public static List<Atribūts<? extends Object>> objektuAtribūti(List<Atribūts<Object>> atribūti) {
         return atribūti.stream()
-                .map(a -> (Atribūts<Object>) a)
+                .map(a -> (Atribūts<? extends Object>) a)
                 .collect(toList());
     }
 }
