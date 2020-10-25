@@ -42,15 +42,13 @@ public class DatuBāzes extends ResourceI<DatuBāzesVeidotajs> {
         return environment().config().configValue(DatuBāzes.class).datuBāze(atribūti);
     }
 
-    public static DatuBāze datuBāzeNoObjektiem(List<Atribūts<Object>> atribūti) {
-        return environment().config().configValue(DatuBāzes.class)
-                .datuBāze
-                        (atribūti.stream()
-                                .map(a -> (Atribūts<Object>) a)
-                                .collect(toList()));
-    }
-
     public static DatuBāze datuBāzeNoFods(List<Atribūts<?>> atribūti, Element fods) {
         return environment().config().configValue(DatuBāzes.class).datuBāzeNoFods(atribūti, fods);
+    }
+
+    public static List<Atribūts<Object>> objektuAtribūti(List<Atribūts<?>> atribūti) {
+        return atribūti.stream()
+                .map(a -> (Atribūts<Object>) a)
+                .collect(toList());
     }
 }
