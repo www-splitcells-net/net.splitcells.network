@@ -94,7 +94,6 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
     }
 
     default void veidoStandartaAnalīze() {
-        final var standardDokumentuMapu = environment().config().configValue(ProcessPath.class);
         veidotAnalīzu(datuKonteiners());
     }
 
