@@ -84,7 +84,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
         return irPilns() && ierobežojums().novērtējums().equalz(cena(0));
     }
 
-    default Path analīzuKonteiners() {
+    default Path datuKonteiners() {
         final var standardDokumentuMapu = environment().config().configValue(ProcessPath.class);
         return standardDokumentuMapu
                 .resolve(
@@ -95,8 +95,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
 
     default void veidoStandartaAnalīze() {
         final var standardDokumentuMapu = environment().config().configValue(ProcessPath.class);
-        final var analīzuKonteiners = analīzuKonteiners();
-        veidotAnalīzu(analīzuKonteiners);
+        veidotAnalīzu(datuKonteiners());
     }
 
     default void veidotAnalīzu(Path mērķis) {
