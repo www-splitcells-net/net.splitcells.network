@@ -93,7 +93,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
                                 .orElse(getClass().getSimpleName()));
     }
 
-    default void veidotStandartaAnalīze() {
+    default void veidoStandartaAnalīze() {
         final var standardDokumentuMapu = environment().config().configValue(ProcessPath.class);
         final var analīzuKonteiners = analīzuKonteiners();
         veidotAnalīzu(analīzuKonteiners);
