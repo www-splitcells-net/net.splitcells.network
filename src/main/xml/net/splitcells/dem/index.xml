@@ -26,6 +26,7 @@
                         </d:toDo>
                         <d:toDo>Clean up ConfigurationI.</d:toDo>
                         <d:idea>Dem programs are constructors of linked values.</d:idea>
+                        <d:toDo>Console should print message asynchronously.</d:toDo>
                     </d:priority>
                 </d:queues>
             </d:scheduling>
