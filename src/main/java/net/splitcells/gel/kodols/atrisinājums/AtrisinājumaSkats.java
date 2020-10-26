@@ -84,15 +84,18 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
         return irPilns() && ierobežojums().novērtējums().equalz(cena(0));
     }
 
-    default void veidotStandartaAnalīze() {
+    default Path analīzuKonteiners() {
         final var standardDokumentuMapu = environment().config().configValue(ProcessPath.class);
-        createDirectory(standardDokumentuMapu);
-        final var analīzuKonteiners = standardDokumentuMapu
+        return standardDokumentuMapu
                 .resolve(
                         path()
                                 .reduced((a, b) -> a + "." + b)
                                 .orElse(getClass().getSimpleName()));
-        ensureAbsence(analīzuKonteiners);
+    }
+
+    default void veidotStandartaAnalīze() {
+        final var standardDokumentuMapu = environment().config().configValue(ProcessPath.class);
+        final var analīzuKonteiners = analīzuKonteiners();
         veidotAnalīzu(analīzuKonteiners);
     }
 
