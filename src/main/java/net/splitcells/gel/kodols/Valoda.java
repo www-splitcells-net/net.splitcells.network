@@ -22,6 +22,7 @@ public enum Valoda {
     , SOLU_TIPS("soluTips")
     , RADĪJUMS("radījums")
     , NOTIKUMS("notikums")
+    , NOVĒRTĒJUMS("novērtējums")
     , PROBLĒMA("problēma")
     ;
     private final String apraksts;
