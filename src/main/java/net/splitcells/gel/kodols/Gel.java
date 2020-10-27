@@ -1,6 +1,6 @@
 package net.splitcells.gel.kodols;
 
-import net.splitcells.gel.kodols.atrisinājums.Atrisinājumi;
+import net.splitcells.gel.kodols.atrisinājums.AtrisinājumBūvētājs;
 import net.splitcells.gel.kodols.problēma.Definē_prasības_nosaukumu;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -20,6 +20,6 @@ public final class Gel {
     }
 
     public static Definē_prasības_nosaukumu definē_problēmu() {
-        return Atrisinājumi.definē_problēmu();
+        return AtrisinājumBūvētājs.definē_problēmu();
     }
 }

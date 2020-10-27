@@ -18,10 +18,9 @@ import net.splitcells.gel.kodols.problēma.DefinēPiedāvājumi;
 import net.splitcells.gel.kodols.problēma.Definē_prasības_nosaukumu;
 import net.splitcells.gel.kodols.problēma.Problēma;
 import net.splitcells.gel.kodols.problēma.ProblēmaĢenerators;
-import net.splitcells.gel.kodols.problēma.ProblēmaI;
 
 
-public class Atrisinājumi implements Definē_prasības_nosaukumu, DefinēPrasība, DefinēPiedāvājumi, ProblēmaĢenerators {
+public class AtrisinājumBūvētājs implements Definē_prasības_nosaukumu, DefinēPrasība, DefinēPiedāvājumi, ProblēmaĢenerators {
 
     private List<Atribūts<? extends Object>> prasības_atribūti = list();
     private List<List<Object>> prasības = list();
@@ -31,11 +30,11 @@ public class Atrisinājumi implements Definē_prasības_nosaukumu, DefinēPrasī
 
     private Ierobežojums ierobežojums;
 
-    protected Atrisinājumi() {
+    protected AtrisinājumBūvētājs() {
     }
 
     public static Definē_prasības_nosaukumu definē_problēmu() {
-        return new Atrisinājumi();
+        return new AtrisinājumBūvētājs();
     }
 
     @Override
