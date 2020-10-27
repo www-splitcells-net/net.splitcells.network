@@ -2,6 +2,7 @@ package net.splitcells.gel.kodols.problēma;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.gel.kodols.atrisinājums.Atrisinājumi;
 import net.splitcells.gel.kodols.dati.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
 import net.splitcells.gel.kodols.dati.datubāze.PapildinājumsKlausītājs;
@@ -56,7 +57,7 @@ public class ProblēmaI implements Problēma {
     @Override
     public Atrisinājums kāAtrisinājums() {
         if (kāAtrisinājums == null) {
-            kāAtrisinājums = new AtrisinājumsI(this);
+            kāAtrisinājums = Atrisinājumi.atrisinājum(this);
         }
         return kāAtrisinājums;
     }

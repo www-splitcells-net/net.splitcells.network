@@ -25,6 +25,10 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 public class AtrisinājumsI implements Atrisinājums {
 	private final Problēma problēma;
 	private final Vēsture vēsture;
+	
+	public static Atrisinājums atrisinājums(Problēma problēma) {
+		return new AtrisinājumsI(problēma);
+	}
 
 	public AtrisinājumsI(Problēma problēma) {
 		this.problēma = problēma;

@@ -15,7 +15,7 @@ public class Atrisinājumi extends ResourceI<AtrisinājumuVeidotajs> {
         super(() -> new AtrisinājumuVeidotajsI());
     }
 
-    public static DatuBāze atrisinājum(Problēma problēma) {
+    public static Atrisinājums atrisinājum(Problēma problēma) {
         return environment().config().configValue(Atrisinājumi.class).atrisinājum(problēma);
     }
 }
