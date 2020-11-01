@@ -17,6 +17,7 @@ public interface RindaRādītājs extends Domable {
         return interpretē(konteksts());
     }
 
+    @Deprecated
     Optional<Rinda> interpretē(Tabula context);
 
     @Override
