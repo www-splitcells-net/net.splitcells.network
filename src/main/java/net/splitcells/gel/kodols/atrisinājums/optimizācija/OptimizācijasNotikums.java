@@ -4,6 +4,8 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.kodols.dati.tabula.RindaRādītājs;
 import org.w3c.dom.Node;
 
+import java.util.Objects;
+
 import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.gel.kodols.Valoda.PIEDĀVĀJUMS;
@@ -45,5 +47,21 @@ public final class OptimizācijasNotikums implements Domable {
         dom.appendChild(element(PRASĪBA.apraksts(), prasība.toDom()));
         dom.appendChild(element(PIEDĀVĀJUMS.apraksts(), piedāvājums.toDom()));
         return dom;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(prasība.indekss(), piedāvājums.indekss(), solisTips);
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof OptimizācijasNotikums) {
+            final var other = (OptimizācijasNotikums) arg;
+            return prasība.equals(other.prasība())
+                    && piedāvājums.equals(other.piedāvājums())
+                    && solisTips.equals(other.soluTips());
+        }
+        throw new IllegalArgumentException();
     }
 }
