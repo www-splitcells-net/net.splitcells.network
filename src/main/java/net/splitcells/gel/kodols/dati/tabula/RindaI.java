@@ -12,6 +12,8 @@ import org.w3c.dom.Node;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 
+import java.util.Objects;
+
 public class RindaI implements Rinda {
     private final Tabula konteksts;
     private final int indekss;
@@ -80,4 +82,10 @@ public class RindaI implements Rinda {
         });
         return gūtasDomVertība;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(indekss(), konteksts());
+    }
+
 }
