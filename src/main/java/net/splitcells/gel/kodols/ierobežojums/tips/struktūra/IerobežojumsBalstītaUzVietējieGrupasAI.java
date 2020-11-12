@@ -37,7 +37,7 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
     @Override
     public void apstrāde_rindu_papildinajumu(Rinda papildinājums) {
         final var ienākošaGrupa = papildinājums.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
-        apstrādeNovērtējumiNotikums(
+        apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pēc_papildinājumu(
                         rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(ienākošaGrupa)
@@ -48,7 +48,7 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
                                 .uzmeklēšana(ienākošaGrupa)));
     }
 
-    protected void apstrādeNovērtējumiNotikums(NovērtējumsNotikums novērtējumsNotikums) {
+    protected void apstrādeNovērtējumiNotikumu(NovērtējumsNotikums novērtējumsNotikums) {
         novērtējumsNotikums.noņemšana().forEach(noņemšana ->
                 rindasApstrāde.piešķiršanas_no_prasības(noņemšana).forEach(rindasApstrāde::noņemt));
         novērtējumsNotikums.papildinājumi().forEach((line, resultUpdate) -> {
@@ -60,7 +60,7 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
 
     @Override
     protected void apstrāda_rindas_primsNoņemšana(GrupaId ienākošaGrupaId, Rinda noņemšana) {
-        apstrādeNovērtējumiNotikums(
+        apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pirms_noņemšana(
                         rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)
                         , rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
