@@ -73,8 +73,8 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
     default Atrisinājums optimizē(OptimizācijasNotikums notikums, OptimizācijasParametri optimizācijasParametri) {
         if (notikums.soluTips().equals(PIEŠĶIRŠANA)) {
             this.piešķirt(
-                    notikums.prasība().interpretē(prasības_nelietotas()).get(),
-                    notikums.piedāvājums().interpretē(piedāvājums_nelietots()).get());
+                    prasības_nelietotas().gūtJēluRindas(notikums.prasība().interpretē().get().indekss()),
+                    piedāvājums_nelietots().gūtJēluRindas(notikums.piedāvājums().interpretē().get().indekss()));
         } else if (notikums.soluTips().equals(NOŅEMŠANA)) {
             final var prasībaPriekšNoņemšanas = notikums.prasība().interpretē();
             final var piedāvājumuPriekšNoņemšanas = notikums.piedāvājums().interpretē();
