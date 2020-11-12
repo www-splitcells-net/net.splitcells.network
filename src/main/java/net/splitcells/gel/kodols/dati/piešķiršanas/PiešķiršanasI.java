@@ -181,7 +181,8 @@ public class PiešķiršanasI implements Piešķiršanas {
 
     @Override
     public Rinda prasība_no_piešķiršana(Rinda piešķiršana) {
-        return prāsibas.jēlaRindasSkats().get(piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.get(piešķiršana.indekss()));
+        return prāsibas.jēlaRindasSkats()
+                .get(piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.get(piešķiršana.indekss()));
     }
 
     @Override
