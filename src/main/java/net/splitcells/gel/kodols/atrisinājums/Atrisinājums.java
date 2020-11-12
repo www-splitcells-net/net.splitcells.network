@@ -76,8 +76,8 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
                     notikums.prasība().interpretē(prasības_nelietotas()).get(),
                     notikums.piedāvājums().interpretē(piedāvājums_nelietots()).get());
         } else if (notikums.soluTips().equals(NOŅEMŠANA)) {
-            final var prasībaPriekšNoņemšanas = notikums.prasība().interpretē(prasība_lietots());
-            final var piedāvājumuPriekšNoņemšanas = notikums.piedāvājums().interpretē(piedāvājumi_lietoti());
+            final var prasībaPriekšNoņemšanas = notikums.prasība().interpretē();
+            final var piedāvājumuPriekšNoņemšanas = notikums.piedāvājums().interpretē();
             if (optimizācijasParametri.getDubultuNoņemšanaAtļauts()) {
                 if (prasībaPriekšNoņemšanas.isEmpty() && piedāvājumuPriekšNoņemšanas.isEmpty()) {
                     return this;
