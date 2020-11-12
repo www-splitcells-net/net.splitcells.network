@@ -152,12 +152,8 @@ public class MinimālsAttālums<T> implements Vērtētājs {
             while (-1 < sakārtotasRindas.size() - 2 - i) {
                 final var oriģinālaKreisaRinda = sakārtotasRindas.get(sakārtotasRindas.size() - 2 - i);
                 if (!ievēro(oriģinālaKreisaRinda, papildinājums) || i == 0) {
-                    try {
-                        novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaKreisaRinda, bērni//
-                                , Optional.of(novērtējumsPirmsPapildinājumu.uzmeklēVienādus(Ierobežojums.RINDA, oriģinālaKreisaRinda).vērtība(NOVĒRTĒJUMS)));
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
+                    novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaKreisaRinda, bērni//
+                            , Optional.of(novērtējumsPirmsPapildinājumu.uzmeklēVienādus(Ierobežojums.RINDA, oriģinālaKreisaRinda).vērtība(NOVĒRTĒJUMS)));
                     ++i;
                 } else {
                     break;

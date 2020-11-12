@@ -135,12 +135,7 @@ public class VēstureI implements Vēsture {
     }
 
     protected void atgrieztPedeijo_noņemt(int indekss) {
-        try {
-            noņemt_(kolonnaSkats(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss + 1).gūtRinda(0));
-        } catch (Throwable t) {
-            System.out.println(1);
-            throw new RuntimeException(t);
-        }
+        noņemt_(kolonnaSkats(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss + 1).gūtRinda(0));
         noņemt_(kolonnaSkats(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss).gūtRinda(0));
     }
 

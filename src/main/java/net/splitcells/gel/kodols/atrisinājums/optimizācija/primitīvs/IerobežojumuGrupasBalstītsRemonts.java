@@ -3,6 +3,7 @@ package net.splitcells.gel.kodols.atrisinājums.optimizācija.primitīvs;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.kodols.ierobežojums.GrupaId;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
@@ -65,14 +66,14 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
     public static final Function<Map<GrupaId, Set<Rinda>>, Optimizācija> indeksuBalstītsPārdalītājs
             (Function<Integer, Integer> indeksuAtlasītajs) {
         return brīvasPrasībasGrupas -> atrisinājums -> {
-            final List<OptimizācijasNotikums> pārdale = list();
+            final Set<OptimizācijasNotikums> pārdale = setOfUniques();
             final var nelietotiPiedāvājumi = atrisinājums.piedāvājums_nelietots().gūtRindas();
             brīvasPrasībasGrupas.entrySet().forEach(grupa -> {
                 grupa.getValue().forEach(prāsiba -> {
                     if (nelietotiPiedāvājumi.isEmpty()) {
                         return;
                     }
-                    pārdale.add
+                    pārdale.ensureContains
                             (optimizacijasNotikums
                                     (PIEŠĶIRŠANA
                                             , prāsiba.uzRindaRādītājs()
@@ -81,7 +82,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                                                     .uzRindaRādītājs()));
                 });
             });
-            return pārdale;
+            return listWithValuesOf(pārdale);
         };
     }
 
@@ -153,13 +154,12 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 .stream()
                 .filter(grupa -> !ierobežojums.neievērotaji(grupa).isEmpty())
                 .map(grupa -> ierobežojums.rindasAbstrāde().kolonnaSkats(RINDA).vertības())
-                .collect(toSetOfUniques())
-                .stream()
                 .flatMap(straumeNoRindasSarakstiem -> straumeNoRindasSarakstiem.stream())
-                .map(rinda -> optimizacijasNotikums
+                .distinct()
+                .map(piešķiršana -> optimizacijasNotikums
                         (NOŅEMŠANA
-                                , atrisinājums.prasība_no_piešķiršana(rinda).uzRindaRādītājs()
-                                , atrisinājums.piedāvājums_no_piešķiršana(rinda).uzRindaRādītājs()))
+                                , atrisinājums.prasība_no_piešķiršana(piešķiršana).uzRindaRādītājs()
+                                , atrisinājums.piedāvājums_no_piešķiršana(piešķiršana).uzRindaRādītājs()))
                 .collect(toList());
     }
 }
