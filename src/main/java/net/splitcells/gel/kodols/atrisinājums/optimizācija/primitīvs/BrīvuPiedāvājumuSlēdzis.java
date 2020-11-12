@@ -83,11 +83,11 @@ public class BrīvuPiedāvājumuSlēdzis implements Optimizācija {
                             optimizacijasNotikums(NOŅEMŠANA, lietotasPrasībasRādītājs, lietotsPiedāvājumuRādītājs)
                             , optimizacijasNotikums(
                                     PIEŠĶIRŠANA
-                                    , atrisinājums.prasība_lietots()
+                                    , atrisinājums.prasība()
                                             .gūtJēluRindas(lietotaPrasība.indekss())
                                             .uzRindaRādītājs()
                                     , atrisinājums
-                                            .piedāvājumi_lietoti()
+                                            .piedāvājums()
                                             .gūtJēluRindas
                                                     (nejaušiba.integer(0, atrisinājums.piedāvājums_nelietots().izmērs()))
                                             .uzRindaRādītājs()

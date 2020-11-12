@@ -64,12 +64,14 @@ public class LietotuPiedāvājumuSlēdzis implements Optimizācija {
             if (atlaseA == atlaseB) {
                 return list();
             }
-            final var lietotaPrasībaA = atrisinājums.prasība_lietots().gūtRinda(atlaseA);
+            final var lietotaPrasībaA = atrisinājums.prasība().gūtRinda(atlaseA);
             final var vecaPieškiršanaA = atrisinājums.piešķiršanas_no_prasības(lietotaPrasībaA).iterator().next();
             final var lietotaPiedāvājumsA = atrisinājums.piedāvājums_no_piešķiršana(vecaPieškiršanaA);
-            final var lietotaPrasībaB = atrisinājums.prasība_lietots().gūtRinda(atlaseB);
+
+            final var lietotaPrasībaB = atrisinājums.prasība().gūtRinda(atlaseB);
             final var vecaPieſkirſanaB = atrisinājums.piešķiršanas_no_prasības(lietotaPrasībaB).iterator().next();
             final var lietotsPiedāvājumsB = atrisinājums.piedāvājums_no_piešķiršana(vecaPieſkirſanaB);
+
             final var lietotasParsībasARāditājs = lietotaPrasībaA.uzRindaRādītājs();
             final var lietotasPrasībasBRāditājs = lietotaPrasībaB.uzRindaRādītājs();
             if (apstrādatiPrasības.containsAny(lietotasParsībasARāditājs, lietotasPrasībasBRāditājs)) {
@@ -83,8 +85,7 @@ public class LietotuPiedāvājumuSlēdzis implements Optimizācija {
             apstrādatiPrasības.addAll(lietotasParsībasARāditājs, lietotasPrasībasBRāditājs);
             apstrādatiPiedāvājumi.addAll(lietotasPiedāvājumuARāditājs, lietotasPiedāvājumuBRāditājs);
             return
-                    list(
-                            optimizacijasNotikums(NOŅEMŠANA, lietotasParsībasARāditājs, lietotasPiedāvājumuARāditājs)
+                    list(optimizacijasNotikums(NOŅEMŠANA, lietotasParsībasARāditājs, lietotasPiedāvājumuARāditājs)
                             , optimizacijasNotikums(NOŅEMŠANA, lietotasPrasībasBRāditājs, lietotasPiedāvājumuBRāditājs)
                             , optimizacijasNotikums(PIEŠĶIRŠANA, lietotasParsībasARāditājs, lietotasPiedāvājumuBRāditājs)
                             , optimizacijasNotikums(PIEŠĶIRŠANA, lietotasPrasībasBRāditājs, lietotasPiedāvājumuARāditājs)
