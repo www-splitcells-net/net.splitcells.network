@@ -59,8 +59,8 @@ public class PiešķiršanasI implements Piešķiršanas {
         // DARĪT Noņemiet kodu un komentāru dublēšanos.
         {
             this.prāsibas = prasības;
-            prāsibas_nelietoti = new DatuBāzeI("prasības_lietoti", this, prasības.nosaukumuSkats());
-            prāsibas_lietoti = new DatuBāzeI("piedāvājumi_nelietoti", this, prasības.nosaukumuSkats());
+            prāsibas_nelietoti = new DatuBāzeI("prasības_nelietoti", this, prasības.nosaukumuSkats());
+            prāsibas_lietoti = new DatuBāzeI("prasības_lietoti", this, prasības.nosaukumuSkats());
             prasības.jēlaRindasSkats().forEach(prāsibas_nelietoti::pielikt);
             prasības.abonē_uz_papildinājums(prāsibas_nelietoti::pielikt);
             prasības.abonē_uz_iepriekšNoņemšana(removalOf -> {
