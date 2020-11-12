@@ -270,4 +270,9 @@ public class AtrisinājumsI implements Atrisinājums {
 	public org.w3c.dom.Node toDom() {
 		return this.problēma.toDom();
 	}
+
+	@Override
+	public String toString() {
+		return path().toString();
+	}
 }
