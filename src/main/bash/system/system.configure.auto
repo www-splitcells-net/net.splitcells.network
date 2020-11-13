@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Its main goal is to provide a good experience for the computer user.
+# These configuration should be as neutral to the user's preferences as possible
+# and should never get in the way of the user.
+
+# Makes configurations, that should be done on all normal desktop computers.
+# Only configurations that fit to the computers should be done,
+# like installing graphics driver, if not present.
+
+command.managed.execute conjunction system.configure.auto
