@@ -7,7 +7,7 @@ mkdir -p ~/bin/net.splitcells.os.state.interface.commands.managed
 mkdir -p ~/.config/net.splitcells.os.state.interface
 
 # Adds this framework only to interactive shells.
-# There only ".bashrc" is currently configured.
+# Therefore only ".bashrc" is currently configured.
 
 # TODO Support alternative shells.
 
