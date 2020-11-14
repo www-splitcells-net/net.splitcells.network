@@ -3,15 +3,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Configures the current user.
-# The main difference with "package.install" is the fact, that "user.configure" works without arguments and defines the configuration of the current user.
-# This command may or may not required extend rights.
-
-# It is preferred that every "user.configure" command calls a set of "package.install" commands.
-# This ensures the portability of user configurations.
-# It also makes it possible to install the same set of commands on multiple computers, even if the computers require different configurations.
-# In this case the administrator has only to create the "~/.config/net.splitcells.os.state.interface/user.configure" command on each computer, this defines which configurations are required for each computer.
-
 user.bin.configure
 command.managed.execute conjunction user.configure
 user.data.synchronize # User configuration update may add new data peers.

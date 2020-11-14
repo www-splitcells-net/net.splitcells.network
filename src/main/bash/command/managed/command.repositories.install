@@ -36,9 +36,14 @@ do
 	if hasPrefix 'repo=' "$property"; then
 		propertyValue=$(echo $property | cut -c6-)
 		cd $propertyValue
-		cd src # It is assumed, that all repositories are source code projects.
-		find . -type f | sort -n | xargs -r -n 1 $installer
-		chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+		cd src/main # It is assumed, that all repositories are source code projects.
+			find . -type f | sort -n | xargs -r -n 1 $installer
+			chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+		if [ -d ../doc/man ]; then
+			cd ../doc/man
+			# TODO Support multiple sections.
+			find . -type f | sort -n | xargs -i cp {} ~/.local/share/man/man1/
+		fi
 	fi
 done < "$repoList"
 if test -d "$HOME/.config/net.splitcells.os.state.interface/src"; then
