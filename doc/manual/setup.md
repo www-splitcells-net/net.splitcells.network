@@ -51,6 +51,10 @@ command.repository.register $(pwd)
 user.bin.configure
 ```
 
+# Command Documentation
+
+The manuals for each commands can be viewed via "man <command>".
+
 # End Your Adventure
 
 So you decided that enough is enough?

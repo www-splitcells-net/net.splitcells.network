@@ -9,6 +9,7 @@ Changes to this are not considered major changes.
 ## Version 4.0.1
 Release project in order to test release process.
 ### Major Changes
+1. Add support for manpages.
 1. Create command 'system.configure.auto' in order provide configuration
    that fit most users.
 1. Create command 'sh.is.interactive' in order to detect,
