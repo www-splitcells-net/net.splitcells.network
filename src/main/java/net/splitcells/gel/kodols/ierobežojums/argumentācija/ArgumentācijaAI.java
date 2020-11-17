@@ -3,6 +3,7 @@ package net.splitcells.gel.kodols.ierobežojums.argumentācija;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Collectors;
 
@@ -25,9 +26,7 @@ public abstract class ArgumentācijaAI implements Argumentācija {
                     vietējaArgumentācijas().forEach(localReason -> dom.appendChild(localReason.toDom()));
                 }
                 if (!apaķsArgumentācijas().isEmpty()) {
-                    final var apakšArgumentācijasDom = Xml.element("apakš-argumentācija");
-                    dom.appendChild(apakšArgumentācijasDom);
-                    apaķsArgumentācijas().forEach(apakšArgumentācija -> apakšArgumentācijasDom.appendChild(apakšArgumentācija.toDom()));
+                    apaķsArgumentācijas().forEach(apakšArgumentācija -> dom.appendChild(apakšArgumentācija.toDom()));
                 }
                 return dom;
             }
