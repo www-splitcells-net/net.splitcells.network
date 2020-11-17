@@ -4,7 +4,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.random.Randomness;
-import net.splitcells.gel.kodols.dati.tabula.RindaRādītājs;
+import net.splitcells.gel.kodols.dati.tabula.RindasRādītājs;
 import net.splitcells.gel.kodols.atrisinājums.AtrisinājumaSkats;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.Optimizācija;
 import net.splitcells.gel.kodols.atrisinājums.optimizācija.OptimizācijasNotikums;
@@ -46,8 +46,8 @@ public class LietotuPiedāvājumuSlēdzis implements Optimizācija {
     @Override
     public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinajums) {
         final List<OptimizācijasNotikums> optimizācijas = list();
-        final var apstrādatiPrasības = Sets.<RindaRādītājs>setOfUniques();
-        final var apstrādatiPiedāvājumi = Sets.<RindaRādītājs>setOfUniques();
+        final var apstrādatiPrasības = Sets.<RindasRādītājs>setOfUniques();
+        final var apstrādatiPiedāvājumi = Sets.<RindasRādītājs>setOfUniques();
         rangeClosed(1, soluSkaits)
                 .forEach(i -> optimizācijas.addAll
                         (optimizacijasSoli(atrisinajums, apstrādatiPrasības, apstrādatiPiedāvājumi)));
@@ -56,8 +56,8 @@ public class LietotuPiedāvājumuSlēdzis implements Optimizācija {
 
     private List<OptimizācijasNotikums> optimizacijasSoli
             (AtrisinājumaSkats atrisinājums
-                    , Set<RindaRādītājs> apstrādatiPrasības
-                    , Set<RindaRādītājs> apstrādatiPiedāvājumi) {
+                    , Set<RindasRādītājs> apstrādatiPrasības
+                    , Set<RindasRādītājs> apstrādatiPiedāvājumi) {
         if (atrisinājums.prasība_lietots().izmērs() >= 2) {
             final int atlaseA = nejaušiba.integer(0, atrisinājums.prasība_lietots().izmērs() - 1);
             final int atlaseB = nejaušiba.integer(0, atrisinājums.prasība_lietots().izmērs() - 1);

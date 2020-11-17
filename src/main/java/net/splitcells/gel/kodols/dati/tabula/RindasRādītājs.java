@@ -8,7 +8,7 @@ import java.util.Optional;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.lang.Xml.textNode;
 
-public interface RindaRādītājs extends Domable {
+public interface RindasRādītājs extends Domable {
     Tabula konteksts();
 
     int indekss();
@@ -22,7 +22,7 @@ public interface RindaRādītājs extends Domable {
 
     @Override
     default Node toDom() {
-        final var dom = element(RindaRādītājs.class.getSimpleName());
+        final var dom = element(RindasRādītājs.class.getSimpleName());
         final var rinda = interpretē();
         if (rinda.isPresent()) {
             dom.appendChild(rinda.get().toDom());

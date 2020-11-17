@@ -4,15 +4,15 @@ import java.util.Optional;
 
 import static java.util.Objects.hash;
 
-public class RindaRādītājsI implements RindaRādītājs {
-    public static RindaRādītājs rindasRādītājs(Tabula konteksts, int indekss) {
-        return new RindaRādītājsI(konteksts, indekss);
+public class RindasRādītājsI implements RindasRādītājs {
+    public static RindasRādītājs rindasRādītājs(Tabula konteksts, int indekss) {
+        return new RindasRādītājsI(konteksts, indekss);
     }
 
     private final Tabula konteksts;
     private final int indekss;
 
-    private RindaRādītājsI(Tabula konteksts, int indekss) {
+    private RindasRādītājsI(Tabula konteksts, int indekss) {
         this.konteksts = konteksts;
         this.indekss = indekss;
     }
@@ -37,8 +37,8 @@ public class RindaRādītājsI implements RindaRādītājs {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof RindaRādītājs) {
-            final var other = (RindaRādītājs) arg;
+        if (arg instanceof RindasRādītājs) {
+            final var other = (RindasRādītājs) arg;
             return konteksts().equals(other.konteksts()) && indekss() == other.indekss();
         } else {
             return false;

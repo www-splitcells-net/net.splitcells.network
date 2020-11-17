@@ -1,11 +1,10 @@
 package net.splitcells.gel.kodols.dati.tabula;
 
 import static net.splitcells.dem.data.set.list.Lists.*;
-import static net.splitcells.gel.kodols.dati.tabula.RindaRādītājsI.rindasRādītājs;
+import static net.splitcells.gel.kodols.dati.tabula.RindasRādītājsI.rindasRādītājs;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.kodols.dati.datubāze.DatuBāze;
 import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 
 public interface Rinda extends Domable {
@@ -23,7 +22,7 @@ public interface Rinda extends Domable {
 
     int indekss();
 
-    default RindaRādītājs uzRindaRādītājs() {
+    default RindasRādītājs uzRindaRādītājs() {
         return rindasRādītājs(konteksts(), indekss());
     }
 

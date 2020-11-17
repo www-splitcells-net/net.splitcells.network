@@ -1,7 +1,7 @@
 package net.splitcells.gel.kodols.atrisinājums.optimizācija;
 
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.gel.kodols.dati.tabula.RindaRādītājs;
+import net.splitcells.gel.kodols.dati.tabula.RindasRādītājs;
 import org.w3c.dom.Node;
 
 import java.util.Objects;
@@ -13,15 +13,15 @@ import static net.splitcells.gel.kodols.Valoda.PRASĪBA;
 
 public final class OptimizācijasNotikums implements Domable {
 
-    private final RindaRādītājs prasība;
-    private final RindaRādītājs piedāvājums;
+    private final RindasRādītājs prasība;
+    private final RindasRādītājs piedāvājums;
     private final SoluTips solisTips;
 
-    public static OptimizācijasNotikums optimizacijasNotikums(SoluTips solisTips, RindaRādītājs prasība, RindaRādītājs piedāvājums) {
+    public static OptimizācijasNotikums optimizacijasNotikums(SoluTips solisTips, RindasRādītājs prasība, RindasRādītājs piedāvājums) {
         return new OptimizācijasNotikums(solisTips, prasība, piedāvājums);
     }
 
-    private OptimizācijasNotikums(SoluTips solisTips, RindaRādītājs demand, RindaRādītājs supply) {
+    private OptimizācijasNotikums(SoluTips solisTips, RindasRādītājs demand, RindasRādītājs supply) {
         this.solisTips = solisTips;
         this.prasība = demand;
         this.piedāvājums = supply;
@@ -32,11 +32,11 @@ public final class OptimizācijasNotikums implements Domable {
         return solisTips;
     }
 
-    public RindaRādītājs piedāvājums() {
+    public RindasRādītājs piedāvājums() {
         return piedāvājums;
     }
 
-    public RindaRādītājs prasība() {
+    public RindasRādītājs prasība() {
         return prasība;
     }
 
