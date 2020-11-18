@@ -1,7 +1,8 @@
 package net.splitcells.gel.kodols;
 
 public enum Valoda {
-    PIEŠĶIRT("piešķirt")
+    ARGUMENTĀCIJA("argumentācija")
+    ,PIEŠĶIRT("piešķirt")
     ,CEĻA_PIEEJAS_SIMBOLS(".")
     ,PRASĪBA("prasība")
     ,PIEDĀVĀJUMS("piedāvājums")
@@ -24,6 +25,7 @@ public enum Valoda {
     , NOTIKUMS("notikums")
     , NOVĒRTĒJUMS("novērtējums")
     , PROBLĒMA("problēma")
+    , VĀRDS("vāŗds")
     ;
     private final String apraksts;
 

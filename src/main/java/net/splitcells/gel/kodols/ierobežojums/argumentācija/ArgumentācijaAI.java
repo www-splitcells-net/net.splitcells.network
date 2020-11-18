@@ -5,10 +5,12 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.gel.kodols.Valoda.ARGUMENTĀCIJA;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Collectors;
 
+import net.splitcells.gel.kodols.Valoda;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.set.list.List;
@@ -23,9 +25,9 @@ public abstract class ArgumentācijaAI implements Argumentācija {
             } else if (apaķsArgumentācijas().isEmpty() && parametri().size() == 1) {
                 return element(parametri().iterator().next());
             } else {
-                final var dom = element("argumentācija");
+                final var dom = element(ARGUMENTĀCIJA.apraksts());
                 if (!parametri().isEmpty()) {
-                    parametri().forEach(localReason -> dom.appendChild(element("name", textNode(localReason))));
+                    dom.appendChild(element(Valoda.VĀRDS.apraksts(), textNode(parametri().stream().reduce((a, b) -> a + "," + b).get())));
                 }
                 if (!apaķsArgumentācijas().isEmpty()) {
                     apaķsArgumentācijas().forEach(apakšArgumentācija -> dom.appendChild(apakšArgumentācija.toDom()));
