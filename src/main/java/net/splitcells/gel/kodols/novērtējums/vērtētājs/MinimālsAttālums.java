@@ -297,4 +297,9 @@ public class MinimālsAttālums<T> implements Vērtētājs {
                 .sorted((a, b) -> comparator.compare(a.vērtība(RINDA).vērtība(atribūts), b.vērtība(RINDA).vērtība(atribūts)))
                 .collect(toList());
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + ", " + atribūts + ", " + minimumDistance;
+    }
 }

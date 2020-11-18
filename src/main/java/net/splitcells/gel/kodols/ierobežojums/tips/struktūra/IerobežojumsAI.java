@@ -388,19 +388,8 @@ public abstract class IerobežojumsAI implements Ierobežojums {
                                 , piešķiršana.vērtība(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                 , piešķiršana.vērtība(NOVĒRTĒJUMS)))
                 .map(ziņojums -> vietēijaArgumentācija(ziņojums))
-                .collect(toList());
-        final var vietējaArgumentācija = Lists.<String>list();
-        if (vietējaArgumentācijas.isEmpty()) {
-            return Optional.empty();
-        }
-        if (vietējaArgumentācijas.size() == 1) {
-            return Optional.of(vietējaArgumentācijas.get(0));
-        } else {
-            vietējaArgumentācijas.stream()
-                    .forEach(dabiskaArgumentācija
-                            -> vietējaArgumentācija.addAll(dabiskaArgumentācija));
-        }
-        return Optional.of(vietējaArgumentācija);
+                .findFirst();
+        return vietējaArgumentācijas;
     }
 
     @Override

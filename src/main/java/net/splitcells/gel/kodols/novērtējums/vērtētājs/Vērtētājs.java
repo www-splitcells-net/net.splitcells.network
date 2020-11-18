@@ -24,13 +24,12 @@ public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
     NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu);
 
     /**
-     * @see Ierobežojums#rēgistrē_pirms_noņemšanas(Rinda)
-     * 
      * @param rindas
      * @param noņemšana
      * @param bērni
      * @param novērtējumsPirmsNoņemšana
      * @return
+     * @see Ierobežojums#rēgistrē_pirms_noņemšanas(Rinda)
      */
     @Deprecated
     NovērtējumsNotikums vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana);
@@ -51,5 +50,13 @@ public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
             dom.appendChild(Xml.element2(ARGUMENTI, arguments().stream().map(arg -> arg.toDom())));
         }
         return dom;
+    }
+
+    default String uzVienkāršuAprakstu() {
+        return getClass().getSimpleName()
+                + arguments()
+                .stream()
+                .map(e -> e.toString())
+                .reduce((a, b) -> a + "-" + b);
     }
 }

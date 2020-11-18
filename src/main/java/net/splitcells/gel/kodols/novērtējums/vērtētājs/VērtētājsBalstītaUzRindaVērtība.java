@@ -110,4 +110,9 @@ public class VērtētājsBalstītaUzRindaVērtība implements Vērtētājs {
         dom.appendChild(Xml.element("args", arguments().get(0).toDom()));
         return dom;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + ", " + rindasBalstītsUzVertībasVērtētājs + ", " + grupetajsBalstītsUzRindasVertības;
+    }
 }

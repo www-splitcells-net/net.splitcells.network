@@ -70,4 +70,9 @@ public class Izdalīšana implements Vērtētājs {
     public Collection<List<String>> paths() {
         return konteksti.stream().map(Discoverable::path).collect(toList());
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
 }

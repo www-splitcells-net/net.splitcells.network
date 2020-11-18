@@ -133,4 +133,9 @@ public class IrIzmērs implements Vērtētājs {
     public Collection<List<String>> paths() {
         return konteksts.stream().map(Discoverable::path).collect(toList());
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + ", " + mērķuIzmers;
+    }
 }

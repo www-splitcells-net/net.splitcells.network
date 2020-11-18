@@ -82,4 +82,8 @@ public class NemainīgsVērtētājs implements Vērtētājs {
         dom.appendChild(novērtējums.toDom());
         return dom;
     }
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
 }

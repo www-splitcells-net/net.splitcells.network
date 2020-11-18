@@ -139,4 +139,9 @@ public class VisiemAtšķirība<T> implements Vērtētājs {
     public Collection<net.splitcells.dem.data.set.list.List<String>> paths() {
         return kontekts.stream().map(Discoverable::path).collect(toList());
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + ", " + atribūts.vārds();
+    }
 }
