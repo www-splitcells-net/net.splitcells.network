@@ -102,4 +102,9 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
     public Class<? extends Vērtētājs> type() {
         return PriekšVisiemAtribūtsVērtībam.class;
     }
+    
+    @Override
+    public String toString() {
+        return PriekšVisiemAtribūtsVērtībam.class.getSimpleName() + "-" + arg.vārds();
+    }
 }

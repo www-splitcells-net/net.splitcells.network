@@ -92,7 +92,7 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
     protected List<String> vietēijaArgumentācija(Ziņojums ziņojums) {
         final var vietēijaArgumentācija = Lists.<String>list();
         vietēijaArgumentācija.withAppended(getClass().getSimpleName(), vērtētājs.uzVienkāršuAprakstu());
-        ziņojums.grupa().vārds().ifPresent(vārds -> vietēijaArgumentācija.withAppended(vārds));
+        ziņojums.grupa().vārds().ifPresent(vārds -> vietēijaArgumentācija.withAppended("grupa=" + vārds));
         return vietēijaArgumentācija;
     }
 }

@@ -57,6 +57,7 @@ public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
                 + arguments()
                 .stream()
                 .map(e -> e.toString())
-                .reduce((a, b) -> a + "-" + b);
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("");
     }
 }
