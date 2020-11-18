@@ -6,7 +6,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Equality_;
 
 public interface Argumentācija extends Domable, Equality_<Argumentācija> {
-    List<Argumentācija> vietējaArgumentācijas();
+    List<String> parametri();
 
     List<Argumentācija> apaķsArgumentācijas();
 
@@ -14,7 +14,7 @@ public interface Argumentācija extends Domable, Equality_<Argumentācija> {
     Argumentācija arApaķsArgumentacija(Argumentācija argumentācija);
 
     @Returns_this
-    Argumentācija argVietējiuArgumentācija(Argumentācija argumentācija);
+    Argumentācija arParametru(String parametrs);
 
     List<Argumentācija> paplašinātUzVienkāršaArgumentācija();
 

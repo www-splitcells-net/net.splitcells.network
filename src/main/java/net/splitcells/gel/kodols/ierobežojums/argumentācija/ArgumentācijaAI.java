@@ -2,6 +2,8 @@ package net.splitcells.gel.kodols.ierobežojums.argumentācija;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,14 +18,14 @@ public abstract class ArgumentācijaAI implements Argumentācija {
     private static class ArgumentācijaI extends ArgumentācijaAI {
         @Override
         public Node toDom() {
-            if (apaķsArgumentācijas().isEmpty() && vietējaArgumentācijas().isEmpty()) {
-                return Xml.textNode("");
-            } else if (apaķsArgumentācijas().isEmpty() && vietējaArgumentācijas().size() == 1) {
-                return vietējaArgumentācijas().iterator().next().toDom();
+            if (apaķsArgumentācijas().isEmpty() && parametri().isEmpty()) {
+                return textNode("");
+            } else if (apaķsArgumentācijas().isEmpty() && parametri().size() == 1) {
+                return element(parametri().iterator().next());
             } else {
-                final var dom = Xml.element("argumentācija");
-                if (!vietējaArgumentācijas().isEmpty()) {
-                    vietējaArgumentācijas().forEach(localReason -> dom.appendChild(localReason.toDom()));
+                final var dom = element("argumentācija");
+                if (!parametri().isEmpty()) {
+                    parametri().forEach(localReason -> dom.appendChild(element("name", textNode(localReason))));
                 }
                 if (!apaķsArgumentācijas().isEmpty()) {
                     apaķsArgumentācijas().forEach(apakšArgumentācija -> dom.appendChild(apakšArgumentācija.toDom()));
@@ -39,7 +41,7 @@ public abstract class ArgumentācijaAI implements Argumentācija {
         public <A extends Argumentācija> boolean equalContents(A arg) {
             if (arg instanceof ArgumentācijaI) {
                 final var citaArgumentācija = (ArgumentācijaI) arg;
-                return vietējaArgumentācijas().equals(citaArgumentācija.vietējaArgumentācijas())
+                return parametri().equals(citaArgumentācija.parametri())
                         && apaķsArgumentācijas().equals(citaArgumentācija.apaķsArgumentācijas());
             }
             return false;
@@ -48,7 +50,7 @@ public abstract class ArgumentācijaAI implements Argumentācija {
         @Override
         public Argumentācija shallowClone() {
             final ArgumentācijaI klons = new ArgumentācijaI();
-            vietējaArgumentācijas().forEach(localReason -> klons.argVietējiuArgumentācija(localReason.shallowClone()));
+            parametri().forEach(localReason -> klons.arParametru(localReason));
             return klons;
         }
     }
@@ -71,7 +73,7 @@ public abstract class ArgumentācijaAI implements Argumentācija {
     }
 
     private final List<Argumentācija> apakšArgumentācijas = list();
-    private final List<Argumentācija> vietēijaArgumentācija = list();
+    private final List<String> parametri = list();
 
     protected ArgumentācijaAI() {
     }
@@ -87,8 +89,8 @@ public abstract class ArgumentācijaAI implements Argumentācija {
     }
 
     @Override
-    public List<Argumentācija> vietējaArgumentācijas() {
-        return vietēijaArgumentācija;
+    public List<String> parametri() {
+        return parametri;
     }
 
     @Override
@@ -98,8 +100,8 @@ public abstract class ArgumentācijaAI implements Argumentācija {
     }
 
     @Override
-    public Argumentācija argVietējiuArgumentācija(Argumentācija argumentācija) {
-        vietēijaArgumentācija.add(argumentācija);
+    public Argumentācija arParametru(String parametrs) {
+        parametri.add(parametrs);
         return this;
     }
 

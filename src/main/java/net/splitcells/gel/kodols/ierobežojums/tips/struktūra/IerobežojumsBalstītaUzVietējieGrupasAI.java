@@ -4,11 +4,13 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 
 import java.util.function.Function;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.GrupaId;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
+import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.NovērtējumsNotikums;
 
@@ -84,5 +86,13 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
     @Override
     public List<Domable> arguments() {
         return list(vērtētājs);
+    }
+
+    @Override
+    protected List<String> vietēijaArgumentācija(Ziņojums ziņojums) {
+        final var vietēijaArgumentācija = Lists.<String>list();
+        vietēijaArgumentācija.withAppended(getClass().getSimpleName(), vērtētājs.toString());
+        ziņojums.grupa().vārds().ifPresent(vārds -> vietēijaArgumentācija.withAppended(vārds));
+        return vietēijaArgumentācija;
     }
 }

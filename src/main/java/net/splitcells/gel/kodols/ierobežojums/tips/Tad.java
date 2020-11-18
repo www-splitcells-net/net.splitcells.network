@@ -1,8 +1,10 @@
 package net.splitcells.gel.kodols.ierobežojums.tips;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.kodols.novērtējums.vērtētājs.NemainīgsVērtētājs.constantRater;
-import static net.splitcells.gel.kodols.ierobežojums.argumentācija.valoda.TadArgumentācija.tadARgumentācija;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.tips.struktūra.IerobežojumsBalstītaUzVietējieGrupasAI;
 import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
@@ -29,11 +31,4 @@ public class Tad extends IerobežojumsBalstītaUzVietējieGrupasAI {
         return Tad.class;
     }
 
-    @Override
-    protected Argumentācija vietēijaArgumentācija(Ziņojums ziņojums) {
-        return tadARgumentācija(ziņojums.grupa()
-                , vērtētājs
-                , rindasApstrāde.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
-                        .uzmeklēšana(ziņojums.grupa()));
-    }
 }
