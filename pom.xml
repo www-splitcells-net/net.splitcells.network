@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.splitcells.martins.avots</groupId>
+    <groupId>net.splitcells</groupId>
     <artifactId>pom-java-defaults</artifactId>
     <version>0.1.0</version>
     <packaging>pom</packaging>
@@ -174,6 +174,7 @@
         </profile>
         <profile>
             <!-- Use Lombok only for code generation via delombok ("mvn lombok:delombok"). -->
+            <!-- Lombok's @Delegate does not seem to work well in Java 11. -->
             <!-- Following features of Lombok would be very helpful, but have severe implementation problems.
              Val is not used, because it causes a big compilation performance regression. Last time it multiplied compilation times by 100.
             @Delegate is not used, because it is experimental and may have complex bugs. -->
