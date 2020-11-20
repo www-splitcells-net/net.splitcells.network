@@ -9,6 +9,9 @@ Changes to this are not considered major changes.
 ## Version 4.0.1
 Release project in order to test release process.
 ### Major Changes
+1. Remove "user.programs.close.gracefully", because it was defined incorrectly
+   and also was not used.
+### Minor Changes
 1. Add support for manpages.
 1. Create command 'system.configure.auto' in order provide configuration
    that fit most users.
