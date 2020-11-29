@@ -1,4 +1,5 @@
 # Code Guidelines
+Prefer aborting an command on first error.
 ## Backward Compatibility
 Starting with version 4.0, major changes,
 that are not backwards compatible,
