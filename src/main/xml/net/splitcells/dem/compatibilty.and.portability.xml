@@ -8,7 +8,10 @@
         are easily replaceable. The replacement can be automatic or manual.
         <solution>Ensure that the software project is valid and only uses certain features,
             that makes it easy to migrate the project.
-            <toDo>Standardize usage of Java feature by defining a subset of valid Java grammar and checking it.</toDo>
+            <toDo>Standardize usage of Java feature by defining a subset of valid Java grammar and checking it.
+                <toDo>Use different Grammar for Dem and subsequent projects,
+                    because Dem is the base for subsequent projects, which should have higher restriction.</toDo>
+            </toDo>
             <idea>Always translate code to other language automatically and test it, in order to be sure
                 that the code is portable.</idea>
         </solution>
