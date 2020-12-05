@@ -25,7 +25,7 @@ public final class Lists {
     }
 
     @SafeVarargs
-	public static <T> List<T> concat(Collection<T>... collections) {
+    public static <T> List<T> concat(Collection<T>... collections) {
         final var rVal = Lists.<T>list();
         for (Collection<T> collection : collections) {
             rVal.addAll(collection);
@@ -44,8 +44,8 @@ public final class Lists {
     }
 
     @SafeVarargs
-	public static <T> List<T> listWithValuesOf(T... values) {
-        return  listWithValuesOf(Arrays.asList(values));
+    public static <T> List<T> listWithValuesOf(T... values) {
+        return listWithValuesOf(Arrays.asList(values));
     }
 
     @SafeVarargs
@@ -53,11 +53,6 @@ public final class Lists {
         final var list = new ListI<T>();
         list.addAll(Arrays.asList(args));
         return list;
-    }
-
-    @SafeVarargs
-    public static <T> java.util.List<T> _list(T... args) {
-        return new ArrayList<>(Arrays.asList(args));
     }
 
 }

@@ -1,18 +1,19 @@
 package net.splitcells.dem.utils.reflection;
 
+import net.splitcells.dem.data.set.list.List;
+
 import java.io.InputStream;
-import java.util.List;
 
 public interface ClassRelated {
 
-	List<Class<?>> allClasses();
+    List<Class<?>> allClasses();
 
-	List<Class<?>> allClassesOf(String root_package);
+    List<Class<?>> allClassesOf(String root_package);
 
-	Class<?> callerClass();
+    Class<?> callerClass();
 
-	Class<?> callerClass(int i);
+    Class<?> callerClass(int i);
 
-	String simplifiedName(Class<?> arg);
+    String simplifiedName(Class<?> arg);
 
 }

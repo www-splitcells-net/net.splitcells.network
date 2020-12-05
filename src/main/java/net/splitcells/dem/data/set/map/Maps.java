@@ -1,5 +1,6 @@
 package net.splitcells.dem.data.set.map;
 
+import java.util.Collection;
 import java.util.stream.Collector;
 
 import static java.util.Arrays.asList;
@@ -41,7 +42,7 @@ public class Maps {
     }
 
     @SuppressWarnings("unchecked")
-	public static <T> Map<Class<? extends T>, T> typeMapping(java.util.List<T> values) {
+	public static <T> Map<Class<? extends T>, T> typeMapping(Collection<T> values) {
         Map<Class<? extends T>, T> rVal = map();
         values.forEach(value -> {
             if (rVal.containsKey(value.getClass())) {

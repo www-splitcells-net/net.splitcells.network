@@ -1,8 +1,9 @@
 package net.splitcells.dem.utils.reflection;
 
+import net.splitcells.dem.data.set.list.List;
+
 import java.io.File;
 import java.net.URL;
-import java.util.List;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 

@@ -14,7 +14,6 @@
                         <d:toDo>Create echo paging, when Domsole outputs to file.</d:toDo>
                         <d:toDo>Fix up code guide lines.</d:toDo>
                         <d:toDo>Make unit tests.</d:toDo>
-                        <d:toDo>Deprecate usage of java.util.List.</d:toDo>
                         <d:toDo xl:href="https://www.heise.de/developer/meldung/Fuzzing-fuer-alle-Google-verwandelt-ClusterFuzz-in-ein-Open-Source-Projekt-4301744.html">
                             Use fuzzy testing.
                         </d:toDo>
