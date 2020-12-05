@@ -26,5 +26,5 @@ java_javadoc_text = &!'*/' ~'[\s\w.*]'
 grammar = Grammar(grammarDefinition)
 print(grammarDefinition)
 grammar.parse(
-Path('/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.dem/src/main/java/net/splitcells/dem/lang/perspective/Den.java').read_text()
+Path('src/main/java/net/splitcells/dem/lang/perspective/Den.java').read_text()
 )
