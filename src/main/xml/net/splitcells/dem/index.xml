@@ -11,6 +11,9 @@
             <d:scheduling>
                 <d:queues>
                     <d:priority>
+                        <d:toDo>Standardize usage of Java feature by defining a subset of valid Java grammar and
+                            checking it.
+                        </d:toDo>
                         <d:toDo>Create echo paging, when Domsole outputs to file.</d:toDo>
                         <d:toDo>Fix up code guide lines and transfer to this project.
                             <d:toDo xl:href="http://splitcells.net/net/splitcells/martins/avots/website//2018/04/29/experimental-code-guidelines.html"/>
@@ -29,6 +32,7 @@
                         <d:idea>Dem programs are constructors of linked values.</d:idea>
                         <d:toDo>Console should print message asynchronously.</d:toDo>
                         <d:toDo>Create logging context, which creates a wrapper for Domsole.</d:toDo>
+                        <d:toDo>Implement test injection and recursive test injection.</d:toDo>
                     </d:priority>
                 </d:queues>
             </d:scheduling>
@@ -83,7 +87,8 @@
         <n:val name="logging">
             <d:solution>There is no differences between logs and console output.
             </d:solution>
-            <d:toFix>End of log does not contain closing tag.</d:toFix>
+            <d:toDo>End of log does not contain closing tag.</d:toDo>
+            <d:toDo>Increase logging speed by making logging asynchronous.</d:toDo>
         </n:val>
         <n:val name="side-effects">
             <d:toDo>Create program system as effect system.
