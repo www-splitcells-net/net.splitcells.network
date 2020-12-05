@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:m="http://www.w3.org/1998/Math/MathML">
+    <meta>
+        <title>
+            <siteName/>
+            's XSL/XML Code Guidelines
+        </title>
+        <description>These are the guidelines used for XSL code on this site.
+            These represent part of my current
+            understanding
+            of XSL and may be
+            incorrect.
+        </description>
+        <publication_date year="2018" month="05" day_of_month="05"/>
+        <license>standard</license>
+        <related_to>
+            <url>
+                <site_instance_purl/>
+                /2015/03/04/about-this-site
+            </url>
+        </related_to>
+        <d:toDo>
+            <d:todo>Avoid using xml attributes and use them only if exact strings
+                are required and no tempaltes should be applied to
+                its value.
+            </d:todo>
+            <d:todo>Minimize abstract syntax tree complexity by avoiding using XML
+                attributes.
+            </d:todo>
+        </d:toDo>
+    </meta>
+    <paragraph>These are the guidelines used for XSL code on this site.
+        These represent part of my current
+        understanding of
+        XSL and may be
+        incorrect.
+    </paragraph>
+    <chapter>
+        <title>External Guidelines</title>
+        <chapter>
+            <title>XSL Guidelines</title>
+            <list>
+                <item>
+                    <link>
+                        <text>Patterns and antipatterns in XSLT micropipelining</text>
+                        <url>https://www.balisage.net/Proceedings/vol19/html/Birnbaum01/BalisageVol19-Birnbaum01.html
+                        </url>
+                    </link>
+                </item>
+            </list>
+        </chapter>
+        <chapter>
+            <title>XSD Guidelines</title>
+            <list>
+                <item>
+                    <link>
+                        <text>W3C XML Schema: DOs and DON'Ts</text>
+                        <url>https://www.kohsuke.org/xmlschema/XMLSchemaDOsAndDONTs.html
+                        </url>
+                    </link>
+                </item>
+            </list>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Design and Architecture</title>
+        <chapter>
+            <title>XML Structures</title>
+            <chapter>
+                <title>Attributes and Values</title>
+                <paragraph>Use attributes only in order state that its content should not be processed by templates.
+                    Use explicit
+                    elements in the other case.
+                    If it makes sense, attributes and values should be supported.
+                    If the distinction does not
+                    make sense, attributes should not be used or supported.
+                    An attribute and its equivalent should not both be present
+                    in the same element.
+                </paragraph>
+            </chapter>
+        </chapter>
+        <chapter>
+            <title>Template Application Time</title>
+            <paragraph>
+                Templates should be applied as late as possible. Example:
+                Inside a template an intermediate element is
+                created
+                and templates are
+                applied to it. Such intermediate elements often contain child
+                elements with additional
+                information.
+
+
+                if intermediate elements are
+                created which can be adapted
+                with elements from the inputs
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>
+                Layout Template Structure
+            </title>
+            <d:todo>Use intermediate XML document in order to support different
+                types of XML documents for the layout.
+            </d:todo>
+            <paragraph>
+                Create for each namespace a template that terminates the execution
+                with an error via
+                <quote>xsl:message terminate="true"</quote>
+                .
+                This way incorrect elements can be detected without any XSD.
+            </paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Details of XSLT</title>
+        <chapter>
+            <title>
+                <quote>value-of</quote>
+                ,
+                <quote>copy-of</quote>
+                and
+                <quote>$</quote>
+            </title>
+            <paragraph>
+                <link>
+                    <text>Value-of</text>
+                    <url>https://www.w3schools.com/xml/xsl_value_of.asp</url>
+                </link>
+                extracts the value of the node that is queried by the select
+                attribute.
+                <link>
+                    <text>All elements that are children of the selected node are
+                        thereby striped.
+                    </text>
+                    <url>http://www.adrianlynch.com/view/blog/xsl-copy-of-and-value-of
+                    </url>
+                </link>
+                <link>
+                    <text>Copy-of</text>
+                    <url>https://www.w3schools.com/xml/ref_xsl_el_copy-of.asp</url>
+                </link>
+                creates a copy of the queried node.
+                In general copy-of should be used
+                to generate XML nodes and value-of should be
+                used
+                to generate strings
+                that are not XML nodes.
+            </paragraph>
+            <paragraph>
+                In order to output objects where all processing
+                is already done, use a
+                template that matches
+                <quote>*/text()[normalize-space()]</quote>
+                .
+                This template should not be called directly. Instead it should be
+                applied implicitly via
+                <quote>apply-templates</quote>
+                .
+                This ensures ensures that results does not contain any unprocessed
+                values.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Check if Variable is set.</title>
+            <d:todo>normalize-space($variable-name) != ''</d:todo>
+        </chapter>
+        <chapter>
+            <title>
+                <quote>*</quote>
+                vs.
+                <quote>node()</quote>
+            </title>
+            <d:todo>normalize-space($variable-name) != ''</d:todo>
+        </chapter>
+        <chapter>
+            <title>Special Characters</title>
+            <paragraph>Whitespace is best rendered by the non breaking space
+                entity 160 which works for HTML output.
+            </paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>RDF/XML</title>
+        <paragraph>Document that everything is subject, object or predicated.
+            Everything else is just a library of these.
+        </paragraph>
+    </chapter>
+</article>
