@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:e="http://splitcells.net/sen.xsd" description="compatibility and portability">
+    <objective>Ensure that a software project's dependencies like language, framework and platforms
+        are easily replaceable. The replacement can be automatic or manual.
+        <solution>Ensure that the software project is valid and only uses certain features,
+            that makes it easy to migrate the project.
+            <toDo>Standardize usage of Java feature by defining a subset of valid Java grammar and checking it.</toDo>
+            <idea>Always translate code to other language automatically and test it, in order to be sure
+                that the code is portable.</idea>
+        </solution>
+    </objective>
+</project>

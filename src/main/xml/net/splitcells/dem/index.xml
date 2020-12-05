@@ -11,9 +11,6 @@
             <d:scheduling>
                 <d:queues>
                     <d:priority>
-                        <d:toDo>Standardize usage of Java feature by defining a subset of valid Java grammar and
-                            checking it.
-                        </d:toDo>
                         <d:toDo>Create echo paging, when Domsole outputs to file.</d:toDo>
                         <d:toDo>Fix up code guide lines and transfer to this project.
                             <d:toDo xl:href="http://splitcells.net/net/splitcells/martins/avots/website//2018/04/29/experimental-code-guidelines.html"/>
@@ -35,6 +32,7 @@
                         <d:toDo>Implement test injection and recursive test injection.</d:toDo>
                     </d:priority>
                 </d:queues>
+                <d:service xl:href="compatibilty.and.portability.xml"/>
             </d:scheduling>
             <d:unscheduled>
                 <d:toDo>Why are certain things done? i.e. object factory with static
