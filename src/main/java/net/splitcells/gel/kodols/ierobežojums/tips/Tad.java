@@ -3,14 +3,10 @@ package net.splitcells.gel.kodols.ierobežojums.tips;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.kodols.novērtējums.vērtētājs.NemainīgsVērtētājs.constantRater;
 
-import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.tips.struktūra.IerobežojumsBalstītaUzVietējieGrupasAI;
-import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
 import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
-import net.splitcells.gel.kodols.ierobežojums.argumentācija.Argumentācija;
 
 public class Tad extends IerobežojumsBalstītaUzVietējieGrupasAI {
 

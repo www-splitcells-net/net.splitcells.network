@@ -104,7 +104,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
         writeToFile(mērķis.resolve("ierebežojumu.novērtejums.xml"), ierobežojums().novērtējums().toDom());
         writeToFile(mērķis.resolve("ierebežojumu.stāvoklis.xml"), ierobežojums().toDom());
         writeToFile(mērķis.resolve("vēsture.fods"), vēsture().uzFods());
-        writeToFile(mērķis.resolve("stāvoklis.xml"), ierobežojums().argumentācija().toDom());
+        writeToFile(mērķis.resolve("stāvoklis.xml"), ierobežojums().dabiskaArgumentācija().toDom());
         writeToFile(mērķis.resolve("radījums.fods"), uzFods());
     }
 
@@ -180,7 +180,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
             rindasArgumentacijasVertīiba.appendChild(
                     Xml.textNode(
                             toPrettyWithoutHeaderString(
-                                    ierobežojums().argumentācija(piešķiršana, ierobežojums().injekcijasGrupa()).toDom())));
+                                    ierobežojums().dabiskaArgumentācija(piešķiršana, ierobežojums().injekcijasGrupa()).toDom())));
         }
         return tabulasRinda;
     }

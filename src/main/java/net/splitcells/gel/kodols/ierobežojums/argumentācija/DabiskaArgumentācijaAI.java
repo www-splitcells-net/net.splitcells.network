@@ -12,12 +12,11 @@ import java.util.stream.Collectors;
 
 import net.splitcells.gel.kodols.Valoda;
 import org.w3c.dom.Node;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.set.list.List;
 
-public abstract class ArgumentācijaAI implements Argumentācija {
+public abstract class DabiskaArgumentācijaAI implements DabiskaArgumentācija {
 
-    private static class ArgumentācijaI extends ArgumentācijaAI {
+    private static class DabiskaArgumentācijaI extends DabiskaArgumentācijaAI {
         @Override
         public Node toDom() {
             if (apaķsArgumentācijas().isEmpty() && parametri().isEmpty()) {
@@ -40,9 +39,9 @@ public abstract class ArgumentācijaAI implements Argumentācija {
          * KOMPROMISS
          */
         @Override
-        public <A extends Argumentācija> boolean equalContents(A arg) {
-            if (arg instanceof ArgumentācijaI) {
-                final var citaArgumentācija = (ArgumentācijaI) arg;
+        public <A extends DabiskaArgumentācija> boolean equalContents(A arg) {
+            if (arg instanceof DabiskaArgumentācijaI) {
+                final var citaArgumentācija = (DabiskaArgumentācijaI) arg;
                 return parametri().equals(citaArgumentācija.parametri())
                         && apaķsArgumentācijas().equals(citaArgumentācija.apaķsArgumentācijas());
             }
@@ -50,34 +49,34 @@ public abstract class ArgumentācijaAI implements Argumentācija {
         }
 
         @Override
-        public Argumentācija shallowClone() {
-            final ArgumentācijaI klons = new ArgumentācijaI();
+        public DabiskaArgumentācija shallowClone() {
+            final DabiskaArgumentācijaI klons = new DabiskaArgumentācijaI();
             parametri().forEach(localReason -> klons.arParametru(localReason));
             return klons;
         }
     }
 
-    public static Argumentācija argumentācija() {
-        return new ArgumentācijaI();
+    public static DabiskaArgumentācija argumentācija() {
+        return new DabiskaArgumentācijaI();
     }
 
     @Override
-    public List<Argumentācija> paplašinātUzVienkāršaArgumentācija() {
-        if (apakšArgumentācijas.isEmpty()) {
+    public List<DabiskaArgumentācija> paplašinātUzVienkāršuArgumentācija() {
+        if (apakšDabiskaArgumentācijas.isEmpty()) {
             return list(this);
         } else {
             return listWithValuesOf
                     (apaķsArgumentācijas().stream()
-                            .flatMap(apašArgumentācija -> apašArgumentācija.paplašinātUzVienkāršaArgumentācija().stream())
+                            .flatMap(apašArgumentācija -> apašArgumentācija.paplašinātUzVienkāršuArgumentācija().stream())
                             .map(vienkāršaArgumentācija -> shallowClone().arApaķsArgumentacija(vienkāršaArgumentācija))
                             .collect(Collectors.toList()));
         }
     }
 
-    private final List<Argumentācija> apakšArgumentācijas = list();
+    private final List<DabiskaArgumentācija> apakšDabiskaArgumentācijas = list();
     private final List<String> parametri = list();
 
-    protected ArgumentācijaAI() {
+    protected DabiskaArgumentācijaAI() {
     }
 
     @Override
@@ -86,8 +85,8 @@ public abstract class ArgumentācijaAI implements Argumentācija {
     }
 
     @Override
-    public List<Argumentācija> apaķsArgumentācijas() {
-        return apakšArgumentācijas;
+    public List<DabiskaArgumentācija> apaķsArgumentācijas() {
+        return apakšDabiskaArgumentācijas;
     }
 
     @Override
@@ -96,17 +95,17 @@ public abstract class ArgumentācijaAI implements Argumentācija {
     }
 
     @Override
-    public Argumentācija arApaķsArgumentacija(Argumentācija argumentācija) {
-        apakšArgumentācijas.add(argumentācija);
+    public DabiskaArgumentācija arApaķsArgumentacija(DabiskaArgumentācija dabiskaArgumentācija) {
+        apakšDabiskaArgumentācijas.add(dabiskaArgumentācija);
         return this;
     }
 
     @Override
-    public Argumentācija arParametru(String parametrs) {
+    public DabiskaArgumentācija arParametru(String parametrs) {
         parametri.add(parametrs);
         return this;
     }
 
     @Override
-    public abstract <A extends Argumentācija> boolean equalContents(A arg);
+    public abstract <A extends DabiskaArgumentācija> boolean equalContents(A arg);
 }

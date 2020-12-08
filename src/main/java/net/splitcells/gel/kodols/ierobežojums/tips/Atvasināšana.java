@@ -6,12 +6,12 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.GrupaId;
 import net.splitcells.gel.kodols.ierobežojums.Jautājums;
+import net.splitcells.gel.kodols.ierobežojums.argumentācija.DabiskaArgumentācija;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
 import net.splitcells.gel.kodols.novērtējums.struktūra.VietējieNovērtējums;
 import net.splitcells.gel.kodols.novērtējums.struktūra.RefleksijaNovērtējums;
-import net.splitcells.gel.kodols.ierobežojums.argumentācija.Argumentācija;
 import org.w3c.dom.Element;
 
 import java.util.Collection;
@@ -53,7 +53,7 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public Argumentācija argumentācija(GrupaId grupa) {
+    public DabiskaArgumentācija dabiskaArgumentācija(GrupaId grupa) {
         throw not_implemented_yet();
     }
 
@@ -63,7 +63,7 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public Argumentācija argumentācija
+    public DabiskaArgumentācija dabiskaArgumentācija
             (Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
         throw not_implemented_yet();
     }

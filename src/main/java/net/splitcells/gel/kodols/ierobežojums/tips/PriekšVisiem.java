@@ -4,9 +4,7 @@ import static net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators
 
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.tips.struktūra.IerobežojumsBalstītaUzVietējieGrupasAI;
-import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
-import net.splitcells.gel.kodols.ierobežojums.argumentācija.Argumentācija;
 
 public class PriekšVisiem extends IerobežojumsBalstītaUzVietējieGrupasAI {
 

@@ -18,6 +18,7 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.gel.kodols.dati.tabula.Tabula;
+import net.splitcells.gel.kodols.ierobežojums.argumentācija.DabiskaArgumentācija;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -33,7 +34,6 @@ import net.splitcells.gel.kodols.dati.tabula.atribūts.Atribūts;
 import net.splitcells.gel.kodols.novērtējums.struktūra.VietējieNovērtējums;
 import net.splitcells.gel.kodols.novērtējums.struktūra.RefleksijaNovērtējums;
 import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
-import net.splitcells.gel.kodols.ierobežojums.argumentācija.Argumentācija;
 
 public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemšanasKlausītājs, IerobežojumuRakstnieks, Discoverable, PubliclyTyped<Ierobežojums>, PubliclyConstructed<Domable>, Domable {
     Atribūts<Rinda> RINDA = atributs(Rinda.class, "rinda");
@@ -76,19 +76,19 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemš
 
     RefleksijaNovērtējums novērtējums(GrupaId grupaId);
 
-    default Argumentācija argumentācija() {
-        return argumentācija(injekcijasGrupa());
+    default DabiskaArgumentācija dabiskaArgumentācija() {
+        return dabiskaArgumentācija(injekcijasGrupa());
     }
 
-    Argumentācija argumentācija(GrupaId grupa);
+    DabiskaArgumentācija dabiskaArgumentācija(GrupaId grupa);
 
     Optional<Discoverable> galvenaisKonteksts();
 
-    default Argumentācija argumentācija(Rinda priekšmets, GrupaId grupa) {
-        return argumentācija(priekšmets, grupa, PiešķiršanaFiltrs::atlasītArCenu);
+    default DabiskaArgumentācija dabiskaArgumentācija(Rinda priekšmets, GrupaId grupa) {
+        return dabiskaArgumentācija(priekšmets, grupa, PiešķiršanaFiltrs::atlasītArCenu);
     }
 
-    Argumentācija argumentācija(Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
+    DabiskaArgumentācija dabiskaArgumentācija(Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
 
     default RefleksijaNovērtējums rating(Set<GrupaId> grupas) {
         return grupas.stream().

@@ -28,7 +28,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.gel.kodols.ierobežojums.argumentācija.DabiskaArgumentācija;
+import net.splitcells.gel.kodols.ierobežojums.argumentācija.DabiskaArgumentācijaAI;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaFiltrs;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
@@ -51,8 +52,6 @@ import net.splitcells.gel.kodols.dati.tabula.Tabula;
 import net.splitcells.gel.kodols.novērtējums.struktūra.VietējieNovērtējums;
 import net.splitcells.gel.kodols.novērtējums.struktūra.RefleksijaNovērtējums;
 import net.splitcells.gel.kodols.novērtējums.struktūra.Novērtējums;
-import net.splitcells.gel.kodols.ierobežojums.argumentācija.Argumentācija;
-import net.splitcells.gel.kodols.ierobežojums.argumentācija.ArgumentācijaAI;
 
 @Deprecated
 public abstract class IerobežojumsAI implements Ierobežojums {
@@ -367,9 +366,9 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         return dom;
     }
 
-    protected abstract List<String> vietēijaArgumentācija(Ziņojums ziņojums);
+    protected abstract List<String> vietēijaDabiskaArgumentācija(Ziņojums ziņojums);
 
-    protected Optional<List<String>> vietēijaArgumentācija
+    protected Optional<List<String>> vietēijaDabiskaArgumentācija
             (Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
         final var vietējaArgumentācijas
                 = rindasApstrāde
@@ -387,35 +386,35 @@ public abstract class IerobežojumsAI implements Ierobežojums {
                         (piešķiršana.vērtība(RINDA)
                                 , piešķiršana.vērtība(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                 , piešķiršana.vērtība(NOVĒRTĒJUMS)))
-                .map(ziņojums -> vietēijaArgumentācija(ziņojums))
+                .map(ziņojums -> vietēijaDabiskaArgumentācija(ziņojums))
                 .findFirst();
         return vietējaArgumentācijas;
     }
 
     @Override
-    public Argumentācija argumentācija(GrupaId grupa) {
+    public DabiskaArgumentācija dabiskaArgumentācija(GrupaId grupa) {
         final var vietējiaArgumentācijas = rindasApstrāde
                 .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                 .uzmeklēšana(grupa)
                 .gūtRindas()
                 .stream()
                 .map(piešķiršana -> piešķiršana.vērtība(RINDA))
-                .map(rinda -> argumentācija(rinda, grupa, PiešķiršanaFiltrs::atlasītArCenu))
+                .map(rinda -> dabiskaArgumentācija(rinda, grupa, PiešķiršanaFiltrs::atlasītArCenu))
                 .collect(toList());
         if (vietējiaArgumentācijas.size() == 1) {
             return vietējiaArgumentācijas.get(0);
         }
-        final var vietējiaArgumentācija = ArgumentācijaAI.argumentācija();
+        final var vietējiaArgumentācija = DabiskaArgumentācijaAI.argumentācija();
         vietējiaArgumentācijas.stream()
                 .forEach(naturalReasoning -> vietējiaArgumentācija.arApaķsArgumentacija(naturalReasoning));
         return vietējiaArgumentācija;
     }
 
     @Override
-    public Argumentācija argumentācija(Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
-        final var vietējiaArgumēntacija = vietēijaArgumentācija(rinda, grupa, rindasAtlasītājs);
+    public DabiskaArgumentācija dabiskaArgumentācija(Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
+        final var vietējiaArgumēntacija = vietēijaDabiskaArgumentācija(rinda, grupa, rindasAtlasītājs);
         final var bērnuArgumēntacija = bērnuArgumēntacija(rinda, grupa, rindasAtlasītājs);
-        final var argumentācija = ArgumentācijaAI.argumentācija();
+        final var argumentācija = DabiskaArgumentācijaAI.argumentācija();
         if (!vietējiaArgumēntacija.isEmpty()) {
             argumentācija.parametri().addAll(vietējiaArgumēntacija.get());
         }
@@ -429,7 +428,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         return argumentācija;
     }
 
-    protected Optional<Argumentācija> bērnuArgumēntacija
+    protected Optional<DabiskaArgumentācija> bērnuArgumēntacija
             (Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
         final var argumēntacijas
                 = rindasApstrāde
@@ -451,7 +450,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
                                         (piešķiršana.vērtība(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                                 , propagatedTo)))
                 .flatMap(e -> e)
-                .map(routingResult -> routingResult.izplatītājs().argumentācija(rinda, routingResult.grupa()))
+                .map(routingResult -> routingResult.izplatītājs().dabiskaArgumentācija(rinda, routingResult.grupa()))
                 .collect(toSet());
         if (argumēntacijas.isEmpty()) {
             return Optional.empty();
@@ -459,7 +458,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         if (argumēntacijas.size() == 1) {
             return Optional.of(argumēntacijas.iterator().next());
         }
-        final var argumēntacija = ArgumentācijaAI.argumentācija();
+        final var argumēntacija = DabiskaArgumentācijaAI.argumentācija();
         argumēntacijas.forEach(e -> argumēntacija.arApaķsArgumentacija(e));
         return Optional.of(argumēntacija);
     }
