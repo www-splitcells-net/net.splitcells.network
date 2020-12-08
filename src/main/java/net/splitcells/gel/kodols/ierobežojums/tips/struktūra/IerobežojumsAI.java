@@ -420,7 +420,11 @@ public abstract class IerobežojumsAI implements Ierobežojums {
             argumentācija.parametri().addAll(vietējiaArgumēntacija.get());
         }
         if (!bērnuArgumēntacija.isEmpty()) {
-            argumentācija.arApaķsArgumentacija(bērnuArgumēntacija.get());
+            if (bērnuArgumēntacija.get().parametri().isEmpty()) {
+                argumentācija.apaķsArgumentācijas().withAppended(bērnuArgumēntacija.get().apaķsArgumentācijas());
+            } else {
+                argumentācija.arApaķsArgumentacija(bērnuArgumēntacija.get());
+            }
         }
         return argumentācija;
     }
