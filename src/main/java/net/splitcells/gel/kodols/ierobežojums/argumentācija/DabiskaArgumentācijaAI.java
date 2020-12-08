@@ -14,6 +14,7 @@ import net.splitcells.gel.kodols.Valoda;
 import org.w3c.dom.Node;
 import net.splitcells.dem.data.set.list.List;
 
+@Deprecated
 public abstract class DabiskaArgumentācijaAI implements DabiskaArgumentācija {
 
     private static class DabiskaArgumentācijaI extends DabiskaArgumentācijaAI {

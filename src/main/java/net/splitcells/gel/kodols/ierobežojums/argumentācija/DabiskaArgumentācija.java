@@ -5,6 +5,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Equality_;
 
+@Deprecated
 public interface DabiskaArgumentācija extends Domable, Equality_<DabiskaArgumentācija> {
     List<String> parametri();
 
