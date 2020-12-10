@@ -2,11 +2,11 @@ package net.splitcells.gel.kodols.ierobežojums.tips;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.GrupaId;
 import net.splitcells.gel.kodols.ierobežojums.Jautājums;
-import net.splitcells.gel.kodols.ierobežojums.argumentācija.DabiskaArgumentācija;
 import net.splitcells.gel.kodols.ierobežojums.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.kodols.dati.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.kodols.dati.tabula.Rinda;
@@ -53,7 +53,7 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public DabiskaArgumentācija dabiskaArgumentācija(GrupaId grupa) {
+    public Perspective dabiskaArgumentācija(GrupaId grupa) {
         throw not_implemented_yet();
     }
 
@@ -63,7 +63,7 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public DabiskaArgumentācija dabiskaArgumentācija
+    public Perspective dabiskaArgumentācija
             (Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
         throw not_implemented_yet();
     }

@@ -17,8 +17,8 @@ import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.kodols.dati.tabula.Tabula;
-import net.splitcells.gel.kodols.ierobežojums.argumentācija.DabiskaArgumentācija;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -76,19 +76,19 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemš
 
     RefleksijaNovērtējums novērtējums(GrupaId grupaId);
 
-    default DabiskaArgumentācija dabiskaArgumentācija() {
+    default Perspective dabiskaArgumentācija() {
         return dabiskaArgumentācija(injekcijasGrupa());
     }
 
-    DabiskaArgumentācija dabiskaArgumentācija(GrupaId grupa);
+    Perspective dabiskaArgumentācija(GrupaId grupa);
 
     Optional<Discoverable> galvenaisKonteksts();
 
-    default DabiskaArgumentācija dabiskaArgumentācija(Rinda priekšmets, GrupaId grupa) {
+    default Perspective dabiskaArgumentācija(Rinda priekšmets, GrupaId grupa) {
         return dabiskaArgumentācija(priekšmets, grupa, PiešķiršanaFiltrs::atlasītArCenu);
     }
 
-    DabiskaArgumentācija dabiskaArgumentācija(Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
+    Perspective dabiskaArgumentācija(Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
 
     default RefleksijaNovērtējums rating(Set<GrupaId> grupas) {
         return grupas.stream().
