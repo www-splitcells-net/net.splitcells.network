@@ -408,7 +408,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         if (vietējiaArgumentācijas.size() == 1) {
             return vietējiaArgumentācijas.get(0);
         }
-        final var vietējiaArgumentācija = perspective(ARGUMENTĀCIJA.apraksts());
+        final var vietējiaArgumentācija = perspective(ARGUMENTĀCIJA.apraksts(), NameSpaces.GEL);
         vietējiaArgumentācijas.stream()
                 .forEach(naturalReasoning -> vietējiaArgumentācija.withChild(naturalReasoning));
         return vietējiaArgumentācija;
