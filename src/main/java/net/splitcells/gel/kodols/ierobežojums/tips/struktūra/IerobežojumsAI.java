@@ -426,7 +426,9 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         }
         if (bērnuArgumēntacija.isPresent()) {
             if (bērnuArgumēntacija.get().name().isEmpty()) {
-                bērnuArgumēntacija.get().children().forEach(argumentācija::withChild);
+                bērnuArgumēntacija.get().children().stream()
+                        .filter(e -> !e.children().isEmpty())
+                        .forEach(argumentācija::withChild);
             } else {
                 argumentācija.withChild(bērnuArgumēntacija.get());
             }

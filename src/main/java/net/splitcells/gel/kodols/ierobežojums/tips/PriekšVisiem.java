@@ -2,7 +2,10 @@ package net.splitcells.gel.kodols.ierobežojums.tips;
 
 import static net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.VērtētājsBalstītsUzGrupēšana.raterBasedGrouping;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
+import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
 import net.splitcells.gel.kodols.ierobežojums.tips.struktūra.IerobežojumsBalstītaUzVietējieGrupasAI;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
 
@@ -29,4 +32,11 @@ public class PriekšVisiem extends IerobežojumsBalstītaUzVietējieGrupasAI {
         return PriekšVisiem.class;
     }
 
+    /* TODO @Override
+    protected List<String> vietēijaDabiskaArgumentācija(Ziņojums ziņojums) {
+        final var vietēijaArgumentācija = Lists.<String>list();
+        vietēijaArgumentācija.withAppended(getClass().getSimpleName(), vērtētājs.uzVienkāršuAprakstu());
+        ziņojums.grupa().vārds().ifPresent(vārds -> vietēijaArgumentācija.withAppended(vārds));
+        return vietēijaArgumentācija;
+    }*/
 }

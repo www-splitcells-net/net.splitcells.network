@@ -88,11 +88,4 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
         return list(vērtētājs);
     }
 
-    @Override
-    protected List<String> vietēijaDabiskaArgumentācija(Ziņojums ziņojums) {
-        final var vietēijaArgumentācija = Lists.<String>list();
-        vietēijaArgumentācija.withAppended(getClass().getSimpleName(), vērtētājs.uzVienkāršuAprakstu());
-        ziņojums.grupa().vārds().ifPresent(vārds -> vietēijaArgumentācija.withAppended(vārds));
-        return vietēijaArgumentācija;
-    }
 }
