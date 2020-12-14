@@ -10,10 +10,20 @@
             that makes it easy to migrate the project.
             <toDo>Standardize usage of Java feature by defining a subset of valid Java grammar and checking it.
                 <toDo>Use different Grammar for Dem and subsequent projects,
-                    because Dem is the base for subsequent projects, which should have higher restriction.</toDo>
+                    because Dem is the base for subsequent projects, which should have higher restriction.
+                    <toDo>Only some parts of Dem should use a different/unrestricted part.
+                        This part should only be the Java-specific code.
+                    </toDo>
+                </toDo>
+            </toDo>
+            <toDo>Ensure that the code is easily translatable to other languages with minimal effort and manual work.
+                <idea>Support different paradigmas.
+                    <toDo>Object-Orientation mainly provides polymorphic tree transformations.</toDo>
+                </idea>
             </toDo>
             <idea>Always translate code to other language automatically and test it, in order to be sure
-                that the code is portable.</idea>
+                that the code is portable.
+            </idea>
         </solution>
     </objective>
 </project>

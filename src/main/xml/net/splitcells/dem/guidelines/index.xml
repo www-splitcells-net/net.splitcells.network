@@ -155,6 +155,7 @@
                 <d:todo>Make correct by making more simple things the correct ones.
                 </d:todo>
             </d:todo>
+            <d:toDo>Avoid software rewrites and prefer migration based development.</d:toDo>
         </d:toDo>
     </meta>
     <chapter>
