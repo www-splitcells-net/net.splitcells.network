@@ -32,11 +32,8 @@ public class PriekšVisiem extends IerobežojumsBalstītaUzVietējieGrupasAI {
         return PriekšVisiem.class;
     }
 
-    /* TODO @Override
+    @Override
     protected List<String> vietēijaDabiskaArgumentācija(Ziņojums ziņojums) {
-        final var vietēijaArgumentācija = Lists.<String>list();
-        vietēijaArgumentācija.withAppended(getClass().getSimpleName(), vērtētājs.uzVienkāršuAprakstu());
-        ziņojums.grupa().vārds().ifPresent(vārds -> vietēijaArgumentācija.withAppended(vārds));
-        return vietēijaArgumentācija;
-    }*/
+        return list("Priekš visiem " + vērtētājs.uzVienkāršuAprakstu(ziņojums.rinda(), ziņojums.grupa()));
+    }
 }

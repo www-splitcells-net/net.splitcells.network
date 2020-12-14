@@ -52,12 +52,5 @@ public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
         return dom;
     }
 
-    default String uzVienkāršuAprakstu() {
-        return getClass().getSimpleName()
-                + arguments()
-                .stream()
-                .map(e -> e.toString())
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("");
-    }
+    default String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa);
 }

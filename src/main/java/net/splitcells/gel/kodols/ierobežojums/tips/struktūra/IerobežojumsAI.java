@@ -389,7 +389,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
                                         , novērtējums(piešķiršana.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID), rinda))))
                 .map(piešķiršana -> report
                         (piešķiršana.vērtība(RINDA)
-                                , piešķiršana.vērtība(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                                , piešķiršana.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 , piešķiršana.vērtība(NOVĒRTĒJUMS)))
                 .map(ziņojums -> vietēijaDabiskaArgumentācija(ziņojums))
                 .findFirst();
