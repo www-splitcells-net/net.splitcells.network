@@ -11,6 +11,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Xml.textNode;
+import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
@@ -408,7 +409,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         if (vietējiaArgumentācijas.size() == 1) {
             return vietējiaArgumentācijas.get(0);
         }
-        final var vietējiaArgumentācija = perspective(ARGUMENTĀCIJA.apraksts(), NameSpaces.GEL);
+        final var vietējiaArgumentācija = perspective(ARGUMENTĀCIJA.apraksts(), GEL);
         vietējiaArgumentācijas.stream()
                 .forEach(naturalReasoning -> vietējiaArgumentācija.withChild(naturalReasoning));
         return vietējiaArgumentācija;
@@ -418,7 +419,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     public Perspective dabiskaArgumentācija(Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
         final var vietējiaArgumēntacija = vietēijaDabiskaArgumentācija(rinda, grupa, rindasAtlasītājs);
         final var bērnuArgumēntacija = bērnuArgumēntacija(rinda, grupa, rindasAtlasītājs);
-        final var argumentācija = perspective(ARGUMENTĀCIJA.apraksts(), NameSpaces.GEL);
+        final var argumentācija = perspective(ARGUMENTĀCIJA.apraksts(), GEL);
         if (vietējiaArgumēntacija.isPresent()) {
             vietējiaArgumēntacija.get().stream()
                     .map(e -> perspective(e, NameSpaces.STRING))
@@ -466,7 +467,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         if (argumēntacijas.size() == 1) {
             return Optional.of(argumēntacijas.iterator().next());
         }
-        final var argumēntacija = perspective(ARGUMENTĀCIJA.apraksts());
+        final var argumēntacija = perspective(ARGUMENTĀCIJA.apraksts(), GEL);
         argumēntacijas.forEach(argumēntacija::withChild);
         return Optional.of(argumēntacija);
     }
