@@ -82,6 +82,12 @@ public class NemainīgsVērtētājs implements Vērtētājs {
         dom.appendChild(novērtējums.toDom());
         return dom;
     }
+
+    @Override
+    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        return "";
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName();

@@ -1,5 +1,6 @@
 package net.splitcells.gel.kodols.ierobežojums.tips;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.VērtētājsBalstītsUzGrupēšana.raterBasedGrouping;
 
 import net.splitcells.dem.data.set.list.List;
