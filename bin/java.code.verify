@@ -12,7 +12,7 @@ java_class = "public " "final "? "class " java_name java_class_implementation? j
 java_class_body = whitespace '{' whitespace java_class_member* '}'
 java_class_member = java_class_function
 java_class_function = "public static "  whitespace java_name whitespace java_name "(" java_class_function_arguments ")" java_class_function_body
-java_class_function_body = "{" java_statement* "}"
+java_class_function_body = whitespace "{" whitespace java_statement* "}" whitespace
 java_statement = whitespace java_statement_variable ";"whitespace
 java_statement_variable = "final"? whitespace java_name whitespace "=" whitespace
 java_class_function_arguments = java_name "..."? whitespace java_name whitespace java_class_function_arguments_additional*
