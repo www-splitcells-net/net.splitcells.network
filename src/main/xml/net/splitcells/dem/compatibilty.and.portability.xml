@@ -7,7 +7,7 @@
     <optimization>
         <priority>
             <queue>
-                <toDo>Define a minimal Java grammar via "java.code.verify".</toDo>
+                <toDo>Define a minimal Java EBNF grammar via "java.code.verify" and antlr.</toDo>
                 <toDo>Create a translation tool to a target language.
                     Consider it a success, when the result compiles and represents the structure of the source code.
                     The concrete functionality in the resulting program is not of concern.
