@@ -4,6 +4,20 @@
          xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
          xmlns:e="http://splitcells.net/sen.xsd" description="compatibility and portability">
+    <optimization>
+        <priority>
+            <queue>
+                <toDo>Define a minimal Java grammar via "java.code.verify".</toDo>
+                <toDo>Create a translation tool to a target language.
+                    Consider it a success, when the result compiles and represents the structure of the source code.
+                    The concrete functionality in the resulting program is not of concern.
+                </toDo>
+                <toDo>Create a way to automatically generate the skeleton of environment integration code.</toDo>
+                <toDo>Translate Dem to a Lisp langauge.</toDo>
+                <toDo>Translate an actual project to a Lisp langauge.</toDo>
+            </queue>
+        </priority>
+    </optimization>
     <objective>Ensure that a software project's dependencies like language, framework and platforms
         are easily replaceable. The replacement can be automatic or manual.
         <solution>Ensure that the software project is valid and only uses certain features,
@@ -19,11 +33,17 @@
             <toDo>Ensure that the code is easily translatable to other languages with minimal effort and manual work.
                 <idea>Support different paradigmas.
                     <toDo>Object-Orientation mainly provides polymorphic tree transformations.</toDo>
+                    <todo>Support a very simple and basic version of functional programming
+                        with an simple statically typed object system.
+                        The object system, which is kind of an OOP-System only provides state interfaces.
+                        The functions define the state transitions of the objects.
+                    </todo>
                 </idea>
+                <toDo>Always translate code to other language automatically and test it, in order to be sure
+                    that the code is portable. A good target would be a minimal language.
+                    It may be easier to start with a dynamically typed language.
+                </toDo>
             </toDo>
-            <idea>Always translate code to other language automatically and test it, in order to be sure
-                that the code is portable.
-            </idea>
         </solution>
     </objective>
 </project>
