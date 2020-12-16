@@ -16,6 +16,9 @@
                 <toDo>Translate Dem to a Lisp langauge.</toDo>
                 <toDo>Translate an actual project to a Lisp langauge.</toDo>
             </queue>
+            <unscheduled>
+                <toDo>Learn OCaml.</toDo>
+            </unscheduled>
         </priority>
     </optimization>
     <objective>Ensure that a software project's dependencies like language, framework and platforms

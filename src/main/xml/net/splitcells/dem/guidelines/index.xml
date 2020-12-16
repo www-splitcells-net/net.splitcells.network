@@ -156,6 +156,7 @@
                 </d:todo>
             </d:todo>
             <d:toDo>Avoid software rewrites and prefer migration based development.</d:toDo>
+            <d:toDo>Projects are likely to grow and get out of scope.</d:toDo>
         </d:toDo>
     </meta>
     <chapter>
