@@ -81,12 +81,20 @@ public class GrupesReizinātājs implements Vērtētājs {
 
     @Override
     public NovērtējumsNotikums vērtē_pirms_noņemšana
-    (Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+            (Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
     @Override
     public Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
         return Xml.textNode(getClass().getSimpleName());
+    }
+
+    @Override
+    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        return grupetaji.stream()
+                .map(grupetajis -> grupetajis.toString())
+                .reduce((a, b) -> a + " " + b)
+                .orElse("");
     }
 }

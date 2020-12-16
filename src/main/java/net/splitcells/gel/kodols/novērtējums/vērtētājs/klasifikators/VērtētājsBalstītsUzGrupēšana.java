@@ -27,12 +27,11 @@ public class VērtētājsBalstītsUzGrupēšana implements Vērtētājs {
     }
 
     private final Vērtētājs grupetājs;
+    private final List<Discoverable> kontekts = list();
 
     protected VērtētājsBalstītsUzGrupēšana(Vērtētājs grupetājs) {
         this.grupetājs = grupetājs;
     }
-
-    private final List<Discoverable> kontekts = list();
 
     @Override
     public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
@@ -60,6 +59,11 @@ public class VērtētājsBalstītsUzGrupēšana implements Vērtētājs {
         final var reasoning = Xml.element("group-by");
         reasoning.appendChild(grupetājs.argumentacija(grupa, piešķiršanas));
         return reasoning;
+    }
+
+    @Override
+    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        return grupetājs.uzVienkāršuAprakstu(rinda, grupa);
     }
 
     @Override

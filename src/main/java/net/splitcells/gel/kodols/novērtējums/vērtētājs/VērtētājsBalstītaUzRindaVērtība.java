@@ -37,6 +37,11 @@ public class VērtētājsBalstītaUzRindaVērtība implements Vērtētājs {
                         (grupetajs.apply(arg.vērtība(RINDA))
                                 , classification -> grupa(apraksts + ": " + classification));
             }
+
+            @Override
+            public String toString() {
+                return apraksts;
+            }
         });
     }
 
@@ -109,6 +114,11 @@ public class VērtētājsBalstītaUzRindaVērtība implements Vērtētājs {
         final org.w3c.dom.Element dom = Xml.element(getClass().getSimpleName());
         dom.appendChild(Xml.element("args", arguments().get(0).toDom()));
         return dom;
+    }
+
+    @Override
+    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        return grupetajsBalstītsUzRindasVertības.toString();
     }
 
     @Override
