@@ -53,6 +53,6 @@ public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
     }
 
     default String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
-        throw not_implemented_yet();
+        throw not_implemented_yet(getClass().getName());
     }
 }
