@@ -79,6 +79,11 @@ public class IrIzmērs implements Vērtētājs {
     }
 
     @Override
+    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        return "izmērs ir " + mērķuIzmers;
+    }
+
+    @Override
     public NovērtējumsNotikums vērtē_pirms_noņemšana
             (Tabula rindas
                     , Rinda noņemšana
