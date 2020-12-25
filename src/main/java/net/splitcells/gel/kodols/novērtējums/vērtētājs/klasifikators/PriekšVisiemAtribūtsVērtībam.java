@@ -33,23 +33,23 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
         return new PriekšVisiemAtribūtsVērtībam(arg);
     }
 
-    private final Atribūts<?> arg;
+    private final Atribūts<?> atribūts;
 
-    protected PriekšVisiemAtribūtsVērtībam(final Atribūts<?> arg) {
-        this.arg = arg;
+    protected PriekšVisiemAtribūtsVērtībam(final Atribūts<?> atribūts) {
+        this.atribūts = atribūts;
     }
 
     protected final Map<GrupaId, Map<Object, GrupaId>> grupa = map();
     private final List<Discoverable> konteksti = list();
 
     public Atribūts<?> atribūti() {
-        return arg;
+        return atribūts;
     }
 
     @Override
     public NovērtējumsNotikums vērtē_pēc_papildinājumu
             (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
-        final var grupēšanasVertība = papildinājums.vērtība(RINDA).vērtība(arg);
+        final var grupēšanasVertība = papildinājums.vērtība(RINDA).vērtība(atribūts);
         final var ienākošasGrupasId = papildinājums.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         if (!grupa.containsKey(ienākošasGrupasId)) {
             grupa.put(ienākošasGrupasId, map());
@@ -75,7 +75,7 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
 
     @Override
     public List<Domable> arguments() {
-        return list(arg);
+        return list(atribūts);
     }
 
     @Override
@@ -84,8 +84,13 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
         argumentācia.appendChild(
                 Xml.element("vārds"
                         , Xml.textNode(getClass().getSimpleName())));
-        argumentācia.appendChild(arg.toDom());
+        argumentācia.appendChild(atribūts.toDom());
         return argumentācia;
+    }
+
+    @Override
+    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        return "priekš visiem " + atribūts;
     }
 
     @Override
@@ -105,6 +110,6 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
     
     @Override
     public String toString() {
-        return PriekšVisiemAtribūtsVērtībam.class.getSimpleName() + "-" + arg.vārds();
+        return PriekšVisiemAtribūtsVērtībam.class.getSimpleName() + "-" + atribūts.vārds();
     }
 }
