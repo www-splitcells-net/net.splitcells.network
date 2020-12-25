@@ -302,4 +302,9 @@ public class MinimālsAttālums<T> implements Vērtētājs {
     public String toString() {
         return getClass().getSimpleName() + ", " + atribūts + ", " + minimumDistance;
     }
+
+    @Override
+    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        return "vismaz " + minimumDistance + " " + atribūts.vārds() + " attālums";
+    }
 }
