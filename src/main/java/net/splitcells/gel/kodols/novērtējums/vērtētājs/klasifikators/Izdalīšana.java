@@ -57,6 +57,11 @@ public class Izdalīšana implements Vērtētājs {
     }
 
     @Override
+    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        return "";
+    }
+
+    @Override
     public List<Domable> arguments() {
         return list();
     }
