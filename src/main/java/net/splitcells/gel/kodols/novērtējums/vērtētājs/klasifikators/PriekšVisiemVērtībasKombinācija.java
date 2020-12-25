@@ -36,17 +36,17 @@ public class PriekšVisiemVērtībasKombinācija implements Vērtētājs {
      * ienākošieGrupasId -> vertības no atribūts -> radītsGrupasId
      */
     private final Map<GrupaId, Map<List<Object>, GrupaId>> grupas = map();
-    private final List<Atribūts<?>> atribūts = list();
+    private final List<Atribūts<?>> atribūti = list();
     private final List<Discoverable> kontekts = list();
 
     private PriekšVisiemVērtībasKombinācija(final Atribūts<?>... args) {
         for (final var atribūti : args) {
-            atribūts.add(atribūti);
+            this.atribūti.add(atribūti);
         }
     }
 
     public List<Atribūts<?>> attributes() {
-        return Lists.listWithValuesOf(atribūts);
+        return Lists.listWithValuesOf(atribūti);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class PriekšVisiemVērtībasKombinācija implements Vērtētājs {
             (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final List<Object> grupasVertības = list();
         final var rindasVērtība = papildinājums.vērtība(RINDA);
-        atribūts.forEach(e -> grupasVertības.add(rindasVērtība.vērtība(e)));
+        atribūti.forEach(e -> grupasVertības.add(rindasVērtība.vērtība(e)));
         final var ienākošasGrupasId = papildinājums.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         if (!grupas.containsKey(ienākošasGrupasId)) {
             grupas.put(ienākošasGrupasId, map());
@@ -89,7 +89,7 @@ public class PriekšVisiemVērtībasKombinācija implements Vērtētājs {
 
     @Override
     public List<Domable> arguments() {
-        return listWithValuesOf(atribūts.mapped(a -> (Domable) a));
+        return listWithValuesOf(atribūti.mapped(a -> (Domable) a));
     }
 
     @Override
@@ -108,8 +108,18 @@ public class PriekšVisiemVērtībasKombinācija implements Vērtētājs {
         {
             final var attributeDescription = Xml.element("atribūts");
             reasoning.appendChild(attributeDescription);
-            atribūts.forEach(att -> attributeDescription.appendChild(att.toDom()));
+            atribūti.forEach(att -> attributeDescription.appendChild(att.toDom()));
         }
         return reasoning;
+    }
+
+    @Override
+    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        return "priekš visiem kombinācijas no "
+                + atribūti
+                .stream()
+                .map(a -> a.vārds())
+                .reduce((a, b) -> a + " " + b)
+                .orElse("");
     }
 }
