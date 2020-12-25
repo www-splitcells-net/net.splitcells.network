@@ -9,6 +9,7 @@ import net.splitcells.gel.kodols.ierobežojums.Ierobežojums;
 import net.splitcells.gel.kodols.ierobežojums.Ziņojums;
 import net.splitcells.gel.kodols.ierobežojums.tips.struktūra.IerobežojumsBalstītaUzVietējieGrupasAI;
 import net.splitcells.gel.kodols.novērtējums.vērtētājs.Vērtētājs;
+import net.splitcells.gel.kodols.novērtējums.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam;
 
 public class PriekšVisiem extends IerobežojumsBalstītaUzVietējieGrupasAI {
 
@@ -35,6 +36,10 @@ public class PriekšVisiem extends IerobežojumsBalstītaUzVietējieGrupasAI {
 
     @Override
     protected List<String> vietēijaDabiskaArgumentācija(Ziņojums ziņojums) {
-        return list("Priekš visiem " + vērtētājs.uzVienkāršuAprakstu(ziņojums.rinda(), ziņojums.grupa()));
+        if (vērtētājs.type().equals(PriekšVisiemAtribūtsVērtībam.class)) {
+            return list(vērtētājs.uzVienkāršuAprakstu(ziņojums.rinda(), ziņojums.grupa()));
+        } else {
+            return list("Priekš visiem " + vērtētājs.uzVienkāršuAprakstu(ziņojums.rinda(), ziņojums.grupa()));
+        }
     }
 }
