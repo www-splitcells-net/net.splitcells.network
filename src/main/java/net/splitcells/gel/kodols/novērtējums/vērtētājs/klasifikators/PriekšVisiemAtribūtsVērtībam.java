@@ -90,7 +90,7 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
 
     @Override
     public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
-        return "priekš visiem " + atribūts;
+        return "priekš visiem " + atribūts.vārds();
     }
 
     @Override
