@@ -52,5 +52,7 @@ public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
         return dom;
     }
 
-    String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa);
+    default String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+        throw not_implemented_yet();
+    }
 }
