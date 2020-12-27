@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet attribute="text/xsl" href="xofi.html.xslt"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns:m="http://www.w3.org/1998/Math/MathML"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd"
+         xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Assignment Problem</title>
+        <description></description>
+        <descriptive_imagery>
+            <image license="standard">white.project.logo.generic.allocator.jpg</image>
+        </descriptive_imagery>
+        <related_to>
+            <url>
+                <site_instance_purl/>
+                /2016/10/11/projects
+            </url>
+            <url>
+                <site_instance_purl/>
+                /2015/03/04/about-this-site
+            </url>
+            <url>
+                <site_instance_purl/>
+                /2016/10/12/project-generic-allocator
+            </url>
+        </related_to>
+        <arbitrary_publication_date/>
+        <license>standard</license>
+        <r:RDF>
+            <r:Description
+                    r:about="https://www.semanticscholar.org/paper/Konfigurierbare-Probleml%C3%B6sungsmethoden-am-Beispiel-Poeck/a4bde1fc431f30aaf5c63bd643c58ba10606afdd">
+                <dc:title>Konfigurierbare Problemlösungsmethoden am Beispiel der Problemklassen - Zuordnung und
+                    Diagnostik
+                </dc:title>
+                <dc:creator>Karsten Poeck</dc:creator>
+                <dc:date>1995</dc:date>
+                <dc:description>DISKI 86, 12-14.</dc:description>
+            </r:Description>
+        </r:RDF>
+    </meta>
+    <paragraph>
+        An assignment problem requires that demands are assigned to supplies.
+        For a given assignment set <quote>X</quote> the assignment problem return <quote>1</quote>, if the assignment
+        set
+        is a acceptable solution, and <quote>0</quote> otherwise.
+    </paragraph>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <semantics>
+            <mrow>
+                <mi mathvariant="italic">acceptable</mi>
+                <mrow>
+                    <mo fence="true" stretchy="false">(</mo>
+                    <mrow>
+                        <mi>X</mi>
+                    </mrow>
+                    <mo fence="true" stretchy="false">)</mo>
+                </mrow>
+                <mo stretchy="false">→</mo>
+                <mrow>
+                    <mo fence="true" stretchy="false">{</mo>
+                    <mrow>
+                        <mrow>
+                            <mn>0</mn>
+                            <mi>,</mi>
+                            <mn>1</mn>
+                        </mrow>
+                    </mrow>
+                    <mo fence="true" stretchy="false">}</mo>
+                </mrow>
+            </mrow>
+            <annotation encoding="StarMath 5.0">acceptable( X ) -&gt; lbrace 0, 1 rbrace</annotation>
+        </semantics>
+    </math>
+    <chapter>
+        <title>One Dimensional Assignment Problem</title>
+        <d:toDo>Create visualization.</d:toDo>
+        <paragraph>
+            As shown in the imagery a one dimensional assignment problem
+            demands <quote>D</quote> that each element of demands is assigned to a
+            element of supplies <quote>S</quote>.
+            Every possible assignment of a demand <quote>d</quote> to a supply
+            <quote>s</quote>
+            is represented by the variable
+            <quote>
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+                    <semantics>
+                        <msub>
+                            <mi>x</mi>
+                            <mi mathvariant="italic">na</mi>
+                        </msub>
+                        <annotation encoding="StarMath 5.0">x_na</annotation>
+                    </semantics>
+                </math>
+            </quote>
+            .
+            An assignment of all assignment variables
+            <quote>
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+                    <semantics>
+                        <mrow>
+                            <msub>
+                                <mi>x</mi>
+                                <mi mathvariant="italic">ds</mi>
+                            </msub>
+                            <mo stretchy="false">∈</mo>
+                            <mi>X</mi>
+                        </mrow>
+                        <annotation encoding="StarMath 5.0">x_ds in X</annotation>
+                    </semantics>
+                </math>
+            </quote>
+            is a solution to the assignment problem <quote>X</quote>.
+            <related>
+                <id xl:href="https://www.semanticscholar.org/paper/Konfigurierbare-Probleml%C3%B6sungsmethoden-am-Beispiel-Poeck/a4bde1fc431f30aaf5c63bd643c58ba10606afdd"/>
+            </related>
+        </paragraph>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <semantics>
+                <mrow>
+                    <mrow>
+                        <msub>
+                            <mi>x</mi>
+                            <mi mathvariant="italic">ds</mi>
+                        </msub>
+                        <mo stretchy="false">∈</mo>
+                        <mi>X</mi>
+                    </mrow>
+                    <mi mathvariant="normal">:</mi>
+                    <mrow>
+                        <msub>
+                            <mi>x</mi>
+                            <mi mathvariant="italic">ds</mi>
+                        </msub>
+                        <mo stretchy="false">=</mo>
+                        <mrow>
+                            <mo fence="true" stretchy="true">{</mo>
+                            <mrow>
+                                <mtable>
+                                    <mtr>
+                                        <mtd>
+                                            <mrow>
+                                                <mn>1</mn>
+                                                <mtext>, if</mtext>
+                                                <mi>d</mi>
+                                                <mtext>is assigned to</mtext>
+                                                <mi>s</mi>
+                                            </mrow>
+                                        </mtd>
+                                    </mtr>
+                                    <mtr>
+                                        <mtd>
+                                            <mrow>
+                                                <mn>0</mn>
+                                                <mtext>, otherwise</mtext>
+                                            </mrow>
+                                        </mtd>
+                                    </mtr>
+                                </mtable>
+                            </mrow>
+                        </mrow>
+                    </mrow>
+                </mrow>
+                <annotation encoding="StarMath 5.0">x_ds in X : x_ds = left lbrace stack {1 &quot;, if&quot;d &quot;is
+                    assigned to&quot; s # 0 &quot;, otherwise&quot;} right none
+                </annotation>
+            </semantics>
+        </math>
+        <paragraph>A complete solution is an assignment set
+            <quote>X</quote>, where each demand has assigned at least one supply.
+            Often it is also required that each demand has at most one supply.
+            If there has to be exactly one supply for each demand,
+            than it can be called an 1 on 1 problem.
+            In this case the set of demands and the set of supplies has to have the same size.
+            If one demand can be assigned to N supplies this can be called an 1 on N Problem.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>A Semantic Extension of the Assignment Problem</title>
+        <paragraph>The assignment problem itself does not model the semantic meaning of the problem at hand.
+            It just states that a set of demands and a set of supplies are assigned to each other.
+            Each demand and each supply has an inherit identity.
+            There is no inherent semantic meaning of an identity.
+        </paragraph>
+        <paragraph>When the N-Queen puzzle is modeled as an assignment problem,
+            each demand and supply is just an identity.
+            The problem also restricts the set of valid assignments via the <quote>acceptable</quote> function.
+            The function itself does describe, why a given solution is incorrect.
+            The model does not state which row corresponds to which elements of the supplies.
+            In general its not possible to model the puzzle with concepts introduced by the puzzle.
+        </paragraph>
+        <paragraph>The basic idea of the semantic extension is the usage of attribute functions <quote>A</quote>.
+            Each attribute function <quote>a</quote> returns a value, for all supplies <quote>S</quote>,
+            demands <quote>D</quote> and assignemnts <quote>X</quote>.
+            The value returned by the attribute, describes or relates to some meaning.
+            In this case it is modeled via the set of all integers, that itself can for instance represent the set of
+            all
+            strings.
+        </paragraph>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <semantics>
+                <mrow>
+                    <mo stretchy="false">∀</mo>
+                    <mrow>
+                        <mi>a</mi>
+                        <mo stretchy="false">∈</mo>
+                        <mi>A</mi>
+                    </mrow>
+                    <mi mathvariant="normal">:</mi>
+                    <mo stretchy="false">∀</mo>
+                    <mrow>
+                        <mi>o</mi>
+                        <mo stretchy="false">∈</mo>
+                        <mrow>
+                            <mo fence="true" stretchy="false">(</mo>
+                            <mrow>
+                                <mrow>
+                                    <mi>D</mi>
+                                    <mo stretchy="false">∪</mo>
+                                    <mi>S</mi>
+                                    <mo stretchy="false">∪</mo>
+                                    <mi>X</mi>
+                                </mrow>
+                            </mrow>
+                            <mo fence="true" stretchy="false">)</mo>
+                        </mrow>
+                        <mo stretchy="false">=</mo>
+                        <mrow>
+                            <mo fence="true" stretchy="true">{</mo>
+                            <mrow>
+                                <mtable>
+                                    <mtr>
+                                        <mtd>
+                                            <mrow>
+                                                <mi>a</mi>
+                                                <mrow>
+                                                    <mrow>
+                                                        <mo fence="true" stretchy="false">(</mo>
+                                                        <mrow>
+                                                            <mi>o</mi>
+                                                        </mrow>
+                                                        <mo fence="true" stretchy="false">)</mo>
+                                                    </mrow>
+                                                    <mo stretchy="false">∈</mo>
+                                                    <mi mathvariant="normal">ℕ</mi>
+                                                </mrow>
+                                                <mi>,</mi>
+                                                <mtext>if defined</mtext>
+                                                <mi>,</mi>
+                                            </mrow>
+                                        </mtd>
+                                    </mtr>
+                                    <mtr>
+                                        <mtd>
+                                            <mrow>
+                                                <mtext>undefined</mtext>
+                                                <mi>,</mi>
+                                                <mtext>otherwise.</mtext>
+                                            </mrow>
+                                        </mtd>
+                                    </mtr>
+                                </mtable>
+                            </mrow>
+                        </mrow>
+                    </mrow>
+                </mrow>
+                <annotation encoding="StarMath 5.0">forall a in A: forall o in ( D union S union X ) = left lbrace stack
+                    { a(o) in setN , &quot; if defined&quot;, # &quot;undefined&quot; , &quot;otherwise.&quot;} right
+                    none
+                </annotation>
+            </semantics>
+        </math>
+        <paragraph>In most cases it does not make sense to provide values by an attribute function
+            <quote>a</quote>
+            for supplies and demands. In most cases it makes sense, that an attribute function
+            has only defined values for supplies or only for demands.
+            The queens in the N-Queen problem, do in general not have an inherent row and column, because
+            otherwise the solution of the problem would be already present.
+            This does no apply for the assignments in general.
+            In this case, every assignment has an defined value for every attribute.
+        </paragraph>
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <semantics>
+                <mrow>
+                    <msub>
+                        <mi>A</mi>
+                        <mi mathvariant="italic">limited</mi>
+                    </msub>
+                    <mo stretchy="false">=</mo>
+                    <mrow>
+                        <mo fence="true" stretchy="true">{</mo>
+                        <mrow>
+                            <mrow>
+                                <mtable>
+                                    <mtr>
+                                        <mtd>
+                                            <mi>a</mi>
+                                        </mtd>
+                                    </mtr>
+                                </mtable>
+                                <mi>,</mi>
+                                <mtable>
+                                    <mtr>
+                                        <mtd>
+                                            <mrow>
+                                                <mi>a</mi>
+                                                <mo stretchy="false">∈</mo>
+                                                <mi>A</mi>
+                                            </mrow>
+                                        </mtd>
+                                    </mtr>
+                                    <mtr>
+                                        <mtd>
+                                            <mrow>
+                                                <mo stretchy="false">∀</mo>
+                                                <mrow>
+                                                    <mi>d</mi>
+                                                    <mo stretchy="false">∈</mo>
+                                                    <mi>D</mi>
+                                                </mrow>
+                                                <mi mathvariant="normal">:</mi>
+                                                <mi>a</mi>
+                                                <mrow>
+                                                    <mrow>
+                                                        <mo fence="true" stretchy="false">(</mo>
+                                                        <mrow>
+                                                            <mi>d</mi>
+                                                        </mrow>
+                                                        <mo fence="true" stretchy="false">)</mo>
+                                                    </mrow>
+                                                    <mo stretchy="false">∈</mo>
+                                                    <mrow>
+                                                        <mi mathvariant="normal">ℕ</mi>
+                                                        <mo stretchy="false">∧</mo>
+                                                        <mo stretchy="false">∀</mo>
+                                                    </mrow>
+                                                </mrow>
+                                                <mrow>
+                                                    <mi>s</mi>
+                                                    <mo stretchy="false">∈</mo>
+                                                    <mi>S</mi>
+                                                </mrow>
+                                                <mi mathvariant="normal">:</mi>
+                                                <mi>a</mi>
+                                                <mrow>
+                                                    <mrow>
+                                                        <mo fence="true" stretchy="false">(</mo>
+                                                        <mrow>
+                                                            <mi>s</mi>
+                                                        </mrow>
+                                                        <mo fence="true" stretchy="false">)</mo>
+                                                    </mrow>
+                                                    <mo stretchy="false">=</mo>
+                                                    <mi mathvariant="italic">undefined</mi>
+                                                </mrow>
+                                            </mrow>
+                                        </mtd>
+                                    </mtr>
+                                    <mtr>
+                                        <mtd>
+                                            <mrow>
+                                                <mrow>
+                                                    <mrow/>
+                                                    <mo stretchy="false">∨</mo>
+                                                    <mo stretchy="false">∀</mo>
+                                                </mrow>
+                                                <mrow>
+                                                    <mi>s</mi>
+                                                    <mo stretchy="false">∈</mo>
+                                                    <mi>S</mi>
+                                                </mrow>
+                                                <mi mathvariant="normal">:</mi>
+                                                <mi>a</mi>
+                                                <mrow>
+                                                    <mrow>
+                                                        <mo fence="true" stretchy="false">(</mo>
+                                                        <mrow>
+                                                            <mi>s</mi>
+                                                        </mrow>
+                                                        <mo fence="true" stretchy="false">)</mo>
+                                                    </mrow>
+                                                    <mo stretchy="false">∈</mo>
+                                                    <mrow>
+                                                        <mi mathvariant="normal">ℕ</mi>
+                                                        <mo stretchy="false">∧</mo>
+                                                        <mo stretchy="false">∀</mo>
+                                                    </mrow>
+                                                </mrow>
+                                                <mrow>
+                                                    <mi>d</mi>
+                                                    <mo stretchy="false">∈</mo>
+                                                    <mi>D</mi>
+                                                </mrow>
+                                                <mi mathvariant="normal">:</mi>
+                                                <mi>a</mi>
+                                                <mrow>
+                                                    <mrow>
+                                                        <mo fence="true" stretchy="false">(</mo>
+                                                        <mrow>
+                                                            <mi>d</mi>
+                                                        </mrow>
+                                                        <mo fence="true" stretchy="false">)</mo>
+                                                    </mrow>
+                                                    <mo stretchy="false">=</mo>
+                                                    <mi mathvariant="italic">undefined</mi>
+                                                </mrow>
+                                            </mrow>
+                                        </mtd>
+                                    </mtr>
+                                    <mtr>
+                                        <mtd>
+                                            <mrow>
+                                                <mo stretchy="false">∀</mo>
+                                                <mrow>
+                                                    <mi>x</mi>
+                                                    <mo stretchy="false">∈</mo>
+                                                    <mi>X</mi>
+                                                </mrow>
+                                                <mi mathvariant="normal">:</mi>
+                                                <mi>a</mi>
+                                                <mrow>
+                                                    <mrow>
+                                                        <mo fence="true" stretchy="false">(</mo>
+                                                        <mrow>
+                                                            <mi>x</mi>
+                                                        </mrow>
+                                                        <mo fence="true" stretchy="false">)</mo>
+                                                    </mrow>
+                                                    <mo stretchy="false">∈</mo>
+                                                    <mi mathvariant="normal">ℕ</mi>
+                                                </mrow>
+                                            </mrow>
+                                        </mtd>
+                                    </mtr>
+                                </mtable>
+                            </mrow>
+                        </mrow>
+                        <mo fence="true" stretchy="true">}</mo>
+                    </mrow>
+                </mrow>
+                <annotation encoding="StarMath 5.0">A_limited = left lbrace stack {a}, stack {a in A #
+                    forall d in D: a(d) in setN and forall s in S: a(s) = undefined #
+                    {} or forall s in S: a(s) in setN and forall d in D: a(d) = undefined #
+                    forall x in X: a(x) in setN
+                    } right rbrace
+                </annotation>
+            </semantics>
+        </math>
+    </chapter>
+    <chapter>
+        <title>Multi Dimensional Assignment Problem</title>
+        <d:toDo/>
+        <chapter>
+            <title>Model Multi Dimensional Assignment Problem with Multiple One Dimensional Assignment Problems</title>
+            <d:toDo/>
+        </chapter>
+    </chapter>
+</article>
