@@ -1,0 +1,13 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.splitcells</groupId>
+    <artifactId>gel</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>../net.splitcells.pom.java.defaults</module>
+        <module>../net.splitcells.dem</module>
+        <module>../net.splitcells.gel.core</module>
+        <module>../net.splitcells.gel.doc</module>
+    </modules>
+</project>
