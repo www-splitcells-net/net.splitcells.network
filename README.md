@@ -1,6 +1,5 @@
 # splitcells.net
 
-
 ## Introduction
 
 Build Project via [build command](./bin/build).
