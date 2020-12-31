@@ -4,6 +4,7 @@
     <groupId>net.splitcells</groupId>
     <artifactId>gel</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <modules>
         <module>../net.splitcells.pom.java.defaults</module>
         <module>../net.splitcells.dem</module>
