@@ -1,6 +1,6 @@
 # Generic Allocator System (Gas)
 
-* [Core](https://github.com/www-splitcells-net/net.splitcells.gel.core)
+* [Core](./net.splitcells.gel.core)
 * [Documentation](https://github.com/www-splitcells-net/net.splitcells.gel.doc)
 * [Social Media](https://twitter.com/splitcells)
 
