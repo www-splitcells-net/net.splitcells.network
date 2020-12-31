@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# TODO Make this command platform dependent.
+# TODO Currently only initial build is supported.
+    # Support multiple builds with this command.
+set -e
+chmod +x ./bin/*
+cd ..
+    mkdir net.splitcells.gel
+    cd net.splitcells.gel
+    git clone https://github.com/www-splitcells-net/net.splitcells.gel.git .
+cd ..
+    mkdir net.splitcells.os.state.interface
+    cd net.splitcells.os.state.interface
+    git clone https://github.com/www-splitcells-net/net.splitcells.os.state.interface.git .
+cd ..
+    mkdir net.splitcells.os.state.interface.lib
+    cd net.splitcells.os.state.interface.lib
+    git clone https://github.com/www-splitcells-net/net.splitcells.os.state.interface.lib.git .
+cd ..
+    mkdir net.splitcells.os.state.interface.lib.gpl.2
+    cd net.splitcells.os.state.interface.lib.gpl.2
+    git clone https://github.com/www-splitcells-net/net.splitcells.os.state.interface.lib.gpl.2.git .
+cd ..
+    mkdir net.splitcells.os.state.interface.lib.gpl.3
+    cd net.splitcells.os.state.interface.lib.gpl.3
+    git clone https://github.com/www-splitcells-net/net.splitcells.os.state.interface.lib.gpl.3.git .
+cd ../net.splitcells
+    mvn clean install
