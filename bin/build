@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# TODO Make this command platform dependent.
+# TODO Currently only initial build is supported.
+    # Support multiple builds with this command.
+set -e
+chmod +x ./bin/*
+cd ..
+    mkdir net.splitcells.pom.java.defaults
+    cd net.splitcells.pom.java.defaults
+    git clone https://github.com/www-splitcells-net/net.splitcells.pom.java.defaults.git .
+cd ..
+    mkdir net.splitcells.dem
+    cd net.splitcells.dem
+    git clone https://github.com/www-splitcells-net/net.splitcells.dem.git .
+cd ..
+    mkdir net.splitcells.gel.core
+    cd net.splitcells.gel.core
+    git clone https://github.com/www-splitcells-net/net.splitcells.gel.core.git .
+cd ..
+    mkdir net.splitcells.gel.doc
+    cd net.splitcells.gel.doc
+    git clone https://github.com/www-splitcells-net/net.splitcells.gel.doc.git .
+cd ../net.splitcells.gel
+    mvn clean install
