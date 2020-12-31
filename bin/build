@@ -8,6 +8,7 @@ cd ..
     mkdir net.splitcells.gel
     cd net.splitcells.gel
     git clone https://github.com/www-splitcells-net/net.splitcells.gel.git .
+    ./bin/build
 cd ..
     mkdir net.splitcells.os.state.interface
     cd net.splitcells.os.state.interface
