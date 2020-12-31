@@ -1,0 +1,3 @@
+[submodule "net.splitcells.gel.core"]
+	path = net.splitcells.gel.core
+	url = ../net.splitcells.gel.core
