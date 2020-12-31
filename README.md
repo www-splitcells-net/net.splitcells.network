@@ -1,7 +1,12 @@
 # Generic Allocator System (Gas)
 
-* [Core](./net.splitcells.gel.core)
-* [Documentation](https://github.com/www-splitcells-net/net.splitcells.gel.doc)
+* [Rendered Documentation](http://splitcells.net/net/splitcells/gel/doc/index.html)
 * [Social Media](https://twitter.com/splitcells)
+
+## Introduction
+
+Build Project via [build command](./bin/build).
+Related repositories are not included as submodules.
+Instead the repositories are cloned into this repository's parent folder.
 
 ![Generic Allocator Logo](http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/white.project.logo.generic.allocator.jpg)
