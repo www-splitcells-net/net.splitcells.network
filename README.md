@@ -1,5 +1,7 @@
 # splitcells.net
 
+[Rendered Documentation](http://splitcells.net/net/splitcells/martins/avots/website//2016/10/11/projects.html)
+
 ## Introduction
 
 Build Project via [build command](./bin/build).
