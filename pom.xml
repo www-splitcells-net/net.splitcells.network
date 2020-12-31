@@ -7,6 +7,6 @@
         <groupId>net.splitcells</groupId>
         <artifactId>pom-java-defaults</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../public/net.splitcells.pom.java.defaults/pom.xml</relativePath>
+        <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
 </project>
