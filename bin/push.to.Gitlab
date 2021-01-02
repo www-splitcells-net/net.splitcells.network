@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+echo ../$1
+cd ../$1
+git remote add gitlab git@gitlab.com:splitcells-net/"$1".git
+git remote set-url gitlab git@gitlab.com:splitcells-net/"$1".git
+git push gitlab
