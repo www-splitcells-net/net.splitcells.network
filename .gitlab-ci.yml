@@ -1,0 +1,4 @@
+image: 3.6.3-openjdk-11
+test:
+  script:
+    - ./bin/build
