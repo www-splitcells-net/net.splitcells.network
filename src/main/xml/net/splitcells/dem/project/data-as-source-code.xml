@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:e="http://splitcells.net/sen.xsd" description="compatibility and portability">
+    <objective>
+        <objective>The idea is to model syntax trees like XML and JSON
+            via the Perspective class.
+        </objective>
+        <objective>This base language could make it easier to apply automatic refactoring via the
+            Java's IDEs, to apply custom checks via Java's type system and runtime systems.
+            This also makes it possible to integrate document with the program code much easier
+            by linking from data to source code.
+        </objective>
+        <objective>Ensure this via an Example document, that this is indeed a good idea.</objective>
+        <objective>Introduce this by migrating to this system.</objective>
+    </objective>
+    <scheduling>
+        <priority>
+            <queue>
+                <toDo>Create an example class, because the formatting seems to be a problem,
+                    according to experience.
+                </toDo>
+                <toDo>Create a testsuite which states all requirements to the Perspective in order
+                    to support data as source code.
+                </toDo>
+                <toDo>Create a framework in order to support data schemes.</toDo>
+            </queue>
+        </priority>
+    </scheduling>
+</project>
