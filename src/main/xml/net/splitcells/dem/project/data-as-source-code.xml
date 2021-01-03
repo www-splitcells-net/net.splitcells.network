@@ -14,7 +14,9 @@
             by linking from data to source code.
         </objective>
         <objective>Ensure this via an Example document, that this is indeed a good idea.</objective>
-        <objective>Introduce this by migrating to this system.</objective>
+        <objective>Introduce this by migrating to this system.
+            <toDo>Create a program that translates XML or Text to this Perspective model.</toDo>
+        </objective>
     </objective>
     <scheduling>
         <priority>
