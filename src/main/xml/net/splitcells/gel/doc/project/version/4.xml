@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:e="http://splitcells.net/sen.xsd">
+    <optimization>
+        <objective>
+            <objective>
+                Ensure full and detailed test coverage in order to stabilize functionality and avoid regressions.
+                <toDo>
+                    <toDo xl:href="https://blog.ssanj.net/posts/2016-06-26-property-based-testing-patterns.html"/>
+                    <toDo>Create test for each caching/performance decision.</toDo>
+                    <toDo>Address Randomization test for creation of Lines in each Table implementation.</toDo>
+                    <toDo>Implement mutation tests via PIT.</toDo>
+                </toDo>
+                <objective>Long running and random unit tests used for fuzzy mining.</objective>
+                <objective>Use declarative tests that are injected into program during runtime.</objective>
+                <objective>Use mutation tests.</objective>
+            </objective>
+            <objective>
+                Implement benchmarking of memory usage and run
+                time and the storing of its results, in order to have a feeling for the hardware requirements.
+                <idea>Use TestsuiteI/JUnit and performance counters..</idea>
+            </objective>
+            <objective>Extend solving capabilities by solving Killer Sudoku.</objective>
+            <objective>Support interactive problem solving via Website.</objective>
+        </objective>
+        <scheduling>
+            <priority>
+                <queue>
+                </queue>
+            </priority>
+        </scheduling>
+    </optimization>
+    <unscheduled>
+        <toDo>History should only contain primary demand/supply references and
+            no references to used or unused demand/supply, in order to preserve line pointer validity.
+        </toDo>
+        <idea>
+            <idea>Used/unused demand/supply should be a lookup of the primary demand/supply table.</idea>
+            <idea>Make Rating immutable.</idea>
+        </idea>
+    </unscheduled>
+</project>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:e="http://splitcells.net/sen.xsd">
+    <optimization>
+        <objective>
+            <objective>Reimplement functionality of version 2 with better
+                adaptability on source code level, better analysis and logging capabilities.
+                Reuse as much code as possible.
+            </objective>
+            <objective>Translate to English.</objective>
+        </objective>
+        <scheduling>
+            <priority>
+                <queue>
+                    <todo>
+                        Solve oral exams problem.
+                        <toDo>maven.test MutisksEksamensTest#testMomentānu
+                            <toDo>testMomentānu
+                                <toDo name="Implement fast interactive optmization loop.">
+                                    <toDo>Simplify reasoning system.
+                                        <toDo>Fix errors.</toDo>
+                                        <toDo>Find cause of natural tags.</toDo>
+                                        <toDo>Prevent nesting of empty argumentation.</toDo>
+                                    </toDo>
+                                </toDo>
+                            </toDo>
+                            <toDo>oralExamsSolverTests</toDo>
+                        </toDo>
+                        <done>
+                            Create random problem instances via a distribution.
+                            <done>
+                                Determine distribution parameters..
+                                <students>88</students>
+                                <exams>177</exams>
+                                <examiners>40</examiners>
+                                <checkers>41</checkers>
+                                <rooms>6</rooms>
+                                <time>2 weeks with each exam at least 4 days apart and 5 time slots per
+                                    day.
+                                </time>
+                            </done>
+                        </done>
+                        <toDo>Implement IerobežojumuGrupasBalstītsRemontsTest.
+                            <toDo>pārbaudiPārdališanu</toDo>
+                            <toDo>MinimālsAttālums.156</toDo>
+                        </toDo>
+                    </todo>
+                    <todo>Solve Schienen-Planung.</todo>
+                    <todo>Solve Sportkur.</todo>
+                    <toDo>Fix NQueenProblēmaTest.</toDo>
+                    <toDo>Create test for Killer Sudoku.</toDo>
+                </queue>
+            </priority>
+        </scheduling>
+        <unscheduled>
+            <toDo>Check version 2 of Gel and extract all missed out information.
+            </toDo>
+            <idea>Create 1 basic memory and 1 runtime profiling test.
+            </idea>
+        </unscheduled>
+    </optimization>
+</project>
