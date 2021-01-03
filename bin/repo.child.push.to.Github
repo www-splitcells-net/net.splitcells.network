@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo ../$1
 cd ../$1
-git remote add github git@github.com:www-splitcells-net/"$1".git
+git remote show github || git remote add github git@github.com:www-splitcells-net/"$1".git
 git remote set-url github git@github.com:www-splitcells-net/"$1".git
 git push github
