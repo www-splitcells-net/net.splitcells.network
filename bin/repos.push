@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+./bin/repos.push.to.Gitlab
+./bin/repos.push.to.Github
