@@ -26,6 +26,21 @@
                         <d:toDo>Console should print message asynchronously.</d:toDo>
                         <d:toDo>Create logging context, which creates a wrapper for Domsole.</d:toDo>
                         <d:toDo>Implement test injection and recursive test injection.</d:toDo>
+                        <d:idea name="Data as Source Code">
+                            The idea is to model syntax trees like XML and JSON
+                            via the Perspective class.
+                            This base language could make it easier to apply automatic refactoring via the
+                            Java's IDEs, to apply custom checks via Java's type system and runtime systems.
+                            This also makes it possible to integrate document with the program code much easier
+                            by linking from data to source code.
+                            <d:toDo>Create an example class, because the formatting seems to be a problem,
+                                according to experience.
+                            </d:toDo>
+                            <d:toDo>Create a testsuite which states all requirements to the Perspective in order
+                                to support data as source code.
+                            </d:toDo>
+                            <d:toDo>Create a framework in order to support data schemes.</d:toDo>
+                        </d:idea>
                     </d:priority>
                 </d:queues>
                 <d:service xl:href="compatibilty.and.portability.xml"/>
