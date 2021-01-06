@@ -6,6 +6,7 @@
          xmlns:e="http://splitcells.net/sen.xsd">
     <optimization>
         <objective>
+            <objective>Implement test injection.</objective>
             <objective>
                 Ensure full and detailed test coverage in order to stabilize functionality and avoid regressions.
                 <toDo>
