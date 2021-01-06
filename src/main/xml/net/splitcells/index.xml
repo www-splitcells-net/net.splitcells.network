@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd" xmlns:d="http://splitcells.net/den.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Introduction to
+            <siteName/>
+        </title>
+        <description>Introduction to
+            <siteName/>
+        </description>
+        <publication_date year="2020" month="01" day_of_month="06"/>
+        <license>standard</license>
+    </meta>
+    <paragraph>This is a cluster of projects that are managed by this meta project
+        and are integrated by this site (server software is not released yet).
+        If you want to build this cluster, you can consult the README file
+        in the main repository. These are listed at the Infrastructure chapter.
+    </paragraph>
+    <chapter>
+        <title>Infrastructure</title>
+        <paragraph>The main development platform is currently GitHub.</paragraph>
+        <option>
+            <name>GitHub</name>
+            <url>https://github.com/www-splitcells-net/net.splitcells</url>
+        </option>
+        <option>
+            <name>GitLab</name>
+            <url>https://gitlab.com/splitcells-net/net.splitcells</url>
+        </option>
+    </chapter>
+</article>
