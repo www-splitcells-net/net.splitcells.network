@@ -1,8 +1,6 @@
 # splitcells.net
 
 * [Rendered Documentation](http://splitcells.net/net/splitcells/index.html)
-* TODO Make repository cluster platform independent.
-   * TODO Use [sourcehut](https://sourcehut.org/).
 
 ## Introduction
 

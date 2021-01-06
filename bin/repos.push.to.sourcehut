@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -e
+./bin/repos | xargs -i ./bin/repo.child.push.to.sourcehut {}
