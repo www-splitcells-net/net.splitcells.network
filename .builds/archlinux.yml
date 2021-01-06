@@ -1,0 +1,12 @@
+image: archlinux
+packages:
+  - jdk11-openjdk
+  - maven
+sources:
+  - https://git.sr.ht/~splitcells-net/net.splitcells
+environment:
+  deploy: synapse@synapse-bt.org
+tasks:
+  - build: |
+      cd net.splitcells
+      ./bin/build
