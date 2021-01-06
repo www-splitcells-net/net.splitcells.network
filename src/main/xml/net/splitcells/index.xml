@@ -22,6 +22,10 @@
         <title>Infrastructure</title>
         <paragraph>The main development platform is currently GitHub.</paragraph>
         <option>
+            <name>sourcehut</name>
+            <url>https://git.sr.ht/~splitcells-net/net.splitcells</url>
+        </option>
+        <option>
             <name>GitHub</name>
             <url>https://github.com/www-splitcells-net/net.splitcells</url>
         </option>
