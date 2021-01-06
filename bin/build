@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# TODO Make this command platform dependent.
+# TODO Make this command platform independent.
 # TODO Currently only initial build is supported.
     # Support multiple builds with this command.
 set -e
