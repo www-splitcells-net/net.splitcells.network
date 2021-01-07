@@ -34,4 +34,23 @@
             <url>https://gitlab.com/splitcells-net/net.splitcells</url>
         </option>
     </chapter>
+    <chapter>
+        <title>Continuous Integration</title>
+        <paragraph>The main continuous integration is done on
+            <link>
+                <text>sourcehut</text>
+                <url>https://git.sr.ht/~splitcells-net/net.splitcells</url>
+            </link>
+            .
+        </paragraph>
+        <paragraph>Most of the code is written in Java.
+            Although Java is relatively platform independent, there are still dependencies to the underlining platform.
+            For instance some operation systems do not support the full set of Latvian alphabet for class names.
+            A normal class (not an inner one) needs to be located in a file, that has the same name as the class.
+            Not all operation systems support such a file name.
+        </paragraph>
+        <paragraph>Additionally, continuous integration is done on as many development platforms as possible,
+            in order to ensure that this project cluster is portable.
+        </paragraph>
+    </chapter>
 </article>

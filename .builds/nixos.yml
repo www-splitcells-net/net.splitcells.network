@@ -1,6 +1,6 @@
-image: archlinux
+image: nixos/latest
 packages:
-  - jdk11-openjdk
+  - jdk11
   - maven
 sources:
   - https://git.sr.ht/~splitcells-net/net.splitcells

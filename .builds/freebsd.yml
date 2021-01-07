@@ -1,6 +1,6 @@
-image: archlinux
+image: freebsd/latest
 packages:
-  - jdk11-openjdk
+  - openjdk11
   - maven
 sources:
   - https://git.sr.ht/~splitcells-net/net.splitcells
