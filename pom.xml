@@ -169,7 +169,7 @@
                             <!-- source: https://issues.apache.org/jira/browse/MCOMPILER-209 -->
                             <useIncrementalCompilation>false</useIncrementalCompilation>
                             <compilerArgs>
-                                <arg>sun.jnu.encoding=UTF-8</arg>
+                                <arg>-sun.jnu.encoding=UTF-8</arg>
                             </compilerArgs>
                         </configuration>
                     </plugin>
