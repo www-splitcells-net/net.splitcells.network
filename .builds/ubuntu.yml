@@ -1,6 +1,6 @@
 image: ubuntu/lts
 packages:
-  - openjdk-11-jdk
+  - openjdk-11-jdk-headless
   - maven
 sources:
   - https://git.sr.ht/~splitcells-net/net.splitcells
