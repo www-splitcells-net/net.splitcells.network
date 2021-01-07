@@ -168,6 +168,9 @@
                             <!-- source: https://stackoverflow.com/questions/8918165/does-maven-support-incremental-builds/41301660#41301660 -->
                             <!-- source: https://issues.apache.org/jira/browse/MCOMPILER-209 -->
                             <useIncrementalCompilation>false</useIncrementalCompilation>
+                            <compilerArgs>
+                                <arg>sun.jnu.encoding=UTF-8</arg>
+                            </compilerArgs>
                         </configuration>
                     </plugin>
                 </plugins>
