@@ -1,0 +1,10 @@
+image: ubuntu/lts
+packages:
+  - jdk11-openjdk
+  - maven
+sources:
+  - https://git.sr.ht/~splitcells-net/net.splitcells
+tasks:
+  - build: |
+      cd net.splitcells
+      ./bin/build
