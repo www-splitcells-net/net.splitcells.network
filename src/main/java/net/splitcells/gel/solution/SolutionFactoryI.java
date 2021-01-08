@@ -2,7 +2,7 @@ package net.splitcells.gel.solution;
 
 import net.splitcells.gel.problem.Problēma;
 
-public class OptimizationBuilderI extends OptimizationBuilder {
+public class SolutionFactoryI extends SolutionFactory {
     @Override
     public Solution atrisinājum(Problēma problēma) {
         return joinAspects(SolutionI.atrisinājums(problēma));

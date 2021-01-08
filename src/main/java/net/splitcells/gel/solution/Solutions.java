@@ -5,9 +5,9 @@ import net.splitcells.gel.problem.Problēma;
 
 import static net.splitcells.dem.Dem.environment;
 
-public class Solutions extends ResourceI<OptimizationBuilder> {
+public class Solutions extends ResourceI<SolutionFactory> {
     public Solutions() {
-        super(() -> new OptimizationBuilderI());
+        super(() -> new SolutionFactoryI());
     }
 
     public static Solution atrisinājum(Problēma problēma) {
