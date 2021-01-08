@@ -2,7 +2,7 @@ package net.splitcells.gel.solution.optimization.primitīvs;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.solution.AtrisinājumaSkats;
+import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.Optimizācija;
 import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
 import net.splitcells.gel.solution.optimization.SoluTips;
@@ -25,7 +25,7 @@ public class VeidnesIzpildītājs implements Optimizācija {
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
+    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
         final List<OptimizācijasNotikums> optimicaija = list();
         final Set<Rinda> lietotasPrasības = setOfUniques();
         final Set<Rinda> lietotasPiedāvājumi = setOfUniques();

@@ -1,7 +1,7 @@
 package net.splitcells.gel.solution.optimization.primitīvs;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.solution.AtrisinājumaSkats;
+import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.Optimizācija;
 import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
 
@@ -20,7 +20,7 @@ public class LineārsAtņemtājs implements Optimizācija {
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats solution) {
+    public List<OptimizācijasNotikums> optimizē(SolutionView solution) {
         if (solution.prasība_lietots().navTukšs() && solution.piedāvājumi_lietoti().navTukšs()) {
             return
                     list(

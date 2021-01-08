@@ -1,7 +1,7 @@
 package net.splitcells.gel.solution.optimization.refleksija;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.solution.AtrisinājumaSkats;
+import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.Optimizācija;
 import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
 
@@ -18,7 +18,7 @@ public class LineāraIterācija implements Optimizācija {
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
+    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
         List<OptimizācijasNotikums> optimizācijas = list();
         int mēģinājums = 0;
         while (optimizācijas.isEmpty() && mēģinājums < this.optimizācijas.size()) {

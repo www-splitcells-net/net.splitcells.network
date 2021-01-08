@@ -17,7 +17,7 @@ import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
 
 import java.util.function.Function;
 
-public interface Solution extends Problēma, AtrisinājumaSkats {
+public interface Solution extends Problēma, SolutionView {
 
     @Returns_this
     default Solution optimizē(Optimizācija optimizācija) {

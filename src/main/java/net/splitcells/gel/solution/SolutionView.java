@@ -30,7 +30,7 @@ import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
 import static net.splitcells.dem.resource.host.Files.*;
 import static net.splitcells.gel.rating.tips.Cena.cena;
 
-public interface AtrisinājumaSkats extends ProblēmasSkats {
+public interface SolutionView extends ProblēmasSkats {
 
     default List<List<Ierobežojums>> prasībasGrupas() {
         return prasībasGrupas(ierobežojums(), list());

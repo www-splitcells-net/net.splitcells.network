@@ -4,7 +4,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.random.Randomness;
-import net.splitcells.gel.solution.AtrisinājumaSkats;
+import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.tabula.RindasRādītājs;
 import net.splitcells.gel.solution.optimization.Optimizācija;
 import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
@@ -49,7 +49,7 @@ public class BrīvuPiedāvājumuSlēdzis implements Optimizācija {
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
+    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
         final List<OptimizācijasNotikums> optimizācijas = list();
         final var apstrādataPrasība = Sets.<RindasRādītājs>setOfUniques();
         final var apstrādatsPiedāvājums = Sets.<RindasRādītājs>setOfUniques();
@@ -60,7 +60,7 @@ public class BrīvuPiedāvājumuSlēdzis implements Optimizācija {
     }
 
     public List<OptimizācijasNotikums> optimizacijasSoli
-            (AtrisinājumaSkats atrisinājums
+            (SolutionView atrisinājums
                     , Set<RindasRādītājs> apstrādatasPrasības
                     , Set<RindasRādītājs> apstrādatiPiedāvājumi) {
         if (atrisinājums.prasība_lietots().navTukšs() && atrisinājums.piedāvājums_nelietots().navTukšs()) {

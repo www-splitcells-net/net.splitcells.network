@@ -2,7 +2,7 @@ package net.splitcells.gel.solution.optimization.primitīvs;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.random.Randomness;
-import net.splitcells.gel.solution.AtrisinājumaSkats;
+import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.Optimizācija;
 import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
 
@@ -23,7 +23,7 @@ public class NejaušsInicializētājs implements Optimizācija {
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
+    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
         if (atrisinājums.prasības_nelietotas().navTukšs() && atrisinājums.piedāvājums_nelietots().navTukšs()) {
             return list(
                     optimizacijasNotikums

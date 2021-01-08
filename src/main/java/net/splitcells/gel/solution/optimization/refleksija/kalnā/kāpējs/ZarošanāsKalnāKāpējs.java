@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.solution.AtrisinājumaSkats;
+import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.Vēsture;
 import net.splitcells.gel.solution.history.refleksija.tips.PilnsNovērtejums;
@@ -27,7 +27,7 @@ public class ZarošanāsKalnāKāpējs implements Optimizācija {
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
+    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
         final var nakamaisZars = nakamaisZars(atrisinājums);
         return nakamaOperācija(nakamaisZars.get());
     }
@@ -36,7 +36,7 @@ public class ZarošanāsKalnāKāpējs implements Optimizācija {
         throw not_implemented_yet();
     }
 
-    private Optional<Solution> nakamaisZars(AtrisinājumaSkats atrisinājums) {
+    private Optional<Solution> nakamaisZars(SolutionView atrisinājums) {
         final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
         var labakaisKaimiņs = Optional.<Solution>empty();
         while (plānotajs.get()) {

@@ -2,7 +2,7 @@ package net.splitcells.gel.solution.optimization.refleksija.kalnā.kāpējs;
 
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.solution.AtrisinājumaSkats;
+import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.rating.struktūra.Novērtējums;
 import net.splitcells.gel.solution.optimization.Optimizācija;
 import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
@@ -38,7 +38,7 @@ public class KalnāKāpējs implements Optimizācija {
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
+    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
         final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
         final var sanknesVēsturesIndekss = atrisinājums.vēsture().momentansIndekss();
         Optional<Novērtējums> labakaisKaimiņuNovērtējums = Optional.empty();

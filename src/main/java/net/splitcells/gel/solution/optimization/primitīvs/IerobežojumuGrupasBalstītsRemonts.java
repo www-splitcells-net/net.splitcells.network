@@ -4,7 +4,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.gel.solution.AtrisinājumaSkats;
+import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
@@ -95,7 +95,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(AtrisinājumaSkats atrisinājums) {
+    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
         final var grupuNoIerobežojumuGrupu = grupuNoIerobežojumuGrupu(atrisinājums);
         final var prasībasGrupēšana = grupuNoIerobežojumuGrupu
                 .map(e -> e
@@ -114,11 +114,11 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         return optimizāija;
     }
 
-    public List<OptimizācijasNotikums> pārdali(AtrisinājumaSkats atrisinājums, Map<GrupaId, Set<Rinda>> brīvasPrasībasGrupas) {
+    public List<OptimizācijasNotikums> pārdali(SolutionView atrisinājums, Map<GrupaId, Set<Rinda>> brīvasPrasībasGrupas) {
         return pārdalītājs.apply(brīvasPrasībasGrupas).optimizē(atrisinājums);
     }
 
-    public Map<GrupaId, Set<Rinda>> prāsībasGrupēšana(Ierobežojums ierobežojumuGrupēšāna, AtrisinājumaSkats atrisinājums) {
+    public Map<GrupaId, Set<Rinda>> prāsībasGrupēšana(Ierobežojums ierobežojumuGrupēšāna, SolutionView atrisinājums) {
         final Map<GrupaId, Set<Rinda>> prāsībasGrupēšana = map();
         ierobežojumuGrupēšāna
                 .rindasAbstrāde()
@@ -138,11 +138,11 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         return prāsībasGrupēšana;
     }
 
-    public Optional<List<Ierobežojums>> grupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums) {
+    public Optional<List<Ierobežojums>> grupuNoIerobežojumuGrupu(SolutionView atrisinājums) {
         return pieškiršanasAtlasītajs.apply(Ierobežojums.piešķiršanasGruppas(atrisinājums.ierobežojums()));
     }
 
-    public List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(AtrisinājumaSkats atrisinājums, Ierobežojums ierobežojums) {
+    public List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(SolutionView atrisinājums, Ierobežojums ierobežojums) {
         final var ienākošasGrupas = Sets.setOfUniques
                 (ierobežojums
                         .rindasAbstrāde()
