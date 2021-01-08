@@ -1,7 +1,7 @@
 package net.splitcells.gel;
 
-import net.splitcells.gel.atrisinājums.AtrisinājumBūvētājs;
-import net.splitcells.gel.problēma.Definē_prasības_nosaukumu;
+import net.splitcells.gel.solution.AtrisinājumBūvētājs;
+import net.splitcells.gel.problem.Definē_prasības_nosaukumu;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
