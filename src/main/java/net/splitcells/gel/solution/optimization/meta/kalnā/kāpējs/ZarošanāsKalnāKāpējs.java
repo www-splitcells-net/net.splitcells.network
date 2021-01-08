@@ -1,4 +1,4 @@
-package net.splitcells.gel.solution.optimization.refleksija.kalnā.kāpējs;
+package net.splitcells.gel.solution.optimization.meta.kalnā.kāpējs;
 
 import java.util.Optional;
 import java.util.function.Supplier;

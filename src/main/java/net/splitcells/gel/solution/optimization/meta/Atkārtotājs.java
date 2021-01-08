@@ -1,4 +1,4 @@
-package net.splitcells.gel.solution.optimization.refleksija;
+package net.splitcells.gel.solution.optimization.meta;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
