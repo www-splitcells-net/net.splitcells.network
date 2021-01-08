@@ -20,7 +20,7 @@ import net.splitcells.gel.problem.Problēma;
 import net.splitcells.gel.problem.ProblēmaĢenerators;
 
 
-public class AtrisinājumBūvētājs implements Definē_prasības_nosaukumu, DefinēPrasība, DefinēPiedāvājumi, ProblēmaĢenerators {
+public class SolutionBuilder implements Definē_prasības_nosaukumu, DefinēPrasība, DefinēPiedāvājumi, ProblēmaĢenerators {
 
     private List<Atribūts<? extends Object>> prasības_atribūti = list();
     private List<List<Object>> prasības = list();
@@ -30,11 +30,11 @@ public class AtrisinājumBūvētājs implements Definē_prasības_nosaukumu, Def
 
     private Ierobežojums ierobežojums;
 
-    protected AtrisinājumBūvētājs() {
+    protected SolutionBuilder() {
     }
 
     public static Definē_prasības_nosaukumu definē_problēmu() {
-        return new AtrisinājumBūvētājs();
+        return new SolutionBuilder();
     }
 
     @Override

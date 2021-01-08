@@ -1,6 +1,6 @@
 package net.splitcells.gel;
 
-import net.splitcells.gel.solution.AtrisinājumBūvētājs;
+import net.splitcells.gel.solution.SolutionBuilder;
 import net.splitcells.gel.problem.Definē_prasības_nosaukumu;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -20,6 +20,6 @@ public final class Gel {
     }
 
     public static Definē_prasības_nosaukumu definē_problēmu() {
-        return AtrisinājumBūvētājs.definē_problēmu();
+        return SolutionBuilder.definē_problēmu();
     }
 }
