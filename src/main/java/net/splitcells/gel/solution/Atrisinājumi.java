@@ -10,7 +10,7 @@ public class Atrisinājumi extends ResourceI<OptimizationBuilder> {
         super(() -> new OptimizationBuilderI());
     }
 
-    public static Atrisinājums atrisinājum(Problēma problēma) {
+    public static Optimization atrisinājum(Problēma problēma) {
         return environment().config().configValue(Atrisinājumi.class).atrisinājum(problēma);
     }
 }

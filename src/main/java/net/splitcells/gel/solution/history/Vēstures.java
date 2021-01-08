@@ -1,7 +1,7 @@
 package net.splitcells.gel.solution.history;
 
 import net.splitcells.dem.environment.resource.ResourceI;
-import net.splitcells.gel.solution.Atrisinājums;
+import net.splitcells.gel.solution.Optimization;
 
 import static net.splitcells.dem.Dem.environment;
 
@@ -10,7 +10,7 @@ public class Vēstures extends ResourceI<VēsturesVeidotajs> {
         super(() -> new VēsturesIVeidotajs());
     }
 
-    public static Vēsture vēsture(Atrisinājums atrisinājums) {
-        return environment().config().configValue(Vēstures.class).vēsture(atrisinājums);
+    public static Vēsture vēsture(Optimization optimization) {
+        return environment().config().configValue(Vēstures.class).vēsture(optimization);
     }
 }

@@ -12,21 +12,21 @@ import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.problem.atvasināts.AtvasinātsAtrisinājums;
+import net.splitcells.gel.problem.atvasināts.AtvasinātsOptimization;
 import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
-import net.splitcells.gel.solution.Atrisinājums;
+import net.splitcells.gel.solution.Optimization;
 
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.problem.atvasināts.AtvasinātsAtrisinājums.atvasinātaProblema;
+import static net.splitcells.gel.problem.atvasināts.AtvasinātsOptimization.atvasinātaProblema;
 
 public class ProblēmaI implements Problēma {
 
     private final Ierobežojums ierobežojums;
     private final Piešķiršanas piešķiršanas;
-    protected Atrisinājums kāAtrisinājums;
+    protected Optimization kāOptimization;
 
     public static Problēma problēma(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
         return new ProblēmaI(piešķiršanas, ierobežojums);
@@ -49,20 +49,20 @@ public class ProblēmaI implements Problēma {
     }
 
     @Override
-    public Atrisinājums uzAtrisinājumu() {
+    public Optimization uzAtrisinājumu() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Atrisinājums kāAtrisinājums() {
-        if (kāAtrisinājums == null) {
-            kāAtrisinājums = Atrisinājumi.atrisinājum(this);
+    public Optimization kāAtrisinājums() {
+        if (kāOptimization == null) {
+            kāOptimization = Atrisinājumi.atrisinājum(this);
         }
-        return kāAtrisinājums;
+        return kāOptimization;
     }
 
     @Override
-    public AtvasinātsAtrisinājums atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> konversija) {
+    public AtvasinātsOptimization atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> konversija) {
         return atvasinātaProblema(() -> list(), piešķiršanas, ierobežojums, konversija);
     }
 

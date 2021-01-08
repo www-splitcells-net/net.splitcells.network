@@ -1,7 +1,7 @@
 package net.splitcells.gel.problem;
 
-import net.splitcells.gel.solution.Atrisinājums;
+import net.splitcells.gel.solution.Optimization;
 
 public interface AtrisinājumsĢenerators {
-	Atrisinājums atrisinājums();
+	Optimization atrisinājums();
 }

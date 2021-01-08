@@ -72,7 +72,7 @@ public interface AtrisinājumaSkats extends ProblēmasSkats {
 
     Vēsture vēsture();
 
-    default Atrisinājums zars() {
+    default Optimization zars() {
         throw not_implemented_yet();
     }
 

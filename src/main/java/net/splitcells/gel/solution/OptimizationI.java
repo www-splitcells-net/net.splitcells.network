@@ -15,18 +15,18 @@ import net.splitcells.gel.data.datubāze.DatuBāze;
 import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.problem.Problēma;
-import net.splitcells.gel.problem.atvasināts.AtvasinātsAtrisinājums;
+import net.splitcells.gel.problem.atvasināts.AtvasinātsOptimization;
 import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
 
 import java.util.function.Function;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
-public class OptimizationI implements Atrisinājums {
+public class OptimizationI implements Optimization {
 	private final Problēma problēma;
 	private final Vēsture vēsture;
 	
-	public static Atrisinājums atrisinājums(Problēma problēma) {
+	public static Optimization atrisinājums(Problēma problēma) {
 		return new OptimizationI(problēma);
 	}
 
@@ -66,17 +66,17 @@ public class OptimizationI implements Atrisinājums {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Atrisinājums uzAtrisinājumu() {
+	public Optimization uzAtrisinājumu() {
 		return this.problēma.uzAtrisinājumu();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Atrisinājums kāAtrisinājums() {
+	public Optimization kāAtrisinājums() {
 		return this.problēma.kāAtrisinājums();
 	}
 
 	@Override
-	public AtvasinātsAtrisinājums atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātaijs) {
+	public AtvasinātsOptimization atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātaijs) {
 		return problēma.atvasinājums(atvasinātaijs);
 	}
 

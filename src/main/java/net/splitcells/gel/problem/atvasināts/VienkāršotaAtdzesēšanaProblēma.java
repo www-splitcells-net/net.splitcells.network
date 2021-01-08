@@ -1,7 +1,7 @@
 package net.splitcells.gel.problem.atvasināts;
 
 import net.splitcells.dem.utils.random.Randomness;
-import net.splitcells.gel.solution.Atrisinājums;
+import net.splitcells.gel.solution.Optimization;
 import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.tips.Atvasināšana;
@@ -13,14 +13,14 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 
-public class VienkāršotaAtdzesēšanaProblēma extends AtvasinātsAtrisinājums {
+public class VienkāršotaAtdzesēšanaProblēma extends AtvasinātsOptimization {
 
-    public static Atrisinājums vienkāršotsAtzesēšanasProblēma(Atrisinājums atrisinājums) {
-        return vienkāršsotsAtdzesēšanasProblēma(atrisinājums, i ->
+    public static Optimization vienkāršotsAtzesēšanasProblēma(Optimization optimization) {
+        return vienkāršsotsAtdzesēšanasProblēma(optimization, i ->
                 1f / (i.floatValue() + 1f));
     }
-    public static Atrisinājums vienkāršsotsAtdzesēšanasProblēma(Atrisinājums atrisinājums, Function<Integer, Float> temperatureFunction) {
-        return new VienkāršotaAtdzesēšanaProblēma(atrisinājums.piešķiršanas(), atrisinājums.ierobežojums(), temperatureFunction);
+    public static Optimization vienkāršsotsAtdzesēšanasProblēma(Optimization optimization, Function<Integer, Float> temperatureFunction) {
+        return new VienkāršotaAtdzesēšanaProblēma(optimization.piešķiršanas(), optimization.ierobežojums(), temperatureFunction);
     }
 
     protected VienkāršotaAtdzesēšanaProblēma(Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<Integer, Float> temperatureFunction) {

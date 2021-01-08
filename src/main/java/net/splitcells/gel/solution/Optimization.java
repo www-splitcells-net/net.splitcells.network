@@ -17,15 +17,15 @@ import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
 
 import java.util.function.Function;
 
-public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
+public interface Optimization extends Problēma, AtrisinājumaSkats {
 
     @Returns_this
-    default Atrisinājums optimizē(Optimizācija optimizācija) {
+    default Optimization optimizē(Optimizācija optimizācija) {
         return optimizēArFunkciju(s -> optimizācija.optimizē(s));
     }
 
     @Returns_this
-    default Atrisinājums optimizēArFunkciju(Function<Atrisinājums, List<OptimizācijasNotikums>> optimizācijaFunkcija) {
+    default Optimization optimizēArFunkciju(Function<Optimization, List<OptimizācijasNotikums>> optimizācijaFunkcija) {
         while (!irOptimāls()) {
             final var ieteikumi = optimizācijaFunkcija.apply(this);
             if (ieteikumi.isEmpty()) {
@@ -37,12 +37,12 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
     }
 
     @Returns_this
-    default Atrisinājums optimizēVienreis(Optimizācija optimizācija) {
+    default Optimization optimizēVienreis(Optimizācija optimizācija) {
         return optimizeArFunkcijuVienreis(s -> optimizācija.optimizē(s));
     }
 
     @Returns_this
-    default Atrisinājums optimizeArFunkcijuVienreis(Function<Atrisinājums, List<OptimizācijasNotikums>> optimizācija) {
+    default Optimization optimizeArFunkcijuVienreis(Function<Optimization, List<OptimizācijasNotikums>> optimizācija) {
         final var ieteikumi = optimizācija.apply(this);
         if (ieteikumi.isEmpty()) {
             return this;
@@ -52,24 +52,24 @@ public interface Atrisinājums extends Problēma, AtrisinājumaSkats {
     }
 
     @Returns_this
-    default Atrisinājums optimizē(List<OptimizācijasNotikums> notikumi) {
+    default Optimization optimizē(List<OptimizācijasNotikums> notikumi) {
         notikumi.forEach(this::optimizē);
         return this;
     }
 
     @Returns_this
-    default Atrisinājums optimizē(List<OptimizācijasNotikums> notikumi, OptimizationParameters optimizationParameters) {
+    default Optimization optimizē(List<OptimizācijasNotikums> notikumi, OptimizationParameters optimizationParameters) {
         notikumi.forEach(e -> optimizē(e, optimizationParameters));
         return this;
     }
 
     @Returns_this
-    default Atrisinājums optimizē(OptimizācijasNotikums notikums) {
+    default Optimization optimizē(OptimizācijasNotikums notikums) {
         return optimizē(notikums, OptimizationParameters.optimizācijasParametri());
     }
 
     @Returns_this
-    default Atrisinājums optimizē(OptimizācijasNotikums notikums, OptimizationParameters optimizationParameters) {
+    default Optimization optimizē(OptimizācijasNotikums notikums, OptimizationParameters optimizationParameters) {
         if (notikums.soluTips().equals(PIEŠĶIRŠANA)) {
             this.piešķirt(
                     prasības_nelietotas().gūtJēluRindas(notikums.prasība().interpretē().get().indekss()),
