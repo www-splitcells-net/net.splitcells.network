@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.not;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.gel.solution.Optimization;
+import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.notikums.Piešķiršana;
 import net.splitcells.gel.solution.history.notikums.PiešķiršanaMaiņaTips;
 import net.splitcells.gel.solution.history.refleksija.RefleksijasDatiI;
@@ -35,39 +35,39 @@ import java.util.Set;
 
 public class VēstureI implements Vēsture {
 
-    private final Optimization optimization;
+    private final Solution solution;
     private int pēdējaNotikumuId = -1;
     private Piešķiršanas piešķiršanas;
 
-    protected VēstureI(Optimization optimization) {
+    protected VēstureI(Solution solution) {
         piešķiršanas = Piešķiršanass.piešķiršanas
                 (VĒSTURE.apraksts()
                         , datuBāze
                                 (NOTIKUMS.apraksts()
-                                        , () -> optimization.path().withAppended(VĒSTURE.apraksts())
+                                        , () -> solution.path().withAppended(VĒSTURE.apraksts())
                                         , PIEŠĶIRŠANA_ID, PIEŠĶIRŠANAS_NOTIKUMS)
                         , datuBāze
                                 (RADĪJUMS.apraksts()
-                                        , () -> optimization.path().withAppended(VĒSTURE.apraksts())
+                                        , () -> solution.path().withAppended(VĒSTURE.apraksts())
                                         , REFLEKSIJAS_DATI));
-        this.optimization = optimization;
-        optimization.abonē_uz_papildinājums(this);
-        optimization.abonē_uz_iepriekšNoņemšana(this);
+        this.solution = solution;
+        solution.abonē_uz_papildinājums(this);
+        solution.abonē_uz_iepriekšNoņemšana(this);
     }
 
     @Override
     public void reģistrē_papildinājumi(Rinda piešķiršanasVertība) {
         final var refleksijasDati = RefleksijasDatiI.refleksijasDatī();
         refleksijasDati.ar(PilnsNovērtejums.class
-                , pilnsNovērtejums(optimization.ierobežojums().novērtējums()));
+                , pilnsNovērtejums(solution.ierobežojums().novērtējums()));
         refleksijasDati.ar(PiešķiršanaNovērtējums.class
-                , pieškiršanasNovērtejums(optimization.ierobežojums().novērtējums(piešķiršanasVertība)));
+                , pieškiršanasNovērtejums(solution.ierobežojums().novērtējums(piešķiršanasVertība)));
         final Rinda piešķiršana
                 = prasība().pieliktUnPārtulkot(list(
                 parceltPedeijuNotikumuIdUzpriekšu()
                 , Piešķiršana.piešķiršana(PiešķiršanaMaiņaTips.PAPILDINĀJUMS
-                        , optimization.prasība_no_piešķiršana(piešķiršanasVertība)
-                        , optimization.piedāvājums_no_piešķiršana(piešķiršanasVertība))));
+                        , solution.prasība_no_piešķiršana(piešķiršanasVertība)
+                        , solution.piedāvājums_no_piešķiršana(piešķiršanasVertība))));
         piešķiršanas.piešķirt(piešķiršana, this.piedāvājums().pieliktUnPārtulkot(list(refleksijasDati)));
     }
 
@@ -75,15 +75,15 @@ public class VēstureI implements Vēsture {
     public void rēgistrē_pirms_noņemšanas(Rinda noņemtAtrisinājums) {
         final var refleksijasDati = RefleksijasDatiI.refleksijasDatī();
         refleksijasDati.ar(PilnsNovērtejums.class
-                , pilnsNovērtejums(optimization.ierobežojums().novērtējums()));
+                , pilnsNovērtejums(solution.ierobežojums().novērtējums()));
         refleksijasDati.ar(PiešķiršanaNovērtējums.class
-                , pieškiršanasNovērtejums(optimization.ierobežojums().novērtējums(noņemtAtrisinājums)));
+                , pieškiršanasNovērtejums(solution.ierobežojums().novērtējums(noņemtAtrisinājums)));
         final Rinda pieķiršanas
                 = prasība().pieliktUnPārtulkot(list(
                 parceltPedeijuNotikumuIdUzpriekšu()
                 , Piešķiršana.piešķiršana(PiešķiršanaMaiņaTips.NOŅEMŠANA
-                        , optimization.prasība_no_piešķiršana(noņemtAtrisinājums)
-                        , optimization.piedāvājums_no_piešķiršana(noņemtAtrisinājums))));
+                        , solution.prasība_no_piešķiršana(noņemtAtrisinājums)
+                        , solution.piedāvājums_no_piešķiršana(noņemtAtrisinājums))));
         piešķiršanas.piešķirt(pieķiršanas, this.piedāvājums().pieliktUnPārtulkot(list(refleksijasDati)));
     }
 
@@ -118,15 +118,15 @@ public class VēstureI implements Vēsture {
                 .vērtība(PIEŠĶIRŠANAS_NOTIKUMS);
         final var notikumuTips = notikumuKoNoņemnt.tips();
         if (notikumuTips.equals(PiešķiršanaMaiņaTips.PAPILDINĀJUMS)) {
-            final var pieškiršanas = optimization.piešķiršanasNo
-                    (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(optimization.prasība()).get()
-                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(optimization.piedāvājums()).get());
+            final var pieškiršanas = solution.piešķiršanasNo
+                    (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(solution.prasība()).get()
+                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(solution.piedāvājums()).get());
             assertThat(pieškiršanas).hasSize(1);
-            pieškiršanas.forEach(e -> optimization.noņemt(e));
+            pieškiršanas.forEach(e -> solution.noņemt(e));
         } else if (notikumuTips.equals(PiešķiršanaMaiņaTips.NOŅEMŠANA)) {
-            optimization.piešķirt
-                    (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(optimization.prasība()).get()
-                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(optimization.piedāvājums()).get());
+            solution.piešķirt
+                    (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(solution.prasība()).get()
+                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(solution.piedāvājums()).get());
         } else {
             throw new UnsupportedOperationException();
         }

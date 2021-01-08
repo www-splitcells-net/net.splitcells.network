@@ -4,8 +4,8 @@ import net.splitcells.gel.problem.Problēma;
 
 public class OptimizationBuilderI extends OptimizationBuilder {
     @Override
-    public Optimization atrisinājum(Problēma problēma) {
-        return joinAspects(OptimizationI.atrisinājums(problēma));
+    public Solution atrisinājum(Problēma problēma) {
+        return joinAspects(SolutionI.atrisinājums(problēma));
     }
 
     @Override

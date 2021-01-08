@@ -1,10 +1,10 @@
 package net.splitcells.gel.problem;
 
 import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
-import net.splitcells.gel.solution.Optimization;
+import net.splitcells.gel.solution.Solution;
 
 public interface Problēma extends Piešķiršanas, ProblēmasSkats {
-	Optimization uzAtrisinājumu();
+	Solution uzAtrisinājumu();
 
-	Optimization kāAtrisinājums();
+	Solution kāAtrisinājums();
 }

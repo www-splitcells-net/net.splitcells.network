@@ -2,9 +2,9 @@ package net.splitcells.gel.solution.history;
 
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
-import net.splitcells.gel.solution.Optimization;
+import net.splitcells.gel.solution.Solution;
 
 public interface VēsturesVeidotajs extends Closeable, Flushable {
 
-    Vēsture vēsture(Optimization optimization);
+    Vēsture vēsture(Solution solution);
 }

@@ -45,7 +45,7 @@ public class AtrisinājumBūvētājs implements Definē_prasības_nosaukumu, Def
         piedāvājumi.forEach(piedāvājums -> piedāvājumuDatuBaže.pieliktUnPārtulkot(piedāvājums));
         return problēma(
                 piešķiršanas(
-                        Optimization.class.getSimpleName()
+                        Solution.class.getSimpleName()
                         , prasībasDatuBaže
                         , piedāvājumuDatuBaže)
                 , ierobežojums);

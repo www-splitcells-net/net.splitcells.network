@@ -5,28 +5,28 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.data.tabula.kolonna.Kolonna;
 import net.splitcells.gel.data.tabula.kolonna.KolonnaSkats;
-import net.splitcells.gel.solution.Atrisinājumi;
+import net.splitcells.gel.problem.atvasināts.AtvasinātsSolution;
+import net.splitcells.gel.solution.Solutions;
 import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.data.datubāze.DatuBāze;
 import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.problem.atvasināts.AtvasinātsOptimization;
 import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
-import net.splitcells.gel.solution.Optimization;
+import net.splitcells.gel.solution.Solution;
 
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.problem.atvasināts.AtvasinātsOptimization.atvasinātaProblema;
+import static net.splitcells.gel.problem.atvasināts.AtvasinātsSolution.atvasinātaProblema;
 
 public class ProblēmaI implements Problēma {
 
     private final Ierobežojums ierobežojums;
     private final Piešķiršanas piešķiršanas;
-    protected Optimization kāOptimization;
+    protected Solution kāSolution;
 
     public static Problēma problēma(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
         return new ProblēmaI(piešķiršanas, ierobežojums);
@@ -49,20 +49,20 @@ public class ProblēmaI implements Problēma {
     }
 
     @Override
-    public Optimization uzAtrisinājumu() {
+    public Solution uzAtrisinājumu() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Optimization kāAtrisinājums() {
-        if (kāOptimization == null) {
-            kāOptimization = Atrisinājumi.atrisinājum(this);
+    public Solution kāAtrisinājums() {
+        if (kāSolution == null) {
+            kāSolution = Solutions.atrisinājum(this);
         }
-        return kāOptimization;
+        return kāSolution;
     }
 
     @Override
-    public AtvasinātsOptimization atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> konversija) {
+    public AtvasinātsSolution atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> konversija) {
         return atvasinātaProblema(() -> list(), piešķiršanas, ierobežojums, konversija);
     }
 

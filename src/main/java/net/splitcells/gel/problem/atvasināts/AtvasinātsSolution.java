@@ -3,7 +3,7 @@ package net.splitcells.gel.problem.atvasināts;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.solution.Optimization;
+import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.Vēsture;
 import net.splitcells.gel.solution.history.Vēstures;
 import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
@@ -25,33 +25,33 @@ import java.util.function.Function;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 
-public class AtvasinātsOptimization implements Optimization {
+public class AtvasinātsSolution implements Solution {
 
     protected Ierobežojums ierobežojums;
     private final Piešķiršanas piešķiršanas;
     private final Vēsture vēsture;
     private final Discoverable konteksts;
     
-    public static AtvasinātsOptimization atvasinātaProblema(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
-        return new AtvasinātsOptimization(konteksts, piešķiršanas, originalIerobežojums, Atvasināšana.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
+    public static AtvasinātsSolution atvasinātaProblema(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
+        return new AtvasinātsSolution(konteksts, piešķiršanas, originalIerobežojums, Atvasināšana.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
     }
 
-    protected AtvasinātsOptimization(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
+    protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
         this(konteksts, piešķiršanas, oriģinālaisIerobežojums, Atvasināšana.atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
     }
 
-    public static AtvasinātsOptimization atvasinātsProblēma(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
-        return new AtvasinātsOptimization(konteksts, piešķiršanas, ierobežojums, atvasināšana);
+    public static AtvasinātsSolution atvasinātsProblēma(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+        return new AtvasinātsSolution(konteksts, piešķiršanas, ierobežojums, atvasināšana);
     }
 
-    protected AtvasinātsOptimization(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+    protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = atvasināšana;
         vēsture = Vēstures.vēsture(this);
         this.konteksts = konteksts;
     }
 
-    protected AtvasinātsOptimization(Discoverable konteksts, Piešķiršanas piešķiršanas) {
+    protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas) {
         this.piešķiršanas = piešķiršanas;
         vēsture = Vēstures.vēsture(this);
         this.konteksts = konteksts;
@@ -68,17 +68,17 @@ public class AtvasinātsOptimization implements Optimization {
     }
 
     @Override
-    public Optimization uzAtrisinājumu() {
+    public Solution uzAtrisinājumu() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Optimization kāAtrisinājums() {
+    public Solution kāAtrisinājums() {
         throw not_implemented_yet();
     }
 
     @Override
-    public AtvasinātsOptimization atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasināšana) {
+    public AtvasinātsSolution atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasināšana) {
         throw not_implemented_yet();
     }
 
@@ -214,7 +214,7 @@ public class AtvasinātsOptimization implements Optimization {
 
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
-        return konteksts.path().withAppended(AtvasinātsOptimization.class.getSimpleName());
+        return konteksts.path().withAppended(AtvasinātsSolution.class.getSimpleName());
     }
 
     @Override

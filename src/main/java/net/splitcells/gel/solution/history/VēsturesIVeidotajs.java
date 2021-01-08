@@ -1,12 +1,12 @@
 package net.splitcells.gel.solution.history;
 
-import net.splitcells.gel.solution.Optimization;
+import net.splitcells.gel.solution.Solution;
 
 public class VēsturesIVeidotajs implements VēsturesVeidotajs {
 
     @Override
-    public Vēsture vēsture(Optimization optimization) {
-        return new VēstureI(optimization);
+    public Vēsture vēsture(Solution solution) {
+        return new VēstureI(solution);
     }
 
     @Override
