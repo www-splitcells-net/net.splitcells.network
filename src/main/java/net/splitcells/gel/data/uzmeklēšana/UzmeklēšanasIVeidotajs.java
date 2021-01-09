@@ -1,7 +1,7 @@
 package net.splitcells.gel.data.uzmeklēšana;
 
-import net.splitcells.gel.data.tabula.Tabula;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 
 public class UzmeklēšanasIVeidotajs implements UzmeklēšanasVeidotajs {
     @Override

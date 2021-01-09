@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 import net.splitcells.dem.utils.Not_implemented_yet;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.Tabula;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.data.tabula.kolonna.Kolonna;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.kolonna.Kolonna;
 
 public class UzmeklēšanasKolonna<T> implements Kolonna<T> {
 

@@ -2,7 +2,7 @@ package net.splitcells.gel.solution.history.event;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.gel.data.tabula.Rinda;
+import net.splitcells.gel.data.table.Rinda;
 import org.w3c.dom.Node;
 
 import static net.splitcells.gel.Language.*;

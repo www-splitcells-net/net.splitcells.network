@@ -1,6 +1,6 @@
 package net.splitcells.gel.constraint.tips;
 
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
 

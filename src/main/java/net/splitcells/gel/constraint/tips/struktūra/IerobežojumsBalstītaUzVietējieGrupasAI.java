@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.tabula.Rinda;
+import net.splitcells.gel.data.table.Rinda;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.rating.rater.Rater;

@@ -5,15 +5,15 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.kolonna.Kolonna;
-import net.splitcells.gel.data.tabula.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.kolonna.Kolonna;
+import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
 import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
-import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
-import net.splitcells.gel.data.datubāze.DatuBāze;
-import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.database.AfterAdditionSubscriber;
+import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.rating.structure.MetaRating;
@@ -61,7 +61,7 @@ public class SolutionI implements Solution {
 	}
 
 	@Override
-	public Piešķiršanas piešķiršanas() {
+	public Allocations piešķiršanas() {
 		return problēma.piešķiršanas();
 	}
 
@@ -81,32 +81,32 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public DatuBāze piedāvājums() {
+	public Database piedāvājums() {
 		return this.problēma.piedāvājums();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public DatuBāze piedāvājumi_lietoti() {
+	public Database piedāvājumi_lietoti() {
 		return this.problēma.piedāvājumi_lietoti();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public DatuBāze piedāvājums_nelietots() {
+	public Database piedāvājums_nelietots() {
 		return this.problēma.piedāvājums_nelietots();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public DatuBāze prasība() {
+	public Database prasība() {
 		return this.problēma.prasība();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public DatuBāze prasība_lietots() {
+	public Database prasība_lietots() {
 		return this.problēma.prasība_lietots();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public DatuBāze prasības_nelietotas() {
+	public Database prasības_nelietotas() {
 		return this.problēma.prasības_nelietotas();
 	}
 
@@ -171,22 +171,22 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public <T extends PapildinājumsKlausītājs & PirmsNoņemšanasKlausītājs> void sinhronizē(final T klausītājs) {
+	public <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void sinhronizē(final T klausītājs) {
 		this.problēma.sinhronizē(klausītājs);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void abonē_uz_papildinājums(final PapildinājumsKlausītājs klausītājs) {
+	public void abonē_uz_papildinājums(final AfterAdditionSubscriber klausītājs) {
 		this.problēma.abonē_uz_papildinājums(klausītājs);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void abonē_uz_iepriekšNoņemšana(final PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+	public void abonē_uz_iepriekšNoņemšana(final BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
 		this.problēma.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void abonē_uz_pēcNoņemšana(final PirmsNoņemšanasKlausītājs listener) {
+	public void abonē_uz_pēcNoņemšana(final BeforeRemovalSubscriber listener) {
 		this.problēma.abonē_uz_pēcNoņemšana(listener);
 	}
 

@@ -1,8 +1,8 @@
 package net.splitcells.gel.solution;
 
-import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
+import net.splitcells.gel.data.allocation.Allocations;
 
-public interface SolutionHistory extends Piešķiršanas {
+public interface SolutionHistory extends Allocations {
 
 	Solution priekšmets();
 }

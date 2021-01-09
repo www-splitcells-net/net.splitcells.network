@@ -8,8 +8,8 @@ import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.gel.data.tabula.Tabula;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 
 public class UzmeklēšanaI<T> implements Uzmeklēšana<T> {
     private final UzmeklēšanasTabula tukšaUzmeklēšanasTabula;

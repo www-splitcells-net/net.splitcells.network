@@ -2,7 +2,7 @@ package net.splitcells.gel.constraint;
 
 import java.util.Optional;
 
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 

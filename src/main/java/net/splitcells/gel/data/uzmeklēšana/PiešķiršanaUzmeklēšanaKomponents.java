@@ -2,10 +2,10 @@ package net.splitcells.gel.data.uzmeklēšana;
 
 import java.util.function.Predicate;
 
-import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
+import net.splitcells.gel.data.allocation.Allocations;
 
 public interface PiešķiršanaUzmeklēšanaKomponents<T> extends UzmeklēšanaKomponents<T> {
-	Piešķiršanas uzmeklēšana(T vertība);
+	Allocations uzmeklēšana(T vertība);
 
-	Piešķiršanas uzmeklēšana(Predicate<T> predikāts);
+	Allocations uzmeklēšana(Predicate<T> predikāts);
 }

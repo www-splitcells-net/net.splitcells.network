@@ -12,9 +12,9 @@ import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejum
 import java.util.Collection;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.Tabula;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 import org.w3c.dom.Node;

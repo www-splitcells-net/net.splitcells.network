@@ -2,7 +2,7 @@ package net.splitcells.gel.problem;
 
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;

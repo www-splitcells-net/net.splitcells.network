@@ -1,8 +1,8 @@
 package net.splitcells.gel.data.uzmeklēšana;
 
 import net.splitcells.dem.environment.resource.ResourceI;
-import net.splitcells.gel.data.tabula.Tabula;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 
 public class Uzmeklēšanas extends ResourceI<UzmeklēšanasVeidotajs> {
     public Uzmeklēšanas() {

@@ -7,8 +7,8 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
 import static net.splitcells.gel.constraint.GrupaId.grupa;
-import static net.splitcells.gel.data.tabula.atribūts.AtribūtsI.atributs;
-import static net.splitcells.gel.data.tabula.atribūts.SarakstsAtribūts.listAttribute;
+import static net.splitcells.gel.data.table.atribūts.AtribūtsI.atributs;
+import static net.splitcells.gel.data.table.atribūts.SarakstsAtribūts.listAttribute;
 import static net.splitcells.gel.rating.structure.MetaRating.neitrāla;
 
 import java.util.Optional;
@@ -18,8 +18,8 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.Tabula;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Tabula;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -28,14 +28,14 @@ import net.splitcells.dem.utils.reflection.PubliclyConstructed;
 import net.splitcells.dem.utils.reflection.PubliclyTyped;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaFiltrs;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
-import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
-import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.database.AfterAdditionSubscriber;
+import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 
-public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemšanasKlausītājs, IerobežojumuRakstnieks, Discoverable, PubliclyTyped<Ierobežojums>, PubliclyConstructed<Domable>, Domable {
+public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSubscriber, IerobežojumuRakstnieks, Discoverable, PubliclyTyped<Ierobežojums>, PubliclyConstructed<Domable>, Domable {
     Atribūts<Rinda> RINDA = atributs(Rinda.class, "rinda");
     Atribūts<java.util.List<Ierobežojums>> IZDALĪŠANA_UZ = listAttribute(Ierobežojums.class, "idalīšana uz");
     Atribūts<GrupaId> IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "ienākošie ierobežojumu grupas id");

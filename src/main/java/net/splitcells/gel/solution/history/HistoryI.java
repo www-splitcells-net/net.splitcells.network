@@ -5,7 +5,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
 import static net.splitcells.gel.Language.*;
-import static net.splitcells.gel.data.datubāze.DatuBāzes.datuBāze;
+import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.solution.history.meta.type.AllocationRating.pieškiršanasNovērtejums;
 import static net.splitcells.gel.solution.history.meta.type.CompleteRating.pilnsNovērtejums;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,15 +18,15 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.event.Allocation;
 import net.splitcells.gel.solution.history.event.AllocationChangeType;
 import net.splitcells.gel.solution.history.meta.MetaDataI;
-import net.splitcells.gel.data.tabula.kolonna.Kolonna;
-import net.splitcells.gel.data.tabula.kolonna.KolonnaSkats;
-import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
-import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
-import net.splitcells.gel.data.datubāze.DatuBāze;
-import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
-import net.splitcells.gel.data.piešķiršanas.Piešķiršanass;
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.kolonna.Kolonna;
+import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.database.AfterAdditionSubscriber;
+import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.allocation.Allocationss;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import org.w3c.dom.Node;
@@ -37,10 +37,10 @@ public class HistoryI implements History {
 
     private final Solution solution;
     private int pēdējaNotikumuId = -1;
-    private Piešķiršanas piešķiršanas;
+    private Allocations piešķiršanas;
 
     protected HistoryI(Solution solution) {
-        piešķiršanas = Piešķiršanass.piešķiršanas
+        piešķiršanas = Allocationss.piešķiršanas
                 (VĒSTURE.apraksts()
                         , datuBāze
                                 (NOTIKUMS.apraksts()
@@ -149,17 +149,17 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void abonē_uz_papildinājums(PapildinājumsKlausītājs klausītājs) {
+    public void abonē_uz_papildinājums(AfterAdditionSubscriber klausītājs) {
         piešķiršanas.abonē_uz_papildinājums(klausītājs);
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+    public void abonē_uz_iepriekšNoņemšana(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
         piešķiršanas.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public void abonē_uz_pēcNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+    public void abonē_uz_pēcNoņemšana(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
         piešķiršanas.abonē_uz_pēcNoņemšana(pirmsNoņemšanasKlausītājs);
     }
 
@@ -192,32 +192,32 @@ public class HistoryI implements History {
     }
 
     @Override
-    public DatuBāze piedāvājums() {
+    public Database piedāvājums() {
         return piešķiršanas.piedāvājums();
     }
 
     @Override
-    public DatuBāze piedāvājumi_lietoti() {
+    public Database piedāvājumi_lietoti() {
         return piešķiršanas.piedāvājumi_lietoti();
     }
 
     @Override
-    public DatuBāze piedāvājums_nelietots() {
+    public Database piedāvājums_nelietots() {
         return piešķiršanas.piedāvājums_nelietots();
     }
 
     @Override
-    public DatuBāze prasība() {
+    public Database prasība() {
         return piešķiršanas.prasība();
     }
 
     @Override
-    public DatuBāze prasība_lietots() {
+    public Database prasība_lietots() {
         return piešķiršanas.prasība_lietots();
     }
 
     @Override
-    public DatuBāze prasības_nelietotas() {
+    public Database prasības_nelietotas() {
         return piešķiršanas.prasības_nelietotas();
     }
 

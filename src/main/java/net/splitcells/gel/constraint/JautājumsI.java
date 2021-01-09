@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.constraint.tips.PriekšVisiem;
 import net.splitcells.gel.constraint.tips.PriekšVisiemF;
 import net.splitcells.gel.constraint.tips.Tad;

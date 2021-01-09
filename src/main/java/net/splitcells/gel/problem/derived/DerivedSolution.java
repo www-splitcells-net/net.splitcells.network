@@ -6,16 +6,16 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
-import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
-import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.data.tabula.kolonna.Kolonna;
-import net.splitcells.gel.data.tabula.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.database.AfterAdditionSubscriber;
+import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.kolonna.Kolonna;
+import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.tips.Atvasināšana;
-import net.splitcells.gel.data.datubāze.DatuBāze;
-import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
+import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.rating.structure.MetaRating;
 import org.w3c.dom.Node;
 
@@ -28,30 +28,30 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 public class DerivedSolution implements Solution {
 
     protected Ierobežojums ierobežojums;
-    private final Piešķiršanas piešķiršanas;
+    private final Allocations piešķiršanas;
     private final History vēsture;
     private final Discoverable konteksts;
     
-    public static DerivedSolution atvasinātaProblema(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
+    public static DerivedSolution atvasinātaProblema(Discoverable konteksts, Allocations piešķiršanas, Ierobežojums originalIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
         return new DerivedSolution(konteksts, piešķiršanas, originalIerobežojums, Atvasināšana.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
     }
 
-    protected DerivedSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
+    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
         this(konteksts, piešķiršanas, oriģinālaisIerobežojums, Atvasināšana.atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
     }
 
-    public static DerivedSolution atvasinātsProblēma(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+    public static DerivedSolution atvasinātsProblēma(Discoverable konteksts, Allocations piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
         return new DerivedSolution(konteksts, piešķiršanas, ierobežojums, atvasināšana);
     }
 
-    protected DerivedSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = atvasināšana;
         vēsture = Histories.vēsture(this);
         this.konteksts = konteksts;
     }
 
-    protected DerivedSolution(Discoverable konteksts, Piešķiršanas piešķiršanas) {
+    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas) {
         this.piešķiršanas = piešķiršanas;
         vēsture = Histories.vēsture(this);
         this.konteksts = konteksts;
@@ -63,7 +63,7 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Piešķiršanas piešķiršanas() {
+    public Allocations piešķiršanas() {
         return piešķiršanas;
     }
 
@@ -83,32 +83,32 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public DatuBāze piedāvājums() {
+    public Database piedāvājums() {
         return piešķiršanas.piedāvājums();
     }
 
     @Override
-    public DatuBāze piedāvājumi_lietoti() {
+    public Database piedāvājumi_lietoti() {
         return piešķiršanas.piedāvājumi_lietoti();
     }
 
     @Override
-    public DatuBāze piedāvājums_nelietots() {
+    public Database piedāvājums_nelietots() {
         return piešķiršanas.piedāvājums_nelietots();
     }
 
     @Override
-    public DatuBāze prasība() {
+    public Database prasība() {
         return piešķiršanas.prasība();
     }
 
     @Override
-    public DatuBāze prasība_lietots() {
+    public Database prasība_lietots() {
         return piešķiršanas.prasība_lietots();
     }
 
     @Override
-    public DatuBāze prasības_nelietotas() {
+    public Database prasības_nelietotas() {
         return piešķiršanas.prasības_nelietotas();
     }
 
@@ -158,17 +158,17 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public void abonē_uz_papildinājums(PapildinājumsKlausītājs klausītājs) {
+    public void abonē_uz_papildinājums(AfterAdditionSubscriber klausītājs) {
         piešķiršanas.abonē_uz_papildinājums(klausītājs);
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+    public void abonē_uz_iepriekšNoņemšana(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
         piešķiršanas.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public void abonē_uz_pēcNoņemšana(PirmsNoņemšanasKlausītājs klausītājs) {
+    public void abonē_uz_pēcNoņemšana(BeforeRemovalSubscriber klausītājs) {
         piešķiršanas.abonē_uz_pēcNoņemšana(klausītājs);
     }
 

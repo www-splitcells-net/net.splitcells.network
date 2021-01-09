@@ -3,7 +3,7 @@ package net.splitcells.gel.solution.optimization;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.Language;
-import net.splitcells.gel.data.tabula.RindasRādītājs;
+import net.splitcells.gel.data.table.RindasRādītājs;
 import org.w3c.dom.Node;
 
 import java.util.Objects;

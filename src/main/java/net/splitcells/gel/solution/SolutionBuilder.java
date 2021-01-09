@@ -3,16 +3,16 @@ package net.splitcells.gel.solution;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.gel.Language.*;
-import static net.splitcells.gel.data.piešķiršanas.Piešķiršanass.piešķiršanas;
+import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
 
-import static net.splitcells.gel.data.datubāze.DatuBāzes.datuBāze;
+import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.problem.ProblemI.problēma;
 
 import java.util.Arrays;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.problem.DefineDemands;
 import net.splitcells.gel.problem.DefineSupply;
 import net.splitcells.gel.problem.Define_Demand_Attributes;

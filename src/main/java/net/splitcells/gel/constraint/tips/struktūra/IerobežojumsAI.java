@@ -16,8 +16,8 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
 import static net.splitcells.gel.Language.ARGUMENTĀCIJA;
-import static net.splitcells.gel.data.datubāze.DatuBāzes.datuBāze;
-import static net.splitcells.gel.data.piešķiršanas.Piešķiršanass.piešķiršanas;
+import static net.splitcells.gel.data.database.Databases.datuBāze;
+import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
 import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
 import static net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums.rindasNovērtējums;
 import static net.splitcells.gel.constraint.Ziņojums.report;
@@ -33,8 +33,8 @@ import java.util.function.Predicate;
 
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.Tabula;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Tabula;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaFiltrs;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.constraint.Ziņojums;
@@ -50,8 +50,8 @@ import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Jautājums;
 import net.splitcells.gel.constraint.JautājumsI;
-import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
-import net.splitcells.gel.data.datubāze.DatuBāze;
+import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
@@ -62,9 +62,9 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     protected final net.splitcells.dem.data.set.list.List<Ierobežojums> bērni = list();
     protected Optional<Discoverable> golvenaisKonteksts = Optional.empty();
     private final List<Discoverable> konteksti = list();
-    protected final DatuBāze rindas;
-    protected final DatuBāze radījums = datuBāze("results", this, RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID, NOVĒRTĒJUMS, IZDALĪŠANA_UZ);
-    protected final Piešķiršanas rindasApstrāde;
+    protected final Database rindas;
+    protected final Database radījums = datuBāze("results", this, RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID, NOVĒRTĒJUMS, IZDALĪŠANA_UZ);
+    protected final Allocations rindasApstrāde;
     protected final Map<GrupaId, Rating> grupasApstrāde = map();
 
     protected IerobežojumsAI(GrupaId injekcijasGrupas) {
@@ -269,7 +269,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public Piešķiršanas rindasAbstrāde() {
+    public Allocations rindasAbstrāde() {
         return rindasApstrāde;
     }
 

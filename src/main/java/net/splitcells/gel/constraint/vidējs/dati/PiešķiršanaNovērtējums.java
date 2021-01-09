@@ -1,6 +1,6 @@
 package net.splitcells.gel.constraint.vidējs.dati;
 
-import net.splitcells.gel.data.tabula.Rinda;
+import net.splitcells.gel.data.table.Rinda;
 import net.splitcells.gel.rating.structure.MetaRating;
 
 public class PiešķiršanaNovērtējums {

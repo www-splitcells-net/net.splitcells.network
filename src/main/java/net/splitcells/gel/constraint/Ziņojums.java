@@ -1,6 +1,6 @@
 package net.splitcells.gel.constraint;
 
-import net.splitcells.gel.data.tabula.Rinda;
+import net.splitcells.gel.data.table.Rinda;
 import net.splitcells.gel.rating.structure.Rating;
 
 public final class Ziņojums {

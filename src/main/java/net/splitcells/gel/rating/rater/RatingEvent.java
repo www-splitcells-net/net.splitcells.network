@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.gel.data.tabula.Rinda;
+import net.splitcells.gel.data.table.Rinda;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.Rating;

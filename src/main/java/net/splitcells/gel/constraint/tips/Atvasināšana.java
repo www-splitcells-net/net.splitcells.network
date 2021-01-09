@@ -4,12 +4,12 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.tabula.Rinda;
+import net.splitcells.gel.data.table.Rinda;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Jautājums;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
-import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
+import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.MetaRating;
 import org.w3c.dom.Element;
@@ -104,7 +104,7 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public Piešķiršanas rindasAbstrāde() {
+    public Allocations rindasAbstrāde() {
         throw not_implemented_yet();
     }
 

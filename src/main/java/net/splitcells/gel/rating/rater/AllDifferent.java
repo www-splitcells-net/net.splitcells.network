@@ -19,9 +19,9 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.Tabula;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.constraint.Ierobežojums;
 
 public class AllDifferent<T> implements Rater {

@@ -2,17 +2,17 @@ package net.splitcells.gel.problem;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.kolonna.Kolonna;
-import net.splitcells.gel.data.tabula.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.kolonna.Kolonna;
+import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
 import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.solution.Solutions;
-import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
-import net.splitcells.gel.data.datubāze.DatuBāze;
-import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
+import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
-import net.splitcells.gel.data.tabula.atribūts.Atribūts;
+import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.table.atribūts.Atribūts;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.solution.Solution;
 
@@ -25,14 +25,14 @@ import static net.splitcells.gel.problem.derived.DerivedSolution.atvasinātaProb
 public class ProblemI implements Problem {
 
     private final Ierobežojums ierobežojums;
-    private final Piešķiršanas piešķiršanas;
+    private final Allocations piešķiršanas;
     protected Solution kāSolution;
 
-    public static Problem problēma(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
+    public static Problem problēma(Allocations piešķiršanas, Ierobežojums ierobežojums) {
         return new ProblemI(piešķiršanas, ierobežojums);
     }
 
-    protected ProblemI(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
+    protected ProblemI(Allocations piešķiršanas, Ierobežojums ierobežojums) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = ierobežojums;
         sinhronizē(ierobežojums);
@@ -44,7 +44,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Piešķiršanas piešķiršanas() {
+    public Allocations piešķiršanas() {
         return piešķiršanas;
     }
 
@@ -67,32 +67,32 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public DatuBāze piedāvājums() {
+    public Database piedāvājums() {
         return this.piešķiršanas.piedāvājums();
     }
 
     @Override
-    public DatuBāze piedāvājumi_lietoti() {
+    public Database piedāvājumi_lietoti() {
         return this.piešķiršanas.piedāvājumi_lietoti();
     }
 
     @Override
-    public DatuBāze piedāvājums_nelietots() {
+    public Database piedāvājums_nelietots() {
         return this.piešķiršanas.piedāvājums_nelietots();
     }
 
     @Override
-    public DatuBāze prasība() {
+    public Database prasība() {
         return this.piešķiršanas.prasība();
     }
 
     @Override
-    public DatuBāze prasība_lietots() {
+    public Database prasība_lietots() {
         return this.piešķiršanas.prasība_lietots();
     }
 
     @Override
-    public DatuBāze prasības_nelietotas() {
+    public Database prasības_nelietotas() {
         return this.piešķiršanas.prasības_nelietotas();
     }
 
@@ -157,22 +157,22 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public <T extends PapildinājumsKlausītājs & PirmsNoņemšanasKlausītājs> void sinhronizē(final T klausītājs) {
+    public <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void sinhronizē(final T klausītājs) {
         this.piešķiršanas.<T>sinhronizē(klausītājs);
     }
 
     @Override
-    public void abonē_uz_papildinājums(final PapildinājumsKlausītājs klausītājs) {
+    public void abonē_uz_papildinājums(final AfterAdditionSubscriber klausītājs) {
         this.piešķiršanas.abonē_uz_papildinājums(klausītājs);
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(final PirmsNoņemšanasKlausītājs pirmsNoņemšanasKlausītājs) {
+    public void abonē_uz_iepriekšNoņemšana(final BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
         this.piešķiršanas.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public void abonē_uz_pēcNoņemšana(final PirmsNoņemšanasKlausītājs klausītājs) {
+    public void abonē_uz_pēcNoņemšana(final BeforeRemovalSubscriber klausītājs) {
         this.piešķiršanas.abonē_uz_pēcNoņemšana(klausītājs);
     }
 

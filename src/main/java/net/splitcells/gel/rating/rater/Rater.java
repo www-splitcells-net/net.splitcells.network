@@ -2,8 +2,8 @@ package net.splitcells.gel.rating.rater;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
-import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.data.tabula.Tabula;
+import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Tabula;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.common.Vārdi;
