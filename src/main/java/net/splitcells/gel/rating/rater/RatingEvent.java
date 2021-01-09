@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.Rating;
@@ -18,11 +18,11 @@ import org.assertj.core.api.Assertions;
 
 public interface RatingEvent {
 
-    Map<Rinda, LocalRating> papildinājumi();
+    Map<Line, LocalRating> papildinājumi();
 
-    Set<Rinda> noņemšana();
+    Set<Line> noņemšana();
 
-    default void pieliktNovērtējumu_caurPapildinājumu(Rinda priekjšmets, Rating papilduNovērtējums, List<Ierobežojums> bērni,
+    default void pieliktNovērtējumu_caurPapildinājumu(Line priekjšmets, Rating papilduNovērtējums, List<Ierobežojums> bērni,
                                                       Optional<Rating> novērtejumsPirmsPapildinājumu) {
         final Rating momentānsNovērtējums;
         if (papildinājumi().containsKey(priekjšmets)) {
@@ -38,7 +38,7 @@ public interface RatingEvent {
                                 .arRadītuGrupasId(priekjšmets.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
     }
 
-    default void updateRating_viaAddition(Rinda priekšmets, Rating papilduNovērtējums, List<Ierobežojums> bērni,
+    default void updateRating_viaAddition(Line priekšmets, Rating papilduNovērtējums, List<Ierobežojums> bērni,
                                           Optional<Rating> novērtējumsPirmsPapildinājumu) {
         final Rating currentNovērtējums;
         if (papildinājumi().containsKey(priekšmets)) {
@@ -53,7 +53,7 @@ public interface RatingEvent {
                         .arRadītuGrupasId(priekšmets.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
     }
 
-    default void atjaunaNovērtējumu_caurAizvietošana(Rinda priekšmets, LocalRating jaunsNovērtējums) {
+    default void atjaunaNovērtējumu_caurAizvietošana(Line priekšmets, LocalRating jaunsNovērtējums) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(papildinājumi().keySet()).doesNotContain(priekšmets);
             assertThat(noņemšana()).doesNotContain(priekšmets);

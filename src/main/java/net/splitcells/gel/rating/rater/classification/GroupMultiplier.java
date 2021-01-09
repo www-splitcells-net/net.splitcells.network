@@ -15,8 +15,8 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.rating.rater.Rater;
@@ -53,7 +53,7 @@ public class GroupMultiplier implements Rater {
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu
-            (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+            (Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = novērtejumuNotikums();
         List<GrupaId> grupešanaNoPapildinajmiem = listWithValuesOf(
                 grupetaji.stream()
@@ -80,17 +80,17 @@ public class GroupMultiplier implements Rater {
 
     @Override
     public RatingEvent vērtē_pirms_noņemšana
-            (Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+            (Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
+    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
         return Xml.textNode(getClass().getSimpleName());
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+    public String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
         return grupetaji.stream()
                 .map(grupetajis -> grupetajis.toString())
                 .reduce((a, b) -> a + " " + b)

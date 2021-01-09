@@ -11,8 +11,8 @@ import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejum
 import java.util.Collection;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 import org.w3c.dom.Node;
@@ -33,7 +33,7 @@ public class Propagation implements Rater {
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu
-            (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+            (Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
         final RatingEvent novērtejumuNotikums = novērtejumuNotikums();
         novērtejumuNotikums.papildinājumi().put
                 (papildinājums
@@ -46,17 +46,17 @@ public class Propagation implements Rater {
 
     @Override
     public RatingEvent vērtē_pirms_noņemšana
-            (Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+            (Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
+    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
         return element("izdalīšana");
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+    public String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
         return "";
     }
 

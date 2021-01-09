@@ -5,15 +5,15 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.kolonna.Kolonna;
-import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.rating.structure.MetaRating;
@@ -111,47 +111,47 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Rinda piešķirt(final Rinda prasība, final Rinda piedāvājums) {
+	public Line piešķirt(final Line prasība, final Line piedāvājums) {
 		return this.problēma.piešķirt(prasība, piedāvājums);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Rinda prasība_no_piešķiršana(final Rinda piešķiršana) {
+	public Line prasība_no_piešķiršana(final Line piešķiršana) {
 		return this.problēma.prasība_no_piešķiršana(piešķiršana);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Rinda piedāvājums_no_piešķiršana(final Rinda piešķiršana) {
+	public Line piedāvājums_no_piešķiršana(final Line piešķiršana) {
 		return this.problēma.piedāvājums_no_piešķiršana(piešķiršana);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Rinda> piešķiršanas_no_piedāvājuma(final Rinda peidāvājums) {
+	public java.util.Set<Line> piešķiršanas_no_piedāvājuma(final Line peidāvājums) {
 		return this.problēma.piešķiršanas_no_piedāvājuma(peidāvājums);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Rinda> piešķiršanasNo(final Rinda prasība, final Rinda piedāvājums) {
+	public java.util.Set<Line> piešķiršanasNo(final Line prasība, final Line piedāvājums) {
 		return this.problēma.piešķiršanasNo(prasība, piedāvājums);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Rinda> piešķiršanas_no_prasības(final Rinda prasība) {
+	public java.util.Set<Line> piešķiršanas_no_prasības(final Line prasība) {
 		return this.problēma.piešķiršanas_no_prasības(prasība);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Rinda> peidāvājumi_no_prasībam(final Rinda prasība) {
+	public java.util.Set<Line> peidāvājumi_no_prasībam(final Line prasība) {
 		return this.problēma.peidāvājumi_no_prasībam(prasība);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Rinda pieliktUnPārtulkot(final List<?> vertības) {
+	public Line pieliktUnPārtulkot(final List<?> vertības) {
 		return this.problēma.pieliktUnPārtulkot(vertības);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Rinda pielikt(final Rinda rinda) {
+	public Line pielikt(final Line rinda) {
 		return this.problēma.pielikt(rinda);
 	}
 
@@ -161,12 +161,12 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void noņemt(final Rinda rinda) {
+	public void noņemt(final Line rinda) {
 		this.problēma.noņemt(rinda);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void aizvietot(final Rinda jaunaRinda) {
+	public void aizvietot(final Line jaunaRinda) {
 		this.problēma.aizvietot(jaunaRinda);
 	}
 
@@ -191,38 +191,38 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public List<Atribūts<Object>> nosaukumuSkats() {
+	public List<Attribute<Object>> nosaukumuSkats() {
 		return this.problēma.nosaukumuSkats();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public <T extends Object> KolonnaSkats<T> kolonnaSkats(final Atribūts<T> atribūts) {
+	public <T extends Object> ColumnView<T> kolonnaSkats(final Attribute<T> atribūts) {
 		return this.problēma.<T>kolonnaSkats(atribūts);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public List<Kolonna<Object>> kolonnaSkats() {
+	public List<Column<Object>> kolonnaSkats() {
 		return this.problēma.kolonnaSkats();
 	}
 
 	@Deprecated
 	@java.lang.SuppressWarnings("all")
-	public ListView<Rinda> jēlaRindasSkats() {
+	public ListView<Line> jēlaRindasSkats() {
 		return this.problēma.jēlaRindasSkats();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public boolean satur(final Rinda rinda) {
+	public boolean satur(final Line rinda) {
 		return this.problēma.satur(rinda);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public List<Rinda> gūtRindas() {
+	public List<Line> gūtRindas() {
 		return this.problēma.gūtRindas();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Rinda gūtJēluRindas(final int indekss) {
+	public Line gūtJēluRindas(final int indekss) {
 		return this.problēma.gūtJēluRindas(indekss);
 	}
 
@@ -242,7 +242,7 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public List<Rinda> jēlasRindas() {
+	public List<Line> jēlasRindas() {
 		return this.problēma.jēlasRindas();
 	}
 
@@ -252,7 +252,7 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Rinda uzmeklēVienādus(final Atribūts<Rinda> atribūts, final Rinda cits) {
+	public Line uzmeklēVienādus(final Attribute<Line> atribūts, final Line cits) {
 		return this.problēma.uzmeklēVienādus(atribūts, cits);
 	}
 

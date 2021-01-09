@@ -1,4 +1,4 @@
-package net.splitcells.gel.data.uzmeklēšana;
+package net.splitcells.gel.data.lookup;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
@@ -12,22 +12,22 @@ import java.util.stream.Collectors;
 
 import net.splitcells.dem.utils.Not_implemented_yet;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
-import net.splitcells.gel.data.table.kolonna.Kolonna;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.table.column.Column;
 
-public class UzmeklēšanasKolonna<T> implements Kolonna<T> {
+public class LookupColumn<T> implements Column<T> {
 
-    private final UzmeklēšanasTabula tabula;
-    private Optional<Uzmeklēšana<T>> uzmeklēšana = Optional.empty();
-    private final Atribūts<T> atribūts;
+    private final LookupTable tabula;
+    private Optional<Lookup<T>> uzmeklēšana = Optional.empty();
+    private final Attribute<T> atribūts;
 
-    public static <T> UzmeklēšanasKolonna<T> lookupColumn(UzmeklēšanasTabula tabula, Atribūts<T> atribūts) {
-        return new UzmeklēšanasKolonna<>(tabula, atribūts);
+    public static <T> LookupColumn<T> lookupColumn(LookupTable tabula, Attribute<T> atribūts) {
+        return new LookupColumn<>(tabula, atribūts);
     }
 
-    private UzmeklēšanasKolonna(UzmeklēšanasTabula tabula, Atribūts<T> atribūts) {
+    private LookupColumn(LookupTable tabula, Attribute<T> atribūts) {
         this.tabula = tabula;
         this.atribūts = atribūts;
     }
@@ -151,29 +151,29 @@ public class UzmeklēšanasKolonna<T> implements Kolonna<T> {
 
     private void nodrošinatUzmeklēšanaInitializets() {
         if (!uzmeklēšana.isPresent()) {
-            uzmeklēšana = Optional.of(Uzmeklēšanas.uzmeklē(tabula, atribūts));
+            uzmeklēšana = Optional.of(Lookups.uzmeklē(tabula, atribūts));
         }
     }
 
     @Override
-    public Tabula uzmeklēšana(T vertība) {
+    public Table uzmeklēšana(T vertība) {
         nodrošinatUzmeklēšanaInitializets();
         return uzmeklēšana.get().uzmeklēšana(vertība);
     }
 
     @Override
-    public Tabula uzmeklēšana(Predicate<T> predikāts) {
+    public Table uzmeklēšana(Predicate<T> predikāts) {
         nodrošinatUzmeklēšanaInitializets();
         return uzmeklēšana.get().uzmeklēšana(predikāts);
     }
 
     @Override
-    public void reģistrē_papildinājumi(Rinda addition) {
+    public void reģistrē_papildinājumi(Line addition) {
         uzmeklēšana.ifPresent(l -> l.reģistrē_papildinājums(addition.vērtība(atribūts), addition.indekss()));
     }
 
     @Override
-    public void rēgistrē_pirms_noņemšanas(Rinda removal) {
+    public void rēgistrē_pirms_noņemšanas(Line removal) {
         uzmeklēšana.ifPresent(l -> l.reģistē_noņemšana(removal.vērtība(atribūts), removal.indekss()));
     }
 

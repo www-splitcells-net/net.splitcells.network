@@ -3,7 +3,7 @@ package net.splitcells.gel.data.database;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.ResourceI;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import org.w3c.dom.Element;
 
 import static net.splitcells.dem.Dem.environment;
@@ -14,38 +14,38 @@ public class Databases extends ResourceI<DatabaseFactory> {
         super(() -> new DatabaseIFactory());
     }
 
-    public static Database datuBāze(String vārds, Atribūts<? extends Object>... atribūti) {
+    public static Database datuBāze(String vārds, Attribute<? extends Object>... atribūti) {
         return environment().config().configValue(Databases.class).datuBāze(vārds, atribūti);
     }
 
-    public static Database datuBāze(Atribūts<? extends Object>... atribūti) {
+    public static Database datuBāze(Attribute<? extends Object>... atribūti) {
         return environment().config().configValue(Databases.class).datuBāze(atribūti);
     }
 
-    public static Database datuBāze(List<Atribūts<? extends Object>> atribūti, List<List<Object>> rindasVertības) {
+    public static Database datuBāze(List<Attribute<? extends Object>> atribūti, List<List<Object>> rindasVertības) {
         return environment().config().configValue(Databases.class).datuBāze(atribūti, rindasVertības);
     }
 
     @Deprecated
-    public static Database datuBāze(String vārds, Discoverable vecāks, Atribūts<? extends Object>... atribūti) {
+    public static Database datuBāze(String vārds, Discoverable vecāks, Attribute<? extends Object>... atribūti) {
         return environment().config().configValue(Databases.class).datuBāze(vārds, vecāks, atribūti);
     }
 
-    public static Database datuBāze(String vārds, Discoverable vecāks, List<Atribūts<? extends Object>> atribūti) {
+    public static Database datuBāze(String vārds, Discoverable vecāks, List<Attribute<? extends Object>> atribūti) {
         return environment().config().configValue(Databases.class).datuBāze(vārds, vecāks, atribūti);
     }
 
-    public static Database datuBāze(List<Atribūts<?>> atribūti) {
+    public static Database datuBāze(List<Attribute<?>> atribūti) {
         return environment().config().configValue(Databases.class).datuBāze(atribūti);
     }
 
-    public static Database datuBāzeNoFods(List<Atribūts<?>> atribūti, Element fods) {
+    public static Database datuBāzeNoFods(List<Attribute<?>> atribūti, Element fods) {
         return environment().config().configValue(Databases.class).datuBāzeNoFods(atribūti, fods);
     }
 
-    public static List<Atribūts<? extends Object>> objektuAtribūti(List<Atribūts<Object>> atribūti) {
+    public static List<Attribute<? extends Object>> objektuAtribūti(List<Attribute<Object>> atribūti) {
         return atribūti.stream()
-                .map(a -> (Atribūts<? extends Object>) a)
+                .map(a -> (Attribute<? extends Object>) a)
                 .collect(toList());
     }
 }

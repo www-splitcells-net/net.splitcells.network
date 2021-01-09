@@ -6,29 +6,29 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 
 public class TemplateInitializer implements Optimization {
-    public static TemplateInitializer veidnesIzpildītājs(Tabula veidne) {
+    public static TemplateInitializer veidnesIzpildītājs(Table veidne) {
         return new TemplateInitializer(veidne);
     }
 
-    private final Tabula veidne;
+    private final Table veidne;
 
-    private TemplateInitializer(Tabula veidne) {
+    private TemplateInitializer(Table veidne) {
         this.veidne = veidne;
     }
 
     @Override
     public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
         final List<OptimizationEvent> optimicaija = list();
-        final Set<Rinda> lietotasPrasības = setOfUniques();
-        final Set<Rinda> lietotasPiedāvājumi = setOfUniques();
+        final Set<Line> lietotasPrasības = setOfUniques();
+        final Set<Line> lietotasPiedāvājumi = setOfUniques();
         veidne.gūtRindas().forEach(rinda -> {
             final var prasībasVertība = atrisinājums.prasības_nelietotas()
                     .nosaukumuSkats()

@@ -6,13 +6,13 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import java.util.Set;
 
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.structure.LocalRating;
 
 public class RatingEventI implements RatingEvent {
 
-	private final Map<Rinda, LocalRating> papildinājumi = map();
-	private final Set<Rinda> noņemšanas = setOfUniques();
+	private final Map<Line, LocalRating> papildinājumi = map();
+	private final Set<Line> noņemšanas = setOfUniques();
 
 	public static RatingEvent novērtejumuNotikums() {
 		return new RatingEventI();
@@ -23,12 +23,12 @@ public class RatingEventI implements RatingEvent {
 	}
 
 	@Override
-	public Map<Rinda, LocalRating> papildinājumi() {
+	public Map<Line, LocalRating> papildinājumi() {
 		return papildinājumi;
 	}
 
 	@Override
-	public Set<Rinda> noņemšana() {
+	public Set<Line> noņemšana() {
 		return noņemšanas;
 	}
 

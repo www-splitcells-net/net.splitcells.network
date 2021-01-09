@@ -1,8 +1,8 @@
-package net.splitcells.gel.data.table.kolonna;
+package net.splitcells.gel.data.table.column;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.data.uzmeklēšana.Uzmeklēšanas.uzmeklē;
+import static net.splitcells.gel.data.lookup.Lookups.uzmeklē;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -10,27 +10,27 @@ import java.util.ListIterator;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import net.splitcells.gel.data.uzmeklēšana.Uzmeklēšana;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.lookup.Lookup;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
 
-public class KolonnaI<T> implements Kolonna<T> {
-	public static <R> Kolonna<R> kolonna(Tabula tabula, Atribūts<R> atribūts) {
-		return new KolonnaI<>(tabula, atribūts);
+public class ColumnI<T> implements Column<T> {
+	public static <R> Column<R> kolonna(Table tabula, Attribute<R> atribūts) {
+		return new ColumnI<>(tabula, atribūts);
 	}
 
 	private final List<T> saturs = list();
-	private final Atribūts<T> atribūts;
-	private final Tabula tabula;
-	private Optional<Uzmeklēšana<T>> uzmeklēšana = Optional.empty();
+	private final Attribute<T> atribūts;
+	private final Table tabula;
+	private Optional<Lookup<T>> uzmeklēšana = Optional.empty();
 
-	private KolonnaI(Tabula tabula, Atribūts<T> atribūts) {
+	private ColumnI(Table tabula, Attribute<T> atribūts) {
 		this.atribūts = atribūts;
 		this.tabula = tabula;
 	}
 
-	private Uzmeklēšana<T> nodrošinātUzmeklēšanasInicializēsānu() {
+	private Lookup<T> nodrošinātUzmeklēšanasInicializēsānu() {
 		if (uzmeklēšana.isEmpty()) {
 			uzmeklēšana = Optional.of(uzmeklē(tabula, atribūts));
 		}
@@ -158,24 +158,24 @@ public class KolonnaI<T> implements Kolonna<T> {
 	}
 
 	@Override
-	public Tabula uzmeklēšana(T vertība) {
+	public Table uzmeklēšana(T vertība) {
 		nodrošinātUzmeklēšanasInicializēsānu();
 		return uzmeklēšana.get().uzmeklēšana(vertība);
 	}
 
 	@Override
-	public Tabula uzmeklēšana(Predicate<T> predikāts) {
+	public Table uzmeklēšana(Predicate<T> predikāts) {
 		nodrošinātUzmeklēšanasInicializēsānu();
 		return uzmeklēšana.get().uzmeklēšana(predikāts);
 	}
 
 	@Override
-	public void reģistrē_papildinājumi(Rinda papildinājums) {
+	public void reģistrē_papildinājumi(Line papildinājums) {
 		uzmeklēšana.ifPresent(i -> i.reģistrē_papildinājums(papildinājums.vērtība(atribūts), papildinājums.indekss()));
 	}
 
 	@Override
-	public void rēgistrē_pirms_noņemšanas(Rinda noņemšana) {
+	public void rēgistrē_pirms_noņemšanas(Line noņemšana) {
 		uzmeklēšana.ifPresent(i -> i.reģistē_noņemšana(noņemšana.vērtība(atribūts), noņemšana.indekss()));
 	}
 }

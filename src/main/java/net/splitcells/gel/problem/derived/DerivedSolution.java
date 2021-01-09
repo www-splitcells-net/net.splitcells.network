@@ -8,10 +8,10 @@ import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.allocation.Allocations;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
-import net.splitcells.gel.data.table.kolonna.Kolonna;
-import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.tips.Atvasināšana;
 import net.splitcells.gel.data.database.Database;
@@ -113,37 +113,37 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Rinda piešķirt(Rinda prasība, Rinda piedāvājums) {
+    public Line piešķirt(Line prasība, Line piedāvājums) {
         return piešķiršanas.piešķirt(prasība, piedāvājums);
     }
 
     @Override
-    public Rinda prasība_no_piešķiršana(Rinda piešķiršana) {
+    public Line prasība_no_piešķiršana(Line piešķiršana) {
         return piešķiršanas.prasība_no_piešķiršana(piešķiršana);
     }
 
     @Override
-    public Rinda piedāvājums_no_piešķiršana(Rinda piešķiršana) {
+    public Line piedāvājums_no_piešķiršana(Line piešķiršana) {
         return piešķiršanas.piedāvājums_no_piešķiršana(piešķiršana);
     }
 
     @Override
-    public Set<Rinda> piešķiršanas_no_piedāvājuma(Rinda piedāvājums) {
+    public Set<Line> piešķiršanas_no_piedāvājuma(Line piedāvājums) {
         return piešķiršanas.piešķiršanas_no_piedāvājuma(piedāvājums);
     }
 
     @Override
-    public Set<Rinda> piešķiršanas_no_prasības(Rinda prasība) {
+    public Set<Line> piešķiršanas_no_prasības(Line prasība) {
         return piešķiršanas.piešķiršanas_no_prasības(prasība);
     }
 
     @Override
-    public Rinda pieliktUnPārtulkot(List<?> vērtība) {
+    public Line pieliktUnPārtulkot(List<?> vērtība) {
         return piešķiršanas.pieliktUnPārtulkot(vērtība);
     }
 
     @Override
-    public Rinda pielikt(Rinda rinda) {
+    public Line pielikt(Line rinda) {
         return piešķiršanas.pielikt(rinda);
     }
 
@@ -153,7 +153,7 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public void noņemt(Rinda rinda) {
+    public void noņemt(Line rinda) {
         piešķiršanas.noņemt(rinda);
     }
 
@@ -173,22 +173,22 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public List<Atribūts<Object>> nosaukumuSkats() {
+    public List<Attribute<Object>> nosaukumuSkats() {
         return piešķiršanas.nosaukumuSkats();
     }
 
     @Override
-    public <T> KolonnaSkats<T> kolonnaSkats(Atribūts<T> atribūts) {
+    public <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts) {
         return piešķiršanas.kolonnaSkats(atribūts);
     }
 
     @Override
-    public List<Kolonna<Object>> kolonnaSkats() {
+    public List<Column<Object>> kolonnaSkats() {
         return piešķiršanas.kolonnaSkats();
     }
 
     @Override
-    public ListView<Rinda> jēlaRindasSkats() {
+    public ListView<Line> jēlaRindasSkats() {
         return piešķiršanas.jēlaRindasSkats();
     }
 
@@ -198,12 +198,12 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public List<Rinda> jēlasRindas() {
+    public List<Line> jēlasRindas() {
         return piešķiršanas.jēlasRindas();
     }
 
     @Override
-    public Rinda uzmeklēVienādus(Atribūts<Rinda> atribūts, Rinda other) {
+    public Line uzmeklēVienādus(Attribute<Line> atribūts, Line other) {
         return piešķiršanas.uzmeklēVienādus(atribūts, other);
     }
 

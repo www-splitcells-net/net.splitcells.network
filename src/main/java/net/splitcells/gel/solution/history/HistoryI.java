@@ -18,15 +18,15 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.event.Allocation;
 import net.splitcells.gel.solution.history.event.AllocationChangeType;
 import net.splitcells.gel.solution.history.meta.MetaDataI;
-import net.splitcells.gel.data.table.kolonna.Kolonna;
-import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.allocation.Allocationss;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import org.w3c.dom.Node;
@@ -56,13 +56,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void reģistrē_papildinājumi(Rinda piešķiršanasVertība) {
+    public void reģistrē_papildinājumi(Line piešķiršanasVertība) {
         final var refleksijasDati = MetaDataI.refleksijasDatī();
         refleksijasDati.ar(CompleteRating.class
                 , pilnsNovērtejums(solution.ierobežojums().novērtējums()));
         refleksijasDati.ar(AllocationRating.class
                 , pieškiršanasNovērtejums(solution.ierobežojums().novērtējums(piešķiršanasVertība)));
-        final Rinda piešķiršana
+        final Line piešķiršana
                 = prasība().pieliktUnPārtulkot(list(
                 parceltPedeijuNotikumuIdUzpriekšu()
                 , Allocation.piešķiršana(AllocationChangeType.PAPILDINĀJUMS
@@ -72,13 +72,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void rēgistrē_pirms_noņemšanas(Rinda noņemtAtrisinājums) {
+    public void rēgistrē_pirms_noņemšanas(Line noņemtAtrisinājums) {
         final var refleksijasDati = MetaDataI.refleksijasDatī();
         refleksijasDati.ar(CompleteRating.class
                 , pilnsNovērtejums(solution.ierobežojums().novērtējums()));
         refleksijasDati.ar(AllocationRating.class
                 , pieškiršanasNovērtejums(solution.ierobežojums().novērtējums(noņemtAtrisinājums)));
-        final Rinda pieķiršanas
+        final Line pieķiršanas
                 = prasība().pieliktUnPārtulkot(list(
                 parceltPedeijuNotikumuIdUzpriekšu()
                 , Allocation.piešķiršana(AllocationChangeType.NOŅEMŠANA
@@ -138,13 +138,13 @@ public class HistoryI implements History {
         noņemt_(kolonnaSkats(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss).gūtRinda(0));
     }
 
-    protected void noņemt_(Rinda rinda) {
+    protected void noņemt_(Line rinda) {
         piešķiršanas.noņemt(rinda);
         --pēdējaNotikumuId;
     }
 
     @Override
-    public void noņemt(Rinda rinda) {
+    public void noņemt(Line rinda) {
         throw not_implemented_yet();
     }
 
@@ -164,12 +164,12 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Rinda pieliktUnPārtulkot(List<?> vertības) {
+    public Line pieliktUnPārtulkot(List<?> vertības) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Rinda pielikt(Rinda rinda) {
+    public Line pielikt(Line rinda) {
         throw not_implemented_yet();
     }
 
@@ -187,7 +187,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Rinda piešķirt(Rinda prasība, Rinda piedāvājums) {
+    public Line piešķirt(Line prasība, Line piedāvājums) {
         throw not_implemented_yet();
     }
 
@@ -222,42 +222,42 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Rinda prasība_no_piešķiršana(Rinda piešķiršana) {
+    public Line prasība_no_piešķiršana(Line piešķiršana) {
         return piešķiršanas.prasība_no_piešķiršana(piešķiršana);
     }
 
     @Override
-    public Rinda piedāvājums_no_piešķiršana(Rinda piešķiršana) {
+    public Line piedāvājums_no_piešķiršana(Line piešķiršana) {
         return piešķiršanas.piedāvājums_no_piešķiršana(piešķiršana);
     }
 
     @Override
-    public Set<Rinda> piešķiršanas_no_piedāvājuma(Rinda piedāvājums) {
+    public Set<Line> piešķiršanas_no_piedāvājuma(Line piedāvājums) {
         return piešķiršanas.piešķiršanas_no_piedāvājuma(piedāvājums);
     }
 
     @Override
-    public Set<Rinda> piešķiršanas_no_prasības(Rinda prasība) {
+    public Set<Line> piešķiršanas_no_prasības(Line prasība) {
         return piešķiršanas.piešķiršanas_no_prasības(prasība);
     }
 
     @Override
-    public List<Atribūts<Object>> nosaukumuSkats() {
+    public List<Attribute<Object>> nosaukumuSkats() {
         return piešķiršanas.nosaukumuSkats();
     }
 
     @Override
-    public <T> KolonnaSkats<T> kolonnaSkats(Atribūts<T> atribūts) {
+    public <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts) {
         return piešķiršanas.kolonnaSkats(atribūts);
     }
 
     @Override
-    public List<Kolonna<Object>> kolonnaSkats() {
+    public List<Column<Object>> kolonnaSkats() {
         return piešķiršanas.kolonnaSkats();
     }
 
     @Override
-    public ListView<Rinda> jēlaRindasSkats() {
+    public ListView<Line> jēlaRindasSkats() {
         return piešķiršanas.jēlaRindasSkats();
     }
 
@@ -267,12 +267,12 @@ public class HistoryI implements History {
     }
 
     @Override
-    public List<Rinda> jēlasRindas() {
+    public List<Line> jēlasRindas() {
         return piešķiršanas.jēlasRindas();
     }
 
     @Override
-    public Rinda uzmeklēVienādus(Atribūts<Rinda> atribūts, Rinda cits) {
+    public Line uzmeklēVienādus(Attribute<Line> atribūts, Line cits) {
         return piešķiršanas.uzmeklēVienādus(atribūts, cits);
     }
 

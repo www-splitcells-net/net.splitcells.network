@@ -4,21 +4,21 @@ import java.util.Optional;
 
 import static java.util.Objects.hash;
 
-public class RindasRādītājsI implements RindasRādītājs {
-    public static RindasRādītājs rindasRādītājs(Tabula konteksts, int indekss) {
-        return new RindasRādītājsI(konteksts, indekss);
+public class LinePointerI implements LinePointer {
+    public static LinePointer rindasRādītājs(Table konteksts, int indekss) {
+        return new LinePointerI(konteksts, indekss);
     }
 
-    private final Tabula konteksts;
+    private final Table konteksts;
     private final int indekss;
 
-    private RindasRādītājsI(Tabula konteksts, int indekss) {
+    private LinePointerI(Table konteksts, int indekss) {
         this.konteksts = konteksts;
         this.indekss = indekss;
     }
 
     @Override
-    public Tabula konteksts() {
+    public Table konteksts() {
         return konteksts;
     }
 
@@ -28,7 +28,7 @@ public class RindasRādītājsI implements RindasRādītājs {
     }
 
     @Override
-    public Optional<Rinda> interpretē(Tabula argKonteksts) {
+    public Optional<Line> interpretē(Table argKonteksts) {
         if (argKonteksts.jēlaRindasSkats().size() <= indekss) {
             return Optional.empty();
         }
@@ -37,8 +37,8 @@ public class RindasRādītājsI implements RindasRādītājs {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof RindasRādītājs) {
-            final var other = (RindasRādītājs) arg;
+        if (arg instanceof LinePointer) {
+            final var other = (LinePointer) arg;
             return konteksts().equals(other.konteksts()) && indekss() == other.indekss();
         } else {
             return false;

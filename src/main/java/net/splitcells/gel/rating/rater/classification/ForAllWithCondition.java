@@ -6,8 +6,8 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 import org.w3c.dom.Node;
@@ -27,20 +27,20 @@ import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 
 public class ForAllWithCondition<T> implements Rater {
 
-    public static <T> ForAllWithCondition<T> priekšVisiemArNosacījumu(Predicate<Rinda> nosacījums) {
+    public static <T> ForAllWithCondition<T> priekšVisiemArNosacījumu(Predicate<Line> nosacījums) {
         return new ForAllWithCondition<>(nosacījums);
     }
 
-    private final Predicate<Rinda> nosacījums;
+    private final Predicate<Line> nosacījums;
     private final List<Discoverable> konteksti = list();
 
-    private ForAllWithCondition(Predicate<Rinda> nosacījums) {
+    private ForAllWithCondition(Predicate<Line> nosacījums) {
         this.nosacījums = nosacījums;
     }
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu
-            (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+            (Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
         final List<Ierobežojums> mērķBērni;
         if (nosacījums.test(papildinājums.vērtība(RINDA))) {
             mērķBērni = bērni;
@@ -58,12 +58,12 @@ public class ForAllWithCondition<T> implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
+    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
         final var argumentācjia = Xml.element("priekš-visiem-ar-nosacījumu");
         final var atribūtuApraksts = Xml.element("nosacījumu");
         argumentācjia.appendChild(atribūtuApraksts);

@@ -3,7 +3,7 @@ package net.splitcells.gel.solution.optimization;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.Language;
-import net.splitcells.gel.data.table.RindasRādītājs;
+import net.splitcells.gel.data.table.LinePointer;
 import org.w3c.dom.Node;
 
 import java.util.Objects;
@@ -13,15 +13,15 @@ import static net.splitcells.dem.lang.Xml.element;
 
 public final class OptimizationEvent implements Domable {
 
-    private final RindasRādītājs prasība;
-    private final RindasRādītājs piedāvājums;
+    private final LinePointer prasība;
+    private final LinePointer piedāvājums;
     private final StepType solisTips;
 
-    public static OptimizationEvent optimizacijasNotikums(StepType solisTips, RindasRādītājs prasība, RindasRādītājs piedāvājums) {
+    public static OptimizationEvent optimizacijasNotikums(StepType solisTips, LinePointer prasība, LinePointer piedāvājums) {
         return new OptimizationEvent(solisTips, prasība, piedāvājums);
     }
 
-    private OptimizationEvent(StepType solisTips, RindasRādītājs demand, RindasRādītājs supply) {
+    private OptimizationEvent(StepType solisTips, LinePointer demand, LinePointer supply) {
         this.solisTips = solisTips;
         this.prasība = demand;
         this.piedāvājums = supply;
@@ -32,11 +32,11 @@ public final class OptimizationEvent implements Domable {
         return solisTips;
     }
 
-    public RindasRādītājs piedāvājums() {
+    public LinePointer piedāvājums() {
         return piedāvājums;
     }
 
-    public RindasRādītājs prasība() {
+    public LinePointer prasība() {
         return prasība;
     }
 

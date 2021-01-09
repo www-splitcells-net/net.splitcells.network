@@ -5,7 +5,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import org.w3c.dom.Element;
 
 import static java.util.stream.IntStream.range;
@@ -16,25 +16,25 @@ import static net.splitcells.dem.lang.Xml.directChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 
 public interface DatabaseFactory extends Closeable, Flushable {
-    Database datuBāze(String vārds, Atribūts<? extends Object>... atribūti);
+    Database datuBāze(String vārds, Attribute<? extends Object>... atribūti);
 
-    Database datuBāze(Atribūts<? extends Object>... atribūti);
+    Database datuBāze(Attribute<? extends Object>... atribūti);
 
     @Deprecated
-    default Database database(List<Atribūts<?>> atribūti) {
+    default Database database(List<Attribute<?>> atribūti) {
         return datuBāze(atribūti);
     }
 
-    Database datuBāze(List<Atribūts<?>> atribūti);
+    Database datuBāze(List<Attribute<?>> atribūti);
 
-    Database datuBāze(List<Atribūts<? extends Object>> atribūti, List<List<Object>> rindasVertības);
+    Database datuBāze(List<Attribute<? extends Object>> atribūti, List<List<Object>> rindasVertības);
 
     @Deprecated
-    Database datuBāze(String vārds, Discoverable vecāks, Atribūts<? extends Object>... atribūti);
+    Database datuBāze(String vārds, Discoverable vecāks, Attribute<? extends Object>... atribūti);
 
-    Database datuBāze(String vārds, Discoverable vecāks, List<Atribūts<? extends Object>> atribūti);
+    Database datuBāze(String vārds, Discoverable vecāks, List<Attribute<? extends Object>> atribūti);
 
-    default Database datuBāzeNoFods(List<Atribūts<?>> atribūti, Element fods) {
+    default Database datuBāzeNoFods(List<Attribute<?>> atribūti, Element fods) {
         final var datuBāzeNoFods = datuBāze(atribūti);
         final var body = directChildElementByName(fods, "body", FODS_OFFICE);
         final var speardsheet = directChildElementByName(body, "spreadsheet", FODS_OFFICE);
@@ -46,7 +46,7 @@ public interface DatabaseFactory extends Closeable, Flushable {
         return datuBāzeNoFods;
     }
 
-    private static List<Object> rindaNoFodsRow(List<Atribūts<?>> atribūti, Element row) {
+    private static List<Object> rindaNoFodsRow(List<Attribute<?>> atribūti, Element row) {
         final var tableCells = directChildElementsByName(row, "table-cell", FODS_TABLE)
                 .collect(toList());
         return range(0, atribūti.size())

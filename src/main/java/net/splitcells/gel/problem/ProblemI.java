@@ -2,9 +2,9 @@ package net.splitcells.gel.problem;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.kolonna.Kolonna;
-import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.solution.Solutions;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
@@ -12,7 +12,7 @@ import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.allocation.Allocations;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.solution.Solution;
 
@@ -97,47 +97,47 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Rinda piešķirt(final Rinda prasība, final Rinda piedāvājums) {
+    public Line piešķirt(final Line prasība, final Line piedāvājums) {
         return this.piešķiršanas.piešķirt(prasība, piedāvājums);
     }
 
     @Override
-    public Rinda prasība_no_piešķiršana(final Rinda piešķiršana) {
+    public Line prasība_no_piešķiršana(final Line piešķiršana) {
         return this.piešķiršanas.prasība_no_piešķiršana(piešķiršana);
     }
 
     @Override
-    public Rinda piedāvājums_no_piešķiršana(final Rinda piešķiršana) {
+    public Line piedāvājums_no_piešķiršana(final Line piešķiršana) {
         return this.piešķiršanas.piedāvājums_no_piešķiršana(piešķiršana);
     }
 
     @Override
-    public java.util.Set<Rinda> piešķiršanas_no_piedāvājuma(final Rinda piedāvājuma) {
+    public java.util.Set<Line> piešķiršanas_no_piedāvājuma(final Line piedāvājuma) {
         return this.piešķiršanas.piešķiršanas_no_piedāvājuma(piedāvājuma);
     }
 
     @Override
-    public java.util.Set<Rinda> piešķiršanasNo(final Rinda prasība, final Rinda piedāvājums) {
+    public java.util.Set<Line> piešķiršanasNo(final Line prasība, final Line piedāvājums) {
         return this.piešķiršanas.piešķiršanasNo(prasība, piedāvājums);
     }
 
     @Override
-    public java.util.Set<Rinda> piešķiršanas_no_prasības(final Rinda prasība) {
+    public java.util.Set<Line> piešķiršanas_no_prasības(final Line prasība) {
         return this.piešķiršanas.piešķiršanas_no_prasības(prasība);
     }
 
     @Override
-    public java.util.Set<Rinda> peidāvājumi_no_prasībam(final Rinda prasība) {
+    public java.util.Set<Line> peidāvājumi_no_prasībam(final Line prasība) {
         return this.piešķiršanas.peidāvājumi_no_prasībam(prasība);
     }
 
     @Override
-    public Rinda pieliktUnPārtulkot(List<?> vērtība) {
+    public Line pieliktUnPārtulkot(List<?> vērtība) {
         return this.piešķiršanas.pieliktUnPārtulkot(vērtība);
     }
 
     @Override
-    public Rinda pielikt(final Rinda rinda) {
+    public Line pielikt(final Line rinda) {
         return this.piešķiršanas.pielikt(rinda);
     }
 
@@ -147,12 +147,12 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public void noņemt(final Rinda rinda) {
+    public void noņemt(final Line rinda) {
         this.piešķiršanas.noņemt(rinda);
     }
 
     @Override
-    public void aizvietot(final Rinda newRinda) {
+    public void aizvietot(final Line newRinda) {
         this.piešķiršanas.aizvietot(newRinda);
     }
 
@@ -177,37 +177,37 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public List<Atribūts<Object>> nosaukumuSkats() {
+    public List<Attribute<Object>> nosaukumuSkats() {
         return this.piešķiršanas.nosaukumuSkats();
     }
 
     @Override
-    public <T extends Object> KolonnaSkats<T> kolonnaSkats(final Atribūts<T> atribūts) {
+    public <T extends Object> ColumnView<T> kolonnaSkats(final Attribute<T> atribūts) {
         return this.piešķiršanas.<T>kolonnaSkats(atribūts);
     }
 
     @Override
-    public List<Kolonna<Object>> kolonnaSkats() {
+    public List<Column<Object>> kolonnaSkats() {
         return this.piešķiršanas.kolonnaSkats();
     }
 
     @Deprecated
-    public ListView<Rinda> jēlaRindasSkats() {
+    public ListView<Line> jēlaRindasSkats() {
         return this.piešķiršanas.jēlaRindasSkats();
     }
 
     @Override
-    public boolean satur(final Rinda rinda) {
+    public boolean satur(final Line rinda) {
         return this.piešķiršanas.satur(rinda);
     }
 
     @Override
-    public List<Rinda> gūtRindas() {
+    public List<Line> gūtRindas() {
         return this.piešķiršanas.gūtRindas();
     }
 
     @Override
-    public Rinda gūtJēluRindas(final int indekss) {
+    public Line gūtJēluRindas(final int indekss) {
         return this.piešķiršanas.gūtJēluRindas(indekss);
     }
 
@@ -227,7 +227,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public List<Rinda> jēlasRindas() {
+    public List<Line> jēlasRindas() {
         return this.piešķiršanas.jēlasRindas();
     }
 
@@ -236,7 +236,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Rinda uzmeklēVienādus(final Atribūts<Rinda> atribūts, final Rinda other) {
+    public Line uzmeklēVienādus(final Attribute<Line> atribūts, final Line other) {
         return this.piešķiršanas.uzmeklēVienādus(atribūts, other);
     }
 

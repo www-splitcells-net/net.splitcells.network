@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.tips.PriekšVisiem;
 import net.splitcells.gel.constraint.tips.PriekšVisiemF;
 import net.splitcells.gel.constraint.tips.Tad;
@@ -79,7 +79,7 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Jautājums priekšVisiem(Atribūts<?> arg) {
+    public Jautājums priekšVisiem(Attribute<?> arg) {
         var radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
@@ -174,7 +174,7 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Jautājums priekšVisamKombinācijam(Atribūts<?>... args) {
+    public Jautājums priekšVisamKombinācijam(Attribute<?>... args) {
         final Ierobežojums radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
                 .filter(child -> PriekšVisiem.class.equals(child.type()))

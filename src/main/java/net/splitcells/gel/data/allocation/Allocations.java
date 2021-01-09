@@ -5,13 +5,13 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
 import java.util.Set;
 
-import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.database.Database;
 
 public interface Allocations extends Database, AllocationsLiveView {
-    Rinda piešķirt(Rinda prasība, Rinda piedāvājums);
+    Line piešķirt(Line prasība, Line piedāvājums);
 
-    default Set<Rinda> piešķiršanasNo(Rinda prasība, Rinda piedāvājums) {
+    default Set<Line> piešķiršanasNo(Line prasība, Line piedāvājums) {
         final var piešķiršanasNo = piešķiršanas_no_piedāvājuma(piedāvājums);
         return piešķiršanas_no_prasības(prasība)
                 .stream()

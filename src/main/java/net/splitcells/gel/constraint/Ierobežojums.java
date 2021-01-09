@@ -7,8 +7,8 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
 import static net.splitcells.gel.constraint.GrupaId.grupa;
-import static net.splitcells.gel.data.table.atribūts.AtribūtsI.atributs;
-import static net.splitcells.gel.data.table.atribūts.SarakstsAtribūts.listAttribute;
+import static net.splitcells.gel.data.table.attribute.AttributeI.atributs;
+import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
 import static net.splitcells.gel.rating.structure.MetaRating.neitrāla;
 
 import java.util.Optional;
@@ -18,8 +18,8 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -30,17 +30,17 @@ import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaFiltrs;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 
 public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSubscriber, IerobežojumuRakstnieks, Discoverable, PubliclyTyped<Ierobežojums>, PubliclyConstructed<Domable>, Domable {
-    Atribūts<Rinda> RINDA = atributs(Rinda.class, "rinda");
-    Atribūts<java.util.List<Ierobežojums>> IZDALĪŠANA_UZ = listAttribute(Ierobežojums.class, "idalīšana uz");
-    Atribūts<GrupaId> IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "ienākošie ierobežojumu grupas id");
-    Atribūts<GrupaId> RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "radītas ierobežojumu grupas id");
-    Atribūts<Rating> NOVĒRTĒJUMS = atributs(Rating.class, "novērtējums");
+    Attribute<Line> RINDA = atributs(Line.class, "rinda");
+    Attribute<java.util.List<Ierobežojums>> IZDALĪŠANA_UZ = listAttribute(Ierobežojums.class, "idalīšana uz");
+    Attribute<GrupaId> IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "ienākošie ierobežojumu grupas id");
+    Attribute<GrupaId> RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "radītas ierobežojumu grupas id");
+    Attribute<Rating> NOVĒRTĒJUMS = atributs(Rating.class, "novērtējums");
 
     static List<List<Ierobežojums>> piešķiršanasGruppas(List<Ierobežojums> momentānaTaka) {
         final var ierobežojums = momentānaTaka.lastValue().get();
@@ -68,11 +68,11 @@ public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSub
         return GrupaId.grupa("priekš-visiem");
     }
 
-    default MetaRating novērtējums(Rinda rinda) {
+    default MetaRating novērtējums(Line rinda) {
         return novērtējums(injekcijasGrupa(), rinda);
     }
 
-    MetaRating novērtējums(GrupaId grupaId, Rinda rinda);
+    MetaRating novērtējums(GrupaId grupaId, Line rinda);
 
     MetaRating novērtējums(GrupaId grupaId);
 
@@ -84,11 +84,11 @@ public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSub
 
     Optional<Discoverable> galvenaisKonteksts();
 
-    default Perspective dabiskaArgumentācija(Rinda priekšmets, GrupaId grupa) {
+    default Perspective dabiskaArgumentācija(Line priekšmets, GrupaId grupa) {
         return dabiskaArgumentācija(priekšmets, grupa, PiešķiršanaFiltrs::atlasītArCenu);
     }
 
-    Perspective dabiskaArgumentācija(Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
+    Perspective dabiskaArgumentācija(Line rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
 
     default MetaRating rating(Set<GrupaId> grupas) {
         return grupas.stream().
@@ -97,48 +97,48 @@ public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSub
                 orElseGet(() -> neitrāla());
     }
 
-    default GrupaId reģistrē(Rinda rinda) {
+    default GrupaId reģistrē(Line rinda) {
         final var rVal = injekcijasGrupa();
         reģistrē_papildinājums(rVal, rinda);
         return rVal;
     }
 
-    GrupaId grupaNo(Rinda rinda);
+    GrupaId grupaNo(Line rinda);
 
-    void reģistrē_papildinājums(GrupaId grupaId, Rinda rinda);
+    void reģistrē_papildinājums(GrupaId grupaId, Line rinda);
 
-    default void reģistrē_papildinājumi(Rinda rinda) {
+    default void reģistrē_papildinājumi(Line rinda) {
         reģistrē_papildinājums(injekcijasGrupa(), rinda);
     }
 
-    void rēgistrē_pirms_noņemšanas(GrupaId grupaId, Rinda rinda);
+    void rēgistrē_pirms_noņemšanas(GrupaId grupaId, Line rinda);
 
     @Deprecated
-    default void rēgistrē_pirms_noņemšanas(Rinda rinda) {
+    default void rēgistrē_pirms_noņemšanas(Line rinda) {
         rēgistrē_pirms_noņemšanas(injekcijasGrupa(), rinda);
     }
 
     List<Ierobežojums> skatsUsBerniem();
 
-    Set<Rinda> izpildītāji(GrupaId grupaId);
+    Set<Line> izpildītāji(GrupaId grupaId);
 
-    default Set<Rinda> izpildītāji() {
+    default Set<Line> izpildītāji() {
         return izpildītāji(injekcijasGrupa());
     }
 
-    Set<Rinda> neievērotaji(GrupaId grupaId);
+    Set<Line> neievērotaji(GrupaId grupaId);
 
-    default Set<Rinda> neievērotaji() {
+    default Set<Line> neievērotaji() {
         return neievērotaji(injekcijasGrupa());
     }
 
-    Rinda pieliktRadījums(LocalRating vietējieNovērtējums);
+    Line pieliktRadījums(LocalRating vietējieNovērtējums);
 
     default Jautājums jautājums() {
         return JautājumsI.jautājums(this);
     }
 
-    Tabula rindasAbstrāde();
+    Table rindasAbstrāde();
 
     Element toDom();
 
@@ -154,7 +154,7 @@ public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSub
                 .orElseGet(() -> setOfUniques());
     }
 
-    default Set<GrupaId> bērnuGrupas(Rinda rinda, Ierobežojums priekšmets) {
+    default Set<GrupaId> bērnuGrupas(Line rinda, Ierobežojums priekšmets) {
         final Set<GrupaId> bērnuGrupas = setOfUniques();
         if (equals(priekšmets)) {
             bērnuGrupas.add(grupaNo(rinda));

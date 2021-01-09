@@ -1,25 +1,25 @@
-package net.splitcells.gel.data.uzmeklēšana;
+package net.splitcells.gel.data.lookup;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.data.uzmeklēšana.UzmeklēšanasTabula.uzmeklēšanasTabula;
+import static net.splitcells.gel.data.lookup.LookupTable.uzmeklēšanasTabula;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.gel.data.table.Tabula;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
 
-public class UzmeklēšanaI<T> implements Uzmeklēšana<T> {
-    private final UzmeklēšanasTabula tukšaUzmeklēšanasTabula;
+public class LookupI<T> implements Lookup<T> {
+    private final LookupTable tukšaUzmeklēšanasTabula;
 
-    protected final Tabula tabula;
-    protected final Map<T, UzmeklēšanasTabula> saturs = map();
-    protected final Atribūts<T> atribūts;
-    protected final Map<Predicate<T>, UzmeklēšanasTabula> agregātsSaturs = map();
+    protected final Table tabula;
+    protected final Map<T, LookupTable> saturs = map();
+    protected final Attribute<T> atribūts;
+    protected final Map<Predicate<T>, LookupTable> agregātsSaturs = map();
 
-    protected UzmeklēšanaI(Tabula tabula, Atribūts<T> atribūts) {
+    protected LookupI(Table tabula, Attribute<T> atribūts) {
         this.tabula = tabula;
         this.tukšaUzmeklēšanasTabula = uzmeklēšanasTabula(tabula, atribūts);
         this.atribūts = atribūts;
@@ -31,7 +31,7 @@ public class UzmeklēšanaI<T> implements Uzmeklēšana<T> {
     @Override
     public void reģistrē_papildinājums(T papildinājums, int indekss) {
         {
-            final UzmeklēšanasTabula uzmeklēšanasTabula;
+            final LookupTable uzmeklēšanasTabula;
             if (saturs.containsKey(papildinājums)) {
                 uzmeklēšanasTabula = saturs.get(papildinājums);
             } else {
@@ -67,7 +67,7 @@ public class UzmeklēšanaI<T> implements Uzmeklēšana<T> {
     }
 
     @Override
-    public Tabula uzmeklēšana(T vertība) {
+    public Table uzmeklēšana(T vertība) {
         if (saturs.containsKey(vertība)) {
             return saturs.get(vertība);
         }
@@ -75,7 +75,7 @@ public class UzmeklēšanaI<T> implements Uzmeklēšana<T> {
     }
 
     @Override
-    public Tabula uzmeklēšana(Predicate<T> predikāts) {
+    public Table uzmeklēšana(Predicate<T> predikāts) {
         if (!agregātsSaturs.containsKey(predikāts)) {
             final var uzmeklēšana = uzmeklēšanasTabula(tabula, predikāts.toString());
             agregātsSaturs.put(predikāts, uzmeklēšana);

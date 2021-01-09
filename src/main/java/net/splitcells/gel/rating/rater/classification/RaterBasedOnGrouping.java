@@ -9,8 +9,8 @@ import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejum
 
 import java.util.Collection;
 
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 import org.w3c.dom.Node;
@@ -34,7 +34,7 @@ public class RaterBasedOnGrouping implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = novērtejumuNotikums();
         final var rBase = grupetājs.vērtē_pēc_papildinājumu(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu);
         novērtejumuNotikums.noņemšana().addAll(rBase.noņemšana());
@@ -50,19 +50,19 @@ public class RaterBasedOnGrouping implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
+    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
         final var reasoning = Xml.element("group-by");
         reasoning.appendChild(grupetājs.argumentacija(grupa, piešķiršanas));
         return reasoning;
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+    public String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
         return grupetājs.uzVienkāršuAprakstu(rinda, grupa);
     }
 

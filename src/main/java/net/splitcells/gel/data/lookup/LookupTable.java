@@ -1,4 +1,4 @@
-package net.splitcells.gel.data.uzmeklēšana;
+package net.splitcells.gel.data.lookup;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
@@ -11,51 +11,51 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Set;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
-import net.splitcells.gel.data.table.kolonna.Kolonna;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.table.column.Column;
 import org.w3c.dom.Element;
 import net.splitcells.dem.data.set.list.Lists;
 
-public class UzmeklēšanasTabula implements Tabula {
+public class LookupTable implements Table {
     // PĀRSAUKT Nosaukums nenorāda mainīgās nozīmu.
-    protected final Tabula tabula;
+    protected final Table tabula;
     protected final String vārds;
     protected final Set<Integer> saturs = setOfUniques();
-    protected final List<Kolonna<Object>> kolonnas;
-    protected final List<Kolonna<Object>> kolonnasSkats;
+    protected final List<Column<Object>> kolonnas;
+    protected final List<Column<Object>> kolonnasSkats;
 
-    public static UzmeklēšanasTabula uzmeklēšanasTabula(Tabula tabula, String vārds) {
-        return new UzmeklēšanasTabula(tabula, vārds);
+    public static LookupTable uzmeklēšanasTabula(Table tabula, String vārds) {
+        return new LookupTable(tabula, vārds);
     }
 
-    public static UzmeklēšanasTabula uzmeklēšanasTabula(Tabula tabula, Atribūts<?> atribūts) {
-        return new UzmeklēšanasTabula(tabula, atribūts.vārds());
+    public static LookupTable uzmeklēšanasTabula(Table tabula, Attribute<?> atribūts) {
+        return new LookupTable(tabula, atribūts.vārds());
     }
 
-    protected UzmeklēšanasTabula(Tabula tabula, String vārds) {
+    protected LookupTable(Table tabula, String vārds) {
         this.tabula = tabula;
         this.vārds = vārds;
         kolonnas = listWithValuesOf
                 (tabula.nosaukumuSkats().stream()
-                        .map(attribute -> UzmeklēšanasKolonna.lookupColumn(this, attribute))
+                        .map(attribute -> LookupColumn.lookupColumn(this, attribute))
                         .collect(toList()));
         kolonnasSkats = listWithValuesOf(kolonnas);
     }
 
     @Override
-    public List<Atribūts<Object>> nosaukumuSkats() {
+    public List<Attribute<Object>> nosaukumuSkats() {
         return tabula.nosaukumuSkats();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> Kolonna<T> kolonnaSkats(Atribūts<T> atribūts) {
+    public <T> Column<T> kolonnaSkats(Attribute<T> atribūts) {
         int index = 0;
         for (final var headerAttribute : tabula.nosaukumuSkats()) {
             if (headerAttribute.equals(atribūts)) {
-                return (Kolonna<T>) kolonnas.get(index);
+                return (Column<T>) kolonnas.get(index);
             }
             ++index;
         }
@@ -63,10 +63,10 @@ public class UzmeklēšanasTabula implements Tabula {
     }
 
     @Override
-    public List<Rinda> jēlaRindasSkats() {
-        final var rVal = Lists.<Rinda>list();
+    public List<Line> jēlaRindasSkats() {
+        final var rVal = Lists.<Line>list();
         range(0, tabula.jēlaRindasSkats().size()).forEach(i -> {
-            final Rinda rElement;
+            final Line rElement;
             if (saturs.contains(i)) {
                 rElement = tabula.jēlaRindasSkats().get(i);
             } else {
@@ -82,47 +82,47 @@ public class UzmeklēšanasTabula implements Tabula {
         return saturs.size();
     }
 
-    public void reģistrē(Rinda rinda) {
+    public void reģistrē(Line rinda) {
         saturs.add(rinda.indekss());
         // DARĪT JAUD
         // SALABOT
         range(0, kolonnas.size()).forEach(i -> {
             // KOMPROMISS
-            final var kolonna = (UzmeklēšanasKolonna<Object>) kolonnas.get(i);
+            final var kolonna = (LookupColumn<Object>) kolonnas.get(i);
             kolonna.set(rinda.indekss(), rinda.vērtība(tabula.nosaukumuSkats().get(i)));
         });
         kolonnas.forEach(kolonna -> kolonna.reģistrē_papildinājumi(rinda));
     }
 
-    public void noņemt_reģistrāciju(Rinda rinda) {
+    public void noņemt_reģistrāciju(Line rinda) {
         kolonnas.forEach(column -> column.rēgistrē_pirms_noņemšanas(rinda));
         saturs.remove(rinda.indekss());
         range(0, kolonnas.size()).forEach(i -> {
             // HACK
-            final var column = (UzmeklēšanasKolonna<Object>) kolonnas.get(i);
+            final var column = (LookupColumn<Object>) kolonnas.get(i);
             column.set(rinda.indekss(), null);
         });
     }
 
     @Override
-    public List<Kolonna<Object>> kolonnaSkats() {
+    public List<Column<Object>> kolonnaSkats() {
         return kolonnasSkats;
     }
 
-    public Tabula base() {
+    public Table base() {
         return tabula;
     }
 
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
         final var rVal = tabula.path();
-        rVal.add(UzmeklēšanasTabula.class.getSimpleName() + "(" + vārds + ")");
+        rVal.add(LookupTable.class.getSimpleName() + "(" + vārds + ")");
         return rVal;
     }
 
     @Override
     public Element toDom() {
-        final var rVal = element(UzmeklēšanasTabula.class.getSimpleName());
+        final var rVal = element(LookupTable.class.getSimpleName());
         // REMOVE
         rVal.appendChild(textNode("" + hashCode()));
         rVal.appendChild(element("subject", textNode(path().toString())));
@@ -135,19 +135,19 @@ public class UzmeklēšanasTabula implements Tabula {
 
     @Override
     public String toString() {
-        return UzmeklēšanasTabula.class.getSimpleName() + path().toString();
+        return LookupTable.class.getSimpleName() + path().toString();
     }
 
     @Override
-    public List<Rinda> jēlasRindas() {
+    public List<Line> jēlasRindas() {
         // TASK PERFORMANCE
-        final var rVal = Lists.<Rinda>list();
+        final var rVal = Lists.<Line>list();
         saturs.forEach(index -> rVal.add(tabula.gūtJēluRindas(index)));
         return rVal;
     }
 
     @Override
-    public Rinda uzmeklēVienādus(Atribūts<Rinda> atribūts, Rinda other) {
+    public Line uzmeklēVienādus(Attribute<Line> atribūts, Line other) {
         final var rBase = tabula.uzmeklēVienādus(atribūts, other);
         if (saturs.contains(rBase.indekss())) {
             return rBase;

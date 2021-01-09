@@ -1,4 +1,4 @@
-package net.splitcells.gel.data.table.atribūts;
+package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.data.atom.BoolI.bool;
 
@@ -7,12 +7,12 @@ import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.atom.Bool;
 
-public class MetaAtribūts<T> implements Atribūts<Class<T>> {
+public class MetaAttribute<T> implements Attribute<Class<T>> {
 
     private final Class<T> tips;
     private final String vārds;
 
-    public MetaAtribūts(Class<T> tips, String vārds) {
+    public MetaAttribute(Class<T> tips, String vārds) {
         this.tips = tips;
         this.vārds = vārds;
     }

@@ -1,14 +1,14 @@
 package net.splitcells.gel.data.allocation;
 
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.database.Database;
 
 import java.util.Set;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
-public interface AllocationsLiveView extends Tabula {
+public interface AllocationsLiveView extends Table {
     Database piedāvājums();
 
     Database piedāvājumi_lietoti();
@@ -21,16 +21,16 @@ public interface AllocationsLiveView extends Tabula {
 
     Database prasības_nelietotas();
 
-    Rinda prasība_no_piešķiršana(Rinda piešķiršana);
+    Line prasība_no_piešķiršana(Line piešķiršana);
 
-    Rinda piedāvājums_no_piešķiršana(Rinda piešķiršana);
+    Line piedāvājums_no_piešķiršana(Line piešķiršana);
 
-    Set<Rinda> piešķiršanas_no_piedāvājuma(Rinda peidāvājums);
+    Set<Line> piešķiršanas_no_piedāvājuma(Line peidāvājums);
 
-    Set<Rinda> piešķiršanas_no_prasības(Rinda prasība);
+    Set<Line> piešķiršanas_no_prasības(Line prasība);
 
-    default Set<Rinda> peidāvājumi_no_prasībam(Rinda prasība) {
-        final Set<Rinda> peidāvājumi_no_prasībam = setOfUniques();
+    default Set<Line> peidāvājumi_no_prasībam(Line prasība) {
+        final Set<Line> peidāvājumi_no_prasībam = setOfUniques();
         piešķiršanas_no_prasības(prasība)
                 .forEach(piešķiršana -> peidāvājumi_no_prasībam.add(piedāvājums_no_piešķiršana(piešķiršana)));
         return peidāvājumi_no_prasībam;

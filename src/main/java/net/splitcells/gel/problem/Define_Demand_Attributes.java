@@ -1,11 +1,11 @@
 package net.splitcells.gel.problem;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 
 public interface Define_Demand_Attributes {
-	DefineDemands arPrasībasNosaukumiem(Atribūts<?>... parsībasNosaukumi);
+	DefineDemands arPrasībasNosaukumiem(Attribute<?>... parsībasNosaukumi);
 
-	DefineDemands arPrasībasNosaukumiem(List<Atribūts<?>> parsībasNosaukumi);
+	DefineDemands arPrasībasNosaukumiem(List<Attribute<?>> parsībasNosaukumi);
 
 }

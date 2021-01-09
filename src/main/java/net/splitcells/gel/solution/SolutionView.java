@@ -5,11 +5,11 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.solution.history.History;
-import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.tips.PriekšVisiem;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.problem.ProblemView;
 import net.splitcells.gel.rating.rater.Rater;
@@ -61,8 +61,8 @@ public interface SolutionView extends ProblemView {
         return brīvasGrupas;
     }
 
-    private static List<Atribūts<?>> prieksVisiemAtribūtuNoGrupetājs(Rater grupetājs) {
-        final List<Atribūts<?>> priekšVisiemAtribūtieNoGrupas = list();
+    private static List<Attribute<?>> prieksVisiemAtribūtuNoGrupetājs(Rater grupetājs) {
+        final List<Attribute<?>> priekšVisiemAtribūtieNoGrupas = list();
         grupetājs.casted(ForAllAttributeValues.class)
                 .ifPresent(e -> priekšVisiemAtribūtieNoGrupas.add(e.atribūti()));
         grupetājs.casted(ForAllValueCombinations.class)
@@ -161,7 +161,7 @@ public interface SolutionView extends ProblemView {
         return atribūti;
     }
 
-    default Element uzRindasFodsAnalīzu(Rinda piešķiršana) {
+    default Element uzRindasFodsAnalīzu(Line piešķiršana) {
         final var tabulasRinda = element(NameSpaces.FODS_TABLE, "table-row");
         {
             nosaukumuSkats().stream().map(attribute -> piešķiršana.vērtība(attribute)).map(value -> {

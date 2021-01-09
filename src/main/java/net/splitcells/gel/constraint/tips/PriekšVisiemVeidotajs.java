@@ -1,6 +1,6 @@
 package net.splitcells.gel.constraint.tips;
 
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
 
@@ -19,7 +19,7 @@ public class PriekšVisiemVeidotajs {
 
     }
 
-    public <T> PriekšVisiem priekšVisiemArVērtibu(Atribūts<T> atribūts, T vērtiba) {
+    public <T> PriekšVisiem priekšVisiemArVērtibu(Attribute<T> atribūts, T vērtiba) {
         return PriekšVisiem.veidot(
                 priekšVisiemArNosacījumu(line -> vērtiba.equals(line.vērtība(atribūts))));
     }
@@ -28,7 +28,7 @@ public class PriekšVisiemVeidotajs {
         return PriekšVisiem.veidot(izdalīšana());
     }
 
-    public PriekšVisiem priekšVisiem(final Atribūts<?> arg) {
+    public PriekšVisiem priekšVisiem(final Attribute<?> arg) {
         return PriekšVisiem.veidot(priekšVisiemAtribūtuVertības(arg));
     }
 
@@ -36,7 +36,7 @@ public class PriekšVisiemVeidotajs {
         return PriekšVisiem.veidot(grouping);
     }
 
-    public PriekšVisiem forAllCombinations(final Atribūts<?>... argumenti) {
+    public PriekšVisiem forAllCombinations(final Attribute<?>... argumenti) {
         return PriekšVisiem.veidot(ForAllValueCombinations.forAllValueCombinations(argumenti));
     }
 

@@ -5,7 +5,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.data.table.RindasRādītājs;
+import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
@@ -46,8 +46,8 @@ public class UsedSupplySwitcher implements Optimization {
     @Override
     public List<OptimizationEvent> optimizē(SolutionView atrisinajums) {
         final List<OptimizationEvent> optimizācijas = list();
-        final var apstrādatiPrasības = Sets.<RindasRādītājs>setOfUniques();
-        final var apstrādatiPiedāvājumi = Sets.<RindasRādītājs>setOfUniques();
+        final var apstrādatiPrasības = Sets.<LinePointer>setOfUniques();
+        final var apstrādatiPiedāvājumi = Sets.<LinePointer>setOfUniques();
         rangeClosed(1, soluSkaits)
                 .forEach(i -> optimizācijas.addAll
                         (optimizacijasSoli(atrisinajums, apstrādatiPrasības, apstrādatiPiedāvājumi)));
@@ -56,8 +56,8 @@ public class UsedSupplySwitcher implements Optimization {
 
     private List<OptimizationEvent> optimizacijasSoli
             (SolutionView atrisinājums
-                    , Set<RindasRādītājs> apstrādatiPrasības
-                    , Set<RindasRādītājs> apstrādatiPiedāvājumi) {
+                    , Set<LinePointer> apstrādatiPrasības
+                    , Set<LinePointer> apstrādatiPiedāvājumi) {
         if (atrisinājums.prasība_lietots().izmērs() >= 2) {
             final int atlaseA = nejaušiba.integer(0, atrisinājums.prasība_lietots().izmērs() - 1);
             final int atlaseB = nejaušiba.integer(0, atrisinājums.prasība_lietots().izmērs() - 1);

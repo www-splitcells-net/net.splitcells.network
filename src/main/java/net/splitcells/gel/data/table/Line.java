@@ -1,15 +1,15 @@
 package net.splitcells.gel.data.table;
 
 import static net.splitcells.dem.data.set.list.Lists.*;
-import static net.splitcells.gel.data.table.RindasRādītājsI.rindasRādītājs;
+import static net.splitcells.gel.data.table.LinePointerI.rindasRādītājs;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 
-public interface Rinda extends Domable {
+public interface Line extends Domable {
 
-    static List<?> saķēdet(Rinda... rindas) {
+    static List<?> saķēdet(Line... rindas) {
         final List<Object> rVal = list();
         for (var rinda : rindas) {
             rinda.konteksts().nosaukumuSkats()
@@ -18,17 +18,17 @@ public interface Rinda extends Domable {
         return rVal;
     }
 
-    <T> T vērtība(Atribūts<T> atribūts);
+    <T> T vērtība(Attribute<T> atribūts);
 
     int indekss();
 
-    default RindasRādītājs uzRindaRādītājs() {
+    default LinePointer uzRindaRādītājs() {
         return rindasRādītājs(konteksts(), indekss());
     }
 
-    Tabula konteksts();
+    Table konteksts();
 
-    default boolean vienāds(Rinda arg) {
+    default boolean vienāds(Line arg) {
         return indekss() == arg.indekss() && konteksts().equals(arg.konteksts());
     }
 

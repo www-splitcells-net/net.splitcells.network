@@ -16,9 +16,9 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.rating.rater.Rater;
@@ -26,7 +26,7 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 import org.w3c.dom.Node;
 
 public class ForAllValueCombinations implements Rater {
-    public static ForAllValueCombinations forAllValueCombinations(final Atribūts<?>... args) {
+    public static ForAllValueCombinations forAllValueCombinations(final Attribute<?>... args) {
         return new ForAllValueCombinations(args);
     }
 
@@ -34,22 +34,22 @@ public class ForAllValueCombinations implements Rater {
      * ienākošieGrupasId -> vertības no atribūts -> radītsGrupasId
      */
     private final Map<GrupaId, Map<List<Object>, GrupaId>> grupas = map();
-    private final List<Atribūts<?>> atribūti = list();
+    private final List<Attribute<?>> atribūti = list();
     private final List<Discoverable> kontekts = list();
 
-    private ForAllValueCombinations(final Atribūts<?>... args) {
+    private ForAllValueCombinations(final Attribute<?>... args) {
         for (final var atribūti : args) {
             this.atribūti.add(atribūti);
         }
     }
 
-    public List<Atribūts<?>> attributes() {
+    public List<Attribute<?>> attributes() {
         return Lists.listWithValuesOf(atribūti);
     }
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu
-            (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+            (Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
         final List<Object> grupasVertības = list();
         final var rindasVērtība = papildinājums.vērtība(Ierobežojums.RINDA);
         atribūti.forEach(e -> grupasVertības.add(rindasVērtība.vērtība(e)));
@@ -76,7 +76,7 @@ public class ForAllValueCombinations implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
@@ -101,7 +101,7 @@ public class ForAllValueCombinations implements Rater {
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
+    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
         final var reasoning = Xml.element(getClass().getSimpleName());
         {
             final var attributeDescription = Xml.element("atribūts");
@@ -112,7 +112,7 @@ public class ForAllValueCombinations implements Rater {
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+    public String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
         return "priekš visiem kombinācijas no "
                 + atribūti
                 .stream()

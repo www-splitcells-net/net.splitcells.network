@@ -2,7 +2,7 @@ package net.splitcells.gel.problem;
 
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -22,7 +22,7 @@ public interface DefineDemands {
 	@Returns_this
     DefineDemands arPrasībam(List<List<Object>> parsības);
 
-	DefineSupply arPiedāvumuNosaukumiem(Atribūts<?>... supply_header);
+	DefineSupply arPiedāvumuNosaukumiem(Attribute<?>... supply_header);
 
-	DefineSupply arPiedāvumuNosaukumiem(List<Atribūts<?>> supply_header);
+	DefineSupply arPiedāvumuNosaukumiem(List<Attribute<?>> supply_header);
 }

@@ -4,7 +4,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Jautājums;
@@ -43,7 +43,7 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public MetaRating novērtējums(GrupaId grupaId, Rinda rinda) {
+    public MetaRating novērtējums(GrupaId grupaId, Line rinda) {
         return atvasināšanaFuncija.apply(atvasināšanasMērķis.novērtējums(grupaId, rinda));
     }
 
@@ -64,22 +64,22 @@ public final class Atvasināšana implements Ierobežojums {
 
     @Override
     public Perspective dabiskaArgumentācija
-            (Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
+            (Line rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
         throw not_implemented_yet();
     }
 
     @Override
-    public GrupaId grupaNo(Rinda rinda) {
+    public GrupaId grupaNo(Line rinda) {
         return atvasināšanasMērķis.grupaNo(rinda);
     }
 
     @Override
-    public void reģistrē_papildinājums(GrupaId grupaId, Rinda rinda) {
+    public void reģistrē_papildinājums(GrupaId grupaId, Line rinda) {
         throw not_implemented_yet();
     }
 
     @Override
-    public void rēgistrē_pirms_noņemšanas(GrupaId grupaId, Rinda rinda) {
+    public void rēgistrē_pirms_noņemšanas(GrupaId grupaId, Line rinda) {
         throw not_implemented_yet();
     }
 
@@ -89,17 +89,17 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public Set<Rinda> izpildītāji(GrupaId grupaId) {
+    public Set<Line> izpildītāji(GrupaId grupaId) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Set<Rinda> neievērotaji(GrupaId grupaId) {
+    public Set<Line> neievērotaji(GrupaId grupaId) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Rinda pieliktRadījums(LocalRating vietējieNovērtējums) {
+    public Line pieliktRadījums(LocalRating vietējieNovērtējums) {
         throw not_implemented_yet();
     }
 

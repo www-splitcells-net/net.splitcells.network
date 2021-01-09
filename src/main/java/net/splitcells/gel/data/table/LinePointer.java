@@ -8,21 +8,21 @@ import java.util.Optional;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.lang.Xml.textNode;
 
-public interface RindasRādītājs extends Domable {
-    Tabula konteksts();
+public interface LinePointer extends Domable {
+    Table konteksts();
 
     int indekss();
 
-    default Optional<Rinda> interpretē() {
+    default Optional<Line> interpretē() {
         return interpretē(konteksts());
     }
 
     @Deprecated
-    Optional<Rinda> interpretē(Tabula context);
+    Optional<Line> interpretē(Table context);
 
     @Override
     default Node toDom() {
-        final var dom = element(RindasRādītājs.class.getSimpleName());
+        final var dom = element(LinePointer.class.getSimpleName());
         final var rinda = interpretē();
         if (rinda.isPresent()) {
             dom.appendChild(rinda.get().toDom());

@@ -1,6 +1,6 @@
-package net.splitcells.gel.data.table.kolonna;
+package net.splitcells.gel.data.table.column;
 
-public interface KolonnaAbonēšana<T> {
+public interface ColumnSubscriber<T> {
 
 	void reģistrē_papildinājums(T papildinājums, int indekss);
 

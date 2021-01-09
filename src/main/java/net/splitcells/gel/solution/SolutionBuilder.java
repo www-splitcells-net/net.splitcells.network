@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.DefineDemands;
 import net.splitcells.gel.problem.DefineSupply;
 import net.splitcells.gel.problem.Define_Demand_Attributes;
@@ -22,10 +22,10 @@ import net.splitcells.gel.problem.ProblemGenerator;
 
 public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands, DefineSupply, ProblemGenerator {
 
-    private List<Atribūts<? extends Object>> prasības_atribūti = list();
+    private List<Attribute<? extends Object>> prasības_atribūti = list();
     private List<List<Object>> prasības = list();
 
-    private List<Atribūts<? extends Object>> piedāvājumu_atribūti = list();
+    private List<Attribute<? extends Object>> piedāvājumu_atribūti = list();
     private List<List<Object>> piedāvājumi = list();
 
     private Ierobežojums ierobežojums;
@@ -58,14 +58,14 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
     }
 
     @Override
-    public DefineSupply arPiedāvumuNosaukumiem(Atribūts<? extends Object>... argPiedāvājumuAtribūti) {
-        piedāvājumu_atribūti = list(argPiedāvājumuAtribūti).mapped(a -> (Atribūts<Object>) a);
+    public DefineSupply arPiedāvumuNosaukumiem(Attribute<? extends Object>... argPiedāvājumuAtribūti) {
+        piedāvājumu_atribūti = list(argPiedāvājumuAtribūti).mapped(a -> (Attribute<Object>) a);
         return this;
     }
 
     @Override
-    public DefineDemands arPrasībasNosaukumiem(Atribūts<? extends Object>... argPrāsibasPiedāvājums) {
-        prasības_atribūti = list(argPrāsibasPiedāvājums).mapped(a -> (Atribūts<Object>) a);
+    public DefineDemands arPrasībasNosaukumiem(Attribute<? extends Object>... argPrāsibasPiedāvājums) {
+        prasības_atribūti = list(argPrāsibasPiedāvājums).mapped(a -> (Attribute<Object>) a);
         return this;
     }
 
@@ -84,14 +84,14 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
     }
 
     @Override
-    public DefineSupply arPiedāvumuNosaukumiem(List<Atribūts<? extends Object>> argPiedāvājumuAtribūti) {
-        piedāvājumu_atribūti = argPiedāvājumuAtribūti.mapped(a -> (Atribūts<Object>) a);
+    public DefineSupply arPiedāvumuNosaukumiem(List<Attribute<? extends Object>> argPiedāvājumuAtribūti) {
+        piedāvājumu_atribūti = argPiedāvājumuAtribūti.mapped(a -> (Attribute<Object>) a);
         return this;
     }
 
     @Override
-    public DefineDemands arPrasībasNosaukumiem(List<Atribūts<? extends Object>> argPrasībasAtribūti) {
-        prasības_atribūti = argPrasībasAtribūti.mapped(a -> (Atribūts<Object>) a);
+    public DefineDemands arPrasībasNosaukumiem(List<Attribute<? extends Object>> argPrasībasAtribūti) {
+        prasības_atribūti = argPrasībasAtribūti.mapped(a -> (Attribute<Object>) a);
         return this;
     }
 

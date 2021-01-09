@@ -1,24 +1,24 @@
 package net.splitcells.gel.constraint;
 
-import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.structure.Rating;
 
 public final class Ziņojums {
-	public static Ziņojums report(Rinda rinda, GrupaId grupa, Rating novērtējums) {
+	public static Ziņojums report(Line rinda, GrupaId grupa, Rating novērtējums) {
 		return new Ziņojums(rinda, grupa, novērtējums);
 	}
 
-	private Rinda rinda;
+	private Line rinda;
 	private GrupaId group;
 	private Rating novērtējums;
 
-	private Ziņojums(Rinda rinda, GrupaId grupa, Rating novērtējums) {
+	private Ziņojums(Line rinda, GrupaId grupa, Rating novērtējums) {
 		this.rinda = rinda;
 		this.group = grupa;
 		this.novērtējums = novērtējums;
 	}
 
-	public Rinda rinda() {
+	public Line rinda() {
 		return rinda;
 	}
 

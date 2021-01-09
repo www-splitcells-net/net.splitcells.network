@@ -1,14 +1,14 @@
-package net.splitcells.gel.data.table.atribūts;
+package net.splitcells.gel.data.table.attribute;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.atom.Bool;
-import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Line;
 
-public interface Atribūts<T> extends Domable {
+public interface Attribute<T> extends Domable {
 
     String vārds();
 
-    default boolean vienāds(Rinda arg) {
+    default boolean vienāds(Line arg) {
         return this == arg;
     }
 

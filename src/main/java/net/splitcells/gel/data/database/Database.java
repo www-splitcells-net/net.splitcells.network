@@ -1,21 +1,21 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 
-public interface Database extends Tabula {
+public interface Database extends Table {
 
-	Rinda pieliktUnPārtulkot(List<? extends Object> values);
+	Line pieliktUnPārtulkot(List<? extends Object> values);
 
-	Rinda pielikt(Rinda rinda);
+	Line pielikt(Line rinda);
 
 	@Deprecated
 	void noņemt(int rindasIndekss);
 
-	void noņemt(Rinda rinda);
+	void noņemt(Line rinda);
 
-	default void aizvietot(Rinda jaunaRinda) {
+	default void aizvietot(Line jaunaRinda) {
 		if (null != jēlaRindasSkats().get(jaunaRinda.indekss())) {
 			noņemt(jaunaRinda.indekss());
 		}

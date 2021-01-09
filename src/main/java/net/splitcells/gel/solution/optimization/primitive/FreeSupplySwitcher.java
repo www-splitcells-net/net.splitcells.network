@@ -5,7 +5,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.data.table.RindasRādītājs;
+import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
@@ -51,8 +51,8 @@ public class FreeSupplySwitcher implements Optimization {
     @Override
     public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
         final List<OptimizationEvent> optimizācijas = list();
-        final var apstrādataPrasība = Sets.<RindasRādītājs>setOfUniques();
-        final var apstrādatsPiedāvājums = Sets.<RindasRādītājs>setOfUniques();
+        final var apstrādataPrasība = Sets.<LinePointer>setOfUniques();
+        final var apstrādatsPiedāvājums = Sets.<LinePointer>setOfUniques();
         rangeClosed(1, soluSkaititlis)
                 .forEach(i -> optimizācijas.addAll
                         (optimizacijasSoli(atrisinājums, apstrādataPrasība, apstrādatsPiedāvājums)));
@@ -61,8 +61,8 @@ public class FreeSupplySwitcher implements Optimization {
 
     public List<OptimizationEvent> optimizacijasSoli
             (SolutionView atrisinājums
-                    , Set<RindasRādītājs> apstrādatasPrasības
-                    , Set<RindasRādītājs> apstrādatiPiedāvājumi) {
+                    , Set<LinePointer> apstrādatasPrasības
+                    , Set<LinePointer> apstrādatiPiedāvājumi) {
         if (atrisinājums.prasība_lietots().navTukšs() && atrisinājums.piedāvājums_nelietots().navTukšs()) {
             final int atlase = nejaušiba.integer(0, atrisinājums.prasības_nelietotas().izmērs() - 1);
             final var lietotaPrasība = atrisinājums.prasība_lietots().gūtRinda(atlase);

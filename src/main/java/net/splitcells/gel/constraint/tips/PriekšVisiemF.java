@@ -1,11 +1,11 @@
 package net.splitcells.gel.constraint.tips;
 
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 
 public class PriekšVisiemF {
 
-    public static <T> PriekšVisiem priekšVisiemArVērtibu(Atribūts<T> atribūts, T vērtiba) {
+    public static <T> PriekšVisiem priekšVisiemArVērtibu(Attribute<T> atribūts, T vērtiba) {
         return PriekšVisiemVeidotajs.gadījums().priekšVisiemArVērtibu(atribūts, vērtiba);
     }
 
@@ -25,7 +25,7 @@ public class PriekšVisiemF {
      * @param arg
      * @return
      */
-    public static PriekšVisiem priekšVisiem(final Atribūts<?> arg) {
+    public static PriekšVisiem priekšVisiem(final Attribute<?> arg) {
         return PriekšVisiemVeidotajs.gadījums().priekšVisiem(arg);
     }
 
@@ -39,7 +39,7 @@ public class PriekšVisiemF {
      * @param argumenti
      * @return
      */
-    public static PriekšVisiem forAllCombinations(final Atribūts<?>... argumenti) {
+    public static PriekšVisiem forAllCombinations(final Attribute<?>... argumenti) {
         return PriekšVisiemVeidotajs.gadījums().forAllCombinations(argumenti);
     }
 }

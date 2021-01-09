@@ -17,10 +17,10 @@ import java.util.Set;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
-import net.splitcells.gel.data.table.kolonna.Kolonna;
-import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.table.column.ColumnView;
 import org.w3c.dom.Element;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.Database;
@@ -135,8 +135,8 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Rinda piešķirt(Rinda prasība, Rinda piedāvājums) {
-        final var piešķiršana = piešķiršanas.pieliktUnPārtulkot(Rinda.saķēdet(prasība, piedāvājums));
+    public Line piešķirt(Line prasība, Line piedāvājums) {
+        final var piešķiršana = piešķiršanas.pieliktUnPārtulkot(Line.saķēdet(prasība, piedāvājums));
         if (!lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(piedāvājums.indekss())) {
             piedāvājumi_lietoti.pielikt(piedāvājums);
             piedāvājumi_nelietoti.noņemt(piedāvājums);
@@ -180,29 +180,29 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Rinda prasība_no_piešķiršana(Rinda piešķiršana) {
+    public Line prasība_no_piešķiršana(Line piešķiršana) {
         return prāsibas.jēlaRindasSkats()
                 .get(piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.get(piešķiršana.indekss()));
     }
 
     @Override
-    public Rinda piedāvājums_no_piešķiršana(Rinda allocation) {
+    public Line piedāvājums_no_piešķiršana(Line allocation) {
         return piedāvājumi.jēlaRindasSkats()
                 .get(piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.get(allocation.indekss()));
     }
 
     @Override
-    public Rinda pieliktUnPārtulkot(List<?> vertības) {
+    public Line pieliktUnPārtulkot(List<?> vertības) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Rinda pielikt(Rinda rinda) {
+    public Line pielikt(Line rinda) {
         throw not_implemented_yet();
     }
 
     @Override
-    public void noņemt(Rinda piešķiršana) {
+    public void noņemt(Line piešķiršana) {
         final var prasība = prasība_no_piešķiršana(piešķiršana);
         final var piedāvājums = piedāvājums_no_piešķiršana(piešķiršana);
         primsNoņemšanaAbonēšanas.forEach(pirmsNoņemšanasKlausītājs -> pirmsNoņemšanasKlausītājs.rēgistrē_pirms_noņemšanas(piešķiršana));
@@ -253,17 +253,17 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public List<Atribūts<Object>> nosaukumuSkats() {
+    public List<Attribute<Object>> nosaukumuSkats() {
         return piešķiršanas.nosaukumuSkats();
     }
 
     @Override
-    public <T> KolonnaSkats<T> kolonnaSkats(Atribūts<T> atribūts) {
+    public <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts) {
         return piešķiršanas.kolonnaSkats(atribūts);
     }
 
     @Override
-    public ListView<Rinda> jēlaRindasSkats() {
+    public ListView<Line> jēlaRindasSkats() {
         return piešķiršanas.jēlaRindasSkats();
     }
 
@@ -292,8 +292,8 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Set<Rinda> piešķiršanas_no_piedāvājuma(Rinda piedāvājums) {
-        final Set<Rinda> piešķiršanas_no_piedāvājuma = setOfUniques();
+    public Set<Line> piešķiršanas_no_piedāvājuma(Line piedāvājums) {
+        final Set<Line> piešķiršanas_no_piedāvājuma = setOfUniques();
         try {
             lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu
                     .get(piedāvājums.indekss())
@@ -306,8 +306,8 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Set<Rinda> piešķiršanas_no_prasības(Rinda prasība) {
-        final Set<Rinda> piešķiršanas_no_prasības = setOfUniques();
+    public Set<Line> piešķiršanas_no_prasības(Line prasība) {
+        final Set<Line> piešķiršanas_no_prasības = setOfUniques();
         lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu
                 .get(prasība.indekss())
                 .forEach(piešķiršanasIndekss ->
@@ -316,7 +316,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public List<Kolonna<Object>> kolonnaSkats() {
+    public List<Column<Object>> kolonnaSkats() {
         return piešķiršanas.kolonnaSkats();
     }
 
@@ -344,12 +344,12 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public List<Rinda> jēlasRindas() {
+    public List<Line> jēlasRindas() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Rinda uzmeklēVienādus(Atribūts<Rinda> atribūts, Rinda cits) {
+    public Line uzmeklēVienādus(Attribute<Line> atribūts, Line cits) {
         return piešķiršanas.uzmeklēVienādus(atribūts, cits);
     }
 }

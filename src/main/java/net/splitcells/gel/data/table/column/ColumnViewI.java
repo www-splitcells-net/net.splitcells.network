@@ -1,6 +1,6 @@
-package net.splitcells.gel.data.table.kolonna;
+package net.splitcells.gel.data.table.column;
 
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Table;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -10,12 +10,12 @@ import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
-public class KolonnaSkatsI<T> implements KolonnaSkats<T> {
-    public static <T> KolonnaSkats<T> kolonnasSkats(Kolonna<T> kolonna) {
-        return new KolonnaSkatsI<>(kolonna);
+public class ColumnViewI<T> implements ColumnView<T> {
+    public static <T> ColumnView<T> kolonnasSkats(Column<T> kolonna) {
+        return new ColumnViewI<>(kolonna);
     }
-    private final Kolonna<T> kolonna;
-    private KolonnaSkatsI(Kolonna<T> kolonna) {
+    private final Column<T> kolonna;
+    private ColumnViewI(Column<T> kolonna) {
         this.kolonna = kolonna;
     }
 
@@ -135,12 +135,12 @@ public class KolonnaSkatsI<T> implements KolonnaSkats<T> {
     }
 
     @Override
-    public Tabula uzmeklēšana(T vertība) {
+    public Table uzmeklēšana(T vertība) {
         return kolonna.uzmeklēšana(vertība);
     }
 
     @Override
-    public Tabula uzmeklēšana(Predicate<T> predikāts) {
+    public Table uzmeklēšana(Predicate<T> predikāts) {
         return kolonna.uzmeklēšana(predikāts);
     }
 }

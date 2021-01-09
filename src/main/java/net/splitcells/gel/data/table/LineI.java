@@ -9,25 +9,25 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 
 import java.util.Objects;
 
-public class RindaI implements Rinda {
-    private final Tabula konteksts;
+public class LineI implements Line {
+    private final Table konteksts;
     private final int indekss;
 
-    public static Rinda rinda(Tabula konteksts, int indekss) {
-        return new RindaI(konteksts, indekss);
+    public static Line rinda(Table konteksts, int indekss) {
+        return new LineI(konteksts, indekss);
     }
 
-    protected RindaI(Tabula konteksts, int indekss) {
+    protected LineI(Table konteksts, int indekss) {
         this.konteksts = konteksts;
         this.indekss = indekss;
     }
 
     @Override
-    public <T> T vērtība(Atribūts<T> atribūts) {
+    public <T> T vērtība(Attribute<T> atribūts) {
         return konteksts.kolonnaSkats(requireNonNull(atribūts)).get(indekss);
     }
 
@@ -37,7 +37,7 @@ public class RindaI implements Rinda {
     }
 
     @Override
-    public Tabula konteksts() {
+    public Table konteksts() {
         return konteksts;
     }
 
@@ -45,8 +45,8 @@ public class RindaI implements Rinda {
     public boolean equals(Object arg) {
         if (this == arg) {
             return true;
-        } else if (arg instanceof Rinda) {
-            final var argRinda = (Rinda) arg;
+        } else if (arg instanceof Line) {
+            final var argRinda = (Line) arg;
             return indekss() == argRinda.indekss() && konteksts().equals(argRinda.konteksts());
         } else {
             return false;
@@ -60,7 +60,7 @@ public class RindaI implements Rinda {
 
     @Override
     public Element toDom() {
-        final var gūtasDomVertība = element(Rinda.class.getSimpleName());
+        final var gūtasDomVertība = element(Line.class.getSimpleName());
         gūtasDomVertība.appendChild(element("indekss", textNode("" + indekss)));
         konteksts.nosaukumuSkats().forEach(atribūts -> {
             final var vertība = konteksts.kolonnaSkats(atribūts).get(indekss);

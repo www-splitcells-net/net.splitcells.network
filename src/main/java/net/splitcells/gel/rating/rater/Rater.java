@@ -2,8 +2,8 @@ package net.splitcells.gel.rating.rater;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.common.Vārdi;
@@ -19,7 +19,7 @@ public interface Rater extends PubliclyTyped<Rater>
         , PubliclyConstructed<Domable>
         , DiscoverableFromMultiplePathsSetter
         , Domable {
-    RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu);
+    RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu);
 
     /**
      * @param rindas
@@ -27,17 +27,17 @@ public interface Rater extends PubliclyTyped<Rater>
      * @param bērni
      * @param novērtējumsPirmsNoņemšana
      * @return
-     * @see Ierobežojums#rēgistrē_pirms_noņemšanas(Rinda)
+     * @see Ierobežojums#rēgistrē_pirms_noņemšanas(Line)
      */
     @Deprecated
-    RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana);
+    RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana);
 
     @Override
     default Class<? extends Rater> type() {
         return Rater.class;
     }
 
-    default Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
+    default Node argumentacija(GrupaId grupa, Table piešķiršanas) {
         throw not_implemented_yet(getClass().getName());
     }
 
@@ -50,7 +50,7 @@ public interface Rater extends PubliclyTyped<Rater>
         return dom;
     }
 
-    default String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+    default String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
         throw not_implemented_yet(getClass().getName());
     }
 }

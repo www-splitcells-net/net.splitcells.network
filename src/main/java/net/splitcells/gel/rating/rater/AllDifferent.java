@@ -19,29 +19,29 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.Ierobežojums;
 
 public class AllDifferent<T> implements Rater {
-    private final Atribūts<T> atribūts;
-    private final Map<T, Predicate<Rinda>> predikāts = map();
-    private final Function<T, Predicate<Rinda>> predikātaRažotājs;
+    private final Attribute<T> atribūts;
+    private final Map<T, Predicate<Line>> predikāts = map();
+    private final Function<T, Predicate<Line>> predikātaRažotājs;
     private final List<Discoverable> kontekts = list();
 
-    public static <R> AllDifferent<R> visiemAtšķirība(Atribūts<R> arg) {
+    public static <R> AllDifferent<R> visiemAtšķirība(Attribute<R> arg) {
         return new AllDifferent<>(arg);
     }
 
-    private AllDifferent(Atribūts<T> arg) {
+    private AllDifferent(Attribute<T> arg) {
         atribūts = arg;
         predikātaRažotājs = value -> {
             return line -> line.vērtība(atribūts).equals(value);
         };
     }
 
-    private Predicate<Rinda> predikāts(T value) {
+    private Predicate<Line> predikāts(T value) {
         if (!predikāts.containsKey(value)) {
             predikāts.put(value, predikātaRažotājs.apply(value));
         }
@@ -49,7 +49,7 @@ public class AllDifferent<T> implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
         final T vertība = papildinājums.vērtība(Ierobežojums.RINDA).vērtība(atribūts);
         final var grupa = rindas.kolonnaSkats(Ierobežojums.RINDA).uzmeklēšana(predikāts(vertība));
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
@@ -92,7 +92,7 @@ public class AllDifferent<T> implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
         final T vērtība = noņemšana.vērtība(Ierobežojums.RINDA).vērtība(atribūts);
         final var grupa = rindas.kolonnaSkats(Ierobežojums.RINDA).uzmeklēšana(predikāts(vērtība));
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();

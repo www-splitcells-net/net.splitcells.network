@@ -19,34 +19,34 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Node;
 
 public class MinimalDistance<T> implements Rater {
-    public static MinimalDistance<Integer> minimālsIntAttālums(Atribūts<Integer> atribūts, double minimumDistance) {
+    public static MinimalDistance<Integer> minimālsIntAttālums(Attribute<Integer> atribūts, double minimumDistance) {
         return minimālsAttālums(atribūts, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
     }
 
-    public static MinimalDistance<Double> minimālsAttālums(Atribūts<Double> atribūts, double minimumDistance) {
+    public static MinimalDistance<Double> minimālsAttālums(Attribute<Double> atribūts, double minimumDistance) {
         return minimālsAttālums(atribūts, minimumDistance, comparator_(Double::compare), MathUtils::distance);
     }
 
-    public static <R> MinimalDistance<R> minimālsAttālums(Atribūts<R> atribūts, double minimumDistance, Comparator<R> comparator, BiFunction<R, R, Double> distanceMeassurer) {
+    public static <R> MinimalDistance<R> minimālsAttālums(Attribute<R> atribūts, double minimumDistance, Comparator<R> comparator, BiFunction<R, R, Double> distanceMeassurer) {
         return new MinimalDistance<>(atribūts, minimumDistance, comparator, distanceMeassurer);
     }
 
     private final double minimumDistance;
-    private final Atribūts<T> atribūts;
+    private final Attribute<T> atribūts;
     private final Comparator<T> comparator;
     private final BiFunction<T, T, Double> distanceMeassurer;
     private final List<Discoverable> contextes = list();
 
-    protected MinimalDistance(Atribūts<T> atribūts, double minimumDistance, Comparator<T> comparator, BiFunction<T, T, Double> distanceMeassurer) {
+    protected MinimalDistance(Attribute<T> atribūts, double minimumDistance, Comparator<T> comparator, BiFunction<T, T, Double> distanceMeassurer) {
         this.distanceMeassurer = distanceMeassurer;
         this.atribūts = atribūts;
         this.minimumDistance = minimumDistance;
@@ -55,10 +55,10 @@ public class MinimalDistance<T> implements Rater {
 
     @Override
     public RatingEvent vērtē_pirms_noņemšana
-            (Tabula rindas
-                    , Rinda noņemšana
+            (Table rindas
+                    , Line noņemšana
                     , net.splitcells.dem.data.set.list.List<Ierobežojums> bērni
-                    , Tabula novērtējumsPirmsNoņemšana) {
+                    , Table novērtējumsPirmsNoņemšana) {
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         final var sakārtotasRindas = sorted(rindas);
         final int sakārtotiIndeksi = sakārtotasRindas.indexOf(
@@ -82,7 +82,7 @@ public class MinimalDistance<T> implements Rater {
             // KOMPORMISS
             int i = sakārtotiIndeksi - 1;
             while (i < -1) {
-                final Rinda paliekuKreisaRinda = sakārtotasRindas.get(i);
+                final Line paliekuKreisaRinda = sakārtotasRindas.get(i);
                 if (!ievēro(noņemšana, paliekuKreisaRinda)) {
                     novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, sakārtotasRindas.get(i), bērni//
                             , novērtējumsPirmsNoņemšana.uzmeklēVienādus(Ierobežojums.RINDA, paliekuKreisaRinda).vērtība(Ierobežojums.NOVĒRTĒJUMS));
@@ -95,7 +95,7 @@ public class MinimalDistance<T> implements Rater {
             // KOMPORMISS
             int i = sakārtotiIndeksi - 1;
             while (i < -1) {
-                final Rinda paliekaKreisaRinda = sakārtotasRindas.get(i);
+                final Line paliekaKreisaRinda = sakārtotasRindas.get(i);
                 if (!ievēro(noņemšana, paliekaKreisaRinda)) {
                     novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, sakārtotasRindas.get(i), bērni//
                             , novērtējumsPirmsNoņemšana.uzmeklēVienādus(Ierobežojums.RINDA, paliekaKreisaRinda).vērtība(Ierobežojums.NOVĒRTĒJUMS));
@@ -106,7 +106,7 @@ public class MinimalDistance<T> implements Rater {
             }
             i = sakārtotiIndeksi + 1;
             while (i < sakārtotasRindas.size()) {
-                final Rinda paliekaLabaRinda = sakārtotasRindas.get(i);
+                final Line paliekaLabaRinda = sakārtotasRindas.get(i);
                 if (!ievēro(noņemšana, paliekaLabaRinda)) {
                     novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, sakārtotasRindas.get(i), bērni//
                             , novērtējumsPirmsNoņemšana.uzmeklēVienādus(Ierobežojums.RINDA, paliekaLabaRinda).vērtība(Ierobežojums.NOVĒRTĒJUMS));
@@ -122,7 +122,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         final var sakārtotasRindas = sorted(rindas);
         // JAUDA
@@ -186,8 +186,8 @@ public class MinimalDistance<T> implements Rater {
 
     protected void novērte_papildinājumu_noPapildinājumuPāris
             (RatingEvent rVal
-                    , Rinda papildinājums
-                    , Rinda oriģinālaRinda
+                    , Line papildinājums
+                    , Line oriģinālaRinda
                     , List<Ierobežojums> berni
                     , Optional<Rating> ratingBeforeAddition) {
         final Rating papilduCena;
@@ -202,7 +202,7 @@ public class MinimalDistance<T> implements Rater {
         rVal.pieliktNovērtējumu_caurPapildinājumu(papildinājums, papilduCena, berni, Optional.empty());
     }
 
-    private boolean ievēro(Rinda a, Rinda b) {
+    private boolean ievēro(Line a, Line b) {
         return abs(distanceMeassurer
                 .apply(a.vērtība(Ierobežojums.RINDA).vērtība(atribūts)
                         , b.vērtība(Ierobežojums.RINDA).vērtība(atribūts))
@@ -211,8 +211,8 @@ public class MinimalDistance<T> implements Rater {
 
     protected void novērte_papildinajums_noNoņemšanasPāri
             (RatingEvent rVal
-                    , Rinda noņemšana
-                    , Rinda paliekas
+                    , Line noņemšana
+                    , Line paliekas
                     , List<Ierobežojums> bērni
                     , Rating paliekuNovērtējumsPirmsNoņemšanas) {
         if (!ievēro(noņemšana, paliekas)) {
@@ -226,7 +226,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
+    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
         final var reasoning = Xml.element("min-distance");
         reasoning.appendChild(
                 Xml.element("minimum"
@@ -269,7 +269,7 @@ public class MinimalDistance<T> implements Rater {
         return contextes.stream().map(Discoverable::path).collect(toList());
     }
 
-    private List<Rinda> sorted(Tabula rindas) {
+    private List<Line> sorted(Table rindas) {
         return rindas.jēlaRindasSkats().stream()
                 .filter(e -> e != null)
                 .sorted((a, b) -> {
@@ -285,7 +285,7 @@ public class MinimalDistance<T> implements Rater {
                 .collect(toList());
     }
 
-    private List<Rinda> defyingSorted(Tabula lines) {
+    private List<Line> defyingSorted(Table lines) {
         final var cost = bezMaksas();
         return lines.jēlaRindasSkats().stream()
                 .filter(e -> e != null)
@@ -300,7 +300,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+    public String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
         return "vismaz " + minimumDistance + " " + atribūts.vārds() + " attālums";
     }
 }

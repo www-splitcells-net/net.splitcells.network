@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.table.Rinda;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.rating.rater.Rater;
@@ -35,7 +35,7 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
     }
 
     @Override
-    public void apstrāde_rindu_papildinajumu(Rinda papildinājums) {
+    public void apstrāde_rindu_papildinajumu(Line papildinājums) {
         final var ienākošaGrupa = papildinājums.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pēc_papildinājumu(
@@ -59,7 +59,7 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
     }
 
     @Override
-    protected void apstrāda_rindas_primsNoņemšana(GrupaId ienākošaGrupaId, Rinda noņemšana) {
+    protected void apstrāda_rindas_primsNoņemšana(GrupaId ienākošaGrupaId, Line noņemšana) {
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pirms_noņemšana(
                         rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)

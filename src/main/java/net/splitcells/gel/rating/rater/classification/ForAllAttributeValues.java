@@ -12,9 +12,9 @@ import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejum
 import java.util.Collection;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.table.Rinda;
-import net.splitcells.gel.data.table.Tabula;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 import org.w3c.dom.Node;
@@ -27,26 +27,26 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 @Deprecated
 public class ForAllAttributeValues implements Rater {
-    public static ForAllAttributeValues priekšVisiemAtribūtuVertības(final Atribūts<?> arg) {
+    public static ForAllAttributeValues priekšVisiemAtribūtuVertības(final Attribute<?> arg) {
         return new ForAllAttributeValues(arg);
     }
 
-    private final Atribūts<?> atribūts;
+    private final Attribute<?> atribūts;
 
-    protected ForAllAttributeValues(final Atribūts<?> atribūts) {
+    protected ForAllAttributeValues(final Attribute<?> atribūts) {
         this.atribūts = atribūts;
     }
 
     protected final Map<GrupaId, Map<Object, GrupaId>> grupa = map();
     private final List<Discoverable> konteksti = list();
 
-    public Atribūts<?> atribūti() {
+    public Attribute<?> atribūti() {
         return atribūts;
     }
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu
-            (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+            (Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
         final var grupēšanasVertība = papildinājums.vērtība(Ierobežojums.RINDA).vērtība(atribūts);
         final var ienākošasGrupasId = papildinājums.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         if (!grupa.containsKey(ienākošasGrupasId)) {
@@ -67,7 +67,7 @@ public class ForAllAttributeValues implements Rater {
 
     @Override
     public RatingEvent vērtē_pirms_noņemšana
-            (Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+            (Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
@@ -77,7 +77,7 @@ public class ForAllAttributeValues implements Rater {
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {
+    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
         final var argumentācia = Xml.element("priekš-visiem");
         argumentācia.appendChild(
                 Xml.element("vārds"
@@ -87,7 +87,7 @@ public class ForAllAttributeValues implements Rater {
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Rinda rinda, GrupaId grupa) {
+    public String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
         return "priekš visiem " + atribūts.vārds();
     }
 

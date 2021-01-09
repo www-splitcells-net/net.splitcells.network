@@ -1,4 +1,4 @@
-package net.splitcells.gel.data.table.atribūts;
+package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.lang.Xml.textNode;
@@ -10,35 +10,35 @@ import net.splitcells.dem.data.atom.Bool;
 
 import java.util.function.Function;
 
-public final class AtribūtsI<T> implements Atribūts<T> {
+public final class AttributeI<T> implements Attribute<T> {
 
     private final Class<T> tips;
     private final String vārds;
     private final Function<String, T> deserializācija;
 
-    public static <T> Atribūts<T> atribūts(Class<T> tips) {
-        return new AtribūtsI<>(tips, tips.getSimpleName());
+    public static <T> Attribute<T> atribūts(Class<T> tips) {
+        return new AttributeI<>(tips, tips.getSimpleName());
     }
 
-    public static Atribūts<Integer> integerAtributs(String vārds) {
-        return new AtribūtsI<>(Integer.class, vārds, arg -> Integer.valueOf(arg));
+    public static Attribute<Integer> integerAtributs(String vārds) {
+        return new AttributeI<>(Integer.class, vārds, arg -> Integer.valueOf(arg));
     }
 
-    public static Atribūts<String> stringAtributs(String vārds) {
-        return new AtribūtsI<>(String.class, vārds, arg -> arg);
+    public static Attribute<String> stringAtributs(String vārds) {
+        return new AttributeI<>(String.class, vārds, arg -> arg);
     }
 
-    public static <T> Atribūts<T> atributs(Class<T> tips, String vārds) {
-        return new AtribūtsI<>(tips, vārds);
+    public static <T> Attribute<T> atributs(Class<T> tips, String vārds) {
+        return new AttributeI<>(tips, vārds);
     }
 
-    private AtribūtsI(Class<T> tips, String vārds) {
+    private AttributeI(Class<T> tips, String vārds) {
         this(tips, vārds, arg -> {
             throw new UnsupportedOperationException();
         });
     }
 
-    private AtribūtsI(Class<T> tips, String vārds, Function<String, T> deserializācija) {
+    private AttributeI(Class<T> tips, String vārds, Function<String, T> deserializācija) {
         this.tips = tips;
         this.vārds = vārds;
         this.deserializācija = deserializācija;
@@ -61,7 +61,7 @@ public final class AtribūtsI<T> implements Atribūts<T> {
 
     @Override
     public Element toDom() {
-        return element(Atribūts.class.getSimpleName()
+        return element(Attribute.class.getSimpleName()
                 , element("vārds", textNode(vārds))
                 , element(tips.getSimpleName())
         );

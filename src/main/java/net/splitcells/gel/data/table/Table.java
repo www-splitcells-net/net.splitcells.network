@@ -16,25 +16,25 @@ import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.table.kolonna.Kolonna;
-import net.splitcells.gel.data.table.kolonna.KolonnaSkats;
+import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.table.column.ColumnView;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.atribūts.Atribūts;
+import net.splitcells.gel.data.table.attribute.Attribute;
 
-public interface Tabula extends Discoverable, Domable {
-    List<Atribūts<Object>> nosaukumuSkats();
+public interface Table extends Discoverable, Domable {
+    List<Attribute<Object>> nosaukumuSkats();
 
-    <T> KolonnaSkats<T> kolonnaSkats(Atribūts<T> atribūts);
+    <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts);
 
-    List<Kolonna<Object>> kolonnaSkats();
+    List<Column<Object>> kolonnaSkats();
 
-    ListView<Rinda> jēlaRindasSkats();
+    ListView<Line> jēlaRindasSkats();
 
-    default boolean satur(Rinda rinda) {
+    default boolean satur(Line rinda) {
         if (rinda.indekss() >= jēlaRindasSkats().size()) {
             return false;
         } else {
@@ -42,18 +42,18 @@ public interface Tabula extends Discoverable, Domable {
         }
     }
 
-    default net.splitcells.dem.data.set.list.List<Rinda> gūtRindas() {
+    default net.splitcells.dem.data.set.list.List<Line> gūtRindas() {
         return listWithValuesOf
                 (jēlaRindasSkats().stream()
                         .filter(e -> e != null)
                         .collect(Collectors.toList()));
     }
 
-    default Rinda gūtJēluRindas(int indekss) {
+    default Line gūtJēluRindas(int indekss) {
         return jēlaRindasSkats().get(indekss);
     }
 
-    default Rinda gūtRinda(int indekss) {
+    default Line gūtRinda(int indekss) {
         return gūtRindas().get(indekss);
     }
 
@@ -68,7 +68,7 @@ public interface Tabula extends Discoverable, Domable {
     }
 
     @Deprecated
-    List<Rinda> jēlasRindas();
+    List<Line> jēlasRindas();
 
     default String uzCSV() {
         final var csv = new StringBuffer();
@@ -95,9 +95,9 @@ public interface Tabula extends Discoverable, Domable {
     /**
      * PĀRSAUKT
      */
-    Rinda uzmeklēVienādus(Atribūts<Rinda> atribūts, Rinda other);
+    Line uzmeklēVienādus(Attribute<Line> atribūts, Line other);
 
-    default Stream<Rinda> uzmeklēVienādus(List<Object> vertības) {
+    default Stream<Line> uzmeklēVienādus(List<Object> vertības) {
         return gūtRindas().stream()
                 .filter(rinda ->
                         IntStream.range(0, nosaukumuSkats().size())
