@@ -6,7 +6,7 @@
 
 | Attribute | Status |
 | --- | --- |
-| sourcehut CI | [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/builds.sr.ht.svg)](https://builds.sr.ht/~splitcells-net/builds.sr.ht?) |
+| sourcehut CI | [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net/net.splitcells?) |
 | GitHub CI | ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells/workflows/Continous%20Integration/badge.svg) |
 | GitLab CI | ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells/badges/master/pipeline.svg) |
 
