@@ -11,7 +11,7 @@ The rendered documentation can be seen [here](http://splitcells.net/net/splitcel
 | GitHub CI | ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells/workflows/Continous%20Integration/badge.svg) |
 | GitLab CI | ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells/badges/master/pipeline.svg) |
 
-## Introduction
+## Building The Cluster
 
 Build Project via [build command](./bin/build).
 Related repositories are not included as submodules.
