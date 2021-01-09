@@ -4,7 +4,7 @@ import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.tips.Atvasināšana;
+import net.splitcells.gel.constraint.type.Atvasināšana;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.type.Optimality;
 

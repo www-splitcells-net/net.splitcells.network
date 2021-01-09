@@ -1,4 +1,4 @@
-package net.splitcells.gel.constraint.tips;
+package net.splitcells.gel.constraint.type;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;

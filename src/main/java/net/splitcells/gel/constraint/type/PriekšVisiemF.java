@@ -1,4 +1,4 @@
-package net.splitcells.gel.constraint.tips;
+package net.splitcells.gel.constraint.type;
 
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;

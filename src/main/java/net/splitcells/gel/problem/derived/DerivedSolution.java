@@ -13,7 +13,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.tips.Atvasināšana;
+import net.splitcells.gel.constraint.type.Atvasināšana;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.rating.structure.MetaRating;

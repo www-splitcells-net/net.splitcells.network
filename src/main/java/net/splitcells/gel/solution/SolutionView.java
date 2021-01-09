@@ -6,7 +6,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.constraint.tips.PriekšVisiem;
+import net.splitcells.gel.constraint.type.PriekšVisiem;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;

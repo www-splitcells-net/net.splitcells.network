@@ -13,9 +13,9 @@ import java.util.Optional;
 
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.constraint.tips.PriekšVisiem;
-import net.splitcells.gel.constraint.tips.PriekšVisiemF;
-import net.splitcells.gel.constraint.tips.Tad;
+import net.splitcells.gel.constraint.type.PriekšVisiem;
+import net.splitcells.gel.constraint.type.PriekšVisiemF;
+import net.splitcells.gel.constraint.type.Tad;
 import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
 import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 import net.splitcells.gel.rating.structure.Rating;

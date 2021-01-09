@@ -1,4 +1,4 @@
-package net.splitcells.gel.constraint.tips.struktūra;
+package net.splitcells.gel.constraint.type.framework;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
@@ -13,23 +13,23 @@ import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
 @Deprecated
-public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends IerobežojumsAI {
+public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     protected final Rater vērtētājs;
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(Function<Constraint, Rater> vērtētājuRažotajs) {
+    protected ConstraintBasedOnLocalGroupsAI(Function<Constraint, Rater> vērtētājuRažotajs) {
         super(Constraint.standartaGrupa());
         vērtētājs = vērtētājuRažotajs.apply(this);
     }
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(Rater vērtētājs, String vārds) {
+    protected ConstraintBasedOnLocalGroupsAI(Rater vērtētājs, String vārds) {
         this(Constraint.standartaGrupa(), vērtētājs, vārds);
     }
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(Rater vērtētājs) {
+    protected ConstraintBasedOnLocalGroupsAI(Rater vērtētājs) {
         this(Constraint.standartaGrupa(), vērtētājs, "");
     }
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(GroupId standartaGrupa, Rater vērtētājs, String vārds) {
+    protected ConstraintBasedOnLocalGroupsAI(GroupId standartaGrupa, Rater vērtētājs, String vārds) {
         super(standartaGrupa, vārds);
         this.vērtētājs = vērtētājs;
     }

@@ -1,16 +1,16 @@
-package net.splitcells.gel.constraint.tips;
+package net.splitcells.gel.constraint.type;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping.raterBasedGrouping;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.constraint.tips.struktūra.IerobežojumsBalstītaUzVietējieGrupasAI;
+import net.splitcells.gel.constraint.type.framework.ConstraintBasedOnLocalGroupsAI;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
 
-public class PriekšVisiem extends IerobežojumsBalstītaUzVietējieGrupasAI {
+public class PriekšVisiem extends ConstraintBasedOnLocalGroupsAI {
 
     public static PriekšVisiem veidot(Rater grupēšana) {
         return priekšVisiem(grupēšana);

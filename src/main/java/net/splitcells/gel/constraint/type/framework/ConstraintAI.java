@@ -1,4 +1,4 @@
-package net.splitcells.gel.constraint.tips.struktūra;
+package net.splitcells.gel.constraint.type.framework;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
@@ -57,7 +57,7 @@ import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 
 @Deprecated
-public abstract class IerobežojumsAI implements Constraint {
+public abstract class ConstraintAI implements Constraint {
     private final GroupId injekcijasGrupas;
     protected final net.splitcells.dem.data.set.list.List<Constraint> bērni = list();
     protected Optional<Discoverable> golvenaisKonteksts = Optional.empty();
@@ -67,11 +67,11 @@ public abstract class IerobežojumsAI implements Constraint {
     protected final Allocations rindasApstrāde;
     protected final Map<GroupId, Rating> grupasApstrāde = map();
 
-    protected IerobežojumsAI(GroupId injekcijasGrupas) {
+    protected ConstraintAI(GroupId injekcijasGrupas) {
         this(injekcijasGrupas, "");
     }
 
-    protected IerobežojumsAI(GroupId injekcijasGrupas, String vārds) {
+    protected ConstraintAI(GroupId injekcijasGrupas, String vārds) {
         this.injekcijasGrupas = injekcijasGrupas;
         rindas = datuBāze(vārds + ".rindas", this, RINDA, IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         rindasApstrāde = piešķiršanas("rindasApstrāde", rindas, radījums);
@@ -80,7 +80,7 @@ public abstract class IerobežojumsAI implements Constraint {
         rindas.abonē_uz_papildinājums(this::apstrāde_rindu_papildinajumu);
     }
 
-    protected IerobežojumsAI() {
+    protected ConstraintAI() {
         this(Constraint.standartaGrupa());
     }
 
