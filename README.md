@@ -2,7 +2,7 @@
 
 This is the root project of a project cluster. 
 
-* [Rendered Documentation](http://splitcells.net/net/splitcells/index.html).
+* [Rendered Documentation](http://splitcells.net/net/splitcells/index.html)
 * [Twitch Channel](https://www.twitch.tv/splitcellsnet)
 * [Twitter](https://twitter.com/splitcells)
 
