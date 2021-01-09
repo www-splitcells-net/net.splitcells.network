@@ -1,4 +1,4 @@
-package net.splitcells.gel.solution.optimization.meta.kalnā.kāpējs;
+package net.splitcells.gel.solution.optimization.meta.hill.climber;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -8,31 +8,31 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.Vēsture;
 import net.splitcells.gel.solution.history.refleksija.tips.PilnsNovērtejums;
-import net.splitcells.gel.solution.optimization.Optimizācija;
-import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
+import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 @Deprecated
-public class ZarošanāsKalnāKāpējs implements Optimizācija {
+public class BranchingHillClimber implements Optimization {
 
-    public static ZarošanāsKalnāKāpējs zarošanāsKalnāKāpējs() {
-        return new ZarošanāsKalnāKāpējs();
+    public static BranchingHillClimber zarošanāsKalnāKāpējs() {
+        return new BranchingHillClimber();
     }
 
     private final Supplier<Boolean> plānotajs = () -> true;
 
-    private ZarošanāsKalnāKāpējs() {
+    private BranchingHillClimber() {
 
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
         final var nakamaisZars = nakamaisZars(atrisinājums);
         return nakamaOperācija(nakamaisZars.get());
     }
 
-    private List<OptimizācijasNotikums> nakamaOperācija(Solution zars) {
+    private List<OptimizationEvent> nakamaOperācija(Solution zars) {
         throw not_implemented_yet();
     }
 

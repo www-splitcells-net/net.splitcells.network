@@ -2,28 +2,28 @@ package net.splitcells.gel.solution.optimization.meta;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.Optimizācija;
-import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
+import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
-public class Atkārtotājs implements Optimizācija {
-    public static Atkārtotājs atkārtotājs(Optimizācija optimizācija, int maksimalsAtkārtošanasSkaitlis) {
-        return new Atkārtotājs(optimizācija, maksimalsAtkārtošanasSkaitlis);
+public class Repeater implements Optimization {
+    public static Repeater atkārtotājs(Optimization optimization, int maksimalsAtkārtošanasSkaitlis) {
+        return new Repeater(optimization, maksimalsAtkārtošanasSkaitlis);
     }
 
-    private final Optimizācija optimizācija;
+    private final Optimization optimization;
     private final int maksimalsAtkārtošanasSkaitlis;
     private int atkārtošanasSkaitlis = 0;
 
-    private Atkārtotājs(Optimizācija optimizācija, int maksimalsAtkārtošanasSkaitlis) {
-        this.optimizācija = optimizācija;
+    private Repeater(Optimization optimization, int maksimalsAtkārtošanasSkaitlis) {
+        this.optimization = optimization;
         this.maksimalsAtkārtošanasSkaitlis = maksimalsAtkārtošanasSkaitlis;
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
         if (atkārtošanasSkaitlis >= maksimalsAtkārtošanasSkaitlis) {
             return list();
         }

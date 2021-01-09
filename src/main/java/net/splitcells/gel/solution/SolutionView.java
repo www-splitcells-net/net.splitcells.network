@@ -7,7 +7,7 @@ import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.solution.history.Vēsture;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.constraint.tips.PriekšVisiem;
-import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.rating.struktūra.Novērtējums;
@@ -185,6 +185,6 @@ public interface SolutionView extends ProblēmasSkats {
         return tabulasRinda;
     }
 
-    Novērtējums novērtējums(List<OptimizācijasNotikums> notikumi);
+    Novērtējums novērtējums(List<OptimizationEvent> notikumi);
 }
 

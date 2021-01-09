@@ -1,11 +1,11 @@
-package net.splitcells.gel.solution.optimization.meta.kalnā.kāpējs;
+package net.splitcells.gel.solution.optimization.meta.hill.climber;
 
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.rating.struktūra.Novērtējums;
-import net.splitcells.gel.solution.optimization.Optimizācija;
-import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
+import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -14,10 +14,10 @@ import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 
-public class KalnāKāpējs implements Optimizācija {
+public class HillClimber implements Optimization {
 
-    public static KalnāKāpējs funkcionālsKalnāKāpējs(Optimizācija optimizācija, int i) {
-        return new KalnāKāpējs(optimizācija, new Supplier<Boolean>() {
+    public static HillClimber funkcionālsKalnāKāpējs(Optimization optimization, int i) {
+        return new HillClimber(optimization, new Supplier<Boolean>() {
             int counter = 0;
 
             @Override
@@ -30,19 +30,19 @@ public class KalnāKāpējs implements Optimizācija {
     }
 
     private final Supplier<Boolean> plānotājs;
-    private final Optimizācija atrisinājumuKaimiņi;
+    private final Optimization atrisinājumuKaimiņi;
 
-    private KalnāKāpējs(Optimizācija optimizācija, Supplier<Boolean> plānotājs) {
+    private HillClimber(Optimization optimization, Supplier<Boolean> plānotājs) {
         this.plānotājs = plānotājs;
-        this.atrisinājumuKaimiņi = optimizācija;
+        this.atrisinājumuKaimiņi = optimization;
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
         final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
         final var sanknesVēsturesIndekss = atrisinājums.vēsture().momentansIndekss();
         Optional<Novērtējums> labakaisKaimiņuNovērtējums = Optional.empty();
-        List<OptimizācijasNotikums> labakaKaimiņuOperācija = list();
+        List<OptimizationEvent> labakaKaimiņuOperācija = list();
         while (plānotājs.get()) {
             final var ieteikumi = atrisinājumuKaimiņi.optimizē(atrisinājums);
             if (ieteikumi.isEmpty()) {
@@ -53,7 +53,7 @@ public class KalnāKāpējs implements Optimizācija {
                         (suggestion -> domsole().append
                                 (suggestion.toDom()
                                         , () -> atrisinājums.path().withAppended
-                                                (Optimizācija.class.getSimpleName()
+                                                (Optimization.class.getSimpleName()
                                                         , getClass().getSimpleName())
                                         , LogLevel.TRACE)
                         );

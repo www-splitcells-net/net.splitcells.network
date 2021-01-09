@@ -4,28 +4,28 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.host.Files.createDirectory;
 import static net.splitcells.dem.resource.host.Files.writeToFile;
-import static net.splitcells.gel.solution.optimization.SoluTips.PIEŠĶIRŠANA;
-import static net.splitcells.gel.solution.optimization.SoluTips.NOŅEMŠANA;
+import static net.splitcells.gel.solution.optimization.StepType.PIEŠĶIRŠANA;
+import static net.splitcells.gel.solution.optimization.StepType.NOŅEMŠANA;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.struktūra.Novērtējums;
 import net.splitcells.gel.problem.Problēma;
-import net.splitcells.gel.solution.optimization.Optimizācija;
-import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
+import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.function.Function;
 
 public interface Solution extends Problēma, SolutionView {
 
     @Returns_this
-    default Solution optimizē(Optimizācija optimizācija) {
-        return optimizēArFunkciju(s -> optimizācija.optimizē(s));
+    default Solution optimizē(Optimization optimization) {
+        return optimizēArFunkciju(s -> optimization.optimizē(s));
     }
 
     @Returns_this
-    default Solution optimizēArFunkciju(Function<Solution, List<OptimizācijasNotikums>> optimizācijaFunkcija) {
+    default Solution optimizēArFunkciju(Function<Solution, List<OptimizationEvent>> optimizācijaFunkcija) {
         while (!irOptimāls()) {
             final var ieteikumi = optimizācijaFunkcija.apply(this);
             if (ieteikumi.isEmpty()) {
@@ -37,12 +37,12 @@ public interface Solution extends Problēma, SolutionView {
     }
 
     @Returns_this
-    default Solution optimizēVienreis(Optimizācija optimizācija) {
-        return optimizeArFunkcijuVienreis(s -> optimizācija.optimizē(s));
+    default Solution optimizēVienreis(Optimization optimization) {
+        return optimizeArFunkcijuVienreis(s -> optimization.optimizē(s));
     }
 
     @Returns_this
-    default Solution optimizeArFunkcijuVienreis(Function<Solution, List<OptimizācijasNotikums>> optimizācija) {
+    default Solution optimizeArFunkcijuVienreis(Function<Solution, List<OptimizationEvent>> optimizācija) {
         final var ieteikumi = optimizācija.apply(this);
         if (ieteikumi.isEmpty()) {
             return this;
@@ -52,24 +52,24 @@ public interface Solution extends Problēma, SolutionView {
     }
 
     @Returns_this
-    default Solution optimizē(List<OptimizācijasNotikums> notikumi) {
+    default Solution optimizē(List<OptimizationEvent> notikumi) {
         notikumi.forEach(this::optimizē);
         return this;
     }
 
     @Returns_this
-    default Solution optimizē(List<OptimizācijasNotikums> notikumi, OptimizationParameters optimizationParameters) {
+    default Solution optimizē(List<OptimizationEvent> notikumi, OptimizationParameters optimizationParameters) {
         notikumi.forEach(e -> optimizē(e, optimizationParameters));
         return this;
     }
 
     @Returns_this
-    default Solution optimizē(OptimizācijasNotikums notikums) {
+    default Solution optimizē(OptimizationEvent notikums) {
         return optimizē(notikums, OptimizationParameters.optimizācijasParametri());
     }
 
     @Returns_this
-    default Solution optimizē(OptimizācijasNotikums notikums, OptimizationParameters optimizationParameters) {
+    default Solution optimizē(OptimizationEvent notikums, OptimizationParameters optimizationParameters) {
         if (notikums.soluTips().equals(PIEŠĶIRŠANA)) {
             this.piešķirt(
                     prasības_nelietotas().gūtJēluRindas(notikums.prasība().interpretē().get().indekss()),
@@ -100,7 +100,7 @@ public interface Solution extends Problēma, SolutionView {
         writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), ierobežojums().grafiks());
     }
 
-    default Novērtējums novērtējums(List<OptimizācijasNotikums> notikumi) {
+    default Novērtējums novērtējums(List<OptimizationEvent> notikumi) {
         final var sanknesVēsturesIndekss = vēsture().momentansIndekss();
         optimizē(notikumi);
         final var novērtējums = ierobežojums().novērtējums();

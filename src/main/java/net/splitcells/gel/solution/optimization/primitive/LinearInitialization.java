@@ -1,26 +1,26 @@
-package net.splitcells.gel.solution.optimization.primitīvs;
+package net.splitcells.gel.solution.optimization.primitive;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.solution.optimization.OptimizācijasNotikums.optimizacijasNotikums;
-import static net.splitcells.gel.solution.optimization.SoluTips.PIEŠĶIRŠANA;
+import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
+import static net.splitcells.gel.solution.optimization.StepType.PIEŠĶIRŠANA;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.Optimizācija;
-import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
+import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
-public class LineārsInicializētājs implements Optimizācija {
+public class LinearInitialization implements Optimization {
 
-    public static LineārsInicializētājs lineārsInicializētājs() {
-        return new LineārsInicializētājs();
+    public static LinearInitialization lineārsInicializētājs() {
+        return new LinearInitialization();
     }
 
-    private LineārsInicializētājs() {
+    private LinearInitialization() {
 
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(SolutionView solution) {
+    public List<OptimizationEvent> optimizē(SolutionView solution) {
         if (solution.prasības_nelietotas().navTukšs() && solution.piedāvājums_nelietots().navTukšs()) {
             return list(
                     optimizacijasNotikums

@@ -2,29 +2,29 @@ package net.splitcells.gel.solution.optimization.meta;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.Optimizācija;
-import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
+import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
-public class Eskalācija implements Optimizācija {
+public class Escalator implements Optimization {
 
-    public static Eskalācija eskalācija(Function<Integer, Optimizācija> optimzācijas) {
-        return new Eskalācija(optimzācijas);
+    public static Escalator eskalācija(Function<Integer, Optimization> optimzācijas) {
+        return new Escalator(optimzācijas);
     }
 
-    private final Function<Integer, Optimizācija> optimzācijas;
+    private final Function<Integer, Optimization> optimzācijas;
     private int eskalācijasLīmens = 0;
 
-    private Eskalācija
-            (Function<Integer, Optimizācija> optimzācijas) {
+    private Escalator
+            (Function<Integer, Optimization> optimzācijas) {
         this.optimzācijas = optimzācijas;
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
         final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
         final var sanknesVēsturesIndekss = atrisinājums.vēsture().momentansIndekss();
         if (eskalācijasLīmens < 0) {

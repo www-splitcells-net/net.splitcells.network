@@ -4,8 +4,8 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
 
 @FunctionalInterface
-public interface Optimizācija {
+public interface Optimization {
 
-	List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums);
+	List<OptimizationEvent> optimizē(SolutionView atrisinājums);
 
 }

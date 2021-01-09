@@ -1,4 +1,4 @@
-package net.splitcells.gel.solution.optimization.primitīvs;
+package net.splitcells.gel.solution.optimization.primitive;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
@@ -8,8 +8,8 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.solution.optimization.Optimizācija;
-import net.splitcells.gel.solution.optimization.OptimizācijasNotikums;
+import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -20,26 +20,26 @@ import static net.splitcells.dem.data.set.Sets.*;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.solution.optimization.OptimizācijasNotikums.optimizacijasNotikums;
-import static net.splitcells.gel.solution.optimization.SoluTips.NOŅEMŠANA;
-import static net.splitcells.gel.solution.optimization.SoluTips.PIEŠĶIRŠANA;
+import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
+import static net.splitcells.gel.solution.optimization.StepType.NOŅEMŠANA;
+import static net.splitcells.gel.solution.optimization.StepType.PIEŠĶIRŠANA;
 
-public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
+public class ConstraintGroupBasedRepair implements Optimization {
 
-    public static IerobežojumuGrupasBalstītsRemonts ierobežojumGrupaBalstītsRemonts
+    public static ConstraintGroupBasedRepair ierobežojumGrupaBalstītsRemonts
             (Function<List<List<Ierobežojums>>, Optional<List<Ierobežojums>>> pieškiršanasAtlasītajs
-                    , Function<Map<GrupaId, Set<Rinda>>, Optimizācija> pārdalītājs) {
-        return new IerobežojumuGrupasBalstītsRemonts(pieškiršanasAtlasītajs, pārdalītājs);
+                    , Function<Map<GrupaId, Set<Rinda>>, Optimization> pārdalītājs) {
+        return new ConstraintGroupBasedRepair(pieškiršanasAtlasītajs, pārdalītājs);
     }
 
-    public static IerobežojumuGrupasBalstītsRemonts ierobežojumGrupaBalstītsRemonts
+    public static ConstraintGroupBasedRepair ierobežojumGrupaBalstītsRemonts
             (Function<List<List<Ierobežojums>>, Optional<List<Ierobežojums>>> pieškiršanasAtlasītajs) {
-        return new IerobežojumuGrupasBalstītsRemonts(pieškiršanasAtlasītajs, nejāuhšsPārdalītājs());
+        return new ConstraintGroupBasedRepair(pieškiršanasAtlasītajs, nejāuhšsPārdalītājs());
     }
 
-    public static IerobežojumuGrupasBalstītsRemonts ierobežojumGrupaBalstītsRemonts() {
+    public static ConstraintGroupBasedRepair ierobežojumGrupaBalstītsRemonts() {
         final var randomness = randomness();
-        return new IerobežojumuGrupasBalstītsRemonts
+        return new ConstraintGroupBasedRepair
                 (piešķiršanasGruppas -> {
                     final var kandidāti = piešķiršanasGruppas
                             .stream()
@@ -56,15 +56,15 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
                 }, nejāuhšsPārdalītājs());
     }
 
-    private static final Function<Map<GrupaId, Set<Rinda>>, Optimizācija> nejāuhšsPārdalītājs() {
+    private static final Function<Map<GrupaId, Set<Rinda>>, Optimization> nejāuhšsPārdalītājs() {
         final var randomness = randomness();
         return indeksuBalstītsPārdalītājs(i -> randomness.integer(0, i));
     }
 
-    public static final Function<Map<GrupaId, Set<Rinda>>, Optimizācija> indeksuBalstītsPārdalītājs
+    public static final Function<Map<GrupaId, Set<Rinda>>, Optimization> indeksuBalstītsPārdalītājs
             (Function<Integer, Integer> indeksuAtlasītajs) {
         return brīvasPrasībasGrupas -> atrisinājums -> {
-            final Set<OptimizācijasNotikums> pārdale = setOfUniques();
+            final Set<OptimizationEvent> pārdale = setOfUniques();
             final var nelietotiPiedāvājumi = atrisinājums.piedāvājums_nelietots().gūtRindas();
             brīvasPrasībasGrupas.entrySet().forEach(grupa -> {
                 grupa.getValue().forEach(prāsiba -> {
@@ -85,17 +85,17 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
     }
 
     private final Function<List<List<Ierobežojums>>, Optional<List<Ierobežojums>>> pieškiršanasAtlasītajs;
-    private final Function<Map<GrupaId, Set<Rinda>>, Optimizācija> pārdalītājs;
+    private final Function<Map<GrupaId, Set<Rinda>>, Optimization> pārdalītājs;
 
-    protected IerobežojumuGrupasBalstītsRemonts
+    protected ConstraintGroupBasedRepair
             (Function<List<List<Ierobežojums>>, Optional<List<Ierobežojums>>> pieškiršanasAtlasītajs
-                    , Function<Map<GrupaId, Set<Rinda>>, Optimizācija> pārdalītājs) {
+                    , Function<Map<GrupaId, Set<Rinda>>, Optimization> pārdalītājs) {
         this.pieškiršanasAtlasītajs = pieškiršanasAtlasītajs;
         this.pārdalītājs = pārdalītājs;
     }
 
     @Override
-    public List<OptimizācijasNotikums> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
         final var grupuNoIerobežojumuGrupu = grupuNoIerobežojumuGrupu(atrisinājums);
         final var prasībasGrupēšana = grupuNoIerobežojumuGrupu
                 .map(e -> e
@@ -114,7 +114,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         return optimizāija;
     }
 
-    public List<OptimizācijasNotikums> pārdali(SolutionView atrisinājums, Map<GrupaId, Set<Rinda>> brīvasPrasībasGrupas) {
+    public List<OptimizationEvent> pārdali(SolutionView atrisinājums, Map<GrupaId, Set<Rinda>> brīvasPrasībasGrupas) {
         return pārdalītājs.apply(brīvasPrasībasGrupas).optimizē(atrisinājums);
     }
 
@@ -142,7 +142,7 @@ public class IerobežojumuGrupasBalstītsRemonts implements Optimizācija {
         return pieškiršanasAtlasītajs.apply(Ierobežojums.piešķiršanasGruppas(atrisinājums.ierobežojums()));
     }
 
-    public List<OptimizācijasNotikums> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(SolutionView atrisinājums, Ierobežojums ierobežojums) {
+    public List<OptimizationEvent> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(SolutionView atrisinājums, Ierobežojums ierobežojums) {
         final var ienākošasGrupas = Sets.setOfUniques
                 (ierobežojums
                         .rindasAbstrāde()
