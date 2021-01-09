@@ -1,4 +1,4 @@
-package net.splitcells.gel.problem.atvasināts;
+package net.splitcells.gel.problem.derived;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -25,33 +25,33 @@ import java.util.function.Function;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 
-public class AtvasinātsSolution implements Solution {
+public class DerivedSolution implements Solution {
 
     protected Ierobežojums ierobežojums;
     private final Piešķiršanas piešķiršanas;
     private final History vēsture;
     private final Discoverable konteksts;
     
-    public static AtvasinātsSolution atvasinātaProblema(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
-        return new AtvasinātsSolution(konteksts, piešķiršanas, originalIerobežojums, Atvasināšana.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
+    public static DerivedSolution atvasinātaProblema(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
+        return new DerivedSolution(konteksts, piešķiršanas, originalIerobežojums, Atvasināšana.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
     }
 
-    protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
+    protected DerivedSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
         this(konteksts, piešķiršanas, oriģinālaisIerobežojums, Atvasināšana.atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
     }
 
-    public static AtvasinātsSolution atvasinātsProblēma(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
-        return new AtvasinātsSolution(konteksts, piešķiršanas, ierobežojums, atvasināšana);
+    public static DerivedSolution atvasinātsProblēma(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+        return new DerivedSolution(konteksts, piešķiršanas, ierobežojums, atvasināšana);
     }
 
-    protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+    protected DerivedSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = atvasināšana;
         vēsture = Histories.vēsture(this);
         this.konteksts = konteksts;
     }
 
-    protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas) {
+    protected DerivedSolution(Discoverable konteksts, Piešķiršanas piešķiršanas) {
         this.piešķiršanas = piešķiršanas;
         vēsture = Histories.vēsture(this);
         this.konteksts = konteksts;
@@ -78,7 +78,7 @@ public class AtvasinātsSolution implements Solution {
     }
 
     @Override
-    public AtvasinātsSolution atvasinājums(Function<MetaRating, MetaRating> atvasināšana) {
+    public DerivedSolution atvasinājums(Function<MetaRating, MetaRating> atvasināšana) {
         throw not_implemented_yet();
     }
 
@@ -214,7 +214,7 @@ public class AtvasinātsSolution implements Solution {
 
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
-        return konteksts.path().withAppended(AtvasinātsSolution.class.getSimpleName());
+        return konteksts.path().withAppended(DerivedSolution.class.getSimpleName());
     }
 
     @Override

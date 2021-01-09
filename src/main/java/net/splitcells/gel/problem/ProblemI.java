@@ -5,7 +5,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.data.tabula.kolonna.Kolonna;
 import net.splitcells.gel.data.tabula.kolonna.KolonnaSkats;
-import net.splitcells.gel.problem.atvasināts.AtvasinātsSolution;
+import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.solution.Solutions;
 import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.data.datubāze.DatuBāze;
@@ -20,19 +20,19 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.problem.atvasināts.AtvasinātsSolution.atvasinātaProblema;
+import static net.splitcells.gel.problem.derived.DerivedSolution.atvasinātaProblema;
 
-public class ProblēmaI implements Problēma {
+public class ProblemI implements Problem {
 
     private final Ierobežojums ierobežojums;
     private final Piešķiršanas piešķiršanas;
     protected Solution kāSolution;
 
-    public static Problēma problēma(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
-        return new ProblēmaI(piešķiršanas, ierobežojums);
+    public static Problem problēma(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
+        return new ProblemI(piešķiršanas, ierobežojums);
     }
 
-    protected ProblēmaI(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
+    protected ProblemI(Piešķiršanas piešķiršanas, Ierobežojums ierobežojums) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = ierobežojums;
         sinhronizē(ierobežojums);
@@ -62,7 +62,7 @@ public class ProblēmaI implements Problēma {
     }
 
     @Override
-    public AtvasinātsSolution atvasinājums(Function<MetaRating, MetaRating> konversija) {
+    public DerivedSolution atvasinājums(Function<MetaRating, MetaRating> konversija) {
         return atvasinātaProblema(() -> list(), piešķiršanas, ierobežojums, konversija);
     }
 

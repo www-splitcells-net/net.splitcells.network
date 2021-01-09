@@ -11,13 +11,13 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.structure.Rating;
-import net.splitcells.gel.problem.Problēma;
+import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.function.Function;
 
-public interface Solution extends Problēma, SolutionView {
+public interface Solution extends Problem, SolutionView {
 
     @Returns_this
     default Solution optimizē(Optimization optimization) {

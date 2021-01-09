@@ -14,8 +14,8 @@ import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.data.datubāze.DatuBāze;
 import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.problem.Problēma;
-import net.splitcells.gel.problem.atvasināts.AtvasinātsSolution;
+import net.splitcells.gel.problem.Problem;
+import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.rating.structure.MetaRating;
 
 import java.util.function.Function;
@@ -23,14 +23,14 @@ import java.util.function.Function;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 public class SolutionI implements Solution {
-	private final Problēma problēma;
+	private final Problem problēma;
 	private final History vēsture;
 	
-	public static Solution atrisinājums(Problēma problēma) {
+	public static Solution atrisinājums(Problem problēma) {
 		return new SolutionI(problēma);
 	}
 
-	public SolutionI(Problēma problēma) {
+	public SolutionI(Problem problēma) {
 		this.problēma = problēma;
 		vēsture = Histories.vēsture(this);
 	}
@@ -76,7 +76,7 @@ public class SolutionI implements Solution {
 	}
 
 	@Override
-	public AtvasinātsSolution atvasinājums(Function<MetaRating, MetaRating> atvasinātaijs) {
+	public DerivedSolution atvasinājums(Function<MetaRating, MetaRating> atvasinātaijs) {
 		return problēma.atvasinājums(atvasinātaijs);
 	}
 

@@ -8,19 +8,19 @@ import net.splitcells.gel.constraint.Ierobežojums;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
-public interface DefinēPiedāvājumi {
+public interface DefineSupply {
 
 	@Returns_this
-	default DefinēPiedāvājumi arTukšiemPiedāvājumiem(int numursNuTuķšīem) {
+	default DefineSupply arTukšiemPiedāvājumiem(int numursNuTuķšīem) {
 		final List<List<Object>> piedāvājumi = list();
 		rangeClosed(1, numursNuTuķšīem).forEach(i -> piedāvājumi.add(list()));
 		return arePiedāvājumiem(piedāvājumi);
 	}
 
-	DefinēPiedāvājumi arePiedāvājumiem(List<Object>... peidāvājumi);
+	DefineSupply arePiedāvājumiem(List<Object>... peidāvājumi);
 
-	DefinēPiedāvājumi arePiedāvājumiem(List<List<Object>> peidāvājumi);
+	DefineSupply arePiedāvājumiem(List<List<Object>> peidāvājumi);
 
-	ProblēmaĢenerators arIerobežojumu(Ierobežojums ierobežojums);
+	ProblemGenerator arIerobežojumu(Ierobežojums ierobežojums);
 
 }

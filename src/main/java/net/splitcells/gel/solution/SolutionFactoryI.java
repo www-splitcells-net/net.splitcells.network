@@ -1,10 +1,10 @@
 package net.splitcells.gel.solution;
 
-import net.splitcells.gel.problem.Problēma;
+import net.splitcells.gel.problem.Problem;
 
 public class SolutionFactoryI extends SolutionFactory {
     @Override
-    public Solution atrisinājum(Problēma problēma) {
+    public Solution atrisinājum(Problem problēma) {
         return joinAspects(SolutionI.atrisinājums(problēma));
     }
 

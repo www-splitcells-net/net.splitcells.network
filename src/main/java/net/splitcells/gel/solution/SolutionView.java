@@ -11,7 +11,7 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.rating.structure.Rating;
-import net.splitcells.gel.problem.ProblēmasSkats;
+import net.splitcells.gel.problem.ProblemView;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
 import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
@@ -30,7 +30,7 @@ import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
 import static net.splitcells.dem.resource.host.Files.*;
 import static net.splitcells.gel.rating.type.Cost.cena;
 
-public interface SolutionView extends ProblēmasSkats {
+public interface SolutionView extends ProblemView {
 
     default List<List<Ierobežojums>> prasībasGrupas() {
         return prasībasGrupas(ierobežojums(), list());

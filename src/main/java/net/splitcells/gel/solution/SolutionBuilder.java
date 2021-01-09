@@ -6,21 +6,21 @@ import static net.splitcells.gel.Language.*;
 import static net.splitcells.gel.data.piešķiršanas.Piešķiršanass.piešķiršanas;
 
 import static net.splitcells.gel.data.datubāze.DatuBāzes.datuBāze;
-import static net.splitcells.gel.problem.ProblēmaI.problēma;
+import static net.splitcells.gel.problem.ProblemI.problēma;
 
 import java.util.Arrays;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.problem.DefinēPrasība;
-import net.splitcells.gel.problem.DefinēPiedāvājumi;
-import net.splitcells.gel.problem.Definē_prasības_nosaukumu;
-import net.splitcells.gel.problem.Problēma;
-import net.splitcells.gel.problem.ProblēmaĢenerators;
+import net.splitcells.gel.problem.DefineDemands;
+import net.splitcells.gel.problem.DefineSupply;
+import net.splitcells.gel.problem.Define_Demand_Attributes;
+import net.splitcells.gel.problem.Problem;
+import net.splitcells.gel.problem.ProblemGenerator;
 
 
-public class SolutionBuilder implements Definē_prasības_nosaukumu, DefinēPrasība, DefinēPiedāvājumi, ProblēmaĢenerators {
+public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands, DefineSupply, ProblemGenerator {
 
     private List<Atribūts<? extends Object>> prasības_atribūti = list();
     private List<List<Object>> prasības = list();
@@ -33,12 +33,12 @@ public class SolutionBuilder implements Definē_prasības_nosaukumu, DefinēPras
     protected SolutionBuilder() {
     }
 
-    public static Definē_prasības_nosaukumu definē_problēmu() {
+    public static Define_Demand_Attributes definē_problēmu() {
         return new SolutionBuilder();
     }
 
     @Override
-    public Problēma uzProblēmu() {
+    public Problem uzProblēmu() {
         final var prasībasDatuBaže = datuBāze(PRASĪBAS.apraksts(), null, prasības_atribūti);
         final var piedāvājumuDatuBaže = datuBāze(PIEDĀVĀJUMI.apraksts(), null, piedāvājumu_atribūti);
         prasības.forEach(prasība -> prasībasDatuBaže.pieliktUnPārtulkot(prasība));
@@ -52,31 +52,31 @@ public class SolutionBuilder implements Definē_prasības_nosaukumu, DefinēPras
     }
 
     @Override
-    public ProblēmaĢenerators arIerobežojumu(Ierobežojums ierobežojums) {
+    public ProblemGenerator arIerobežojumu(Ierobežojums ierobežojums) {
         this.ierobežojums = ierobežojums;
         return this;
     }
 
     @Override
-    public DefinēPiedāvājumi arPiedāvumuNosaukumiem(Atribūts<? extends Object>... argPiedāvājumuAtribūti) {
+    public DefineSupply arPiedāvumuNosaukumiem(Atribūts<? extends Object>... argPiedāvājumuAtribūti) {
         piedāvājumu_atribūti = list(argPiedāvājumuAtribūti).mapped(a -> (Atribūts<Object>) a);
         return this;
     }
 
     @Override
-    public DefinēPrasība arPrasībasNosaukumiem(Atribūts<? extends Object>... argPrāsibasPiedāvājums) {
+    public DefineDemands arPrasībasNosaukumiem(Atribūts<? extends Object>... argPrāsibasPiedāvājums) {
         prasības_atribūti = list(argPrāsibasPiedāvājums).mapped(a -> (Atribūts<Object>) a);
         return this;
     }
 
     @Override
-    public DefinēPiedāvājumi arePiedāvājumiem(List<Object>... peidāvājumi) {
+    public DefineSupply arePiedāvājumiem(List<Object>... peidāvājumi) {
         piedāvājumi = listWithValuesOf(peidāvājumi);
         return this;
     }
 
     @Override
-    public DefinēPrasība arPrasībam(List<Object> prasība, List<Object>... parsības) {
+    public DefineDemands arPrasībam(List<Object> prasība, List<Object>... parsības) {
         prasības = list();
         prasības.add(prasība);
         prasības.addAll(Arrays.asList(parsības));
@@ -84,25 +84,25 @@ public class SolutionBuilder implements Definē_prasības_nosaukumu, DefinēPras
     }
 
     @Override
-    public DefinēPiedāvājumi arPiedāvumuNosaukumiem(List<Atribūts<? extends Object>> argPiedāvājumuAtribūti) {
+    public DefineSupply arPiedāvumuNosaukumiem(List<Atribūts<? extends Object>> argPiedāvājumuAtribūti) {
         piedāvājumu_atribūti = argPiedāvājumuAtribūti.mapped(a -> (Atribūts<Object>) a);
         return this;
     }
 
     @Override
-    public DefinēPrasība arPrasībasNosaukumiem(List<Atribūts<? extends Object>> argPrasībasAtribūti) {
+    public DefineDemands arPrasībasNosaukumiem(List<Atribūts<? extends Object>> argPrasībasAtribūti) {
         prasības_atribūti = argPrasībasAtribūti.mapped(a -> (Atribūts<Object>) a);
         return this;
     }
 
     @Override
-    public DefinēPiedāvājumi arePiedāvājumiem(List<List<Object>> peidāvājumi) {
+    public DefineSupply arePiedāvājumiem(List<List<Object>> peidāvājumi) {
         this.piedāvājumi = peidāvājumi;
         return this;
     }
 
     @Override
-    public DefinēPrasība arPrasībam(List<List<Object>> parsības) {
+    public DefineDemands arPrasībam(List<List<Object>> parsības) {
         this.prasības = parsības;
         return this;
     }
