@@ -18,7 +18,7 @@ import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
 import static net.splitcells.gel.Language.ARGUMENTĀCIJA;
 import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
-import static net.splitcells.gel.common.Words.ARGUMENTI;
+import static net.splitcells.gel.Language.ARGUMENTĀCIJA;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.rindasNovērtējums;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
@@ -316,7 +316,7 @@ public abstract class ConstraintAI implements Constraint {
     public Element toDom() {
         final var dom = Xml.element(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTI, arg.toDom())));
+            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTĀCIJA.apraksts(), arg.toDom())));
         }
         dom.appendChild(Xml.element("novērtējums", novērtējums().toDom()));
         {
@@ -340,7 +340,7 @@ public abstract class ConstraintAI implements Constraint {
     public Element toDom(Set<GroupId> grupas) {
         final var dom = Xml.element(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTI, arg.toDom())));
+            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTĀCIJA.apraksts(), arg.toDom())));
         }
         dom.appendChild(Xml.element("novērtējums", rating(grupas).toDom()));
         {
