@@ -13,9 +13,9 @@ import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.problem.ProblēmasSkats;
 import net.splitcells.gel.rating.rater.Rater;
-import net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemAtribūtsVērtībam;
-import net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemVērtībasKombinācija;
-import net.splitcells.gel.rating.rater.klasifikators.VērtētājsBalstītsUzGrupēšana;
+import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
+import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
+import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 import org.w3c.dom.Element;
 
 import java.nio.file.Path;
@@ -45,7 +45,7 @@ public interface SolutionView extends ProblēmasSkats {
                             (priekšVisiiemIerobežojums.grupešana())
                             .withAppended(
                                     priekšVisiiemIerobežojums.grupešana()
-                                            .casted(VērtētājsBalstītsUzGrupēšana.class)
+                                            .casted(RaterBasedOnGrouping.class)
                                             .map(e -> prieksVisiemAtribūtuNoGrupetājs(e.grupetājs()))
                                             .orElseGet(() -> list())
                             );
@@ -63,9 +63,9 @@ public interface SolutionView extends ProblēmasSkats {
 
     private static List<Atribūts<?>> prieksVisiemAtribūtuNoGrupetājs(Rater grupetājs) {
         final List<Atribūts<?>> priekšVisiemAtribūtieNoGrupas = list();
-        grupetājs.casted(PriekšVisiemAtribūtsVērtībam.class)
+        grupetājs.casted(ForAllAttributeValues.class)
                 .ifPresent(e -> priekšVisiemAtribūtieNoGrupas.add(e.atribūti()));
-        grupetājs.casted(PriekšVisiemVērtībasKombinācija.class)
+        grupetājs.casted(ForAllValueCombinations.class)
                 .ifPresent(e -> priekšVisiemAtribūtieNoGrupas.addAll(e.attributes()));
         return priekšVisiemAtribūtieNoGrupas;
     }

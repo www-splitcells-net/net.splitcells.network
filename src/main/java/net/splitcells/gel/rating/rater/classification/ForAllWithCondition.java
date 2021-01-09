@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.rater.klasifikators;
+package net.splitcells.gel.rating.rater.classification;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
@@ -22,19 +22,19 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.gel.constraint.Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID;
 import static net.splitcells.gel.constraint.Ierobežojums.RINDA;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
-import static net.splitcells.gel.rating.rater.NovērtējumsNotikumsI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 
-public class PriekšVisiemArNosacījumu<T> implements Rater {
+public class ForAllWithCondition<T> implements Rater {
 
-    public static <T> PriekšVisiemArNosacījumu<T> priekšVisiemArNosacījumu(Predicate<Rinda> nosacījums) {
-        return new PriekšVisiemArNosacījumu<>(nosacījums);
+    public static <T> ForAllWithCondition<T> priekšVisiemArNosacījumu(Predicate<Rinda> nosacījums) {
+        return new ForAllWithCondition<>(nosacījums);
     }
 
     private final Predicate<Rinda> nosacījums;
     private final List<Discoverable> konteksti = list();
 
-    private PriekšVisiemArNosacījumu(Predicate<Rinda> nosacījums) {
+    private ForAllWithCondition(Predicate<Rinda> nosacījums) {
         this.nosacījums = nosacījums;
     }
 

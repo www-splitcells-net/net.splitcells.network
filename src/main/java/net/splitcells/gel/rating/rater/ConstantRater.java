@@ -32,7 +32,7 @@ public class ConstantRater implements Rater {
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
-        final var novērtejumuNotikums = NovērtējumsNotikumsI.novērtejumuNotikums();
+        final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         novērtejumuNotikums.papildinājumi().put(
                 papildinājums
                 , lokalsNovērtejums()
@@ -44,7 +44,7 @@ public class ConstantRater implements Rater {
 
     @Override
     public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
-        return NovērtējumsNotikumsI.novērtejumuNotikums();
+        return RatingEventI.novērtejumuNotikums();
     }
 
     @Override

@@ -1,9 +1,9 @@
-package net.splitcells.gel.rating.rater.klasifikators;
+package net.splitcells.gel.rating.rater.classification;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.rater.NovērtējumsNotikumsI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
@@ -21,15 +21,15 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
-public class VērtētājsBalstītsUzGrupēšana implements Rater {
-    public static VērtētājsBalstītsUzGrupēšana raterBasedGrouping(Rater grouping) {
-        return new VērtētājsBalstītsUzGrupēšana(grouping);
+public class RaterBasedOnGrouping implements Rater {
+    public static RaterBasedOnGrouping raterBasedGrouping(Rater grouping) {
+        return new RaterBasedOnGrouping(grouping);
     }
 
     private final Rater grupetājs;
     private final List<Discoverable> kontekts = list();
 
-    protected VērtētājsBalstītsUzGrupēšana(Rater grupetājs) {
+    protected RaterBasedOnGrouping(Rater grupetājs) {
         this.grupetājs = grupetājs;
     }
 
@@ -83,7 +83,7 @@ public class VērtētājsBalstītsUzGrupēšana implements Rater {
 
     @Override
     public Class<? extends Rater> type() {
-        return VērtētājsBalstītsUzGrupēšana.class;
+        return RaterBasedOnGrouping.class;
     }
 
     public Rater grupetājs() {

@@ -2,11 +2,11 @@ package net.splitcells.gel.constraint.tips;
 
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.rating.rater.Rater;
-import net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemVērtībasKombinācija;
+import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
 
-import static net.splitcells.gel.rating.rater.klasifikators.Izdalīšana.izdalīšana;
-import static net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemArNosacījumu.priekšVisiemArNosacījumu;
-import static net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemAtribūtsVērtībam.priekšVisiemAtribūtuVertības;
+import static net.splitcells.gel.rating.rater.classification.Propagation.izdalīšana;
+import static net.splitcells.gel.rating.rater.classification.ForAllWithCondition.priekšVisiemArNosacījumu;
+import static net.splitcells.gel.rating.rater.classification.ForAllAttributeValues.priekšVisiemAtribūtuVertības;
 
 public class PriekšVisiemVeidotajs {
     protected static final PriekšVisiemVeidotajs GADĪJUMS = new PriekšVisiemVeidotajs();
@@ -37,7 +37,7 @@ public class PriekšVisiemVeidotajs {
     }
 
     public PriekšVisiem forAllCombinations(final Atribūts<?>... argumenti) {
-        return PriekšVisiem.veidot(PriekšVisiemVērtībasKombinācija.forAllValueCombinations(argumenti));
+        return PriekšVisiem.veidot(ForAllValueCombinations.forAllValueCombinations(argumenti));
     }
 
 }

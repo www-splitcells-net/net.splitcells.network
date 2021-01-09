@@ -59,7 +59,7 @@ public class MinimalDistance<T> implements Rater {
                     , Rinda noņemšana
                     , net.splitcells.dem.data.set.list.List<Ierobežojums> bērni
                     , Tabula novērtējumsPirmsNoņemšana) {
-        final var novērtejumuNotikums = NovērtējumsNotikumsI.novērtejumuNotikums();
+        final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         final var sakārtotasRindas = sorted(rindas);
         final int sakārtotiIndeksi = sakārtotasRindas.indexOf(
                 sakārtotasRindas.stream()
@@ -123,7 +123,7 @@ public class MinimalDistance<T> implements Rater {
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
-        final var novērtejumuNotikums = NovērtējumsNotikumsI.novērtejumuNotikums();
+        final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         final var sakārtotasRindas = sorted(rindas);
         // JAUDA
         final int sakārtotasIndeksi = sakārtotasRindas.indexOf(

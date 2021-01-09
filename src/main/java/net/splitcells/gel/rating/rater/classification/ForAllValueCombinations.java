@@ -1,10 +1,10 @@
-package net.splitcells.gel.rating.rater.klasifikators;
+package net.splitcells.gel.rating.rater.classification;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.rating.rater.NovērtējumsNotikumsI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
@@ -25,9 +25,9 @@ import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 import org.w3c.dom.Node;
 
-public class PriekšVisiemVērtībasKombinācija implements Rater {
-    public static PriekšVisiemVērtībasKombinācija forAllValueCombinations(final Atribūts<?>... args) {
-        return new PriekšVisiemVērtībasKombinācija(args);
+public class ForAllValueCombinations implements Rater {
+    public static ForAllValueCombinations forAllValueCombinations(final Atribūts<?>... args) {
+        return new ForAllValueCombinations(args);
     }
 
     /**
@@ -37,7 +37,7 @@ public class PriekšVisiemVērtībasKombinācija implements Rater {
     private final List<Atribūts<?>> atribūti = list();
     private final List<Discoverable> kontekts = list();
 
-    private PriekšVisiemVērtībasKombinācija(final Atribūts<?>... args) {
+    private ForAllValueCombinations(final Atribūts<?>... args) {
         for (final var atribūti : args) {
             this.atribūti.add(atribūti);
         }
@@ -82,7 +82,7 @@ public class PriekšVisiemVērtībasKombinācija implements Rater {
 
     @Override
     public Class<? extends Rater> type() {
-        return PriekšVisiemVērtībasKombinācija.class;
+        return ForAllValueCombinations.class;
     }
 
     @Override

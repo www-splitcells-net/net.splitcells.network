@@ -52,7 +52,7 @@ public class AllDifferent<T> implements Rater {
     public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final T vertība = papildinājums.vērtība(Ierobežojums.RINDA).vērtība(atribūts);
         final var grupa = rindas.kolonnaSkats(Ierobežojums.RINDA).uzmeklēšana(predikāts(vertība));
-        final var novērtejumuNotikums = NovērtējumsNotikumsI.novērtejumuNotikums();
+        final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         if (1 == grupa.izmērs()) {
             novērtejumuNotikums.papildinājumi().put(
                     papildinājums
@@ -95,7 +95,7 @@ public class AllDifferent<T> implements Rater {
     public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
         final T vērtība = noņemšana.vērtība(Ierobežojums.RINDA).vērtība(atribūts);
         final var grupa = rindas.kolonnaSkats(Ierobežojums.RINDA).uzmeklēšana(predikāts(vērtība));
-        final var novērtejumuNotikums = NovērtējumsNotikumsI.novērtejumuNotikums();
+        final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         if (1 == grupa.izmērs()) {
             // Before removal there was 1 duplication and now there is now duplicate lines
             // for this value present anymore.

@@ -1,11 +1,11 @@
-package net.splitcells.gel.rating.rater.klasifikators;
+package net.splitcells.gel.rating.rater.classification;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.GrupaId.grupa;
-import static net.splitcells.gel.rating.rater.NovērtējumsNotikumsI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
@@ -26,14 +26,14 @@ import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
 @Deprecated
-public class PriekšVisiemAtribūtsVērtībam implements Rater {
-    public static PriekšVisiemAtribūtsVērtībam priekšVisiemAtribūtuVertības(final Atribūts<?> arg) {
-        return new PriekšVisiemAtribūtsVērtībam(arg);
+public class ForAllAttributeValues implements Rater {
+    public static ForAllAttributeValues priekšVisiemAtribūtuVertības(final Atribūts<?> arg) {
+        return new ForAllAttributeValues(arg);
     }
 
     private final Atribūts<?> atribūts;
 
-    protected PriekšVisiemAtribūtsVērtībam(final Atribūts<?> atribūts) {
+    protected ForAllAttributeValues(final Atribūts<?> atribūts) {
         this.atribūts = atribūts;
     }
 
@@ -103,11 +103,11 @@ public class PriekšVisiemAtribūtsVērtībam implements Rater {
 
     @Override
     public Class<? extends Rater> type() {
-        return PriekšVisiemAtribūtsVērtībam.class;
+        return ForAllAttributeValues.class;
     }
     
     @Override
     public String toString() {
-        return PriekšVisiemAtribūtsVērtībam.class.getSimpleName() + "-" + atribūts.vārds();
+        return ForAllAttributeValues.class.getSimpleName() + "-" + atribūts.vārds();
     }
 }

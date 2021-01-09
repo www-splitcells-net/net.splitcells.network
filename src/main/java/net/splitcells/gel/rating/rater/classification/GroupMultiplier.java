@@ -1,10 +1,10 @@
-package net.splitcells.gel.rating.rater.klasifikators;
+package net.splitcells.gel.rating.rater.classification;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.rating.rater.NovērtējumsNotikumsI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
@@ -23,16 +23,16 @@ import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 import org.w3c.dom.Node;
 
-public class GrupesReizinātājs implements Rater {
-    public static GrupesReizinātājs groupMultiplier(Rater... groupers) {
-        return new GrupesReizinātājs(groupers);
+public class GroupMultiplier implements Rater {
+    public static GroupMultiplier groupMultiplier(Rater... groupers) {
+        return new GroupMultiplier(groupers);
     }
 
     private final List<Rater> grupetaji;
     protected final Map<List<GrupaId>, GrupaId> grupuReizinātājs = map();
     private final List<Discoverable> konteksti = list();
 
-    protected GrupesReizinātājs(Rater... grupetaji) {
+    protected GroupMultiplier(Rater... grupetaji) {
         this.grupetaji = list(grupetaji);
     }
 

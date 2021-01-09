@@ -16,8 +16,8 @@ import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.constraint.tips.PriekšVisiem;
 import net.splitcells.gel.constraint.tips.PriekšVisiemF;
 import net.splitcells.gel.constraint.tips.Tad;
-import net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemVērtībasKombinācija;
-import net.splitcells.gel.rating.rater.klasifikators.VērtētājsBalstītsUzGrupēšana;
+import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
+import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 
@@ -50,9 +50,9 @@ public class JautājumsI implements Jautājums {
                 .skatsUsBerniem().stream()
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
                 .filter(child -> child.arguments().size() == 1)
-                .filter(child -> child.arguments().get(0).getClass().equals(VērtētājsBalstītsUzGrupēšana.class))
+                .filter(child -> child.arguments().get(0).getClass().equals(RaterBasedOnGrouping.class))
                 .filter(child -> {
-                    final var grupēšana = (VērtētājsBalstītsUzGrupēšana) child.arguments().get(0);
+                    final var grupēšana = (RaterBasedOnGrouping) child.arguments().get(0);
                     return grupēšana.arguments().get(0).equals(vērtētājs);
                 }).reduce(ensureSingle());
         final var radītasGrupas = Sets.<GrupaId>setOfUniques();
@@ -182,7 +182,7 @@ public class JautājumsI implements Jautājums {
                 .filter(child -> {
                     final var grupešana = (Rater) child.arguments().get(0);
                     final var atribūtuGrupešana = (Rater) grupešana.arguments().get(0);
-                    if (!atribūtuGrupešana.type().equals(PriekšVisiemVērtībasKombinācija.class)) {
+                    if (!atribūtuGrupešana.type().equals(ForAllValueCombinations.class)) {
                         return false;
                     }
                     if (args.length != atribūtuGrupešana.arguments().size()) {

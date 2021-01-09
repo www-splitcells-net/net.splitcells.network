@@ -61,7 +61,7 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
-        final RatingEvent rVal = NovērtējumsNotikumsI.novērtejumuNotikums();
+        final RatingEvent rVal = RatingEventI.novērtejumuNotikums();
         rVal.papildinājumi().put
                 (papildinājums
                         , lokalsNovērtejums()
@@ -73,7 +73,7 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
-        return NovērtējumsNotikumsI.novērtejumuNotikums();
+        return RatingEventI.novērtejumuNotikums();
     }
 
     @Override

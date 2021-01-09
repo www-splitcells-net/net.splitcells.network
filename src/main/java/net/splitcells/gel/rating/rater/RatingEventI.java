@@ -9,16 +9,16 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.rating.structure.LocalRating;
 
-public class NovērtējumsNotikumsI implements RatingEvent {
+public class RatingEventI implements RatingEvent {
 
 	private final Map<Rinda, LocalRating> papildinājumi = map();
 	private final Set<Rinda> noņemšanas = setOfUniques();
 
 	public static RatingEvent novērtejumuNotikums() {
-		return new NovērtējumsNotikumsI();
+		return new RatingEventI();
 	}
 
-	private NovērtējumsNotikumsI() {
+	private RatingEventI() {
 
 	}
 
