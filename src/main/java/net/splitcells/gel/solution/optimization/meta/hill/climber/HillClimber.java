@@ -3,7 +3,7 @@ package net.splitcells.gel.solution.optimization.meta.hill.climber;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
@@ -41,7 +41,7 @@ public class HillClimber implements Optimization {
     public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
         final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
         final var sanknesVēsturesIndekss = atrisinājums.vēsture().momentansIndekss();
-        Optional<Novērtējums> labakaisKaimiņuNovērtējums = Optional.empty();
+        Optional<Rating> labakaisKaimiņuNovērtējums = Optional.empty();
         List<OptimizationEvent> labakaKaimiņuOperācija = list();
         while (plānotājs.get()) {
             final var ieteikumi = atrisinājumuKaimiņi.optimizē(atrisinājums);

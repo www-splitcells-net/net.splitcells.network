@@ -5,7 +5,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.gel.rating.struktūra.RefleksijaNovērtējumsI.rflektētsNovērtējums;
+import static net.splitcells.gel.rating.structure.MetaRatingI.rflektētsNovērtējums;
 import static net.splitcells.gel.rating.vērtētājs.NemainīgsVērtētājs.constantRater;
 
 import java.util.Collection;
@@ -18,7 +18,7 @@ import net.splitcells.gel.constraint.tips.PriekšVisiemF;
 import net.splitcells.gel.constraint.tips.Tad;
 import net.splitcells.gel.rating.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;
 import net.splitcells.gel.rating.vērtētājs.klasifikators.VērtētājsBalstītsUzGrupēšana;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
 
 public class JautājumsI implements Jautājums {
@@ -169,7 +169,7 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Jautājums tad(Novērtējums novērtējums) {
+    public Jautājums tad(Rating novērtējums) {
         return tad(constantRater(novērtējums));
     }
 
@@ -210,7 +210,7 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Novērtējums novērtējums() {
+    public Rating novērtējums() {
         final var grupasNovērtējums
                     = grupas.stream().map(group -> ierobežojums.novērtējums(group)).reduce((a, b) -> a.kombinē(b));
         if (grupasNovērtējums.isPresent()) {

@@ -16,7 +16,7 @@ import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.problem.Problēma;
 import net.splitcells.gel.problem.atvasināts.AtvasinātsSolution;
-import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
+import net.splitcells.gel.rating.structure.MetaRating;
 
 import java.util.function.Function;
 
@@ -76,7 +76,7 @@ public class SolutionI implements Solution {
 	}
 
 	@Override
-	public AtvasinātsSolution atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātaijs) {
+	public AtvasinātsSolution atvasinājums(Function<MetaRating, MetaRating> atvasinātaijs) {
 		return problēma.atvasinājums(atvasinātaijs);
 	}
 

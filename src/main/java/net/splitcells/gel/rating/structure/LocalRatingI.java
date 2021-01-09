@@ -1,21 +1,21 @@
-package net.splitcells.gel.rating.struktūra;
+package net.splitcells.gel.rating.structure;
 
 import java.util.List;
 
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
 
-public class VietējieNovērtējumsI implements VietējieNovērtējums {
+public class LocalRatingI implements LocalRating {
 
 	private GrupaId radītsIerobežojumuGrupaId;
-	private Novērtējums novērtējums;
+	private Rating novērtējums;
 	private List<Ierobežojums> izdalīUz;
 
-	public static VietējieNovērtējums lokalsNovērtejums() {
-		return new VietējieNovērtējumsI();
+	public static LocalRating lokalsNovērtejums() {
+		return new LocalRatingI();
 	}
 
-	private VietējieNovērtējumsI() {
+	private LocalRatingI() {
 
 	}
 
@@ -25,7 +25,7 @@ public class VietējieNovērtējumsI implements VietējieNovērtējums {
 	}
 
 	@Override
-	public Novērtējums novērtējums() {
+	public Rating novērtējums() {
 		return novērtējums;
 	}
 
@@ -35,19 +35,19 @@ public class VietējieNovērtējumsI implements VietējieNovērtējums {
 	}
 
 	@Override
-	public VietējieNovērtējumsI arIzdalīšanaUz(List<Ierobežojums> IzdalīšanaUz) {
+	public LocalRatingI arIzdalīšanaUz(List<Ierobežojums> IzdalīšanaUz) {
 		this.izdalīUz = IzdalīšanaUz;
 		return this;
 	}
 
 	@Override
-	public VietējieNovērtējumsI arNovērtējumu(Novērtējums novērtējums) {
+	public LocalRatingI arNovērtējumu(Rating novērtējums) {
 		this.novērtējums = novērtējums;
 		return this;
 	}
 
 	@Override
-	public VietējieNovērtējumsI arRadītuGrupasId(GrupaId radītsIerobežojumuGrupaId) {
+	public LocalRatingI arRadītuGrupasId(GrupaId radītsIerobežojumuGrupaId) {
 		this.radītsIerobežojumuGrupaId = radītsIerobežojumuGrupaId;
 		return this;
 	}

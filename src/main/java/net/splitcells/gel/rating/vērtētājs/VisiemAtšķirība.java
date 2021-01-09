@@ -5,9 +5,9 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.IncorrectImplementation.incorrectImplementation;
-import static net.splitcells.gel.rating.tips.Cena.cena;
-import static net.splitcells.gel.rating.tips.Cena.bezMaksas;
-import static net.splitcells.gel.rating.struktūra.VietējieNovērtējumsI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.type.Cena.cena;
+import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;

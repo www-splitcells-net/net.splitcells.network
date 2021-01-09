@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.tips;
+package net.splitcells.gel.rating.type;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
@@ -6,13 +6,13 @@ import static net.splitcells.dem.lang.Xml.element;
 
 import java.util.Optional;
 
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
-public class Atbilstība implements Novērtējums {
+public class Atbilstība implements Rating {
     private static final Comparator<Boolean> SALĪDYINĀTĀJS = comparator_((a, b) -> Boolean.compare(a, b));
     private boolean vertība;
 
@@ -25,7 +25,7 @@ public class Atbilstība implements Novērtējums {
     }
 
     @Override
-    public Optional<Ordering> compare_partially_to(Novērtējums arg) {
+    public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof Atbilstība) {
             return Optional.of(SALĪDYINĀTĀJS.compareTo(vertība, ((Atbilstība) arg).vertība));
         }
@@ -34,7 +34,7 @@ public class Atbilstība implements Novērtējums {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Atbilstība kombinē(Novērtējums... papilduNovērtējums) {
+    public Atbilstība kombinē(Rating... papilduNovērtējums) {
         if (papilduNovērtējums[0] instanceof Atbilstība) {
             return atbilstība(vertība && ((Atbilstība) papilduNovērtējums[0]).vertība);
         }
@@ -51,7 +51,7 @@ public class Atbilstība implements Novērtējums {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <R extends Novērtējums> R _clone() {
+    public <R extends Rating> R _clone() {
         return (R) new Atbilstība(vertība);
     }
 

@@ -5,8 +5,8 @@ import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikumsI.novērtejumuNotikums;
-import static net.splitcells.gel.rating.tips.Cena.bezMaksas;
-import static net.splitcells.gel.rating.struktūra.VietējieNovērtējumsI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
 

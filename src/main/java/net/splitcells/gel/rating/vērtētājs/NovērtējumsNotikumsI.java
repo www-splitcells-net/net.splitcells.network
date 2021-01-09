@@ -7,11 +7,11 @@ import java.util.Set;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.tabula.Rinda;
-import net.splitcells.gel.rating.struktūra.VietējieNovērtējums;
+import net.splitcells.gel.rating.structure.LocalRating;
 
 public class NovērtējumsNotikumsI implements NovērtējumsNotikums {
 
-	private final Map<Rinda, VietējieNovērtējums> papildinājumi = map();
+	private final Map<Rinda, LocalRating> papildinājumi = map();
 	private final Set<Rinda> noņemšanas = setOfUniques();
 
 	public static NovērtējumsNotikums novērtejumuNotikums() {
@@ -23,7 +23,7 @@ public class NovērtējumsNotikumsI implements NovērtējumsNotikums {
 	}
 
 	@Override
-	public Map<Rinda, VietējieNovērtējums> papildinājumi() {
+	public Map<Rinda, LocalRating> papildinājumi() {
 		return papildinājumi;
 	}
 

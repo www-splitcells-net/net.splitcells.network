@@ -13,7 +13,7 @@ import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
+import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.function.Function;
@@ -62,7 +62,7 @@ public class ProblēmaI implements Problēma {
     }
 
     @Override
-    public AtvasinātsSolution atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> konversija) {
+    public AtvasinātsSolution atvasinājums(Function<MetaRating, MetaRating> konversija) {
         return atvasinātaProblema(() -> list(), piešķiršanas, ierobežojums, konversija);
     }
 

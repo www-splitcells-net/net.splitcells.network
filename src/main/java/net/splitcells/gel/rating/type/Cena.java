@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.tips;
+package net.splitcells.gel.rating.type;
 
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
@@ -7,14 +7,14 @@ import static net.splitcells.dem.data.order.Ordering.LESSER_THAN;
 
 import java.util.Optional;
 
-import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.MetaRating;
+import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
-public class Cena implements Novērtējums {
+public class Cena implements Rating {
 	protected static final Comparator<Double> COST_VALUE_COMPARATOR = new Comparator<Double>() {
 		@Override
 		public int compare(Double a, Double b) {
@@ -40,7 +40,7 @@ public class Cena implements Novērtējums {
 	}
 
 	@Override
-	public Optional<Ordering> compare_partially_to(Novērtējums arg) {
+	public Optional<Ordering> compare_partially_to(Rating arg) {
 		if (arg instanceof Cena) {
 			return Optional.of(COST_VALUE_COMPARATOR.compareTo(vertība, ((Cena) arg).vertība()));
 		}
@@ -59,14 +59,14 @@ public class Cena implements Novērtējums {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Novērtējums kombinē(Novērtējums... additionalNovērtējumi) {
+	public Rating kombinē(Rating... additionalNovērtējumi) {
 		if (additionalNovērtējumi.length == 1) {
-			final Novērtējums additionalNovērtējums = additionalNovērtējumi[0];
+			final Rating additionalNovērtējums = additionalNovērtējumi[0];
 			if (additionalNovērtējums instanceof Cena) {
 				final Cena otherCena = (Cena) additionalNovērtējums;
 				return cena(vertība + otherCena.vertība);
 			}
-			if (additionalNovērtējums instanceof RefleksijaNovērtējums) {
+			if (additionalNovērtējums instanceof MetaRating) {
 				return additionalNovērtējums.kombinē(this);
 			}
 			if (additionalNovērtējums instanceof Optimālums) {
@@ -81,12 +81,12 @@ public class Cena implements Novērtējums {
 
 	@Override
 	public boolean equals(Object ob) {
-		return compare_partially_to((Novērtējums) ob).get().equals(EQUAL);
+		return compare_partially_to((Rating) ob).get().equals(EQUAL);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <R extends Novērtējums> R _clone() {
+	public <R extends Rating> R _clone() {
 		return (R) new Cena(vertība);
 	}
 

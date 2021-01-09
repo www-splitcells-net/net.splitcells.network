@@ -2,7 +2,7 @@ package net.splitcells.gel.rating.vērtētājs;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.struktūra.VietējieNovērtējumsI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
 
@@ -15,18 +15,18 @@ import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Node;
 
 public class NemainīgsVērtētājs implements Vērtētājs {
-    public static Vērtētājs constantRater(Novērtējums novērtējums) {
+    public static Vērtētājs constantRater(Rating novērtējums) {
         return new NemainīgsVērtētājs(novērtējums);
     }
 
-    private final Novērtējums novērtējums;
+    private final Rating novērtējums;
     private final List<Discoverable> konteksts = list();
 
-    protected NemainīgsVērtētājs(Novērtējums novērtējums) {
+    protected NemainīgsVērtētājs(Rating novērtējums) {
         this.novērtējums = novērtējums;
     }
 

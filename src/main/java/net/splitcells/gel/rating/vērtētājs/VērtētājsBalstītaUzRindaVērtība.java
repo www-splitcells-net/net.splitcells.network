@@ -4,8 +4,8 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.GrupaId.grupa;
-import static net.splitcells.gel.rating.tips.Cena.bezMaksas;
-import static net.splitcells.gel.rating.struktūra.VietējieNovērtējumsI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 
 public class VērtētājsBalstītaUzRindaVērtība implements Vērtētājs {
     public static Vērtētājs rindasVertībasBalstītasUzGrupetajs(String apraksts, Function<Rinda, Integer> grupetajs) {
@@ -42,7 +42,7 @@ public class VērtētājsBalstītaUzRindaVērtība implements Vērtētājs {
         });
     }
 
-    public static Vērtētājs rindasVertībaBalstītaUzVērtētāju(Function<Rinda, Novērtējums> vērtētājsBalstītsUzRindasVertības) {
+    public static Vērtētājs rindasVertībaBalstītaUzVērtētāju(Function<Rinda, Rating> vērtētājsBalstītsUzRindasVertības) {
         return new VērtētājsBalstītaUzRindaVērtība(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID));
     }
 
@@ -50,11 +50,11 @@ public class VērtētājsBalstītaUzRindaVērtība implements Vērtētājs {
         return new VērtētājsBalstītaUzRindaVērtība(papilduRinda -> bezMaksas(), grupetajsBalstītsUzRindasVertības);
     }
 
-    private final Function<Rinda, Novērtējums> rindasBalstītsUzVertībasVērtētājs;
+    private final Function<Rinda, Rating> rindasBalstītsUzVertībasVērtētājs;
     private final Function<Rinda, GrupaId> grupetajsBalstītsUzRindasVertības;
     private final List<Discoverable> konteksts = list();
 
-    private VērtētājsBalstītaUzRindaVērtība(Function<Rinda, Novērtējums> rindasBalstītsUzVertībasVērtētājs, Function<Rinda, GrupaId> grupetajsBalstītsUzRindasVertības) {
+    private VērtētājsBalstītaUzRindaVērtība(Function<Rinda, Rating> rindasBalstītsUzVertībasVērtētājs, Function<Rinda, GrupaId> grupetajsBalstītsUzRindasVertības) {
         this.rindasBalstītsUzVertībasVērtētājs = rindasBalstītsUzVertībasVērtētājs;
         this.grupetajsBalstītsUzRindasVertības = grupetajsBalstītsUzRindasVertības;
     }

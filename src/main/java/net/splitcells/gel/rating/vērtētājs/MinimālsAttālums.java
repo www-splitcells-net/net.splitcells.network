@@ -4,9 +4,9 @@ import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.tips.Cena.cena;
-import static net.splitcells.gel.rating.tips.Cena.bezMaksas;
-import static net.splitcells.gel.rating.struktūra.VietējieNovērtējumsI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.type.Cena.cena;
+import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +24,7 @@ import net.splitcells.gel.data.tabula.Tabula;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Node;
 
 public class MinimālsAttālums<T> implements Vērtētājs {
@@ -189,8 +189,8 @@ public class MinimālsAttālums<T> implements Vērtētājs {
                     , Rinda papildinājums
                     , Rinda oriģinālaRinda
                     , List<Ierobežojums> berni
-                    , Optional<Novērtējums> ratingBeforeAddition) {
-        final Novērtējums papilduCena;
+                    , Optional<Rating> ratingBeforeAddition) {
+        final Rating papilduCena;
         if (abs(distanceMeassurer.apply(
                 papildinājums.vērtība(Ierobežojums.RINDA).vērtība(atribūts),
                 oriģinālaRinda.vērtība(Ierobežojums.RINDA).vērtība(atribūts))) >= minimumDistance) {
@@ -214,7 +214,7 @@ public class MinimālsAttālums<T> implements Vērtētājs {
                     , Rinda noņemšana
                     , Rinda paliekas
                     , List<Ierobežojums> bērni
-                    , Novērtējums paliekuNovērtējumsPirmsNoņemšanas) {
+                    , Rating paliekuNovērtējumsPirmsNoņemšanas) {
         if (!ievēro(noņemšana, paliekas)) {
             rVal.updateRating_viaAddition(paliekas, cena(-0.5), bērni, Optional.of(paliekuNovērtējumsPirmsNoņemšanas));
         }

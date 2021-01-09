@@ -3,7 +3,7 @@ package net.splitcells.gel.constraint;
 import java.util.Optional;
 
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
 
 public interface Jautājums {
@@ -18,11 +18,11 @@ public interface Jautājums {
 
 	Jautājums tad(Vērtētājs vērtētājs);
 
-	Jautājums tad(Novērtējums novērtējums);
+	Jautājums tad(Rating novērtējums);
 
 	Jautājums priekšVisamKombinācijam(Atribūts<?>... args);
 
-	Novērtējums novērtējums();
+	Rating novērtējums();
 
 	Ierobežojums ierobežojums();
 

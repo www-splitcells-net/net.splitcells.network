@@ -10,7 +10,7 @@ import static net.splitcells.gel.solution.optimization.StepType.NOŅEMŠANA;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.problem.Problēma;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
@@ -100,7 +100,7 @@ public interface Solution extends Problēma, SolutionView {
         writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), ierobežojums().grafiks());
     }
 
-    default Novērtējums novērtējums(List<OptimizationEvent> notikumi) {
+    default Rating novērtējums(List<OptimizationEvent> notikumi) {
         final var sanknesVēsturesIndekss = vēsture().momentansIndekss();
         optimizē(notikumi);
         final var novērtējums = ierobežojums().novērtējums();

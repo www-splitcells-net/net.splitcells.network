@@ -7,7 +7,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.tips.struktūra.IerobežojumsBalstītaUzVietējieGrupasAI;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.Ziņojums;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
 
 public class Tad extends IerobežojumsBalstītaUzVietējieGrupasAI {
@@ -16,7 +16,7 @@ public class Tad extends IerobežojumsBalstītaUzVietējieGrupasAI {
         return new Tad(vērtētājs);
     }
 
-    public static Tad tad(Novērtējums novērtējums) {
+    public static Tad tad(Rating novērtējums) {
         return new Tad(constantRater(novērtējums));
     }
 

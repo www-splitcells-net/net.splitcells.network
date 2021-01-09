@@ -2,24 +2,24 @@ package net.splitcells.gel.solution.history.meta.type;
 
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Node;
 
-public final class CompleteRating implements MetaData<Novērtējums>, Domable {
+public final class CompleteRating implements MetaData<Rating>, Domable {
 
-    public static CompleteRating pilnsNovērtejums(Novērtējums novērtējums) {
+    public static CompleteRating pilnsNovērtejums(Rating novērtējums) {
         return new CompleteRating(novērtējums);
     }
 
-    private final Novērtējums novērtējums;
+    private final Rating novērtējums;
 
-    private CompleteRating(Novērtējums novērtējums) {
+    private CompleteRating(Rating novērtējums) {
         this.novērtējums = novērtējums;
 
     }
 
     @Override
-    public Novērtējums vertība() {
+    public Rating vertība() {
         return novērtējums;
     }
 

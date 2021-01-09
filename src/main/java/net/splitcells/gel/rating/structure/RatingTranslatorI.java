@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.struktūra;
+package net.splitcells.gel.rating.structure;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,28 +10,28 @@ import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.map.Map;
 
-public class NovērtējumuTulksI implements RatingTulks {
-    private final Map<Class<? extends Novērtējums>, Novērtējums> novērtējumi;
+public class RatingTranslatorI implements RatingTranslator {
+    private final Map<Class<? extends Rating>, Rating> novērtējumi;
 
-    public static RatingTulks ratingTranslator(Map<Class<? extends Novērtējums>, Novērtējums> novērtējumi) {
-        return new NovērtējumuTulksI(novērtējumi);
+    public static RatingTranslator ratingTranslator(Map<Class<? extends Rating>, Rating> novērtējumi) {
+        return new RatingTranslatorI(novērtējumi);
     }
 
-    protected NovērtējumuTulksI(Map<Class<? extends Novērtējums>, Novērtējums> novērtējumi) {
+    protected RatingTranslatorI(Map<Class<? extends Rating>, Rating> novērtējumi) {
         this.novērtējumi = novērtējumi;
     }
 
-    protected final Map<Class<? extends Novērtējums>
-            , Map<Predicate<Map<Class<? extends Novērtējums>, Novērtējums>>
-            , Function<Map<Class<? extends Novērtējums>, Novērtējums>, Novērtējums>>> tulki = map();
+    protected final Map<Class<? extends Rating>
+            , Map<Predicate<Map<Class<? extends Rating>, Rating>>
+            , Function<Map<Class<? extends Rating>, Rating>, Rating>>> tulki = map();
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Novērtējums> T tulkošana(Class<T> target) {
+    public <T extends Rating> T tulkošana(Class<T> target) {
         if (novērtējumi.containsKey(target)) {
             return (T) novērtējumi.get(target);
         }
-        Function<Map<Class<? extends Novērtējums>, Novērtējums>, Novērtējums> derīgsTulks;
+        Function<Map<Class<? extends Rating>, Rating>, Rating> derīgsTulks;
         final var tulkiKandidāts
                 = classesOf(target).stream()
                 .filter(i -> tulki.containsKey(i))
@@ -45,9 +45,9 @@ public class NovērtējumuTulksI implements RatingTulks {
     }
 
     @Override
-    public void reģistrēTulks(Class<? extends Novērtējums> mērķis
-            , Predicate<Map<Class<? extends Novērtējums>, Novērtējums>> nosacījums
-            , Function<Map<Class<? extends Novērtējums>, Novērtējums>, Novērtējums> tulks) {
+    public void reģistrēTulks(Class<? extends Rating> mērķis
+            , Predicate<Map<Class<? extends Rating>, Rating>> nosacījums
+            , Function<Map<Class<? extends Rating>, Rating>, Rating> tulks) {
         if (!tulki.containsKey(mērķis)) {
             tulki.put(mērķis, map());
         }

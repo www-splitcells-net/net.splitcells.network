@@ -1,0 +1,14 @@
+package net.splitcells.gel.rating.structure;
+
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import net.splitcells.dem.data.set.map.Map;
+
+public interface RatingTranslator {
+	<T extends Rating> T tulkošana(Class<T> type);
+
+	void reģistrēTulks(Class<? extends Rating> target, Predicate<Map<Class<? extends Rating>, Rating>> condition,
+					   Function<Map<Class<? extends Rating>, Rating>, Rating> translator);
+
+}

@@ -1,12 +1,12 @@
-package net.splitcells.gel.rating.struktūra;
+package net.splitcells.gel.rating.structure;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.rating.struktūra.RefleksijaRatingSavienotiesI.reflektētsNovērtejumsKombinetajs;
-import static net.splitcells.gel.rating.struktūra.NovērtējumuTulksI.ratingTranslator;
+import static net.splitcells.gel.rating.structure.MetaRatingMergerI.reflektētsNovērtejumsKombinetajs;
+import static net.splitcells.gel.rating.structure.RatingTranslatorI.ratingTranslator;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -14,71 +14,71 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import net.splitcells.gel.rating.tips.Cena;
-import net.splitcells.gel.rating.tips.Optimālums;
-import net.splitcells.gel.rating.tips.Peļņa;
+import net.splitcells.gel.rating.type.Cena;
+import net.splitcells.gel.rating.type.Optimālums;
+import net.splitcells.gel.rating.type.Peļņa;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
 
-public class RefleksijaNovērtējumsI implements RefleksijaNovērtējums {
-    protected final Map<Class<? extends Novērtējums>, Novērtējums> novērtējumi;
-    protected final RatingTulks tulkotajs;
-    protected final RefleksijaRatingSavienoties kombinētajs;
+public class MetaRatingI implements MetaRating {
+    protected final Map<Class<? extends Rating>, Rating> novērtējumi;
+    protected final RatingTranslator tulkotajs;
+    protected final MetaRatingMerger kombinētajs;
 
-    public static RefleksijaNovērtējums metaRating(Map<Class<? extends Novērtējums>, Novērtējums> novērtējums) {
-        return new RefleksijaNovērtējumsI(novērtējums);
+    public static MetaRating metaRating(Map<Class<? extends Rating>, Rating> novērtējums) {
+        return new MetaRatingI(novērtējums);
     }
 
-    public static RefleksijaNovērtējums rflektētsNovērtējums() {
-        return new RefleksijaNovērtējumsI();
+    public static MetaRating rflektētsNovērtējums() {
+        return new MetaRatingI();
     }
 
-    public static RefleksijaNovērtējums reflektētsNovērtējums(Novērtējums... argNovērtējumi) {
-        final Map<Class<? extends Novērtējums>, Novērtējums> novērtējumuVārdnīca = map();
+    public static MetaRating reflektētsNovērtējums(Rating... argNovērtējumi) {
+        final Map<Class<? extends Rating>, Rating> novērtējumuVārdnīca = map();
         asList(argNovērtējumi).forEach(novērtējums -> novērtējumuVārdnīca.put(novērtējums.getClass(), novērtējums));
-        final RefleksijaNovērtējumsI reflektētsNovērtējums = new RefleksijaNovērtējumsI(novērtējumuVārdnīca);
+        final MetaRatingI reflektētsNovērtējums = new MetaRatingI(novērtējumuVārdnīca);
         return reflektētsNovērtējums;
     }
 
-    protected RefleksijaNovērtējumsI() {
+    protected MetaRatingI() {
         this(map());
     }
 
     @SuppressWarnings("unlikely-arg-type")
-    protected RefleksijaNovērtējumsI(Map<Class<? extends Novērtējums>, Novērtējums> novērtējumi) {
+    protected MetaRatingI(Map<Class<? extends Rating>, Rating> novērtējumi) {
         this.novērtējumi = novērtējumi;
         tulkotajs = ratingTranslator(novērtējumi);
         kombinētajs = reflektētsNovērtejumsKombinetajs(novērtējumi);
         /**
-         * Apvienojiet vienkāršu vērtējumu ar {@link RefleksijaNovērtējums}.
+         * Apvienojiet vienkāršu vērtējumu ar {@link MetaRating}.
          */
         reģistrētieKombinētajs(
                 (baže, papildinājums) -> baže.isEmpty()
                         && papildinājums.size() == 1
-                        && papildinājums.values().iterator().next() instanceof RefleksijaNovērtējums
-                        && ((RefleksijaNovērtējums) papildinājums.values().iterator().next()).saturs().size() == 1
+                        && papildinājums.values().iterator().next() instanceof MetaRating
+                        && ((MetaRating) papildinājums.values().iterator().next()).saturs().size() == 1
                 , (baže, papildinājums) -> {
-                    RefleksijaNovērtējums reflektētsPapildinājums
-                            = (RefleksijaNovērtējums) papildinājums.values().iterator().next();
-                    Map<Class<? extends Novērtējums>, Novērtējums> reflektētsNovērtējums = map();
+                    MetaRating reflektētsPapildinājums
+                            = (MetaRating) papildinājums.values().iterator().next();
+                    Map<Class<? extends Rating>, Rating> reflektētsNovērtējums = map();
                     reflektētsNovērtējums.put(reflektētsPapildinājums.saturs().keySet().iterator().next()
                             , reflektētsPapildinājums.saturs().values().iterator().next());
                     return reflektētsNovērtējums;
                 }
         );
         /**
-         * Apvieno 2 primitīvos {@link Novērtējums}.
+         * Apvieno 2 primitīvos {@link Rating}.
          */
         reģistrētieKombinētajs(
                 (baže, papildinājums) -> baže.size() == 1
                         && papildinājums.size() == 1
-                        && !(papildinājums.values().iterator().next() instanceof RefleksijaNovērtējums)
-                        && !(baže.values().iterator().next() instanceof RefleksijaNovērtējums)
+                        && !(papildinājums.values().iterator().next() instanceof MetaRating)
+                        && !(baže.values().iterator().next() instanceof MetaRating)
                 , (baže, papildinājums) -> {
-                    final Map<Class<? extends Novērtējums>, Novērtējums> reflektētsNovērtējums = map();
-                    Novērtējums primitiveAddition = baže.values().iterator().next()
+                    final Map<Class<? extends Rating>, Rating> reflektētsNovērtējums = map();
+                    Rating primitiveAddition = baže.values().iterator().next()
                             .kombinē(papildinājums.values().iterator().next());
                     reflektētsNovērtējums.put(primitiveAddition.getClass()
                             , primitiveAddition);
@@ -86,17 +86,17 @@ public class RefleksijaNovērtējumsI implements RefleksijaNovērtējums {
                 }
         );
         /**
-         * Kombinē primitīvo vērtējumu ar {@link RefleksijaNovērtējums} ar vienu primitīvo {@link Novērtējums}.
+         * Kombinē primitīvo vērtējumu ar {@link MetaRating} ar vienu primitīvo {@link Rating}.
          */
         reģistrētieKombinētajs(
                 (baže, papildinājums) -> baže.size() == 1
                         && papildinājums.size() == 1
-                        && !(baže.values().iterator().next() instanceof RefleksijaNovērtējums)
-                        && papildinājums.values().iterator().next() instanceof RefleksijaNovērtējums
+                        && !(baže.values().iterator().next() instanceof MetaRating)
+                        && papildinājums.values().iterator().next() instanceof MetaRating
                 , (baže, papildinājums) -> {
-                    final Map<Class<? extends Novērtējums>, Novērtējums> reflektētsNovērtējums = map();
-                    Novērtējums primitiveAddition = baže.values().iterator().next()
-                            .kombinē(((RefleksijaNovērtējums)
+                    final Map<Class<? extends Rating>, Rating> reflektētsNovērtējums = map();
+                    Rating primitiveAddition = baže.values().iterator().next()
+                            .kombinē(((MetaRating)
                                     papildinājums.values().iterator().next()).saturs().values().iterator().next());
                     reflektētsNovērtējums.put(primitiveAddition.getClass()
                             , primitiveAddition);
@@ -109,9 +109,9 @@ public class RefleksijaNovērtējumsI implements RefleksijaNovērtējums {
         reģistrētieKombinētajs(
                 (baže, papildinājums) -> baže.isEmpty()
                         && papildinājums.size() == 1
-                        && !(papildinājums.values().iterator().next() instanceof RefleksijaNovērtējums)
+                        && !(papildinājums.values().iterator().next() instanceof MetaRating)
                 , (baže, papildinājums) -> {
-                    final Map<Class<? extends Novērtējums>, Novērtējums> reflektētsNovērtējums = map();
+                    final Map<Class<? extends Rating>, Rating> reflektētsNovērtējums = map();
                     final var ratingClass = papildinājums.keySet().iterator().next();
                     /**
                      * Bez {@link net.splitcells.dem.object.DeepCloneable#deepClone}
@@ -124,12 +124,12 @@ public class RefleksijaNovērtējumsI implements RefleksijaNovērtējums {
     }
 
     @Override
-    public <R extends Novērtējums> R kombinē(Novērtējums... additionalNovērtējums) {
+    public <R extends Rating> R kombinē(Rating... additionalNovērtējums) {
         return (R) kombinētajs.kombinē(additionalNovērtējums);
     }
 
     @Override
-    public <R extends Novērtējums> R tulkošana(Class<R> tips) {
+    public <R extends Rating> R tulkošana(Class<R> tips) {
         if (novērtējumi.size() == 1) {
             if (novērtējumi.containsKey(Peļņa.class)) {
                 return (R) Peļņa.peļņa(gūtSaturuDaļa(Peļņa.class).vertība());
@@ -139,35 +139,35 @@ public class RefleksijaNovērtējumsI implements RefleksijaNovērtējums {
     }
 
     @Override
-    public <T extends Novērtējums> void reģistrētieKombinētajs
-            (BiPredicate<Map<Class<? extends Novērtējums>, Novērtējums>, Map<Class<? extends Novērtējums>, Novērtējums>> nosacījums
+    public <T extends Rating> void reģistrētieKombinētajs
+            (BiPredicate<Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>> nosacījums
                     , BiFunction
-                     <Map<Class<? extends Novērtējums>, Novērtējums>
-                             , Map<Class<? extends Novērtējums>, Novērtējums>
-                             , Map<Class<? extends Novērtējums>, Novērtējums>> kombinētajs) {
+                     <Map<Class<? extends Rating>, Rating>
+                             , Map<Class<? extends Rating>, Rating>
+                             , Map<Class<? extends Rating>, Rating>> kombinētajs) {
         this.kombinētajs.reģistrētieKombinētajs(nosacījums, kombinētajs);
     }
 
     @Override
     public void reģistrēTulks
-            (Class<? extends Novērtējums> mērķis
-                    , Predicate<Map<Class<? extends Novērtējums>, Novērtējums>> nosacījums
-                    , Function<Map<Class<? extends Novērtējums>, Novērtējums>, Novērtējums> tulks) {
+            (Class<? extends Rating> mērķis
+                    , Predicate<Map<Class<? extends Rating>, Rating>> nosacījums
+                    , Function<Map<Class<? extends Rating>, Rating>, Rating> tulks) {
         this.tulkotajs.reģistrēTulks(mērķis, nosacījums, tulks);
     }
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Novērtējums) {
-            return compare_partially_to((Novērtējums) arg).get().equals(EQUAL);
+        if (arg instanceof Rating) {
+            return compare_partially_to((Rating) arg).get().equals(EQUAL);
         }
         throw not_implemented_yet();
     }
 
     @Override
-    public Optional<Ordering> compare_partially_to(Novērtējums arg) {
-        if (arg instanceof RefleksijaNovērtējums) {
-            final RefleksijaNovērtējums other = (RefleksijaNovērtējums) arg;
+    public Optional<Ordering> compare_partially_to(Rating arg) {
+        if (arg instanceof MetaRating) {
+            final MetaRating other = (MetaRating) arg;
             if (other.saturs().isEmpty() && novērtējumi.isEmpty()) {
                 return Optional.of(EQUAL);
             }
@@ -203,13 +203,13 @@ public class RefleksijaNovērtējumsI implements RefleksijaNovērtējums {
     }
 
     @Override
-    public Map<Class<? extends Novērtējums>, Novērtējums> saturs() {
+    public Map<Class<? extends Rating>, Rating> saturs() {
         return novērtējumi;
     }
 
     @Override
-    public <R extends Novērtējums> R _clone() {
-        final RefleksijaNovērtējumsI clone = new RefleksijaNovērtējumsI();
+    public <R extends Rating> R _clone() {
+        final MetaRatingI clone = new MetaRatingI();
         clone.saturs().forEach((key, value) -> {
             clone.saturs().put(key, value._clone());
         });
@@ -221,7 +221,7 @@ public class RefleksijaNovērtējumsI implements RefleksijaNovērtējums {
         if (1 == novērtējumi.size()) {
             return novērtējumi.values().iterator().next().toDom();
         }
-        final var dom = element(RefleksijaNovērtējums.class.getSimpleName());
+        final var dom = element(MetaRating.class.getSimpleName());
         return dom;
     }
 

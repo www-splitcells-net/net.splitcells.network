@@ -16,7 +16,7 @@ import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.tips.Atvasināšana;
 import net.splitcells.gel.data.datubāze.DatuBāze;
 import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
-import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
+import net.splitcells.gel.rating.structure.MetaRating;
 import org.w3c.dom.Node;
 
 import java.util.Set;
@@ -32,11 +32,11 @@ public class AtvasinātsSolution implements Solution {
     private final History vēsture;
     private final Discoverable konteksts;
     
-    public static AtvasinātsSolution atvasinātaProblema(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
+    public static AtvasinātsSolution atvasinātaProblema(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
         return new AtvasinātsSolution(konteksts, piešķiršanas, originalIerobežojums, Atvasināšana.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
     }
 
-    protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
+    protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
         this(konteksts, piešķiršanas, oriģinālaisIerobežojums, Atvasināšana.atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
     }
 
@@ -78,7 +78,7 @@ public class AtvasinātsSolution implements Solution {
     }
 
     @Override
-    public AtvasinātsSolution atvasinājums(Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasināšana) {
+    public AtvasinātsSolution atvasinājums(Function<MetaRating, MetaRating> atvasināšana) {
         throw not_implemented_yet();
     }
 

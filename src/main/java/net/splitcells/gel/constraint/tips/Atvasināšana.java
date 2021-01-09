@@ -10,8 +10,8 @@ import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Jautājums;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
-import net.splitcells.gel.rating.struktūra.VietējieNovērtējums;
-import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
+import net.splitcells.gel.rating.structure.LocalRating;
+import net.splitcells.gel.rating.structure.MetaRating;
 import org.w3c.dom.Element;
 
 import java.util.Collection;
@@ -25,14 +25,14 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 public final class Atvasināšana implements Ierobežojums {
 
     public static Atvasināšana atvasināšana
-            (Ierobežojums atvasināšanasMērķis, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasināšanaFuncija) {
+            (Ierobežojums atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
         return new Atvasināšana(atvasināšanasMērķis, atvasināšanaFuncija);
     }
 
     private final Ierobežojums atvasināšanasMērķis;
-    private final Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasināšanaFuncija;
+    private final Function<MetaRating, MetaRating> atvasināšanaFuncija;
 
-    private Atvasināšana(Ierobežojums atvasināšanasMērķis, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasināšanaFuncija) {
+    private Atvasināšana(Ierobežojums atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
         this.atvasināšanasMērķis = atvasināšanasMērķis;
         this.atvasināšanaFuncija = atvasināšanaFuncija;
     }
@@ -43,12 +43,12 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public RefleksijaNovērtējums novērtējums(GrupaId grupaId, Rinda rinda) {
+    public MetaRating novērtējums(GrupaId grupaId, Rinda rinda) {
         return atvasināšanaFuncija.apply(atvasināšanasMērķis.novērtējums(grupaId, rinda));
     }
 
     @Override
-    public RefleksijaNovērtējums novērtējums(GrupaId groupdId) {
+    public MetaRating novērtējums(GrupaId groupdId) {
         return atvasināšanaFuncija.apply(atvasināšanasMērķis.novērtējums(groupdId));
     }
 
@@ -99,7 +99,7 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public Rinda pieliktRadījums(VietējieNovērtējums vietējieNovērtējums) {
+    public Rinda pieliktRadījums(LocalRating vietējieNovērtējums) {
         throw not_implemented_yet();
     }
 

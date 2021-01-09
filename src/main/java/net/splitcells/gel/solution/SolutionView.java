@@ -10,7 +10,7 @@ import net.splitcells.gel.constraint.tips.PriekšVisiem;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.problem.ProblēmasSkats;
 import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
 import net.splitcells.gel.rating.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam;
@@ -28,7 +28,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
 import static net.splitcells.dem.resource.host.Files.*;
-import static net.splitcells.gel.rating.tips.Cena.cena;
+import static net.splitcells.gel.rating.type.Cena.cena;
 
 public interface SolutionView extends ProblēmasSkats {
 
@@ -185,6 +185,6 @@ public interface SolutionView extends ProblēmasSkats {
         return tabulasRinda;
     }
 
-    Novērtējums novērtējums(List<OptimizationEvent> notikumi);
+    Rating novērtējums(List<OptimizationEvent> notikumi);
 }
 

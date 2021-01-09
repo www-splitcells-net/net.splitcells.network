@@ -9,7 +9,7 @@ import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
 import static net.splitcells.gel.constraint.GrupaId.grupa;
 import static net.splitcells.gel.data.tabula.atribūts.AtribūtsI.atributs;
 import static net.splitcells.gel.data.tabula.atribūts.SarakstsAtribūts.listAttribute;
-import static net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums.neitrāla;
+import static net.splitcells.gel.rating.structure.MetaRating.neitrāla;
 
 import java.util.Optional;
 import java.util.Set;
@@ -31,16 +31,16 @@ import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.data.datubāze.PirmsNoņemšanasKlausītājs;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.rating.struktūra.VietējieNovērtējums;
-import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.LocalRating;
+import net.splitcells.gel.rating.structure.MetaRating;
+import net.splitcells.gel.rating.structure.Rating;
 
 public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemšanasKlausītājs, IerobežojumuRakstnieks, Discoverable, PubliclyTyped<Ierobežojums>, PubliclyConstructed<Domable>, Domable {
     Atribūts<Rinda> RINDA = atributs(Rinda.class, "rinda");
     Atribūts<java.util.List<Ierobežojums>> IZDALĪŠANA_UZ = listAttribute(Ierobežojums.class, "idalīšana uz");
     Atribūts<GrupaId> IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "ienākošie ierobežojumu grupas id");
     Atribūts<GrupaId> RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "radītas ierobežojumu grupas id");
-    Atribūts<Novērtējums> NOVĒRTĒJUMS = atributs(Novērtējums.class, "novērtējums");
+    Atribūts<Rating> NOVĒRTĒJUMS = atributs(Rating.class, "novērtējums");
 
     static List<List<Ierobežojums>> piešķiršanasGruppas(List<Ierobežojums> momentānaTaka) {
         final var ierobežojums = momentānaTaka.lastValue().get();
@@ -60,7 +60,7 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemš
 
     GrupaId injekcijasGrupa();
 
-    default RefleksijaNovērtējums novērtējums() {
+    default MetaRating novērtējums() {
         return novērtējums(injekcijasGrupa());
     }
 
@@ -68,13 +68,13 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemš
         return GrupaId.grupa("priekš-visiem");
     }
 
-    default RefleksijaNovērtējums novērtējums(Rinda rinda) {
+    default MetaRating novērtējums(Rinda rinda) {
         return novērtējums(injekcijasGrupa(), rinda);
     }
 
-    RefleksijaNovērtējums novērtējums(GrupaId grupaId, Rinda rinda);
+    MetaRating novērtējums(GrupaId grupaId, Rinda rinda);
 
-    RefleksijaNovērtējums novērtējums(GrupaId grupaId);
+    MetaRating novērtējums(GrupaId grupaId);
 
     default Perspective dabiskaArgumentācija() {
         return dabiskaArgumentācija(injekcijasGrupa());
@@ -90,7 +90,7 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemš
 
     Perspective dabiskaArgumentācija(Rinda rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
 
-    default RefleksijaNovērtējums rating(Set<GrupaId> grupas) {
+    default MetaRating rating(Set<GrupaId> grupas) {
         return grupas.stream().
                 map(group -> novērtējums(group)).
                 reduce((a, b) -> a.kombinē(b)).
@@ -132,7 +132,7 @@ public interface Ierobežojums extends PapildinājumsKlausītājs, PirmsNoņemš
         return neievērotaji(injekcijasGrupa());
     }
 
-    Rinda pieliktRadījums(VietējieNovērtējums vietējieNovērtējums);
+    Rinda pieliktRadījums(LocalRating vietējieNovērtējums);
 
     default Jautājums jautājums() {
         return JautājumsI.jautājums(this);

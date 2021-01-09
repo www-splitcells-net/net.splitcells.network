@@ -4,8 +4,8 @@ import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.tips.Cena.cena;
-import static net.splitcells.gel.rating.struktūra.VietējieNovērtējumsI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.type.Cena.cena;
+import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
 
@@ -18,8 +18,8 @@ import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.rating.tips.Cena;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.type.Cena;
+import net.splitcells.gel.rating.structure.Rating;
 
 
 public class IrIzmērs implements Vērtētājs {
@@ -48,7 +48,7 @@ public class IrIzmērs implements Vērtētājs {
         return padildinājumuNovērtējumu;
     }
 
-    private NovērtējumsNotikums novērteRindas(Tabula rindas, Rinda maiņīts, List<Ierobežojums> children, Novērtējums cena) {
+    private NovērtējumsNotikums novērteRindas(Tabula rindas, Rinda maiņīts, List<Ierobežojums> children, Rating cena) {
         final NovērtējumsNotikums rindasNovērtējumu = NovērtējumsNotikumsI.novērtejumuNotikums();
         rindas.jēlaRindasSkats().stream()
                 .filter(e -> e != null)
@@ -90,8 +90,8 @@ public class IrIzmērs implements Vērtētājs {
         return novērteRindas(rindas, noņemšana, bērni, novērtējums(rindas, true));
     }
 
-    private Novērtējums novērtējums(Tabula rindas, boolean pirmsNoņemšana) {
-        final Novērtējums novērtējums;
+    private Rating novērtējums(Tabula rindas, boolean pirmsNoņemšana) {
+        final Rating novērtējums;
         final int izmers;
         if (pirmsNoņemšana) {
             izmers = rindas.izmērs() - 1;

@@ -1,6 +1,6 @@
 package net.splitcells.gel.constraint.vidējs.dati;
 
-import net.splitcells.gel.rating.tips.Cena;
+import net.splitcells.gel.rating.type.Cena;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 

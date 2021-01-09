@@ -22,7 +22,7 @@ import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
 import static net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums.rindasNovērtējums;
 import static net.splitcells.gel.constraint.Ziņojums.report;
 import static net.splitcells.gel.constraint.vidējs.dati.GrupuIzdalīšanaVirziens.routingResult;
-import static net.splitcells.gel.rating.tips.Cena.bezMaksas;
+import static net.splitcells.gel.rating.type.Cena.bezMaksas;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
@@ -39,7 +39,7 @@ import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaFiltrs;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.constraint.Ziņojums;
 import net.splitcells.gel.constraint.vidējs.dati.MaršrutēšanaNovērtējums;
-import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējumsI;
+import net.splitcells.gel.rating.structure.MetaRatingI;
 import org.assertj.core.api.Assertions;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
@@ -52,9 +52,9 @@ import net.splitcells.gel.constraint.Jautājums;
 import net.splitcells.gel.constraint.JautājumsI;
 import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.data.datubāze.DatuBāze;
-import net.splitcells.gel.rating.struktūra.VietējieNovērtējums;
-import net.splitcells.gel.rating.struktūra.RefleksijaNovērtējums;
-import net.splitcells.gel.rating.struktūra.Novērtējums;
+import net.splitcells.gel.rating.structure.LocalRating;
+import net.splitcells.gel.rating.structure.MetaRating;
+import net.splitcells.gel.rating.structure.Rating;
 
 @Deprecated
 public abstract class IerobežojumsAI implements Ierobežojums {
@@ -65,7 +65,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     protected final DatuBāze rindas;
     protected final DatuBāze radījums = datuBāze("results", this, RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID, NOVĒRTĒJUMS, IZDALĪŠANA_UZ);
     protected final Piešķiršanas rindasApstrāde;
-    protected final Map<GrupaId, Novērtējums> grupasApstrāde = map();
+    protected final Map<GrupaId, Rating> grupasApstrāde = map();
 
     protected IerobežojumsAI(GrupaId injekcijasGrupas) {
         this(injekcijasGrupas, "");
@@ -189,14 +189,14 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public RefleksijaNovērtējums novērtējums(GrupaId grupaId, Rinda rinda) {
+    public MetaRating novērtējums(GrupaId grupaId, Rinda rinda) {
         final var novērtetāMaršrutēšana
                 = atlasītNovērtetāMaršrutēšana(grupaId, processedLine -> processedLine.vērtība(RINDA).vienāds(rinda));
         novērtetāMaršrutēšana.gūtBērnusUzGrupas().forEach((bērns, grūpa) ->
                 grūpa.forEach(group -> novērtetāMaršrutēšana.gūtNovērtējums().add(bērns.novērtējums(group, rinda)))
         );
         if (novērtetāMaršrutēšana.gūtNovērtējums().isEmpty()) {
-            return RefleksijaNovērtējumsI.reflektētsNovērtējums(bezMaksas());
+            return MetaRatingI.reflektētsNovērtējums(bezMaksas());
         }
         return novērtetāMaršrutēšana.gūtNovērtējums().stream()
                 .reduce((a, b) -> a.kombinē(b))
@@ -228,13 +228,13 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public RefleksijaNovērtējums novērtējums(GrupaId grupaId) {
+    public MetaRating novērtējums(GrupaId grupaId) {
         final var novērtetāMaršrutēšana
                 = atlasītNovērtetāMaršrutēšana(grupaId, atlasītaRinda -> true);
         novērtetāMaršrutēšana.gūtBērnusUzGrupas().forEach((bērni, grupas) ->
                 grupas.forEach(group -> novērtetāMaršrutēšana.gūtNovērtējums().add(bērni.novērtējums(group))));
         if (novērtetāMaršrutēšana.gūtNovērtējums().isEmpty()) {
-            return RefleksijaNovērtējumsI.reflektētsNovērtējums(bezMaksas());
+            return MetaRatingI.reflektētsNovērtējums(bezMaksas());
         }
         return novērtetāMaršrutēšana.gūtNovērtējums().stream()
                 .reduce((a, b) -> a.kombinē(b))
@@ -285,7 +285,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public Rinda pieliktRadījums(VietējieNovērtējums vietējieNovērtējums) {
+    public Rinda pieliktRadījums(LocalRating vietējieNovērtējums) {
         return radījums.pieliktUnPārtulkot
                 (list
                         (vietējieNovērtējums.radītsIerobežojumuGrupaId()
