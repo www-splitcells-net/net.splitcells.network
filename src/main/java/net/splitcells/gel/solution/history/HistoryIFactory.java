@@ -2,11 +2,11 @@ package net.splitcells.gel.solution.history;
 
 import net.splitcells.gel.solution.Solution;
 
-public class VēsturesIVeidotajs implements VēsturesVeidotajs {
+public class HistoryIFactory implements HistoryFactory {
 
     @Override
-    public Vēsture vēsture(Solution solution) {
-        return new VēstureI(solution);
+    public History vēsture(Solution solution) {
+        return new HistoryI(solution);
     }
 
     @Override

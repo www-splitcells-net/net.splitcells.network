@@ -1,19 +1,19 @@
-package net.splitcells.gel.solution.history.refleksija.tips;
+package net.splitcells.gel.solution.history.meta.type;
 
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.rating.struktūra.Novērtējums;
 import org.w3c.dom.Node;
 
-public final class PilnsNovērtejums implements RefleksijaDati<Novērtējums>, Domable {
+public final class CompleteRating implements MetaData<Novērtējums>, Domable {
 
-    public static PilnsNovērtejums pilnsNovērtejums(Novērtējums novērtējums) {
-        return new PilnsNovērtejums(novērtējums);
+    public static CompleteRating pilnsNovērtejums(Novērtējums novērtējums) {
+        return new CompleteRating(novērtējums);
     }
 
     private final Novērtējums novērtējums;
 
-    private PilnsNovērtejums(Novērtējums novērtējums) {
+    private CompleteRating(Novērtējums novērtējums) {
         this.novērtējums = novērtējums;
 
     }

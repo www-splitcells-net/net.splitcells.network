@@ -1,4 +1,4 @@
-package net.splitcells.gel.solution.history.notikums;
+package net.splitcells.gel.solution.history.event;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.Xml;
@@ -7,23 +7,23 @@ import org.w3c.dom.Node;
 
 import static net.splitcells.gel.Language.*;
 
-public class Piešķiršana implements Domable {
-    private final PiešķiršanaMaiņaTips tips;
+public class Allocation implements Domable {
+    private final AllocationChangeType tips;
     private final Rinda prasība;
     private final Rinda piedāvājums;
 
-    public static Piešķiršana piešķiršana(PiešķiršanaMaiņaTips tips, Rinda prasība, Rinda piedāvājums) {
-        return new Piešķiršana(tips, prasība, piedāvājums);
+    public static Allocation piešķiršana(AllocationChangeType tips, Rinda prasība, Rinda piedāvājums) {
+        return new Allocation(tips, prasība, piedāvājums);
     }
 
-    private Piešķiršana(PiešķiršanaMaiņaTips tips, Rinda prasība, Rinda piedāvājums) {
+    private Allocation(AllocationChangeType tips, Rinda prasība, Rinda piedāvājums) {
         this.tips = tips;
         this.prasība = prasība;
         this.piedāvājums = piedāvājums;
 
     }
 
-    public PiešķiršanaMaiņaTips tips() {
+    public AllocationChangeType tips() {
         return tips;
     }
 

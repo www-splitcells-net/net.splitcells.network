@@ -1,4 +1,4 @@
-package net.splitcells.gel.solution.history.refleksija;
+package net.splitcells.gel.solution.history.meta;
 
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.Xml.toPrettyString;
@@ -12,18 +12,18 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
 import org.w3c.dom.Node;
 
-public class RefleksijasDatiI implements RefleksijaSkats, RefleksijaRakstnieks {
-    public static RefleksijasDatiI refleksijasDatī() {
-        return new RefleksijasDatiI();
+public class MetaDataI implements MetaDataView, MetaDataWriter {
+    public static MetaDataI refleksijasDatī() {
+        return new MetaDataI();
     }
 
     private final Map<Class<?>, Object> dati = map();
 
-    private RefleksijasDatiI() {
+    private MetaDataI() {
     }
 
     @Override
-    public <A> RefleksijaRakstnieks ar(Class<A> tips, A vertība) {
+    public <A> MetaDataWriter ar(Class<A> tips, A vertība) {
         if (dati.containsKey(tips)) {
             throw new IllegalArgumentException(tips.getName());
         }

@@ -4,8 +4,8 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.history.Vēsture;
-import net.splitcells.gel.solution.history.Vēstures;
+import net.splitcells.gel.solution.history.History;
+import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.datubāze.PapildinājumsKlausītājs;
 import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.data.tabula.Rinda;
@@ -29,7 +29,7 @@ public class AtvasinātsSolution implements Solution {
 
     protected Ierobežojums ierobežojums;
     private final Piešķiršanas piešķiršanas;
-    private final Vēsture vēsture;
+    private final History vēsture;
     private final Discoverable konteksts;
     
     public static AtvasinātsSolution atvasinātaProblema(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums originalIerobežojums, Function<RefleksijaNovērtējums, RefleksijaNovērtējums> atvasinātsFunkcija) {
@@ -47,13 +47,13 @@ public class AtvasinātsSolution implements Solution {
     protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = atvasināšana;
-        vēsture = Vēstures.vēsture(this);
+        vēsture = Histories.vēsture(this);
         this.konteksts = konteksts;
     }
 
     protected AtvasinātsSolution(Discoverable konteksts, Piešķiršanas piešķiršanas) {
         this.piešķiršanas = piešķiršanas;
-        vēsture = Vēstures.vēsture(this);
+        vēsture = Histories.vēsture(this);
         this.konteksts = konteksts;
     }
 
@@ -218,7 +218,7 @@ public class AtvasinātsSolution implements Solution {
     }
 
     @Override
-    public Vēsture vēsture() {
+    public History vēsture() {
         return vēsture;
     }
 }

@@ -3,8 +3,8 @@ package net.splitcells.gel.solution;
 import net.splitcells.dem.utils.Not_implemented_yet;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.solution.history.Vēsture;
-import net.splitcells.gel.solution.history.Vēstures;
+import net.splitcells.gel.solution.history.History;
+import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.data.tabula.kolonna.Kolonna;
 import net.splitcells.gel.data.tabula.kolonna.KolonnaSkats;
@@ -24,7 +24,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 public class SolutionI implements Solution {
 	private final Problēma problēma;
-	private final Vēsture vēsture;
+	private final History vēsture;
 	
 	public static Solution atrisinājums(Problēma problēma) {
 		return new SolutionI(problēma);
@@ -32,7 +32,7 @@ public class SolutionI implements Solution {
 
 	public SolutionI(Problēma problēma) {
 		this.problēma = problēma;
-		vēsture = Vēstures.vēsture(this);
+		vēsture = Histories.vēsture(this);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class SolutionI implements Solution {
 	}
 
 	@Override
-	public Vēsture vēsture() {
+	public History vēsture() {
 		return vēsture;
 	}
 

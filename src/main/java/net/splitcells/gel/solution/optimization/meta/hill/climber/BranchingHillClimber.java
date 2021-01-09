@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.history.Vēsture;
-import net.splitcells.gel.solution.history.refleksija.tips.PilnsNovērtejums;
+import net.splitcells.gel.solution.history.History;
+import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
@@ -46,8 +46,8 @@ public class BranchingHillClimber implements Optimization {
                     .gūtRindas()
                     .lastValue()
                     .get()
-                    .vērtība(Vēsture.REFLEKSIJAS_DATI)
-                    .vertība(PilnsNovērtejums.class)
+                    .vērtība(History.REFLEKSIJAS_DATI)
+                    .vertība(CompleteRating.class)
                     .get()
                     .vertība();
             if (momentansNovērtejums.labākNekā(saknesNovērtejums)) {

@@ -4,7 +4,7 @@ import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.gel.solution.Solution;
 
-public interface VēsturesVeidotajs extends Closeable, Flushable {
+public interface HistoryFactory extends Closeable, Flushable {
 
-    Vēsture vēsture(Solution solution);
+    History vēsture(Solution solution);
 }

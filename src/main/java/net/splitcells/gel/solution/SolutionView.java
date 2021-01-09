@@ -4,7 +4,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.gel.solution.history.Vēsture;
+import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.constraint.tips.PriekšVisiem;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
@@ -70,7 +70,7 @@ public interface SolutionView extends ProblēmasSkats {
         return priekšVisiemAtribūtieNoGrupas;
     }
 
-    Vēsture vēsture();
+    History vēsture();
 
     default Solution zars() {
         throw not_implemented_yet();

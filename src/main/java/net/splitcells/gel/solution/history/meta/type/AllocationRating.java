@@ -1,18 +1,18 @@
-package net.splitcells.gel.solution.history.refleksija.tips;
+package net.splitcells.gel.solution.history.meta.type;
 
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.rating.struktūra.Novērtējums;
 import org.w3c.dom.Node;
 
-public class PiešķiršanaNovērtējums implements RefleksijaDati<Novērtējums> {
+public class AllocationRating implements MetaData<Novērtējums> {
 
-    public static PiešķiršanaNovērtējums pieškiršanasNovērtejums(Novērtējums novērtējums) {
-        return new PiešķiršanaNovērtējums(novērtējums);
+    public static AllocationRating pieškiršanasNovērtejums(Novērtējums novērtējums) {
+        return new AllocationRating(novērtējums);
     }
 
     private final Novērtējums novērtējums;
 
-    private PiešķiršanaNovērtējums(Novērtējums novērtējums) {
+    private AllocationRating(Novērtējums novērtējums) {
         this.novērtējums = novērtējums;
     }
 
