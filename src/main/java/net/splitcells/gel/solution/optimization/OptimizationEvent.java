@@ -44,8 +44,8 @@ public final class OptimizationEvent implements Domable {
     public Node toDom() {
         final var dom = element(getClass().getSimpleName());
         dom.setAttribute(StepType.class.getSimpleName(), solisTips.name());
-        dom.appendChild(Xml.element(Language.PRASĪBA.apraksts(), prasība.toDom()));
-        dom.appendChild(Xml.element(Language.PIEDĀVĀJUMS.apraksts(), piedāvājums.toDom()));
+        dom.appendChild(Xml.element(Language.DEMAND.value(), prasība.toDom()));
+        dom.appendChild(Xml.element(Language.SUPPLY.value(), piedāvājums.toDom()));
         return dom;
     }
 

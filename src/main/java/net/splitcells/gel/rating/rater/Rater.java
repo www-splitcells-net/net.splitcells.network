@@ -45,7 +45,7 @@ public interface Rater extends PubliclyTyped<Rater>
     default Node toDom() {
         final var dom = Xml.element(getClass().getSimpleName());
         if (!arguments().isEmpty()) {
-            dom.appendChild(Xml.element2(Language.ARGUMENTĀCIJA.apraksts(), arguments().stream().map(arg -> arg.toDom())));
+            dom.appendChild(Xml.element2(Language.ARGUMENTATION.value(), arguments().stream().map(arg -> arg.toDom())));
         }
         return dom;
     }

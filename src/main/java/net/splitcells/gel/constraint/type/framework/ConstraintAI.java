@@ -15,7 +15,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
-import static net.splitcells.gel.common.Language.ARGUMENTĀCIJA;
+import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.rindasNovērtējums;
@@ -315,7 +315,7 @@ public abstract class ConstraintAI implements Constraint {
     public Element toDom() {
         final var dom = Xml.element(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTĀCIJA.apraksts(), arg.toDom())));
+            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
         }
         dom.appendChild(Xml.element("novērtējums", novērtējums().toDom()));
         {
@@ -339,7 +339,7 @@ public abstract class ConstraintAI implements Constraint {
     public Element toDom(Set<GroupId> grupas) {
         final var dom = Xml.element(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTĀCIJA.apraksts(), arg.toDom())));
+            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
         }
         dom.appendChild(Xml.element("novērtējums", rating(grupas).toDom()));
         {
@@ -406,7 +406,7 @@ public abstract class ConstraintAI implements Constraint {
         if (vietējiaArgumentācijas.size() == 1) {
             return vietējiaArgumentācijas.get(0);
         }
-        final var vietējiaArgumentācija = perspective(ARGUMENTĀCIJA.apraksts(), GEL);
+        final var vietējiaArgumentācija = perspective(ARGUMENTATION.value(), GEL);
         vietējiaArgumentācijas.stream()
                 .forEach(naturalReasoning -> vietējiaArgumentācija.withChild(naturalReasoning));
         return vietējiaArgumentācija;
@@ -416,7 +416,7 @@ public abstract class ConstraintAI implements Constraint {
     public Perspective dabiskaArgumentācija(Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs) {
         final var vietējiaArgumēntacija = vietēijaDabiskaArgumentācija(rinda, grupa, rindasAtlasītājs);
         final var bērnuArgumēntacija = bērnuArgumēntacija(rinda, grupa, rindasAtlasītājs);
-        final var argumentācija = perspective(ARGUMENTĀCIJA.apraksts(), GEL);
+        final var argumentācija = perspective(ARGUMENTATION.value(), GEL);
         if (vietējiaArgumēntacija.isPresent()) {
             vietējiaArgumēntacija.get().stream()
                     .map(e -> perspective(e, NameSpaces.STRING))
@@ -464,7 +464,7 @@ public abstract class ConstraintAI implements Constraint {
         if (argumēntacijas.size() == 1) {
             return Optional.of(argumēntacijas.iterator().next());
         }
-        final var argumēntacija = perspective(ARGUMENTĀCIJA.apraksts(), GEL);
+        final var argumēntacija = perspective(ARGUMENTATION.value(), GEL);
         argumēntacijas.forEach(argumēntacija::withChild);
         return Optional.of(argumēntacija);
     }

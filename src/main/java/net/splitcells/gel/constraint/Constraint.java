@@ -5,7 +5,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.gel.common.Language.ARGUMENTĀCIJA;
+import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.constraint.GroupId.grupa;
 import static net.splitcells.gel.data.table.attribute.AttributeI.atributs;
 import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
@@ -167,7 +167,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     default Element grafiks() {
         final var grafiks = Xml.rElement(GEL, type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> grafiks.appendChild(Xml.element(ARGUMENTĀCIJA.apraksts(), arg.toDom())));
+            arguments().forEach(arg -> grafiks.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
         }
         skatsUsBerniem().forEach(child -> {
             grafiks.appendChild(child.grafiks());

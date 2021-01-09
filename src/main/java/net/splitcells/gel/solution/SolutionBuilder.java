@@ -39,8 +39,8 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
 
     @Override
     public Problem uzProblēmu() {
-        final var prasībasDatuBaže = datuBāze(PRASĪBAS.apraksts(), null, prasības_atribūti);
-        final var piedāvājumuDatuBaže = datuBāze(PIEDĀVĀJUMI.apraksts(), null, piedāvājumu_atribūti);
+        final var prasībasDatuBaže = datuBāze(DEMANDS.value(), null, prasības_atribūti);
+        final var piedāvājumuDatuBaže = datuBāze(SUPPLIES.value(), null, piedāvājumu_atribūti);
         prasības.forEach(prasība -> prasībasDatuBaže.pieliktUnPārtulkot(prasība));
         piedāvājumi.forEach(piedāvājums -> piedāvājumuDatuBaže.pieliktUnPārtulkot(piedāvājums));
         return problēma(

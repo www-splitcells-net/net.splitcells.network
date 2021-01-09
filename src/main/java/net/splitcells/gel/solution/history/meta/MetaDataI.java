@@ -44,12 +44,12 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
 
     @Override
     public Node toDom() {
-        final var dom = Xml.element(REFKLEKSIJAS_DATI.apraksts());
+        final var dom = Xml.element(META_DATA.value());
         dati.forEach((atslēga, vertība) -> {
-            final var dati = Xml.element(REFKLEKSIJAS_DATI.apraksts());
-            final var atslēgasDati = Xml.element(ATSLĒGA.apraksts());
+            final var dati = Xml.element(META_DATA.value());
+            final var atslēgasDati = Xml.element(KEY.value());
             atslēgasDati.appendChild(textNode(atslēga.getName()));
-            final var vertībasDati = Xml.element(VERTĪBA.apraksts());
+            final var vertībasDati = Xml.element(VALUE.value());
             {
                 if (vertība instanceof Domable) {
                     vertībasDati.appendChild(((Domable) vertība).toDom());

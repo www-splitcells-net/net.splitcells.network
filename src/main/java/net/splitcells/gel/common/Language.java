@@ -1,39 +1,39 @@
 package net.splitcells.gel.common;
 
 public enum Language {
-    ARGUMENTĀCIJA("argumentācija")
-    ,PIEŠĶIRT("piešķirt")
-    ,CEĻA_PIEEJAS_SIMBOLS(".")
-    ,PRASĪBA("prasība")
-    ,PIEDĀVĀJUMS("piedāvājums")
-    , NOŅEMT("noņemt")
-    , PĀRBAUDE("pārbaude")
-    , RINDA("rinda")
-    , PIEDĀVĀJUMI("piedāvājumi")
-    , PRASĪBAS("parsības")
-    , VĒSTURE("vēsture")
-    , PIEŠĶIRŠANA("piešķiršana")
-    , PIEŠĶIRŠANAS("piešķiršanas")
-    , REFKLEKSIJAS_DATI("refkleksijasDati")
-    , DAIT("dati")
-    , VERTĪBA("vertība")
-    , ATSLĒGA("atslēga")
+    ARGUMENTATION("argumentation")
+    , ALLOCATE("allocate")
+    , PATH_ACCESS_SYMBOL(".")
+    , DEMAND("demand")
+    , SUPPLY("supply")
+    , REMOVE("remove")
+    , TEST("test")
+    , LINE("line")
+    , SUPPLIES("supplies")
+    , DEMANDS("demands")
+    , HISTORY("history")
+    , ALLOCATION("allocation")
+    , ALLOCATIONS("allocations")
+    , META_DATA("metaData")
+    , DATA("data")
+    , VALUE("value")
+    , KEY("key")
     , TIPS("tips")
-    , PARSĪBA("parsība")
-    , SOLU_TIPS("soluTips")
-    , RADĪJUMS("radījums")
-    , NOTIKUMS("notikums")
-    , NOVĒRTĒJUMS("novērtējums")
-    , PROBLĒMA("problēma")
-    , VĀRDS("vāŗds")
+    , DEMAND2("demand")
+    , STEP_TYPE("stepType")
+    , RESULT("result")
+    , EVENT("event")
+    , RATING("rating")
+    , PROBLEM("problem")
+    , WORDS("words")
     ;
-    private final String apraksts;
+    private final String value;
 
-    Language(String apraksts) {
-        this.apraksts = apraksts;
+    Language(String value) {
+        this.value = value;
     }
 
-    public String apraksts() {
-        return apraksts;
+    public String value() {
+        return value;
     }
 }

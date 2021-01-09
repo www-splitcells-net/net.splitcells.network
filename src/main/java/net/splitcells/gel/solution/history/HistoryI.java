@@ -41,14 +41,14 @@ public class HistoryI implements History {
 
     protected HistoryI(Solution solution) {
         piešķiršanas = Allocationss.piešķiršanas
-                (VĒSTURE.apraksts()
+                (HISTORY.value()
                         , datuBāze
-                                (NOTIKUMS.apraksts()
-                                        , () -> solution.path().withAppended(VĒSTURE.apraksts())
+                                (EVENT.value()
+                                        , () -> solution.path().withAppended(HISTORY.value())
                                         , PIEŠĶIRŠANA_ID, PIEŠĶIRŠANAS_NOTIKUMS)
                         , datuBāze
-                                (RADĪJUMS.apraksts()
-                                        , () -> solution.path().withAppended(VĒSTURE.apraksts())
+                                (RESULT.value()
+                                        , () -> solution.path().withAppended(HISTORY.value())
                                         , REFLEKSIJAS_DATI));
         this.solution = solution;
         solution.abonē_uz_papildinājums(this);
