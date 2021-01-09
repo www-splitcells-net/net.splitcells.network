@@ -26,8 +26,8 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.utils.reflection.PubliclyConstructed;
 import net.splitcells.dem.utils.reflection.PubliclyTyped;
-import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaFiltrs;
-import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
+import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
+import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -85,10 +85,10 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     Optional<Discoverable> galvenaisKonteksts();
 
     default Perspective dabiskaArgumentācija(Line priekšmets, GroupId grupa) {
-        return dabiskaArgumentācija(priekšmets, grupa, PiešķiršanaFiltrs::atlasītArCenu);
+        return dabiskaArgumentācija(priekšmets, grupa, AllocationSelector::atlasītArCenu);
     }
 
-    Perspective dabiskaArgumentācija(Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
+    Perspective dabiskaArgumentācija(Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs);
 
     default MetaRating rating(Set<GroupId> grupas) {
         return grupas.stream().

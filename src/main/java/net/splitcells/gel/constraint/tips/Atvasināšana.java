@@ -8,7 +8,7 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
+import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.MetaRating;
@@ -64,7 +64,7 @@ public final class Atvasināšana implements Constraint {
 
     @Override
     public Perspective dabiskaArgumentācija
-            (Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
+            (Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs) {
         throw not_implemented_yet();
     }
 

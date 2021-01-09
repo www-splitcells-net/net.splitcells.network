@@ -1,17 +1,17 @@
-package net.splitcells.gel.constraint.vidējs.dati;
+package net.splitcells.gel.constraint.intermediate.data;
 
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.structure.MetaRating;
 
-public class PiešķiršanaNovērtējums {
-	public static PiešķiršanaNovērtējums rindasNovērtējums(Line rinda, MetaRating novērtējums) {
-		return new PiešķiršanaNovērtējums(rinda, novērtējums);
+public class AllocationRating {
+	public static AllocationRating rindasNovērtējums(Line rinda, MetaRating novērtējums) {
+		return new AllocationRating(rinda, novērtējums);
 	}
 
 	private final Line rinda;
 	private final MetaRating novērtējums;
 
-	private PiešķiršanaNovērtējums(Line rinda, MetaRating novērtējums) {
+	private AllocationRating(Line rinda, MetaRating novērtējums) {
 		this.rinda = rinda;
 		this.novērtējums = novērtējums;
 	}

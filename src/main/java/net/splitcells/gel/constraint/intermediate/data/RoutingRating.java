@@ -1,4 +1,4 @@
-package net.splitcells.gel.constraint.vidējs.dati;
+package net.splitcells.gel.constraint.intermediate.data;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
@@ -11,11 +11,11 @@ import java.util.Set;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
-public class MaršrutēšanaNovērtējums {
-    public static MaršrutēšanaNovērtējums veidot() {
-        return new MaršrutēšanaNovērtējums();
+public class RoutingRating {
+    public static RoutingRating veidot() {
+        return new RoutingRating();
     }
-    private MaršrutēšanaNovērtējums() {
+    private RoutingRating() {
 
     }
     private final List<Rating> novērtējums = list();

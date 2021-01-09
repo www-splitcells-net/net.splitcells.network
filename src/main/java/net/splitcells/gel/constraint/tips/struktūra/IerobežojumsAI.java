@@ -19,9 +19,9 @@ import static net.splitcells.gel.Language.ARGUMENTĀCIJA;
 import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
 import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
-import static net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums.rindasNovērtējums;
+import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.rindasNovērtējums;
 import static net.splitcells.gel.constraint.Report.report;
-import static net.splitcells.gel.constraint.vidējs.dati.GrupuIzdalīšanaVirziens.routingResult;
+import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,10 +35,10 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaFiltrs;
-import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
+import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
+import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.constraint.Report;
-import net.splitcells.gel.constraint.vidējs.dati.MaršrutēšanaNovērtējums;
+import net.splitcells.gel.constraint.intermediate.data.RoutingRating;
 import net.splitcells.gel.rating.structure.MetaRatingI;
 import org.assertj.core.api.Assertions;
 import org.w3c.dom.Element;
@@ -204,9 +204,9 @@ public abstract class IerobežojumsAI implements Constraint {
                 .kāReflektētsNovērtējums();
     }
 
-    protected MaršrutēšanaNovērtējums atlasītNovērtetāMaršrutēšana
+    protected RoutingRating atlasītNovērtetāMaršrutēšana
             (GroupId grupaId, Predicate<Line> apstrādsRindasAtlasītajs) {
-        final var novērtetāMaršrutēšana = MaršrutēšanaNovērtējums.veidot();
+        final var novērtetāMaršrutēšana = RoutingRating.veidot();
         rindasApstrāde.jēlaRindasSkats().forEach(rinda -> {
             if (rinda != null
                     && apstrādsRindasAtlasītajs.test(rinda)
@@ -372,7 +372,7 @@ public abstract class IerobežojumsAI implements Constraint {
     protected abstract List<String> vietēijaDabiskaArgumentācija(Report ziņojums);
 
     protected Optional<List<String>> vietēijaDabiskaArgumentācija
-            (Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
+            (Line rinda, GroupId grupa, Predicate<AllocationRating> piešķiršanaAtlasītājs) {
         final var vietējaArgumentācijas
                 = rindasApstrāde
                 .kolonnaSkats(RINDA)
@@ -402,7 +402,7 @@ public abstract class IerobežojumsAI implements Constraint {
                 .gūtRindas()
                 .stream()
                 .map(piešķiršana -> piešķiršana.vērtība(RINDA))
-                .map(rinda -> dabiskaArgumentācija(rinda, grupa, PiešķiršanaFiltrs::atlasītArCenu))
+                .map(rinda -> dabiskaArgumentācija(rinda, grupa, AllocationSelector::atlasītArCenu))
                 .collect(toList());
         if (vietējiaArgumentācijas.size() == 1) {
             return vietējiaArgumentācijas.get(0);
@@ -414,7 +414,7 @@ public abstract class IerobežojumsAI implements Constraint {
     }
 
     @Override
-    public Perspective dabiskaArgumentācija(Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
+    public Perspective dabiskaArgumentācija(Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs) {
         final var vietējiaArgumēntacija = vietēijaDabiskaArgumentācija(rinda, grupa, rindasAtlasītājs);
         final var bērnuArgumēntacija = bērnuArgumēntacija(rinda, grupa, rindasAtlasītājs);
         final var argumentācija = perspective(ARGUMENTĀCIJA.apraksts(), GEL);
@@ -436,7 +436,7 @@ public abstract class IerobežojumsAI implements Constraint {
     }
 
     protected Optional<Perspective> bērnuArgumēntacija
-            (Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
+            (Line rinda, GroupId grupa, Predicate<AllocationRating> piešķiršanaAtlasītājs) {
         final var argumēntacijas
                 = rindasApstrāde
                 .kolonnaSkats(RINDA)
