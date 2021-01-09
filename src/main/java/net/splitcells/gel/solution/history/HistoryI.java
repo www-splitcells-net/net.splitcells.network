@@ -4,7 +4,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
-import static net.splitcells.gel.Language.*;
+import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.solution.history.meta.type.AllocationRating.pieškiršanasNovērtejums;
 import static net.splitcells.gel.solution.history.meta.type.CompleteRating.pilnsNovērtejums;

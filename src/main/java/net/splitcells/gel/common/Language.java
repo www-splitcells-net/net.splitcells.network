@@ -1,4 +1,4 @@
-package net.splitcells.gel;
+package net.splitcells.gel.common;
 
 public enum Language {
     ARGUMENTĀCIJA("argumentācija")

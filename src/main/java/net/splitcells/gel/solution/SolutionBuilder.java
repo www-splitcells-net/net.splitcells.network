@@ -2,7 +2,7 @@ package net.splitcells.gel.solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.gel.Language.*;
+import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
 
 import static net.splitcells.gel.data.database.Databases.datuBāze;

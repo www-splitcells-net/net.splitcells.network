@@ -5,7 +5,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.data.table.Line;
 import org.w3c.dom.Node;
 
-import static net.splitcells.gel.Language.*;
+import static net.splitcells.gel.common.Language.*;
 
 public class Allocation implements Domable {
     private final AllocationChangeType tips;

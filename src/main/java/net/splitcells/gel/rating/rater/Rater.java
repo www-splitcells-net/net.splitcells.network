@@ -2,7 +2,7 @@ package net.splitcells.gel.rating.rater;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
-import net.splitcells.gel.Language;
+import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;

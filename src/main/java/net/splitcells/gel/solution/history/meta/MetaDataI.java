@@ -3,7 +3,7 @@ package net.splitcells.gel.solution.history.meta;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.Xml.toPrettyString;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.Language.*;
+import static net.splitcells.gel.common.Language.*;
 
 import java.util.Optional;
 
