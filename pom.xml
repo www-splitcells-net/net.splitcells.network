@@ -51,6 +51,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
+                    <!-- Java version older than 9 is used: "Fatal error compiling: invalid flag: --release -> [Help 1]" -->
                     <release>${java.version}</release>
                     <encoding>${encoding.default}</encoding>
                     <showWarnings>true</showWarnings>
