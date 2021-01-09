@@ -36,14 +36,14 @@ public class SolutionI implements Solution {
 	}
 
 	@Override
-	public boolean irPilns() {
-		return prasības_nelietotas().izmērs() == 0
-				|| prasība().izmērs() < piedāvājums().izmērs()
-				&& prasība_lietots().izmērs() == piedāvājums().izmērs();
+	public boolean isComplete() {
+		return demands_unused().size() == 0
+				|| demands().size() < piedāvājums().size()
+				&& prasība_lietots().size() == piedāvājums().size();
 	}
 
 	public boolean līdzsvarots() {
-		return prasība().jēlaRindasSkats().size() == piedāvājums().jēlaRindasSkats().size();
+		return demands().jēlaRindasSkats().size() == piedāvājums().jēlaRindasSkats().size();
 	}
 
 	public boolean pieļaujams(final long kļudas_slieksnis) {
@@ -51,13 +51,13 @@ public class SolutionI implements Solution {
 	}
 
 	@Override
-	public History vēsture() {
+	public History history() {
 		return vēsture;
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Constraint ierobežojums() {
-		return this.problēma.ierobežojums();
+	public Constraint constraint() {
+		return this.problēma.constraint();
 	}
 
 	@Override
@@ -91,13 +91,13 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database piedāvājums_nelietots() {
-		return this.problēma.piedāvājums_nelietots();
+	public Database supplies_unused() {
+		return this.problēma.supplies_unused();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database prasība() {
-		return this.problēma.prasība();
+	public Database demands() {
+		return this.problēma.demands();
 	}
 
 	@java.lang.SuppressWarnings("all")
@@ -106,8 +106,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database prasības_nelietotas() {
-		return this.problēma.prasības_nelietotas();
+	public Database demands_unused() {
+		return this.problēma.demands_unused();
 	}
 
 	@java.lang.SuppressWarnings("all")
@@ -191,8 +191,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public List<Attribute<Object>> nosaukumuSkats() {
-		return this.problēma.nosaukumuSkats();
+	public List<Attribute<Object>> headerView() {
+		return this.problēma.headerView();
 	}
 
 	@java.lang.SuppressWarnings("all")
@@ -217,8 +217,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public List<Line> gūtRindas() {
-		return this.problēma.gūtRindas();
+	public List<Line> getLines() {
+		return this.problēma.getLines();
 	}
 
 	@java.lang.SuppressWarnings("all")
@@ -227,8 +227,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public int izmērs() {
-		return this.problēma.izmērs();
+	public int size() {
+		return this.problēma.size();
 	}
 
 	@java.lang.SuppressWarnings("all")
@@ -257,8 +257,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public org.w3c.dom.Element uzFods() {
-		return this.problēma.uzFods();
+	public org.w3c.dom.Element toFods() {
+		return this.problēma.toFods();
 	}
 
 	@java.lang.SuppressWarnings("all")

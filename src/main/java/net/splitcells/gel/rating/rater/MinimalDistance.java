@@ -4,7 +4,7 @@ import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.type.Cost.cena;
+import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
@@ -196,7 +196,7 @@ public class MinimalDistance<T> implements Rater {
                 oriģinālaRinda.vērtība(Constraint.RINDA).vērtība(atribūts))) >= minimumDistance) {
             papilduCena = bezMaksas();
         } else {
-            papilduCena = cena(0.5);
+            papilduCena = cost(0.5);
             rVal.updateRating_viaAddition(oriģinālaRinda, papilduCena, berni, ratingBeforeAddition);
         }
         rVal.pieliktNovērtējumu_caurPapildinājumu(papildinājums, papilduCena, berni, Optional.empty());
@@ -216,7 +216,7 @@ public class MinimalDistance<T> implements Rater {
                     , List<Constraint> bērni
                     , Rating paliekuNovērtējumsPirmsNoņemšanas) {
         if (!ievēro(noņemšana, paliekas)) {
-            rVal.updateRating_viaAddition(paliekas, cena(-0.5), bērni, Optional.of(paliekuNovērtējumsPirmsNoņemšanas));
+            rVal.updateRating_viaAddition(paliekas, cost(-0.5), bērni, Optional.of(paliekuNovērtējumsPirmsNoņemšanas));
         }
     }
 

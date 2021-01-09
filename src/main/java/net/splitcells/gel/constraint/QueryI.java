@@ -23,11 +23,11 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public class QueryI implements Query {
     public static Query jautājums(Constraint ierobežojums, Optional<Constraint> root) {
-        return new QueryI(ierobežojums, list(ierobežojums.injekcijasGrupa()), root);
+        return new QueryI(ierobežojums, list(ierobežojums.injectionGroup()), root);
     }
 
     public static Query jautājums(Constraint ierobežojums) {
-        return new QueryI(ierobežojums, list(ierobežojums.injekcijasGrupa()), Optional.of(ierobežojums));
+        return new QueryI(ierobežojums, list(ierobežojums.injectionGroup()), Optional.of(ierobežojums));
     }
 
     public static Query jautājums(Constraint ierobežojums, Collection<GroupId> groups, Constraint root) {
@@ -47,7 +47,7 @@ public class QueryI implements Query {
     @Override
     public Query priekšVisiem(Rater vērtētājs) {
         var radijumuBaže = ierobežojums
-                .skatsUsBerniem().stream()
+                .childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> child.arguments().size() == 1)
                 .filter(child -> child.arguments().get(0).getClass().equals(RaterBasedOnGrouping.class))
@@ -81,7 +81,7 @@ public class QueryI implements Query {
     @Override
     public Query priekšVisiem(Attribute<?> arg) {
         var radijumuBaže
-                = ierobežojums.skatsUsBerniem().stream()
+                = ierobežojums.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
@@ -117,7 +117,7 @@ public class QueryI implements Query {
     @Override
     public Query priekšVisiem() {
         final var radijumuBaže
-                = ierobežojums.skatsUsBerniem().stream()
+                = ierobežojums.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
@@ -141,7 +141,7 @@ public class QueryI implements Query {
     @Override
     public Query tad(Rater vērtētājs) {
         var radijumuBaže
-                = ierobežojums.skatsUsBerniem().stream()
+                = ierobežojums.childrenView().stream()
                 .filter(child -> Then.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> child.arguments().get(0).equals(vērtētājs))
@@ -176,7 +176,7 @@ public class QueryI implements Query {
     @Override
     public Query priekšVisamKombinācijam(Attribute<?>... args) {
         final Constraint radijumuBaže
-                = ierobežojums.skatsUsBerniem().stream()
+                = ierobežojums.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {

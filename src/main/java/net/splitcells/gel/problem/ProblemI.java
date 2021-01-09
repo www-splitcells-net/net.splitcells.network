@@ -39,7 +39,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Constraint ierobežojums() {
+    public Constraint constraint() {
         return ierobežojums;
     }
 
@@ -77,13 +77,13 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Database piedāvājums_nelietots() {
-        return this.piešķiršanas.piedāvājums_nelietots();
+    public Database supplies_unused() {
+        return this.piešķiršanas.supplies_unused();
     }
 
     @Override
-    public Database prasība() {
-        return this.piešķiršanas.prasība();
+    public Database demands() {
+        return this.piešķiršanas.demands();
     }
 
     @Override
@@ -92,8 +92,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Database prasības_nelietotas() {
-        return this.piešķiršanas.prasības_nelietotas();
+    public Database demands_unused() {
+        return this.piešķiršanas.demands_unused();
     }
 
     @Override
@@ -177,8 +177,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public List<Attribute<Object>> nosaukumuSkats() {
-        return this.piešķiršanas.nosaukumuSkats();
+    public List<Attribute<Object>> headerView() {
+        return this.piešķiršanas.headerView();
     }
 
     @Override
@@ -202,8 +202,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public List<Line> gūtRindas() {
-        return this.piešķiršanas.gūtRindas();
+    public List<Line> getLines() {
+        return this.piešķiršanas.getLines();
     }
 
     @Override
@@ -212,8 +212,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public int izmērs() {
-        return this.piešķiršanas.izmērs();
+    public int size() {
+        return this.piešķiršanas.size();
     }
 
     @Override
@@ -241,8 +241,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public org.w3c.dom.Element uzFods() {
-        return this.piešķiršanas.uzFods();
+    public org.w3c.dom.Element toFods() {
+        return this.piešķiršanas.toFods();
     }
 
     @Override

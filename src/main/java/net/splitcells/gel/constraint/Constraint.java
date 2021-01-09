@@ -47,7 +47,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         final List<List<Constraint>> piešķiršanasGruppas = list();
         piešķiršanasGruppas.add(momentānaTaka);
         piešķiršanasGruppas.addAll(
-                ierobežojums.skatsUsBerniem().stream()
+                ierobežojums.childrenView().stream()
                         .map(child -> piešķiršanasGruppas(listWithValuesOf(momentānaTaka).withAppended(child)))
                         .reduce((a, b) -> a.withAppended(b))
                         .orElseGet(() -> list()));
@@ -58,10 +58,10 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         return piešķiršanasGruppas(list(ierobežojums));
     }
 
-    GroupId injekcijasGrupa();
+    GroupId injectionGroup();
 
-    default MetaRating novērtējums() {
-        return novērtējums(injekcijasGrupa());
+    default MetaRating rating() {
+        return novērtējums(injectionGroup());
     }
 
     static GroupId standartaGrupa() {
@@ -69,22 +69,22 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     }
 
     default MetaRating novērtējums(Line rinda) {
-        return novērtējums(injekcijasGrupa(), rinda);
+        return novērtējums(injectionGroup(), rinda);
     }
 
     MetaRating novērtējums(GroupId grupaId, Line rinda);
 
     MetaRating novērtējums(GroupId grupaId);
 
-    default Perspective dabiskaArgumentācija() {
-        return dabiskaArgumentācija(injekcijasGrupa());
+    default Perspective naturalArgumentation() {
+        return dabiskaArgumentācija(injectionGroup());
     }
 
     Perspective dabiskaArgumentācija(GroupId grupa);
 
     Optional<Discoverable> galvenaisKonteksts();
 
-    default Perspective dabiskaArgumentācija(Line priekšmets, GroupId grupa) {
+    default Perspective naturalArgumentation(Line priekšmets, GroupId grupa) {
         return dabiskaArgumentācija(priekšmets, grupa, AllocationSelector::atlasītArCenu);
     }
 
@@ -98,7 +98,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     }
 
     default GroupId reģistrē(Line rinda) {
-        final var rVal = injekcijasGrupa();
+        final var rVal = injectionGroup();
         reģistrē_papildinājums(rVal, rinda);
         return rVal;
     }
@@ -108,28 +108,28 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     void reģistrē_papildinājums(GroupId grupaId, Line rinda);
 
     default void reģistrē_papildinājumi(Line rinda) {
-        reģistrē_papildinājums(injekcijasGrupa(), rinda);
+        reģistrē_papildinājums(injectionGroup(), rinda);
     }
 
     void rēgistrē_pirms_noņemšanas(GroupId grupaId, Line rinda);
 
     @Deprecated
     default void rēgistrē_pirms_noņemšanas(Line rinda) {
-        rēgistrē_pirms_noņemšanas(injekcijasGrupa(), rinda);
+        rēgistrē_pirms_noņemšanas(injectionGroup(), rinda);
     }
 
-    List<Constraint> skatsUsBerniem();
+    List<Constraint> childrenView();
 
     Set<Line> izpildītāji(GroupId grupaId);
 
     default Set<Line> izpildītāji() {
-        return izpildītāji(injekcijasGrupa());
+        return izpildītāji(injectionGroup());
     }
 
     Set<Line> neievērotaji(GroupId grupaId);
 
     default Set<Line> neievērotaji() {
-        return neievērotaji(injekcijasGrupa());
+        return neievērotaji(injectionGroup());
     }
 
     Line pieliktRadījums(LocalRating vietējieNovērtējums);
@@ -148,7 +148,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         if (equals(ierobežojums)) {
             return setOfUniques(this);
         }
-        return skatsUsBerniem().stream()
+        return childrenView().stream()
                 .map(child -> child.vecāksNo(ierobežojums))
                 .reduce((a, b) -> Sets.merge(a, b))
                 .orElseGet(() -> setOfUniques());
@@ -159,18 +159,18 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         if (equals(priekšmets)) {
             bērnuGrupas.add(grupaNo(rinda));
         } else {
-            skatsUsBerniem().forEach(bērns -> bērnuGrupas.addAll(bērns.bērnuGrupas(rinda, priekšmets)));
+            childrenView().forEach(bērns -> bērnuGrupas.addAll(bērns.bērnuGrupas(rinda, priekšmets)));
         }
         return bērnuGrupas;
     }
 
-    default Element grafiks() {
+    default Element graph() {
         final var grafiks = Xml.rElement(GEL, type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> grafiks.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
         }
-        skatsUsBerniem().forEach(child -> {
-            grafiks.appendChild(child.grafiks());
+        childrenView().forEach(child -> {
+            grafiks.appendChild(child.graph());
         });
         return grafiks;
     }

@@ -37,13 +37,13 @@ public class BranchingHillClimber implements Optimization {
     }
 
     private Optional<Solution> nakamaisZars(SolutionView atrisinājums) {
-        final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
+        final var saknesNovērtejums = atrisinājums.constraint().rating();
         var labakaisKaimiņs = Optional.<Solution>empty();
         while (plānotajs.get()) {
-            final var momentansKaimiņs = atrisinājums.zars();
+            final var momentansKaimiņs = atrisinājums.branch();
             final var momentansNovērtejums = atrisinājums
-                    .vēsture()
-                    .gūtRindas()
+                    .history()
+                    .getLines()
                     .lastValue()
                     .get()
                     .vērtība(History.REFLEKSIJAS_DATI)

@@ -26,8 +26,8 @@ public class LinearDeinitializer implements Optimization {
                     list(
                             optimizacijasNotikums
                                     (NOŅEMŠANA
-                                            , solution.prasība_lietots().gūtRindas().get(0).uzRindaRādītājs()
-                                            , solution.piedāvājumi_lietoti().gūtRindas().get(0).uzRindaRādītājs()));
+                                            , solution.prasība_lietots().getLines().get(0).uzRindaRādītājs()
+                                            , solution.piedāvājumi_lietoti().getLines().get(0).uzRindaRādītājs()));
 
         }
         return list();

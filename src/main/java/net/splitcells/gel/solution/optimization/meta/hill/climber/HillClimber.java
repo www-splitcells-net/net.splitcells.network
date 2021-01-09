@@ -39,8 +39,8 @@ public class HillClimber implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
-        final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
-        final var sanknesVēsturesIndekss = atrisinājums.vēsture().momentansIndekss();
+        final var saknesNovērtejums = atrisinājums.constraint().rating();
+        final var sanknesVēsturesIndekss = atrisinājums.history().momentansIndekss();
         Optional<Rating> labakaisKaimiņuNovērtējums = Optional.empty();
         List<OptimizationEvent> labakaKaimiņuOperācija = list();
         while (plānotājs.get()) {
@@ -58,13 +58,13 @@ public class HillClimber implements Optimization {
                                         , LogLevel.TRACE)
                         );
             }
-            final var momentansNovērtējums = atrisinājums.novērtējums(ieteikumi);
+            final var momentansNovērtējums = atrisinājums.rating(ieteikumi);
             if (labakaisKaimiņuNovērtējums.isEmpty()
                     || momentansNovērtējums.labākNekā(labakaisKaimiņuNovērtējums.get())) {
                 labakaisKaimiņuNovērtējums = Optional.of(momentansNovērtējums);
                 labakaKaimiņuOperācija = ieteikumi;
             }
-            atrisinājums.vēsture().atiestatUz(sanknesVēsturesIndekss);
+            atrisinājums.history().atiestatUz(sanknesVēsturesIndekss);
         }
         if (!labakaisKaimiņuNovērtējums.isEmpty() && labakaisKaimiņuNovērtējums.get().labākNekā(saknesNovērtejums)) {
             return labakaKaimiņuOperācija;

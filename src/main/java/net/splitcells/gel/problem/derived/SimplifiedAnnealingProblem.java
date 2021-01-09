@@ -20,7 +20,7 @@ public class SimplifiedAnnealingProblem extends DerivedSolution {
                 1f / (i.floatValue() + 1f));
     }
     public static Solution vienkāršsotsAtdzesēšanasProblēma(Solution solution, Function<Integer, Float> temperatureFunction) {
-        return new SimplifiedAnnealingProblem(solution.piešķiršanas(), solution.ierobežojums(), temperatureFunction);
+        return new SimplifiedAnnealingProblem(solution.piešķiršanas(), solution.constraint(), temperatureFunction);
     }
 
     protected SimplifiedAnnealingProblem(Allocations piešķiršanas, Constraint originalIerobežojums, Function<Integer, Float> temperatureFunction) {
@@ -30,7 +30,7 @@ public class SimplifiedAnnealingProblem extends DerivedSolution {
                     private final Randomness randomness = randomness();
                     @Override
                     public MetaRating apply(MetaRating rating) {
-                        if (randomness.truthValue(temperatureFunction.apply(SimplifiedAnnealingProblem.this.vēsture().izmērs()))) {
+                        if (randomness.truthValue(temperatureFunction.apply(SimplifiedAnnealingProblem.this.history().size()))) {
                             return Optimality.optimālums(1).kāReflektētsNovērtējums();
                         }
                         return rating;

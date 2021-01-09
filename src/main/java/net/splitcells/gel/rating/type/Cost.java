@@ -23,12 +23,12 @@ public class Cost implements Rating {
 	};
 	private double vertība;
 
-	public static Cost cena(double vertība) {
+	public static Cost cost(double vertība) {
 		return new Cost(vertība);
 	}
 
 	public static Cost bezMaksas() {
-		return cena(0.0);
+		return cost(0.0);
 	}
 
 	protected Cost(double vertība) {
@@ -64,7 +64,7 @@ public class Cost implements Rating {
 			final Rating additionalNovērtējums = additionalNovērtējumi[0];
 			if (additionalNovērtējums instanceof Cost) {
 				final Cost otherCena = (Cost) additionalNovērtējums;
-				return cena(vertība + otherCena.vertība);
+				return cost(vertība + otherCena.vertība);
 			}
 			if (additionalNovērtējums instanceof MetaRating) {
 				return additionalNovērtējums.kombinē(this);

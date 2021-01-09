@@ -13,13 +13,13 @@ public interface AllocationsLiveView extends Table {
 
     Database piedāvājumi_lietoti();
 
-    Database piedāvājums_nelietots();
+    Database supplies_unused();
 
-    Database prasība();
+    Database demands();
 
     Database prasība_lietots();
 
-    Database prasības_nelietotas();
+    Database demands_unused();
 
     Line prasība_no_piešķiršana(Line piešķiršana);
 

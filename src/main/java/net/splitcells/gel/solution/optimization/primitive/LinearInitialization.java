@@ -21,12 +21,12 @@ public class LinearInitialization implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimizē(SolutionView solution) {
-        if (solution.prasības_nelietotas().navTukšs() && solution.piedāvājums_nelietots().navTukšs()) {
+        if (solution.demands_unused().navTukšs() && solution.supplies_unused().navTukšs()) {
             return list(
                     optimizacijasNotikums
                             (PIEŠĶIRŠANA
-                                    , solution.prasības_nelietotas().gūtRindas().get(0).uzRindaRādītājs()
-                                    , solution.piedāvājums_nelietots().gūtRindas().get(0).uzRindaRādītājs()));
+                                    , solution.demands_unused().getLines().get(0).uzRindaRādītājs()
+                                    , solution.supplies_unused().getLines().get(0).uzRindaRādītājs()));
 
         }
         return list();

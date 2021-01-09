@@ -34,7 +34,7 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public int size() {
-        return tabula.izmērs();
+        return tabula.size();
     }
 
     @Override

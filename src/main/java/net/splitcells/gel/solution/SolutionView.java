@@ -28,163 +28,163 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
 import static net.splitcells.dem.resource.host.Files.*;
-import static net.splitcells.gel.rating.type.Cost.cena;
+import static net.splitcells.gel.rating.type.Cost.cost;
 
 public interface SolutionView extends ProblemView {
 
-    default List<List<Constraint>> prasībasGrupas() {
-        return prasībasGrupas(ierobežojums(), list());
+    default List<List<Constraint>> demandsGroups() {
+        return demandsGroups(constraint(), list());
     }
 
-    default List<List<Constraint>> prasībasGrupas(Constraint ierobežojums, List<Constraint> vecākuTaka) {
-        final var ierobežojumuTaka = vecākuTaka.shallowCopy().withAppended(ierobežojums);
-        final List<List<Constraint>> brīvasGrupas = list();
-        ierobežojums.casted(ForAll.class)
-                .ifPresent(priekšVisiiemIerobežojums -> {
-                    final var priekšVisiiemAtribūti = prieksVisiemAtribūtuNoGrupetājs
-                            (priekšVisiiemIerobežojums.grupešana())
+    default List<List<Constraint>> demandsGroups(Constraint constraint, List<Constraint> parentPath) {
+        final var constraintPath = parentPath.shallowCopy().withAppended(constraint);
+        final List<List<Constraint>> freeGroups = list();
+        constraint.casted(ForAll.class)
+                .ifPresent(forAllConstraints -> {
+                    final var forAllAttributes = forAllAttributesOfGroups
+                            (forAllConstraints.grouping())
                             .withAppended(
-                                    priekšVisiiemIerobežojums.grupešana()
+                                    forAllConstraints.grouping()
                                             .casted(RaterBasedOnGrouping.class)
-                                            .map(e -> prieksVisiemAtribūtuNoGrupetājs(e.grupetājs()))
+                                            .map(e -> forAllAttributesOfGroups(e.classifier()))
                                             .orElseGet(() -> list())
                             );
-                    if (priekšVisiiemAtribūti.stream()
-                            .anyMatch(attribute -> prasība().nosaukumuSkats().contains(attribute))
+                    if (forAllAttributes.stream()
+                            .anyMatch(attribute -> demands().headerView().contains(attribute))
                     ) {
-                        brīvasGrupas.add(ierobežojumuTaka);
+                        freeGroups.add(constraintPath);
                     }
                 });
-        ierobežojums.skatsUsBerniem().stream()
-                .map(bērns -> prasībasGrupas(bērns, ierobežojumuTaka))
-                .forEach(brīvasGrupas::addAll);
-        return brīvasGrupas;
+        constraint.childrenView().stream()
+                .map(child -> demandsGroups(child, constraintPath))
+                .forEach(freeGroups::addAll);
+        return freeGroups;
     }
 
-    private static List<Attribute<?>> prieksVisiemAtribūtuNoGrupetājs(Rater grupetājs) {
-        final List<Attribute<?>> priekšVisiemAtribūtieNoGrupas = list();
-        grupetājs.casted(ForAllAttributeValues.class)
-                .ifPresent(e -> priekšVisiemAtribūtieNoGrupas.add(e.atribūti()));
-        grupetājs.casted(ForAllValueCombinations.class)
-                .ifPresent(e -> priekšVisiemAtribūtieNoGrupas.addAll(e.attributes()));
-        return priekšVisiemAtribūtieNoGrupas;
+    private static List<Attribute<?>> forAllAttributesOfGroups(Rater classifier) {
+        final List<Attribute<?>> forAllAttributesOfGroups = list();
+        classifier.casted(ForAllAttributeValues.class)
+                .ifPresent(e -> forAllAttributesOfGroups.add(e.atribūti()));
+        classifier.casted(ForAllValueCombinations.class)
+                .ifPresent(e -> forAllAttributesOfGroups.addAll(e.attributes()));
+        return forAllAttributesOfGroups;
     }
 
-    History vēsture();
+    History history();
 
-    default Solution zars() {
+    default Solution branch() {
         throw not_implemented_yet();
     }
 
-    default boolean irPilns() {
-        return prasības_nelietotas().izmērs() == 0 || (piedāvājums_nelietots().izmērs() == 0 && prasības_nelietotas().izmērs() > 0);
+    default boolean isComplete() {
+        return demands_unused().size() == 0 || (supplies_unused().size() == 0 && demands_unused().size() > 0);
     }
 
-    default boolean irOptimāls() {
-        return irPilns() && ierobežojums().novērtējums().equalz(cena(0));
+    default boolean isOptimal() {
+        return isComplete() && constraint().rating().equalz(cost(0));
     }
 
-    default Path datuKonteiners() {
-        final var standardDokumentuMapu = environment().config().configValue(ProcessPath.class);
-        return standardDokumentuMapu
+    default Path dataContainer() {
+        final var standardDocumentFolder = environment().config().configValue(ProcessPath.class);
+        return standardDocumentFolder
                 .resolve(
                         path()
                                 .reduced((a, b) -> a + "." + b)
                                 .orElse(getClass().getSimpleName()));
     }
 
-    default void veidoStandartaAnalīze() {
-        veidotAnalīzu(datuKonteiners());
+    default void createStandardAnalysis() {
+        createAnalysis(dataContainer());
     }
 
-    default void veidotAnalīzu(Path mērķis) {
-        createDirectory(mērķis);
-        writeToFile(mērķis.resolve("analīze.fods"), uzFodsTabuluAnalīzu());
-        writeToFile(mērķis.resolve("ierebežojumu.grafs.xml"), ierobežojums().grafiks());
-        writeToFile(mērķis.resolve("ierebežojumu.novērtejums.xml"), ierobežojums().novērtējums().toDom());
-        writeToFile(mērķis.resolve("ierebežojumu.stāvoklis.xml"), ierobežojums().toDom());
-        writeToFile(mērķis.resolve("vēsture.fods"), vēsture().uzFods());
-        writeToFile(mērķis.resolve("stāvoklis.xml"), ierobežojums().dabiskaArgumentācija().toDom());
-        writeToFile(mērķis.resolve("radījums.fods"), uzFods());
+    default void createAnalysis(Path targetFolder) {
+        createDirectory(targetFolder);
+        writeToFile(targetFolder.resolve("result.analysis.fods"), toFodsTableAnalysis());
+        writeToFile(targetFolder.resolve("constraint.graph.xml"), constraint().graph());
+        writeToFile(targetFolder.resolve("constraint.rating.xml"), constraint().rating().toDom());
+        writeToFile(targetFolder.resolve("constraint.state.xml"), constraint().toDom());
+        writeToFile(targetFolder.resolve("history.fods"), history().toFods());
+        writeToFile(targetFolder.resolve("constraint.natural-argumentation.xml"), constraint().naturalArgumentation().toDom());
+        writeToFile(targetFolder.resolve("results.fods"), toFods());
     }
 
-    default Element uzFodsTabuluAnalīzu() {
-        final var fodsTabuluAnalīzu = rElement(NameSpaces.FODS_OFFICE, "document");
-        final var analīzuSaturs = element(NameSpaces.FODS_OFFICE, "body");
-        fodsTabuluAnalīzu.setAttributeNode(attribute(NameSpaces.FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
-        fodsTabuluAnalīzu.appendChild(analīzuSaturs);
+    default Element toFodsTableAnalysis() {
+        final var fodsTableAnalysis = rElement(NameSpaces.FODS_OFFICE, "document");
+        final var analysisContent = element(NameSpaces.FODS_OFFICE, "body");
+        fodsTableAnalysis.setAttributeNode(attribute(NameSpaces.FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
+        fodsTableAnalysis.appendChild(analysisContent);
         {
-            final var izklājlapa = element(NameSpaces.FODS_OFFICE, "spreadsheet");
-            analīzuSaturs.appendChild(izklājlapa);
-            final var tabula = rElement(NameSpaces.FODS_TABLE, "table");
-            izklājlapa.appendChild(tabula);
-            tabula.setAttributeNode(attribute(NameSpaces.FODS_TABLE, "name", "values"));
+            final var spreadsheet = element(NameSpaces.FODS_OFFICE, "spreadsheet");
+            analysisContent.appendChild(spreadsheet);
+            final var table = rElement(NameSpaces.FODS_TABLE, "table");
+            spreadsheet.appendChild(table);
+            table.setAttributeNode(attribute(NameSpaces.FODS_TABLE, "name", "values"));
             {
-                tabula.appendChild(atribūtiNotFodsAnalīzu());
-                gūtRindas().stream().
-                        map(this::uzRindasFodsAnalīzu)
-                        .forEach(e -> tabula.appendChild(e));
+                table.appendChild(attributesOfFodsAnalysis());
+                getLines().stream().
+                        map(this::toLinesFodsAnalysis)
+                        .forEach(e -> table.appendChild(e));
             }
         }
-        return fodsTabuluAnalīzu;
+        return fodsTableAnalysis;
     }
 
-    default Element atribūtiNotFodsAnalīzu() {
-        final var atribūti = element(NameSpaces.FODS_TABLE, "table-row");
-        nosaukumuSkats().stream().map(att -> att.vārds()).map(attName -> {
-            final var tabulasElements = element(NameSpaces.FODS_TABLE, "table-cell");
-            final var tabulasVertība = rElement(NameSpaces.FODS_TEXT, "p");
-            tabulasElements.appendChild(tabulasVertība);
-            tabulasVertība.appendChild(Xml.textNode(attName));
-            return tabulasElements;
-        }).forEach(attDesc -> atribūti.appendChild(attDesc));
+    default Element attributesOfFodsAnalysis() {
+        final var attributes = element(NameSpaces.FODS_TABLE, "table-row");
+        headerView().stream().map(att -> att.vārds()).map(attName -> {
+            final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
+            tableElement.appendChild(tableValue);
+            tableValue.appendChild(Xml.textNode(attName));
+            return tableElement;
+        }).forEach(attributeDescription -> attributes.appendChild(attributeDescription));
         {
-            final var tabulasElements = element(NameSpaces.FODS_TABLE, "table-cell");
-            final var tabulasVertība = rElement(NameSpaces.FODS_TEXT, "p");
-            tabulasElements.appendChild(tabulasVertība);
-            tabulasVertība.appendChild(Xml.textNode("lrindas argumentacija"));
-            atribūti.appendChild(tabulasElements);
+            final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
+            tableElement.appendChild(tableValue);
+            tableValue.appendChild(Xml.textNode("line argumentation"));
+            attributes.appendChild(tableElement);
         }
         {
-            final var novērtejums = element(NameSpaces.FODS_TABLE, "table-cell");
-            final var novērtejumuVertība = rElement(NameSpaces.FODS_TEXT, "p");
-            novērtejums.appendChild(novērtejumuVertība);
-            atribūti.appendChild(novērtejums);
-            novērtejumuVertība.appendChild(
+            final var rating = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var ratingValue = rElement(NameSpaces.FODS_TEXT, "p");
+            rating.appendChild(ratingValue);
+            attributes.appendChild(rating);
+            ratingValue.appendChild(
                     Xml.textNode(
                             toPrettyWithoutHeaderString(
-                                    ierobežojums()
-                                            .novērtējums()
+                                    constraint()
+                                            .rating()
                                             .toDom()
                             )));
         }
-        return atribūti;
+        return attributes;
     }
 
-    default Element uzRindasFodsAnalīzu(Line piešķiršana) {
-        final var tabulasRinda = element(NameSpaces.FODS_TABLE, "table-row");
+    default Element toLinesFodsAnalysis(Line allocation) {
+        final var tableLine = element(NameSpaces.FODS_TABLE, "table-row");
         {
-            nosaukumuSkats().stream().map(attribute -> piešķiršana.vērtība(attribute)).map(value -> {
-                final var tabulasElements = element(NameSpaces.FODS_TABLE, "table-cell");
-                final var tabulasVertība = rElement(NameSpaces.FODS_TEXT, "p");
-                tabulasElements.appendChild(tabulasVertība);
-                tabulasVertība.appendChild(Xml.textNode(value.toString()));
-                return tabulasElements;
-            }).forEach(tableCell -> tabulasRinda.appendChild(tableCell));
+            headerView().stream().map(attribute -> allocation.vērtība(attribute)).map(value -> {
+                final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
+                final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
+                tableElement.appendChild(tableValue);
+                tableValue.appendChild(Xml.textNode(value.toString()));
+                return tableElement;
+            }).forEach(tableCell -> tableLine.appendChild(tableCell));
         }
         {
-            final var rindasArgumentacija = element(NameSpaces.FODS_TABLE, "table-cell");
-            final var rindasArgumentacijasVertīiba = rElement(NameSpaces.FODS_TEXT, "p");
-            tabulasRinda.appendChild(rindasArgumentacija);
-            rindasArgumentacija.appendChild(rindasArgumentacijasVertīiba);
-            rindasArgumentacijasVertīiba.appendChild(
+            final var lineArgumentation = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var lineArgumentationValue = rElement(NameSpaces.FODS_TEXT, "p");
+            tableLine.appendChild(lineArgumentation);
+            lineArgumentation.appendChild(lineArgumentationValue);
+            lineArgumentationValue.appendChild(
                     Xml.textNode(
                             toPrettyWithoutHeaderString(
-                                    ierobežojums().dabiskaArgumentācija(piešķiršana, ierobežojums().injekcijasGrupa()).toDom())));
+                                    constraint().naturalArgumentation(allocation, constraint().injectionGroup()).toDom())));
         }
-        return tabulasRinda;
+        return tableLine;
     }
 
-    Rating novērtējums(List<OptimizationEvent> notikumi);
+    Rating rating(List<OptimizationEvent> events);
 }
 

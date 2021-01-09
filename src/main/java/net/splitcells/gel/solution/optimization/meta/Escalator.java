@@ -25,13 +25,13 @@ public class Escalator implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
-        final var saknesNovērtejums = atrisinājums.ierobežojums().novērtējums();
-        final var sanknesVēsturesIndekss = atrisinājums.vēsture().momentansIndekss();
+        final var saknesNovērtejums = atrisinājums.constraint().rating();
+        final var sanknesVēsturesIndekss = atrisinājums.history().momentansIndekss();
         if (eskalācijasLīmens < 0) {
             return list();
         }
         final var optimizācija = optimzācijas.apply(eskalācijasLīmens).optimizē(atrisinājums);
-        final var momentansNovērtējums = atrisinājums.novērtējums(optimizācija);
+        final var momentansNovērtējums = atrisinājums.rating(optimizācija);
         if (momentansNovērtējums.labākNekā(saknesNovērtejums)) {
             eskalācijasLīmens += 1;
         } else {

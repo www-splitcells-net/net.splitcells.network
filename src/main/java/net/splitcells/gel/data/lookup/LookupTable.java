@@ -38,22 +38,22 @@ public class LookupTable implements Table {
         this.tabula = tabula;
         this.vārds = vārds;
         kolonnas = listWithValuesOf
-                (tabula.nosaukumuSkats().stream()
+                (tabula.headerView().stream()
                         .map(attribute -> LookupColumn.lookupColumn(this, attribute))
                         .collect(toList()));
         kolonnasSkats = listWithValuesOf(kolonnas);
     }
 
     @Override
-    public List<Attribute<Object>> nosaukumuSkats() {
-        return tabula.nosaukumuSkats();
+    public List<Attribute<Object>> headerView() {
+        return tabula.headerView();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> Column<T> kolonnaSkats(Attribute<T> atribūts) {
         int index = 0;
-        for (final var headerAttribute : tabula.nosaukumuSkats()) {
+        for (final var headerAttribute : tabula.headerView()) {
             if (headerAttribute.equals(atribūts)) {
                 return (Column<T>) kolonnas.get(index);
             }
@@ -78,7 +78,7 @@ public class LookupTable implements Table {
     }
 
     @Override
-    public int izmērs() {
+    public int size() {
         return saturs.size();
     }
 
@@ -89,7 +89,7 @@ public class LookupTable implements Table {
         range(0, kolonnas.size()).forEach(i -> {
             // KOMPROMISS
             final var kolonna = (LookupColumn<Object>) kolonnas.get(i);
-            kolonna.set(rinda.indekss(), rinda.vērtība(tabula.nosaukumuSkats().get(i)));
+            kolonna.set(rinda.indekss(), rinda.vērtība(tabula.headerView().get(i)));
         });
         kolonnas.forEach(kolonna -> kolonna.reģistrē_papildinājumi(rinda));
     }

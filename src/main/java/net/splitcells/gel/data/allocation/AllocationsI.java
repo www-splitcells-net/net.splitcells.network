@@ -55,12 +55,12 @@ public class AllocationsI implements Allocations {
     @Deprecated
     protected AllocationsI(String vārds, Database prasības, Database piedāvājumi) {
         this.vārds = vārds;
-        piešķiršanas = new DatabaseI("piešķiršanas", this, concat(prasības.nosaukumuSkats(), piedāvājumi.nosaukumuSkats()));
+        piešķiršanas = new DatabaseI("piešķiršanas", this, concat(prasības.headerView(), piedāvājumi.headerView()));
         // DARĪT Noņemiet kodu un komentāru dublēšanos.
         {
             this.prāsibas = prasības;
-            prāsibas_nelietoti = new DatabaseI("prasības_nelietoti", this, prasības.nosaukumuSkats());
-            prāsibas_lietoti = new DatabaseI("prasības_lietoti", this, prasības.nosaukumuSkats());
+            prāsibas_nelietoti = new DatabaseI("prasības_nelietoti", this, prasības.headerView());
+            prāsibas_lietoti = new DatabaseI("prasības_lietoti", this, prasības.headerView());
             prasības.jēlaRindasSkats().forEach(prāsibas_nelietoti::pielikt);
             prasības.abonē_uz_papildinājums(prāsibas_nelietoti::pielikt);
             prasības.abonē_uz_iepriekšNoņemšana(removalOf -> {
@@ -80,8 +80,8 @@ public class AllocationsI implements Allocations {
         }
         {
             this.piedāvājumi = requireNonNull(piedāvājumi);
-            piedāvājumi_nelietoti = new DatabaseI("piedāvājumi_nelietoti", this, piedāvājumi.nosaukumuSkats());
-            piedāvājumi_lietoti = new DatabaseI("piedāvājumi_lietoti", this, piedāvājumi.nosaukumuSkats());
+            piedāvājumi_nelietoti = new DatabaseI("piedāvājumi_nelietoti", this, piedāvājumi.headerView());
+            piedāvājumi_lietoti = new DatabaseI("piedāvājumi_lietoti", this, piedāvājumi.headerView());
             piedāvājumi.jēlaRindasSkats().forEach(piedāvājumi_nelietoti::pielikt);
             piedāvājumi.abonē_uz_papildinājums(i -> {
                 piedāvājumi_nelietoti.pielikt(i);
@@ -115,12 +115,12 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Database piedāvājums_nelietots() {
+    public Database supplies_unused() {
         return piedāvājumi_nelietoti;
     }
 
     @Override
-    public Database prasība() {
+    public Database demands() {
         return prāsibas;
     }
 
@@ -130,7 +130,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Database prasības_nelietotas() {
+    public Database demands_unused() {
         return prāsibas_nelietoti;
     }
 
@@ -253,8 +253,8 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public List<Attribute<Object>> nosaukumuSkats() {
-        return piešķiršanas.nosaukumuSkats();
+    public List<Attribute<Object>> headerView() {
+        return piešķiršanas.headerView();
     }
 
     @Override
@@ -273,8 +273,8 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public int izmērs() {
-        return piešķiršanas.izmērs();
+    public int size() {
+        return piešķiršanas.size();
     }
 
     @Override

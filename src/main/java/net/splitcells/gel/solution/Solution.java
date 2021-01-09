@@ -26,7 +26,7 @@ public interface Solution extends Problem, SolutionView {
 
     @Returns_this
     default Solution optimizēArFunkciju(Function<Solution, List<OptimizationEvent>> optimizācijaFunkcija) {
-        while (!irOptimāls()) {
+        while (!isOptimal()) {
             final var ieteikumi = optimizācijaFunkcija.apply(this);
             if (ieteikumi.isEmpty()) {
                 break;
@@ -72,8 +72,8 @@ public interface Solution extends Problem, SolutionView {
     default Solution optimizē(OptimizationEvent notikums, OptimizationParameters optimizationParameters) {
         if (notikums.soluTips().equals(PIEŠĶIRŠANA)) {
             this.piešķirt(
-                    prasības_nelietotas().gūtJēluRindas(notikums.prasība().interpretē().get().indekss()),
-                    piedāvājums_nelietots().gūtJēluRindas(notikums.piedāvājums().interpretē().get().indekss()));
+                    demands_unused().gūtJēluRindas(notikums.prasība().interpretē().get().indekss()),
+                    supplies_unused().gūtJēluRindas(notikums.piedāvājums().interpretē().get().indekss()));
         } else if (notikums.soluTips().equals(NOŅEMŠANA)) {
             final var prasībaPriekšNoņemšanas = notikums.prasība().interpretē();
             final var piedāvājumuPriekšNoņemšanas = notikums.piedāvājums().interpretē();
@@ -96,15 +96,15 @@ public interface Solution extends Problem, SolutionView {
     default void veidoAnalīzu() {
         createDirectory(environment().config().configValue(ProcessPath.class));
         final var path = this.path().stream().reduce((kreisi, labi) -> kreisi + "." + labi);
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.toDom.xml"), ierobežojums().toDom());
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), ierobežojums().grafiks());
+        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.toDom.xml"), constraint().toDom());
+        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), constraint().graph());
     }
 
-    default Rating novērtējums(List<OptimizationEvent> notikumi) {
-        final var sanknesVēsturesIndekss = vēsture().momentansIndekss();
+    default Rating rating(List<OptimizationEvent> notikumi) {
+        final var sanknesVēsturesIndekss = history().momentansIndekss();
         optimizē(notikumi);
-        final var novērtējums = ierobežojums().novērtējums();
-        vēsture().atiestatUz(sanknesVēsturesIndekss);
+        final var novērtējums = constraint().rating();
+        history().atiestatUz(sanknesVēsturesIndekss);
         return novērtējums;
     }
 }

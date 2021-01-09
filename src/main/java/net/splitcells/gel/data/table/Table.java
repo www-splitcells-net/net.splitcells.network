@@ -26,7 +26,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
 public interface Table extends Discoverable, Domable {
-    List<Attribute<Object>> nosaukumuSkats();
+    List<Attribute<Object>> headerView();
 
     <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts);
 
@@ -42,7 +42,7 @@ public interface Table extends Discoverable, Domable {
         }
     }
 
-    default net.splitcells.dem.data.set.list.List<Line> gūtRindas() {
+    default net.splitcells.dem.data.set.list.List<Line> getLines() {
         return listWithValuesOf
                 (jēlaRindasSkats().stream()
                         .filter(e -> e != null)
@@ -54,13 +54,13 @@ public interface Table extends Discoverable, Domable {
     }
 
     default Line gūtRinda(int indekss) {
-        return gūtRindas().get(indekss);
+        return getLines().get(indekss);
     }
 
-    int izmērs();
+    int size();
 
     default boolean irTukšs() {
-        return 0 == izmērs();
+        return 0 == size();
     }
 
     default boolean navTukšs() {
@@ -72,12 +72,12 @@ public interface Table extends Discoverable, Domable {
 
     default String uzCSV() {
         final var csv = new StringBuffer();
-        final var header = nosaukumuSkats().stream()
+        final var header = headerView().stream()
                 .map(atribūts -> atribūts.vārds())
                 .collect(toList());
         try (final var printeris = new CSVPrinter
                 (csv, CSVFormat.RFC4180.withHeader(header.toArray(new String[header.size()])))) {
-            gūtRindas().stream()
+            getLines().stream()
                     .map(rinda -> rinda.toStringList())
                     .forEach(rinda -> {
                         try {
@@ -98,14 +98,14 @@ public interface Table extends Discoverable, Domable {
     Line uzmeklēVienādus(Attribute<Line> atribūts, Line other);
 
     default Stream<Line> uzmeklēVienādus(List<Object> vertības) {
-        return gūtRindas().stream()
+        return getLines().stream()
                 .filter(rinda ->
-                        IntStream.range(0, nosaukumuSkats().size())
-                                .mapToObj(i -> Objects.equals(vertības.get(i), rinda.vērtība(nosaukumuSkats().get(i))))
+                        IntStream.range(0, headerView().size())
+                                .mapToObj(i -> Objects.equals(vertības.get(i), rinda.vērtība(headerView().get(i))))
                                 .reduce(true, (a, b) -> a && b));
     }
 
-    default Element uzFods() {
+    default Element toFods() {
         final var fods = rElement(FODS_OFFICE, "document");
         final var ķermenis = element(FODS_OFFICE, "body");
         fods.setAttributeNode
@@ -120,7 +120,7 @@ public interface Table extends Discoverable, Domable {
             {
                 final var nosaukums = element(FODS_TABLE, "table-row");
                 tabula.appendChild(nosaukums);
-                nosaukumuSkats().stream()
+                headerView().stream()
                         .map(att -> att.vārds())
                         .map(attName -> {
                             final var tabulasElements = element(FODS_TABLE, "table-cell");
@@ -129,10 +129,10 @@ public interface Table extends Discoverable, Domable {
                             tabulasVertība.appendChild(textNode(attName));
                             return tabulasElements;
                         }).forEach(attDesc -> nosaukums.appendChild(attDesc));
-                gūtRindas().forEach(line -> {
+                getLines().forEach(line -> {
                     final var tabulasRinda = element(FODS_TABLE, "table-row");
                     tabula.appendChild(tabulasRinda);
-                    nosaukumuSkats().stream()
+                    headerView().stream()
                             .map(atribūts -> line.vērtība(atribūts))
                             .map(vertība -> {
                                 final var tabulasElements = element(FODS_TABLE, "table-cell");

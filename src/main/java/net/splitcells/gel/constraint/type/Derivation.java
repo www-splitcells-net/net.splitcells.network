@@ -38,8 +38,8 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public GroupId injekcijasGrupa() {
-        return atvasināšanasMērķis.injekcijasGrupa();
+    public GroupId injectionGroup() {
+        return atvasināšanasMērķis.injectionGroup();
     }
 
     @Override
@@ -84,7 +84,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public List<Constraint> skatsUsBerniem() {
+    public List<Constraint> childrenView() {
         throw not_implemented_yet();
     }
 

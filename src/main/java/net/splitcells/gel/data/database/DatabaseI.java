@@ -82,7 +82,7 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public List<Attribute<Object>> nosaukumuSkats() {
+    public List<Attribute<Object>> headerView() {
         return atribūti;
     }
 
@@ -186,7 +186,7 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public int izmērs() {
+    public int size() {
         return izmers;
     }
 

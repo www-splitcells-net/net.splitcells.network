@@ -63,8 +63,8 @@ public class FreeSupplySwitcher implements Optimization {
             (SolutionView atrisinājums
                     , Set<LinePointer> apstrādatasPrasības
                     , Set<LinePointer> apstrādatiPiedāvājumi) {
-        if (atrisinājums.prasība_lietots().navTukšs() && atrisinājums.piedāvājums_nelietots().navTukšs()) {
-            final int atlase = nejaušiba.integer(0, atrisinājums.prasības_nelietotas().izmērs() - 1);
+        if (atrisinājums.prasība_lietots().navTukšs() && atrisinājums.supplies_unused().navTukšs()) {
+            final int atlase = nejaušiba.integer(0, atrisinājums.demands_unused().size() - 1);
             final var lietotaPrasība = atrisinājums.prasība_lietots().gūtRinda(atlase);
             final var lietotasPrasībasRādītājs = lietotaPrasība.uzRindaRādītājs();
             if (apstrādatasPrasības.contains(lietotasPrasībasRādītājs)) {
@@ -83,13 +83,13 @@ public class FreeSupplySwitcher implements Optimization {
                             optimizacijasNotikums(NOŅEMŠANA, lietotasPrasībasRādītājs, lietotsPiedāvājumuRādītājs)
                             , optimizacijasNotikums(
                                     PIEŠĶIRŠANA
-                                    , atrisinājums.prasība()
+                                    , atrisinājums.demands()
                                             .gūtJēluRindas(lietotaPrasība.indekss())
                                             .uzRindaRādītājs()
                                     , atrisinājums
                                             .piedāvājums()
                                             .gūtJēluRindas
-                                                    (nejaušiba.integer(0, atrisinājums.piedāvājums_nelietots().izmērs()))
+                                                    (nejaušiba.integer(0, atrisinājums.supplies_unused().size()))
                                             .uzRindaRādītājs()
                             ));
         }

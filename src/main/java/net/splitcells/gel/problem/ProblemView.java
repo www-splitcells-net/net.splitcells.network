@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 public interface ProblemView extends AllocationsLiveView {
 
-    Constraint ierobežojums();
+    Constraint constraint();
 
     Allocations piešķiršanas();
 

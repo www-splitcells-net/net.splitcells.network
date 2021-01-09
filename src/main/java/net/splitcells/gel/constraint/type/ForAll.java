@@ -24,7 +24,7 @@ public class ForAll extends ConstraintBasedOnLocalGroupsAI {
         super(raterBasedGrouping(grupēšana));
     }
 
-    public Rater grupešana() {
+    public Rater grouping() {
         return vērtētājs;
     }
 

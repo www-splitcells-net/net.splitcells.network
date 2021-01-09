@@ -4,7 +4,7 @@ import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.type.Cost.cena;
+import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -72,7 +72,7 @@ public class HasSize implements Rater {
                         , Xml.textNode(mērķuIzmers + "")));
         argumentacija.appendChild(
                 Xml.element("faktiskais-izmērs"
-                        , Xml.textNode(piešķiršanas.izmērs() + "")));
+                        , Xml.textNode(piešķiršanas.size() + "")));
         return argumentacija;
     }
 
@@ -94,15 +94,15 @@ public class HasSize implements Rater {
         final Rating novērtējums;
         final int izmers;
         if (pirmsNoņemšana) {
-            izmers = rindas.izmērs() - 1;
+            izmers = rindas.size() - 1;
         } else {
-            izmers = rindas.izmērs();
+            izmers = rindas.size();
         }
         if (izmers == 0) {
             novērtējums = Cost.bezMaksas();
         } else if (izmers > 0) {
             final int atšķirība = abs(mērķuIzmers - izmers);
-            novērtējums = cena(atšķirība / ((double) izmers));
+            novērtējums = cost(atšķirība / ((double) izmers));
         } else {
             throw new AssertionError("negatīvs izmērs atrasts: " + izmers);
         }

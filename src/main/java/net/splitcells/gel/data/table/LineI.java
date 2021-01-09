@@ -62,7 +62,7 @@ public class LineI implements Line {
     public Element toDom() {
         final var gūtasDomVertība = element(Line.class.getSimpleName());
         gūtasDomVertība.appendChild(element("indekss", textNode("" + indekss)));
-        konteksts.nosaukumuSkats().forEach(atribūts -> {
+        konteksts.headerView().forEach(atribūts -> {
             final var vertība = konteksts.kolonnaSkats(atribūts).get(indekss);
             final Node domVertība;
             if (vertība == null) {

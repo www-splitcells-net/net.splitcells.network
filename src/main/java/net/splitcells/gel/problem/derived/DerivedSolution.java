@@ -58,7 +58,7 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Constraint ierobežojums() {
+    public Constraint constraint() {
         return ierobežojums;
     }
 
@@ -93,13 +93,13 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Database piedāvājums_nelietots() {
-        return piešķiršanas.piedāvājums_nelietots();
+    public Database supplies_unused() {
+        return piešķiršanas.supplies_unused();
     }
 
     @Override
-    public Database prasība() {
-        return piešķiršanas.prasība();
+    public Database demands() {
+        return piešķiršanas.demands();
     }
 
     @Override
@@ -108,8 +108,8 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Database prasības_nelietotas() {
-        return piešķiršanas.prasības_nelietotas();
+    public Database demands_unused() {
+        return piešķiršanas.demands_unused();
     }
 
     @Override
@@ -173,8 +173,8 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public List<Attribute<Object>> nosaukumuSkats() {
-        return piešķiršanas.nosaukumuSkats();
+    public List<Attribute<Object>> headerView() {
+        return piešķiršanas.headerView();
     }
 
     @Override
@@ -193,8 +193,8 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public int izmērs() {
-        return piešķiršanas.izmērs();
+    public int size() {
+        return piešķiršanas.size();
     }
 
     @Override
@@ -218,7 +218,7 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public History vēsture() {
+    public History history() {
         return vēsture;
     }
 }

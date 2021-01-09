@@ -29,22 +29,22 @@ public class TemplateInitializer implements Optimization {
         final List<OptimizationEvent> optimicaija = list();
         final Set<Line> lietotasPrasības = setOfUniques();
         final Set<Line> lietotasPiedāvājumi = setOfUniques();
-        veidne.gūtRindas().forEach(rinda -> {
-            final var prasībasVertība = atrisinājums.prasības_nelietotas()
-                    .nosaukumuSkats()
+        veidne.getLines().forEach(rinda -> {
+            final var prasībasVertība = atrisinājums.demands_unused()
+                    .headerView()
                     .stream()
                     .map(nosaukums -> rinda.vērtība(nosaukums))
                     .collect(toList());
-            final var piedāvājumuVertība = atrisinājums.piedāvājums_nelietots()
-                    .nosaukumuSkats()
+            final var piedāvājumuVertība = atrisinājums.supplies_unused()
+                    .headerView()
                     .stream()
                     .map(nosaukums -> rinda.vērtība(nosaukums))
                     .collect(toList());
-            final var atlasītaPrasība = atrisinājums.prasības_nelietotas()
+            final var atlasītaPrasība = atrisinājums.demands_unused()
                     .uzmeklēVienādus(prasībasVertība)
                     .filter(e -> !lietotasPrasības.contains(e))
                     .findFirst();
-            final var atlasītsPiedāvājums = atrisinājums.piedāvājums_nelietots()
+            final var atlasītsPiedāvājums = atrisinājums.supplies_unused()
                     .uzmeklēVienādus(piedāvājumuVertība)
                     .filter(e -> !lietotasPiedāvājumi.contains(e))
                     .findFirst();

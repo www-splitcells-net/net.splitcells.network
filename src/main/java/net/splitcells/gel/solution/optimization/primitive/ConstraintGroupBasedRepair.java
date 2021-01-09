@@ -65,7 +65,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
             (Function<Integer, Integer> indeksuAtlasītajs) {
         return brīvasPrasībasGrupas -> atrisinājums -> {
             final Set<OptimizationEvent> pārdale = setOfUniques();
-            final var nelietotiPiedāvājumi = atrisinājums.piedāvājums_nelietots().gūtRindas();
+            final var nelietotiPiedāvājumi = atrisinājums.supplies_unused().getLines();
             brīvasPrasībasGrupas.entrySet().forEach(grupa -> {
                 grupa.getValue().forEach(prāsiba -> {
                     if (nelietotiPiedāvājumi.isEmpty()) {
@@ -103,7 +103,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         .map(f -> prāsībasGrupēšana(f, atrisinājums))
                         .orElseGet(() -> map()))
                 .orElseGet(() -> map());
-        prasībasGrupēšana.put(null, setOfUniques(atrisinājums.prasības_nelietotas().gūtRindas()));
+        prasībasGrupēšana.put(null, setOfUniques(atrisinājums.demands_unused().getLines()));
         final var optimizāija = grupuNoIerobežojumuGrupu
                 .map(e -> e
                         .lastValue()
@@ -122,7 +122,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
         final Map<GroupId, Set<Line>> prāsībasGrupēšana = map();
         ierobežojumuGrupēšāna
                 .rindasAbstrāde()
-                .gūtRindas()
+                .getLines()
                 .stream()
                 .map(abstrāde -> pair(abstrāde.vērtība(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID), abstrāde.vērtība(Constraint.RINDA)))
                 .forEach(abstrāde -> {
@@ -139,7 +139,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
     }
 
     public Optional<List<Constraint>> grupuNoIerobežojumuGrupu(SolutionView atrisinājums) {
-        return pieškiršanasAtlasītajs.apply(Constraint.piešķiršanasGruppas(atrisinājums.ierobežojums()));
+        return pieškiršanasAtlasītajs.apply(Constraint.piešķiršanasGruppas(atrisinājums.constraint()));
     }
 
     public List<OptimizationEvent> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(SolutionView atrisinājums, Constraint ierobežojums) {

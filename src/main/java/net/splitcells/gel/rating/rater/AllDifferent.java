@@ -5,7 +5,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.IncorrectImplementation.incorrectImplementation;
-import static net.splitcells.gel.rating.type.Cost.cena;
+import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,14 +53,14 @@ public class AllDifferent<T> implements Rater {
         final T vertība = papildinājums.vērtība(Constraint.RINDA).vērtība(atribūts);
         final var grupa = rindas.kolonnaSkats(Constraint.RINDA).uzmeklēšana(predikāts(vertība));
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
-        if (1 == grupa.izmērs()) {
+        if (1 == grupa.size()) {
             novērtejumuNotikums.papildinājumi().put(
                     papildinājums
                     , lokalsNovērtejums()
                             .arIzdalīšanaUz(bērni)
                             .arNovērtējumu(bezMaksas())
                             .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
-        } else if (2 == grupa.izmērs()) {
+        } else if (2 == grupa.size()) {
             if (ENFORCING_UNIT_CONSISTENCY) {
                 assertThat(grupa.jēlaRindasSkats().stream().filter(e -> e != null)).hasSize(2);
             }
@@ -71,22 +71,22 @@ public class AllDifferent<T> implements Rater {
                             .put(e//
                                     , lokalsNovērtejums()
                                             .arIzdalīšanaUz(bērni)
-                                            .arNovērtējumu(cena(1.0))
+                                            .arNovērtējumu(cost(1.0))
                                             .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))));
             grupa.jēlaRindasSkats().stream()
                     .filter(e -> e != null)
                     .filter(e -> e.indekss() != papildinājums.indekss())
                     .forEach(e -> novērtejumuNotikums.noņemšana().add(e));
-        } else if (2 < grupa.izmērs()) {
+        } else if (2 < grupa.size()) {
             // DARĪT Parametrizē pārbaudi.
             novērtejumuNotikums.papildinājumi().put
                     (papildinājums
                             , lokalsNovērtejums()
                                     .arIzdalīšanaUz(bērni)
-                                    .arNovērtējumu(cena(1.0))
+                                    .arNovērtējumu(cost(1.0))
                                     .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
         } else {
-            throw incorrectImplementation("" + grupa.izmērs());
+            throw incorrectImplementation("" + grupa.size());
         }
         return novērtejumuNotikums;
     }
@@ -96,7 +96,7 @@ public class AllDifferent<T> implements Rater {
         final T vērtība = noņemšana.vērtība(Constraint.RINDA).vērtība(atribūts);
         final var grupa = rindas.kolonnaSkats(Constraint.RINDA).uzmeklēšana(predikāts(vērtība));
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
-        if (1 == grupa.izmērs()) {
+        if (1 == grupa.size()) {
             // Before removal there was 1 duplication and now there is now duplicate lines
             // for this value present anymore.
             if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {

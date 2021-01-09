@@ -24,12 +24,12 @@ public class RandomInitialization implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
-        if (atrisinājums.prasības_nelietotas().navTukšs() && atrisinājums.piedāvājums_nelietots().navTukšs()) {
+        if (atrisinājums.demands_unused().navTukšs() && atrisinājums.supplies_unused().navTukšs()) {
             return list(
                     optimizacijasNotikums
                             (PIEŠĶIRŠANA
-                                    , nejaušiba.chooseOneOf(atrisinājums.prasības_nelietotas().gūtRindas()).uzRindaRādītājs()
-                                    , nejaušiba.chooseOneOf(atrisinājums.piedāvājums_nelietots().gūtRindas()).uzRindaRādītājs()));
+                                    , nejaušiba.chooseOneOf(atrisinājums.demands_unused().getLines()).uzRindaRādītājs()
+                                    , nejaušiba.chooseOneOf(atrisinājums.supplies_unused().getLines()).uzRindaRādītājs()));
 
         }
         return list();

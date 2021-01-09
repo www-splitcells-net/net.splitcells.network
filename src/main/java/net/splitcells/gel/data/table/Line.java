@@ -12,7 +12,7 @@ public interface Line extends Domable {
     static List<?> saķēdet(Line... rindas) {
         final List<Object> rVal = list();
         for (var rinda : rindas) {
-            rinda.konteksts().nosaukumuSkats()
+            rinda.konteksts().headerView()
                     .forEach(attribute -> rVal.add(rinda.vērtība(attribute)));
         }
         return rVal;
@@ -38,14 +38,14 @@ public interface Line extends Domable {
 
     default List<String> toStringList() {
         return listWithValuesOf
-                (konteksts().nosaukumuSkats().stream()
+                (konteksts().headerView().stream()
                         .map(atribūts -> vērtība(atribūts).toString())
                         .collect(toList()));
     }
 
     default List<Object> vērtības() {
         return konteksts()
-                .nosaukumuSkats()
+                .headerView()
                 .stream()
                 .map(nosaukums -> vērtība(nosaukums))
                 .collect(toList());

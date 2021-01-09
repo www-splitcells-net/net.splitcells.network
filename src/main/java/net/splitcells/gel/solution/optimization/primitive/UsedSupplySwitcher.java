@@ -58,17 +58,17 @@ public class UsedSupplySwitcher implements Optimization {
             (SolutionView atrisinājums
                     , Set<LinePointer> apstrādatiPrasības
                     , Set<LinePointer> apstrādatiPiedāvājumi) {
-        if (atrisinājums.prasība_lietots().izmērs() >= 2) {
-            final int atlaseA = nejaušiba.integer(0, atrisinājums.prasība_lietots().izmērs() - 1);
-            final int atlaseB = nejaušiba.integer(0, atrisinājums.prasība_lietots().izmērs() - 1);
+        if (atrisinājums.prasība_lietots().size() >= 2) {
+            final int atlaseA = nejaušiba.integer(0, atrisinājums.prasība_lietots().size() - 1);
+            final int atlaseB = nejaušiba.integer(0, atrisinājums.prasība_lietots().size() - 1);
             if (atlaseA == atlaseB) {
                 return list();
             }
-            final var lietotaPrasībaA = atrisinājums.prasība().gūtRinda(atlaseA);
+            final var lietotaPrasībaA = atrisinājums.demands().gūtRinda(atlaseA);
             final var vecaPieškiršanaA = atrisinājums.piešķiršanas_no_prasības(lietotaPrasībaA).iterator().next();
             final var lietotaPiedāvājumsA = atrisinājums.piedāvājums_no_piešķiršana(vecaPieškiršanaA);
 
-            final var lietotaPrasībaB = atrisinājums.prasība().gūtRinda(atlaseB);
+            final var lietotaPrasībaB = atrisinājums.demands().gūtRinda(atlaseB);
             final var vecaPieſkirſanaB = atrisinājums.piešķiršanas_no_prasības(lietotaPrasībaB).iterator().next();
             final var lietotsPiedāvājumsB = atrisinājums.piedāvājums_no_piešķiršana(vecaPieſkirſanaB);
 

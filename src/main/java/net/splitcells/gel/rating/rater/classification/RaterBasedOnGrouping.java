@@ -86,7 +86,7 @@ public class RaterBasedOnGrouping implements Rater {
         return RaterBasedOnGrouping.class;
     }
 
-    public Rater grupetājs() {
+    public Rater classifier() {
         return grupetājs;
     }
 }
