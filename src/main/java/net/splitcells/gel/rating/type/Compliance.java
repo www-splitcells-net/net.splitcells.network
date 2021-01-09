@@ -12,39 +12,39 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
-public class Atbilstība implements Rating {
+public class Compliance implements Rating {
     private static final Comparator<Boolean> SALĪDYINĀTĀJS = comparator_((a, b) -> Boolean.compare(a, b));
     private boolean vertība;
 
-    public static Atbilstība atbilstība(boolean vertība) {
-        return new Atbilstība(vertība);
+    public static Compliance atbilstība(boolean vertība) {
+        return new Compliance(vertība);
     }
 
-    protected Atbilstība(boolean vertība) {
+    protected Compliance(boolean vertība) {
         this.vertība = vertība;
     }
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
-        if (arg instanceof Atbilstība) {
-            return Optional.of(SALĪDYINĀTĀJS.compareTo(vertība, ((Atbilstība) arg).vertība));
+        if (arg instanceof Compliance) {
+            return Optional.of(SALĪDYINĀTĀJS.compareTo(vertība, ((Compliance) arg).vertība));
         }
         throw new IllegalArgumentException(arg.getClass().getName());
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Atbilstība kombinē(Rating... papilduNovērtējums) {
-        if (papilduNovērtējums[0] instanceof Atbilstība) {
-            return atbilstība(vertība && ((Atbilstība) papilduNovērtējums[0]).vertība);
+    public Compliance kombinē(Rating... papilduNovērtējums) {
+        if (papilduNovērtējums[0] instanceof Compliance) {
+            return atbilstība(vertība && ((Compliance) papilduNovērtējums[0]).vertība);
         }
         throw new IllegalArgumentException(asList(papilduNovērtējums).toString());
     }
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Atbilstība) {
-            return this.vertība == ((Atbilstība) arg).vertība;
+        if (arg instanceof Compliance) {
+            return this.vertība == ((Compliance) arg).vertība;
         }
         return false;
     }
@@ -52,7 +52,7 @@ public class Atbilstība implements Rating {
     @SuppressWarnings("unchecked")
     @Override
     public <R extends Rating> R _clone() {
-        return (R) new Atbilstība(vertība);
+        return (R) new Compliance(vertība);
     }
 
     @Override

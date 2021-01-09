@@ -6,7 +6,7 @@ import net.splitcells.gel.data.piešķiršanas.Piešķiršanas;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.tips.Atvasināšana;
 import net.splitcells.gel.rating.structure.MetaRating;
-import net.splitcells.gel.rating.type.Optimālums;
+import net.splitcells.gel.rating.type.Optimality;
 
 import java.util.function.Function;
 
@@ -31,7 +31,7 @@ public class VienkāršotaAtdzesēšanaProblēma extends AtvasinātsSolution {
                     @Override
                     public MetaRating apply(MetaRating rating) {
                         if (randomness.truthValue(temperatureFunction.apply(VienkāršotaAtdzesēšanaProblēma.this.vēsture().izmērs()))) {
-                            return Optimālums.optimālums(1).kāReflektētsNovērtējums();
+                            return Optimality.optimālums(1).kāReflektētsNovērtējums();
                         }
                         return rating;
                     }

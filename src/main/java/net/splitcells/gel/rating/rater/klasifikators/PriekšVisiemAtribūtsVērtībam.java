@@ -1,12 +1,12 @@
-package net.splitcells.gel.rating.vērtētājs.klasifikators;
+package net.splitcells.gel.rating.rater.klasifikators;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.GrupaId.grupa;
-import static net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikumsI.novērtejumuNotikums;
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.rater.NovērtējumsNotikumsI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -22,11 +22,11 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
-import net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikums;
+import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.RatingEvent;
 
 @Deprecated
-public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
+public class PriekšVisiemAtribūtsVērtībam implements Rater {
     public static PriekšVisiemAtribūtsVērtībam priekšVisiemAtribūtuVertības(final Atribūts<?> arg) {
         return new PriekšVisiemAtribūtsVērtībam(arg);
     }
@@ -45,7 +45,7 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_papildinājumu
+    public RatingEvent vērtē_pēc_papildinājumu
             (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final var grupēšanasVertība = papildinājums.vērtība(Ierobežojums.RINDA).vērtība(atribūts);
         final var ienākošasGrupasId = papildinājums.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
@@ -66,7 +66,7 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pirms_noņemšana
+    public RatingEvent vērtē_pirms_noņemšana
             (Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
@@ -102,7 +102,7 @@ public class PriekšVisiemAtribūtsVērtībam implements Vērtētājs {
     }
 
     @Override
-    public Class<? extends Vērtētājs> type() {
+    public Class<? extends Rater> type() {
         return PriekšVisiemAtribūtsVērtībam.class;
     }
     

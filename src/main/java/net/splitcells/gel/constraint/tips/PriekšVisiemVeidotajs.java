@@ -1,12 +1,12 @@
 package net.splitcells.gel.constraint.tips;
 
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
-import net.splitcells.gel.rating.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;
+import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemVērtībasKombinācija;
 
-import static net.splitcells.gel.rating.vērtētājs.klasifikators.Izdalīšana.izdalīšana;
-import static net.splitcells.gel.rating.vērtētājs.klasifikators.PriekšVisiemArNosacījumu.priekšVisiemArNosacījumu;
-import static net.splitcells.gel.rating.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam.priekšVisiemAtribūtuVertības;
+import static net.splitcells.gel.rating.rater.klasifikators.Izdalīšana.izdalīšana;
+import static net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemArNosacījumu.priekšVisiemArNosacījumu;
+import static net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemAtribūtsVērtībam.priekšVisiemAtribūtuVertības;
 
 public class PriekšVisiemVeidotajs {
     protected static final PriekšVisiemVeidotajs GADĪJUMS = new PriekšVisiemVeidotajs();
@@ -32,7 +32,7 @@ public class PriekšVisiemVeidotajs {
         return PriekšVisiem.veidot(priekšVisiemAtribūtuVertības(arg));
     }
 
-    public PriekšVisiem priekšVisiem(Vērtētājs grouping) {
+    public PriekšVisiem priekšVisiem(Rater grouping) {
         return PriekšVisiem.veidot(grouping);
     }
 

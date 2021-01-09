@@ -9,27 +9,27 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
-import net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikums;
+import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.RatingEvent;
 
 @Deprecated
 public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends IerobežojumsAI {
-    protected final Vērtētājs vērtētājs;
+    protected final Rater vērtētājs;
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(Function<Ierobežojums, Vērtētājs> vērtētājuRažotajs) {
+    protected IerobežojumsBalstītaUzVietējieGrupasAI(Function<Ierobežojums, Rater> vērtētājuRažotajs) {
         super(Ierobežojums.standartaGrupa());
         vērtētājs = vērtētājuRažotajs.apply(this);
     }
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(Vērtētājs vērtētājs, String vārds) {
+    protected IerobežojumsBalstītaUzVietējieGrupasAI(Rater vērtētājs, String vārds) {
         this(Ierobežojums.standartaGrupa(), vērtētājs, vārds);
     }
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(Vērtētājs vērtētājs) {
+    protected IerobežojumsBalstītaUzVietējieGrupasAI(Rater vērtētājs) {
         this(Ierobežojums.standartaGrupa(), vērtētājs, "");
     }
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(GrupaId standartaGrupa, Vērtētājs vērtētājs, String vārds) {
+    protected IerobežojumsBalstītaUzVietējieGrupasAI(GrupaId standartaGrupa, Rater vērtētājs, String vārds) {
         super(standartaGrupa, vārds);
         this.vērtētājs = vērtētājs;
     }
@@ -48,7 +48,7 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
                                 .uzmeklēšana(ienākošaGrupa)));
     }
 
-    protected void apstrādeNovērtējumiNotikumu(NovērtējumsNotikums novērtējumsNotikums) {
+    protected void apstrādeNovērtējumiNotikumu(RatingEvent novērtējumsNotikums) {
         novērtējumsNotikums.noņemšana().forEach(noņemšana ->
                 rindasApstrāde.piešķiršanas_no_prasības(noņemšana).forEach(rindasApstrāde::noņemt));
         novērtējumsNotikums.papildinājumi().forEach((line, resultUpdate) -> {

@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.vērtētājs.klasifikators;
+package net.splitcells.gel.rating.rater.klasifikators;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
@@ -8,8 +8,8 @@ import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.data.tabula.Rinda;
 import net.splitcells.gel.data.tabula.Tabula;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
-import net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikums;
+import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.RatingEvent;
 import org.w3c.dom.Node;
 
 import java.util.Collection;
@@ -22,10 +22,10 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.gel.constraint.Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID;
 import static net.splitcells.gel.constraint.Ierobežojums.RINDA;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
-import static net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikumsI.novērtejumuNotikums;
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.rater.NovērtējumsNotikumsI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 
-public class PriekšVisiemArNosacījumu<T> implements Vērtētājs {
+public class PriekšVisiemArNosacījumu<T> implements Rater {
 
     public static <T> PriekšVisiemArNosacījumu<T> priekšVisiemArNosacījumu(Predicate<Rinda> nosacījums) {
         return new PriekšVisiemArNosacījumu<>(nosacījums);
@@ -39,7 +39,7 @@ public class PriekšVisiemArNosacījumu<T> implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_papildinājumu
+    public RatingEvent vērtē_pēc_papildinājumu
             (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final List<Ierobežojums> mērķBērni;
         if (nosacījums.test(papildinājums.vērtība(RINDA))) {
@@ -58,7 +58,7 @@ public class PriekšVisiemArNosacījumu<T> implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 

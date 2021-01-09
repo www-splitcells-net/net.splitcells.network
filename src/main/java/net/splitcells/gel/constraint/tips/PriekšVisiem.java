@@ -1,30 +1,30 @@
 package net.splitcells.gel.constraint.tips;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.vērtētājs.klasifikators.VērtētājsBalstītsUzGrupēšana.raterBasedGrouping;
+import static net.splitcells.gel.rating.rater.klasifikators.VērtētājsBalstītsUzGrupēšana.raterBasedGrouping;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.tips.struktūra.IerobežojumsBalstītaUzVietējieGrupasAI;
 import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.constraint.Ziņojums;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
-import net.splitcells.gel.rating.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam;
+import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemAtribūtsVērtībam;
 
 public class PriekšVisiem extends IerobežojumsBalstītaUzVietējieGrupasAI {
 
-    public static PriekšVisiem veidot(Vērtētājs grupēšana) {
+    public static PriekšVisiem veidot(Rater grupēšana) {
         return priekšVisiem(grupēšana);
     }
 
-    public static PriekšVisiem priekšVisiem(Vērtētājs grupēšana) {
+    public static PriekšVisiem priekšVisiem(Rater grupēšana) {
         return new PriekšVisiem(grupēšana);
     }
 
-    protected PriekšVisiem(Vērtētājs grupēšana) {
+    protected PriekšVisiem(Rater grupēšana) {
         super(raterBasedGrouping(grupēšana));
     }
 
-    public Vērtētājs grupešana() {
+    public Rater grupešana() {
         return vērtētājs;
     }
 

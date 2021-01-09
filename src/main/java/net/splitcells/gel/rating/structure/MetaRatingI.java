@@ -14,9 +14,9 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import net.splitcells.gel.rating.type.Cena;
-import net.splitcells.gel.rating.type.Optimālums;
-import net.splitcells.gel.rating.type.Peļņa;
+import net.splitcells.gel.rating.type.Cost;
+import net.splitcells.gel.rating.type.Optimality;
+import net.splitcells.gel.rating.type.Profit;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Ordering;
@@ -131,8 +131,8 @@ public class MetaRatingI implements MetaRating {
     @Override
     public <R extends Rating> R tulkošana(Class<R> tips) {
         if (novērtējumi.size() == 1) {
-            if (novērtējumi.containsKey(Peļņa.class)) {
-                return (R) Peļņa.peļņa(gūtSaturuDaļa(Peļņa.class).vertība());
+            if (novērtējumi.containsKey(Profit.class)) {
+                return (R) Profit.peļņa(gūtSaturuDaļa(Profit.class).vertība());
             }
         }
         return (R) this;
@@ -176,27 +176,27 @@ public class MetaRatingI implements MetaRating {
                         .compare_partially_to(novērtējumi.values().iterator().next());
             }
         }
-        if (arg instanceof Peļņa) {
-            if (saturs().containsKey(Peļņa.class)) {
-                return this.gūtSaturuDaļa(Peļņa.class).compare_partially_to(arg);
+        if (arg instanceof Profit) {
+            if (saturs().containsKey(Profit.class)) {
+                return this.gūtSaturuDaļa(Profit.class).compare_partially_to(arg);
             }
             throw not_implemented_yet();
         }
-        if (arg instanceof Cena) {
-            if (saturs().containsKey(Cena.class)) {
-                return this.gūtSaturuDaļa(Cena.class).compare_partially_to(arg);
+        if (arg instanceof Cost) {
+            if (saturs().containsKey(Cost.class)) {
+                return this.gūtSaturuDaļa(Cost.class).compare_partially_to(arg);
             }
-            if (saturs().isEmpty() && 0 == ((Cena) arg).vertība()) {
+            if (saturs().isEmpty() && 0 == ((Cost) arg).vertība()) {
                 return Optional.of(EQUAL);
             }
-            if (saturs().containsKey(Optimālums.class)) {
-                return this.gūtSaturuDaļa(Optimālums.class).compare_partially_to(arg);
+            if (saturs().containsKey(Optimality.class)) {
+                return this.gūtSaturuDaļa(Optimality.class).compare_partially_to(arg);
             }
             throw not_implemented_yet();
         }
-        if (arg instanceof Optimālums) {
-            if (saturs().containsKey(Cena.class)) {
-                return this.gūtSaturuDaļa(Cena.class).compare_partially_to(arg);
+        if (arg instanceof Optimality) {
+            if (saturs().containsKey(Cost.class)) {
+                return this.gūtSaturuDaļa(Cost.class).compare_partially_to(arg);
             }
         }
         throw not_implemented_yet();

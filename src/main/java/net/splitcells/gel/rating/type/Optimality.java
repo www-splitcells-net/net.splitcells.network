@@ -13,7 +13,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
-public class Optimālums implements Rating {
+public class Optimality implements Rating {
     private static final Comparator<Double> OPTIMĀLUMU_VĒRTIBAS_SALĪDZINĀTĀJS = new Comparator<Double>() {
         @Override
         public int compare(Double a, Double b) {
@@ -21,28 +21,28 @@ public class Optimālums implements Rating {
         }
     };
 
-    public static Optimālums optimālums() {
+    public static Optimality optimālums() {
         return optimālums(0.0);
     }
 
-    public static Optimālums optimālums(double optimality) {
-        return new Optimālums(optimality);
+    public static Optimality optimālums(double optimality) {
+        return new Optimality(optimality);
     }
 
     private double vertība;
 
-    protected Optimālums(double vertība) {
+    protected Optimality(double vertība) {
         assertThat(vertība).isBetween(0.0, 1.0);
         this.vertība = vertība;
     }
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
-        if (arg instanceof Optimālums) {
-            return Optional.of(OPTIMĀLUMU_VĒRTIBAS_SALĪDZINĀTĀJS.compareTo(vertība, ((Optimālums) arg).vertība));
+        if (arg instanceof Optimality) {
+            return Optional.of(OPTIMĀLUMU_VĒRTIBAS_SALĪDZINĀTĀJS.compareTo(vertība, ((Optimality) arg).vertība));
         }
-        if (arg instanceof Cena) {
-            final Cena argCena = ((Cena) arg);
+        if (arg instanceof Cost) {
+            final Cost argCena = ((Cost) arg);
             if (vertība == 1 && argCena.vertība() == 0) {
                 return Optional.of(EQUAL);
             }
@@ -62,7 +62,7 @@ public class Optimālums implements Rating {
     @SuppressWarnings("unchecked")
     @Override
     public <R extends Rating> R _clone() {
-        return (R) new Optimālums(vertība);
+        return (R) new Optimality(vertība);
     }
 
     @Override

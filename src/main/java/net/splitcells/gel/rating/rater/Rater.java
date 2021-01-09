@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.vērtētājs;
+package net.splitcells.gel.rating.rater;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
@@ -15,11 +15,11 @@ import net.splitcells.dem.object.DiscoverableFromMultiplePathsSetter;
 import net.splitcells.dem.utils.reflection.PubliclyConstructed;
 import net.splitcells.dem.utils.reflection.PubliclyTyped;
 
-public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
+public interface Rater extends PubliclyTyped<Rater>
         , PubliclyConstructed<Domable>
         , DiscoverableFromMultiplePathsSetter
         , Domable {
-    NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu);
+    RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu);
 
     /**
      * @param rindas
@@ -30,11 +30,11 @@ public interface Vērtētājs extends PubliclyTyped<Vērtētājs>
      * @see Ierobežojums#rēgistrē_pirms_noņemšanas(Rinda)
      */
     @Deprecated
-    NovērtējumsNotikums vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana);
+    RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana);
 
     @Override
-    default Class<? extends Vērtētājs> type() {
-        return Vērtētājs.class;
+    default Class<? extends Rater> type() {
+        return Rater.class;
     }
 
     default Node argumentacija(GrupaId grupa, Tabula piešķiršanas) {

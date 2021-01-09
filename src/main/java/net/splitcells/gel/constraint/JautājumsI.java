@@ -6,7 +6,7 @@ import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.gel.rating.structure.MetaRatingI.rflektētsNovērtējums;
-import static net.splitcells.gel.rating.vērtētājs.NemainīgsVērtētājs.constantRater;
+import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -16,10 +16,10 @@ import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.constraint.tips.PriekšVisiem;
 import net.splitcells.gel.constraint.tips.PriekšVisiemF;
 import net.splitcells.gel.constraint.tips.Tad;
-import net.splitcells.gel.rating.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;
-import net.splitcells.gel.rating.vērtētājs.klasifikators.VērtētājsBalstītsUzGrupēšana;
+import net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemVērtībasKombinācija;
+import net.splitcells.gel.rating.rater.klasifikators.VērtētājsBalstītsUzGrupēšana;
 import net.splitcells.gel.rating.structure.Rating;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
+import net.splitcells.gel.rating.rater.Rater;
 
 public class JautājumsI implements Jautājums {
     public static Jautājums jautājums(Ierobežojums ierobežojums, Optional<Ierobežojums> root) {
@@ -45,7 +45,7 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Jautājums priekšVisiem(Vērtētājs vērtētājs) {
+    public Jautājums priekšVisiem(Rater vērtētājs) {
         var radijumuBaže = ierobežojums
                 .skatsUsBerniem().stream()
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
@@ -85,8 +85,8 @@ public class JautājumsI implements Jautājums {
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
-                    final var grupešana = (Vērtētājs) child.arguments().get(0);
-                    final var atribūtuGrupešana = (Vērtētājs) grupešana.arguments().get(0);
+                    final var grupešana = (Rater) child.arguments().get(0);
+                    final var atribūtuGrupešana = (Rater) grupešana.arguments().get(0);
                     if (atribūtuGrupešana.arguments().size() != 1) {
                         return false;
                     }
@@ -121,8 +121,8 @@ public class JautājumsI implements Jautājums {
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
-                    final var grupēšana = (Vērtētājs) child.arguments().get(0);
-                    final var attributeGrouping = (Vērtētājs) grupēšana.arguments().get(0);
+                    final var grupēšana = (Rater) child.arguments().get(0);
+                    final var attributeGrouping = (Rater) grupēšana.arguments().get(0);
                     return attributeGrouping.arguments().isEmpty();
                 }).reduce(ensureSingle())
                 .get();
@@ -139,7 +139,7 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Jautājums tad(Vērtētājs vērtētājs) {
+    public Jautājums tad(Rater vērtētājs) {
         var radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
                 .filter(child -> Tad.class.equals(child.type()))
@@ -180,8 +180,8 @@ public class JautājumsI implements Jautājums {
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
-                    final var grupešana = (Vērtētājs) child.arguments().get(0);
-                    final var atribūtuGrupešana = (Vērtētājs) grupešana.arguments().get(0);
+                    final var grupešana = (Rater) child.arguments().get(0);
+                    final var atribūtuGrupešana = (Rater) grupešana.arguments().get(0);
                     if (!atribūtuGrupešana.type().equals(PriekšVisiemVērtībasKombinācija.class)) {
                         return false;
                     }

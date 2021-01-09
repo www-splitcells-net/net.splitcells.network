@@ -12,7 +12,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
-public class Peļņa implements Rating {
+public class Profit implements Rating {
     private static final Comparator<Double> PEĻŅĀS_VERTĪBA_SALĪDZINĀTĀJS = new Comparator<Double>() {
         @Override
         public int compare(Double a, Double b) {
@@ -21,19 +21,19 @@ public class Peļņa implements Rating {
     };
     private double vertība;
 
-    public static Peļņa bezPeļņas() {
-        return new Peļņa();
+    public static Profit bezPeļņas() {
+        return new Profit();
     }
 
-    public static Peļņa peļņa(double vertība) {
-        return new Peļņa(vertība);
+    public static Profit peļņa(double vertība) {
+        return new Profit(vertība);
     }
 
-    protected Peļņa() {
+    protected Profit() {
         this(0.0);
     }
 
-    protected Peļņa(double vertība) {
+    protected Profit(double vertība) {
         this.vertība = vertība;
     }
 
@@ -43,17 +43,17 @@ public class Peļņa implements Rating {
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating novērtējums) {
-        if (novērtējums instanceof Peļņa) {
-            return Optional.of(PEĻŅĀS_VERTĪBA_SALĪDZINĀTĀJS.compareTo(vertība, ((Peļņa) novērtējums).vertība()));
+        if (novērtējums instanceof Profit) {
+            return Optional.of(PEĻŅĀS_VERTĪBA_SALĪDZINĀTĀJS.compareTo(vertība, ((Profit) novērtējums).vertība()));
         }
         throw new IllegalArgumentException(novērtējums.getClass().getName());
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Peļņa kombinē(Rating... papilduNovērtējums) {
-        if (papilduNovērtējums[0] instanceof Peļņa) {
-            final Peļņa otherPeļņa = (Peļņa) papilduNovērtējums[0];
+    public Profit kombinē(Rating... papilduNovērtējums) {
+        if (papilduNovērtējums[0] instanceof Profit) {
+            final Profit otherPeļņa = (Profit) papilduNovērtējums[0];
             return peļņa(vertība + otherPeļņa.vertība);
         }
         throw not_implemented_yet();
@@ -67,7 +67,7 @@ public class Peļņa implements Rating {
     @SuppressWarnings("unchecked")
     @Override
     public <R extends Rating> R _clone() {
-        return (R) new Peļņa(vertība);
+        return (R) new Profit(vertība);
     }
 
     @Override

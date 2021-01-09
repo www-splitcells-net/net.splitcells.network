@@ -1,7 +1,7 @@
 package net.splitcells.gel.constraint.tips;
 
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
+import net.splitcells.gel.rating.rater.Rater;
 
 public class PriekšVisiemF {
 
@@ -29,7 +29,7 @@ public class PriekšVisiemF {
         return PriekšVisiemVeidotajs.gadījums().priekšVisiem(arg);
     }
 
-    public static PriekšVisiem priekšVisiem(Vērtētājs grouping) {
+    public static PriekšVisiem priekšVisiem(Rater grouping) {
         return PriekšVisiemVeidotajs.gadījums().priekšVisiem(grouping);
     }
 

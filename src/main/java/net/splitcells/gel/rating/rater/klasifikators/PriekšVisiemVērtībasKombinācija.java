@@ -1,11 +1,11 @@
-package net.splitcells.gel.rating.vērtētājs.klasifikators;
+package net.splitcells.gel.rating.rater.klasifikators;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikumsI.novērtejumuNotikums;
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.rater.NovērtējumsNotikumsI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -21,11 +21,11 @@ import net.splitcells.gel.data.tabula.Tabula;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.constraint.GrupaId;
 import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
-import net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikums;
+import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.RatingEvent;
 import org.w3c.dom.Node;
 
-public class PriekšVisiemVērtībasKombinācija implements Vērtētājs {
+public class PriekšVisiemVērtībasKombinācija implements Rater {
     public static PriekšVisiemVērtībasKombinācija forAllValueCombinations(final Atribūts<?>... args) {
         return new PriekšVisiemVērtībasKombinācija(args);
     }
@@ -48,7 +48,7 @@ public class PriekšVisiemVērtībasKombinācija implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_papildinājumu
+    public RatingEvent vērtē_pēc_papildinājumu
             (Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final List<Object> grupasVertības = list();
         final var rindasVērtība = papildinājums.vērtība(Ierobežojums.RINDA);
@@ -76,12 +76,12 @@ public class PriekšVisiemVērtībasKombinācija implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
     @Override
-    public Class<? extends Vērtētājs> type() {
+    public Class<? extends Rater> type() {
         return PriekšVisiemVērtībasKombinācija.class;
     }
 

@@ -1,12 +1,12 @@
-package net.splitcells.gel.rating.vērtētājs;
+package net.splitcells.gel.rating.rater;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.IncorrectImplementation.incorrectImplementation;
-import static net.splitcells.gel.rating.type.Cena.cena;
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.cena;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,17 +24,17 @@ import net.splitcells.gel.data.tabula.Tabula;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.constraint.Ierobežojums;
 
-public class VisiemAtšķirība<T> implements Vērtētājs {
+public class AllDifferent<T> implements Rater {
     private final Atribūts<T> atribūts;
     private final Map<T, Predicate<Rinda>> predikāts = map();
     private final Function<T, Predicate<Rinda>> predikātaRažotājs;
     private final List<Discoverable> kontekts = list();
 
-    public static <R> VisiemAtšķirība<R> visiemAtšķirība(Atribūts<R> arg) {
-        return new VisiemAtšķirība<>(arg);
+    public static <R> AllDifferent<R> visiemAtšķirība(Atribūts<R> arg) {
+        return new AllDifferent<>(arg);
     }
 
-    private VisiemAtšķirība(Atribūts<T> arg) {
+    private AllDifferent(Atribūts<T> arg) {
         atribūts = arg;
         predikātaRažotājs = value -> {
             return line -> line.vērtība(atribūts).equals(value);
@@ -49,7 +49,7 @@ public class VisiemAtšķirība<T> implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final T vertība = papildinājums.vērtība(Ierobežojums.RINDA).vērtība(atribūts);
         final var grupa = rindas.kolonnaSkats(Ierobežojums.RINDA).uzmeklēšana(predikāts(vertība));
         final var novērtejumuNotikums = NovērtējumsNotikumsI.novērtejumuNotikums();
@@ -92,7 +92,7 @@ public class VisiemAtšķirība<T> implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
         final T vērtība = noņemšana.vērtība(Ierobežojums.RINDA).vērtība(atribūts);
         final var grupa = rindas.kolonnaSkats(Ierobežojums.RINDA).uzmeklēšana(predikāts(vērtība));
         final var novērtejumuNotikums = NovērtējumsNotikumsI.novērtejumuNotikums();
@@ -118,8 +118,8 @@ public class VisiemAtšķirība<T> implements Vērtētājs {
     }
 
     @Override
-    public Class<? extends Vērtētājs> type() {
-        return VisiemAtšķirība.class;
+    public Class<? extends Rater> type() {
+        return AllDifferent.class;
     }
 
     @Override

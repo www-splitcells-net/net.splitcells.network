@@ -12,10 +12,10 @@ import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.data.tabula.atribūts.Atribūts;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.problem.ProblēmasSkats;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
-import net.splitcells.gel.rating.vērtētājs.klasifikators.PriekšVisiemAtribūtsVērtībam;
-import net.splitcells.gel.rating.vērtētājs.klasifikators.PriekšVisiemVērtībasKombinācija;
-import net.splitcells.gel.rating.vērtētājs.klasifikators.VērtētājsBalstītsUzGrupēšana;
+import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemAtribūtsVērtībam;
+import net.splitcells.gel.rating.rater.klasifikators.PriekšVisiemVērtībasKombinācija;
+import net.splitcells.gel.rating.rater.klasifikators.VērtētājsBalstītsUzGrupēšana;
 import org.w3c.dom.Element;
 
 import java.nio.file.Path;
@@ -28,7 +28,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
 import static net.splitcells.dem.resource.host.Files.*;
-import static net.splitcells.gel.rating.type.Cena.cena;
+import static net.splitcells.gel.rating.type.Cost.cena;
 
 public interface SolutionView extends ProblēmasSkats {
 
@@ -61,7 +61,7 @@ public interface SolutionView extends ProblēmasSkats {
         return brīvasGrupas;
     }
 
-    private static List<Atribūts<?>> prieksVisiemAtribūtuNoGrupetājs(Vērtētājs grupetājs) {
+    private static List<Atribūts<?>> prieksVisiemAtribūtuNoGrupetājs(Rater grupetājs) {
         final List<Atribūts<?>> priekšVisiemAtribūtieNoGrupas = list();
         grupetājs.casted(PriekšVisiemAtribūtsVērtībam.class)
                 .ifPresent(e -> priekšVisiemAtribūtieNoGrupas.add(e.atribūti()));

@@ -22,7 +22,7 @@ import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
 import static net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums.rindasNovērtējums;
 import static net.splitcells.gel.constraint.Ziņojums.report;
 import static net.splitcells.gel.constraint.vidējs.dati.GrupuIzdalīšanaVirziens.routingResult;
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;

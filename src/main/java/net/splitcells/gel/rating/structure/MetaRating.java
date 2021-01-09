@@ -1,6 +1,6 @@
 package net.splitcells.gel.rating.structure;
 
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 
 import net.splitcells.dem.data.set.map.Map;
 

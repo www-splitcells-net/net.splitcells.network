@@ -1,11 +1,11 @@
-package net.splitcells.gel.rating.vērtētājs;
+package net.splitcells.gel.rating.rater;
 
 import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.type.Cena.cena;
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.cena;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -27,17 +27,17 @@ import net.splitcells.gel.constraint.Ierobežojums;
 import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Node;
 
-public class MinimālsAttālums<T> implements Vērtētājs {
-    public static MinimālsAttālums<Integer> minimālsIntAttālums(Atribūts<Integer> atribūts, double minimumDistance) {
+public class MinimalDistance<T> implements Rater {
+    public static MinimalDistance<Integer> minimālsIntAttālums(Atribūts<Integer> atribūts, double minimumDistance) {
         return minimālsAttālums(atribūts, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
     }
 
-    public static MinimālsAttālums<Double> minimālsAttālums(Atribūts<Double> atribūts, double minimumDistance) {
+    public static MinimalDistance<Double> minimālsAttālums(Atribūts<Double> atribūts, double minimumDistance) {
         return minimālsAttālums(atribūts, minimumDistance, comparator_(Double::compare), MathUtils::distance);
     }
 
-    public static <R> MinimālsAttālums<R> minimālsAttālums(Atribūts<R> atribūts, double minimumDistance, Comparator<R> comparator, BiFunction<R, R, Double> distanceMeassurer) {
-        return new MinimālsAttālums<>(atribūts, minimumDistance, comparator, distanceMeassurer);
+    public static <R> MinimalDistance<R> minimālsAttālums(Atribūts<R> atribūts, double minimumDistance, Comparator<R> comparator, BiFunction<R, R, Double> distanceMeassurer) {
+        return new MinimalDistance<>(atribūts, minimumDistance, comparator, distanceMeassurer);
     }
 
     private final double minimumDistance;
@@ -46,7 +46,7 @@ public class MinimālsAttālums<T> implements Vērtētājs {
     private final BiFunction<T, T, Double> distanceMeassurer;
     private final List<Discoverable> contextes = list();
 
-    protected MinimālsAttālums(Atribūts<T> atribūts, double minimumDistance, Comparator<T> comparator, BiFunction<T, T, Double> distanceMeassurer) {
+    protected MinimalDistance(Atribūts<T> atribūts, double minimumDistance, Comparator<T> comparator, BiFunction<T, T, Double> distanceMeassurer) {
         this.distanceMeassurer = distanceMeassurer;
         this.atribūts = atribūts;
         this.minimumDistance = minimumDistance;
@@ -54,7 +54,7 @@ public class MinimālsAttālums<T> implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pirms_noņemšana
+    public RatingEvent vērtē_pirms_noņemšana
             (Tabula rindas
                     , Rinda noņemšana
                     , net.splitcells.dem.data.set.list.List<Ierobežojums> bērni
@@ -122,7 +122,7 @@ public class MinimālsAttālums<T> implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = NovērtējumsNotikumsI.novērtejumuNotikums();
         final var sakārtotasRindas = sorted(rindas);
         // JAUDA
@@ -185,7 +185,7 @@ public class MinimālsAttālums<T> implements Vērtētājs {
     }
 
     protected void novērte_papildinājumu_noPapildinājumuPāris
-            (NovērtējumsNotikums rVal
+            (RatingEvent rVal
                     , Rinda papildinājums
                     , Rinda oriģinālaRinda
                     , List<Ierobežojums> berni
@@ -210,7 +210,7 @@ public class MinimālsAttālums<T> implements Vērtētājs {
     }
 
     protected void novērte_papildinajums_noNoņemšanasPāri
-            (NovērtējumsNotikums rVal
+            (RatingEvent rVal
                     , Rinda noņemšana
                     , Rinda paliekas
                     , List<Ierobežojums> bērni
@@ -221,8 +221,8 @@ public class MinimālsAttālums<T> implements Vērtētājs {
     }
 
     @Override
-    public Class<? extends Vērtētājs> type() {
-        return MinimālsAttālums.class;
+    public Class<? extends Rater> type() {
+        return MinimalDistance.class;
     }
 
     @Override
@@ -250,11 +250,11 @@ public class MinimālsAttālums<T> implements Vērtētājs {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg != null && arg instanceof MinimālsAttālums) {
-            return this.minimumDistance == ((MinimālsAttālums) arg).minimumDistance
-                    && this.atribūts.equals(((MinimālsAttālums) arg).atribūts)
-                    && this.comparator.equals(((MinimālsAttālums) arg).comparator)
-                    && this.distanceMeassurer.equals(((MinimālsAttālums) arg).distanceMeassurer);
+        if (arg != null && arg instanceof MinimalDistance) {
+            return this.minimumDistance == ((MinimalDistance) arg).minimumDistance
+                    && this.atribūts.equals(((MinimalDistance) arg).atribūts)
+                    && this.comparator.equals(((MinimalDistance) arg).comparator)
+                    && this.distanceMeassurer.equals(((MinimalDistance) arg).distanceMeassurer);
         }
         return false;
     }

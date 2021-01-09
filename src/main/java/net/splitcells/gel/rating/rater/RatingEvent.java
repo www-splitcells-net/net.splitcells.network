@@ -1,7 +1,7 @@
-package net.splitcells.gel.rating.vērtētājs;
+package net.splitcells.gel.rating.rater;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,7 +16,7 @@ import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.Rating;
 import org.assertj.core.api.Assertions;
 
-public interface NovērtējumsNotikums {
+public interface RatingEvent {
 
     Map<Rinda, LocalRating> papildinājumi();
 

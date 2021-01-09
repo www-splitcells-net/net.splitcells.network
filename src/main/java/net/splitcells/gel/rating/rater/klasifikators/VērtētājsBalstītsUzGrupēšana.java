@@ -1,10 +1,10 @@
-package net.splitcells.gel.rating.vērtētājs.klasifikators;
+package net.splitcells.gel.rating.rater.klasifikators;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikumsI.novērtejumuNotikums;
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.rater.NovērtējumsNotikumsI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -18,23 +18,23 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.rating.vērtētājs.Vērtētājs;
-import net.splitcells.gel.rating.vērtētājs.NovērtējumsNotikums;
+import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.RatingEvent;
 
-public class VērtētājsBalstītsUzGrupēšana implements Vērtētājs {
-    public static VērtētājsBalstītsUzGrupēšana raterBasedGrouping(Vērtētājs grouping) {
+public class VērtētājsBalstītsUzGrupēšana implements Rater {
+    public static VērtētājsBalstītsUzGrupēšana raterBasedGrouping(Rater grouping) {
         return new VērtētājsBalstītsUzGrupēšana(grouping);
     }
 
-    private final Vērtētājs grupetājs;
+    private final Rater grupetājs;
     private final List<Discoverable> kontekts = list();
 
-    protected VērtētājsBalstītsUzGrupēšana(Vērtētājs grupetājs) {
+    protected VērtētājsBalstītsUzGrupēšana(Rater grupetājs) {
         this.grupetājs = grupetājs;
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = novērtejumuNotikums();
         final var rBase = grupetājs.vērtē_pēc_papildinājumu(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu);
         novērtejumuNotikums.noņemšana().addAll(rBase.noņemšana());
@@ -50,7 +50,7 @@ public class VērtētājsBalstītsUzGrupēšana implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
@@ -82,11 +82,11 @@ public class VērtētājsBalstītsUzGrupēšana implements Vērtētājs {
     }
 
     @Override
-    public Class<? extends Vērtētājs> type() {
+    public Class<? extends Rater> type() {
         return VērtētājsBalstītsUzGrupēšana.class;
     }
 
-    public Vērtētājs grupetājs() {
+    public Rater grupetājs() {
         return grupetājs;
     }
 }

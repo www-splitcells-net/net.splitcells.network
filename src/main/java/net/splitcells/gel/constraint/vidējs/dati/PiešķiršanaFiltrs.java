@@ -1,6 +1,6 @@
 package net.splitcells.gel.constraint.vidējs.dati;
 
-import net.splitcells.gel.rating.type.Cena;
+import net.splitcells.gel.rating.type.Cost;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
@@ -10,6 +10,6 @@ public class PiešķiršanaFiltrs {
 	}
 
 	public static boolean atlasītArCenu(PiešķiršanaNovērtējums piešķiršanaNovērtējums) {
-		return !piešķiršanaNovērtējums.novērtējums().equalz(Cena.bezMaksas());
+		return !piešķiršanaNovērtējums.novērtējums().equalz(Cost.bezMaksas());
 	}
 }

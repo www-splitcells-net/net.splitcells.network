@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.vērtētājs;
+package net.splitcells.gel.rating.rater;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -18,20 +18,20 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Node;
 
-public class NemainīgsVērtētājs implements Vērtētājs {
-    public static Vērtētājs constantRater(Rating novērtējums) {
-        return new NemainīgsVērtētājs(novērtējums);
+public class ConstantRater implements Rater {
+    public static Rater constantRater(Rating novērtējums) {
+        return new ConstantRater(novērtējums);
     }
 
     private final Rating novērtējums;
     private final List<Discoverable> konteksts = list();
 
-    protected NemainīgsVērtētājs(Rating novērtējums) {
+    protected ConstantRater(Rating novērtējums) {
         this.novērtējums = novērtējums;
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+    public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = NovērtējumsNotikumsI.novērtejumuNotikums();
         novērtejumuNotikums.papildinājumi().put(
                 papildinājums
@@ -43,13 +43,13 @@ public class NemainīgsVērtētājs implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
         return NovērtējumsNotikumsI.novērtejumuNotikums();
     }
 
     @Override
-    public Class<? extends Vērtētājs> type() {
-        return NemainīgsVērtētājs.class;
+    public Class<? extends Rater> type() {
+        return ConstantRater.class;
     }
 
     @Override

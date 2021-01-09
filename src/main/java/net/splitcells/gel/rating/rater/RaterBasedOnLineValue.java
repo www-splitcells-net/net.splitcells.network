@@ -1,10 +1,10 @@
-package net.splitcells.gel.rating.vērtētājs;
+package net.splitcells.gel.rating.rater;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.GrupaId.grupa;
-import static net.splitcells.gel.rating.type.Cena.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -23,8 +23,8 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.rating.structure.Rating;
 
-public class VērtētājsBalstītaUzRindaVērtība implements Vērtētājs {
-    public static Vērtētājs rindasVertībasBalstītasUzGrupetajs(String apraksts, Function<Rinda, Integer> grupetajs) {
+public class RaterBasedOnLineValue implements Rater {
+    public static Rater rindasVertībasBalstītasUzGrupetajs(String apraksts, Function<Rinda, Integer> grupetajs) {
         return rindasVertībasBalstītasUzGrupetajs(new Function<>() {
             private final Map<Integer, GrupaId> lineNumbering = map();
 
@@ -42,26 +42,26 @@ public class VērtētājsBalstītaUzRindaVērtība implements Vērtētājs {
         });
     }
 
-    public static Vērtētājs rindasVertībaBalstītaUzVērtētāju(Function<Rinda, Rating> vērtētājsBalstītsUzRindasVertības) {
-        return new VērtētājsBalstītaUzRindaVērtība(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID));
+    public static Rater rindasVertībaBalstītaUzVērtētāju(Function<Rinda, Rating> vērtētājsBalstītsUzRindasVertības) {
+        return new RaterBasedOnLineValue(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID));
     }
 
-    public static Vērtētājs rindasVertībasBalstītasUzGrupetajs(Function<Rinda, GrupaId> grupetajsBalstītsUzRindasVertības) {
-        return new VērtētājsBalstītaUzRindaVērtība(papilduRinda -> bezMaksas(), grupetajsBalstītsUzRindasVertības);
+    public static Rater rindasVertībasBalstītasUzGrupetajs(Function<Rinda, GrupaId> grupetajsBalstītsUzRindasVertības) {
+        return new RaterBasedOnLineValue(papilduRinda -> bezMaksas(), grupetajsBalstītsUzRindasVertības);
     }
 
     private final Function<Rinda, Rating> rindasBalstītsUzVertībasVērtētājs;
     private final Function<Rinda, GrupaId> grupetajsBalstītsUzRindasVertības;
     private final List<Discoverable> konteksts = list();
 
-    private VērtētājsBalstītaUzRindaVērtība(Function<Rinda, Rating> rindasBalstītsUzVertībasVērtētājs, Function<Rinda, GrupaId> grupetajsBalstītsUzRindasVertības) {
+    private RaterBasedOnLineValue(Function<Rinda, Rating> rindasBalstītsUzVertībasVērtētājs, Function<Rinda, GrupaId> grupetajsBalstītsUzRindasVertības) {
         this.rindasBalstītsUzVertībasVērtētājs = rindasBalstītsUzVertībasVērtētājs;
         this.grupetajsBalstītsUzRindasVertības = grupetajsBalstītsUzRindasVertības;
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
-        final NovērtējumsNotikums rVal = NovērtējumsNotikumsI.novērtejumuNotikums();
+    public RatingEvent vērtē_pēc_papildinājumu(Tabula rindas, Rinda papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsPapildinājumu) {
+        final RatingEvent rVal = NovērtējumsNotikumsI.novērtejumuNotikums();
         rVal.papildinājumi().put
                 (papildinājums
                         , lokalsNovērtejums()
@@ -72,13 +72,13 @@ public class VērtētājsBalstītaUzRindaVērtība implements Vērtētājs {
     }
 
     @Override
-    public NovērtējumsNotikums vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Tabula rindas, Rinda noņemšana, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Tabula novērtējumsPirmsNoņemšana) {
         return NovērtējumsNotikumsI.novērtejumuNotikums();
     }
 
     @Override
-    public Class<? extends Vērtētājs> type() {
-        return VērtētājsBalstītaUzRindaVērtība.class;
+    public Class<? extends Rater> type() {
+        return RaterBasedOnLineValue.class;
     }
 
     @Override
