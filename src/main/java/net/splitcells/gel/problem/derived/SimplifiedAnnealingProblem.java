@@ -4,7 +4,7 @@ import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.type.Atvasināšana;
+import net.splitcells.gel.constraint.type.Derivation;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.type.Optimality;
 
@@ -25,7 +25,7 @@ public class SimplifiedAnnealingProblem extends DerivedSolution {
 
     protected SimplifiedAnnealingProblem(Allocations piešķiršanas, Constraint originalIerobežojums, Function<Integer, Float> temperatureFunction) {
         super(() -> list(), piešķiršanas);
-        ierobežojums = Atvasināšana.atvasināšana(originalIerobežojums,
+        ierobežojums = Derivation.atvasināšana(originalIerobežojums,
                 new Function<>() {
                     private final Randomness randomness = randomness();
                     @Override

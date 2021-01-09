@@ -6,7 +6,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.constraint.type.PriekšVisiem;
+import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -39,7 +39,7 @@ public interface SolutionView extends ProblemView {
     default List<List<Constraint>> prasībasGrupas(Constraint ierobežojums, List<Constraint> vecākuTaka) {
         final var ierobežojumuTaka = vecākuTaka.shallowCopy().withAppended(ierobežojums);
         final List<List<Constraint>> brīvasGrupas = list();
-        ierobežojums.casted(PriekšVisiem.class)
+        ierobežojums.casted(ForAll.class)
                 .ifPresent(priekšVisiiemIerobežojums -> {
                     final var priekšVisiiemAtribūti = prieksVisiemAtribūtuNoGrupetājs
                             (priekšVisiiemIerobežojums.grupešana())

@@ -13,9 +13,9 @@ import java.util.Optional;
 
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.constraint.type.PriekšVisiem;
-import net.splitcells.gel.constraint.type.PriekšVisiemF;
-import net.splitcells.gel.constraint.type.Tad;
+import net.splitcells.gel.constraint.type.ForAll;
+import net.splitcells.gel.constraint.type.ForAlls;
+import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
 import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 import net.splitcells.gel.rating.structure.Rating;
@@ -48,7 +48,7 @@ public class QueryI implements Query {
     public Query priekšVisiem(Rater vērtētājs) {
         var radijumuBaže = ierobežojums
                 .skatsUsBerniem().stream()
-                .filter(child -> PriekšVisiem.class.equals(child.type()))
+                .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> child.arguments().size() == 1)
                 .filter(child -> child.arguments().get(0).getClass().equals(RaterBasedOnGrouping.class))
                 .filter(child -> {
@@ -67,7 +67,7 @@ public class QueryI implements Query {
                                 .vertības());
             }
         } else {
-            radijumuBaže = Optional.of(PriekšVisiemF.priekšVisiem(vērtētājs));
+            radijumuBaže = Optional.of(ForAlls.priekšVisiem(vērtētājs));
             ierobežojums.arBērnu(radijumuBaže.get());
             radītasGrupas.addAll(grupas);
         }
@@ -82,7 +82,7 @@ public class QueryI implements Query {
     public Query priekšVisiem(Attribute<?> arg) {
         var radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
-                .filter(child -> PriekšVisiem.class.equals(child.type()))
+                .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
                     final var grupešana = (Rater) child.arguments().get(0);
@@ -103,7 +103,7 @@ public class QueryI implements Query {
                                 .vertības());
             }
         } else {
-            radijumuBaže = Optional.of(PriekšVisiemF.priekšVisiem(arg));
+            radijumuBaže = Optional.of(ForAlls.priekšVisiem(arg));
             ierobežojums.arBērnu(radijumuBaže.get());
             radītasGrupas.addAll(grupas);
         }
@@ -118,7 +118,7 @@ public class QueryI implements Query {
     public Query priekšVisiem() {
         final var radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
-                .filter(child -> PriekšVisiem.class.equals(child.type()))
+                .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
                     final var grupēšana = (Rater) child.arguments().get(0);
@@ -142,7 +142,7 @@ public class QueryI implements Query {
     public Query tad(Rater vērtētājs) {
         var radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
-                .filter(child -> Tad.class.equals(child.type()))
+                .filter(child -> Then.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> child.arguments().get(0).equals(vērtētājs))
                 .reduce(ensureSingle());
@@ -157,7 +157,7 @@ public class QueryI implements Query {
                                 .vertības());
             }
         } else {
-            radijumuBaže = Optional.of(Tad.tad(vērtētājs));
+            radijumuBaže = Optional.of(Then.tad(vērtētājs));
             ierobežojums.arBērnu(radijumuBaže.get());
             resultingGroups.addAll(grupas);
         }
@@ -177,7 +177,7 @@ public class QueryI implements Query {
     public Query priekšVisamKombinācijam(Attribute<?>... args) {
         final Constraint radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
-                .filter(child -> PriekšVisiem.class.equals(child.type()))
+                .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
                     final var grupešana = (Rater) child.arguments().get(0);

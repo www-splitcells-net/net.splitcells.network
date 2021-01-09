@@ -10,17 +10,17 @@ import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
 
-public class PriekšVisiem extends ConstraintBasedOnLocalGroupsAI {
+public class ForAll extends ConstraintBasedOnLocalGroupsAI {
 
-    public static PriekšVisiem veidot(Rater grupēšana) {
+    public static ForAll veidot(Rater grupēšana) {
         return priekšVisiem(grupēšana);
     }
 
-    public static PriekšVisiem priekšVisiem(Rater grupēšana) {
-        return new PriekšVisiem(grupēšana);
+    public static ForAll priekšVisiem(Rater grupēšana) {
+        return new ForAll(grupēšana);
     }
 
-    protected PriekšVisiem(Rater grupēšana) {
+    protected ForAll(Rater grupēšana) {
         super(raterBasedGrouping(grupēšana));
     }
 
@@ -30,7 +30,7 @@ public class PriekšVisiem extends ConstraintBasedOnLocalGroupsAI {
 
     @Override
     public Class<? extends Constraint> type() {
-        return PriekšVisiem.class;
+        return ForAll.class;
     }
 
     @Override

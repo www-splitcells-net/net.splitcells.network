@@ -10,23 +10,23 @@ import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 
-public class Tad extends ConstraintBasedOnLocalGroupsAI {
+public class Then extends ConstraintBasedOnLocalGroupsAI {
 
-    public static Tad tad(Rater vērtētājs) {
-        return new Tad(vērtētājs);
+    public static Then tad(Rater vērtētājs) {
+        return new Then(vērtētājs);
     }
 
-    public static Tad tad(Rating novērtējums) {
-        return new Tad(constantRater(novērtējums));
+    public static Then tad(Rating novērtējums) {
+        return new Then(constantRater(novērtējums));
     }
 
-    protected Tad(Rater vērtētājs) {
+    protected Then(Rater vērtētājs) {
         super(vērtētājs, vērtētājs.getClass().getSimpleName());
     }
 
     @Override
     public Class<? extends Constraint> type() {
-        return Tad.class;
+        return Then.class;
     }
 
     @Override

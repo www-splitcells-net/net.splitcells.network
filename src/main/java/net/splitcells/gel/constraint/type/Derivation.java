@@ -22,17 +22,17 @@ import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
-public final class Atvasināšana implements Constraint {
+public final class Derivation implements Constraint {
 
-    public static Atvasināšana atvasināšana
+    public static Derivation atvasināšana
             (Constraint atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
-        return new Atvasināšana(atvasināšanasMērķis, atvasināšanaFuncija);
+        return new Derivation(atvasināšanasMērķis, atvasināšanaFuncija);
     }
 
     private final Constraint atvasināšanasMērķis;
     private final Function<MetaRating, MetaRating> atvasināšanaFuncija;
 
-    private Atvasināšana(Constraint atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
+    private Derivation(Constraint atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
         this.atvasināšanasMērķis = atvasināšanasMērķis;
         this.atvasināšanaFuncija = atvasināšanaFuncija;
     }

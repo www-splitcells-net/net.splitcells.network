@@ -13,7 +13,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.type.Atvasināšana;
+import net.splitcells.gel.constraint.type.Derivation;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.rating.structure.MetaRating;
@@ -33,11 +33,11 @@ public class DerivedSolution implements Solution {
     private final Discoverable konteksts;
     
     public static DerivedSolution atvasinātaProblema(Discoverable konteksts, Allocations piešķiršanas, Constraint originalIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
-        return new DerivedSolution(konteksts, piešķiršanas, originalIerobežojums, Atvasināšana.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
+        return new DerivedSolution(konteksts, piešķiršanas, originalIerobežojums, Derivation.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
     }
 
     protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Constraint oriģinālaisIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
-        this(konteksts, piešķiršanas, oriģinālaisIerobežojums, Atvasināšana.atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
+        this(konteksts, piešķiršanas, oriģinālaisIerobežojums, Derivation.atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
     }
 
     public static DerivedSolution atvasinātsProblēma(Discoverable konteksts, Allocations piešķiršanas, Constraint ierobežojums, Constraint atvasināšana) {
