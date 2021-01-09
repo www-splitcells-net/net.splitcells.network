@@ -1,7 +1,7 @@
 image: nixos/latest
 packages:
-  - jdk11
-  - maven
+  - nixos.jdk11
+  - nixos.maven
 sources:
   - https://git.sr.ht/~splitcells-net/net.splitcells
 tasks:
