@@ -9,11 +9,11 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.database.Database;
 
 public interface Allocations extends Database, AllocationsLiveView {
-    Line piešķirt(Line prasība, Line piedāvājums);
+    Line allocate(Line prasība, Line piedāvājums);
 
-    default Set<Line> piešķiršanasNo(Line prasība, Line piedāvājums) {
-        final var piešķiršanasNo = piešķiršanas_no_piedāvājuma(piedāvājums);
-        return piešķiršanas_no_prasības(prasība)
+    default Set<Line> allocationsOf(Line prasība, Line piedāvājums) {
+        final var piešķiršanasNo = allocations_of_supply(piedāvājums);
+        return allocations_of_demand(prasība)
                 .stream()
                 .filter(piešķiršanasNo::contains)
                 .collect(toSet());

@@ -20,7 +20,7 @@ public class SimplifiedAnnealingProblem extends DerivedSolution {
                 1f / (i.floatValue() + 1f));
     }
     public static Solution vienkāršsotsAtdzesēšanasProblēma(Solution solution, Function<Integer, Float> temperatureFunction) {
-        return new SimplifiedAnnealingProblem(solution.piešķiršanas(), solution.constraint(), temperatureFunction);
+        return new SimplifiedAnnealingProblem(solution.allocations(), solution.constraint(), temperatureFunction);
     }
 
     protected SimplifiedAnnealingProblem(Allocations piešķiršanas, Constraint originalIerobežojums, Function<Integer, Float> temperatureFunction) {

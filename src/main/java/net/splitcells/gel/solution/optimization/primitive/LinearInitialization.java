@@ -21,7 +21,7 @@ public class LinearInitialization implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimizē(SolutionView solution) {
-        if (solution.demands_unused().navTukšs() && solution.supplies_unused().navTukšs()) {
+        if (solution.demands_unused().hasContent() && solution.supplies_unused().hasContent()) {
             return list(
                     optimizacijasNotikums
                             (PIEŠĶIRŠANA

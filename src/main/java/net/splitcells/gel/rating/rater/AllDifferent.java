@@ -51,7 +51,7 @@ public class AllDifferent<T> implements Rater {
     @Override
     public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
         final T vertība = papildinājums.vērtība(Constraint.RINDA).vērtība(atribūts);
-        final var grupa = rindas.kolonnaSkats(Constraint.RINDA).uzmeklēšana(predikāts(vertība));
+        final var grupa = rindas.columnView(Constraint.RINDA).uzmeklēšana(predikāts(vertība));
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         if (1 == grupa.size()) {
             novērtejumuNotikums.papildinājumi().put(
@@ -62,10 +62,10 @@ public class AllDifferent<T> implements Rater {
                             .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
         } else if (2 == grupa.size()) {
             if (ENFORCING_UNIT_CONSISTENCY) {
-                assertThat(grupa.jēlaRindasSkats().stream().filter(e -> e != null)).hasSize(2);
+                assertThat(grupa.rawLinesView().stream().filter(e -> e != null)).hasSize(2);
             }
             // DARĪT Parametrizē pārbaudi.
-            grupa.jēlaRindasSkats().stream()
+            grupa.rawLinesView().stream()
                     .filter(e -> e != null)
                     .forEach(e -> novērtejumuNotikums.papildinājumi()
                             .put(e//
@@ -73,7 +73,7 @@ public class AllDifferent<T> implements Rater {
                                             .arIzdalīšanaUz(bērni)
                                             .arNovērtējumu(cost(1.0))
                                             .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))));
-            grupa.jēlaRindasSkats().stream()
+            grupa.rawLinesView().stream()
                     .filter(e -> e != null)
                     .filter(e -> e.indekss() != papildinājums.indekss())
                     .forEach(e -> novērtejumuNotikums.noņemšana().add(e));
@@ -94,15 +94,15 @@ public class AllDifferent<T> implements Rater {
     @Override
     public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
         final T vērtība = noņemšana.vērtība(Constraint.RINDA).vērtība(atribūts);
-        final var grupa = rindas.kolonnaSkats(Constraint.RINDA).uzmeklēšana(predikāts(vērtība));
+        final var grupa = rindas.columnView(Constraint.RINDA).uzmeklēšana(predikāts(vērtība));
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         if (1 == grupa.size()) {
             // Before removal there was 1 duplication and now there is now duplicate lines
             // for this value present anymore.
             if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-                assertThat(grupa.jēlaRindasSkats().stream().filter(e -> e != null)).hasSize(1);
+                assertThat(grupa.rawLinesView().stream().filter(e -> e != null)).hasSize(1);
             }
-            grupa.jēlaRindasSkats().stream()
+            grupa.rawLinesView().stream()
                     .filter(e -> e != null)
                     .forEach(e -> {
                         novērtejumuNotikums.noņemšana().add(e);

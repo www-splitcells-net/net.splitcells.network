@@ -71,9 +71,9 @@ public interface Solution extends Problem, SolutionView {
     @Returns_this
     default Solution optimizē(OptimizationEvent notikums, OptimizationParameters optimizationParameters) {
         if (notikums.soluTips().equals(PIEŠĶIRŠANA)) {
-            this.piešķirt(
-                    demands_unused().gūtJēluRindas(notikums.prasība().interpretē().get().indekss()),
-                    supplies_unused().gūtJēluRindas(notikums.piedāvājums().interpretē().get().indekss()));
+            this.allocate(
+                    demands_unused().getRawLines(notikums.prasība().interpretē().get().indekss()),
+                    supplies_unused().getRawLines(notikums.piedāvājums().interpretē().get().indekss()));
         } else if (notikums.soluTips().equals(NOŅEMŠANA)) {
             final var prasībaPriekšNoņemšanas = notikums.prasība().interpretē();
             final var piedāvājumuPriekšNoņemšanas = notikums.piedāvājums().interpretē();
@@ -82,7 +82,7 @@ public interface Solution extends Problem, SolutionView {
                     return this;
                 }
             }
-            noņemt(piešķiršanasNo
+            remove(allocationsOf
                     (prasībaPriekšNoņemšanas.get()
                             , piedāvājumuPriekšNoņemšanas.get())
                     .iterator()

@@ -35,7 +35,7 @@ public class ProblemI implements Problem {
     protected ProblemI(Allocations piešķiršanas, Constraint ierobežojums) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = ierobežojums;
-        sinhronizē(ierobežojums);
+        synchronize(ierobežojums);
     }
 
     @Override
@@ -44,36 +44,36 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Allocations piešķiršanas() {
+    public Allocations allocations() {
         return piešķiršanas;
     }
 
     @Override
-    public Solution uzAtrisinājumu() {
+    public Solution toSolution() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Solution kāAtrisinājums() {
+    public Solution asSolution() {
         if (kāSolution == null) {
-            kāSolution = Solutions.atrisinājum(this);
+            kāSolution = Solutions.solution(this);
         }
         return kāSolution;
     }
 
     @Override
-    public DerivedSolution atvasinājums(Function<MetaRating, MetaRating> konversija) {
+    public DerivedSolution derived(Function<MetaRating, MetaRating> konversija) {
         return atvasinātaProblema(() -> list(), piešķiršanas, ierobežojums, konversija);
     }
 
     @Override
-    public Database piedāvājums() {
-        return this.piešķiršanas.piedāvājums();
+    public Database supplies() {
+        return this.piešķiršanas.supplies();
     }
 
     @Override
-    public Database piedāvājumi_lietoti() {
-        return this.piešķiršanas.piedāvājumi_lietoti();
+    public Database supplies_used() {
+        return this.piešķiršanas.supplies_used();
     }
 
     @Override
@@ -87,8 +87,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Database prasība_lietots() {
-        return this.piešķiršanas.prasība_lietots();
+    public Database demands_used() {
+        return this.piešķiršanas.demands_used();
     }
 
     @Override
@@ -97,83 +97,83 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Line piešķirt(final Line prasība, final Line piedāvājums) {
-        return this.piešķiršanas.piešķirt(prasība, piedāvājums);
+    public Line allocate(final Line prasība, final Line piedāvājums) {
+        return this.piešķiršanas.allocate(prasība, piedāvājums);
     }
 
     @Override
-    public Line prasība_no_piešķiršana(final Line piešķiršana) {
-        return this.piešķiršanas.prasība_no_piešķiršana(piešķiršana);
+    public Line demand_of_allocation(final Line piešķiršana) {
+        return this.piešķiršanas.demand_of_allocation(piešķiršana);
     }
 
     @Override
-    public Line piedāvājums_no_piešķiršana(final Line piešķiršana) {
-        return this.piešķiršanas.piedāvājums_no_piešķiršana(piešķiršana);
+    public Line supply_of_allocation(final Line piešķiršana) {
+        return this.piešķiršanas.supply_of_allocation(piešķiršana);
     }
 
     @Override
-    public java.util.Set<Line> piešķiršanas_no_piedāvājuma(final Line piedāvājuma) {
-        return this.piešķiršanas.piešķiršanas_no_piedāvājuma(piedāvājuma);
+    public java.util.Set<Line> allocations_of_supply(final Line piedāvājuma) {
+        return this.piešķiršanas.allocations_of_supply(piedāvājuma);
     }
 
     @Override
-    public java.util.Set<Line> piešķiršanasNo(final Line prasība, final Line piedāvājums) {
-        return this.piešķiršanas.piešķiršanasNo(prasība, piedāvājums);
+    public java.util.Set<Line> allocationsOf(final Line prasība, final Line piedāvājums) {
+        return this.piešķiršanas.allocationsOf(prasība, piedāvājums);
     }
 
     @Override
-    public java.util.Set<Line> piešķiršanas_no_prasības(final Line prasība) {
-        return this.piešķiršanas.piešķiršanas_no_prasības(prasība);
+    public java.util.Set<Line> allocations_of_demand(final Line prasība) {
+        return this.piešķiršanas.allocations_of_demand(prasība);
     }
 
     @Override
-    public java.util.Set<Line> peidāvājumi_no_prasībam(final Line prasība) {
-        return this.piešķiršanas.peidāvājumi_no_prasībam(prasība);
+    public java.util.Set<Line> supply_of_demand(final Line prasība) {
+        return this.piešķiršanas.supply_of_demand(prasība);
     }
 
     @Override
-    public Line pieliktUnPārtulkot(List<?> vērtība) {
-        return this.piešķiršanas.pieliktUnPārtulkot(vērtība);
+    public Line addTranslated(List<?> vērtība) {
+        return this.piešķiršanas.addTranslated(vērtība);
     }
 
     @Override
-    public Line pielikt(final Line rinda) {
-        return this.piešķiršanas.pielikt(rinda);
+    public Line add(final Line rinda) {
+        return this.piešķiršanas.add(rinda);
     }
 
     @Override
-    public void noņemt(final int rindasIndekss) {
-        this.piešķiršanas.noņemt(rindasIndekss);
+    public void remove(final int rindasIndekss) {
+        this.piešķiršanas.remove(rindasIndekss);
     }
 
     @Override
-    public void noņemt(final Line rinda) {
-        this.piešķiršanas.noņemt(rinda);
+    public void remove(final Line rinda) {
+        this.piešķiršanas.remove(rinda);
     }
 
     @Override
-    public void aizvietot(final Line newRinda) {
-        this.piešķiršanas.aizvietot(newRinda);
+    public void replace(final Line newRinda) {
+        this.piešķiršanas.replace(newRinda);
     }
 
     @Override
-    public <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void sinhronizē(final T klausītājs) {
-        this.piešķiršanas.<T>sinhronizē(klausītājs);
+    public <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void synchronize(final T klausītājs) {
+        this.piešķiršanas.<T>synchronize(klausītājs);
     }
 
     @Override
-    public void abonē_uz_papildinājums(final AfterAdditionSubscriber klausītājs) {
-        this.piešķiršanas.abonē_uz_papildinājums(klausītājs);
+    public void subscribe_to_afterAddtions(final AfterAdditionSubscriber klausītājs) {
+        this.piešķiršanas.subscribe_to_afterAddtions(klausītājs);
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(final BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        this.piešķiršanas.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_beforeRemoval(final BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
+        this.piešķiršanas.subscriber_to_beforeRemoval(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public void abonē_uz_pēcNoņemšana(final BeforeRemovalSubscriber klausītājs) {
-        this.piešķiršanas.abonē_uz_pēcNoņemšana(klausītājs);
+    public void subscriber_to_afterRemoval(final BeforeRemovalSubscriber klausītājs) {
+        this.piešķiršanas.subscriber_to_afterRemoval(klausītājs);
     }
 
     @Override
@@ -182,23 +182,23 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public <T extends Object> ColumnView<T> kolonnaSkats(final Attribute<T> atribūts) {
-        return this.piešķiršanas.<T>kolonnaSkats(atribūts);
+    public <T extends Object> ColumnView<T> columnView(final Attribute<T> atribūts) {
+        return this.piešķiršanas.<T>columnView(atribūts);
     }
 
     @Override
-    public List<Column<Object>> kolonnaSkats() {
-        return this.piešķiršanas.kolonnaSkats();
+    public List<Column<Object>> columnsView() {
+        return this.piešķiršanas.columnsView();
     }
 
     @Deprecated
-    public ListView<Line> jēlaRindasSkats() {
-        return this.piešķiršanas.jēlaRindasSkats();
+    public ListView<Line> rawLinesView() {
+        return this.piešķiršanas.rawLinesView();
     }
 
     @Override
-    public boolean satur(final Line rinda) {
-        return this.piešķiršanas.satur(rinda);
+    public boolean contains(final Line rinda) {
+        return this.piešķiršanas.contains(rinda);
     }
 
     @Override
@@ -207,8 +207,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Line gūtJēluRindas(final int indekss) {
-        return this.piešķiršanas.gūtJēluRindas(indekss);
+    public Line getRawLines(final int indekss) {
+        return this.piešķiršanas.getRawLines(indekss);
     }
 
     @Override
@@ -217,27 +217,27 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public boolean irTukšs() {
-        return this.piešķiršanas.irTukšs();
+    public boolean isEmpty() {
+        return this.piešķiršanas.isEmpty();
     }
 
     @Override
-    public boolean navTukšs() {
-        return this.piešķiršanas.navTukšs();
+    public boolean hasContent() {
+        return this.piešķiršanas.hasContent();
     }
 
     @Override
-    public List<Line> jēlasRindas() {
-        return this.piešķiršanas.jēlasRindas();
+    public List<Line> rawLines() {
+        return this.piešķiršanas.rawLines();
     }
 
-    public String uzCSV() {
-        return this.piešķiršanas.uzCSV();
+    public String toCSV() {
+        return this.piešķiršanas.toCSV();
     }
 
     @Override
-    public Line uzmeklēVienādus(final Attribute<Line> atribūts, final Line other) {
-        return this.piešķiršanas.uzmeklēVienādus(atribūts, other);
+    public Line lookupEquals(final Attribute<Line> atribūts, final Line other) {
+        return this.piešķiršanas.lookupEquals(atribūts, other);
     }
 
     @Override

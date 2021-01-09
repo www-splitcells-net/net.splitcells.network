@@ -21,13 +21,13 @@ public class LinearDeinitializer implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimizē(SolutionView solution) {
-        if (solution.prasība_lietots().navTukšs() && solution.piedāvājumi_lietoti().navTukšs()) {
+        if (solution.demands_used().hasContent() && solution.supplies_used().hasContent()) {
             return
                     list(
                             optimizacijasNotikums
                                     (NOŅEMŠANA
-                                            , solution.prasība_lietots().getLines().get(0).uzRindaRādītājs()
-                                            , solution.piedāvājumi_lietoti().getLines().get(0).uzRindaRādītājs()));
+                                            , solution.demands_used().getLines().get(0).uzRindaRādītājs()
+                                            , solution.supplies_used().getLines().get(0).uzRindaRādītājs()));
 
         }
         return list();

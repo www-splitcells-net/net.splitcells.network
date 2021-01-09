@@ -61,20 +61,20 @@ public class AllocationsI implements Allocations {
             this.prāsibas = prasības;
             prāsibas_nelietoti = new DatabaseI("prasības_nelietoti", this, prasības.headerView());
             prāsibas_lietoti = new DatabaseI("prasības_lietoti", this, prasības.headerView());
-            prasības.jēlaRindasSkats().forEach(prāsibas_nelietoti::pielikt);
-            prasības.abonē_uz_papildinājums(prāsibas_nelietoti::pielikt);
-            prasības.abonē_uz_iepriekšNoņemšana(removalOf -> {
+            prasības.rawLinesView().forEach(prāsibas_nelietoti::add);
+            prasības.subscribe_to_afterAddtions(prāsibas_nelietoti::add);
+            prasības.subscriber_to_beforeRemoval(removalOf -> {
                 if (lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(removalOf.indekss())) {
                     listWithValuesOf(
                             lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(removalOf.indekss()))
-                            .forEach(allocation_of_demand -> noņemt(piešķiršanas.jēlaRindasSkats().get(allocation_of_demand)));
+                            .forEach(allocation_of_demand -> remove(piešķiršanas.rawLinesView().get(allocation_of_demand)));
                 }
-                if (prāsibas_nelietoti.satur(removalOf)) {
-                    prāsibas_nelietoti.noņemt(removalOf);
+                if (prāsibas_nelietoti.contains(removalOf)) {
+                    prāsibas_nelietoti.remove(removalOf);
                 }
                 // SALABOT Vai alternatīvā gadījumā būtu jādara kaut kas cits.
-                if (prāsibas_lietoti.satur(removalOf)) {
-                    prāsibas_lietoti.noņemt(removalOf);
+                if (prāsibas_lietoti.contains(removalOf)) {
+                    prāsibas_lietoti.remove(removalOf);
                 }
             });
         }
@@ -82,35 +82,35 @@ public class AllocationsI implements Allocations {
             this.piedāvājumi = requireNonNull(piedāvājumi);
             piedāvājumi_nelietoti = new DatabaseI("piedāvājumi_nelietoti", this, piedāvājumi.headerView());
             piedāvājumi_lietoti = new DatabaseI("piedāvājumi_lietoti", this, piedāvājumi.headerView());
-            piedāvājumi.jēlaRindasSkats().forEach(piedāvājumi_nelietoti::pielikt);
-            piedāvājumi.abonē_uz_papildinājums(i -> {
-                piedāvājumi_nelietoti.pielikt(i);
+            piedāvājumi.rawLinesView().forEach(piedāvājumi_nelietoti::add);
+            piedāvājumi.subscribe_to_afterAddtions(i -> {
+                piedāvājumi_nelietoti.add(i);
             });
-            piedāvājumi.abonē_uz_iepriekšNoņemšana(noņemšanaNo -> {
+            piedāvājumi.subscriber_to_beforeRemoval(noņemšanaNo -> {
                 if (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(noņemšanaNo.indekss())) {
                     listWithValuesOf
                             (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(noņemšanaNo.indekss()))
                             .forEach(piešķiršanas_no_piedāvāijumu
-                                    -> noņemt(piešķiršanas.jēlaRindasSkats().get(piešķiršanas_no_piedāvāijumu)));
+                                    -> remove(piešķiršanas.rawLinesView().get(piešķiršanas_no_piedāvāijumu)));
                 }
-                if (piedāvājumi_nelietoti.satur(noņemšanaNo)) {
-                    piedāvājumi_nelietoti.noņemt(noņemšanaNo);
+                if (piedāvājumi_nelietoti.contains(noņemšanaNo)) {
+                    piedāvājumi_nelietoti.remove(noņemšanaNo);
                 }
                 // SALABOT Vai alternatīvā gadījumā būtu jādara kaut kas cits.
-                if (piedāvājumi_lietoti.satur(noņemšanaNo)) {
-                    piedāvājumi_lietoti.noņemt(noņemšanaNo);
+                if (piedāvājumi_lietoti.contains(noņemšanaNo)) {
+                    piedāvājumi_lietoti.remove(noņemšanaNo);
                 }
             });
         }
     }
 
     @Override
-    public Database piedāvājums() {
+    public Database supplies() {
         return piedāvājumi;
     }
 
     @Override
-    public Database piedāvājumi_lietoti() {
+    public Database supplies_used() {
         return piedāvājumi_lietoti;
     }
 
@@ -125,7 +125,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Database prasība_lietots() {
+    public Database demands_used() {
         return prāsibas_lietoti;
     }
 
@@ -135,15 +135,15 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Line piešķirt(Line prasība, Line piedāvājums) {
-        final var piešķiršana = piešķiršanas.pieliktUnPārtulkot(Line.saķēdet(prasība, piedāvājums));
+    public Line allocate(Line prasība, Line piedāvājums) {
+        final var piešķiršana = piešķiršanas.addTranslated(Line.saķēdet(prasība, piedāvājums));
         if (!lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(piedāvājums.indekss())) {
-            piedāvājumi_lietoti.pielikt(piedāvājums);
-            piedāvājumi_nelietoti.noņemt(piedāvājums);
+            piedāvājumi_lietoti.add(piedāvājums);
+            piedāvājumi_nelietoti.remove(piedāvājums);
         }
         if (!lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(prasība.indekss())) {
-            prāsibas_lietoti.pielikt(prasība);
-            prāsibas_nelietoti.noņemt(prasība);
+            prāsibas_lietoti.add(prasība);
+            prāsibas_nelietoti.remove(prasība);
         }
         {
             piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.put(piešķiršana.indekss(), prasība.indekss());
@@ -180,33 +180,33 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Line prasība_no_piešķiršana(Line piešķiršana) {
-        return prāsibas.jēlaRindasSkats()
+    public Line demand_of_allocation(Line piešķiršana) {
+        return prāsibas.rawLinesView()
                 .get(piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.get(piešķiršana.indekss()));
     }
 
     @Override
-    public Line piedāvājums_no_piešķiršana(Line allocation) {
-        return piedāvājumi.jēlaRindasSkats()
+    public Line supply_of_allocation(Line allocation) {
+        return piedāvājumi.rawLinesView()
                 .get(piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.get(allocation.indekss()));
     }
 
     @Override
-    public Line pieliktUnPārtulkot(List<?> vertības) {
+    public Line addTranslated(List<?> vertības) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Line pielikt(Line rinda) {
+    public Line add(Line rinda) {
         throw not_implemented_yet();
     }
 
     @Override
-    public void noņemt(Line piešķiršana) {
-        final var prasība = prasība_no_piešķiršana(piešķiršana);
-        final var piedāvājums = piedāvājums_no_piešķiršana(piešķiršana);
+    public void remove(Line piešķiršana) {
+        final var prasība = demand_of_allocation(piešķiršana);
+        final var piedāvājums = supply_of_allocation(piešķiršana);
         primsNoņemšanaAbonēšanas.forEach(pirmsNoņemšanasKlausītājs -> pirmsNoņemšanasKlausītājs.rēgistrē_pirms_noņemšanas(piešķiršana));
-        piešķiršanas.noņemt(piešķiršana);
+        piešķiršanas.remove(piešķiršana);
         // TODO Make following code a remove subscription to allocations.
         {
             piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.remove(piešķiršana.indekss());
@@ -237,18 +237,18 @@ public class AllocationsI implements Allocations {
         piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.remove(piešķiršana.indekss());
         piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.remove(piešķiršana.indekss());
         if (!lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.containsKey(prasība.indekss())) {
-            prāsibas_lietoti.noņemt(prasība);
-            prāsibas_nelietoti.pielikt(prasība);
+            prāsibas_lietoti.remove(prasība);
+            prāsibas_nelietoti.add(prasība);
         }
         if (!lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.containsKey(piedāvājums.indekss())) {
-            piedāvājumi_lietoti.noņemt(piedāvājums);
-            piedāvājumi_nelietoti.pielikt(piedāvājums);
+            piedāvājumi_lietoti.remove(piedāvājums);
+            piedāvājumi_nelietoti.add(piedāvājums);
         }
         pēcNoņemšanaAbonēšanas.forEach(listener -> listener.rēgistrē_pirms_noņemšanas(piešķiršana));
     }
 
     @Override
-    public void abonē_uz_papildinājums(AfterAdditionSubscriber klausītājs) {
+    public void subscribe_to_afterAddtions(AfterAdditionSubscriber klausītājs) {
         papildinājumsKlausītājs.add(klausītājs);
     }
 
@@ -258,17 +258,17 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts) {
-        return piešķiršanas.kolonnaSkats(atribūts);
+    public <T> ColumnView<T> columnView(Attribute<T> atribūts) {
+        return piešķiršanas.columnView(atribūts);
     }
 
     @Override
-    public ListView<Line> jēlaRindasSkats() {
-        return piešķiršanas.jēlaRindasSkats();
+    public ListView<Line> rawLinesView() {
+        return piešķiršanas.rawLinesView();
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
+    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
         primsNoņemšanaAbonēšanas.add(pirmsNoņemšanasKlausītājs);
     }
 
@@ -278,27 +278,27 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void noņemt(int rindasIndekss) {
+    public void remove(int rindasIndekss) {
         try {
-            noņemt(piešķiršanas.jēlaRindasSkats().get(rindasIndekss));
+            remove(piešķiršanas.rawLinesView().get(rindasIndekss));
         } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
-    public void abonē_uz_pēcNoņemšana(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
+    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
         pēcNoņemšanaAbonēšanas.add(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public Set<Line> piešķiršanas_no_piedāvājuma(Line piedāvājums) {
+    public Set<Line> allocations_of_supply(Line piedāvājums) {
         final Set<Line> piešķiršanas_no_piedāvājuma = setOfUniques();
         try {
             lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu
                     .get(piedāvājums.indekss())
                     .forEach(piešķiršanasIndekss ->
-                            piešķiršanas_no_piedāvājuma.add(piešķiršanas.jēlaRindasSkats().get(piešķiršanasIndekss)));
+                            piešķiršanas_no_piedāvājuma.add(piešķiršanas.rawLinesView().get(piešķiršanasIndekss)));
         } catch (RuntimeException e) {
             throw e;
         }
@@ -306,18 +306,18 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Set<Line> piešķiršanas_no_prasības(Line prasība) {
+    public Set<Line> allocations_of_demand(Line prasība) {
         final Set<Line> piešķiršanas_no_prasības = setOfUniques();
         lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu
                 .get(prasība.indekss())
                 .forEach(piešķiršanasIndekss ->
-                    piešķiršanas_no_prasības.add(piešķiršanas.jēlaRindasSkats().get(piešķiršanasIndekss)));
+                    piešķiršanas_no_prasības.add(piešķiršanas.rawLinesView().get(piešķiršanasIndekss)));
         return piešķiršanas_no_prasības;
     }
 
     @Override
-    public List<Column<Object>> kolonnaSkats() {
-        return piešķiršanas.kolonnaSkats();
+    public List<Column<Object>> columnsView() {
+        return piešķiršanas.columnsView();
     }
 
     @Override
@@ -337,19 +337,19 @@ public class AllocationsI implements Allocations {
     public Element toDom() {
         final var dom = element(Allocations.class.getSimpleName());
         dom.appendChild(textNode(path().toString()));
-        jēlaRindasSkats().stream()
+        rawLinesView().stream()
                 .filter(rinda -> rinda != null)
                 .forEach(rinda -> dom.appendChild(rinda.toDom()));
         return dom;
     }
 
     @Override
-    public List<Line> jēlasRindas() {
+    public List<Line> rawLines() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Line uzmeklēVienādus(Attribute<Line> atribūts, Line cits) {
-        return piešķiršanas.uzmeklēVienādus(atribūts, cits);
+    public Line lookupEquals(Attribute<Line> atribūts, Line cits) {
+        return piešķiršanas.lookupEquals(atribūts, cits);
     }
 }

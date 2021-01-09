@@ -12,7 +12,7 @@ public interface ProblemView extends AllocationsLiveView {
 
     Constraint constraint();
 
-    Allocations piešķiršanas();
+    Allocations allocations();
 
-    DerivedSolution atvasinājums(Function<MetaRating, MetaRating> konversija);
+    DerivedSolution derived(Function<MetaRating, MetaRating> konversija);
 }

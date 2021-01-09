@@ -50,7 +50,7 @@ public class HasSize implements Rater {
 
     private RatingEvent novērteRindas(Table rindas, Line maiņīts, List<Constraint> children, Rating cena) {
         final RatingEvent rindasNovērtējumu = RatingEventI.novērtejumuNotikums();
-        rindas.jēlaRindasSkats().stream()
+        rindas.rawLinesView().stream()
                 .filter(e -> e != null)
                 .filter(e -> e.indekss() != maiņīts.indekss())
                 .forEach(e -> {

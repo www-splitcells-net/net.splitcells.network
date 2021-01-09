@@ -63,33 +63,33 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Allocations piešķiršanas() {
+    public Allocations allocations() {
         return piešķiršanas;
     }
 
     @Override
-    public Solution uzAtrisinājumu() {
+    public Solution toSolution() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Solution kāAtrisinājums() {
+    public Solution asSolution() {
         throw not_implemented_yet();
     }
 
     @Override
-    public DerivedSolution atvasinājums(Function<MetaRating, MetaRating> atvasināšana) {
+    public DerivedSolution derived(Function<MetaRating, MetaRating> atvasināšana) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Database piedāvājums() {
-        return piešķiršanas.piedāvājums();
+    public Database supplies() {
+        return piešķiršanas.supplies();
     }
 
     @Override
-    public Database piedāvājumi_lietoti() {
-        return piešķiršanas.piedāvājumi_lietoti();
+    public Database supplies_used() {
+        return piešķiršanas.supplies_used();
     }
 
     @Override
@@ -103,8 +103,8 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Database prasība_lietots() {
-        return piešķiršanas.prasība_lietots();
+    public Database demands_used() {
+        return piešķiršanas.demands_used();
     }
 
     @Override
@@ -113,63 +113,63 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Line piešķirt(Line prasība, Line piedāvājums) {
-        return piešķiršanas.piešķirt(prasība, piedāvājums);
+    public Line allocate(Line prasība, Line piedāvājums) {
+        return piešķiršanas.allocate(prasība, piedāvājums);
     }
 
     @Override
-    public Line prasība_no_piešķiršana(Line piešķiršana) {
-        return piešķiršanas.prasība_no_piešķiršana(piešķiršana);
+    public Line demand_of_allocation(Line piešķiršana) {
+        return piešķiršanas.demand_of_allocation(piešķiršana);
     }
 
     @Override
-    public Line piedāvājums_no_piešķiršana(Line piešķiršana) {
-        return piešķiršanas.piedāvājums_no_piešķiršana(piešķiršana);
+    public Line supply_of_allocation(Line piešķiršana) {
+        return piešķiršanas.supply_of_allocation(piešķiršana);
     }
 
     @Override
-    public Set<Line> piešķiršanas_no_piedāvājuma(Line piedāvājums) {
-        return piešķiršanas.piešķiršanas_no_piedāvājuma(piedāvājums);
+    public Set<Line> allocations_of_supply(Line piedāvājums) {
+        return piešķiršanas.allocations_of_supply(piedāvājums);
     }
 
     @Override
-    public Set<Line> piešķiršanas_no_prasības(Line prasība) {
-        return piešķiršanas.piešķiršanas_no_prasības(prasība);
+    public Set<Line> allocations_of_demand(Line prasība) {
+        return piešķiršanas.allocations_of_demand(prasība);
     }
 
     @Override
-    public Line pieliktUnPārtulkot(List<?> vērtība) {
-        return piešķiršanas.pieliktUnPārtulkot(vērtība);
+    public Line addTranslated(List<?> vērtība) {
+        return piešķiršanas.addTranslated(vērtība);
     }
 
     @Override
-    public Line pielikt(Line rinda) {
-        return piešķiršanas.pielikt(rinda);
+    public Line add(Line rinda) {
+        return piešķiršanas.add(rinda);
     }
 
     @Override
-    public void noņemt(int lineIndex) {
-        piešķiršanas.noņemt(lineIndex);
+    public void remove(int lineIndex) {
+        piešķiršanas.remove(lineIndex);
     }
 
     @Override
-    public void noņemt(Line rinda) {
-        piešķiršanas.noņemt(rinda);
+    public void remove(Line rinda) {
+        piešķiršanas.remove(rinda);
     }
 
     @Override
-    public void abonē_uz_papildinājums(AfterAdditionSubscriber klausītājs) {
-        piešķiršanas.abonē_uz_papildinājums(klausītājs);
+    public void subscribe_to_afterAddtions(AfterAdditionSubscriber klausītājs) {
+        piešķiršanas.subscribe_to_afterAddtions(klausītājs);
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        piešķiršanas.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
+        piešķiršanas.subscriber_to_beforeRemoval(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public void abonē_uz_pēcNoņemšana(BeforeRemovalSubscriber klausītājs) {
-        piešķiršanas.abonē_uz_pēcNoņemšana(klausītājs);
+    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber klausītājs) {
+        piešķiršanas.subscriber_to_afterRemoval(klausītājs);
     }
 
     @Override
@@ -178,18 +178,18 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts) {
-        return piešķiršanas.kolonnaSkats(atribūts);
+    public <T> ColumnView<T> columnView(Attribute<T> atribūts) {
+        return piešķiršanas.columnView(atribūts);
     }
 
     @Override
-    public List<Column<Object>> kolonnaSkats() {
-        return piešķiršanas.kolonnaSkats();
+    public List<Column<Object>> columnsView() {
+        return piešķiršanas.columnsView();
     }
 
     @Override
-    public ListView<Line> jēlaRindasSkats() {
-        return piešķiršanas.jēlaRindasSkats();
+    public ListView<Line> rawLinesView() {
+        return piešķiršanas.rawLinesView();
     }
 
     @Override
@@ -198,13 +198,13 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public List<Line> jēlasRindas() {
-        return piešķiršanas.jēlasRindas();
+    public List<Line> rawLines() {
+        return piešķiršanas.rawLines();
     }
 
     @Override
-    public Line uzmeklēVienādus(Attribute<Line> atribūts, Line other) {
-        return piešķiršanas.uzmeklēVienādus(atribūts, other);
+    public Line lookupEquals(Attribute<Line> atribūts, Line other) {
+        return piešķiršanas.lookupEquals(atribūts, other);
     }
 
     @Override

@@ -74,9 +74,9 @@ public abstract class ConstraintAI implements Constraint {
         this.injekcijasGrupas = injekcijasGrupas;
         rindas = datuBāze(vārds + ".rindas", this, RINDA, IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         rindasApstrāde = piešķiršanas("rindasApstrāde", rindas, radījums);
-        rindasApstrāde.abonē_uz_papildinājums(this::izdalīt_papildinajumu);
-        rindasApstrāde.abonē_uz_iepriekšNoņemšana(this::izdalīt_noņemšana);
-        rindas.abonē_uz_papildinājums(this::apstrāde_rindu_papildinajumu);
+        rindasApstrāde.subscribe_to_afterAddtions(this::izdalīt_papildinajumu);
+        rindasApstrāde.subscriber_to_beforeRemoval(this::izdalīt_noņemšana);
+        rindas.subscribe_to_afterAddtions(this::apstrāde_rindu_papildinajumu);
     }
 
     protected ConstraintAI() {
@@ -104,14 +104,14 @@ public abstract class ConstraintAI implements Constraint {
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(
                     rindas
-                            .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                            .columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                             .uzmeklēšana(ienākošieGrupasId)
-                            .kolonnaSkats(RINDA)
+                            .columnView(RINDA)
                             .uzmeklēšana(papildinajums)
                             .getLines()
             ).isEmpty();
         }
-        rindas.pieliktUnPārtulkot(list(papildinajums, ienākošieGrupasId));
+        rindas.addTranslated(list(papildinajums, ienākošieGrupasId));
     }
 
     protected abstract void apstrāde_rindu_papildinajumu(Line papildinājums);
@@ -124,24 +124,24 @@ public abstract class ConstraintAI implements Constraint {
         }
         apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
         rindasApstrāde
-                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                .columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                 .uzmeklēšana(ienākošaGrupaId)
-                .kolonnaSkats(RINDA)
+                .columnView(RINDA)
                 .uzmeklēšana(noņemšana)
                 .getLines()
-                .forEach(rindasApstrāde::noņemt);
+                .forEach(rindasApstrāde::remove);
         // JAUDA
-        rindas.jēlaRindasSkats().stream()
+        rindas.rawLinesView().stream()
                 .filter(e -> e != null)
                 .filter(line -> line.vērtība(RINDA).equals(noņemšana))
                 .filter(line -> line.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).equals(ienākošaGrupaId))
-                .forEach(rindas::noņemt);
+                .forEach(rindas::remove);
     }
 
     protected void apstrāda_rindas_primsNoņemšana(GroupId ienākošaGrupaId, Line noņemšana) {
-        rindasApstrāde.supplies_unused().jēlaRindasSkats().stream()
+        rindasApstrāde.supplies_unused().rawLinesView().stream()
                 .filter(e -> e != null)
-                .forEach(nelitotsPiedāvājums -> radījums.noņemt(nelitotsPiedāvājums));
+                .forEach(nelitotsPiedāvājums -> radījums.remove(nelitotsPiedāvājums));
     }
 
     protected void izdalīt_papildinajumu(Line papildinajums) {
@@ -171,7 +171,7 @@ public abstract class ConstraintAI implements Constraint {
         final Set<Line> ievērojama = setOfUniques();
         piešķiršanas.forEach(piešķiršana -> {
             if (novērtējums(grupaId, piešķiršana.vērtība(RINDA)).equals(bezMaksas())) {
-                ievērojama.add(rindasApstrāde.prasība_no_piešķiršana(piešķiršana).vērtība(RINDA));
+                ievērojama.add(rindasApstrāde.demand_of_allocation(piešķiršana).vērtība(RINDA));
             }
         });
         return ievērojama;
@@ -181,7 +181,7 @@ public abstract class ConstraintAI implements Constraint {
         final Set<Line> neievērotaji = setOfUniques();
         piešķiršanas.forEach(piešķiršana -> {
             if (!novērtējums(grupaId, piešķiršana.vērtība(RINDA)).equals(bezMaksas())) {
-                neievērotaji.add(rindasApstrāde.prasība_no_piešķiršana(piešķiršana).vērtība(RINDA));
+                neievērotaji.add(rindasApstrāde.demand_of_allocation(piešķiršana).vērtība(RINDA));
             }
         });
         return neievērotaji;
@@ -206,7 +206,7 @@ public abstract class ConstraintAI implements Constraint {
     protected RoutingRating atlasītNovērtetāMaršrutēšana
             (GroupId grupaId, Predicate<Line> apstrādsRindasAtlasītajs) {
         final var novērtetāMaršrutēšana = RoutingRating.veidot();
-        rindasApstrāde.jēlaRindasSkats().forEach(rinda -> {
+        rindasApstrāde.rawLinesView().forEach(rinda -> {
             if (rinda != null
                     && apstrādsRindasAtlasītajs.test(rinda)
                     && grupaId.equals(rinda.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))) {
@@ -251,7 +251,7 @@ public abstract class ConstraintAI implements Constraint {
 
     public Set<Line> piešķiršanaNo(GroupId grupaId) {
         final Set<Line> piešķiršanas = setOfUniques();
-        rindasApstrāde.jēlaRindasSkats().forEach(rinda -> {
+        rindasApstrāde.rawLinesView().forEach(rinda -> {
             if (rinda != null && rinda.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).equals(grupaId)) {
                 piešķiršanas.add(rinda);
             }
@@ -278,14 +278,14 @@ public abstract class ConstraintAI implements Constraint {
 
     public GroupId grupaNo(Line rinda) {
         return rindasAbstrāde()
-                .jēlaRindasSkats()
+                .rawLinesView()
                 .get(rinda.indekss())
                 .vērtība(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID);
     }
 
     @Override
     public Line pieliktRadījums(LocalRating vietējieNovērtējums) {
-        return radījums.pieliktUnPārtulkot
+        return radījums.addTranslated
                 (list
                         (vietējieNovērtējums.radītsIerobežojumuGrupaId()
                                 , vietējieNovērtējums.novērtējums()
@@ -321,7 +321,7 @@ public abstract class ConstraintAI implements Constraint {
         {
             final var novērtējumi = Xml.element("novērtējumi");
             dom.appendChild(novērtējumi);
-            rindasApstrāde.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+            rindasApstrāde.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                     .uzmeklēšana(injectionGroup())
                     .getLines()
                     .forEach(line -> novērtējumi.appendChild(line.toDom()));
@@ -330,7 +330,7 @@ public abstract class ConstraintAI implements Constraint {
                 dom.appendChild(
                         bērns.toDom(
                                 setOfUniques(radījums
-                                        .kolonnaSkats(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                                        .columnView(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                         .vertības()))));
         return dom;
     }
@@ -347,7 +347,7 @@ public abstract class ConstraintAI implements Constraint {
             dom.appendChild(novērtējumi);
             grupas.forEach(grupa ->
                     rindasApstrāde
-                            .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                            .columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                             .uzmeklēšana(grupa)
                             .getLines().
                             forEach(line -> novērtējumi.appendChild(line.toDom())));
@@ -357,7 +357,7 @@ public abstract class ConstraintAI implements Constraint {
                         bērns.toDom(
                                 grupas.stream().
                                         map(group -> rindasApstrāde
-                                                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                                .columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                                 .uzmeklēšana(group)
                                                 .getLines()
                                                 .stream()
@@ -374,9 +374,9 @@ public abstract class ConstraintAI implements Constraint {
             (Line rinda, GroupId grupa, Predicate<AllocationRating> piešķiršanaAtlasītājs) {
         final var vietējaArgumentācijas
                 = rindasApstrāde
-                .kolonnaSkats(RINDA)
+                .columnView(RINDA)
                 .uzmeklēšana(rinda)
-                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                .columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                 .uzmeklēšana(grupa)
                 .getLines()
                 .stream()
@@ -396,7 +396,7 @@ public abstract class ConstraintAI implements Constraint {
     @Override
     public Perspective dabiskaArgumentācija(GroupId grupa) {
         final var vietējiaArgumentācijas = rindasApstrāde
-                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                .columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                 .uzmeklēšana(grupa)
                 .getLines()
                 .stream()
@@ -438,9 +438,9 @@ public abstract class ConstraintAI implements Constraint {
             (Line rinda, GroupId grupa, Predicate<AllocationRating> piešķiršanaAtlasītājs) {
         final var argumēntacijas
                 = rindasApstrāde
-                .kolonnaSkats(RINDA)
+                .columnView(RINDA)
                 .uzmeklēšana(rinda)
-                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                .columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                 .uzmeklēšana(grupa)
                 .getLines()
                 .stream()

@@ -29,10 +29,10 @@ public class LinePointerI implements LinePointer {
 
     @Override
     public Optional<Line> interpretē(Table argKonteksts) {
-        if (argKonteksts.jēlaRindasSkats().size() <= indekss) {
+        if (argKonteksts.rawLinesView().size() <= indekss) {
             return Optional.empty();
         }
-        return Optional.ofNullable(argKonteksts.gūtJēluRindas(indekss));
+        return Optional.ofNullable(argKonteksts.getRawLines(indekss));
     }
 
     @Override

@@ -105,7 +105,7 @@ public class LookupColumn<T> implements Column<T> {
     @Override
     public T get(int indekss) {
         // SALABOT Filtrējiet elementus, kas nav daļa no uzmeklēšanas.
-        return tabula.base().kolonnaSkats(atribūts).get(indekss);
+        return tabula.base().columnView(atribūts).get(indekss);
     }
 
     @Override
@@ -180,7 +180,7 @@ public class LookupColumn<T> implements Column<T> {
     @Override
     public net.splitcells.dem.data.set.list.List<T> vertības() {
         return Lists.<T>list().withAppended(
-                tabula.jēlasRindas().stream()//
+                tabula.rawLines().stream()//
                         .map(e -> e.vērtība(atribūts))//
                         .collect(Collectors.toList())
         );

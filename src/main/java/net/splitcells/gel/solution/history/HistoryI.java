@@ -51,8 +51,8 @@ public class HistoryI implements History {
                                         , () -> solution.path().withAppended(HISTORY.value())
                                         , REFLEKSIJAS_DATI));
         this.solution = solution;
-        solution.abonē_uz_papildinājums(this);
-        solution.abonē_uz_iepriekšNoņemšana(this);
+        solution.subscribe_to_afterAddtions(this);
+        solution.subscriber_to_beforeRemoval(this);
     }
 
     @Override
@@ -63,12 +63,12 @@ public class HistoryI implements History {
         refleksijasDati.ar(AllocationRating.class
                 , pieškiršanasNovērtejums(solution.constraint().novērtējums(piešķiršanasVertība)));
         final Line piešķiršana
-                = demands().pieliktUnPārtulkot(list(
+                = demands().addTranslated(list(
                 parceltPedeijuNotikumuIdUzpriekšu()
                 , Allocation.piešķiršana(AllocationChangeType.PAPILDINĀJUMS
-                        , solution.prasība_no_piešķiršana(piešķiršanasVertība)
-                        , solution.piedāvājums_no_piešķiršana(piešķiršanasVertība))));
-        piešķiršanas.piešķirt(piešķiršana, this.piedāvājums().pieliktUnPārtulkot(list(refleksijasDati)));
+                        , solution.demand_of_allocation(piešķiršanasVertība)
+                        , solution.supply_of_allocation(piešķiršanasVertība))));
+        piešķiršanas.allocate(piešķiršana, this.supplies().addTranslated(list(refleksijasDati)));
     }
 
     @Override
@@ -79,12 +79,12 @@ public class HistoryI implements History {
         refleksijasDati.ar(AllocationRating.class
                 , pieškiršanasNovērtejums(solution.constraint().novērtējums(noņemtAtrisinājums)));
         final Line pieķiršanas
-                = demands().pieliktUnPārtulkot(list(
+                = demands().addTranslated(list(
                 parceltPedeijuNotikumuIdUzpriekšu()
                 , Allocation.piešķiršana(AllocationChangeType.NOŅEMŠANA
-                        , solution.prasība_no_piešķiršana(noņemtAtrisinājums)
-                        , solution.piedāvājums_no_piešķiršana(noņemtAtrisinājums))));
-        piešķiršanas.piešķirt(pieķiršanas, this.piedāvājums().pieliktUnPārtulkot(list(refleksijasDati)));
+                        , solution.demand_of_allocation(noņemtAtrisinājums)
+                        , solution.supply_of_allocation(noņemtAtrisinājums))));
+        piešķiršanas.allocate(pieķiršanas, this.supplies().addTranslated(list(refleksijasDati)));
     }
 
     protected Integer parceltPedeijuNotikumuIdAtpakal() {
@@ -112,21 +112,21 @@ public class HistoryI implements History {
 
     protected void atgrieztPedeijo() {
         final var indekss = size() - 1;
-        final var notikumuKoNoņemnt = kolonnaSkats(PIEŠĶIRŠANA_ID)
+        final var notikumuKoNoņemnt = columnView(PIEŠĶIRŠANA_ID)
                 .uzmeklēšana(indekss)
                 .gūtRinda(0)
                 .vērtība(PIEŠĶIRŠANAS_NOTIKUMS);
         final var notikumuTips = notikumuKoNoņemnt.tips();
         if (notikumuTips.equals(AllocationChangeType.PAPILDINĀJUMS)) {
-            final var pieškiršanas = solution.piešķiršanasNo
+            final var pieškiršanas = solution.allocationsOf
                     (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(solution.demands()).get()
-                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(solution.piedāvājums()).get());
+                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(solution.supplies()).get());
             assertThat(pieškiršanas).hasSize(1);
-            pieškiršanas.forEach(e -> solution.noņemt(e));
+            pieškiršanas.forEach(e -> solution.remove(e));
         } else if (notikumuTips.equals(AllocationChangeType.NOŅEMŠANA)) {
-            solution.piešķirt
+            solution.allocate
                     (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(solution.demands()).get()
-                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(solution.piedāvājums()).get());
+                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(solution.supplies()).get());
         } else {
             throw new UnsupportedOperationException();
         }
@@ -134,51 +134,51 @@ public class HistoryI implements History {
     }
 
     protected void atgrieztPedeijo_noņemt(int indekss) {
-        noņemt_(kolonnaSkats(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss + 1).gūtRinda(0));
-        noņemt_(kolonnaSkats(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss).gūtRinda(0));
+        noņemt_(columnView(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss + 1).gūtRinda(0));
+        noņemt_(columnView(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss).gūtRinda(0));
     }
 
     protected void noņemt_(Line rinda) {
-        piešķiršanas.noņemt(rinda);
+        piešķiršanas.remove(rinda);
         --pēdējaNotikumuId;
     }
 
     @Override
-    public void noņemt(Line rinda) {
+    public void remove(Line rinda) {
         throw not_implemented_yet();
     }
 
     @Override
-    public void abonē_uz_papildinājums(AfterAdditionSubscriber klausītājs) {
-        piešķiršanas.abonē_uz_papildinājums(klausītājs);
+    public void subscribe_to_afterAddtions(AfterAdditionSubscriber klausītājs) {
+        piešķiršanas.subscribe_to_afterAddtions(klausītājs);
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        piešķiršanas.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
+        piešķiršanas.subscriber_to_beforeRemoval(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public void abonē_uz_pēcNoņemšana(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        piešķiršanas.abonē_uz_pēcNoņemšana(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
+        piešķiršanas.subscriber_to_afterRemoval(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public Line pieliktUnPārtulkot(List<?> vertības) {
+    public Line addTranslated(List<?> vertības) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Line pielikt(Line rinda) {
+    public Line add(Line rinda) {
         throw not_implemented_yet();
     }
 
     @Override
-    public void noņemt(int indekss) {
+    public void remove(int indekss) {
         if (size() != indekss + 1) {
             throw not_implemented_yet();
         }
-        piešķiršanas.noņemt(jēlaRindasSkats().get(indekss));
+        piešķiršanas.remove(rawLinesView().get(indekss));
     }
 
     @Override
@@ -187,18 +187,18 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line piešķirt(Line prasība, Line piedāvājums) {
+    public Line allocate(Line prasība, Line piedāvājums) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Database piedāvājums() {
-        return piešķiršanas.piedāvājums();
+    public Database supplies() {
+        return piešķiršanas.supplies();
     }
 
     @Override
-    public Database piedāvājumi_lietoti() {
-        return piešķiršanas.piedāvājumi_lietoti();
+    public Database supplies_used() {
+        return piešķiršanas.supplies_used();
     }
 
     @Override
@@ -212,8 +212,8 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database prasība_lietots() {
-        return piešķiršanas.prasība_lietots();
+    public Database demands_used() {
+        return piešķiršanas.demands_used();
     }
 
     @Override
@@ -222,23 +222,23 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line prasība_no_piešķiršana(Line piešķiršana) {
-        return piešķiršanas.prasība_no_piešķiršana(piešķiršana);
+    public Line demand_of_allocation(Line piešķiršana) {
+        return piešķiršanas.demand_of_allocation(piešķiršana);
     }
 
     @Override
-    public Line piedāvājums_no_piešķiršana(Line piešķiršana) {
-        return piešķiršanas.piedāvājums_no_piešķiršana(piešķiršana);
+    public Line supply_of_allocation(Line piešķiršana) {
+        return piešķiršanas.supply_of_allocation(piešķiršana);
     }
 
     @Override
-    public Set<Line> piešķiršanas_no_piedāvājuma(Line piedāvājums) {
-        return piešķiršanas.piešķiršanas_no_piedāvājuma(piedāvājums);
+    public Set<Line> allocations_of_supply(Line piedāvājums) {
+        return piešķiršanas.allocations_of_supply(piedāvājums);
     }
 
     @Override
-    public Set<Line> piešķiršanas_no_prasības(Line prasība) {
-        return piešķiršanas.piešķiršanas_no_prasības(prasība);
+    public Set<Line> allocations_of_demand(Line prasība) {
+        return piešķiršanas.allocations_of_demand(prasība);
     }
 
     @Override
@@ -247,18 +247,18 @@ public class HistoryI implements History {
     }
 
     @Override
-    public <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts) {
-        return piešķiršanas.kolonnaSkats(atribūts);
+    public <T> ColumnView<T> columnView(Attribute<T> atribūts) {
+        return piešķiršanas.columnView(atribūts);
     }
 
     @Override
-    public List<Column<Object>> kolonnaSkats() {
-        return piešķiršanas.kolonnaSkats();
+    public List<Column<Object>> columnsView() {
+        return piešķiršanas.columnsView();
     }
 
     @Override
-    public ListView<Line> jēlaRindasSkats() {
-        return piešķiršanas.jēlaRindasSkats();
+    public ListView<Line> rawLinesView() {
+        return piešķiršanas.rawLinesView();
     }
 
     @Override
@@ -267,13 +267,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public List<Line> jēlasRindas() {
-        return piešķiršanas.jēlasRindas();
+    public List<Line> rawLines() {
+        return piešķiršanas.rawLines();
     }
 
     @Override
-    public Line uzmeklēVienādus(Attribute<Line> atribūts, Line cits) {
-        return piešķiršanas.uzmeklēVienādus(atribūts, cits);
+    public Line lookupEquals(Attribute<Line> atribūts, Line cits) {
+        return piešķiršanas.lookupEquals(atribūts, cits);
     }
 
     @Override

@@ -58,19 +58,19 @@ public class UsedSupplySwitcher implements Optimization {
             (SolutionView atrisinājums
                     , Set<LinePointer> apstrādatiPrasības
                     , Set<LinePointer> apstrādatiPiedāvājumi) {
-        if (atrisinājums.prasība_lietots().size() >= 2) {
-            final int atlaseA = nejaušiba.integer(0, atrisinājums.prasība_lietots().size() - 1);
-            final int atlaseB = nejaušiba.integer(0, atrisinājums.prasība_lietots().size() - 1);
+        if (atrisinājums.demands_used().size() >= 2) {
+            final int atlaseA = nejaušiba.integer(0, atrisinājums.demands_used().size() - 1);
+            final int atlaseB = nejaušiba.integer(0, atrisinājums.demands_used().size() - 1);
             if (atlaseA == atlaseB) {
                 return list();
             }
             final var lietotaPrasībaA = atrisinājums.demands().gūtRinda(atlaseA);
-            final var vecaPieškiršanaA = atrisinājums.piešķiršanas_no_prasības(lietotaPrasībaA).iterator().next();
-            final var lietotaPiedāvājumsA = atrisinājums.piedāvājums_no_piešķiršana(vecaPieškiršanaA);
+            final var vecaPieškiršanaA = atrisinājums.allocations_of_demand(lietotaPrasībaA).iterator().next();
+            final var lietotaPiedāvājumsA = atrisinājums.supply_of_allocation(vecaPieškiršanaA);
 
             final var lietotaPrasībaB = atrisinājums.demands().gūtRinda(atlaseB);
-            final var vecaPieſkirſanaB = atrisinājums.piešķiršanas_no_prasības(lietotaPrasībaB).iterator().next();
-            final var lietotsPiedāvājumsB = atrisinājums.piedāvājums_no_piešķiršana(vecaPieſkirſanaB);
+            final var vecaPieſkirſanaB = atrisinājums.allocations_of_demand(lietotaPrasībaB).iterator().next();
+            final var lietotsPiedāvājumsB = atrisinājums.supply_of_allocation(vecaPieſkirſanaB);
 
             final var lietotasParsībasARāditājs = lietotaPrasībaA.uzRindaRādītājs();
             final var lietotasPrasībasBRāditājs = lietotaPrasībaB.uzRindaRādītājs();

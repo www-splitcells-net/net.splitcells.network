@@ -28,29 +28,29 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 public interface Table extends Discoverable, Domable {
     List<Attribute<Object>> headerView();
 
-    <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts);
+    <T> ColumnView<T> columnView(Attribute<T> atribūts);
 
-    List<Column<Object>> kolonnaSkats();
+    List<Column<Object>> columnsView();
 
-    ListView<Line> jēlaRindasSkats();
+    ListView<Line> rawLinesView();
 
-    default boolean satur(Line rinda) {
-        if (rinda.indekss() >= jēlaRindasSkats().size()) {
+    default boolean contains(Line rinda) {
+        if (rinda.indekss() >= rawLinesView().size()) {
             return false;
         } else {
-            return null != jēlaRindasSkats().get(rinda.indekss());
+            return null != rawLinesView().get(rinda.indekss());
         }
     }
 
     default net.splitcells.dem.data.set.list.List<Line> getLines() {
         return listWithValuesOf
-                (jēlaRindasSkats().stream()
+                (rawLinesView().stream()
                         .filter(e -> e != null)
                         .collect(Collectors.toList()));
     }
 
-    default Line gūtJēluRindas(int indekss) {
-        return jēlaRindasSkats().get(indekss);
+    default Line getRawLines(int indekss) {
+        return rawLinesView().get(indekss);
     }
 
     default Line gūtRinda(int indekss) {
@@ -59,18 +59,18 @@ public interface Table extends Discoverable, Domable {
 
     int size();
 
-    default boolean irTukšs() {
+    default boolean isEmpty() {
         return 0 == size();
     }
 
-    default boolean navTukšs() {
-        return !irTukšs();
+    default boolean hasContent() {
+        return !isEmpty();
     }
 
     @Deprecated
-    List<Line> jēlasRindas();
+    List<Line> rawLines();
 
-    default String uzCSV() {
+    default String toCSV() {
         final var csv = new StringBuffer();
         final var header = headerView().stream()
                 .map(atribūts -> atribūts.vārds())
@@ -95,7 +95,7 @@ public interface Table extends Discoverable, Domable {
     /**
      * PĀRSAUKT
      */
-    Line uzmeklēVienādus(Attribute<Line> atribūts, Line other);
+    Line lookupEquals(Attribute<Line> atribūts, Line other);
 
     default Stream<Line> uzmeklēVienādus(List<Object> vertības) {
         return getLines().stream()

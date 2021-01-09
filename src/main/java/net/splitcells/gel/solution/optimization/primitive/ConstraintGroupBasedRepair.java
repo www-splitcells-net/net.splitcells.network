@@ -146,18 +146,18 @@ public class ConstraintGroupBasedRepair implements Optimization {
         final var ienākošasGrupas = Sets.setOfUniques
                 (ierobežojums
                         .rindasAbstrāde()
-                        .kolonnaSkats(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                        .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                         .vertības());
         return ienākošasGrupas
                 .stream()
                 .filter(grupa -> !ierobežojums.neievērotaji(grupa).isEmpty())
-                .map(grupa -> ierobežojums.rindasAbstrāde().kolonnaSkats(Constraint.RINDA).vertības())
+                .map(grupa -> ierobežojums.rindasAbstrāde().columnView(Constraint.RINDA).vertības())
                 .flatMap(straumeNoRindasSarakstiem -> straumeNoRindasSarakstiem.stream())
                 .distinct()
                 .map(piešķiršana -> optimizacijasNotikums
                         (NOŅEMŠANA
-                                , atrisinājums.prasība_no_piešķiršana(piešķiršana).uzRindaRādītājs()
-                                , atrisinājums.piedāvājums_no_piešķiršana(piešķiršana).uzRindaRādītājs()))
+                                , atrisinājums.demand_of_allocation(piešķiršana).uzRindaRādītājs()
+                                , atrisinājums.supply_of_allocation(piešķiršana).uzRindaRādītājs()))
                 .collect(toList());
     }
 }

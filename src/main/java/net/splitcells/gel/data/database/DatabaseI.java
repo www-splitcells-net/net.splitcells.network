@@ -62,14 +62,14 @@ public class DatabaseI implements Database {
             kolonnas.add(ColumnI.kolonna(this, att));
         });
         this.atribūti = listWithValuesOf(headerAtribūts);
-        kolonnas.forEach(this::abonē_uz_papildinājums);
-        kolonnas.forEach(this::abonē_uz_iepriekšNoņemšana);
+        kolonnas.forEach(this::subscribe_to_afterAddtions);
+        kolonnas.forEach(this::subscriber_to_beforeRemoval);
     }
 
     @Deprecated
     public DatabaseI(List<Attribute<?>> atribūti, Collection<List<Object>> rindasVertības) {
         this(atribūti);
-        rindasVertības.forEach(line_values -> pieliktUnPārtulkot(line_values));
+        rindasVertības.forEach(line_values -> addTranslated(line_values));
     }
 
     public DatabaseI(String vārds, Discoverable vecāks, Attribute<? extends Object>... atribūti) {
@@ -88,27 +88,27 @@ public class DatabaseI implements Database {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> ColumnView<T> kolonnaSkats(Attribute<T> atribūts) {
+    public <T> ColumnView<T> columnView(Attribute<T> atribūts) {
         return ColumnViewI.kolonnasSkats((Column<T>) kolonnas.get(tips_kolonnasIndekss.get(atribūts)));
     }
 
     @Override
-    public ListView<Line> jēlaRindasSkats() {
+    public ListView<Line> rawLinesView() {
         return jēlasRindasSkats;
     }
 
     @Override
-    public void abonē_uz_papildinājums(AfterAdditionSubscriber klausītājs) {
+    public void subscribe_to_afterAddtions(AfterAdditionSubscriber klausītājs) {
         this.papildinājumsKlausītājs.add(klausītājs);
     }
 
     @Override
-    public void abonē_uz_iepriekšNoņemšana(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
+    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
         pirmsNoņemšanaKlausītājs.add(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
-    public Line pielikt(Line rinda) {
+    public Line add(Line rinda) {
         final List<Object> rindasVertības = list();
         range(0, atribūti.size()).forEach(i -> {
             rindasVertības.add(rinda.vērtība(atribūti.get(i)));
@@ -146,7 +146,7 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public Line pieliktUnPārtulkot(List<? extends Object> rindasVertības) {
+    public Line addTranslated(List<? extends Object> rindasVertības) {
         final int rindasIndekss;
         final Line rinda;
         if (indekssiNelitoti.isEmpty()) {
@@ -167,7 +167,7 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public void noņemt(int rindasIndekss) {
+    public void remove(int rindasIndekss) {
         final var noņemšanaNo = jēlasRindas.get(rindasIndekss);
         pirmsNoņemšanaKlausītājs.forEach(klausītājs -> klausītājs.rēgistrē_pirms_noņemšanas(noņemšanaNo));
         kolonnas.forEach(kolonna -> {
@@ -181,8 +181,8 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public void noņemt(Line rinda) {
-        noņemt(rinda.indekss());
+    public void remove(Line rinda) {
+        remove(rinda.indekss());
     }
 
     @Override
@@ -191,7 +191,7 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public void abonē_uz_pēcNoņemšana(BeforeRemovalSubscriber listener) {
+    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber listener) {
         pēcNoņemšanaAbonēšanas.add(listener);
     }
 
@@ -201,7 +201,7 @@ public class DatabaseI implements Database {
      * @return
      */
     @Override
-    public List<Column<Object>> kolonnaSkats() {
+    public List<Column<Object>> columnsView() {
         return listWithValuesOf(kolonnas);
     }
 
@@ -218,19 +218,19 @@ public class DatabaseI implements Database {
     @Override
     public Element toDom() {
         final var dom = element(Database.class.getSimpleName());
-        jēlaRindasSkats().stream()
+        rawLinesView().stream()
                 .filter(rinda -> rinda != null)
                 .forEach(rinda -> dom.appendChild(rinda.toDom()));
         return dom;
     }
 
     @Override
-    public List<Line> jēlasRindas() {
+    public List<Line> rawLines() {
         return listWithValuesOf(rindas);
     }
 
     @Override
-    public Line uzmeklēVienādus(Attribute<Line> atribūts, Line rinda) {
+    public Line lookupEquals(Attribute<Line> atribūts, Line rinda) {
         return rindas.stream()
                 .filter(citaRinda -> citaRinda.vērtība(atribūts).indekss() == rinda.indekss())
                 .reduce(StreamUtils.ensureSingle())

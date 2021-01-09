@@ -28,7 +28,7 @@ public class LineI implements Line {
 
     @Override
     public <T> T vērtība(Attribute<T> atribūts) {
-        return konteksts.kolonnaSkats(requireNonNull(atribūts)).get(indekss);
+        return konteksts.columnView(requireNonNull(atribūts)).get(indekss);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class LineI implements Line {
         final var gūtasDomVertība = element(Line.class.getSimpleName());
         gūtasDomVertība.appendChild(element("indekss", textNode("" + indekss)));
         konteksts.headerView().forEach(atribūts -> {
-            final var vertība = konteksts.kolonnaSkats(atribūts).get(indekss);
+            final var vertība = konteksts.columnView(atribūts).get(indekss);
             final Node domVertība;
             if (vertība == null) {
                 domVertība = textNode("");

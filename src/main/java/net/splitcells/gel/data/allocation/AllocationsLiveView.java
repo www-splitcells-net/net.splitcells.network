@@ -9,30 +9,30 @@ import java.util.Set;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
 public interface AllocationsLiveView extends Table {
-    Database piedāvājums();
+    Database supplies();
 
-    Database piedāvājumi_lietoti();
+    Database supplies_used();
 
     Database supplies_unused();
 
     Database demands();
 
-    Database prasība_lietots();
+    Database demands_used();
 
     Database demands_unused();
 
-    Line prasība_no_piešķiršana(Line piešķiršana);
+    Line demand_of_allocation(Line piešķiršana);
 
-    Line piedāvājums_no_piešķiršana(Line piešķiršana);
+    Line supply_of_allocation(Line piešķiršana);
 
-    Set<Line> piešķiršanas_no_piedāvājuma(Line peidāvājums);
+    Set<Line> allocations_of_supply(Line peidāvājums);
 
-    Set<Line> piešķiršanas_no_prasības(Line prasība);
+    Set<Line> allocations_of_demand(Line prasība);
 
-    default Set<Line> peidāvājumi_no_prasībam(Line prasība) {
+    default Set<Line> supply_of_demand(Line prasība) {
         final Set<Line> peidāvājumi_no_prasībam = setOfUniques();
-        piešķiršanas_no_prasības(prasība)
-                .forEach(piešķiršana -> peidāvājumi_no_prasībam.add(piedāvājums_no_piešķiršana(piešķiršana)));
+        allocations_of_demand(prasība)
+                .forEach(piešķiršana -> peidāvājumi_no_prasībam.add(supply_of_allocation(piešķiršana)));
         return peidāvājumi_no_prasībam;
     }
 }

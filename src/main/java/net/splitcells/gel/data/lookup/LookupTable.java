@@ -51,7 +51,7 @@ public class LookupTable implements Table {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> Column<T> kolonnaSkats(Attribute<T> atribūts) {
+    public <T> Column<T> columnView(Attribute<T> atribūts) {
         int index = 0;
         for (final var headerAttribute : tabula.headerView()) {
             if (headerAttribute.equals(atribūts)) {
@@ -63,12 +63,12 @@ public class LookupTable implements Table {
     }
 
     @Override
-    public List<Line> jēlaRindasSkats() {
+    public List<Line> rawLinesView() {
         final var rVal = Lists.<Line>list();
-        range(0, tabula.jēlaRindasSkats().size()).forEach(i -> {
+        range(0, tabula.rawLinesView().size()).forEach(i -> {
             final Line rElement;
             if (saturs.contains(i)) {
-                rElement = tabula.jēlaRindasSkats().get(i);
+                rElement = tabula.rawLinesView().get(i);
             } else {
                 rElement = null;
             }
@@ -105,7 +105,7 @@ public class LookupTable implements Table {
     }
 
     @Override
-    public List<Column<Object>> kolonnaSkats() {
+    public List<Column<Object>> columnsView() {
         return kolonnasSkats;
     }
 
@@ -128,7 +128,7 @@ public class LookupTable implements Table {
         rVal.appendChild(element("subject", textNode(path().toString())));
         rVal.appendChild(element("content", textNode(saturs.toString())));
         saturs.forEach(i -> {
-            rVal.appendChild(jēlaRindasSkats().get(i).toDom());
+            rVal.appendChild(rawLinesView().get(i).toDom());
         });
         return rVal;
     }
@@ -139,16 +139,16 @@ public class LookupTable implements Table {
     }
 
     @Override
-    public List<Line> jēlasRindas() {
+    public List<Line> rawLines() {
         // TASK PERFORMANCE
         final var rVal = Lists.<Line>list();
-        saturs.forEach(index -> rVal.add(tabula.gūtJēluRindas(index)));
+        saturs.forEach(index -> rVal.add(tabula.getRawLines(index)));
         return rVal;
     }
 
     @Override
-    public Line uzmeklēVienādus(Attribute<Line> atribūts, Line other) {
-        final var rBase = tabula.uzmeklēVienādus(atribūts, other);
+    public Line lookupEquals(Attribute<Line> atribūts, Line other) {
+        final var rBase = tabula.lookupEquals(atribūts, other);
         if (saturs.contains(rBase.indekss())) {
             return rBase;
         }

@@ -10,7 +10,7 @@ public class Solutions extends ResourceI<SolutionFactory> {
         super(() -> new SolutionFactoryI());
     }
 
-    public static Solution atrisinājum(Problem problēma) {
-        return environment().config().configValue(Solutions.class).atrisinājum(problēma);
+    public static Solution solution(Problem problem) {
+        return environment().config().configValue(Solutions.class).solution(problem);
     }
 }

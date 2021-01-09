@@ -61,9 +61,9 @@ public class QueryI implements Query {
                 radītasGrupas.addAll
                         (ierobežojums
                                 .rindasAbstrāde()
-                                .kolonnaSkats(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(grupa)
-                                .kolonnaSkats(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                                .columnView(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                 .vertības());
             }
         } else {
@@ -97,9 +97,9 @@ public class QueryI implements Query {
             for (GroupId grupa : grupas) {
                 radītasGrupas.addAll(
                         ierobežojums.rindasAbstrāde()
-                                .kolonnaSkats(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(grupa)
-                                .kolonnaSkats(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                                .columnView(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                 .vertības());
             }
         } else {
@@ -151,9 +151,9 @@ public class QueryI implements Query {
             for (GroupId grupa : grupas) {
                 resultingGroups.addAll(
                         ierobežojums.rindasAbstrāde()
-                                .kolonnaSkats(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(grupa)
-                                .kolonnaSkats(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                                .columnView(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                 .vertības());
             }
         } else {
@@ -197,9 +197,9 @@ public class QueryI implements Query {
         for (GroupId grupa : grupas) {
             radītasGrupas.addAll(
                     ierobežojums.rindasAbstrāde()
-                            .kolonnaSkats(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                            .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                             .uzmeklēšana(grupa)
-                            .kolonnaSkats(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                            .columnView(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                             .vertības());
         }
         if (sakne.isEmpty()) {

@@ -63,15 +63,15 @@ public class FreeSupplySwitcher implements Optimization {
             (SolutionView atrisinājums
                     , Set<LinePointer> apstrādatasPrasības
                     , Set<LinePointer> apstrādatiPiedāvājumi) {
-        if (atrisinājums.prasība_lietots().navTukšs() && atrisinājums.supplies_unused().navTukšs()) {
+        if (atrisinājums.demands_used().hasContent() && atrisinājums.supplies_unused().hasContent()) {
             final int atlase = nejaušiba.integer(0, atrisinājums.demands_unused().size() - 1);
-            final var lietotaPrasība = atrisinājums.prasība_lietots().gūtRinda(atlase);
+            final var lietotaPrasība = atrisinājums.demands_used().gūtRinda(atlase);
             final var lietotasPrasībasRādītājs = lietotaPrasība.uzRindaRādītājs();
             if (apstrādatasPrasības.contains(lietotasPrasībasRādītājs)) {
                 return list();
             }
-            final var pieškiršana = atrisinājums.piešķiršanas_no_prasības(lietotaPrasība).iterator().next();
-            final var lietotsPiedāvājums = atrisinājums.piedāvājums_no_piešķiršana(pieškiršana);
+            final var pieškiršana = atrisinājums.allocations_of_demand(lietotaPrasība).iterator().next();
+            final var lietotsPiedāvājums = atrisinājums.supply_of_allocation(pieškiršana);
             final var lietotsPiedāvājumuRādītājs = lietotsPiedāvājums.uzRindaRādītājs();
             if (apstrādatiPiedāvājumi.contains(lietotsPiedāvājumuRādītājs)) {
                 return list();
@@ -84,11 +84,11 @@ public class FreeSupplySwitcher implements Optimization {
                             , optimizacijasNotikums(
                                     PIEŠĶIRŠANA
                                     , atrisinājums.demands()
-                                            .gūtJēluRindas(lietotaPrasība.indekss())
+                                            .getRawLines(lietotaPrasība.indekss())
                                             .uzRindaRādītājs()
                                     , atrisinājums
-                                            .piedāvājums()
-                                            .gūtJēluRindas
+                                            .supplies()
+                                            .getRawLines
                                                     (nejaušiba.integer(0, atrisinājums.supplies_unused().size()))
                                             .uzRindaRādītājs()
                             ));

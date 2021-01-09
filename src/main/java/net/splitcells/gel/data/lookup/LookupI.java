@@ -23,7 +23,7 @@ public class LookupI<T> implements Lookup<T> {
         this.tabula = tabula;
         this.tukšaUzmeklēšanasTabula = uzmeklēšanasTabula(tabula, atribūts);
         this.atribūts = atribūts;
-        tabula.jēlaRindasSkats().stream()
+        tabula.rawLinesView().stream()
                 .filter(e -> e != null)
                 .forEach(e -> reģistrē_papildinājums(e.vērtība(atribūts), e.indekss()));
     }
@@ -38,7 +38,7 @@ public class LookupI<T> implements Lookup<T> {
                 uzmeklēšanasTabula = uzmeklēšanasTabula(tabula, atribūts);
                 saturs.put(papildinājums, uzmeklēšanasTabula);
             }
-            uzmeklēšanasTabula.reģistrē(tabula.jēlaRindasSkats().get(indekss));
+            uzmeklēšanasTabula.reģistrē(tabula.rawLinesView().get(indekss));
         }
         reģistrē_papildinājums_priekš_agregātuSaturs(papildinājums, indekss);
     }
@@ -46,22 +46,22 @@ public class LookupI<T> implements Lookup<T> {
     private void reģistrē_papildinājums_priekš_agregātuSaturs(T papildinājums, int indekss) {
         agregātsSaturs.forEach((predikāts, uzmeklēšanasTabula) -> {
             if (predikāts.test(papildinājums)) {
-                uzmeklēšanasTabula.reģistrē(tabula.jēlaRindasSkats().get(indekss));
+                uzmeklēšanasTabula.reģistrē(tabula.rawLinesView().get(indekss));
             }
         });
     }
 
     @Override
     public void reģistē_noņemšana(T noņemšana, int indekss) {
-        final var rinda = tabula.jēlaRindasSkats().get(indekss);
+        final var rinda = tabula.rawLinesView().get(indekss);
         saturs.get(noņemšana).noņemt_reģistrāciju(rinda);
         // atkritumu kolekcija
-        if (saturs.get(noņemšana).irTukšs()) {
+        if (saturs.get(noņemšana).isEmpty()) {
             saturs.remove(noņemšana);
         }
         agregātsSaturs.forEach((predikāts, uzmeklēšanasTabula) -> {
             if (predikāts.test(noņemšana)) {
-                uzmeklēšanasTabula.noņemt_reģistrāciju(tabula.jēlaRindasSkats().get(indekss));
+                uzmeklēšanasTabula.noņemt_reģistrāciju(tabula.rawLinesView().get(indekss));
             }
         });
     }
@@ -80,7 +80,7 @@ public class LookupI<T> implements Lookup<T> {
             final var uzmeklēšana = uzmeklēšanasTabula(tabula, predikāts.toString());
             agregātsSaturs.put(predikāts, uzmeklēšana);
             tabula
-                    .jēlaRindasSkats()
+                    .rawLinesView()
                     .stream()
                     .filter(e -> e != null)
                     .forEach(e -> {

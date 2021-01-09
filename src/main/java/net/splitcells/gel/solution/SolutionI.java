@@ -23,252 +23,252 @@ import java.util.function.Function;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 public class SolutionI implements Solution {
-	private final Problem problēma;
-	private final History vēsture;
+	private final Problem problem;
+	private final History history;
 	
-	public static Solution atrisinājums(Problem problēma) {
-		return new SolutionI(problēma);
+	public static Solution solution(Problem problem) {
+		return new SolutionI(problem);
 	}
 
-	public SolutionI(Problem problēma) {
-		this.problēma = problēma;
-		vēsture = Histories.vēsture(this);
+	public SolutionI(Problem problem) {
+		this.problem = problem;
+		history = Histories.vēsture(this);
 	}
 
 	@Override
 	public boolean isComplete() {
 		return demands_unused().size() == 0
-				|| demands().size() < piedāvājums().size()
-				&& prasība_lietots().size() == piedāvājums().size();
+				|| demands().size() < supplies().size()
+				&& demands_used().size() == supplies().size();
 	}
 
-	public boolean līdzsvarots() {
-		return demands().jēlaRindasSkats().size() == piedāvājums().jēlaRindasSkats().size();
+	public boolean balanced() {
+		return demands().rawLinesView().size() == supplies().rawLinesView().size();
 	}
 
-	public boolean pieļaujams(final long kļudas_slieksnis) {
+	public boolean tolerable(final long error_threshold) {
 		throw new Not_implemented_yet();
 	}
 
 	@Override
 	public History history() {
-		return vēsture;
+		return history;
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public Constraint constraint() {
-		return this.problēma.constraint();
+		return this.problem.constraint();
 	}
 
 	@Override
-	public Allocations piešķiršanas() {
-		return problēma.piešķiršanas();
+	public Allocations allocations() {
+		return problem.allocations();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Solution uzAtrisinājumu() {
-		return this.problēma.uzAtrisinājumu();
+	public Solution toSolution() {
+		return this.problem.toSolution();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Solution kāAtrisinājums() {
-		return this.problēma.kāAtrisinājums();
+	public Solution asSolution() {
+		return this.problem.asSolution();
 	}
 
 	@Override
-	public DerivedSolution atvasinājums(Function<MetaRating, MetaRating> atvasinātaijs) {
-		return problēma.atvasinājums(atvasinātaijs);
+	public DerivedSolution derived(Function<MetaRating, MetaRating> derivation) {
+		return problem.derived(derivation);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database piedāvājums() {
-		return this.problēma.piedāvājums();
+	public Database supplies() {
+		return this.problem.supplies();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database piedāvājumi_lietoti() {
-		return this.problēma.piedāvājumi_lietoti();
+	public Database supplies_used() {
+		return this.problem.supplies_used();
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public Database supplies_unused() {
-		return this.problēma.supplies_unused();
+		return this.problem.supplies_unused();
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public Database demands() {
-		return this.problēma.demands();
+		return this.problem.demands();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database prasība_lietots() {
-		return this.problēma.prasība_lietots();
+	public Database demands_used() {
+		return this.problem.demands_used();
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public Database demands_unused() {
-		return this.problēma.demands_unused();
+		return this.problem.demands_unused();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line piešķirt(final Line prasība, final Line piedāvājums) {
-		return this.problēma.piešķirt(prasība, piedāvājums);
+	public Line allocate(final Line demand, final Line supply) {
+		return this.problem.allocate(demand, supply);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line prasība_no_piešķiršana(final Line piešķiršana) {
-		return this.problēma.prasība_no_piešķiršana(piešķiršana);
+	public Line demand_of_allocation(final Line allocation) {
+		return this.problem.demand_of_allocation(allocation);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line piedāvājums_no_piešķiršana(final Line piešķiršana) {
-		return this.problēma.piedāvājums_no_piešķiršana(piešķiršana);
+	public Line supply_of_allocation(final Line allocation) {
+		return this.problem.supply_of_allocation(allocation);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Line> piešķiršanas_no_piedāvājuma(final Line peidāvājums) {
-		return this.problēma.piešķiršanas_no_piedāvājuma(peidāvājums);
+	public java.util.Set<Line> allocations_of_supply(final Line supply) {
+		return this.problem.allocations_of_supply(supply);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Line> piešķiršanasNo(final Line prasība, final Line piedāvājums) {
-		return this.problēma.piešķiršanasNo(prasība, piedāvājums);
+	public java.util.Set<Line> allocationsOf(final Line demand, final Line supply) {
+		return this.problem.allocationsOf(demand, supply);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Line> piešķiršanas_no_prasības(final Line prasība) {
-		return this.problēma.piešķiršanas_no_prasības(prasība);
+	public java.util.Set<Line> allocations_of_demand(final Line demand) {
+		return this.problem.allocations_of_demand(demand);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Line> peidāvājumi_no_prasībam(final Line prasība) {
-		return this.problēma.peidāvājumi_no_prasībam(prasība);
+	public java.util.Set<Line> supply_of_demand(final Line demand) {
+		return this.problem.supply_of_demand(demand);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line pieliktUnPārtulkot(final List<?> vertības) {
-		return this.problēma.pieliktUnPārtulkot(vertības);
+	public Line addTranslated(final List<?> values) {
+		return this.problem.addTranslated(values);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line pielikt(final Line rinda) {
-		return this.problēma.pielikt(rinda);
+	public Line add(final Line line) {
+		return this.problem.add(line);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void noņemt(final int rindasIndekss) {
-		this.problēma.noņemt(rindasIndekss);
+	public void remove(final int lineIndex) {
+		this.problem.remove(lineIndex);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void noņemt(final Line rinda) {
-		this.problēma.noņemt(rinda);
+	public void remove(final Line line) {
+		this.problem.remove(line);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void aizvietot(final Line jaunaRinda) {
-		this.problēma.aizvietot(jaunaRinda);
+	public void replace(final Line newLine) {
+		this.problem.replace(newLine);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void sinhronizē(final T klausītājs) {
-		this.problēma.sinhronizē(klausītājs);
+	public <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void synchronize(final T subscriber) {
+		this.problem.synchronize(subscriber);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void abonē_uz_papildinājums(final AfterAdditionSubscriber klausītājs) {
-		this.problēma.abonē_uz_papildinājums(klausītājs);
+	public void subscribe_to_afterAddtions(final AfterAdditionSubscriber subscriber) {
+		this.problem.subscribe_to_afterAddtions(subscriber);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void abonē_uz_iepriekšNoņemšana(final BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-		this.problēma.abonē_uz_iepriekšNoņemšana(pirmsNoņemšanasKlausītājs);
+	public void subscriber_to_beforeRemoval(final BeforeRemovalSubscriber subscriber) {
+		this.problem.subscriber_to_beforeRemoval(subscriber);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void abonē_uz_pēcNoņemšana(final BeforeRemovalSubscriber listener) {
-		this.problēma.abonē_uz_pēcNoņemšana(listener);
+	public void subscriber_to_afterRemoval(final BeforeRemovalSubscriber listener) {
+		this.problem.subscriber_to_afterRemoval(listener);
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public List<Attribute<Object>> headerView() {
-		return this.problēma.headerView();
+		return this.problem.headerView();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public <T extends Object> ColumnView<T> kolonnaSkats(final Attribute<T> atribūts) {
-		return this.problēma.<T>kolonnaSkats(atribūts);
+	public <T extends Object> ColumnView<T> columnView(final Attribute<T> atribūts) {
+		return this.problem.<T>columnView(atribūts);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public List<Column<Object>> kolonnaSkats() {
-		return this.problēma.kolonnaSkats();
+	public List<Column<Object>> columnsView() {
+		return this.problem.columnsView();
 	}
 
 	@Deprecated
 	@java.lang.SuppressWarnings("all")
-	public ListView<Line> jēlaRindasSkats() {
-		return this.problēma.jēlaRindasSkats();
+	public ListView<Line> rawLinesView() {
+		return this.problem.rawLinesView();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public boolean satur(final Line rinda) {
-		return this.problēma.satur(rinda);
+	public boolean contains(final Line line) {
+		return this.problem.contains(line);
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public List<Line> getLines() {
-		return this.problēma.getLines();
+		return this.problem.getLines();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line gūtJēluRindas(final int indekss) {
-		return this.problēma.gūtJēluRindas(indekss);
+	public Line getRawLines(final int index) {
+		return this.problem.getRawLines(index);
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public int size() {
-		return this.problēma.size();
+		return this.problem.size();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public boolean irTukšs() {
-		return this.problēma.irTukšs();
+	public boolean isEmpty() {
+		return this.problem.isEmpty();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public boolean navTukšs() {
-		return this.problēma.navTukšs();
+	public boolean hasContent() {
+		return this.problem.hasContent();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public List<Line> jēlasRindas() {
-		return this.problēma.jēlasRindas();
+	public List<Line> rawLines() {
+		return this.problem.rawLines();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.lang.String uzCSV() {
-		return this.problēma.uzCSV();
+	public java.lang.String toCSV() {
+		return this.problem.toCSV();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line uzmeklēVienādus(final Attribute<Line> atribūts, final Line cits) {
-		return this.problēma.uzmeklēVienādus(atribūts, cits);
+	public Line lookupEquals(final Attribute<Line> atribūts, final Line cits) {
+		return this.problem.lookupEquals(atribūts, cits);
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public org.w3c.dom.Element toFods() {
-		return this.problēma.toFods();
+		return this.problem.toFods();
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public List<String> path() {
-		return this.problēma.path();
+		return this.problem.path();
 	}
 
 	@java.lang.SuppressWarnings("all")
 	public org.w3c.dom.Node toDom() {
-		return this.problēma.toDom();
+		return this.problem.toDom();
 	}
 
 	@Override

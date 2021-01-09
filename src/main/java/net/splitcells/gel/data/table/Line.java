@@ -33,7 +33,7 @@ public interface Line extends Domable {
     }
 
     default boolean irDerīgs() {
-        return null != konteksts().jēlaRindasSkats().get(indekss());
+        return null != konteksts().rawLinesView().get(indekss());
     }
 
     default List<String> toStringList() {

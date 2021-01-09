@@ -4,8 +4,8 @@ import net.splitcells.gel.problem.Problem;
 
 public class SolutionFactoryI extends SolutionFactory {
     @Override
-    public Solution atrisinājum(Problem problēma) {
-        return joinAspects(SolutionI.atrisinājums(problēma));
+    public Solution solution(Problem problēma) {
+        return joinAspects(SolutionI.solution(problēma));
     }
 
     @Override

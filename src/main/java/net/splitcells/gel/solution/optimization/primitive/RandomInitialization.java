@@ -24,7 +24,7 @@ public class RandomInitialization implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
-        if (atrisinājums.demands_unused().navTukšs() && atrisinājums.supplies_unused().navTukšs()) {
+        if (atrisinājums.demands_unused().hasContent() && atrisinājums.supplies_unused().hasContent()) {
             return list(
                     optimizacijasNotikums
                             (PIEŠĶIRŠANA

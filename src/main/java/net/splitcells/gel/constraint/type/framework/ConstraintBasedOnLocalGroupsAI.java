@@ -39,22 +39,22 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
         final var ienākošaGrupa = papildinājums.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pēc_papildinājumu(
-                        rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                        rindas.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(ienākošaGrupa)
                         , papildinājums
                         , bērni
                         , rindasApstrāde
-                                .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(ienākošaGrupa)));
     }
 
     protected void apstrādeNovērtējumiNotikumu(RatingEvent novērtējumsNotikums) {
         novērtējumsNotikums.noņemšana().forEach(noņemšana ->
-                rindasApstrāde.piešķiršanas_no_prasības(noņemšana).forEach(rindasApstrāde::noņemt));
+                rindasApstrāde.allocations_of_demand(noņemšana).forEach(rindasApstrāde::remove));
         novērtējumsNotikums.papildinājumi().forEach((line, resultUpdate) -> {
             final var r = pieliktRadījums(resultUpdate);
             int i = r.indekss();
-            rindasApstrāde.piešķirt(line, r);
+            rindasApstrāde.allocate(line, r);
         });
     }
 
@@ -62,14 +62,14 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     protected void apstrāda_rindas_primsNoņemšana(GroupId ienākošaGrupaId, Line noņemšana) {
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pirms_noņemšana(
-                        rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)
-                        , rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                        rindas.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)
+                        , rindas.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(ienākošaGrupaId)
-                                .kolonnaSkats(RINDA)
+                                .columnView(RINDA)
                                 .uzmeklēšana(noņemšana)
                                 .gūtRinda(0)
                         , bērni
-                        , rindasApstrāde.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)));
+                        , rindasApstrāde.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)));
         super.apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
     }
 

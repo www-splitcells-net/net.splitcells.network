@@ -42,7 +42,7 @@ public interface DatabaseFactory extends Closeable, Flushable {
         directChildElementsByName(table, "table-row", FODS_TABLE)
                 .skip(1)
                 .map(row -> rindaNoFodsRow(atribūti, row))
-                .forEach(rindasVērtības -> datuBāzeNoFods.pieliktUnPārtulkot(rindasVērtības));
+                .forEach(rindasVērtības -> datuBāzeNoFods.addTranslated(rindasVērtības));
         return datuBāzeNoFods;
     }
 
