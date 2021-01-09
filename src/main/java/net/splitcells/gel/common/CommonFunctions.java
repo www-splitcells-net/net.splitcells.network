@@ -14,27 +14,27 @@ public class CommonFunctions {
 		throw constructorIllegal();
 	}
 
-	public static <T, R extends T> R vetība(Map<Class<? extends T>, T> map, Class<R> key) {
+	public static <T, R extends T> R value(Map<Class<? extends T>, T> map, Class<R> key) {
 		return (R) map.get(key);
 	}
 
 	@Deprecated
-	public static <E> Collection<E> summa(Collection<Set<E>> arg) {
+	public static <E> Collection<E> sum(Collection<Set<E>> arg) {
 		final var argIter = arg.iterator();
-		final var summa = new HashSet<>(argIter.next());
+		final var sum = new HashSet<>(argIter.next());
 		while (argIter.hasNext()) {
-			summa.addAll(argIter.next());
+			sum.addAll(argIter.next());
 		}
-		return summa;
+		return sum;
 	}
 
 	@Deprecated
-	public static <E> Set<E> pārklājas(Set<E>... arg) {
-		return pārklājas(Arrays.asList(arg));
+	public static <E> Set<E> intersection(Set<E>... arg) {
+		return intersection(Arrays.asList(arg));
 	}
 
 	@Deprecated
-	public static <E> Set<E> pārklājas(Collection<Set<E>> arg) {
+	public static <E> Set<E> intersection(Collection<Set<E>> arg) {
 		if (arg.size() == 0) {
 			return new HashSet<>();
 		} else if (arg.size() == 1) {
