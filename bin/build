@@ -4,6 +4,7 @@
     # Support multiple builds with this command.
 set -e
 chmod +x ./bin/*
+export JAVA_VERSION=11 # This is required on FreeBSD, if an older Java version is set as default.
 cd ..
     mkdir net.splitcells.gel
     cd net.splitcells.gel
