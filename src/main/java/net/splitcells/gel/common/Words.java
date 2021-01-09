@@ -8,11 +8,11 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  * NOŅEMT Lieto {@link Language}.
  */
 @Deprecated
-public final class Vārdi {
+public final class Words {
 
     public static final String ARGUMENTI = "argi";
 
-    private Vārdi() {
+    private Words() {
         throw constructorIllegal();
     }
 

@@ -18,7 +18,7 @@ import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
 import static net.splitcells.gel.Language.ARGUMENTĀCIJA;
 import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
-import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
+import static net.splitcells.gel.common.Words.ARGUMENTI;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.rindasNovērtējums;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;

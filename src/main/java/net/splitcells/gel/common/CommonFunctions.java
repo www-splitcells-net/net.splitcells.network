@@ -8,9 +8,9 @@ import java.util.Set;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
-public class KopaFunkcijas {
+public class CommonFunctions {
 
-	private KopaFunkcijas() {
+	private CommonFunctions() {
 		throw constructorIllegal();
 	}
 

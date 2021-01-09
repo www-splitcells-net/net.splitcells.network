@@ -6,7 +6,7 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.common.Vārdi;
+import net.splitcells.gel.common.Words;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -45,7 +45,7 @@ public interface Rater extends PubliclyTyped<Rater>
     default Node toDom() {
         final var dom = Xml.element(getClass().getSimpleName());
         if (!arguments().isEmpty()) {
-            dom.appendChild(Xml.element2(Vārdi.ARGUMENTI, arguments().stream().map(arg -> arg.toDom())));
+            dom.appendChild(Xml.element2(Words.ARGUMENTI, arguments().stream().map(arg -> arg.toDom())));
         }
         return dom;
     }
