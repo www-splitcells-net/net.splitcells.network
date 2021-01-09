@@ -8,7 +8,7 @@ import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.Database;
@@ -56,7 +56,7 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Ierobežojums ierobežojums() {
+	public Constraint ierobežojums() {
 		return this.problēma.ierobežojums();
 	}
 

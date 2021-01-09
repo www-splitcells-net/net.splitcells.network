@@ -3,16 +3,16 @@ package net.splitcells.gel.constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.structure.Rating;
 
-public final class Ziņojums {
-	public static Ziņojums report(Line rinda, GrupaId grupa, Rating novērtējums) {
-		return new Ziņojums(rinda, grupa, novērtējums);
+public final class Report {
+	public static Report report(Line rinda, GroupId grupa, Rating novērtējums) {
+		return new Report(rinda, grupa, novērtējums);
 	}
 
 	private Line rinda;
-	private GrupaId group;
+	private GroupId group;
 	private Rating novērtējums;
 
-	private Ziņojums(Line rinda, GrupaId grupa, Rating novērtējums) {
+	private Report(Line rinda, GroupId grupa, Rating novērtējums) {
 		this.rinda = rinda;
 		this.group = grupa;
 		this.novērtējums = novērtējums;
@@ -22,7 +22,7 @@ public final class Ziņojums {
 		return rinda;
 	}
 
-	public GrupaId grupa() {
+	public GroupId grupa() {
 		return group;
 	}
 

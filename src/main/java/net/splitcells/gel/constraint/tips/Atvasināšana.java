@@ -5,9 +5,9 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.constraint.Jautājums;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.rating.structure.LocalRating;
@@ -22,38 +22,38 @@ import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
-public final class Atvasināšana implements Ierobežojums {
+public final class Atvasināšana implements Constraint {
 
     public static Atvasināšana atvasināšana
-            (Ierobežojums atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
+            (Constraint atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
         return new Atvasināšana(atvasināšanasMērķis, atvasināšanaFuncija);
     }
 
-    private final Ierobežojums atvasināšanasMērķis;
+    private final Constraint atvasināšanasMērķis;
     private final Function<MetaRating, MetaRating> atvasināšanaFuncija;
 
-    private Atvasināšana(Ierobežojums atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
+    private Atvasināšana(Constraint atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
         this.atvasināšanasMērķis = atvasināšanasMērķis;
         this.atvasināšanaFuncija = atvasināšanaFuncija;
     }
 
     @Override
-    public GrupaId injekcijasGrupa() {
+    public GroupId injekcijasGrupa() {
         return atvasināšanasMērķis.injekcijasGrupa();
     }
 
     @Override
-    public MetaRating novērtējums(GrupaId grupaId, Line rinda) {
+    public MetaRating novērtējums(GroupId grupaId, Line rinda) {
         return atvasināšanaFuncija.apply(atvasināšanasMērķis.novērtējums(grupaId, rinda));
     }
 
     @Override
-    public MetaRating novērtējums(GrupaId groupdId) {
+    public MetaRating novērtējums(GroupId groupdId) {
         return atvasināšanaFuncija.apply(atvasināšanasMērķis.novērtējums(groupdId));
     }
 
     @Override
-    public Perspective dabiskaArgumentācija(GrupaId grupa) {
+    public Perspective dabiskaArgumentācija(GroupId grupa) {
         throw not_implemented_yet();
     }
 
@@ -64,37 +64,37 @@ public final class Atvasināšana implements Ierobežojums {
 
     @Override
     public Perspective dabiskaArgumentācija
-            (Line rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
+            (Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
         throw not_implemented_yet();
     }
 
     @Override
-    public GrupaId grupaNo(Line rinda) {
+    public GroupId grupaNo(Line rinda) {
         return atvasināšanasMērķis.grupaNo(rinda);
     }
 
     @Override
-    public void reģistrē_papildinājums(GrupaId grupaId, Line rinda) {
+    public void reģistrē_papildinājums(GroupId grupaId, Line rinda) {
         throw not_implemented_yet();
     }
 
     @Override
-    public void rēgistrē_pirms_noņemšanas(GrupaId grupaId, Line rinda) {
+    public void rēgistrē_pirms_noņemšanas(GroupId grupaId, Line rinda) {
         throw not_implemented_yet();
     }
 
     @Override
-    public List<Ierobežojums> skatsUsBerniem() {
+    public List<Constraint> skatsUsBerniem() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Set<Line> izpildītāji(GrupaId grupaId) {
+    public Set<Line> izpildītāji(GroupId grupaId) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Set<Line> neievērotaji(GrupaId grupaId) {
+    public Set<Line> neievērotaji(GroupId grupaId) {
         throw not_implemented_yet();
     }
 
@@ -114,7 +114,7 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public Element toDom(Set<GrupaId> grupas) {
+    public Element toDom(Set<GroupId> grupas) {
         throw not_implemented_yet();
     }
 
@@ -131,17 +131,17 @@ public final class Atvasināšana implements Ierobežojums {
     }
 
     @Override
-    public Class<? extends Ierobežojums> type() {
+    public Class<? extends Constraint> type() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Ierobežojums arBērnu(Ierobežojums... ierobežojums) {
+    public Constraint arBērnu(Constraint... ierobežojums) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Ierobežojums arBērnu(Function<Jautājums, Jautājums> būvētājs) {
+    public Constraint arBērnu(Function<Query, Query> būvētājs) {
         throw not_implemented_yet();
     }
 

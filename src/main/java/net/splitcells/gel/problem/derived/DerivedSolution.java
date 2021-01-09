@@ -12,7 +12,7 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.tips.Atvasināšana;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
@@ -27,24 +27,24 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 public class DerivedSolution implements Solution {
 
-    protected Ierobežojums ierobežojums;
+    protected Constraint ierobežojums;
     private final Allocations piešķiršanas;
     private final History vēsture;
     private final Discoverable konteksts;
     
-    public static DerivedSolution atvasinātaProblema(Discoverable konteksts, Allocations piešķiršanas, Ierobežojums originalIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
+    public static DerivedSolution atvasinātaProblema(Discoverable konteksts, Allocations piešķiršanas, Constraint originalIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
         return new DerivedSolution(konteksts, piešķiršanas, originalIerobežojums, Atvasināšana.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
     }
 
-    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Ierobežojums oriģinālaisIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
+    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Constraint oriģinālaisIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
         this(konteksts, piešķiršanas, oriģinālaisIerobežojums, Atvasināšana.atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
     }
 
-    public static DerivedSolution atvasinātsProblēma(Discoverable konteksts, Allocations piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+    public static DerivedSolution atvasinātsProblēma(Discoverable konteksts, Allocations piešķiršanas, Constraint ierobežojums, Constraint atvasināšana) {
         return new DerivedSolution(konteksts, piešķiršanas, ierobežojums, atvasināšana);
     }
 
-    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Ierobežojums ierobežojums, Ierobežojums atvasināšana) {
+    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Constraint ierobežojums, Constraint atvasināšana) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = atvasināšana;
         vēsture = Histories.vēsture(this);
@@ -58,7 +58,7 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Ierobežojums ierobežojums() {
+    public Constraint ierobežojums() {
         return ierobežojums;
     }
 

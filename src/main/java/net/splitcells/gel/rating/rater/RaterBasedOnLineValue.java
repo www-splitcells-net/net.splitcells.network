@@ -3,7 +3,7 @@ package net.splitcells.gel.rating.rater;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.constraint.GrupaId.grupa;
+import static net.splitcells.gel.constraint.GroupId.grupa;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
@@ -13,8 +13,8 @@ import java.util.function.Function;
 
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.constraint.Constraint;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
@@ -26,13 +26,13 @@ import net.splitcells.gel.rating.structure.Rating;
 public class RaterBasedOnLineValue implements Rater {
     public static Rater rindasVertībasBalstītasUzGrupetajs(String apraksts, Function<Line, Integer> grupetajs) {
         return rindasVertībasBalstītasUzGrupetajs(new Function<>() {
-            private final Map<Integer, GrupaId> lineNumbering = map();
+            private final Map<Integer, GroupId> lineNumbering = map();
 
             @Override
-            public GrupaId apply(Line arg) {
+            public GroupId apply(Line arg) {
                 return lineNumbering.computeIfAbsent
-                        (grupetajs.apply(arg.vērtība(Ierobežojums.RINDA))
-                                , classification -> GrupaId.grupa(apraksts + ": " + classification));
+                        (grupetajs.apply(arg.vērtība(Constraint.RINDA))
+                                , classification -> GroupId.grupa(apraksts + ": " + classification));
             }
 
             @Override
@@ -43,36 +43,36 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     public static Rater rindasVertībaBalstītaUzVērtētāju(Function<Line, Rating> vērtētājsBalstītsUzRindasVertības) {
-        return new RaterBasedOnLineValue(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID));
+        return new RaterBasedOnLineValue(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID));
     }
 
-    public static Rater rindasVertībasBalstītasUzGrupetajs(Function<Line, GrupaId> grupetajsBalstītsUzRindasVertības) {
+    public static Rater rindasVertībasBalstītasUzGrupetajs(Function<Line, GroupId> grupetajsBalstītsUzRindasVertības) {
         return new RaterBasedOnLineValue(papilduRinda -> bezMaksas(), grupetajsBalstītsUzRindasVertības);
     }
 
     private final Function<Line, Rating> rindasBalstītsUzVertībasVērtētājs;
-    private final Function<Line, GrupaId> grupetajsBalstītsUzRindasVertības;
+    private final Function<Line, GroupId> grupetajsBalstītsUzRindasVertības;
     private final List<Discoverable> konteksts = list();
 
-    private RaterBasedOnLineValue(Function<Line, Rating> rindasBalstītsUzVertībasVērtētājs, Function<Line, GrupaId> grupetajsBalstītsUzRindasVertības) {
+    private RaterBasedOnLineValue(Function<Line, Rating> rindasBalstītsUzVertībasVērtētājs, Function<Line, GroupId> grupetajsBalstītsUzRindasVertības) {
         this.rindasBalstītsUzVertībasVērtētājs = rindasBalstītsUzVertībasVērtētājs;
         this.grupetajsBalstītsUzRindasVertības = grupetajsBalstītsUzRindasVertības;
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
+    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
         final RatingEvent rVal = RatingEventI.novērtejumuNotikums();
         rVal.papildinājumi().put
                 (papildinājums
                         , lokalsNovērtejums()
                                 .arIzdalīšanaUz(bērni)
                                 .arRadītuGrupasId(grupetajsBalstītsUzRindasVertības.apply(papildinājums))
-                                .arNovērtējumu(rindasBalstītsUzVertībasVērtētājs.apply(papildinājums.vērtība(Ierobežojums.RINDA))));
+                                .arNovērtējumu(rindasBalstītsUzVertībasVērtētājs.apply(papildinājums.vērtība(Constraint.RINDA))));
         return rVal;
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, net.splitcells.dem.data.set.list.List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
         return RatingEventI.novērtejumuNotikums();
     }
 
@@ -89,7 +89,7 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
+    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
         final var argumentācija = Xml.element("grupa");
         argumentācija.appendChild
                 (Xml.textNode(grupa.vārds().orElse("pazudis-grupas-vards")));
@@ -114,7 +114,7 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
+    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
         return grupetajsBalstītsUzRindasVertības.toString();
     }
 

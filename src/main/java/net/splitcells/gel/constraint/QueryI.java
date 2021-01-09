@@ -21,31 +21,31 @@ import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 
-public class JautājumsI implements Jautājums {
-    public static Jautājums jautājums(Ierobežojums ierobežojums, Optional<Ierobežojums> root) {
-        return new JautājumsI(ierobežojums, list(ierobežojums.injekcijasGrupa()), root);
+public class QueryI implements Query {
+    public static Query jautājums(Constraint ierobežojums, Optional<Constraint> root) {
+        return new QueryI(ierobežojums, list(ierobežojums.injekcijasGrupa()), root);
     }
 
-    public static Jautājums jautājums(Ierobežojums ierobežojums) {
-        return new JautājumsI(ierobežojums, list(ierobežojums.injekcijasGrupa()), Optional.of(ierobežojums));
+    public static Query jautājums(Constraint ierobežojums) {
+        return new QueryI(ierobežojums, list(ierobežojums.injekcijasGrupa()), Optional.of(ierobežojums));
     }
 
-    public static Jautājums jautājums(Ierobežojums ierobežojums, Collection<GrupaId> groups, Ierobežojums root) {
-        return new JautājumsI(ierobežojums, groups, Optional.of(root));
+    public static Query jautājums(Constraint ierobežojums, Collection<GroupId> groups, Constraint root) {
+        return new QueryI(ierobežojums, groups, Optional.of(root));
     }
 
-    private final Optional<Ierobežojums> sakne;
-    private final Ierobežojums ierobežojums;
-    private final Collection<GrupaId> grupas;
+    private final Optional<Constraint> sakne;
+    private final Constraint ierobežojums;
+    private final Collection<GroupId> grupas;
 
-    public JautājumsI(Ierobežojums ierobežojums, Collection<GrupaId> grupas, Optional<Ierobežojums> sakne) {
+    public QueryI(Constraint ierobežojums, Collection<GroupId> grupas, Optional<Constraint> sakne) {
         this.ierobežojums = ierobežojums;
         this.grupas = grupas;
         this.sakne = sakne;
     }
 
     @Override
-    public Jautājums priekšVisiem(Rater vērtētājs) {
+    public Query priekšVisiem(Rater vērtētājs) {
         var radijumuBaže = ierobežojums
                 .skatsUsBerniem().stream()
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
@@ -55,15 +55,15 @@ public class JautājumsI implements Jautājums {
                     final var grupēšana = (RaterBasedOnGrouping) child.arguments().get(0);
                     return grupēšana.arguments().get(0).equals(vērtētājs);
                 }).reduce(ensureSingle());
-        final var radītasGrupas = Sets.<GrupaId>setOfUniques();
+        final var radītasGrupas = Sets.<GroupId>setOfUniques();
         if (radijumuBaže.isPresent()) {
-            for (GrupaId grupa : grupas) {
+            for (GroupId grupa : grupas) {
                 radītasGrupas.addAll
                         (ierobežojums
                                 .rindasAbstrāde()
-                                .kolonnaSkats(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .kolonnaSkats(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(grupa)
-                                .kolonnaSkats(Ierobežojums.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                                .kolonnaSkats(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                 .vertības());
             }
         } else {
@@ -79,7 +79,7 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Jautājums priekšVisiem(Attribute<?> arg) {
+    public Query priekšVisiem(Attribute<?> arg) {
         var radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
@@ -92,14 +92,14 @@ public class JautājumsI implements Jautājums {
                     }
                     return arg.equals(atribūtuGrupešana.arguments().get(0));
                 }).reduce(ensureSingle());
-        final var radītasGrupas = Sets.<GrupaId>setOfUniques();
+        final var radītasGrupas = Sets.<GroupId>setOfUniques();
         if (radijumuBaže.isPresent()) {
-            for (GrupaId grupa : grupas) {
+            for (GroupId grupa : grupas) {
                 radītasGrupas.addAll(
                         ierobežojums.rindasAbstrāde()
-                                .kolonnaSkats(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .kolonnaSkats(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(grupa)
-                                .kolonnaSkats(Ierobežojums.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                                .kolonnaSkats(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                 .vertības());
             }
         } else {
@@ -115,7 +115,7 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Jautājums priekšVisiem() {
+    public Query priekšVisiem() {
         final var radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
@@ -134,26 +134,26 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Jautājums tad() {
+    public Query tad() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Jautājums tad(Rater vērtētājs) {
+    public Query tad(Rater vērtētājs) {
         var radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
                 .filter(child -> Tad.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> child.arguments().get(0).equals(vērtētājs))
                 .reduce(ensureSingle());
-        final var resultingGroups = Sets.<GrupaId>setOfUniques();
+        final var resultingGroups = Sets.<GroupId>setOfUniques();
         if (radijumuBaže.isPresent()) {
-            for (GrupaId grupa : grupas) {
+            for (GroupId grupa : grupas) {
                 resultingGroups.addAll(
                         ierobežojums.rindasAbstrāde()
-                                .kolonnaSkats(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .kolonnaSkats(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                                 .uzmeklēšana(grupa)
-                                .kolonnaSkats(Ierobežojums.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                                .kolonnaSkats(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                                 .vertības());
             }
         } else {
@@ -169,13 +169,13 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Jautājums tad(Rating novērtējums) {
+    public Query tad(Rating novērtējums) {
         return tad(constantRater(novērtējums));
     }
 
     @Override
-    public Jautājums priekšVisamKombinācijam(Attribute<?>... args) {
-        final Ierobežojums radijumuBaže
+    public Query priekšVisamKombinācijam(Attribute<?>... args) {
+        final Constraint radijumuBaže
                 = ierobežojums.skatsUsBerniem().stream()
                 .filter(child -> PriekšVisiem.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
@@ -193,13 +193,13 @@ public class JautājumsI implements Jautājums {
                             .findAny()
                             .isEmpty();
                 }).reduce(ensureSingle()).get();
-        final var radītasGrupas = Sets.<GrupaId>setOfUniques();
-        for (GrupaId grupa : grupas) {
+        final var radītasGrupas = Sets.<GroupId>setOfUniques();
+        for (GroupId grupa : grupas) {
             radītasGrupas.addAll(
                     ierobežojums.rindasAbstrāde()
-                            .kolonnaSkats(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                            .kolonnaSkats(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                             .uzmeklēšana(grupa)
-                            .kolonnaSkats(Ierobežojums.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
+                            .kolonnaSkats(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
                             .vertības());
         }
         if (sakne.isEmpty()) {
@@ -220,12 +220,12 @@ public class JautājumsI implements Jautājums {
     }
 
     @Override
-    public Ierobežojums ierobežojums() {
+    public Constraint ierobežojums() {
         return ierobežojums;
     }
 
     @Override
-    public Optional<Ierobežojums> sakne() {
+    public Optional<Constraint> sakne() {
         return sakne;
     }
 }

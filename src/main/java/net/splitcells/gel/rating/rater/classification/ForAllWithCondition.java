@@ -4,8 +4,8 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.constraint.GrupaId;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.rater.Rater;
@@ -19,8 +19,8 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.constraint.Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID;
-import static net.splitcells.gel.constraint.Ierobežojums.RINDA;
+import static net.splitcells.gel.constraint.Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID;
+import static net.splitcells.gel.constraint.Constraint.RINDA;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
@@ -40,8 +40,8 @@ public class ForAllWithCondition<T> implements Rater {
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu
-            (Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final List<Ierobežojums> mērķBērni;
+            (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
+        final List<Constraint> mērķBērni;
         if (nosacījums.test(papildinājums.vērtība(RINDA))) {
             mērķBērni = bērni;
         } else {
@@ -58,12 +58,12 @@ public class ForAllWithCondition<T> implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
+    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
         final var argumentācjia = Xml.element("priekš-visiem-ar-nosacījumu");
         final var atribūtuApraksts = Xml.element("nosacījumu");
         argumentācjia.appendChild(atribūtuApraksts);

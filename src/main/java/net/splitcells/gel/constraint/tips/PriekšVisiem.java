@@ -5,8 +5,8 @@ import static net.splitcells.gel.rating.rater.classification.RaterBasedOnGroupin
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.tips.struktūra.IerobežojumsBalstītaUzVietējieGrupasAI;
-import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.constraint.Ziņojums;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
 
@@ -29,12 +29,12 @@ public class PriekšVisiem extends IerobežojumsBalstītaUzVietējieGrupasAI {
     }
 
     @Override
-    public Class<? extends Ierobežojums> type() {
+    public Class<? extends Constraint> type() {
         return PriekšVisiem.class;
     }
 
     @Override
-    protected List<String> vietēijaDabiskaArgumentācija(Ziņojums ziņojums) {
+    protected List<String> vietēijaDabiskaArgumentācija(Report ziņojums) {
         if (vērtētājs.type().equals(ForAllAttributeValues.class)) {
             return list(vērtētājs.uzVienkāršuAprakstu(ziņojums.rinda(), ziņojums.grupa()));
         } else {

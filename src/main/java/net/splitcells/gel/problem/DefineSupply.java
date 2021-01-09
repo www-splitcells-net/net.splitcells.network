@@ -3,7 +3,7 @@ package net.splitcells.gel.problem;
 
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.Constraint;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -21,6 +21,6 @@ public interface DefineSupply {
 
 	DefineSupply arePiedāvājumiem(List<List<Object>> peidāvājumi);
 
-	ProblemGenerator arIerobežojumu(Ierobežojums ierobežojums);
+	ProblemGenerator arIerobežojumu(Constraint ierobežojums);
 
 }

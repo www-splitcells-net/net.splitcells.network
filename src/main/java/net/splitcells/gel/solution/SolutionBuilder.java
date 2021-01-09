@@ -11,7 +11,7 @@ import static net.splitcells.gel.problem.ProblemI.problēma;
 import java.util.Arrays;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.DefineDemands;
 import net.splitcells.gel.problem.DefineSupply;
@@ -28,7 +28,7 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
     private List<Attribute<? extends Object>> piedāvājumu_atribūti = list();
     private List<List<Object>> piedāvājumi = list();
 
-    private Ierobežojums ierobežojums;
+    private Constraint ierobežojums;
 
     protected SolutionBuilder() {
     }
@@ -52,7 +52,7 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
     }
 
     @Override
-    public ProblemGenerator arIerobežojumu(Ierobežojums ierobežojums) {
+    public ProblemGenerator arIerobežojumu(Constraint ierobežojums) {
         this.ierobežojums = ierobežojums;
         return this;
     }

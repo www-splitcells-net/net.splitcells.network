@@ -5,10 +5,10 @@ import java.util.function.Function;
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.object.DiscoverableFromMultiplePathsSetter;
 
-public interface IerobežojumuRakstnieks extends DiscoverableFromMultiplePathsSetter {
+public interface ConstraintWriter extends DiscoverableFromMultiplePathsSetter {
 	@Returns_this
-    Ierobežojums arBērnu(Ierobežojums... ierobežojums);
+    Constraint arBērnu(Constraint... ierobežojums);
 
 	@Returns_this
-    Ierobežojums arBērnu(Function<Jautājums, Jautājums> būvētājs);
+    Constraint arBērnu(Function<Query, Query> būvētājs);
 }

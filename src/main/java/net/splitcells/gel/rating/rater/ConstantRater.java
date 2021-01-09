@@ -9,8 +9,8 @@ import java.util.Collection;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.constraint.Constraint;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -31,19 +31,19 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
+    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         novērtejumuNotikums.papildinājumi().put(
                 papildinājums
                 , lokalsNovērtejums()
                         .arIzdalīšanaUz(bērni)
-                        .arRadītuGrupasId(papildinājums.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))
+                        .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))
                         .arNovērtējumu(novērtējums));
         return novērtejumuNotikums;
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
+    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
         return RatingEventI.novērtejumuNotikums();
     }
 
@@ -53,7 +53,7 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
+    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
         final var argumentācija = Xml.element("nemainīgs-novērtējums");
         argumentācija.appendChild(novērtējums.toDom());
         return argumentācija;
@@ -82,7 +82,7 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
+    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
         return "";
     }
 

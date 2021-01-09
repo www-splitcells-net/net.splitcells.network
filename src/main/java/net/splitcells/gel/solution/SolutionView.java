@@ -8,7 +8,7 @@ import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.tips.PriekšVisiem;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.problem.ProblemView;
@@ -32,13 +32,13 @@ import static net.splitcells.gel.rating.type.Cost.cena;
 
 public interface SolutionView extends ProblemView {
 
-    default List<List<Ierobežojums>> prasībasGrupas() {
+    default List<List<Constraint>> prasībasGrupas() {
         return prasībasGrupas(ierobežojums(), list());
     }
 
-    default List<List<Ierobežojums>> prasībasGrupas(Ierobežojums ierobežojums, List<Ierobežojums> vecākuTaka) {
+    default List<List<Constraint>> prasībasGrupas(Constraint ierobežojums, List<Constraint> vecākuTaka) {
         final var ierobežojumuTaka = vecākuTaka.shallowCopy().withAppended(ierobežojums);
-        final List<List<Ierobežojums>> brīvasGrupas = list();
+        final List<List<Constraint>> brīvasGrupas = list();
         ierobežojums.casted(PriekšVisiem.class)
                 .ifPresent(priekšVisiiemIerobežojums -> {
                     final var priekšVisiiemAtribūti = prieksVisiemAtribūtuNoGrupetājs

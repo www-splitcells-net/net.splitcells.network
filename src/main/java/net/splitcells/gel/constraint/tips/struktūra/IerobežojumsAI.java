@@ -20,7 +20,7 @@ import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
 import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
 import static net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums.rindasNovērtējums;
-import static net.splitcells.gel.constraint.Ziņojums.report;
+import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.vidējs.dati.GrupuIzdalīšanaVirziens.routingResult;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +37,7 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaFiltrs;
 import net.splitcells.gel.constraint.vidējs.dati.PiešķiršanaNovērtējums;
-import net.splitcells.gel.constraint.Ziņojums;
+import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.constraint.vidējs.dati.MaršrutēšanaNovērtējums;
 import net.splitcells.gel.rating.structure.MetaRatingI;
 import org.assertj.core.api.Assertions;
@@ -46,10 +46,10 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.constraint.Jautājums;
-import net.splitcells.gel.constraint.JautājumsI;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.constraint.QueryI;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.rating.structure.LocalRating;
@@ -57,21 +57,21 @@ import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 
 @Deprecated
-public abstract class IerobežojumsAI implements Ierobežojums {
-    private final GrupaId injekcijasGrupas;
-    protected final net.splitcells.dem.data.set.list.List<Ierobežojums> bērni = list();
+public abstract class IerobežojumsAI implements Constraint {
+    private final GroupId injekcijasGrupas;
+    protected final net.splitcells.dem.data.set.list.List<Constraint> bērni = list();
     protected Optional<Discoverable> golvenaisKonteksts = Optional.empty();
     private final List<Discoverable> konteksti = list();
     protected final Database rindas;
     protected final Database radījums = datuBāze("results", this, RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID, NOVĒRTĒJUMS, IZDALĪŠANA_UZ);
     protected final Allocations rindasApstrāde;
-    protected final Map<GrupaId, Rating> grupasApstrāde = map();
+    protected final Map<GroupId, Rating> grupasApstrāde = map();
 
-    protected IerobežojumsAI(GrupaId injekcijasGrupas) {
+    protected IerobežojumsAI(GroupId injekcijasGrupas) {
         this(injekcijasGrupas, "");
     }
 
-    protected IerobežojumsAI(GrupaId injekcijasGrupas, String vārds) {
+    protected IerobežojumsAI(GroupId injekcijasGrupas, String vārds) {
         this.injekcijasGrupas = injekcijasGrupas;
         rindas = datuBāze(vārds + ".rindas", this, RINDA, IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         rindasApstrāde = piešķiršanas("rindasApstrāde", rindas, radījums);
@@ -81,20 +81,20 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     protected IerobežojumsAI() {
-        this(Ierobežojums.standartaGrupa());
+        this(Constraint.standartaGrupa());
     }
 
     @Override
-    public GrupaId injekcijasGrupa() {
+    public GroupId injekcijasGrupa() {
         return injekcijasGrupas;
     }
 
     @Override
-    public void reģistrē_papildinājums(GrupaId ienākošieGrupasId, Line papildinajums) {
+    public void reģistrē_papildinājums(GroupId ienākošieGrupasId, Line papildinajums) {
         // DARĪT Kustēt uz ārpuses projektu.
         if (TRACING) {
             domsole().append
-                    (element("reģistrē_papildinajums." + Ierobežojums.class.getSimpleName()
+                    (element("reģistrē_papildinajums." + Constraint.class.getSimpleName()
                             , element("papildinajums", papildinajums.toDom())
                             , element("ienākošieGrupasId", textNode(ienākošieGrupasId.toString()))
                             )
@@ -118,7 +118,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     protected abstract void apstrāde_rindu_papildinajumu(Line papildinājums);
 
     @Override
-    public void rēgistrē_pirms_noņemšanas(GrupaId ienākošaGrupaId, Line noņemšana) {
+    public void rēgistrē_pirms_noņemšanas(GroupId ienākošaGrupaId, Line noņemšana) {
         // DARĪT Kustēt uz ārpuses projektu.
         if (ENFORCING_UNIT_CONSISTENCY) {
             Assertions.assertThat(noņemšana.irDerīgs()).isTrue();
@@ -139,7 +139,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
                 .forEach(rindas::noņemt);
     }
 
-    protected void apstrāda_rindas_primsNoņemšana(GrupaId ienākošaGrupaId, Line noņemšana) {
+    protected void apstrāda_rindas_primsNoņemšana(GroupId ienākošaGrupaId, Line noņemšana) {
         rindasApstrāde.piedāvājums_nelietots().jēlaRindasSkats().stream()
                 .filter(e -> e != null)
                 .forEach(nelitotsPiedāvājums -> radījums.noņemt(nelitotsPiedāvājums));
@@ -160,7 +160,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public Ierobežojums arBērnu(Ierobežojums... ierobežojumi) {
+    public Constraint arBērnu(Constraint... ierobežojumi) {
         asList(ierobežojumi).forEach(ierobežojums -> {
             bērni.add(ierobežojums);
             ierobežojums.addContext(this);
@@ -168,7 +168,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         return this;
     }
 
-    public Set<Line> ievērojami(GrupaId grupaId, Set<Line> piešķiršanas) {
+    public Set<Line> ievērojami(GroupId grupaId, Set<Line> piešķiršanas) {
         final Set<Line> ievērojama = setOfUniques();
         piešķiršanas.forEach(piešķiršana -> {
             if (novērtējums(grupaId, piešķiršana.vērtība(RINDA)).equals(bezMaksas())) {
@@ -178,7 +178,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         return ievērojama;
     }
 
-    public Set<Line> neievērotaji(GrupaId grupaId, Set<Line> piešķiršanas) {
+    public Set<Line> neievērotaji(GroupId grupaId, Set<Line> piešķiršanas) {
         final Set<Line> neievērotaji = setOfUniques();
         piešķiršanas.forEach(piešķiršana -> {
             if (!novērtējums(grupaId, piešķiršana.vērtība(RINDA)).equals(bezMaksas())) {
@@ -189,7 +189,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public MetaRating novērtējums(GrupaId grupaId, Line rinda) {
+    public MetaRating novērtējums(GroupId grupaId, Line rinda) {
         final var novērtetāMaršrutēšana
                 = atlasītNovērtetāMaršrutēšana(grupaId, processedLine -> processedLine.vērtība(RINDA).vienāds(rinda));
         novērtetāMaršrutēšana.gūtBērnusUzGrupas().forEach((bērns, grūpa) ->
@@ -205,15 +205,15 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     protected MaršrutēšanaNovērtējums atlasītNovērtetāMaršrutēšana
-            (GrupaId grupaId, Predicate<Line> apstrādsRindasAtlasītajs) {
+            (GroupId grupaId, Predicate<Line> apstrādsRindasAtlasītajs) {
         final var novērtetāMaršrutēšana = MaršrutēšanaNovērtējums.veidot();
         rindasApstrāde.jēlaRindasSkats().forEach(rinda -> {
             if (rinda != null
                     && apstrādsRindasAtlasītajs.test(rinda)
                     && grupaId.equals(rinda.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))) {
                 novērtetāMaršrutēšana.gūtNovērtējums().add(rinda.vērtība(NOVĒRTĒJUMS));
-                rinda.vērtība(Ierobežojums.IZDALĪŠANA_UZ).forEach(bērni -> {
-                    final Set<GrupaId> groupsOfChild;
+                rinda.vērtība(Constraint.IZDALĪŠANA_UZ).forEach(bērni -> {
+                    final Set<GroupId> groupsOfChild;
                     if (!novērtetāMaršrutēšana.gūtBērnusUzGrupas().containsKey(bērni)) {
                         groupsOfChild = setOfUniques();
                         novērtetāMaršrutēšana.gūtBērnusUzGrupas().put(bērni, groupsOfChild);
@@ -228,7 +228,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public MetaRating novērtējums(GrupaId grupaId) {
+    public MetaRating novērtējums(GroupId grupaId) {
         final var novērtetāMaršrutēšana
                 = atlasītNovērtetāMaršrutēšana(grupaId, atlasītaRinda -> true);
         novērtetāMaršrutēšana.gūtBērnusUzGrupas().forEach((bērni, grupas) ->
@@ -246,11 +246,11 @@ public abstract class IerobežojumsAI implements Ierobežojums {
      * JAUDA
      */
     @Override
-    public List<Ierobežojums> skatsUsBerniem() {
+    public List<Constraint> skatsUsBerniem() {
         return listWithValuesOf(bērni);
     }
 
-    public Set<Line> piešķiršanaNo(GrupaId grupaId) {
+    public Set<Line> piešķiršanaNo(GroupId grupaId) {
         final Set<Line> piešķiršanas = setOfUniques();
         rindasApstrāde.jēlaRindasSkats().forEach(rinda -> {
             if (rinda != null && rinda.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).equals(grupaId)) {
@@ -260,11 +260,11 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         return piešķiršanas;
     }
 
-    public Set<Line> izpildītāji(GrupaId grupaId) {
+    public Set<Line> izpildītāji(GroupId grupaId) {
         return ievērojami(grupaId, piešķiršanaNo(grupaId));
     }
 
-    public Set<Line> neievērotaji(GrupaId grupaId) {
+    public Set<Line> neievērotaji(GroupId grupaId) {
         return neievērotaji(grupaId, piešķiršanaNo(grupaId));
     }
 
@@ -277,7 +277,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         return rindas;
     }
 
-    public GrupaId grupaNo(Line rinda) {
+    public GroupId grupaNo(Line rinda) {
         return rindasAbstrāde()
                 .jēlaRindasSkats()
                 .get(rinda.indekss())
@@ -307,8 +307,8 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public Ierobežojums arBērnu(Function<Jautājums, Jautājums> būvētājs) {
-        būvētājs.apply(JautājumsI.jautājums(this, Optional.empty()));
+    public Constraint arBērnu(Function<Query, Query> būvētājs) {
+        būvētājs.apply(QueryI.jautājums(this, Optional.empty()));
         return this;
     }
 
@@ -337,7 +337,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public Element toDom(Set<GrupaId> grupas) {
+    public Element toDom(Set<GroupId> grupas) {
         final var dom = Xml.element(type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTI, arg.toDom())));
@@ -369,10 +369,10 @@ public abstract class IerobežojumsAI implements Ierobežojums {
         return dom;
     }
 
-    protected abstract List<String> vietēijaDabiskaArgumentācija(Ziņojums ziņojums);
+    protected abstract List<String> vietēijaDabiskaArgumentācija(Report ziņojums);
 
     protected Optional<List<String>> vietēijaDabiskaArgumentācija
-            (Line rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
+            (Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
         final var vietējaArgumentācijas
                 = rindasApstrāde
                 .kolonnaSkats(RINDA)
@@ -395,7 +395,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public Perspective dabiskaArgumentācija(GrupaId grupa) {
+    public Perspective dabiskaArgumentācija(GroupId grupa) {
         final var vietējiaArgumentācijas = rindasApstrāde
                 .kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
                 .uzmeklēšana(grupa)
@@ -414,7 +414,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     @Override
-    public Perspective dabiskaArgumentācija(Line rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
+    public Perspective dabiskaArgumentācija(Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs) {
         final var vietējiaArgumēntacija = vietēijaDabiskaArgumentācija(rinda, grupa, rindasAtlasītājs);
         final var bērnuArgumēntacija = bērnuArgumēntacija(rinda, grupa, rindasAtlasītājs);
         final var argumentācija = perspective(ARGUMENTĀCIJA.apraksts(), GEL);
@@ -436,7 +436,7 @@ public abstract class IerobežojumsAI implements Ierobežojums {
     }
 
     protected Optional<Perspective> bērnuArgumēntacija
-            (Line rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
+            (Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> piešķiršanaAtlasītājs) {
         final var argumēntacijas
                 = rindasApstrāde
                 .kolonnaSkats(RINDA)

@@ -11,7 +11,7 @@ import java.util.Set;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.Rating;
 import org.assertj.core.api.Assertions;
@@ -22,7 +22,7 @@ public interface RatingEvent {
 
     Set<Line> noņemšana();
 
-    default void pieliktNovērtējumu_caurPapildinājumu(Line priekjšmets, Rating papilduNovērtējums, List<Ierobežojums> bērni,
+    default void pieliktNovērtējumu_caurPapildinājumu(Line priekjšmets, Rating papilduNovērtējums, List<Constraint> bērni,
                                                       Optional<Rating> novērtejumsPirmsPapildinājumu) {
         final Rating momentānsNovērtējums;
         if (papildinājumi().containsKey(priekjšmets)) {
@@ -35,10 +35,10 @@ public interface RatingEvent {
                         , lokalsNovērtejums()
                                 .arIzdalīšanaUz(bērni)
                                 .arNovērtējumu(momentānsNovērtējums.kombinē(papilduNovērtējums))
-                                .arRadītuGrupasId(priekjšmets.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
+                                .arRadītuGrupasId(priekjšmets.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
     }
 
-    default void updateRating_viaAddition(Line priekšmets, Rating papilduNovērtējums, List<Ierobežojums> bērni,
+    default void updateRating_viaAddition(Line priekšmets, Rating papilduNovērtējums, List<Constraint> bērni,
                                           Optional<Rating> novērtējumsPirmsPapildinājumu) {
         final Rating currentNovērtējums;
         if (papildinājumi().containsKey(priekšmets)) {
@@ -50,7 +50,7 @@ public interface RatingEvent {
                 , lokalsNovērtejums()
                         .arIzdalīšanaUz(bērni)
                         .arNovērtējumu(currentNovērtējums.kombinē(papilduNovērtējums))
-                        .arRadītuGrupasId(priekšmets.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
+                        .arRadītuGrupasId(priekšmets.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
     }
 
     default void atjaunaNovērtējumu_caurAizvietošana(Line priekšmets, LocalRating jaunsNovērtējums) {
@@ -58,8 +58,8 @@ public interface RatingEvent {
             assertThat(papildinājumi().keySet()).doesNotContain(priekšmets);
             assertThat(noņemšana()).doesNotContain(priekšmets);
             {
-                Assertions.assertThat(priekšmets.vērtība(Ierobežojums.RINDA)).isNotNull();
-                Assertions.assertThat(priekšmets.vērtība(Ierobežojums.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)).isNotNull();
+                Assertions.assertThat(priekšmets.vērtība(Constraint.RINDA)).isNotNull();
+                Assertions.assertThat(priekšmets.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)).isNotNull();
             }
         }
         noņemšana().add(priekšmets);

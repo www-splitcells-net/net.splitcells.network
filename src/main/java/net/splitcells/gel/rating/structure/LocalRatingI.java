@@ -2,14 +2,14 @@ package net.splitcells.gel.rating.structure;
 
 import java.util.List;
 
-import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.constraint.Constraint;
 
 public class LocalRatingI implements LocalRating {
 
-	private GrupaId radītsIerobežojumuGrupaId;
+	private GroupId radītsIerobežojumuGrupaId;
 	private Rating novērtējums;
-	private List<Ierobežojums> izdalīUz;
+	private List<Constraint> izdalīUz;
 
 	public static LocalRating lokalsNovērtejums() {
 		return new LocalRatingI();
@@ -20,7 +20,7 @@ public class LocalRatingI implements LocalRating {
 	}
 
 	@Override
-	public GrupaId radītsIerobežojumuGrupaId() {
+	public GroupId radītsIerobežojumuGrupaId() {
 		return radītsIerobežojumuGrupaId;
 	}
 
@@ -30,12 +30,12 @@ public class LocalRatingI implements LocalRating {
 	}
 
 	@Override
-	public List<Ierobežojums> izdalīUz() {
+	public List<Constraint> izdalīUz() {
 		return izdalīUz;
 	}
 
 	@Override
-	public LocalRatingI arIzdalīšanaUz(List<Ierobežojums> IzdalīšanaUz) {
+	public LocalRatingI arIzdalīšanaUz(List<Constraint> IzdalīšanaUz) {
 		this.izdalīUz = IzdalīšanaUz;
 		return this;
 	}
@@ -47,7 +47,7 @@ public class LocalRatingI implements LocalRating {
 	}
 
 	@Override
-	public LocalRatingI arRadītuGrupasId(GrupaId radītsIerobežojumuGrupaId) {
+	public LocalRatingI arRadītuGrupasId(GroupId radītsIerobežojumuGrupaId) {
 		this.radītsIerobežojumuGrupaId = radītsIerobežojumuGrupaId;
 		return this;
 	}

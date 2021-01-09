@@ -6,7 +6,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.common.Vārdi.ARGUMENTI;
-import static net.splitcells.gel.constraint.GrupaId.grupa;
+import static net.splitcells.gel.constraint.GroupId.grupa;
 import static net.splitcells.gel.data.table.attribute.AttributeI.atributs;
 import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
 import static net.splitcells.gel.rating.structure.MetaRating.neitrāla;
@@ -35,16 +35,16 @@ import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 
-public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSubscriber, IerobežojumuRakstnieks, Discoverable, PubliclyTyped<Ierobežojums>, PubliclyConstructed<Domable>, Domable {
+public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscriber, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
     Attribute<Line> RINDA = atributs(Line.class, "rinda");
-    Attribute<java.util.List<Ierobežojums>> IZDALĪŠANA_UZ = listAttribute(Ierobežojums.class, "idalīšana uz");
-    Attribute<GrupaId> IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "ienākošie ierobežojumu grupas id");
-    Attribute<GrupaId> RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID = atributs(GrupaId.class, "radītas ierobežojumu grupas id");
+    Attribute<java.util.List<Constraint>> IZDALĪŠANA_UZ = listAttribute(Constraint.class, "idalīšana uz");
+    Attribute<GroupId> IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID = atributs(GroupId.class, "ienākošie ierobežojumu grupas id");
+    Attribute<GroupId> RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID = atributs(GroupId.class, "radītas ierobežojumu grupas id");
     Attribute<Rating> NOVĒRTĒJUMS = atributs(Rating.class, "novērtējums");
 
-    static List<List<Ierobežojums>> piešķiršanasGruppas(List<Ierobežojums> momentānaTaka) {
+    static List<List<Constraint>> piešķiršanasGruppas(List<Constraint> momentānaTaka) {
         final var ierobežojums = momentānaTaka.lastValue().get();
-        final List<List<Ierobežojums>> piešķiršanasGruppas = list();
+        final List<List<Constraint>> piešķiršanasGruppas = list();
         piešķiršanasGruppas.add(momentānaTaka);
         piešķiršanasGruppas.addAll(
                 ierobežojums.skatsUsBerniem().stream()
@@ -54,79 +54,79 @@ public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSub
         return piešķiršanasGruppas;
     }
 
-    static List<List<Ierobežojums>> piešķiršanasGruppas(Ierobežojums ierobežojums) {
+    static List<List<Constraint>> piešķiršanasGruppas(Constraint ierobežojums) {
         return piešķiršanasGruppas(list(ierobežojums));
     }
 
-    GrupaId injekcijasGrupa();
+    GroupId injekcijasGrupa();
 
     default MetaRating novērtējums() {
         return novērtējums(injekcijasGrupa());
     }
 
-    static GrupaId standartaGrupa() {
-        return GrupaId.grupa("priekš-visiem");
+    static GroupId standartaGrupa() {
+        return GroupId.grupa("priekš-visiem");
     }
 
     default MetaRating novērtējums(Line rinda) {
         return novērtējums(injekcijasGrupa(), rinda);
     }
 
-    MetaRating novērtējums(GrupaId grupaId, Line rinda);
+    MetaRating novērtējums(GroupId grupaId, Line rinda);
 
-    MetaRating novērtējums(GrupaId grupaId);
+    MetaRating novērtējums(GroupId grupaId);
 
     default Perspective dabiskaArgumentācija() {
         return dabiskaArgumentācija(injekcijasGrupa());
     }
 
-    Perspective dabiskaArgumentācija(GrupaId grupa);
+    Perspective dabiskaArgumentācija(GroupId grupa);
 
     Optional<Discoverable> galvenaisKonteksts();
 
-    default Perspective dabiskaArgumentācija(Line priekšmets, GrupaId grupa) {
+    default Perspective dabiskaArgumentācija(Line priekšmets, GroupId grupa) {
         return dabiskaArgumentācija(priekšmets, grupa, PiešķiršanaFiltrs::atlasītArCenu);
     }
 
-    Perspective dabiskaArgumentācija(Line rinda, GrupaId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
+    Perspective dabiskaArgumentācija(Line rinda, GroupId grupa, Predicate<PiešķiršanaNovērtējums> rindasAtlasītājs);
 
-    default MetaRating rating(Set<GrupaId> grupas) {
+    default MetaRating rating(Set<GroupId> grupas) {
         return grupas.stream().
                 map(group -> novērtējums(group)).
                 reduce((a, b) -> a.kombinē(b)).
                 orElseGet(() -> neitrāla());
     }
 
-    default GrupaId reģistrē(Line rinda) {
+    default GroupId reģistrē(Line rinda) {
         final var rVal = injekcijasGrupa();
         reģistrē_papildinājums(rVal, rinda);
         return rVal;
     }
 
-    GrupaId grupaNo(Line rinda);
+    GroupId grupaNo(Line rinda);
 
-    void reģistrē_papildinājums(GrupaId grupaId, Line rinda);
+    void reģistrē_papildinājums(GroupId grupaId, Line rinda);
 
     default void reģistrē_papildinājumi(Line rinda) {
         reģistrē_papildinājums(injekcijasGrupa(), rinda);
     }
 
-    void rēgistrē_pirms_noņemšanas(GrupaId grupaId, Line rinda);
+    void rēgistrē_pirms_noņemšanas(GroupId grupaId, Line rinda);
 
     @Deprecated
     default void rēgistrē_pirms_noņemšanas(Line rinda) {
         rēgistrē_pirms_noņemšanas(injekcijasGrupa(), rinda);
     }
 
-    List<Ierobežojums> skatsUsBerniem();
+    List<Constraint> skatsUsBerniem();
 
-    Set<Line> izpildītāji(GrupaId grupaId);
+    Set<Line> izpildītāji(GroupId grupaId);
 
     default Set<Line> izpildītāji() {
         return izpildītāji(injekcijasGrupa());
     }
 
-    Set<Line> neievērotaji(GrupaId grupaId);
+    Set<Line> neievērotaji(GroupId grupaId);
 
     default Set<Line> neievērotaji() {
         return neievērotaji(injekcijasGrupa());
@@ -134,17 +134,17 @@ public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSub
 
     Line pieliktRadījums(LocalRating vietējieNovērtējums);
 
-    default Jautājums jautājums() {
-        return JautājumsI.jautājums(this);
+    default Query jautājums() {
+        return QueryI.jautājums(this);
     }
 
     Table rindasAbstrāde();
 
     Element toDom();
 
-    Element toDom(Set<GrupaId> grupas);
+    Element toDom(Set<GroupId> grupas);
 
-    default Set<Ierobežojums> vecāksNo(Ierobežojums ierobežojums) {
+    default Set<Constraint> vecāksNo(Constraint ierobežojums) {
         if (equals(ierobežojums)) {
             return setOfUniques(this);
         }
@@ -154,8 +154,8 @@ public interface Ierobežojums extends AfterAdditionSubscriber, BeforeRemovalSub
                 .orElseGet(() -> setOfUniques());
     }
 
-    default Set<GrupaId> bērnuGrupas(Line rinda, Ierobežojums priekšmets) {
-        final Set<GrupaId> bērnuGrupas = setOfUniques();
+    default Set<GroupId> bērnuGrupas(Line rinda, Constraint priekšmets) {
+        final Set<GroupId> bērnuGrupas = setOfUniques();
         if (equals(priekšmets)) {
             bērnuGrupas.add(grupaNo(rinda));
         } else {

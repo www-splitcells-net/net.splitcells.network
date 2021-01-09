@@ -1,26 +1,26 @@
 package net.splitcells.gel.constraint.vidējs.dati;
 
-import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.constraint.Constraint;
 
 public class GrupuIzdalīšanaVirziens {
-	public static GrupuIzdalīšanaVirziens routingResult(GrupaId grupa, Ierobežojums izplatītājs) {
+	public static GrupuIzdalīšanaVirziens routingResult(GroupId grupa, Constraint izplatītājs) {
 		return new GrupuIzdalīšanaVirziens(grupa, izplatītājs);
 	}
 
-	private final GrupaId grupa;
-	private final Ierobežojums izplatītājs;
+	private final GroupId grupa;
+	private final Constraint izplatītājs;
 
-	private GrupuIzdalīšanaVirziens(GrupaId grupa, Ierobežojums izplatītājs) {
+	private GrupuIzdalīšanaVirziens(GroupId grupa, Constraint izplatītājs) {
 		this.grupa = grupa;
 		this.izplatītājs = izplatītājs;
 	}
 
-	public GrupaId grupa() {
+	public GroupId grupa() {
 		return grupa;
 	}
 
-	public Ierobežojums izplatītājs() {
+	public Constraint izplatītājs() {
 		return izplatītājs;
 	}
 }

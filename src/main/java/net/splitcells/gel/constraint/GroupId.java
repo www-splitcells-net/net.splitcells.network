@@ -8,24 +8,24 @@ import java.util.Optional;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
 
-public class GrupaId implements Domable {
+public class GroupId implements Domable {
     @Deprecated
-    public GrupaId() {
+    public GroupId() {
         vārds = Optional.empty();
     }
 
-    private GrupaId(String vārds) {
+    private GroupId(String vārds) {
         this.vārds = Optional.ofNullable(vārds);
     }
 
     private final Optional<String> vārds;
 
-    public static GrupaId grupa() {
-        return new GrupaId();
+    public static GroupId grupa() {
+        return new GroupId();
     }
 
-    public static GrupaId grupa(String vārds) {
-        return new GrupaId(vārds);
+    public static GroupId grupa(String vārds) {
+        return new GroupId(vārds);
     }
 
     @Deprecated
@@ -37,8 +37,8 @@ public class GrupaId implements Domable {
         return vārds;
     }
 
-    public static GrupaId reizinatasGrupas(GrupaId a, GrupaId b) {
-        return new GrupaId(a.toString() + " un " + b.toString());
+    public static GroupId reizinatasGrupas(GroupId a, GroupId b) {
+        return new GroupId(a.toString() + " un " + b.toString());
     }
 
     @Override

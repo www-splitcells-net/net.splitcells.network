@@ -7,8 +7,8 @@ import java.util.function.Function;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.constraint.Ierobežojums;
-import net.splitcells.gel.constraint.GrupaId;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
@@ -16,20 +16,20 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends IerobežojumsAI {
     protected final Rater vērtētājs;
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(Function<Ierobežojums, Rater> vērtētājuRažotajs) {
-        super(Ierobežojums.standartaGrupa());
+    protected IerobežojumsBalstītaUzVietējieGrupasAI(Function<Constraint, Rater> vērtētājuRažotajs) {
+        super(Constraint.standartaGrupa());
         vērtētājs = vērtētājuRažotajs.apply(this);
     }
 
     protected IerobežojumsBalstītaUzVietējieGrupasAI(Rater vērtētājs, String vārds) {
-        this(Ierobežojums.standartaGrupa(), vērtētājs, vārds);
+        this(Constraint.standartaGrupa(), vērtētājs, vārds);
     }
 
     protected IerobežojumsBalstītaUzVietējieGrupasAI(Rater vērtētājs) {
-        this(Ierobežojums.standartaGrupa(), vērtētājs, "");
+        this(Constraint.standartaGrupa(), vērtētājs, "");
     }
 
-    protected IerobežojumsBalstītaUzVietējieGrupasAI(GrupaId standartaGrupa, Rater vērtētājs, String vārds) {
+    protected IerobežojumsBalstītaUzVietējieGrupasAI(GroupId standartaGrupa, Rater vērtētājs, String vārds) {
         super(standartaGrupa, vārds);
         this.vērtētājs = vērtētājs;
     }
@@ -59,7 +59,7 @@ public abstract class IerobežojumsBalstītaUzVietējieGrupasAI extends Ierobež
     }
 
     @Override
-    protected void apstrāda_rindas_primsNoņemšana(GrupaId ienākošaGrupaId, Line noņemšana) {
+    protected void apstrāda_rindas_primsNoņemšana(GroupId ienākošaGrupaId, Line noņemšana) {
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pirms_noņemšana(
                         rindas.kolonnaSkats(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)

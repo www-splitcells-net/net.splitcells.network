@@ -17,8 +17,8 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 import org.w3c.dom.Node;
@@ -29,7 +29,7 @@ public class GroupMultiplier implements Rater {
     }
 
     private final List<Rater> grupetaji;
-    protected final Map<List<GrupaId>, GrupaId> grupuReizinātājs = map();
+    protected final Map<List<GroupId>, GroupId> grupuReizinātājs = map();
     private final List<Discoverable> konteksti = list();
 
     protected GroupMultiplier(Rater... grupetaji) {
@@ -53,9 +53,9 @@ public class GroupMultiplier implements Rater {
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu
-            (Table rindas, Line papildinājums, List<Ierobežojums> bērni, Table novērtējumsPirmsPapildinājumu) {
+            (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
         final var novērtejumuNotikums = novērtejumuNotikums();
-        List<GrupaId> grupešanaNoPapildinajmiem = listWithValuesOf(
+        List<GroupId> grupešanaNoPapildinajmiem = listWithValuesOf(
                 grupetaji.stream()
                         .map(grupetajs -> grupetajs
                                 .vērtē_pēc_papildinājumu(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu))
@@ -67,8 +67,8 @@ public class GroupMultiplier implements Rater {
         grupuReizinātājs.computeIfAbsent(
                 grupešanaNoPapildinajmiem
                 , atslēga -> atslēga
-                        .reduced((a, b) -> GrupaId.reizinatasGrupas(a, b))
-                        .orElseGet(() -> GrupaId.grupa()));
+                        .reduced((a, b) -> GroupId.reizinatasGrupas(a, b))
+                        .orElseGet(() -> GroupId.grupa()));
         novērtejumuNotikums.papildinājumi().put(
                 papildinājums
                 , lokalsNovērtejums()
@@ -80,17 +80,17 @@ public class GroupMultiplier implements Rater {
 
     @Override
     public RatingEvent vērtē_pirms_noņemšana
-            (Table rindas, Line noņemšana, List<Ierobežojums> bērni, Table novērtējumsPirmsNoņemšana) {
+            (Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
         return novērtejumuNotikums();
     }
 
     @Override
-    public Node argumentacija(GrupaId grupa, Table piešķiršanas) {
+    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
         return Xml.textNode(getClass().getSimpleName());
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GrupaId grupa) {
+    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
         return grupetaji.stream()
                 .map(grupetajis -> grupetajis.toString())
                 .reduce((a, b) -> a + " " + b)

@@ -2,20 +2,20 @@ package net.splitcells.gel.rating.structure;
 
 import java.util.List;
 
-import net.splitcells.gel.constraint.GrupaId;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.constraint.Constraint;
 
 public interface LocalRating {
 
-	GrupaId radītsIerobežojumuGrupaId();
+	GroupId radītsIerobežojumuGrupaId();
 
 	Rating novērtējums();
 
-	List<Ierobežojums> izdalīUz();
+	List<Constraint> izdalīUz();
 
-	LocalRatingI arIzdalīšanaUz(List<Ierobežojums> IzdalīšanaUz);
+	LocalRatingI arIzdalīšanaUz(List<Constraint> IzdalīšanaUz);
 
 	LocalRatingI arNovērtējumu(Rating novērtējums);
 
-	LocalRatingI arRadītuGrupasId(GrupaId radītsIerobežojumuGrupaId);
+	LocalRatingI arRadītuGrupasId(GroupId radītsIerobežojumuGrupaId);
 }

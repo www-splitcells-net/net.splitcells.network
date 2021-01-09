@@ -10,7 +10,7 @@ import net.splitcells.gel.solution.Solutions;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
-import net.splitcells.gel.constraint.Ierobežojums;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.structure.MetaRating;
@@ -24,22 +24,22 @@ import static net.splitcells.gel.problem.derived.DerivedSolution.atvasinātaProb
 
 public class ProblemI implements Problem {
 
-    private final Ierobežojums ierobežojums;
+    private final Constraint ierobežojums;
     private final Allocations piešķiršanas;
     protected Solution kāSolution;
 
-    public static Problem problēma(Allocations piešķiršanas, Ierobežojums ierobežojums) {
+    public static Problem problēma(Allocations piešķiršanas, Constraint ierobežojums) {
         return new ProblemI(piešķiršanas, ierobežojums);
     }
 
-    protected ProblemI(Allocations piešķiršanas, Ierobežojums ierobežojums) {
+    protected ProblemI(Allocations piešķiršanas, Constraint ierobežojums) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = ierobežojums;
         sinhronizē(ierobežojums);
     }
 
     @Override
-    public Ierobežojums ierobežojums() {
+    public Constraint ierobežojums() {
         return ierobežojums;
     }
 
