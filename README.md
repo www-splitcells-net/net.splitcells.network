@@ -1,7 +1,9 @@
 # splitcells.net
 
 This is the root project of a project cluster. 
-The rendered documentation can be seen [here](http://splitcells.net/net/splitcells/index.html).
+
+* [Rendered Documentation](http://splitcells.net/net/splitcells/index.html).
+* [Twitch Channel](https://www.twitch.tv/splitcellsnet)
 
 ## Status
 
