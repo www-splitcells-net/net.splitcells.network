@@ -13,38 +13,38 @@ import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
 public class Compliance implements Rating {
-    private static final Comparator<Boolean> SALĪDYINĀTĀJS = comparator_((a, b) -> Boolean.compare(a, b));
-    private boolean vertība;
+    private static final Comparator<Boolean> COMPARATOR = comparator_((a, b) -> Boolean.compare(a, b));
+    private boolean value;
 
-    public static Compliance atbilstība(boolean vertība) {
-        return new Compliance(vertība);
+    public static Compliance compliance(boolean value) {
+        return new Compliance(value);
     }
 
-    protected Compliance(boolean vertība) {
-        this.vertība = vertība;
+    protected Compliance(boolean value) {
+        this.value = value;
     }
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof Compliance) {
-            return Optional.of(SALĪDYINĀTĀJS.compareTo(vertība, ((Compliance) arg).vertība));
+            return Optional.of(COMPARATOR.compareTo(value, ((Compliance) arg).value));
         }
         throw new IllegalArgumentException(arg.getClass().getName());
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Compliance kombinē(Rating... papilduNovērtējums) {
-        if (papilduNovērtējums[0] instanceof Compliance) {
-            return atbilstība(vertība && ((Compliance) papilduNovērtējums[0]).vertība);
+    public Compliance kombinē(Rating... additionalRatings) {
+        if (additionalRatings[0] instanceof Compliance) {
+            return compliance(value && ((Compliance) additionalRatings[0]).value);
         }
-        throw new IllegalArgumentException(asList(papilduNovērtējums).toString());
+        throw new IllegalArgumentException(asList(additionalRatings).toString());
     }
 
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof Compliance) {
-            return this.vertība == ((Compliance) arg).vertība;
+            return this.value == ((Compliance) arg).value;
         }
         return false;
     }
@@ -52,13 +52,13 @@ public class Compliance implements Rating {
     @SuppressWarnings("unchecked")
     @Override
     public <R extends Rating> R _clone() {
-        return (R) new Compliance(vertība);
+        return (R) new Compliance(value);
     }
 
     @Override
     public Element toDom() {
         final var dom = element(this.getClass().getSimpleName());
-        dom.appendChild(Xml.textNode("" + vertība));
+        dom.appendChild(Xml.textNode("" + value));
         return dom;
     }
 }

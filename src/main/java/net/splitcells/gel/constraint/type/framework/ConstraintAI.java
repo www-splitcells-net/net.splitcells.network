@@ -21,7 +21,7 @@ import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.rindasNovērtējums;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
@@ -170,7 +170,7 @@ public abstract class ConstraintAI implements Constraint {
     public Set<Line> ievērojami(GroupId grupaId, Set<Line> piešķiršanas) {
         final Set<Line> ievērojama = setOfUniques();
         piešķiršanas.forEach(piešķiršana -> {
-            if (novērtējums(grupaId, piešķiršana.value(LINE)).equals(bezMaksas())) {
+            if (novērtējums(grupaId, piešķiršana.value(LINE)).equals(noCost())) {
                 ievērojama.add(rindasApstrāde.demand_of_allocation(piešķiršana).value(LINE));
             }
         });
@@ -180,7 +180,7 @@ public abstract class ConstraintAI implements Constraint {
     public Set<Line> neievērotaji(GroupId grupaId, Set<Line> piešķiršanas) {
         final Set<Line> neievērotaji = setOfUniques();
         piešķiršanas.forEach(piešķiršana -> {
-            if (!novērtējums(grupaId, piešķiršana.value(LINE)).equals(bezMaksas())) {
+            if (!novērtējums(grupaId, piešķiršana.value(LINE)).equals(noCost())) {
                 neievērotaji.add(rindasApstrāde.demand_of_allocation(piešķiršana).value(LINE));
             }
         });
@@ -195,7 +195,7 @@ public abstract class ConstraintAI implements Constraint {
                 grūpa.forEach(group -> novērtetāMaršrutēšana.gūtNovērtējums().add(bērns.novērtējums(group, rinda)))
         );
         if (novērtetāMaršrutēšana.gūtNovērtējums().isEmpty()) {
-            return MetaRatingI.reflektētsNovērtējums(bezMaksas());
+            return MetaRatingI.reflektētsNovērtējums(noCost());
         }
         return novērtetāMaršrutēšana.gūtNovērtējums().stream()
                 .reduce((a, b) -> a.kombinē(b))
@@ -233,7 +233,7 @@ public abstract class ConstraintAI implements Constraint {
         novērtetāMaršrutēšana.gūtBērnusUzGrupas().forEach((bērni, grupas) ->
                 grupas.forEach(group -> novērtetāMaršrutēšana.gūtNovērtējums().add(bērni.novērtējums(group))));
         if (novērtetāMaršrutēšana.gūtNovērtējums().isEmpty()) {
-            return MetaRatingI.reflektētsNovērtējums(bezMaksas());
+            return MetaRatingI.reflektētsNovērtējums(noCost());
         }
         return novērtetāMaršrutēšana.gūtNovērtējums().stream()
                 .reduce((a, b) -> a.kombinē(b))

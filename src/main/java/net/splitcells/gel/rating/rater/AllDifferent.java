@@ -6,7 +6,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.IncorrectImplementation.incorrectImplementation;
 import static net.splitcells.gel.rating.type.Cost.cost;
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -58,7 +58,7 @@ public class AllDifferent<T> implements Rater {
                     papildinājums
                     , lokalsNovērtejums()
                             .arIzdalīšanaUz(bērni)
-                            .arNovērtējumu(bezMaksas())
+                            .arNovērtējumu(noCost())
                             .arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
         } else if (2 == grupa.size()) {
             if (ENFORCING_UNIT_CONSISTENCY) {
@@ -110,7 +110,7 @@ public class AllDifferent<T> implements Rater {
                                 .put(e
                                         , lokalsNovērtejums()
                                                 .arIzdalīšanaUz(bērni)
-                                                .arNovērtējumu(bezMaksas())
+                                                .arNovērtējumu(noCost())
                                                 .arRadītuGrupasId(noņemšana.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
                     });
         }

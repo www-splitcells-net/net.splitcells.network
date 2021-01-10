@@ -10,6 +10,6 @@ public class AllocationSelector {
 	}
 
 	public static boolean atlasītArCenu(AllocationRating piešķiršanaNovērtējums) {
-		return !piešķiršanaNovērtējums.novērtējums().equalz(Cost.bezMaksas());
+		return !piešķiršanaNovērtējums.novērtējums().equalz(Cost.noCost());
 	}
 }

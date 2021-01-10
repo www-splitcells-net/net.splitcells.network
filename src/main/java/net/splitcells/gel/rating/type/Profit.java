@@ -13,67 +13,67 @@ import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
 public class Profit implements Rating {
-    private static final Comparator<Double> PEĻŅĀS_VERTĪBA_SALĪDZINĀTĀJS = new Comparator<Double>() {
+    private static final Comparator<Double> PROFIT_VALUE_COMPARATOR = new Comparator<Double>() {
         @Override
         public int compare(Double a, Double b) {
             return a.compareTo(b);
         }
     };
-    private double vertība;
+    private double value;
 
-    public static Profit bezPeļņas() {
+    public static Profit withoutProfit() {
         return new Profit();
     }
 
-    public static Profit peļņa(double vertība) {
-        return new Profit(vertība);
+    public static Profit profit(double value) {
+        return new Profit(value);
     }
 
     protected Profit() {
         this(0.0);
     }
 
-    protected Profit(double vertība) {
-        this.vertība = vertība;
+    protected Profit(double value) {
+        this.value = value;
     }
 
-    public double vertība() {
-        return vertība;
+    public double value() {
+        return value;
     }
 
     @Override
-    public Optional<Ordering> compare_partially_to(Rating novērtējums) {
-        if (novērtējums instanceof Profit) {
-            return Optional.of(PEĻŅĀS_VERTĪBA_SALĪDZINĀTĀJS.compareTo(vertība, ((Profit) novērtējums).vertība()));
+    public Optional<Ordering> compare_partially_to(Rating rating) {
+        if (rating instanceof Profit) {
+            return Optional.of(PROFIT_VALUE_COMPARATOR.compareTo(value, ((Profit) rating).value()));
         }
-        throw new IllegalArgumentException(novērtējums.getClass().getName());
+        throw new IllegalArgumentException(rating.getClass().getName());
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Profit kombinē(Rating... papilduNovērtējums) {
-        if (papilduNovērtējums[0] instanceof Profit) {
-            final Profit otherPeļņa = (Profit) papilduNovērtējums[0];
-            return peļņa(vertība + otherPeļņa.vertība);
+    public Profit kombinē(Rating... additionalRatings) {
+        if (additionalRatings[0] instanceof Profit) {
+            final Profit otherCost = (Profit) additionalRatings[0];
+            return profit(value + otherCost.value);
         }
         throw not_implemented_yet();
     }
 
     @Override
-    public boolean equals(Object cits) {
-        return compare_partially_to((Rating) cits).get().equals(EQUAL);
+    public boolean equals(Object other) {
+        return compare_partially_to((Rating) other).get().equals(EQUAL);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <R extends Rating> R _clone() {
-        return (R) new Profit(vertība);
+        return (R) new Profit(value);
     }
 
     @Override
     public Element toDom() {
         final org.w3c.dom.Element dom = element(this.getClass().getSimpleName());
-        dom.appendChild(Xml.textNode("" + vertība));
+        dom.appendChild(Xml.textNode("" + value));
         return dom;
     }
 }

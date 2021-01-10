@@ -6,7 +6,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.GroupId.grupa;
 import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -59,7 +59,7 @@ public class ForAllAttributeValues implements Rater {
         novērtejumuNotikums.papildinājumi().put(papildinājums
                 , lokalsNovērtejums()
                         .arIzdalīšanaUz(bērni)
-                        .arNovērtējumu(bezMaksas())
+                        .arNovērtējumu(noCost())
                         .arRadītuGrupasId(grupa.get(ienākošasGrupasId).get(grupēšanasVertība))
         );
         return novērtejumuNotikums;

@@ -132,7 +132,7 @@ public class MetaRatingI implements MetaRating {
     public <R extends Rating> R tulkošana(Class<R> tips) {
         if (novērtējumi.size() == 1) {
             if (novērtējumi.containsKey(Profit.class)) {
-                return (R) Profit.peļņa(gūtSaturuDaļa(Profit.class).vertība());
+                return (R) Profit.profit(gūtSaturuDaļa(Profit.class).value());
             }
         }
         return (R) this;
@@ -186,7 +186,7 @@ public class MetaRatingI implements MetaRating {
             if (saturs().containsKey(Cost.class)) {
                 return this.gūtSaturuDaļa(Cost.class).compare_partially_to(arg);
             }
-            if (saturs().isEmpty() && 0 == ((Cost) arg).vertība()) {
+            if (saturs().isEmpty() && 0 == ((Cost) arg).value()) {
                 return Optional.of(EQUAL);
             }
             if (saturs().containsKey(Optimality.class)) {

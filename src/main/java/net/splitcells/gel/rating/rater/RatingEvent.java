@@ -1,7 +1,7 @@
 package net.splitcells.gel.rating.rater;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,7 +28,7 @@ public interface RatingEvent {
         if (papildinājumi().containsKey(priekjšmets)) {
             momentānsNovērtējums = papildinājumi().get(priekjšmets).novērtējums();
         } else {
-            momentānsNovērtējums = novērtejumsPirmsPapildinājumu.orElse(bezMaksas());
+            momentānsNovērtējums = novērtejumsPirmsPapildinājumu.orElse(noCost());
         }
         papildinājumi().put
                 (priekjšmets
@@ -44,7 +44,7 @@ public interface RatingEvent {
         if (papildinājumi().containsKey(priekšmets)) {
             currentNovērtējums = papildinājumi().get(priekšmets).novērtējums();
         } else {
-            currentNovērtējums = novērtējumsPirmsPapildinājumu.orElse(bezMaksas());
+            currentNovērtējums = novērtējumsPirmsPapildinājumu.orElse(noCost());
         }
         atjaunaNovērtējumu_caurAizvietošana(priekšmets
                 , lokalsNovērtejums()

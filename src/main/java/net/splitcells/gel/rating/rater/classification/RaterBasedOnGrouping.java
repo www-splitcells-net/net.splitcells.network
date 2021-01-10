@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -43,7 +43,7 @@ public class RaterBasedOnGrouping implements Rater {
                         .put(rinda
                                 , lokalsNovērtejums()
                                         .arIzdalīšanaUz(vietējiasNovērtējums.izdalīUz())
-                                        .arNovērtējumu(bezMaksas())
+                                        .arNovērtējumu(noCost())
                                         .arRadītuGrupasId
                                                 (vietējiasNovērtējums.radītsIerobežojumuGrupaId())));
         return novērtejumuNotikums;

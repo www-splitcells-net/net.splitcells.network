@@ -14,39 +14,39 @@ import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
 public class Optimality implements Rating {
-    private static final Comparator<Double> OPTIMĀLUMU_VĒRTIBAS_SALĪDZINĀTĀJS = new Comparator<Double>() {
+    private static final Comparator<Double> OPTIMALITY_VALUE_COMPARATOR = new Comparator<Double>() {
         @Override
         public int compare(Double a, Double b) {
             return a.compareTo(b);
         }
     };
 
-    public static Optimality optimālums() {
-        return optimālums(0.0);
+    public static Optimality optimality() {
+        return optimality(0.0);
     }
 
-    public static Optimality optimālums(double optimality) {
-        return new Optimality(optimality);
+    public static Optimality optimality(double value) {
+        return new Optimality(value);
     }
 
-    private double vertība;
+    private double value;
 
-    protected Optimality(double vertība) {
-        assertThat(vertība).isBetween(0.0, 1.0);
-        this.vertība = vertība;
+    protected Optimality(double value) {
+        assertThat(value).isBetween(0.0, 1.0);
+        this.value = value;
     }
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof Optimality) {
-            return Optional.of(OPTIMĀLUMU_VĒRTIBAS_SALĪDZINĀTĀJS.compareTo(vertība, ((Optimality) arg).vertība));
+            return Optional.of(OPTIMALITY_VALUE_COMPARATOR.compareTo(value, ((Optimality) arg).value));
         }
         if (arg instanceof Cost) {
-            final Cost argCena = ((Cost) arg);
-            if (vertība == 1 && argCena.vertība() == 0) {
+            final Cost argCost = ((Cost) arg);
+            if (value == 1 && argCost.value() == 0) {
                 return Optional.of(EQUAL);
             }
-            if (vertība == 1 && argCena.vertība() > 0) {
+            if (value == 1 && argCost.value() > 0) {
                 return Optional.of(Ordering.GREATER_THAN);
             }
             return Optional.empty();
@@ -55,20 +55,20 @@ public class Optimality implements Rating {
     }
 
     @Override
-    public Rating kombinē(Rating... additionalNovērtējums) {
+    public Rating kombinē(Rating... addtionalRatings) {
         throw not_implemented_yet();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <R extends Rating> R _clone() {
-        return (R) new Optimality(vertība);
+        return (R) new Optimality(value);
     }
 
     @Override
     public Element toDom() {
         final var dom = element(this.getClass().getSimpleName());
-        dom.appendChild(Xml.textNode("" + vertība));
+        dom.appendChild(Xml.textNode("" + value));
         return dom;
     }
 
@@ -78,6 +78,6 @@ public class Optimality implements Rating {
     }
 
     public double vertība() {
-        return vertība;
+        return value;
     }
 }

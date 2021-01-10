@@ -1,13 +1,13 @@
 package net.splitcells.gel.rating.structure;
 
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 import net.splitcells.dem.data.set.map.Map;
 
 public interface MetaRating extends Rating, RatingTranslator, MetaRatingMerger {
     static MetaRating neitrāla() {
         final MetaRating neitrāla = MetaRatingI.rflektētsNovērtējums();
-        neitrāla.kombinē(bezMaksas());
+        neitrāla.kombinē(noCost());
         return neitrāla;
     }
 

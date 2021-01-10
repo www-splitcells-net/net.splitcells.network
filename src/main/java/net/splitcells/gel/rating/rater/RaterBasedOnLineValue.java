@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.GroupId.grupa;
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -47,7 +47,7 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     public static Rater rindasVertībasBalstītasUzGrupetajs(Function<Line, GroupId> grupetajsBalstītsUzRindasVertības) {
-        return new RaterBasedOnLineValue(papilduRinda -> bezMaksas(), grupetajsBalstītsUzRindasVertības);
+        return new RaterBasedOnLineValue(papilduRinda -> noCost(), grupetajsBalstītsUzRindasVertības);
     }
 
     private final Function<Line, Rating> rindasBalstītsUzVertībasVērtētājs;

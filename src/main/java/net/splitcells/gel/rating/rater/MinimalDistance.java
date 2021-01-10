@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.type.Cost.cost;
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -136,7 +136,7 @@ public class MinimalDistance<T> implements Rater {
                 novērtejumuNotikums.papildinājumi().put(papildinājums//
                         , lokalsNovērtejums().
                                 arIzdalīšanaUz(bērni).
-                                arNovērtējumu(bezMaksas()).
+                                arNovērtējumu(noCost()).
                                 arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
             } else {
                 novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, sakārtotasRindas.get(1), bērni//
@@ -194,7 +194,7 @@ public class MinimalDistance<T> implements Rater {
         if (abs(distanceMeassurer.apply(
                 papildinājums.value(Constraint.LINE).value(atribūts),
                 oriģinālaRinda.value(Constraint.LINE).value(atribūts))) >= minimumDistance) {
-            papilduCena = bezMaksas();
+            papilduCena = noCost();
         } else {
             papilduCena = cost(0.5);
             rVal.updateRating_viaAddition(oriģinālaRinda, papilduCena, berni, ratingBeforeAddition);
@@ -286,7 +286,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     private List<Line> defyingSorted(Table lines) {
-        final var cost = bezMaksas();
+        final var cost = noCost();
         return lines.rawLinesView().stream()
                 .filter(e -> e != null)
                 .filter(e -> !e.value(Constraint.NOVĒRTĒJUMS).equalz(cost))

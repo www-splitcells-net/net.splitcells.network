@@ -5,7 +5,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 
 import java.util.Collection;
@@ -73,7 +73,7 @@ public class GroupMultiplier implements Rater {
                 papildinājums
                 , lokalsNovērtejums()
                         .arIzdalīšanaUz(bērni)
-                        .arNovērtējumu(bezMaksas())
+                        .arNovērtējumu(noCost())
                         .arRadītuGrupasId(grupuReizinātājs.get(grupešanaNoPapildinajmiem)));
         return novērtejumuNotikums;
     }

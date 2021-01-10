@@ -31,7 +31,7 @@ public class SimplifiedAnnealingProblem extends DerivedSolution {
                     @Override
                     public MetaRating apply(MetaRating rating) {
                         if (randomness.truthValue(temperatureFunction.apply(SimplifiedAnnealingProblem.this.history().size()))) {
-                            return Optimality.optimālums(1).kāReflektētsNovērtējums();
+                            return Optimality.optimality(1).kāReflektētsNovērtējums();
                         }
                         return rating;
                     }

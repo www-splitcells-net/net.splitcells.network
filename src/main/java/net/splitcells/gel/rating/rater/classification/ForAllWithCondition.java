@@ -23,7 +23,7 @@ import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
-import static net.splitcells.gel.rating.type.Cost.bezMaksas;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class ForAllWithCondition<T> implements Rater {
 
@@ -52,7 +52,7 @@ public class ForAllWithCondition<T> implements Rater {
                 (papildinājums
                         , lokalsNovērtejums()
                                 .arIzdalīšanaUz(mērķBērni)
-                                .arNovērtējumu(bezMaksas())
+                                .arNovērtējumu(noCost())
                                 .arRadītuGrupasId(papildinājums.value(INCOMING_CONSTRAINT_GROUP_ID)));
         return novērtejumuNotikums;
     }

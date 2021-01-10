@@ -99,7 +99,7 @@ public class HasSize implements Rater {
             izmers = rindas.size();
         }
         if (izmers == 0) {
-            novērtējums = Cost.bezMaksas();
+            novērtējums = Cost.noCost();
         } else if (izmers > 0) {
             final int atšķirība = abs(mērķuIzmers - izmers);
             novērtējums = cost(atšķirība / ((double) izmers));
