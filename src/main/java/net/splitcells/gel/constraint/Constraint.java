@@ -6,7 +6,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
-import static net.splitcells.gel.data.table.attribute.AttributeI.atributs;
+import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
 import static net.splitcells.gel.rating.structure.MetaRating.neutral;
 
@@ -35,11 +35,11 @@ import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 
 public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscriber, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
-    Attribute<Line> LINE = atributs(Line.class, "rinda");
+    Attribute<Line> LINE = attribute(Line.class, "rinda");
     Attribute<java.util.List<Constraint>> IZDALĪŠANA_UZ = listAttribute(Constraint.class, "idalīšana uz");
-    Attribute<GroupId> INCOMING_CONSTRAINT_GROUP = atributs(GroupId.class, "ienākošie ierobežojumu grupas id");
-    Attribute<GroupId> RESULTING_CONSTRAINT_GROUP_ID = atributs(GroupId.class, "radītas ierobežojumu grupas id");
-    Attribute<Rating> NOVĒRTĒJUMS = atributs(Rating.class, "novērtējums");
+    Attribute<GroupId> INCOMING_CONSTRAINT_GROUP = attribute(GroupId.class, "ienākošie ierobežojumu grupas id");
+    Attribute<GroupId> RESULTING_CONSTRAINT_GROUP_ID = attribute(GroupId.class, "radītas ierobežojumu grupas id");
+    Attribute<Rating> NOVĒRTĒJUMS = attribute(Rating.class, "novērtējums");
 
     static List<List<Constraint>> piešķiršanasGruppas(List<Constraint> momentānaTaka) {
         final var ierobežojums = momentānaTaka.lastValue().get();

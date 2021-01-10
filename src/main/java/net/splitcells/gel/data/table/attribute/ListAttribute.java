@@ -12,21 +12,21 @@ import net.splitcells.dem.data.atom.Bool;
 
 public class ListAttribute<T> implements Attribute<List<T>> {
 
-    private final Class<T> tips;
-    private final String vārds;
+    private final Class<T> type;
+    private final String name;
 
     public static <T> ListAttribute<T> listAttribute(Class<T> type, String name) {
         return new ListAttribute<>(type, name);
     }
 
-    protected ListAttribute(Class<T> tips, String vārds) {
-        this.tips = tips;
-        this.vārds = vārds;
+    protected ListAttribute(Class<T> type, String name) {
+        this.type = type;
+        this.name = name;
     }
 
     @Override
     public String name() {
-        return vārds;
+        return name;
     }
 
     @Override
@@ -35,12 +35,12 @@ public class ListAttribute<T> implements Attribute<List<T>> {
     }
 
     @Override
-    public Bool irGadījumsNo(Object arg) {
+    public Bool isInstanceOf(Object arg) {
         if (arg instanceof List<?>) {
             return bool(
                     ((List<?>) arg).stream()
                             .filter(i -> i != null)
-                            .allMatch(i -> tips.isAssignableFrom(i.getClass())));
+                            .allMatch(i -> type.isAssignableFrom(i.getClass())));
         } else {
             return untrue();
         }
@@ -48,9 +48,9 @@ public class ListAttribute<T> implements Attribute<List<T>> {
 
     @Override
     public Element toDom() {
-        return Xml.element(vārds
+        return Xml.element(name
                 , Xml.element(getClass().getSimpleName())
-                , Xml.element(tips.getSimpleName())
+                , Xml.element(type.getSimpleName())
         );
     }
 }

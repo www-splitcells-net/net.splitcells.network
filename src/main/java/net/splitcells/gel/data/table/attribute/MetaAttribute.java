@@ -9,17 +9,17 @@ import net.splitcells.dem.data.atom.Bool;
 
 public class MetaAttribute<T> implements Attribute<Class<T>> {
 
-    private final Class<T> tips;
-    private final String vārds;
+    private final Class<T> type;
+    private final String name;
 
-    public MetaAttribute(Class<T> tips, String vārds) {
-        this.tips = tips;
-        this.vārds = vārds;
+    public MetaAttribute(Class<T> type, String name) {
+        this.type = type;
+        this.name = name;
     }
 
     @Override
     public String name() {
-        return vārds;
+        return name;
     }
 
     @Override
@@ -28,15 +28,15 @@ public class MetaAttribute<T> implements Attribute<Class<T>> {
     }
 
     @Override
-    public Bool irGadījumsNo(Object arg) {
-        return bool(tips.isAssignableFrom((Class<?>) arg));
+    public Bool isInstanceOf(Object arg) {
+        return bool(type.isAssignableFrom((Class<?>) arg));
     }
 
     @Override
     public Element toDom() {
-        return Xml.element(vārds
+        return Xml.element(name
                 , Xml.element(getClass().getSimpleName())
-                , Xml.element(tips.getSimpleName())
+                , Xml.element(type.getSimpleName())
         );
     }
 }

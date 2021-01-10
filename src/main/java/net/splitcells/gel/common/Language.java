@@ -16,6 +16,7 @@ public enum Language {
     KEY("key"),
     LINE("line"),
     META_DATA("metaData"),
+    NAME("name"),
     PATH_ACCESS_SYMBOL("."),
     PROBLEM("problem"),
     RATING("rating"),

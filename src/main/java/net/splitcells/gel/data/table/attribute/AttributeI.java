@@ -4,6 +4,7 @@ import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.atom.BoolI.bool;
 
+import net.splitcells.gel.common.Language;
 import org.w3c.dom.Element;
 
 import net.splitcells.dem.data.atom.Bool;
@@ -12,41 +13,41 @@ import java.util.function.Function;
 
 public final class AttributeI<T> implements Attribute<T> {
 
-    private final Class<T> tips;
-    private final String vārds;
-    private final Function<String, T> deserializācija;
+    private final Class<T> type;
+    private final String name;
+    private final Function<String, T> deserializer;
 
-    public static <T> Attribute<T> atribūts(Class<T> tips) {
-        return new AttributeI<>(tips, tips.getSimpleName());
+    public static <T> Attribute<T> attribute(Class<T> type) {
+        return new AttributeI<>(type, type.getSimpleName());
     }
 
-    public static Attribute<Integer> integerAtributs(String vārds) {
-        return new AttributeI<>(Integer.class, vārds, arg -> Integer.valueOf(arg));
+    public static Attribute<Integer> integerAttribute(String name) {
+        return new AttributeI<>(Integer.class, name, arg -> Integer.valueOf(arg));
     }
 
-    public static Attribute<String> stringAtributs(String vārds) {
-        return new AttributeI<>(String.class, vārds, arg -> arg);
+    public static Attribute<String> stringAttribute(String name) {
+        return new AttributeI<>(String.class, name, arg -> arg);
     }
 
-    public static <T> Attribute<T> atributs(Class<T> tips, String vārds) {
-        return new AttributeI<>(tips, vārds);
+    public static <T> Attribute<T> attribute(Class<T> type, String name) {
+        return new AttributeI<>(type, name);
     }
 
-    private AttributeI(Class<T> tips, String vārds) {
-        this(tips, vārds, arg -> {
+    private AttributeI(Class<T> type, String name) {
+        this(type, name, arg -> {
             throw new UnsupportedOperationException();
         });
     }
 
-    private AttributeI(Class<T> tips, String vārds, Function<String, T> deserializācija) {
-        this.tips = tips;
-        this.vārds = vārds;
-        this.deserializācija = deserializācija;
+    private AttributeI(Class<T> type, String name, Function<String, T> deserializer) {
+        this.type = type;
+        this.name = name;
+        this.deserializer = deserializer;
     }
 
     @Override
     public String name() {
-        return vārds;
+        return name;
     }
 
     @Override
@@ -55,20 +56,20 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     @Override
-    public Bool irGadījumsNo(Object arg) {
-        return bool(tips.isAssignableFrom(arg.getClass()));
+    public Bool isInstanceOf(Object arg) {
+        return bool(type.isAssignableFrom(arg.getClass()));
     }
 
     @Override
     public Element toDom() {
         return element(Attribute.class.getSimpleName()
-                , element("vārds", textNode(vārds))
-                , element(tips.getSimpleName())
+                , element(Language.NAME.value(), textNode(name))
+                , element(type.getSimpleName())
         );
     }
 
     @Override
-    public T deserializēVērtību(String vērtība) {
-        return deserializācija.apply(vērtība);
+    public T deserializeValue(String value) {
+        return deserializer.apply(value);
     }
 }

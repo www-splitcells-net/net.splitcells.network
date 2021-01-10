@@ -12,26 +12,27 @@ import net.splitcells.dem.data.atom.Bool;
 
 public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
 
-    private final Class<?> tips;
-    private final String vārds;
+    private final Class<?> type;
+    private final String name;
 
-    public MapAttribute(Class<?> tips, String vārds) {
-        this.tips = tips;
-        this.vārds = vārds;
+    @Deprecated
+    public MapAttribute(Class<?> type, String name) {
+        this.type = type;
+        this.name = name;
     }
 
     @Override
     public String name() {
-        return vārds;
+        return name;
     }
 
     @Override
-    public Bool irGadījumsNo(Object arg) {
+    public Bool isInstanceOf(Object arg) {
         if (arg instanceof Map) {
             return bool(((Map<Class<?>, ?>) arg).entrySet().stream()
                     .filter(i -> i != null)
-                    .allMatch(i -> tips.isAssignableFrom(i.getValue().getClass())
-                            && tips.isAssignableFrom(i.getKey())
+                    .allMatch(i -> type.isAssignableFrom(i.getValue().getClass())
+                            && type.isAssignableFrom(i.getKey())
                             && i.getKey().equals(i.getValue().getClass())
                     ));
         } else {
@@ -41,9 +42,9 @@ public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
 
     @Override
     public Element toDom() {
-        return Xml.element(vārds
+        return Xml.element(name
                 , Xml.element(getClass().getSimpleName())
-                , Xml.element(tips.getSimpleName())
+                , Xml.element(type.getSimpleName())
         );
     }
 }

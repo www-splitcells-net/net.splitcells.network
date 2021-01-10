@@ -50,7 +50,7 @@ public interface DatabaseFactory extends Closeable, Flushable {
         final var tableCells = directChildElementsByName(row, "table-cell", FODS_TABLE)
                 .collect(toList());
         return range(0, atribūti.size())
-                .mapToObj(i -> atribūti.get(i).deserializēVērtību(
+                .mapToObj(i -> atribūti.get(i).deserializeValue(
                         Xml.directChildElements(tableCells.get(i))
                                 .filter(e -> FODS_TEXT.uri().equals(e.getNamespaceURI()))
                                 .findFirst()

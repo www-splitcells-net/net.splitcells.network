@@ -8,13 +8,13 @@ public interface Attribute<T> extends Domable {
 
     String name();
 
-    default boolean vienāds(Line arg) {
+    default boolean equalz(Line arg) {
         return this == arg;
     }
 
-    Bool irGadījumsNo(Object arg);
+    Bool isInstanceOf(Object arg);
     
-    default T deserializēVērtību(String vērtība) {
+    default T deserializeValue(String value) {
         throw new UnsupportedOperationException();
     }
     
