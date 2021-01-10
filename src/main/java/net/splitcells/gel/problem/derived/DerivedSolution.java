@@ -23,48 +23,54 @@ import java.util.Set;
 import java.util.function.Function;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.gel.constraint.type.Derivation.derivation;
 
 
 public class DerivedSolution implements Solution {
 
-    protected Constraint ierobežojums;
-    private final Allocations piešķiršanas;
-    private final History vēsture;
-    private final Discoverable konteksts;
-    
-    public static DerivedSolution atvasinātaProblema(Discoverable konteksts, Allocations piešķiršanas, Constraint originalIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
-        return new DerivedSolution(konteksts, piešķiršanas, originalIerobežojums, Derivation.atvasināšana(originalIerobežojums, atvasinātsFunkcija));
+    protected Constraint constraint;
+    private final Allocations allocations;
+    private final History history;
+    private final Discoverable contexts;
+
+    public static DerivedSolution derivedSolution(Discoverable context, Allocations allocations
+            , Constraint originalConstraint, Function<MetaRating, MetaRating> derivation) {
+        return new DerivedSolution(context, allocations, originalConstraint
+                , derivation(originalConstraint, derivation));
     }
 
-    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Constraint oriģinālaisIerobežojums, Function<MetaRating, MetaRating> atvasinātsFunkcija) {
-        this(konteksts, piešķiršanas, oriģinālaisIerobežojums, Derivation.atvasināšana(oriģinālaisIerobežojums, atvasinātsFunkcija));
+    public static DerivedSolution derivedSolution(Discoverable context, Allocations allocations
+            , Constraint constraint, Constraint derivation) {
+        return new DerivedSolution(context, allocations, constraint, derivation);
     }
 
-    public static DerivedSolution atvasinātsProblēma(Discoverable konteksts, Allocations piešķiršanas, Constraint ierobežojums, Constraint atvasināšana) {
-        return new DerivedSolution(konteksts, piešķiršanas, ierobežojums, atvasināšana);
+    protected DerivedSolution(Discoverable context, Allocations allocations, Constraint originalConstraints
+            , Function<MetaRating, MetaRating> derivation) {
+        this(context, allocations, originalConstraints, derivation(originalConstraints, derivation));
     }
 
-    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Constraint ierobežojums, Constraint atvasināšana) {
-        this.piešķiršanas = piešķiršanas;
-        this.ierobežojums = atvasināšana;
-        vēsture = Histories.history(this);
-        this.konteksts = konteksts;
+    protected DerivedSolution(Discoverable context, Allocations allocations, Constraint constraint
+            , Constraint derivation) {
+        this.allocations = allocations;
+        this.constraint = derivation;
+        this.history = Histories.history(this);
+        this.contexts = context;
     }
 
-    protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas) {
-        this.piešķiršanas = piešķiršanas;
-        vēsture = Histories.history(this);
-        this.konteksts = konteksts;
+    protected DerivedSolution(Discoverable contexts, Allocations allocations) {
+        this.allocations = allocations;
+        history = Histories.history(this);
+        this.contexts = contexts;
     }
 
     @Override
     public Constraint constraint() {
-        return ierobežojums;
+        return constraint;
     }
 
     @Override
     public Allocations allocations() {
-        return piešķiršanas;
+        return allocations;
     }
 
     @Override
@@ -78,133 +84,133 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public DerivedSolution derived(Function<MetaRating, MetaRating> atvasināšana) {
+    public DerivedSolution derived(Function<MetaRating, MetaRating> derivation) {
         throw not_implemented_yet();
     }
 
     @Override
     public Database supplies() {
-        return piešķiršanas.supplies();
+        return allocations.supplies();
     }
 
     @Override
     public Database supplies_used() {
-        return piešķiršanas.supplies_used();
+        return allocations.supplies_used();
     }
 
     @Override
     public Database supplies_free() {
-        return piešķiršanas.supplies_free();
+        return allocations.supplies_free();
     }
 
     @Override
     public Database demands() {
-        return piešķiršanas.demands();
+        return allocations.demands();
     }
 
     @Override
     public Database demands_used() {
-        return piešķiršanas.demands_used();
+        return allocations.demands_used();
     }
 
     @Override
     public Database demands_unused() {
-        return piešķiršanas.demands_unused();
+        return allocations.demands_unused();
     }
 
     @Override
-    public Line allocate(Line prasība, Line piedāvājums) {
-        return piešķiršanas.allocate(prasība, piedāvājums);
+    public Line allocate(Line demand, Line supply) {
+        return allocations.allocate(demand, supply);
     }
 
     @Override
-    public Line demand_of_allocation(Line piešķiršana) {
-        return piešķiršanas.demand_of_allocation(piešķiršana);
+    public Line demand_of_allocation(Line allocation) {
+        return allocations.demand_of_allocation(allocation);
     }
 
     @Override
-    public Line supply_of_allocation(Line piešķiršana) {
-        return piešķiršanas.supply_of_allocation(piešķiršana);
+    public Line supply_of_allocation(Line allocation) {
+        return allocations.supply_of_allocation(allocation);
     }
 
     @Override
-    public Set<Line> allocations_of_supply(Line piedāvājums) {
-        return piešķiršanas.allocations_of_supply(piedāvājums);
+    public Set<Line> allocations_of_supply(Line supply) {
+        return allocations.allocations_of_supply(supply);
     }
 
     @Override
-    public Set<Line> allocations_of_demand(Line prasība) {
-        return piešķiršanas.allocations_of_demand(prasība);
+    public Set<Line> allocations_of_demand(Line demand) {
+        return allocations.allocations_of_demand(demand);
     }
 
     @Override
-    public Line addTranslated(List<?> vērtība) {
-        return piešķiršanas.addTranslated(vērtība);
+    public Line addTranslated(List<?> values) {
+        return allocations.addTranslated(values);
     }
 
     @Override
-    public Line add(Line rinda) {
-        return piešķiršanas.add(rinda);
+    public Line add(Line line) {
+        return allocations.add(line);
     }
 
     @Override
     public void remove(int lineIndex) {
-        piešķiršanas.remove(lineIndex);
+        allocations.remove(lineIndex);
     }
 
     @Override
-    public void remove(Line rinda) {
-        piešķiršanas.remove(rinda);
+    public void remove(Line line) {
+        allocations.remove(line);
     }
 
     @Override
-    public void subscribe_to_afterAddtions(AfterAdditionSubscriber klausītājs) {
-        piešķiršanas.subscribe_to_afterAddtions(klausītājs);
+    public void subscribe_to_afterAddtions(AfterAdditionSubscriber subscriber) {
+        allocations.subscribe_to_afterAddtions(subscriber);
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        piešķiršanas.subscriber_to_beforeRemoval(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber) {
+        allocations.subscriber_to_beforeRemoval(subscriber);
     }
 
     @Override
-    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber klausītājs) {
-        piešķiršanas.subscriber_to_afterRemoval(klausītājs);
+    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber subscriber) {
+        allocations.subscriber_to_afterRemoval(subscriber);
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return piešķiršanas.headerView();
+        return allocations.headerView();
     }
 
     @Override
-    public <T> ColumnView<T> columnView(Attribute<T> atribūts) {
-        return piešķiršanas.columnView(atribūts);
+    public <T> ColumnView<T> columnView(Attribute<T> attribute) {
+        return allocations.columnView(attribute);
     }
 
     @Override
     public List<Column<Object>> columnsView() {
-        return piešķiršanas.columnsView();
+        return allocations.columnsView();
     }
 
     @Override
     public ListView<Line> rawLinesView() {
-        return piešķiršanas.rawLinesView();
+        return allocations.rawLinesView();
     }
 
     @Override
     public int size() {
-        return piešķiršanas.size();
+        return allocations.size();
     }
 
     @Override
     public List<Line> rawLines() {
-        return piešķiršanas.rawLines();
+        return allocations.rawLines();
     }
 
     @Override
-    public Line lookupEquals(Attribute<Line> atribūts, Line other) {
-        return piešķiršanas.lookupEquals(atribūts, other);
+    public Line lookupEquals(Attribute<Line> attribute, Line other) {
+        return allocations.lookupEquals(attribute, other);
     }
 
     @Override
@@ -213,12 +219,12 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public net.splitcells.dem.data.set.list.List<String> path() {
-        return konteksts.path().withAppended(DerivedSolution.class.getSimpleName());
+    public List<String> path() {
+        return contexts.path().withAppended(DerivedSolution.class.getSimpleName());
     }
 
     @Override
     public History history() {
-        return vēsture;
+        return history;
     }
 }

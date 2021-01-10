@@ -20,7 +20,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.problem.derived.DerivedSolution.atvasinātaProblema;
+import static net.splitcells.gel.problem.derived.DerivedSolution.derivedSolution;
 
 public class ProblemI implements Problem {
 
@@ -63,7 +63,7 @@ public class ProblemI implements Problem {
 
     @Override
     public DerivedSolution derived(Function<MetaRating, MetaRating> konversija) {
-        return atvasinātaProblema(() -> list(), piešķiršanas, ierobežojums, konversija);
+        return derivedSolution(() -> list(), piešķiršanas, ierobežojums, konversija);
     }
 
     @Override

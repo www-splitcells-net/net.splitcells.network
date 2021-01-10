@@ -24,7 +24,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 public final class Derivation implements Constraint {
 
-    public static Derivation atvasināšana
+    public static Derivation derivation
             (Constraint atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
         return new Derivation(atvasināšanasMērķis, atvasināšanaFuncija);
     }

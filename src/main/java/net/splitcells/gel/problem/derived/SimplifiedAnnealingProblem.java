@@ -12,22 +12,26 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
+import static net.splitcells.gel.constraint.type.Derivation.derivation;
 
 public class SimplifiedAnnealingProblem extends DerivedSolution {
 
-    public static Solution vienkāršotsAtzesēšanasProblēma(Solution solution) {
-        return vienkāršsotsAtdzesēšanasProblēma(solution, i ->
+    public static Solution simplifiedAnnealingProblem(Solution solution) {
+        return simplifiedAnnealingProblem(solution, i ->
                 1f / (i.floatValue() + 1f));
     }
-    public static Solution vienkāršsotsAtdzesēšanasProblēma(Solution solution, Function<Integer, Float> temperatureFunction) {
+
+    public static Solution simplifiedAnnealingProblem(Solution solution, Function<Integer, Float> temperatureFunction) {
         return new SimplifiedAnnealingProblem(solution.allocations(), solution.constraint(), temperatureFunction);
     }
 
-    protected SimplifiedAnnealingProblem(Allocations piešķiršanas, Constraint originalIerobežojums, Function<Integer, Float> temperatureFunction) {
-        super(() -> list(), piešķiršanas);
-        ierobežojums = Derivation.atvasināšana(originalIerobežojums,
+    protected SimplifiedAnnealingProblem(Allocations allocations, Constraint originalConstraint
+            , Function<Integer, Float> temperatureFunction) {
+        super(() -> list(), allocations);
+        constraint = derivation(originalConstraint,
                 new Function<>() {
                     private final Randomness randomness = randomness();
+
                     @Override
                     public MetaRating apply(MetaRating rating) {
                         if (randomness.truthValue(temperatureFunction.apply(SimplifiedAnnealingProblem.this.history().size()))) {
