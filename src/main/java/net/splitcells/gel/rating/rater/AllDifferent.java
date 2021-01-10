@@ -37,7 +37,7 @@ public class AllDifferent<T> implements Rater {
     private AllDifferent(Attribute<T> arg) {
         atribūts = arg;
         predikātaRažotājs = value -> {
-            return line -> line.vērtība(atribūts).equals(value);
+            return line -> line.value(atribūts).equals(value);
         };
     }
 
@@ -50,7 +50,7 @@ public class AllDifferent<T> implements Rater {
 
     @Override
     public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final T vertība = papildinājums.vērtība(Constraint.RINDA).vērtība(atribūts);
+        final T vertība = papildinājums.value(Constraint.RINDA).value(atribūts);
         final var grupa = rindas.columnView(Constraint.RINDA).uzmeklēšana(predikāts(vertība));
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         if (1 == grupa.size()) {
@@ -59,7 +59,7 @@ public class AllDifferent<T> implements Rater {
                     , lokalsNovērtejums()
                             .arIzdalīšanaUz(bērni)
                             .arNovērtējumu(bezMaksas())
-                            .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
+                            .arRadītuGrupasId(papildinājums.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
         } else if (2 == grupa.size()) {
             if (ENFORCING_UNIT_CONSISTENCY) {
                 assertThat(grupa.rawLinesView().stream().filter(e -> e != null)).hasSize(2);
@@ -72,7 +72,7 @@ public class AllDifferent<T> implements Rater {
                                     , lokalsNovērtejums()
                                             .arIzdalīšanaUz(bērni)
                                             .arNovērtējumu(cost(1.0))
-                                            .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))));
+                                            .arRadītuGrupasId(papildinājums.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))));
             grupa.rawLinesView().stream()
                     .filter(e -> e != null)
                     .filter(e -> e.index() != papildinājums.index())
@@ -84,7 +84,7 @@ public class AllDifferent<T> implements Rater {
                             , lokalsNovērtejums()
                                     .arIzdalīšanaUz(bērni)
                                     .arNovērtējumu(cost(1.0))
-                                    .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
+                                    .arRadītuGrupasId(papildinājums.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
         } else {
             throw incorrectImplementation("" + grupa.size());
         }
@@ -93,7 +93,7 @@ public class AllDifferent<T> implements Rater {
 
     @Override
     public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        final T vērtība = noņemšana.vērtība(Constraint.RINDA).vērtība(atribūts);
+        final T vērtība = noņemšana.value(Constraint.RINDA).value(atribūts);
         final var grupa = rindas.columnView(Constraint.RINDA).uzmeklēšana(predikāts(vērtība));
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         if (1 == grupa.size()) {
@@ -111,7 +111,7 @@ public class AllDifferent<T> implements Rater {
                                         , lokalsNovērtejums()
                                                 .arIzdalīšanaUz(bērni)
                                                 .arNovērtējumu(bezMaksas())
-                                                .arRadītuGrupasId(noņemšana.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
+                                                .arRadītuGrupasId(noņemšana.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
                     });
         }
         return novērtejumuNotikums;

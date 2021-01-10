@@ -101,7 +101,7 @@ public interface Table extends Discoverable, Domable {
         return getLines().stream()
                 .filter(rinda ->
                         IntStream.range(0, headerView().size())
-                                .mapToObj(i -> Objects.equals(vertības.get(i), rinda.vērtība(headerView().get(i))))
+                                .mapToObj(i -> Objects.equals(vertības.get(i), rinda.value(headerView().get(i))))
                                 .reduce(true, (a, b) -> a && b));
     }
 
@@ -133,7 +133,7 @@ public interface Table extends Discoverable, Domable {
                     final var tabulasRinda = element(FODS_TABLE, "table-row");
                     tabula.appendChild(tabulasRinda);
                     headerView().stream()
-                            .map(atribūts -> line.vērtība(atribūts))
+                            .map(atribūts -> line.value(atribūts))
                             .map(vertība -> {
                                 final var tabulasElements = element(FODS_TABLE, "table-cell");
                                 final var tabulasVertības = rElement(FODS_TEXT, "p");

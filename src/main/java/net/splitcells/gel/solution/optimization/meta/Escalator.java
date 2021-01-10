@@ -32,7 +32,7 @@ public class Escalator implements Optimization {
         }
         final var optimizācija = optimzācijas.apply(eskalācijasLīmens).optimize(atrisinājums);
         final var momentansNovērtējums = atrisinājums.rating(optimizācija);
-        if (momentansNovērtējums.labākNekā(saknesNovērtejums)) {
+        if (momentansNovērtējums.betterThan(saknesNovērtejums)) {
             eskalācijasLīmens += 1;
         } else {
             eskalācijasLīmens -= 1;

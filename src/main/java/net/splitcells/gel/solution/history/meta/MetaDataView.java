@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface MetaDataView extends Domable {
 
-	<T> Optional<T> vertība(Class<T> type);
+	<T> Optional<T> value(Class<T> type);
 
 }

@@ -13,12 +13,12 @@ public interface Line extends Domable {
         final List<Object> rVal = list();
         for (var rinda : rindas) {
             rinda.konteksts().headerView()
-                    .forEach(attribute -> rVal.add(rinda.vērtība(attribute)));
+                    .forEach(attribute -> rVal.add(rinda.value(attribute)));
         }
         return rVal;
     }
 
-    <T> T vērtība(Attribute<T> atribūts);
+    <T> T value(Attribute<T> atribūts);
 
     int index();
 
@@ -39,7 +39,7 @@ public interface Line extends Domable {
     default List<String> toStringList() {
         return listWithValuesOf
                 (konteksts().headerView().stream()
-                        .map(atribūts -> vērtība(atribūts).toString())
+                        .map(atribūts -> value(atribūts).toString())
                         .collect(toList()));
     }
 
@@ -47,7 +47,7 @@ public interface Line extends Domable {
         return konteksts()
                 .headerView()
                 .stream()
-                .map(nosaukums -> vērtība(nosaukums))
+                .map(nosaukums -> value(nosaukums))
                 .collect(toList());
     }
 }

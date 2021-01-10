@@ -19,7 +19,7 @@ public final class CompleteRating implements MetaData<Rating>, Domable {
     }
 
     @Override
-    public Rating vertība() {
+    public Rating value() {
         return novērtējums;
     }
 

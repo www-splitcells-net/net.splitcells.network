@@ -12,7 +12,7 @@ import net.splitcells.gel.solution.history.meta.MetaDataView;
 public interface History extends Allocations, AfterAdditionSubscriber, BeforeRemovalSubscriber {
     Attribute<Integer> PIEŠĶIRŠANA_ID = atributs(Integer.class, "pieškiršana-id");
     Attribute<Allocation> PIEŠĶIRŠANAS_NOTIKUMS = atributs(Allocation.class, "pieškiršana-notikums");
-    Attribute<MetaDataView> REFLEKSIJAS_DATI = atributs(MetaDataView.class, "refleksijas-dati");
+    Attribute<MetaDataView> META_DATA = atributs(MetaDataView.class, "refleksijas-dati");
 
     void atiestatUz(int index);
     int currentIndex();

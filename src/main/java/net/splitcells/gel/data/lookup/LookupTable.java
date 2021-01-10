@@ -89,7 +89,7 @@ public class LookupTable implements Table {
         range(0, kolonnas.size()).forEach(i -> {
             // KOMPROMISS
             final var kolonna = (LookupColumn<Object>) kolonnas.get(i);
-            kolonna.set(rinda.index(), rinda.vērtība(tabula.headerView().get(i)));
+            kolonna.set(rinda.index(), rinda.value(tabula.headerView().get(i)));
         });
         kolonnas.forEach(kolonna -> kolonna.reģistrē_papildinājumi(rinda));
     }

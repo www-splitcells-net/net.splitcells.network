@@ -17,7 +17,7 @@ public class AllocationRating implements MetaData<Rating> {
     }
 
     @Override
-    public Rating vertība() {
+    public Rating value() {
         return novērtējums;
     }
 

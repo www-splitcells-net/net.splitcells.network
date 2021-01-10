@@ -111,7 +111,7 @@ public class DatabaseI implements Database {
     public Line add(Line rinda) {
         final List<Object> rindasVertības = list();
         range(0, atribūti.size()).forEach(i -> {
-            rindasVertības.add(rinda.vērtība(atribūti.get(i)));
+            rindasVertības.add(rinda.value(atribūti.get(i)));
         });
         return pieliktTulkošanaNo(rindasVertības, rinda.index());
     }
@@ -232,7 +232,7 @@ public class DatabaseI implements Database {
     @Override
     public Line lookupEquals(Attribute<Line> atribūts, Line rinda) {
         return rindas.stream()
-                .filter(citaRinda -> citaRinda.vērtība(atribūts).index() == rinda.index())
+                .filter(citaRinda -> citaRinda.value(atribūts).index() == rinda.index())
                 .reduce(StreamUtils.ensureSingle())
                 .get();
     }

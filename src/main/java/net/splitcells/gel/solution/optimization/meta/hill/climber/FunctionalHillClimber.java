@@ -1,0 +1,75 @@
+package net.splitcells.gel.solution.optimization.meta.hill.climber;
+
+import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.solution.SolutionView;
+import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
+
+import java.util.Optional;
+import java.util.function.Supplier;
+
+import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
+
+public class FunctionalHillClimber implements Optimization {
+
+    public static FunctionalHillClimber functionalHillClimber(Optimization optimization, int i) {
+        return new FunctionalHillClimber(optimization, new Supplier<Boolean>() {
+            int counter = 0;
+
+            @Override
+            public Boolean get() {
+                final var rVal = counter < i;
+                counter += 1;
+                return rVal;
+            }
+        });
+    }
+
+    private final Supplier<Boolean> planner;
+    private final Optimization optimizationNeighbour;
+
+    private FunctionalHillClimber(Optimization optimization, Supplier<Boolean> planner) {
+        this.planner = planner;
+        this.optimizationNeighbour = optimization;
+    }
+
+    @Override
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        final var rootRating = solution.constraint().rating();
+        final var rootHistoryIndex = solution.history().currentIndex();
+        Optional<Rating> bestNeighbourRating = Optional.empty();
+        List<OptimizationEvent> bestNeighbourOperation = list();
+        while (planner.get()) {
+            final var recommendations = optimizationNeighbour.optimize(solution);
+            if (recommendations.isEmpty()) {
+                continue;
+            }
+            if (TRACING) {
+                recommendations.forEach
+                        (suggestion -> domsole().append
+                                (suggestion.toDom()
+                                        , () -> solution.path().withAppended
+                                                (Optimization.class.getSimpleName()
+                                                        , getClass().getSimpleName())
+                                        , LogLevel.TRACE)
+                        );
+            }
+            final var currentRating = solution.rating(recommendations);
+            if (bestNeighbourRating.isEmpty()
+                    || currentRating.betterThan(bestNeighbourRating.get())) {
+                bestNeighbourRating = Optional.of(currentRating);
+                bestNeighbourOperation = recommendations;
+            }
+            solution.history().atiestatUz(rootHistoryIndex);
+        }
+        if (!bestNeighbourRating.isEmpty() && bestNeighbourRating.get().betterThan(rootRating)) {
+            return bestNeighbourOperation;
+        }
+        return list();
+    }
+}
+

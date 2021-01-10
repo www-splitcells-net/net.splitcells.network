@@ -16,44 +16,44 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 @Deprecated
 public class BranchingHillClimber implements Optimization {
 
-    public static BranchingHillClimber zarošanāsKalnāKāpējs() {
+    public static BranchingHillClimber branchingHillClimber() {
         return new BranchingHillClimber();
     }
 
-    private final Supplier<Boolean> plānotajs = () -> true;
+    private final Supplier<Boolean> planner = () -> true;
 
     private BranchingHillClimber() {
 
     }
 
     @Override
-    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
-        final var nakamaisZars = nakamaisZars(atrisinājums);
-        return nakamaOperācija(nakamaisZars.get());
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        final var nextBranch = nextBranch(solution);
+        return nextOperation(nextBranch.get());
     }
 
-    private List<OptimizationEvent> nakamaOperācija(Solution zars) {
+    private List<OptimizationEvent> nextOperation(Solution branch) {
         throw not_implemented_yet();
     }
 
-    private Optional<Solution> nakamaisZars(SolutionView atrisinājums) {
-        final var saknesNovērtejums = atrisinājums.constraint().rating();
-        var labakaisKaimiņs = Optional.<Solution>empty();
-        while (plānotajs.get()) {
-            final var momentansKaimiņs = atrisinājums.branch();
-            final var momentansNovērtejums = atrisinājums
+    private Optional<Solution> nextBranch(SolutionView solution) {
+        final var rootRating = solution.constraint().rating();
+        var bestNeighbour = Optional.<Solution>empty();
+        while (planner.get()) {
+            final var currentNeighbour = solution.branch();
+            final var currentRating = solution
                     .history()
                     .getLines()
                     .lastValue()
                     .get()
-                    .vērtība(History.REFLEKSIJAS_DATI)
-                    .vertība(CompleteRating.class)
+                    .value(History.META_DATA)
+                    .value(CompleteRating.class)
                     .get()
-                    .vertība();
-            if (momentansNovērtejums.labākNekā(saknesNovērtejums)) {
-                labakaisKaimiņs = Optional.of(momentansKaimiņs);
+                    .value();
+            if (currentRating.betterThan(rootRating)) {
+                bestNeighbour = Optional.of(currentNeighbour);
             }
         }
-        return labakaisKaimiņs;
+        return bestNeighbour;
     }
 }

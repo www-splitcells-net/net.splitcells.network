@@ -169,19 +169,19 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public void reģistrē_papildinājumi(Line addition) {
-        uzmeklēšana.ifPresent(l -> l.reģistrē_papildinājums(addition.vērtība(atribūts), addition.index()));
+        uzmeklēšana.ifPresent(l -> l.reģistrē_papildinājums(addition.value(atribūts), addition.index()));
     }
 
     @Override
     public void rēgistrē_pirms_noņemšanas(Line removal) {
-        uzmeklēšana.ifPresent(l -> l.reģistē_noņemšana(removal.vērtība(atribūts), removal.index()));
+        uzmeklēšana.ifPresent(l -> l.reģistē_noņemšana(removal.value(atribūts), removal.index()));
     }
 
     @Override
     public net.splitcells.dem.data.set.list.List<T> vertības() {
         return Lists.<T>list().withAppended(
                 tabula.rawLines().stream()//
-                        .map(e -> e.vērtība(atribūts))//
+                        .map(e -> e.value(atribūts))//
                         .collect(Collectors.toList())
         );
     }

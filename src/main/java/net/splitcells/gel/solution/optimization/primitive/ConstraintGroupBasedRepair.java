@@ -124,7 +124,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 .rindasAbstrāde()
                 .getLines()
                 .stream()
-                .map(abstrāde -> pair(abstrāde.vērtība(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID), abstrāde.vērtība(Constraint.RINDA)))
+                .map(abstrāde -> pair(abstrāde.value(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID), abstrāde.value(Constraint.RINDA)))
                 .forEach(abstrāde -> {
                     final Set<Line> grupa;
                     if (!prāsībasGrupēšana.containsKey(abstrāde.getKey())) {

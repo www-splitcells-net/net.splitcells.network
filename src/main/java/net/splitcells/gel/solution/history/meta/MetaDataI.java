@@ -33,7 +33,7 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> Optional<T> vertība(Class<T> tips) {
+    public <T> Optional<T> value(Class<T> tips) {
         return (Optional<T>) Optional.ofNullable(dati.get(tips));
     }
 

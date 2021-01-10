@@ -40,7 +40,7 @@ public class Propagation implements Rater {
                         , lokalsNovērtejums()
                                 .arIzdalīšanaUz(bērni)
                                 .arNovērtējumu(bezMaksas())
-                                .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
+                                .arRadītuGrupasId(papildinājums.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
         return novērtejumuNotikums;
     }
 

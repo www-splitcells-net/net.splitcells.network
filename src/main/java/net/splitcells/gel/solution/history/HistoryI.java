@@ -49,7 +49,7 @@ public class HistoryI implements History {
                         , datuBāze
                                 (RESULT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
-                                        , REFLEKSIJAS_DATI));
+                                        , META_DATA));
         this.solution = solution;
         solution.subscribe_to_afterAddtions(this);
         solution.subscriber_to_beforeRemoval(this);
@@ -115,7 +115,7 @@ public class HistoryI implements History {
         final var notikumuKoNoņemnt = columnView(PIEŠĶIRŠANA_ID)
                 .uzmeklēšana(indekss)
                 .gūtRinda(0)
-                .vērtība(PIEŠĶIRŠANAS_NOTIKUMS);
+                .value(PIEŠĶIRŠANAS_NOTIKUMS);
         final var notikumuTips = notikumuKoNoņemnt.tips();
         if (notikumuTips.equals(AllocationChangeType.PAPILDINĀJUMS)) {
             final var pieškiršanas = solution.allocationsOf

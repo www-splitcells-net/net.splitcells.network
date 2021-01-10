@@ -21,7 +21,7 @@ public class ForAllFactory {
 
     public <T> ForAll priekšVisiemArVērtibu(Attribute<T> atribūts, T vērtiba) {
         return ForAll.veidot(
-                priekšVisiemArNosacījumu(line -> vērtiba.equals(line.vērtība(atribūts))));
+                priekšVisiemArNosacījumu(line -> vērtiba.equals(line.value(atribūts))));
     }
 
     public ForAll priekšVisiem() {

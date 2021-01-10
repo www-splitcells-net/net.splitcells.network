@@ -171,11 +171,11 @@ public class ColumnI<T> implements Column<T> {
 
 	@Override
 	public void reģistrē_papildinājumi(Line papildinājums) {
-		uzmeklēšana.ifPresent(i -> i.reģistrē_papildinājums(papildinājums.vērtība(atribūts), papildinājums.index()));
+		uzmeklēšana.ifPresent(i -> i.reģistrē_papildinājums(papildinājums.value(atribūts), papildinājums.index()));
 	}
 
 	@Override
 	public void rēgistrē_pirms_noņemšanas(Line noņemšana) {
-		uzmeklēšana.ifPresent(i -> i.reģistē_noņemšana(noņemšana.vērtība(atribūts), noņemšana.index()));
+		uzmeklēšana.ifPresent(i -> i.reģistē_noņemšana(noņemšana.value(atribūts), noņemšana.index()));
 	}
 }

@@ -4,5 +4,5 @@ import net.splitcells.dem.lang.dom.Domable;
 
 public interface MetaData<T> extends Domable {
 
-	T vertība();
+	T value();
 }

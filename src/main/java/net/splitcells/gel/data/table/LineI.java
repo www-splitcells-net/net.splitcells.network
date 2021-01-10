@@ -27,7 +27,7 @@ public class LineI implements Line {
     }
 
     @Override
-    public <T> T vērtība(Attribute<T> atribūts) {
+    public <T> T value(Attribute<T> atribūts) {
         return konteksts.columnView(requireNonNull(atribūts)).get(indekss);
     }
 

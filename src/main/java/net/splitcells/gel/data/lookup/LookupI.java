@@ -25,7 +25,7 @@ public class LookupI<T> implements Lookup<T> {
         this.atribūts = atribūts;
         tabula.rawLinesView().stream()
                 .filter(e -> e != null)
-                .forEach(e -> reģistrē_papildinājums(e.vērtība(atribūts), e.index()));
+                .forEach(e -> reģistrē_papildinājums(e.value(atribūts), e.index()));
     }
 
     @Override
@@ -84,7 +84,7 @@ public class LookupI<T> implements Lookup<T> {
                     .stream()
                     .filter(e -> e != null)
                     .forEach(e -> {
-                        if (predikāts.test(e.vērtība(atribūts))) {
+                        if (predikāts.test(e.value(atribūts))) {
                             uzmeklēšana.reģistrē(e);
                         }
                     });

@@ -33,12 +33,12 @@ public class TemplateInitializer implements Optimization {
             final var prasībasVertība = atrisinājums.demands_unused()
                     .headerView()
                     .stream()
-                    .map(nosaukums -> rinda.vērtība(nosaukums))
+                    .map(nosaukums -> rinda.value(nosaukums))
                     .collect(toList());
             final var piedāvājumuVertība = atrisinājums.supplies_unused()
                     .headerView()
                     .stream()
-                    .map(nosaukums -> rinda.vērtība(nosaukums))
+                    .map(nosaukums -> rinda.value(nosaukums))
                     .collect(toList());
             final var atlasītaPrasība = atrisinājums.demands_unused()
                     .uzmeklēVienādus(prasībasVertība)

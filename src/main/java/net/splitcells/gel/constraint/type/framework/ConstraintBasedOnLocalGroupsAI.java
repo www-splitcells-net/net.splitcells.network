@@ -36,7 +36,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
 
     @Override
     public void apstrāde_rindu_papildinajumu(Line papildinājums) {
-        final var ienākošaGrupa = papildinājums.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
+        final var ienākošaGrupa = papildinājums.value(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pēc_papildinājumu(
                         rindas.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)

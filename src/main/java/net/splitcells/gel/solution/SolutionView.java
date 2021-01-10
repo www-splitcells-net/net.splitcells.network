@@ -164,7 +164,7 @@ public interface SolutionView extends ProblemView {
     default Element toLinesFodsAnalysis(Line allocation) {
         final var tableLine = element(NameSpaces.FODS_TABLE, "table-row");
         {
-            headerView().stream().map(attribute -> allocation.vērtība(attribute)).map(value -> {
+            headerView().stream().map(attribute -> allocation.value(attribute)).map(value -> {
                 final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
                 final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
                 tableElement.appendChild(tableValue);

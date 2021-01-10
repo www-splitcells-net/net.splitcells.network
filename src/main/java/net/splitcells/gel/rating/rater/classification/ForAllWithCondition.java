@@ -42,7 +42,7 @@ public class ForAllWithCondition<T> implements Rater {
     public RatingEvent vērtē_pēc_papildinājumu
             (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
         final List<Constraint> mērķBērni;
-        if (nosacījums.test(papildinājums.vērtība(RINDA))) {
+        if (nosacījums.test(papildinājums.value(RINDA))) {
             mērķBērni = bērni;
         } else {
             mērķBērni = list();
@@ -53,7 +53,7 @@ public class ForAllWithCondition<T> implements Rater {
                         , lokalsNovērtejums()
                                 .arIzdalīšanaUz(mērķBērni)
                                 .arNovērtējumu(bezMaksas())
-                                .arRadītuGrupasId(papildinājums.vērtība(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
+                                .arRadītuGrupasId(papildinājums.value(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
         return novērtejumuNotikums;
     }
 
