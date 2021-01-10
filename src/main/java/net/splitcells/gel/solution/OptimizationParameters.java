@@ -6,17 +6,17 @@ public class OptimizationParameters {
     public static OptimizationParameters optimizationParameters() {
         return new OptimizationParameters();
     }
-    private boolean dubultuNoņemšanaAtļauts = false;
+    private boolean dublicateRemovalAllowed = false;
     private OptimizationParameters() {
         
     }
     @Returns_this
     public OptimizationParameters arDubultuNoņemšanaAtļauts(boolean arg) {
-        dubultuNoņemšanaAtļauts = arg;
+        dublicateRemovalAllowed = arg;
         return this;
     }
 
     public boolean dublicateRemovalAllowed() {
-        return dubultuNoņemšanaAtļauts;
+        return dublicateRemovalAllowed;
     }
 }
