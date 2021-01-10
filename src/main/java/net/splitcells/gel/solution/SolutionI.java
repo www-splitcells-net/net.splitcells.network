@@ -32,7 +32,7 @@ public class SolutionI implements Solution {
 
 	public SolutionI(Problem problem) {
 		this.problem = problem;
-		history = Histories.vēsture(this);
+		history = Histories.history(this);
 	}
 
 	@Override

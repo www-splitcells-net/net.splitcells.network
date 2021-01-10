@@ -105,9 +105,9 @@ public abstract class ConstraintAI implements Constraint {
             assertThat(
                     rindas
                             .columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                            .uzmeklēšana(ienākošieGrupasId)
+                            .lookup(ienākošieGrupasId)
                             .columnView(LINE)
-                            .uzmeklēšana(papildinajums)
+                            .lookup(papildinajums)
                             .getLines()
             ).isEmpty();
         }
@@ -125,9 +125,9 @@ public abstract class ConstraintAI implements Constraint {
         apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
         rindasApstrāde
                 .columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                .uzmeklēšana(ienākošaGrupaId)
+                .lookup(ienākošaGrupaId)
                 .columnView(LINE)
-                .uzmeklēšana(noņemšana)
+                .lookup(noņemšana)
                 .getLines()
                 .forEach(rindasApstrāde::remove);
         // JAUDA
@@ -322,7 +322,7 @@ public abstract class ConstraintAI implements Constraint {
             final var novērtējumi = Xml.element("novērtējumi");
             dom.appendChild(novērtējumi);
             rindasApstrāde.columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                    .uzmeklēšana(injectionGroup())
+                    .lookup(injectionGroup())
                     .getLines()
                     .forEach(line -> novērtējumi.appendChild(line.toDom()));
         }
@@ -348,7 +348,7 @@ public abstract class ConstraintAI implements Constraint {
             grupas.forEach(grupa ->
                     rindasApstrāde
                             .columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                            .uzmeklēšana(grupa)
+                            .lookup(grupa)
                             .getLines().
                             forEach(line -> novērtējumi.appendChild(line.toDom())));
         }
@@ -358,7 +358,7 @@ public abstract class ConstraintAI implements Constraint {
                                 grupas.stream().
                                         map(group -> rindasApstrāde
                                                 .columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                                                .uzmeklēšana(group)
+                                                .lookup(group)
                                                 .getLines()
                                                 .stream()
                                                 .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP_ID))
@@ -375,9 +375,9 @@ public abstract class ConstraintAI implements Constraint {
         final var vietējaArgumentācijas
                 = rindasApstrāde
                 .columnView(LINE)
-                .uzmeklēšana(rinda)
+                .lookup(rinda)
                 .columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                .uzmeklēšana(grupa)
+                .lookup(grupa)
                 .getLines()
                 .stream()
                 .filter(piešķiršana -> piešķiršanaAtlasītājs
@@ -397,7 +397,7 @@ public abstract class ConstraintAI implements Constraint {
     public Perspective dabiskaArgumentācija(GroupId grupa) {
         final var vietējiaArgumentācijas = rindasApstrāde
                 .columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                .uzmeklēšana(grupa)
+                .lookup(grupa)
                 .getLines()
                 .stream()
                 .map(piešķiršana -> piešķiršana.value(LINE))
@@ -439,9 +439,9 @@ public abstract class ConstraintAI implements Constraint {
         final var argumēntacijas
                 = rindasApstrāde
                 .columnView(LINE)
-                .uzmeklēšana(rinda)
+                .lookup(rinda)
                 .columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                .uzmeklēšana(grupa)
+                .lookup(grupa)
                 .getLines()
                 .stream()
                 .filter(piešķiršana

@@ -135,8 +135,8 @@ public class ColumnViewI<T> implements ColumnView<T> {
     }
 
     @Override
-    public Table uzmeklēšana(T vertība) {
-        return kolonna.uzmeklēšana(vertība);
+    public Table lookup(T vertība) {
+        return kolonna.lookup(vertība);
     }
 
     @Override

@@ -10,10 +10,11 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.history.meta.MetaDataView;
 
 public interface History extends Allocations, AfterAdditionSubscriber, BeforeRemovalSubscriber {
-    Attribute<Integer> PIEŠĶIRŠANA_ID = atributs(Integer.class, "pieškiršana-id");
-    Attribute<Allocation> PIEŠĶIRŠANAS_NOTIKUMS = atributs(Allocation.class, "pieškiršana-notikums");
-    Attribute<MetaDataView> META_DATA = atributs(MetaDataView.class, "refleksijas-dati");
+    Attribute<Integer> ALLOCATION_ID = atributs(Integer.class, "allocation-id");
+    Attribute<Allocation> ALLOCATION_EVENT = atributs(Allocation.class, "allocation-notikums");
+    Attribute<MetaDataView> META_DATA = atributs(MetaDataView.class, "meta-data");
 
-    void atiestatUz(int index);
+    void resetTo(int index);
+
     int currentIndex();
 }

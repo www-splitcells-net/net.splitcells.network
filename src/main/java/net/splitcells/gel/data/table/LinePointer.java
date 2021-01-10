@@ -14,11 +14,11 @@ public interface LinePointer extends Domable {
     int index();
 
     default Optional<Line> interpret() {
-        return interpretē(konteksts());
+        return interpret(konteksts());
     }
 
     @Deprecated
-    Optional<Line> interpretē(Table context);
+    Optional<Line> interpret(Table context);
 
     @Override
     default Node toDom() {

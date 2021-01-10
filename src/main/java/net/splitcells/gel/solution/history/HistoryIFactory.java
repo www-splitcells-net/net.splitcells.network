@@ -5,7 +5,7 @@ import net.splitcells.gel.solution.Solution;
 public class HistoryIFactory implements HistoryFactory {
 
     @Override
-    public History vēsture(Solution solution) {
+    public History history(Solution solution) {
         return new HistoryI(solution);
     }
 

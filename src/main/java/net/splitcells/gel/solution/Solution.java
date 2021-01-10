@@ -105,7 +105,7 @@ public interface Solution extends Problem, SolutionView {
         final var historyRootIndex = history().currentIndex();
         optimize(events);
         final var rating = constraint().rating();
-        history().atiestatUz(historyRootIndex);
+        history().resetTo(historyRootIndex);
         return rating;
     }
 }

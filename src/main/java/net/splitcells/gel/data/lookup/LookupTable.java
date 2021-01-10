@@ -91,11 +91,11 @@ public class LookupTable implements Table {
             final var kolonna = (LookupColumn<Object>) kolonnas.get(i);
             kolonna.set(rinda.index(), rinda.value(tabula.headerView().get(i)));
         });
-        kolonnas.forEach(kolonna -> kolonna.reģistrē_papildinājumi(rinda));
+        kolonnas.forEach(kolonna -> kolonna.register_addition(rinda));
     }
 
     public void noņemt_reģistrāciju(Line rinda) {
-        kolonnas.forEach(column -> column.rēgistrē_pirms_noņemšanas(rinda));
+        kolonnas.forEach(column -> column.register_before_removal(rinda));
         saturs.remove(rinda.index());
         range(0, kolonnas.size()).forEach(i -> {
             // HACK

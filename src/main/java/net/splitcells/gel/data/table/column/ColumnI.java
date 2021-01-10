@@ -158,9 +158,9 @@ public class ColumnI<T> implements Column<T> {
 	}
 
 	@Override
-	public Table uzmeklēšana(T vertība) {
+	public Table lookup(T vertība) {
 		nodrošinātUzmeklēšanasInicializēsānu();
-		return uzmeklēšana.get().uzmeklēšana(vertība);
+		return uzmeklēšana.get().lookup(vertība);
 	}
 
 	@Override
@@ -170,12 +170,12 @@ public class ColumnI<T> implements Column<T> {
 	}
 
 	@Override
-	public void reģistrē_papildinājumi(Line papildinājums) {
+	public void register_addition(Line papildinājums) {
 		uzmeklēšana.ifPresent(i -> i.reģistrē_papildinājums(papildinājums.value(atribūts), papildinājums.index()));
 	}
 
 	@Override
-	public void rēgistrē_pirms_noņemšanas(Line noņemšana) {
+	public void register_before_removal(Line noņemšana) {
 		uzmeklēšana.ifPresent(i -> i.reģistē_noņemšana(noņemšana.value(atribūts), noņemšana.index()));
 	}
 }

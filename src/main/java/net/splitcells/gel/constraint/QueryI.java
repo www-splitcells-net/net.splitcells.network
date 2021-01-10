@@ -62,7 +62,7 @@ public class QueryI implements Query {
                         (ierobežojums
                                 .lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
-                                .uzmeklēšana(grupa)
+                                .lookup(grupa)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
                                 .values());
             }
@@ -98,7 +98,7 @@ public class QueryI implements Query {
                 radītasGrupas.addAll(
                         ierobežojums.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
-                                .uzmeklēšana(grupa)
+                                .lookup(grupa)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
                                 .values());
             }
@@ -152,7 +152,7 @@ public class QueryI implements Query {
                 resultingGroups.addAll(
                         ierobežojums.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
-                                .uzmeklēšana(grupa)
+                                .lookup(grupa)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
                                 .values());
             }
@@ -198,7 +198,7 @@ public class QueryI implements Query {
             radītasGrupas.addAll(
                     ierobežojums.lineProcessing()
                             .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
-                            .uzmeklēšana(grupa)
+                            .lookup(grupa)
                             .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
                             .values());
         }

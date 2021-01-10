@@ -107,14 +107,14 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
 
     void reģistrē_papildinājums(GroupId grupaId, Line rinda);
 
-    default void reģistrē_papildinājumi(Line rinda) {
+    default void register_addition(Line rinda) {
         reģistrē_papildinājums(injectionGroup(), rinda);
     }
 
     void rēgistrē_pirms_noņemšanas(GroupId grupaId, Line rinda);
 
     @Deprecated
-    default void rēgistrē_pirms_noņemšanas(Line rinda) {
+    default void register_before_removal(Line rinda) {
         rēgistrē_pirms_noņemšanas(injectionGroup(), rinda);
     }
 

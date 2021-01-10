@@ -40,12 +40,12 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pēc_papildinājumu(
                         rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                                .uzmeklēšana(ienākošaGrupa)
+                                .lookup(ienākošaGrupa)
                         , papildinājums
                         , bērni
                         , rindasApstrāde
                                 .columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                                .uzmeklēšana(ienākošaGrupa)));
+                                .lookup(ienākošaGrupa)));
     }
 
     protected void apstrādeNovērtējumiNotikumu(RatingEvent novērtējumsNotikums) {
@@ -62,14 +62,14 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     protected void apstrāda_rindas_primsNoņemšana(GroupId ienākošaGrupaId, Line noņemšana) {
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pirms_noņemšana(
-                        rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID).uzmeklēšana(ienākošaGrupaId)
+                        rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID).lookup(ienākošaGrupaId)
                         , rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID)
-                                .uzmeklēšana(ienākošaGrupaId)
+                                .lookup(ienākošaGrupaId)
                                 .columnView(LINE)
-                                .uzmeklēšana(noņemšana)
+                                .lookup(noņemšana)
                                 .getLines(0)
                         , bērni
-                        , rindasApstrāde.columnView(INCOMING_CONSTRAINT_GROUP_ID).uzmeklēšana(ienākošaGrupaId)));
+                        , rindasApstrāde.columnView(INCOMING_CONSTRAINT_GROUP_ID).lookup(ienākošaGrupaId)));
         super.apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
     }
 

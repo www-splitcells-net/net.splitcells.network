@@ -27,7 +27,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * @param bērni
      * @param novērtējumsPirmsNoņemšana
      * @return
-     * @see Constraint#rēgistrē_pirms_noņemšanas(Line)
+     * @see Constraint#register_before_removal(Line)
      */
     @Deprecated
     RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana);

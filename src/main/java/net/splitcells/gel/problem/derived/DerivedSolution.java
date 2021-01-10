@@ -47,13 +47,13 @@ public class DerivedSolution implements Solution {
     protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas, Constraint ierobežojums, Constraint atvasināšana) {
         this.piešķiršanas = piešķiršanas;
         this.ierobežojums = atvasināšana;
-        vēsture = Histories.vēsture(this);
+        vēsture = Histories.history(this);
         this.konteksts = konteksts;
     }
 
     protected DerivedSolution(Discoverable konteksts, Allocations piešķiršanas) {
         this.piešķiršanas = piešķiršanas;
-        vēsture = Histories.vēsture(this);
+        vēsture = Histories.history(this);
         this.konteksts = konteksts;
     }
 

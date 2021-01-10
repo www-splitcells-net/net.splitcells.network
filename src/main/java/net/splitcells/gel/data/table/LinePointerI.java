@@ -28,7 +28,7 @@ public class LinePointerI implements LinePointer {
     }
 
     @Override
-    public Optional<Line> interpretē(Table argKonteksts) {
+    public Optional<Line> interpret(Table argKonteksts) {
         if (argKonteksts.rawLinesView().size() <= indekss) {
             return Optional.empty();
         }

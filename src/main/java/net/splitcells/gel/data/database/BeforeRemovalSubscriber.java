@@ -6,10 +6,10 @@ import net.splitcells.gel.data.table.Line;
 
 @FunctionalInterface
 public interface BeforeRemovalSubscriber {
-	void rēgistrē_pirms_noņemšanas(Line rinda);
+	void register_before_removal(Line rinda);
 
-	default void rēgistrē_pirms_noņemšanas(Collection<Line> rindas) {
-		rindas.forEach(line -> rēgistrē_pirms_noņemšanas(line));
+	default void register_before_removal(Collection<Line> rindas) {
+		rindas.forEach(line -> register_before_removal(line));
 	}
 
 }

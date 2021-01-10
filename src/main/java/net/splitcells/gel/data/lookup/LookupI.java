@@ -67,7 +67,7 @@ public class LookupI<T> implements Lookup<T> {
     }
 
     @Override
-    public Table uzmeklēšana(T vertība) {
+    public Table lookup(T vertība) {
         if (saturs.containsKey(vertība)) {
             return saturs.get(vertība);
         }

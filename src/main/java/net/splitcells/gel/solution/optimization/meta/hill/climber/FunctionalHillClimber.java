@@ -64,7 +64,7 @@ public class FunctionalHillClimber implements Optimization {
                 bestNeighbourRating = Optional.of(currentRating);
                 bestNeighbourOperation = recommendations;
             }
-            solution.history().atiestatUz(rootHistoryIndex);
+            solution.history().resetTo(rootHistoryIndex);
         }
         if (!bestNeighbourRating.isEmpty() && bestNeighbourRating.get().betterThan(rootRating)) {
             return bestNeighbourOperation;

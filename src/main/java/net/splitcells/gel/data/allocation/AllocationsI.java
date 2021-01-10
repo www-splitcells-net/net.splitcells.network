@@ -175,7 +175,7 @@ public class AllocationsI implements Allocations {
                 lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.index()).add(prasība.index());
             }
         }
-        papildinājumsKlausītājs.forEach(listener -> listener.reģistrē_papildinājumi(piešķiršana));
+        papildinājumsKlausītājs.forEach(listener -> listener.register_addition(piešķiršana));
         return piešķiršana;
     }
 
@@ -205,7 +205,7 @@ public class AllocationsI implements Allocations {
     public void remove(Line piešķiršana) {
         final var prasība = demand_of_allocation(piešķiršana);
         final var piedāvājums = supply_of_allocation(piešķiršana);
-        primsNoņemšanaAbonēšanas.forEach(pirmsNoņemšanasKlausītājs -> pirmsNoņemšanasKlausītājs.rēgistrē_pirms_noņemšanas(piešķiršana));
+        primsNoņemšanaAbonēšanas.forEach(pirmsNoņemšanasKlausītājs -> pirmsNoņemšanasKlausītājs.register_before_removal(piešķiršana));
         piešķiršanas.remove(piešķiršana);
         // TODO Make following code a remove subscription to allocations.
         {
@@ -244,7 +244,7 @@ public class AllocationsI implements Allocations {
             piedāvājumi_lietoti.remove(piedāvājums);
             piedāvājumi_nelietoti.add(piedāvājums);
         }
-        pēcNoņemšanaAbonēšanas.forEach(listener -> listener.rēgistrē_pirms_noņemšanas(piešķiršana));
+        pēcNoņemšanaAbonēšanas.forEach(listener -> listener.register_before_removal(piešķiršana));
     }
 
     @Override

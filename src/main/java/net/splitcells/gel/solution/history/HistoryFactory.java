@@ -6,5 +6,5 @@ import net.splitcells.gel.solution.Solution;
 
 public interface HistoryFactory extends Closeable, Flushable {
 
-    History vēsture(Solution solution);
+    History history(Solution solution);
 }

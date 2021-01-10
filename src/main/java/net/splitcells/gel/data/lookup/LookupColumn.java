@@ -156,9 +156,9 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public Table uzmeklēšana(T vertība) {
+    public Table lookup(T vertība) {
         nodrošinatUzmeklēšanaInitializets();
-        return uzmeklēšana.get().uzmeklēšana(vertība);
+        return uzmeklēšana.get().lookup(vertība);
     }
 
     @Override
@@ -168,12 +168,12 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public void reģistrē_papildinājumi(Line addition) {
+    public void register_addition(Line addition) {
         uzmeklēšana.ifPresent(l -> l.reģistrē_papildinājums(addition.value(atribūts), addition.index()));
     }
 
     @Override
-    public void rēgistrē_pirms_noņemšanas(Line removal) {
+    public void register_before_removal(Line removal) {
         uzmeklēšana.ifPresent(l -> l.reģistē_noņemšana(removal.value(atribūts), removal.index()));
     }
 

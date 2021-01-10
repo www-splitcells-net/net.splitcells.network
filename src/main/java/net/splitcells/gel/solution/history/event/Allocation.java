@@ -12,7 +12,7 @@ public class Allocation implements Domable {
     private final Line prasība;
     private final Line piedāvājums;
 
-    public static Allocation piešķiršana(AllocationChangeType tips, Line prasība, Line piedāvājums) {
+    public static Allocation allocations(AllocationChangeType tips, Line prasība, Line piedāvājums) {
         return new Allocation(tips, prasība, piedāvājums);
     }
 

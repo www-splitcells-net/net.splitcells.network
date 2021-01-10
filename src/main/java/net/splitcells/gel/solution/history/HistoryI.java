@@ -6,6 +6,10 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
 import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.data.database.Databases.datuBāze;
+import static net.splitcells.gel.solution.history.event.Allocation.allocations;
+import static net.splitcells.gel.solution.history.event.AllocationChangeType.ADDITION;
+import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
+import static net.splitcells.gel.solution.history.meta.MetaDataI.metaData;
 import static net.splitcells.gel.solution.history.meta.type.AllocationRating.allocationRating;
 import static net.splitcells.gel.solution.history.meta.type.CompleteRating.completeRating;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,9 +19,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.history.event.Allocation;
-import net.splitcells.gel.solution.history.event.AllocationChangeType;
-import net.splitcells.gel.solution.history.meta.MetaDataI;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -36,16 +37,16 @@ import java.util.Set;
 public class HistoryI implements History {
 
     private final Solution solution;
-    private int pēdējaNotikumuId = -1;
-    private Allocations piešķiršanas;
+    private int lastEventId = -1;
+    private Allocations allocations;
 
     protected HistoryI(Solution solution) {
-        piešķiršanas = Allocationss.allocations
+        allocations = Allocationss.allocations
                 (HISTORY.value()
                         , datuBāze
                                 (EVENT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
-                                        , PIEŠĶIRŠANA_ID, PIEŠĶIRŠANAS_NOTIKUMS)
+                                        , ALLOCATION_ID, ALLOCATION_EVENT)
                         , datuBāze
                                 (RESULT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
@@ -56,91 +57,91 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void reģistrē_papildinājumi(Line piešķiršanasVertība) {
-        final var refleksijasDati = MetaDataI.metaData();
-        refleksijasDati.with(CompleteRating.class
+    public void register_addition(Line allocationValues) {
+        final var metaData = metaData();
+        metaData.with(CompleteRating.class
                 , completeRating(solution.constraint().rating()));
-        refleksijasDati.with(AllocationRating.class
-                , allocationRating(solution.constraint().novērtējums(piešķiršanasVertība)));
-        final Line piešķiršana
+        metaData.with(AllocationRating.class
+                , allocationRating(solution.constraint().novērtējums(allocationValues)));
+        final Line allocation
                 = demands().addTranslated(list(
-                parceltPedeijuNotikumuIdUzpriekšu()
-                , Allocation.piešķiršana(AllocationChangeType.PAPILDINĀJUMS
-                        , solution.demand_of_allocation(piešķiršanasVertība)
-                        , solution.supply_of_allocation(piešķiršanasVertība))));
-        piešķiršanas.allocate(piešķiršana, this.supplies().addTranslated(list(refleksijasDati)));
+                moveLastEventIdForward()
+                , allocations(ADDITION
+                        , solution.demand_of_allocation(allocationValues)
+                        , solution.supply_of_allocation(allocationValues))));
+        allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
     }
 
     @Override
-    public void rēgistrē_pirms_noņemšanas(Line noņemtAtrisinājums) {
-        final var refleksijasDati = MetaDataI.metaData();
-        refleksijasDati.with(CompleteRating.class
+    public void register_before_removal(Line removal) {
+        final var metaData = metaData();
+        metaData.with(CompleteRating.class
                 , completeRating(solution.constraint().rating()));
-        refleksijasDati.with(AllocationRating.class
-                , allocationRating(solution.constraint().novērtējums(noņemtAtrisinājums)));
-        final Line pieķiršanas
+        metaData.with(AllocationRating.class
+                , allocationRating(solution.constraint().novērtējums(removal)));
+        final Line allocation
                 = demands().addTranslated(list(
-                parceltPedeijuNotikumuIdUzpriekšu()
-                , Allocation.piešķiršana(AllocationChangeType.NOŅEMŠANA
-                        , solution.demand_of_allocation(noņemtAtrisinājums)
-                        , solution.supply_of_allocation(noņemtAtrisinājums))));
-        piešķiršanas.allocate(pieķiršanas, this.supplies().addTranslated(list(refleksijasDati)));
+                moveLastEventIdForward()
+                , allocations(REMOVAL
+                        , solution.demand_of_allocation(removal)
+                        , solution.supply_of_allocation(removal))));
+        allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
     }
 
-    protected Integer parceltPedeijuNotikumuIdAtpakal() {
-        return pēdējaNotikumuId -= 1;
+    protected Integer moveLastEventIdBackward() {
+        return lastEventId -= 1;
     }
 
-    protected Integer parceltPedeijuNotikumuIdUzpriekšu() {
-        return pēdējaNotikumuId += 1;
+    protected Integer moveLastEventIdForward() {
+        return lastEventId += 1;
     }
 
     @Override
-    public void atiestatUz(int indekss) {
-        final var indeksiUzAtgrieztu = reverse
-                (rangeClosed(indekss, this.size() - 1)
+    public void resetTo(int index) {
+        final var indexToReversal = reverse
+                (rangeClosed(index, this.size() - 1)
                         .boxed()
                         .filter(i -> i != -1)
-                        .filter(i -> i != indekss)
+                        .filter(i -> i != index)
                 ).collect(Lists.toList());
-        atiestatUz(indeksiUzAtgrieztu);
+        resetToInOrder(indexToReversal);
     }
 
-    protected void atiestatUz(List<Integer> indeksi) {
-        indeksi.forEach(i -> atgrieztPedeijo());
+    protected void resetToInOrder(List<Integer> index) {
+        index.forEach(i -> resetLast());
     }
 
-    protected void atgrieztPedeijo() {
-        final var indekss = size() - 1;
-        final var notikumuKoNoņemnt = columnView(PIEŠĶIRŠANA_ID)
-                .uzmeklēšana(indekss)
+    protected void resetLast() {
+        final var index = size() - 1;
+        final var eventToRemove = columnView(ALLOCATION_ID)
+                .lookup(index)
                 .getLines(0)
-                .value(PIEŠĶIRŠANAS_NOTIKUMS);
-        final var notikumuTips = notikumuKoNoņemnt.tips();
-        if (notikumuTips.equals(AllocationChangeType.PAPILDINĀJUMS)) {
-            final var pieškiršanas = solution.allocationsOf
-                    (notikumuKoNoņemnt.demand().toLinePointer().interpretē(solution.demands()).get()
-                            , notikumuKoNoņemnt.supply().toLinePointer().interpretē(solution.supplies()).get());
-            assertThat(pieškiršanas).hasSize(1);
-            pieškiršanas.forEach(e -> solution.remove(e));
-        } else if (notikumuTips.equals(AllocationChangeType.NOŅEMŠANA)) {
+                .value(ALLOCATION_EVENT);
+        final var eventType = eventToRemove.tips();
+        if (eventType.equals(ADDITION)) {
+            final var allocation = solution.allocationsOf
+                    (eventToRemove.demand().toLinePointer().interpret(solution.demands()).get()
+                            , eventToRemove.supply().toLinePointer().interpret(solution.supplies()).get());
+            assertThat(allocation).hasSize(1);
+            allocation.forEach(e -> solution.remove(e));
+        } else if (eventType.equals(REMOVAL)) {
             solution.allocate
-                    (notikumuKoNoņemnt.demand().toLinePointer().interpretē(solution.demands()).get()
-                            , notikumuKoNoņemnt.supply().toLinePointer().interpretē(solution.supplies()).get());
+                    (eventToRemove.demand().toLinePointer().interpret(solution.demands()).get()
+                            , eventToRemove.supply().toLinePointer().interpret(solution.supplies()).get());
         } else {
             throw new UnsupportedOperationException();
         }
-        atgrieztPedeijo_noņemt(indekss);
+        resetLast_removal(index);
     }
 
-    protected void atgrieztPedeijo_noņemt(int indekss) {
-        noņemt_(columnView(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss + 1).getLines(0));
-        noņemt_(columnView(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss).getLines(0));
+    protected void resetLast_removal(int index) {
+        removal_(columnView(ALLOCATION_ID).lookup(index + 1).getLines(0));
+        removal_(columnView(ALLOCATION_ID).lookup(index).getLines(0));
     }
 
-    protected void noņemt_(Line rinda) {
-        piešķiršanas.remove(rinda);
-        --pēdējaNotikumuId;
+    protected void removal_(Line rinda) {
+        allocations.remove(rinda);
+        --lastEventId;
     }
 
     @Override
@@ -150,17 +151,17 @@ public class HistoryI implements History {
 
     @Override
     public void subscribe_to_afterAddtions(AfterAdditionSubscriber klausītājs) {
-        piešķiršanas.subscribe_to_afterAddtions(klausītājs);
+        allocations.subscribe_to_afterAddtions(klausītājs);
     }
 
     @Override
     public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        piešķiršanas.subscriber_to_beforeRemoval(pirmsNoņemšanasKlausītājs);
+        allocations.subscriber_to_beforeRemoval(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
     public void subscriber_to_afterRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        piešķiršanas.subscriber_to_afterRemoval(pirmsNoņemšanasKlausītājs);
+        allocations.subscriber_to_afterRemoval(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
@@ -178,12 +179,12 @@ public class HistoryI implements History {
         if (size() != indekss + 1) {
             throw not_implemented_yet();
         }
-        piešķiršanas.remove(rawLinesView().get(indekss));
+        allocations.remove(rawLinesView().get(indekss));
     }
 
     @Override
     public int currentIndex() {
-        return pēdējaNotikumuId;
+        return lastEventId;
     }
 
     @Override
@@ -193,87 +194,87 @@ public class HistoryI implements History {
 
     @Override
     public Database supplies() {
-        return piešķiršanas.supplies();
+        return allocations.supplies();
     }
 
     @Override
     public Database supplies_used() {
-        return piešķiršanas.supplies_used();
+        return allocations.supplies_used();
     }
 
     @Override
     public Database supplies_free() {
-        return piešķiršanas.supplies_free();
+        return allocations.supplies_free();
     }
 
     @Override
     public Database demands() {
-        return piešķiršanas.demands();
+        return allocations.demands();
     }
 
     @Override
     public Database demands_used() {
-        return piešķiršanas.demands_used();
+        return allocations.demands_used();
     }
 
     @Override
     public Database demands_unused() {
-        return piešķiršanas.demands_unused();
+        return allocations.demands_unused();
     }
 
     @Override
     public Line demand_of_allocation(Line piešķiršana) {
-        return piešķiršanas.demand_of_allocation(piešķiršana);
+        return allocations.demand_of_allocation(piešķiršana);
     }
 
     @Override
     public Line supply_of_allocation(Line piešķiršana) {
-        return piešķiršanas.supply_of_allocation(piešķiršana);
+        return allocations.supply_of_allocation(piešķiršana);
     }
 
     @Override
     public Set<Line> allocations_of_supply(Line piedāvājums) {
-        return piešķiršanas.allocations_of_supply(piedāvājums);
+        return allocations.allocations_of_supply(piedāvājums);
     }
 
     @Override
     public Set<Line> allocations_of_demand(Line prasība) {
-        return piešķiršanas.allocations_of_demand(prasība);
+        return allocations.allocations_of_demand(prasība);
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return piešķiršanas.headerView();
+        return allocations.headerView();
     }
 
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> atribūts) {
-        return piešķiršanas.columnView(atribūts);
+        return allocations.columnView(atribūts);
     }
 
     @Override
     public List<Column<Object>> columnsView() {
-        return piešķiršanas.columnsView();
+        return allocations.columnsView();
     }
 
     @Override
     public ListView<Line> rawLinesView() {
-        return piešķiršanas.rawLinesView();
+        return allocations.rawLinesView();
     }
 
     @Override
     public int size() {
-        return piešķiršanas.size();
+        return allocations.size();
     }
 
     @Override
     public List<Line> rawLines() {
-        return piešķiršanas.rawLines();
+        return allocations.rawLines();
     }
 
     @Override
     public Line lookupEquals(Attribute<Line> atribūts, Line cits) {
-        return piešķiršanas.lookupEquals(atribūts, cits);
+        return allocations.lookupEquals(atribūts, cits);
     }
 
     @Override
@@ -283,6 +284,6 @@ public class HistoryI implements History {
 
     @Override
     public List<String> path() {
-        return piešķiršanas.path();
+        return allocations.path();
     }
 }

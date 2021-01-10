@@ -10,7 +10,7 @@ public class Histories extends ResourceI<HistoryFactory> {
         super(() -> new HistoryIFactory());
     }
 
-    public static History vēsture(Solution solution) {
-        return environment().config().configValue(Histories.class).vēsture(solution);
+    public static History history(Solution solution) {
+        return environment().config().configValue(Histories.class).history(solution);
     }
 }
