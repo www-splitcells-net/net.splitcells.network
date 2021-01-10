@@ -71,11 +71,11 @@ public interface Solution extends Problem, SolutionView {
 
     @Returns_this
     default Solution optimize(OptimizationEvent event, OptimizationParameters parameters) {
-        if (event.soluTips().equals(ADDITION)) {
+        if (event.stepType().equals(ADDITION)) {
             this.allocate(
                     demands_unused().getRawLines(event.demand().interpret().get().index()),
                     supplies_free().getRawLines(event.supply().interpret().get().index()));
-        } else if (event.soluTips().equals(REMOVAL)) {
+        } else if (event.stepType().equals(REMOVAL)) {
             final var demandBeforeRemoval = event.demand().interpret();
             final var supplyBeforeRemoval = event.supply().interpret();
             if (parameters.dublicateRemovalAllowed()) {

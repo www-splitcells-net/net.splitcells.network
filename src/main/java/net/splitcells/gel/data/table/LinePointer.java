@@ -11,7 +11,7 @@ import static net.splitcells.dem.lang.Xml.textNode;
 public interface LinePointer extends Domable {
     Table konteksts();
 
-    int indekss();
+    int index();
 
     default Optional<Line> interpret() {
         return interpretē(konteksts());
@@ -27,7 +27,7 @@ public interface LinePointer extends Domable {
         if (rinda.isPresent()) {
             dom.appendChild(rinda.get().toDom());
         } else {
-            dom.appendChild(element("indekss", textNode(indekss() + "")));
+            dom.appendChild(element("indekss", textNode(index() + "")));
         }
         return dom;
     }

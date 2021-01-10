@@ -13,54 +13,54 @@ import static net.splitcells.dem.lang.Xml.element;
 
 public final class OptimizationEvent implements Domable {
 
-    private final LinePointer prasība;
-    private final LinePointer piedāvājums;
-    private final StepType solisTips;
+    private final LinePointer demand;
+    private final LinePointer supply;
+    private final StepType stepType;
 
-    public static OptimizationEvent optimizationEvent(StepType solisTips, LinePointer prasība, LinePointer piedāvājums) {
-        return new OptimizationEvent(solisTips, prasība, piedāvājums);
+    public static OptimizationEvent optimizationEvent(StepType stepType, LinePointer demand, LinePointer supply) {
+        return new OptimizationEvent(stepType, demand, supply);
     }
 
-    private OptimizationEvent(StepType solisTips, LinePointer demand, LinePointer supply) {
-        this.solisTips = solisTips;
-        this.prasība = demand;
-        this.piedāvājums = supply;
+    private OptimizationEvent(StepType stepType, LinePointer demand, LinePointer supply) {
+        this.stepType = stepType;
+        this.demand = demand;
+        this.supply = supply;
 
     }
 
-    public StepType soluTips() {
-        return solisTips;
+    public StepType stepType() {
+        return stepType;
     }
 
     public LinePointer supply() {
-        return piedāvājums;
+        return supply;
     }
 
     public LinePointer demand() {
-        return prasība;
+        return demand;
     }
 
     @Override
     public Node toDom() {
         final var dom = element(getClass().getSimpleName());
-        dom.setAttribute(StepType.class.getSimpleName(), solisTips.name());
-        dom.appendChild(Xml.element(Language.DEMAND.value(), prasība.toDom()));
-        dom.appendChild(Xml.element(Language.SUPPLY.value(), piedāvājums.toDom()));
+        dom.setAttribute(StepType.class.getSimpleName(), stepType.name());
+        dom.appendChild(Xml.element(Language.DEMAND.value(), demand.toDom()));
+        dom.appendChild(Xml.element(Language.SUPPLY.value(), supply.toDom()));
         return dom;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(prasība.indekss(), piedāvājums.indekss(), solisTips);
+        return Objects.hash(demand.index(), supply.index(), stepType);
     }
 
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof OptimizationEvent) {
             final var other = (OptimizationEvent) arg;
-            return prasība.equals(other.demand())
-                    && piedāvājums.equals(other.supply())
-                    && solisTips.equals(other.soluTips());
+            return demand.equals(other.demand())
+                    && supply.equals(other.supply())
+                    && stepType.equals(other.stepType());
         }
         throw new IllegalArgumentException();
     }

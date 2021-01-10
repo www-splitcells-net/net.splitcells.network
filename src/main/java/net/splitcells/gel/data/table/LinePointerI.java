@@ -23,7 +23,7 @@ public class LinePointerI implements LinePointer {
     }
 
     @Override
-    public int indekss() {
+    public int index() {
         return indekss;
     }
 
@@ -39,7 +39,7 @@ public class LinePointerI implements LinePointer {
     public boolean equals(Object arg) {
         if (arg instanceof LinePointer) {
             final var other = (LinePointer) arg;
-            return konteksts().equals(other.konteksts()) && indekss() == other.indekss();
+            return konteksts().equals(other.konteksts()) && index() == other.index();
         } else {
             return false;
         }
@@ -47,6 +47,6 @@ public class LinePointerI implements LinePointer {
 
     @Override
     public int hashCode() {
-        return hash(indekss(), konteksts());
+        return hash(index(), konteksts());
     }
 }
