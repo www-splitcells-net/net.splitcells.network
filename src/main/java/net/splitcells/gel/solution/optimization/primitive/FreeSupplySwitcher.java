@@ -84,11 +84,11 @@ public class FreeSupplySwitcher implements Optimization {
                             , optimizationEvent(
                                     ADDITION
                                     , solution.demands()
-                                            .getRawLines(usedDemand.index())
+                                            .getRawLine(usedDemand.index())
                                             .toLinePointer()
                                     , solution
                                             .supplies()
-                                            .getRawLines
+                                            .getRawLine
                                                     (randomness.integer(0, solution.supplies_free().size()))
                                             .toLinePointer()
                             ));

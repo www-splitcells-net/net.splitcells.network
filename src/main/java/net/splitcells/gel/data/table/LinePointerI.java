@@ -32,7 +32,7 @@ public class LinePointerI implements LinePointer {
         if (argKonteksts.rawLinesView().size() <= indekss) {
             return Optional.empty();
         }
-        return Optional.ofNullable(argKonteksts.getRawLines(indekss));
+        return Optional.ofNullable(argKonteksts.getRawLine(indekss));
     }
 
     @Override

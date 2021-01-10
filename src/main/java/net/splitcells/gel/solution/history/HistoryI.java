@@ -52,7 +52,7 @@ public class HistoryI implements History {
                                         , () -> solution.path().withAppended(HISTORY.value())
                                         , META_DATA));
         this.solution = solution;
-        solution.subscribe_to_afterAddtions(this);
+        solution.subscribe_to_afterAdditions(this);
         solution.subscriber_to_beforeRemoval(this);
     }
 
@@ -150,8 +150,8 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void subscribe_to_afterAddtions(AfterAdditionSubscriber klausītājs) {
-        allocations.subscribe_to_afterAddtions(klausītājs);
+    public void subscribe_to_afterAdditions(AfterAdditionSubscriber klausītājs) {
+        allocations.subscribe_to_afterAdditions(klausītājs);
     }
 
     @Override

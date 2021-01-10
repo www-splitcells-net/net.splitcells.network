@@ -13,7 +13,6 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.type.Derivation;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.rating.structure.MetaRating;
@@ -164,8 +163,8 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public void subscribe_to_afterAddtions(AfterAdditionSubscriber subscriber) {
-        allocations.subscribe_to_afterAddtions(subscriber);
+    public void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber) {
+        allocations.subscribe_to_afterAdditions(subscriber);
     }
 
     @Override

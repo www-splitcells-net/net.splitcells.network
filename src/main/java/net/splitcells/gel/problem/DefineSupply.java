@@ -11,16 +11,16 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 public interface DefineSupply {
 
 	@Returns_this
-	default DefineSupply arTukšiemPiedāvājumiem(int numursNuTuķšīem) {
-		final List<List<Object>> piedāvājumi = list();
-		rangeClosed(1, numursNuTuķšīem).forEach(i -> piedāvājumi.add(list()));
-		return withSupplies(piedāvājumi);
+	default DefineSupply withEmptySupplies(int supplyCount) {
+		final List<List<Object>> supplies = list();
+		rangeClosed(1, supplyCount).forEach(i -> supplies.add(list()));
+		return withSupplies(supplies);
 	}
 
-	DefineSupply withSupplies(List<Object>... peidāvājumi);
+	DefineSupply withSupplies(List<Object>... supplies);
 
-	DefineSupply withSupplies(List<List<Object>> peidāvājumi);
+	DefineSupply withSupplies(List<List<Object>> supplies);
 
-	ProblemGenerator withConstraint(Constraint ierobežojums);
+	ProblemGenerator withConstraint(Constraint constraint);
 
 }

@@ -62,7 +62,7 @@ public class AllocationsI implements Allocations {
             prāsibas_nelietoti = new DatabaseI("prasības_nelietoti", this, prasības.headerView());
             prāsibas_lietoti = new DatabaseI("prasības_lietoti", this, prasības.headerView());
             prasības.rawLinesView().forEach(prāsibas_nelietoti::add);
-            prasības.subscribe_to_afterAddtions(prāsibas_nelietoti::add);
+            prasības.subscribe_to_afterAdditions(prāsibas_nelietoti::add);
             prasības.subscriber_to_beforeRemoval(removalOf -> {
                 if (lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(removalOf.index())) {
                     listWithValuesOf(
@@ -83,7 +83,7 @@ public class AllocationsI implements Allocations {
             piedāvājumi_nelietoti = new DatabaseI("piedāvājumi_nelietoti", this, piedāvājumi.headerView());
             piedāvājumi_lietoti = new DatabaseI("piedāvājumi_lietoti", this, piedāvājumi.headerView());
             piedāvājumi.rawLinesView().forEach(piedāvājumi_nelietoti::add);
-            piedāvājumi.subscribe_to_afterAddtions(i -> {
+            piedāvājumi.subscribe_to_afterAdditions(i -> {
                 piedāvājumi_nelietoti.add(i);
             });
             piedāvājumi.subscriber_to_beforeRemoval(noņemšanaNo -> {
@@ -248,7 +248,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void subscribe_to_afterAddtions(AfterAdditionSubscriber klausītājs) {
+    public void subscribe_to_afterAdditions(AfterAdditionSubscriber klausītājs) {
         papildinājumsKlausītājs.add(klausītājs);
     }
 

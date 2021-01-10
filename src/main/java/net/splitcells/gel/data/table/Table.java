@@ -49,7 +49,7 @@ public interface Table extends Discoverable, Domable {
                         .collect(Collectors.toList()));
     }
 
-    default Line getRawLines(int indekss) {
+    default Line getRawLine(int indekss) {
         return rawLinesView().get(indekss);
     }
 

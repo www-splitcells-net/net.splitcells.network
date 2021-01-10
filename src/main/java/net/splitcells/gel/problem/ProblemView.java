@@ -14,5 +14,5 @@ public interface ProblemView extends AllocationsLiveView {
 
     Allocations allocations();
 
-    DerivedSolution derived(Function<MetaRating, MetaRating> konversija);
+    DerivedSolution derived(Function<MetaRating, MetaRating> derivation);
 }

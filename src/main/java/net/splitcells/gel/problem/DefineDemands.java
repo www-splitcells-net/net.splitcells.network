@@ -10,19 +10,19 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 public interface DefineDemands {
 
 	@Returns_this
-	default DefineDemands arTuķšamPrasībam(int numursNuTuķšīem) {
-		final List<List<Object>> parsības = list();
-		rangeClosed(1, numursNuTuķšīem).forEach(i -> parsības.add(list()));
-		return withDemands(parsības);
+	default DefineDemands withEmptyDemands(int demandCount) {
+		final List<List<Object>> demands = list();
+		rangeClosed(1, demandCount).forEach(i -> demands.add(list()));
+		return withDemands(demands);
 	}
 
 	@Returns_this
-    DefineDemands withDemands(List<Object> prasība, @SuppressWarnings("unchecked") List<Object>... parsības);
+    DefineDemands withDemands(List<Object> demand, @SuppressWarnings("unchecked") List<Object>... demands);
 
 	@Returns_this
-    DefineDemands withDemands(List<List<Object>> parsības);
+    DefineDemands withDemands(List<List<Object>> demands);
 
-	DefineSupply withSupplyAttributes(Attribute<?>... supply_header);
+	DefineSupply withSupplyAttributes(Attribute<?>... supplyAttributes);
 
-	DefineSupply withSupplyAttributes(List<Attribute<?>> supply_header);
+	DefineSupply withSupplyAttributes(List<Attribute<?>> supplyAttributes);
 }

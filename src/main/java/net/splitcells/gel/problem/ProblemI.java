@@ -15,6 +15,8 @@ import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.solution.Solution;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import java.util.function.Function;
 
@@ -24,28 +26,28 @@ import static net.splitcells.gel.problem.derived.DerivedSolution.derivedSolution
 
 public class ProblemI implements Problem {
 
-    private final Constraint ierobežojums;
-    private final Allocations piešķiršanas;
-    protected Solution kāSolution;
+    private final Constraint constraint;
+    private final Allocations allocations;
+    protected Solution asSolution;
 
-    public static Problem problem(Allocations piešķiršanas, Constraint ierobežojums) {
-        return new ProblemI(piešķiršanas, ierobežojums);
+    public static Problem problem(Allocations allocations, Constraint constraint) {
+        return new ProblemI(allocations, constraint);
     }
 
-    protected ProblemI(Allocations piešķiršanas, Constraint ierobežojums) {
-        this.piešķiršanas = piešķiršanas;
-        this.ierobežojums = ierobežojums;
-        synchronize(ierobežojums);
+    protected ProblemI(Allocations allocations, Constraint constraint) {
+        this.allocations = allocations;
+        this.constraint = constraint;
+        synchronize(constraint);
     }
 
     @Override
     public Constraint constraint() {
-        return ierobežojums;
+        return constraint;
     }
 
     @Override
     public Allocations allocations() {
-        return piešķiršanas;
+        return allocations;
     }
 
     @Override
@@ -55,202 +57,202 @@ public class ProblemI implements Problem {
 
     @Override
     public Solution asSolution() {
-        if (kāSolution == null) {
-            kāSolution = Solutions.solution(this);
+        if (asSolution == null) {
+            asSolution = Solutions.solution(this);
         }
-        return kāSolution;
+        return asSolution;
     }
 
     @Override
-    public DerivedSolution derived(Function<MetaRating, MetaRating> konversija) {
-        return derivedSolution(() -> list(), piešķiršanas, ierobežojums, konversija);
+    public DerivedSolution derived(Function<MetaRating, MetaRating> derivation) {
+        return derivedSolution(() -> list(), allocations, constraint, derivation);
     }
 
     @Override
     public Database supplies() {
-        return this.piešķiršanas.supplies();
+        return this.allocations.supplies();
     }
 
     @Override
     public Database supplies_used() {
-        return this.piešķiršanas.supplies_used();
+        return this.allocations.supplies_used();
     }
 
     @Override
     public Database supplies_free() {
-        return this.piešķiršanas.supplies_free();
+        return this.allocations.supplies_free();
     }
 
     @Override
     public Database demands() {
-        return this.piešķiršanas.demands();
+        return this.allocations.demands();
     }
 
     @Override
     public Database demands_used() {
-        return this.piešķiršanas.demands_used();
+        return this.allocations.demands_used();
     }
 
     @Override
     public Database demands_unused() {
-        return this.piešķiršanas.demands_unused();
+        return this.allocations.demands_unused();
     }
 
     @Override
-    public Line allocate(final Line prasība, final Line piedāvājums) {
-        return this.piešķiršanas.allocate(prasība, piedāvājums);
+    public Line allocate(final Line demand, final Line supply) {
+        return this.allocations.allocate(demand, supply);
     }
 
     @Override
-    public Line demand_of_allocation(final Line piešķiršana) {
-        return this.piešķiršanas.demand_of_allocation(piešķiršana);
+    public Line demand_of_allocation(final Line allocation) {
+        return this.allocations.demand_of_allocation(allocation);
     }
 
     @Override
-    public Line supply_of_allocation(final Line piešķiršana) {
-        return this.piešķiršanas.supply_of_allocation(piešķiršana);
+    public Line supply_of_allocation(final Line allocation) {
+        return this.allocations.supply_of_allocation(allocation);
     }
 
     @Override
-    public java.util.Set<Line> allocations_of_supply(final Line piedāvājuma) {
-        return this.piešķiršanas.allocations_of_supply(piedāvājuma);
+    public java.util.Set<Line> allocations_of_supply(final Line supply) {
+        return this.allocations.allocations_of_supply(supply);
     }
 
     @Override
-    public java.util.Set<Line> allocationsOf(final Line prasība, final Line piedāvājums) {
-        return this.piešķiršanas.allocationsOf(prasība, piedāvājums);
+    public java.util.Set<Line> allocationsOf(final Line demand, final Line supply) {
+        return this.allocations.allocationsOf(demand, supply);
     }
 
     @Override
-    public java.util.Set<Line> allocations_of_demand(final Line prasība) {
-        return this.piešķiršanas.allocations_of_demand(prasība);
+    public java.util.Set<Line> allocations_of_demand(final Line demand) {
+        return this.allocations.allocations_of_demand(demand);
     }
 
     @Override
-    public java.util.Set<Line> supply_of_demand(final Line prasība) {
-        return this.piešķiršanas.supply_of_demand(prasība);
+    public java.util.Set<Line> supply_of_demand(final Line demand) {
+        return this.allocations.supply_of_demand(demand);
     }
 
     @Override
-    public Line addTranslated(List<?> vērtība) {
-        return this.piešķiršanas.addTranslated(vērtība);
+    public Line addTranslated(List<?> values) {
+        return this.allocations.addTranslated(values);
     }
 
     @Override
-    public Line add(final Line rinda) {
-        return this.piešķiršanas.add(rinda);
+    public Line add(final Line line) {
+        return this.allocations.add(line);
     }
 
     @Override
-    public void remove(final int rindasIndekss) {
-        this.piešķiršanas.remove(rindasIndekss);
+    public void remove(final int allocationIndex) {
+        this.allocations.remove(allocationIndex);
     }
 
     @Override
-    public void remove(final Line rinda) {
-        this.piešķiršanas.remove(rinda);
+    public void remove(final Line line) {
+        this.allocations.remove(line);
     }
 
     @Override
-    public void replace(final Line newRinda) {
-        this.piešķiršanas.replace(newRinda);
+    public void replace(final Line newLine) {
+        this.allocations.replace(newLine);
     }
 
     @Override
-    public <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void synchronize(final T klausītājs) {
-        this.piešķiršanas.<T>synchronize(klausītājs);
+    public <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void synchronize(final T subscriber) {
+        this.allocations.<T>synchronize(subscriber);
     }
 
     @Override
-    public void subscribe_to_afterAddtions(final AfterAdditionSubscriber klausītājs) {
-        this.piešķiršanas.subscribe_to_afterAddtions(klausītājs);
+    public void subscribe_to_afterAdditions(final AfterAdditionSubscriber subscriber) {
+        this.allocations.subscribe_to_afterAdditions(subscriber);
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(final BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        this.piešķiršanas.subscriber_to_beforeRemoval(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_beforeRemoval(final BeforeRemovalSubscriber subscriber) {
+        this.allocations.subscriber_to_beforeRemoval(subscriber);
     }
 
     @Override
-    public void subscriber_to_afterRemoval(final BeforeRemovalSubscriber klausītājs) {
-        this.piešķiršanas.subscriber_to_afterRemoval(klausītājs);
+    public void subscriber_to_afterRemoval(final BeforeRemovalSubscriber subscriber) {
+        this.allocations.subscriber_to_afterRemoval(subscriber);
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return this.piešķiršanas.headerView();
+        return this.allocations.headerView();
     }
 
     @Override
-    public <T extends Object> ColumnView<T> columnView(final Attribute<T> atribūts) {
-        return this.piešķiršanas.<T>columnView(atribūts);
+    public <T extends Object> ColumnView<T> columnView(final Attribute<T> attribute) {
+        return this.allocations.<T>columnView(attribute);
     }
 
     @Override
     public List<Column<Object>> columnsView() {
-        return this.piešķiršanas.columnsView();
+        return this.allocations.columnsView();
     }
 
     @Deprecated
     public ListView<Line> rawLinesView() {
-        return this.piešķiršanas.rawLinesView();
+        return this.allocations.rawLinesView();
     }
 
     @Override
-    public boolean contains(final Line rinda) {
-        return this.piešķiršanas.contains(rinda);
+    public boolean contains(final Line line) {
+        return this.allocations.contains(line);
     }
 
     @Override
     public List<Line> getLines() {
-        return this.piešķiršanas.getLines();
+        return this.allocations.getLines();
     }
 
     @Override
-    public Line getRawLines(final int indekss) {
-        return this.piešķiršanas.getRawLines(indekss);
+    public Line getRawLine(final int index) {
+        return this.allocations.getRawLine(index);
     }
 
     @Override
     public int size() {
-        return this.piešķiršanas.size();
+        return this.allocations.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.piešķiršanas.isEmpty();
+        return this.allocations.isEmpty();
     }
 
     @Override
     public boolean hasContent() {
-        return this.piešķiršanas.hasContent();
+        return this.allocations.hasContent();
     }
 
     @Override
     public List<Line> rawLines() {
-        return this.piešķiršanas.rawLines();
+        return this.allocations.rawLines();
     }
 
     public String toCSV() {
-        return this.piešķiršanas.toCSV();
+        return this.allocations.toCSV();
     }
 
     @Override
-    public Line lookupEquals(final Attribute<Line> atribūts, final Line other) {
-        return this.piešķiršanas.lookupEquals(atribūts, other);
+    public Line lookupEquals(final Attribute<Line> attribute, final Line value) {
+        return this.allocations.lookupEquals(attribute, value);
     }
 
     @Override
-    public org.w3c.dom.Element toFods() {
-        return this.piešķiršanas.toFods();
+    public Element toFods() {
+        return this.allocations.toFods();
     }
 
     @Override
     public List<String> path() {
-        return this.piešķiršanas.path();
+        return this.allocations.path();
     }
 
-    public org.w3c.dom.Node toDom() {
-        return this.piešķiršanas.toDom();
+    public Node toDom() {
+        return this.allocations.toDom();
     }
 }

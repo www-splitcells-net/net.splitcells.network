@@ -23,11 +23,11 @@ public interface Database extends Table {
 	}
 
 	default <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void synchronize(T klausītājs) {
-		subscribe_to_afterAddtions(klausītājs);
+		subscribe_to_afterAdditions(klausītājs);
 		subscriber_to_beforeRemoval(klausītājs);
 	}
 
-	void subscribe_to_afterAddtions(AfterAdditionSubscriber papildinājumuKlausītājs);
+	void subscribe_to_afterAdditions(AfterAdditionSubscriber papildinājumuKlausītājs);
 
 	void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs);
 

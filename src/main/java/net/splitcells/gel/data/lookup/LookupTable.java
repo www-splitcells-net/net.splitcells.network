@@ -142,7 +142,7 @@ public class LookupTable implements Table {
     public List<Line> rawLines() {
         // TASK PERFORMANCE
         final var rVal = Lists.<Line>list();
-        saturs.forEach(index -> rVal.add(tabula.getRawLines(index)));
+        saturs.forEach(index -> rVal.add(tabula.getRawLine(index)));
         return rVal;
     }
 

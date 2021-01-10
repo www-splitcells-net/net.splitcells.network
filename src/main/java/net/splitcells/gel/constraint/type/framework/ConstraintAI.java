@@ -74,9 +74,9 @@ public abstract class ConstraintAI implements Constraint {
         this.injekcijasGrupas = injekcijasGrupas;
         rindas = datuBāze(vārds + ".rindas", this, LINE, INCOMING_CONSTRAINT_GROUP);
         rindasApstrāde = allocations("rindasApstrāde", rindas, radījums);
-        rindasApstrāde.subscribe_to_afterAddtions(this::izdalīt_papildinajumu);
+        rindasApstrāde.subscribe_to_afterAdditions(this::izdalīt_papildinajumu);
         rindasApstrāde.subscriber_to_beforeRemoval(this::izdalīt_noņemšana);
-        rindas.subscribe_to_afterAddtions(this::apstrāde_rindu_papildinajumu);
+        rindas.subscribe_to_afterAdditions(this::apstrāde_rindu_papildinajumu);
     }
 
     protected ConstraintAI() {

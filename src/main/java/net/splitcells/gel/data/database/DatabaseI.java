@@ -62,7 +62,7 @@ public class DatabaseI implements Database {
             kolonnas.add(ColumnI.kolonna(this, att));
         });
         this.atribūti = listWithValuesOf(headerAtribūts);
-        kolonnas.forEach(this::subscribe_to_afterAddtions);
+        kolonnas.forEach(this::subscribe_to_afterAdditions);
         kolonnas.forEach(this::subscriber_to_beforeRemoval);
     }
 
@@ -98,7 +98,7 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public void subscribe_to_afterAddtions(AfterAdditionSubscriber klausītājs) {
+    public void subscribe_to_afterAdditions(AfterAdditionSubscriber klausītājs) {
         this.papildinājumsKlausītājs.add(klausītājs);
     }
 

@@ -73,8 +73,8 @@ public interface Solution extends Problem, SolutionView {
     default Solution optimize(OptimizationEvent event, OptimizationParameters parameters) {
         if (event.stepType().equals(ADDITION)) {
             this.allocate(
-                    demands_unused().getRawLines(event.demand().interpret().get().index()),
-                    supplies_free().getRawLines(event.supply().interpret().get().index()));
+                    demands_unused().getRawLine(event.demand().interpret().get().index()),
+                    supplies_free().getRawLine(event.supply().interpret().get().index()));
         } else if (event.stepType().equals(REMOVAL)) {
             final var demandBeforeRemoval = event.demand().interpret();
             final var supplyBeforeRemoval = event.supply().interpret();

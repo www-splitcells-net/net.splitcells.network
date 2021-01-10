@@ -176,8 +176,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void subscribe_to_afterAddtions(final AfterAdditionSubscriber subscriber) {
-		this.problem.subscribe_to_afterAddtions(subscriber);
+	public void subscribe_to_afterAdditions(final AfterAdditionSubscriber subscriber) {
+		this.problem.subscribe_to_afterAdditions(subscriber);
 	}
 
 	@java.lang.SuppressWarnings("all")
@@ -222,8 +222,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line getRawLines(final int index) {
-		return this.problem.getRawLines(index);
+	public Line getRawLine(final int index) {
+		return this.problem.getRawLine(index);
 	}
 
 	@java.lang.SuppressWarnings("all")
