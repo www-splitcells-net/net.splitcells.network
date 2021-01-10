@@ -11,47 +11,46 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.map.Map;
 
 public class RatingTranslatorI implements RatingTranslator {
-    private final Map<Class<? extends Rating>, Rating> novērtējumi;
+    private final Map<Class<? extends Rating>, Rating> ratings;
 
-    public static RatingTranslator ratingTranslator(Map<Class<? extends Rating>, Rating> novērtējumi) {
-        return new RatingTranslatorI(novērtējumi);
+    public static RatingTranslator ratingTranslator(Map<Class<? extends Rating>, Rating> ratings) {
+        return new RatingTranslatorI(ratings);
     }
 
-    protected RatingTranslatorI(Map<Class<? extends Rating>, Rating> novērtējumi) {
-        this.novērtējumi = novērtējumi;
+    protected RatingTranslatorI(Map<Class<? extends Rating>, Rating> ratings) {
+        this.ratings = ratings;
     }
 
     protected final Map<Class<? extends Rating>
             , Map<Predicate<Map<Class<? extends Rating>, Rating>>
-            , Function<Map<Class<? extends Rating>, Rating>, Rating>>> tulki = map();
+            , Function<Map<Class<? extends Rating>, Rating>, Rating>>> translators = map();
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Rating> T tulkošana(Class<T> target) {
-        if (novērtējumi.containsKey(target)) {
-            return (T) novērtējumi.get(target);
+    public <T extends Rating> T translate(Class<T> target) {
+        if (ratings.containsKey(target)) {
+            return (T) ratings.get(target);
         }
-        Function<Map<Class<? extends Rating>, Rating>, Rating> derīgsTulks;
-        final var tulkiKandidāts
+        Function<Map<Class<? extends Rating>, Rating>, Rating> fittingTranslator;
+        final var translatorCandidate
                 = classesOf(target).stream()
-                .filter(i -> tulki.containsKey(i))
-                .map(i -> tulki.get(i).entrySet()).flatMap(i -> i.stream())
-                .filter(i -> i.getKey().test(novērtējumi))
+                .filter(i -> translators.containsKey(i))
+                .map(i -> translators.get(i).entrySet()).flatMap(i -> i.stream())
+                .filter(i -> i.getKey().test(ratings))
                 .map(i -> i.getValue())
                 .findFirst();
-        assertTrue(tulkiKandidāts.isPresent());
-        derīgsTulks = tulkiKandidāts.get();
-        return (T) derīgsTulks.apply(novērtējumi);
+        fittingTranslator = translatorCandidate.get();
+        return (T) fittingTranslator.apply(ratings);
     }
 
     @Override
-    public void reģistrēTulks(Class<? extends Rating> mērķis
-            , Predicate<Map<Class<? extends Rating>, Rating>> nosacījums
-            , Function<Map<Class<? extends Rating>, Rating>, Rating> tulks) {
-        if (!tulki.containsKey(mērķis)) {
-            tulki.put(mērķis, map());
+    public void registerTranslator(Class<? extends Rating> targetType
+            , Predicate<Map<Class<? extends Rating>, Rating>> condition
+            , Function<Map<Class<? extends Rating>, Rating>, Rating> translator) {
+        if (!translators.containsKey(targetType)) {
+            translators.put(targetType, map());
         }
-        tulki.get(mērķis).put(nosacījums, tulks);
+        translators.get(targetType).put(condition, translator);
     }
 
     public static List<Class<?>> classesOf(Class<?> clazz) {

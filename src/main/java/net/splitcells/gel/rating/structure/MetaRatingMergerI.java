@@ -18,7 +18,7 @@ import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
 
 public class MetaRatingMergerI implements MetaRatingMerger {
-    protected final Map<Class<? extends Rating>, Rating> novērtējumi;
+    protected final Map<Class<? extends Rating>, Rating> ratings;
     protected final Map<BiPredicate
             <Map
                     <Class<? extends Rating>, Rating>
@@ -26,45 +26,46 @@ public class MetaRatingMergerI implements MetaRatingMerger {
             , BiFunction
             <Map<Class<? extends Rating>, Rating>
                     , Map<Class<? extends Rating>, Rating>
-                    , Map<Class<? extends Rating>, Rating>>> kombinētaji = map();
+                    , Map<Class<? extends Rating>, Rating>>> combiners = map();
 
     public static MetaRatingMerger metaRatingMerger
-            (Map<Class<? extends Rating>, Rating> novērtējumi) {
-        return new MetaRatingMergerI(novērtējumi);
+            (Map<Class<? extends Rating>, Rating> ratings) {
+        return new MetaRatingMergerI(ratings);
     }
 
-    protected MetaRatingMergerI(Map<Class<? extends Rating>, Rating> novērtējumi) {
-        this.novērtējumi = requireNonNull(novērtējumi);
+    protected MetaRatingMergerI(Map<Class<? extends Rating>, Rating> ratings) {
+        this.ratings = requireNonNull(ratings);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <R extends Rating> R combine(Rating... papilduNovērtējums) {
-        // DARĪT Darī nemainigu.
-        final var papildiNovērtējumuVārdnīca = typeMapping(simplify(papilduNovērtējums));
-        return (R) MetaRatingI.metaRating(kombinētaji.entrySet().stream()
-                .filter(kombinētajs -> kombinētajs.getKey().test(novērtējumi, papildiNovērtējumuVārdnīca))
+    public <R extends Rating> R combine(Rating... additionalRatings) {
+        // TODO Make it immutble.
+        final var additionalRatingMap = typeMapping(simplify(additionalRatings));
+        return (R) MetaRatingI.metaRating(combiners.entrySet().stream()
+                .filter(combiner -> combiner.getKey().test(ratings, additionalRatingMap))
                 .findFirst()
                 .get()
                 .getValue()
-                .apply(novērtējumi, papildiNovērtējumuVārdnīca));
+                .apply(ratings, additionalRatingMap));
     }
 
     @Override
     public <T extends Rating> void registerMerger
-            (BiPredicate<Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>> nosacījums, BiFunction<Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>> kombinētajs) {
-        if (kombinētaji.containsKey(nosacījums)) {
+            (BiPredicate<Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>> condition
+                    , BiFunction<Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>> combiner) {
+        if (combiners.containsKey(condition)) {
             throw new IllegalArgumentException();
         }
-        kombinētaji.put(nosacījums, kombinētajs);
+        combiners.put(condition, combiner);
     }
 
-    private java.util.List<Rating> simplify(Rating... novērtējumi) {
-        return asList(novērtējumi).stream().flatMap(novērtējums -> {
-            if (novērtējums instanceof MetaRating) {
-                return ((MetaRating) novērtējums).content().values().stream();
+    private java.util.List<Rating> simplify(Rating... ratings) {
+        return asList(ratings).stream().flatMap(rating -> {
+            if (rating instanceof MetaRating) {
+                return ((MetaRating) rating).content().values().stream();
             }
-            return Stream.of(novērtējums);
+            return Stream.of(rating);
         }).collect(toList());
     }
 

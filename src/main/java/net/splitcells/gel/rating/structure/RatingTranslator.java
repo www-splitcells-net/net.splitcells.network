@@ -6,9 +6,9 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.map.Map;
 
 public interface RatingTranslator {
-	<T extends Rating> T tulkošana(Class<T> type);
+	<T extends Rating> T translate(Class<T> type);
 
-	void reģistrēTulks(Class<? extends Rating> target, Predicate<Map<Class<? extends Rating>, Rating>> condition,
-					   Function<Map<Class<? extends Rating>, Rating>, Rating> translator);
+	void registerTranslator(Class<? extends Rating> target, Predicate<Map<Class<? extends Rating>, Rating>> condition,
+							Function<Map<Class<? extends Rating>, Rating>, Rating> translator);
 
 }

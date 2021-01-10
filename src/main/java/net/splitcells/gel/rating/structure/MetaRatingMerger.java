@@ -9,9 +9,9 @@ public interface MetaRatingMerger extends Rating {
     <T extends Rating> void registerMerger(
             BiPredicate
                     <Map<Class<? extends Rating>, Rating>
-                            , Map<Class<? extends Rating>, Rating>> nosacījums,
+                            , Map<Class<? extends Rating>, Rating>> condition,
             BiFunction
                     <Map<Class<? extends Rating>, Rating>
                             , Map<Class<? extends Rating>, Rating>
-                            , Map<Class<? extends Rating>, Rating>> kombinētajs);
+                            , Map<Class<? extends Rating>, Rating>> combiner);
 }
