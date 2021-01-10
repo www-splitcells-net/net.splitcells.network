@@ -2,8 +2,8 @@ package net.splitcells.gel.data.table.column;
 
 public interface ColumnSubscriber<T> {
 
-	void reģistrē_papildinājums(T papildinājums, int indekss);
+	void register_addition(T addition, int index);
 
-	void reģistē_noņemšana(T noņemšana, int indekss);
+	void register_removal(T removal, int index);
 
 }

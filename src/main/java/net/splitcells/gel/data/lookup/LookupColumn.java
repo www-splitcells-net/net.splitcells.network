@@ -151,7 +151,7 @@ public class LookupColumn<T> implements Column<T> {
 
     private void nodrošinatUzmeklēšanaInitializets() {
         if (!uzmeklēšana.isPresent()) {
-            uzmeklēšana = Optional.of(Lookups.uzmeklē(tabula, atribūts));
+            uzmeklēšana = Optional.of(Lookups.lookup(tabula, atribūts));
         }
     }
 
@@ -162,19 +162,19 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public Table uzmeklēšana(Predicate<T> predikāts) {
+    public Table lookup(Predicate<T> predikāts) {
         nodrošinatUzmeklēšanaInitializets();
-        return uzmeklēšana.get().uzmeklēšana(predikāts);
+        return uzmeklēšana.get().lookup(predikāts);
     }
 
     @Override
     public void register_addition(Line addition) {
-        uzmeklēšana.ifPresent(l -> l.reģistrē_papildinājums(addition.value(atribūts), addition.index()));
+        uzmeklēšana.ifPresent(l -> l.register_addition(addition.value(atribūts), addition.index()));
     }
 
     @Override
     public void register_before_removal(Line removal) {
-        uzmeklēšana.ifPresent(l -> l.reģistē_noņemšana(removal.value(atribūts), removal.index()));
+        uzmeklēšana.ifPresent(l -> l.register_removal(removal.value(atribūts), removal.index()));
     }
 
     @Override

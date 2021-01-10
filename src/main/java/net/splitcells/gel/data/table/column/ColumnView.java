@@ -7,11 +7,11 @@ import net.splitcells.gel.data.lookup.LookupComponents;
 
 public interface ColumnView<T> extends ListView<T>, LookupComponents<T> {
     /**
-     * JAUDA
+     * TODO PERFORMANCE
      */
     default List<T> values() {
-        final List<T> vertība = Lists.<T>list();
-        this.stream().filter(e -> e != null).forEach(e -> vertība.add(e));
-        return vertība;
+        final List<T> values = Lists.<T>list();
+        this.stream().filter(e -> e != null).forEach(e -> values.add(e));
+        return values;
     }
 }

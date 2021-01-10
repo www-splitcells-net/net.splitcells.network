@@ -25,11 +25,11 @@ public class LookupI<T> implements Lookup<T> {
         this.atribūts = atribūts;
         tabula.rawLinesView().stream()
                 .filter(e -> e != null)
-                .forEach(e -> reģistrē_papildinājums(e.value(atribūts), e.index()));
+                .forEach(e -> register_addition(e.value(atribūts), e.index()));
     }
 
     @Override
-    public void reģistrē_papildinājums(T papildinājums, int indekss) {
+    public void register_addition(T papildinājums, int indekss) {
         {
             final LookupTable uzmeklēšanasTabula;
             if (saturs.containsKey(papildinājums)) {
@@ -52,16 +52,16 @@ public class LookupI<T> implements Lookup<T> {
     }
 
     @Override
-    public void reģistē_noņemšana(T noņemšana, int indekss) {
-        final var rinda = tabula.rawLinesView().get(indekss);
-        saturs.get(noņemšana).noņemt_reģistrāciju(rinda);
+    public void register_removal(T removal, int index) {
+        final var rinda = tabula.rawLinesView().get(index);
+        saturs.get(removal).noņemt_reģistrāciju(rinda);
         // atkritumu kolekcija
-        if (saturs.get(noņemšana).isEmpty()) {
-            saturs.remove(noņemšana);
+        if (saturs.get(removal).isEmpty()) {
+            saturs.remove(removal);
         }
         agregātsSaturs.forEach((predikāts, uzmeklēšanasTabula) -> {
-            if (predikāts.test(noņemšana)) {
-                uzmeklēšanasTabula.noņemt_reģistrāciju(tabula.rawLinesView().get(indekss));
+            if (predikāts.test(removal)) {
+                uzmeklēšanasTabula.noņemt_reģistrāciju(tabula.rawLinesView().get(index));
             }
         });
     }
@@ -75,7 +75,7 @@ public class LookupI<T> implements Lookup<T> {
     }
 
     @Override
-    public Table uzmeklēšana(Predicate<T> predikāts) {
+    public Table lookup(Predicate<T> predikāts) {
         if (!agregātsSaturs.containsKey(predikāts)) {
             final var uzmeklēšana = uzmeklēšanasTabula(tabula, predikāts.toString());
             agregātsSaturs.put(predikāts, uzmeklēšana);

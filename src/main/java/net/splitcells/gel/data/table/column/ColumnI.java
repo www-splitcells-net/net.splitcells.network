@@ -2,7 +2,7 @@ package net.splitcells.gel.data.table.column;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.data.lookup.Lookups.uzmeklē;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -11,65 +11,66 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import net.splitcells.gel.data.lookup.Lookup;
+import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
 public class ColumnI<T> implements Column<T> {
-	public static <R> Column<R> kolonna(Table tabula, Attribute<R> atribūts) {
-		return new ColumnI<>(tabula, atribūts);
+	public static <R> Column<R> column(Table table, Attribute<R> attribute) {
+		return new ColumnI<>(table, attribute);
 	}
 
-	private final List<T> saturs = list();
-	private final Attribute<T> atribūts;
-	private final Table tabula;
-	private Optional<Lookup<T>> uzmeklēšana = Optional.empty();
+	private final List<T> content = list();
+	private final Attribute<T> attribute;
+	private final Table table;
+	private Optional<Lookup<T>> lookup = Optional.empty();
 
-	private ColumnI(Table tabula, Attribute<T> atribūts) {
-		this.atribūts = atribūts;
-		this.tabula = tabula;
+	private ColumnI(Table table, Attribute<T> attribute) {
+		this.attribute = attribute;
+		this.table = table;
 	}
 
-	private Lookup<T> nodrošinātUzmeklēšanasInicializēsānu() {
-		if (uzmeklēšana.isEmpty()) {
-			uzmeklēšana = Optional.of(uzmeklē(tabula, atribūts));
+	private Lookup<T> ensureInitializedLookup() {
+		if (lookup.isEmpty()) {
+			lookup = Optional.of(Lookups.lookup(table, attribute));
 		}
-		return uzmeklēšana.get();
+		return lookup.get();
 	}
 
 	@Override
 	public int size() {
-		return saturs.size();
+		return content.size();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return saturs.isEmpty();
+		return content.isEmpty();
 	}
 
 	@Override
 	public boolean contains(Object o) {
-		return saturs.contains(o);
+		return content.contains(o);
 	}
 
 	@Override
 	public Iterator<T> iterator() {
-		return saturs.iterator();
+		return content.iterator();
 	}
 
 	@Override
 	public Object[] toArray() {
-		return saturs.toArray();
+		return content.toArray();
 	}
 
 	@Override
 	public <R> R[] toArray(R[] a) {
-		return saturs.toArray(a);
+		return content.toArray(a);
 	}
 
 	@Override
 	public boolean add(T e) {
-		return saturs.add(e);
+		return content.add(e);
 	}
 
 	@Override
@@ -79,16 +80,16 @@ public class ColumnI<T> implements Column<T> {
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
-		return saturs.containsAll(c);
+		return content.containsAll(c);
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends T> c) {
-		var satursMaiņīts = false;
+		var contentChanged = false;
 		for (T e : c) {
-			satursMaiņīts |= add(e);
+			contentChanged |= add(e);
 		}
-		return satursMaiņīts;
+		return contentChanged;
 	}
 
 	@Override
@@ -108,74 +109,74 @@ public class ColumnI<T> implements Column<T> {
 
 	@Override
 	public void clear() {
-		saturs.clear();
+		content.clear();
 	}
 
 	@Override
-	public T get(int indekss) {
-		return saturs.get(indekss);
+	public T get(int index) {
+		return content.get(index);
 	}
 
 	@Override
-	public T set(int indekss, T papīlduElements) {
-		saturs.set(indekss, papīlduElements);
-		return papīlduElements;
+	public T set(int index, T additionalElement) {
+		content.set(index, additionalElement);
+		return additionalElement;
 	}
 
 	@Override
-	public void add(int indekss, T elements) {
+	public void add(int index, T element) {
 		throw not_implemented_yet();
 	}
 
 	@Override
-	public T remove(int indekss) {
+	public T remove(int index) {
 		throw not_implemented_yet();
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		return saturs.indexOf(o);
+		return content.indexOf(o);
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		return saturs.lastIndexOf(o);
+		return content.lastIndexOf(o);
 	}
 
 	@Override
 	public ListIterator<T> listIterator() {
-		return saturs.listIterator();
+		return content.listIterator();
 	}
 
 	@Override
 	public ListIterator<T> listIterator(int index) {
-		return saturs.listIterator(index);
+		return content.listIterator(index);
 	}
 
 	@Override
-	public List<T> subList(int noIndekss, int uzIndekss) {
-		return saturs.subList(noIndekss, uzIndekss);
+	public List<T> subList(int startIndex, int endIndex) {
+		return content.subList(startIndex, endIndex);
 	}
 
 	@Override
-	public Table lookup(T vertība) {
-		nodrošinātUzmeklēšanasInicializēsānu();
-		return uzmeklēšana.get().lookup(vertība);
+	public Table lookup(T value) {
+		ensureInitializedLookup();
+		return lookup.get().lookup(value);
 	}
 
 	@Override
-	public Table uzmeklēšana(Predicate<T> predikāts) {
-		nodrošinātUzmeklēšanasInicializēsānu();
-		return uzmeklēšana.get().uzmeklēšana(predikāts);
+	public Table lookup(Predicate<T> predicate) {
+		ensureInitializedLookup();
+		return lookup.get().lookup(predicate);
 	}
 
 	@Override
-	public void register_addition(Line papildinājums) {
-		uzmeklēšana.ifPresent(i -> i.reģistrē_papildinājums(papildinājums.value(atribūts), papildinājums.index()));
+	public void register_addition(Line addition) {
+		lookup.ifPresent(i -> i.register_addition(addition.value(attribute), addition.index()));
 	}
 
 	@Override
-	public void register_before_removal(Line noņemšana) {
-		uzmeklēšana.ifPresent(i -> i.reģistē_noņemšana(noņemšana.value(atribūts), noņemšana.index()));
+	public void register_before_removal(Line removal) {
+		lookup.ifPresent(i -> i.register_removal(removal.value(attribute), removal.index()));
 	}
 }

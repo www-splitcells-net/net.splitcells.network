@@ -140,7 +140,7 @@ public class ColumnViewI<T> implements ColumnView<T> {
     }
 
     @Override
-    public Table uzmeklēšana(Predicate<T> predikāts) {
-        return kolonna.uzmeklēšana(predikāts);
+    public Table lookup(Predicate<T> predikāts) {
+        return kolonna.lookup(predikāts);
     }
 }

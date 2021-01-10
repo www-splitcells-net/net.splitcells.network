@@ -59,7 +59,7 @@ public class DatabaseI implements Database {
         atribūti.forEach(att -> {
             tips_kolonnasIndekss.put(att, headerAtribūts.size());
             headerAtribūts.add(att);
-            kolonnas.add(ColumnI.kolonna(this, att));
+            kolonnas.add(ColumnI.column(this, att));
         });
         this.atribūti = listWithValuesOf(headerAtribūts);
         kolonnas.forEach(this::subscribe_to_afterAdditions);
