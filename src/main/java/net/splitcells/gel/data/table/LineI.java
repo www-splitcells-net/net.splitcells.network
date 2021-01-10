@@ -5,6 +5,7 @@ import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.Xml.toFlatString;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.common.Language.*;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,31 +15,31 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import java.util.Objects;
 
 public class LineI implements Line {
-    private final Table konteksts;
-    private final int indekss;
+    private final Table context;
+    private final int index;
 
-    public static Line rinda(Table konteksts, int indekss) {
-        return new LineI(konteksts, indekss);
+    public static Line line(Table context, int index) {
+        return new LineI(context, index);
     }
 
-    protected LineI(Table konteksts, int indekss) {
-        this.konteksts = konteksts;
-        this.indekss = indekss;
+    protected LineI(Table context, int line) {
+        this.context = context;
+        this.index = line;
     }
 
     @Override
-    public <T> T value(Attribute<T> atribūts) {
-        return konteksts.columnView(requireNonNull(atribūts)).get(indekss);
+    public <T> T value(Attribute<T> attribute) {
+        return context.columnView(requireNonNull(attribute)).get(index);
     }
 
     @Override
     public int index() {
-        return indekss;
+        return index;
     }
 
     @Override
-    public Table konteksts() {
-        return konteksts;
+    public Table context() {
+        return context;
     }
 
     @Override
@@ -46,8 +47,8 @@ public class LineI implements Line {
         if (this == arg) {
             return true;
         } else if (arg instanceof Line) {
-            final var argRinda = (Line) arg;
-            return index() == argRinda.index() && konteksts().equals(argRinda.konteksts());
+            final var argLine = (Line) arg;
+            return index() == argLine.index() && context().equals(argLine.context());
         } else {
             return false;
         }
@@ -60,31 +61,31 @@ public class LineI implements Line {
 
     @Override
     public Element toDom() {
-        final var gūtasDomVertība = element(Line.class.getSimpleName());
-        gūtasDomVertība.appendChild(element("indekss", textNode("" + indekss)));
-        konteksts.headerView().forEach(atribūts -> {
-            final var vertība = konteksts.columnView(atribūts).get(indekss);
-            final Node domVertība;
-            if (vertība == null) {
-                domVertība = textNode("");
+        final var dom = element(Line.class.getSimpleName());
+        dom.appendChild(element(INDEX.value(), textNode("" + index)));
+        context.headerView().forEach(attribute -> {
+            final var value = context.columnView(attribute).get(index);
+            final Node domValue;
+            if (value == null) {
+                domValue = textNode("");
             } else {
-                if (vertība instanceof Domable) {
-                    domVertība = ((Domable) vertība).toDom();
+                if (value instanceof Domable) {
+                    domValue = ((Domable) value).toDom();
                 } else {
-                    domVertība = textNode(vertība.toString());
+                    domValue = textNode(value.toString());
                 }
             }
-            final var vertībasElements = element("vertība");
-            vertībasElements.setAttribute("tips", atribūts.name());
-            vertībasElements.appendChild(domVertība);
-            gūtasDomVertība.appendChild(vertībasElements);
+            final var valueElement = element(VALUE.value());
+            valueElement.setAttribute(TYPE.value(), attribute.name());
+            valueElement.appendChild(domValue);
+            dom.appendChild(valueElement);
         });
-        return gūtasDomVertība;
+        return dom;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index(), konteksts());
+        return Objects.hash(index(), context());
     }
 
 }

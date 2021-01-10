@@ -1,7 +1,7 @@
 package net.splitcells.gel.data.table;
 
 import static net.splitcells.dem.data.set.list.Lists.*;
-import static net.splitcells.gel.data.table.LinePointerI.rindasRādītājs;
+import static net.splitcells.gel.data.table.LinePointerI.linePointer;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
@@ -9,45 +9,45 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 
 public interface Line extends Domable {
 
-    static List<?> saķēdet(Line... rindas) {
-        final List<Object> rVal = list();
-        for (var rinda : rindas) {
-            rinda.konteksts().headerView()
-                    .forEach(attribute -> rVal.add(rinda.value(attribute)));
+    static List<?> concat(Line... lines) {
+        final List<Object> concatination = list();
+        for (var line : lines) {
+            line.context().headerView()
+                    .forEach(attribute -> concatination.add(line.value(attribute)));
         }
-        return rVal;
+        return concatination;
     }
 
-    <T> T value(Attribute<T> atribūts);
+    <T> T value(Attribute<T> attribute);
 
     int index();
 
     default LinePointer toLinePointer() {
-        return rindasRādītājs(konteksts(), index());
+        return linePointer(context(), index());
     }
 
-    Table konteksts();
+    Table context();
 
-    default boolean vienāds(Line arg) {
-        return index() == arg.index() && konteksts().equals(arg.konteksts());
+    default boolean equalsTo(Line other) {
+        return index() == other.index() && context().equals(other.context());
     }
 
-    default boolean irDerīgs() {
-        return null != konteksts().rawLinesView().get(index());
+    default boolean isValid() {
+        return null != context().rawLinesView().get(index());
     }
 
     default List<String> toStringList() {
         return listWithValuesOf
-                (konteksts().headerView().stream()
-                        .map(atribūts -> value(atribūts).toString())
+                (context().headerView().stream()
+                        .map(attribute -> value(attribute).toString())
                         .collect(toList()));
     }
 
-    default List<Object> vērtības() {
-        return konteksts()
+    default List<Object> values() {
+        return context()
                 .headerView()
                 .stream()
-                .map(nosaukums -> value(nosaukums))
+                .map(attribute -> value(attribute))
                 .collect(toList());
     }
 }

@@ -136,7 +136,7 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Line allocate(Line prasība, Line piedāvājums) {
-        final var piešķiršana = piešķiršanas.addTranslated(Line.saķēdet(prasība, piedāvājums));
+        final var piešķiršana = piešķiršanas.addTranslated(Line.concat(prasība, piedāvājums));
         if (!lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(piedāvājums.index())) {
             piedāvājumi_lietoti.add(piedāvājums);
             piedāvājumi_nelietoti.remove(piedāvājums);

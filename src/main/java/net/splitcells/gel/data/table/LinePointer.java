@@ -9,12 +9,12 @@ import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.lang.Xml.textNode;
 
 public interface LinePointer extends Domable {
-    Table konteksts();
+    Table context();
 
     int index();
 
     default Optional<Line> interpret() {
-        return interpret(konteksts());
+        return interpret(context());
     }
 
     @Deprecated

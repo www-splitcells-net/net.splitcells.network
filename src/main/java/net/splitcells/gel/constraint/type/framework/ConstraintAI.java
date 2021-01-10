@@ -120,7 +120,7 @@ public abstract class ConstraintAI implements Constraint {
     public void rēgistrē_pirms_noņemšanas(GroupId ienākošaGrupaId, Line noņemšana) {
         // DARĪT Kustēt uz ārpuses projektu.
         if (ENFORCING_UNIT_CONSISTENCY) {
-            Assertions.assertThat(noņemšana.irDerīgs()).isTrue();
+            Assertions.assertThat(noņemšana.isValid()).isTrue();
         }
         apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
         rindasApstrāde
@@ -190,7 +190,7 @@ public abstract class ConstraintAI implements Constraint {
     @Override
     public MetaRating novērtējums(GroupId grupaId, Line rinda) {
         final var novērtetāMaršrutēšana
-                = atlasītNovērtetāMaršrutēšana(grupaId, processedLine -> processedLine.value(LINE).vienāds(rinda));
+                = atlasītNovērtetāMaršrutēšana(grupaId, processedLine -> processedLine.value(LINE).equalsTo(rinda));
         novērtetāMaršrutēšana.gūtBērnusUzGrupas().forEach((bērns, grūpa) ->
                 grūpa.forEach(group -> novērtetāMaršrutēšana.gūtNovērtējums().add(bērns.novērtējums(group, rinda)))
         );

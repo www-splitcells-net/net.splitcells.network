@@ -5,41 +5,41 @@ import java.util.Optional;
 import static java.util.Objects.hash;
 
 public class LinePointerI implements LinePointer {
-    public static LinePointer rindasRādītājs(Table konteksts, int indekss) {
-        return new LinePointerI(konteksts, indekss);
+    public static LinePointer linePointer(Table context, int index) {
+        return new LinePointerI(context, index);
     }
 
-    private final Table konteksts;
-    private final int indekss;
+    private final Table context;
+    private final int index;
 
-    private LinePointerI(Table konteksts, int indekss) {
-        this.konteksts = konteksts;
-        this.indekss = indekss;
+    private LinePointerI(Table context, int index) {
+        this.context = context;
+        this.index = index;
     }
 
     @Override
-    public Table konteksts() {
-        return konteksts;
+    public Table context() {
+        return context;
     }
 
     @Override
     public int index() {
-        return indekss;
+        return index;
     }
 
     @Override
-    public Optional<Line> interpret(Table argKonteksts) {
-        if (argKonteksts.rawLinesView().size() <= indekss) {
+    public Optional<Line> interpret(Table context) {
+        if (context.rawLinesView().size() <= index) {
             return Optional.empty();
         }
-        return Optional.ofNullable(argKonteksts.getRawLine(indekss));
+        return Optional.ofNullable(context.getRawLine(index));
     }
 
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof LinePointer) {
             final var other = (LinePointer) arg;
-            return konteksts().equals(other.konteksts()) && index() == other.index();
+            return context().equals(other.context()) && index() == other.index();
         } else {
             return false;
         }
@@ -47,6 +47,6 @@ public class LinePointerI implements LinePointer {
 
     @Override
     public int hashCode() {
-        return hash(index(), konteksts());
+        return hash(index(), context());
     }
 }

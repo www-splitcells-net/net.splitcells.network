@@ -129,7 +129,7 @@ public class DatabaseI implements Database {
         indekssiNelitoti.delete(indekss);
         range(0, rindasVertības.size()).forEach(i -> kolonnas.get(i).set(indekss, rindasVertības.get(i)));
         ++izmers;
-        final var rinda = LineI.rinda(this, indekss);
+        final var rinda = LineI.line(this, indekss);
         jēlasRindas.set(rinda.index(), rinda);
         rindas.add(rinda);
         papildinājumsKlausītājs.forEach(klausītājs -> klausītājs.register_addition(rinda));
@@ -151,13 +151,13 @@ public class DatabaseI implements Database {
         final Line rinda;
         if (indekssiNelitoti.isEmpty()) {
             rindasIndekss = jēlasRindas.size();
-            rinda = LineI.rinda(this, rindasIndekss);
+            rinda = LineI.line(this, rindasIndekss);
             jēlasRindas.add(rinda);
             range(0, rindasVertības.size()).forEach(i -> kolonnas.get(i).add(rindasVertības.get(i)));
         } else {
             rindasIndekss = removeAny(indekssiNelitoti);
             range(0, rindasVertības.size()).forEach(i -> kolonnas.get(i).set(rindasIndekss, rindasVertības.get(i)));
-            rinda = LineI.rinda(this, rindasIndekss);
+            rinda = LineI.line(this, rindasIndekss);
             jēlasRindas.set(rindasIndekss, rinda);
         }
         ++izmers;

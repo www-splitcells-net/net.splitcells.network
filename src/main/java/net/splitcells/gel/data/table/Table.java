@@ -34,27 +34,27 @@ public interface Table extends Discoverable, Domable {
 
     ListView<Line> rawLinesView();
 
-    default boolean contains(Line rinda) {
-        if (rinda.index() >= rawLinesView().size()) {
+    default boolean contains(Line line) {
+        if (line.index() >= rawLinesView().size()) {
             return false;
         } else {
-            return null != rawLinesView().get(rinda.index());
+            return null != rawLinesView().get(line.index());
         }
     }
 
-    default net.splitcells.dem.data.set.list.List<Line> getLines() {
+    default List<Line> getLines() {
         return listWithValuesOf
                 (rawLinesView().stream()
                         .filter(e -> e != null)
                         .collect(Collectors.toList()));
     }
 
-    default Line getRawLine(int indekss) {
-        return rawLinesView().get(indekss);
+    default Line getRawLine(int index) {
+        return rawLinesView().get(index);
     }
 
-    default Line getLines(int indekss) {
-        return getLines().get(indekss);
+    default Line getLines(int index) {
+        return getLines().get(index);
     }
 
     int size();
@@ -75,13 +75,13 @@ public interface Table extends Discoverable, Domable {
         final var header = headerView().stream()
                 .map(atribūts -> atribūts.name())
                 .collect(toList());
-        try (final var printeris = new CSVPrinter
+        try (final var printer = new CSVPrinter
                 (csv, CSVFormat.RFC4180.withHeader(header.toArray(new String[header.size()])))) {
             getLines().stream()
-                    .map(rinda -> rinda.toStringList())
-                    .forEach(rinda -> {
+                    .map(line -> line.toStringList())
+                    .forEach(line -> {
                         try {
-                            printeris.printRecord(rinda);
+                            printer.printRecord(line);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -93,33 +93,33 @@ public interface Table extends Discoverable, Domable {
     }
 
     /**
-     * PĀRSAUKT
+     * TODO RENAME
      */
-    Line lookupEquals(Attribute<Line> atribūts, Line other);
+    Line lookupEquals(Attribute<Line> attribute, Line values);
 
-    default Stream<Line> lookupEquals(List<Object> vertības) {
+    default Stream<Line> lookupEquals(List<Object> values) {
         return getLines().stream()
-                .filter(rinda ->
+                .filter(line ->
                         IntStream.range(0, headerView().size())
-                                .mapToObj(i -> Objects.equals(vertības.get(i), rinda.value(headerView().get(i))))
+                                .mapToObj(i -> Objects.equals(values.get(i), line.value(headerView().get(i))))
                                 .reduce(true, (a, b) -> a && b));
     }
 
     default Element toFods() {
         final var fods = rElement(FODS_OFFICE, "document");
-        final var ķermenis = element(FODS_OFFICE, "body");
+        final var body = element(FODS_OFFICE, "body");
         fods.setAttributeNode
                 (attribute(FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
-        fods.appendChild(ķermenis);
+        fods.appendChild(body);
         {
-            final var izklājlapu = element(FODS_OFFICE, "spreadsheet");
-            ķermenis.appendChild(izklājlapu);
-            final var tabula = rElement(FODS_TABLE, "table");
-            izklājlapu.appendChild(tabula);
-            tabula.setAttributeNode(attribute(FODS_TABLE, "name", "values"));
+            final var spreadsheet = element(FODS_OFFICE, "spreadsheet");
+            body.appendChild(spreadsheet);
+            final var table = rElement(FODS_TABLE, "table");
+            spreadsheet.appendChild(table);
+            table.setAttributeNode(attribute(FODS_TABLE, "name", "values"));
             {
-                final var nosaukums = element(FODS_TABLE, "table-row");
-                tabula.appendChild(nosaukums);
+                final var header = element(FODS_TABLE, "table-row");
+                table.appendChild(header);
                 headerView().stream()
                         .map(att -> att.name())
                         .map(attName -> {
@@ -128,25 +128,25 @@ public interface Table extends Discoverable, Domable {
                             tabulasElements.appendChild(tabulasVertība);
                             tabulasVertība.appendChild(textNode(attName));
                             return tabulasElements;
-                        }).forEach(attDesc -> nosaukums.appendChild(attDesc));
+                        }).forEach(attDesc -> header.appendChild(attDesc));
                 getLines().forEach(line -> {
-                    final var tabulasRinda = element(FODS_TABLE, "table-row");
-                    tabula.appendChild(tabulasRinda);
+                    final var tableLine = element(FODS_TABLE, "table-row");
+                    table.appendChild(tableLine);
                     headerView().stream()
-                            .map(atribūts -> line.value(atribūts))
-                            .map(vertība -> {
-                                final var tabulasElements = element(FODS_TABLE, "table-cell");
-                                final var tabulasVertības = rElement(FODS_TEXT, "p");
-                                tabulasElements.appendChild(tabulasVertības);
-                                if (vertība instanceof Domable) {
-                                    final var vertībasDom = ((Domable) vertība).toDom();
-                                    tabulasVertības.appendChild
-                                            (textNode(toPrettyString(vertībasDom)));
+                            .map(attribute -> line.value(attribute))
+                            .map(value -> {
+                                final var cellElement = element(FODS_TABLE, "table-cell");
+                                final var cellValue = rElement(FODS_TEXT, "p");
+                                cellElement.appendChild(cellValue);
+                                if (value instanceof Domable) {
+                                    final var domValue = ((Domable) value).toDom();
+                                    cellValue.appendChild
+                                            (textNode(toPrettyString(domValue)));
                                 } else {
-                                    tabulasVertības.appendChild(textNode(vertība.toString()));
+                                    cellValue.appendChild(textNode(value.toString()));
                                 }
-                                return tabulasElements;
-                            }).forEach(tabulasElements -> tabulasRinda.appendChild(tabulasElements));
+                                return cellElement;
+                            }).forEach(tableElement -> tableLine.appendChild(tableElement));
                 });
             }
         }

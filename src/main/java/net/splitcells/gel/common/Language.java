@@ -13,6 +13,7 @@ public enum Language {
     EVENT("event"),
     GROUP("group"),
     HISTORY("history"),
+    INDEX("index"),
     KEY("key"),
     LINE("line"),
     META_DATA("metaData"),
@@ -26,7 +27,7 @@ public enum Language {
     SUPPLIES("supplies"),
     SUPPLY("supply"),
     TEST("test"),
-    TIPS("tips"),
+    TYPE("type"),
     VALUE("value"),
     WORDS("words");
     private final String value;

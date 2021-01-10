@@ -39,7 +39,7 @@ public class Allocation implements Domable {
     public Node toDom() {
         final var piešķiršana = Xml.element(ALLOCATION.value());
         piešķiršana.appendChild
-                (Xml.element(TIPS.value()).appendChild(Xml.textNode(tips.name())));
+                (Xml.element(TYPE.value()).appendChild(Xml.textNode(tips.name())));
         piešķiršana.appendChild
                 (Xml.element(DEMAND2.value()).appendChild(prasība.toDom()));
         piešķiršana.appendChild
