@@ -11,6 +11,6 @@ public class TemporaryPath extends OptionI<Path> {
     public TemporaryPath() {
         super(() -> environment().config()
                 .configValue(ProcessPath.class)
-                .resolve("pagaidu"));
+                .resolve("tmp"));
     }
 }
