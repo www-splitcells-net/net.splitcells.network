@@ -53,7 +53,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
                 rindasApstrāde.allocations_of_demand(noņemšana).forEach(rindasApstrāde::remove));
         novērtējumsNotikums.papildinājumi().forEach((line, resultUpdate) -> {
             final var r = pieliktRadījums(resultUpdate);
-            int i = r.indekss();
+            int i = r.index();
             rindasApstrāde.allocate(line, r);
         });
     }

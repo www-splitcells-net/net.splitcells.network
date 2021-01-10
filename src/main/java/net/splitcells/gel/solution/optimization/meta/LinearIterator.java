@@ -18,11 +18,11 @@ public class LinearIterator implements Optimization {
     }
 
     @Override
-    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
         List<OptimizationEvent> optimizācijas = list();
         int mēģinājums = 0;
         while (optimizācijas.isEmpty() && mēģinājums < this.optimizations.size()) {
-            optimizācijas = atlasitNakamoOptimicājiu().optimizē(atrisinājums);
+            optimizācijas = atlasitNakamoOptimicājiu().optimize(atrisinājums);
             ++mēģinājums;
         }
         return optimizācijas;

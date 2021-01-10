@@ -64,9 +64,9 @@ public class AllocationsI implements Allocations {
             prasības.rawLinesView().forEach(prāsibas_nelietoti::add);
             prasības.subscribe_to_afterAddtions(prāsibas_nelietoti::add);
             prasības.subscriber_to_beforeRemoval(removalOf -> {
-                if (lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(removalOf.indekss())) {
+                if (lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(removalOf.index())) {
                     listWithValuesOf(
-                            lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(removalOf.indekss()))
+                            lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(removalOf.index()))
                             .forEach(allocation_of_demand -> remove(piešķiršanas.rawLinesView().get(allocation_of_demand)));
                 }
                 if (prāsibas_nelietoti.contains(removalOf)) {
@@ -87,9 +87,9 @@ public class AllocationsI implements Allocations {
                 piedāvājumi_nelietoti.add(i);
             });
             piedāvājumi.subscriber_to_beforeRemoval(noņemšanaNo -> {
-                if (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(noņemšanaNo.indekss())) {
+                if (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(noņemšanaNo.index())) {
                     listWithValuesOf
-                            (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(noņemšanaNo.indekss()))
+                            (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(noņemšanaNo.index()))
                             .forEach(piešķiršanas_no_piedāvāijumu
                                     -> remove(piešķiršanas.rawLinesView().get(piešķiršanas_no_piedāvāijumu)));
                 }
@@ -137,42 +137,42 @@ public class AllocationsI implements Allocations {
     @Override
     public Line allocate(Line prasība, Line piedāvājums) {
         final var piešķiršana = piešķiršanas.addTranslated(Line.saķēdet(prasība, piedāvājums));
-        if (!lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(piedāvājums.indekss())) {
+        if (!lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(piedāvājums.index())) {
             piedāvājumi_lietoti.add(piedāvājums);
             piedāvājumi_nelietoti.remove(piedāvājums);
         }
-        if (!lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(prasība.indekss())) {
+        if (!lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(prasība.index())) {
             prāsibas_lietoti.add(prasība);
             prāsibas_nelietoti.remove(prasība);
         }
         {
-            piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.put(piešķiršana.indekss(), prasība.indekss());
-            piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.put(piešķiršana.indekss(), piedāvājums.indekss());
+            piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.put(piešķiršana.index(), prasība.index());
+            piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.put(piešķiršana.index(), piedāvājums.index());
         }
         {
             {
-                if (!lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(prasība.indekss())) {
-                    lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.put(prasība.indekss(), setOfUniques());
+                if (!lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(prasība.index())) {
+                    lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.put(prasība.index(), setOfUniques());
                 }
-                lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(prasība.indekss()).add(piešķiršana.indekss());
-                if (!lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(piedāvājums.indekss())) {
-                    lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.put(piedāvājums.indekss(), setOfUniques());
+                lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(prasība.index()).add(piešķiršana.index());
+                if (!lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(piedāvājums.index())) {
+                    lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.put(piedāvājums.index(), setOfUniques());
                 }
-                lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(piedāvājums.indekss()).add(piešķiršana.indekss());
+                lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(piedāvājums.index()).add(piešķiršana.index());
             }
         }
         {
             {
-                if (!lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.containsKey(prasība.indekss())) {
-                    lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.put(prasība.indekss(), setOfUniques());
+                if (!lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.containsKey(prasība.index())) {
+                    lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.put(prasība.index(), setOfUniques());
                 }
-                lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.get(prasība.indekss()).add(piedāvājums.indekss());
+                lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.get(prasība.index()).add(piedāvājums.index());
             }
             {
-                if (!lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.containsKey(piedāvājums.indekss())) {
-                    lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.put(piedāvājums.indekss(), setOfUniques());
+                if (!lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.containsKey(piedāvājums.index())) {
+                    lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.put(piedāvājums.index(), setOfUniques());
                 }
-                lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.indekss()).add(prasība.indekss());
+                lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.index()).add(prasība.index());
             }
         }
         papildinājumsKlausītājs.forEach(listener -> listener.reģistrē_papildinājumi(piešķiršana));
@@ -182,13 +182,13 @@ public class AllocationsI implements Allocations {
     @Override
     public Line demand_of_allocation(Line piešķiršana) {
         return prāsibas.rawLinesView()
-                .get(piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.get(piešķiršana.indekss()));
+                .get(piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.get(piešķiršana.index()));
     }
 
     @Override
     public Line supply_of_allocation(Line allocation) {
         return piedāvājumi.rawLinesView()
-                .get(piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.get(allocation.indekss()));
+                .get(piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.get(allocation.index()));
     }
 
     @Override
@@ -209,38 +209,38 @@ public class AllocationsI implements Allocations {
         piešķiršanas.remove(piešķiršana);
         // TODO Make following code a remove subscription to allocations.
         {
-            piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.remove(piešķiršana.indekss());
-            piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.remove(piešķiršana.indekss());
+            piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.remove(piešķiršana.index());
+            piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.remove(piešķiršana.index());
         }
         {
             {
-                lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.get(prasība.indekss()).remove(piedāvājums.indekss());
-                if (lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.get(prasība.indekss()).isEmpty()) {
-                    lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.remove(prasība.indekss());
+                lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.get(prasība.index()).remove(piedāvājums.index());
+                if (lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.get(prasība.index()).isEmpty()) {
+                    lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.remove(prasība.index());
                 }
-                lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.indekss()).remove(prasība.indekss());
-                if (lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.indekss()).isEmpty()) {
-                    lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.remove(piedāvājums.indekss());
+                lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.index()).remove(prasība.index());
+                if (lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.index()).isEmpty()) {
+                    lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.remove(piedāvājums.index());
                 }
             }
             {
-                lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(piedāvājums.indekss()).remove(piešķiršana.indekss());
-                if (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(piedāvājums.indekss()).isEmpty()) {
-                    lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.remove(piedāvājums.indekss());
+                lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(piedāvājums.index()).remove(piešķiršana.index());
+                if (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(piedāvājums.index()).isEmpty()) {
+                    lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.remove(piedāvājums.index());
                 }
-                lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(prasība.indekss()).remove(piešķiršana.indekss());
-                if (lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(prasība.indekss()).isEmpty()) {
-                    lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.remove(prasība.indekss());
+                lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(prasība.index()).remove(piešķiršana.index());
+                if (lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(prasība.index()).isEmpty()) {
+                    lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.remove(prasība.index());
                 }
             }
         }
-        piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.remove(piešķiršana.indekss());
-        piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.remove(piešķiršana.indekss());
-        if (!lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.containsKey(prasība.indekss())) {
+        piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.remove(piešķiršana.index());
+        piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.remove(piešķiršana.index());
+        if (!lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.containsKey(prasība.index())) {
             prāsibas_lietoti.remove(prasība);
             prāsibas_nelietoti.add(prasība);
         }
-        if (!lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.containsKey(piedāvājums.indekss())) {
+        if (!lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.containsKey(piedāvājums.index())) {
             piedāvājumi_lietoti.remove(piedāvājums);
             piedāvājumi_nelietoti.add(piedāvājums);
         }
@@ -296,7 +296,7 @@ public class AllocationsI implements Allocations {
         final Set<Line> piešķiršanas_no_piedāvājuma = setOfUniques();
         try {
             lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu
-                    .get(piedāvājums.indekss())
+                    .get(piedāvājums.index())
                     .forEach(piešķiršanasIndekss ->
                             piešķiršanas_no_piedāvājuma.add(piešķiršanas.rawLinesView().get(piešķiršanasIndekss)));
         } catch (RuntimeException e) {
@@ -309,7 +309,7 @@ public class AllocationsI implements Allocations {
     public Set<Line> allocations_of_demand(Line prasība) {
         final Set<Line> piešķiršanas_no_prasības = setOfUniques();
         lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu
-                .get(prasība.indekss())
+                .get(prasība.index())
                 .forEach(piešķiršanasIndekss ->
                     piešķiršanas_no_prasības.add(piešķiršanas.rawLinesView().get(piešķiršanasIndekss)));
         return piešķiršanas_no_prasības;

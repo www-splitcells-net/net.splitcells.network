@@ -4,8 +4,9 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.host.Files.createDirectory;
 import static net.splitcells.dem.resource.host.Files.writeToFile;
-import static net.splitcells.gel.solution.optimization.StepType.PIEŠĶIRŠANA;
-import static net.splitcells.gel.solution.optimization.StepType.NOŅEMŠANA;
+import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
+import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
+import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.Returns_this;
@@ -20,71 +21,71 @@ import java.util.function.Function;
 public interface Solution extends Problem, SolutionView {
 
     @Returns_this
-    default Solution optimizē(Optimization optimization) {
-        return optimizēArFunkciju(s -> optimization.optimizē(s));
+    default Solution optimize(Optimization optimization) {
+        return optimizeWithFunction(s -> optimization.optimize(s));
     }
 
     @Returns_this
-    default Solution optimizēArFunkciju(Function<Solution, List<OptimizationEvent>> optimizācijaFunkcija) {
+    default Solution optimizeWithFunction(Function<Solution, List<OptimizationEvent>> optimizationFunction) {
         while (!isOptimal()) {
-            final var ieteikumi = optimizācijaFunkcija.apply(this);
-            if (ieteikumi.isEmpty()) {
+            final var recommendations = optimizationFunction.apply(this);
+            if (recommendations.isEmpty()) {
                 break;
             }
-            optimizē(ieteikumi);
+            optimize(recommendations);
         }
         return this;
     }
 
     @Returns_this
-    default Solution optimizēVienreis(Optimization optimization) {
-        return optimizeArFunkcijuVienreis(s -> optimization.optimizē(s));
+    default Solution optimizeOnce(Optimization optimization) {
+        return optimizeWithFunctionOnce(s -> optimization.optimize(s));
     }
 
     @Returns_this
-    default Solution optimizeArFunkcijuVienreis(Function<Solution, List<OptimizationEvent>> optimizācija) {
-        final var ieteikumi = optimizācija.apply(this);
-        if (ieteikumi.isEmpty()) {
+    default Solution optimizeWithFunctionOnce(Function<Solution, List<OptimizationEvent>> optimization) {
+        final var recommendations = optimization.apply(this);
+        if (recommendations.isEmpty()) {
             return this;
         }
-        optimizē(ieteikumi);
+        optimize(recommendations);
         return this;
     }
 
     @Returns_this
-    default Solution optimizē(List<OptimizationEvent> notikumi) {
-        notikumi.forEach(this::optimizē);
+    default Solution optimize(List<OptimizationEvent> events) {
+        events.forEach(this::optimize);
         return this;
     }
 
     @Returns_this
-    default Solution optimizē(List<OptimizationEvent> notikumi, OptimizationParameters optimizationParameters) {
-        notikumi.forEach(e -> optimizē(e, optimizationParameters));
+    default Solution optimize(List<OptimizationEvent> events, OptimizationParameters parameters) {
+        events.forEach(e -> optimize(e, parameters));
         return this;
     }
 
     @Returns_this
-    default Solution optimizē(OptimizationEvent notikums) {
-        return optimizē(notikums, OptimizationParameters.optimizācijasParametri());
+    default Solution optimize(OptimizationEvent event) {
+        return optimize(event, optimizationParameters());
     }
 
     @Returns_this
-    default Solution optimizē(OptimizationEvent notikums, OptimizationParameters optimizationParameters) {
-        if (notikums.soluTips().equals(PIEŠĶIRŠANA)) {
+    default Solution optimize(OptimizationEvent event, OptimizationParameters parameters) {
+        if (event.soluTips().equals(ADDITION)) {
             this.allocate(
-                    demands_unused().getRawLines(notikums.prasība().interpretē().get().indekss()),
-                    supplies_unused().getRawLines(notikums.piedāvājums().interpretē().get().indekss()));
-        } else if (notikums.soluTips().equals(NOŅEMŠANA)) {
-            final var prasībaPriekšNoņemšanas = notikums.prasība().interpretē();
-            final var piedāvājumuPriekšNoņemšanas = notikums.piedāvājums().interpretē();
-            if (optimizationParameters.getDubultuNoņemšanaAtļauts()) {
-                if (prasībaPriekšNoņemšanas.isEmpty() && piedāvājumuPriekšNoņemšanas.isEmpty()) {
+                    demands_unused().getRawLines(event.demand().interpret().get().index()),
+                    supplies_unused().getRawLines(event.supply().interpret().get().index()));
+        } else if (event.soluTips().equals(REMOVAL)) {
+            final var demandBeforeRemoval = event.demand().interpret();
+            final var supplyBeforeRemoval = event.supply().interpret();
+            if (parameters.dublicateRemovalAllowed()) {
+                if (demandBeforeRemoval.isEmpty() && supplyBeforeRemoval.isEmpty()) {
                     return this;
                 }
             }
             remove(allocationsOf
-                    (prasībaPriekšNoņemšanas.get()
-                            , piedāvājumuPriekšNoņemšanas.get())
+                    (demandBeforeRemoval.get()
+                            , supplyBeforeRemoval.get())
                     .iterator()
                     .next());
         } else {
@@ -93,18 +94,18 @@ public interface Solution extends Problem, SolutionView {
         return this;
     }
 
-    default void veidoAnalīzu() {
+    default void createAnalysis() {
         createDirectory(environment().config().configValue(ProcessPath.class));
-        final var path = this.path().stream().reduce((kreisi, labi) -> kreisi + "." + labi);
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.toDom.xml"), constraint().toDom());
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".atrisinājums.ierobežojums.grafiks.xml"), constraint().graph());
+        final var path = this.path().stream().reduce((left, right) -> left + "." + right);
+        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".solution.constraint.toDom.xml"), constraint().toDom());
+        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".solution.constraint.graph.xml"), constraint().graph());
     }
 
-    default Rating rating(List<OptimizationEvent> notikumi) {
-        final var sanknesVēsturesIndekss = history().momentansIndekss();
-        optimizē(notikumi);
-        final var novērtējums = constraint().rating();
-        history().atiestatUz(sanknesVēsturesIndekss);
-        return novērtējums;
+    default Rating rating(List<OptimizationEvent> events) {
+        final var historyRootIndex = history().currentIndex();
+        optimize(events);
+        final var rating = constraint().rating();
+        history().atiestatUz(historyRootIndex);
+        return rating;
     }
 }

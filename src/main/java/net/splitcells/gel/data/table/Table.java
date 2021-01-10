@@ -35,10 +35,10 @@ public interface Table extends Discoverable, Domable {
     ListView<Line> rawLinesView();
 
     default boolean contains(Line rinda) {
-        if (rinda.indekss() >= rawLinesView().size()) {
+        if (rinda.index() >= rawLinesView().size()) {
             return false;
         } else {
-            return null != rawLinesView().get(rinda.indekss());
+            return null != rawLinesView().get(rinda.index());
         }
     }
 

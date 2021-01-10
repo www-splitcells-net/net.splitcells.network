@@ -83,24 +83,24 @@ public class LookupTable implements Table {
     }
 
     public void reģistrē(Line rinda) {
-        saturs.add(rinda.indekss());
+        saturs.add(rinda.index());
         // DARĪT JAUD
         // SALABOT
         range(0, kolonnas.size()).forEach(i -> {
             // KOMPROMISS
             final var kolonna = (LookupColumn<Object>) kolonnas.get(i);
-            kolonna.set(rinda.indekss(), rinda.vērtība(tabula.headerView().get(i)));
+            kolonna.set(rinda.index(), rinda.vērtība(tabula.headerView().get(i)));
         });
         kolonnas.forEach(kolonna -> kolonna.reģistrē_papildinājumi(rinda));
     }
 
     public void noņemt_reģistrāciju(Line rinda) {
         kolonnas.forEach(column -> column.rēgistrē_pirms_noņemšanas(rinda));
-        saturs.remove(rinda.indekss());
+        saturs.remove(rinda.index());
         range(0, kolonnas.size()).forEach(i -> {
             // HACK
             final var column = (LookupColumn<Object>) kolonnas.get(i);
-            column.set(rinda.indekss(), null);
+            column.set(rinda.index(), null);
         });
     }
 
@@ -149,7 +149,7 @@ public class LookupTable implements Table {
     @Override
     public Line lookupEquals(Attribute<Line> atribūts, Line other) {
         final var rBase = tabula.lookupEquals(atribūts, other);
-        if (saturs.contains(rBase.indekss())) {
+        if (saturs.contains(rBase.index())) {
             return rBase;
         }
         return null;

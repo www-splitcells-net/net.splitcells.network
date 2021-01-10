@@ -52,7 +52,7 @@ public class HasSize implements Rater {
         final RatingEvent rindasNovērtējumu = RatingEventI.novērtejumuNotikums();
         rindas.rawLinesView().stream()
                 .filter(e -> e != null)
-                .filter(e -> e.indekss() != maiņīts.indekss())
+                .filter(e -> e.index() != maiņīts.index())
                 .forEach(e -> {
                     rindasNovērtējumu.atjaunaNovērtējumu_caurAizvietošana(e,
                             lokalsNovērtejums().

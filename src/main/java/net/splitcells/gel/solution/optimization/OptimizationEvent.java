@@ -32,11 +32,11 @@ public final class OptimizationEvent implements Domable {
         return solisTips;
     }
 
-    public LinePointer piedāvājums() {
+    public LinePointer supply() {
         return piedāvājums;
     }
 
-    public LinePointer prasība() {
+    public LinePointer demand() {
         return prasība;
     }
 
@@ -58,8 +58,8 @@ public final class OptimizationEvent implements Domable {
     public boolean equals(Object arg) {
         if (arg instanceof OptimizationEvent) {
             final var other = (OptimizationEvent) arg;
-            return prasība.equals(other.prasība())
-                    && piedāvājums.equals(other.piedāvājums())
+            return prasība.equals(other.demand())
+                    && piedāvājums.equals(other.supply())
                     && solisTips.equals(other.soluTips());
         }
         throw new IllegalArgumentException();

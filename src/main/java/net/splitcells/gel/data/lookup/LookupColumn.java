@@ -169,12 +169,12 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public void reģistrē_papildinājumi(Line addition) {
-        uzmeklēšana.ifPresent(l -> l.reģistrē_papildinājums(addition.vērtība(atribūts), addition.indekss()));
+        uzmeklēšana.ifPresent(l -> l.reģistrē_papildinājums(addition.vērtība(atribūts), addition.index()));
     }
 
     @Override
     public void rēgistrē_pirms_noņemšanas(Line removal) {
-        uzmeklēšana.ifPresent(l -> l.reģistē_noņemšana(removal.vērtība(atribūts), removal.indekss()));
+        uzmeklēšana.ifPresent(l -> l.reģistē_noņemšana(removal.vērtība(atribūts), removal.index()));
     }
 
     @Override

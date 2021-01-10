@@ -15,8 +15,8 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
-import static net.splitcells.gel.solution.optimization.StepType.PIEŠĶIRŠANA;
-import static net.splitcells.gel.solution.optimization.StepType.NOŅEMŠANA;
+import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
+import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 public class UsedSupplySwitcher implements Optimization {
     public static UsedSupplySwitcher lietotaPiedāvājumuSlēdzis() {
@@ -44,7 +44,7 @@ public class UsedSupplySwitcher implements Optimization {
     private final int soluSkaits;
 
     @Override
-    public List<OptimizationEvent> optimizē(SolutionView atrisinajums) {
+    public List<OptimizationEvent> optimize(SolutionView atrisinajums) {
         final List<OptimizationEvent> optimizācijas = list();
         final var apstrādatiPrasības = Sets.<LinePointer>setOfUniques();
         final var apstrādatiPiedāvājumi = Sets.<LinePointer>setOfUniques();
@@ -85,10 +85,10 @@ public class UsedSupplySwitcher implements Optimization {
             apstrādatiPrasības.addAll(lietotasParsībasARāditājs, lietotasPrasībasBRāditājs);
             apstrādatiPiedāvājumi.addAll(lietotasPiedāvājumuARāditājs, lietotasPiedāvājumuBRāditājs);
             return
-                    list(optimizacijasNotikums(NOŅEMŠANA, lietotasParsībasARāditājs, lietotasPiedāvājumuARāditājs)
-                            , optimizacijasNotikums(NOŅEMŠANA, lietotasPrasībasBRāditājs, lietotasPiedāvājumuBRāditājs)
-                            , optimizacijasNotikums(PIEŠĶIRŠANA, lietotasParsībasARāditājs, lietotasPiedāvājumuBRāditājs)
-                            , optimizacijasNotikums(PIEŠĶIRŠANA, lietotasPrasībasBRāditājs, lietotasPiedāvājumuARāditājs)
+                    list(optimizacijasNotikums(REMOVAL, lietotasParsībasARāditājs, lietotasPiedāvājumuARāditājs)
+                            , optimizacijasNotikums(REMOVAL, lietotasPrasībasBRāditājs, lietotasPiedāvājumuBRāditājs)
+                            , optimizacijasNotikums(ADDITION, lietotasParsībasARāditājs, lietotasPiedāvājumuBRāditājs)
+                            , optimizacijasNotikums(ADDITION, lietotasPrasībasBRāditājs, lietotasPiedāvājumuARāditājs)
                     );
         }
         return list();

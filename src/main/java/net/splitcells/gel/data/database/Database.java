@@ -16,8 +16,8 @@ public interface Database extends Table {
 	void remove(Line rinda);
 
 	default void replace(Line jaunaRinda) {
-		if (null != rawLinesView().get(jaunaRinda.indekss())) {
-			remove(jaunaRinda.indekss());
+		if (null != rawLinesView().get(jaunaRinda.index())) {
+			remove(jaunaRinda.index());
 		}
 		add(jaunaRinda);
 	}

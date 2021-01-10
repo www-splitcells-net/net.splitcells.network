@@ -279,7 +279,7 @@ public abstract class ConstraintAI implements Constraint {
     public GroupId grupaNo(Line rinda) {
         return rindasAbstrāde()
                 .rawLinesView()
-                .get(rinda.indekss())
+                .get(rinda.index())
                 .vērtība(RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID);
     }
 

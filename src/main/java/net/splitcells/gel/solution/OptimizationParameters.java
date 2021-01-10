@@ -3,7 +3,7 @@ package net.splitcells.gel.solution;
 import net.splitcells.dem.lang.annotations.Returns_this;
 
 public class OptimizationParameters {
-    public static OptimizationParameters optimizācijasParametri() {
+    public static OptimizationParameters optimizationParameters() {
         return new OptimizationParameters();
     }
     private boolean dubultuNoņemšanaAtļauts = false;
@@ -16,7 +16,7 @@ public class OptimizationParameters {
         return this;
     }
 
-    public boolean getDubultuNoņemšanaAtļauts() {
+    public boolean dublicateRemovalAllowed() {
         return dubultuNoņemšanaAtļauts;
     }
 }

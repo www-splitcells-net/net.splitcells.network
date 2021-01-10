@@ -23,11 +23,11 @@ public class Repeater implements Optimization {
     }
 
     @Override
-    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
         if (atkārtošanasSkaitlis >= maksimalsAtkārtošanasSkaitlis) {
             return list();
         }
         atkārtošanasSkaitlis += 1;
-        return optimizē(atrisinājums);
+        return optimize(atrisinājums);
     }
 }

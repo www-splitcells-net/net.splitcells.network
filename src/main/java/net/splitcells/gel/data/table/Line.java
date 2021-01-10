@@ -20,20 +20,20 @@ public interface Line extends Domable {
 
     <T> T vērtība(Attribute<T> atribūts);
 
-    int indekss();
+    int index();
 
     default LinePointer uzRindaRādītājs() {
-        return rindasRādītājs(konteksts(), indekss());
+        return rindasRādītājs(konteksts(), index());
     }
 
     Table konteksts();
 
     default boolean vienāds(Line arg) {
-        return indekss() == arg.indekss() && konteksts().equals(arg.konteksts());
+        return index() == arg.index() && konteksts().equals(arg.konteksts());
     }
 
     default boolean irDerīgs() {
-        return null != konteksts().rawLinesView().get(indekss());
+        return null != konteksts().rawLinesView().get(index());
     }
 
     default List<String> toStringList() {

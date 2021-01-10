@@ -25,7 +25,7 @@ public class LookupI<T> implements Lookup<T> {
         this.atribūts = atribūts;
         tabula.rawLinesView().stream()
                 .filter(e -> e != null)
-                .forEach(e -> reģistrē_papildinājums(e.vērtība(atribūts), e.indekss()));
+                .forEach(e -> reģistrē_papildinājums(e.vērtība(atribūts), e.index()));
     }
 
     @Override

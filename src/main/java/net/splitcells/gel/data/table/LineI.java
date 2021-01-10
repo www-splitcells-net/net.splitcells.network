@@ -32,7 +32,7 @@ public class LineI implements Line {
     }
 
     @Override
-    public int indekss() {
+    public int index() {
         return indekss;
     }
 
@@ -47,7 +47,7 @@ public class LineI implements Line {
             return true;
         } else if (arg instanceof Line) {
             final var argRinda = (Line) arg;
-            return indekss() == argRinda.indekss() && konteksts().equals(argRinda.konteksts());
+            return index() == argRinda.index() && konteksts().equals(argRinda.konteksts());
         } else {
             return false;
         }
@@ -84,7 +84,7 @@ public class LineI implements Line {
 
     @Override
     public int hashCode() {
-        return Objects.hash(indekss(), konteksts());
+        return Objects.hash(index(), konteksts());
     }
 
 }

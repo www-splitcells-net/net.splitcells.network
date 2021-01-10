@@ -21,8 +21,8 @@ import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
-import static net.splitcells.gel.solution.optimization.StepType.NOŅEMŠANA;
-import static net.splitcells.gel.solution.optimization.StepType.PIEŠĶIRŠANA;
+import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
+import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 
 public class ConstraintGroupBasedRepair implements Optimization {
 
@@ -73,7 +73,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                     }
                     pārdale.ensureContains
                             (optimizacijasNotikums
-                                    (PIEŠĶIRŠANA
+                                    (ADDITION
                                             , prāsiba.uzRindaRādītājs()
                                             , nelietotiPiedāvājumi
                                                     .remove((int) indeksuAtlasītajs.apply(nelietotiPiedāvājumi.size() - 1))
@@ -95,7 +95,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
     }
 
     @Override
-    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
         final var grupuNoIerobežojumuGrupu = grupuNoIerobežojumuGrupu(atrisinājums);
         final var prasībasGrupēšana = grupuNoIerobežojumuGrupu
                 .map(e -> e
@@ -115,7 +115,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
     }
 
     public List<OptimizationEvent> pārdali(SolutionView atrisinājums, Map<GroupId, Set<Line>> brīvasPrasībasGrupas) {
-        return pārdalītājs.apply(brīvasPrasībasGrupas).optimizē(atrisinājums);
+        return pārdalītājs.apply(brīvasPrasībasGrupas).optimize(atrisinājums);
     }
 
     public Map<GroupId, Set<Line>> prāsībasGrupēšana(Constraint ierobežojumuGrupēšāna, SolutionView atrisinājums) {
@@ -155,7 +155,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 .flatMap(straumeNoRindasSarakstiem -> straumeNoRindasSarakstiem.stream())
                 .distinct()
                 .map(piešķiršana -> optimizacijasNotikums
-                        (NOŅEMŠANA
+                        (REMOVAL
                                 , atrisinājums.demand_of_allocation(piešķiršana).uzRindaRādītājs()
                                 , atrisinājums.supply_of_allocation(piešķiršana).uzRindaRādītājs()))
                 .collect(toList());

@@ -113,7 +113,7 @@ public class DatabaseI implements Database {
         range(0, atribūti.size()).forEach(i -> {
             rindasVertības.add(rinda.vērtība(atribūti.get(i)));
         });
-        return pieliktTulkošanaNo(rindasVertības, rinda.indekss());
+        return pieliktTulkošanaNo(rindasVertības, rinda.index());
     }
 
     protected Line pieliktTulkošanaNo(List<Object> rindasVertības, int indekss) {
@@ -130,7 +130,7 @@ public class DatabaseI implements Database {
         range(0, rindasVertības.size()).forEach(i -> kolonnas.get(i).set(indekss, rindasVertības.get(i)));
         ++izmers;
         final var rinda = LineI.rinda(this, indekss);
-        jēlasRindas.set(rinda.indekss(), rinda);
+        jēlasRindas.set(rinda.index(), rinda);
         rindas.add(rinda);
         papildinājumsKlausītājs.forEach(klausītājs -> klausītājs.reģistrē_papildinājumi(rinda));
         return rinda;
@@ -182,7 +182,7 @@ public class DatabaseI implements Database {
 
     @Override
     public void remove(Line rinda) {
-        remove(rinda.indekss());
+        remove(rinda.index());
     }
 
     @Override
@@ -232,7 +232,7 @@ public class DatabaseI implements Database {
     @Override
     public Line lookupEquals(Attribute<Line> atribūts, Line rinda) {
         return rindas.stream()
-                .filter(citaRinda -> citaRinda.vērtība(atribūts).indekss() == rinda.indekss())
+                .filter(citaRinda -> citaRinda.vērtība(atribūts).index() == rinda.index())
                 .reduce(StreamUtils.ensureSingle())
                 .get();
     }

@@ -15,5 +15,5 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
     Attribute<MetaDataView> REFLEKSIJAS_DATI = atributs(MetaDataView.class, "refleksijas-dati");
 
     void atiestatUz(int index);
-    int momentansIndekss();
+    int currentIndex();
 }

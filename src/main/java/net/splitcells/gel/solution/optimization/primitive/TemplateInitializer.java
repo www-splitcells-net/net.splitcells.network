@@ -25,7 +25,7 @@ public class TemplateInitializer implements Optimization {
     }
 
     @Override
-    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
         final List<OptimizationEvent> optimicaija = list();
         final Set<Line> lietotasPrasības = setOfUniques();
         final Set<Line> lietotasPiedāvājumi = setOfUniques();
@@ -52,7 +52,7 @@ public class TemplateInitializer implements Optimization {
                 lietotasPrasības.ensureContains(atlasītaPrasība.get());
                 lietotasPiedāvājumi.ensureContains(atlasītsPiedāvājums.get());
                 optimicaija.add(OptimizationEvent.optimizacijasNotikums
-                        (StepType.PIEŠĶIRŠANA
+                        (StepType.ADDITION
                                 , atlasītaPrasība.get().uzRindaRādītājs()
                                 , atlasītsPiedāvājums.get().uzRindaRādītājs()));
             }

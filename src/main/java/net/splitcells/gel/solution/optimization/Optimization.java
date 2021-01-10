@@ -6,6 +6,6 @@ import net.splitcells.gel.solution.SolutionView;
 @FunctionalInterface
 public interface Optimization {
 
-	List<OptimizationEvent> optimizē(SolutionView atrisinājums);
+	List<OptimizationEvent> optimize(SolutionView atrisinājums);
 
 }

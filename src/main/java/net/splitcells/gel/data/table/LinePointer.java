@@ -13,7 +13,7 @@ public interface LinePointer extends Domable {
 
     int indekss();
 
-    default Optional<Line> interpretē() {
+    default Optional<Line> interpret() {
         return interpretē(konteksts());
     }
 
@@ -23,7 +23,7 @@ public interface LinePointer extends Domable {
     @Override
     default Node toDom() {
         final var dom = element(LinePointer.class.getSimpleName());
-        final var rinda = interpretē();
+        final var rinda = interpret();
         if (rinda.isPresent()) {
             dom.appendChild(rinda.get().toDom());
         } else {

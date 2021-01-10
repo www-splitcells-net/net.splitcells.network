@@ -182,7 +182,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public int momentansIndekss() {
+    public int currentIndex() {
         return pēdējaNotikumuId;
     }
 

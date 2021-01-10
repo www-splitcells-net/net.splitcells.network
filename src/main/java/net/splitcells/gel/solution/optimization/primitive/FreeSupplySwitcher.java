@@ -14,8 +14,8 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
-import static net.splitcells.gel.solution.optimization.StepType.PIEŠĶIRŠANA;
-import static net.splitcells.gel.solution.optimization.StepType.NOŅEMŠANA;
+import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
+import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 public class FreeSupplySwitcher implements Optimization {
     public static FreeSupplySwitcher brīvuPiedāvājumuSlēdzis() {
@@ -49,7 +49,7 @@ public class FreeSupplySwitcher implements Optimization {
     }
 
     @Override
-    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
         final List<OptimizationEvent> optimizācijas = list();
         final var apstrādataPrasība = Sets.<LinePointer>setOfUniques();
         final var apstrādatsPiedāvājums = Sets.<LinePointer>setOfUniques();
@@ -80,11 +80,11 @@ public class FreeSupplySwitcher implements Optimization {
             apstrādatiPiedāvājumi.add(lietotsPiedāvājumuRādītājs);
             return
                     list(
-                            optimizacijasNotikums(NOŅEMŠANA, lietotasPrasībasRādītājs, lietotsPiedāvājumuRādītājs)
+                            optimizacijasNotikums(REMOVAL, lietotasPrasībasRādītājs, lietotsPiedāvājumuRādītājs)
                             , optimizacijasNotikums(
-                                    PIEŠĶIRŠANA
+                                    ADDITION
                                     , atrisinājums.demands()
-                                            .getRawLines(lietotaPrasība.indekss())
+                                            .getRawLines(lietotaPrasība.index())
                                             .uzRindaRādītājs()
                                     , atrisinājums
                                             .supplies()

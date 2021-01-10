@@ -38,13 +38,13 @@ public class HillClimber implements Optimization {
     }
 
     @Override
-    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
         final var saknesNovērtejums = atrisinājums.constraint().rating();
-        final var sanknesVēsturesIndekss = atrisinājums.history().momentansIndekss();
+        final var sanknesVēsturesIndekss = atrisinājums.history().currentIndex();
         Optional<Rating> labakaisKaimiņuNovērtējums = Optional.empty();
         List<OptimizationEvent> labakaKaimiņuOperācija = list();
         while (plānotājs.get()) {
-            final var ieteikumi = atrisinājumuKaimiņi.optimizē(atrisinājums);
+            final var ieteikumi = atrisinājumuKaimiņi.optimize(atrisinājums);
             if (ieteikumi.isEmpty()) {
                 continue;
             }

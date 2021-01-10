@@ -75,7 +75,7 @@ public class AllDifferent<T> implements Rater {
                                             .arRadītuGrupasId(papildinājums.vērtība(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))));
             grupa.rawLinesView().stream()
                     .filter(e -> e != null)
-                    .filter(e -> e.indekss() != papildinājums.indekss())
+                    .filter(e -> e.index() != papildinājums.index())
                     .forEach(e -> novērtejumuNotikums.noņemšana().add(e));
         } else if (2 < grupa.size()) {
             // DARĪT Parametrizē pārbaudi.

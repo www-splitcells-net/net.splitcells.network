@@ -27,7 +27,7 @@ public class BranchingHillClimber implements Optimization {
     }
 
     @Override
-    public List<OptimizationEvent> optimizē(SolutionView atrisinājums) {
+    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
         final var nakamaisZars = nakamaisZars(atrisinājums);
         return nakamaOperācija(nakamaisZars.get());
     }

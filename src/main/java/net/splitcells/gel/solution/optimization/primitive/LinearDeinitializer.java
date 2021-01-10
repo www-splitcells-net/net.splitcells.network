@@ -7,7 +7,7 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
-import static net.splitcells.gel.solution.optimization.StepType.NOŅEMŠANA;
+import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 public class LinearDeinitializer implements Optimization {
 
@@ -20,12 +20,12 @@ public class LinearDeinitializer implements Optimization {
     }
 
     @Override
-    public List<OptimizationEvent> optimizē(SolutionView solution) {
+    public List<OptimizationEvent> optimize(SolutionView solution) {
         if (solution.demands_used().hasContent() && solution.supplies_used().hasContent()) {
             return
                     list(
                             optimizacijasNotikums
-                                    (NOŅEMŠANA
+                                    (REMOVAL
                                             , solution.demands_used().getLines().get(0).uzRindaRādītājs()
                                             , solution.supplies_used().getLines().get(0).uzRindaRādītājs()));
 
