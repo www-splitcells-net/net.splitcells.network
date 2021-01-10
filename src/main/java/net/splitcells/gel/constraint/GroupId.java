@@ -24,7 +24,7 @@ public class GroupId implements Domable {
         return new GroupId();
     }
 
-    public static GroupId grupa(String vārds) {
+    public static GroupId group(String vārds) {
         return new GroupId(vārds);
     }
 

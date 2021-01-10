@@ -18,31 +18,31 @@ import org.assertj.core.api.Assertions;
 
 public interface RatingEvent {
 
-    Map<Line, LocalRating> papildinājumi();
+    Map<Line, LocalRating> additions();
 
-    Set<Line> noņemšana();
+    Set<Line> removal();
 
     default void pieliktNovērtējumu_caurPapildinājumu(Line priekjšmets, Rating papilduNovērtējums, List<Constraint> bērni,
                                                       Optional<Rating> novērtejumsPirmsPapildinājumu) {
         final Rating momentānsNovērtējums;
-        if (papildinājumi().containsKey(priekjšmets)) {
-            momentānsNovērtējums = papildinājumi().get(priekjšmets).rating();
+        if (additions().containsKey(priekjšmets)) {
+            momentānsNovērtējums = additions().get(priekjšmets).rating();
         } else {
             momentānsNovērtējums = novērtejumsPirmsPapildinājumu.orElse(noCost());
         }
-        papildinājumi().put
+        additions().put
                 (priekjšmets
                         , localRating()
                                 .withPropagationTo(bērni)
                                 .withRating(momentānsNovērtējums.combine(papilduNovērtējums))
-                                .withResultingGroupId(priekjšmets.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
+                                .withResultingGroupId(priekjšmets.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
     }
 
     default void updateRating_viaAddition(Line priekšmets, Rating papilduNovērtējums, List<Constraint> bērni,
                                           Optional<Rating> novērtējumsPirmsPapildinājumu) {
         final Rating currentNovērtējums;
-        if (papildinājumi().containsKey(priekšmets)) {
-            currentNovērtējums = papildinājumi().get(priekšmets).rating();
+        if (additions().containsKey(priekšmets)) {
+            currentNovērtējums = additions().get(priekšmets).rating();
         } else {
             currentNovērtējums = novērtējumsPirmsPapildinājumu.orElse(noCost());
         }
@@ -50,19 +50,19 @@ public interface RatingEvent {
                 , localRating()
                         .withPropagationTo(bērni)
                         .withRating(currentNovērtējums.combine(papilduNovērtējums))
-                        .withResultingGroupId(priekšmets.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
+                        .withResultingGroupId(priekšmets.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
     }
 
     default void atjaunaNovērtējumu_caurAizvietošana(Line priekšmets, LocalRating jaunsNovērtējums) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(papildinājumi().keySet()).doesNotContain(priekšmets);
-            assertThat(noņemšana()).doesNotContain(priekšmets);
+            assertThat(additions().keySet()).doesNotContain(priekšmets);
+            assertThat(removal()).doesNotContain(priekšmets);
             {
                 Assertions.assertThat(priekšmets.value(Constraint.LINE)).isNotNull();
-                Assertions.assertThat(priekšmets.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)).isNotNull();
+                Assertions.assertThat(priekšmets.value(Constraint.INCOMING_CONSTRAINT_GROUP)).isNotNull();
             }
         }
-        noņemšana().add(priekšmets);
-        papildinājumi().put(priekšmets, jaunsNovērtējums);
+        removal().add(priekšmets);
+        additions().put(priekšmets, jaunsNovērtējums);
     }
 }

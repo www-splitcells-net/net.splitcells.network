@@ -4,8 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.constraint.GroupId.grupa;
-import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
@@ -27,78 +26,78 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 @Deprecated
 public class ForAllAttributeValues implements Rater {
-    public static ForAllAttributeValues priekšVisiemAtribūtuVertības(final Attribute<?> arg) {
-        return new ForAllAttributeValues(arg);
+    public static ForAllAttributeValues forAllAtributeValues(final Attribute<?> attribute) {
+        return new ForAllAttributeValues(attribute);
     }
 
-    private final Attribute<?> atribūts;
+    private final Attribute<?> attribute;
 
-    protected ForAllAttributeValues(final Attribute<?> atribūts) {
-        this.atribūts = atribūts;
+    protected ForAllAttributeValues(final Attribute<?> attribute) {
+        this.attribute = attribute;
     }
 
-    protected final Map<GroupId, Map<Object, GroupId>> grupa = map();
-    private final List<Discoverable> konteksti = list();
+    protected final Map<GroupId, Map<Object, GroupId>> group = map();
+    private final List<Discoverable> contexts = list();
 
-    public Attribute<?> atribūti() {
-        return atribūts;
+    public Attribute<?> atttribute() {
+        return attribute;
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu
-            (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final var grupēšanasVertība = papildinājums.value(Constraint.LINE).value(atribūts);
-        final var ienākošasGrupasId = papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID);
-        if (!grupa.containsKey(ienākošasGrupasId)) {
-            grupa.put(ienākošasGrupasId, map());
+    public RatingEvent rating_after_addition
+            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeRating) {
+        final var groupingValue = addition.value(Constraint.LINE).value(attribute);
+        final var incomingGroup = addition.value(Constraint.INCOMING_CONSTRAINT_GROUP);
+        if (!group.containsKey(incomingGroup)) {
+            group.put(incomingGroup, map());
         }
-        if (!grupa.get(ienākošasGrupasId).containsKey(grupēšanasVertība)) {
-            grupa.get(ienākošasGrupasId).put(grupēšanasVertība, GroupId.grupa(grupēšanasVertība.toString()));
+        if (!group.get(incomingGroup).containsKey(groupingValue)) {
+            group.get(incomingGroup).put(groupingValue, GroupId.group(groupingValue.toString()));
         }
-        final var novērtejumuNotikums = novērtejumuNotikums();
-        novērtejumuNotikums.papildinājumi().put(papildinājums
+        final var ratingEvent = ratingEvent();
+        ratingEvent.additions().put(addition
                 , localRating()
-                        .withPropagationTo(bērni)
+                        .withPropagationTo(children)
                         .withRating(noCost())
-                        .withResultingGroupId(grupa.get(ienākošasGrupasId).get(grupēšanasVertība))
+                        .withResultingGroupId(group.get(incomingGroup).get(groupingValue))
         );
-        return novērtejumuNotikums;
+        return ratingEvent;
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana
-            (Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        return novērtejumuNotikums();
+    public RatingEvent rating_before_removal
+            (Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+        return ratingEvent();
     }
 
     @Override
     public List<Domable> arguments() {
-        return list(atribūts);
+        return list(attribute);
     }
 
     @Override
-    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
-        final var argumentācia = Xml.element("priekš-visiem");
-        argumentācia.appendChild(
-                Xml.element("vārds"
+    public Node argumentation(GroupId group, Table allocations) {
+        final var argumentation = Xml.element("for-all");
+        argumentation.appendChild(
+                Xml.element("words"
                         , Xml.textNode(getClass().getSimpleName())));
-        argumentācia.appendChild(atribūts.toDom());
-        return argumentācia;
+        argumentation.appendChild(attribute.toDom());
+        return argumentation;
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
-        return "priekš visiem " + atribūts.vārds();
+    public String toSimpleDescription(Line line, GroupId group) {
+        return "for all " + attribute.name();
     }
 
     @Override
-    public void addContext(Discoverable kontexsts) {
-        konteksti.add(kontexsts);
+    public void addContext(Discoverable contexts) {
+        this.contexts.add(contexts);
     }
 
     @Override
     public Collection<List<String>> paths() {
-        return konteksti.stream().map(Discoverable::path).collect(toList());
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override
@@ -108,6 +107,6 @@ public class ForAllAttributeValues implements Rater {
     
     @Override
     public String toString() {
-        return ForAllAttributeValues.class.getSimpleName() + "-" + atribūts.vārds();
+        return ForAllAttributeValues.class.getSimpleName() + "-" + attribute.name();
     }
 }

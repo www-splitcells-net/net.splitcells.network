@@ -6,7 +6,7 @@ import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
 
 import static net.splitcells.gel.rating.rater.classification.Propagation.izdalīšana;
 import static net.splitcells.gel.rating.rater.classification.ForAllWithCondition.priekšVisiemArNosacījumu;
-import static net.splitcells.gel.rating.rater.classification.ForAllAttributeValues.priekšVisiemAtribūtuVertības;
+import static net.splitcells.gel.rating.rater.classification.ForAllAttributeValues.forAllAtributeValues;
 
 public class ForAllFactory {
     protected static final ForAllFactory GADĪJUMS = new ForAllFactory();
@@ -29,7 +29,7 @@ public class ForAllFactory {
     }
 
     public ForAll priekšVisiem(final Attribute<?> arg) {
-        return ForAll.veidot(priekšVisiemAtribūtuVertības(arg));
+        return ForAll.veidot(forAllAtributeValues(arg));
     }
 
     public ForAll priekšVisiem(Rater grouping) {

@@ -54,12 +54,12 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana
+    public RatingEvent rating_before_removal
             (Table rindas
                     , Line noņemšana
                     , net.splitcells.dem.data.set.list.List<Constraint> bērni
                     , Table novērtējumsPirmsNoņemšana) {
-        final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
+        final var novērtejumuNotikums = RatingEventI.ratingEvent();
         final var sakārtotasRindas = sorted(rindas);
         final int sakārtotiIndeksi = sakārtotasRindas.indexOf(
                 sakārtotasRindas.stream()
@@ -122,8 +122,8 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
+    public RatingEvent rating_after_addition(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
+        final var novērtejumuNotikums = RatingEventI.ratingEvent();
         final var sakārtotasRindas = sorted(rindas);
         // JAUDA
         final int sakārtotasIndeksi = sakārtotasRindas.indexOf(
@@ -133,11 +133,11 @@ public class MinimalDistance<T> implements Rater {
                         .get());
         if (sakārtotasIndeksi == 0) {
             if (sakārtotasRindas.size() == 1) {
-                novērtejumuNotikums.papildinājumi().put(papildinājums//
+                novērtejumuNotikums.additions().put(papildinājums//
                         , localRating().
                                 withPropagationTo(bērni).
                                 withRating(noCost()).
-                                withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
+                                withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
             } else {
                 novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, sakārtotasRindas.get(1), bērni//
                         , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, sakārtotasRindas.get(1)).value(Constraint.NOVĒRTĒJUMS)));
@@ -226,7 +226,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
+    public Node argumentation(GroupId grupa, Table piešķiršanas) {
         final var reasoning = Xml.element("min-distance");
         reasoning.appendChild(
                 Xml.element("minimum"
@@ -300,7 +300,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
-        return "vismaz " + minimumDistance + " " + atribūts.vārds() + " attālums";
+    public String toSimpleDescription(Line rinda, GroupId grupa) {
+        return "vismaz " + minimumDistance + " " + atribūts.name() + " attālums";
     }
 }

@@ -21,7 +21,7 @@ public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
     }
 
     @Override
-    public String vārds() {
+    public String name() {
         return vārds;
     }
 

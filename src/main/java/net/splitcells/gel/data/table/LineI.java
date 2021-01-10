@@ -75,7 +75,7 @@ public class LineI implements Line {
                 }
             }
             final var vertībasElements = element("vertība");
-            vertībasElements.setAttribute("tips", atribūts.vārds());
+            vertībasElements.setAttribute("tips", atribūts.name());
             vertībasElements.appendChild(domVertība);
             gūtasDomVertība.appendChild(vertībasElements);
         });

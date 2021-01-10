@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
@@ -32,31 +32,31 @@ public class Propagation implements Rater {
     private final List<Discoverable> konteksti = list();
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu
+    public RatingEvent rating_after_addition
             (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final RatingEvent novērtejumuNotikums = novērtejumuNotikums();
-        novērtejumuNotikums.papildinājumi().put
+        final RatingEvent novērtejumuNotikums = ratingEvent();
+        novērtejumuNotikums.additions().put
                 (papildinājums
                         , localRating()
                                 .withPropagationTo(bērni)
                                 .withRating(noCost())
-                                .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
+                                .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
         return novērtejumuNotikums;
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana
+    public RatingEvent rating_before_removal
             (Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        return novērtejumuNotikums();
+        return ratingEvent();
     }
 
     @Override
-    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
+    public Node argumentation(GroupId grupa, Table piešķiršanas) {
         return element("izdalīšana");
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
+    public String toSimpleDescription(Line rinda, GroupId grupa) {
         return "";
     }
 

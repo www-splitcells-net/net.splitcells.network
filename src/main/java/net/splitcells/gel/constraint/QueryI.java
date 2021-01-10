@@ -61,7 +61,7 @@ public class QueryI implements Query {
                 radītasGrupas.addAll
                         (ierobežojums
                                 .lineProcessing()
-                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
+                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(grupa)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
                                 .values());
@@ -97,7 +97,7 @@ public class QueryI implements Query {
             for (GroupId grupa : grupas) {
                 radītasGrupas.addAll(
                         ierobežojums.lineProcessing()
-                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
+                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(grupa)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
                                 .values());
@@ -151,7 +151,7 @@ public class QueryI implements Query {
             for (GroupId grupa : grupas) {
                 resultingGroups.addAll(
                         ierobežojums.lineProcessing()
-                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
+                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(grupa)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
                                 .values());
@@ -197,7 +197,7 @@ public class QueryI implements Query {
         for (GroupId grupa : grupas) {
             radītasGrupas.addAll(
                     ierobežojums.lineProcessing()
-                            .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
+                            .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                             .lookup(grupa)
                             .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
                             .values());

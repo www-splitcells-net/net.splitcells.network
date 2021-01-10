@@ -3,7 +3,6 @@ package net.splitcells.gel.rating.rater;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.constraint.GroupId.grupa;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
@@ -32,7 +31,7 @@ public class RaterBasedOnLineValue implements Rater {
             public GroupId apply(Line arg) {
                 return lineNumbering.computeIfAbsent
                         (grupetajs.apply(arg.value(Constraint.LINE))
-                                , classification -> GroupId.grupa(apraksts + ": " + classification));
+                                , classification -> GroupId.group(apraksts + ": " + classification));
             }
 
             @Override
@@ -43,7 +42,7 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     public static Rater rindasVertībaBalstītaUzVērtētāju(Function<Line, Rating> vērtētājsBalstītsUzRindasVertības) {
-        return new RaterBasedOnLineValue(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID));
+        return new RaterBasedOnLineValue(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP));
     }
 
     public static Rater rindasVertībasBalstītasUzGrupetajs(Function<Line, GroupId> grupetajsBalstītsUzRindasVertības) {
@@ -60,9 +59,9 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final RatingEvent rVal = RatingEventI.novērtejumuNotikums();
-        rVal.papildinājumi().put
+    public RatingEvent rating_after_addition(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
+        final RatingEvent rVal = RatingEventI.ratingEvent();
+        rVal.additions().put
                 (papildinājums
                         , localRating()
                                 .withPropagationTo(bērni)
@@ -72,8 +71,8 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        return RatingEventI.novērtejumuNotikums();
+    public RatingEvent rating_before_removal(Table rindas, Line noņemšana, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
+        return RatingEventI.ratingEvent();
     }
 
     @Override
@@ -89,7 +88,7 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
+    public Node argumentation(GroupId grupa, Table piešķiršanas) {
         final var argumentācija = Xml.element("grupa");
         argumentācija.appendChild
                 (Xml.textNode(grupa.vārds().orElse("pazudis-grupas-vards")));
@@ -114,7 +113,7 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
+    public String toSimpleDescription(Line rinda, GroupId grupa) {
         return grupetajsBalstītsUzRindasVertības.toString();
     }
 

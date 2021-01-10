@@ -36,22 +36,22 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
 
     @Override
     public void apstrāde_rindu_papildinajumu(Line papildinājums) {
-        final var ienākošaGrupa = papildinājums.value(INCOMING_CONSTRAINT_GROUP_ID);
+        final var ienākošaGrupa = papildinājums.value(INCOMING_CONSTRAINT_GROUP);
         apstrādeNovērtējumiNotikumu(
-                vērtētājs.vērtē_pēc_papildinājumu(
-                        rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID)
+                vērtētājs.rating_after_addition(
+                        rindas.columnView(INCOMING_CONSTRAINT_GROUP)
                                 .lookup(ienākošaGrupa)
                         , papildinājums
                         , bērni
                         , rindasApstrāde
-                                .columnView(INCOMING_CONSTRAINT_GROUP_ID)
+                                .columnView(INCOMING_CONSTRAINT_GROUP)
                                 .lookup(ienākošaGrupa)));
     }
 
     protected void apstrādeNovērtējumiNotikumu(RatingEvent novērtējumsNotikums) {
-        novērtējumsNotikums.noņemšana().forEach(noņemšana ->
+        novērtējumsNotikums.removal().forEach(noņemšana ->
                 rindasApstrāde.allocations_of_demand(noņemšana).forEach(rindasApstrāde::remove));
-        novērtējumsNotikums.papildinājumi().forEach((line, resultUpdate) -> {
+        novērtējumsNotikums.additions().forEach((line, resultUpdate) -> {
             final var r = pieliktRadījums(resultUpdate);
             int i = r.index();
             rindasApstrāde.allocate(line, r);
@@ -61,15 +61,15 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     @Override
     protected void apstrāda_rindas_primsNoņemšana(GroupId ienākošaGrupaId, Line noņemšana) {
         apstrādeNovērtējumiNotikumu(
-                vērtētājs.vērtē_pirms_noņemšana(
-                        rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID).lookup(ienākošaGrupaId)
-                        , rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID)
+                vērtētājs.rating_before_removal(
+                        rindas.columnView(INCOMING_CONSTRAINT_GROUP).lookup(ienākošaGrupaId)
+                        , rindas.columnView(INCOMING_CONSTRAINT_GROUP)
                                 .lookup(ienākošaGrupaId)
                                 .columnView(LINE)
                                 .lookup(noņemšana)
                                 .getLines(0)
                         , bērni
-                        , rindasApstrāde.columnView(INCOMING_CONSTRAINT_GROUP_ID).lookup(ienākošaGrupaId)));
+                        , rindasApstrāde.columnView(INCOMING_CONSTRAINT_GROUP).lookup(ienākošaGrupaId)));
         super.apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
     }
 

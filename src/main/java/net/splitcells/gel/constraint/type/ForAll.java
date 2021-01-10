@@ -36,9 +36,9 @@ public class ForAll extends ConstraintBasedOnLocalGroupsAI {
     @Override
     protected List<String> vietēijaDabiskaArgumentācija(Report ziņojums) {
         if (vērtētājs.type().equals(ForAllAttributeValues.class)) {
-            return list(vērtētājs.uzVienkāršuAprakstu(ziņojums.rinda(), ziņojums.grupa()));
+            return list(vērtētājs.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
         } else {
-            return list("Priekš visiem " + vērtētājs.uzVienkāršuAprakstu(ziņojums.rinda(), ziņojums.grupa()));
+            return list("Priekš visiem " + vērtētājs.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
         }
     }
 }

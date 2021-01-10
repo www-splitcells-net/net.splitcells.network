@@ -14,7 +14,7 @@ public class RatingEventI implements RatingEvent {
 	private final Map<Line, LocalRating> papildinājumi = map();
 	private final Set<Line> noņemšanas = setOfUniques();
 
-	public static RatingEvent novērtejumuNotikums() {
+	public static RatingEvent ratingEvent() {
 		return new RatingEventI();
 	}
 
@@ -23,12 +23,12 @@ public class RatingEventI implements RatingEvent {
 	}
 
 	@Override
-	public Map<Line, LocalRating> papildinājumi() {
+	public Map<Line, LocalRating> additions() {
 		return papildinājumi;
 	}
 
 	@Override
-	public Set<Line> noņemšana() {
+	public Set<Line> removal() {
 		return noņemšanas;
 	}
 

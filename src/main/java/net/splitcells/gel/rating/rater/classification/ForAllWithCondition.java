@@ -19,66 +19,66 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP_ID;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
-import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class ForAllWithCondition<T> implements Rater {
 
-    public static <T> ForAllWithCondition<T> priekšVisiemArNosacījumu(Predicate<Line> nosacījums) {
-        return new ForAllWithCondition<>(nosacījums);
+    public static <T> ForAllWithCondition<T> priekšVisiemArNosacījumu(Predicate<Line> condition) {
+        return new ForAllWithCondition<>(condition);
     }
 
-    private final Predicate<Line> nosacījums;
-    private final List<Discoverable> konteksti = list();
+    private final Predicate<Line> condition;
+    private final List<Discoverable> contexts = list();
 
-    private ForAllWithCondition(Predicate<Line> nosacījums) {
-        this.nosacījums = nosacījums;
+    private ForAllWithCondition(Predicate<Line> condition) {
+        this.condition = condition;
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu
-            (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final List<Constraint> mērķBērni;
-        if (nosacījums.test(papildinājums.value(LINE))) {
-            mērķBērni = bērni;
+    public RatingEvent rating_after_addition
+            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+        final List<Constraint> targetChildren;
+        if (condition.test(addition.value(LINE))) {
+            targetChildren = children;
         } else {
-            mērķBērni = list();
+            targetChildren = list();
         }
-        final var novērtejumuNotikums = novērtejumuNotikums();
-        novērtejumuNotikums.papildinājumi().put
-                (papildinājums
+        final var ratingEvent = ratingEvent();
+        ratingEvent.additions().put
+                (addition
                         , localRating()
-                                .withPropagationTo(mērķBērni)
+                                .withPropagationTo(targetChildren)
                                 .withRating(noCost())
-                                .withResultingGroupId(papildinājums.value(INCOMING_CONSTRAINT_GROUP_ID)));
-        return novērtejumuNotikums;
+                                .withResultingGroupId(addition.value(INCOMING_CONSTRAINT_GROUP)));
+        return ratingEvent;
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        return novērtejumuNotikums();
+    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+        return ratingEvent();
     }
 
     @Override
-    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
-        final var argumentācjia = Xml.element("priekš-visiem-ar-nosacījumu");
-        final var atribūtuApraksts = Xml.element("nosacījumu");
-        argumentācjia.appendChild(atribūtuApraksts);
-        atribūtuApraksts.appendChild(Xml.textNode(nosacījums.toString()));
-        return argumentācjia;
+    public Node argumentation(GroupId group, Table allocations) {
+        final var argumentation = Xml.element("for-all-with-condition");
+        final var attributeDescription = Xml.element("condition");
+        argumentation.appendChild(attributeDescription);
+        attributeDescription.appendChild(Xml.textNode(condition.toString()));
+        return argumentation;
     }
 
     @Override
-    public void addContext(Discoverable konteksts) {
-        konteksti.add(konteksts);
+    public void addContext(Discoverable contexts) {
+        this.contexts.add(contexts);
     }
 
     @Override
     public Collection<List<String>> paths() {
-        return konteksti.stream().map(Discoverable::path).collect(toList());
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override
@@ -87,7 +87,7 @@ public class ForAllWithCondition<T> implements Rater {
                 new Domable() {
                     @Override
                     public Node toDom() {
-                        return Xml.textNode(nosacījums.toString());
+                        return Xml.textNode(condition.toString());
                     }
                 }
         );

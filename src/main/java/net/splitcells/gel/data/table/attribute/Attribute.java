@@ -6,7 +6,7 @@ import net.splitcells.gel.data.table.Line;
 
 public interface Attribute<T> extends Domable {
 
-    String vārds();
+    String name();
 
     default boolean vienāds(Line arg) {
         return this == arg;

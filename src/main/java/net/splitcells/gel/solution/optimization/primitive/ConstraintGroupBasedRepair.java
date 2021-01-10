@@ -146,7 +146,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
         final var incomingGroups = Sets.setOfUniques
                 (constraint
                         .lineProcessing()
-                        .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
+                        .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                         .values());
         return incomingGroups
                 .stream()

@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
@@ -26,58 +26,58 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 import org.w3c.dom.Node;
 
 public class ForAllValueCombinations implements Rater {
-    public static ForAllValueCombinations forAllValueCombinations(final Attribute<?>... args) {
-        return new ForAllValueCombinations(args);
+    public static ForAllValueCombinations forAllValueCombinations(final Attribute<?>... attributes) {
+        return new ForAllValueCombinations(attributes);
     }
 
     /**
-     * ienākošieGrupasId -> vertības no atribūts -> radītsGrupasId
+     * incoming group -> value of attribute -> resulting group
      */
-    private final Map<GroupId, Map<List<Object>, GroupId>> grupas = map();
-    private final List<Attribute<?>> atribūti = list();
-    private final List<Discoverable> kontekts = list();
+    private final Map<GroupId, Map<List<Object>, GroupId>> grouping = map();
+    private final List<Attribute<?>> attributes = list();
+    private final List<Discoverable> contexts = list();
 
-    private ForAllValueCombinations(final Attribute<?>... args) {
-        for (final var atribūti : args) {
-            this.atribūti.add(atribūti);
+    private ForAllValueCombinations(final Attribute<?>... attributes) {
+        for (final var atribūti : attributes) {
+            this.attributes.add(atribūti);
         }
     }
 
     public List<Attribute<?>> attributes() {
-        return Lists.listWithValuesOf(atribūti);
+        return Lists.listWithValuesOf(attributes);
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu
-            (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final List<Object> grupasVertības = list();
-        final var rindasVērtība = papildinājums.value(Constraint.LINE);
-        atribūti.forEach(e -> grupasVertības.add(rindasVērtība.value(e)));
-        final var ienākošasGrupasId = papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID);
-        if (!grupas.containsKey(ienākošasGrupasId)) {
-            grupas.put(ienākošasGrupasId, map());
+    public RatingEvent rating_after_addition
+            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+        final List<Object> groupValues = list();
+        final var lineValue = addition.value(Constraint.LINE);
+        attributes.forEach(e -> groupValues.add(lineValue.value(e)));
+        final var incomingGroup = addition.value(Constraint.INCOMING_CONSTRAINT_GROUP);
+        if (!grouping.containsKey(incomingGroup)) {
+            grouping.put(incomingGroup, map());
         }
-        if (!grupas.get(ienākošasGrupasId).containsKey(grupasVertības)) {
-            grupas.get(ienākošasGrupasId).put(grupasVertības
-                    , GroupId.grupa(
-                            grupasVertības.stream()
+        if (!grouping.get(incomingGroup).containsKey(groupValues)) {
+            grouping.get(incomingGroup).put(groupValues
+                    , GroupId.group(
+                            groupValues.stream()
                                     .map(value -> value.toString()).reduce((a, b) -> a + "," + b)
-                                    .orElse("tukšs")));
+                                    .orElse("empty")));
         }
-        final var novērtejumuNotikums = novērtejumuNotikums();
-        novērtejumuNotikums.papildinājumi().put(
-                papildinājums
+        final var ratingEvent = ratingEvent();
+        ratingEvent.additions().put(
+                addition
                 , localRating()
-                        .withPropagationTo(bērni)
+                        .withPropagationTo(children)
                         .withRating(noCost())
                         .withResultingGroupId
-                                (grupas.get(ienākošasGrupasId).get(grupasVertības)));
-        return novērtejumuNotikums;
+                                (grouping.get(incomingGroup).get(groupValues)));
+        return ratingEvent;
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        return novērtejumuNotikums();
+    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+        return ratingEvent();
     }
 
     @Override
@@ -87,36 +87,36 @@ public class ForAllValueCombinations implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return listWithValuesOf(atribūti.mapped(a -> (Domable) a));
+        return listWithValuesOf(attributes.mapped(a -> (Domable) a));
     }
 
     @Override
-    public void addContext(Discoverable kontekts) {
-        this.kontekts.add(kontekts);
+    public void addContext(Discoverable contexts) {
+        this.contexts.add(contexts);
     }
 
     @Override
     public Collection<List<String>> paths() {
-        return kontekts.stream().map(Discoverable::path).collect(toList());
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override
-    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
+    public Node argumentation(GroupId group, Table allocations) {
         final var reasoning = Xml.element(getClass().getSimpleName());
         {
-            final var attributeDescription = Xml.element("atribūts");
+            final var attributeDescription = Xml.element("attribute");
             reasoning.appendChild(attributeDescription);
-            atribūti.forEach(att -> attributeDescription.appendChild(att.toDom()));
+            attributes.forEach(att -> attributeDescription.appendChild(att.toDom()));
         }
         return reasoning;
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
-        return "priekš visiem kombinācijas no "
-                + atribūti
+    public String toSimpleDescription(Line line, GroupId group) {
+        return "for all combinations of "
+                + attributes
                 .stream()
-                .map(a -> a.vārds())
+                .map(a -> a.name())
                 .reduce((a, b) -> a + " " + b)
                 .orElse("");
     }

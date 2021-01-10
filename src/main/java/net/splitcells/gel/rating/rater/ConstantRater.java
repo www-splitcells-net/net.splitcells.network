@@ -31,20 +31,20 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
-        novērtejumuNotikums.papildinājumi().put(
+    public RatingEvent rating_after_addition(Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
+        final var novērtejumuNotikums = RatingEventI.ratingEvent();
+        novērtejumuNotikums.additions().put(
                 papildinājums
                 , localRating()
                         .withPropagationTo(bērni)
-                        .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
+                        .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP))
                         .withRating(novērtējums));
         return novērtejumuNotikums;
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana(Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        return RatingEventI.novērtejumuNotikums();
+    public RatingEvent rating_before_removal(Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
+        return RatingEventI.ratingEvent();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
+    public Node argumentation(GroupId grupa, Table piešķiršanas) {
         final var argumentācija = Xml.element("nemainīgs-novērtējums");
         argumentācija.appendChild(novērtējums.toDom());
         return argumentācija;
@@ -82,7 +82,7 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
+    public String toSimpleDescription(Line rinda, GroupId grupa) {
         return "";
     }
 

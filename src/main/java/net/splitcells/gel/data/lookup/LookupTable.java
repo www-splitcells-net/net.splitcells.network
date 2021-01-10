@@ -31,7 +31,7 @@ public class LookupTable implements Table {
     }
 
     public static LookupTable uzmeklēšanasTabula(Table tabula, Attribute<?> atribūts) {
-        return new LookupTable(tabula, atribūts.vārds());
+        return new LookupTable(tabula, atribūts.name());
     }
 
     protected LookupTable(Table tabula, String vārds) {

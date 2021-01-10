@@ -35,21 +35,21 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public RatingEvent vērtē_pēc_papildinājumu(Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
+    public RatingEvent rating_after_addition(Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
         final var indivīdsNovērtējums = novērtējums(rindas, false);
         final var padildinājumuNovērtējumu
                 = novērteRindas(rindas, papildinājums, bērni, indivīdsNovērtējums);
-        padildinājumuNovērtējumu.papildinājumi().put(papildinājums
+        padildinājumuNovērtējumu.additions().put(papildinājums
                 , localRating()
                         .withPropagationTo(bērni)
                         .withRating(indivīdsNovērtējums)
-                        .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
+                        .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP))
         );
         return padildinājumuNovērtējumu;
     }
 
     private RatingEvent novērteRindas(Table rindas, Line maiņīts, List<Constraint> children, Rating cena) {
-        final RatingEvent rindasNovērtējumu = RatingEventI.novērtejumuNotikums();
+        final RatingEvent rindasNovērtējumu = RatingEventI.ratingEvent();
         rindas.rawLinesView().stream()
                 .filter(e -> e != null)
                 .filter(e -> e.index() != maiņīts.index())
@@ -58,14 +58,14 @@ public class HasSize implements Rater {
                             localRating().
                                     withPropagationTo(children).
                                     withRating(cena).
-                                    withResultingGroupId(maiņīts.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
+                                    withResultingGroupId(maiņīts.value(Constraint.INCOMING_CONSTRAINT_GROUP))
                     );
                 });
         return rindasNovērtējumu;
     }
 
     @Override
-    public Node argumentacija(GroupId grupa, Table piešķiršanas) {
+    public Node argumentation(GroupId grupa, Table piešķiršanas) {
         final var argumentacija = Xml.element(HasSize.class.getSimpleName());
         argumentacija.appendChild(
                 Xml.element("vēlamais-izmērs"
@@ -77,12 +77,12 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public String uzVienkāršuAprakstu(Line rinda, GroupId grupa) {
+    public String toSimpleDescription(Line rinda, GroupId grupa) {
         return "izmērs ir " + mērķuIzmers;
     }
 
     @Override
-    public RatingEvent vērtē_pirms_noņemšana
+    public RatingEvent rating_before_removal
             (Table rindas
                     , Line noņemšana
                     , List<Constraint> bērni

@@ -31,6 +31,6 @@ public class Then extends ConstraintBasedOnLocalGroupsAI {
 
     @Override
     protected List<String> vietēijaDabiskaArgumentācija(Report ziņojums) {
-        return list(vērtētājs.uzVienkāršuAprakstu(ziņojums.rinda(), ziņojums.grupa()));
+        return list(vērtētājs.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
     }
 }

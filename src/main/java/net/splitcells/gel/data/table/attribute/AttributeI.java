@@ -45,7 +45,7 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     @Override
-    public String vārds() {
+    public String name() {
         return vārds;
     }
 

@@ -95,7 +95,7 @@ public class LookupI<T> implements Lookup<T> {
     @Override
     public List<String> path() {
         final List<String> taka = tabula.path();
-        taka.add(atribūts.vārds());
+        taka.add(atribūts.name());
         return taka;
     }
 }

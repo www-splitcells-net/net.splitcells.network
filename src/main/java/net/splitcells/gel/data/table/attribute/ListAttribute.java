@@ -25,7 +25,7 @@ public class ListAttribute<T> implements Attribute<List<T>> {
     }
 
     @Override
-    public String vārds() {
+    public String name() {
         return vārds;
     }
 

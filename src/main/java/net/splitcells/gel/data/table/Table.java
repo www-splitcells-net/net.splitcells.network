@@ -73,7 +73,7 @@ public interface Table extends Discoverable, Domable {
     default String toCSV() {
         final var csv = new StringBuffer();
         final var header = headerView().stream()
-                .map(atribūts -> atribūts.vārds())
+                .map(atribūts -> atribūts.name())
                 .collect(toList());
         try (final var printeris = new CSVPrinter
                 (csv, CSVFormat.RFC4180.withHeader(header.toArray(new String[header.size()])))) {
@@ -121,7 +121,7 @@ public interface Table extends Discoverable, Domable {
                 final var nosaukums = element(FODS_TABLE, "table-row");
                 tabula.appendChild(nosaukums);
                 headerView().stream()
-                        .map(att -> att.vārds())
+                        .map(att -> att.name())
                         .map(attName -> {
                             final var tabulasElements = element(FODS_TABLE, "table-cell");
                             final var tabulasVertība = rElement(FODS_TEXT, "p");

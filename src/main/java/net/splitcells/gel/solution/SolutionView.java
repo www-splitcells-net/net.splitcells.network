@@ -64,7 +64,7 @@ public interface SolutionView extends ProblemView {
     private static List<Attribute<?>> forAllAttributesOfGroups(Rater classifier) {
         final List<Attribute<?>> forAllAttributesOfGroups = list();
         classifier.casted(ForAllAttributeValues.class)
-                .ifPresent(e -> forAllAttributesOfGroups.add(e.atribūti()));
+                .ifPresent(e -> forAllAttributesOfGroups.add(e.atttribute()));
         classifier.casted(ForAllValueCombinations.class)
                 .ifPresent(e -> forAllAttributesOfGroups.addAll(e.attributes()));
         return forAllAttributesOfGroups;
@@ -131,7 +131,7 @@ public interface SolutionView extends ProblemView {
 
     default Element attributesOfFodsAnalysis() {
         final var attributes = element(NameSpaces.FODS_TABLE, "table-row");
-        headerView().stream().map(att -> att.vārds()).map(attName -> {
+        headerView().stream().map(att -> att.name()).map(attName -> {
             final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
             final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
             tableElement.appendChild(tableValue);

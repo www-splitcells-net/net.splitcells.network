@@ -18,7 +18,7 @@ public class MetaAttribute<T> implements Attribute<Class<T>> {
     }
 
     @Override
-    public String vārds() {
+    public String name() {
         return vārds;
     }
 
