@@ -7,15 +7,15 @@ import net.splitcells.gel.constraint.Constraint;
 
 public interface LocalRating {
 
-	GroupId radītsIerobežojumuGrupaId();
+	GroupId resultingConstraintGroupId();
 
-	Rating novērtējums();
+	Rating rating();
 
-	List<Constraint> izdalīUz();
+	List<Constraint> propagateTo();
 
-	LocalRatingI arIzdalīšanaUz(List<Constraint> IzdalīšanaUz);
+	LocalRatingI withPropagationTo(List<Constraint> propagationTo);
 
-	LocalRatingI arNovērtējumu(Rating novērtējums);
+	LocalRatingI withRating(Rating rating);
 
-	LocalRatingI arRadītuGrupasId(GroupId radītsIerobežojumuGrupaId);
+	LocalRatingI withResultingGroupId(GroupId resultingGroupId);
 }

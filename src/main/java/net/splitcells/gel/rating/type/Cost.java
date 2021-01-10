@@ -59,7 +59,7 @@ public class Cost implements Rating {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Rating kombinē(Rating... additionalRatings) {
+    public Rating combine(Rating... additionalRatings) {
         if (additionalRatings.length == 1) {
             final Rating additionalRating = additionalRatings[0];
             if (additionalRating instanceof Cost) {
@@ -67,7 +67,7 @@ public class Cost implements Rating {
                 return cost(value + otherCost.value);
             }
             if (additionalRating instanceof MetaRating) {
-                return additionalRating.kombinē(this);
+                return additionalRating.combine(this);
             }
             if (additionalRating instanceof Optimality) {
                 final Optimality additionalOptimiality = (Optimality) additionalRating;

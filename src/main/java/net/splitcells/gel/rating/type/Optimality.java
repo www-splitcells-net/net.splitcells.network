@@ -55,7 +55,7 @@ public class Optimality implements Rating {
     }
 
     @Override
-    public Rating kombinē(Rating... addtionalRatings) {
+    public Rating combine(Rating... addtionalRatings) {
         throw not_implemented_yet();
     }
 

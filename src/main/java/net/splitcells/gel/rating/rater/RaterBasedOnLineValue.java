@@ -5,7 +5,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.GroupId.grupa;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
 import java.util.List;
@@ -64,10 +64,10 @@ public class RaterBasedOnLineValue implements Rater {
         final RatingEvent rVal = RatingEventI.novērtejumuNotikums();
         rVal.papildinājumi().put
                 (papildinājums
-                        , lokalsNovērtejums()
-                                .arIzdalīšanaUz(bērni)
-                                .arRadītuGrupasId(grupetajsBalstītsUzRindasVertības.apply(papildinājums))
-                                .arNovērtējumu(rindasBalstītsUzVertībasVērtētājs.apply(papildinājums.value(Constraint.LINE))));
+                        , localRating()
+                                .withPropagationTo(bērni)
+                                .withResultingGroupId(grupetajsBalstītsUzRindasVertības.apply(papildinājums))
+                                .withRating(rindasBalstītsUzVertībasVērtētājs.apply(papildinājums.value(Constraint.LINE))));
         return rVal;
     }
 

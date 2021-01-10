@@ -21,7 +21,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP_ID;
 import static net.splitcells.gel.constraint.Constraint.LINE;
-import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
@@ -50,10 +50,10 @@ public class ForAllWithCondition<T> implements Rater {
         final var novērtejumuNotikums = novērtejumuNotikums();
         novērtejumuNotikums.papildinājumi().put
                 (papildinājums
-                        , lokalsNovērtejums()
-                                .arIzdalīšanaUz(mērķBērni)
-                                .arNovērtējumu(noCost())
-                                .arRadītuGrupasId(papildinājums.value(INCOMING_CONSTRAINT_GROUP_ID)));
+                        , localRating()
+                                .withPropagationTo(mērķBērni)
+                                .withRating(noCost())
+                                .withResultingGroupId(papildinājums.value(INCOMING_CONSTRAINT_GROUP_ID)));
         return novērtejumuNotikums;
     }
 

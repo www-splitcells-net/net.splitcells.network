@@ -1,25 +1,26 @@
 package net.splitcells.gel.rating.structure;
 
+import static net.splitcells.gel.rating.structure.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 import net.splitcells.dem.data.set.map.Map;
 
 public interface MetaRating extends Rating, RatingTranslator, MetaRatingMerger {
-    static MetaRating neitrāla() {
-        final MetaRating neitrāla = MetaRatingI.rflektētsNovērtējums();
-        neitrāla.kombinē(noCost());
-        return neitrāla;
+    static MetaRating neutral() {
+        final MetaRating neutral = metaRating();
+        neutral.combine(noCost());
+        return neutral;
     }
 
-    Map<Class<? extends Rating>, Rating> saturs();
+    Map<Class<? extends Rating>, Rating> content();
 
     @SuppressWarnings("unchecked")
-    default <T> T gūtSaturuDaļa(Class<? extends T> tips) {
-        return (T) saturs().get(tips);
+    default <T> T getContentValue(Class<? extends T> tips) {
+        return (T) content().get(tips);
     }
 
     @Override
-    default MetaRating kāReflektētsNovērtējums() {
+    default MetaRating asMetaRating() {
         return this;
     }
 }

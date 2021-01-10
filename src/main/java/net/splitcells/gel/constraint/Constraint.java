@@ -9,7 +9,7 @@ import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.constraint.GroupId.grupa;
 import static net.splitcells.gel.data.table.attribute.AttributeI.atributs;
 import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
-import static net.splitcells.gel.rating.structure.MetaRating.neitrāla;
+import static net.splitcells.gel.rating.structure.MetaRating.neutral;
 
 import java.util.Optional;
 import java.util.Set;
@@ -93,8 +93,8 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     default MetaRating rating(Set<GroupId> grupas) {
         return grupas.stream().
                 map(group -> novērtējums(group)).
-                reduce((a, b) -> a.kombinē(b)).
-                orElseGet(() -> neitrāla());
+                reduce((a, b) -> a.combine(b)).
+                orElseGet(() -> neutral());
     }
 
     default GroupId reģistrē(Line rinda) {

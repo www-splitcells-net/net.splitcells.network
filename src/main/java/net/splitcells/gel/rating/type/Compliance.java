@@ -34,7 +34,7 @@ public class Compliance implements Rating {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Compliance kombinē(Rating... additionalRatings) {
+    public Compliance combine(Rating... additionalRatings) {
         if (additionalRatings[0] instanceof Compliance) {
             return compliance(value && ((Compliance) additionalRatings[0]).value);
         }

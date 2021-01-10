@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.type.Cost.cost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
 
@@ -40,10 +40,10 @@ public class HasSize implements Rater {
         final var padildinājumuNovērtējumu
                 = novērteRindas(rindas, papildinājums, bērni, indivīdsNovērtējums);
         padildinājumuNovērtējumu.papildinājumi().put(papildinājums
-                , lokalsNovērtejums()
-                        .arIzdalīšanaUz(bērni)
-                        .arNovērtējumu(indivīdsNovērtējums)
-                        .arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
+                , localRating()
+                        .withPropagationTo(bērni)
+                        .withRating(indivīdsNovērtējums)
+                        .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
         );
         return padildinājumuNovērtējumu;
     }
@@ -55,10 +55,10 @@ public class HasSize implements Rater {
                 .filter(e -> e.index() != maiņīts.index())
                 .forEach(e -> {
                     rindasNovērtējumu.atjaunaNovērtējumu_caurAizvietošana(e,
-                            lokalsNovērtejums().
-                                    arIzdalīšanaUz(children).
-                                    arNovērtējumu(cena).
-                                    arRadītuGrupasId(maiņīts.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
+                            localRating().
+                                    withPropagationTo(children).
+                                    withRating(cena).
+                                    withResultingGroupId(maiņīts.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
                     );
                 });
         return rindasNovērtējumu;

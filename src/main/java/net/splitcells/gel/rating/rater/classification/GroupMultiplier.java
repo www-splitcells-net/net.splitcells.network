@@ -6,7 +6,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
 
@@ -61,7 +61,7 @@ public class GroupMultiplier implements Rater {
                                 .vērtē_pēc_papildinājumu(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu))
                         .map(nn -> nn.papildinājumi())
                         .flatMap(papildinajums -> papildinajums.values().stream())
-                        .map(papildumuNovērtējums -> papildumuNovērtējums.radītsIerobežojumuGrupaId())
+                        .map(papildumuNovērtējums -> papildumuNovērtējums.resultingConstraintGroupId())
                         .collect(toList())
         );
         grupuReizinātājs.computeIfAbsent(
@@ -71,10 +71,10 @@ public class GroupMultiplier implements Rater {
                         .orElseGet(() -> GroupId.grupa()));
         novērtejumuNotikums.papildinājumi().put(
                 papildinājums
-                , lokalsNovērtejums()
-                        .arIzdalīšanaUz(bērni)
-                        .arNovērtējumu(noCost())
-                        .arRadītuGrupasId(grupuReizinātājs.get(grupešanaNoPapildinajmiem)));
+                , localRating()
+                        .withPropagationTo(bērni)
+                        .withRating(noCost())
+                        .withResultingGroupId(grupuReizinātājs.get(grupešanaNoPapildinajmiem)));
         return novērtejumuNotikums;
     }
 

@@ -2,7 +2,7 @@ package net.splitcells.gel.rating.rater;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
 
@@ -35,10 +35,10 @@ public class ConstantRater implements Rater {
         final var novērtejumuNotikums = RatingEventI.novērtejumuNotikums();
         novērtejumuNotikums.papildinājumi().put(
                 papildinājums
-                , lokalsNovērtejums()
-                        .arIzdalīšanaUz(bērni)
-                        .arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
-                        .arNovērtējumu(novērtējums));
+                , localRating()
+                        .withPropagationTo(bērni)
+                        .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
+                        .withRating(novērtējums));
         return novērtejumuNotikums;
     }
 

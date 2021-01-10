@@ -7,7 +7,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_C
 import static net.splitcells.dem.utils.IncorrectImplementation.incorrectImplementation;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
@@ -56,10 +56,10 @@ public class AllDifferent<T> implements Rater {
         if (1 == grupa.size()) {
             novērtejumuNotikums.papildinājumi().put(
                     papildinājums
-                    , lokalsNovērtejums()
-                            .arIzdalīšanaUz(bērni)
-                            .arNovērtējumu(noCost())
-                            .arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
+                    , localRating()
+                            .withPropagationTo(bērni)
+                            .withRating(noCost())
+                            .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
         } else if (2 == grupa.size()) {
             if (ENFORCING_UNIT_CONSISTENCY) {
                 assertThat(grupa.rawLinesView().stream().filter(e -> e != null)).hasSize(2);
@@ -69,10 +69,10 @@ public class AllDifferent<T> implements Rater {
                     .filter(e -> e != null)
                     .forEach(e -> novērtejumuNotikums.papildinājumi()
                             .put(e//
-                                    , lokalsNovērtejums()
-                                            .arIzdalīšanaUz(bērni)
-                                            .arNovērtējumu(cost(1.0))
-                                            .arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))));
+                                    , localRating()
+                                            .withPropagationTo(bērni)
+                                            .withRating(cost(1.0))
+                                            .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))));
             grupa.rawLinesView().stream()
                     .filter(e -> e != null)
                     .filter(e -> e.index() != papildinājums.index())
@@ -81,10 +81,10 @@ public class AllDifferent<T> implements Rater {
             // DARĪT Parametrizē pārbaudi.
             novērtejumuNotikums.papildinājumi().put
                     (papildinājums
-                            , lokalsNovērtejums()
-                                    .arIzdalīšanaUz(bērni)
-                                    .arNovērtējumu(cost(1.0))
-                                    .arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
+                            , localRating()
+                                    .withPropagationTo(bērni)
+                                    .withRating(cost(1.0))
+                                    .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
         } else {
             throw incorrectImplementation("" + grupa.size());
         }
@@ -108,10 +108,10 @@ public class AllDifferent<T> implements Rater {
                         novērtejumuNotikums.noņemšana().add(e);
                         novērtejumuNotikums.papildinājumi()
                                 .put(e
-                                        , lokalsNovērtejums()
-                                                .arIzdalīšanaUz(bērni)
-                                                .arNovērtējumu(noCost())
-                                                .arRadītuGrupasId(noņemšana.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
+                                        , localRating()
+                                                .withPropagationTo(bērni)
+                                                .withRating(noCost())
+                                                .withResultingGroupId(noņemšana.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
                     });
         }
         return novērtejumuNotikums;

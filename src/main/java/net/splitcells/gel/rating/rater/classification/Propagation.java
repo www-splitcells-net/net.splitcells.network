@@ -6,7 +6,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
 
@@ -37,10 +37,10 @@ public class Propagation implements Rater {
         final RatingEvent novērtejumuNotikums = novērtejumuNotikums();
         novērtejumuNotikums.papildinājumi().put
                 (papildinājums
-                        , lokalsNovērtejums()
-                                .arIzdalīšanaUz(bērni)
-                                .arNovērtējumu(noCost())
-                                .arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
+                        , localRating()
+                                .withPropagationTo(bērni)
+                                .withRating(noCost())
+                                .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
         return novērtejumuNotikums;
     }
 

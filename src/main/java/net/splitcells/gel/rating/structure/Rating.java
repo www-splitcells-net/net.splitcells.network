@@ -7,10 +7,10 @@ import net.splitcells.dem.data.order.PartiallyOrdered;
 public interface Rating extends PartiallyOrdered<Rating>, Domable {
 
     @Returns_this
-    <R extends Rating> R kombinē(Rating... additionalNovērtējums);
+    <R extends Rating> R combine(Rating... additionalNovērtējums);
 
-    default MetaRating kāReflektētsNovērtējums() {
-        return MetaRatingI.rflektētsNovērtējums().kombinē(this);
+    default MetaRating asMetaRating() {
+        return MetaRatingI.metaRating().combine(this);
     }
 
     <R extends Rating> R _clone();

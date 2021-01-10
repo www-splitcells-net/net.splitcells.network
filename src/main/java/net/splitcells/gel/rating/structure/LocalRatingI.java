@@ -7,49 +7,49 @@ import net.splitcells.gel.constraint.Constraint;
 
 public class LocalRatingI implements LocalRating {
 
-	private GroupId radītsIerobežojumuGrupaId;
-	private Rating novērtējums;
-	private List<Constraint> izdalīUz;
+    private GroupId resultingConstraintGroupId;
+    private Rating rating;
+    private List<Constraint> propagationTo;
 
-	public static LocalRating lokalsNovērtejums() {
-		return new LocalRatingI();
-	}
+    public static LocalRating localRating() {
+        return new LocalRatingI();
+    }
 
-	private LocalRatingI() {
+    private LocalRatingI() {
 
-	}
+    }
 
-	@Override
-	public GroupId radītsIerobežojumuGrupaId() {
-		return radītsIerobežojumuGrupaId;
-	}
+    @Override
+    public GroupId resultingConstraintGroupId() {
+        return resultingConstraintGroupId;
+    }
 
-	@Override
-	public Rating novērtējums() {
-		return novērtējums;
-	}
+    @Override
+    public Rating rating() {
+        return rating;
+    }
 
-	@Override
-	public List<Constraint> izdalīUz() {
-		return izdalīUz;
-	}
+    @Override
+    public List<Constraint> propagateTo() {
+        return propagationTo;
+    }
 
-	@Override
-	public LocalRatingI arIzdalīšanaUz(List<Constraint> IzdalīšanaUz) {
-		this.izdalīUz = IzdalīšanaUz;
-		return this;
-	}
+    @Override
+    public LocalRatingI withPropagationTo(List<Constraint> propagationTo) {
+        this.propagationTo = propagationTo;
+        return this;
+    }
 
-	@Override
-	public LocalRatingI arNovērtējumu(Rating novērtējums) {
-		this.novērtējums = novērtējums;
-		return this;
-	}
+    @Override
+    public LocalRatingI withRating(Rating rating) {
+        this.rating = rating;
+        return this;
+    }
 
-	@Override
-	public LocalRatingI arRadītuGrupasId(GroupId radītsIerobežojumuGrupaId) {
-		this.radītsIerobežojumuGrupaId = radītsIerobežojumuGrupaId;
-		return this;
-	}
+    @Override
+    public LocalRatingI withResultingGroupId(GroupId resultingConstraintGroupId) {
+        this.resultingConstraintGroupId = resultingConstraintGroupId;
+        return this;
+    }
 
 }

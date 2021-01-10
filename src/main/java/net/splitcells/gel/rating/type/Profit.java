@@ -51,7 +51,7 @@ public class Profit implements Rating {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Profit kombinē(Rating... additionalRatings) {
+    public Profit combine(Rating... additionalRatings) {
         if (additionalRatings[0] instanceof Profit) {
             final Profit otherCost = (Profit) additionalRatings[0];
             return profit(value + otherCost.value);

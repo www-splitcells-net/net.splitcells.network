@@ -5,7 +5,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.rating.structure.MetaRatingMergerI.reflektētsNovērtejumsKombinetajs;
+import static net.splitcells.gel.rating.structure.MetaRatingMergerI.metaRatingMerger;
 import static net.splitcells.gel.rating.structure.RatingTranslatorI.ratingTranslator;
 
 import java.util.Optional;
@@ -23,23 +23,23 @@ import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
 
 public class MetaRatingI implements MetaRating {
-    protected final Map<Class<? extends Rating>, Rating> novērtējumi;
-    protected final RatingTranslator tulkotajs;
-    protected final MetaRatingMerger kombinētajs;
+    protected final Map<Class<? extends Rating>, Rating> ratingMap;
+    protected final RatingTranslator translator;
+    protected final MetaRatingMerger merger;
 
-    public static MetaRating metaRating(Map<Class<? extends Rating>, Rating> novērtējums) {
-        return new MetaRatingI(novērtējums);
+    public static MetaRating metaRating(Map<Class<? extends Rating>, Rating> rating) {
+        return new MetaRatingI(rating);
     }
 
-    public static MetaRating rflektētsNovērtējums() {
+    public static MetaRating metaRating() {
         return new MetaRatingI();
     }
 
-    public static MetaRating reflektētsNovērtējums(Rating... argNovērtējumi) {
-        final Map<Class<? extends Rating>, Rating> novērtējumuVārdnīca = map();
-        asList(argNovērtējumi).forEach(novērtējums -> novērtējumuVārdnīca.put(novērtējums.getClass(), novērtējums));
-        final MetaRatingI reflektētsNovērtējums = new MetaRatingI(novērtējumuVārdnīca);
-        return reflektētsNovērtējums;
+    public static MetaRating reflektētsNovērtējums(Rating... ratings) {
+        final Map<Class<? extends Rating>, Rating> ratingMap = map();
+        asList(ratings).forEach(rating -> ratingMap.put(rating.getClass(), rating));
+        final MetaRatingI metaRating = new MetaRatingI(ratingMap);
+        return metaRating;
     }
 
     protected MetaRatingI() {
@@ -47,48 +47,48 @@ public class MetaRatingI implements MetaRating {
     }
 
     @SuppressWarnings("unlikely-arg-type")
-    protected MetaRatingI(Map<Class<? extends Rating>, Rating> novērtējumi) {
-        this.novērtējumi = novērtējumi;
-        tulkotajs = ratingTranslator(novērtējumi);
-        kombinētajs = reflektētsNovērtejumsKombinetajs(novērtējumi);
+    protected MetaRatingI(Map<Class<? extends Rating>, Rating> ratingMap) {
+        this.ratingMap = ratingMap;
+        translator = ratingTranslator(ratingMap);
+        merger = metaRatingMerger(ratingMap);
         /**
-         * Apvienojiet vienkāršu vērtējumu ar {@link MetaRating}.
+         * Combine multiple simple {@link Rating} with ar {@link MetaRating}.
          */
-        reģistrētieKombinētajs(
-                (baže, papildinājums) -> baže.isEmpty()
-                        && papildinājums.size() == 1
-                        && papildinājums.values().iterator().next() instanceof MetaRating
-                        && ((MetaRating) papildinājums.values().iterator().next()).saturs().size() == 1
-                , (baže, papildinājums) -> {
-                    MetaRating reflektētsPapildinājums
-                            = (MetaRating) papildinājums.values().iterator().next();
-                    Map<Class<? extends Rating>, Rating> reflektētsNovērtējums = map();
-                    reflektētsNovērtējums.put(reflektētsPapildinājums.saturs().keySet().iterator().next()
-                            , reflektētsPapildinājums.saturs().values().iterator().next());
-                    return reflektētsNovērtējums;
+        registerMerger(
+                (base, addition) -> base.isEmpty()
+                        && addition.size() == 1
+                        && addition.values().iterator().next() instanceof MetaRating
+                        && ((MetaRating) addition.values().iterator().next()).content().size() == 1
+                , (base, addition) -> {
+                    MetaRating metaAddition
+                            = (MetaRating) addition.values().iterator().next();
+                    final Map<Class<? extends Rating>, Rating> metaRating = map();
+                    metaRating.put(metaAddition.content().keySet().iterator().next()
+                            , metaAddition.content().values().iterator().next());
+                    return metaRating;
                 }
         );
         /**
-         * Apvieno 2 primitīvos {@link Rating}.
+         * Combine 2 primitive {@link Rating}.
          */
-        reģistrētieKombinētajs(
-                (baže, papildinājums) -> baže.size() == 1
-                        && papildinājums.size() == 1
-                        && !(papildinājums.values().iterator().next() instanceof MetaRating)
-                        && !(baže.values().iterator().next() instanceof MetaRating)
-                , (baže, papildinājums) -> {
-                    final Map<Class<? extends Rating>, Rating> reflektētsNovērtējums = map();
-                    Rating primitiveAddition = baže.values().iterator().next()
-                            .kombinē(papildinājums.values().iterator().next());
-                    reflektētsNovērtējums.put(primitiveAddition.getClass()
+        registerMerger(
+                (base, addition) -> base.size() == 1
+                        && addition.size() == 1
+                        && !(addition.values().iterator().next() instanceof MetaRating)
+                        && !(base.values().iterator().next() instanceof MetaRating)
+                , (base, addition) -> {
+                    final Map<Class<? extends Rating>, Rating> metaRating = map();
+                    final Rating primitiveAddition = base.values().iterator().next()
+                            .combine(addition.values().iterator().next());
+                    metaRating.put(primitiveAddition.getClass()
                             , primitiveAddition);
-                    return reflektētsNovērtējums;
+                    return metaRating;
                 }
         );
         /**
          * Kombinē primitīvo vērtējumu ar {@link MetaRating} ar vienu primitīvo {@link Rating}.
          */
-        reģistrētieKombinētajs(
+        registerMerger(
                 (baže, papildinājums) -> baže.size() == 1
                         && papildinājums.size() == 1
                         && !(baže.values().iterator().next() instanceof MetaRating)
@@ -96,8 +96,8 @@ public class MetaRatingI implements MetaRating {
                 , (baže, papildinājums) -> {
                     final Map<Class<? extends Rating>, Rating> reflektētsNovērtējums = map();
                     Rating primitiveAddition = baže.values().iterator().next()
-                            .kombinē(((MetaRating)
-                                    papildinājums.values().iterator().next()).saturs().values().iterator().next());
+                            .combine(((MetaRating)
+                                    papildinājums.values().iterator().next()).content().values().iterator().next());
                     reflektētsNovērtējums.put(primitiveAddition.getClass()
                             , primitiveAddition);
                     return reflektētsNovērtējums;
@@ -106,7 +106,7 @@ public class MetaRatingI implements MetaRating {
         /**
          * Primitīvu vērtējumu pielikt meitrālajam elementam.
          */
-        reģistrētieKombinētajs(
+        registerMerger(
                 (baže, papildinājums) -> baže.isEmpty()
                         && papildinājums.size() == 1
                         && !(papildinājums.values().iterator().next() instanceof MetaRating)
@@ -124,28 +124,28 @@ public class MetaRatingI implements MetaRating {
     }
 
     @Override
-    public <R extends Rating> R kombinē(Rating... additionalNovērtējums) {
-        return (R) kombinētajs.kombinē(additionalNovērtējums);
+    public <R extends Rating> R combine(Rating... additionalNovērtējums) {
+        return (R) merger.combine(additionalNovērtējums);
     }
 
     @Override
     public <R extends Rating> R tulkošana(Class<R> tips) {
-        if (novērtējumi.size() == 1) {
-            if (novērtējumi.containsKey(Profit.class)) {
-                return (R) Profit.profit(gūtSaturuDaļa(Profit.class).value());
+        if (ratingMap.size() == 1) {
+            if (ratingMap.containsKey(Profit.class)) {
+                return (R) Profit.profit(getContentValue(Profit.class).value());
             }
         }
         return (R) this;
     }
 
     @Override
-    public <T extends Rating> void reģistrētieKombinētajs
+    public <T extends Rating> void registerMerger
             (BiPredicate<Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>> nosacījums
                     , BiFunction
                      <Map<Class<? extends Rating>, Rating>
                              , Map<Class<? extends Rating>, Rating>
                              , Map<Class<? extends Rating>, Rating>> kombinētajs) {
-        this.kombinētajs.reģistrētieKombinētajs(nosacījums, kombinētajs);
+        this.merger.registerMerger(nosacījums, kombinētajs);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class MetaRatingI implements MetaRating {
             (Class<? extends Rating> mērķis
                     , Predicate<Map<Class<? extends Rating>, Rating>> nosacījums
                     , Function<Map<Class<? extends Rating>, Rating>, Rating> tulks) {
-        this.tulkotajs.reģistrēTulks(mērķis, nosacījums, tulks);
+        this.translator.reģistrēTulks(mērķis, nosacījums, tulks);
     }
 
     @Override
@@ -168,58 +168,58 @@ public class MetaRatingI implements MetaRating {
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof MetaRating) {
             final MetaRating other = (MetaRating) arg;
-            if (other.saturs().isEmpty() && novērtējumi.isEmpty()) {
+            if (other.content().isEmpty() && ratingMap.isEmpty()) {
                 return Optional.of(EQUAL);
             }
-            if (other.saturs().size() == 1 && novērtējumi.size() == 1) {
-                return other.saturs().values().iterator().next()
-                        .compare_partially_to(novērtējumi.values().iterator().next());
+            if (other.content().size() == 1 && ratingMap.size() == 1) {
+                return other.content().values().iterator().next()
+                        .compare_partially_to(ratingMap.values().iterator().next());
             }
         }
         if (arg instanceof Profit) {
-            if (saturs().containsKey(Profit.class)) {
-                return this.gūtSaturuDaļa(Profit.class).compare_partially_to(arg);
+            if (content().containsKey(Profit.class)) {
+                return this.getContentValue(Profit.class).compare_partially_to(arg);
             }
             throw not_implemented_yet();
         }
         if (arg instanceof Cost) {
-            if (saturs().containsKey(Cost.class)) {
-                return this.gūtSaturuDaļa(Cost.class).compare_partially_to(arg);
+            if (content().containsKey(Cost.class)) {
+                return this.getContentValue(Cost.class).compare_partially_to(arg);
             }
-            if (saturs().isEmpty() && 0 == ((Cost) arg).value()) {
+            if (content().isEmpty() && 0 == ((Cost) arg).value()) {
                 return Optional.of(EQUAL);
             }
-            if (saturs().containsKey(Optimality.class)) {
-                return this.gūtSaturuDaļa(Optimality.class).compare_partially_to(arg);
+            if (content().containsKey(Optimality.class)) {
+                return this.getContentValue(Optimality.class).compare_partially_to(arg);
             }
             throw not_implemented_yet();
         }
         if (arg instanceof Optimality) {
-            if (saturs().containsKey(Cost.class)) {
-                return this.gūtSaturuDaļa(Cost.class).compare_partially_to(arg);
+            if (content().containsKey(Cost.class)) {
+                return this.getContentValue(Cost.class).compare_partially_to(arg);
             }
         }
         throw not_implemented_yet();
     }
 
     @Override
-    public Map<Class<? extends Rating>, Rating> saturs() {
-        return novērtējumi;
+    public Map<Class<? extends Rating>, Rating> content() {
+        return ratingMap;
     }
 
     @Override
     public <R extends Rating> R _clone() {
         final MetaRatingI clone = new MetaRatingI();
-        clone.saturs().forEach((key, value) -> {
-            clone.saturs().put(key, value._clone());
+        clone.content().forEach((key, value) -> {
+            clone.content().put(key, value._clone());
         });
         return (R) clone;
     }
 
     @Override
     public Node toDom() {
-        if (1 == novērtējumi.size()) {
-            return novērtējumi.values().iterator().next().toDom();
+        if (1 == ratingMap.size()) {
+            return ratingMap.values().iterator().next().toDom();
         }
         final var dom = element(MetaRating.class.getSimpleName());
         return dom;

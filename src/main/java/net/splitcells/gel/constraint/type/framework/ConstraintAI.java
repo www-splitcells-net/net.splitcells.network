@@ -198,9 +198,9 @@ public abstract class ConstraintAI implements Constraint {
             return MetaRatingI.reflektētsNovērtējums(noCost());
         }
         return novērtetāMaršrutēšana.gūtNovērtējums().stream()
-                .reduce((a, b) -> a.kombinē(b))
+                .reduce((a, b) -> a.combine(b))
                 .get()
-                .kāReflektētsNovērtējums();
+                .asMetaRating();
     }
 
     protected RoutingRating atlasītNovērtetāMaršrutēšana
@@ -236,9 +236,9 @@ public abstract class ConstraintAI implements Constraint {
             return MetaRatingI.reflektētsNovērtējums(noCost());
         }
         return novērtetāMaršrutēšana.gūtNovērtējums().stream()
-                .reduce((a, b) -> a.kombinē(b))
+                .reduce((a, b) -> a.combine(b))
                 .get()
-                .kāReflektētsNovērtējums();
+                .asMetaRating();
     }
 
     /**
@@ -287,9 +287,9 @@ public abstract class ConstraintAI implements Constraint {
     public Line pieliktRadījums(LocalRating vietējieNovērtējums) {
         return radījums.addTranslated
                 (list
-                        (vietējieNovērtējums.radītsIerobežojumuGrupaId()
-                                , vietējieNovērtējums.novērtējums()
-                                , vietējieNovērtējums.izdalīUz()));
+                        (vietējieNovērtējums.resultingConstraintGroupId()
+                                , vietējieNovērtējums.rating()
+                                , vietējieNovērtējums.propagateTo()));
     }
 
     @Override

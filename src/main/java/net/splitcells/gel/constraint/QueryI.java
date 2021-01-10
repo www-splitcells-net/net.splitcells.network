@@ -5,7 +5,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.gel.rating.structure.MetaRatingI.rflektētsNovērtējums;
+import static net.splitcells.gel.rating.structure.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 
 import java.util.Collection;
@@ -212,11 +212,11 @@ public class QueryI implements Query {
     @Override
     public Rating novērtējums() {
         final var grupasNovērtējums
-                    = grupas.stream().map(group -> ierobežojums.novērtējums(group)).reduce((a, b) -> a.kombinē(b));
+                    = grupas.stream().map(group -> ierobežojums.novērtējums(group)).reduce((a, b) -> a.combine(b));
         if (grupasNovērtējums.isPresent()) {
             return grupasNovērtējums.get();
         }
-        return rflektētsNovērtējums();
+        return metaRating();
     }
 
     @Override

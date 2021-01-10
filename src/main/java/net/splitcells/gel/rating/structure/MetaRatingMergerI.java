@@ -28,7 +28,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
                     , Map<Class<? extends Rating>, Rating>
                     , Map<Class<? extends Rating>, Rating>>> kombinētaji = map();
 
-    public static MetaRatingMerger reflektētsNovērtejumsKombinetajs
+    public static MetaRatingMerger metaRatingMerger
             (Map<Class<? extends Rating>, Rating> novērtējumi) {
         return new MetaRatingMergerI(novērtējumi);
     }
@@ -39,7 +39,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <R extends Rating> R kombinē(Rating... papilduNovērtējums) {
+    public <R extends Rating> R combine(Rating... papilduNovērtējums) {
         // DARĪT Darī nemainigu.
         final var papildiNovērtējumuVārdnīca = typeMapping(simplify(papilduNovērtējums));
         return (R) MetaRatingI.metaRating(kombinētaji.entrySet().stream()
@@ -51,7 +51,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     }
 
     @Override
-    public <T extends Rating> void reģistrētieKombinētajs
+    public <T extends Rating> void registerMerger
             (BiPredicate<Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>> nosacījums, BiFunction<Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>, Map<Class<? extends Rating>, Rating>> kombinētajs) {
         if (kombinētaji.containsKey(nosacījums)) {
             throw new IllegalArgumentException();
@@ -62,7 +62,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     private java.util.List<Rating> simplify(Rating... novērtējumi) {
         return asList(novērtējumi).stream().flatMap(novērtējums -> {
             if (novērtējums instanceof MetaRating) {
-                return ((MetaRating) novērtējums).saturs().values().stream();
+                return ((MetaRating) novērtējums).content().values().stream();
             }
             return Stream.of(novērtējums);
         }).collect(toList());

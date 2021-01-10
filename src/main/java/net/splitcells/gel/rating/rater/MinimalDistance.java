@@ -6,7 +6,7 @@ import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
 import java.util.List;
@@ -134,10 +134,10 @@ public class MinimalDistance<T> implements Rater {
         if (sakārtotasIndeksi == 0) {
             if (sakārtotasRindas.size() == 1) {
                 novērtejumuNotikums.papildinājumi().put(papildinājums//
-                        , lokalsNovērtejums().
-                                arIzdalīšanaUz(bērni).
-                                arNovērtējumu(noCost()).
-                                arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
+                        , localRating().
+                                withPropagationTo(bērni).
+                                withRating(noCost()).
+                                withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID)));
             } else {
                 novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, sakārtotasRindas.get(1), bērni//
                         , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, sakārtotasRindas.get(1)).value(Constraint.NOVĒRTĒJUMS)));
