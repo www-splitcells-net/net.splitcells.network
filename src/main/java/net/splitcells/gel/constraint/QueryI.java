@@ -60,11 +60,11 @@ public class QueryI implements Query {
             for (GroupId grupa : grupas) {
                 radītasGrupas.addAll
                         (ierobežojums
-                                .rindasAbstrāde()
-                                .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .lineProcessing()
+                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
                                 .uzmeklēšana(grupa)
-                                .columnView(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
-                                .vertības());
+                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
+                                .values());
             }
         } else {
             radijumuBaže = Optional.of(ForAlls.priekšVisiem(vērtētājs));
@@ -96,11 +96,11 @@ public class QueryI implements Query {
         if (radijumuBaže.isPresent()) {
             for (GroupId grupa : grupas) {
                 radītasGrupas.addAll(
-                        ierobežojums.rindasAbstrāde()
-                                .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                        ierobežojums.lineProcessing()
+                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
                                 .uzmeklēšana(grupa)
-                                .columnView(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
-                                .vertības());
+                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
+                                .values());
             }
         } else {
             radijumuBaže = Optional.of(ForAlls.priekšVisiem(arg));
@@ -150,11 +150,11 @@ public class QueryI implements Query {
         if (radijumuBaže.isPresent()) {
             for (GroupId grupa : grupas) {
                 resultingGroups.addAll(
-                        ierobežojums.rindasAbstrāde()
-                                .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                        ierobežojums.lineProcessing()
+                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
                                 .uzmeklēšana(grupa)
-                                .columnView(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
-                                .vertības());
+                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
+                                .values());
             }
         } else {
             radijumuBaže = Optional.of(Then.tad(vērtētājs));
@@ -196,11 +196,11 @@ public class QueryI implements Query {
         final var radītasGrupas = Sets.<GroupId>setOfUniques();
         for (GroupId grupa : grupas) {
             radītasGrupas.addAll(
-                    ierobežojums.rindasAbstrāde()
-                            .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                    ierobežojums.lineProcessing()
+                            .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
                             .uzmeklēšana(grupa)
-                            .columnView(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID)
-                            .vertības());
+                            .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
+                            .values());
         }
         if (sakne.isEmpty()) {
             return jautājums(radijumuBaže, radītasGrupas, radijumuBaže);

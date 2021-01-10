@@ -31,7 +31,7 @@ public class RaterBasedOnLineValue implements Rater {
             @Override
             public GroupId apply(Line arg) {
                 return lineNumbering.computeIfAbsent
-                        (grupetajs.apply(arg.value(Constraint.RINDA))
+                        (grupetajs.apply(arg.value(Constraint.LINE))
                                 , classification -> GroupId.grupa(apraksts + ": " + classification));
             }
 
@@ -43,7 +43,7 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     public static Rater rindasVertībaBalstītaUzVērtētāju(Function<Line, Rating> vērtētājsBalstītsUzRindasVertības) {
-        return new RaterBasedOnLineValue(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID));
+        return new RaterBasedOnLineValue(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID));
     }
 
     public static Rater rindasVertībasBalstītasUzGrupetajs(Function<Line, GroupId> grupetajsBalstītsUzRindasVertības) {
@@ -67,7 +67,7 @@ public class RaterBasedOnLineValue implements Rater {
                         , lokalsNovērtejums()
                                 .arIzdalīšanaUz(bērni)
                                 .arRadītuGrupasId(grupetajsBalstītsUzRindasVertības.apply(papildinājums))
-                                .arNovērtējumu(rindasBalstītsUzVertībasVērtētājs.apply(papildinājums.value(Constraint.RINDA))));
+                                .arNovērtējumu(rindasBalstītsUzVertībasVērtētājs.apply(papildinājums.value(Constraint.LINE))));
         return rVal;
     }
 

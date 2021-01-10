@@ -49,7 +49,7 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return vertības().iterator();
+        return values().iterator();
     }
 
     @Override
@@ -178,7 +178,7 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public net.splitcells.dem.data.set.list.List<T> vertības() {
+    public net.splitcells.dem.data.set.list.List<T> values() {
         return Lists.<T>list().withAppended(
                 tabula.rawLines().stream()//
                         .map(e -> e.value(atribūts))//

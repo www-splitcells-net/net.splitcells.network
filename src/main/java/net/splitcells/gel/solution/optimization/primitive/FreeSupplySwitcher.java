@@ -13,84 +13,84 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
+import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 public class FreeSupplySwitcher implements Optimization {
-    public static FreeSupplySwitcher brīvuPiedāvājumuSlēdzis() {
+    public static FreeSupplySwitcher freeSupplySwitcher() {
         return new FreeSupplySwitcher();
     }
 
-    public static FreeSupplySwitcher brīvuPiedāvājumuSlēdzis(Randomness nejaušiba, int soluSkaitlis) {
-        return new FreeSupplySwitcher(nejaušiba, soluSkaitlis);
+    public static FreeSupplySwitcher freeSupplySwitcher(Randomness randomness, int soluSkaitlis) {
+        return new FreeSupplySwitcher(randomness, soluSkaitlis);
     }
 
-    public static FreeSupplySwitcher brīvuPiedāvājumuSlēdzis(Randomness nejaušiba) {
-        return new FreeSupplySwitcher(nejaušiba);
+    public static FreeSupplySwitcher freeSupplySwitcher(Randomness randomness) {
+        return new FreeSupplySwitcher(randomness);
     }
 
-    private final Randomness nejaušiba;
-    private final int soluSkaititlis;
+    private final Randomness randomness;
+    private final int stepCounter;
 
-    public FreeSupplySwitcher(Randomness nejaušiba, int soluSkaititlis) {
-        this.nejaušiba = nejaušiba;
-        this.soluSkaititlis = soluSkaititlis;
+    public FreeSupplySwitcher(Randomness randomness, int stepCounter) {
+        this.randomness = randomness;
+        this.stepCounter = stepCounter;
     }
 
-    public FreeSupplySwitcher(Randomness nejaušiba) {
-        this.nejaušiba = nejaušiba;
-        this.soluSkaititlis = 1;
+    public FreeSupplySwitcher(Randomness randomness) {
+        this.randomness = randomness;
+        this.stepCounter = 1;
     }
 
     public FreeSupplySwitcher() {
-        nejaušiba = randomness();
-        this.soluSkaititlis = 1;
+        randomness = randomness();
+        this.stepCounter = 1;
     }
 
     @Override
-    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
-        final List<OptimizationEvent> optimizācijas = list();
-        final var apstrādataPrasība = Sets.<LinePointer>setOfUniques();
-        final var apstrādatsPiedāvājums = Sets.<LinePointer>setOfUniques();
-        rangeClosed(1, soluSkaititlis)
-                .forEach(i -> optimizācijas.addAll
-                        (optimizacijasSoli(atrisinājums, apstrādataPrasība, apstrādatsPiedāvājums)));
-        return optimizācijas;
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        final List<OptimizationEvent> optimization = list();
+        final var processedDemands = Sets.<LinePointer>setOfUniques();
+        final var processedSupplies = Sets.<LinePointer>setOfUniques();
+        rangeClosed(1, stepCounter)
+                .forEach(i -> optimization.addAll
+                        (optimizationStep(solution, processedDemands, processedSupplies)));
+        return optimization;
     }
 
-    public List<OptimizationEvent> optimizacijasSoli
-            (SolutionView atrisinājums
-                    , Set<LinePointer> apstrādatasPrasības
-                    , Set<LinePointer> apstrādatiPiedāvājumi) {
-        if (atrisinājums.demands_used().hasContent() && atrisinājums.supplies_unused().hasContent()) {
-            final int atlase = nejaušiba.integer(0, atrisinājums.demands_unused().size() - 1);
-            final var lietotaPrasība = atrisinājums.demands_used().gūtRinda(atlase);
-            final var lietotasPrasībasRādītājs = lietotaPrasība.uzRindaRādītājs();
-            if (apstrādatasPrasības.contains(lietotasPrasībasRādītājs)) {
+    public List<OptimizationEvent> optimizationStep
+            (SolutionView solution
+                    , Set<LinePointer> processedDemands
+                    , Set<LinePointer> processedSupplies) {
+        if (solution.demands_used().hasContent() && solution.supplies_free().hasContent()) {
+            final int usedDemandIndex = randomness.integer(0, solution.demands_used().size() - 1);
+            final var usedDemand = solution.demands_used().getLines(usedDemandIndex);
+            final var usedDemandPointer = usedDemand.toLinePointer();
+            if (processedDemands.contains(usedDemandPointer)) {
                 return list();
             }
-            final var pieškiršana = atrisinājums.allocations_of_demand(lietotaPrasība).iterator().next();
-            final var lietotsPiedāvājums = atrisinājums.supply_of_allocation(pieškiršana);
-            final var lietotsPiedāvājumuRādītājs = lietotsPiedāvājums.uzRindaRādītājs();
-            if (apstrādatiPiedāvājumi.contains(lietotsPiedāvājumuRādītājs)) {
+            final var allocation = solution.allocations_of_demand(usedDemand).iterator().next();
+            final var usedSupply = solution.supply_of_allocation(allocation);
+            final var usedSupplyPointer = usedSupply.toLinePointer();
+            if (processedSupplies.contains(usedSupplyPointer)) {
                 return list();
             }
-            apstrādatasPrasības.add(lietotasPrasībasRādītājs);
-            apstrādatiPiedāvājumi.add(lietotsPiedāvājumuRādītājs);
+            processedDemands.add(usedDemandPointer);
+            processedSupplies.add(usedSupplyPointer);
             return
                     list(
-                            optimizacijasNotikums(REMOVAL, lietotasPrasībasRādītājs, lietotsPiedāvājumuRādītājs)
-                            , optimizacijasNotikums(
+                            optimizationEvent(REMOVAL, usedDemandPointer, usedSupplyPointer)
+                            , optimizationEvent(
                                     ADDITION
-                                    , atrisinājums.demands()
-                                            .getRawLines(lietotaPrasība.index())
-                                            .uzRindaRādītājs()
-                                    , atrisinājums
+                                    , solution.demands()
+                                            .getRawLines(usedDemand.index())
+                                            .toLinePointer()
+                                    , solution
                                             .supplies()
                                             .getRawLines
-                                                    (nejaušiba.integer(0, atrisinājums.supplies_unused().size()))
-                                            .uzRindaRādītājs()
+                                                    (randomness.integer(0, solution.supplies_free().size()))
+                                            .toLinePointer()
                             ));
         }
         return list();

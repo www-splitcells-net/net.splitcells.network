@@ -14,81 +14,81 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
+import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 public class UsedSupplySwitcher implements Optimization {
-    public static UsedSupplySwitcher lietotaPiedāvājumuSlēdzis() {
+    public static UsedSupplySwitcher usedSupplySwitcher() {
         return new UsedSupplySwitcher(randomness(), 1);
     }
 
-    public static UsedSupplySwitcher lietotaPiedāvājumuSlēdzis(int soluSkaits) {
-        return new UsedSupplySwitcher(randomness(), soluSkaits);
+    public static UsedSupplySwitcher usedSupplySwitcher(int stepCount) {
+        return new UsedSupplySwitcher(randomness(), stepCount);
     }
 
-    public static UsedSupplySwitcher lietotaPiedāvājumuSlēdzis(Randomness nejaušiba) {
-        return new UsedSupplySwitcher(nejaušiba, 1);
+    public static UsedSupplySwitcher usedSupplySwitcher(Randomness randomness) {
+        return new UsedSupplySwitcher(randomness, 1);
     }
 
-    public static UsedSupplySwitcher lietotaPiedāvājumuSlēdzis(Randomness nejaušiba, int soluSkaits) {
-        return new UsedSupplySwitcher(nejaušiba, soluSkaits);
+    public static UsedSupplySwitcher usedSupplySwitcher(Randomness randomness, int stepCount) {
+        return new UsedSupplySwitcher(randomness, stepCount);
     }
 
-    private UsedSupplySwitcher(Randomness nejaušiba, int soluSkaits) {
-        this.nejaušiba = requireNonNull(nejaušiba);
-        this.soluSkaits = soluSkaits;
+    private UsedSupplySwitcher(Randomness randomness, int stepCount) {
+        this.randomness = requireNonNull(randomness);
+        this.stepCount = stepCount;
     }
 
-    private final Randomness nejaušiba;
-    private final int soluSkaits;
+    private final Randomness randomness;
+    private final int stepCount;
 
     @Override
-    public List<OptimizationEvent> optimize(SolutionView atrisinajums) {
-        final List<OptimizationEvent> optimizācijas = list();
-        final var apstrādatiPrasības = Sets.<LinePointer>setOfUniques();
-        final var apstrādatiPiedāvājumi = Sets.<LinePointer>setOfUniques();
-        rangeClosed(1, soluSkaits)
-                .forEach(i -> optimizācijas.addAll
-                        (optimizacijasSoli(atrisinajums, apstrādatiPrasības, apstrādatiPiedāvājumi)));
-        return optimizācijas;
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        final List<OptimizationEvent> optimization = list();
+        final var processedDemands = Sets.<LinePointer>setOfUniques();
+        final var processedSupplies = Sets.<LinePointer>setOfUniques();
+        rangeClosed(1, stepCount)
+                .forEach(i -> optimization.addAll
+                        (optimizationStep(solution, processedDemands, processedSupplies)));
+        return optimization;
     }
 
-    private List<OptimizationEvent> optimizacijasSoli
-            (SolutionView atrisinājums
-                    , Set<LinePointer> apstrādatiPrasības
-                    , Set<LinePointer> apstrādatiPiedāvājumi) {
-        if (atrisinājums.demands_used().size() >= 2) {
-            final int atlaseA = nejaušiba.integer(0, atrisinājums.demands_used().size() - 1);
-            final int atlaseB = nejaušiba.integer(0, atrisinājums.demands_used().size() - 1);
-            if (atlaseA == atlaseB) {
+    private List<OptimizationEvent> optimizationStep
+            (SolutionView solution
+                    , Set<LinePointer> processedDemands
+                    , Set<LinePointer> preocessedSupplies) {
+        if (solution.demands_used().size() >= 2) {
+            final int selectionA = randomness.integer(0, solution.demands_used().size() - 1);
+            final int selectionB = randomness.integer(0, solution.demands_used().size() - 1);
+            if (selectionA == selectionB) {
                 return list();
             }
-            final var lietotaPrasībaA = atrisinājums.demands().gūtRinda(atlaseA);
-            final var vecaPieškiršanaA = atrisinājums.allocations_of_demand(lietotaPrasībaA).iterator().next();
-            final var lietotaPiedāvājumsA = atrisinājums.supply_of_allocation(vecaPieškiršanaA);
+            final var usedDemandA = solution.demands().getLines(selectionA);
+            final var oldAllocationA = solution.allocations_of_demand(usedDemandA).iterator().next();
+            final var usedSupplyA = solution.supply_of_allocation(oldAllocationA);
 
-            final var lietotaPrasībaB = atrisinājums.demands().gūtRinda(atlaseB);
-            final var vecaPieſkirſanaB = atrisinājums.allocations_of_demand(lietotaPrasībaB).iterator().next();
-            final var lietotsPiedāvājumsB = atrisinājums.supply_of_allocation(vecaPieſkirſanaB);
+            final var usedDemandB = solution.demands().getLines(selectionB);
+            final var oldAllocationB = solution.allocations_of_demand(usedDemandB).iterator().next();
+            final var usedSupplyB = solution.supply_of_allocation(oldAllocationB);
 
-            final var lietotasParsībasARāditājs = lietotaPrasībaA.uzRindaRādītājs();
-            final var lietotasPrasībasBRāditājs = lietotaPrasībaB.uzRindaRādītājs();
-            if (apstrādatiPrasības.containsAny(lietotasParsībasARāditājs, lietotasPrasībasBRāditājs)) {
+            final var usedDemandAPointer = usedDemandA.toLinePointer();
+            final var usedDemandBPointer = usedDemandB.toLinePointer();
+            if (processedDemands.containsAny(usedDemandAPointer, usedDemandBPointer)) {
                 return list();
             }
-            final var lietotasPiedāvājumuARāditājs = lietotaPiedāvājumsA.uzRindaRādītājs();
-            final var lietotasPiedāvājumuBRāditājs = lietotsPiedāvājumsB.uzRindaRādītājs();
-            if (apstrādatiPiedāvājumi.containsAny(lietotasPiedāvājumuARāditājs, lietotasPiedāvājumuBRāditājs)) {
+            final var usedSupplyAPointer = usedSupplyA.toLinePointer();
+            final var usedSupplyBPointer = usedSupplyB.toLinePointer();
+            if (preocessedSupplies.containsAny(usedSupplyAPointer, usedSupplyBPointer)) {
                 return list();
             }
-            apstrādatiPrasības.addAll(lietotasParsībasARāditājs, lietotasPrasībasBRāditājs);
-            apstrādatiPiedāvājumi.addAll(lietotasPiedāvājumuARāditājs, lietotasPiedāvājumuBRāditājs);
+            processedDemands.addAll(usedDemandAPointer, usedDemandBPointer);
+            preocessedSupplies.addAll(usedSupplyAPointer, usedSupplyBPointer);
             return
-                    list(optimizacijasNotikums(REMOVAL, lietotasParsībasARāditājs, lietotasPiedāvājumuARāditājs)
-                            , optimizacijasNotikums(REMOVAL, lietotasPrasībasBRāditājs, lietotasPiedāvājumuBRāditājs)
-                            , optimizacijasNotikums(ADDITION, lietotasParsībasARāditājs, lietotasPiedāvājumuBRāditājs)
-                            , optimizacijasNotikums(ADDITION, lietotasPrasībasBRāditājs, lietotasPiedāvājumuARāditājs)
+                    list(optimizationEvent(REMOVAL, usedDemandAPointer, usedSupplyAPointer)
+                            , optimizationEvent(REMOVAL, usedDemandBPointer, usedSupplyBPointer)
+                            , optimizationEvent(ADDITION, usedDemandAPointer, usedSupplyBPointer)
+                            , optimizationEvent(ADDITION, usedDemandBPointer, usedSupplyAPointer)
                     );
         }
         return list();

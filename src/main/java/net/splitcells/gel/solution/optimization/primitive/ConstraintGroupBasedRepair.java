@@ -20,144 +20,144 @@ import static net.splitcells.dem.data.set.Sets.*;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
+import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 
 public class ConstraintGroupBasedRepair implements Optimization {
 
-    public static ConstraintGroupBasedRepair ierobežojumGrupaBalstītsRemonts
-            (Function<List<List<Constraint>>, Optional<List<Constraint>>> pieškiršanasAtlasītajs
-                    , Function<Map<GroupId, Set<Line>>, Optimization> pārdalītājs) {
-        return new ConstraintGroupBasedRepair(pieškiršanasAtlasītajs, pārdalītājs);
+    public static ConstraintGroupBasedRepair constraintGroupBasedRepair
+            (Function<List<List<Constraint>>, Optional<List<Constraint>>> allocationSelector
+                    , Function<Map<GroupId, Set<Line>>, Optimization> reallocator) {
+        return new ConstraintGroupBasedRepair(allocationSelector, reallocator);
     }
 
-    public static ConstraintGroupBasedRepair ierobežojumGrupaBalstītsRemonts
-            (Function<List<List<Constraint>>, Optional<List<Constraint>>> pieškiršanasAtlasītajs) {
-        return new ConstraintGroupBasedRepair(pieškiršanasAtlasītajs, nejāuhšsPārdalītājs());
+    public static ConstraintGroupBasedRepair constraintGroupBasedRepair
+            (Function<List<List<Constraint>>, Optional<List<Constraint>>> allocationSelector) {
+        return new ConstraintGroupBasedRepair(allocationSelector, randomReallocator());
     }
 
-    public static ConstraintGroupBasedRepair ierobežojumGrupaBalstītsRemonts() {
+    public static ConstraintGroupBasedRepair constraintGroupBasedRepair() {
         final var randomness = randomness();
         return new ConstraintGroupBasedRepair
-                (piešķiršanasGruppas -> {
-                    final var kandidāti = piešķiršanasGruppas
+                (allocationsGroups -> {
+                    final var candidates = allocationsGroups
                             .stream()
-                            .filter(piešķiršanasGruppasTaka -> !piešķiršanasGruppasTaka
+                            .filter(allocationGroupsPath -> !allocationGroupsPath
                                     .lastValue()
                                     .get()
-                                    .neievērotaji()
+                                    .defying()
                                     .isEmpty())
                             .collect(toList());
-                    if (kandidāti.isEmpty()) {
+                    if (candidates.isEmpty()) {
                         return Optional.empty();
                     }
-                    return Optional.of(randomness.chooseOneOf(kandidāti));
-                }, nejāuhšsPārdalītājs());
+                    return Optional.of(randomness.chooseOneOf(candidates));
+                }, randomReallocator());
     }
 
-    private static final Function<Map<GroupId, Set<Line>>, Optimization> nejāuhšsPārdalītājs() {
+    private static final Function<Map<GroupId, Set<Line>>, Optimization> randomReallocator() {
         final var randomness = randomness();
-        return indeksuBalstītsPārdalītājs(i -> randomness.integer(0, i));
+        return indexBasedReallocator(i -> randomness.integer(0, i));
     }
 
-    public static final Function<Map<GroupId, Set<Line>>, Optimization> indeksuBalstītsPārdalītājs
-            (Function<Integer, Integer> indeksuAtlasītajs) {
-        return brīvasPrasībasGrupas -> atrisinājums -> {
-            final Set<OptimizationEvent> pārdale = setOfUniques();
-            final var nelietotiPiedāvājumi = atrisinājums.supplies_unused().getLines();
-            brīvasPrasībasGrupas.entrySet().forEach(grupa -> {
-                grupa.getValue().forEach(prāsiba -> {
-                    if (nelietotiPiedāvājumi.isEmpty()) {
+    public static final Function<Map<GroupId, Set<Line>>, Optimization> indexBasedReallocator
+            (Function<Integer, Integer> indexSelector) {
+        return freeDemandGroups -> solution -> {
+            final Set<OptimizationEvent> reallocations = setOfUniques();
+            final var supplyFree = solution.supplies_free().getLines();
+            freeDemandGroups.entrySet().forEach(grup -> {
+                grup.getValue().forEach(demand -> {
+                    if (supplyFree.isEmpty()) {
                         return;
                     }
-                    pārdale.ensureContains
-                            (optimizacijasNotikums
+                    reallocations.ensureContains
+                            (optimizationEvent
                                     (ADDITION
-                                            , prāsiba.uzRindaRādītājs()
-                                            , nelietotiPiedāvājumi
-                                                    .remove((int) indeksuAtlasītajs.apply(nelietotiPiedāvājumi.size() - 1))
-                                                    .uzRindaRādītājs()));
+                                            , demand.toLinePointer()
+                                            , supplyFree
+                                                    .remove((int) indexSelector.apply(supplyFree.size() - 1))
+                                                    .toLinePointer()));
                 });
             });
-            return listWithValuesOf(pārdale);
+            return listWithValuesOf(reallocations);
         };
     }
 
-    private final Function<List<List<Constraint>>, Optional<List<Constraint>>> pieškiršanasAtlasītajs;
-    private final Function<Map<GroupId, Set<Line>>, Optimization> pārdalītājs;
+    private final Function<List<List<Constraint>>, Optional<List<Constraint>>> allocationSelector;
+    private final Function<Map<GroupId, Set<Line>>, Optimization> reallocator;
 
     protected ConstraintGroupBasedRepair
-            (Function<List<List<Constraint>>, Optional<List<Constraint>>> pieškiršanasAtlasītajs
-                    , Function<Map<GroupId, Set<Line>>, Optimization> pārdalītājs) {
-        this.pieškiršanasAtlasītajs = pieškiršanasAtlasītajs;
-        this.pārdalītājs = pārdalītājs;
+            (Function<List<List<Constraint>>, Optional<List<Constraint>>> allocationSelector
+                    , Function<Map<GroupId, Set<Line>>, Optimization> reallocator) {
+        this.allocationSelector = allocationSelector;
+        this.reallocator = reallocator;
     }
 
     @Override
-    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
-        final var grupuNoIerobežojumuGrupu = grupuNoIerobežojumuGrupu(atrisinājums);
-        final var prasībasGrupēšana = grupuNoIerobežojumuGrupu
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        final var groupOfConstraintGroup = groupOfConstraintGroup(solution);
+        final var demandGrouping = groupOfConstraintGroup
                 .map(e -> e
                         .lastValue()
-                        .map(f -> prāsībasGrupēšana(f, atrisinājums))
+                        .map(f -> demandGrouping(f, solution))
                         .orElseGet(() -> map()))
                 .orElseGet(() -> map());
-        prasībasGrupēšana.put(null, setOfUniques(atrisinājums.demands_unused().getLines()));
-        final var optimizāija = grupuNoIerobežojumuGrupu
+        demandGrouping.put(null, setOfUniques(solution.demands_unused().getLines()));
+        final var optimization = groupOfConstraintGroup
                 .map(e -> e
                         .lastValue()
-                        .map(f -> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(atrisinājums, f))
+                        .map(f -> freeDefyingGroupOfConstraintGroup(solution, f))
                         .orElseGet(() -> list()))
                 .orElseGet(() -> list());
-        optimizāija.withAppended(pārdali(atrisinājums, prasībasGrupēšana));
-        return optimizāija;
+        optimization.withAppended(reallocate(solution, demandGrouping));
+        return optimization;
     }
 
-    public List<OptimizationEvent> pārdali(SolutionView atrisinājums, Map<GroupId, Set<Line>> brīvasPrasībasGrupas) {
-        return pārdalītājs.apply(brīvasPrasībasGrupas).optimize(atrisinājums);
+    public List<OptimizationEvent> reallocate(SolutionView solution, Map<GroupId, Set<Line>> freeDemandGroups) {
+        return reallocator.apply(freeDemandGroups).optimize(solution);
     }
 
-    public Map<GroupId, Set<Line>> prāsībasGrupēšana(Constraint ierobežojumuGrupēšāna, SolutionView atrisinājums) {
-        final Map<GroupId, Set<Line>> prāsībasGrupēšana = map();
-        ierobežojumuGrupēšāna
-                .rindasAbstrāde()
+    public Map<GroupId, Set<Line>> demandGrouping(Constraint constraintGrouping, SolutionView solution) {
+        final Map<GroupId, Set<Line>> demandGrouping = map();
+        constraintGrouping
+                .lineProcessing()
                 .getLines()
                 .stream()
-                .map(abstrāde -> pair(abstrāde.value(Constraint.RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID), abstrāde.value(Constraint.RINDA)))
-                .forEach(abstrāde -> {
-                    final Set<Line> grupa;
-                    if (!prāsībasGrupēšana.containsKey(abstrāde.getKey())) {
-                        grupa = Sets.setOfUniques();
-                        prāsībasGrupēšana.put(abstrāde.getKey(), grupa);
+                .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP_ID), processing.value(Constraint.LINE)))
+                .forEach(processing -> {
+                    final Set<Line> grup;
+                    if (!demandGrouping.containsKey(processing.getKey())) {
+                        grup = Sets.setOfUniques();
+                        demandGrouping.put(processing.getKey(), grup);
                     } else {
-                        grupa = prāsībasGrupēšana.get(abstrāde.getKey());
+                        grup = demandGrouping.get(processing.getKey());
                     }
-                    grupa.with(abstrāde.getValue());
+                    grup.with(processing.getValue());
                 });
-        return prāsībasGrupēšana;
+        return demandGrouping;
     }
 
-    public Optional<List<Constraint>> grupuNoIerobežojumuGrupu(SolutionView atrisinājums) {
-        return pieškiršanasAtlasītajs.apply(Constraint.piešķiršanasGruppas(atrisinājums.constraint()));
+    public Optional<List<Constraint>> groupOfConstraintGroup(SolutionView solution) {
+        return allocationSelector.apply(Constraint.allocationGroups(solution.constraint()));
     }
 
-    public List<OptimizationEvent> izbrīvoNeievērotajuGrupuNoIerobežojumuGrupu(SolutionView atrisinājums, Constraint ierobežojums) {
-        final var ienākošasGrupas = Sets.setOfUniques
-                (ierobežojums
-                        .rindasAbstrāde()
-                        .columnView(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
-                        .vertības());
-        return ienākošasGrupas
+    public List<OptimizationEvent> freeDefyingGroupOfConstraintGroup(SolutionView solution, Constraint constraint) {
+        final var incomingGroups = Sets.setOfUniques
+                (constraint
+                        .lineProcessing()
+                        .columnView(Constraint.INCOMING_CONSTRAINT_GROUP_ID)
+                        .values());
+        return incomingGroups
                 .stream()
-                .filter(grupa -> !ierobežojums.neievērotaji(grupa).isEmpty())
-                .map(grupa -> ierobežojums.rindasAbstrāde().columnView(Constraint.RINDA).vertības())
-                .flatMap(straumeNoRindasSarakstiem -> straumeNoRindasSarakstiem.stream())
+                .filter(group -> !constraint.defying(group).isEmpty())
+                .map(group -> constraint.lineProcessing().columnView(Constraint.LINE).values())
+                .flatMap(streamOfLineList -> streamOfLineList.stream())
                 .distinct()
-                .map(piešķiršana -> optimizacijasNotikums
+                .map(allocation -> optimizationEvent
                         (REMOVAL
-                                , atrisinājums.demand_of_allocation(piešķiršana).uzRindaRādītājs()
-                                , atrisinājums.supply_of_allocation(piešķiršana).uzRindaRādītājs()))
+                                , solution.demand_of_allocation(allocation).toLinePointer()
+                                , solution.supply_of_allocation(allocation).toLinePointer()))
                 .collect(toList());
     }
 }

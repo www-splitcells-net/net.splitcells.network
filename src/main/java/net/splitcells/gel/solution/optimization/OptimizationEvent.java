@@ -17,7 +17,7 @@ public final class OptimizationEvent implements Domable {
     private final LinePointer piedāvājums;
     private final StepType solisTips;
 
-    public static OptimizationEvent optimizacijasNotikums(StepType solisTips, LinePointer prasība, LinePointer piedāvājums) {
+    public static OptimizationEvent optimizationEvent(StepType solisTips, LinePointer prasība, LinePointer piedāvājums) {
         return new OptimizationEvent(solisTips, prasība, piedāvājums);
     }
 

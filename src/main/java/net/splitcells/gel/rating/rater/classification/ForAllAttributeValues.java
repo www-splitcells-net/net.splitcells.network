@@ -47,8 +47,8 @@ public class ForAllAttributeValues implements Rater {
     @Override
     public RatingEvent vērtē_pēc_papildinājumu
             (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final var grupēšanasVertība = papildinājums.value(Constraint.RINDA).value(atribūts);
-        final var ienākošasGrupasId = papildinājums.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
+        final var grupēšanasVertība = papildinājums.value(Constraint.LINE).value(atribūts);
+        final var ienākošasGrupasId = papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID);
         if (!grupa.containsKey(ienākošasGrupasId)) {
             grupa.put(ienākošasGrupasId, map());
         }

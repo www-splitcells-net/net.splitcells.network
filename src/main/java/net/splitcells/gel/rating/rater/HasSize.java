@@ -43,7 +43,7 @@ public class HasSize implements Rater {
                 , lokalsNovērtejums()
                         .arIzdalīšanaUz(bērni)
                         .arNovērtējumu(indivīdsNovērtējums)
-                        .arRadītuGrupasId(papildinājums.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))
+                        .arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
         );
         return padildinājumuNovērtējumu;
     }
@@ -58,7 +58,7 @@ public class HasSize implements Rater {
                             lokalsNovērtejums().
                                     arIzdalīšanaUz(children).
                                     arNovērtējumu(cena).
-                                    arRadītuGrupasId(maiņīts.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))
+                                    arRadītuGrupasId(maiņīts.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
                     );
                 });
         return rindasNovērtējumu;

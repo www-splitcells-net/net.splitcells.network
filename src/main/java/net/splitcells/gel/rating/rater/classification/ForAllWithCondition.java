@@ -19,8 +19,8 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.constraint.Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID;
-import static net.splitcells.gel.constraint.Constraint.RINDA;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP_ID;
+import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.structure.LocalRatingI.lokalsNovērtejums;
 import static net.splitcells.gel.rating.rater.RatingEventI.novērtejumuNotikums;
 import static net.splitcells.gel.rating.type.Cost.bezMaksas;
@@ -42,7 +42,7 @@ public class ForAllWithCondition<T> implements Rater {
     public RatingEvent vērtē_pēc_papildinājumu
             (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
         final List<Constraint> mērķBērni;
-        if (nosacījums.test(papildinājums.value(RINDA))) {
+        if (nosacījums.test(papildinājums.value(LINE))) {
             mērķBērni = bērni;
         } else {
             mērķBērni = list();
@@ -53,7 +53,7 @@ public class ForAllWithCondition<T> implements Rater {
                         , lokalsNovērtejums()
                                 .arIzdalīšanaUz(mērķBērni)
                                 .arNovērtējumu(bezMaksas())
-                                .arRadītuGrupasId(papildinājums.value(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)));
+                                .arRadītuGrupasId(papildinājums.value(INCOMING_CONSTRAINT_GROUP_ID)));
         return novērtejumuNotikums;
     }
 

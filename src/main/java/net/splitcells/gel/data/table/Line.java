@@ -22,7 +22,7 @@ public interface Line extends Domable {
 
     int index();
 
-    default LinePointer uzRindaRādītājs() {
+    default LinePointer toLinePointer() {
         return rindasRādītājs(konteksts(), index());
     }
 

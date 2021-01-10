@@ -36,10 +36,10 @@ import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 
 public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscriber, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
-    Attribute<Line> RINDA = atributs(Line.class, "rinda");
+    Attribute<Line> LINE = atributs(Line.class, "rinda");
     Attribute<java.util.List<Constraint>> IZDALĪŠANA_UZ = listAttribute(Constraint.class, "idalīšana uz");
-    Attribute<GroupId> IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID = atributs(GroupId.class, "ienākošie ierobežojumu grupas id");
-    Attribute<GroupId> RADĪTAS_IEROBEŽOJUMU_GRUPAS_ID = atributs(GroupId.class, "radītas ierobežojumu grupas id");
+    Attribute<GroupId> INCOMING_CONSTRAINT_GROUP_ID = atributs(GroupId.class, "ienākošie ierobežojumu grupas id");
+    Attribute<GroupId> RESULTING_CONSTRAINT_GROUP_ID = atributs(GroupId.class, "radītas ierobežojumu grupas id");
     Attribute<Rating> NOVĒRTĒJUMS = atributs(Rating.class, "novērtējums");
 
     static List<List<Constraint>> piešķiršanasGruppas(List<Constraint> momentānaTaka) {
@@ -54,7 +54,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         return piešķiršanasGruppas;
     }
 
-    static List<List<Constraint>> piešķiršanasGruppas(Constraint ierobežojums) {
+    static List<List<Constraint>> allocationGroups(Constraint ierobežojums) {
         return piešķiršanasGruppas(list(ierobežojums));
     }
 
@@ -126,10 +126,10 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         return izpildītāji(injectionGroup());
     }
 
-    Set<Line> neievērotaji(GroupId grupaId);
+    Set<Line> defying(GroupId grupaId);
 
-    default Set<Line> neievērotaji() {
-        return neievērotaji(injectionGroup());
+    default Set<Line> defying() {
+        return defying(injectionGroup());
     }
 
     Line pieliktRadījums(LocalRating vietējieNovērtējums);
@@ -138,7 +138,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         return QueryI.jautājums(this);
     }
 
-    Table rindasAbstrāde();
+    Table lineProcessing();
 
     Element toDom();
 

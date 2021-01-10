@@ -1,7 +1,7 @@
 package net.splitcells.gel.solution.optimization.primitive;
 
 /**
- * DARĪT
+ * TODO
  */
 public class AttributeGroupBasedRepair {
 }

@@ -77,8 +77,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Database supplies_unused() {
-        return this.piešķiršanas.supplies_unused();
+    public Database supplies_free() {
+        return this.piešķiršanas.supplies_free();
     }
 
     @Override

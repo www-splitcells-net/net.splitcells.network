@@ -37,7 +37,7 @@ public class ConstantRater implements Rater {
                 papildinājums
                 , lokalsNovērtejums()
                         .arIzdalīšanaUz(bērni)
-                        .arRadītuGrupasId(papildinājums.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID))
+                        .arRadītuGrupasId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID))
                         .arNovērtējumu(novērtējums));
         return novērtejumuNotikums;
     }

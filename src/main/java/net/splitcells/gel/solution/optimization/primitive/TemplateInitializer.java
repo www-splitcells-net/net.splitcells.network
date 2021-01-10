@@ -14,49 +14,49 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 
 public class TemplateInitializer implements Optimization {
-    public static TemplateInitializer veidnesIzpildītājs(Table veidne) {
-        return new TemplateInitializer(veidne);
+    public static TemplateInitializer templateInitializer(Table template) {
+        return new TemplateInitializer(template);
     }
 
-    private final Table veidne;
+    private final Table template;
 
-    private TemplateInitializer(Table veidne) {
-        this.veidne = veidne;
+    private TemplateInitializer(Table template) {
+        this.template = template;
     }
 
     @Override
-    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
-        final List<OptimizationEvent> optimicaija = list();
-        final Set<Line> lietotasPrasības = setOfUniques();
-        final Set<Line> lietotasPiedāvājumi = setOfUniques();
-        veidne.getLines().forEach(rinda -> {
-            final var prasībasVertība = atrisinājums.demands_unused()
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        final List<OptimizationEvent> optimization = list();
+        final Set<Line> usedDemands = setOfUniques();
+        final Set<Line> usedSupplies = setOfUniques();
+        template.getLines().forEach(line -> {
+            final var demandValues = solution.demands_unused()
                     .headerView()
                     .stream()
-                    .map(nosaukums -> rinda.value(nosaukums))
+                    .map(attribute -> line.value(attribute))
                     .collect(toList());
-            final var piedāvājumuVertība = atrisinājums.supplies_unused()
+            final var supplyValues = solution.supplies_free()
                     .headerView()
                     .stream()
-                    .map(nosaukums -> rinda.value(nosaukums))
+                    .map(attribute -> line.value(attribute))
                     .collect(toList());
-            final var atlasītaPrasība = atrisinājums.demands_unused()
-                    .uzmeklēVienādus(prasībasVertība)
-                    .filter(e -> !lietotasPrasības.contains(e))
+            final var selectedDemand = solution.demands_unused()
+                    .lookupEquals(demandValues)
+                    .filter(e -> !usedDemands.contains(e))
                     .findFirst();
-            final var atlasītsPiedāvājums = atrisinājums.supplies_unused()
-                    .uzmeklēVienādus(piedāvājumuVertība)
-                    .filter(e -> !lietotasPiedāvājumi.contains(e))
+            final var selectedSupply = solution.supplies_free()
+                    .lookupEquals(supplyValues)
+                    .filter(e -> !usedSupplies.contains(e))
                     .findFirst();
-            if (atlasītaPrasība.isPresent() && atlasītsPiedāvājums.isPresent()) {
-                lietotasPrasības.ensureContains(atlasītaPrasība.get());
-                lietotasPiedāvājumi.ensureContains(atlasītsPiedāvājums.get());
-                optimicaija.add(OptimizationEvent.optimizacijasNotikums
+            if (selectedDemand.isPresent() && selectedSupply.isPresent()) {
+                usedDemands.ensureContains(selectedDemand.get());
+                usedSupplies.ensureContains(selectedSupply.get());
+                optimization.add(OptimizationEvent.optimizationEvent
                         (StepType.ADDITION
-                                , atlasītaPrasība.get().uzRindaRādītājs()
-                                , atlasītsPiedāvājums.get().uzRindaRādītājs()));
+                                , selectedDemand.get().toLinePointer()
+                                , selectedSupply.get().toLinePointer()));
             }
         });
-        return optimicaija;
+        return optimization;
     }
 }

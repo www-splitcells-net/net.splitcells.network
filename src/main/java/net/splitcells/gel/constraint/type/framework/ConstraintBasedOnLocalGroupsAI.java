@@ -36,15 +36,15 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
 
     @Override
     public void apstrāde_rindu_papildinajumu(Line papildinājums) {
-        final var ienākošaGrupa = papildinājums.value(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
+        final var ienākošaGrupa = papildinājums.value(INCOMING_CONSTRAINT_GROUP_ID);
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pēc_papildinājumu(
-                        rindas.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                        rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID)
                                 .uzmeklēšana(ienākošaGrupa)
                         , papildinājums
                         , bērni
                         , rindasApstrāde
-                                .columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                                .columnView(INCOMING_CONSTRAINT_GROUP_ID)
                                 .uzmeklēšana(ienākošaGrupa)));
     }
 
@@ -62,14 +62,14 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     protected void apstrāda_rindas_primsNoņemšana(GroupId ienākošaGrupaId, Line noņemšana) {
         apstrādeNovērtējumiNotikumu(
                 vērtētājs.vērtē_pirms_noņemšana(
-                        rindas.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)
-                        , rindas.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID)
+                        rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID).uzmeklēšana(ienākošaGrupaId)
+                        , rindas.columnView(INCOMING_CONSTRAINT_GROUP_ID)
                                 .uzmeklēšana(ienākošaGrupaId)
-                                .columnView(RINDA)
+                                .columnView(LINE)
                                 .uzmeklēšana(noņemšana)
-                                .gūtRinda(0)
+                                .getLines(0)
                         , bērni
-                        , rindasApstrāde.columnView(IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID).uzmeklēšana(ienākošaGrupaId)));
+                        , rindasApstrāde.columnView(INCOMING_CONSTRAINT_GROUP_ID).uzmeklēšana(ienākošaGrupaId)));
         super.apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
     }
 

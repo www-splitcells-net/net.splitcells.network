@@ -9,7 +9,7 @@ public interface ColumnView<T> extends ListView<T>, LookupComponents<T> {
     /**
      * JAUDA
      */
-    default List<T> vertības() {
+    default List<T> values() {
         final List<T> vertība = Lists.<T>list();
         this.stream().filter(e -> e != null).forEach(e -> vertība.add(e));
         return vertība;

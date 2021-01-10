@@ -51,9 +51,9 @@ public class ForAllValueCombinations implements Rater {
     public RatingEvent vērtē_pēc_papildinājumu
             (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
         final List<Object> grupasVertības = list();
-        final var rindasVērtība = papildinājums.value(Constraint.RINDA);
+        final var rindasVērtība = papildinājums.value(Constraint.LINE);
         atribūti.forEach(e -> grupasVertības.add(rindasVērtība.value(e)));
-        final var ienākošasGrupasId = papildinājums.value(Constraint.IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
+        final var ienākošasGrupasId = papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP_ID);
         if (!grupas.containsKey(ienākošasGrupasId)) {
             grupas.put(ienākošasGrupasId, map());
         }

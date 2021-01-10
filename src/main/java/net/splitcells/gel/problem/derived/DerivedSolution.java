@@ -93,8 +93,8 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Database supplies_unused() {
-        return piešķiršanas.supplies_unused();
+    public Database supplies_free() {
+        return piešķiršanas.supplies_free();
     }
 
     @Override

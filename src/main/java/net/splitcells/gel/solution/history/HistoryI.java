@@ -114,19 +114,19 @@ public class HistoryI implements History {
         final var indekss = size() - 1;
         final var notikumuKoNoņemnt = columnView(PIEŠĶIRŠANA_ID)
                 .uzmeklēšana(indekss)
-                .gūtRinda(0)
+                .getLines(0)
                 .value(PIEŠĶIRŠANAS_NOTIKUMS);
         final var notikumuTips = notikumuKoNoņemnt.tips();
         if (notikumuTips.equals(AllocationChangeType.PAPILDINĀJUMS)) {
             final var pieškiršanas = solution.allocationsOf
-                    (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(solution.demands()).get()
-                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(solution.supplies()).get());
+                    (notikumuKoNoņemnt.demand().toLinePointer().interpretē(solution.demands()).get()
+                            , notikumuKoNoņemnt.supply().toLinePointer().interpretē(solution.supplies()).get());
             assertThat(pieškiršanas).hasSize(1);
             pieškiršanas.forEach(e -> solution.remove(e));
         } else if (notikumuTips.equals(AllocationChangeType.NOŅEMŠANA)) {
             solution.allocate
-                    (notikumuKoNoņemnt.demand().uzRindaRādītājs().interpretē(solution.demands()).get()
-                            , notikumuKoNoņemnt.supply().uzRindaRādītājs().interpretē(solution.supplies()).get());
+                    (notikumuKoNoņemnt.demand().toLinePointer().interpretē(solution.demands()).get()
+                            , notikumuKoNoņemnt.supply().toLinePointer().interpretē(solution.supplies()).get());
         } else {
             throw new UnsupportedOperationException();
         }
@@ -134,8 +134,8 @@ public class HistoryI implements History {
     }
 
     protected void atgrieztPedeijo_noņemt(int indekss) {
-        noņemt_(columnView(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss + 1).gūtRinda(0));
-        noņemt_(columnView(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss).gūtRinda(0));
+        noņemt_(columnView(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss + 1).getLines(0));
+        noņemt_(columnView(PIEŠĶIRŠANA_ID).uzmeklēšana(indekss).getLines(0));
     }
 
     protected void noņemt_(Line rinda) {
@@ -202,8 +202,8 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database supplies_unused() {
-        return piešķiršanas.supplies_unused();
+    public Database supplies_free() {
+        return piešķiršanas.supplies_free();
     }
 
     @Override

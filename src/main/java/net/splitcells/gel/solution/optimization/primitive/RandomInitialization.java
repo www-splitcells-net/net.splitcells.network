@@ -8,28 +8,28 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizacijasNotikums;
+import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 
 public class RandomInitialization implements Optimization {
-    public static RandomInitialization nejaušsInicialiyētājs() {
+    public static RandomInitialization randomInitialization() {
         return new RandomInitialization(randomness());
     }
 
-    private final Randomness nejaušiba;
+    private final Randomness randomness;
 
     private RandomInitialization(Randomness nejaušiba) {
-        this.nejaušiba = nejaušiba;
+        this.randomness = nejaušiba;
     }
 
     @Override
-    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
-        if (atrisinājums.demands_unused().hasContent() && atrisinājums.supplies_unused().hasContent()) {
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        if (solution.demands_unused().hasContent() && solution.supplies_free().hasContent()) {
             return list(
-                    optimizacijasNotikums
+                    optimizationEvent
                             (ADDITION
-                                    , nejaušiba.chooseOneOf(atrisinājums.demands_unused().getLines()).uzRindaRādītājs()
-                                    , nejaušiba.chooseOneOf(atrisinājums.supplies_unused().getLines()).uzRindaRādītājs()));
+                                    , randomness.chooseOneOf(solution.demands_unused().getLines()).toLinePointer()
+                                    , randomness.chooseOneOf(solution.supplies_free().getLines()).toLinePointer()));
 
         }
         return list();

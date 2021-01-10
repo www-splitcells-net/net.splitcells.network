@@ -53,7 +53,7 @@ public interface Table extends Discoverable, Domable {
         return rawLinesView().get(indekss);
     }
 
-    default Line gūtRinda(int indekss) {
+    default Line getLines(int indekss) {
         return getLines().get(indekss);
     }
 
@@ -97,7 +97,7 @@ public interface Table extends Discoverable, Domable {
      */
     Line lookupEquals(Attribute<Line> atribūts, Line other);
 
-    default Stream<Line> uzmeklēVienādus(List<Object> vertības) {
+    default Stream<Line> lookupEquals(List<Object> vertības) {
         return getLines().stream()
                 .filter(rinda ->
                         IntStream.range(0, headerView().size())

@@ -74,7 +74,7 @@ public interface Solution extends Problem, SolutionView {
         if (event.soluTips().equals(ADDITION)) {
             this.allocate(
                     demands_unused().getRawLines(event.demand().interpret().get().index()),
-                    supplies_unused().getRawLines(event.supply().interpret().get().index()));
+                    supplies_free().getRawLines(event.supply().interpret().get().index()));
         } else if (event.soluTips().equals(REMOVAL)) {
             final var demandBeforeRemoval = event.demand().interpret();
             final var supplyBeforeRemoval = event.supply().interpret();

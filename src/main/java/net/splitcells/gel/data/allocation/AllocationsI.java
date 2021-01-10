@@ -115,7 +115,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Database supplies_unused() {
+    public Database supplies_free() {
         return piedāvājumi_nelietoti;
     }
 

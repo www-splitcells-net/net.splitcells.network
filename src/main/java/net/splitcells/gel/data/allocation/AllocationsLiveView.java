@@ -13,7 +13,7 @@ public interface AllocationsLiveView extends Table {
 
     Database supplies_used();
 
-    Database supplies_unused();
+    Database supplies_free();
 
     Database demands();
 

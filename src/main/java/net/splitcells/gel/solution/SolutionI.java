@@ -91,8 +91,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database supplies_unused() {
-		return this.problem.supplies_unused();
+	public Database supplies_free() {
+		return this.problem.supplies_free();
 	}
 
 	@java.lang.SuppressWarnings("all")

@@ -94,7 +94,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Set<Line> neievērotaji(GroupId grupaId) {
+    public Set<Line> defying(GroupId grupaId) {
         throw not_implemented_yet();
     }
 
@@ -104,7 +104,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Allocations rindasAbstrāde() {
+    public Allocations lineProcessing() {
         throw not_implemented_yet();
     }
 
