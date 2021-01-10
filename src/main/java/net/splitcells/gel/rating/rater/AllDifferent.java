@@ -5,16 +5,17 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.IncorrectImplementation.incorrectImplementation;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
@@ -25,96 +26,97 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.Constraint;
 
 public class AllDifferent<T> implements Rater {
-    private final Attribute<T> atribūts;
-    private final Map<T, Predicate<Line>> predikāts = map();
-    private final Function<T, Predicate<Line>> predikātaRažotājs;
-    private final List<Discoverable> kontekts = list();
+    private final Attribute<T> attribute;
+    private final Map<T, Predicate<Line>> predicate = map();
+    private final Function<T, Predicate<Line>> predicateFactory;
+    private final List<Discoverable> contexts = list();
 
-    public static <R> AllDifferent<R> visiemAtšķirība(Attribute<R> arg) {
-        return new AllDifferent<>(arg);
+    public static <R> AllDifferent<R> allDifferent(Attribute<R> attribute) {
+        return new AllDifferent<>(attribute);
     }
 
-    private AllDifferent(Attribute<T> arg) {
-        atribūts = arg;
-        predikātaRažotājs = value -> {
-            return line -> line.value(atribūts).equals(value);
-        };
+    private AllDifferent(Attribute<T> attribute) {
+        this.attribute = attribute;
+        predicateFactory = value -> line -> line.value(this.attribute).equals(value);
+        ;
     }
 
-    private Predicate<Line> predikāts(T value) {
-        if (!predikāts.containsKey(value)) {
-            predikāts.put(value, predikātaRažotājs.apply(value));
+    private Predicate<Line> predicate(T value) {
+        if (!predicate.containsKey(value)) {
+            predicate.put(value, predicateFactory.apply(value));
         }
-        return predikāts.get(value);
+        return predicate.get(value);
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final T vertība = papildinājums.value(Constraint.LINE).value(atribūts);
-        final var grupa = rindas.columnView(Constraint.LINE).uzmeklēšana(predikāts(vertība));
-        final var novērtejumuNotikums = RatingEventI.ratingEvent();
-        if (1 == grupa.size()) {
-            novērtejumuNotikums.additions().put(
-                    papildinājums
+    public RatingEvent rating_after_addition(Table lines, Line addition, List<Constraint> children
+            , Table ratingsBeforeAddition) {
+        final T value = addition.value(Constraint.LINE).value(attribute);
+        final var group = lines.columnView(Constraint.LINE).uzmeklēšana(predicate(value));
+        final var ratingEvent = ratingEvent();
+        if (1 == group.size()) {
+            ratingEvent.additions().put(
+                    addition
                     , localRating()
-                            .withPropagationTo(bērni)
+                            .withPropagationTo(children)
                             .withRating(noCost())
-                            .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
-        } else if (2 == grupa.size()) {
+                            .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+        } else if (2 == group.size()) {
             if (ENFORCING_UNIT_CONSISTENCY) {
-                assertThat(grupa.rawLinesView().stream().filter(e -> e != null)).hasSize(2);
+                assertThat(group.rawLinesView().stream().filter(e -> e != null)).hasSize(2);
             }
-            // DARĪT Parametrizē pārbaudi.
-            grupa.rawLinesView().stream()
+            // TODO Parameterize test.
+            group.rawLinesView().stream()
                     .filter(e -> e != null)
-                    .forEach(e -> novērtejumuNotikums.additions()
+                    .forEach(e -> ratingEvent.additions()
                             .put(e//
                                     , localRating()
-                                            .withPropagationTo(bērni)
+                                            .withPropagationTo(children)
                                             .withRating(cost(1.0))
-                                            .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
-            grupa.rawLinesView().stream()
+                                            .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
+            group.rawLinesView().stream()
                     .filter(e -> e != null)
-                    .filter(e -> e.index() != papildinājums.index())
-                    .forEach(e -> novērtejumuNotikums.removal().add(e));
-        } else if (2 < grupa.size()) {
-            // DARĪT Parametrizē pārbaudi.
-            novērtejumuNotikums.additions().put
-                    (papildinājums
+                    .filter(e -> e.index() != addition.index())
+                    .forEach(e -> ratingEvent.removal().add(e));
+        } else if (2 < group.size()) {
+            // TODO Parameterize test.
+            ratingEvent.additions().put
+                    (addition
                             , localRating()
-                                    .withPropagationTo(bērni)
+                                    .withPropagationTo(children)
                                     .withRating(cost(1.0))
-                                    .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+                                    .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
         } else {
-            throw incorrectImplementation("" + grupa.size());
+            throw incorrectImplementation("" + group.size());
         }
-        return novērtejumuNotikums;
+        return ratingEvent;
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table rindas, Line noņemšana, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        final T vērtība = noņemšana.value(Constraint.LINE).value(atribūts);
-        final var grupa = rindas.columnView(Constraint.LINE).uzmeklēšana(predikāts(vērtība));
-        final var novērtejumuNotikums = RatingEventI.ratingEvent();
-        if (1 == grupa.size()) {
+    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children
+            , Table ratingBeforeRemoval) {
+        final T value = removal.value(Constraint.LINE).value(attribute);
+        final var group = lines.columnView(Constraint.LINE).uzmeklēšana(predicate(value));
+        final var ratingEvent = ratingEvent();
+        if (1 == group.size()) {
             // Before removal there was 1 duplication and now there is now duplicate lines
             // for this value present anymore.
             if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-                assertThat(grupa.rawLinesView().stream().filter(e -> e != null)).hasSize(1);
+                assertThat(group.rawLinesView().stream().filter(e -> e != null)).hasSize(1);
             }
-            grupa.rawLinesView().stream()
+            group.rawLinesView().stream()
                     .filter(e -> e != null)
                     .forEach(e -> {
-                        novērtejumuNotikums.removal().add(e);
-                        novērtejumuNotikums.additions()
+                        ratingEvent.removal().add(e);
+                        ratingEvent.additions()
                                 .put(e
                                         , localRating()
-                                                .withPropagationTo(bērni)
+                                                .withPropagationTo(children)
                                                 .withRating(noCost())
-                                                .withResultingGroupId(noņemšana.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+                                                .withResultingGroupId(removal.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
                     });
         }
-        return novērtejumuNotikums;
+        return ratingEvent;
     }
 
     @Override
@@ -123,22 +125,22 @@ public class AllDifferent<T> implements Rater {
     }
 
     @Override
-    public net.splitcells.dem.data.set.list.List<Domable> arguments() {
-        return list(atribūts);
+    public List<Domable> arguments() {
+        return list(attribute);
     }
 
     @Override
     public void addContext(Discoverable context) {
-        kontekts.add(context);
+        contexts.add(context);
     }
 
     @Override
-    public Collection<net.splitcells.dem.data.set.list.List<String>> paths() {
-        return kontekts.stream().map(Discoverable::path).collect(toList());
+    public Collection<List<String>> paths() {
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ", " + atribūts.name();
+        return getClass().getSimpleName() + ", " + attribute.name();
     }
 }

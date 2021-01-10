@@ -3,13 +3,15 @@ package net.splitcells.gel.rating.rater;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Function;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
@@ -23,56 +25,60 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.rating.structure.Rating;
 
 public class RaterBasedOnLineValue implements Rater {
-    public static Rater rindasVertībasBalstītasUzGrupetajs(String apraksts, Function<Line, Integer> grupetajs) {
-        return rindasVertībasBalstītasUzGrupetajs(new Function<>() {
+    public static Rater raterBasedOnLineValue(String description, Function<Line, Integer> classifier) {
+        return raterBasedOnLineValue(new Function<>() {
             private final Map<Integer, GroupId> lineNumbering = map();
 
             @Override
             public GroupId apply(Line arg) {
                 return lineNumbering.computeIfAbsent
-                        (grupetajs.apply(arg.value(Constraint.LINE))
-                                , classification -> GroupId.group(apraksts + ": " + classification));
+                        (classifier.apply(arg.value(Constraint.LINE))
+                                , classification -> GroupId.group(description + ": " + classification));
             }
 
             @Override
             public String toString() {
-                return apraksts;
+                return description;
             }
         });
     }
 
-    public static Rater rindasVertībaBalstītaUzVērtētāju(Function<Line, Rating> vērtētājsBalstītsUzRindasVertības) {
-        return new RaterBasedOnLineValue(vērtētājsBalstītsUzRindasVertības, papildinājums -> papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP));
+    public static Rater lineValueBasedOnRater(Function<Line, Rating> raterBasedOnLineValue) {
+        return new RaterBasedOnLineValue(raterBasedOnLineValue
+                , papildinājums -> papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP));
     }
 
-    public static Rater rindasVertībasBalstītasUzGrupetajs(Function<Line, GroupId> grupetajsBalstītsUzRindasVertības) {
-        return new RaterBasedOnLineValue(papilduRinda -> noCost(), grupetajsBalstītsUzRindasVertības);
+    public static Rater raterBasedOnLineValue(Function<Line, GroupId> clasifierBasedOnLineValue) {
+        return new RaterBasedOnLineValue(additionalLine -> noCost(), clasifierBasedOnLineValue);
     }
 
-    private final Function<Line, Rating> rindasBalstītsUzVertībasVērtētājs;
-    private final Function<Line, GroupId> grupetajsBalstītsUzRindasVertības;
-    private final List<Discoverable> konteksts = list();
+    private final Function<Line, Rating> raterBasedOnLineValue;
+    private final Function<Line, GroupId> classifierBasedOnLineValue;
+    private final List<Discoverable> contexts = list();
 
-    private RaterBasedOnLineValue(Function<Line, Rating> rindasBalstītsUzVertībasVērtētājs, Function<Line, GroupId> grupetajsBalstītsUzRindasVertības) {
-        this.rindasBalstītsUzVertībasVērtētājs = rindasBalstītsUzVertībasVērtētājs;
-        this.grupetajsBalstītsUzRindasVertības = grupetajsBalstītsUzRindasVertības;
+    private RaterBasedOnLineValue(Function<Line, Rating> raterBasedOnLineValue
+            , Function<Line, GroupId> classifierBasedOnLineValue) {
+        this.raterBasedOnLineValue = raterBasedOnLineValue;
+        this.classifierBasedOnLineValue = classifierBasedOnLineValue;
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final RatingEvent rVal = RatingEventI.ratingEvent();
-        rVal.additions().put
+    public RatingEvent rating_after_addition(Table lines, Line papildinājums, List<Constraint> bērni
+            , Table novērtējumsPirmsPapildinājumu) {
+        final RatingEvent rating = ratingEvent();
+        rating.additions().put
                 (papildinājums
                         , localRating()
                                 .withPropagationTo(bērni)
-                                .withResultingGroupId(grupetajsBalstītsUzRindasVertības.apply(papildinājums))
-                                .withRating(rindasBalstītsUzVertībasVērtētājs.apply(papildinājums.value(Constraint.LINE))));
-        return rVal;
+                                .withResultingGroupId(classifierBasedOnLineValue.apply(papildinājums))
+                                .withRating(raterBasedOnLineValue.apply(papildinājums.value(Constraint.LINE))));
+        return rating;
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table rindas, Line noņemšana, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        return RatingEventI.ratingEvent();
+    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children
+            , Table ratingBeforeRemoval) {
+        return ratingEvent();
     }
 
     @Override
@@ -81,44 +87,42 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public net.splitcells.dem.data.set.list.List<Domable> arguments() {
-        return list(() -> Xml.element
-                ("rindasBalstītsUzVertībasVērtētājs"
-                        , Xml.textNode(rindasBalstītsUzVertībasVērtētājs.toString())));
+    public List<Domable> arguments() {
+        return list(() -> Xml.element(getClass().getSimpleName(), Xml.textNode(raterBasedOnLineValue.toString())));
     }
 
     @Override
-    public Node argumentation(GroupId grupa, Table piešķiršanas) {
-        final var argumentācija = Xml.element("grupa");
-        argumentācija.appendChild
-                (Xml.textNode(grupa.vārds().orElse("pazudis-grupas-vards")));
-        return argumentācija;
+    public Node argumentation(GroupId group, Table allocations) {
+        final var argumentation = Xml.element(Language.GROUP.value());
+        argumentation.appendChild
+                (Xml.textNode(group.vārds().orElse("missing-group-name")));
+        return argumentation;
     }
 
     @Override
-    public void addContext(Discoverable konteksts) {
-        this.konteksts.add(konteksts);
+    public void addContext(Discoverable contexts) {
+        this.contexts.add(contexts);
     }
 
     @Override
-    public Collection<net.splitcells.dem.data.set.list.List<String>> paths() {
-        return konteksts.stream().map(Discoverable::path).collect(toList());
+    public Collection<List<String>> paths() {
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override
     public Element toDom() {
-        final org.w3c.dom.Element dom = Xml.element(getClass().getSimpleName());
+        final Element dom = Xml.element(getClass().getSimpleName());
         dom.appendChild(Xml.element("args", arguments().get(0).toDom()));
         return dom;
     }
 
     @Override
-    public String toSimpleDescription(Line rinda, GroupId grupa) {
-        return grupetajsBalstītsUzRindasVertības.toString();
+    public String toSimpleDescription(Line line, GroupId group) {
+        return classifierBasedOnLineValue.toString();
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ", " + rindasBalstītsUzVertībasVērtētājs + ", " + grupetajsBalstītsUzRindasVertības;
+        return getClass().getSimpleName() + ", " + raterBasedOnLineValue + ", " + classifierBasedOnLineValue;
     }
 }

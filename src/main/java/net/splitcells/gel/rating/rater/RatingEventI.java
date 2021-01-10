@@ -11,8 +11,8 @@ import net.splitcells.gel.rating.structure.LocalRating;
 
 public class RatingEventI implements RatingEvent {
 
-	private final Map<Line, LocalRating> papildinājumi = map();
-	private final Set<Line> noņemšanas = setOfUniques();
+	private final Map<Line, LocalRating> additions = map();
+	private final Set<Line> removal = setOfUniques();
 
 	public static RatingEvent ratingEvent() {
 		return new RatingEventI();
@@ -24,12 +24,12 @@ public class RatingEventI implements RatingEvent {
 
 	@Override
 	public Map<Line, LocalRating> additions() {
-		return papildinājumi;
+		return additions;
 	}
 
 	@Override
 	public Set<Line> removal() {
-		return noņemšanas;
+		return removal;
 	}
 
 }

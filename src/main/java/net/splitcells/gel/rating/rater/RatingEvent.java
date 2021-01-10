@@ -22,47 +22,47 @@ public interface RatingEvent {
 
     Set<Line> removal();
 
-    default void pieliktNovērtējumu_caurPapildinājumu(Line priekjšmets, Rating papilduNovērtējums, List<Constraint> bērni,
-                                                      Optional<Rating> novērtejumsPirmsPapildinājumu) {
-        final Rating momentānsNovērtējums;
-        if (additions().containsKey(priekjšmets)) {
-            momentānsNovērtējums = additions().get(priekjšmets).rating();
+    default void pieliktNovērtējumu_caurPapildinājumu(Line subject, Rating additionalRating, List<Constraint> children,
+                                                      Optional<Rating> ratingBeforeAddtion) {
+        final Rating currentRating;
+        if (additions().containsKey(subject)) {
+            currentRating = additions().get(subject).rating();
         } else {
-            momentānsNovērtējums = novērtejumsPirmsPapildinājumu.orElse(noCost());
+            currentRating = ratingBeforeAddtion.orElse(noCost());
         }
         additions().put
-                (priekjšmets
+                (subject
                         , localRating()
-                                .withPropagationTo(bērni)
-                                .withRating(momentānsNovērtējums.combine(papilduNovērtējums))
-                                .withResultingGroupId(priekjšmets.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+                                .withPropagationTo(children)
+                                .withRating(currentRating.combine(additionalRating))
+                                .withResultingGroupId(subject.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
     }
 
-    default void updateRating_viaAddition(Line priekšmets, Rating papilduNovērtējums, List<Constraint> bērni,
-                                          Optional<Rating> novērtējumsPirmsPapildinājumu) {
-        final Rating currentNovērtējums;
-        if (additions().containsKey(priekšmets)) {
-            currentNovērtējums = additions().get(priekšmets).rating();
+    default void updateRating_viaAddition(Line subject, Rating additionalRating, List<Constraint> children,
+                                          Optional<Rating> ratingBeforeAddition) {
+        final Rating currentRating;
+        if (additions().containsKey(subject)) {
+            currentRating = additions().get(subject).rating();
         } else {
-            currentNovērtējums = novērtējumsPirmsPapildinājumu.orElse(noCost());
+            currentRating = ratingBeforeAddition.orElse(noCost());
         }
-        atjaunaNovērtējumu_caurAizvietošana(priekšmets
+        updateRating_withReplacement(subject
                 , localRating()
-                        .withPropagationTo(bērni)
-                        .withRating(currentNovērtējums.combine(papilduNovērtējums))
-                        .withResultingGroupId(priekšmets.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+                        .withPropagationTo(children)
+                        .withRating(currentRating.combine(additionalRating))
+                        .withResultingGroupId(subject.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
     }
 
-    default void atjaunaNovērtējumu_caurAizvietošana(Line priekšmets, LocalRating jaunsNovērtējums) {
+    default void updateRating_withReplacement(Line subject, LocalRating newRating) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(additions().keySet()).doesNotContain(priekšmets);
-            assertThat(removal()).doesNotContain(priekšmets);
+            assertThat(additions().keySet()).doesNotContain(subject);
+            assertThat(removal()).doesNotContain(subject);
             {
-                Assertions.assertThat(priekšmets.value(Constraint.LINE)).isNotNull();
-                Assertions.assertThat(priekšmets.value(Constraint.INCOMING_CONSTRAINT_GROUP)).isNotNull();
+                Assertions.assertThat(subject.value(Constraint.LINE)).isNotNull();
+                Assertions.assertThat(subject.value(Constraint.INCOMING_CONSTRAINT_GROUP)).isNotNull();
             }
         }
-        removal().add(priekšmets);
-        additions().put(priekšmets, jaunsNovērtējums);
+        removal().add(subject);
+        additions().put(subject, newRating);
     }
 }

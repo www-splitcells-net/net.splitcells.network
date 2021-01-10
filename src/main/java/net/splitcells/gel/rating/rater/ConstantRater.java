@@ -2,6 +2,7 @@ package net.splitcells.gel.rating.rater;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
@@ -19,32 +20,34 @@ import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Node;
 
 public class ConstantRater implements Rater {
-    public static Rater constantRater(Rating novērtējums) {
-        return new ConstantRater(novērtējums);
+    public static Rater constantRater(Rating rating) {
+        return new ConstantRater(rating);
     }
 
-    private final Rating novērtējums;
-    private final List<Discoverable> konteksts = list();
+    private final Rating rating;
+    private final List<Discoverable> contexts = list();
 
-    protected ConstantRater(Rating novērtējums) {
-        this.novērtējums = novērtējums;
+    protected ConstantRater(Rating rating) {
+        this.rating = rating;
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final var novērtejumuNotikums = RatingEventI.ratingEvent();
-        novērtejumuNotikums.additions().put(
-                papildinājums
+    public RatingEvent rating_after_addition(Table lines, Line additional, List<Constraint> children
+            , Table ratingsBeforeAddition) {
+        final var ratingEvent = ratingEvent();
+        ratingEvent.additions().put(
+                additional
                 , localRating()
-                        .withPropagationTo(bērni)
-                        .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP))
-                        .withRating(novērtējums));
-        return novērtejumuNotikums;
+                        .withPropagationTo(children)
+                        .withResultingGroupId(additional.value(Constraint.INCOMING_CONSTRAINT_GROUP))
+                        .withRating(rating));
+        return ratingEvent;
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
-        return RatingEventI.ratingEvent();
+    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children
+            , Table ratingsBeforeRemoval) {
+        return ratingEvent();
     }
 
     @Override
@@ -53,36 +56,36 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId grupa, Table piešķiršanas) {
-        final var argumentācija = Xml.element("nemainīgs-novērtējums");
-        argumentācija.appendChild(novērtējums.toDom());
-        return argumentācija;
+    public Node argumentation(GroupId group, Table allocations) {
+        final var argumentation = Xml.element("constant-ratings");
+        argumentation.appendChild(rating.toDom());
+        return argumentation;
     }
 
     @Override
     public List<Domable> arguments() {
-        return list(novērtējums);
+        return list(rating);
     }
 
     @Override
     public void addContext(Discoverable context) {
-        konteksts.add(context);
+        contexts.add(context);
     }
 
     @Override
     public Collection<List<String>> paths() {
-        return konteksts.stream().map(Discoverable::path).collect(toList());
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override
     public Element toDom() {
         final var dom = Xml.element(getClass().getSimpleName());
-        dom.appendChild(novērtējums.toDom());
+        dom.appendChild(rating.toDom());
         return dom;
     }
 
     @Override
-    public String toSimpleDescription(Line rinda, GroupId grupa) {
+    public String toSimpleDescription(Line line, GroupId group) {
         return "";
     }
 

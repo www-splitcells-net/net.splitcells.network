@@ -4,6 +4,7 @@ import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
@@ -23,90 +24,91 @@ import net.splitcells.gel.rating.structure.Rating;
 
 
 public class HasSize implements Rater {
-    public static HasSize irIzmērs(int mērķuIzmers) {
-        return new HasSize(mērķuIzmers);
+    public static HasSize hasSize(int targetSize) {
+        return new HasSize(targetSize);
     }
 
-    private final int mērķuIzmers;
-    private final List<Discoverable> konteksts = list();
+    private final int targetSize;
+    private final List<Discoverable> contexts = list();
 
-    protected HasSize(int mērķuIzmers) {
-        this.mērķuIzmers = mērķuIzmers;
+    protected HasSize(int targetSize) {
+        this.targetSize = targetSize;
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final var indivīdsNovērtējums = novērtējums(rindas, false);
-        final var padildinājumuNovērtējumu
-                = novērteRindas(rindas, papildinājums, bērni, indivīdsNovērtējums);
-        padildinājumuNovērtējumu.additions().put(papildinājums
+    public RatingEvent rating_after_addition(Table lines, Line additional, List<Constraint> children
+            , Table ratingsBeforeAddition) {
+        final var individualRating = rating(lines, false);
+        final var additionalRatings
+                = rateLines(lines, additional, children, individualRating);
+        additionalRatings.additions().put(additional
                 , localRating()
-                        .withPropagationTo(bērni)
-                        .withRating(indivīdsNovērtējums)
-                        .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP))
+                        .withPropagationTo(children)
+                        .withRating(individualRating)
+                        .withResultingGroupId(additional.value(Constraint.INCOMING_CONSTRAINT_GROUP))
         );
-        return padildinājumuNovērtējumu;
+        return additionalRatings;
     }
 
-    private RatingEvent novērteRindas(Table rindas, Line maiņīts, List<Constraint> children, Rating cena) {
-        final RatingEvent rindasNovērtējumu = RatingEventI.ratingEvent();
-        rindas.rawLinesView().stream()
+    private RatingEvent rateLines(Table lines, Line changed, List<Constraint> children, Rating cost) {
+        final RatingEvent linesRating = ratingEvent();
+        lines.rawLinesView().stream()
                 .filter(e -> e != null)
-                .filter(e -> e.index() != maiņīts.index())
+                .filter(e -> e.index() != changed.index())
                 .forEach(e -> {
-                    rindasNovērtējumu.atjaunaNovērtējumu_caurAizvietošana(e,
+                    linesRating.updateRating_withReplacement(e,
                             localRating().
                                     withPropagationTo(children).
-                                    withRating(cena).
-                                    withResultingGroupId(maiņīts.value(Constraint.INCOMING_CONSTRAINT_GROUP))
+                                    withRating(cost).
+                                    withResultingGroupId(changed.value(Constraint.INCOMING_CONSTRAINT_GROUP))
                     );
                 });
-        return rindasNovērtējumu;
+        return linesRating;
     }
 
     @Override
-    public Node argumentation(GroupId grupa, Table piešķiršanas) {
-        final var argumentacija = Xml.element(HasSize.class.getSimpleName());
-        argumentacija.appendChild(
-                Xml.element("vēlamais-izmērs"
-                        , Xml.textNode(mērķuIzmers + "")));
-        argumentacija.appendChild(
-                Xml.element("faktiskais-izmērs"
-                        , Xml.textNode(piešķiršanas.size() + "")));
-        return argumentacija;
+    public Node argumentation(GroupId group, Table allocations) {
+        final var argumentation = Xml.element(HasSize.class.getSimpleName());
+        argumentation.appendChild(
+                Xml.element("target-size"
+                        , Xml.textNode(targetSize + "")));
+        argumentation.appendChild(
+                Xml.element("actual-size"
+                        , Xml.textNode(allocations.size() + "")));
+        return argumentation;
     }
 
     @Override
-    public String toSimpleDescription(Line rinda, GroupId grupa) {
-        return "izmērs ir " + mērķuIzmers;
+    public String toSimpleDescription(Line line, GroupId group) {
+        return "size is " + targetSize;
     }
 
     @Override
     public RatingEvent rating_before_removal
-            (Table rindas
-                    , Line noņemšana
-                    , List<Constraint> bērni
-                    , Table novērtējumsPirmsNoņemšana) {
-        return novērteRindas(rindas, noņemšana, bērni, novērtējums(rindas, true));
+            (Table lines
+                    , Line removal
+                    , List<Constraint> children
+                    , Table ratingsBeforeRemoval) {
+        return rateLines(lines, removal, children, rating(lines, true));
     }
 
-    private Rating novērtējums(Table rindas, boolean pirmsNoņemšana) {
-        final Rating novērtējums;
-        final int izmers;
-        if (pirmsNoņemšana) {
-            izmers = rindas.size() - 1;
+    private Rating rating(Table lines, boolean beforeRemoval) {
+        final Rating rating;
+        final int size;
+        if (beforeRemoval) {
+            size = lines.size() - 1;
         } else {
-            izmers = rindas.size();
+            size = lines.size();
         }
-        if (izmers == 0) {
-            novērtējums = Cost.noCost();
-        } else if (izmers > 0) {
-            final int atšķirība = abs(mērķuIzmers - izmers);
-            novērtējums = cost(atšķirība / ((double) izmers));
+        if (size == 0) {
+            rating = Cost.noCost();
+        } else if (size > 0) {
+            final int atšķirība = abs(targetSize - size);
+            rating = cost(atšķirība / ((double) size));
         } else {
-            throw new AssertionError("negatīvs izmērs atrasts: " + izmers);
+            throw new AssertionError("negative size is: " + size);
         }
-        return novērtējums;
+        return rating;
     }
 
     @Override
@@ -116,29 +118,29 @@ public class HasSize implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.element(HasSize.class.getSimpleName(), Xml.textNode("" + mērķuIzmers)));
+        return list(() -> Xml.element(HasSize.class.getSimpleName(), Xml.textNode("" + targetSize)));
     }
 
     @Override
     public boolean equals(Object arg) {
         if (arg != null && arg instanceof HasSize) {
-            return this.mērķuIzmers == ((HasSize) arg).mērķuIzmers;
+            return this.targetSize == ((HasSize) arg).targetSize;
         }
         return false;
     }
 
     @Override
     public void addContext(Discoverable context) {
-        konteksts.add(context);
+        contexts.add(context);
     }
 
     @Override
     public Collection<List<String>> paths() {
-        return konteksts.stream().map(Discoverable::path).collect(toList());
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ", " + mērķuIzmers;
+        return getClass().getSimpleName() + ", " + targetSize;
     }
 }
