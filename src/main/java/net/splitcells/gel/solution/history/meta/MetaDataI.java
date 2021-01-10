@@ -13,28 +13,28 @@ import net.splitcells.dem.data.set.map.Map;
 import org.w3c.dom.Node;
 
 public class MetaDataI implements MetaDataView, MetaDataWriter {
-    public static MetaDataI refleksijasDatī() {
+    public static MetaDataI metaData() {
         return new MetaDataI();
     }
 
-    private final Map<Class<?>, Object> dati = map();
+    private final Map<Class<?>, Object> data = map();
 
     private MetaDataI() {
     }
 
     @Override
-    public <A> MetaDataWriter ar(Class<A> tips, A vertība) {
-        if (dati.containsKey(tips)) {
-            throw new IllegalArgumentException(tips.getName());
+    public <A> MetaDataWriter with(Class<A> type, A value) {
+        if (data.containsKey(type)) {
+            throw new IllegalArgumentException(type.getName());
         }
-        dati.put(tips, vertība);
+        data.put(type, value);
         return this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> Optional<T> value(Class<T> tips) {
-        return (Optional<T>) Optional.ofNullable(dati.get(tips));
+        return (Optional<T>) Optional.ofNullable(data.get(tips));
     }
 
     @Override
@@ -45,20 +45,20 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
     @Override
     public Node toDom() {
         final var dom = Xml.element(META_DATA.value());
-        dati.forEach((atslēga, vertība) -> {
-            final var dati = Xml.element(META_DATA.value());
-            final var atslēgasDati = Xml.element(KEY.value());
-            atslēgasDati.appendChild(textNode(atslēga.getName()));
-            final var vertībasDati = Xml.element(VALUE.value());
+        data.forEach((key, value) -> {
+            final var data = Xml.element(META_DATA.value());
+            final var keyData = Xml.element(KEY.value());
+            keyData.appendChild(textNode(key.getName()));
+            final var valueData = Xml.element(VALUE.value());
             {
-                if (vertība instanceof Domable) {
-                    vertībasDati.appendChild(((Domable) vertība).toDom());
+                if (value instanceof Domable) {
+                    valueData.appendChild(((Domable) value).toDom());
                 } else {
-                    vertībasDati.appendChild(textNode(vertība.toString()));
+                    valueData.appendChild(textNode(value.toString()));
                 }
             }
-            dom.appendChild(atslēgasDati);
-            dom.appendChild(vertībasDati);
+            dom.appendChild(keyData);
+            dom.appendChild(valueData);
         });
         return dom;
     }

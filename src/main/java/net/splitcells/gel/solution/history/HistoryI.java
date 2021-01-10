@@ -6,8 +6,8 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
 import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.data.database.Databases.datuBāze;
-import static net.splitcells.gel.solution.history.meta.type.AllocationRating.pieškiršanasNovērtejums;
-import static net.splitcells.gel.solution.history.meta.type.CompleteRating.pilnsNovērtejums;
+import static net.splitcells.gel.solution.history.meta.type.AllocationRating.allocationRating;
+import static net.splitcells.gel.solution.history.meta.type.CompleteRating.completeRating;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.not;
 
@@ -57,11 +57,11 @@ public class HistoryI implements History {
 
     @Override
     public void reģistrē_papildinājumi(Line piešķiršanasVertība) {
-        final var refleksijasDati = MetaDataI.refleksijasDatī();
-        refleksijasDati.ar(CompleteRating.class
-                , pilnsNovērtejums(solution.constraint().rating()));
-        refleksijasDati.ar(AllocationRating.class
-                , pieškiršanasNovērtejums(solution.constraint().novērtējums(piešķiršanasVertība)));
+        final var refleksijasDati = MetaDataI.metaData();
+        refleksijasDati.with(CompleteRating.class
+                , completeRating(solution.constraint().rating()));
+        refleksijasDati.with(AllocationRating.class
+                , allocationRating(solution.constraint().novērtējums(piešķiršanasVertība)));
         final Line piešķiršana
                 = demands().addTranslated(list(
                 parceltPedeijuNotikumuIdUzpriekšu()
@@ -73,11 +73,11 @@ public class HistoryI implements History {
 
     @Override
     public void rēgistrē_pirms_noņemšanas(Line noņemtAtrisinājums) {
-        final var refleksijasDati = MetaDataI.refleksijasDatī();
-        refleksijasDati.ar(CompleteRating.class
-                , pilnsNovērtejums(solution.constraint().rating()));
-        refleksijasDati.ar(AllocationRating.class
-                , pieškiršanasNovērtejums(solution.constraint().novērtējums(noņemtAtrisinājums)));
+        final var refleksijasDati = MetaDataI.metaData();
+        refleksijasDati.with(CompleteRating.class
+                , completeRating(solution.constraint().rating()));
+        refleksijasDati.with(AllocationRating.class
+                , allocationRating(solution.constraint().novērtējums(noņemtAtrisinājums)));
         final Line pieķiršanas
                 = demands().addTranslated(list(
                 parceltPedeijuNotikumuIdUzpriekšu()

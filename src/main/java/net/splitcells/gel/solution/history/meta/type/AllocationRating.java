@@ -6,25 +6,25 @@ import org.w3c.dom.Node;
 
 public class AllocationRating implements MetaData<Rating> {
 
-    public static AllocationRating pieškiršanasNovērtejums(Rating novērtējums) {
-        return new AllocationRating(novērtējums);
+    public static AllocationRating allocationRating(Rating rating) {
+        return new AllocationRating(rating);
     }
 
-    private final Rating novērtējums;
+    private final Rating rating;
 
-    private AllocationRating(Rating novērtējums) {
-        this.novērtējums = novērtējums;
+    private AllocationRating(Rating rating) {
+        this.rating = rating;
     }
 
     @Override
     public Rating value() {
-        return novērtējums;
+        return rating;
     }
 
     @Override
     public Node toDom() {
         final var dom = Xml.element(getClass().getSimpleName());
-        dom.appendChild(novērtējums.toDom());
+        dom.appendChild(rating.toDom());
         return dom;
     }
 }

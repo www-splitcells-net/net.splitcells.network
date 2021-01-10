@@ -7,20 +7,20 @@ import org.w3c.dom.Node;
 
 public final class CompleteRating implements MetaData<Rating>, Domable {
 
-    public static CompleteRating pilnsNovērtejums(Rating novērtējums) {
-        return new CompleteRating(novērtējums);
+    public static CompleteRating completeRating(Rating rating) {
+        return new CompleteRating(rating);
     }
 
-    private final Rating novērtējums;
+    private final Rating rating;
 
-    private CompleteRating(Rating novērtējums) {
-        this.novērtējums = novērtējums;
+    private CompleteRating(Rating rating) {
+        this.rating = rating;
 
     }
 
     @Override
     public Rating value() {
-        return novērtējums;
+        return rating;
     }
 
     @Override
@@ -31,7 +31,7 @@ public final class CompleteRating implements MetaData<Rating>, Domable {
 	@Override
 	public Node toDom() {
     	final var dom = Xml.element(getClass().getSimpleName());
-    	dom.appendChild(novērtējums.toDom());
+    	dom.appendChild(rating.toDom());
 		return dom;
 	}
 }

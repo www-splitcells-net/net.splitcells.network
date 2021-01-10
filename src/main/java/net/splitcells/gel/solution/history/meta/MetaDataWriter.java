@@ -2,5 +2,5 @@ package net.splitcells.gel.solution.history.meta;
 
 public interface MetaDataWriter {
 
-	<A> MetaDataWriter ar(Class<A> type, A value);
+	<A> MetaDataWriter with(Class<A> type, A value);
 }
