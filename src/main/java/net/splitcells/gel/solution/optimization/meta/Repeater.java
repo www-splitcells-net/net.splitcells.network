@@ -9,25 +9,25 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 public class Repeater implements Optimization {
-    public static Repeater atkārtotājs(Optimization optimization, int maksimalsAtkārtošanasSkaitlis) {
-        return new Repeater(optimization, maksimalsAtkārtošanasSkaitlis);
+    public static Repeater repeater(Optimization optimization, int maximalRepetitionCount) {
+        return new Repeater(optimization, maximalRepetitionCount);
     }
 
     private final Optimization optimization;
-    private final int maksimalsAtkārtošanasSkaitlis;
-    private int atkārtošanasSkaitlis = 0;
+    private final int maximalRepetitionCount;
+    private int repetitionCount = 0;
 
-    private Repeater(Optimization optimization, int maksimalsAtkārtošanasSkaitlis) {
+    private Repeater(Optimization optimization, int maximalRepetitionCount) {
         this.optimization = optimization;
-        this.maksimalsAtkārtošanasSkaitlis = maksimalsAtkārtošanasSkaitlis;
+        this.maximalRepetitionCount = maximalRepetitionCount;
     }
 
     @Override
-    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
-        if (atkārtošanasSkaitlis >= maksimalsAtkārtošanasSkaitlis) {
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        if (repetitionCount >= maximalRepetitionCount) {
             return list();
         }
-        atkārtošanasSkaitlis += 1;
-        return optimize(atrisinājums);
+        repetitionCount += 1;
+        return optimize(solution);
     }
 }

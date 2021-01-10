@@ -11,28 +11,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LinearIterator implements Optimization {
 
     private final List<Optimization> optimizations;
-    private int skaitītājs = -1;
+    private int counter = -1;
 
     public LinearIterator(List<Optimization> optimizations) {
         this.optimizations = optimizations;
     }
 
     @Override
-    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
-        List<OptimizationEvent> optimizācijas = list();
-        int mēģinājums = 0;
-        while (optimizācijas.isEmpty() && mēģinājums < this.optimizations.size()) {
-            optimizācijas = atlasitNakamoOptimicājiu().optimize(atrisinājums);
-            ++mēģinājums;
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        List<OptimizationEvent> optimization = list();
+        int tryCounter = 0;
+        while (optimization.isEmpty() && tryCounter < this.optimizations.size()) {
+            optimization = selectNextOptimization().optimize(solution);
+            ++tryCounter;
         }
-        return optimizācijas;
+        return optimization;
     }
 
-    private Optimization atlasitNakamoOptimicājiu() {
-        skaitītājs += 1;
-        if (skaitītājs >= optimizations.size()) {
-            skaitītājs = 0;
+    private Optimization selectNextOptimization() {
+        counter += 1;
+        if (counter >= optimizations.size()) {
+            counter = 0;
         }
-        return optimizations.get(skaitītājs);
+        return optimizations.get(counter);
     }
 }

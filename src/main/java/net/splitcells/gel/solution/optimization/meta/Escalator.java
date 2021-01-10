@@ -11,32 +11,31 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 
 public class Escalator implements Optimization {
 
-    public static Escalator eskalācija(Function<Integer, Optimization> optimzācijas) {
-        return new Escalator(optimzācijas);
+    public static Escalator escalator(Function<Integer, Optimization> optimizations) {
+        return new Escalator(optimizations);
     }
 
-    private final Function<Integer, Optimization> optimzācijas;
-    private int eskalācijasLīmens = 0;
+    private final Function<Integer, Optimization> optimizations;
+    private int escalationLevel = 0;
 
-    private Escalator
-            (Function<Integer, Optimization> optimzācijas) {
-        this.optimzācijas = optimzācijas;
+    private Escalator(Function<Integer, Optimization> optimizations) {
+        this.optimizations = optimizations;
     }
 
     @Override
-    public List<OptimizationEvent> optimize(SolutionView atrisinājums) {
-        final var saknesNovērtejums = atrisinājums.constraint().rating();
-        final var sanknesVēsturesIndekss = atrisinājums.history().currentIndex();
-        if (eskalācijasLīmens < 0) {
+    public List<OptimizationEvent> optimize(SolutionView solution) {
+        final var rootRating = solution.constraint().rating();
+        final var rootHistoryIndex = solution.history().currentIndex();
+        if (escalationLevel < 0) {
             return list();
         }
-        final var optimizācija = optimzācijas.apply(eskalācijasLīmens).optimize(atrisinājums);
-        final var momentansNovērtējums = atrisinājums.rating(optimizācija);
-        if (momentansNovērtējums.betterThan(saknesNovērtejums)) {
-            eskalācijasLīmens += 1;
+        final var optimizations = this.optimizations.apply(escalationLevel).optimize(solution);
+        final var currentRating = solution.rating(optimizations);
+        if (currentRating.betterThan(rootRating)) {
+            escalationLevel += 1;
         } else {
-            eskalācijasLīmens -= 1;
+            escalationLevel -= 1;
         }
-        return optimizācija;
+        return optimizations;
     }
 }
