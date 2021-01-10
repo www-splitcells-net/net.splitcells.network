@@ -13,16 +13,16 @@ public interface DefineDemands {
 	default DefineDemands arTuķšamPrasībam(int numursNuTuķšīem) {
 		final List<List<Object>> parsības = list();
 		rangeClosed(1, numursNuTuķšīem).forEach(i -> parsības.add(list()));
-		return arPrasībam(parsības);
+		return withDemands(parsības);
 	}
 
 	@Returns_this
-    DefineDemands arPrasībam(List<Object> prasība, @SuppressWarnings("unchecked") List<Object>... parsības);
+    DefineDemands withDemands(List<Object> prasība, @SuppressWarnings("unchecked") List<Object>... parsības);
 
 	@Returns_this
-    DefineDemands arPrasībam(List<List<Object>> parsības);
+    DefineDemands withDemands(List<List<Object>> parsības);
 
-	DefineSupply arPiedāvumuNosaukumiem(Attribute<?>... supply_header);
+	DefineSupply withSupplyAttributes(Attribute<?>... supply_header);
 
-	DefineSupply arPiedāvumuNosaukumiem(List<Attribute<?>> supply_header);
+	DefineSupply withSupplyAttributes(List<Attribute<?>> supply_header);
 }

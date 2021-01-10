@@ -17,7 +17,7 @@ import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.data.database.Databases.datuBāze;
-import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
+import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.rindasNovērtējums;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
@@ -73,7 +73,7 @@ public abstract class ConstraintAI implements Constraint {
     protected ConstraintAI(GroupId injekcijasGrupas, String vārds) {
         this.injekcijasGrupas = injekcijasGrupas;
         rindas = datuBāze(vārds + ".rindas", this, RINDA, IENĀKOŠIE_IEROBEŽOJUMU_GRUPAS_ID);
-        rindasApstrāde = piešķiršanas("rindasApstrāde", rindas, radījums);
+        rindasApstrāde = allocations("rindasApstrāde", rindas, radījums);
         rindasApstrāde.subscribe_to_afterAddtions(this::izdalīt_papildinajumu);
         rindasApstrāde.subscriber_to_beforeRemoval(this::izdalīt_noņemšana);
         rindas.subscribe_to_afterAddtions(this::apstrāde_rindu_papildinajumu);

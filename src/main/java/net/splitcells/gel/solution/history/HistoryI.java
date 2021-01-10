@@ -40,7 +40,7 @@ public class HistoryI implements History {
     private Allocations piešķiršanas;
 
     protected HistoryI(Solution solution) {
-        piešķiršanas = Allocationss.piešķiršanas
+        piešķiršanas = Allocationss.allocations
                 (HISTORY.value()
                         , datuBāze
                                 (EVENT.value()

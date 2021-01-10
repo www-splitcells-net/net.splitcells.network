@@ -4,5 +4,5 @@ import net.splitcells.gel.data.allocation.Allocations;
 
 public interface SolutionHistory extends Allocations {
 
-	Solution priekšmets();
+	Solution subject();
 }

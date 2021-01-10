@@ -20,6 +20,6 @@ public final class Gel {
     }
 
     public static Define_Demand_Attributes definē_problēmu() {
-        return SolutionBuilder.definē_problēmu();
+        return SolutionBuilder.define_problem();
     }
 }

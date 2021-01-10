@@ -1,5 +1,5 @@
 package net.splitcells.gel.problem;
 
 public interface ProblemGenerator {
-	Problem uzProblēmu();
+	Problem toProblem();
 }

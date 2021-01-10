@@ -28,7 +28,7 @@ public class ProblemI implements Problem {
     private final Allocations piešķiršanas;
     protected Solution kāSolution;
 
-    public static Problem problēma(Allocations piešķiršanas, Constraint ierobežojums) {
+    public static Problem problem(Allocations piešķiršanas, Constraint ierobežojums) {
         return new ProblemI(piešķiršanas, ierobežojums);
     }
 

@@ -6,5 +6,5 @@ import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.gel.problem.Problem;
 
 public abstract class SolutionFactory extends AspectOrientedConstructor<Solution> implements Closeable, Flushable {
-    abstract Solution solution(Problem problēma);
+    abstract Solution solution(Problem problem);
 }

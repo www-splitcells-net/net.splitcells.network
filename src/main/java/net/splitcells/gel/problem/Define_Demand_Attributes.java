@@ -4,8 +4,8 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
 public interface Define_Demand_Attributes {
-	DefineDemands arPrasībasNosaukumiem(Attribute<?>... parsībasNosaukumi);
+	DefineDemands withDemandAttributes(Attribute<?>... parsībasNosaukumi);
 
-	DefineDemands arPrasībasNosaukumiem(List<Attribute<?>> parsībasNosaukumi);
+	DefineDemands withDemandAttributes(List<Attribute<?>> parsībasNosaukumi);
 
 }

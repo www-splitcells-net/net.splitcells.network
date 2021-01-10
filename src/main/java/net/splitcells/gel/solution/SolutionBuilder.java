@@ -3,10 +3,10 @@ package net.splitcells.gel.solution;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.gel.common.Language.*;
-import static net.splitcells.gel.data.allocation.Allocationss.piešķiršanas;
+import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 
 import static net.splitcells.gel.data.database.Databases.datuBāze;
-import static net.splitcells.gel.problem.ProblemI.problēma;
+import static net.splitcells.gel.problem.ProblemI.problem;
 
 import java.util.Arrays;
 
@@ -22,88 +22,88 @@ import net.splitcells.gel.problem.ProblemGenerator;
 
 public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands, DefineSupply, ProblemGenerator {
 
-    private List<Attribute<? extends Object>> prasības_atribūti = list();
-    private List<List<Object>> prasības = list();
+    private List<Attribute<? extends Object>> demandAttributes = list();
+    private List<List<Object>> demands = list();
 
-    private List<Attribute<? extends Object>> piedāvājumu_atribūti = list();
-    private List<List<Object>> piedāvājumi = list();
+    private List<Attribute<? extends Object>> supplyAttributes = list();
+    private List<List<Object>> supplies = list();
 
-    private Constraint ierobežojums;
+    private Constraint constraint;
 
     protected SolutionBuilder() {
     }
 
-    public static Define_Demand_Attributes definē_problēmu() {
+    public static Define_Demand_Attributes define_problem() {
         return new SolutionBuilder();
     }
 
     @Override
-    public Problem uzProblēmu() {
-        final var prasībasDatuBaže = datuBāze(DEMANDS.value(), null, prasības_atribūti);
-        final var piedāvājumuDatuBaže = datuBāze(SUPPLIES.value(), null, piedāvājumu_atribūti);
-        prasības.forEach(prasība -> prasībasDatuBaže.addTranslated(prasība));
-        piedāvājumi.forEach(piedāvājums -> piedāvājumuDatuBaže.addTranslated(piedāvājums));
-        return problēma(
-                piešķiršanas(
+    public Problem toProblem() {
+        final var demandDatabase = datuBāze(DEMANDS.value(), null, demandAttributes);
+        final var supplyDatabase = datuBāze(SUPPLIES.value(), null, supplyAttributes);
+        demands.forEach(demand -> demandDatabase.addTranslated(demand));
+        supplies.forEach(supplies -> supplyDatabase.addTranslated(supplies));
+        return problem(
+                allocations(
                         Solution.class.getSimpleName()
-                        , prasībasDatuBaže
-                        , piedāvājumuDatuBaže)
-                , ierobežojums);
+                        , demandDatabase
+                        , supplyDatabase)
+                , constraint);
     }
 
     @Override
-    public ProblemGenerator arIerobežojumu(Constraint ierobežojums) {
-        this.ierobežojums = ierobežojums;
+    public ProblemGenerator withConstraint(Constraint constraint) {
+        this.constraint = constraint;
         return this;
     }
 
     @Override
-    public DefineSupply arPiedāvumuNosaukumiem(Attribute<? extends Object>... argPiedāvājumuAtribūti) {
-        piedāvājumu_atribūti = list(argPiedāvājumuAtribūti).mapped(a -> (Attribute<Object>) a);
+    public DefineSupply withSupplyAttributes(Attribute<? extends Object>... supplyAttributes) {
+        this.supplyAttributes = list(supplyAttributes).mapped(a -> (Attribute<Object>) a);
         return this;
     }
 
     @Override
-    public DefineDemands arPrasībasNosaukumiem(Attribute<? extends Object>... argPrāsibasPiedāvājums) {
-        prasības_atribūti = list(argPrāsibasPiedāvājums).mapped(a -> (Attribute<Object>) a);
+    public DefineDemands withDemandAttributes(Attribute<? extends Object>... demandAttributes) {
+        this.demandAttributes = list(demandAttributes).mapped(a -> (Attribute<Object>) a);
         return this;
     }
 
     @Override
-    public DefineSupply arePiedāvājumiem(List<Object>... peidāvājumi) {
-        piedāvājumi = listWithValuesOf(peidāvājumi);
+    public DefineSupply withSupplies(List<Object>... supplies) {
+        this.supplies = listWithValuesOf(supplies);
         return this;
     }
 
     @Override
-    public DefineDemands arPrasībam(List<Object> prasība, List<Object>... parsības) {
-        prasības = list();
-        prasības.add(prasība);
-        prasības.addAll(Arrays.asList(parsības));
+    public DefineDemands withDemands(List<Object> demand, List<Object>... demands) {
+        this.demands = list();
+        this.demands.add(demand);
+        this.demands.addAll(Arrays.asList(demands));
         return this;
     }
 
     @Override
-    public DefineSupply arPiedāvumuNosaukumiem(List<Attribute<? extends Object>> argPiedāvājumuAtribūti) {
-        piedāvājumu_atribūti = argPiedāvājumuAtribūti.mapped(a -> (Attribute<Object>) a);
+    public DefineSupply withSupplyAttributes(List<Attribute<? extends Object>> supplyAttributes) {
+        this.supplyAttributes = supplyAttributes.mapped(a -> (Attribute<Object>) a);
         return this;
     }
 
     @Override
-    public DefineDemands arPrasībasNosaukumiem(List<Attribute<? extends Object>> argPrasībasAtribūti) {
-        prasības_atribūti = argPrasībasAtribūti.mapped(a -> (Attribute<Object>) a);
+    public DefineDemands withDemandAttributes(List<Attribute<? extends Object>> demandAttributes) {
+        this.demandAttributes = demandAttributes.mapped(a -> (Attribute<Object>) a);
         return this;
     }
 
     @Override
-    public DefineSupply arePiedāvājumiem(List<List<Object>> peidāvājumi) {
-        this.piedāvājumi = peidāvājumi;
+    public DefineSupply withSupplies(List<List<Object>> supplies) {
+        this.supplies = supplies;
         return this;
     }
 
     @Override
-    public DefineDemands arPrasībam(List<List<Object>> parsības) {
-        this.prasības = parsības;
+    public DefineDemands withDemands(List<List<Object>> supplies) {
+        this.demands = supplies;
         return this;
     }
 

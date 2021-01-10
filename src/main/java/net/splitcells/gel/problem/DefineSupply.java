@@ -14,13 +14,13 @@ public interface DefineSupply {
 	default DefineSupply arTukšiemPiedāvājumiem(int numursNuTuķšīem) {
 		final List<List<Object>> piedāvājumi = list();
 		rangeClosed(1, numursNuTuķšīem).forEach(i -> piedāvājumi.add(list()));
-		return arePiedāvājumiem(piedāvājumi);
+		return withSupplies(piedāvājumi);
 	}
 
-	DefineSupply arePiedāvājumiem(List<Object>... peidāvājumi);
+	DefineSupply withSupplies(List<Object>... peidāvājumi);
 
-	DefineSupply arePiedāvājumiem(List<List<Object>> peidāvājumi);
+	DefineSupply withSupplies(List<List<Object>> peidāvājumi);
 
-	ProblemGenerator arIerobežojumu(Constraint ierobežojums);
+	ProblemGenerator withConstraint(Constraint ierobežojums);
 
 }
