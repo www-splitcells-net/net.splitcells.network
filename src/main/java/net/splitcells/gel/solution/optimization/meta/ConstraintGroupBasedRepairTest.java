@@ -111,25 +111,25 @@ public class ConstraintGroupBasedRepairTest {
     }
 
     @Test
-    public void testIzbrīvoNeievērotajuGrupuNoIerobežojumuGrupu() {
+    public void test_remvoal_of_defying_group_from_constraint_group() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var nēderigaAVertība = 1;
-        final var nēderigaBVertība = 3;
-        final var derigaVertība = 5;
-        final var neievērotajuGrupaA = tad(cost(1));
-        final var neievērotajuGrupaB = tad(cost(1));
-        @SuppressWarnings("unchecked") final var atrisinājums
+        final var invalidValueA = 1;
+        final var invalidValueB = 3;
+        final var validValue = 5;
+        final var defyingConstraintA = tad(cost(1));
+        final var defyingCoinstraintB = tad(cost(1));
+        @SuppressWarnings("unchecked") final var solution
                 = define_problem()
                 .withDemandAttributes(a, b)
                 .withDemands
-                        (list(nēderigaAVertība, 1)
-                                , list(nēderigaAVertība, 1)
-                                , list(nēderigaAVertība, 2)
-                                , list(nēderigaAVertība, 2)
-                                , list(2, nēderigaBVertība)
-                                , list(2, nēderigaBVertība)
-                                , list(derigaVertība, derigaVertība))
+                        (list(invalidValueA, 1)
+                                , list(invalidValueA, 1)
+                                , list(invalidValueA, 2)
+                                , list(invalidValueA, 2)
+                                , list(2, invalidValueB)
+                                , list(2, invalidValueB)
+                                , list(validValue, validValue))
                 .withSupplyAttributes()
                 .withSupplies
                         (list(), list()
@@ -141,23 +141,22 @@ public class ConstraintGroupBasedRepairTest {
                                 , list())
                 .withConstraint
                         (forAll().withChildren
-                                (forAllWithValue(a, Integer.valueOf(derigaVertība)).withChildren(tad(noCost()))
-                                        , forAllWithValue(b, Integer.valueOf(derigaVertība)).withChildren(tad(noCost()))
-                                        , forAllWithValue(a, Integer.valueOf(nēderigaAVertība)).withChildren(neievērotajuGrupaA)
-                                        , forAllWithValue(b, Integer.valueOf(nēderigaBVertība)).withChildren(neievērotajuGrupaB)
-                                        , forAllWithValue(a, Integer.valueOf(derigaVertība)).withChildren(tad(noCost()))
-                                        , forAllWithValue(b, Integer.valueOf(derigaVertība)).withChildren(tad(noCost()))))
+                                (forAllWithValue(a, validValue).withChildren(tad(noCost()))
+                                        , forAllWithValue(b, validValue).withChildren(tad(noCost()))
+                                        , forAllWithValue(a, invalidValueA).withChildren(defyingConstraintA)
+                                        , forAllWithValue(b, invalidValueB).withChildren(defyingCoinstraintB)
+                                        , forAllWithValue(a, validValue).withChildren(tad(noCost()))
+                                        , forAllWithValue(b, validValue).withChildren(tad(noCost()))))
                 .toProblem()
                 .asSolution();
-        atrisinājums.optimize(linearInitialization());
-        assertThat(atrisinājums.getLines()).hasSize(7);
+        solution.optimize(linearInitialization());
+        assertThat(solution.getLines()).hasSize(7);
 
-        final var pārbaudesPriekšmets = constraintGroupBasedRepair();
-        atrisinājums.optimize(pārbaudesPriekšmets.freeDefyingGroupOfConstraintGroup(atrisinājums, neievērotajuGrupaA));
-        assertThat(atrisinājums.getLines()).hasSize(3);
-        atrisinājums.optimize(pārbaudesPriekšmets.freeDefyingGroupOfConstraintGroup(atrisinājums, neievērotajuGrupaB));
-        assertThat(atrisinājums.getLines()).hasSize(1);
-        assertThat(atrisinājums.getLines()).hasSize(1);
+        final var testSubject = constraintGroupBasedRepair();
+        solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA));
+        assertThat(solution.getLines()).hasSize(3);
+        solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingCoinstraintB));
+        assertThat(solution.getLines()).hasSize(1);
     }
 
     @Test
