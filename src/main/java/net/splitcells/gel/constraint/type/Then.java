@@ -16,7 +16,7 @@ public class Then extends ConstraintBasedOnLocalGroupsAI {
         return new Then(rater);
     }
 
-    public static Then tad(Rating rating) {
+    public static Then then(Rating rating) {
         return new Then(constantRater(rating));
     }
 
