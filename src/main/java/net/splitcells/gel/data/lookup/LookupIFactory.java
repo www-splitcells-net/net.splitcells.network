@@ -5,8 +5,8 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 
 public class LookupIFactory implements LookupFactory {
     @Override
-    public <R> Lookup<R> uzmeklē(Table tabula, Attribute<R> atribūts) {
-        return new LookupI<>(tabula, atribūts);
+    public <R> Lookup<R> lookup(Table table, Attribute<R> attribute) {
+        return new LookupI<>(table, attribute);
     }
 
     @Override

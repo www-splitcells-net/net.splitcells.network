@@ -1,7 +1,7 @@
 package net.splitcells.gel.data.lookup;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.data.lookup.LookupTable.uzmeklēšanasTabula;
+import static net.splitcells.gel.data.lookup.LookupTable.lookupTable;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.function.Predicate;
@@ -12,90 +12,90 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
 public class LookupI<T> implements Lookup<T> {
-    private final LookupTable tukšaUzmeklēšanasTabula;
+    private final LookupTable lookupTable;
 
-    protected final Table tabula;
-    protected final Map<T, LookupTable> saturs = map();
-    protected final Attribute<T> atribūts;
-    protected final Map<Predicate<T>, LookupTable> agregātsSaturs = map();
+    protected final Table table;
+    protected final Map<T, LookupTable> content = map();
+    protected final Attribute<T> attribute;
+    protected final Map<Predicate<T>, LookupTable> complexContent = map();
 
-    protected LookupI(Table tabula, Attribute<T> atribūts) {
-        this.tabula = tabula;
-        this.tukšaUzmeklēšanasTabula = uzmeklēšanasTabula(tabula, atribūts);
-        this.atribūts = atribūts;
-        tabula.rawLinesView().stream()
+    protected LookupI(Table table, Attribute<T> attribute) {
+        this.table = table;
+        this.lookupTable = lookupTable(table, attribute);
+        this.attribute = attribute;
+        table.rawLinesView().stream()
                 .filter(e -> e != null)
-                .forEach(e -> register_addition(e.value(atribūts), e.index()));
+                .forEach(e -> register_addition(e.value(attribute), e.index()));
     }
 
     @Override
-    public void register_addition(T papildinājums, int indekss) {
+    public void register_addition(T addition, int index) {
         {
-            final LookupTable uzmeklēšanasTabula;
-            if (saturs.containsKey(papildinājums)) {
-                uzmeklēšanasTabula = saturs.get(papildinājums);
+            final LookupTable lookupTable;
+            if (content.containsKey(addition)) {
+                lookupTable = content.get(addition);
             } else {
-                uzmeklēšanasTabula = uzmeklēšanasTabula(tabula, atribūts);
-                saturs.put(papildinājums, uzmeklēšanasTabula);
+                lookupTable = lookupTable(table, attribute);
+                content.put(addition, lookupTable);
             }
-            uzmeklēšanasTabula.reģistrē(tabula.rawLinesView().get(indekss));
+            lookupTable.register(table.rawLinesView().get(index));
         }
-        reģistrē_papildinājums_priekš_agregātuSaturs(papildinājums, indekss);
+        register_beforeAddition_atComplexContent(addition, index);
     }
 
-    private void reģistrē_papildinājums_priekš_agregātuSaturs(T papildinājums, int indekss) {
-        agregātsSaturs.forEach((predikāts, uzmeklēšanasTabula) -> {
-            if (predikāts.test(papildinājums)) {
-                uzmeklēšanasTabula.reģistrē(tabula.rawLinesView().get(indekss));
+    private void register_beforeAddition_atComplexContent(T addition, int index) {
+        complexContent.forEach((predicate, lookupTable) -> {
+            if (predicate.test(addition)) {
+                lookupTable.register(table.rawLinesView().get(index));
             }
         });
     }
 
     @Override
     public void register_removal(T removal, int index) {
-        final var rinda = tabula.rawLinesView().get(index);
-        saturs.get(removal).noņemt_reģistrāciju(rinda);
-        // atkritumu kolekcija
-        if (saturs.get(removal).isEmpty()) {
-            saturs.remove(removal);
+        final var line = table.rawLinesView().get(index);
+        content.get(removal).removeRegistration(line);
+        // garbage collection
+        if (content.get(removal).isEmpty()) {
+            content.remove(removal);
         }
-        agregātsSaturs.forEach((predikāts, uzmeklēšanasTabula) -> {
-            if (predikāts.test(removal)) {
-                uzmeklēšanasTabula.noņemt_reģistrāciju(tabula.rawLinesView().get(index));
+        complexContent.forEach((predicate, lookupTable) -> {
+            if (predicate.test(removal)) {
+                lookupTable.removeRegistration(table.rawLinesView().get(index));
             }
         });
     }
 
     @Override
-    public Table lookup(T vertība) {
-        if (saturs.containsKey(vertība)) {
-            return saturs.get(vertība);
+    public Table lookup(T value) {
+        if (content.containsKey(value)) {
+            return content.get(value);
         }
-        return tukšaUzmeklēšanasTabula;
+        return lookupTable;
     }
 
     @Override
-    public Table lookup(Predicate<T> predikāts) {
-        if (!agregātsSaturs.containsKey(predikāts)) {
-            final var uzmeklēšana = uzmeklēšanasTabula(tabula, predikāts.toString());
-            agregātsSaturs.put(predikāts, uzmeklēšana);
-            tabula
+    public Table lookup(Predicate<T> predicate) {
+        if (!complexContent.containsKey(predicate)) {
+            final var lookup = LookupTable.lookupTable(table, predicate.toString());
+            complexContent.put(predicate, lookup);
+            table
                     .rawLinesView()
                     .stream()
                     .filter(e -> e != null)
                     .forEach(e -> {
-                        if (predikāts.test(e.value(atribūts))) {
-                            uzmeklēšana.reģistrē(e);
+                        if (predicate.test(e.value(attribute))) {
+                            lookup.register(e);
                         }
                     });
         }
-        return agregātsSaturs.get(predikāts);
+        return complexContent.get(predicate);
     }
 
     @Override
     public List<String> path() {
-        final List<String> taka = tabula.path();
-        taka.add(atribūts.name());
-        return taka;
+        final List<String> path = table.path();
+        path.add(attribute.name());
+        return path;
     }
 }

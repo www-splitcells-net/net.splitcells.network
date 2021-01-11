@@ -19,105 +19,104 @@ import org.w3c.dom.Element;
 import net.splitcells.dem.data.set.list.Lists;
 
 public class LookupTable implements Table {
-    // PĀRSAUKT Nosaukums nenorāda mainīgās nozīmu.
-    protected final Table tabula;
-    protected final String vārds;
-    protected final Set<Integer> saturs = setOfUniques();
-    protected final List<Column<Object>> kolonnas;
-    protected final List<Column<Object>> kolonnasSkats;
+    protected final Table tableView;
+    protected final String name;
+    protected final Set<Integer> content = setOfUniques();
+    protected final List<Column<Object>> columns;
+    protected final List<Column<Object>> columnsView;
 
-    public static LookupTable uzmeklēšanasTabula(Table tabula, String vārds) {
-        return new LookupTable(tabula, vārds);
+    public static LookupTable lookupTable(Table table, String name) {
+        return new LookupTable(table, name);
     }
 
-    public static LookupTable uzmeklēšanasTabula(Table tabula, Attribute<?> atribūts) {
-        return new LookupTable(tabula, atribūts.name());
+    public static LookupTable lookupTable(Table table, Attribute<?> attribute) {
+        return new LookupTable(table, attribute.name());
     }
 
-    protected LookupTable(Table tabula, String vārds) {
-        this.tabula = tabula;
-        this.vārds = vārds;
-        kolonnas = listWithValuesOf
-                (tabula.headerView().stream()
+    protected LookupTable(Table table, String name) {
+        this.tableView = table;
+        this.name = name;
+        columns = listWithValuesOf
+                (table.headerView().stream()
                         .map(attribute -> LookupColumn.lookupColumn(this, attribute))
                         .collect(toList()));
-        kolonnasSkats = listWithValuesOf(kolonnas);
+        columnsView = listWithValuesOf(columns);
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return tabula.headerView();
+        return tableView.headerView();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> Column<T> columnView(Attribute<T> atribūts) {
+    public <T> Column<T> columnView(Attribute<T> attribute) {
         int index = 0;
-        for (final var headerAttribute : tabula.headerView()) {
-            if (headerAttribute.equals(atribūts)) {
-                return (Column<T>) kolonnas.get(index);
+        for (final var headerAttribute : tableView.headerView()) {
+            if (headerAttribute.equals(attribute)) {
+                return (Column<T>) columns.get(index);
             }
             ++index;
         }
-        throw new IllegalArgumentException(atribūts.toString());
+        throw new IllegalArgumentException(attribute.toString());
     }
 
     @Override
     public List<Line> rawLinesView() {
-        final var rVal = Lists.<Line>list();
-        range(0, tabula.rawLinesView().size()).forEach(i -> {
+        final var rawLines = Lists.<Line>list();
+        range(0, tableView.rawLinesView().size()).forEach(i -> {
             final Line rElement;
-            if (saturs.contains(i)) {
-                rElement = tabula.rawLinesView().get(i);
+            if (content.contains(i)) {
+                rElement = tableView.rawLinesView().get(i);
             } else {
                 rElement = null;
             }
-            rVal.add(rElement);
+            rawLines.add(rElement);
         });
-        return rVal;
+        return rawLines;
     }
 
     @Override
     public int size() {
-        return saturs.size();
+        return content.size();
     }
 
-    public void reģistrē(Line rinda) {
-        saturs.add(rinda.index());
-        // DARĪT JAUD
-        // SALABOT
-        range(0, kolonnas.size()).forEach(i -> {
-            // KOMPROMISS
-            final var kolonna = (LookupColumn<Object>) kolonnas.get(i);
-            kolonna.set(rinda.index(), rinda.value(tabula.headerView().get(i)));
-        });
-        kolonnas.forEach(kolonna -> kolonna.register_addition(rinda));
-    }
-
-    public void noņemt_reģistrāciju(Line rinda) {
-        kolonnas.forEach(column -> column.register_before_removal(rinda));
-        saturs.remove(rinda.index());
-        range(0, kolonnas.size()).forEach(i -> {
+    public void register(Line line) {
+        content.add(line.index());
+        // TODO PERFORMANCE
+        // TODO FIX
+        range(0, columns.size()).forEach(i -> {
             // HACK
-            final var column = (LookupColumn<Object>) kolonnas.get(i);
-            column.set(rinda.index(), null);
+            final var column = (LookupColumn<Object>) columns.get(i);
+            column.set(line.index(), line.value(tableView.headerView().get(i)));
+        });
+        columns.forEach(column -> column.register_addition(line));
+    }
+
+    public void removeRegistration(Line line) {
+        columns.forEach(column -> column.register_before_removal(line));
+        content.remove(line.index());
+        range(0, columns.size()).forEach(i -> {
+            // HACK
+            final var column = (LookupColumn<Object>) columns.get(i);
+            column.set(line.index(), null);
         });
     }
 
     @Override
     public List<Column<Object>> columnsView() {
-        return kolonnasSkats;
+        return columnsView;
     }
 
     public Table base() {
-        return tabula;
+        return tableView;
     }
 
     @Override
-    public net.splitcells.dem.data.set.list.List<String> path() {
-        final var rVal = tabula.path();
-        rVal.add(LookupTable.class.getSimpleName() + "(" + vārds + ")");
-        return rVal;
+    public List<String> path() {
+        final var path = tableView.path();
+        path.add(LookupTable.class.getSimpleName() + "(" + name + ")");
+        return path;
     }
 
     @Override
@@ -126,10 +125,8 @@ public class LookupTable implements Table {
         // REMOVE
         rVal.appendChild(textNode("" + hashCode()));
         rVal.appendChild(element("subject", textNode(path().toString())));
-        rVal.appendChild(element("content", textNode(saturs.toString())));
-        saturs.forEach(i -> {
-            rVal.appendChild(rawLinesView().get(i).toDom());
-        });
+        rVal.appendChild(element("content", textNode(content.toString())));
+        content.forEach(i -> rVal.appendChild(rawLinesView().get(i).toDom()));
         return rVal;
     }
 
@@ -140,18 +137,19 @@ public class LookupTable implements Table {
 
     @Override
     public List<Line> rawLines() {
-        // TASK PERFORMANCE
-        final var rVal = Lists.<Line>list();
-        saturs.forEach(index -> rVal.add(tabula.getRawLine(index)));
-        return rVal;
+        // TODO PERFORMANCE
+        final var rawLines = Lists.<Line>list();
+        content.forEach(index -> rawLines.add(tableView.getRawLine(index)));
+        return rawLines;
     }
 
     @Override
-    public Line lookupEquals(Attribute<Line> atribūts, Line other) {
-        final var rBase = tabula.lookupEquals(atribūts, other);
-        if (saturs.contains(rBase.index())) {
+    public Line lookupEquals(Attribute<Line> attribute, Line values) {
+        final var rBase = tableView.lookupEquals(attribute, values);
+        if (content.contains(rBase.index())) {
             return rBase;
         }
+        // TODO Fix interface. Instead of return null, an error should be thrown.
         return null;
     }
 }

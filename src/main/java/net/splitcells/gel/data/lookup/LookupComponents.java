@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import net.splitcells.gel.data.table.Table;
 
 public interface LookupComponents<T> {
-	Table lookup(T vertība);
+	Table lookup(T value);
 
-	Table lookup(Predicate<T> predikāts);
+	Table lookup(Predicate<T> predicate);
 }

@@ -9,7 +9,7 @@ public class Lookups extends ResourceI<LookupFactory> {
         super(() -> new LookupIFactory());
     }
 
-    public static <R> Lookup<R> lookup(Table tabula, Attribute<R> atribūts) {
-        return new LookupI<>(tabula, atribūts);
+    public static <R> Lookup<R> lookup(Table table, Attribute<R> attribute) {
+        return new LookupI<>(table, attribute);
     }
 }

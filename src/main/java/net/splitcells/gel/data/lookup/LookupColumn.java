@@ -19,22 +19,22 @@ import net.splitcells.gel.data.table.column.Column;
 
 public class LookupColumn<T> implements Column<T> {
 
-    private final LookupTable tabula;
-    private Optional<Lookup<T>> uzmeklēšana = Optional.empty();
-    private final Attribute<T> atribūts;
+    private final LookupTable table;
+    private Optional<Lookup<T>> lookup = Optional.empty();
+    private final Attribute<T> attribute;
 
-    public static <T> LookupColumn<T> lookupColumn(LookupTable tabula, Attribute<T> atribūts) {
-        return new LookupColumn<>(tabula, atribūts);
+    public static <T> LookupColumn<T> lookupColumn(LookupTable table, Attribute<T> attribute) {
+        return new LookupColumn<>(table, attribute);
     }
 
-    private LookupColumn(LookupTable tabula, Attribute<T> atribūts) {
-        this.tabula = tabula;
-        this.atribūts = atribūts;
+    private LookupColumn(LookupTable table, Attribute<T> attribute) {
+        this.table = table;
+        this.attribute = attribute;
     }
 
     @Override
     public int size() {
-        return tabula.size();
+        return table.size();
     }
 
     @Override
@@ -83,7 +83,7 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public boolean addAll(int indekss, Collection<? extends T> c) {
+    public boolean addAll(int index, Collection<? extends T> c) {
         throw new Not_implemented_yet();
     }
 
@@ -103,24 +103,24 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public T get(int indekss) {
-        // SALABOT Filtrējiet elementus, kas nav daļa no uzmeklēšanas.
-        return tabula.base().columnView(atribūts).get(indekss);
+    public T get(int index) {
+        // TODO FIX Filter elements, that are not part of lookup.
+        return table.base().columnView(attribute).get(index);
     }
 
     @Override
     public T set(int indekss, T elements) {
-        // SALABOT Vai kaut kas ir jādara?
+        // TODO FIX Has something else to be doen here?
         return elements;
     }
 
     @Override
-    public void add(int indekss, T elements) {
+    public void add(int index, T value) {
         throw new Not_implemented_yet();
     }
 
     @Override
-    public T remove(int indekss) {
+    public T remove(int index) {
         throw new Not_implemented_yet();
     }
 
@@ -140,48 +140,48 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public ListIterator<T> listIterator(int indekss) {
+    public ListIterator<T> listIterator(int index) {
         throw new Not_implemented_yet();
     }
 
     @Override
-    public List<T> subList(int noIndekss, int uzIndekss) {
+    public List<T> subList(int startIndex, int endIndex) {
         throw new Not_implemented_yet();
     }
 
-    private void nodrošinatUzmeklēšanaInitializets() {
-        if (!uzmeklēšana.isPresent()) {
-            uzmeklēšana = Optional.of(Lookups.lookup(tabula, atribūts));
+    private void ensureInitializedLookup() {
+        if (!lookup.isPresent()) {
+            lookup = Optional.of(Lookups.lookup(table, attribute));
         }
     }
 
     @Override
-    public Table lookup(T vertība) {
-        nodrošinatUzmeklēšanaInitializets();
-        return uzmeklēšana.get().lookup(vertība);
+    public Table lookup(T value) {
+        ensureInitializedLookup();
+        return lookup.get().lookup(value);
     }
 
     @Override
-    public Table lookup(Predicate<T> predikāts) {
-        nodrošinatUzmeklēšanaInitializets();
-        return uzmeklēšana.get().lookup(predikāts);
+    public Table lookup(Predicate<T> predicate) {
+        ensureInitializedLookup();
+        return lookup.get().lookup(predicate);
     }
 
     @Override
     public void register_addition(Line addition) {
-        uzmeklēšana.ifPresent(l -> l.register_addition(addition.value(atribūts), addition.index()));
+        lookup.ifPresent(l -> l.register_addition(addition.value(attribute), addition.index()));
     }
 
     @Override
     public void register_before_removal(Line removal) {
-        uzmeklēšana.ifPresent(l -> l.register_removal(removal.value(atribūts), removal.index()));
+        lookup.ifPresent(l -> l.register_removal(removal.value(attribute), removal.index()));
     }
 
     @Override
     public net.splitcells.dem.data.set.list.List<T> values() {
         return Lists.<T>list().withAppended(
-                tabula.rawLines().stream()//
-                        .map(e -> e.value(atribūts))//
+                table.rawLines().stream()//
+                        .map(e -> e.value(attribute))//
                         .collect(Collectors.toList())
         );
     }

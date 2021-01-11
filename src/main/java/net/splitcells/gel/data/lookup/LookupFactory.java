@@ -6,5 +6,5 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
 public interface LookupFactory extends Closeable, Flushable {
-    <R> Lookup<R> uzmeklē(Table tabula, Attribute<R> atribūts);
+    <R> Lookup<R> lookup(Table table, Attribute<R> attribute);
 }
