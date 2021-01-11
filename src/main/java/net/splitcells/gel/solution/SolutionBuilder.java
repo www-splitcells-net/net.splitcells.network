@@ -5,13 +5,13 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 
-import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.problem.ProblemI.problem;
 
 import java.util.Arrays;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.DefineDemands;
 import net.splitcells.gel.problem.DefineSupply;
@@ -39,8 +39,8 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
 
     @Override
     public Problem toProblem() {
-        final var demandDatabase = datuBāze(DEMANDS.value(), null, demandAttributes);
-        final var supplyDatabase = datuBāze(SUPPLIES.value(), null, supplyAttributes);
+        final var demandDatabase = Databases.database(DEMANDS.value(), null, demandAttributes);
+        final var supplyDatabase = Databases.database(SUPPLIES.value(), null, supplyAttributes);
         demands.forEach(demand -> demandDatabase.addTranslated(demand));
         supplies.forEach(supplies -> supplyDatabase.addTranslated(supplies));
         return problem(

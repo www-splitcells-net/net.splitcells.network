@@ -5,7 +5,6 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
 import static net.splitcells.gel.common.Language.*;
-import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.solution.history.event.Allocation.allocations;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.ADDITION;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
@@ -18,6 +17,7 @@ import static org.assertj.core.api.Assertions.not;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -43,11 +43,11 @@ public class HistoryI implements History {
     protected HistoryI(Solution solution) {
         allocations = Allocationss.allocations
                 (HISTORY.value()
-                        , datuBāze
+                        , Databases.database
                                 (EVENT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
                                         , ALLOCATION_ID, ALLOCATION_EVENT)
-                        , datuBāze
+                        , Databases.database
                                 (RESULT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
                                         , META_DATA));
@@ -150,13 +150,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void subscribe_to_afterAdditions(AfterAdditionSubscriber klausītājs) {
-        allocations.subscribe_to_afterAdditions(klausītājs);
+    public void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber) {
+        allocations.subscribe_to_afterAdditions(subscriber);
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        allocations.subscriber_to_beforeRemoval(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber) {
+        allocations.subscriber_to_beforeRemoval(subscriber);
     }
 
     @Override

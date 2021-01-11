@@ -248,8 +248,8 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void subscribe_to_afterAdditions(AfterAdditionSubscriber klausītājs) {
-        papildinājumsKlausītājs.add(klausītājs);
+    public void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber) {
+        papildinājumsKlausītājs.add(subscriber);
     }
 
     @Override
@@ -268,8 +268,8 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        primsNoņemšanaAbonēšanas.add(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber) {
+        primsNoņemšanaAbonēšanas.add(subscriber);
     }
 
     @Override

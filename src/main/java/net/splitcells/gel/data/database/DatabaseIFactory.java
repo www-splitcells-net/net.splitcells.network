@@ -9,33 +9,33 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 public class DatabaseIFactory implements DatabaseFactory {
 
     @Override
-    public Database datuBāze(String vārds, Attribute<? extends Object>... atribūti) {
+    public Database database(String vārds, Attribute<? extends Object>... atribūti) {
         return new DatabaseI(vārds, null, atribūti);
     }
 
     @Override
-    public Database datuBāze(Attribute<? extends Object>... atribūti) {
+    public Database database(Attribute<? extends Object>... atribūti) {
         return new DatabaseI(atribūti);
     }
 
     @Override
-    public Database datuBāze(List<Attribute<?>> atribūti) {
+    public Database database(List<Attribute<?>> atribūti) {
         return new DatabaseI(atribūti);
     }
 
     @Override
-    public Database datuBāze(List<Attribute<? extends Object>> atribūti, List<List<Object>> rindasVertības) {
+    public Database database(List<Attribute<? extends Object>> atribūti, List<List<Object>> rindasVertības) {
         return new DatabaseI(atribūti, rindasVertības);
     }
 
     @Override
     @Deprecated
-    public Database datuBāze(String vārds, Discoverable vecāks, Attribute<? extends Object>... atribūti) {
+    public Database database(String vārds, Discoverable vecāks, Attribute<? extends Object>... atribūti) {
         return new DatabaseI(vārds, vecāks, listWithValuesOf(atribūti).mapped(a -> (Attribute<Object>) a));
     }
 
     @Override
-    public Database datuBāze(String vārds, Discoverable vecāks, List<Attribute<? extends Object>> atribūti) {
+    public Database database(String vārds, Discoverable vecāks, List<Attribute<? extends Object>> atribūti) {
         return new DatabaseI(vārds, vecāks, atribūti.mapped(a -> (Attribute<Object>) a));
     }
 

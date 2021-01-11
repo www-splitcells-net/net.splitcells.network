@@ -16,7 +16,6 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
-import static net.splitcells.gel.data.database.Databases.datuBāze;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.rindasNovērtējums;
 import static net.splitcells.gel.constraint.Report.report;
@@ -32,6 +31,7 @@ import java.util.function.Predicate;
 
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
@@ -62,7 +62,7 @@ public abstract class ConstraintAI implements Constraint {
     protected Optional<Discoverable> golvenaisKonteksts = Optional.empty();
     private final List<Discoverable> konteksti = list();
     protected final Database rindas;
-    protected final Database radījums = datuBāze("results", this, RESULTING_CONSTRAINT_GROUP_ID, NOVĒRTĒJUMS, IZDALĪŠANA_UZ);
+    protected final Database radījums = Databases.database("results", this, RESULTING_CONSTRAINT_GROUP_ID, NOVĒRTĒJUMS, IZDALĪŠANA_UZ);
     protected final Allocations rindasApstrāde;
     protected final Map<GroupId, Rating> grupasApstrāde = map();
 
@@ -72,7 +72,7 @@ public abstract class ConstraintAI implements Constraint {
 
     protected ConstraintAI(GroupId injekcijasGrupas, String vārds) {
         this.injekcijasGrupas = injekcijasGrupas;
-        rindas = datuBāze(vārds + ".rindas", this, LINE, INCOMING_CONSTRAINT_GROUP);
+        rindas = Databases.database(vārds + ".rindas", this, LINE, INCOMING_CONSTRAINT_GROUP);
         rindasApstrāde = allocations("rindasApstrāde", rindas, radījums);
         rindasApstrāde.subscribe_to_afterAdditions(this::izdalīt_papildinajumu);
         rindasApstrāde.subscriber_to_beforeRemoval(this::izdalīt_noņemšana);

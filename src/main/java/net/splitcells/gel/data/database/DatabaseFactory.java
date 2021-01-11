@@ -16,41 +16,41 @@ import static net.splitcells.dem.lang.Xml.directChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 
 public interface DatabaseFactory extends Closeable, Flushable {
-    Database datuBāze(String vārds, Attribute<? extends Object>... atribūti);
+    Database database(String name, Attribute<? extends Object>... attributes);
 
-    Database datuBāze(Attribute<? extends Object>... atribūti);
+    Database database(Attribute<? extends Object>... attributes);
 
     @Deprecated
-    default Database database(List<Attribute<?>> atribūti) {
-        return datuBāze(atribūti);
+    default Database database_(List<Attribute<?>> attributes) {
+        return database(attributes);
     }
 
-    Database datuBāze(List<Attribute<?>> atribūti);
+    Database database(List<Attribute<?>> attributes);
 
-    Database datuBāze(List<Attribute<? extends Object>> atribūti, List<List<Object>> rindasVertības);
+    Database database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues);
 
     @Deprecated
-    Database datuBāze(String vārds, Discoverable vecāks, Attribute<? extends Object>... atribūti);
+    Database database(String name, Discoverable parent, Attribute<? extends Object>... attributes);
 
-    Database datuBāze(String vārds, Discoverable vecāks, List<Attribute<? extends Object>> atribūti);
+    Database database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes);
 
-    default Database datuBāzeNoFods(List<Attribute<?>> atribūti, Element fods) {
-        final var datuBāzeNoFods = datuBāze(atribūti);
+    default Database databaseOfFods(List<Attribute<?>> attributes, Element fods) {
+        final var databaseOfFods = database(attributes);
         final var body = directChildElementByName(fods, "body", FODS_OFFICE);
         final var speardsheet = directChildElementByName(body, "spreadsheet", FODS_OFFICE);
         final var table = directChildElementByName(speardsheet, "table", FODS_TABLE);
         directChildElementsByName(table, "table-row", FODS_TABLE)
                 .skip(1)
-                .map(row -> rindaNoFodsRow(atribūti, row))
-                .forEach(rindasVērtības -> datuBāzeNoFods.addTranslated(rindasVērtības));
-        return datuBāzeNoFods;
+                .map(row -> lineOfFodsRow(attributes, row))
+                .forEach(rindasVērtības -> databaseOfFods.addTranslated(rindasVērtības));
+        return databaseOfFods;
     }
 
-    private static List<Object> rindaNoFodsRow(List<Attribute<?>> atribūti, Element row) {
+    private static List<Object> lineOfFodsRow(List<Attribute<?>> attributes, Element row) {
         final var tableCells = directChildElementsByName(row, "table-cell", FODS_TABLE)
                 .collect(toList());
-        return range(0, atribūti.size())
-                .mapToObj(i -> atribūti.get(i).deserializeValue(
+        return range(0, attributes.size())
+                .mapToObj(i -> attributes.get(i).deserializeValue(
                         Xml.directChildElements(tableCells.get(i))
                                 .filter(e -> FODS_TEXT.uri().equals(e.getNamespaceURI()))
                                 .findFirst()

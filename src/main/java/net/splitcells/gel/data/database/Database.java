@@ -8,28 +8,28 @@ public interface Database extends Table {
 
 	Line addTranslated(List<? extends Object> values);
 
-	Line add(Line rinda);
+	Line add(Line line);
 
 	@Deprecated
-	void remove(int rindasIndekss);
+	void remove(int lineIndex);
 
-	void remove(Line rinda);
+	void remove(Line line);
 
-	default void replace(Line jaunaRinda) {
-		if (null != rawLinesView().get(jaunaRinda.index())) {
-			remove(jaunaRinda.index());
+	default void replace(Line newLine) {
+		if (null != rawLinesView().get(newLine.index())) {
+			remove(newLine.index());
 		}
-		add(jaunaRinda);
+		add(newLine);
 	}
 
-	default <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void synchronize(T klausītājs) {
-		subscribe_to_afterAdditions(klausītājs);
-		subscriber_to_beforeRemoval(klausītājs);
+	default <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void synchronize(T subscriber) {
+		subscribe_to_afterAdditions(subscriber);
+		subscriber_to_beforeRemoval(subscriber);
 	}
 
-	void subscribe_to_afterAdditions(AfterAdditionSubscriber papildinājumuKlausītājs);
+	void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber);
 
-	void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs);
+	void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber);
 
-	void subscriber_to_afterRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs);
+	void subscriber_to_afterRemoval(BeforeRemovalSubscriber subscriber);
 }

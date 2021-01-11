@@ -9,6 +9,7 @@ import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.data.table.LineI.line;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
@@ -30,179 +31,179 @@ import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
 
 public class DatabaseI implements Database {
-    protected final String vārds;
-    protected final Optional<Discoverable> vecāks;
-    protected final List<Attribute<Object>> atribūti;
-    protected final List<Column<Object>> kolonnas = list();
-    protected final Map<Attribute<?>, Integer> tips_kolonnasIndekss = map();
-    protected final Set<Line> rindas = setOfUniques();
-    protected final List<Line> jēlasRindas = list();
-    protected final ListView<Line> jēlasRindasSkats = listView(jēlasRindas);
-    protected int izmers;
-    protected final List<AfterAdditionSubscriber> papildinājumsKlausītājs = list();
-    protected final List<BeforeRemovalSubscriber> pirmsNoņemšanaKlausītājs = list();
-    protected final List<BeforeRemovalSubscriber> pēcNoņemšanaAbonēšanas = list();
-    protected final net.splitcells.dem.data.set.Set<Integer> indekssiNelitoti = setOfUniques();
+    protected final String name;
+    protected final Optional<Discoverable> parent;
+    protected final List<Attribute<Object>> attributes;
+    protected final List<Column<Object>> columns = list();
+    protected final Map<Attribute<?>, Integer> typed_column_index = map();
+    protected final Set<Line> lines = setOfUniques();
+    protected final List<Line> rawLines = list();
+    protected final ListView<Line> rawLinesView = listView(rawLines);
+    protected int size;
+    protected final List<AfterAdditionSubscriber> additionSubscriber = list();
+    protected final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
+    protected final List<BeforeRemovalSubscriber> afterRemovalSubscriber = list();
+    protected final net.splitcells.dem.data.set.Set<Integer> indexesOfFree = setOfUniques();
 
 
     @Deprecated
-    public DatabaseI(List<Attribute<? extends Object>> atribūti) {
-        this("", null, atribūti.mapped(a -> (Attribute<Object>) a));
+    public DatabaseI(List<Attribute<? extends Object>> attributes) {
+        this("", null, attributes.mapped(a -> (Attribute<Object>) a));
     }
 
     @Deprecated
     @SuppressWarnings("unchecked")
-    public DatabaseI(String vārds, Discoverable vecāks, List<Attribute<Object>> atribūti) {
-        this.vārds = vārds;
-        this.vecāks = Optional.ofNullable(vecāks);
-        final List<Attribute<Object>> headerAtribūts = list();
-        atribūti.forEach(att -> {
-            tips_kolonnasIndekss.put(att, headerAtribūts.size());
-            headerAtribūts.add(att);
-            kolonnas.add(ColumnI.column(this, att));
+    public DatabaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+        this.name = name;
+        this.parent = Optional.ofNullable(parent);
+        final List<Attribute<Object>> headerAttributes = list();
+        attributes.forEach(att -> {
+            typed_column_index.put(att, headerAttributes.size());
+            headerAttributes.add(att);
+            columns.add(ColumnI.column(this, att));
         });
-        this.atribūti = listWithValuesOf(headerAtribūts);
-        kolonnas.forEach(this::subscribe_to_afterAdditions);
-        kolonnas.forEach(this::subscriber_to_beforeRemoval);
+        this.attributes = listWithValuesOf(headerAttributes);
+        columns.forEach(this::subscribe_to_afterAdditions);
+        columns.forEach(this::subscriber_to_beforeRemoval);
     }
 
     @Deprecated
-    public DatabaseI(List<Attribute<?>> atribūti, Collection<List<Object>> rindasVertības) {
-        this(atribūti);
-        rindasVertības.forEach(line_values -> addTranslated(line_values));
+    public DatabaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
+        this(attributes);
+        linesValues.forEach(line_values -> addTranslated(line_values));
     }
 
-    public DatabaseI(String vārds, Discoverable vecāks, Attribute<? extends Object>... atribūti) {
-        this(vārds, vecāks, listWithValuesOf(atribūti).mapped(a -> (Attribute<Object>) a));
+    public DatabaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+        this(name, parent, listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a));
     }
 
     @Deprecated
-    public DatabaseI(Attribute<?>... atribūti) {
-        this(listWithValuesOf(atribūti));
+    public DatabaseI(Attribute<?>... attributes) {
+        this(listWithValuesOf(attributes));
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return atribūti;
+        return attributes;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> ColumnView<T> columnView(Attribute<T> atribūts) {
-        return ColumnViewI.kolonnasSkats((Column<T>) kolonnas.get(tips_kolonnasIndekss.get(atribūts)));
+    public <T> ColumnView<T> columnView(Attribute<T> attributes) {
+        return ColumnViewI.kolonnasSkats((Column<T>) columns.get(typed_column_index.get(attributes)));
     }
 
     @Override
     public ListView<Line> rawLinesView() {
-        return jēlasRindasSkats;
+        return rawLinesView;
     }
 
     @Override
-    public void subscribe_to_afterAdditions(AfterAdditionSubscriber klausītājs) {
-        this.papildinājumsKlausītājs.add(klausītājs);
+    public void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber) {
+        this.additionSubscriber.add(subscriber);
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        pirmsNoņemšanaKlausītājs.add(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber) {
+        beforeRemovalSubscriber.add(subscriber);
     }
 
     @Override
-    public Line add(Line rinda) {
-        final List<Object> rindasVertības = list();
-        range(0, atribūti.size()).forEach(i -> {
-            rindasVertības.add(rinda.value(atribūti.get(i)));
+    public Line add(Line line) {
+        final List<Object> lineValues = list();
+        range(0, attributes.size()).forEach(i -> {
+            lineValues.add(line.value(attributes.get(i)));
         });
-        return pieliktTulkošanaNo(rindasVertības, rinda.index());
+        return addTranslated(lineValues, line.index());
     }
 
-    protected Line pieliktTulkošanaNo(List<Object> rindasVertības, int indekss) {
-        if (indekss >= jēlasRindas.size()) {
-            range(0, rindasVertības.size()).forEach(i -> {
-                paplašināt_sarakstu_uz(kolonnas.get(i), indekss);
+    protected Line addTranslated(List<Object> lineValues, int index) {
+        if (index >= rawLines.size()) {
+            range(0, lineValues.size()).forEach(i -> {
+                extend_content_to(columns.get(i), index);
             });
-            rangeClosed(jēlasRindas.size(), indekss).forEach(i -> {
-                indekssiNelitoti.add(i);
-                jēlasRindas.add(null);
+            rangeClosed(rawLines.size(), index).forEach(i -> {
+                indexesOfFree.add(i);
+                rawLines.add(null);
             });
         }
-        indekssiNelitoti.delete(indekss);
-        range(0, rindasVertības.size()).forEach(i -> kolonnas.get(i).set(indekss, rindasVertības.get(i)));
-        ++izmers;
-        final var rinda = LineI.line(this, indekss);
-        jēlasRindas.set(rinda.index(), rinda);
-        rindas.add(rinda);
-        papildinājumsKlausītājs.forEach(klausītājs -> klausītājs.register_addition(rinda));
-        return rinda;
+        indexesOfFree.delete(index);
+        range(0, lineValues.size()).forEach(i -> columns.get(i).set(index, lineValues.get(i)));
+        ++size;
+        final var line = line(this, index);
+        rawLines.set(line.index(), line);
+        lines.add(line);
+        additionSubscriber.forEach(subscriber -> subscriber.register_addition(line));
+        return line;
     }
 
     /**
      * TODO Move this to an utility class.
      */
-    protected static void paplašināt_sarakstu_uz(List<?> sarakst, int mērķetasMaksimalaisIndekss) {
-        while (sarakst.size() < mērķetasMaksimalaisIndekss + 1) {
-            sarakst.add(null);
+    protected static void extend_content_to(List<?> list, int targetMaximalIndex) {
+        while (list.size() < targetMaximalIndex + 1) {
+            list.add(null);
         }
     }
 
     @Override
-    public Line addTranslated(List<? extends Object> rindasVertības) {
-        final int rindasIndekss;
-        final Line rinda;
-        if (indekssiNelitoti.isEmpty()) {
-            rindasIndekss = jēlasRindas.size();
-            rinda = LineI.line(this, rindasIndekss);
-            jēlasRindas.add(rinda);
-            range(0, rindasVertības.size()).forEach(i -> kolonnas.get(i).add(rindasVertības.get(i)));
+    public Line addTranslated(List<? extends Object> lineValues) {
+        final int lineIndex;
+        final Line line;
+        if (indexesOfFree.isEmpty()) {
+            lineIndex = rawLines.size();
+            line = line(this, lineIndex);
+            rawLines.add(line);
+            range(0, lineValues.size()).forEach(i -> columns.get(i).add(lineValues.get(i)));
         } else {
-            rindasIndekss = removeAny(indekssiNelitoti);
-            range(0, rindasVertības.size()).forEach(i -> kolonnas.get(i).set(rindasIndekss, rindasVertības.get(i)));
-            rinda = LineI.line(this, rindasIndekss);
-            jēlasRindas.set(rindasIndekss, rinda);
+            lineIndex = removeAny(indexesOfFree);
+            range(0, lineValues.size()).forEach(i -> columns.get(i).set(lineIndex, lineValues.get(i)));
+            line = line(this, lineIndex);
+            rawLines.set(lineIndex, line);
         }
-        ++izmers;
-        rindas.add(rinda);
-        papildinājumsKlausītājs.forEach(klausītājs -> klausītājs.register_addition(rinda));
-        return rinda;
+        ++size;
+        lines.add(line);
+        additionSubscriber.forEach(subscriber -> subscriber.register_addition(line));
+        return line;
     }
 
     @Override
-    public void remove(int rindasIndekss) {
-        final var noņemšanaNo = jēlasRindas.get(rindasIndekss);
-        pirmsNoņemšanaKlausītājs.forEach(klausītājs -> klausītājs.register_before_removal(noņemšanaNo));
-        kolonnas.forEach(kolonna -> {
-            kolonna.set(rindasIndekss, null);
+    public void remove(int lineIndex) {
+        final var removalFrom = rawLines.get(lineIndex);
+        beforeRemovalSubscriber.forEach(subscriber -> subscriber.register_before_removal(removalFrom));
+        columns.forEach(kolonna -> {
+            kolonna.set(lineIndex, null);
         });
-        rindas.remove(jēlasRindas.get(rindasIndekss));
-        jēlasRindas.set(rindasIndekss, null);
-        indekssiNelitoti.add(rindasIndekss);
-        --izmers;
-        pēcNoņemšanaAbonēšanas.forEach(klausītājs -> klausītājs.register_before_removal(noņemšanaNo));
+        lines.remove(rawLines.get(lineIndex));
+        rawLines.set(lineIndex, null);
+        indexesOfFree.add(lineIndex);
+        --size;
+        afterRemovalSubscriber.forEach(subscriber -> subscriber.register_before_removal(removalFrom));
     }
 
     @Override
-    public void remove(Line rinda) {
-        remove(rinda.index());
+    public void remove(Line line) {
+        remove(line.index());
     }
 
     @Override
     public int size() {
-        return izmers;
+        return size;
     }
 
     @Override
-    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber listener) {
-        pēcNoņemšanaAbonēšanas.add(listener);
+    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber subscriber) {
+        afterRemovalSubscriber.add(subscriber);
     }
 
     /**
-     * JAUDA
+     * TODO PERFORMANCE
      *
      * @return
      */
     @Override
     public List<Column<Object>> columnsView() {
-        return listWithValuesOf(kolonnas);
+        return listWithValuesOf(columns);
     }
 
     @Override
@@ -212,7 +213,7 @@ public class DatabaseI implements Database {
 
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
-        return vecāks.map(Discoverable::path).orElse(list()).withAppended(vārds);
+        return parent.map(Discoverable::path).orElse(list()).withAppended(name);
     }
 
     @Override
@@ -226,12 +227,12 @@ public class DatabaseI implements Database {
 
     @Override
     public List<Line> rawLines() {
-        return listWithValuesOf(rindas);
+        return listWithValuesOf(lines);
     }
 
     @Override
     public Line lookupEquals(Attribute<Line> atribūts, Line rinda) {
-        return rindas.stream()
+        return lines.stream()
                 .filter(citaRinda -> citaRinda.value(atribūts).index() == rinda.index())
                 .reduce(StreamUtils.ensureSingle())
                 .get();

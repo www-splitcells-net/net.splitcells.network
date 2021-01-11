@@ -14,37 +14,37 @@ public class Databases extends ResourceI<DatabaseFactory> {
         super(() -> new DatabaseIFactory());
     }
 
-    public static Database datuBāze(String vārds, Attribute<? extends Object>... atribūti) {
-        return environment().config().configValue(Databases.class).datuBāze(vārds, atribūti);
+    public static Database database(String name, Attribute<? extends Object>... attributes) {
+        return environment().config().configValue(Databases.class).database(name, attributes);
     }
 
-    public static Database datuBāze(Attribute<? extends Object>... atribūti) {
-        return environment().config().configValue(Databases.class).datuBāze(atribūti);
+    public static Database database(Attribute<? extends Object>... attributes) {
+        return environment().config().configValue(Databases.class).database(attributes);
     }
 
-    public static Database datuBāze(List<Attribute<? extends Object>> atribūti, List<List<Object>> rindasVertības) {
-        return environment().config().configValue(Databases.class).datuBāze(atribūti, rindasVertības);
+    public static Database database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
+        return environment().config().configValue(Databases.class).database(attributes, linesValues);
     }
 
     @Deprecated
-    public static Database datuBāze(String vārds, Discoverable vecāks, Attribute<? extends Object>... atribūti) {
-        return environment().config().configValue(Databases.class).datuBāze(vārds, vecāks, atribūti);
+    public static Database database(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+        return environment().config().configValue(Databases.class).database(name, parent, attributes);
     }
 
-    public static Database datuBāze(String vārds, Discoverable vecāks, List<Attribute<? extends Object>> atribūti) {
-        return environment().config().configValue(Databases.class).datuBāze(vārds, vecāks, atribūti);
+    public static Database database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
+        return environment().config().configValue(Databases.class).database(name, parent, attributes);
     }
 
-    public static Database datuBāze(List<Attribute<?>> atribūti) {
-        return environment().config().configValue(Databases.class).datuBāze(atribūti);
+    public static Database database(List<Attribute<?>> attributes) {
+        return environment().config().configValue(Databases.class).database(attributes);
     }
 
-    public static Database datuBāzeNoFods(List<Attribute<?>> atribūti, Element fods) {
-        return environment().config().configValue(Databases.class).datuBāzeNoFods(atribūti, fods);
+    public static Database databaseOfFods(List<Attribute<?>> attributes, Element fods) {
+        return environment().config().configValue(Databases.class).databaseOfFods(attributes, fods);
     }
 
-    public static List<Attribute<? extends Object>> objektuAtribūti(List<Attribute<Object>> atribūti) {
-        return atribūti.stream()
+    public static List<Attribute<? extends Object>> objectAttributes(List<Attribute<Object>> attributes) {
+        return attributes.stream()
                 .map(a -> (Attribute<? extends Object>) a)
                 .collect(toList());
     }
