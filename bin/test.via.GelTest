@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+./bin/build
+mvn compile exec:java -Dexec.mainClass="net.splitcells.martins.avots.gel.GelTest"
