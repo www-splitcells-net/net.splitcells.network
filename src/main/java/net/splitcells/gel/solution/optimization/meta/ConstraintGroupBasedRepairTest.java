@@ -12,7 +12,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.type.ForAlls.forAllWithValue;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.constraint.type.Then.tad;
+import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -32,8 +32,8 @@ public class ConstraintGroupBasedRepairTest {
         final var invalidValueA = 1;
         final var invalidValueB = 3;
         final var validValue = 5;
-        final var defyingGroupA = tad(cost(1));
-        final var defyingGroupB = tad(cost(1));
+        final var defyingGroupA = then(cost(1));
+        final var defyingGroupB = then(cost(1));
         @SuppressWarnings("unchecked") final var solution
                 = define_problem()
                 .withDemandAttributes(a, b)
@@ -64,12 +64,12 @@ public class ConstraintGroupBasedRepairTest {
                  * Needless constraints are added, in order to check, if the correct {@link Constraint} is select.
                  */
                         (forAll().withChildren
-                                (forAllWithValue(a, validValue).withChildren(tad(noCost()))
-                                        , forAllWithValue(b, validValue).withChildren(tad(noCost()))
+                                (forAllWithValue(a, validValue).withChildren(then(noCost()))
+                                        , forAllWithValue(b, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(a, invalidValueA).withChildren(defyingGroupA)
                                         , forAllWithValue(b, invalidValueB).withChildren(defyingGroupB)
-                                        , forAllWithValue(a, validValue).withChildren(tad(noCost()))
-                                        , forAllWithValue(b, validValue).withChildren(tad(noCost()))))
+                                        , forAllWithValue(a, validValue).withChildren(then(noCost()))
+                                        , forAllWithValue(b, validValue).withChildren(then(noCost()))))
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
@@ -117,8 +117,8 @@ public class ConstraintGroupBasedRepairTest {
         final var invalidValueA = 1;
         final var invalidValueB = 3;
         final var validValue = 5;
-        final var defyingConstraintA = tad(cost(1));
-        final var defyingConstraintB = tad(cost(1));
+        final var defyingConstraintA = then(cost(1));
+        final var defyingConstraintB = then(cost(1));
         @SuppressWarnings("unchecked") final var solution
                 = define_problem()
                 .withDemandAttributes(a, b)
@@ -141,12 +141,12 @@ public class ConstraintGroupBasedRepairTest {
                                 , list())
                 .withConstraint
                         (forAll().withChildren
-                                (forAllWithValue(a, validValue).withChildren(tad(noCost()))
-                                        , forAllWithValue(b, validValue).withChildren(tad(noCost()))
+                                (forAllWithValue(a, validValue).withChildren(then(noCost()))
+                                        , forAllWithValue(b, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(a, invalidValueA).withChildren(defyingConstraintA)
                                         , forAllWithValue(b, invalidValueB).withChildren(defyingConstraintB)
-                                        , forAllWithValue(a, validValue).withChildren(tad(noCost()))
-                                        , forAllWithValue(b, validValue).withChildren(tad(noCost()))))
+                                        , forAllWithValue(a, validValue).withChildren(then(noCost()))
+                                        , forAllWithValue(b, validValue).withChildren(then(noCost()))))
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
@@ -160,25 +160,25 @@ public class ConstraintGroupBasedRepairTest {
     }
 
     @Test
-    public void testPrāsībasGrupēšana() {
+    public void testDemandClassification() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var nēderigaAVertība = 1;
-        final var nēderigaBVertība = 3;
-        final var derigaVertība = 5;
-        final var neievērotajuGrupaA = tad(cost(1));
-        final var neievērotajuGrupaB = tad(cost(1));
-        @SuppressWarnings("unchecked") final var atrisinājums
+        final var invalidValueA = 1;
+        final var invalidValueB = 3;
+        final var validValue = 5;
+        final var defyingConstraintA = then(cost(1));
+        final var defyingConstraintB = then(cost(1));
+        @SuppressWarnings("unchecked") final var solution
                 = define_problem()
                 .withDemandAttributes(a, b)
                 .withDemands
-                        (list(nēderigaAVertība, derigaVertība)
-                                , list(nēderigaAVertība, derigaVertība)
-                                , list(nēderigaAVertība, derigaVertība)
-                                , list(nēderigaAVertība, derigaVertība)
-                                , list(derigaVertība, nēderigaBVertība)
-                                , list(derigaVertība, nēderigaBVertība)
-                                , list(derigaVertība, derigaVertība))
+                        (list(invalidValueA, validValue)
+                                , list(invalidValueA, validValue)
+                                , list(invalidValueA, validValue)
+                                , list(invalidValueA, validValue)
+                                , list(validValue, invalidValueB)
+                                , list(validValue, invalidValueB)
+                                , list(validValue, validValue))
                 .withSupplyAttributes()
                 .withSupplies
                         (list(), list()
@@ -190,24 +190,24 @@ public class ConstraintGroupBasedRepairTest {
                                 , list())
                 .withConstraint
                         (forAll().withChildren
-                                (forAllWithValue(a, Integer.valueOf(derigaVertība)).withChildren(tad(noCost()))
-                                        , forAllWithValue(b, Integer.valueOf(derigaVertība)).withChildren(tad(noCost()))
-                                        , forAllWithValue(a, Integer.valueOf(nēderigaAVertība)).withChildren(neievērotajuGrupaA)
-                                        , forAllWithValue(b, Integer.valueOf(nēderigaBVertība)).withChildren(neievērotajuGrupaB)
-                                        , forAllWithValue(a, Integer.valueOf(derigaVertība)).withChildren(tad(noCost()))
-                                        , forAllWithValue(b, Integer.valueOf(derigaVertība)).withChildren(tad(noCost()))))
+                                (forAllWithValue(a, validValue).withChildren(then(noCost()))
+                                        , forAllWithValue(b, validValue).withChildren(then(noCost()))
+                                        , forAllWithValue(a, invalidValueA).withChildren(defyingConstraintA)
+                                        , forAllWithValue(b, invalidValueB).withChildren(defyingConstraintB)
+                                        , forAllWithValue(a, validValue).withChildren(then(noCost()))
+                                        , forAllWithValue(b, validValue).withChildren(then(noCost()))))
                 .toProblem()
                 .asSolution();
-        atrisinājums.optimize(linearInitialization());
-        assertThat(atrisinājums.getLines()).hasSize(7);
+        solution.optimize(linearInitialization());
+        assertThat(solution.getLines()).hasSize(7);
 
-        final var pārbaudesPriekšmets = constraintGroupBasedRepair();
-        final var pārbaudesRažojums = pārbaudesPriekšmets.demandGrouping
-                (atrisinājums.constraint().childrenView().get(3).childrenView().get(0)
-                        , atrisinājums);
-        assertThat(pārbaudesRažojums).hasSize(1);
-        assertThat(pārbaudesRažojums.values().iterator().next()).hasSize(2);
-        pārbaudesRažojums.values().iterator().next()
-                .forEach(rinda -> assertThat(rinda.value(b)).isEqualTo(nēderigaBVertība));
+        final var testSubject = constraintGroupBasedRepair();
+        final var testProduct = testSubject.demandGrouping
+                (solution.constraint().childrenView().get(3).childrenView().get(0)
+                        , solution);
+        assertThat(testProduct).hasSize(1);
+        assertThat(testProduct.values().iterator().next()).hasSize(2);
+        testProduct.values().iterator().next()
+                .forEach(line -> assertThat(line.value(b)).isEqualTo(invalidValueB));
     }
 }
