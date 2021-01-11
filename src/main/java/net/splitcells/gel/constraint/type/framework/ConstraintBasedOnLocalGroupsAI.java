@@ -14,76 +14,76 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 @Deprecated
 public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
-    protected final Rater vērtētājs;
+    protected final Rater rater;
 
-    protected ConstraintBasedOnLocalGroupsAI(Function<Constraint, Rater> vērtētājuRažotajs) {
-        super(Constraint.standartaGrupa());
-        vērtētājs = vērtētājuRažotajs.apply(this);
+    protected ConstraintBasedOnLocalGroupsAI(Function<Constraint, Rater> raterFactory) {
+        super(Constraint.standardGroup());
+        rater = raterFactory.apply(this);
     }
 
-    protected ConstraintBasedOnLocalGroupsAI(Rater vērtētājs, String vārds) {
-        this(Constraint.standartaGrupa(), vērtētājs, vārds);
+    protected ConstraintBasedOnLocalGroupsAI(Rater rater, String name) {
+        this(Constraint.standardGroup(), rater, name);
     }
 
-    protected ConstraintBasedOnLocalGroupsAI(Rater vērtētājs) {
-        this(Constraint.standartaGrupa(), vērtētājs, "");
+    protected ConstraintBasedOnLocalGroupsAI(Rater rater) {
+        this(Constraint.standardGroup(), rater, "");
     }
 
-    protected ConstraintBasedOnLocalGroupsAI(GroupId standartaGrupa, Rater vērtētājs, String vārds) {
-        super(standartaGrupa, vārds);
-        this.vērtētājs = vērtētājs;
+    protected ConstraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name) {
+        super(standardGroup, name);
+        this.rater = rater;
     }
 
     @Override
-    public void apstrāde_rindu_papildinajumu(Line papildinājums) {
-        final var ienākošaGrupa = papildinājums.value(INCOMING_CONSTRAINT_GROUP);
-        apstrādeNovērtējumiNotikumu(
-                vērtētājs.rating_after_addition(
-                        rindas.columnView(INCOMING_CONSTRAINT_GROUP)
-                                .lookup(ienākošaGrupa)
-                        , papildinājums
-                        , bērni
-                        , rindasApstrāde
+    public void process_line_addtion(Line addition) {
+        final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
+        processRatingEvent(
+                rater.rating_after_addition(
+                        lines.columnView(INCOMING_CONSTRAINT_GROUP)
+                                .lookup(incomingGroup)
+                        , addition
+                        , children
+                        , lineProcessing
                                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                                .lookup(ienākošaGrupa)));
+                                .lookup(incomingGroup)));
     }
 
-    protected void apstrādeNovērtējumiNotikumu(RatingEvent novērtējumsNotikums) {
-        novērtējumsNotikums.removal().forEach(noņemšana ->
-                rindasApstrāde.allocations_of_demand(noņemšana).forEach(rindasApstrāde::remove));
-        novērtējumsNotikums.additions().forEach((line, resultUpdate) -> {
-            final var r = pieliktRadījums(resultUpdate);
+    protected void processRatingEvent(RatingEvent ratingEvent) {
+        ratingEvent.removal().forEach(removal ->
+                lineProcessing.allocations_of_demand(removal).forEach(lineProcessing::remove));
+        ratingEvent.additions().forEach((line, resultUpdate) -> {
+            final var r = addResult(resultUpdate);
             int i = r.index();
-            rindasApstrāde.allocate(line, r);
+            lineProcessing.allocate(line, r);
         });
     }
 
     @Override
-    protected void apstrāda_rindas_primsNoņemšana(GroupId ienākošaGrupaId, Line noņemšana) {
-        apstrādeNovērtējumiNotikumu(
-                vērtētājs.rating_before_removal(
-                        rindas.columnView(INCOMING_CONSTRAINT_GROUP).lookup(ienākošaGrupaId)
-                        , rindas.columnView(INCOMING_CONSTRAINT_GROUP)
-                                .lookup(ienākošaGrupaId)
+    protected void process_lines_beforeRemoval(GroupId incomingGroup, Line removal) {
+        processRatingEvent(
+                rater.rating_before_removal(
+                        lines.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)
+                        , lines.columnView(INCOMING_CONSTRAINT_GROUP)
+                                .lookup(incomingGroup)
                                 .columnView(LINE)
-                                .lookup(noņemšana)
+                                .lookup(removal)
                                 .getLines(0)
-                        , bērni
-                        , rindasApstrāde.columnView(INCOMING_CONSTRAINT_GROUP).lookup(ienākošaGrupaId)));
-        super.apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
+                        , children
+                        , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
+        super.process_lines_beforeRemoval(incomingGroup, removal);
     }
 
     @Override
     public List<String> path() {
-        return golvenaisKonteksts
-                .map(konteksts -> konteksts.path())
+        return mainContext
+                .map(context -> context.path())
                 .orElseGet(() -> list())
                 .withAppended(this.getClass().getSimpleName());
     }
 
     @Override
     public List<Domable> arguments() {
-        return list(vērtētājs);
+        return list(rater);
     }
 
 }

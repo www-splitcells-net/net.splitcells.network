@@ -7,8 +7,8 @@ import net.splitcells.dem.object.DiscoverableFromMultiplePathsSetter;
 
 public interface ConstraintWriter extends DiscoverableFromMultiplePathsSetter {
 	@Returns_this
-    Constraint arBērnu(Constraint... ierobežojums);
+    Constraint withChildren(Constraint... ierobežojums);
 
 	@Returns_this
-    Constraint arBērnu(Function<Query, Query> būvētājs);
+    Constraint withChildren(Function<Query, Query> būvētājs);
 }

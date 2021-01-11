@@ -20,7 +20,7 @@ public class RoutingResult {
 		return grupa;
 	}
 
-	public Constraint izplatītājs() {
+	public Constraint propagation() {
 		return izplatītājs;
 	}
 }

@@ -25,7 +25,7 @@ public class ForAll extends ConstraintBasedOnLocalGroupsAI {
     }
 
     public Rater grouping() {
-        return vērtētājs;
+        return rater;
     }
 
     @Override
@@ -34,11 +34,11 @@ public class ForAll extends ConstraintBasedOnLocalGroupsAI {
     }
 
     @Override
-    protected List<String> vietēijaDabiskaArgumentācija(Report ziņojums) {
-        if (vērtētājs.type().equals(ForAllAttributeValues.class)) {
-            return list(vērtētājs.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
+    protected List<String> localNaturalArgumentation(Report ziņojums) {
+        if (rater.type().equals(ForAllAttributeValues.class)) {
+            return list(rater.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
         } else {
-            return list("Priekš visiem " + vērtētājs.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
+            return list("Priekš visiem " + rater.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
         }
     }
 }

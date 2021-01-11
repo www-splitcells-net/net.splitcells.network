@@ -21,11 +21,11 @@ public class RoutingRating {
     private final List<Rating> novērtējums = list();
     private final Map<Constraint, Set<GroupId>> bērnusUzGrupas = map();
 
-    public List<Rating> gūtNovērtējums() {
+    public List<Rating> getEvents() {
         return novērtējums;
     }
 
-    public Map<Constraint, Set<GroupId>> gūtBērnusUzGrupas() {
+    public Map<Constraint, Set<GroupId>> getChildrenToGroups() {
         return bērnusUzGrupas;
     }
 }

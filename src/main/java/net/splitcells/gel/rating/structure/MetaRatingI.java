@@ -35,7 +35,7 @@ public class MetaRatingI implements MetaRating {
         return new MetaRatingI();
     }
 
-    public static MetaRating reflektētsNovērtējums(Rating... ratings) {
+    public static MetaRating metaRating(Rating... ratings) {
         final Map<Class<? extends Rating>, Rating> ratingMap = map();
         asList(ratings).forEach(rating -> ratingMap.put(rating.getClass(), rating));
         final MetaRatingI metaRating = new MetaRatingI(ratingMap);

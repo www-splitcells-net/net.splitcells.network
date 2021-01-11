@@ -124,7 +124,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 .lineProcessing()
                 .getLines()
                 .stream()
-                .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP_ID), processing.value(Constraint.LINE)))
+                .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP), processing.value(Constraint.LINE)))
                 .forEach(processing -> {
                     final Set<Line> grup;
                     if (!demandGrouping.containsKey(processing.getKey())) {

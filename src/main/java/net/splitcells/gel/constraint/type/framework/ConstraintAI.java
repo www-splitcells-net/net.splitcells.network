@@ -17,9 +17,10 @@ import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
-import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.rindasNovērtējums;
+import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.lineRating;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
+import static net.splitcells.gel.rating.structure.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,7 +39,6 @@ import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.constraint.intermediate.data.RoutingRating;
-import net.splitcells.gel.rating.structure.MetaRatingI;
 import org.assertj.core.api.Assertions;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
@@ -57,64 +57,62 @@ import net.splitcells.gel.rating.structure.Rating;
 
 @Deprecated
 public abstract class ConstraintAI implements Constraint {
-    private final GroupId injekcijasGrupas;
-    protected final net.splitcells.dem.data.set.list.List<Constraint> bērni = list();
-    protected Optional<Discoverable> golvenaisKonteksts = Optional.empty();
-    private final List<Discoverable> konteksti = list();
-    protected final Database rindas;
-    protected final Database radījums = Databases.database("results", this, RESULTING_CONSTRAINT_GROUP_ID, NOVĒRTĒJUMS, IZDALĪŠANA_UZ);
-    protected final Allocations rindasApstrāde;
-    protected final Map<GroupId, Rating> grupasApstrāde = map();
+    private final GroupId injectionGroup;
+    protected final net.splitcells.dem.data.set.list.List<Constraint> children = list();
+    protected Optional<Discoverable> mainContext = Optional.empty();
+    private final List<Discoverable> contexts = list();
+    protected final Database lines;
+    protected final Database results = Databases.database("results", this, RESULTING_CONSTRAINT_GROUP, NOVĒRTĒJUMS, IZDALĪŠANA_UZ);
+    protected final Allocations lineProcessing;
+    protected final Map<GroupId, Rating> groupProcessing = map();
 
-    protected ConstraintAI(GroupId injekcijasGrupas) {
-        this(injekcijasGrupas, "");
+    protected ConstraintAI(GroupId injectionGroup) {
+        this(injectionGroup, "");
     }
 
-    protected ConstraintAI(GroupId injekcijasGrupas, String vārds) {
-        this.injekcijasGrupas = injekcijasGrupas;
-        rindas = Databases.database(vārds + ".rindas", this, LINE, INCOMING_CONSTRAINT_GROUP);
-        rindasApstrāde = allocations("rindasApstrāde", rindas, radījums);
-        rindasApstrāde.subscribe_to_afterAdditions(this::izdalīt_papildinajumu);
-        rindasApstrāde.subscriber_to_beforeRemoval(this::izdalīt_noņemšana);
-        rindas.subscribe_to_afterAdditions(this::apstrāde_rindu_papildinajumu);
+    protected ConstraintAI(GroupId injectionGroup, String name) {
+        this.injectionGroup = injectionGroup;
+        lines = Databases.database(name + ".lines", this, LINE, INCOMING_CONSTRAINT_GROUP);
+        lineProcessing = allocations("linesProcessing", lines, results);
+        lineProcessing.subscribe_to_afterAdditions(this::propagateAddition);
+        lineProcessing.subscriber_to_beforeRemoval(this::propagateRemoval);
+        lines.subscribe_to_afterAdditions(this::process_line_addtion);
     }
 
     protected ConstraintAI() {
-        this(Constraint.standartaGrupa());
+        this(Constraint.standardGroup());
     }
 
     @Override
     public GroupId injectionGroup() {
-        return injekcijasGrupas;
+        return injectionGroup;
     }
 
     @Override
-    public void reģistrē_papildinājums(GroupId ienākošieGrupasId, Line papildinajums) {
-        // DARĪT Kustēt uz ārpuses projektu.
+    public void register_additions(GroupId injectionGroup, Line addition) {
+        // TODO Move this to differnt project.
         if (TRACING) {
             domsole().append
-                    (element("reģistrē_papildinajums." + Constraint.class.getSimpleName()
-                            , element("papildinajums", papildinajums.toDom())
-                            , element("ienākošieGrupasId", textNode(ienākošieGrupasId.toString()))
+                    (element("register-additions." + Constraint.class.getSimpleName()
+                            , element("additions", addition.toDom())
+                            , element("injectionGroup", textNode(injectionGroup.toString()))
                             )
                             , this
                             , DEBUG);
         }
-        // DARĪT Kustēt uz ārpuses projektu.
+        // TODO Move this to differnt project.
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(
-                    rindas
+                    lines
                             .columnView(INCOMING_CONSTRAINT_GROUP)
-                            .lookup(ienākošieGrupasId)
+                            .lookup(injectionGroup)
                             .columnView(LINE)
-                            .lookup(papildinajums)
+                            .lookup(addition)
                             .getLines()
             ).isEmpty();
         }
-        rindas.addTranslated(list(papildinajums, ienākošieGrupasId));
+        lines.addTranslated(list(addition, injectionGroup));
     }
-
-    protected abstract void apstrāde_rindu_papildinajumu(Line papildinājums);
 
     @Override
     public void rēgistrē_pirms_noņemšanas(GroupId ienākošaGrupaId, Line noņemšana) {
@@ -122,192 +120,194 @@ public abstract class ConstraintAI implements Constraint {
         if (ENFORCING_UNIT_CONSISTENCY) {
             Assertions.assertThat(noņemšana.isValid()).isTrue();
         }
-        apstrāda_rindas_primsNoņemšana(ienākošaGrupaId, noņemšana);
-        rindasApstrāde
+        process_lines_beforeRemoval(ienākošaGrupaId, noņemšana);
+        lineProcessing
                 .columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(ienākošaGrupaId)
                 .columnView(LINE)
                 .lookup(noņemšana)
                 .getLines()
-                .forEach(rindasApstrāde::remove);
+                .forEach(lineProcessing::remove);
         // JAUDA
-        rindas.rawLinesView().stream()
+        lines.rawLinesView().stream()
                 .filter(e -> e != null)
                 .filter(line -> line.value(LINE).equals(noņemšana))
                 .filter(line -> line.value(INCOMING_CONSTRAINT_GROUP).equals(ienākošaGrupaId))
-                .forEach(rindas::remove);
+                .forEach(lines::remove);
     }
 
-    protected void apstrāda_rindas_primsNoņemšana(GroupId ienākošaGrupaId, Line noņemšana) {
-        rindasApstrāde.supplies_free().rawLinesView().stream()
+    protected abstract void process_line_addtion(Line addition);
+
+    protected void process_lines_beforeRemoval(GroupId injectionGroup, Line removal) {
+        lineProcessing.supplies_free().rawLinesView().stream()
                 .filter(e -> e != null)
-                .forEach(nelitotsPiedāvājums -> radījums.remove(nelitotsPiedāvājums));
+                .forEach(freeSupply -> results.remove(freeSupply));
     }
 
-    protected void izdalīt_papildinajumu(Line papildinajums) {
-        papildinajums.value(IZDALĪŠANA_UZ).forEach(child ->
-                child.reģistrē_papildinājums
-                        (papildinajums.value(RESULTING_CONSTRAINT_GROUP_ID)
-                                , papildinajums.value(LINE)));
+    protected void propagateAddition(Line addition) {
+        addition.value(IZDALĪŠANA_UZ).forEach(child ->
+                child.register_additions
+                        (addition.value(RESULTING_CONSTRAINT_GROUP)
+                                , addition.value(LINE)));
     }
 
-    protected void izdalīt_noņemšana(Line noņemšana) {
-        noņemšana.value(IZDALĪŠANA_UZ).forEach(child ->
+    protected void propagateRemoval(Line removal) {
+        removal.value(IZDALĪŠANA_UZ).forEach(child ->
                 child.rēgistrē_pirms_noņemšanas
-                        (noņemšana.value(RESULTING_CONSTRAINT_GROUP_ID)
-                                , noņemšana.value(LINE)));
+                        (removal.value(RESULTING_CONSTRAINT_GROUP)
+                                , removal.value(LINE)));
     }
 
     @Override
-    public Constraint arBērnu(Constraint... ierobežojumi) {
-        asList(ierobežojumi).forEach(ierobežojums -> {
-            bērni.add(ierobežojums);
-            ierobežojums.addContext(this);
+    public Constraint withChildren(Constraint... children) {
+        asList(children).forEach(child -> {
+            this.children.add(child);
+            child.addContext(this);
         });
         return this;
     }
 
-    public Set<Line> ievērojami(GroupId grupaId, Set<Line> piešķiršanas) {
-        final Set<Line> ievērojama = setOfUniques();
-        piešķiršanas.forEach(piešķiršana -> {
-            if (novērtējums(grupaId, piešķiršana.value(LINE)).equals(noCost())) {
-                ievērojama.add(rindasApstrāde.demand_of_allocation(piešķiršana).value(LINE));
+    public Set<Line> complying(GroupId group, Set<Line> allocations) {
+        final Set<Line> complying = setOfUniques();
+        allocations.forEach(allocation -> {
+            if (event(group, allocation.value(LINE)).equals(noCost())) {
+                complying.add(lineProcessing.demand_of_allocation(allocation).value(LINE));
             }
         });
-        return ievērojama;
+        return complying;
     }
 
-    public Set<Line> neievērotaji(GroupId grupaId, Set<Line> piešķiršanas) {
-        final Set<Line> neievērotaji = setOfUniques();
-        piešķiršanas.forEach(piešķiršana -> {
-            if (!novērtējums(grupaId, piešķiršana.value(LINE)).equals(noCost())) {
-                neievērotaji.add(rindasApstrāde.demand_of_allocation(piešķiršana).value(LINE));
+    public Set<Line> defying(GroupId group, Set<Line> allocations) {
+        final Set<Line> defying = setOfUniques();
+        allocations.forEach(allocation -> {
+            if (!event(group, allocation.value(LINE)).equals(noCost())) {
+                defying.add(lineProcessing.demand_of_allocation(allocation).value(LINE));
             }
         });
-        return neievērotaji;
+        return defying;
     }
 
     @Override
-    public MetaRating novērtējums(GroupId grupaId, Line rinda) {
-        final var novērtetāMaršrutēšana
-                = atlasītNovērtetāMaršrutēšana(grupaId, processedLine -> processedLine.value(LINE).equalsTo(rinda));
-        novērtetāMaršrutēšana.gūtBērnusUzGrupas().forEach((bērns, grūpa) ->
-                grūpa.forEach(group -> novērtetāMaršrutēšana.gūtNovērtējums().add(bērns.novērtējums(group, rinda)))
+    public MetaRating event(GroupId group, Line line) {
+        final var routingRating
+                = routingRating(group, processedLine -> processedLine.value(LINE).equalsTo(line));
+        routingRating.getChildrenToGroups().forEach((child, groups) ->
+                groups.forEach(group2 -> routingRating.getEvents().add(child.event(group2, line)))
         );
-        if (novērtetāMaršrutēšana.gūtNovērtējums().isEmpty()) {
-            return MetaRatingI.reflektētsNovērtējums(noCost());
+        if (routingRating.getEvents().isEmpty()) {
+            return metaRating(noCost());
         }
-        return novērtetāMaršrutēšana.gūtNovērtējums().stream()
+        return routingRating.getEvents().stream()
                 .reduce((a, b) -> a.combine(b))
                 .get()
                 .asMetaRating();
     }
 
-    protected RoutingRating atlasītNovērtetāMaršrutēšana
-            (GroupId grupaId, Predicate<Line> apstrādsRindasAtlasītajs) {
-        final var novērtetāMaršrutēšana = RoutingRating.veidot();
-        rindasApstrāde.rawLinesView().forEach(rinda -> {
-            if (rinda != null
-                    && apstrādsRindasAtlasītajs.test(rinda)
-                    && grupaId.equals(rinda.value(INCOMING_CONSTRAINT_GROUP))) {
-                novērtetāMaršrutēšana.gūtNovērtējums().add(rinda.value(NOVĒRTĒJUMS));
-                rinda.value(Constraint.IZDALĪŠANA_UZ).forEach(bērni -> {
+    protected RoutingRating routingRating
+            (GroupId group, Predicate<Line> lineSelector) {
+        final var routingRating = RoutingRating.veidot();
+        lineProcessing.rawLinesView().forEach(line -> {
+            if (line != null
+                    && lineSelector.test(line)
+                    && group.equals(line.value(INCOMING_CONSTRAINT_GROUP))) {
+                routingRating.getEvents().add(line.value(NOVĒRTĒJUMS));
+                line.value(Constraint.IZDALĪŠANA_UZ).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
-                    if (!novērtetāMaršrutēšana.gūtBērnusUzGrupas().containsKey(bērni)) {
+                    if (!routingRating.getChildrenToGroups().containsKey(child)) {
                         groupsOfChild = setOfUniques();
-                        novērtetāMaršrutēšana.gūtBērnusUzGrupas().put(bērni, groupsOfChild);
+                        routingRating.getChildrenToGroups().put(child, groupsOfChild);
                     } else {
-                        groupsOfChild = novērtetāMaršrutēšana.gūtBērnusUzGrupas().get(bērni);
+                        groupsOfChild = routingRating.getChildrenToGroups().get(child);
                     }
-                    groupsOfChild.add(rinda.value(RESULTING_CONSTRAINT_GROUP_ID));
+                    groupsOfChild.add(line.value(RESULTING_CONSTRAINT_GROUP));
                 });
             }
         });
-        return novērtetāMaršrutēšana;
+        return routingRating;
     }
 
     @Override
-    public MetaRating novērtējums(GroupId grupaId) {
-        final var novērtetāMaršrutēšana
-                = atlasītNovērtetāMaršrutēšana(grupaId, atlasītaRinda -> true);
-        novērtetāMaršrutēšana.gūtBērnusUzGrupas().forEach((bērni, grupas) ->
-                grupas.forEach(group -> novērtetāMaršrutēšana.gūtNovērtējums().add(bērni.novērtējums(group))));
-        if (novērtetāMaršrutēšana.gūtNovērtējums().isEmpty()) {
-            return MetaRatingI.reflektētsNovērtējums(noCost());
+    public MetaRating rating(GroupId group) {
+        final var routingRating
+                = routingRating(group, lineSelector -> true);
+        routingRating.getChildrenToGroups().forEach((children, groups) ->
+                groups.forEach(group2 -> routingRating.getEvents().add(children.rating(group2))));
+        if (routingRating.getEvents().isEmpty()) {
+            return metaRating(noCost());
         }
-        return novērtetāMaršrutēšana.gūtNovērtējums().stream()
+        return routingRating.getEvents().stream()
                 .reduce((a, b) -> a.combine(b))
                 .get()
                 .asMetaRating();
     }
 
     /**
-     * JAUDA
+     * TODO PERFORMANCE
      */
     @Override
     public List<Constraint> childrenView() {
-        return listWithValuesOf(bērni);
+        return listWithValuesOf(children);
     }
 
-    public Set<Line> piešķiršanaNo(GroupId grupaId) {
-        final Set<Line> piešķiršanas = setOfUniques();
-        rindasApstrāde.rawLinesView().forEach(rinda -> {
-            if (rinda != null && rinda.value(INCOMING_CONSTRAINT_GROUP).equals(grupaId)) {
-                piešķiršanas.add(rinda);
+    public Set<Line> allocationsOf(GroupId group) {
+        final Set<Line> allocations = setOfUniques();
+        lineProcessing.rawLinesView().forEach(line -> {
+            if (line != null && line.value(INCOMING_CONSTRAINT_GROUP).equals(group)) {
+                allocations.add(line);
             }
         });
-        return piešķiršanas;
+        return allocations;
     }
 
-    public Set<Line> izpildītāji(GroupId grupaId) {
-        return ievērojami(grupaId, piešķiršanaNo(grupaId));
+    public Set<Line> complying(GroupId group) {
+        return complying(group, allocationsOf(group));
     }
 
-    public Set<Line> defying(GroupId grupaId) {
-        return neievērotaji(grupaId, piešķiršanaNo(grupaId));
+    public Set<Line> defying(GroupId group) {
+        return defying(group, allocationsOf(group));
     }
 
     @Override
     public Allocations lineProcessing() {
-        return rindasApstrāde;
+        return lineProcessing;
     }
 
-    public Table rindas() {
-        return rindas;
+    public Table lines() {
+        return lines;
     }
 
-    public GroupId grupaNo(Line rinda) {
+    public GroupId groupOf(Line line) {
         return lineProcessing()
                 .rawLinesView()
-                .get(rinda.index())
-                .value(RESULTING_CONSTRAINT_GROUP_ID);
+                .get(line.index())
+                .value(RESULTING_CONSTRAINT_GROUP);
     }
 
     @Override
-    public Line pieliktRadījums(LocalRating vietējieNovērtējums) {
-        return radījums.addTranslated
+    public Line addResult(LocalRating localRating) {
+        return results.addTranslated
                 (list
-                        (vietējieNovērtējums.resultingConstraintGroupId()
-                                , vietējieNovērtējums.rating()
-                                , vietējieNovērtējums.propagateTo()));
+                        (localRating.resultingConstraintGroupId()
+                                , localRating.rating()
+                                , localRating.propagateTo()));
     }
 
     @Override
-    public void addContext(Discoverable konteksts) {
-        if (golvenaisKonteksts.isEmpty()) {
-            golvenaisKonteksts = Optional.of(konteksts);
+    public void addContext(Discoverable context) {
+        if (mainContext.isEmpty()) {
+            mainContext = Optional.of(context);
         }
-        konteksti.add(konteksts);
+        contexts.add(context);
     }
 
     @Override
     public Collection<net.splitcells.dem.data.set.list.List<String>> paths() {
-        return konteksti.stream().map(Discoverable::path).collect(toList());
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override
-    public Constraint arBērnu(Function<Query, Query> būvētājs) {
-        būvētājs.apply(QueryI.jautājums(this, Optional.empty()));
+    public Constraint withChildren(Function<Query, Query> builder) {
+        builder.apply(QueryI.query(this, Optional.empty()));
         return this;
     }
 
@@ -317,159 +317,159 @@ public abstract class ConstraintAI implements Constraint {
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
         }
-        dom.appendChild(Xml.element("novērtējums", rating().toDom()));
+        dom.appendChild(Xml.element("rating", rating().toDom()));
         {
-            final var novērtējumi = Xml.element("novērtējumi");
-            dom.appendChild(novērtējumi);
-            rindasApstrāde.columnView(INCOMING_CONSTRAINT_GROUP)
+            final var ratings = Xml.element("ratings");
+            dom.appendChild(ratings);
+            lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
                     .lookup(injectionGroup())
                     .getLines()
-                    .forEach(line -> novērtējumi.appendChild(line.toDom()));
+                    .forEach(line -> ratings.appendChild(line.toDom()));
         }
         childrenView().forEach(bērns ->
                 dom.appendChild(
                         bērns.toDom(
-                                setOfUniques(radījums
-                                        .columnView(RESULTING_CONSTRAINT_GROUP_ID)
+                                setOfUniques(results
+                                        .columnView(RESULTING_CONSTRAINT_GROUP)
                                         .values()))));
         return dom;
     }
 
     @Override
-    public Element toDom(Set<GroupId> grupas) {
+    public Element toDom(Set<GroupId> groups) {
         final var dom = Xml.element(type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
         }
-        dom.appendChild(Xml.element("novērtējums", rating(grupas).toDom()));
+        dom.appendChild(Xml.element("rating", rating(groups).toDom()));
         {
-            final var novērtējumi = Xml.element("novērtējumi");
-            dom.appendChild(novērtējumi);
-            grupas.forEach(grupa ->
-                    rindasApstrāde
+            final var ratings = Xml.element("ratings");
+            dom.appendChild(ratings);
+            groups.forEach(group ->
+                    lineProcessing
                             .columnView(INCOMING_CONSTRAINT_GROUP)
-                            .lookup(grupa)
+                            .lookup(group)
                             .getLines().
-                            forEach(line -> novērtējumi.appendChild(line.toDom())));
+                            forEach(line -> ratings.appendChild(line.toDom())));
         }
-        childrenView().forEach(bērns ->
+        childrenView().forEach(child ->
                 dom.appendChild(
-                        bērns.toDom(
-                                grupas.stream().
-                                        map(group -> rindasApstrāde
+                        child.toDom(
+                                groups.stream().
+                                        map(group -> lineProcessing
                                                 .columnView(INCOMING_CONSTRAINT_GROUP)
                                                 .lookup(group)
                                                 .getLines()
                                                 .stream()
-                                                .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP_ID))
+                                                .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP))
                                                 .collect(toSet()))
                                         .flatMap(resultingGroupings -> resultingGroupings.stream())
                                         .collect(toSet()))));
         return dom;
     }
 
-    protected abstract List<String> vietēijaDabiskaArgumentācija(Report ziņojums);
+    protected abstract List<String> localNaturalArgumentation(Report report);
 
-    protected Optional<List<String>> vietēijaDabiskaArgumentācija
-            (Line rinda, GroupId grupa, Predicate<AllocationRating> piešķiršanaAtlasītājs) {
-        final var vietējaArgumentācijas
-                = rindasApstrāde
+    protected Optional<List<String>> localNaturalArgumentation
+            (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
+        final var localNaturalArgumentation
+                = lineProcessing
                 .columnView(LINE)
-                .lookup(rinda)
+                .lookup(line)
                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                .lookup(grupa)
+                .lookup(group)
                 .getLines()
                 .stream()
-                .filter(piešķiršana -> piešķiršanaAtlasītājs
-                        .test(rindasNovērtējums
-                                (piešķiršana
-                                        , novērtējums(piešķiršana.value(INCOMING_CONSTRAINT_GROUP), rinda))))
-                .map(piešķiršana -> report
-                        (piešķiršana.value(LINE)
-                                , piešķiršana.value(INCOMING_CONSTRAINT_GROUP)
-                                , piešķiršana.value(NOVĒRTĒJUMS)))
-                .map(ziņojums -> vietēijaDabiskaArgumentācija(ziņojums))
+                .filter(allocation -> allocationSelector
+                        .test(lineRating
+                                (allocation
+                                        , event(allocation.value(INCOMING_CONSTRAINT_GROUP), line))))
+                .map(allocation -> report
+                        (allocation.value(LINE)
+                                , allocation.value(INCOMING_CONSTRAINT_GROUP)
+                                , allocation.value(NOVĒRTĒJUMS)))
+                .map(report -> localNaturalArgumentation(report))
                 .findFirst();
-        return vietējaArgumentācijas;
+        return localNaturalArgumentation;
     }
 
     @Override
-    public Perspective dabiskaArgumentācija(GroupId grupa) {
-        final var vietējiaArgumentācijas = rindasApstrāde
+    public Perspective naturalArgumentation(GroupId group) {
+        final var naturalArgumentation = lineProcessing
                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                .lookup(grupa)
+                .lookup(group)
                 .getLines()
                 .stream()
-                .map(piešķiršana -> piešķiršana.value(LINE))
-                .map(rinda -> dabiskaArgumentācija(rinda, grupa, AllocationSelector::atlasītArCenu))
+                .map(allocation -> allocation.value(LINE))
+                .map(line -> naturalArgumentation(line, group, AllocationSelector::selectLinesWithCost))
                 .collect(toList());
-        if (vietējiaArgumentācijas.size() == 1) {
-            return vietējiaArgumentācijas.get(0);
+        if (naturalArgumentation.size() == 1) {
+            return naturalArgumentation.get(0);
         }
-        final var vietējiaArgumentācija = perspective(ARGUMENTATION.value(), GEL);
-        vietējiaArgumentācijas.stream()
-                .forEach(naturalReasoning -> vietējiaArgumentācija.withChild(naturalReasoning));
-        return vietējiaArgumentācija;
+        final var localArgumentation = perspective(ARGUMENTATION.value(), GEL);
+        naturalArgumentation.stream()
+                .forEach(naturalReasoning -> localArgumentation.withChild(naturalReasoning));
+        return localArgumentation;
     }
 
     @Override
-    public Perspective dabiskaArgumentācija(Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs) {
-        final var vietējiaArgumēntacija = vietēijaDabiskaArgumentācija(rinda, grupa, rindasAtlasītājs);
-        final var bērnuArgumēntacija = bērnuArgumēntacija(rinda, grupa, rindasAtlasītājs);
-        final var argumentācija = perspective(ARGUMENTATION.value(), GEL);
-        if (vietējiaArgumēntacija.isPresent()) {
-            vietējiaArgumēntacija.get().stream()
+    public Perspective naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
+        final var localArgumentation = localNaturalArgumentation(line, group, allocationSelector);
+        final var childrenArgumentation = childrenArgumentation(line, group, allocationSelector);
+        final var argumentation = perspective(ARGUMENTATION.value(), GEL);
+        if (localArgumentation.isPresent()) {
+            localArgumentation.get().stream()
                     .map(e -> perspective(e, NameSpaces.STRING))
-                    .forEach(argumentācija::withChild);
+                    .forEach(argumentation::withChild);
         }
-        if (bērnuArgumēntacija.isPresent()) {
-            if (bērnuArgumēntacija.get().name().isEmpty()) {
-                bērnuArgumēntacija.get().children().stream()
+        if (childrenArgumentation.isPresent()) {
+            if (childrenArgumentation.get().name().isEmpty()) {
+                childrenArgumentation.get().children().stream()
                         .filter(e -> !e.children().isEmpty())
-                        .forEach(argumentācija::withChild);
+                        .forEach(argumentation::withChild);
             } else {
-                argumentācija.withChild(bērnuArgumēntacija.get());
+                argumentation.withChild(childrenArgumentation.get());
             }
         }
-        return argumentācija;
+        return argumentation;
     }
 
-    protected Optional<Perspective> bērnuArgumēntacija
-            (Line rinda, GroupId grupa, Predicate<AllocationRating> piešķiršanaAtlasītājs) {
-        final var argumēntacijas
-                = rindasApstrāde
+    protected Optional<Perspective> childrenArgumentation
+            (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
+        final var childrenArgumentationContent
+                = lineProcessing
                 .columnView(LINE)
-                .lookup(rinda)
+                .lookup(line)
                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                .lookup(grupa)
+                .lookup(group)
                 .getLines()
                 .stream()
-                .filter(piešķiršana
-                        -> piešķiršanaAtlasītājs
-                        .test(rindasNovērtējums
-                                (piešķiršana
-                                        , novērtējums(piešķiršana.value(INCOMING_CONSTRAINT_GROUP), rinda))))
-                .map(piešķiršana -> piešķiršana.value(IZDALĪŠANA_UZ)
+                .filter(allocation
+                        -> allocationSelector
+                        .test(lineRating
+                                (allocation
+                                        , event(allocation.value(INCOMING_CONSTRAINT_GROUP), line))))
+                .map(allocation -> allocation.value(IZDALĪŠANA_UZ)
                         .stream()
                         .map(propagatedTo ->
                                 routingResult
-                                        (piešķiršana.value(RESULTING_CONSTRAINT_GROUP_ID)
+                                        (allocation.value(RESULTING_CONSTRAINT_GROUP)
                                                 , propagatedTo)))
                 .flatMap(e -> e)
-                .map(routingResult -> routingResult.izplatītājs().naturalArgumentation(rinda, routingResult.grupa()))
+                .map(routingResult -> routingResult.propagation().naturalArgumentation(line, routingResult.grupa()))
                 .collect(toSet());
-        if (argumēntacijas.isEmpty()) {
+        if (childrenArgumentationContent.isEmpty()) {
             return Optional.empty();
         }
-        if (argumēntacijas.size() == 1) {
-            return Optional.of(argumēntacijas.iterator().next());
+        if (childrenArgumentationContent.size() == 1) {
+            return Optional.of(childrenArgumentationContent.iterator().next());
         }
-        final var argumēntacija = perspective(ARGUMENTATION.value(), GEL);
-        argumēntacijas.forEach(argumēntacija::withChild);
-        return Optional.of(argumēntacija);
+        final var childrenArgumentation = perspective(ARGUMENTATION.value(), GEL);
+        childrenArgumentationContent.forEach(childrenArgumentation::withChild);
+        return Optional.of(childrenArgumentation);
     }
 
-    public Optional<Discoverable> galvenaisKonteksts() {
-        return golvenaisKonteksts;
+    public Optional<Discoverable> mainContext() {
+        return mainContext;
     }
 }

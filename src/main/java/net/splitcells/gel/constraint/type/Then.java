@@ -30,7 +30,7 @@ public class Then extends ConstraintBasedOnLocalGroupsAI {
     }
 
     @Override
-    protected List<String> vietēijaDabiskaArgumentācija(Report ziņojums) {
-        return list(vērtētājs.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
+    protected List<String> localNaturalArgumentation(Report ziņojums) {
+        return list(rater.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
     }
 }

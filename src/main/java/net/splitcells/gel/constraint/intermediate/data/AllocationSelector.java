@@ -9,7 +9,7 @@ public class AllocationSelector {
 		throw constructorIllegal();
 	}
 
-	public static boolean atlasītArCenu(AllocationRating piešķiršanaNovērtējums) {
+	public static boolean selectLinesWithCost(AllocationRating piešķiršanaNovērtējums) {
 		return !piešķiršanaNovērtējums.novērtējums().equalz(Cost.noCost());
 	}
 }

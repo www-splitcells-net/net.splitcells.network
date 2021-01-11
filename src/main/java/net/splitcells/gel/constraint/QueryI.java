@@ -22,7 +22,7 @@ import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 
 public class QueryI implements Query {
-    public static Query jautājums(Constraint ierobežojums, Optional<Constraint> root) {
+    public static Query query(Constraint ierobežojums, Optional<Constraint> root) {
         return new QueryI(ierobežojums, list(ierobežojums.injectionGroup()), root);
     }
 
@@ -63,12 +63,12 @@ public class QueryI implements Query {
                                 .lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(grupa)
-                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
+                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
         } else {
             radijumuBaže = Optional.of(ForAlls.priekšVisiem(vērtētājs));
-            ierobežojums.arBērnu(radijumuBaže.get());
+            ierobežojums.withChildren(radijumuBaže.get());
             radītasGrupas.addAll(grupas);
         }
         if (sakne.isEmpty()) {
@@ -99,12 +99,12 @@ public class QueryI implements Query {
                         ierobežojums.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(grupa)
-                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
+                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
         } else {
             radijumuBaže = Optional.of(ForAlls.priekšVisiem(arg));
-            ierobežojums.arBērnu(radijumuBaže.get());
+            ierobežojums.withChildren(radijumuBaže.get());
             radītasGrupas.addAll(grupas);
         }
         if (sakne.isEmpty()) {
@@ -153,12 +153,12 @@ public class QueryI implements Query {
                         ierobežojums.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(grupa)
-                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
+                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
         } else {
             radijumuBaže = Optional.of(Then.tad(vērtētājs));
-            ierobežojums.arBērnu(radijumuBaže.get());
+            ierobežojums.withChildren(radijumuBaže.get());
             resultingGroups.addAll(grupas);
         }
         if (sakne.isEmpty()) {
@@ -199,7 +199,7 @@ public class QueryI implements Query {
                     ierobežojums.lineProcessing()
                             .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                             .lookup(grupa)
-                            .columnView(Constraint.RESULTING_CONSTRAINT_GROUP_ID)
+                            .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                             .values());
         }
         if (sakne.isEmpty()) {
@@ -212,7 +212,7 @@ public class QueryI implements Query {
     @Override
     public Rating novērtējums() {
         final var grupasNovērtējums
-                    = grupas.stream().map(group -> ierobežojums.novērtējums(group)).reduce((a, b) -> a.combine(b));
+                    = grupas.stream().map(group -> ierobežojums.rating(group)).reduce((a, b) -> a.combine(b));
         if (grupasNovērtējums.isPresent()) {
             return grupasNovērtējums.get();
         }

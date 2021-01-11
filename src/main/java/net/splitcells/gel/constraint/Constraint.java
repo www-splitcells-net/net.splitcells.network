@@ -38,7 +38,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     Attribute<Line> LINE = attribute(Line.class, "rinda");
     Attribute<java.util.List<Constraint>> IZDALĪŠANA_UZ = listAttribute(Constraint.class, "idalīšana uz");
     Attribute<GroupId> INCOMING_CONSTRAINT_GROUP = attribute(GroupId.class, "ienākošie ierobežojumu grupas id");
-    Attribute<GroupId> RESULTING_CONSTRAINT_GROUP_ID = attribute(GroupId.class, "radītas ierobežojumu grupas id");
+    Attribute<GroupId> RESULTING_CONSTRAINT_GROUP = attribute(GroupId.class, "radītas ierobežojumu grupas id");
     Attribute<Rating> NOVĒRTĒJUMS = attribute(Rating.class, "novērtējums");
 
     static List<List<Constraint>> piešķiršanasGruppas(List<Constraint> momentānaTaka) {
@@ -60,54 +60,54 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     GroupId injectionGroup();
 
     default MetaRating rating() {
-        return novērtējums(injectionGroup());
+        return rating(injectionGroup());
     }
 
-    static GroupId standartaGrupa() {
+    static GroupId standardGroup() {
         return GroupId.group("priekš-visiem");
     }
 
     default MetaRating novērtējums(Line rinda) {
-        return novērtējums(injectionGroup(), rinda);
+        return event(injectionGroup(), rinda);
     }
 
-    MetaRating novērtējums(GroupId grupaId, Line rinda);
+    MetaRating event(GroupId grupaId, Line rinda);
 
-    MetaRating novērtējums(GroupId grupaId);
+    MetaRating rating(GroupId grupaId);
 
     default Perspective naturalArgumentation() {
-        return dabiskaArgumentācija(injectionGroup());
+        return naturalArgumentation(injectionGroup());
     }
 
-    Perspective dabiskaArgumentācija(GroupId grupa);
+    Perspective naturalArgumentation(GroupId grupa);
 
-    Optional<Discoverable> galvenaisKonteksts();
+    Optional<Discoverable> mainContext();
 
     default Perspective naturalArgumentation(Line priekšmets, GroupId grupa) {
-        return dabiskaArgumentācija(priekšmets, grupa, AllocationSelector::atlasītArCenu);
+        return naturalArgumentation(priekšmets, grupa, AllocationSelector::selectLinesWithCost);
     }
 
-    Perspective dabiskaArgumentācija(Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs);
+    Perspective naturalArgumentation(Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs);
 
     default MetaRating rating(Set<GroupId> grupas) {
         return grupas.stream().
-                map(group -> novērtējums(group)).
+                map(group -> rating(group)).
                 reduce((a, b) -> a.combine(b)).
                 orElseGet(() -> neutral());
     }
 
     default GroupId reģistrē(Line rinda) {
         final var rVal = injectionGroup();
-        reģistrē_papildinājums(rVal, rinda);
+        register_additions(rVal, rinda);
         return rVal;
     }
 
-    GroupId grupaNo(Line rinda);
+    GroupId groupOf(Line rinda);
 
-    void reģistrē_papildinājums(GroupId grupaId, Line rinda);
+    void register_additions(GroupId grupaId, Line rinda);
 
     default void register_addition(Line rinda) {
-        reģistrē_papildinājums(injectionGroup(), rinda);
+        register_additions(injectionGroup(), rinda);
     }
 
     void rēgistrē_pirms_noņemšanas(GroupId grupaId, Line rinda);
@@ -119,10 +119,10 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
 
     List<Constraint> childrenView();
 
-    Set<Line> izpildītāji(GroupId grupaId);
+    Set<Line> complying(GroupId grupaId);
 
     default Set<Line> izpildītāji() {
-        return izpildītāji(injectionGroup());
+        return complying(injectionGroup());
     }
 
     Set<Line> defying(GroupId grupaId);
@@ -131,7 +131,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         return defying(injectionGroup());
     }
 
-    Line pieliktRadījums(LocalRating vietējieNovērtējums);
+    Line addResult(LocalRating vietējieNovērtējums);
 
     default Query jautājums() {
         return QueryI.jautājums(this);
@@ -156,7 +156,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     default Set<GroupId> bērnuGrupas(Line rinda, Constraint priekšmets) {
         final Set<GroupId> bērnuGrupas = setOfUniques();
         if (equals(priekšmets)) {
-            bērnuGrupas.add(grupaNo(rinda));
+            bērnuGrupas.add(groupOf(rinda));
         } else {
             childrenView().forEach(bērns -> bērnuGrupas.addAll(bērns.bērnuGrupas(rinda, priekšmets)));
         }

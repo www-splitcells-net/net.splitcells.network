@@ -43,38 +43,38 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public MetaRating novērtējums(GroupId grupaId, Line rinda) {
-        return atvasināšanaFuncija.apply(atvasināšanasMērķis.novērtējums(grupaId, rinda));
+    public MetaRating event(GroupId grupaId, Line rinda) {
+        return atvasināšanaFuncija.apply(atvasināšanasMērķis.event(grupaId, rinda));
     }
 
     @Override
-    public MetaRating novērtējums(GroupId groupdId) {
-        return atvasināšanaFuncija.apply(atvasināšanasMērķis.novērtējums(groupdId));
+    public MetaRating rating(GroupId groupdId) {
+        return atvasināšanaFuncija.apply(atvasināšanasMērķis.rating(groupdId));
     }
 
     @Override
-    public Perspective dabiskaArgumentācija(GroupId grupa) {
+    public Perspective naturalArgumentation(GroupId grupa) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Optional<Discoverable> galvenaisKonteksts() {
-        return atvasināšanasMērķis.galvenaisKonteksts();
+    public Optional<Discoverable> mainContext() {
+        return atvasināšanasMērķis.mainContext();
     }
 
     @Override
-    public Perspective dabiskaArgumentācija
+    public Perspective naturalArgumentation
             (Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs) {
         throw not_implemented_yet();
     }
 
     @Override
-    public GroupId grupaNo(Line rinda) {
-        return atvasināšanasMērķis.grupaNo(rinda);
+    public GroupId groupOf(Line rinda) {
+        return atvasināšanasMērķis.groupOf(rinda);
     }
 
     @Override
-    public void reģistrē_papildinājums(GroupId grupaId, Line rinda) {
+    public void register_additions(GroupId grupaId, Line rinda) {
         throw not_implemented_yet();
     }
 
@@ -89,7 +89,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Set<Line> izpildītāji(GroupId grupaId) {
+    public Set<Line> complying(GroupId grupaId) {
         throw not_implemented_yet();
     }
 
@@ -99,7 +99,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Line pieliktRadījums(LocalRating vietējieNovērtējums) {
+    public Line addResult(LocalRating vietējieNovērtējums) {
         throw not_implemented_yet();
     }
 
@@ -136,12 +136,12 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Constraint arBērnu(Constraint... ierobežojums) {
+    public Constraint withChildren(Constraint... ierobežojums) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Constraint arBērnu(Function<Query, Query> būvētājs) {
+    public Constraint withChildren(Function<Query, Query> būvētājs) {
         throw not_implemented_yet();
     }
 
