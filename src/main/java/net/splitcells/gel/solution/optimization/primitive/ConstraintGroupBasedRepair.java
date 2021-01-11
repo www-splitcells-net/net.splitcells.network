@@ -27,14 +27,14 @@ import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 public class ConstraintGroupBasedRepair implements Optimization {
 
     public static ConstraintGroupBasedRepair constraintGroupBasedRepair
-            (Function<List<List<Constraint>>, Optional<List<Constraint>>> allocationSelector
+            (Function<List<List<Constraint>>, Optional<List<Constraint>>> groupSelector
                     , Function<Map<GroupId, Set<Line>>, Optimization> reallocator) {
-        return new ConstraintGroupBasedRepair(allocationSelector, reallocator);
+        return new ConstraintGroupBasedRepair(groupSelector, reallocator);
     }
 
     public static ConstraintGroupBasedRepair constraintGroupBasedRepair
-            (Function<List<List<Constraint>>, Optional<List<Constraint>>> allocationSelector) {
-        return new ConstraintGroupBasedRepair(allocationSelector, randomReallocator());
+            (Function<List<List<Constraint>>, Optional<List<Constraint>>> groupSelector) {
+        return new ConstraintGroupBasedRepair(groupSelector, randomReallocator());
     }
 
     public static ConstraintGroupBasedRepair constraintGroupBasedRepair() {
@@ -84,13 +84,13 @@ public class ConstraintGroupBasedRepair implements Optimization {
         };
     }
 
-    private final Function<List<List<Constraint>>, Optional<List<Constraint>>> allocationSelector;
+    private final Function<List<List<Constraint>>, Optional<List<Constraint>>> groupSelector;
     private final Function<Map<GroupId, Set<Line>>, Optimization> reallocator;
 
     protected ConstraintGroupBasedRepair
-            (Function<List<List<Constraint>>, Optional<List<Constraint>>> allocationSelector
+            (Function<List<List<Constraint>>, Optional<List<Constraint>>> groupSelector
                     , Function<Map<GroupId, Set<Line>>, Optimization> reallocator) {
-        this.allocationSelector = allocationSelector;
+        this.groupSelector = groupSelector;
         this.reallocator = reallocator;
     }
 
@@ -139,7 +139,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
     }
 
     public Optional<List<Constraint>> groupOfConstraintGroup(SolutionView solution) {
-        return allocationSelector.apply(Constraint.allocationGroups(solution.constraint()));
+        return groupSelector.apply(Constraint.allocationGroups(solution.constraint()));
     }
 
     public List<OptimizationEvent> freeDefyingGroupOfConstraintGroup(SolutionView solution, Constraint constraint) {
