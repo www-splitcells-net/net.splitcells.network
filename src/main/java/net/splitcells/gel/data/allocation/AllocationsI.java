@@ -17,6 +17,7 @@ import java.util.Set;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
@@ -28,77 +29,77 @@ import net.splitcells.gel.data.database.DatabaseI;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 
 public class AllocationsI implements Allocations {
-    protected final String vārds;
-    protected final Database piešķiršanas;
+    protected final String names;
+    protected final Database allocations;
 
-    protected final List<AfterAdditionSubscriber> papildinājumsKlausītājs = list();
-    protected final List<BeforeRemovalSubscriber> primsNoņemšanaAbonēšanas = list();
-    protected final List<BeforeRemovalSubscriber> pēcNoņemšanaAbonēšanas = list();
+    protected final List<AfterAdditionSubscriber> additionSubscriptions = list();
+    protected final List<BeforeRemovalSubscriber> beforeRemovalSubscriptions = list();
+    protected final List<BeforeRemovalSubscriber> afterRemovalSubscriptions = list();
 
-    protected final Database piedāvājumi;
-    protected final Database piedāvājumi_lietoti;
-    protected final Database piedāvājumi_nelietoti;
+    protected final Database supplies;
+    protected final Database supplies_used;
+    protected final Database supplies_free;
 
-    protected final Database prāsibas;
-    protected final Database prāsibas_lietoti;
-    protected final Database prāsibas_nelietoti;
+    protected final Database demands;
+    protected final Database demands_used;
+    protected final Database demands_free;
 
-    protected final Map<Integer, Integer> piešķiršanasIndekss_uz_lietotuPrāsibuIndekss = map();
-    protected final Map<Integer, Integer> piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss = map();
+    protected final Map<Integer, Integer> allocationsIndex_to_usedDemandIndex = map();
+    protected final Map<Integer, Integer> allocationsIndex_to_usedSupplyIndex = map();
 
-    protected final Map<Integer, Set<Integer>> lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu = map();
-    protected final Map<Integer, Set<Integer>> lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu = map();
+    protected final Map<Integer, Set<Integer>> usedDemandsIndex_to_allocationIndex = map();
+    protected final Map<Integer, Set<Integer>> usedSuppliesIndex_to_allocationIndex = map();
 
-    protected final Map<Integer, Set<Integer>> lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu = map();
-    protected final Map<Integer, Set<Integer>> lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu = map();
+    protected final Map<Integer, Set<Integer>> usedDemandsIndex_to_usedSuppliesIndex = map();
+    protected final Map<Integer, Set<Integer>> usedSupplyIndex_to_usedDeamndsIndex = map();
 
     @Deprecated
-    protected AllocationsI(String vārds, Database prasības, Database piedāvājumi) {
-        this.vārds = vārds;
-        piešķiršanas = new DatabaseI("piešķiršanas", this, concat(prasības.headerView(), piedāvājumi.headerView()));
-        // DARĪT Noņemiet kodu un komentāru dublēšanos.
+    protected AllocationsI(String name, Database demand, Database supply) {
+        this.names = name;
+        allocations = new DatabaseI(Language.ALLOCATIONS.value(), this, concat(demand.headerView(), supply.headerView()));
+        // TODO Remove code and comment duplications.
         {
-            this.prāsibas = prasības;
-            prāsibas_nelietoti = new DatabaseI("prasības_nelietoti", this, prasības.headerView());
-            prāsibas_lietoti = new DatabaseI("prasības_lietoti", this, prasības.headerView());
-            prasības.rawLinesView().forEach(prāsibas_nelietoti::add);
-            prasības.subscribe_to_afterAdditions(prāsibas_nelietoti::add);
-            prasības.subscriber_to_beforeRemoval(removalOf -> {
-                if (lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(removalOf.index())) {
+            this.demands = demand;
+            demands_free = new DatabaseI("demands-free", this, demand.headerView());
+            demands_used = new DatabaseI("demands-used", this, demand.headerView());
+            demand.rawLinesView().forEach(demands_free::add);
+            demand.subscribe_to_afterAdditions(demands_free::add);
+            demand.subscriber_to_beforeRemoval(removalOf -> {
+                if (usedDemandsIndex_to_allocationIndex.containsKey(removalOf.index())) {
                     listWithValuesOf(
-                            lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(removalOf.index()))
-                            .forEach(allocation_of_demand -> remove(piešķiršanas.rawLinesView().get(allocation_of_demand)));
+                            usedDemandsIndex_to_allocationIndex.get(removalOf.index()))
+                            .forEach(allocation_of_demand -> remove(allocations.rawLinesView().get(allocation_of_demand)));
                 }
-                if (prāsibas_nelietoti.contains(removalOf)) {
-                    prāsibas_nelietoti.remove(removalOf);
+                if (demands_free.contains(removalOf)) {
+                    demands_free.remove(removalOf);
                 }
-                // SALABOT Vai alternatīvā gadījumā būtu jādara kaut kas cits.
-                if (prāsibas_lietoti.contains(removalOf)) {
-                    prāsibas_lietoti.remove(removalOf);
+                // TODO FIX Does something needs to be done if the condition is false.
+                if (demands_used.contains(removalOf)) {
+                    demands_used.remove(removalOf);
                 }
             });
         }
         {
-            this.piedāvājumi = requireNonNull(piedāvājumi);
-            piedāvājumi_nelietoti = new DatabaseI("piedāvājumi_nelietoti", this, piedāvājumi.headerView());
-            piedāvājumi_lietoti = new DatabaseI("piedāvājumi_lietoti", this, piedāvājumi.headerView());
-            piedāvājumi.rawLinesView().forEach(piedāvājumi_nelietoti::add);
-            piedāvājumi.subscribe_to_afterAdditions(i -> {
-                piedāvājumi_nelietoti.add(i);
+            this.supplies = requireNonNull(supply);
+            supplies_free = new DatabaseI("supply-free", this, supply.headerView());
+            supplies_used = new DatabaseI("supply-used", this, supply.headerView());
+            supply.rawLinesView().forEach(supplies_free::add);
+            supply.subscribe_to_afterAdditions(i -> {
+                supplies_free.add(i);
             });
-            piedāvājumi.subscriber_to_beforeRemoval(noņemšanaNo -> {
-                if (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(noņemšanaNo.index())) {
+            supply.subscriber_to_beforeRemoval(noņemšanaNo -> {
+                if (usedSuppliesIndex_to_allocationIndex.containsKey(noņemšanaNo.index())) {
                     listWithValuesOf
-                            (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(noņemšanaNo.index()))
+                            (usedSuppliesIndex_to_allocationIndex.get(noņemšanaNo.index()))
                             .forEach(piešķiršanas_no_piedāvāijumu
-                                    -> remove(piešķiršanas.rawLinesView().get(piešķiršanas_no_piedāvāijumu)));
+                                    -> remove(allocations.rawLinesView().get(piešķiršanas_no_piedāvāijumu)));
                 }
-                if (piedāvājumi_nelietoti.contains(noņemšanaNo)) {
-                    piedāvājumi_nelietoti.remove(noņemšanaNo);
+                if (supplies_free.contains(noņemšanaNo)) {
+                    supplies_free.remove(noņemšanaNo);
                 }
-                // SALABOT Vai alternatīvā gadījumā būtu jādara kaut kas cits.
-                if (piedāvājumi_lietoti.contains(noņemšanaNo)) {
-                    piedāvājumi_lietoti.remove(noņemšanaNo);
+                // TODO FIX Does something needs to be done if the condition is false.
+                if (supplies_used.contains(noņemšanaNo)) {
+                    supplies_used.remove(noņemšanaNo);
                 }
             });
         }
@@ -106,199 +107,199 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Database supplies() {
-        return piedāvājumi;
+        return supplies;
     }
 
     @Override
     public Database supplies_used() {
-        return piedāvājumi_lietoti;
+        return supplies_used;
     }
 
     @Override
     public Database supplies_free() {
-        return piedāvājumi_nelietoti;
+        return supplies_free;
     }
 
     @Override
     public Database demands() {
-        return prāsibas;
+        return demands;
     }
 
     @Override
     public Database demands_used() {
-        return prāsibas_lietoti;
+        return demands_used;
     }
 
     @Override
     public Database demands_unused() {
-        return prāsibas_nelietoti;
+        return demands_free;
     }
 
     @Override
-    public Line allocate(Line prasība, Line piedāvājums) {
-        final var piešķiršana = piešķiršanas.addTranslated(Line.concat(prasība, piedāvājums));
-        if (!lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(piedāvājums.index())) {
-            piedāvājumi_lietoti.add(piedāvājums);
-            piedāvājumi_nelietoti.remove(piedāvājums);
+    public Line allocate(Line demand, Line supply) {
+        final var allocation = allocations.addTranslated(Line.concat(demand, supply));
+        if (!usedSuppliesIndex_to_allocationIndex.containsKey(supply.index())) {
+            supplies_used.add(supply);
+            supplies_free.remove(supply);
         }
-        if (!lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(prasība.index())) {
-            prāsibas_lietoti.add(prasība);
-            prāsibas_nelietoti.remove(prasība);
+        if (!usedDemandsIndex_to_allocationIndex.containsKey(demand.index())) {
+            demands_used.add(demand);
+            demands_free.remove(demand);
         }
         {
-            piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.put(piešķiršana.index(), prasība.index());
-            piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.put(piešķiršana.index(), piedāvājums.index());
+            allocationsIndex_to_usedDemandIndex.put(allocation.index(), demand.index());
+            allocationsIndex_to_usedSupplyIndex.put(allocation.index(), supply.index());
         }
         {
             {
-                if (!lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.containsKey(prasība.index())) {
-                    lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.put(prasība.index(), setOfUniques());
+                if (!usedDemandsIndex_to_allocationIndex.containsKey(demand.index())) {
+                    usedDemandsIndex_to_allocationIndex.put(demand.index(), setOfUniques());
                 }
-                lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(prasība.index()).add(piešķiršana.index());
-                if (!lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.containsKey(piedāvājums.index())) {
-                    lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.put(piedāvājums.index(), setOfUniques());
+                usedDemandsIndex_to_allocationIndex.get(demand.index()).add(allocation.index());
+                if (!usedSuppliesIndex_to_allocationIndex.containsKey(supply.index())) {
+                    usedSuppliesIndex_to_allocationIndex.put(supply.index(), setOfUniques());
                 }
-                lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(piedāvājums.index()).add(piešķiršana.index());
+                usedSuppliesIndex_to_allocationIndex.get(supply.index()).add(allocation.index());
             }
         }
         {
             {
-                if (!lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.containsKey(prasība.index())) {
-                    lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.put(prasība.index(), setOfUniques());
+                if (!usedDemandsIndex_to_usedSuppliesIndex.containsKey(demand.index())) {
+                    usedDemandsIndex_to_usedSuppliesIndex.put(demand.index(), setOfUniques());
                 }
-                lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.get(prasība.index()).add(piedāvājums.index());
+                usedDemandsIndex_to_usedSuppliesIndex.get(demand.index()).add(supply.index());
             }
             {
-                if (!lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.containsKey(piedāvājums.index())) {
-                    lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.put(piedāvājums.index(), setOfUniques());
+                if (!usedSupplyIndex_to_usedDeamndsIndex.containsKey(supply.index())) {
+                    usedSupplyIndex_to_usedDeamndsIndex.put(supply.index(), setOfUniques());
                 }
-                lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.index()).add(prasība.index());
+                usedSupplyIndex_to_usedDeamndsIndex.get(supply.index()).add(demand.index());
             }
         }
-        papildinājumsKlausītājs.forEach(listener -> listener.register_addition(piešķiršana));
-        return piešķiršana;
+        additionSubscriptions.forEach(listener -> listener.register_addition(allocation));
+        return allocation;
     }
 
     @Override
-    public Line demand_of_allocation(Line piešķiršana) {
-        return prāsibas.rawLinesView()
-                .get(piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.get(piešķiršana.index()));
+    public Line demand_of_allocation(Line allocation) {
+        return demands.rawLinesView()
+                .get(allocationsIndex_to_usedDemandIndex.get(allocation.index()));
     }
 
     @Override
     public Line supply_of_allocation(Line allocation) {
-        return piedāvājumi.rawLinesView()
-                .get(piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.get(allocation.index()));
+        return supplies.rawLinesView()
+                .get(allocationsIndex_to_usedSupplyIndex.get(allocation.index()));
     }
 
     @Override
-    public Line addTranslated(List<?> vertības) {
+    public Line addTranslated(List<?> values) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Line add(Line rinda) {
+    public Line add(Line line) {
         throw not_implemented_yet();
     }
 
     @Override
-    public void remove(Line piešķiršana) {
-        final var prasība = demand_of_allocation(piešķiršana);
-        final var piedāvājums = supply_of_allocation(piešķiršana);
-        primsNoņemšanaAbonēšanas.forEach(pirmsNoņemšanasKlausītājs -> pirmsNoņemšanasKlausītājs.register_before_removal(piešķiršana));
-        piešķiršanas.remove(piešķiršana);
+    public void remove(Line allocation) {
+        final var demand = demand_of_allocation(allocation);
+        final var supply = supply_of_allocation(allocation);
+        beforeRemovalSubscriptions.forEach(subscriber -> subscriber.register_before_removal(allocation));
+        allocations.remove(allocation);
         // TODO Make following code a remove subscription to allocations.
         {
-            piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.remove(piešķiršana.index());
-            piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.remove(piešķiršana.index());
+            allocationsIndex_to_usedDemandIndex.remove(allocation.index());
+            allocationsIndex_to_usedSupplyIndex.remove(allocation.index());
         }
         {
             {
-                lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.get(prasība.index()).remove(piedāvājums.index());
-                if (lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.get(prasība.index()).isEmpty()) {
-                    lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.remove(prasība.index());
+                usedDemandsIndex_to_usedSuppliesIndex.get(demand.index()).remove(supply.index());
+                if (usedDemandsIndex_to_usedSuppliesIndex.get(demand.index()).isEmpty()) {
+                    usedDemandsIndex_to_usedSuppliesIndex.remove(demand.index());
                 }
-                lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.index()).remove(prasība.index());
-                if (lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.get(piedāvājums.index()).isEmpty()) {
-                    lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.remove(piedāvājums.index());
+                usedSupplyIndex_to_usedDeamndsIndex.get(supply.index()).remove(demand.index());
+                if (usedSupplyIndex_to_usedDeamndsIndex.get(supply.index()).isEmpty()) {
+                    usedSupplyIndex_to_usedDeamndsIndex.remove(supply.index());
                 }
             }
             {
-                lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(piedāvājums.index()).remove(piešķiršana.index());
-                if (lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.get(piedāvājums.index()).isEmpty()) {
-                    lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu.remove(piedāvājums.index());
+                usedSuppliesIndex_to_allocationIndex.get(supply.index()).remove(allocation.index());
+                if (usedSuppliesIndex_to_allocationIndex.get(supply.index()).isEmpty()) {
+                    usedSuppliesIndex_to_allocationIndex.remove(supply.index());
                 }
-                lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(prasība.index()).remove(piešķiršana.index());
-                if (lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.get(prasība.index()).isEmpty()) {
-                    lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu.remove(prasība.index());
+                usedDemandsIndex_to_allocationIndex.get(demand.index()).remove(allocation.index());
+                if (usedDemandsIndex_to_allocationIndex.get(demand.index()).isEmpty()) {
+                    usedDemandsIndex_to_allocationIndex.remove(demand.index());
                 }
             }
         }
-        piešķiršanasIndekss_uz_lietotuPrāsibuIndekss.remove(piešķiršana.index());
-        piešķiršanasIndekss_uz_lietotuPiedāvājumuIndekss.remove(piešķiršana.index());
-        if (!lietotasPrāsibuIndekss_uz_lietotuPiedāvājumuIndekssu.containsKey(prasība.index())) {
-            prāsibas_lietoti.remove(prasība);
-            prāsibas_nelietoti.add(prasība);
+        allocationsIndex_to_usedDemandIndex.remove(allocation.index());
+        allocationsIndex_to_usedSupplyIndex.remove(allocation.index());
+        if (!usedDemandsIndex_to_usedSuppliesIndex.containsKey(demand.index())) {
+            demands_used.remove(demand);
+            demands_free.add(demand);
         }
-        if (!lietotasPiedāvājumuIndekss_uz_lietotuPrāsibuIndekssu.containsKey(piedāvājums.index())) {
-            piedāvājumi_lietoti.remove(piedāvājums);
-            piedāvājumi_nelietoti.add(piedāvājums);
+        if (!usedSupplyIndex_to_usedDeamndsIndex.containsKey(supply.index())) {
+            supplies_used.remove(supply);
+            supplies_free.add(supply);
         }
-        pēcNoņemšanaAbonēšanas.forEach(listener -> listener.register_before_removal(piešķiršana));
+        afterRemovalSubscriptions.forEach(listener -> listener.register_before_removal(allocation));
     }
 
     @Override
     public void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber) {
-        papildinājumsKlausītājs.add(subscriber);
+        additionSubscriptions.add(subscriber);
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return piešķiršanas.headerView();
+        return allocations.headerView();
     }
 
     @Override
-    public <T> ColumnView<T> columnView(Attribute<T> atribūts) {
-        return piešķiršanas.columnView(atribūts);
+    public <T> ColumnView<T> columnView(Attribute<T> attributes) {
+        return allocations.columnView(attributes);
     }
 
     @Override
     public ListView<Line> rawLinesView() {
-        return piešķiršanas.rawLinesView();
+        return allocations.rawLinesView();
     }
 
     @Override
     public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber) {
-        primsNoņemšanaAbonēšanas.add(subscriber);
+        beforeRemovalSubscriptions.add(subscriber);
     }
 
     @Override
     public int size() {
-        return piešķiršanas.size();
+        return allocations.size();
     }
 
     @Override
-    public void remove(int rindasIndekss) {
+    public void remove(int lineIndex) {
         try {
-            remove(piešķiršanas.rawLinesView().get(rindasIndekss));
+            remove(allocations.rawLinesView().get(lineIndex));
         } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
-    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        pēcNoņemšanaAbonēšanas.add(pirmsNoņemšanasKlausītājs);
+    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber subscriber) {
+        afterRemovalSubscriptions.add(subscriber);
     }
 
     @Override
-    public Set<Line> allocations_of_supply(Line piedāvājums) {
+    public Set<Line> allocations_of_supply(Line supply) {
         final Set<Line> piešķiršanas_no_piedāvājuma = setOfUniques();
         try {
-            lietotasPiedāvājumuIndekss_uz_piešķiršanasIndekssu
-                    .get(piedāvājums.index())
+            usedSuppliesIndex_to_allocationIndex
+                    .get(supply.index())
                     .forEach(piešķiršanasIndekss ->
-                            piešķiršanas_no_piedāvājuma.add(piešķiršanas.rawLinesView().get(piešķiršanasIndekss)));
+                            piešķiršanas_no_piedāvājuma.add(allocations.rawLinesView().get(piešķiršanasIndekss)));
         } catch (RuntimeException e) {
             throw e;
         }
@@ -306,18 +307,18 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Set<Line> allocations_of_demand(Line prasība) {
-        final Set<Line> piešķiršanas_no_prasības = setOfUniques();
-        lietotasPrāsibasIndekss_uz_piešķiršanasIndekssu
-                .get(prasība.index())
+    public Set<Line> allocations_of_demand(Line demand) {
+        final Set<Line> allocations_of_demand = setOfUniques();
+        usedDemandsIndex_to_allocationIndex
+                .get(demand.index())
                 .forEach(piešķiršanasIndekss ->
-                    piešķiršanas_no_prasības.add(piešķiršanas.rawLinesView().get(piešķiršanasIndekss)));
-        return piešķiršanas_no_prasības;
+                    allocations_of_demand.add(allocations.rawLinesView().get(piešķiršanasIndekss)));
+        return allocations_of_demand;
     }
 
     @Override
     public List<Column<Object>> columnsView() {
-        return piešķiršanas.columnsView();
+        return allocations.columnsView();
     }
 
     @Override
@@ -328,8 +329,8 @@ public class AllocationsI implements Allocations {
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
         final net.splitcells.dem.data.set.list.List<String> path = list();
-        path.addAll(prāsibas.path());
-        path.add(vārds);
+        path.addAll(demands.path());
+        path.add(names);
         return path;
     }
 
@@ -350,6 +351,6 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Line lookupEquals(Attribute<Line> atribūts, Line cits) {
-        return piešķiršanas.lookupEquals(atribūts, cits);
+        return allocations.lookupEquals(atribūts, cits);
     }
 }

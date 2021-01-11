@@ -14,7 +14,7 @@ public class AllocationsIFactory implements AllocationsFactory {
     }
 
     @Override
-    public Allocations piešķiršanas(String vārds, Database prāsibas, Database piedāvājumi) {
-        return new AllocationsI(vārds, prāsibas, piedāvājumi);
+    public Allocations allocations(String name, Database demands, Database supplies) {
+        return new AllocationsI(name, demands, supplies);
     }
 }

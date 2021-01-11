@@ -9,13 +9,13 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.database.Database;
 
 public interface Allocations extends Database, AllocationsLiveView {
-    Line allocate(Line prasība, Line piedāvājums);
+    Line allocate(Line demand, Line supply);
 
-    default Set<Line> allocationsOf(Line prasība, Line piedāvājums) {
-        final var piešķiršanasNo = allocations_of_supply(piedāvājums);
-        return allocations_of_demand(prasība)
+    default Set<Line> allocationsOf(Line demand, Line supply) {
+        final var allocationsOf = allocations_of_supply(supply);
+        return allocations_of_demand(demand)
                 .stream()
-                .filter(piešķiršanasNo::contains)
+                .filter(allocationsOf::contains)
                 .collect(toSet());
     }
 }

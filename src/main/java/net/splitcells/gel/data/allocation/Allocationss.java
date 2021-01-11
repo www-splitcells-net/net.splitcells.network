@@ -10,7 +10,7 @@ public class Allocationss extends ResourceI<AllocationsFactory> {
         super(() -> new AllocationsIFactory());
     }
 
-    public static Allocations allocations(String vārds, Database prāsibas, Database piedāvājumi) {
-        return environment().config().configValue(Allocationss.class).piešķiršanas(vārds, prāsibas, piedāvājumi);
+    public static Allocations allocations(String name, Database demands, Database supplies) {
+        return environment().config().configValue(Allocationss.class).allocations(name, demands, supplies);
     }
 }
