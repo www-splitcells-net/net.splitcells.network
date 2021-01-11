@@ -191,13 +191,13 @@ public abstract class ConstraintAI implements Constraint {
     public MetaRating event(GroupId group, Line line) {
         final var routingRating
                 = routingRating(group, processedLine -> processedLine.value(LINE).equalsTo(line));
-        routingRating.getChildrenToGroups().forEach((child, groups) ->
-                groups.forEach(group2 -> routingRating.getEvents().add(child.event(group2, line)))
+        routingRating.children_to_groups().forEach((child, groups) ->
+                groups.forEach(group2 -> routingRating.events().add(child.event(group2, line)))
         );
-        if (routingRating.getEvents().isEmpty()) {
+        if (routingRating.events().isEmpty()) {
             return metaRating(noCost());
         }
-        return routingRating.getEvents().stream()
+        return routingRating.events().stream()
                 .reduce((a, b) -> a.combine(b))
                 .get()
                 .asMetaRating();
@@ -205,19 +205,19 @@ public abstract class ConstraintAI implements Constraint {
 
     protected RoutingRating routingRating
             (GroupId group, Predicate<Line> lineSelector) {
-        final var routingRating = RoutingRating.veidot();
+        final var routingRating = RoutingRating.create();
         lineProcessing.rawLinesView().forEach(line -> {
             if (line != null
                     && lineSelector.test(line)
                     && group.equals(line.value(INCOMING_CONSTRAINT_GROUP))) {
-                routingRating.getEvents().add(line.value(NOVĒRTĒJUMS));
+                routingRating.events().add(line.value(NOVĒRTĒJUMS));
                 line.value(Constraint.IZDALĪŠANA_UZ).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
-                    if (!routingRating.getChildrenToGroups().containsKey(child)) {
+                    if (!routingRating.children_to_groups().containsKey(child)) {
                         groupsOfChild = setOfUniques();
-                        routingRating.getChildrenToGroups().put(child, groupsOfChild);
+                        routingRating.children_to_groups().put(child, groupsOfChild);
                     } else {
-                        groupsOfChild = routingRating.getChildrenToGroups().get(child);
+                        groupsOfChild = routingRating.children_to_groups().get(child);
                     }
                     groupsOfChild.add(line.value(RESULTING_CONSTRAINT_GROUP));
                 });
@@ -230,12 +230,12 @@ public abstract class ConstraintAI implements Constraint {
     public MetaRating rating(GroupId group) {
         final var routingRating
                 = routingRating(group, lineSelector -> true);
-        routingRating.getChildrenToGroups().forEach((children, groups) ->
-                groups.forEach(group2 -> routingRating.getEvents().add(children.rating(group2))));
-        if (routingRating.getEvents().isEmpty()) {
+        routingRating.children_to_groups().forEach((children, groups) ->
+                groups.forEach(group2 -> routingRating.events().add(children.rating(group2))));
+        if (routingRating.events().isEmpty()) {
             return metaRating(noCost());
         }
-        return routingRating.getEvents().stream()
+        return routingRating.events().stream()
                 .reduce((a, b) -> a.combine(b))
                 .get()
                 .asMetaRating();
@@ -456,7 +456,7 @@ public abstract class ConstraintAI implements Constraint {
                                         (allocation.value(RESULTING_CONSTRAINT_GROUP)
                                                 , propagatedTo)))
                 .flatMap(e -> e)
-                .map(routingResult -> routingResult.propagation().naturalArgumentation(line, routingResult.grupa()))
+                .map(routingResult -> routingResult.propagation().naturalArgumentation(line, routingResult.group()))
                 .collect(toSet());
         if (childrenArgumentationContent.isEmpty()) {
             return Optional.empty();

@@ -12,20 +12,25 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 public class RoutingRating {
-    public static RoutingRating veidot() {
+    /**
+     * TODO RENAME
+     * 
+     * @return
+     */
+    public static RoutingRating create() {
         return new RoutingRating();
     }
     private RoutingRating() {
 
     }
-    private final List<Rating> novērtējums = list();
-    private final Map<Constraint, Set<GroupId>> bērnusUzGrupas = map();
+    private final List<Rating> ratings = list();
+    private final Map<Constraint, Set<GroupId>> children_to_groups = map();
 
-    public List<Rating> getEvents() {
-        return novērtējums;
+    public List<Rating> events() {
+        return ratings;
     }
 
-    public Map<Constraint, Set<GroupId>> getChildrenToGroups() {
-        return bērnusUzGrupas;
+    public Map<Constraint, Set<GroupId>> children_to_groups() {
+        return children_to_groups;
     }
 }

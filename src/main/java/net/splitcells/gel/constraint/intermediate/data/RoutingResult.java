@@ -4,23 +4,23 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 
 public class RoutingResult {
-	public static RoutingResult routingResult(GroupId grupa, Constraint izplatītājs) {
-		return new RoutingResult(grupa, izplatītājs);
+	public static RoutingResult routingResult(GroupId group, Constraint propagation) {
+		return new RoutingResult(group, propagation);
 	}
 
-	private final GroupId grupa;
-	private final Constraint izplatītājs;
+	private final GroupId group;
+	private final Constraint propagation;
 
-	private RoutingResult(GroupId grupa, Constraint izplatītājs) {
-		this.grupa = grupa;
-		this.izplatītājs = izplatītājs;
+	private RoutingResult(GroupId group, Constraint propagation) {
+		this.group = group;
+		this.propagation = propagation;
 	}
 
-	public GroupId grupa() {
-		return grupa;
+	public GroupId group() {
+		return group;
 	}
 
 	public Constraint propagation() {
-		return izplatītājs;
+		return propagation;
 	}
 }
