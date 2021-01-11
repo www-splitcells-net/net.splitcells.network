@@ -25,61 +25,61 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 public final class Derivation implements Constraint {
 
     public static Derivation derivation
-            (Constraint atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
-        return new Derivation(atvasināšanasMērķis, atvasināšanaFuncija);
+            (Constraint derivationTarget, Function<MetaRating, MetaRating> derivationFunction) {
+        return new Derivation(derivationTarget, derivationFunction);
     }
 
-    private final Constraint atvasināšanasMērķis;
-    private final Function<MetaRating, MetaRating> atvasināšanaFuncija;
+    private final Constraint derivationTarget;
+    private final Function<MetaRating, MetaRating> derivationFunction;
 
-    private Derivation(Constraint atvasināšanasMērķis, Function<MetaRating, MetaRating> atvasināšanaFuncija) {
-        this.atvasināšanasMērķis = atvasināšanasMērķis;
-        this.atvasināšanaFuncija = atvasināšanaFuncija;
+    private Derivation(Constraint derivationTarget, Function<MetaRating, MetaRating> derivationFunction) {
+        this.derivationTarget = derivationTarget;
+        this.derivationFunction = derivationFunction;
     }
 
     @Override
     public GroupId injectionGroup() {
-        return atvasināšanasMērķis.injectionGroup();
+        return derivationTarget.injectionGroup();
     }
 
     @Override
-    public MetaRating event(GroupId grupaId, Line rinda) {
-        return atvasināšanaFuncija.apply(atvasināšanasMērķis.event(grupaId, rinda));
+    public MetaRating event(GroupId group, Line line) {
+        return derivationFunction.apply(derivationTarget.event(group, line));
     }
 
     @Override
-    public MetaRating rating(GroupId groupdId) {
-        return atvasināšanaFuncija.apply(atvasināšanasMērķis.rating(groupdId));
+    public MetaRating rating(GroupId group) {
+        return derivationFunction.apply(derivationTarget.rating(group));
     }
 
     @Override
-    public Perspective naturalArgumentation(GroupId grupa) {
+    public Perspective naturalArgumentation(GroupId group) {
         throw not_implemented_yet();
     }
 
     @Override
     public Optional<Discoverable> mainContext() {
-        return atvasināšanasMērķis.mainContext();
+        return derivationTarget.mainContext();
     }
 
     @Override
     public Perspective naturalArgumentation
-            (Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs) {
+            (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         throw not_implemented_yet();
     }
 
     @Override
-    public GroupId groupOf(Line rinda) {
-        return atvasināšanasMērķis.groupOf(rinda);
+    public GroupId groupOf(Line line) {
+        return derivationTarget.groupOf(line);
     }
 
     @Override
-    public void register_additions(GroupId grupaId, Line rinda) {
+    public void register_additions(GroupId group, Line line) {
         throw not_implemented_yet();
     }
 
     @Override
-    public void rēgistrē_pirms_noņemšanas(GroupId grupaId, Line rinda) {
+    public void register_before_removal(GroupId group, Line line) {
         throw not_implemented_yet();
     }
 
@@ -89,17 +89,17 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Set<Line> complying(GroupId grupaId) {
+    public Set<Line> complying(GroupId group) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Set<Line> defying(GroupId grupaId) {
+    public Set<Line> defying(GroupId group) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Line addResult(LocalRating vietējieNovērtējums) {
+    public Line addResult(LocalRating localRating) {
         throw not_implemented_yet();
     }
 
@@ -114,13 +114,13 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Element toDom(Set<GroupId> grupas) {
+    public Element toDom(Set<GroupId> groups) {
         throw not_implemented_yet();
     }
 
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
-        final var path = atvasināšanasMērķis.path();
+        final var path = derivationTarget.path();
         path.add(getClass().getSimpleName());
         return path;
     }
@@ -136,17 +136,17 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Constraint withChildren(Constraint... ierobežojums) {
+    public Constraint withChildren(Constraint... constraints) {
         throw not_implemented_yet();
     }
 
     @Override
-    public Constraint withChildren(Function<Query, Query> būvētājs) {
+    public Constraint withChildren(Function<Query, Query> builder) {
         throw not_implemented_yet();
     }
 
     @Override
-    public void addContext(Discoverable konteksts) {
+    public void addContext(Discoverable context) {
         throw not_implemented_yet();
     }
 

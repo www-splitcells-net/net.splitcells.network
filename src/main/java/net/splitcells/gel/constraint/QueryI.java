@@ -67,7 +67,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            radijumuBaže = Optional.of(ForAlls.priekšVisiem(vērtētājs));
+            radijumuBaže = Optional.of(ForAlls.forAll(vērtētājs));
             ierobežojums.withChildren(radijumuBaže.get());
             radītasGrupas.addAll(grupas);
         }
@@ -103,7 +103,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            radijumuBaže = Optional.of(ForAlls.priekšVisiem(arg));
+            radijumuBaže = Optional.of(ForAlls.forAll(arg));
             ierobežojums.withChildren(radijumuBaže.get());
             radītasGrupas.addAll(grupas);
         }
@@ -157,7 +157,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            radijumuBaže = Optional.of(Then.tad(vērtētājs));
+            radijumuBaže = Optional.of(Then.then(vērtētājs));
             ierobežojums.withChildren(radijumuBaže.get());
             resultingGroups.addAll(grupas);
         }

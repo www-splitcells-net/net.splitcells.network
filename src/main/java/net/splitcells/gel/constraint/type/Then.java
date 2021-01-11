@@ -12,16 +12,16 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public class Then extends ConstraintBasedOnLocalGroupsAI {
 
-    public static Then tad(Rater vērtētājs) {
-        return new Then(vērtētājs);
+    public static Then then(Rater rater) {
+        return new Then(rater);
     }
 
-    public static Then tad(Rating novērtējums) {
-        return new Then(constantRater(novērtējums));
+    public static Then tad(Rating rating) {
+        return new Then(constantRater(rating));
     }
 
-    protected Then(Rater vērtētājs) {
-        super(vērtētājs, vērtētājs.getClass().getSimpleName());
+    protected Then(Rater rater) {
+        super(rater, rater.getClass().getSimpleName());
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Then extends ConstraintBasedOnLocalGroupsAI {
     }
 
     @Override
-    protected List<String> localNaturalArgumentation(Report ziņojums) {
-        return list(rater.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
+    protected List<String> localNaturalArgumentation(Report report) {
+        return list(rater.toSimpleDescription(report.line(), report.group()));
     }
 }

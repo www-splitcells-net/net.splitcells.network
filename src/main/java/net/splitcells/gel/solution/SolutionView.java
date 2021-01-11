@@ -42,9 +42,9 @@ public interface SolutionView extends ProblemView {
         constraint.casted(ForAll.class)
                 .ifPresent(forAllConstraints -> {
                     final var forAllAttributes = forAllAttributesOfGroups
-                            (forAllConstraints.grouping())
+                            (forAllConstraints.classification())
                             .withAppended(
-                                    forAllConstraints.grouping()
+                                    forAllConstraints.classification()
                                             .casted(RaterBasedOnGrouping.class)
                                             .map(e -> forAllAttributesOfGroups(e.classifier()))
                                             .orElseGet(() -> list())

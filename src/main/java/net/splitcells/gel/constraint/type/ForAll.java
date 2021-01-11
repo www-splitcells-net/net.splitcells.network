@@ -12,19 +12,20 @@ import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
 
 public class ForAll extends ConstraintBasedOnLocalGroupsAI {
 
-    public static ForAll veidot(Rater grupēšana) {
-        return priekšVisiem(grupēšana);
+    public static ForAll forAll(Rater classifier) {
+        return create(classifier);
     }
 
-    public static ForAll priekšVisiem(Rater grupēšana) {
-        return new ForAll(grupēšana);
+    @Deprecated
+    public static ForAll create(Rater classifier) {
+        return new ForAll(classifier);
     }
 
-    protected ForAll(Rater grupēšana) {
-        super(raterBasedGrouping(grupēšana));
+    protected ForAll(Rater classifier) {
+        super(raterBasedGrouping(classifier));
     }
 
-    public Rater grouping() {
+    public Rater classification() {
         return rater;
     }
 
@@ -34,11 +35,11 @@ public class ForAll extends ConstraintBasedOnLocalGroupsAI {
     }
 
     @Override
-    protected List<String> localNaturalArgumentation(Report ziņojums) {
+    protected List<String> localNaturalArgumentation(Report report) {
         if (rater.type().equals(ForAllAttributeValues.class)) {
-            return list(rater.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
+            return list(rater.toSimpleDescription(report.line(), report.group()));
         } else {
-            return list("Priekš visiem " + rater.toSimpleDescription(ziņojums.rinda(), ziņojums.grupa()));
+            return list("For all " + rater.toSimpleDescription(report.line(), report.group()));
         }
     }
 }

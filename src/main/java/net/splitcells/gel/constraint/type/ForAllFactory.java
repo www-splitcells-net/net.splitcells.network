@@ -4,40 +4,41 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
 
-import static net.splitcells.gel.rating.rater.classification.Propagation.izdalīšana;
-import static net.splitcells.gel.rating.rater.classification.ForAllWithCondition.priekšVisiemArNosacījumu;
+import static net.splitcells.gel.rating.rater.classification.ForAllValueCombinations.forAllValueCombinations;
+import static net.splitcells.gel.rating.rater.classification.Propagation.propagation;
+import static net.splitcells.gel.rating.rater.classification.ForAllWithCondition.forAllWithCondition;
 import static net.splitcells.gel.rating.rater.classification.ForAllAttributeValues.forAllAtributeValues;
 
 public class ForAllFactory {
-    protected static final ForAllFactory GADĪJUMS = new ForAllFactory();
-    
-    public static ForAllFactory gadījums() {
-        return GADĪJUMS;
+    protected static final ForAllFactory INSTANCE = new ForAllFactory();
+
+    public static ForAllFactory instance() {
+        return INSTANCE;
     }
 
     protected ForAllFactory() {
 
     }
 
-    public <T> ForAll priekšVisiemArVērtibu(Attribute<T> atribūts, T vērtiba) {
-        return ForAll.veidot(
-                priekšVisiemArNosacījumu(line -> vērtiba.equals(line.value(atribūts))));
+    public <T> ForAll forAllWithValue(Attribute<T> attribute, T value) {
+        return ForAll.forAll(
+                forAllWithCondition(line -> value.equals(line.value(attribute))));
     }
 
-    public ForAll priekšVisiem() {
-        return ForAll.veidot(izdalīšana());
+    public ForAll forAll() {
+        return ForAll.forAll(propagation());
     }
 
-    public ForAll priekšVisiem(final Attribute<?> arg) {
-        return ForAll.veidot(forAllAtributeValues(arg));
+    public ForAll forAll(final Attribute<?> attribute) {
+        return ForAll.forAll(forAllAtributeValues(attribute));
     }
 
-    public ForAll priekšVisiem(Rater grouping) {
-        return ForAll.veidot(grouping);
+    public ForAll forAll(Rater classifier) {
+        return ForAll.forAll(classifier);
     }
 
-    public ForAll forAllCombinations(final Attribute<?>... argumenti) {
-        return ForAll.veidot(ForAllValueCombinations.forAllValueCombinations(argumenti));
+    public ForAll forAllCombinations(final Attribute<?>... attributes) {
+        return ForAll.forAll(forAllValueCombinations(attributes));
     }
 
 }

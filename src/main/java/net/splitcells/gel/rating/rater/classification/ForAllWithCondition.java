@@ -27,7 +27,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class ForAllWithCondition<T> implements Rater {
 
-    public static <T> ForAllWithCondition<T> priekšVisiemArNosacījumu(Predicate<Line> condition) {
+    public static <T> ForAllWithCondition<T> forAllWithCondition(Predicate<Line> condition) {
         return new ForAllWithCondition<>(condition);
     }
 

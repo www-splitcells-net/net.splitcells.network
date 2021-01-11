@@ -115,7 +115,7 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public void rēgistrē_pirms_noņemšanas(GroupId ienākošaGrupaId, Line noņemšana) {
+    public void register_before_removal(GroupId ienākošaGrupaId, Line noņemšana) {
         // DARĪT Kustēt uz ārpuses projektu.
         if (ENFORCING_UNIT_CONSISTENCY) {
             Assertions.assertThat(noņemšana.isValid()).isTrue();
@@ -153,7 +153,7 @@ public abstract class ConstraintAI implements Constraint {
 
     protected void propagateRemoval(Line removal) {
         removal.value(IZDALĪŠANA_UZ).forEach(child ->
-                child.rēgistrē_pirms_noņemšanas
+                child.register_before_removal
                         (removal.value(RESULTING_CONSTRAINT_GROUP)
                                 , removal.value(LINE)));
     }

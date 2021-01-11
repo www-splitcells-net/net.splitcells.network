@@ -18,11 +18,11 @@ public final class Report {
 		this.novērtējums = novērtējums;
 	}
 
-	public Line rinda() {
+	public Line line() {
 		return rinda;
 	}
 
-	public GroupId grupa() {
+	public GroupId group() {
 		return group;
 	}
 

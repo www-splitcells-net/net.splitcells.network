@@ -110,11 +110,11 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         register_additions(injectionGroup(), rinda);
     }
 
-    void rēgistrē_pirms_noņemšanas(GroupId grupaId, Line rinda);
+    void register_before_removal(GroupId grupaId, Line rinda);
 
     @Deprecated
     default void register_before_removal(Line rinda) {
-        rēgistrē_pirms_noņemšanas(injectionGroup(), rinda);
+        register_before_removal(injectionGroup(), rinda);
     }
 
     List<Constraint> childrenView();

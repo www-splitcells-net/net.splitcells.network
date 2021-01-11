@@ -5,41 +5,41 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public class ForAlls {
 
-    public static <T> ForAll priekšVisiemArVērtibu(Attribute<T> atribūts, T vērtiba) {
-        return ForAllFactory.gadījums().priekšVisiemArVērtibu(atribūts, vērtiba);
+    public static <T> ForAll forAllWithValue(Attribute<T> attribute, T value) {
+        return ForAllFactory.instance().forAllWithValue(attribute, value);
     }
 
     /**
-     * JAUDA DARĪT Specializēts ierobežojums šitam.
+     * TODO PERFORMANCE Specialize implementation for this case.
      * <p>
-     * PĀRBAUDI Testu trukst.
+     * TODO TEST
      */
     public static ForAll priekšVisiem() {
-        return ForAllFactory.gadījums().priekšVisiem();
+        return ForAllFactory.instance().forAll();
     }
 
     /**
      * This Method exists in order to boost performance. TEST If this method does
      * indeed boost performance compared to some other methods with the same name.
      *
-     * @param arg
+     * @param attribute
      * @return
      */
-    public static ForAll priekšVisiem(final Attribute<?> arg) {
-        return ForAllFactory.gadījums().priekšVisiem(arg);
+    public static ForAll forAll(final Attribute<?> attribute) {
+        return ForAllFactory.instance().forAll(attribute);
     }
 
-    public static ForAll priekšVisiem(Rater grouping) {
-        return ForAllFactory.gadījums().priekšVisiem(grouping);
+    public static ForAll forAll(Rater classifier) {
+        return ForAllFactory.instance().forAll(classifier);
     }
 
     /**
      * TEST Tests are missing.
      *
-     * @param argumenti
+     * @param arguments
      * @return
      */
-    public static ForAll forAllCombinations(final Attribute<?>... argumenti) {
-        return ForAllFactory.gadījums().forAllCombinations(argumenti);
+    public static ForAll forAllCombinations(final Attribute<?>... arguments) {
+        return ForAllFactory.instance().forAllCombinations(arguments);
     }
 }
