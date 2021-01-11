@@ -28,13 +28,13 @@ public class ConstraintGroupBasedRepair implements Optimization {
 
     public static ConstraintGroupBasedRepair constraintGroupBasedRepair
             (Function<List<List<Constraint>>, Optional<List<Constraint>>> groupSelector
-                    , Function<Map<GroupId, Set<Line>>, Optimization> reallocator) {
-        return new ConstraintGroupBasedRepair(groupSelector, reallocator);
+                    , Function<Map<GroupId, Set<Line>>, Optimization> repairer) {
+        return new ConstraintGroupBasedRepair(groupSelector, repairer);
     }
 
     public static ConstraintGroupBasedRepair constraintGroupBasedRepair
             (Function<List<List<Constraint>>, Optional<List<Constraint>>> groupSelector) {
-        return new ConstraintGroupBasedRepair(groupSelector, randomReallocator());
+        return new ConstraintGroupBasedRepair(groupSelector, randomRepairer());
     }
 
     public static ConstraintGroupBasedRepair constraintGroupBasedRepair() {
@@ -53,25 +53,25 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         return Optional.empty();
                     }
                     return Optional.of(randomness.chooseOneOf(candidates));
-                }, randomReallocator());
+                }, randomRepairer());
     }
 
-    private static final Function<Map<GroupId, Set<Line>>, Optimization> randomReallocator() {
+    private static final Function<Map<GroupId, Set<Line>>, Optimization> randomRepairer() {
         final var randomness = randomness();
-        return indexBasedReallocator(i -> randomness.integer(0, i));
+        return indexBasedRepairer(i -> randomness.integer(0, i));
     }
 
-    public static final Function<Map<GroupId, Set<Line>>, Optimization> indexBasedReallocator
+    public static final Function<Map<GroupId, Set<Line>>, Optimization> indexBasedRepairer
             (Function<Integer, Integer> indexSelector) {
         return freeDemandGroups -> solution -> {
-            final Set<OptimizationEvent> reallocations = setOfUniques();
+            final Set<OptimizationEvent> repairs = setOfUniques();
             final var supplyFree = solution.supplies_free().getLines();
             freeDemandGroups.entrySet().forEach(grup -> {
                 grup.getValue().forEach(demand -> {
                     if (supplyFree.isEmpty()) {
                         return;
                     }
-                    reallocations.ensureContains
+                    repairs.ensureContains
                             (optimizationEvent
                                     (ADDITION
                                             , demand.toLinePointer()
@@ -80,18 +80,18 @@ public class ConstraintGroupBasedRepair implements Optimization {
                                                     .toLinePointer()));
                 });
             });
-            return listWithValuesOf(reallocations);
+            return listWithValuesOf(repairs);
         };
     }
 
     private final Function<List<List<Constraint>>, Optional<List<Constraint>>> groupSelector;
-    private final Function<Map<GroupId, Set<Line>>, Optimization> reallocator;
+    private final Function<Map<GroupId, Set<Line>>, Optimization> repairer;
 
     protected ConstraintGroupBasedRepair
             (Function<List<List<Constraint>>, Optional<List<Constraint>>> groupSelector
-                    , Function<Map<GroupId, Set<Line>>, Optimization> reallocator) {
+                    , Function<Map<GroupId, Set<Line>>, Optimization> repairer) {
         this.groupSelector = groupSelector;
-        this.reallocator = reallocator;
+        this.repairer = repairer;
     }
 
     @Override
@@ -110,12 +110,12 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         .map(f -> freeDefyingGroupOfConstraintGroup(solution, f))
                         .orElseGet(() -> list()))
                 .orElseGet(() -> list());
-        optimization.withAppended(reallocate(solution, demandGrouping));
+        optimization.withAppended(repairer(solution, demandGrouping));
         return optimization;
     }
 
-    public List<OptimizationEvent> reallocate(SolutionView solution, Map<GroupId, Set<Line>> freeDemandGroups) {
-        return reallocator.apply(freeDemandGroups).optimize(solution);
+    public List<OptimizationEvent> repairer(SolutionView solution, Map<GroupId, Set<Line>> freeDemandGroups) {
+        return repairer.apply(freeDemandGroups).optimize(solution);
     }
 
     public Map<GroupId, Set<Line>> demandGrouping(Constraint constraintGrouping, SolutionView solution) {
