@@ -22,210 +22,210 @@ import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 
 public class QueryI implements Query {
-    public static Query query(Constraint ierobežojums, Optional<Constraint> root) {
-        return new QueryI(ierobežojums, list(ierobežojums.injectionGroup()), root);
+    public static Query query(Constraint constraint, Optional<Constraint> root) {
+        return new QueryI(constraint, list(constraint.injectionGroup()), root);
     }
 
-    public static Query jautājums(Constraint ierobežojums) {
-        return new QueryI(ierobežojums, list(ierobežojums.injectionGroup()), Optional.of(ierobežojums));
+    public static Query query(Constraint constraint) {
+        return new QueryI(constraint, list(constraint.injectionGroup()), Optional.of(constraint));
     }
 
-    public static Query jautājums(Constraint ierobežojums, Collection<GroupId> groups, Constraint root) {
-        return new QueryI(ierobežojums, groups, Optional.of(root));
+    public static Query query(Constraint constraint, Collection<GroupId> groups, Constraint root) {
+        return new QueryI(constraint, groups, Optional.of(root));
     }
 
-    private final Optional<Constraint> sakne;
-    private final Constraint ierobežojums;
-    private final Collection<GroupId> grupas;
+    private final Optional<Constraint> root;
+    private final Constraint constraint;
+    private final Collection<GroupId> groups;
 
-    public QueryI(Constraint ierobežojums, Collection<GroupId> grupas, Optional<Constraint> sakne) {
-        this.ierobežojums = ierobežojums;
-        this.grupas = grupas;
-        this.sakne = sakne;
+    public QueryI(Constraint constraint, Collection<GroupId> groups, Optional<Constraint> root) {
+        this.constraint = constraint;
+        this.groups = groups;
+        this.root = root;
     }
 
     @Override
-    public Query priekšVisiem(Rater vērtētājs) {
-        var radijumuBaže = ierobežojums
+    public Query forAll(Rater rater) {
+        var resultBase = constraint
                 .childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> child.arguments().size() == 1)
                 .filter(child -> child.arguments().get(0).getClass().equals(RaterBasedOnGrouping.class))
                 .filter(child -> {
-                    final var grupēšana = (RaterBasedOnGrouping) child.arguments().get(0);
-                    return grupēšana.arguments().get(0).equals(vērtētājs);
+                    final var classification = (RaterBasedOnGrouping) child.arguments().get(0);
+                    return classification.arguments().get(0).equals(rater);
                 }).reduce(ensureSingle());
-        final var radītasGrupas = Sets.<GroupId>setOfUniques();
-        if (radijumuBaže.isPresent()) {
-            for (GroupId grupa : grupas) {
-                radītasGrupas.addAll
-                        (ierobežojums
+        final var resultingGroups = Sets.<GroupId>setOfUniques();
+        if (resultBase.isPresent()) {
+            for (GroupId group : groups) {
+                resultingGroups.addAll
+                        (constraint
                                 .lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                                .lookup(grupa)
+                                .lookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
         } else {
-            radijumuBaže = Optional.of(ForAlls.forAll(vērtētājs));
-            ierobežojums.withChildren(radijumuBaže.get());
-            radītasGrupas.addAll(grupas);
+            resultBase = Optional.of(ForAlls.forAll(rater));
+            constraint.withChildren(resultBase.get());
+            resultingGroups.addAll(groups);
         }
-        if (sakne.isEmpty()) {
-            return jautājums(radijumuBaže.get(), radītasGrupas, radijumuBaže.get());
+        if (root.isEmpty()) {
+            return query(resultBase.get(), resultingGroups, resultBase.get());
         } else {
-            return jautājums(radijumuBaže.get(), radītasGrupas, sakne.get());
+            return query(resultBase.get(), resultingGroups, root.get());
         }
     }
 
     @Override
-    public Query priekšVisiem(Attribute<?> arg) {
-        var radijumuBaže
-                = ierobežojums.childrenView().stream()
+    public Query forAll(Attribute<?> attribute) {
+        var resultBase
+                = constraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
-                    final var grupešana = (Rater) child.arguments().get(0);
-                    final var atribūtuGrupešana = (Rater) grupešana.arguments().get(0);
-                    if (atribūtuGrupešana.arguments().size() != 1) {
+                    final var classification = (Rater) child.arguments().get(0);
+                    final var attributeClassification = (Rater) classification.arguments().get(0);
+                    if (attributeClassification.arguments().size() != 1) {
                         return false;
                     }
-                    return arg.equals(atribūtuGrupešana.arguments().get(0));
+                    return attribute.equals(attributeClassification.arguments().get(0));
                 }).reduce(ensureSingle());
-        final var radītasGrupas = Sets.<GroupId>setOfUniques();
-        if (radijumuBaže.isPresent()) {
-            for (GroupId grupa : grupas) {
-                radītasGrupas.addAll(
-                        ierobežojums.lineProcessing()
+        final var resultingGroup = Sets.<GroupId>setOfUniques();
+        if (resultBase.isPresent()) {
+            for (GroupId group : groups) {
+                resultingGroup.addAll(
+                        constraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                                .lookup(grupa)
+                                .lookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
         } else {
-            radijumuBaže = Optional.of(ForAlls.forAll(arg));
-            ierobežojums.withChildren(radijumuBaže.get());
-            radītasGrupas.addAll(grupas);
+            resultBase = Optional.of(ForAlls.forAll(attribute));
+            constraint.withChildren(resultBase.get());
+            resultingGroup.addAll(groups);
         }
-        if (sakne.isEmpty()) {
-            return jautājums(radijumuBaže.get(), radītasGrupas, radijumuBaže.get());
+        if (root.isEmpty()) {
+            return query(resultBase.get(), resultingGroup, resultBase.get());
         } else {
-            return jautājums(radijumuBaže.get(), radītasGrupas, sakne.get());
+            return query(resultBase.get(), resultingGroup, root.get());
         }
     }
 
     @Override
-    public Query priekšVisiem() {
-        final var radijumuBaže
-                = ierobežojums.childrenView().stream()
+    public Query forAll() {
+        final var resultBase
+                = constraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
-                    final var grupēšana = (Rater) child.arguments().get(0);
-                    final var attributeGrouping = (Rater) grupēšana.arguments().get(0);
-                    return attributeGrouping.arguments().isEmpty();
+                    final var classification = (Rater) child.arguments().get(0);
+                    final var attributeClassification = (Rater) classification.arguments().get(0);
+                    return attributeClassification.arguments().isEmpty();
                 }).reduce(ensureSingle())
                 .get();
-        if (sakne.isEmpty()) {
-            return jautājums(radijumuBaže, listWithValuesOf(grupas), radijumuBaže);
+        if (root.isEmpty()) {
+            return query(resultBase, listWithValuesOf(groups), resultBase);
         } else {
-            return jautājums(radijumuBaže, listWithValuesOf(grupas), sakne.get());
+            return query(resultBase, listWithValuesOf(groups), root.get());
         }
     }
 
     @Override
-    public Query tad() {
+    public Query then() {
         throw not_implemented_yet();
     }
 
     @Override
-    public Query tad(Rater vērtētājs) {
-        var radijumuBaže
-                = ierobežojums.childrenView().stream()
+    public Query then(Rater rater) {
+        var resultBase
+                = constraint.childrenView().stream()
                 .filter(child -> Then.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
-                .filter(child -> child.arguments().get(0).equals(vērtētājs))
+                .filter(child -> child.arguments().get(0).equals(rater))
                 .reduce(ensureSingle());
         final var resultingGroups = Sets.<GroupId>setOfUniques();
-        if (radijumuBaže.isPresent()) {
-            for (GroupId grupa : grupas) {
+        if (resultBase.isPresent()) {
+            for (GroupId group : groups) {
                 resultingGroups.addAll(
-                        ierobežojums.lineProcessing()
+                        constraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                                .lookup(grupa)
+                                .lookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
         } else {
-            radijumuBaže = Optional.of(Then.then(vērtētājs));
-            ierobežojums.withChildren(radijumuBaže.get());
-            resultingGroups.addAll(grupas);
+            resultBase = Optional.of(Then.then(rater));
+            constraint.withChildren(resultBase.get());
+            resultingGroups.addAll(groups);
         }
-        if (sakne.isEmpty()) {
-            return jautājums(radijumuBaže.get(), resultingGroups, radijumuBaže.get());
+        if (root.isEmpty()) {
+            return query(resultBase.get(), resultingGroups, resultBase.get());
         } else {
-            return jautājums(radijumuBaže.get(), resultingGroups, sakne.get());
+            return query(resultBase.get(), resultingGroups, root.get());
         }
     }
 
     @Override
-    public Query tad(Rating novērtējums) {
-        return tad(constantRater(novērtējums));
+    public Query then(Rating rating) {
+        return then(constantRater(rating));
     }
 
     @Override
-    public Query priekšVisamKombinācijam(Attribute<?>... args) {
-        final Constraint radijumuBaže
-                = ierobežojums.childrenView().stream()
+    public Query forAllCombinations(Attribute<?>... attributes) {
+        final Constraint resultBase
+                = constraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
-                    final var grupešana = (Rater) child.arguments().get(0);
-                    final var atribūtuGrupešana = (Rater) grupešana.arguments().get(0);
-                    if (!atribūtuGrupešana.type().equals(ForAllValueCombinations.class)) {
+                    final var classification = (Rater) child.arguments().get(0);
+                    final var attributeClassification = (Rater) classification.arguments().get(0);
+                    if (!attributeClassification.type().equals(ForAllValueCombinations.class)) {
                         return false;
                     }
-                    if (args.length != atribūtuGrupešana.arguments().size()) {
+                    if (attributes.length != attributeClassification.arguments().size()) {
                         return false;
                     }
-                    return range(0, args.length)
-                            .filter(index -> !args[index].equals(atribūtuGrupešana.arguments().get(index)))
+                    return range(0, attributes.length)
+                            .filter(index -> !attributes[index].equals(attributeClassification.arguments().get(index)))
                             .findAny()
                             .isEmpty();
                 }).reduce(ensureSingle()).get();
-        final var radītasGrupas = Sets.<GroupId>setOfUniques();
-        for (GroupId grupa : grupas) {
-            radītasGrupas.addAll(
-                    ierobežojums.lineProcessing()
+        final var resultingGroups = Sets.<GroupId>setOfUniques();
+        for (GroupId groups : groups) {
+            resultingGroups.addAll(
+                    constraint.lineProcessing()
                             .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                            .lookup(grupa)
+                            .lookup(groups)
                             .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                             .values());
         }
-        if (sakne.isEmpty()) {
-            return jautājums(radijumuBaže, radītasGrupas, radijumuBaže);
+        if (root.isEmpty()) {
+            return query(resultBase, resultingGroups, resultBase);
         } else {
-            return jautājums(radijumuBaže, radītasGrupas, sakne.get());
+            return query(resultBase, resultingGroups, root.get());
         }
     }
 
     @Override
-    public Rating novērtējums() {
-        final var grupasNovērtējums
-                    = grupas.stream().map(group -> ierobežojums.rating(group)).reduce((a, b) -> a.combine(b));
-        if (grupasNovērtējums.isPresent()) {
-            return grupasNovērtējums.get();
+    public Rating rating() {
+        final var groupRating
+                = groups.stream().map(group -> constraint.rating(group)).reduce((a, b) -> a.combine(b));
+        if (groupRating.isPresent()) {
+            return groupRating.get();
         }
         return metaRating();
     }
 
     @Override
-    public Constraint ierobežojums() {
-        return ierobežojums;
+    public Constraint constraint() {
+        return constraint;
     }
 
     @Override
-    public Optional<Constraint> sakne() {
-        return sakne;
+    public Optional<Constraint> root() {
+        return root;
     }
 }

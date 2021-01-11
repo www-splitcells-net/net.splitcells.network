@@ -62,7 +62,7 @@ public abstract class ConstraintAI implements Constraint {
     protected Optional<Discoverable> mainContext = Optional.empty();
     private final List<Discoverable> contexts = list();
     protected final Database lines;
-    protected final Database results = Databases.database("results", this, RESULTING_CONSTRAINT_GROUP, NOVĒRTĒJUMS, IZDALĪŠANA_UZ);
+    protected final Database results = Databases.database("results", this, RESULTING_CONSTRAINT_GROUP, RATING, PROPAGATION_TO);
     protected final Allocations lineProcessing;
     protected final Map<GroupId, Rating> groupProcessing = map();
 
@@ -145,14 +145,14 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     protected void propagateAddition(Line addition) {
-        addition.value(IZDALĪŠANA_UZ).forEach(child ->
+        addition.value(PROPAGATION_TO).forEach(child ->
                 child.register_additions
                         (addition.value(RESULTING_CONSTRAINT_GROUP)
                                 , addition.value(LINE)));
     }
 
     protected void propagateRemoval(Line removal) {
-        removal.value(IZDALĪŠANA_UZ).forEach(child ->
+        removal.value(PROPAGATION_TO).forEach(child ->
                 child.register_before_removal
                         (removal.value(RESULTING_CONSTRAINT_GROUP)
                                 , removal.value(LINE)));
@@ -210,8 +210,8 @@ public abstract class ConstraintAI implements Constraint {
             if (line != null
                     && lineSelector.test(line)
                     && group.equals(line.value(INCOMING_CONSTRAINT_GROUP))) {
-                routingRating.events().add(line.value(NOVĒRTĒJUMS));
-                line.value(Constraint.IZDALĪŠANA_UZ).forEach(child -> {
+                routingRating.events().add(line.value(RATING));
+                line.value(Constraint.PROPAGATION_TO).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
                     if (!routingRating.children_to_groups().containsKey(child)) {
                         groupsOfChild = setOfUniques();
@@ -387,7 +387,7 @@ public abstract class ConstraintAI implements Constraint {
                 .map(allocation -> report
                         (allocation.value(LINE)
                                 , allocation.value(INCOMING_CONSTRAINT_GROUP)
-                                , allocation.value(NOVĒRTĒJUMS)))
+                                , allocation.value(RATING)))
                 .map(report -> localNaturalArgumentation(report))
                 .findFirst();
         return localNaturalArgumentation;
@@ -449,7 +449,7 @@ public abstract class ConstraintAI implements Constraint {
                         .test(lineRating
                                 (allocation
                                         , event(allocation.value(INCOMING_CONSTRAINT_GROUP), line))))
-                .map(allocation -> allocation.value(IZDALĪŠANA_UZ)
+                .map(allocation -> allocation.value(PROPAGATION_TO)
                         .stream()
                         .map(propagatedTo ->
                                 routingResult

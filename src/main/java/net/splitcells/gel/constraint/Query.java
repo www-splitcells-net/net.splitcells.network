@@ -8,23 +8,23 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public interface Query {
 
-	Query priekšVisiem(Attribute<?> args);
+	Query forAll(Attribute<?> args);
 
-	Query priekšVisiem(Rater vērtētājs);
+	Query forAll(Rater vērtētājs);
 
-	Query priekšVisiem();
+	Query forAll();
 
-	Query tad();
+	Query then();
 
-	Query tad(Rater vērtētājs);
+	Query then(Rater vērtētājs);
 
-	Query tad(Rating novērtējums);
+	Query then(Rating novērtējums);
 
-	Query priekšVisamKombinācijam(Attribute<?>... args);
+	Query forAllCombinations(Attribute<?>... args);
 
-	Rating novērtējums();
+	Rating rating();
 
-	Constraint ierobežojums();
+	Constraint constraint();
 
-	Optional<Constraint> sakne();
+	Optional<Constraint> root();
 }

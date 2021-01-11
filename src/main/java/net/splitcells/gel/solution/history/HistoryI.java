@@ -62,7 +62,7 @@ public class HistoryI implements History {
         metaData.with(CompleteRating.class
                 , completeRating(solution.constraint().rating()));
         metaData.with(AllocationRating.class
-                , allocationRating(solution.constraint().novērtējums(allocationValues)));
+                , allocationRating(solution.constraint().rating(allocationValues)));
         final Line allocation
                 = demands().addTranslated(list(
                 moveLastEventIdForward()
@@ -78,7 +78,7 @@ public class HistoryI implements History {
         metaData.with(CompleteRating.class
                 , completeRating(solution.constraint().rating()));
         metaData.with(AllocationRating.class
-                , allocationRating(solution.constraint().novērtējums(removal)));
+                , allocationRating(solution.constraint().rating(removal)));
         final Line allocation
                 = demands().addTranslated(list(
                 moveLastEventIdForward()

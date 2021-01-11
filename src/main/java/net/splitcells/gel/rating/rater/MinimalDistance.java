@@ -72,7 +72,7 @@ public class MinimalDistance<T> implements Rater {
                 final var paliekuLabuRinda = sakārtotasRindas.get(i);
                 if (!ievēro(noņemšana, paliekuLabuRinda)) {
                     novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, paliekuLabuRinda, bērni//
-                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekuLabuRinda).value(Constraint.NOVĒRTĒJUMS));
+                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekuLabuRinda).value(Constraint.RATING));
                     ++i;
                 } else {
                     break;
@@ -85,7 +85,7 @@ public class MinimalDistance<T> implements Rater {
                 final Line paliekuKreisaRinda = sakārtotasRindas.get(i);
                 if (!ievēro(noņemšana, paliekuKreisaRinda)) {
                     novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, sakārtotasRindas.get(i), bērni//
-                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekuKreisaRinda).value(Constraint.NOVĒRTĒJUMS));
+                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekuKreisaRinda).value(Constraint.RATING));
                     --i;
                 } else {
                     break;
@@ -98,7 +98,7 @@ public class MinimalDistance<T> implements Rater {
                 final Line paliekaKreisaRinda = sakārtotasRindas.get(i);
                 if (!ievēro(noņemšana, paliekaKreisaRinda)) {
                     novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, sakārtotasRindas.get(i), bērni//
-                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekaKreisaRinda).value(Constraint.NOVĒRTĒJUMS));
+                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekaKreisaRinda).value(Constraint.RATING));
                     --i;
                 } else {
                     break;
@@ -109,7 +109,7 @@ public class MinimalDistance<T> implements Rater {
                 final Line paliekaLabaRinda = sakārtotasRindas.get(i);
                 if (!ievēro(noņemšana, paliekaLabaRinda)) {
                     novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, sakārtotasRindas.get(i), bērni//
-                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekaLabaRinda).value(Constraint.NOVĒRTĒJUMS));
+                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekaLabaRinda).value(Constraint.RATING));
                     ++i;
                 } else {
                     break;
@@ -140,7 +140,7 @@ public class MinimalDistance<T> implements Rater {
                                 withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
             } else {
                 novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, sakārtotasRindas.get(1), bērni//
-                        , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, sakārtotasRindas.get(1)).value(Constraint.NOVĒRTĒJUMS)));
+                        , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, sakārtotasRindas.get(1)).value(Constraint.RATING)));
             }
         } else if (sakārtotasIndeksi == sakārtotasRindas.size() - 1) {
             // KOMPROMISS
@@ -149,7 +149,7 @@ public class MinimalDistance<T> implements Rater {
                 final var oriģinālaKreisaRinda = sakārtotasRindas.get(sakārtotasRindas.size() - 2 - i);
                 if (!ievēro(oriģinālaKreisaRinda, papildinājums) || i == 0) {
                     novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaKreisaRinda, bērni//
-                            , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, oriģinālaKreisaRinda).value(Constraint.NOVĒRTĒJUMS)));
+                            , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, oriģinālaKreisaRinda).value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
@@ -162,7 +162,7 @@ public class MinimalDistance<T> implements Rater {
                 final var oriģinālaRindaLaba = sakārtotasRindas.get(sakārtotasIndeksi + 1);
                 if (!ievēro(papildinājums, oriģinālaRindaLaba)) {
                     novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaRindaLaba, bērni
-                            , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, oriģinālaRindaLaba).value(Constraint.NOVĒRTĒJUMS)));
+                            , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, oriģinālaRindaLaba).value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
@@ -172,7 +172,7 @@ public class MinimalDistance<T> implements Rater {
             while (-1 < sakārtotasIndeksi - 1 - i) {
                 final var oriģinalaKreisaRinda = sakārtotasRindas.get(sakārtotasIndeksi - 1 - i);
                 if (!ievēro(oriģinalaKreisaRinda, papildinājums)) {
-                    novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinalaKreisaRinda, bērni, Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, oriģinalaKreisaRinda).value(Constraint.NOVĒRTĒJUMS)));
+                    novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinalaKreisaRinda, bērni, Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, oriģinalaKreisaRinda).value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
@@ -289,7 +289,7 @@ public class MinimalDistance<T> implements Rater {
         final var cost = noCost();
         return lines.rawLinesView().stream()
                 .filter(e -> e != null)
-                .filter(e -> !e.value(Constraint.NOVĒRTĒJUMS).equalz(cost))
+                .filter(e -> !e.value(Constraint.RATING).equalz(cost))
                 .sorted((a, b) -> comparator.compare(a.value(Constraint.LINE).value(atribūts), b.value(Constraint.LINE).value(atribūts)))
                 .collect(toList());
     }

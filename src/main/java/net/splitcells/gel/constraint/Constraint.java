@@ -35,26 +35,26 @@ import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 
 public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscriber, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
-    Attribute<Line> LINE = attribute(Line.class, "rinda");
-    Attribute<java.util.List<Constraint>> IZDALĪŠANA_UZ = listAttribute(Constraint.class, "idalīšana uz");
-    Attribute<GroupId> INCOMING_CONSTRAINT_GROUP = attribute(GroupId.class, "ienākošie ierobežojumu grupas id");
-    Attribute<GroupId> RESULTING_CONSTRAINT_GROUP = attribute(GroupId.class, "radītas ierobežojumu grupas id");
-    Attribute<Rating> NOVĒRTĒJUMS = attribute(Rating.class, "novērtējums");
+    Attribute<Line> LINE = attribute(Line.class, "line");
+    Attribute<java.util.List<Constraint>> PROPAGATION_TO = listAttribute(Constraint.class, "propagation to");
+    Attribute<GroupId> INCOMING_CONSTRAINT_GROUP = attribute(GroupId.class, "incoming constraint group");
+    Attribute<GroupId> RESULTING_CONSTRAINT_GROUP = attribute(GroupId.class, "resulting constraint group");
+    Attribute<Rating> RATING = attribute(Rating.class, "rating");
 
-    static List<List<Constraint>> piešķiršanasGruppas(List<Constraint> momentānaTaka) {
-        final var ierobežojums = momentānaTaka.lastValue().get();
-        final List<List<Constraint>> piešķiršanasGruppas = list();
-        piešķiršanasGruppas.add(momentānaTaka);
-        piešķiršanasGruppas.addAll(
-                ierobežojums.childrenView().stream()
-                        .map(child -> piešķiršanasGruppas(listWithValuesOf(momentānaTaka).withAppended(child)))
+    static List<List<Constraint>> allocationGroups(List<Constraint> currentPath) {
+        final var constraint = currentPath.lastValue().get();
+        final List<List<Constraint>> allocationGroups = list();
+        allocationGroups.add(currentPath);
+        allocationGroups.addAll(
+                constraint.childrenView().stream()
+                        .map(child -> allocationGroups(listWithValuesOf(currentPath).withAppended(child)))
                         .reduce((a, b) -> a.withAppended(b))
                         .orElseGet(() -> list()));
-        return piešķiršanasGruppas;
+        return allocationGroups;
     }
 
-    static List<List<Constraint>> allocationGroups(Constraint ierobežojums) {
-        return piešķiršanasGruppas(list(ierobežojums));
+    static List<List<Constraint>> allocationGroups(Constraint constraint) {
+        return allocationGroups(list(constraint));
     }
 
     GroupId injectionGroup();
@@ -64,113 +64,113 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     }
 
     static GroupId standardGroup() {
-        return GroupId.group("priekš-visiem");
+        return GroupId.group("for-all");
     }
 
-    default MetaRating novērtējums(Line rinda) {
-        return event(injectionGroup(), rinda);
+    default MetaRating rating(Line line) {
+        return event(injectionGroup(), line);
     }
 
-    MetaRating event(GroupId grupaId, Line rinda);
+    MetaRating event(GroupId group, Line line);
 
-    MetaRating rating(GroupId grupaId);
+    MetaRating rating(GroupId group);
 
     default Perspective naturalArgumentation() {
         return naturalArgumentation(injectionGroup());
     }
 
-    Perspective naturalArgumentation(GroupId grupa);
+    Perspective naturalArgumentation(GroupId group);
 
     Optional<Discoverable> mainContext();
 
-    default Perspective naturalArgumentation(Line priekšmets, GroupId grupa) {
-        return naturalArgumentation(priekšmets, grupa, AllocationSelector::selectLinesWithCost);
+    default Perspective naturalArgumentation(Line subject, GroupId group) {
+        return naturalArgumentation(subject, group, AllocationSelector::selectLinesWithCost);
     }
 
-    Perspective naturalArgumentation(Line rinda, GroupId grupa, Predicate<AllocationRating> rindasAtlasītājs);
+    Perspective naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector);
 
-    default MetaRating rating(Set<GroupId> grupas) {
-        return grupas.stream().
+    default MetaRating rating(Set<GroupId> groups) {
+        return groups.stream().
                 map(group -> rating(group)).
                 reduce((a, b) -> a.combine(b)).
                 orElseGet(() -> neutral());
     }
 
-    default GroupId reģistrē(Line rinda) {
-        final var rVal = injectionGroup();
-        register_additions(rVal, rinda);
-        return rVal;
+    default GroupId register(Line line) {
+        final var injectionGroup = injectionGroup();
+        register_additions(injectionGroup, line);
+        return injectionGroup;
     }
 
-    GroupId groupOf(Line rinda);
+    GroupId groupOf(Line line);
 
-    void register_additions(GroupId grupaId, Line rinda);
+    void register_additions(GroupId group, Line line);
 
-    default void register_addition(Line rinda) {
-        register_additions(injectionGroup(), rinda);
+    default void register_addition(Line line) {
+        register_additions(injectionGroup(), line);
     }
 
-    void register_before_removal(GroupId grupaId, Line rinda);
+    void register_before_removal(GroupId group, Line line);
 
     @Deprecated
-    default void register_before_removal(Line rinda) {
-        register_before_removal(injectionGroup(), rinda);
+    default void register_before_removal(Line line) {
+        register_before_removal(injectionGroup(), line);
     }
 
     List<Constraint> childrenView();
 
-    Set<Line> complying(GroupId grupaId);
+    Set<Line> complying(GroupId group);
 
-    default Set<Line> izpildītāji() {
+    default Set<Line> complying() {
         return complying(injectionGroup());
     }
 
-    Set<Line> defying(GroupId grupaId);
+    Set<Line> defying(GroupId group);
 
     default Set<Line> defying() {
         return defying(injectionGroup());
     }
 
-    Line addResult(LocalRating vietējieNovērtējums);
+    Line addResult(LocalRating localRating);
 
-    default Query jautājums() {
-        return QueryI.jautājums(this);
+    default Query query() {
+        return QueryI.query(this);
     }
 
     Table lineProcessing();
 
     Element toDom();
 
-    Element toDom(Set<GroupId> grupas);
+    Element toDom(Set<GroupId> groups);
 
-    default Set<Constraint> vecāksNo(Constraint ierobežojums) {
-        if (equals(ierobežojums)) {
+    default Set<Constraint> parentOf(Constraint constraint) {
+        if (equals(constraint)) {
             return setOfUniques(this);
         }
         return childrenView().stream()
-                .map(child -> child.vecāksNo(ierobežojums))
+                .map(child -> child.parentOf(constraint))
                 .reduce((a, b) -> Sets.merge(a, b))
                 .orElseGet(() -> setOfUniques());
     }
 
-    default Set<GroupId> bērnuGrupas(Line rinda, Constraint priekšmets) {
-        final Set<GroupId> bērnuGrupas = setOfUniques();
-        if (equals(priekšmets)) {
-            bērnuGrupas.add(groupOf(rinda));
+    default Set<GroupId> childGroups(Line lines, Constraint subject) {
+        final Set<GroupId> childGroups = setOfUniques();
+        if (equals(subject)) {
+            childGroups.add(groupOf(lines));
         } else {
-            childrenView().forEach(bērns -> bērnuGrupas.addAll(bērns.bērnuGrupas(rinda, priekšmets)));
+            childrenView().forEach(child -> childGroups.addAll(child.childGroups(lines, subject)));
         }
-        return bērnuGrupas;
+        return childGroups;
     }
 
     default Element graph() {
-        final var grafiks = Xml.rElement(GEL, type().getSimpleName());
+        final var graph = Xml.rElement(GEL, type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> grafiks.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
+            arguments().forEach(arg -> graph.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
         }
         childrenView().forEach(child -> {
-            grafiks.appendChild(child.graph());
+            graph.appendChild(child.graph());
         });
-        return grafiks;
+        return graph;
     }
 }
