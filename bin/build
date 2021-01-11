@@ -20,5 +20,9 @@ cd ..
     mkdir net.splitcells.gel.doc
     cd net.splitcells.gel.doc
     git clone https://github.com/www-splitcells-net/net.splitcells.gel.doc.git .
+cd ..
+    mkdir net.splitcells.gel.sheath
+    cd net.splitcells.gel.sheath
+    git clone https://github.com/www-splitcells-net/net.splitcells.gel.sheath.git .
 cd ../net.splitcells.gel
     mvn clean install
