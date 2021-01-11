@@ -110,11 +110,11 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         .map(f -> freeDefyingGroupOfConstraintGroup(solution, f))
                         .orElseGet(() -> list()))
                 .orElseGet(() -> list());
-        optimization.withAppended(repairer(solution, demandGrouping));
+        optimization.withAppended(repair(solution, demandGrouping));
         return optimization;
     }
 
-    public List<OptimizationEvent> repairer(SolutionView solution, Map<GroupId, Set<Line>> freeDemandGroups) {
+    public List<OptimizationEvent> repair(SolutionView solution, Map<GroupId, Set<Line>> freeDemandGroups) {
         return repairer.apply(freeDemandGroups).optimize(solution);
     }
 
