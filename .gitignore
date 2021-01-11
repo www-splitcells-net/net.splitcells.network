@@ -1,0 +1,12 @@
+### Intellji
+*.iml
+.idea/
+### Eclipse
+.settings/
+.classpath
+.project
+### Maven ###
+target/
+### Python
+.pydevproject
+
