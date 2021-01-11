@@ -64,7 +64,7 @@
                 a path in the search space visiting all intermediate solutions in the
                 given order. The rating function can be used in order to determine the next step of the hill climber at
                 the
-                current step of the optimization path.
+                current step of the solution path.
             </paragraph>
             <paragraph>
                 If there is a high number of neighbors at the current position of

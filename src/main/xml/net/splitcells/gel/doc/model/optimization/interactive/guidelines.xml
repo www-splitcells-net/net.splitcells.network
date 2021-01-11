@@ -12,16 +12,16 @@
     </meta>
     <chapter>
         <title>Creating Optimization Algorithms Interactively</title>
-        <paragraph>Given a problem we try to create an optimization algorithm suitable for the problem.
-            At the start there is an empty solution and an optimization algorithm.
-            The optimization algorithm can be empty and therefore create an empty and invalid solution.
-            During the rest of the method the optimization algorithm is steadily improved until the optimizer is able to
+        <paragraph>Given a problem we try to create an solution algorithm suitable for the problem.
+            At the start there is an empty solution and an solution algorithm.
+            The solution algorithm can be empty and therefore create an empty and invalid solution.
+            During the rest of the method the solution algorithm is steadily improved until the optimizer is able to
             solve the given problem.
         </paragraph>
         <paragraph>The algorithm is improved iteratively. At the start of each iteration
             the developer determines a good subset of the solution.
             It then analysis the solution, creates a changed version of it and verifies the changed version.
-            When the changed version meets its needs, the developer extends the optimization algorithm in such a way,
+            When the changed version meets its needs, the developer extends the solution algorithm in such a way,
             that it is capable to do the same thing as the developer has done.
             After that the developer applies the new algorithm to the solution at the start of this iteration.
             It uses this new solution as the current solution for the next iteration.

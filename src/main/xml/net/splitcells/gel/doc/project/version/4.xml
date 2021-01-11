@@ -4,7 +4,7 @@
          xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
          xmlns:e="http://splitcells.net/sen.xsd">
-    <optimization>
+    <solution>
         <objective>
             <objective>Implement test injection.</objective>
             <objective>
@@ -33,7 +33,7 @@
                 </queue>
             </priority>
         </scheduling>
-    </optimization>
+    </solution>
     <unscheduled>
         <toDo>History should only contain primary demand/supply references and
             no references to used or unused demand/supply, in order to preserve line pointer validity.

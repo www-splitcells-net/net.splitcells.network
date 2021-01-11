@@ -5,13 +5,13 @@
          xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
          xmlns:e="http://splitcells.net/sen.xsd">
-    <optimization>
+    <solution>
         <objective>
             <objective>Reimplement functionality of version 2 with better
                 adaptability on source code level, better analysis and logging capabilities.
                 Reuse as much code as possible.
             </objective>
-            <objective>Translate to English.</objective>
+            <done>Translate to English.</done>
         </objective>
         <scheduling>
             <priority>
@@ -62,5 +62,5 @@
             <idea>Create 1 basic memory and 1 runtime profiling test.
             </idea>
         </unscheduled>
-    </optimization>
+    </solution>
 </project>
