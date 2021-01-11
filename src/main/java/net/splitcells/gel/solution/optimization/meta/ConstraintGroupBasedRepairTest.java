@@ -118,7 +118,7 @@ public class ConstraintGroupBasedRepairTest {
         final var invalidValueB = 3;
         final var validValue = 5;
         final var defyingConstraintA = tad(cost(1));
-        final var defyingCoinstraintB = tad(cost(1));
+        final var defyingConstraintB = tad(cost(1));
         @SuppressWarnings("unchecked") final var solution
                 = define_problem()
                 .withDemandAttributes(a, b)
@@ -144,7 +144,7 @@ public class ConstraintGroupBasedRepairTest {
                                 (forAllWithValue(a, validValue).withChildren(tad(noCost()))
                                         , forAllWithValue(b, validValue).withChildren(tad(noCost()))
                                         , forAllWithValue(a, invalidValueA).withChildren(defyingConstraintA)
-                                        , forAllWithValue(b, invalidValueB).withChildren(defyingCoinstraintB)
+                                        , forAllWithValue(b, invalidValueB).withChildren(defyingConstraintB)
                                         , forAllWithValue(a, validValue).withChildren(tad(noCost()))
                                         , forAllWithValue(b, validValue).withChildren(tad(noCost()))))
                 .toProblem()
@@ -155,7 +155,7 @@ public class ConstraintGroupBasedRepairTest {
         final var testSubject = constraintGroupBasedRepair();
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA));
         assertThat(solution.getLines()).hasSize(3);
-        solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingCoinstraintB));
+        solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB));
         assertThat(solution.getLines()).hasSize(1);
     }
 
