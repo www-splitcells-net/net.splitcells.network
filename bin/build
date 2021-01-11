@@ -25,4 +25,4 @@ cd ..
     cd net.splitcells.gel.sheath
     git clone https://github.com/www-splitcells-net/net.splitcells.gel.sheath.git .
 cd ../net.splitcells.gel
-    mvn clean install
+    mvn clean install -Dmaven.compiler.showDeprecation=true -Dmaven.compiler.showWarnings=true
