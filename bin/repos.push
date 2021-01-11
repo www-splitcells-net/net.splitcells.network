@@ -2,3 +2,4 @@
 set -e
 ./bin/repos.push.to.Gitlab
 ./bin/repos.push.to.Github
+./bin/repos.push.to.sourcehut

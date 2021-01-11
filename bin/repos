@@ -4,6 +4,7 @@ echo net.splitcells
 echo net.splitcells.dem
 echo net.splitcells.gel
 echo net.splitcells.gel.core
+echo net.splitcells.gel.sheath
 echo net.splitcells.gel.doc
 echo net.splitcells.os.state.interface
 echo net.splitcells.os.state.interface.lib
