@@ -1,4 +1,4 @@
-package net.splitcells.gel.sheath;
+package net.splitcells.gel;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.lang.Xml;
