@@ -1,6 +1,7 @@
 package net.splitcells.gel.solution.optimization.meta;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import org.junit.jupiter.api.Test;
 
@@ -53,9 +54,15 @@ public class ConstraintGroupBasedRepairTest {
                                 , list()
                                 , list()
                                 , list()
-                                , list())
+                                , list()
+                                , list()
+                                , list()
+                                , list()
+                        )
                 .withConstraint
-                // TODO Document why there are more constraints than needed.
+                /**
+                 * Needless constraints are added, in order to check, if the correct {@link Constraint} is select.
+                 */
                         (forAll().withChildren
                                 (forAllWithValue(a, validValue).withChildren(tad(noCost()))
                                         , forAllWithValue(b, validValue).withChildren(tad(noCost()))
@@ -70,15 +77,14 @@ public class ConstraintGroupBasedRepairTest {
                 constraintGroup -> Optional.of(constraintGroup.get(6)) // Select the first defying group.
                 , freeDemandGroups -> currentSolution -> {
                     final List<OptimizationEvent> repairs = list();
-                    // TODO FIX It does not seem to make sense, to allocate the same supply to all demands.
-                    final var freeSupply = currentSolution.supplies_free().getLines().get(0);
+                    final int i[] = {0};
                     freeDemandGroups.entrySet().forEach(freeGroup -> {
                         freeGroup.getValue().forEach(freeDemand -> {
                             repairs.add(
                                     optimizationEvent(
                                             ADDITION
                                             , freeDemand.toLinePointer()
-                                            , freeSupply.toLinePointer()
+                                            , currentSolution.supplies_free().getLines().get(i[0]++).toLinePointer()
                                     ));
                         });
                     });
@@ -94,10 +100,10 @@ public class ConstraintGroupBasedRepairTest {
                 .orElseGet(() -> map());
         final var testProduct = testSubject.repair(solution, demandClassification);
         assertThat(testProduct).hasSize(4);
-        testProduct
-                .forEach(optimizationEvent
-                        -> assertThat(optimizationEvent.supply().index())
-                        .isEqualTo(solution.supplies_free().getLines().get(0).index()));
+        final var freeSupplyIndexes = testProduct.stream()
+                .map(optimizationEvent -> optimizationEvent.supply().index())
+                .collect(toList());
+        assertThat(freeSupplyIndexes).contains(7, 8, 9, 10);
         final var demandIndexes = testProduct.stream()
                 .map(optimizationEvent -> optimizationEvent.demand().index())
                 .collect(toList());
