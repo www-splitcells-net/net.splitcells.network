@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConstraintGroupBasedRepairTest {
 
     @Test
-    public void testReallocation() {
+    public void test_repair_of_defying_group() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
         final var invalidValueA = 1;
@@ -111,7 +111,7 @@ public class ConstraintGroupBasedRepairTest {
     }
 
     @Test
-    public void test_remvoal_of_defying_group_from_constraint_group() {
+    public void test_removal_of_defying_group() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
         final var invalidValueA = 1;
