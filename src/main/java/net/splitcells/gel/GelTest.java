@@ -4,6 +4,10 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.ProcessPath;
+import net.splitcells.gel.solution.SolutionAspect;
+import net.splitcells.gel.solution.Solutions;
+import net.splitcells.gel.solution.history.Histories;
+import net.splitcells.gel.solution.history.HistoryRefFactory;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
@@ -21,6 +25,10 @@ public class GelTest {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+        }, env -> {
+            env.config()
+                    .withConfigValue(Histories.class, new HistoryRefFactory());
+            env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
         });
     }
 }
