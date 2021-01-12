@@ -47,8 +47,8 @@ public class AllocationsI implements Allocations {
     protected final Map<Integer, Integer> allocationsIndex_to_usedDemandIndex = map();
     protected final Map<Integer, Integer> allocationsIndex_to_usedSupplyIndex = map();
 
-    protected final Map<Integer, Set<Integer>> usedDemandsIndex_to_allocationIndex = map();
-    protected final Map<Integer, Set<Integer>> usedSuppliesIndex_to_allocationIndex = map();
+    protected final Map<Integer, Set<Integer>> usedDemandIndexes_to_allocationIndexes = map();
+    protected final Map<Integer, Set<Integer>> usedSupplyIndexes_to_allocationIndexes = map();
 
     protected final Map<Integer, Set<Integer>> usedDemandsIndex_to_usedSuppliesIndex = map();
     protected final Map<Integer, Set<Integer>> usedSupplyIndex_to_usedDeamndsIndex = map();
@@ -65,9 +65,9 @@ public class AllocationsI implements Allocations {
             demand.rawLinesView().forEach(demands_free::add);
             demand.subscribe_to_afterAdditions(demands_free::add);
             demand.subscriber_to_beforeRemoval(removalOf -> {
-                if (usedDemandsIndex_to_allocationIndex.containsKey(removalOf.index())) {
+                if (usedDemandIndexes_to_allocationIndexes.containsKey(removalOf.index())) {
                     listWithValuesOf(
-                            usedDemandsIndex_to_allocationIndex.get(removalOf.index()))
+                            usedDemandIndexes_to_allocationIndexes.get(removalOf.index()))
                             .forEach(allocation_of_demand -> remove(allocations.rawLinesView().get(allocation_of_demand)));
                 }
                 if (demands_free.contains(removalOf)) {
@@ -88,9 +88,9 @@ public class AllocationsI implements Allocations {
                 supplies_free.add(i);
             });
             supply.subscriber_to_beforeRemoval(noņemšanaNo -> {
-                if (usedSuppliesIndex_to_allocationIndex.containsKey(noņemšanaNo.index())) {
+                if (usedSupplyIndexes_to_allocationIndexes.containsKey(noņemšanaNo.index())) {
                     listWithValuesOf
-                            (usedSuppliesIndex_to_allocationIndex.get(noņemšanaNo.index()))
+                            (usedSupplyIndexes_to_allocationIndexes.get(noņemšanaNo.index()))
                             .forEach(piešķiršanas_no_piedāvāijumu
                                     -> remove(allocations.rawLinesView().get(piešķiršanas_no_piedāvāijumu)));
                 }
@@ -138,11 +138,11 @@ public class AllocationsI implements Allocations {
     @Override
     public Line allocate(Line demand, Line supply) {
         final var allocation = allocations.addTranslated(Line.concat(demand, supply));
-        if (!usedSuppliesIndex_to_allocationIndex.containsKey(supply.index())) {
+        if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
             supplies_used.add(supply);
             supplies_free.remove(supply);
         }
-        if (!usedDemandsIndex_to_allocationIndex.containsKey(demand.index())) {
+        if (!usedDemandIndexes_to_allocationIndexes.containsKey(demand.index())) {
             demands_used.add(demand);
             demands_free.remove(demand);
         }
@@ -152,14 +152,14 @@ public class AllocationsI implements Allocations {
         }
         {
             {
-                if (!usedDemandsIndex_to_allocationIndex.containsKey(demand.index())) {
-                    usedDemandsIndex_to_allocationIndex.put(demand.index(), setOfUniques());
+                if (!usedDemandIndexes_to_allocationIndexes.containsKey(demand.index())) {
+                    usedDemandIndexes_to_allocationIndexes.put(demand.index(), setOfUniques());
                 }
-                usedDemandsIndex_to_allocationIndex.get(demand.index()).add(allocation.index());
-                if (!usedSuppliesIndex_to_allocationIndex.containsKey(supply.index())) {
-                    usedSuppliesIndex_to_allocationIndex.put(supply.index(), setOfUniques());
+                usedDemandIndexes_to_allocationIndexes.get(demand.index()).add(allocation.index());
+                if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
+                    usedSupplyIndexes_to_allocationIndexes.put(supply.index(), setOfUniques());
                 }
-                usedSuppliesIndex_to_allocationIndex.get(supply.index()).add(allocation.index());
+                usedSupplyIndexes_to_allocationIndexes.get(supply.index()).add(allocation.index());
             }
         }
         {
@@ -225,13 +225,13 @@ public class AllocationsI implements Allocations {
                 }
             }
             {
-                usedSuppliesIndex_to_allocationIndex.get(supply.index()).remove(allocation.index());
-                if (usedSuppliesIndex_to_allocationIndex.get(supply.index()).isEmpty()) {
-                    usedSuppliesIndex_to_allocationIndex.remove(supply.index());
+                usedSupplyIndexes_to_allocationIndexes.get(supply.index()).remove(allocation.index());
+                if (usedSupplyIndexes_to_allocationIndexes.get(supply.index()).isEmpty()) {
+                    usedSupplyIndexes_to_allocationIndexes.remove(supply.index());
                 }
-                usedDemandsIndex_to_allocationIndex.get(demand.index()).remove(allocation.index());
-                if (usedDemandsIndex_to_allocationIndex.get(demand.index()).isEmpty()) {
-                    usedDemandsIndex_to_allocationIndex.remove(demand.index());
+                usedDemandIndexes_to_allocationIndexes.get(demand.index()).remove(allocation.index());
+                if (usedDemandIndexes_to_allocationIndexes.get(demand.index()).isEmpty()) {
+                    usedDemandIndexes_to_allocationIndexes.remove(demand.index());
                 }
             }
         }
@@ -296,7 +296,7 @@ public class AllocationsI implements Allocations {
     public Set<Line> allocations_of_supply(Line supply) {
         final Set<Line> piešķiršanas_no_piedāvājuma = setOfUniques();
         try {
-            usedSuppliesIndex_to_allocationIndex
+            usedSupplyIndexes_to_allocationIndexes
                     .get(supply.index())
                     .forEach(piešķiršanasIndekss ->
                             piešķiršanas_no_piedāvājuma.add(allocations.rawLinesView().get(piešķiršanasIndekss)));
@@ -309,7 +309,7 @@ public class AllocationsI implements Allocations {
     @Override
     public Set<Line> allocations_of_demand(Line demand) {
         final Set<Line> allocations_of_demand = setOfUniques();
-        usedDemandsIndex_to_allocationIndex
+        usedDemandIndexes_to_allocationIndexes
                 .get(demand.index())
                 .forEach(piešķiršanasIndekss ->
                     allocations_of_demand.add(allocations.rawLinesView().get(piešķiršanasIndekss)));
