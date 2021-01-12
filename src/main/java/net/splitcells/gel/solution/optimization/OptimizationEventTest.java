@@ -12,7 +12,7 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class OptimizācijasNotikumsTest {
+public class OptimizationEventTest {
     @Test
     public void test_equals_ofEqualPair() {
         final var demandValue = 0;
