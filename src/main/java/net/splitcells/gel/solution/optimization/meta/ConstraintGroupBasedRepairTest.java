@@ -160,7 +160,7 @@ public class ConstraintGroupBasedRepairTest {
     }
 
     @Test
-    public void testDemandClassification() {
+    public void testDonstraintGroupBasedRepair() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
         final var invalidValueA = 1;
