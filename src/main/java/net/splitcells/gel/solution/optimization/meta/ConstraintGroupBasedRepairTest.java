@@ -61,7 +61,7 @@ public class ConstraintGroupBasedRepairTest {
                         )
                 .withConstraint
                 /**
-                 * Needless constraints are added, in order to check, if the correct {@link Constraint} is select.
+                 * Needless constraints are added, in order to check, if the correct {@link Constraint} is selected.
                  */
                         (forAll().withChildren
                                 (forAllWithValue(a, validValue).withChildren(then(noCost()))
