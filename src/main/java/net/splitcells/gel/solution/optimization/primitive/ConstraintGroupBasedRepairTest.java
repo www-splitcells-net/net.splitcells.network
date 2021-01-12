@@ -1,4 +1,4 @@
-package net.splitcells.gel.solution.optimization.meta;
+package net.splitcells.gel.solution.optimization.primitive;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
