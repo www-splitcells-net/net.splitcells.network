@@ -13,7 +13,11 @@ public class LinearIterator implements Optimization {
     private final List<Optimization> optimizations;
     private int counter = -1;
 
-    public LinearIterator(List<Optimization> optimizations) {
+    public static LinearIterator linearIterator(List<Optimization> optimization) {
+        return new LinearIterator(optimization);
+    }
+
+    private LinearIterator(List<Optimization> optimizations) {
         this.optimizations = optimizations;
     }
 
