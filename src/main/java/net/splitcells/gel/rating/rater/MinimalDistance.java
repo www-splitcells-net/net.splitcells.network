@@ -32,7 +32,7 @@ public class MinimalDistance<T> implements Rater {
         return minimālsAttālums(atribūts, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
     }
 
-    public static MinimalDistance<Double> minimālsAttālums(Attribute<Double> atribūts, double minimumDistance) {
+    public static MinimalDistance<Double> minimalDistance(Attribute<Double> atribūts, double minimumDistance) {
         return minimālsAttālums(atribūts, minimumDistance, comparator_(Double::compare), MathUtils::distance);
     }
 
