@@ -4,6 +4,14 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.ProcessPath;
+import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.allocation.Allocationss;
+import net.splitcells.gel.data.allocations.AllocationsIRefFactory;
+import net.splitcells.gel.data.database.DatabaseRefFactory;
+import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.lookup.LookupFactory;
+import net.splitcells.gel.data.lookup.LookupRefFactory;
+import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.solution.SolutionAspect;
 import net.splitcells.gel.solution.Solutions;
 import net.splitcells.gel.solution.history.Histories;
@@ -32,7 +40,11 @@ public final class GelEnv {
             }
         }, env -> {
             env.config()
-                    .withConfigValue(Histories.class, new HistoryRefFactory());
+                    .withConfigValue(Histories.class, new HistoryRefFactory())
+                    .withConfigValue(Allocationss.class, new AllocationsIRefFactory())
+                    .withConfigValue(Databases.class, new DatabaseRefFactory())
+                    .withConfigValue(Lookups.class, new LookupRefFactory())
+            ;
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
         });
     }
