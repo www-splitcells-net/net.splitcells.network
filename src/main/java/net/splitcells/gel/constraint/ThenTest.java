@@ -187,7 +187,7 @@ public class ThenTest {
         assertThat(testSubject.event(testSubject.injectionGroup(), complyingLine))
                 .isEqualTo(noCost());
         assertThat(testSubject.event(testSubject.injectionGroup(), defyingLine))
-                .isEqualTo(noCost());
+                .isEqualTo(cost(defianceCost));
         assertThat(complyingGroup).isEqualTo(defyingGroup);
         assertThat(testSubject.rating(complyingGroup))
                 .isEqualTo(cost(defianceCost));

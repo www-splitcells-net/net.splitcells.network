@@ -58,7 +58,7 @@ public class MinimalDistanceTest {
             assertThat(testSubject.rating()).isEqualTo(cost(2));
         }
         {
-            testSubject.register_before_removal(testValues);
+            testSubject.register_before_removal(testValues.get(0));
             assertThat(testSubject.defying()).hasSize(2);
             assertThat(testSubject.complying()).hasSize(1);
             assertThat(testSubject.rating()).isEqualTo(cost(1));
