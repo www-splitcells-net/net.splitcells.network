@@ -2,6 +2,8 @@ package net.splitcells.gel.constraint;
 
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.type.ForAlls;
+import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.solution.SolutionBuilder;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -13,31 +15,15 @@ public class ConstraintTest {
 
     @Test
     public void testAllocationGroups() {
-        final var a = attribute(Integer.class, "a");
-        final var b = attribute(Integer.class, "b");
-        final var constraint_1 = ForAlls.forAll(a);
-        final var constraint_2 = ForAlls.forAll(a);
-        final var constraint_3 = ForAlls.forAll(a);
-        final var constraint_4 = ForAlls.forAll(a);
-        final var constraint_5 = ForAlls.forAll(a);
+        final var constraint_1 = ForAlls.forAll();
+        final var constraint_2 = ForAlls.forAll();
+        final var constraint_3 = ForAlls.forAll();
+        final var constraint_4 = ForAlls.forAll();
+        final var constraint_5 = ForAlls.forAll();
         @SuppressWarnings("unchecked") final var solution
                 = define_problem()
-                .withDemandAttributes(a, b)
-                .withDemands
-                        (list(1, 1)
-                                , list(1, 1)
-                                , list(1, 2)
-                                , list(1, 2)
-                                , list(2, 1)
-                                , list(2, 1))
+                .withDemandAttributes()
                 .withSupplyAttributes()
-                .withSupplies
-                        (list()
-                                , list()
-                                , list()
-                                , list()
-                                , list()
-                                , list())
                 .withConstraint(constraint_1
                         .withChildren(constraint_2)
                         .withChildren(constraint_3
@@ -52,5 +38,40 @@ public class ConstraintTest {
         assertThat(testProduct.get(3)).containsExactly(constraint_1, constraint_3, constraint_4);
         assertThat(testProduct.get(4)).containsExactly(constraint_1, constraint_3, constraint_5);
         assertThat(testProduct).hasSize(5);
+    }
+
+    @Test
+    public void test_allocation_groups_with_different_attributes() {
+        final var A = attribute(Integer.class, "a");
+        final var B = attribute(Integer.class, "b");
+        final var C = attribute(Integer.class, "c");
+        final var D = attribute(Integer.class, "d");
+        final var solution = define_problem()
+                .withDemandAttributes(A, B)
+                .withSupplyAttributes(C, D)
+                .withConstraint(
+                        ForAlls.forAll(A)
+                                .withChildren(ForAlls.forAll(B)
+                                        , ForAlls.forAll(C)
+                                                .withChildren(ForAlls.forAll(D))))
+                .toProblem()
+                .asSolution();
+        final var testData = Constraint.allocationGroups(solution.constraint());
+        assertThat(testData).hasSize(4);
+        assertThat(testData.get(0)).isEqualTo(list(solution.constraint()));
+        assertThat(testData.get(1))
+                .isEqualTo(list
+                        (solution.constraint()
+                                , solution.constraint().childrenView().get(0)));
+        assertThat(testData.get(2))
+                .isEqualTo(list
+                        (solution.constraint()
+                                , solution.constraint().childrenView().get(1)));
+        assertThat(testData.get(3))
+                .isEqualTo(list
+                        (solution.constraint()
+                                , solution.constraint().childrenView().get(1)
+                                , solution.constraint().childrenView().get(1)
+                                        .childrenView().get(0)));
     }
 }
