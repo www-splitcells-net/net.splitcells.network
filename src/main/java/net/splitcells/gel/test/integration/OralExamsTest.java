@@ -10,10 +10,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.solution.Solution;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.nio.file.Files;
 import java.util.stream.Stream;
@@ -21,6 +18,7 @@ import java.util.stream.Stream;
 import static java.lang.Math.floorMod;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
+import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.ForAlls.forAllCombinations;
@@ -113,8 +111,9 @@ public class OralExamsTest extends TestSuiteI {
                                 , bezMaksas()));*/
     }
 
-    //@Tag(INTEGRATION_TEST)
-    //@TestFactory
+    @Disabled
+    @Tag(INTEGRATION_TEST)
+    @TestFactory
     public Stream<DynamicTest> oralExamOptimizationTests() {
         return dynamicTests(this::testOralExamOptimization
                 , OralExamOptimizationArguments.create(randomOralExams(1, 1, 1, 1, 1, 1, 1, 1).asSolution()
@@ -145,7 +144,7 @@ public class OralExamsTest extends TestSuiteI {
                                 (list(1, 1, 1)
                                         , list(4, 1, 1)));
     }
-    
+
     public Problem randomOralExams(int studentCount, int examCount, int examinerCount, int checkerCount, int weekCount
             , int examDayCountPerWeek, int shiftsPerDayCount, int roomCount) {
         final var randomness = randomness();
