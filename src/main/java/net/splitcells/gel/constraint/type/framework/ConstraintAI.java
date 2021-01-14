@@ -404,16 +404,20 @@ public abstract class ConstraintAI implements Constraint {
                 .map(line -> naturalArgumentation(line, group, AllocationSelector::selectLinesWithCost))
                 .collect(toList());
         if (naturalArgumentation.size() == 1) {
-            return naturalArgumentation.get(0);
+            if (naturalArgumentation.get(0).isPresent()) {
+                return naturalArgumentation.get(0).get();
+            } else {
+                return perspective(ARGUMENTATION.value(), GEL);
+            }
         }
         final var localArgumentation = perspective(ARGUMENTATION.value(), GEL);
-        naturalArgumentation.stream()
-                .forEach(naturalReasoning -> localArgumentation.withChild(naturalReasoning));
+        naturalArgumentation
+                .forEach(naturalReasoning -> naturalReasoning.ifPresent(localArgumentation::withChild));
         return localArgumentation;
     }
 
     @Override
-    public Perspective naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
+    public Optional<Perspective> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         final var localArgumentation = localNaturalArgumentation(line, group, allocationSelector);
         final var childrenArgumentation = childrenArgumentation(line, group, allocationSelector);
         final var argumentation = perspective(ARGUMENTATION.value(), GEL);
@@ -431,7 +435,10 @@ public abstract class ConstraintAI implements Constraint {
                 argumentation.withChild(childrenArgumentation.get());
             }
         }
-        return argumentation;
+        if (!localArgumentation.isPresent() && !childrenArgumentation.isPresent()) {
+            return Optional.empty();
+        }
+        return Optional.of(argumentation);
     }
 
     protected Optional<Perspective> childrenArgumentation
@@ -462,10 +469,13 @@ public abstract class ConstraintAI implements Constraint {
             return Optional.empty();
         }
         if (childrenArgumentationContent.size() == 1) {
-            return Optional.of(childrenArgumentationContent.iterator().next());
+            return childrenArgumentationContent.iterator().next();
         }
         final var childrenArgumentation = perspective(ARGUMENTATION.value(), GEL);
-        childrenArgumentationContent.forEach(childrenArgumentation::withChild);
+        childrenArgumentationContent.stream()
+                .filter(e -> e.isPresent())
+                .map(e -> e.get())
+                .forEach(childrenArgumentation::withChild);
         return Optional.of(childrenArgumentation);
     }
 

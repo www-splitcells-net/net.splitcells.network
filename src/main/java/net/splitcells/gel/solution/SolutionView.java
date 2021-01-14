@@ -177,10 +177,11 @@ public interface SolutionView extends ProblemView {
             final var lineArgumentationValue = rElement(NameSpaces.FODS_TEXT, "p");
             tableLine.appendChild(lineArgumentation);
             lineArgumentation.appendChild(lineArgumentationValue);
-            lineArgumentationValue.appendChild(
-                    Xml.textNode(
-                            toPrettyWithoutHeaderString(
-                                    constraint().naturalArgumentation(allocation, constraint().injectionGroup()).toDom())));
+            constraint().naturalArgumentation(allocation, constraint().injectionGroup())
+                    .map(argumentation -> lineArgumentationValue.appendChild
+                            (Xml.textNode
+                                    (toPrettyWithoutHeaderString
+                                            (argumentation.toDom()))));
         }
         return tableLine;
     }

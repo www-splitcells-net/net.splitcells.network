@@ -83,11 +83,11 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
 
     Optional<Discoverable> mainContext();
 
-    default Perspective naturalArgumentation(Line subject, GroupId group) {
+    default Optional<Perspective> naturalArgumentation(Line subject, GroupId group) {
         return naturalArgumentation(subject, group, AllocationSelector::selectLinesWithCost);
     }
 
-    Perspective naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector);
+    Optional<Perspective> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector);
 
     default MetaRating rating(Set<GroupId> groups) {
         return groups.stream().

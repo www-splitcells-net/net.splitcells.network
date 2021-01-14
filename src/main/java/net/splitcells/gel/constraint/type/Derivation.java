@@ -63,7 +63,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Perspective naturalArgumentation
+    public Optional<Perspective> naturalArgumentation
             (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         throw not_implemented_yet();
     }
