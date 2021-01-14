@@ -28,8 +28,8 @@ public final class Paths {
         return java.nio.file.Paths.get(root, elements);
     }
     
-    public static Path userHome() {
-        return path(System.getProperty("user.home"));
+    public static Path userHome(String relativePath) {
+        return path(System.getProperty("user.home"), relativePath);
     }
 
     public static Path path(Path root, String... elements) {
