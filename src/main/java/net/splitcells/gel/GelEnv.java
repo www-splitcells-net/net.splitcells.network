@@ -1,6 +1,7 @@
 package net.splitcells.gel;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.ProcessPath;
@@ -17,6 +18,8 @@ import net.splitcells.gel.solution.Solutions;
 import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.solution.history.HistoryRefFactory;
 
+import java.util.function.Consumer;
+
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.resource.host.Files.writeToFile;
@@ -28,6 +31,10 @@ public final class GelEnv {
     }
 
     public static void process(Runnable program) {
+        process(program, standardConfigurator());
+    }
+
+    public static void process(Runnable program, Consumer<Environment> configurator) {
         Dem.process(() -> {
             Files.createDirectory(environment().config().configValue(ProcessPath.class));
             writeToFile(environment().config().configValue(ProcessPath.class).resolve("index.xml"), Xml.rElement(SEW, "article"));
@@ -38,14 +45,17 @@ public final class GelEnv {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }, env -> {
+        }, configurator);
+    }
+
+    public static Consumer<Environment> standardConfigurator() {
+        return env -> {
             env.config()
                     .withConfigValue(Histories.class, new HistoryRefFactory())
                     .withConfigValue(Allocationss.class, new AllocationsIRefFactory())
                     .withConfigValue(Databases.class, new DatabaseRefFactory())
-                    .withConfigValue(Lookups.class, new LookupRefFactory())
-            ;
+                    .withConfigValue(Lookups.class, new LookupRefFactory());
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
-        });
+        };
     }
 }
