@@ -215,11 +215,26 @@ public class OralExamsTest extends TestSuiteI {
     @Tag(CAPABILITY_TEST)
     @Test
     public void testRatingsOfPeopleWithMultipleExamClones() {
-        Solution testSubject = oralExams(list(list(1, 1, 1), list(1, 1, 1)), list(list(1, 1, 1), list(1, 1, 1))).asSolution();
+        Solution testSubject = oralExams
+                (list
+                                (list(1, 1, 1)
+                                        , list(1, 1, 1))
+                        , list(list(1, 1, 1), list(1, 1, 1)))
+                .asSolution();
         testSubject.optimize(linearInitialization());
         {
-            assertThat(testSubject.constraint().query().forAll(OBSERVER).forAllCombinations(DATE, SHIFT).then(hasSize(1)).rating()).isEqualTo(cost(1));
-            assertThat(testSubject.constraint().query().forAll(EXAMINER).forAllCombinations(DATE, SHIFT).then(hasSize(1)).rating()).isEqualTo(cost(1));
+            assertThat(testSubject.constraint().query()
+                    .forAll(OBSERVER)
+                    .forAllCombinations(DATE, SHIFT)
+                    .then(hasSize(1))
+                    .rating()
+            ).isEqualTo(cost(1));
+            assertThat(testSubject.constraint().query()
+                    .forAll(EXAMINER)
+                    .forAllCombinations(DATE, SHIFT)
+                    .then(hasSize(1))
+                    .rating()
+            ).isEqualTo(cost(1));
             {
                 assertThat
                         (testSubject.constraint().query()
