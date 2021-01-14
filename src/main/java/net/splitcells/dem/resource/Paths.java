@@ -27,6 +27,10 @@ public final class Paths {
         }
         return java.nio.file.Paths.get(root, elements);
     }
+    
+    public static Path userHome() {
+        return path(System.getProperty("user.home"));
+    }
 
     public static Path path(Path root, String... elements) {
         return path(root, asList(elements));
