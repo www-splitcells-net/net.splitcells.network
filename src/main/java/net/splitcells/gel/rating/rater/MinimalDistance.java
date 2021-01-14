@@ -300,7 +300,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line rinda, GroupId grupa) {
-        return "vismaz " + minimumDistance + " " + atribūts.name() + " attālums";
+    public String toSimpleDescription(Line line, GroupId group) {
+        return "At least a minimum distance of " + minimumDistance + " " + atribūts.name();
     }
 }
