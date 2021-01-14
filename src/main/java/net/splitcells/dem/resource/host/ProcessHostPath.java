@@ -10,6 +10,11 @@ public class ProcessHostPath extends OptionI<Path> {
     public ProcessHostPath() {
         super(() -> {
             if ("true".equals(System.getProperty("net.splitcells.mode.build"))) {
+                /**
+                 * This prevents from files being created at the project's root folder,
+                 * when tests are executed via maven.
+                 * Thereby, no test files are committed by accident.
+                 */
                 return Paths.get("target");
             } else {
                 return Paths.get(".");
