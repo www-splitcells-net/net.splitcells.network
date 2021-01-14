@@ -36,7 +36,8 @@
             </url>
         </related_to>
         <d:toDo>
-            <d:toDo>Define complete life cycle of project in advance and do not ignore the end of the project thereby.</d:toDo>
+            <d:toDo>Define complete life cycle of project in advance and do not ignore the end of the project thereby.
+            </d:toDo>
             <d:toDo>Make project as portable, extendable, changeable deletable as possible.</d:toDo>
             <d:todo>Create code guidelines that are not Java specific.</d:todo>
             <d:todo>
@@ -890,6 +891,7 @@
     </chapter>
     <chapter>
         <title>Code Convention</title>
-        <d:toDo>I=Impl, D=Doc, L=Log, R=Ref</d:toDo>
+        <d:toDo>AI=abstract implementation,I=Impl=Implementation, D=Doc=Documentation, L=Log=Logging, R=Ref=Reflection
+        </d:toDo>
     </chapter>
 </article>

@@ -7,7 +7,7 @@
        xmlns:e="http://splitcells.net/sen.xsd" name="dem">
     <d:name>Dependency Manager</d:name>
     <d:project>
-        <d:optimization>
+        <d:solution>
             <d:scheduling>
                 <d:queues>
                     <d:priority>
@@ -77,7 +77,7 @@
                 </d:objective>
             </d:objective>
             <n:val name="history" xl:href="./history.xml"/>
-        </d:optimization>
+        </d:solution>
         <n:val name="logging">
             <d:solution>There is no differences between logs and console output.
             </d:solution>

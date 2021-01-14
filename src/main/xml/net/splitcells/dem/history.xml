@@ -19,7 +19,7 @@
         <paragraph>
             While implementing
             <link>
-                <text>an optimization program</text>
+                <text>an solution program</text>
                 <url>net/splitcells/martins/avots/website/2017/04/22/origin-of-the-project-generic-allocator.html</url>
             </link>
             during my master's internship, I created some generic helper code, configuration storage
@@ -34,7 +34,7 @@
         <title>First Version of the Dependency Manager</title>
         <paragraph>During my master thesis I implemented a successor to the
             <link>
-                <text>previously mentioned optimization program</text>
+                <text>previously mentioned solution program</text>
                 <url>net/splitcells/martins/avots/website/2017/04/22/origin-of-the-project-generic-allocator.html</url>
             </link>
             .
