@@ -145,10 +145,7 @@ public class OralExamsTest extends TestSuiteI {
                                 (list(1, 1, 1)
                                         , list(4, 1, 1)));
     }
-
-    /**
-     * TODO Randomize.
-     */
+    
     public Problem randomOralExams(int studentCount, int examCount, int examinerCount, int checkerCount, int weekCount
             , int examDayCountPerWeek, int shiftsPerDayCount, int roomCount) {
         final var randomness = randomness();
