@@ -8,6 +8,12 @@ import java.util.function.Supplier;
 
 public class ProcessHostPath extends OptionI<Path> {
     public ProcessHostPath() {
-        super(() -> Paths.get("."));
+        super(() -> {
+            if ("true".equals(System.getProperty("net.splitcells.mode.build"))) {
+                return Paths.get("target");
+            } else {
+                return Paths.get(".");
+            }
+        });
     }
 }
