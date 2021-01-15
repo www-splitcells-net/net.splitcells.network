@@ -9,7 +9,9 @@ import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import org.w3c.dom.Node;
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -63,6 +65,25 @@ public interface Perspective extends PerspectiveView {
                 .collect(toList());
     }
 
+    default String toStringPathsDescription() {
+        return toStringPaths()
+                .stream()
+                .reduce((a, b) -> a + "\n" + b)
+                .orElse("");
+    }
+
+    default List<String> toStringPaths() {
+        if (children().isEmpty()) {
+            return list(name());
+        }
+        return children().stream()
+                .map(child -> child.toStringPaths().stream()
+                        .map(childS -> name() + " " + childS)
+                        .collect(toList()))
+                .flatMap(Collection::stream)
+                .collect(toList());
+    }
+
     default List<Perspective> propertyInstances(String name, NameSpace nameSpace) {
         return children().stream()
                 .filter(property -> name.equals(property.name()))
@@ -89,6 +110,11 @@ public interface Perspective extends PerspectiveView {
             return Optional.ofNullable(null);
         }
         return Optional.of(children.get(0));
+    }
+
+    default Perspective withChildren(List<Perspective> argChildren) {
+        argChildren.forEach(children()::add);
+        return this;
     }
 
     default Perspective withChild(Perspective arg) {
