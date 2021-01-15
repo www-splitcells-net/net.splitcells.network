@@ -1,14 +1,12 @@
 package net.splitcells.gel.constraint.type.framework;
 
 import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
@@ -30,6 +28,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.database.Databases;
@@ -368,9 +367,9 @@ public abstract class ConstraintAI implements Constraint {
         return dom;
     }
 
-    protected abstract List<String> localNaturalArgumentation(Report report);
+    protected abstract String localNaturalArgumentation(Report report);
 
-    protected Optional<List<String>> localNaturalArgumentation
+    protected Optional<String> localNaturalArgumentation
             (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         final var localNaturalArgumentation
                 = lineProcessing
@@ -420,31 +419,23 @@ public abstract class ConstraintAI implements Constraint {
     public Optional<Perspective> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         final var localArgumentation = localNaturalArgumentation(line, group, allocationSelector);
         final var childrenArgumentation = childrenArgumentation(line, group, allocationSelector);
-        final var argumentation = perspective(ARGUMENTATION.value(), GEL);
-        if (localArgumentation.isPresent()) {
-            localArgumentation.get().stream()
-                    .map(e -> perspective(e, NameSpaces.STRING))
-                    .forEach(argumentation::withChild);
-        }
-        if (childrenArgumentation.isPresent()) {
-            if (childrenArgumentation.get().name().isEmpty()) {
-                childrenArgumentation.get().children().stream()
-                        .filter(e -> !e.children().isEmpty())
-                        .forEach(argumentation::withChild);
-            } else {
-                argumentation.withChild(childrenArgumentation.get());
-            }
-        }
-        if (!localArgumentation.isPresent() && !childrenArgumentation.isPresent()) {
+        if (localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
             return Optional.empty();
+        } else if (!localArgumentation.isEmpty() && !childrenArgumentation.isEmpty()) {
+            return Optional.of(perspective(localArgumentation.get(), NameSpaces.STRING)
+                    .withChildren(childrenArgumentation));
+        } else if (!localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
+            return Optional.of(perspective(localArgumentation.get(), NameSpaces.STRING)
+                    .withChildren(childrenArgumentation));
+        } else {
+            return Optional.of(perspective(ARGUMENTATION.value(), GEL)
+                    .withChildren(childrenArgumentation));
         }
-        return Optional.of(argumentation);
     }
 
-    protected Optional<Perspective> childrenArgumentation
+    protected List<Perspective> childrenArgumentation
             (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
-        final var childrenArgumentationContent
-                = lineProcessing
+        return lineProcessing
                 .columnView(LINE)
                 .lookup(line)
                 .columnView(INCOMING_CONSTRAINT_GROUP)
@@ -463,20 +454,13 @@ public abstract class ConstraintAI implements Constraint {
                                         (allocation.value(RESULTING_CONSTRAINT_GROUP)
                                                 , propagatedTo)))
                 .flatMap(e -> e)
-                .map(routingResult -> routingResult.propagation().naturalArgumentation(line, routingResult.group()))
-                .collect(toSet());
-        if (childrenArgumentationContent.isEmpty()) {
-            return Optional.empty();
-        }
-        if (childrenArgumentationContent.size() == 1) {
-            return childrenArgumentationContent.iterator().next();
-        }
-        final var childrenArgumentation = perspective(ARGUMENTATION.value(), GEL);
-        childrenArgumentationContent.stream()
+                .map(routingResult
+                        -> routingResult
+                        .propagation()
+                        .naturalArgumentation(line, routingResult.group()))
                 .filter(e -> e.isPresent())
                 .map(e -> e.get())
-                .forEach(childrenArgumentation::withChild);
-        return Optional.of(childrenArgumentation);
+                .collect(toList());
     }
 
     public Optional<Discoverable> mainContext() {

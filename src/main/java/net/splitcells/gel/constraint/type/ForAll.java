@@ -9,6 +9,8 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
+import net.splitcells.gel.rating.rater.classification.Propagation;
+import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 
 public class ForAll extends ConstraintBasedOnLocalGroupsAI {
 
@@ -35,11 +37,17 @@ public class ForAll extends ConstraintBasedOnLocalGroupsAI {
     }
 
     @Override
-    protected List<String> localNaturalArgumentation(Report report) {
+    protected String localNaturalArgumentation(Report report) {
+        final var raterBasedOnGrouping = rater.casted(RaterBasedOnGrouping.class);
+        if (raterBasedOnGrouping.isPresent()) {
+            if (raterBasedOnGrouping.get().classifier().type().equals(Propagation.class)) {
+                return raterBasedOnGrouping.get().classifier().toSimpleDescription(report.line(), report.group());
+            }
+        }
         if (rater.type().equals(ForAllAttributeValues.class)) {
-            return list(rater.toSimpleDescription(report.line(), report.group()));
+            return rater.toSimpleDescription(report.line(), report.group());
         } else {
-            return list("For all " + rater.toSimpleDescription(report.line(), report.group()));
+            return "For all " + rater.toSimpleDescription(report.line(), report.group());
         }
     }
 }

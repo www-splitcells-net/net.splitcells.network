@@ -79,4 +79,9 @@ public class Propagation implements Rater {
     public String toString() {
         return getClass().getSimpleName();
     }
+
+    @Override
+    public Class<? extends Rater> type() {
+        return Propagation.class;
+    }
 }

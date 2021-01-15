@@ -19,6 +19,7 @@ import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 import org.w3c.dom.Element;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import static com.google.common.collect.Streams.concat;
 import static net.splitcells.dem.Dem.environment;
@@ -28,6 +29,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
 import static net.splitcells.dem.resource.host.Files.*;
+import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.rating.type.Cost.cost;
 
 public interface SolutionView extends ProblemView {
@@ -104,7 +106,7 @@ public interface SolutionView extends ProblemView {
         writeToFile(targetFolder.resolve("constraint.rating.xml"), constraint().rating().toDom());
         writeToFile(targetFolder.resolve("constraint.state.xml"), constraint().toDom());
         writeToFile(targetFolder.resolve("history.fods"), history().toFods());
-        writeToFile(targetFolder.resolve("constraint.natural-argumentation.xml"), constraint().naturalArgumentation().toDom());
+        writeToFile(targetFolder.resolve("constraint.natural-argumentation.txt"), constraint().naturalArgumentation().toStringPathsDescription());
         writeToFile(targetFolder.resolve("results.fods"), toFods());
     }
 
@@ -180,8 +182,7 @@ public interface SolutionView extends ProblemView {
             constraint().naturalArgumentation(allocation, constraint().injectionGroup())
                     .map(argumentation -> lineArgumentationValue.appendChild
                             (Xml.textNode
-                                    (toPrettyWithoutHeaderString
-                                            (argumentation.toDom()))));
+                                    (argumentation.toStringPathsDescription())));
         }
         return tableLine;
     }
