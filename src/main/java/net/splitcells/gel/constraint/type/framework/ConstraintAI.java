@@ -421,10 +421,7 @@ public abstract class ConstraintAI implements Constraint {
         final var childrenArgumentation = childrenArgumentation(line, group, allocationSelector);
         if (localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
             return Optional.empty();
-        } else if (!localArgumentation.isEmpty() && !childrenArgumentation.isEmpty()) {
-            return Optional.of(perspective(localArgumentation.get(), NameSpaces.STRING)
-                    .withChildren(childrenArgumentation));
-        } else if (!localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
+        } else if (!localArgumentation.isEmpty()) {
             return Optional.of(perspective(localArgumentation.get(), NameSpaces.STRING)
                     .withChildren(childrenArgumentation));
         } else {
