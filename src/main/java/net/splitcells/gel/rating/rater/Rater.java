@@ -37,6 +37,7 @@ public interface Rater extends PubliclyTyped<Rater>
         return Rater.class;
     }
 
+    @Deprecated
     default Node argumentation(GroupId grupa, Table piešķiršanas) {
         throw not_implemented_yet(getClass().getName());
     }
