@@ -19,40 +19,30 @@
                     <todo>
                         Solve oral exams problem.
                         <toDo>maven.test MutisksEksamensTest#testMomentānu
-                            <toDo>testMomentānu
-                                <toDo name="Implement fast interactive optmization loop.">
-                                    <toDo>Simplify reasoning system.
-                                        <toDo>Fix errors.</toDo>
-                                        <toDo>Find cause of natural tags.</toDo>
-                                        <toDo>Prevent nesting of empty argumentation.</toDo>
-                                    </toDo>
+                            <toDo>OralExamsTest#testCurrent
+                                <toDo name="Implement fast interactive optimization loop.">
+                                    <todo>Improve reasoning system.
+                                        <toDo>State the error in the reason as well and not just the affected
+                                            constraint.
+                                        </toDo>
+                                        <toDo>Remove empty ForAll nodes in reasoning.</toDo>
+                                        <toDo>Add background color to the "line argument" column
+                                            in the result analysis. The color should represent the number of reasons.
+                                        </toDo>
+                                        <toDo>Add cost column to result analysis.</toDo>
+                                    </todo>
                                 </toDo>
                             </toDo>
-                            <toDo>oralExamsSolverTests</toDo>
-                        </toDo>
-                        <done>
-                            Create random problem instances via a distribution.
-                            <done>
-                                Determine distribution parameters..
-                                <students>88</students>
-                                <exams>177</exams>
-                                <examiners>40</examiners>
-                                <checkers>41</checkers>
-                                <rooms>6</rooms>
-                                <time>2 weeks with each exam at least 4 days apart and 5 time slots per
-                                    day.
-                                </time>
-                            </done>
-                        </done>
-                        <toDo>Implement IerobežojumuGrupasBalstītsRemontsTest.
-                            <toDo>pārbaudiPārdališanu</toDo>
-                            <toDo>MinimālsAttālums.156</toDo>
+                            <toDo>OralExamsTest#oralExamOptimizationTests
+                                <toDo>Use ConstraintGroupBasedRepair.</toDo>
+                                <toDo>Use Escalator.</toDo>
+                                <toDo>Manually validate the solution.</toDo>
+                            </toDo>
                         </toDo>
                     </todo>
                     <todo>Solve Schienen-Planung.</todo>
-                    <todo>Solve Sportkur.</todo>
+                    <todo>Solve Sportkurs-Planung.</todo>
                     <toDo>Fix NQueenProblēmaTest.</toDo>
-                    <toDo>Create test for Killer Sudoku.</toDo>
                 </queue>
             </priority>
         </scheduling>

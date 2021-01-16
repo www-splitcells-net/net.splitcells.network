@@ -30,6 +30,7 @@
         <scheduling>
             <priority>
                 <queue>
+                    <toDo>Create test for Killer Sudoku.</toDo>
                 </queue>
             </priority>
         </scheduling>
