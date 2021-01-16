@@ -90,7 +90,7 @@ public class GroupMultiplier implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line rinda, GroupId grupa) {
+    public String toSimpleDescription(Line line, GroupId group) {
         return grupetaji.stream()
                 .map(grupetajis -> grupetajis.toString())
                 .reduce((a, b) -> a + " " + b)

@@ -56,7 +56,7 @@ public class Propagation implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line rinda, GroupId grupa) {
+    public String toSimpleDescription(Line line, GroupId group) {
         return "";
     }
 
