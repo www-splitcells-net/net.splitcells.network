@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Ubuntu 20.04.1
+set -e
+cd ~/Documents
+git clone git@github.com:swaywm/sway.git
+	cd sway
+	git clone git@github.com:swaywm/wlroots.git subprojects/wlroots
+sudo apt install -y libgles2-mesa-dev \
+	libgbm-dev \
+	libinput-dev \
+	libxkbcommon-dev \
+	libpixman-1-dev \
+	libjson-c-dev \
+	libcairo2-dev \
+	libpango1.0-dev
+meson build/
+ninja -C build/
+# build/sway/sway
