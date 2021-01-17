@@ -5,7 +5,7 @@
 
 # TODO Try without sudo first.
 
-. this.requires docker
+. this.active.if.presence.of docker
 
 if [ "$(sudo docker images --quiet) 2> /dev/null" == "" ]
 then
