@@ -55,6 +55,10 @@ user.bin.configure
 
 The manuals for each commands can be viewed via "man <command>".
 
+# Configuration
+
+One can enable extended logging by setting the environment variable 'log_level' to 'debug': 'export log_level=debug'
+
 # End Your Adventure
 
 So you decided that enough is enough?

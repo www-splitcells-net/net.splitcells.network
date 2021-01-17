@@ -7,13 +7,16 @@
 import subprocess
 import sys
 import argparse
+import logging
+from os import environ
 from pathlib import Path
 # TODO FIXME If file not present in path this script should continue.
 # TODO listener scripts
 def executeCommand(command):
 	"""Returns whether the next commands needs to be executed."""
 	# TODO Check if command exsists.
-	print('Executing \"' + ' '.join(command) + '\".')
+	# TODO Create option to enable trace logging via environment.
+	logging.debug('Executing \"' + ' '.join(command) + '\".')
 	returnCode = subprocess.call(command) # This call raises an error if the command is not found.
 	return returnCode == 0
 def managedCommandExecution(type, command): # RENAME
@@ -51,7 +54,7 @@ def managedCommandExecution(type, command): # RENAME
 		executionCounter+=1
 		managedCommand = commandAt(command, executionCounter)
 	if not executedSuccessfully:
-		print('Could not execute \"' + ' '.join(command) + '\".', file=sys.stderr)
+		logging.error('Could not execute \"' + ' '.join(command) + '\".')
 	return executedSuccessfully
 def commandAt(command, number):
 	rVal = command.copy()
@@ -62,6 +65,8 @@ def commandExists(commandName):
 	from distutils.spawn import find_executable
 	return find_executable(commandName) is not None
 if __name__ == '__main__':
+	if environ.get('log_level') == 'debug':
+		logging.basicConfig(level=logging.DEBUG)
 	wasExecutedSuccessfully = managedCommandExecution(sys.argv[1], sys.argv[2:])
 		# Managed commands are sometimes mixed with other commands, that do not follow the conventions of this project.
 		# The last console line is cleared, in case the last echo was filtered and is still displayed.

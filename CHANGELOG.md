@@ -6,6 +6,10 @@ Please, create a one sentence summary for each release.
 The concrete echo format of each command is not stable.
 Changes to this are not considered major changes.
 ## Unreleased
+### Major Changes
+1. Disable debug logging by default.
+   Add environment variable 'log_level'.
+   When set to 'debug', debug log is enabled.
 ## Version 4.0.1
 Release project in order to test release process.
 ### Major Changes

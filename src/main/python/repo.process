@@ -7,6 +7,8 @@ import subprocess
 import sys
 import argparse
 import json
+import logging
+from os import environ
 from pathlib import Path
 
 # TODO Support relative path.
@@ -15,12 +17,12 @@ from pathlib import Path
 # TODO Add switch in order to skip already present folders.
 
 def execute(relativePath, host, command):
-	print(relativePath)
+	logging.debug('relativePath: ' + relativePath)
 	command = command.replace('$subRepo', '')
-	print('	' + command)
+	logging.debug('	command: ' + command)
 	returnCode = subprocess.call(command, shell='True')
 	if returnCode != 0:
-		print('Error processing repository with return code ' + str(returnCode) + '.')
+		logging.error('	Error processing repository with return code ' + str(returnCode) + '.')
 		return False
 	return True
 def process(relativePath, host, command):
@@ -36,13 +38,15 @@ def process(relativePath, host, command):
 				# TODO Do not rely on Bash specific command syntax.
 				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
-				print('	' + subRepoScript)
+				logging.debug('subRepoScript: ' + subRepoScript)
 				returnCode = subprocess.call(subRepoScript, shell='True')
 				if returnCode != 0:
-					print('Error processing sub repository with return code ' + str(returnCode) + '.')
+					logging.error('Error processing sub repository with return code ' + str(returnCode) + '.')
 					return False
 	return True
 if __name__ == '__main__':
+	if environ.get('log_level') == 'debug':
+		logging.basicConfig(level=logging.DEBUG)
 	parser = argparse.ArgumentParser(description='TODO')
 	parser.add_argument('--relative-path', dest='relativePath', default='./')
 	parser.add_argument('--host', dest='host', default="''")
