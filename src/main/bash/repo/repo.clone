@@ -4,5 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Clones a repository into the current folder.
+# TODO FIX Recursive cloning does not work.
 
 repo.process --command 'command.managed.execute disjunction repo.clone '$@'/$subRepo'
