@@ -20,6 +20,7 @@ public enum Language {
     NAME("name"),
     PATH_ACCESS_SYMBOL("."),
     PROBLEM("problem"),
+    PROPAGTION("propagation"),
     RATING("rating"),
     REMOVE("remove"),
     RESULT("result"),

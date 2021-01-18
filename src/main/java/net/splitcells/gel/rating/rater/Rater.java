@@ -50,8 +50,8 @@ public interface Rater extends PubliclyTyped<Rater>
         }
         return dom;
     }
-
-    default String toSimpleDescription(Line line, GroupId group) {
+    
+    default String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         throw not_implemented_yet(getClass().getName());
     }
 }

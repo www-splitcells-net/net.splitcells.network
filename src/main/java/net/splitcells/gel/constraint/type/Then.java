@@ -31,6 +31,8 @@ public class Then extends ConstraintBasedOnLocalGroupsAI {
 
     @Override
     protected String localNaturalArgumentation(Report report) {
-        return "Then " + rater.toSimpleDescription(report.line(), report.group());
+        return "Then " + rater.toSimpleDescription(report.line()
+                , lineProcessing.columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
+                , report.group());
     }
 }

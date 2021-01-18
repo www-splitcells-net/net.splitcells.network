@@ -86,7 +86,7 @@ public class ForAllAttributeValues implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, GroupId group) {
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return attribute.name();
     }
 

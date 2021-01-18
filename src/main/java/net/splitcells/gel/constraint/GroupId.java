@@ -37,7 +37,7 @@ public class GroupId implements Domable {
         return vārds;
     }
 
-    public static GroupId reizinatasGrupas(GroupId a, GroupId b) {
+    public static GroupId multiply(GroupId a, GroupId b) {
         return new GroupId(a.toString() + " un " + b.toString());
     }
 

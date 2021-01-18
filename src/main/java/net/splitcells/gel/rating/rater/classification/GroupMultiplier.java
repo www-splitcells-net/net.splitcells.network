@@ -28,71 +28,71 @@ public class GroupMultiplier implements Rater {
         return new GroupMultiplier(groupers);
     }
 
-    private final List<Rater> grupetaji;
-    protected final Map<List<GroupId>, GroupId> grupuReizinātājs = map();
-    private final List<Discoverable> konteksti = list();
+    private final List<Rater> classifiers;
+    protected final Map<List<GroupId>, GroupId> groupMultiplier = map();
+    private final List<Discoverable> contexts = list();
 
-    protected GroupMultiplier(Rater... grupetaji) {
-        this.grupetaji = list(grupetaji);
+    protected GroupMultiplier(Rater... classifiers) {
+        this.classifiers = list(classifiers);
     }
 
     @Override
     public List<Domable> arguments() {
-        return grupetaji.mapped(grupetajs -> (Domable) grupetajs);
+        return classifiers.mapped(classifier -> (Domable) classifier);
     }
 
     @Override
-    public void addContext(Discoverable konteksti) {
-        this.konteksti.add(konteksti);
+    public void addContext(Discoverable contexts) {
+        this.contexts.add(contexts);
     }
 
     @Override
     public Collection<List<String>> paths() {
-        return konteksti.stream().map(Discoverable::path).collect(toList());
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override
     public RatingEvent rating_after_addition
-            (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final var novērtejumuNotikums = ratingEvent();
-        List<GroupId> grupešanaNoPapildinajmiem = listWithValuesOf(
-                grupetaji.stream()
-                        .map(grupetajs -> grupetajs
-                                .rating_after_addition(rindas, papildinājums, bērni, novērtējumsPirmsPapildinājumu))
+            (Table lines, Line addition, List<Constraint> children, Table ratingBeforeAddition) {
+        final var ratingEvent = ratingEvent();
+        List<GroupId> groupingOfAddition = listWithValuesOf(
+                classifiers.stream()
+                        .map(classifier -> classifier
+                                .rating_after_addition(lines, addition, children, ratingBeforeAddition))
                         .map(nn -> nn.additions())
-                        .flatMap(papildinajums -> papildinajums.values().stream())
-                        .map(papildumuNovērtējums -> papildumuNovērtējums.resultingConstraintGroupId())
+                        .flatMap(additions -> additions.values().stream())
+                        .map(additionRating -> additionRating.resultingConstraintGroupId())
                         .collect(toList())
         );
-        grupuReizinātājs.computeIfAbsent(
-                grupešanaNoPapildinajmiem
-                , atslēga -> atslēga
-                        .reduced((a, b) -> GroupId.reizinatasGrupas(a, b))
+        groupMultiplier.computeIfAbsent(
+                groupingOfAddition
+                , key -> key
+                        .reduced((a, b) -> GroupId.multiply(a, b))
                         .orElseGet(() -> GroupId.grupa()));
-        novērtejumuNotikums.additions().put(
-                papildinājums
+        ratingEvent.additions().put(
+                addition
                 , localRating()
-                        .withPropagationTo(bērni)
+                        .withPropagationTo(children)
                         .withRating(noCost())
-                        .withResultingGroupId(grupuReizinātājs.get(grupešanaNoPapildinajmiem)));
-        return novērtejumuNotikums;
+                        .withResultingGroupId(groupMultiplier.get(groupingOfAddition)));
+        return ratingEvent;
     }
 
     @Override
     public RatingEvent rating_before_removal
-            (Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
+            (Table lines, Line removal, List<Constraint> children, Table ratings_before_emoval) {
         return ratingEvent();
     }
 
     @Override
-    public Node argumentation(GroupId grupa, Table piešķiršanas) {
+    public Node argumentation(GroupId grupa, Table allocations) {
         return Xml.textNode(getClass().getSimpleName());
     }
 
     @Override
-    public String toSimpleDescription(Line line, GroupId group) {
-        return grupetaji.stream()
-                .map(grupetajis -> grupetajis.toString())
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+        return classifiers.stream()
+                .map(classifier -> classifier.toString())
                 .reduce((a, b) -> a + " " + b)
                 .orElse("");
     }

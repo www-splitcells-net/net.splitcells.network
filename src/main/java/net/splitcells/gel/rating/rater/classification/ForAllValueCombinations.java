@@ -112,7 +112,7 @@ public class ForAllValueCombinations implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, GroupId group) {
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return "combinations of "
                 + attributes
                 .stream()

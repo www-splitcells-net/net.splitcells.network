@@ -62,8 +62,8 @@ public class RaterBasedOnGrouping implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, GroupId group) {
-        return grouping.toSimpleDescription(line, group);
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+        return grouping.toSimpleDescription(line, groupsLineProcessing, incomingGroup);
     }
 
     @Override

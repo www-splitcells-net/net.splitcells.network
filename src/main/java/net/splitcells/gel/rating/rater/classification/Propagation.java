@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.common.Language.PROPAGTION;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
@@ -11,6 +12,7 @@ import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import java.util.Collection;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
@@ -29,34 +31,34 @@ public class Propagation implements Rater {
     private Propagation() {
     }
 
-    private final List<Discoverable> konteksti = list();
+    private final List<Discoverable> contexts = list();
 
     @Override
     public RatingEvent rating_after_addition
-            (Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final RatingEvent novērtejumuNotikums = ratingEvent();
-        novērtejumuNotikums.additions().put
-                (papildinājums
+            (Table lines, Line addition, List<Constraint> children, Table ratingBeforeAdditionnovērtējumsPirmsPapildinājumu) {
+        final RatingEvent ratingEvent = ratingEvent();
+        ratingEvent.additions().put
+                (addition
                         , localRating()
-                                .withPropagationTo(bērni)
+                                .withPropagationTo(children)
                                 .withRating(noCost())
-                                .withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
-        return novērtejumuNotikums;
+                                .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+        return ratingEvent;
     }
 
     @Override
     public RatingEvent rating_before_removal
-            (Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana) {
+            (Table lines, Line removal, List<Constraint> children, Table eventBeforeRemoval) {
         return ratingEvent();
     }
 
     @Override
-    public Node argumentation(GroupId grupa, Table piešķiršanas) {
-        return element("izdalīšana");
+    public Node argumentation(GroupId group, Table allocations) {
+        return element(PROPAGTION.value());
     }
 
     @Override
-    public String toSimpleDescription(Line line, GroupId group) {
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return "";
     }
 
@@ -66,13 +68,13 @@ public class Propagation implements Rater {
     }
 
     @Override
-    public void addContext(Discoverable konteksts) {
-        this.konteksti.add(konteksts);
+    public void addContext(Discoverable contexts) {
+        this.contexts.add(contexts);
     }
 
     @Override
     public Collection<List<String>> paths() {
-        return konteksti.stream().map(Discoverable::path).collect(toList());
+        return contexts.stream().map(Discoverable::path).collect(toList());
     }
 
     @Override

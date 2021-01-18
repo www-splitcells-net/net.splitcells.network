@@ -79,8 +79,8 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, GroupId group) {
-        return "size is " + targetSize;
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+        return "size should be " + targetSize + ", but is " + groupsLineProcessing.size();
     }
 
     @Override

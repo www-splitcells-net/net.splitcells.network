@@ -1,9 +1,12 @@
 package net.splitcells.gel.rating.rater;
 
 import static java.lang.Math.abs;
+import static java.util.Comparator.naturalOrder;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
@@ -12,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.stream.IntStream;
 
 import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.dem.lang.Xml;
@@ -41,182 +45,185 @@ public class MinimalDistance<T> implements Rater {
     }
 
     private final double minimumDistance;
-    private final Attribute<T> atribūts;
+    private final Attribute<T> attribute;
     private final Comparator<T> comparator;
     private final BiFunction<T, T, Double> distanceMeassurer;
     private final List<Discoverable> contextes = list();
 
     protected MinimalDistance(Attribute<T> atribūts, double minimumDistance, Comparator<T> comparator, BiFunction<T, T, Double> distanceMeassurer) {
         this.distanceMeassurer = distanceMeassurer;
-        this.atribūts = atribūts;
+        this.attribute = atribūts;
         this.minimumDistance = minimumDistance;
         this.comparator = comparator;
     }
 
     @Override
     public RatingEvent rating_before_removal
-            (Table rindas
-                    , Line noņemšana
-                    , net.splitcells.dem.data.set.list.List<Constraint> bērni
-                    , Table novērtējumsPirmsNoņemšana) {
-        final var novērtejumuNotikums = RatingEventI.ratingEvent();
-        final var sakārtotasRindas = sorted(rindas);
-        final int sakārtotiIndeksi = sakārtotasRindas.indexOf(
-                sakārtotasRindas.stream()
-                        .filter(e -> e.value(Constraint.LINE).equals(noņemšana.value(Constraint.LINE)))
+            (Table lines
+                    , Line removal
+                    , net.splitcells.dem.data.set.list.List<Constraint> children
+                    , Table ratingBeforeRemoval) {
+        final var ratingEvent = RatingEventI.ratingEvent();
+        final var sortedLines = sorted(lines);
+        final int sortedIndexes = sortedLines.indexOf(
+                sortedLines.stream()
+                        .filter(e -> e.value(LINE).equals(removal.value(LINE)))
                         .findFirst().get());
-        if (sakārtotiIndeksi == 0) {
+        if (sortedIndexes == 0) {
             // KOMPORMISS
             int i = 1;
-            while (i < sakārtotasRindas.size()) {
-                final var paliekuLabuRinda = sakārtotasRindas.get(i);
-                if (!ievēro(noņemšana, paliekuLabuRinda)) {
-                    novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, paliekuLabuRinda, bērni//
-                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekuLabuRinda).value(Constraint.RATING));
+            while (i < sortedLines.size()) {
+                final var paliekuLabuRinda = sortedLines.get(i);
+                if (!isValid(removal, paliekuLabuRinda)) {
+                    rate_addition_ofRemovalPair(ratingEvent, removal, paliekuLabuRinda, children//
+                            , ratingBeforeRemoval.lookupEquals(LINE, paliekuLabuRinda).value(Constraint.RATING));
                     ++i;
                 } else {
                     break;
                 }
             }
-        } else if (sakārtotiIndeksi == sakārtotasRindas.size() - 1) {
+        } else if (sortedIndexes == sortedLines.size() - 1) {
             // KOMPORMISS
-            int i = sakārtotiIndeksi - 1;
+            int i = sortedIndexes - 1;
             while (i < -1) {
-                final Line paliekuKreisaRinda = sakārtotasRindas.get(i);
-                if (!ievēro(noņemšana, paliekuKreisaRinda)) {
-                    novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, sakārtotasRindas.get(i), bērni//
-                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekuKreisaRinda).value(Constraint.RATING));
+                final Line paliekuKreisaRinda = sortedLines.get(i);
+                if (!isValid(removal, paliekuKreisaRinda)) {
+                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children//
+                            , ratingBeforeRemoval.lookupEquals(LINE, paliekuKreisaRinda).value(Constraint.RATING));
                     --i;
                 } else {
                     break;
                 }
             }
-        } else if (sakārtotiIndeksi > 0 && sakārtotiIndeksi < sakārtotasRindas.size() - 1) {
+        } else if (sortedIndexes > 0 && sortedIndexes < sortedLines.size() - 1) {
             // KOMPORMISS
-            int i = sakārtotiIndeksi - 1;
+            int i = sortedIndexes - 1;
             while (i < -1) {
-                final Line paliekaKreisaRinda = sakārtotasRindas.get(i);
-                if (!ievēro(noņemšana, paliekaKreisaRinda)) {
-                    novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, sakārtotasRindas.get(i), bērni//
-                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekaKreisaRinda).value(Constraint.RATING));
+                final Line paliekaKreisaRinda = sortedLines.get(i);
+                if (!isValid(removal, paliekaKreisaRinda)) {
+                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children//
+                            , ratingBeforeRemoval.lookupEquals(LINE, paliekaKreisaRinda).value(Constraint.RATING));
                     --i;
                 } else {
                     break;
                 }
             }
-            i = sakārtotiIndeksi + 1;
-            while (i < sakārtotasRindas.size()) {
-                final Line paliekaLabaRinda = sakārtotasRindas.get(i);
-                if (!ievēro(noņemšana, paliekaLabaRinda)) {
-                    novērte_papildinajums_noNoņemšanasPāri(novērtejumuNotikums, noņemšana, sakārtotasRindas.get(i), bērni//
-                            , novērtējumsPirmsNoņemšana.lookupEquals(Constraint.LINE, paliekaLabaRinda).value(Constraint.RATING));
+            i = sortedIndexes + 1;
+            while (i < sortedLines.size()) {
+                final Line paliekaLabaRinda = sortedLines.get(i);
+                if (!isValid(removal, paliekaLabaRinda)) {
+                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children//
+                            , ratingBeforeRemoval.lookupEquals(LINE, paliekaLabaRinda).value(Constraint.RATING));
                     ++i;
                 } else {
                     break;
                 }
             }
         } else {
-            throw new AssertionError("" + sakārtotiIndeksi);
+            throw new AssertionError("" + sortedIndexes);
         }
-        return novērtejumuNotikums;
+        return ratingEvent;
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table rindas, Line papildinājums, net.splitcells.dem.data.set.list.List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu) {
-        final var novērtejumuNotikums = RatingEventI.ratingEvent();
-        final var sakārtotasRindas = sorted(rindas);
-        // JAUDA
-        final int sakārtotasIndeksi = sakārtotasRindas.indexOf(
-                sakārtotasRindas.stream()
-                        .filter(e -> e.value(Constraint.LINE).equals(papildinājums.value(Constraint.LINE)))
+    public RatingEvent rating_after_addition(Table lines, Line addition, net.splitcells.dem.data.set.list.List<Constraint> children, Table ratingBeforeAddition) {
+        final var ratingEvent = RatingEventI.ratingEvent();
+        final var sortedLines = sorted(lines);
+        // TODO PERFORMANCE
+        final int sortedIndexes = sortedLines.indexOf(
+                sortedLines.stream()
+                        .filter(e -> e.value(LINE).equals(addition.value(LINE)))
                         .findFirst()
                         .get());
-        if (sakārtotasIndeksi == 0) {
-            if (sakārtotasRindas.size() == 1) {
-                novērtejumuNotikums.additions().put(papildinājums//
+        if (sortedIndexes == 0) {
+            if (sortedLines.size() == 1) {
+                ratingEvent.additions().put(addition//
                         , localRating().
-                                withPropagationTo(bērni).
+                                withPropagationTo(children).
                                 withRating(noCost()).
-                                withResultingGroupId(papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+                                withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
             } else {
-                novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, sakārtotasRindas.get(1), bērni//
-                        , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, sakārtotasRindas.get(1)).value(Constraint.RATING)));
+                novērte_papildinājumu_noPapildinājumuPāris(ratingEvent, addition, sortedLines.get(1), children//
+                        , Optional.of(ratingBeforeAddition.lookupEquals(LINE, sortedLines.get(1)).value(Constraint.RATING)));
             }
-        } else if (sakārtotasIndeksi == sakārtotasRindas.size() - 1) {
-            // KOMPROMISS
+        } else if (sortedIndexes == sortedLines.size() - 1) {
+            // TODO HACK
             int i = 0;
-            while (-1 < sakārtotasRindas.size() - 2 - i) {
-                final var oriģinālaKreisaRinda = sakārtotasRindas.get(sakārtotasRindas.size() - 2 - i);
-                if (!ievēro(oriģinālaKreisaRinda, papildinājums) || i == 0) {
-                    novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaKreisaRinda, bērni//
-                            , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, oriģinālaKreisaRinda).value(Constraint.RATING)));
+            while (-1 < sortedLines.size() - 2 - i) {
+                final var originalLeftLine = sortedLines.get(sortedLines.size() - 2 - i);
+                if (!isValid(originalLeftLine, addition) || i == 0) {
+                    novērte_papildinājumu_noPapildinājumuPāris(ratingEvent, addition, originalLeftLine, children//
+                            , Optional.of(ratingBeforeAddition.lookupEquals(LINE, originalLeftLine).value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
                 }
             }
-        } else if (sakārtotasIndeksi > 0 && sakārtotasIndeksi < sakārtotasRindas.size() - 1) {
-            // KOMPROMISS
+        } else if (sortedIndexes > 0 && sortedIndexes < sortedLines.size() - 1) {
+            // TODO HACK
             int i = 0;
-            while (sakārtotasRindas.size() > sakārtotasIndeksi + 1 + i) {
-                final var oriģinālaRindaLaba = sakārtotasRindas.get(sakārtotasIndeksi + 1);
-                if (!ievēro(papildinājums, oriģinālaRindaLaba)) {
-                    novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinālaRindaLaba, bērni
-                            , Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, oriģinālaRindaLaba).value(Constraint.RATING)));
+            while (sortedLines.size() > sortedIndexes + 1 + i) {
+                final var originalRightLine = sortedLines.get(sortedIndexes + 1);
+                if (!isValid(addition, originalRightLine)) {
+                    novērte_papildinājumu_noPapildinājumuPāris(ratingEvent, addition, originalRightLine, children
+                            , Optional.of(ratingBeforeAddition.lookupEquals(LINE, originalRightLine).value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
                 }
             }
             i = 0;
-            while (-1 < sakārtotasIndeksi - 1 - i) {
-                final var oriģinalaKreisaRinda = sakārtotasRindas.get(sakārtotasIndeksi - 1 - i);
-                if (!ievēro(oriģinalaKreisaRinda, papildinājums)) {
-                    novērte_papildinājumu_noPapildinājumuPāris(novērtejumuNotikums, papildinājums, oriģinalaKreisaRinda, bērni, Optional.of(novērtējumsPirmsPapildinājumu.lookupEquals(Constraint.LINE, oriģinalaKreisaRinda).value(Constraint.RATING)));
+            while (-1 < sortedIndexes - 1 - i) {
+                final var originalLeftLine = sortedLines.get(sortedIndexes - 1 - i);
+                if (!isValid(originalLeftLine, addition)) {
+                    novērte_papildinājumu_noPapildinājumuPāris(ratingEvent, addition, originalLeftLine, children, Optional.of(ratingBeforeAddition.lookupEquals(LINE, originalLeftLine).value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
                 }
             }
         } else {
-            throw new AssertionError("" + sakārtotasIndeksi);
+            throw new AssertionError("" + sortedIndexes);
         }
-        return novērtejumuNotikums;
+        return ratingEvent;
     }
 
     protected void novērte_papildinājumu_noPapildinājumuPāris
             (RatingEvent rVal
-                    , Line papildinājums
-                    , Line oriģinālaRinda
-                    , List<Constraint> berni
+                    , Line addition
+                    , Line originalLine
+                    , List<Constraint> children
                     , Optional<Rating> ratingBeforeAddition) {
-        final Rating papilduCena;
+        final Rating additionalCost;
         if (abs(distanceMeassurer.apply(
-                papildinājums.value(Constraint.LINE).value(atribūts),
-                oriģinālaRinda.value(Constraint.LINE).value(atribūts))) >= minimumDistance) {
-            papilduCena = noCost();
+                addition.value(LINE).value(attribute),
+                originalLine.value(LINE).value(attribute))) >= minimumDistance) {
+            additionalCost = noCost();
         } else {
-            papilduCena = cost(0.5);
-            rVal.updateRating_viaAddition(oriģinālaRinda, papilduCena, berni, ratingBeforeAddition);
+            additionalCost = cost(0.5);
+            rVal.updateRating_viaAddition(originalLine, additionalCost, children, ratingBeforeAddition);
         }
-        rVal.pieliktNovērtējumu_caurPapildinājumu(papildinājums, papilduCena, berni, Optional.empty());
+        rVal.pieliktNovērtējumu_caurPapildinājumu(addition, additionalCost, children, Optional.empty());
     }
 
-    private boolean ievēro(Line a, Line b) {
+    private double distance(Line a, Line b) {
         return abs(distanceMeassurer
-                .apply(a.value(Constraint.LINE).value(atribūts)
-                        , b.value(Constraint.LINE).value(atribūts))
-        ) >= minimumDistance;
+                .apply(a.value(LINE).value(attribute)
+                        , b.value(LINE).value(attribute)));
     }
 
-    protected void novērte_papildinajums_noNoņemšanasPāri
+    private boolean isValid(Line a, Line b) {
+        return distance(a, b) >= minimumDistance;
+    }
+
+    protected void rate_addition_ofRemovalPair
             (RatingEvent rVal
-                    , Line noņemšana
-                    , Line paliekas
-                    , List<Constraint> bērni
-                    , Rating paliekuNovērtējumsPirmsNoņemšanas) {
-        if (!ievēro(noņemšana, paliekas)) {
-            rVal.updateRating_viaAddition(paliekas, cost(-0.5), bērni, Optional.of(paliekuNovērtējumsPirmsNoņemšanas));
+                    , Line removal
+                    , Line rest
+                    , List<Constraint> children
+                    , Rating restRatingBeforeRemoval) {
+        if (!isValid(removal, rest)) {
+            rVal.updateRating_viaAddition(rest, cost(-0.5), children, Optional.of(restRatingBeforeRemoval));
         }
     }
 
@@ -242,7 +249,7 @@ public class MinimalDistance<T> implements Rater {
     public net.splitcells.dem.data.set.list.List<Domable> arguments() {
         return Lists.list(//
                 () -> Xml.element("minimumDistance", Xml.textNode("" + minimumDistance))//
-                , () -> Xml.element("attribute", atribūts.toDom())//
+                , () -> Xml.element("attribute", attribute.toDom())//
                 , () -> Xml.element("comparator", Xml.textNode("" + comparator))//
                 , () -> Xml.element("distanceMeassurer", Xml.textNode("" + distanceMeassurer))//
         );
@@ -252,7 +259,7 @@ public class MinimalDistance<T> implements Rater {
     public boolean equals(Object arg) {
         if (arg != null && arg instanceof MinimalDistance) {
             return this.minimumDistance == ((MinimalDistance) arg).minimumDistance
-                    && this.atribūts.equals(((MinimalDistance) arg).atribūts)
+                    && this.attribute.equals(((MinimalDistance) arg).attribute)
                     && this.comparator.equals(((MinimalDistance) arg).comparator)
                     && this.distanceMeassurer.equals(((MinimalDistance) arg).distanceMeassurer);
         }
@@ -269,14 +276,14 @@ public class MinimalDistance<T> implements Rater {
         return contextes.stream().map(Discoverable::path).collect(toList());
     }
 
-    private List<Line> sorted(Table rindas) {
-        return rindas.rawLinesView().stream()
+    private List<Line> sorted(Table lines) {
+        return lines.rawLinesView().stream()
                 .filter(e -> e != null)
                 .sorted((a, b) -> {
                             try {
                                 return comparator.compare
-                                        (a.value(Constraint.LINE).value(atribūts)
-                                                , b.value(Constraint.LINE).value(atribūts));
+                                        (a.value(LINE).value(attribute)
+                                                , b.value(LINE).value(attribute));
                             } catch (RuntimeException e) {
                                 throw e;
                             }
@@ -290,17 +297,30 @@ public class MinimalDistance<T> implements Rater {
         return lines.rawLinesView().stream()
                 .filter(e -> e != null)
                 .filter(e -> !e.value(Constraint.RATING).equalz(cost))
-                .sorted((a, b) -> comparator.compare(a.value(Constraint.LINE).value(atribūts), b.value(Constraint.LINE).value(atribūts)))
+                .sorted((a, b) -> comparator.compare(a.value(LINE).value(attribute), b.value(LINE).value(attribute)))
                 .collect(toList());
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ", " + atribūts + ", " + minimumDistance;
+        return getClass().getSimpleName() + ", " + attribute + ", " + minimumDistance;
     }
 
     @Override
-    public String toSimpleDescription(Line line, GroupId group) {
-        return "At least a minimum distance of " + minimumDistance + " " + atribūts.name();
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+        final var sorted = sorted(groupsLineProcessing);
+        final var minimalDistance = rangeClosed(0, sorted.size() - 2)
+                .filter(i -> sorted.get(i).value(LINE).equalsTo(line) || sorted.get(i + 1).value(LINE).equalsTo(line))
+                .mapToObj(i -> distance(sorted.get(i), sorted.get(i + 1)))
+                .min(naturalOrder());
+        return minimalDistance.map(distance -> "Has a minimum distance of "
+                + distance
+                + " "
+                + attribute.name()
+                + " but should have at least a minimum distance of "
+                + minimumDistance
+                + " "
+                + attribute.name())
+                .orElse("Should have at least a minimum distance of " + minimumDistance + " " + attribute.name());
     }
 }
