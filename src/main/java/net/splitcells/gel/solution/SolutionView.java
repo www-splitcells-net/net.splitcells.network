@@ -3,6 +3,7 @@ package net.splitcells.gel.solution;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.data.table.Line;
@@ -25,6 +26,7 @@ import static com.google.common.collect.Streams.concat;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
@@ -111,12 +113,15 @@ public interface SolutionView extends ProblemView {
     }
 
     default Element toFodsTableAnalysis() {
-        final var fodsTableAnalysis = rElement(NameSpaces.FODS_OFFICE, "document");
-        final var analysisContent = element(NameSpaces.FODS_OFFICE, "body");
-        fodsTableAnalysis.setAttributeNode(attribute(NameSpaces.FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
+        final var fodsTableAnalysis = rElement(FODS_OFFICE, "document");
+        fodsTableAnalysis.setAttribute("xmlns:fo", FODS_FO.uri());
+        fodsTableAnalysis.setAttribute("xmlns:style", FODS_STYLE.uri());
+        fodsTableAnalysis.appendChild(fodsStyling());
+        final var analysisContent = element(FODS_OFFICE, "body");
+        fodsTableAnalysis.setAttributeNode(attribute(FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
         fodsTableAnalysis.appendChild(analysisContent);
         {
-            final var spreadsheet = element(NameSpaces.FODS_OFFICE, "spreadsheet");
+            final var spreadsheet = element(FODS_OFFICE, "spreadsheet");
             analysisContent.appendChild(spreadsheet);
             final var table = rElement(NameSpaces.FODS_TABLE, "table");
             spreadsheet.appendChild(table);
@@ -129,6 +134,34 @@ public interface SolutionView extends ProblemView {
             }
         }
         return fodsTableAnalysis;
+    }
+
+    private static Element fodsStyling() {
+        final var automaticStyling = rElement(FODS_OFFICE, "automatic-styles");
+        automaticStyling.appendChild(fodsStyling_style(1, "#dee6ef"));
+        automaticStyling.appendChild(fodsStyling_style(2, "#fff5ce"));
+        automaticStyling.appendChild(fodsStyling_style(3, "#ffdbb6"));
+        automaticStyling.appendChild(fodsStyling_style(4, "#ffd7d7"));
+        automaticStyling.appendChild(fodsStyling_style(Integer.MAX_VALUE, "#e0c2cd"));
+        return automaticStyling;
+    }
+
+    private static Element fodsStyling_style(int reasoningComplexity, String backgroundColor) {
+        final var style = rElement(FODS_STYLE, "style");
+        style.setAttributeNodeNS(attribute(FODS_STYLE, "name", "reasoning-complexity-" + reasoningComplexity));
+        style.setAttributeNodeNS(attribute(FODS_STYLE, "family", "table-cell"));
+        style.setAttributeNodeNS(attribute(FODS_STYLE, "parent-style-name", "Default"));
+        {
+            final var table_cell_properties = element(FODS_STYLE, "table-cell-properties");
+            table_cell_properties.setAttributeNodeNS(attribute(FODS_FO, "background-color", backgroundColor));
+            style.appendChild(table_cell_properties);
+        }
+        {
+            final var textProperties = element(FODS_STYLE, "text-properties");
+            textProperties.setAttributeNodeNS(attribute(FODS_FO, "color", "#000000"));
+            style.appendChild(textProperties);
+        }
+        return style;
     }
 
     default Element attributesOfFodsAnalysis() {
@@ -180,9 +213,21 @@ public interface SolutionView extends ProblemView {
             tableLine.appendChild(lineArgumentation);
             lineArgumentation.appendChild(lineArgumentationValue);
             constraint().naturalArgumentation(allocation, constraint().injectionGroup())
-                    .map(argumentation -> lineArgumentationValue.appendChild
-                            (Xml.textNode
-                                    (argumentation.toStringPathsDescription())));
+                    .ifPresent(argumentation -> {
+                        final var argumentationPaths = argumentation.toStringPaths();
+                        if (!argumentationPaths.isEmpty()) {
+                            final int reasoningComplexity;
+                            if (argumentationPaths.size() > 4) {
+                                reasoningComplexity = Integer.MAX_VALUE;
+                            } else {
+                                reasoningComplexity = argumentationPaths.size();
+                            }
+                            lineArgumentation.setAttributeNodeNS(attribute(FODS_TABLE, "style-name", "reasoning-complexity-" + reasoningComplexity));
+                        }
+                        lineArgumentationValue.appendChild
+                                (Xml.textNode
+                                        (Perspective.toStringPathsDescription(argumentationPaths)));
+                    });
         }
         return tableLine;
     }
