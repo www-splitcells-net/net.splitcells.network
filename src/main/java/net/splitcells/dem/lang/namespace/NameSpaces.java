@@ -11,6 +11,8 @@ public class NameSpaces {
             "urn:oasis:names:tc:opendocument:xmlns:office:1.0");
     public static final NameSpace FODS_STYLE = nameSpace("style",
             "urn:oasis:names:tc:opendocument:xmlns:style:1.0");
+    public static final NameSpace FODS_FO = nameSpace("fo",
+            "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0");
     public static final NameSpace FODS_TABLE = nameSpace("table",
             "urn:oasis:names:tc:opendocument:xmlns:table:1.0");
     public static final NameSpace FODS_TEXT = nameSpace("text", "urn:oasis:names:tc:opendocument:xmlns:text:1.0");
