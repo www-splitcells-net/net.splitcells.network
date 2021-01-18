@@ -5,6 +5,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.ProcessPath;
+import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.type.ForAll;
@@ -177,7 +178,14 @@ public interface SolutionView extends ProblemView {
             final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
             final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
             tableElement.appendChild(tableValue);
-            tableValue.appendChild(Xml.textNode("line argumentation"));
+            tableValue.appendChild(Xml.textNode("cost"));
+            attributes.appendChild(tableElement);
+        }
+        {
+            final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
+            tableElement.appendChild(tableValue);
+            tableValue.appendChild(Xml.textNode("allocation cost argumentation"));
             attributes.appendChild(tableElement);
         }
         {
@@ -208,10 +216,22 @@ public interface SolutionView extends ProblemView {
             }).forEach(tableCell -> tableLine.appendChild(tableCell));
         }
         {
-            final var lineArgumentation = element(NameSpaces.FODS_TABLE, "table-cell");
-            final var lineArgumentationValue = rElement(NameSpaces.FODS_TEXT, "p");
-            tableLine.appendChild(lineArgumentation);
-            lineArgumentation.appendChild(lineArgumentationValue);
+            final var allocationCost = element(NameSpaces.FODS_TABLE, "table-cell");
+            tableLine.appendChild(allocationCost);
+            final var allocation_cost_value = rElement(NameSpaces.FODS_TEXT, "p");
+            allocationCost.appendChild(allocation_cost_value);
+            allocation_cost_value.appendChild(
+                    textNode(""
+                            + constraint()
+                            .rating(allocation)
+                            .getContentValue(Cost.class)
+                            .value()));
+        }
+        {
+            final var allocationArgumentation = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var allocationArgumentationValue = rElement(NameSpaces.FODS_TEXT, "p");
+            tableLine.appendChild(allocationArgumentation);
+            allocationArgumentation.appendChild(allocationArgumentationValue);
             constraint().naturalArgumentation(allocation, constraint().injectionGroup())
                     .ifPresent(argumentation -> {
                         final var argumentationPaths = argumentation.toStringPaths();
@@ -222,9 +242,9 @@ public interface SolutionView extends ProblemView {
                             } else {
                                 reasoningComplexity = argumentationPaths.size();
                             }
-                            lineArgumentation.setAttributeNodeNS(attribute(FODS_TABLE, "style-name", "reasoning-complexity-" + reasoningComplexity));
+                            allocationArgumentation.setAttributeNodeNS(attribute(FODS_TABLE, "style-name", "reasoning-complexity-" + reasoningComplexity));
                         }
-                        lineArgumentationValue.appendChild
+                        allocationArgumentationValue.appendChild
                                 (Xml.textNode
                                         (Perspective.toStringPathsDescription(argumentationPaths)));
                     });
