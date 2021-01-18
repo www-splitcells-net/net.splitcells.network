@@ -66,7 +66,11 @@ public interface Perspective extends PerspectiveView {
     }
 
     default String toStringPathsDescription() {
-        return toStringPaths()
+        return toStringPathsDescription(toStringPaths());
+    }
+
+    static String toStringPathsDescription(List<String> paths) {
+        return paths
                 .stream()
                 .reduce((a, b) -> a + "\n" + b)
                 .orElse("");
