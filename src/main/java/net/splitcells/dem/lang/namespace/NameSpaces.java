@@ -9,6 +9,8 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 public class NameSpaces {
     public static final NameSpace FODS_OFFICE = nameSpace("office",
             "urn:oasis:names:tc:opendocument:xmlns:office:1.0");
+    public static final NameSpace FODS_STYLE = nameSpace("style",
+            "urn:oasis:names:tc:opendocument:xmlns:style:1.0");
     public static final NameSpace FODS_TABLE = nameSpace("table",
             "urn:oasis:names:tc:opendocument:xmlns:table:1.0");
     public static final NameSpace FODS_TEXT = nameSpace("text", "urn:oasis:names:tc:opendocument:xmlns:text:1.0");
@@ -29,7 +31,7 @@ public class NameSpaces {
     private NameSpaces() {
         throw constructorIllegal();
     }
-    
+
     public static Perspective string(String value) {
         return perspective(value, STRING);
     }
