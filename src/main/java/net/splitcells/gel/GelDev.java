@@ -3,6 +3,7 @@ package net.splitcells.gel;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
+import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.gel.test.integration.OralExamsTest;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -19,6 +20,7 @@ public final class GelDev {
             new OralExamsTest().testCurrent();
         }, standardConfigurator().andThen(env -> {
             env.config()
+                    .withConfigValue(MessageFilter.class, a -> false)
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(ProcessHostPath.class, Paths.userHome("connections", "tmp.storage", "dem"));
         }));
