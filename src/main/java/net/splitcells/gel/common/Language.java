@@ -18,6 +18,7 @@ public enum Language {
     LINE("line"),
     META_DATA("metaData"),
     NAME("name"),
+    OPTIMIZATION("optimization"),
     PATH_ACCESS_SYMBOL("."),
     PROBLEM("problem"),
     PROPAGTION("propagation"),
