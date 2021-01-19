@@ -168,6 +168,13 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 .lineProcessing()
                 .getLines()
                 .stream()
+                /**
+                 * TODO HACK This is code duplication.
+                 * It reimplements part of {@link ConstraintGroupBasedRepair#freeDefyingGroupOfConstraintGroup}.
+                 */
+                .filter(processing -> !constraintGrouping
+                        .defying(processing.value(INCOMING_CONSTRAINT_GROUP))
+                        .isEmpty())
                 .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP)
                         , processing.value(LINE)))
                 .forEach(processing -> {
