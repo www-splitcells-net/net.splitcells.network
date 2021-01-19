@@ -5,6 +5,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.GroupId;
@@ -63,38 +64,40 @@ public class ConstraintGroupBasedRepair implements Optimization {
     private static final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> randomRepairer() {
         final var randomness = randomness();
         return indexBasedRepairer((suppliesFree, freedSupplies) -> {
-            if (randomness.truthValue(suppliesFree.floatValue() / freedSupplies.floatValue())) {
-                return supplySelection(randomness.integer(0, suppliesFree), true);
+            if (suppliesFree.floatValue() + freedSupplies.floatValue() <= 0) {
+                return Optional.empty();
+            }
+            if (randomness.truthValue(suppliesFree.floatValue() / (suppliesFree.floatValue() + freedSupplies.floatValue()))) {
+                return Optional.of(supplySelection(randomness.integer(0, suppliesFree - 1), true));
             } else {
-                return supplySelection(randomness.integer(0, freedSupplies), false);
+                return Optional.of(supplySelection(randomness.integer(0, freedSupplies - 1), false));
             }
         });
     }
 
     public static final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> indexBasedRepairer
-            (BiFunction<Integer, Integer, SupplySelection> indexSelector) {
+            (BiFunction<Integer, Integer, Optional<SupplySelection>> indexSelector) {
         return (freeDemandGroups, freedSupplies) -> solution -> {
             final Set<OptimizationEvent> repairs = setOfUniques();
             final var suppliesFree = solution.supplies_free().getLines();
             freeDemandGroups.entrySet().forEach(group -> {
                 group.getValue().forEach(demand -> {
-                    if (suppliesFree.isEmpty() && freedSupplies.isEmpty()) {
-                        return;
-                    }
                     final var supplySelection = indexSelector
                             .apply(suppliesFree.size() - 1
                                     , freedSupplies.size() - 1);
-                    final Line selectedSupply;
-                    if (supplySelection.isCurrentlyFree()) {
-                        selectedSupply = suppliesFree.remove(supplySelection.selectedIndex());
-                    } else {
-                        selectedSupply = freedSupplies.remove(supplySelection.selectedIndex());
+                    if (!supplySelection.isEmpty()) {
+                        final Line selectedSupply;
+                        if (supplySelection.get().isCurrentlyFree()) {
+                            selectedSupply = suppliesFree.remove(supplySelection.get().selectedIndex());
+                        } else {
+                            selectedSupply = freedSupplies.remove(supplySelection.get().selectedIndex());
+                        }
+                        repairs.add
+                                (optimizationEvent
+                                        (ADDITION
+                                                , demand.toLinePointer()
+                                                , selectedSupply.toLinePointer()));
                     }
-                    repairs.add
-                            (optimizationEvent
-                                    (ADDITION
-                                            , demand.toLinePointer()
-                                            , selectedSupply.toLinePointer()));
                 });
             });
             return listWithValuesOf(repairs);
