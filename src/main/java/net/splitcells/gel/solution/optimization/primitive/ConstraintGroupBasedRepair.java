@@ -24,6 +24,7 @@ import static net.splitcells.dem.data.set.Sets.*;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
+import static net.splitcells.gel.constraint.Constraint.incomingGroupsOfConstraintPath;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
@@ -48,11 +49,17 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 (allocationsGroups -> {
                     final var candidates = allocationsGroups
                             .stream()
-                            .filter(allocationGroupsPath -> !allocationGroupsPath
-                                    .lastValue()
-                                    .get()
-                                    .defying()// TODO FIX Searches defiance in wrong group, most of the time.
-                                    .isEmpty())
+                            .filter(allocationGroupsPath ->
+                                    incomingGroupsOfConstraintPath(allocationGroupsPath)
+                                            .stream()
+                                            .map(group -> !allocationGroupsPath
+                                                    .lastValue()
+                                                    .get()
+                                                    .defying(group)
+                                                    .isEmpty())
+                                            .reduce((a, b) -> a && b)
+                                            .orElse(false)
+                            )
                             .collect(toList());
                     if (candidates.isEmpty()) {
                         return Optional.empty();

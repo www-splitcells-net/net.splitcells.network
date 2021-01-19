@@ -1,5 +1,6 @@
 package net.splitcells.gel.constraint;
 
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
@@ -10,6 +11,7 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
 import static net.splitcells.gel.rating.structure.MetaRating.neutral;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -153,6 +155,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
                 .orElseGet(() -> setOfUniques());
     }
 
+    @Deprecated
     default Set<GroupId> childGroups(Line lines, Constraint subject) {
         final Set<GroupId> childGroups = setOfUniques();
         if (equals(subject)) {
@@ -161,6 +164,35 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
             childrenView().forEach(child -> childGroups.addAll(child.childGroups(lines, subject)));
         }
         return childGroups;
+    }
+
+    static Set<GroupId> incomingGroupsOfConstraintPath(List<Constraint> constraintPath) {
+        return incomingGroupsOfConstraintPath(constraintPath, setOfUniques(constraintPath.get(0).injectionGroup()));
+    }
+
+    static Set<GroupId> incomingGroupsOfConstraintPath(List<Constraint> constraintPath, Set<GroupId> injectionGroups) {
+        if (constraintPath.isEmpty()) {
+            throw new IllegalArgumentException("No path present.");
+        }
+        if (constraintPath.size() == 1) {
+            return injectionGroups;
+        }
+        final var pathHead = constraintPath.remove(0);
+        return incomingGroupsOfConstraintPath
+                (constraintPath
+                        , injectionGroups.stream()
+                                .map(pathHead::childGroups)
+                                .flatMap(Collection::stream)
+                                .collect(toSetOfUniques()));
+    }
+
+    default Set<GroupId> childGroups(GroupId incomingGroup) {
+        return lineProcessing().columnView(INCOMING_CONSTRAINT_GROUP)
+                .lookup(incomingGroup)
+                .getLines()
+                .stream()
+                .map(lineResult -> lineResult.value(RESULTING_CONSTRAINT_GROUP))
+                .collect(toSetOfUniques());
     }
 
     default Element graph() {
