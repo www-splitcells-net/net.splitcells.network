@@ -152,7 +152,7 @@ public class ConstraintGroupBasedRepairTest {
         solution.optimize(linearInitialization());
         assertThat(solution.getLines()).hasSize(7);
 
-        final var testSubject = constraintGroupBasedRepair();
+        final var testSubject = constraintGroupBasedRepair(0);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA));
         assertThat(solution.getLines()).hasSize(3);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB));
@@ -201,7 +201,7 @@ public class ConstraintGroupBasedRepairTest {
         solution.optimize(linearInitialization());
         assertThat(solution.getLines()).hasSize(7);
 
-        final var testSubject = constraintGroupBasedRepair();
+        final var testSubject = constraintGroupBasedRepair(0);
         final var testProduct = testSubject.demandGrouping
                 (solution.constraint().childrenView().get(3).childrenView().get(0)
                         , solution);

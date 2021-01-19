@@ -74,7 +74,7 @@ public class OralExamsTest extends TestSuiteI {
                     // TODO
                     //ierobežojumGrupaBalstītsRemonts();
                     //funkcionālsKalnāKāpējs(ierobežojumGrupaBalstītsRemonts(), 2);
-                    return constraintGroupBasedRepair();
+                    return constraintGroupBasedRepair(0);
                 }
         ));
         arguments.solution.createStandardAnalysis();
@@ -95,7 +95,9 @@ public class OralExamsTest extends TestSuiteI {
                                     , Xml.parse(initialSolutionTemplate).getDocumentElement())));
         }
         testSubject.optimize(linearInitialization());
-        testSubject.optimizeOnce(constraintGroupBasedRepair());
+        testSubject.optimize(escalator(i -> {
+            return constraintGroupBasedRepair(4);
+        }));
         /*pārbaudesPriekšmets.optimizē(eskalācija(i -> {
                     //ierobežojumGrupaBalstītsRemonts();
                     //funkcionālsKalnāKāpējs(ierobežojumGrupaBalstītsRemonts(), 2);
@@ -167,13 +169,13 @@ public class OralExamsTest extends TestSuiteI {
                 .withSupplies(supplies)
                 .withConstraint
                         (forAll()
-                                .withChildren(ForAlls.forAll(OBSERVER)
+                                .withChildren(forAll(OBSERVER)
                                                 .withChildren(forAllCombinations(DATE, SHIFT)
                                                         .withChildren(then(hasSize(1))))
-                                        , ForAlls.forAll(EXAMINER)
+                                        , forAll(EXAMINER)
                                                 .withChildren(forAllCombinations(DATE, SHIFT)
                                                         .withChildren(then(hasSize(1))))
-                                        , ForAlls.forAll(STUDENTS)
+                                        , forAll(STUDENTS)
                                                 .withChildren(forAllCombinations(DATE, SHIFT)
                                                                 .withChildren(then(hasSize(1)))
                                                         , then(minimalDistance2(DATE, 3.0))
