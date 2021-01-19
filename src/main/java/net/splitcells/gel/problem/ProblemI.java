@@ -143,6 +143,7 @@ public class ProblemI implements Problem {
         return this.allocations.add(line);
     }
 
+    @Deprecated
     @Override
     public void remove(final int allocationIndex) {
         this.allocations.remove(allocationIndex);
