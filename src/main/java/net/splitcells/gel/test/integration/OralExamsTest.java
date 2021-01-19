@@ -87,15 +87,14 @@ public class OralExamsTest extends TestSuiteI {
     public void testCurrent() {
         final var testSubject = randomOralExams(88, 177, 40, 41, 2, 4, 5, 6)
                 .asSolution();
-        final var initialSolutionTemplate = testSubject.dataContainer().resolve("result.analysis.fods");
+        final var initialSolutionTemplate = testSubject.dataContainer().resolve("result.fods");
         if (Files.exists(initialSolutionTemplate)) {
             testSubject.optimize
                     (templateInitializer
                             (databaseOfFods(objectAttributes(testSubject.headerView())
                                     , Xml.parse(initialSolutionTemplate).getDocumentElement())));
-        } else {
-            testSubject.optimize(linearInitialization());
         }
+        testSubject.optimize(linearInitialization());
         testSubject.optimizeOnce(constraintGroupBasedRepair());
         /*pārbaudesPriekšmets.optimizē(eskalācija(i -> {
                     //ierobežojumGrupaBalstītsRemonts();
