@@ -11,7 +11,9 @@ public interface ColumnView<T> extends ListView<T>, LookupComponents<T> {
      */
     default List<T> values() {
         final List<T> values = Lists.<T>list();
-        this.stream().filter(e -> e != null).forEach(e -> values.add(e));
+        stream()
+                .filter(e -> e != null)
+                .forEach(e -> values.add(e));
         return values;
     }
 }
