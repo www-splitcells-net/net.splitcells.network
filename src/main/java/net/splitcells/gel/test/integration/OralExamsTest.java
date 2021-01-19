@@ -5,7 +5,6 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.type.ForAlls;
-import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.structure.Rating;
@@ -22,11 +21,12 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.ForAlls.forAllCombinations;
+import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.database.Databases.databaseOfFods;
 import static net.splitcells.gel.data.database.Databases.objectAttributes;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
-import static net.splitcells.gel.rating.rater.MinimalDistance.minimālsIntAttālums;
+import static net.splitcells.gel.rating.rater.MinimalDistance.minimalDistance2;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
@@ -169,15 +169,15 @@ public class OralExamsTest extends TestSuiteI {
                         (forAll()
                                 .withChildren(ForAlls.forAll(OBSERVER)
                                                 .withChildren(forAllCombinations(DATE, SHIFT)
-                                                        .withChildren(Then.then(hasSize(1))))
+                                                        .withChildren(then(hasSize(1))))
                                         , ForAlls.forAll(EXAMINER)
                                                 .withChildren(forAllCombinations(DATE, SHIFT)
-                                                        .withChildren(Then.then(hasSize(1))))
+                                                        .withChildren(then(hasSize(1))))
                                         , ForAlls.forAll(STUDENTS)
                                                 .withChildren(forAllCombinations(DATE, SHIFT)
-                                                                .withChildren(Then.then(hasSize(1)))
-                                                        , Then.then(minimālsIntAttālums(DATE, 3.0))
-                                                        , Then.then(minimālsIntAttālums(DATE, 5.0))
+                                                                .withChildren(then(hasSize(1)))
+                                                        , then(minimalDistance2(DATE, 3.0))
+                                                        , then(minimalDistance2(DATE, 5.0))
                                                 )
                                         /** TODO Every examiner and observer wants to minimize the number of days with exams.
                                          * <p/>
@@ -186,7 +186,7 @@ public class OralExamsTest extends TestSuiteI {
                                          * TODO Every examiner and observer wants to minimize the number of room switches per day.
                                          */
                                         , forAllCombinations(DATE, SHIFT, ROOM_NUMBER)
-                                                .withChildren(Then.then(hasSize(1)))
+                                                .withChildren(then(hasSize(1)))
                                         , studentSpecificConstraints()
                                         , checkerSpecificConstraints()
                                         , examinerSpecificConstraints()
@@ -236,13 +236,13 @@ public class OralExamsTest extends TestSuiteI {
                 assertThat
                         (testSubject.constraint().query()
                                 .forAll(STUDENTS)
-                                .then(minimālsIntAttālums(DATE, 3.0))
+                                .then(minimalDistance2(DATE, 3.0))
                                 .rating()
                         ).isEqualTo(cost(1));
                 assertThat
                         (testSubject.constraint().query()
                                 .forAll(STUDENTS)
-                                .then(minimālsIntAttālums(DATE, 5.0))
+                                .then(minimalDistance2(DATE, 5.0))
                                 .rating()
                         ).isEqualTo(cost(1));
             }
@@ -302,13 +302,13 @@ public class OralExamsTest extends TestSuiteI {
             assertThat
                     (testSubject.constraint().query()
                             .forAll(STUDENTS)
-                            .then(minimālsIntAttālums(DATE, 3.0))
+                            .then(minimalDistance2(DATE, 3.0))
                             .rating()
                     ).isEqualTo(cost(10));
             assertThat
                     (testSubject.constraint().query()
                             .forAll(STUDENTS)
-                            .then(minimālsIntAttālums(DATE, 5.0))
+                            .then(minimalDistance2(DATE, 5.0))
                             .rating()
                     ).isEqualTo(cost(10));
             assertThat
@@ -355,13 +355,13 @@ public class OralExamsTest extends TestSuiteI {
             assertThat
                     (testSubject.constraint().query()
                             .forAll(STUDENTS)
-                            .then(minimālsIntAttālums(DATE, 3.0))
+                            .then(minimalDistance2(DATE, 3.0))
                             .rating()
                     ).isEqualTo(cost(3));
             assertThat
                     (testSubject.constraint().query()
                             .forAll(STUDENTS)
-                            .then(minimālsIntAttālums(DATE, 5.0))
+                            .then(minimalDistance2(DATE, 5.0))
                             .rating()
                     ).isEqualTo(cost(3));
             assertThat

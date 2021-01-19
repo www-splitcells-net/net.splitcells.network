@@ -4,6 +4,7 @@ import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
+import net.splitcells.gel.constraint.ConstraintTest;
 import net.splitcells.gel.test.integration.OralExamsTest;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -17,6 +18,7 @@ public final class GelDev {
 
     public static void main(String... arg) {
         process(() -> {
+            //new ConstraintTest().test_incomingGroupsOfConstraintPath();
             new OralExamsTest().testCurrent();
         }, standardConfigurator().andThen(env -> {
             env.config()
