@@ -87,7 +87,7 @@ public class OralExamsTest extends TestSuiteI {
     public void testCurrent() {
         final var testSubject = randomOralExams(88, 177, 40, 41, 2, 4, 5, 6)
                 .asSolution();
-        final var initialSolutionTemplate = testSubject.dataContainer().resolve("saturu.veidne.fods");
+        final var initialSolutionTemplate = testSubject.dataContainer().resolve("result.analysis.fods");
         if (Files.exists(initialSolutionTemplate)) {
             testSubject.optimize
                     (templateInitializer
@@ -96,19 +96,14 @@ public class OralExamsTest extends TestSuiteI {
         } else {
             testSubject.optimize(linearInitialization());
         }
-        //pārbaudesPriekšmets.optimizē(ierobežojumGrupaBalstītsRemonts());
+        testSubject.optimizeOnce(constraintGroupBasedRepair());
         /*pārbaudesPriekšmets.optimizē(eskalācija(i -> {
                     //ierobežojumGrupaBalstītsRemonts();
                     //funkcionālsKalnāKāpējs(ierobežojumGrupaBalstītsRemonts(), 2);
                     return ierobežojumGrupaBalstītsRemonts();
                 }
         ));*/
-
         testSubject.createStandardAnalysis();
-        /*testMutisksEksamensOptimizācija
-                (MutisksEksamensOptimizācijaArgumenti.veido
-                        (nejaušaijsMutisksEksamens(88, 177, 40, 41, 2, 4, 5, 6).kāAtrisinājums()
-                                , bezMaksas()));*/
     }
 
     @Disabled
