@@ -18,21 +18,23 @@ import static net.splitcells.gel.common.Language.OPTIMIZATION;
 public class Escalator implements Optimization {
 
     public static Escalator escalator(Function<Integer, Optimization> optimizations) {
-        return new Escalator(optimizations, 0, 0);
+        return new Escalator(optimizations, 0, 0, Integer.MAX_VALUE);
     }
 
-    public static Escalator escalator(Function<Integer, Optimization> optimizations, int escalationLevel, int minimum_escalation_level) {
-        return new Escalator(optimizations, escalationLevel, minimum_escalation_level);
+    public static Escalator escalator(Function<Integer, Optimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
+        return new Escalator(optimizations, escalationLevel, minimum_escalation_level, maximum_escalation_level);
     }
 
     private final Function<Integer, Optimization> optimizations;
     private int escalationLevel;
-    private int minimum_escalation_level;
+    private final int minimum_escalation_level;
+    private final int maximum_escalation_level;
 
-    private Escalator(Function<Integer, Optimization> optimizations, int escalationLevel, int minimum_escalation_level) {
+    private Escalator(Function<Integer, Optimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
         this.optimizations = optimizations;
         this.escalationLevel = escalationLevel;
         this.minimum_escalation_level = minimum_escalation_level;
+        this.maximum_escalation_level = maximum_escalation_level;
     }
 
     @Override
@@ -50,9 +52,12 @@ public class Escalator implements Optimization {
             return list();
         }
         final var optimizations = this.optimizations.apply(escalationLevel).optimize(solution);
+        // TODO PERFORMANCE This line of code can duplicate the runtime of the complete code.
         final var currentRating = solution.rating(optimizations);
         if (currentRating.betterThan(rootRating)) {
-            escalationLevel += 1;
+            if (escalationLevel < maximum_escalation_level) {
+                escalationLevel += 1;
+            }
         } else {
             escalationLevel -= 1;
         }
