@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.stream.IntStream;
 
 import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.dem.lang.Xml;
@@ -32,15 +31,15 @@ import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Node;
 
 public class MinimalDistance<T> implements Rater {
-    public static MinimalDistance<Integer> minimālsIntAttālums(Attribute<Integer> atribūts, double minimumDistance) {
-        return minimālsAttālums(atribūts, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
+    public static MinimalDistance<Integer> minimalDistance2(Attribute<Integer> atribūts, double minimumDistance) {
+        return minimalDistance(atribūts, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
     }
 
     public static MinimalDistance<Double> minimalDistance(Attribute<Double> atribūts, double minimumDistance) {
-        return minimālsAttālums(atribūts, minimumDistance, comparator_(Double::compare), MathUtils::distance);
+        return minimalDistance(atribūts, minimumDistance, comparator_(Double::compare), MathUtils::distance);
     }
 
-    public static <R> MinimalDistance<R> minimālsAttālums(Attribute<R> atribūts, double minimumDistance, Comparator<R> comparator, BiFunction<R, R, Double> distanceMeassurer) {
+    public static <R> MinimalDistance<R> minimalDistance(Attribute<R> atribūts, double minimumDistance, Comparator<R> comparator, BiFunction<R, R, Double> distanceMeassurer) {
         return new MinimalDistance<>(atribūts, minimumDistance, comparator, distanceMeassurer);
     }
 
