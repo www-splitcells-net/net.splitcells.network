@@ -24,7 +24,7 @@ import static net.splitcells.dem.data.set.Sets.*;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.constraint.Constraint.incomingGroupsOfConstraintPath;
+import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
@@ -169,7 +169,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 .getLines()
                 .stream()
                 .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP)
-                        , processing.value(Constraint.LINE)))
+                        , processing.value(LINE)))
                 .forEach(processing -> {
                     final Set<Line> group;
                     if (!demandGrouping.containsKey(processing.getKey())) {
@@ -191,12 +191,21 @@ public class ConstraintGroupBasedRepair implements Optimization {
         final var incomingGroups = Sets.setOfUniques
                 (constraint
                         .lineProcessing()
-                        .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
+                        .columnView(INCOMING_CONSTRAINT_GROUP)
                         .values());
+        final var defyingGroup = incomingGroups
+                .stream()
+                .filter(group -> !constraint.defying(group).isEmpty())
+                .count();
         return incomingGroups
                 .stream()
                 .filter(group -> !constraint.defying(group).isEmpty())
-                .map(group -> constraint.lineProcessing().columnView(Constraint.LINE).values())
+                .map(group -> constraint
+                        .lineProcessing()
+                        .columnView(INCOMING_CONSTRAINT_GROUP)
+                        .lookup(group)
+                        .columnView(LINE)
+                        .values())
                 .flatMap(streamOfLineList -> streamOfLineList.stream())
                 .distinct()
                 .map(allocation -> optimizationEvent
