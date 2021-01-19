@@ -28,6 +28,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.gel.common.Language.RATING;
+import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -68,6 +69,12 @@ public class SolutionAspect implements Solution {
 
     @Returns_this
     public Solution optimize(OptimizationEvent event, OptimizationParameters parameters) {
+        if (event.demand().interpret().isEmpty()) {
+            throw new IllegalArgumentException("Unknown demand: " + event.demand().index() + ", " + event.demand().context().path());
+        }
+        if (event.supply().interpret().isEmpty()) {
+            throw new IllegalArgumentException("Unknown supply: " + event.supply().index() + ", " + event.supply().context().path());
+        }
         if (event.stepType().equals(REMOVAL)) {
             event.demand()
                     .interpret()
