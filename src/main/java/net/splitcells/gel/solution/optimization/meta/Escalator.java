@@ -12,14 +12,19 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 public class Escalator implements Optimization {
 
     public static Escalator escalator(Function<Integer, Optimization> optimizations) {
-        return new Escalator(optimizations);
+        return new Escalator(optimizations,0);
+    }
+
+    public static Escalator escalator(Function<Integer, Optimization> optimizations, int escalationLevel) {
+        return new Escalator(optimizations, escalationLevel);
     }
 
     private final Function<Integer, Optimization> optimizations;
-    private int escalationLevel = 0;
+    private int escalationLevel;
 
-    private Escalator(Function<Integer, Optimization> optimizations) {
+    private Escalator(Function<Integer, Optimization> optimizations, int escalationLevel) {
         this.optimizations = optimizations;
+        this.escalationLevel = escalationLevel;
     }
 
     @Override

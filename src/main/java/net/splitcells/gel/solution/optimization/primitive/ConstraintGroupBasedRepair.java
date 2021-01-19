@@ -43,22 +43,27 @@ public class ConstraintGroupBasedRepair implements Optimization {
         return new ConstraintGroupBasedRepair(groupSelector, randomRepairer());
     }
 
-    public static ConstraintGroupBasedRepair constraintGroupBasedRepair() {
+    public static ConstraintGroupBasedRepair constraintGroupBasedRepair(int minimum_constraint_group_path) {
         final var randomness = randomness();
         return new ConstraintGroupBasedRepair
                 (allocationsGroups -> {
                     final var candidates = allocationsGroups
                             .stream()
                             .filter(allocationGroupsPath ->
-                                    incomingGroupsOfConstraintPath(allocationGroupsPath)
-                                            .stream()
-                                            .map(group -> !allocationGroupsPath
-                                                    .lastValue()
-                                                    .get()
-                                                    .defying(group)
-                                                    .isEmpty())
-                                            .reduce((a, b) -> a && b)
-                                            .orElse(false)
+                                    {
+                                        if (allocationGroupsPath.size() < minimum_constraint_group_path) {
+                                            return false;
+                                        }
+                                        return incomingGroupsOfConstraintPath(allocationGroupsPath)
+                                                .stream()
+                                                .map(group -> !allocationGroupsPath
+                                                        .lastValue()
+                                                        .get()
+                                                        .defying(group)
+                                                        .isEmpty())
+                                                .reduce((a, b) -> a || b)
+                                                .orElse(false);
+                                    }
                             )
                             .collect(toList());
                     if (candidates.isEmpty()) {
