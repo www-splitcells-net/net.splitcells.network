@@ -156,16 +156,17 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 .lineProcessing()
                 .getLines()
                 .stream()
-                .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP), processing.value(Constraint.LINE)))
+                .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP)
+                        , processing.value(Constraint.LINE)))
                 .forEach(processing -> {
-                    final Set<Line> grup;
+                    final Set<Line> group;
                     if (!demandGrouping.containsKey(processing.getKey())) {
-                        grup = Sets.setOfUniques();
-                        demandGrouping.put(processing.getKey(), grup);
+                        group = Sets.setOfUniques();
+                        demandGrouping.put(processing.getKey(), group);
                     } else {
-                        grup = demandGrouping.get(processing.getKey());
+                        group = demandGrouping.get(processing.getKey());
                     }
-                    grup.with(processing.getValue());
+                    group.with(solution.demand_of_allocation(processing.getValue()));
                 });
         return demandGrouping;
     }
