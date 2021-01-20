@@ -48,6 +48,11 @@ public interface Perspective extends PerspectiveView {
                 .withValue(perspective(value, STRING)));
     }
 
+    default Perspective withProperty(String name, String value) {
+        return withValue(perspective(name)
+                .withValue(perspective(value, STRING)));
+    }
+
     default Perspective withValues(Perspective... args) {
         children().addAll(list(args));
         return this;
