@@ -14,4 +14,8 @@ public class RandomnessSource {
 		return factory.rnd();
 	}
 
+	public static Randomness randomness(Long seed) {
+		return factory.rnd(seed);
+	}
+
 }

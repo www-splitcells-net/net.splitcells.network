@@ -42,6 +42,11 @@ public class BuilderRandomConfigable implements RndSrcF {
     }
 
     @Override
+    public Randomness rnd(Long seed) {
+        return builderRandom.rnd(seed);
+    }
+
+    @Override
     public Randomness rnd() {
         return builderRandom.rnd();
     }

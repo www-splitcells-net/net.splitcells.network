@@ -25,7 +25,7 @@ public class RandomnessTest {
     @Test
     public void testTruthValueOf() {
         final var chance = 0.75f;
-        final var randomness = randomness();
+        final var randomness = randomness(0L);
         final var truthCounter = new AtomicInteger(0);
         final var runs = 1_000_000;
         final var deviation = 0.1f;
