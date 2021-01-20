@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static java.lang.Math.floor;
 import static java.lang.Math.floorMod;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
@@ -94,7 +95,7 @@ public class OralExamsTest extends TestSuiteI {
                         , 40
                         , 41
                         , 2
-                        , 4
+                        , 5
                         , 5
                         , 6
                         , randomness(0L))
@@ -166,10 +167,18 @@ public class OralExamsTest extends TestSuiteI {
     public Problem randomOralExams(int studentCount, int examCount, int examinerCount, int checkerCount, int weekCount
             , int examDayCountPerWeek, int shiftsPerDayCount, int roomCount, Randomness randomness) {
         final List<List<Object>> supplies = list();
-        for (int room = 1; room <= roomCount; ++room) {
-            for (int examDay = 1; examDay <= examDayCountPerWeek; ++examDay) {
-                for (int shift = 1; shift <= shiftsPerDayCount; ++shift) {
-                    supplies.add(list(shift, floorMod(examDay, examDayCountPerWeek) + ((examDay / 5) * 7) + 1, room));
+        for (int week = 1; week <= weekCount; ++week) {
+            for (int room = 1; room <= roomCount; ++room) {
+                for (int examDay = 1; examDay <= examDayCountPerWeek; ++examDay) {
+                    for (int shift = 1; shift <= shiftsPerDayCount; ++shift) {
+                        supplies.add
+                                (list
+                                        (shift
+                                                , floorMod(examDay, examDayCountPerWeek)
+                                                        + (floor((float) examDay / (float) examDayCountPerWeek) * 7)
+                                                        - 1
+                                                , room));
+                    }
                 }
             }
         }
