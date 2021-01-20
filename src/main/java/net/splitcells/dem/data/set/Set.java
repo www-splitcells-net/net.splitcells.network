@@ -7,8 +7,7 @@ import java.util.HashSet;
 import static java.util.Arrays.asList;
 
 public interface Set<T> extends java.util.Set<T> {
-
-    @Deprecated
+    
     default boolean add(T e) {
         if (contains(e)) {
             throw new IllegalArgumentException("Element " + e + " already present in " + this);
