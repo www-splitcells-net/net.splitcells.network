@@ -54,7 +54,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                                         if (allocationGroupsPath.size() < minimum_constraint_group_path) {
                                             return false;
                                         }
-                                        return incomingGroupsOfConstraintPath(allocationGroupsPath)
+                                        return incomingGroupsOfConstraintPath(allocationGroupsPath.shallowCopy())
                                                 .stream()
                                                 .map(group -> !allocationGroupsPath
                                                         .lastValue()
