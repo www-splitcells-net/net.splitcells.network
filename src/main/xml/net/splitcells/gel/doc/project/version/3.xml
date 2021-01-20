@@ -18,21 +18,7 @@
                 <queue>
                     <todo>
                         Solve oral exams problem.
-                        <toDo>maven.test MutisksEksamensTest#testMomentānu
-                            <toDo>OralExamsTest#testCurrent
-                                <toDo name="Implement fast interactive optimization loop.">
-                                    <todo>Improve reasoning system.
-                                        <toDo>State the error in the reason as well and not just the affected
-                                            constraint.
-                                        </toDo>
-                                        <toDo>Remove empty ForAll nodes in reasoning.</toDo>
-                                        <toDo>Add background color to the "line argument" column
-                                            in the result analysis. The color should represent the number of reasons.
-                                        </toDo>
-                                        <toDo>Add cost column to result analysis.</toDo>
-                                    </todo>
-                                </toDo>
-                            </toDo>
+                        <toDo>maven.test OralExamsTest#testCurrent
                             <toDo>OralExamsTest#oralExamOptimizationTests
                                 <toDo>Use ConstraintGroupBasedRepair.</toDo>
                                 <toDo>Use Escalator.</toDo>
