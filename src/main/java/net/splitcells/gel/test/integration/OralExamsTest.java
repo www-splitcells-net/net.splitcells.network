@@ -26,7 +26,7 @@ import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.database.Databases.databaseOfFods;
 import static net.splitcells.gel.data.database.Databases.objectAttributes;
 import static net.splitcells.gel.data.table.attribute.AttributeI.*;
-import static net.splitcells.gel.data.table.attribute.AttributeI.integerattribute;
+import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.MinimalDistance.minimalDistance2;
 import static net.splitcells.gel.rating.type.Cost.cost;
