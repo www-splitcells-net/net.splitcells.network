@@ -406,10 +406,19 @@
                 of source code.
             </paragraph>
         </chapter>
+        <chapter>
+            <title>Documentation Content</title>
+            <paragraph>Updating the documentation is always a problem.
+                Minimize the need for documentation.
+                Documentation can sometimes replaced by programs (i.e. build script instead of describing how to build
+                software).
+                Prefer documenting justifications instead of functionality.
+            </paragraph>
+        </chapter>
     </chapter>
     <chapter>
         <title>Program Code</title>
-        <paragraph>The programming code should priorize adaptibility.
+        <paragraph>The programming code should prioritize adaptability.
             This can be made by making it easy to refactor the code or to translate it to a completely other language.
         </paragraph>
         <chapter>
