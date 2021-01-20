@@ -175,7 +175,7 @@ public class OralExamsTest extends TestSuiteI {
                                 (list
                                         (shift
                                                 , floorMod(examDay, examDayCountPerWeek)
-                                                        + (floor((float) examDay / (float) examDayCountPerWeek) * 7)
+                                                        + (int) ( floor((float) examDay / (float) examDayCountPerWeek) * 7)
                                                         - 1
                                                 , room));
                     }
