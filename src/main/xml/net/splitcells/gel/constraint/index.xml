@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:n="http://splitcells.net/natural.xsd" xmlns:e="http://splitcells.net/sen.xsd">
+    <meta>
+        <d:toDo>
+            <d:project>
+                <d:scheduling>
+                    <d:usncheduled>
+                        <d:idea>Support incremental and stateless constraint processing.</d:idea>
+                        <d:idea>Implement derived lines, where the lines derived from allocations are created and
+                            propagated.
+                        </d:idea>
+                    </d:usncheduled>
+                </d:scheduling>
+            </d:project>
+        </d:toDo>
+    </meta>
+</article>
