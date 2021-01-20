@@ -3,6 +3,7 @@ package net.splitcells.gel.test.integration;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -87,7 +88,16 @@ public class OralExamsTest extends TestSuiteI {
     @Disabled
     @Test
     public void testCurrent() {
-        final var testSubject = randomOralExams(88, 177, 40, 41, 2, 4, 5, 6)
+        final var testSubject = randomOralExams
+                (88
+                        , 177
+                        , 40
+                        , 41
+                        , 2
+                        , 4
+                        , 5
+                        , 6
+                        , randomness(0L))
                 .asSolution();
         final var initialSolutionTemplate = testSubject.dataContainer().resolve("previous").resolve("results.fods");
         if (Files.exists(initialSolutionTemplate)) {
@@ -113,8 +123,19 @@ public class OralExamsTest extends TestSuiteI {
     @TestFactory
     public Stream<DynamicTest> oralExamOptimizationTests() {
         return dynamicTests(this::testOralExamOptimization
-                , OralExamOptimizationArguments.create(randomOralExams(1, 1, 1, 1, 1, 1, 1, 1).asSolution()
-                        , noCost())
+                , OralExamOptimizationArguments.create
+                        (randomOralExams
+                                        (1
+                                                , 1
+                                                , 1
+                                                , 1
+                                                , 1
+                                                , 1
+                                                , 1
+                                                , 1
+                                                , randomness(0L))
+                                        .asSolution()
+                                , noCost())
                 , OralExamOptimizationArguments.create(two_oral_exams_with_multiple_possible_choices().asSolution()
                         , noCost())
                 , OralExamOptimizationArguments.create(two_oral_exams_with_multiple_bad_choices().asSolution()
@@ -143,8 +164,7 @@ public class OralExamsTest extends TestSuiteI {
     }
 
     public Problem randomOralExams(int studentCount, int examCount, int examinerCount, int checkerCount, int weekCount
-            , int examDayCountPerWeek, int shiftsPerDayCount, int roomCount) {
-        final var randomness = randomness();
+            , int examDayCountPerWeek, int shiftsPerDayCount, int roomCount, Randomness randomness) {
         final List<List<Object>> supplies = list();
         for (int room = 1; room <= roomCount; ++room) {
             for (int examDay = 1; examDay <= examDayCountPerWeek; ++examDay) {
