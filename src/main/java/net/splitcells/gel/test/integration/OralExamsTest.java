@@ -12,6 +12,7 @@ import net.splitcells.gel.solution.Solution;
 import org.junit.jupiter.api.*;
 
 import java.nio.file.Files;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.lang.Math.floorMod;
@@ -24,7 +25,8 @@ import static net.splitcells.gel.constraint.type.ForAlls.forAllCombinations;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.database.Databases.databaseOfFods;
 import static net.splitcells.gel.data.database.Databases.objectAttributes;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.table.attribute.AttributeI.*;
+import static net.splitcells.gel.data.table.attribute.AttributeI.integerattribute;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.MinimalDistance.minimalDistance2;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -47,12 +49,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * TODO Prefered days and shifts for pupil and teachers.
  */
 public class OralExamsTest extends TestSuiteI {
-    public static final Attribute<Integer> STUDENTS = attribute(Integer.class, "students");
-    public static final Attribute<Integer> EXAMINER = attribute(Integer.class, "examiner");
-    public static final Attribute<Integer> OBSERVER = attribute(Integer.class, "observer");
-    public static final Attribute<Integer> SHIFT = attribute(Integer.class, "shift");
-    public static final Attribute<Integer> DATE = attribute(Integer.class, "date");
-    public static final Attribute<Integer> ROOM_NUMBER = attribute(Integer.class, "room-number");
+    public static final Attribute<Integer> STUDENTS = integerAttribute("students");
+    public static final Attribute<Integer> EXAMINER = integerAttribute("examiner");
+    public static final Attribute<Integer> OBSERVER = integerAttribute("observer");
+    public static final Attribute<Integer> SHIFT = integerAttribute("shift");
+    public static final Attribute<Integer> DATE = integerAttribute("date");
+    public static final Attribute<Integer> ROOM_NUMBER = integerAttribute("room-number");
 
     private static class OralExamOptimizationArguments {
         public static OralExamOptimizationArguments create(Solution solution, Rating rating) {
@@ -87,7 +89,7 @@ public class OralExamsTest extends TestSuiteI {
     public void testCurrent() {
         final var testSubject = randomOralExams(88, 177, 40, 41, 2, 4, 5, 6)
                 .asSolution();
-        final var initialSolutionTemplate = testSubject.dataContainer().resolve("result.fods");
+        final var initialSolutionTemplate = testSubject.dataContainer().resolve("previous").resolve("results.fods");
         if (Files.exists(initialSolutionTemplate)) {
             testSubject.optimize
                     (templateInitializer
@@ -95,15 +97,14 @@ public class OralExamsTest extends TestSuiteI {
                                     , Xml.parse(initialSolutionTemplate).getDocumentElement())));
         }
         testSubject.optimize(linearInitialization());
-        testSubject.optimize(escalator(i -> {
-            return constraintGroupBasedRepair(4);
-        }));
-        /*pārbaudesPriekšmets.optimizē(eskalācija(i -> {
-                    //ierobežojumGrupaBalstītsRemonts();
-                    //funkcionālsKalnāKāpējs(ierobežojumGrupaBalstītsRemonts(), 2);
-                    return ierobežojumGrupaBalstītsRemonts();
+        testSubject.optimizeOnce(constraintGroupBasedRepair(4));
+        /*IntStream.rangeClosed(1, 10).forEach(j -> {
+                    testSubject.optimize(escalator(i -> {
+                        return constraintGroupBasedRepair(i);
+                    }, 3, 3, 4));
                 }
-        ));*/
+
+        );*/
         testSubject.createStandardAnalysis();
     }
 
