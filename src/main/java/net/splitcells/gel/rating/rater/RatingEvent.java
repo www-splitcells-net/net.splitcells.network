@@ -22,8 +22,8 @@ public interface RatingEvent {
 
     Set<Line> removal();
 
-    default void pieliktNovērtējumu_caurPapildinājumu(Line subject, Rating additionalRating, List<Constraint> children,
-                                                      Optional<Rating> ratingBeforeAddtion) {
+    default void addRating_viaAddition(Line subject, Rating additionalRating, List<Constraint> children,
+                                       Optional<Rating> ratingBeforeAddtion) {
         final Rating currentRating;
         if (additions().containsKey(subject)) {
             currentRating = additions().get(subject).rating();
