@@ -1,9 +1,12 @@
 package net.splitcells.gel.constraint;
 
+import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
+import static net.splitcells.dem.resource.host.Files.createDirectory;
+import static net.splitcells.dem.resource.host.Files.writeToFile;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
@@ -19,6 +22,7 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import org.w3c.dom.Element;
@@ -204,5 +208,11 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
             graph.appendChild(child.graph());
         });
         return graph;
+    }
+
+    default void persistGraphState() {
+        createDirectory(environment().config().configValue(ProcessPath.class));
+        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path().toString() + ".fods"), lineProcessing().toFods());
+        childrenView().forEach(Constraint::persistGraphState);
     }
 }
