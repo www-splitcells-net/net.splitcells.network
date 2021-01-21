@@ -19,8 +19,25 @@ public interface Rater extends PubliclyTyped<Rater>
         , PubliclyConstructed<Domable>
         , DiscoverableFromMultiplePathsSetter
         , Domable {
+
+    /**
+     *
+     * @param lines TODO Why is this needed? Is this not contained in other variables?
+     * @param addition
+     * @param children
+     * @param ratingsBeforeAddition
+     * @return
+     */
     RatingEvent rating_after_addition(Table  lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition);
 
+    /**
+     *
+     * @param lines TODO Why is this needed. Is this not contained in other variables?
+     * @param removal
+     * @param children
+     * @param ratingsBeforeRemoval
+     * @return
+     */
     RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval);
 
     @Override
