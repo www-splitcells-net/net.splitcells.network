@@ -42,8 +42,8 @@ public class MinimalDistance<T> implements Rater {
     public static <R> MinimalDistance<R> minimalDistance(Attribute<R> attribute
             , double minimumDistance
             , Comparator<R> comparator
-            , BiFunction<R, R, Double> distanceMeassurer) {
-        return new MinimalDistance<>(attribute, minimumDistance, comparator, distanceMeassurer);
+            , BiFunction<R, R, Double> distanceMeasurer) {
+        return new MinimalDistance<>(attribute, minimumDistance, comparator, distanceMeasurer);
     }
 
     private final double minimumDistance;
