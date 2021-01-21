@@ -36,16 +36,16 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines, Line additional, List<Constraint> children
+    public RatingEvent rating_after_addition(Table lines, Line addition, List<Constraint> children
             , Table ratingsBeforeAddition) {
         final var individualRating = rating(lines, false);
         final var additionalRatings
-                = rateLines(lines, additional, children, individualRating);
-        additionalRatings.additions().put(additional
+                = rateLines(lines, addition, children, individualRating);
+        additionalRatings.additions().put(addition
                 , localRating()
                         .withPropagationTo(children)
                         .withRating(individualRating)
-                        .withResultingGroupId(additional.value(Constraint.INCOMING_CONSTRAINT_GROUP))
+                        .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP))
         );
         return additionalRatings;
     }

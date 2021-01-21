@@ -35,7 +35,7 @@ public class Propagation implements Rater {
 
     @Override
     public RatingEvent rating_after_addition
-            (Table lines, Line addition, List<Constraint> children, Table ratingBeforeAdditionnovērtējumsPirmsPapildinājumu) {
+            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final RatingEvent ratingEvent = ratingEvent();
         ratingEvent.additions().put
                 (addition
@@ -48,7 +48,7 @@ public class Propagation implements Rater {
 
     @Override
     public RatingEvent rating_before_removal
-            (Table lines, Line removal, List<Constraint> children, Table eventBeforeRemoval) {
+            (Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
         return ratingEvent();
     }
 

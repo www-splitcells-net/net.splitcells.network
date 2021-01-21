@@ -63,21 +63,21 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines, Line papildinājums, List<Constraint> bērni
-            , Table novērtējumsPirmsPapildinājumu) {
+    public RatingEvent rating_after_addition(Table lines, Line addition, List<Constraint> children
+            , Table ratingsBeforeAddition) {
         final RatingEvent rating = ratingEvent();
         rating.additions().put
-                (papildinājums
+                (addition
                         , localRating()
-                                .withPropagationTo(bērni)
-                                .withResultingGroupId(classifierBasedOnLineValue.apply(papildinājums))
-                                .withRating(raterBasedOnLineValue.apply(papildinājums.value(Constraint.LINE))));
+                                .withPropagationTo(children)
+                                .withResultingGroupId(classifierBasedOnLineValue.apply(addition))
+                                .withRating(raterBasedOnLineValue.apply(addition.value(Constraint.LINE))));
         return rating;
     }
 
     @Override
     public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children
-            , Table ratingBeforeRemoval) {
+            , Table ratingsBeforeRemoval) {
         return ratingEvent();
     }
 

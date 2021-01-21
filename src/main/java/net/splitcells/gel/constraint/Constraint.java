@@ -117,8 +117,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     }
 
     void register_before_removal(GroupId group, Line line);
-
-    @Deprecated
+    
     default void register_before_removal(Line line) {
         register_before_removal(injectionGroup(), line);
     }

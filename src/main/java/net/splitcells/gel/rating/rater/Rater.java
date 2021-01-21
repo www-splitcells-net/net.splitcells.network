@@ -19,18 +19,9 @@ public interface Rater extends PubliclyTyped<Rater>
         , PubliclyConstructed<Domable>
         , DiscoverableFromMultiplePathsSetter
         , Domable {
-    RatingEvent rating_after_addition(Table rindas, Line papildinājums, List<Constraint> bērni, Table novērtējumsPirmsPapildinājumu);
+    RatingEvent rating_after_addition(Table  lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition);
 
-    /**
-     * @param rindas
-     * @param noņemšana
-     * @param bērni
-     * @param novērtējumsPirmsNoņemšana
-     * @return
-     * @see Constraint#register_before_removal(Line)
-     */
-    @Deprecated
-    RatingEvent rating_before_removal(Table rindas, Line noņemšana, List<Constraint> bērni, Table novērtējumsPirmsNoņemšana);
+    RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval);
 
     @Override
     default Class<? extends Rater> type() {
@@ -38,7 +29,7 @@ public interface Rater extends PubliclyTyped<Rater>
     }
 
     @Deprecated
-    default Node argumentation(GroupId grupa, Table piešķiršanas) {
+    default Node argumentation(GroupId group, Table allocations) {
         throw not_implemented_yet(getClass().getName());
     }
 

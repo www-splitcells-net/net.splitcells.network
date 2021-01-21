@@ -32,14 +32,14 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines, Line additional, List<Constraint> children
+    public RatingEvent rating_after_addition(Table lines, Line addition, List<Constraint> children
             , Table ratingsBeforeAddition) {
         final var ratingEvent = ratingEvent();
         ratingEvent.additions().put(
-                additional
+                addition
                 , localRating()
                         .withPropagationTo(children)
-                        .withResultingGroupId(additional.value(Constraint.INCOMING_CONSTRAINT_GROUP))
+                        .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP))
                         .withRating(rating));
         return ratingEvent;
     }

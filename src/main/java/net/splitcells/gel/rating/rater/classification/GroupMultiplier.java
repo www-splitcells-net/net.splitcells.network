@@ -53,12 +53,12 @@ public class GroupMultiplier implements Rater {
 
     @Override
     public RatingEvent rating_after_addition
-            (Table lines, Line addition, List<Constraint> children, Table ratingBeforeAddition) {
+            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final var ratingEvent = ratingEvent();
         List<GroupId> groupingOfAddition = listWithValuesOf(
                 classifiers.stream()
                         .map(classifier -> classifier
-                                .rating_after_addition(lines, addition, children, ratingBeforeAddition))
+                                .rating_after_addition(lines, addition, children, ratingsBeforeAddition))
                         .map(nn -> nn.additions())
                         .flatMap(additions -> additions.values().stream())
                         .map(additionRating -> additionRating.resultingConstraintGroupId())
@@ -80,12 +80,12 @@ public class GroupMultiplier implements Rater {
 
     @Override
     public RatingEvent rating_before_removal
-            (Table lines, Line removal, List<Constraint> children, Table ratings_before_emoval) {
+            (Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
         return ratingEvent();
     }
 
     @Override
-    public Node argumentation(GroupId grupa, Table allocations) {
+    public Node argumentation(GroupId group, Table allocations) {
         return Xml.textNode(getClass().getSimpleName());
     }
 

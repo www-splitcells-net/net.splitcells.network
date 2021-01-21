@@ -94,7 +94,7 @@ public class AllDifferent<T> implements Rater {
 
     @Override
     public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children
-            , Table ratingBeforeRemoval) {
+            , Table ratingsBeforeRemoval) {
         final T value = removal.value(Constraint.LINE).value(attribute);
         final var group = lines.columnView(Constraint.LINE).lookup(predicate(value));
         final var ratingEvent = ratingEvent();
