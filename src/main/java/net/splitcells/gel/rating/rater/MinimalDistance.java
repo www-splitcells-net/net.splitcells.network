@@ -31,16 +31,19 @@ import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Node;
 
 public class MinimalDistance<T> implements Rater {
-    public static MinimalDistance<Integer> minimalDistance2(Attribute<Integer> atribūts, double minimumDistance) {
-        return minimalDistance(atribūts, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
+    public static MinimalDistance<Integer> minimalDistance2(Attribute<Integer> attribute, double minimumDistance) {
+        return minimalDistance(attribute, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
     }
 
-    public static MinimalDistance<Double> minimalDistance(Attribute<Double> atribūts, double minimumDistance) {
-        return minimalDistance(atribūts, minimumDistance, comparator_(Double::compare), MathUtils::distance);
+    public static MinimalDistance<Double> minimalDistance(Attribute<Double> attribute, double minimumDistance) {
+        return minimalDistance(attribute, minimumDistance, comparator_(Double::compare), MathUtils::distance);
     }
 
-    public static <R> MinimalDistance<R> minimalDistance(Attribute<R> atribūts, double minimumDistance, Comparator<R> comparator, BiFunction<R, R, Double> distanceMeassurer) {
-        return new MinimalDistance<>(atribūts, minimumDistance, comparator, distanceMeassurer);
+    public static <R> MinimalDistance<R> minimalDistance(Attribute<R> attribute
+            , double minimumDistance
+            , Comparator<R> comparator
+            , BiFunction<R, R, Double> distanceMeassurer) {
+        return new MinimalDistance<>(attribute, minimumDistance, comparator, distanceMeassurer);
     }
 
     private final double minimumDistance;
@@ -49,9 +52,12 @@ public class MinimalDistance<T> implements Rater {
     private final BiFunction<T, T, Double> distanceMeassurer;
     private final List<Discoverable> contextes = list();
 
-    protected MinimalDistance(Attribute<T> atribūts, double minimumDistance, Comparator<T> comparator, BiFunction<T, T, Double> distanceMeassurer) {
+    protected MinimalDistance
+            (Attribute<T> attribute, double minimumDistance
+                    , Comparator<T> comparator
+                    , BiFunction<T, T, Double> distanceMeassurer) {
         this.distanceMeassurer = distanceMeassurer;
-        this.attribute = atribūts;
+        this.attribute = attribute;
         this.minimumDistance = minimumDistance;
         this.comparator = comparator;
     }
@@ -72,10 +78,10 @@ public class MinimalDistance<T> implements Rater {
             // KOMPORMISS
             int i = 1;
             while (i < sortedLines.size()) {
-                final var paliekuLabuRinda = sortedLines.get(i);
-                if (!isValid(removal, paliekuLabuRinda)) {
-                    rate_addition_ofRemovalPair(ratingEvent, removal, paliekuLabuRinda, children//
-                            , ratingBeforeRemoval.lookupEquals(LINE, paliekuLabuRinda).value(Constraint.RATING));
+                final var remainingRightLine = sortedLines.get(i);
+                if (!isValid(removal, remainingRightLine)) {
+                    rate_addition_ofRemovalPair(ratingEvent, removal, remainingRightLine, children//
+                            , ratingBeforeRemoval.lookupEquals(LINE, remainingRightLine).value(Constraint.RATING));
                     ++i;
                 } else {
                     break;
@@ -85,23 +91,23 @@ public class MinimalDistance<T> implements Rater {
             // KOMPORMISS
             int i = sortedIndexes - 1;
             while (i < -1) {
-                final Line paliekuKreisaRinda = sortedLines.get(i);
-                if (!isValid(removal, paliekuKreisaRinda)) {
+                final Line remainingRightLine = sortedLines.get(i);
+                if (!isValid(removal, remainingRightLine)) {
                     rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children//
-                            , ratingBeforeRemoval.lookupEquals(LINE, paliekuKreisaRinda).value(Constraint.RATING));
+                            , ratingBeforeRemoval.lookupEquals(LINE, remainingRightLine).value(Constraint.RATING));
                     --i;
                 } else {
                     break;
                 }
             }
         } else if (sortedIndexes > 0 && sortedIndexes < sortedLines.size() - 1) {
-            // KOMPORMISS
+            // TODO HACK
             int i = sortedIndexes - 1;
             while (i < -1) {
-                final Line paliekaKreisaRinda = sortedLines.get(i);
-                if (!isValid(removal, paliekaKreisaRinda)) {
+                final Line remainingLeftLine = sortedLines.get(i);
+                if (!isValid(removal, remainingLeftLine)) {
                     rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children//
-                            , ratingBeforeRemoval.lookupEquals(LINE, paliekaKreisaRinda).value(Constraint.RATING));
+                            , ratingBeforeRemoval.lookupEquals(LINE, remainingLeftLine).value(Constraint.RATING));
                     --i;
                 } else {
                     break;
@@ -109,10 +115,10 @@ public class MinimalDistance<T> implements Rater {
             }
             i = sortedIndexes + 1;
             while (i < sortedLines.size()) {
-                final Line paliekaLabaRinda = sortedLines.get(i);
-                if (!isValid(removal, paliekaLabaRinda)) {
+                final Line remainingRightLine = sortedLines.get(i);
+                if (!isValid(removal, remainingRightLine)) {
                     rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children//
-                            , ratingBeforeRemoval.lookupEquals(LINE, paliekaLabaRinda).value(Constraint.RATING));
+                            , ratingBeforeRemoval.lookupEquals(LINE, remainingRightLine).value(Constraint.RATING));
                     ++i;
                 } else {
                     break;
@@ -142,7 +148,7 @@ public class MinimalDistance<T> implements Rater {
                                 withRating(noCost()).
                                 withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
             } else {
-                novērte_papildinājumu_noPapildinājumuPāris(ratingEvent, addition, sortedLines.get(1), children//
+                rate_addition_ofAdditionPair(ratingEvent, addition, sortedLines.get(1), children//
                         , Optional.of(ratingBeforeAddition.lookupEquals(LINE, sortedLines.get(1)).value(Constraint.RATING)));
             }
         } else if (sortedIndexes == sortedLines.size() - 1) {
@@ -151,7 +157,7 @@ public class MinimalDistance<T> implements Rater {
             while (-1 < sortedLines.size() - 2 - i) {
                 final var originalLeftLine = sortedLines.get(sortedLines.size() - 2 - i);
                 if (!isValid(originalLeftLine, addition) || i == 0) {
-                    novērte_papildinājumu_noPapildinājumuPāris(ratingEvent, addition, originalLeftLine, children//
+                    rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children//
                             , Optional.of(ratingBeforeAddition.lookupEquals(LINE, originalLeftLine).value(Constraint.RATING)));
                     ++i;
                 } else {
@@ -164,7 +170,7 @@ public class MinimalDistance<T> implements Rater {
             while (sortedLines.size() > sortedIndexes + 1 + i) {
                 final var originalRightLine = sortedLines.get(sortedIndexes + 1);
                 if (!isValid(addition, originalRightLine)) {
-                    novērte_papildinājumu_noPapildinājumuPāris(ratingEvent, addition, originalRightLine, children
+                    rate_addition_ofAdditionPair(ratingEvent, addition, originalRightLine, children
                             , Optional.of(ratingBeforeAddition.lookupEquals(LINE, originalRightLine).value(Constraint.RATING)));
                     ++i;
                 } else {
@@ -175,7 +181,7 @@ public class MinimalDistance<T> implements Rater {
             while (-1 < sortedIndexes - 1 - i) {
                 final var originalLeftLine = sortedLines.get(sortedIndexes - 1 - i);
                 if (!isValid(originalLeftLine, addition)) {
-                    novērte_papildinājumu_noPapildinājumuPāris(ratingEvent, addition, originalLeftLine, children, Optional.of(ratingBeforeAddition.lookupEquals(LINE, originalLeftLine).value(Constraint.RATING)));
+                    rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children, Optional.of(ratingBeforeAddition.lookupEquals(LINE, originalLeftLine).value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
@@ -187,7 +193,7 @@ public class MinimalDistance<T> implements Rater {
         return ratingEvent;
     }
 
-    protected void novērte_papildinājumu_noPapildinājumuPāris
+    protected void rate_addition_ofAdditionPair
             (RatingEvent rVal
                     , Line addition
                     , Line originalLine
@@ -202,7 +208,7 @@ public class MinimalDistance<T> implements Rater {
             additionalCost = cost(0.5);
             rVal.updateRating_viaAddition(originalLine, additionalCost, children, ratingBeforeAddition);
         }
-        rVal.pieliktNovērtējumu_caurPapildinājumu(addition, additionalCost, children, Optional.empty());
+        rVal.addRating_viaAddition(addition, additionalCost, children, Optional.empty());
     }
 
     private double distance(Line a, Line b) {
@@ -232,7 +238,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId grupa, Table piešķiršanas) {
+    public Node argumentation(GroupId group, Table additions) {
         final var reasoning = Xml.element("min-distance");
         reasoning.appendChild(
                 Xml.element("minimum"
@@ -240,7 +246,7 @@ public class MinimalDistance<T> implements Rater {
         reasoning.appendChild(
                 Xml.element("order"
                         , Xml.textNode(comparator.toString())));
-        defyingSorted(piešķiršanas).forEach(e -> reasoning.appendChild(e.toDom()));
+        defyingSorted(additions).forEach(e -> reasoning.appendChild(e.toDom()));
         return reasoning;
     }
 
