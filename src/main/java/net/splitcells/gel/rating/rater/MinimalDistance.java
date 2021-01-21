@@ -7,15 +7,19 @@ import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.constraint.Constraint.RATING;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -28,6 +32,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.structure.Rating;
+import org.assertj.core.api.Assertions;
 import org.w3c.dom.Node;
 
 public class MinimalDistance<T> implements Rater {
@@ -68,7 +73,7 @@ public class MinimalDistance<T> implements Rater {
                     , Line removal
                     , net.splitcells.dem.data.set.list.List<Constraint> children
                     , Table ratingsBeforeRemoval) {
-        final var ratingEvent = RatingEventI.ratingEvent();
+        final var ratingEvent = ratingEvent();
         final var sortedLines = sorted(lines);
         final int sortedIndexes = sortedLines.indexOf(
                 sortedLines.stream()
@@ -135,8 +140,31 @@ public class MinimalDistance<T> implements Rater {
             , Line addition
             , List<Constraint> children
             , Table ratingsBeforeAddition) {
-        final var ratingEvent = RatingEventI.ratingEvent();
+        final var ratingEvent = ratingEvent();
         final var sortedLines = sorted(lines);
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            final var sortedProcessingLines = sorted(ratingsBeforeAddition);
+            if (sortedProcessingLines.size() > 1) {
+                assertThat(sortedProcessingLines.get(0).value(RATING)).isEqualTo(
+                        cost(((
+                                distance(sortedProcessingLines.get(0), sortedProcessingLines.get(1))
+                                        - minimumDistance) / 2)));
+            }
+            rangeClosed(1, sortedProcessingLines.size() - 2)
+                    .forEach(i ->
+                            assertThat(sortedProcessingLines.get(i).value(RATING)).isEqualTo(
+                                    cost(((
+                                            distance(sortedProcessingLines.get(i - 1), sortedProcessingLines.get(i))
+                                                    - minimumDistance) / 2)
+                                            + ((
+                                            distance(sortedProcessingLines.get(i), sortedProcessingLines.get(i + 1))
+                                                    - minimumDistance) / 2))));
+            if (sortedProcessingLines.size() > 2) {
+                assertThat(sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)).isEqualTo(
+                        cost(((distance(sortedProcessingLines.get(sortedProcessingLines.size() - 2)
+                                , sortedProcessingLines.get(sortedProcessingLines.size() - 1)) - minimumDistance) / 2)));
+            }
+        }
         // TODO PERFORMANCE
         final int sortedIndexes = sortedLines.indexOf(
                 sortedLines.stream()
@@ -259,7 +287,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public net.splitcells.dem.data.set.list.List<Domable> arguments() {
+    public List<Domable> arguments() {
         return Lists.list(//
                 () -> Xml.element("minimumDistance", Xml.textNode("" + minimumDistance))//
                 , () -> Xml.element("attribute", attribute.toDom())//
@@ -285,7 +313,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public Collection<net.splitcells.dem.data.set.list.List<String>> paths() {
+    public Collection<List<String>> paths() {
         return contextes.stream().map(Discoverable::path).collect(toList());
     }
 
