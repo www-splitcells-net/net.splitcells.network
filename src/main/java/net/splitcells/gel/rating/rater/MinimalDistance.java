@@ -2,20 +2,20 @@ package net.splitcells.gel.rating.rater;
 
 import static java.lang.Math.abs;
 import static java.util.Comparator.naturalOrder;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
