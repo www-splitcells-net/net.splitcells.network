@@ -6,7 +6,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  * IDEA Get values out of properties file.
  */
 public final class StaticFlags {
-	public static final boolean ENFORCING_UNIT_CONSISTENCY = "true".equals(System.getProperty("net.splitcells.mode.build"));
+	public static final boolean ENFORCING_UNIT_CONSISTENCY = true;
 	public static final boolean FUZZING = true;
 	public static final boolean ENFORCING_INTEGRATION_CONSISTENCY = true;
 	@Deprecated
