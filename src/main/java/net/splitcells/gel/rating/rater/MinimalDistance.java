@@ -131,7 +131,10 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines, Line addition, net.splitcells.dem.data.set.list.List<Constraint> children, Table ratingsBeforeAddition) {
+    public RatingEvent rating_after_addition(Table lines
+            , Line addition
+            , List<Constraint> children
+            , Table ratingsBeforeAddition) {
         final var ratingEvent = RatingEventI.ratingEvent();
         final var sortedLines = sorted(lines);
         // TODO PERFORMANCE
@@ -149,7 +152,8 @@ public class MinimalDistance<T> implements Rater {
                                 withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
             } else {
                 rate_addition_ofAdditionPair(ratingEvent, addition, sortedLines.get(1), children//
-                        , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, sortedLines.get(1)).value(Constraint.RATING)));
+                        , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, sortedLines.get(1))
+                                .value(Constraint.RATING)));
             }
         } else if (sortedIndexes == sortedLines.size() - 1) {
             // TODO HACK
@@ -158,7 +162,8 @@ public class MinimalDistance<T> implements Rater {
                 final var originalLeftLine = sortedLines.get(sortedLines.size() - 2 - i);
                 if (!isValid(originalLeftLine, addition) || i == 0) {
                     rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children//
-                            , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalLeftLine).value(Constraint.RATING)));
+                            , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalLeftLine)
+                                    .value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
@@ -171,7 +176,8 @@ public class MinimalDistance<T> implements Rater {
                 final var originalRightLine = sortedLines.get(sortedIndexes + 1);
                 if (!isValid(addition, originalRightLine)) {
                     rate_addition_ofAdditionPair(ratingEvent, addition, originalRightLine, children
-                            , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalRightLine).value(Constraint.RATING)));
+                            , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalRightLine)
+                                    .value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
@@ -181,7 +187,9 @@ public class MinimalDistance<T> implements Rater {
             while (-1 < sortedIndexes - 1 - i) {
                 final var originalLeftLine = sortedLines.get(sortedIndexes - 1 - i);
                 if (!isValid(originalLeftLine, addition)) {
-                    rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children, Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalLeftLine).value(Constraint.RATING)));
+                    rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children
+                            , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalLeftLine)
+                                    .value(Constraint.RATING)));
                     ++i;
                 } else {
                     break;
