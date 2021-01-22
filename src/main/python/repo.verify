@@ -33,5 +33,6 @@ if subListPath.is_file():
 					sys.exit(1)
 		for subName in repoList['subs'].keys():
 			if Path('./' + subName).is_dir():
-				subprocess.run('cd ' + subName + '; repo.verify', shell='True')
-					# TODO Check for errors.
+				returnCode = subprocess.call('cd ' + subName + '; repo.verify', shell='True')
+				if returnCode != 0:
+					sys.exit(1)
