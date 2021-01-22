@@ -12,6 +12,7 @@ print(Path('.').resolve())
 returnCode = subprocess.call('command.managed.execute conjunction repo.verify', shell='True')
 if returnCode != 0:
 	sys.exit(1)
+
 subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 if subListPath.is_file():
 	with open(subListPath, 'r') as subListFile:
@@ -29,6 +30,5 @@ if subListPath.is_file():
 					sys.exit(1)
 		for subName in repoList['subs'].keys():
 			if Path('./' + subName).is_dir():
-				subprocess.check_output('cd ' + subName + '; repo.is.instance;', shell='True')
 				subprocess.run('cd ' + subName + '; repo.verify', shell='True')
 					# TODO Check for errors.
