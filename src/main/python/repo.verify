@@ -26,5 +26,6 @@ if subListPath.is_file():
 					sys.exit(1)
 		for subName in repoList['subs'].keys():
 			if Path('./' + subName).is_dir():
+				subprocess.check_output('cd ' + subName + '; repo.is.instance;', shell='True')
 				subprocess.run('cd ' + subName + '; repo.verify.folder.structure', shell='True')
 					# TODO Check for errors.

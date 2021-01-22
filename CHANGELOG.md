@@ -10,6 +10,10 @@ Changes to this are not considered major changes.
 1. Disable debug logging by default.
    Add environment variable 'log_level'.
    When set to 'debug', debug log is enabled.
+1. 'repo.verify' now also checks if sub folders, are really instances of a repository.
+### Patch
+1. Command "echo.error" previously did only echo the message "error" and ignored the argument.
+   This was fixed.
 ## Version 4.0.1
 Release project in order to test release process.
 ### Major Changes
