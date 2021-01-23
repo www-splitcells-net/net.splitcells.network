@@ -25,11 +25,11 @@ public class ForAlls {
      * @param attribute
      * @return
      */
-    public static ForAll forAll(final Attribute<?> attribute) {
+    public static ForAll for_each(final Attribute<?> attribute) {
         return ForAllFactory.instance().forAll(attribute);
     }
 
-    public static ForAll forAll(Rater classifier) {
+    public static ForAll for_each(Rater classifier) {
         return ForAllFactory.instance().forAll(classifier);
     }
 
@@ -39,7 +39,7 @@ public class ForAlls {
      * @param arguments
      * @return
      */
-    public static ForAll forAllCombinations(final Attribute<?>... arguments) {
+    public static ForAll for_all_combinations_of(final Attribute<?>... arguments) {
         return ForAllFactory.instance().forAllCombinations(arguments);
     }
 }

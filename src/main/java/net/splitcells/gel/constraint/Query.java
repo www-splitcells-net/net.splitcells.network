@@ -8,11 +8,11 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public interface Query {
 
-	Query forAll(Attribute<?> args);
+	Query for_each(Attribute<?> args);
 
-	Query forAll(Rater vērtētājs);
+	Query for_all(Rater vērtētājs);
 
-	Query forAll();
+	Query for_all();
 
 	Query then();
 
@@ -20,7 +20,7 @@ public interface Query {
 
 	Query then(Rating novērtējums);
 
-	Query forAllCombinations(Attribute<?>... args);
+	Query for_all_combinations_of(Attribute<?>... args);
 
 	Rating rating();
 

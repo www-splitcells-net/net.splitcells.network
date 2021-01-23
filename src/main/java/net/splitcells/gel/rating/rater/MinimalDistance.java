@@ -36,7 +36,7 @@ import org.assertj.core.api.Assertions;
 import org.w3c.dom.Node;
 
 public class MinimalDistance<T> implements Rater {
-    public static MinimalDistance<Integer> minimalDistance2(Attribute<Integer> attribute, double minimumDistance) {
+    public static MinimalDistance<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
         return minimalDistance(attribute, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
     }
 
@@ -73,6 +73,9 @@ public class MinimalDistance<T> implements Rater {
                     , Line removal
                     , net.splitcells.dem.data.set.list.List<Constraint> children
                     , Table ratingsBeforeRemoval) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            checkConsistency(ratingsBeforeRemoval);
+        }
         final var ratingEvent = ratingEvent();
         final var sortedLines = sorted(lines);
         final int sortedIndexes = sortedLines.indexOf(
@@ -135,36 +138,61 @@ public class MinimalDistance<T> implements Rater {
         return ratingEvent;
     }
 
+    private void checkConsistency(Table lineProcessing) {
+        final var sortedProcessingLines = sorted(lineProcessing);
+        if (sortedProcessingLines.size() > 1) {
+            final var remainingDistance = distance(sortedProcessingLines.get(0), sortedProcessingLines.get(1))
+                    - minimumDistance;
+            if (remainingDistance > 0) {
+                assertThat(sortedProcessingLines.get(0).value(RATING)).isEqualTo(
+                        cost((remainingDistance / 2)));
+            }
+        }
+        rangeClosed(1, sortedProcessingLines.size() - 2)
+                .forEach(i -> {
+                    final var remainingLeftDistance
+                            = distance(sortedProcessingLines.get(i - 1), sortedProcessingLines.get(i))
+                            - minimumDistance;
+                    final var remainingRightDistance
+                            =
+                            distance(sortedProcessingLines.get(i), sortedProcessingLines.get(i + 1))
+                                    - minimumDistance;
+                    final double remainingDistance;
+                    if (remainingLeftDistance > 0 && remainingRightDistance == 0) {
+                        remainingDistance = remainingLeftDistance;
+                    } else if (remainingRightDistance > 0 && remainingLeftDistance == 0) {
+                        remainingDistance = remainingRightDistance;
+                    } else if (remainingLeftDistance > 0 && remainingRightDistance > 0) {
+                        remainingDistance = remainingLeftDistance + remainingRightDistance;
+                    } else {
+                        remainingDistance = 0;
+                    }
+                    if (remainingDistance > 0) {
+                        assertThat(sortedProcessingLines.get(i).value(RATING)).isEqualTo(
+                                cost(remainingDistance / 2));
+                    }
+                });
+        if (sortedProcessingLines.size() > 2) {
+            final var remainingDistance = distance(sortedProcessingLines.get(sortedProcessingLines.size() - 2)
+                    , sortedProcessingLines.get(sortedProcessingLines.size() - 1))
+                    - minimumDistance;
+            if (remainingDistance > 0) {
+                assertThat(sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)).isEqualTo(
+                        cost(remainingDistance / 2));
+            }
+        }
+    }
+
     @Override
     public RatingEvent rating_after_addition(Table lines
             , Line addition
             , List<Constraint> children
             , Table ratingsBeforeAddition) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            checkConsistency(ratingsBeforeAddition);
+        }
         final var ratingEvent = ratingEvent();
         final var sortedLines = sorted(lines);
-        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            final var sortedProcessingLines = sorted(ratingsBeforeAddition);
-            if (sortedProcessingLines.size() > 1) {
-                assertThat(sortedProcessingLines.get(0).value(RATING)).isEqualTo(
-                        cost(((
-                                distance(sortedProcessingLines.get(0), sortedProcessingLines.get(1))
-                                        - minimumDistance) / 2)));
-            }
-            rangeClosed(1, sortedProcessingLines.size() - 2)
-                    .forEach(i ->
-                            assertThat(sortedProcessingLines.get(i).value(RATING)).isEqualTo(
-                                    cost(((
-                                            distance(sortedProcessingLines.get(i - 1), sortedProcessingLines.get(i))
-                                                    - minimumDistance) / 2)
-                                            + ((
-                                            distance(sortedProcessingLines.get(i), sortedProcessingLines.get(i + 1))
-                                                    - minimumDistance) / 2))));
-            if (sortedProcessingLines.size() > 2) {
-                assertThat(sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)).isEqualTo(
-                        cost(((distance(sortedProcessingLines.get(sortedProcessingLines.size() - 2)
-                                , sortedProcessingLines.get(sortedProcessingLines.size() - 1)) - minimumDistance) / 2)));
-            }
-        }
         // TODO PERFORMANCE
         final int sortedIndexes = sortedLines.indexOf(
                 sortedLines.stream()

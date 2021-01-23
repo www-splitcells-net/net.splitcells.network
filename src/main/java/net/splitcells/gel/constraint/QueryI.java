@@ -45,7 +45,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query forAll(Rater rater) {
+    public Query for_all(Rater rater) {
         var resultBase = constraint
                 .childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
@@ -67,7 +67,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(ForAlls.forAll(rater));
+            resultBase = Optional.of(ForAlls.for_each(rater));
             constraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
@@ -79,7 +79,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query forAll(Attribute<?> attribute) {
+    public Query for_each(Attribute<?> attribute) {
         var resultBase
                 = constraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
@@ -103,7 +103,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(ForAlls.forAll(attribute));
+            resultBase = Optional.of(ForAlls.for_each(attribute));
             constraint.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
         }
@@ -115,7 +115,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query forAll() {
+    public Query for_all() {
         final var resultBase
                 = constraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
@@ -174,7 +174,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query forAllCombinations(Attribute<?>... attributes) {
+    public Query for_all_combinations_of(Attribute<?>... attributes) {
         final Constraint resultBase
                 = constraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
