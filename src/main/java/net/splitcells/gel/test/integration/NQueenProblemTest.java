@@ -28,7 +28,7 @@ import static net.splitcells.dem.resource.host.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.rating.rater.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.HasSize.has_size;
 import static net.splitcells.gel.rating.rater.classification.GroupMultiplier.groupMultiplier;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;
@@ -96,11 +96,11 @@ public class NQueenProblemTest extends TestSuiteI {
                 .withSupplyAttributes(ROW)
                 .withSupplies(supplies)
                 .withConstraint(ForAlls.forAll()
-                        .withChildren(r -> r.forAll(ROW).forAll(COLUMN).then(hasSize(1)))
-                        .withChildren(r -> r.forAll(ROW).then(hasSize(1)))
-                        .withChildren(r -> r.forAll(COLUMN).then(hasSize(1)))
-                        .withChildren(r -> r.forAll(ascDiagonals(rows, columns)).then(hasSize(1)))
-                        .withChildren(r -> r.forAll(descDiagonals(rows, columns)).then(hasSize(1))))
+                        .withChildren(r -> r.for_each(ROW).for_each(COLUMN).then(has_size(1)))
+                        .withChildren(r -> r.for_each(ROW).then(has_size(1)))
+                        .withChildren(r -> r.for_each(COLUMN).then(has_size(1)))
+                        .withChildren(r -> r.for_all(ascDiagonals(rows, columns)).then(has_size(1)))
+                        .withChildren(r -> r.for_all(descDiagonals(rows, columns)).then(has_size(1))))
                 .toProblem();
     }
 

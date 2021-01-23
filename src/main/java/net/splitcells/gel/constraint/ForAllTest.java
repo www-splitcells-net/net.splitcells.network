@@ -4,7 +4,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.constraint.type.Then;
-import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.AttributeI;
 import org.junit.jupiter.api.Tag;
@@ -46,7 +45,7 @@ public class ForAllTest extends TestSuiteI {
     public void testNoGrouping() {
         final var attribute = attribute(Integer.class);
         final var lineSupplier = database(attribute);
-        final var testSubject = forAll(attribute);
+        final var testSubject = ForAlls.for_each(attribute);
         final var validator = forAll();
         testSubject.withChildren(validator);
         final List<Line> lines = list();
@@ -106,7 +105,7 @@ public class ForAllTest extends TestSuiteI {
                                 , list()
                                 , list()
                                 , list())
-                .withConstraint(forAll(a)
+                .withConstraint(ForAlls.for_each(a)
                         .withChildren(Then.then(cost(1))))
                 .toProblem()
                 .asSolution();

@@ -1,10 +1,6 @@
 package net.splitcells.gel.constraint;
 
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.type.ForAlls;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.solution.SolutionBuilder;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -34,10 +30,10 @@ public class ConstraintTest {
                 .withSupplyAttributes()
                 .withEmptySupplies(4)
                 .withConstraint
-                        (forAll(attribute)
-                                .withChildren(forAll(attribute)
-                                        , forAll(attribute)
-                                                .withChildren(forAll(attribute))))
+                        (ForAlls.for_each(attribute)
+                                .withChildren(ForAlls.for_each(attribute)
+                                        , ForAlls.for_each(attribute)
+                                                .withChildren(ForAlls.for_each(attribute))))
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
@@ -92,10 +88,10 @@ public class ConstraintTest {
                 .withDemandAttributes(A, B)
                 .withSupplyAttributes(C, D)
                 .withConstraint(
-                        forAll(A)
-                                .withChildren(forAll(B)
-                                        , forAll(C)
-                                                .withChildren(forAll(D))))
+                        ForAlls.for_each(A)
+                                .withChildren(ForAlls.for_each(B)
+                                        , ForAlls.for_each(C)
+                                                .withChildren(ForAlls.for_each(D))))
                 .toProblem()
                 .asSolution();
         final var testData = Constraint.allocationGroups(solution.constraint());

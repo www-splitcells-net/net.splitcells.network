@@ -5,7 +5,6 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.structure.Rating;
@@ -16,21 +15,18 @@ import java.nio.file.Files;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.lang.Math.floor;
 import static java.lang.Math.floorMod;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.constraint.type.ForAlls.forAllCombinations;
+import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.database.Databases.databaseOfFods;
 import static net.splitcells.gel.data.database.Databases.objectAttributes;
-import static net.splitcells.gel.data.table.attribute.AttributeI.*;
 import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
-import static net.splitcells.gel.rating.rater.HasSize.hasSize;
-import static net.splitcells.gel.rating.rater.MinimalDistance.minimalDistance2;
+import static net.splitcells.gel.rating.rater.HasSize.has_size;
+import static net.splitcells.gel.rating.rater.MinimalDistance.has_minimal_distance_of;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
@@ -108,15 +104,24 @@ public class OralExamsTest extends TestSuiteI {
                                     , Xml.parse(initialSolutionTemplate).getDocumentElement())));
         }
         testSubject.optimize(linearInitialization());
-        testSubject.optimizeOnce(constraintGroupBasedRepair(4));
-        /*IntStream.rangeClosed(1, 10).forEach(j -> {
+        IntStream.rangeClosed(1, 10).forEach(a -> {
+            IntStream.rangeClosed(1, 100).forEach(j -> {
+                testSubject.optimizeOnce(constraintGroupBasedRepair(4));
+            });
+            testSubject.optimizeOnce(constraintGroupBasedRepair(3));
+            IntStream.rangeClosed(1, 100).forEach(j -> {
+                testSubject.optimizeOnce(constraintGroupBasedRepair(4));
+            });
+        });
+        /*IntStream.rangeClosed(1, 100).forEach(j -> {
                     testSubject.optimize(escalator(i -> {
-                        return constraintGroupBasedRepair(i);
-                    }, 3, 3, 4));
+                        return repeater(constraintGroupBasedRepair(i), 100);
+                    }, 3, 2, 4));
                 }
 
         );*/
         testSubject.createStandardAnalysis();
+        testSubject.constraint().persistGraphState();
     }
 
     @Disabled
@@ -167,16 +172,15 @@ public class OralExamsTest extends TestSuiteI {
     public Problem randomOralExams(int studentCount, int examCount, int examinerCount, int checkerCount, int weekCount
             , int examDayCountPerWeek, int shiftsPerDayCount, int roomCount, Randomness randomness) {
         final List<List<Object>> supplies = list();
-        for (int week = 1; week <= weekCount; ++week) {
-            for (int room = 1; room <= roomCount; ++room) {
+        for (int room = 1; room <= roomCount; ++room) {
+            for (int week = 1; week <= weekCount; ++week) {
                 for (int examDay = 1; examDay <= examDayCountPerWeek; ++examDay) {
                     for (int shift = 1; shift <= shiftsPerDayCount; ++shift) {
                         supplies.add
                                 (list
-                                        (shift
-                                                , floorMod(examDay, examDayCountPerWeek)
-                                                        + (int) ( floor((float) examDay / (float) examDayCountPerWeek) * 7)
-                                                        - 1
+                                        (floorMod(examDay, examDayCountPerWeek) + 1
+                                                        + (week - 1) * 7
+                                                , shift
                                                 , room));
                     }
                 }
@@ -199,17 +203,17 @@ public class OralExamsTest extends TestSuiteI {
                 .withSupplies(supplies)
                 .withConstraint
                         (forAll()
-                                .withChildren(forAll(OBSERVER)
-                                                .withChildren(forAllCombinations(DATE, SHIFT)
-                                                        .withChildren(then(hasSize(1))))
-                                        , forAll(EXAMINER)
-                                                .withChildren(forAllCombinations(DATE, SHIFT)
-                                                        .withChildren(then(hasSize(1))))
-                                        , forAll(STUDENTS)
-                                                .withChildren(forAllCombinations(DATE, SHIFT)
-                                                                .withChildren(then(hasSize(1)))
-                                                        , then(minimalDistance2(DATE, 3.0))
-                                                        , then(minimalDistance2(DATE, 5.0))
+                                .withChildren(for_each(OBSERVER)
+                                                .withChildren(for_all_combinations_of(DATE, SHIFT)
+                                                        .withChildren(then(has_size(1))))
+                                        , for_each(EXAMINER)
+                                                .withChildren(for_all_combinations_of(DATE, SHIFT)
+                                                        .withChildren(then(has_size(1))))
+                                        , for_each(STUDENTS)
+                                                .withChildren(for_all_combinations_of(DATE, SHIFT)
+                                                                .withChildren(then(has_size(1)))
+                                                        , then(has_minimal_distance_of(DATE, 3.0))
+                                                        , then(has_minimal_distance_of(DATE, 5.0))
                                                 )
                                         /** TODO Every examiner and observer wants to minimize the number of days with exams.
                                          * <p/>
@@ -217,8 +221,8 @@ public class OralExamsTest extends TestSuiteI {
                                          * <p/>
                                          * TODO Every examiner and observer wants to minimize the number of room switches per day.
                                          */
-                                        , forAllCombinations(DATE, SHIFT, ROOM_NUMBER)
-                                                .withChildren(then(hasSize(1)))
+                                        , for_all_combinations_of(DATE, SHIFT, ROOM_NUMBER)
+                                                .withChildren(then(has_size(1)))
                                         , studentSpecificConstraints()
                                         , checkerSpecificConstraints()
                                         , examinerSpecificConstraints()
@@ -246,35 +250,35 @@ public class OralExamsTest extends TestSuiteI {
         testSubject.optimize(linearInitialization());
         {
             assertThat(testSubject.constraint().query()
-                    .forAll(OBSERVER)
-                    .forAllCombinations(DATE, SHIFT)
-                    .then(hasSize(1))
+                    .for_each(OBSERVER)
+                    .for_all_combinations_of(DATE, SHIFT)
+                    .then(has_size(1))
                     .rating()
             ).isEqualTo(cost(1));
             assertThat(testSubject.constraint().query()
-                    .forAll(EXAMINER)
-                    .forAllCombinations(DATE, SHIFT)
-                    .then(hasSize(1))
+                    .for_each(EXAMINER)
+                    .for_all_combinations_of(DATE, SHIFT)
+                    .then(has_size(1))
                     .rating()
             ).isEqualTo(cost(1));
             {
                 assertThat
                         (testSubject.constraint().query()
-                                .forAll(STUDENTS)
-                                .forAllCombinations(DATE, SHIFT)
-                                .then(hasSize(1))
+                                .for_each(STUDENTS)
+                                .for_all_combinations_of(DATE, SHIFT)
+                                .then(has_size(1))
                                 .rating()
                         ).isEqualTo(cost(1));
                 assertThat
                         (testSubject.constraint().query()
-                                .forAll(STUDENTS)
-                                .then(minimalDistance2(DATE, 3.0))
+                                .for_each(STUDENTS)
+                                .then(has_minimal_distance_of(DATE, 3.0))
                                 .rating()
                         ).isEqualTo(cost(1));
                 assertThat
                         (testSubject.constraint().query()
-                                .forAll(STUDENTS)
-                                .then(minimalDistance2(DATE, 5.0))
+                                .for_each(STUDENTS)
+                                .then(has_minimal_distance_of(DATE, 5.0))
                                 .rating()
                         ).isEqualTo(cost(1));
             }
@@ -282,23 +286,23 @@ public class OralExamsTest extends TestSuiteI {
         {
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(OBSERVER)
+                            .for_each(OBSERVER)
                             .rating()
                     ).isEqualTo(cost(1));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(EXAMINER)
+                            .for_each(EXAMINER)
                             .rating()
                     ).isEqualTo(cost(1));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(STUDENTS)
+                            .for_each(STUDENTS)
                             .rating()
                     ).isEqualTo(cost(3));
             assertThat(
                     testSubject.constraint().query()
-                            .forAllCombinations(DATE, SHIFT, ROOM_NUMBER)
-                            .then(hasSize(1))
+                            .for_all_combinations_of(DATE, SHIFT, ROOM_NUMBER)
+                            .then(has_size(1))
                             .rating()
             ).isEqualTo(cost(1));
         }
@@ -327,40 +331,40 @@ public class OralExamsTest extends TestSuiteI {
         {
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .forAllCombinations(DATE, SHIFT)
-                            .then(hasSize(1)).rating()
+                            .for_each(STUDENTS)
+                            .for_all_combinations_of(DATE, SHIFT)
+                            .then(has_size(1)).rating()
                     ).isEqualTo(cost(2));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .then(minimalDistance2(DATE, 3.0))
+                            .for_each(STUDENTS)
+                            .then(has_minimal_distance_of(DATE, 3.0))
                             .rating()
                     ).isEqualTo(cost(10));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .then(minimalDistance2(DATE, 5.0))
+                            .for_each(STUDENTS)
+                            .then(has_minimal_distance_of(DATE, 5.0))
                             .rating()
                     ).isEqualTo(cost(10));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(EXAMINER)
-                            .forAllCombinations(DATE, SHIFT)
-                            .then(hasSize(1))
+                            .for_each(EXAMINER)
+                            .for_all_combinations_of(DATE, SHIFT)
+                            .then(has_size(1))
                             .rating()
                     ).isEqualTo(cost(2));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(OBSERVER)
-                            .forAllCombinations(DATE, SHIFT)
-                            .then(hasSize(1))
+                            .for_each(OBSERVER)
+                            .for_all_combinations_of(DATE, SHIFT)
+                            .then(has_size(1))
                             .rating()
                     ).isEqualTo(cost(2));
             assertThat
                     (testSubject.constraint().query()
-                            .forAllCombinations(DATE, SHIFT, ROOM_NUMBER)
-                            .then(hasSize(1))
+                            .for_all_combinations_of(DATE, SHIFT, ROOM_NUMBER)
+                            .then(has_size(1))
                             .rating()
                     ).isEqualTo(cost(1));
         }
@@ -386,46 +390,46 @@ public class OralExamsTest extends TestSuiteI {
         {
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .then(minimalDistance2(DATE, 3.0))
+                            .for_each(STUDENTS)
+                            .then(has_minimal_distance_of(DATE, 3.0))
                             .rating()
                     ).isEqualTo(cost(3));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .then(minimalDistance2(DATE, 5.0))
+                            .for_each(STUDENTS)
+                            .then(has_minimal_distance_of(DATE, 5.0))
                             .rating()
                     ).isEqualTo(cost(3));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .forAllCombinations(DATE, SHIFT)
-                            .then(hasSize(1))
+                            .for_each(STUDENTS)
+                            .for_all_combinations_of(DATE, SHIFT)
+                            .then(has_size(1))
                             .rating()
                     ).isEqualTo(cost(1));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(STUDENTS)
+                            .for_each(STUDENTS)
                             .rating()
                     ).isEqualTo(cost(7));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(OBSERVER)
-                            .forAllCombinations(DATE, SHIFT)
-                            .then(hasSize(1))
+                            .for_each(OBSERVER)
+                            .for_all_combinations_of(DATE, SHIFT)
+                            .then(has_size(1))
                             .rating()
                     ).isEqualTo(cost(1));
             assertThat
                     (testSubject.constraint().query()
-                            .forAll(EXAMINER)
-                            .forAllCombinations(DATE, SHIFT)
-                            .then(hasSize(1))
+                            .for_each(EXAMINER)
+                            .for_all_combinations_of(DATE, SHIFT)
+                            .then(has_size(1))
                             .rating()
                     ).isEqualTo(cost(1));
             assertThat
                     (testSubject.constraint().query()
-                            .forAllCombinations(DATE, SHIFT, ROOM_NUMBER)
-                            .then(hasSize(1))
+                            .for_all_combinations_of(DATE, SHIFT, ROOM_NUMBER)
+                            .then(has_size(1))
                             .rating()
                     ).isEqualTo(noCost());
         }
