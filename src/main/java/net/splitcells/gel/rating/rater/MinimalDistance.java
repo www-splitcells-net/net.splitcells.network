@@ -148,8 +148,8 @@ public class MinimalDistance<T> implements Rater {
                 final var remainingDistance = minimumDistance
                         - distance(sortedProcessingLines.get(0), sortedProcessingLines.get(1));
                 if (remainingDistance > 0) {
-                    assertThat(noCost().compare_partially_to(sortedProcessingLines.get(0).value(RATING)))
-                            .contains(GREATER_THAN);
+                    assertThat(noCost().betterThan(sortedProcessingLines.get(0).value(RATING)))
+                            .isTrue();
                 } else {
                     assertThat(sortedProcessingLines.get(0).value(RATING).equalz(noCost())).isTrue();
                 }
@@ -173,8 +173,8 @@ public class MinimalDistance<T> implements Rater {
                             remainingDistance = 0;
                         }
                         if (remainingDistance > 0) {
-                            assertThat(noCost().compare_partially_to(sortedProcessingLines.get(i).value(RATING)))
-                                    .contains(GREATER_THAN);
+                            assertThat(noCost().betterThan(sortedProcessingLines.get(i).value(RATING)))
+                                    .isTrue();
                         } else {
                             assertThat(sortedProcessingLines.get(i).value(RATING).equalz(noCost())).isTrue();
                         }
@@ -192,9 +192,9 @@ public class MinimalDistance<T> implements Rater {
                             .isTrue();
                 } else {
                     assertThat
-                            (sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)
-                                    .compare_partially_to(noCost()))
-                            .contains(GREATER_THAN);
+                            (noCost().betterThan
+                                    (sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)))
+                            .isTrue();
                 }
             }
         } catch (Throwable t) {

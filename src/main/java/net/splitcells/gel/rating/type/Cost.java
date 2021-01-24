@@ -54,9 +54,9 @@ public class Cost implements Rating {
             if (order.equals(EQUAL)) {
                 return Optional.of(EQUAL);
             } else if (order.equals(LESSER_THAN)) {
-                return Optional.of(GREATER_THAN);
-            } else if (order.equals(GREATER_THAN)) {
                 return Optional.of(LESSER_THAN);
+            } else if (order.equals(GREATER_THAN)) {
+                return Optional.of(GREATER_THAN);
             } else {
                 throw new IllegalArgumentException();
             }
