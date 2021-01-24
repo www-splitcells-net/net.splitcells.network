@@ -19,7 +19,7 @@ public final class Gel {
         throw constructorIllegal();
     }
 
-    public static Define_Demand_Attributes definē_problēmu() {
+    public static Define_Demand_Attributes define_problem() {
         return SolutionBuilder.define_problem();
     }
 }
