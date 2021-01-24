@@ -66,6 +66,11 @@ public class Optimality implements Rating {
     }
 
     @Override
+    public boolean betterThan(Rating rating) {
+        return greaterThan(rating);
+    }
+
+    @Override
     public Element toDom() {
         final var dom = element(this.getClass().getSimpleName());
         dom.appendChild(Xml.textNode("" + value));
@@ -77,7 +82,7 @@ public class Optimality implements Rating {
         return Xml.toPrettyString(toDom());
     }
 
-    public double vertība() {
+    public double value() {
         return value;
     }
 }

@@ -187,7 +187,7 @@ public class MinimalDistance<T> implements Rater {
                     assertThat
                             (noCost()
                                     .betterThan(sortedProcessingLines
-                                            .get(sortedProcessingLines.size() - 1)
+                                            .get(sortedProcessingLines.size() - 2)
                                             .value(RATING)))
                             .isTrue();
                 } else {

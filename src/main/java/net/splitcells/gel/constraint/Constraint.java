@@ -14,9 +14,11 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
 import static net.splitcells.gel.rating.structure.MetaRating.neutral;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
@@ -117,7 +119,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     }
 
     void register_before_removal(GroupId group, Line line);
-    
+
     default void register_before_removal(Line line) {
         register_before_removal(injectionGroup(), line);
     }
@@ -213,5 +215,11 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
         createDirectory(environment().config().configValue(ProcessPath.class));
         writeToFile(environment().config().configValue(ProcessPath.class).resolve(path().toString() + ".fods"), lineProcessing().toFods());
         childrenView().forEach(Constraint::persistGraphState);
+    }
+
+    @Override
+    default Constraint withChildren(List<Function<Query, Query>> builder) {
+        builder.forEach(this::withChildren);
+        return this;
     }
 }

@@ -217,6 +217,11 @@ public class MetaRatingI implements MetaRating {
     }
 
     @Override
+    public boolean betterThan(Rating rating) {
+        return smallerThan(rating);
+    }
+
+    @Override
     public Node toDom() {
         if (1 == ratingMap.size()) {
             return ratingMap.values().iterator().next().toDom();

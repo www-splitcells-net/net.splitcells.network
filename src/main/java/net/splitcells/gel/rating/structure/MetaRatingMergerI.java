@@ -75,6 +75,11 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     }
 
     @Override
+    public boolean betterThan(Rating rating) {
+        return smallerThan(rating);
+    }
+
+    @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
         throw not_implemented_yet();
     }

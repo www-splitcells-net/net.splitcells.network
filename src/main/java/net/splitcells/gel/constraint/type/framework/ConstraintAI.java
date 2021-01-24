@@ -22,6 +22,7 @@ import static net.splitcells.gel.rating.structure.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
@@ -29,6 +30,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.database.Databases;

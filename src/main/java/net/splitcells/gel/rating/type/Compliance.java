@@ -56,6 +56,11 @@ public class Compliance implements Rating {
     }
 
     @Override
+    public boolean betterThan(Rating rating) {
+        return greaterThan(rating);
+    }
+
+    @Override
     public Element toDom() {
         final var dom = element(this.getClass().getSimpleName());
         dom.appendChild(Xml.textNode("" + value));

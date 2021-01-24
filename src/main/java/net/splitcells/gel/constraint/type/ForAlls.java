@@ -14,7 +14,7 @@ public class ForAlls {
      * <p>
      * TODO TEST
      */
-    public static ForAll forAll() {
+    public static ForAll for_all() {
         return ForAllFactory.instance().forAll();
     }
 

@@ -14,8 +14,6 @@ public interface Rating extends PartiallyOrdered<Rating>, Domable {
     }
 
     <R extends Rating> R _clone();
-    
-    default boolean betterThan(Rating novērtējums) {
-        return smallerThan(novērtējums);
-    }
+
+    boolean betterThan(Rating rating);
 }

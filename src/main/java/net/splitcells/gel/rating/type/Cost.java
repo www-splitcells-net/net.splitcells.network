@@ -1,10 +1,10 @@
 package net.splitcells.gel.rating.type;
 
+import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.dem.data.order.Ordering.EQUAL;
-import static net.splitcells.dem.data.order.Ordering.LESSER_THAN;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import net.splitcells.gel.rating.structure.MetaRating;
@@ -17,8 +17,16 @@ import net.splitcells.dem.data.order.Ordering;
 public class Cost implements Rating {
     protected static final Comparator<Double> COST_VALUE_COMPARATOR = new Comparator<Double>() {
         @Override
-        public int compare(Double a, Double b) {
-            return b.compareTo(a);
+        public Ordering compareTo(Double a, Double b) {
+            if (Objects.equals(a, b)) {
+                return Ordering.EQUAL;
+            } else if (a < b) {
+                return Ordering.LESSER_THAN;
+            } else if (a > b) {
+                return Ordering.GREATER_THAN;
+            } else {
+                throw new IllegalArgumentException();
+            }
         }
     };
     private double value;
@@ -42,14 +50,23 @@ public class Cost implements Rating {
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof Cost) {
-            return Optional.of(COST_VALUE_COMPARATOR.compareTo(value, ((Cost) arg).value()));
+            final var order = COST_VALUE_COMPARATOR.compareTo(value, ((Cost) arg).value());
+            if (order.equals(EQUAL)) {
+                return Optional.of(EQUAL);
+            } else if (order.equals(LESSER_THAN)) {
+                return Optional.of(GREATER_THAN);
+            } else if (order.equals(GREATER_THAN)) {
+                return Optional.of(LESSER_THAN);
+            } else {
+                throw new IllegalArgumentException();
+            }
         }
         if (arg instanceof Optimality) {
             final Optimality argOptimality = ((Optimality) arg);
-            if (argOptimality.vertība() == 1 && value == 0) {
+            if (argOptimality.value() == 1 && value == 0) {
                 return Optional.of(EQUAL);
             }
-            if (argOptimality.vertība() == 1 && value > 0) {
+            if (argOptimality.value() == 1 && value > 0) {
                 return Optional.of(LESSER_THAN);
             }
             return Optional.empty();
@@ -70,8 +87,8 @@ public class Cost implements Rating {
                 return additionalRating.combine(this);
             }
             if (additionalRating instanceof Optimality) {
-                final Optimality additionalOptimiality = (Optimality) additionalRating;
-                if (additionalOptimiality.vertība() == 1 && value == 0) {
+                final Optimality additionalOptimality = (Optimality) additionalRating;
+                if (additionalOptimality.value() == 1 && value == 0) {
                     throw not_implemented_yet();
                 }
             }
@@ -88,6 +105,11 @@ public class Cost implements Rating {
     @Override
     public <R extends Rating> R _clone() {
         return (R) new Cost(value);
+    }
+
+    @Override
+    public boolean betterThan(Rating rating) {
+        return smallerThan(rating);
     }
 
     @Override
