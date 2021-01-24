@@ -37,7 +37,7 @@ public class SchoolSchedulingTest {
     @Disabled
     @Test
     public void testSchoolScheduling() {
-        final var sessionsByTeachers = define_problem()
+        /*final var sessionsByTeachers = define_problem()
                 .withDemandAttributes(TEACHER, SUBJECT, SUBJECT_LENGTH)
                 .withSupplyAttributes(SESSION_LENGTH)
                 .withConstraint(null)
@@ -60,7 +60,7 @@ public class SchoolSchedulingTest {
                 .withSupplyAttributes(WEEKDAY, HOUR, ROOM_NUMBER)
                 .withConstraint(null)
                 .toProblem()
-                .toSolution();
+                .toSolution();*/
         fail("Test not implemented");
     }
 
