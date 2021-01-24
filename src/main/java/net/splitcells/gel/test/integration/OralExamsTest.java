@@ -202,7 +202,7 @@ public class OralExamsTest extends TestSuiteI {
                 .withSupplyAttributes(DATE, SHIFT, ROOM_NUMBER)
                 .withSupplies(supplies)
                 .withConstraint
-                        (forAll()
+                        (for_all()
                                 .withChildren(for_each(OBSERVER)
                                                 .withChildren(for_all_combinations_of(DATE, SHIFT)
                                                         .withChildren(then(has_size(1))))
@@ -441,7 +441,7 @@ public class OralExamsTest extends TestSuiteI {
      * TODO
      */
     private Constraint studentSpecificConstraints() {
-        Constraint rVal = forAll();
+        Constraint rVal = for_all();
         return rVal;
     }
 
@@ -449,7 +449,7 @@ public class OralExamsTest extends TestSuiteI {
      * TODO
      */
     private Constraint examinerSpecificConstraints() {
-        Constraint rVal = forAll();
+        Constraint rVal = for_all();
         return rVal;
     }
 
@@ -457,7 +457,7 @@ public class OralExamsTest extends TestSuiteI {
      * TODO
      */
     private Constraint checkerSpecificConstraints() {
-        Constraint rVal = forAll();
+        Constraint rVal = for_all();
         return rVal;
     }
 }

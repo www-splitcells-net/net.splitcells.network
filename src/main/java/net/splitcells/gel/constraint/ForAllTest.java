@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
-import static net.splitcells.gel.constraint.type.ForAlls.forAll;
+import static net.splitcells.gel.constraint.type.ForAlls.for_all;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -29,7 +29,7 @@ public class ForAllTest extends TestSuiteI {
     public void testPropagation() {
         final int size = 3;
         final var lineProducer = database();
-        final var testSubject = forAll();
+        final var testSubject = for_all();
         assertThat(testSubject.complying()).isEmpty();
         assertThat(testSubject.defying()).isEmpty();
         range(0, size).forEach(i ->
@@ -46,7 +46,7 @@ public class ForAllTest extends TestSuiteI {
         final var attribute = attribute(Integer.class);
         final var lineSupplier = database(attribute);
         final var testSubject = ForAlls.for_each(attribute);
-        final var validator = forAll();
+        final var validator = for_all();
         testSubject.withChildren(validator);
         final List<Line> lines = list();
         {

@@ -3,12 +3,10 @@ package net.splitcells.gel.test.integration;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.testing.TestSuiteI;
-import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.SimplifiedAnnealingProblem;
 import net.splitcells.gel.rating.rater.Rater;
-import net.splitcells.gel.rating.rater.RaterBasedOnLineValue;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.SolutionBuilder;
 import net.splitcells.gel.solution.optimization.primitive.UsedSupplySwitcher;
@@ -27,8 +25,10 @@ import static net.splitcells.dem.resource.host.Files.createDirectory;
 import static net.splitcells.dem.resource.host.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
+import static net.splitcells.gel.constraint.type.ForAlls.for_all;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.HasSize.has_size;
+import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
 import static net.splitcells.gel.rating.rater.classification.GroupMultiplier.groupMultiplier;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;
@@ -95,12 +95,13 @@ public class NQueenProblemTest extends TestSuiteI {
                 .withDemands(demands)
                 .withSupplyAttributes(ROW)
                 .withSupplies(supplies)
-                .withConstraint(ForAlls.forAll()
-                        .withChildren(r -> r.for_each(ROW).for_each(COLUMN).then(has_size(1)))
-                        .withChildren(r -> r.for_each(ROW).then(has_size(1)))
-                        .withChildren(r -> r.for_each(COLUMN).then(has_size(1)))
-                        .withChildren(r -> r.for_all(ascDiagonals(rows, columns)).then(has_size(1)))
-                        .withChildren(r -> r.for_all(descDiagonals(rows, columns)).then(has_size(1))))
+                .withConstraints(list(
+                        r -> r.for_each(ROW).for_each(COLUMN).then(has_size(1))
+                        , r -> r.for_each(ROW).then(has_size(1))
+                        , r -> r.for_each(COLUMN).then(has_size(1))
+                        , r -> r.for_each(ascDiagonals(rows, columns)).then(has_size(1))
+                        , r -> r.for_each(descDiagonals(rows, columns)).then(has_size(1)))
+                )
                 .toProblem();
     }
 
@@ -118,13 +119,13 @@ public class NQueenProblemTest extends TestSuiteI {
      * The ascending diagonal with the number 0 represents the diagonal in the middle.
      */
     private static Rater ascDiagonals(int rows, int columns) {
-        return RaterBasedOnLineValue.raterBasedOnLineValue("ascDiagonals", line -> line.value(ROW) - line.value(COLUMN));
+        return raterBasedOnLineValue("ascDiagonals", line -> line.value(ROW) - line.value(COLUMN));
     }
 
     /**
      * The descending diagonal with the number 0 represents the diagonal in the middle.
      */
     private static Rater descDiagonals(int rows, int columns) {
-        return RaterBasedOnLineValue.raterBasedOnLineValue("descDiagonals", line -> line.value(ROW) - Math.abs(line.value(COLUMN) - columns - 1));
+        return raterBasedOnLineValue("descDiagonals", line -> line.value(ROW) - Math.abs(line.value(COLUMN) - columns - 1));
     }
 }

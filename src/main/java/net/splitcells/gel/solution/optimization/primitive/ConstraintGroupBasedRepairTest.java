@@ -11,7 +11,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.type.ForAlls.forAllWithValue;
-import static net.splitcells.gel.constraint.type.ForAlls.forAll;
+import static net.splitcells.gel.constraint.type.ForAlls.for_all;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -63,7 +63,7 @@ public class ConstraintGroupBasedRepairTest {
                 /**
                  * Needless constraints are added, in order to check, if the correct {@link Constraint} is selected.
                  */
-                        (forAll().withChildren
+                        (for_all().withChildren
                                 (forAllWithValue(a, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(a, invalidValueA).withChildren(defyingGroupA)
@@ -140,7 +140,7 @@ public class ConstraintGroupBasedRepairTest {
                                 , list()
                                 , list())
                 .withConstraint
-                        (forAll().withChildren
+                        (for_all().withChildren
                                 (forAllWithValue(a, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(a, invalidValueA).withChildren(defyingConstraintA)
@@ -189,7 +189,7 @@ public class ConstraintGroupBasedRepairTest {
                                 , list()
                                 , list())
                 .withConstraint
-                        (forAll().withChildren
+                        (for_all().withChildren
                                 (forAllWithValue(a, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(a, invalidValueA).withChildren(defyingConstraintA)

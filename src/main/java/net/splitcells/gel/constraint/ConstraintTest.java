@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.gel.constraint.Constraint.incomingGroupsOfConstraintPath;
-import static net.splitcells.gel.constraint.type.ForAlls.forAll;
+import static net.splitcells.gel.constraint.type.ForAlls.for_all;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
@@ -53,11 +53,11 @@ public class ConstraintTest {
 
     @Test
     public void testAllocationGroups() {
-        final var constraint_1 = forAll();
-        final var constraint_2 = forAll();
-        final var constraint_3 = forAll();
-        final var constraint_4 = forAll();
-        final var constraint_5 = forAll();
+        final var constraint_1 = for_all();
+        final var constraint_2 = for_all();
+        final var constraint_3 = for_all();
+        final var constraint_4 = for_all();
+        final var constraint_5 = for_all();
         @SuppressWarnings("unchecked") final var solution
                 = define_problem()
                 .withDemandAttributes()
