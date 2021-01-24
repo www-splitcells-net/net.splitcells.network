@@ -10,7 +10,7 @@ public interface Query {
 
 	Query for_each(Attribute<?> args);
 
-	Query for_all(Rater vērtētājs);
+	Query for_each(Rater vērtētājs);
 
 	Query for_all();
 
