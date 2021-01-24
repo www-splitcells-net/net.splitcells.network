@@ -95,12 +95,15 @@ public class NQueenProblemTest extends TestSuiteI {
                 .withDemands(demands)
                 .withSupplyAttributes(ROW)
                 .withSupplies(supplies)
-                .withConstraints(list(
-                        r -> r.for_each(ROW).for_each(COLUMN).then(has_size(1))
-                        , r -> r.for_each(ROW).then(has_size(1))
-                        , r -> r.for_each(COLUMN).then(has_size(1))
-                        , r -> r.for_each(ascDiagonals(rows, columns)).then(has_size(1))
-                        , r -> r.for_each(descDiagonals(rows, columns)).then(has_size(1)))
+                .withConstraint(
+                        r -> {
+                            r.for_each(ROW).for_each(COLUMN).then(has_size(1));
+                            r.for_each(ROW).then(has_size(1));
+                            r.for_each(COLUMN).then(has_size(1));
+                            r.for_each(ascDiagonals(rows, columns)).then(has_size(1));
+                            r.for_each(descDiagonals(rows, columns)).then(has_size(1));
+                            return r;
+                        }
                 )
                 .toProblem();
     }
