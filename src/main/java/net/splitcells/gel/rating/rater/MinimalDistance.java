@@ -4,6 +4,7 @@ import static java.lang.Math.abs;
 import static java.util.Comparator.naturalOrder;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
+import static net.splitcells.dem.data.order.Ordering.GREATER_THAN;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.gel.constraint.Constraint.LINE;
@@ -18,6 +19,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
+import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.utils.MathUtils;
@@ -33,6 +35,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.structure.Rating;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.OptionalAssert;
 import org.w3c.dom.Node;
 
 public class MinimalDistance<T> implements Rater {
@@ -88,7 +91,7 @@ public class MinimalDistance<T> implements Rater {
             while (i < sortedLines.size()) {
                 final var remainingRightLine = sortedLines.get(i);
                 if (!isValid(removal, remainingRightLine)) {
-                    rate_addition_ofRemovalPair(ratingEvent, removal, remainingRightLine, children//
+                    rate_addition_ofRemovalPair(ratingEvent, removal, remainingRightLine, children
                             , ratingsBeforeRemoval.lookupEquals(LINE, remainingRightLine).value(Constraint.RATING));
                     ++i;
                 } else {
@@ -101,7 +104,7 @@ public class MinimalDistance<T> implements Rater {
             while (i < -1) {
                 final Line remainingRightLine = sortedLines.get(i);
                 if (!isValid(removal, remainingRightLine)) {
-                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children//
+                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children
                             , ratingsBeforeRemoval.lookupEquals(LINE, remainingRightLine).value(Constraint.RATING));
                     --i;
                 } else {
@@ -114,7 +117,7 @@ public class MinimalDistance<T> implements Rater {
             while (i < -1) {
                 final Line remainingLeftLine = sortedLines.get(i);
                 if (!isValid(removal, remainingLeftLine)) {
-                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children//
+                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children
                             , ratingsBeforeRemoval.lookupEquals(LINE, remainingLeftLine).value(Constraint.RATING));
                     --i;
                 } else {
@@ -125,7 +128,7 @@ public class MinimalDistance<T> implements Rater {
             while (i < sortedLines.size()) {
                 final Line remainingRightLine = sortedLines.get(i);
                 if (!isValid(removal, remainingRightLine)) {
-                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children//
+                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children
                             , ratingsBeforeRemoval.lookupEquals(LINE, remainingRightLine).value(Constraint.RATING));
                     ++i;
                 } else {
@@ -140,46 +143,62 @@ public class MinimalDistance<T> implements Rater {
 
     private void checkConsistency(Table lineProcessing) {
         final var sortedProcessingLines = sorted(lineProcessing);
-        if (sortedProcessingLines.size() > 1) {
-            final var remainingDistance = distance(sortedProcessingLines.get(0), sortedProcessingLines.get(1))
-                    - minimumDistance;
-            if (remainingDistance > 0) {
-                assertThat(sortedProcessingLines.get(0).value(RATING)).isEqualTo(
-                        cost((remainingDistance / 2)));
+        try {
+            if (sortedProcessingLines.size() > 1) {
+                final var remainingDistance = minimumDistance
+                        - distance(sortedProcessingLines.get(0), sortedProcessingLines.get(1));
+                if (remainingDistance > 0) {
+                    assertThat(noCost().compare_partially_to(sortedProcessingLines.get(0).value(RATING)))
+                            .contains(GREATER_THAN);
+                } else {
+                    assertThat(sortedProcessingLines.get(0).value(RATING).equalz(noCost())).isTrue();
+                }
             }
-        }
-        rangeClosed(1, sortedProcessingLines.size() - 2)
-                .forEach(i -> {
-                    final var remainingLeftDistance
-                            = distance(sortedProcessingLines.get(i - 1), sortedProcessingLines.get(i))
-                            - minimumDistance;
-                    final var remainingRightDistance
-                            =
-                            distance(sortedProcessingLines.get(i), sortedProcessingLines.get(i + 1))
-                                    - minimumDistance;
-                    final double remainingDistance;
-                    if (remainingLeftDistance > 0 && remainingRightDistance == 0) {
-                        remainingDistance = remainingLeftDistance;
-                    } else if (remainingRightDistance > 0 && remainingLeftDistance == 0) {
-                        remainingDistance = remainingRightDistance;
-                    } else if (remainingLeftDistance > 0 && remainingRightDistance > 0) {
-                        remainingDistance = remainingLeftDistance + remainingRightDistance;
-                    } else {
-                        remainingDistance = 0;
-                    }
-                    if (remainingDistance > 0) {
-                        assertThat(sortedProcessingLines.get(i).value(RATING)).isEqualTo(
-                                cost(remainingDistance / 2));
-                    }
-                });
-        if (sortedProcessingLines.size() > 2) {
-            final var remainingDistance = distance(sortedProcessingLines.get(sortedProcessingLines.size() - 2)
-                    , sortedProcessingLines.get(sortedProcessingLines.size() - 1))
-                    - minimumDistance;
-            if (remainingDistance > 0) {
-                assertThat(sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)).isEqualTo(
-                        cost(remainingDistance / 2));
+            rangeClosed(1, sortedProcessingLines.size() - 2)
+                    .forEach(i -> {
+                        final var remainingLeftDistance
+                                = minimumDistance
+                                - distance(sortedProcessingLines.get(i - 1), sortedProcessingLines.get(i));
+                        final var remainingRightDistance
+                                = minimumDistance
+                                - distance(sortedProcessingLines.get(i), sortedProcessingLines.get(i + 1));
+                        final double remainingDistance;
+                        if (remainingLeftDistance > 0 && remainingRightDistance == 0) {
+                            remainingDistance = remainingLeftDistance;
+                        } else if (remainingRightDistance > 0 && remainingLeftDistance == 0) {
+                            remainingDistance = remainingRightDistance;
+                        } else if (remainingLeftDistance > 0 && remainingRightDistance > 0) {
+                            remainingDistance = remainingLeftDistance + remainingRightDistance;
+                        } else {
+                            remainingDistance = 0;
+                        }
+                        if (remainingDistance > 0) {
+                            assertThat(noCost().compare_partially_to(sortedProcessingLines.get(i).value(RATING)))
+                                    .contains(GREATER_THAN);
+                        } else {
+                            assertThat(sortedProcessingLines.get(i).value(RATING).equalz(noCost())).isTrue();
+                        }
+                    });
+            if (sortedProcessingLines.size() > 2) {
+                final var remainingDistance = minimumDistance
+                        - distance(sortedProcessingLines.get(sortedProcessingLines.size() - 2)
+                        , sortedProcessingLines.get(sortedProcessingLines.size() - 1));
+                if (remainingDistance > 0) {
+                    assertThat
+                            (noCost()
+                                    .betterThan(sortedProcessingLines
+                                            .get(sortedProcessingLines.size() - 1)
+                                            .value(RATING)))
+                            .isTrue();
+                } else {
+                    assertThat
+                            (sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)
+                                    .compare_partially_to(noCost()))
+                            .contains(GREATER_THAN);
+                }
             }
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
         }
     }
 
@@ -194,30 +213,38 @@ public class MinimalDistance<T> implements Rater {
         final var ratingEvent = ratingEvent();
         final var sortedLines = sorted(lines);
         // TODO PERFORMANCE
-        final int sortedIndexes = sortedLines.indexOf(
+        final int sortedIndex = sortedLines.indexOf(
                 sortedLines.stream()
                         .filter(e -> e.value(LINE).equals(addition.value(LINE)))
                         .findFirst()
                         .get());
-        if (sortedIndexes == 0) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            assertThat
+                    (sortedLines.stream()
+                            .filter(e -> e.value(LINE).equals(addition.value(LINE)))
+                            .count())
+                    .describedAs("Multiple instances of an allocation are not supported.")
+                    .isLessThan(2);
+        }
+        if (sortedIndex == 0) {
             if (sortedLines.size() == 1) {
-                ratingEvent.additions().put(addition//
-                        , localRating().
-                                withPropagationTo(children).
-                                withRating(noCost()).
-                                withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+                ratingEvent.additions().put(addition
+                        , localRating()
+                                .withPropagationTo(children)
+                                .withRating(noCost())
+                                .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
             } else {
-                rate_addition_ofAdditionPair(ratingEvent, addition, sortedLines.get(1), children//
+                rate_addition_ofAdditionPair(ratingEvent, addition, sortedLines.get(1), children
                         , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, sortedLines.get(1))
                                 .value(Constraint.RATING)));
             }
-        } else if (sortedIndexes == sortedLines.size() - 1) {
+        } else if (sortedIndex == sortedLines.size() - 1) {
             // TODO HACK
             int i = 0;
             while (-1 < sortedLines.size() - 2 - i) {
                 final var originalLeftLine = sortedLines.get(sortedLines.size() - 2 - i);
                 if (!isValid(originalLeftLine, addition) || i == 0) {
-                    rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children//
+                    rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children
                             , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalLeftLine)
                                     .value(Constraint.RATING)));
                     ++i;
@@ -225,11 +252,11 @@ public class MinimalDistance<T> implements Rater {
                     break;
                 }
             }
-        } else if (sortedIndexes > 0 && sortedIndexes < sortedLines.size() - 1) {
+        } else if (sortedIndex > 0 && sortedIndex < sortedLines.size() - 1) {
             // TODO HACK
             int i = 0;
-            while (sortedLines.size() > sortedIndexes + 1 + i) {
-                final var originalRightLine = sortedLines.get(sortedIndexes + 1);
+            while (sortedLines.size() > sortedIndex + 1 + i) {
+                final var originalRightLine = sortedLines.get(sortedIndex + 1);
                 if (!isValid(addition, originalRightLine)) {
                     rate_addition_ofAdditionPair(ratingEvent, addition, originalRightLine, children
                             , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalRightLine)
@@ -240,8 +267,8 @@ public class MinimalDistance<T> implements Rater {
                 }
             }
             i = 0;
-            while (-1 < sortedIndexes - 1 - i) {
-                final var originalLeftLine = sortedLines.get(sortedIndexes - 1 - i);
+            while (-1 < sortedIndex - 1 - i) {
+                final var originalLeftLine = sortedLines.get(sortedIndex - 1 - i);
                 if (!isValid(originalLeftLine, addition)) {
                     rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children
                             , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalLeftLine)
@@ -252,7 +279,7 @@ public class MinimalDistance<T> implements Rater {
                 }
             }
         } else {
-            throw new AssertionError("" + sortedIndexes);
+            throw new AssertionError("" + sortedIndex);
         }
         return ratingEvent;
     }
@@ -316,12 +343,12 @@ public class MinimalDistance<T> implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return Lists.list(//
-                () -> Xml.element("minimumDistance", Xml.textNode("" + minimumDistance))//
-                , () -> Xml.element("attribute", attribute.toDom())//
-                , () -> Xml.element("comparator", Xml.textNode("" + comparator))//
-                , () -> Xml.element("distanceMeassurer", Xml.textNode("" + distanceMeassurer))//
-        );
+        return Lists.list
+                (() -> Xml.element("minimumDistance", Xml.textNode("" + minimumDistance))
+                        , () -> Xml.element("attribute", attribute.toDom())
+                        , () -> Xml.element("comparator", Xml.textNode("" + comparator))
+                        , () -> Xml.element("distanceMeassurer", Xml.textNode("" + distanceMeassurer))
+                );
     }
 
     @Override
