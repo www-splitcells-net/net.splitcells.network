@@ -20,7 +20,10 @@
                         Solve oral exams problem.
                         <toDo>maven.test OralExamsTest#testCurrent
                             <toDo>OralExamsTest#oralExamOptimizationTests
-                                <toDo>Use ConstraintGroupBasedRepair.</toDo>
+                                <toDo>Use ConstraintGroupBasedRepair.
+                                    <toDo>Implement custom constraint group optimization order.</toDo>
+                                    <toDo>Implement custom heuristics.</toDo>
+                                </toDo>
                                 <toDo>Use Escalator.</toDo>
                                 <toDo>Manually validate the solution.</toDo>
                             </toDo>

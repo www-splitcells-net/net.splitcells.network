@@ -71,4 +71,11 @@
             solving routine.
         </paragraph>
     </chapter>
+    <chapter>
+        <title>Development</title>
+        <paragraph>The main functions are located at the class
+            <quote>net.splitcells.gel.Gel</quote>
+            of the core project (<quote>net.splitcells.gel.core</quote>).
+        </paragraph>
+    </chapter>
 </article>
