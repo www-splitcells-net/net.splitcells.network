@@ -24,8 +24,14 @@
                 time and the storing of its results, in order to have a feeling for the hardware requirements.
                 <idea>Use TestsuiteI/JUnit and performance counters..</idea>
             </objective>
+            <objective>Externalize constraint state.
+                <objective>Create wrapper for new constraint interface
+                    which is imprinted to a solution instance and where
+                    the solution does not have to be passed explicitly.
+                    (The wrapper interface is like the old interface.)
+                </objective>
+            </objective>
             <objective>Extend solving capabilities by solving Killer Sudoku.</objective>
-            <objective>Support interactive problem solving via Website.</objective>
         </objective>
         <scheduling>
             <priority>

@@ -6,12 +6,15 @@
          xmlns:e="http://splitcells.net/sen.xsd">
     <solution>
         <objective>
-            <objective>Create constraint language, that can be parsed.
-                <solution>Make it text based, so it easy to edit and create.</solution>
-                <solution>Try to do it via simplified Java code, that is automatically translated to the appropriate
-                    Java code.
-                </solution>
-            </objective>
+            <objective>Support interactive problem solving via Website.</objective>
         </objective>
+        <scheduling>
+            <priority>
+                <queue>
+                </queue>
+            </priority>
+        </scheduling>
     </solution>
+    <unscheduled>
+    </unscheduled>
 </project>

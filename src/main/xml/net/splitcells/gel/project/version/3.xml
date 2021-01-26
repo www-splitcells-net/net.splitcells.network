@@ -32,6 +32,7 @@
                     <todo>Solve Schienen-Planung.</todo>
                     <todo>Solve Sportkurs-Planung.</todo>
                     <toDo>Fix NQueenProblēmaTest.</toDo>
+                    <toDo>Create an analysis guideline/concept.</toDo>
                 </queue>
             </priority>
         </scheduling>
@@ -40,6 +41,7 @@
             </toDo>
             <idea>Create 1 basic memory and 1 runtime profiling test.
             </idea>
+            <idea>Support not incremental constraint system.</idea>
         </unscheduled>
     </solution>
 </project>
