@@ -20,7 +20,7 @@
                         Solve oral exams problem.
                         <toDo>maven.test OralExamsTest#testCurrent
                             <toDo>OralExamsTest#oralExamOptimizationTests
-                                <toDo>Fix MinimalDistance.</toDo>
+                                <toDo>Fix MinimalDistance: maven.test MinimalDistanceTest#testRating</toDo>
                                 <toDo>Use ConstraintGroupBasedRepair.
                                     <toDo>Implement custom constraint group optimization order.</toDo>
                                     <toDo>Implement custom heuristics.</toDo>
