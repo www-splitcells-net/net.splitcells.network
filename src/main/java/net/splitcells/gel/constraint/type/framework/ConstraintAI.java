@@ -22,15 +22,12 @@ import static net.splitcells.gel.rating.structure.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.database.Databases;
@@ -77,7 +74,7 @@ public abstract class ConstraintAI implements Constraint {
         lineProcessing = allocations("linesProcessing", lines, results);
         lineProcessing.subscribe_to_afterAdditions(this::propagateAddition);
         lineProcessing.subscriber_to_beforeRemoval(this::propagateRemoval);
-        lines.subscribe_to_afterAdditions(this::process_line_addtion);
+        lines.subscribe_to_afterAdditions(this::process_line_addition);
     }
 
     protected ConstraintAI() {
@@ -137,7 +134,7 @@ public abstract class ConstraintAI implements Constraint {
                 .forEach(lines::remove);
     }
 
-    protected abstract void process_line_addtion(Line addition);
+    protected abstract void process_line_addition(Line addition);
 
     protected void process_lines_beforeRemoval(GroupId injectionGroup, Line removal) {
         lineProcessing.supplies_free().rawLinesView().stream()

@@ -6,7 +6,7 @@ import net.splitcells.gel.problem.Define_Demand_Attributes;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
- * Projektu Nosaukumu Vēsture:
+ * Project name history:
  * <ul>
  *    <li>Gep = Ģenēriskais Piešķirtājs</li>
  *    <li>Gel = Generic Allocator</li>
