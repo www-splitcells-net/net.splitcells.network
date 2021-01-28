@@ -1,59 +1,65 @@
 package net.splitcells.gel.rating.rater;
 
-import static java.lang.Math.abs;
-import static java.util.Comparator.naturalOrder;
-import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.data.order.Comparator.comparator_;
-import static net.splitcells.dem.data.order.Ordering.GREATER_THAN;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.gel.constraint.Constraint.LINE;
-import static net.splitcells.gel.constraint.Constraint.RATING;
-import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
-import static net.splitcells.gel.rating.type.Cost.cost;
-import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
-import static org.assertj.core.api.Assertions.assertThat;
+import net.splitcells.dem.data.order.Comparator;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.utils.MathUtils;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.rating.structure.Rating;
+import org.w3c.dom.Node;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.stream.Stream;
 
-import net.splitcells.dem.data.order.Ordering;
-import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.utils.MathUtils;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.data.order.Comparator;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.rating.structure.Rating;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.OptionalAssert;
-import org.w3c.dom.Node;
+import static java.lang.Math.abs;
+import static java.util.Comparator.naturalOrder;
+import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.order.Comparator.comparator_;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.constraint.Constraint.RATING;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.rating.type.Cost.noCost;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class MinimalDistance<T> implements Rater {
-    public static MinimalDistance<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
+/**
+ * TODO FIX This does not work.
+ * <p/>
+ * TODO IDEA Use this and {@link MinimalDistance} in order to measure performance of diff based implementation
+ * vs recalculating implementation.
+ *
+ * @param <T>
+ */
+@Deprecated
+public class MinimalDistanceBasedOnDiffs<T> implements Rater {
+    @Deprecated
+    public static MinimalDistanceBasedOnDiffs<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
         return minimalDistance(attribute, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
     }
 
-    public static MinimalDistance<Double> minimalDistance(Attribute<Double> attribute, double minimumDistance) {
+    @Deprecated
+    public static MinimalDistanceBasedOnDiffs<Double> minimalDistance(Attribute<Double> attribute, double minimumDistance) {
         return minimalDistance(attribute, minimumDistance, comparator_(Double::compare), MathUtils::distance);
     }
 
-    public static <R> MinimalDistance<R> minimalDistance(Attribute<R> attribute
+    @Deprecated
+    public static <R> MinimalDistanceBasedOnDiffs<R> minimalDistance(Attribute<R> attribute
             , double minimumDistance
             , Comparator<R> comparator
             , BiFunction<R, R, Double> distanceMeasurer) {
-        return new MinimalDistance<>(attribute, minimumDistance, comparator, distanceMeasurer);
+        return new MinimalDistanceBasedOnDiffs<>(attribute, minimumDistance, comparator, distanceMeasurer);
     }
 
     private final double minimumDistance;
@@ -62,7 +68,7 @@ public class MinimalDistance<T> implements Rater {
     private final BiFunction<T, T, Double> distanceMeassurer;
     private final List<Discoverable> contextes = list();
 
-    protected MinimalDistance
+    protected MinimalDistanceBasedOnDiffs
             (Attribute<T> attribute, double minimumDistance
                     , Comparator<T> comparator
                     , BiFunction<T, T, Double> distanceMeassurer) {
@@ -76,29 +82,71 @@ public class MinimalDistance<T> implements Rater {
     public RatingEvent rating_before_removal
             (Table lines
                     , Line removal
-                    , net.splitcells.dem.data.set.list.List<Constraint> children
+                    , List<Constraint> children
                     , Table ratingsBeforeRemoval) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             checkConsistency(ratingsBeforeRemoval);
         }
         final var ratingEvent = ratingEvent();
-        final var sortedLines = sortedStream(lines)
-                .filter(e -> e.value(LINE).equals(removal.value(LINE)))
-                .collect(toList());
-        throw not_implemented_yet();
-    }
-
-    @Override
-    public RatingEvent rating_after_addition(Table lines
-            , Line addition
-            , List<Constraint> children
-            , Table ratingsBeforeAddition) {
-        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            checkConsistency(ratingsBeforeAddition);
-        }
-        final var ratingEvent = ratingEvent();
         final var sortedLines = sorted(lines);
-        throw not_implemented_yet();
+        final int sortedIndexes = sortedLines.indexOf(
+                sortedLines.stream()
+                        .filter(e -> e.value(LINE).equals(removal.value(LINE)))
+                        .findFirst().get());
+        if (sortedIndexes == 0) {
+            // KOMPORMISS
+            int i = 1;
+            while (i < sortedLines.size()) {
+                final var remainingRightLine = sortedLines.get(i);
+                if (!isValid(removal, remainingRightLine)) {
+                    rate_addition_ofRemovalPair(ratingEvent, removal, remainingRightLine, children
+                            , ratingsBeforeRemoval.lookupEquals(LINE, remainingRightLine).value(Constraint.RATING));
+                    ++i;
+                } else {
+                    break;
+                }
+            }
+        } else if (sortedIndexes == sortedLines.size() - 1) {
+            // KOMPORMISS
+            int i = sortedIndexes - 1;
+            while (i < -1) {
+                final Line remainingRightLine = sortedLines.get(i);
+                if (!isValid(removal, remainingRightLine)) {
+                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children
+                            , ratingsBeforeRemoval.lookupEquals(LINE, remainingRightLine).value(Constraint.RATING));
+                    --i;
+                } else {
+                    break;
+                }
+            }
+        } else if (sortedIndexes > 0 && sortedIndexes < sortedLines.size() - 1) {
+            // TODO HACK
+            int i = sortedIndexes - 1;
+            while (i < -1) {
+                final Line remainingLeftLine = sortedLines.get(i);
+                if (!isValid(removal, remainingLeftLine)) {
+                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children
+                            , ratingsBeforeRemoval.lookupEquals(LINE, remainingLeftLine).value(Constraint.RATING));
+                    --i;
+                } else {
+                    break;
+                }
+            }
+            i = sortedIndexes + 1;
+            while (i < sortedLines.size()) {
+                final Line remainingRightLine = sortedLines.get(i);
+                if (!isValid(removal, remainingRightLine)) {
+                    rate_addition_ofRemovalPair(ratingEvent, removal, sortedLines.get(i), children
+                            , ratingsBeforeRemoval.lookupEquals(LINE, remainingRightLine).value(Constraint.RATING));
+                    ++i;
+                } else {
+                    break;
+                }
+            }
+        } else {
+            throw new AssertionError("" + sortedIndexes);
+        }
+        return ratingEvent;
     }
 
     private void checkConsistency(Table lineProcessing) {
@@ -162,6 +210,88 @@ public class MinimalDistance<T> implements Rater {
         }
     }
 
+    @Override
+    public RatingEvent rating_after_addition(Table lines
+            , Line addition
+            , List<Constraint> children
+            , Table ratingsBeforeAddition) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            checkConsistency(ratingsBeforeAddition);
+        }
+        final var ratingEvent = ratingEvent();
+        final var sortedLines = sorted(lines);
+        // TODO PERFORMANCE
+        final int sortedIndex = sortedLines.indexOf(
+                sortedLines.stream()
+                        .filter(e -> e.value(LINE).equals(addition.value(LINE)))
+                        .findFirst()
+                        .get());
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            assertThat
+                    (sortedLines.stream()
+                            .filter(e -> e.value(LINE).equals(addition.value(LINE)))
+                            .count())
+                    .describedAs("Multiple instances of an allocation are not supported.")
+                    .isLessThan(2);
+        }
+        if (sortedIndex == 0) {
+            if (sortedLines.size() == 1) {
+                ratingEvent.additions().put(addition
+                        , localRating()
+                                .withPropagationTo(children)
+                                .withRating(noCost())
+                                .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+            } else {
+                rate_addition_ofAdditionPair(ratingEvent, addition, sortedLines.get(1), children
+                        , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, sortedLines.get(1))
+                                .value(Constraint.RATING)));
+            }
+        } else if (sortedIndex == sortedLines.size() - 1) {
+            // TODO HACK
+            int i = 0;
+            while (-1 < sortedLines.size() - 2 - i) {
+                final var originalLeftLine = sortedLines.get(sortedLines.size() - 2 - i);
+                if (!isValid(originalLeftLine, addition) || i == 0) {
+                    rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children
+                            , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalLeftLine)
+                                    .value(Constraint.RATING)));
+                    ++i;
+                } else {
+                    break;
+                }
+            }
+        } else if (sortedIndex > 0 && sortedIndex < sortedLines.size() - 1) {
+            // TODO HACK
+            int i = 0;
+            while (sortedLines.size() > sortedIndex + 1 + i) {
+                final var originalRightLine = sortedLines.get(sortedIndex + 1);
+                if (!isValid(addition, originalRightLine)) {
+                    rate_addition_ofAdditionPair(ratingEvent, addition, originalRightLine, children
+                            , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalRightLine)
+                                    .value(Constraint.RATING)));
+                    ++i;
+                } else {
+                    break;
+                }
+            }
+            i = 0;
+            while (-1 < sortedIndex - 1 - i) {
+                final var originalLeftLine = sortedLines.get(sortedIndex - 1 - i);
+                if (!isValid(originalLeftLine, addition)) {
+                    rate_addition_ofAdditionPair(ratingEvent, addition, originalLeftLine, children
+                            , Optional.of(ratingsBeforeAddition.lookupEquals(LINE, originalLeftLine)
+                                    .value(Constraint.RATING)));
+                    ++i;
+                } else {
+                    break;
+                }
+            }
+        } else {
+            throw new AssertionError("" + sortedIndex);
+        }
+        return ratingEvent;
+    }
+
     protected void rate_addition_ofAdditionPair
             (RatingEvent rVal
                     , Line addition
@@ -203,7 +333,7 @@ public class MinimalDistance<T> implements Rater {
 
     @Override
     public Class<? extends Rater> type() {
-        return MinimalDistance.class;
+        return MinimalDistanceBasedOnDiffs.class;
     }
 
     @Override
@@ -231,11 +361,11 @@ public class MinimalDistance<T> implements Rater {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg != null && arg instanceof MinimalDistance) {
-            return this.minimumDistance == ((MinimalDistance) arg).minimumDistance
-                    && this.attribute.equals(((MinimalDistance) arg).attribute)
-                    && this.comparator.equals(((MinimalDistance) arg).comparator)
-                    && this.distanceMeassurer.equals(((MinimalDistance) arg).distanceMeassurer);
+        if (arg != null && arg instanceof MinimalDistanceBasedOnDiffs) {
+            return this.minimumDistance == ((MinimalDistanceBasedOnDiffs) arg).minimumDistance
+                    && this.attribute.equals(((MinimalDistanceBasedOnDiffs) arg).attribute)
+                    && this.comparator.equals(((MinimalDistanceBasedOnDiffs) arg).comparator)
+                    && this.distanceMeassurer.equals(((MinimalDistanceBasedOnDiffs) arg).distanceMeassurer);
         }
         return false;
     }
@@ -248,21 +378,6 @@ public class MinimalDistance<T> implements Rater {
     @Override
     public Collection<List<String>> paths() {
         return contextes.stream().map(Discoverable::path).collect(toList());
-    }
-
-    private Stream<Line> sortedStream(Table lines) {
-        return lines.rawLinesView().stream()
-                .filter(e -> e != null)
-                .sorted((a, b) -> {
-                            try {
-                                return comparator.compare
-                                        (a.value(LINE).value(attribute)
-                                                , b.value(LINE).value(attribute));
-                            } catch (RuntimeException e) {
-                                throw e;
-                            }
-                        }
-                );
     }
 
     private List<Line> sorted(Table lines) {
