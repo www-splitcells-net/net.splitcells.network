@@ -30,9 +30,8 @@ public class MinimalDistanceTest {
 
     @Tag(INTEGRATION_TEST)
     @Test
-    public void testMultipleLineAdditionAndRemoval() {
+    public void test_multiple_line_addition_and_removal() {
         final var integer = integerAttribute("integer");
-
         final var testSubject = define_problem()
                 .withDemandAttributes()
                 .withEmptyDemands(3)
