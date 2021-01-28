@@ -423,69 +423,19 @@
         </paragraph>
         <chapter>
             <title>Identifiers</title>
+            <paragraph>Readability is preferred over compactness.</paragraph>
             <paragraph>Static final variables are identified by all upper case
-                names where each word is
-                separated by
-                an underscore.
+                natural description, where each word is separated by an underscore.
+            </paragraph>
+            <paragraph>Type identifiers start with an upper case letter.
+                The identifier consist of a natural description.
+                Every word in the name is separated by an underscore and special symbols can be omitted or be replaced
+                by underscore.
             </paragraph>
             <paragraph>
-                Camel case is the preferred for non static final variable
-                identifiers in order to minimize the
-                number of
-                used
-                characters. Common
-                acronyms
-                are also written in camel case (i.e.
-                <quote>LINUX</quote>
-                is invalid).
-            </paragraph>
-            <tree>
-                <name>Under some conditions identifier names should not be written
-                    in camel case:
-                </name>
-                <tree>
-                    <name>The identifier represents a valid sentence. This is not
-                        uncommon for unit test methods.
-                    </name>
-                </tree>
-                <tree>
-                    <name>
-                        The identifier contains a subject and an object. Note that the
-                        method
-                        <quote>toString</quote>
-                        of
-                        the class
-                        <quote>Object</quote>
-                        does not contain an object. On the other side the identifier
-                        <quote>name_to_address</quote>
-                        for
-                        a dictionary, does have a subject and object. Note that in this
-                        case no complete
-                        sentence is
-                        present.
-                    </name>
-                </tree>
-                <tree>
-                    <name>
-                        <d:todo>The identifier is part of a tree structure.</d:todo>
-                    </name>
-                </tree>
-            </tree>
-            <paragraph>
-                In these cases identifiers should be
-                written as in natural
-                language where white space
-                is replaced by
-                underscores and no special
-                symbols are
-                used. This is done in order to mark things
-                with some
-                additional complexity and in
-                order to support one
-                to partition the
-                code
-                into as many
-                small blocks as possible.
+                Every other identifier also consist of a natural description.
+                Every word in the name is separated by an underscore and special symbols can be omitted or be replaced
+                by underscore.
             </paragraph>
         </chapter>
         <chapter>
