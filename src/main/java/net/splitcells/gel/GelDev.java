@@ -6,6 +6,7 @@ import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.gel.constraint.ConstraintTest;
+import net.splitcells.gel.rating.rater.MinimalDistanceTest;
 import net.splitcells.gel.test.integration.OralExamsTest;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -20,8 +21,9 @@ public final class GelDev {
 
     public static void main(String... arg) {
         process(() -> {
+            new MinimalDistanceTest().testMultipleLineAdditionAndRemoval();
             //new ConstraintTest().test_incomingGroupsOfConstraintPath();
-            new OralExamsTest().testCurrent();
+            //new OralExamsTest().testCurrent();
         }, standardConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class
