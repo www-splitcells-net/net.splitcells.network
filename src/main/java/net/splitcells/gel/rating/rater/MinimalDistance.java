@@ -81,11 +81,10 @@ public class MinimalDistance<T> implements Rater {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             checkConsistency(ratingsBeforeRemoval);
         }
-        final var ratingEvent = ratingEvent();
         final var sortedLines = sortedStream(lines)
                 .filter(e -> e.value(LINE).equals(removal.value(LINE)))
                 .collect(toList());
-        throw not_implemented_yet();
+        return rateDistance(sortedLines);
     }
 
     @Override
@@ -96,8 +95,10 @@ public class MinimalDistance<T> implements Rater {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             checkConsistency(ratingsBeforeAddition);
         }
-        final var ratingEvent = ratingEvent();
-        final var sortedLines = sorted(lines);
+        return rateDistance(sorted(lines));
+    }
+
+    private RatingEvent rateDistance(List<Line> sortedLines) {
         throw not_implemented_yet();
     }
 
