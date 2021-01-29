@@ -23,12 +23,12 @@ public interface RatingEvent {
     Set<Line> removal();
 
     default void addRating_viaAddition(Line subject, Rating additionalRating, List<Constraint> children,
-                                       Optional<Rating> ratingBeforeAddtion) {
+                                       Optional<Rating> ratingBeforeAddition) {
         final Rating currentRating;
         if (additions().containsKey(subject)) {
             currentRating = additions().get(subject).rating();
         } else {
-            currentRating = ratingBeforeAddtion.orElse(noCost());
+            currentRating = ratingBeforeAddition.orElse(noCost());
         }
         additions().put
                 (subject
