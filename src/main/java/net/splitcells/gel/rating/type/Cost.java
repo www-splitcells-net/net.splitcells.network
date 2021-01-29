@@ -15,6 +15,7 @@ import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
 public class Cost implements Rating {
+    private static final Cost NO_COST = cost(0.0);
     protected static final Comparator<Double> COST_VALUE_COMPARATOR = new Comparator<Double>() {
         @Override
         public Ordering compareTo(Double a, Double b) {
@@ -29,14 +30,14 @@ public class Cost implements Rating {
             }
         }
     };
-    private double value;
+    private final double value;
 
     public static Cost cost(double value) {
         return new Cost(value);
     }
 
     public static Cost noCost() {
-        return cost(0.0);
+        return NO_COST;
     }
 
     protected Cost(double value) {
