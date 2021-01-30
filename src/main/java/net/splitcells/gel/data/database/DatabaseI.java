@@ -20,7 +20,6 @@ import java.util.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.LineI;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnI;
@@ -90,7 +89,7 @@ public class DatabaseI implements Database {
     @SuppressWarnings("unchecked")
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attributes) {
-        return ColumnViewI.kolonnasSkats((Column<T>) columns.get(typed_column_index.get(attributes)));
+        return ColumnViewI.columnView((Column<T>) columns.get(typed_column_index.get(attributes)));
     }
 
     @Override

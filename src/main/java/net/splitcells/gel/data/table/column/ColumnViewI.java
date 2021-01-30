@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 public class ColumnViewI<T> implements ColumnView<T> {
-    public static <T> ColumnView<T> kolonnasSkats(Column<T> kolonna) {
+    public static <T> ColumnView<T> columnView(Column<T> kolonna) {
         return new ColumnViewI<>(kolonna);
     }
     private final Column<T> kolonna;
