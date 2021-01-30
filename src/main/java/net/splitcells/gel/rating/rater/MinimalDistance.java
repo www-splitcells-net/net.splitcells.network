@@ -103,11 +103,16 @@ public class MinimalDistance<T> implements Rater {
     private RatingEvent rateDistance(List<Line> sortedLines, List<Constraint> children) {
         final var ratingEvent = ratingEvent();
         range(0, sortedLines.size()).forEach(i -> {
+            ratingEvent.addRating_viaAddition
+                    (sortedLines.get(i)
+                            , noCost()
+                            , children
+                            , Optional.empty());
             range(0, i).takeWhile(left -> {
                 final var pairRating = pairRating(sortedLines.get(left), sortedLines.get(i));
                 if (!pairRating.equalz(noCost())) {
                     ratingEvent.addRating_viaAddition
-                            (sortedLines.get(i).value(LINE)
+                            (sortedLines.get(i)
                                     , pairRating
                                     , children
                                     , Optional.empty());
@@ -119,7 +124,7 @@ public class MinimalDistance<T> implements Rater {
                 final var pairRating = pairRating(sortedLines.get(i), sortedLines.get(right));
                 if (!pairRating.equalz(noCost())) {
                     ratingEvent.addRating_viaAddition
-                            (sortedLines.get(i).value(LINE)
+                            (sortedLines.get(i)
                                     , pairRating
                                     , children
                                     , Optional.empty());
