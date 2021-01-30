@@ -88,7 +88,7 @@ public abstract class ConstraintAI implements Constraint {
 
     @Override
     public void register_additions(GroupId injectionGroup, Line addition) {
-        // TODO Move this to differnt project.
+        // TODO Move this to a different project.
         if (TRACING) {
             domsole().append
                     (element("register-additions." + Constraint.class.getSimpleName()
@@ -98,7 +98,7 @@ public abstract class ConstraintAI implements Constraint {
                             , this
                             , DEBUG);
         }
-        // TODO Move this to differnt project.
+        // TODO Move this to a different project.
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(
                     lines
@@ -113,24 +113,24 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public void register_before_removal(GroupId ienākošaGrupaId, Line noņemšana) {
-        // DARĪT Kustēt uz ārpuses projektu.
+    public void register_before_removal(GroupId injectionGroup, Line removal) {
+        // TODO Move this to a different project.
         if (ENFORCING_UNIT_CONSISTENCY) {
-            Assertions.assertThat(noņemšana.isValid()).isTrue();
+            Assertions.assertThat(removal.isValid()).isTrue();
         }
-        process_lines_beforeRemoval(ienākošaGrupaId, noņemšana);
+        process_lines_beforeRemoval(injectionGroup, removal);
         lineProcessing
                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                .lookup(ienākošaGrupaId)
+                .lookup(injectionGroup)
                 .columnView(LINE)
-                .lookup(noņemšana)
+                .lookup(removal)
                 .getLines()
                 .forEach(lineProcessing::remove);
-        // JAUDA
+        // TODO PERFORMANCE
         lines.rawLinesView().stream()
                 .filter(e -> e != null)
-                .filter(line -> line.value(LINE).equals(noņemšana))
-                .filter(line -> line.value(INCOMING_CONSTRAINT_GROUP).equals(ienākošaGrupaId))
+                .filter(line -> line.value(LINE).equals(removal))
+                .filter(line -> line.value(INCOMING_CONSTRAINT_GROUP).equals(injectionGroup))
                 .forEach(lines::remove);
     }
 

@@ -215,7 +215,7 @@ public class MinimalDistance<T> implements Rater {
     private boolean isValid(Line a, Line b) {
         return distance(a, b) >= minimumDistance;
     }
-    
+
     @Override
     public Class<? extends Rater> type() {
         return MinimalDistance.class;
