@@ -215,18 +215,7 @@ public class MinimalDistance<T> implements Rater {
     private boolean isValid(Line a, Line b) {
         return distance(a, b) >= minimumDistance;
     }
-
-    protected void rate_addition_ofRemovalPair
-            (RatingEvent rVal
-                    , Line removal
-                    , Line rest
-                    , List<Constraint> children
-                    , Rating restRatingBeforeRemoval) {
-        if (!isValid(removal, rest)) {
-            rVal.updateRating_viaAddition(rest, cost(-0.5), children, Optional.of(restRatingBeforeRemoval));
-        }
-    }
-
+    
     @Override
     public Class<? extends Rater> type() {
         return MinimalDistance.class;
