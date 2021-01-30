@@ -2,6 +2,7 @@ package net.splitcells.gel.rating.rater;
 
 import static java.lang.Math.abs;
 import static java.util.Comparator.naturalOrder;
+import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.order.Ordering.GREATER_THAN;
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.order.Ordering;
@@ -84,7 +86,7 @@ public class MinimalDistance<T> implements Rater {
         final var sortedLines = sortedStream(lines)
                 .filter(e -> e.value(LINE).equals(removal.value(LINE)))
                 .collect(toList());
-        return rateDistance(sortedLines);
+        return rateDistance(sortedLines, children);
     }
 
     @Override
@@ -95,11 +97,38 @@ public class MinimalDistance<T> implements Rater {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             checkConsistency(ratingsBeforeAddition);
         }
-        return rateDistance(sorted(lines));
+        return rateDistance(sorted(lines), children);
     }
 
-    private RatingEvent rateDistance(List<Line> sortedLines) {
-        throw not_implemented_yet();
+    private RatingEvent rateDistance(List<Line> sortedLines, List<Constraint> children) {
+        final var ratingEvent = ratingEvent();
+        range(0, sortedLines.size()).forEach(i -> {
+            range(0, i).takeWhile(left -> {
+                final var pairRating = pairRating(sortedLines.get(left), sortedLines.get(i));
+                if (!pairRating.equalz(noCost())) {
+                    ratingEvent.addRating_viaAddition
+                            (sortedLines.get(i).value(LINE)
+                                    , pairRating
+                                    , children
+                                    , Optional.empty());
+                    return true;
+                }
+                return false;
+            });
+            range(i + 1, sortedLines.size()).takeWhile(right -> {
+                final var pairRating = pairRating(sortedLines.get(i), sortedLines.get(right));
+                if (!pairRating.equalz(noCost())) {
+                    ratingEvent.addRating_viaAddition
+                            (sortedLines.get(i).value(LINE)
+                                    , pairRating
+                                    , children
+                                    , Optional.empty());
+                    return true;
+                }
+                return false;
+            });
+        });
+        return ratingEvent;
     }
 
     private void checkConsistency(Table lineProcessing) {
@@ -163,28 +192,19 @@ public class MinimalDistance<T> implements Rater {
         }
     }
 
-    protected void rate_addition_ofAdditionPair
-            (RatingEvent rVal
-                    , Line addition
-                    , Line originalLine
-                    , List<Constraint> children
-                    , Optional<Rating> ratingBeforeAddition) {
-        final Rating additionalCost;
-        if (abs(distanceMeassurer.apply(
-                addition.value(LINE).value(attribute),
-                originalLine.value(LINE).value(attribute))) >= minimumDistance) {
-            additionalCost = noCost();
+    protected Rating pairRating(Line left, Line right) {
+        final var actualDistance = distance(left, right);
+        if (actualDistance >= minimumDistance) {
+            return noCost();
         } else {
-            additionalCost = cost(0.5);
-            rVal.updateRating_viaAddition(originalLine, additionalCost, children, ratingBeforeAddition);
+            return cost(actualDistance - minimumDistance);
         }
-        rVal.addRating_viaAddition(addition, additionalCost, children, Optional.empty());
     }
 
-    private double distance(Line a, Line b) {
+    private double distance(Line left, Line right) {
         return abs(distanceMeassurer
-                .apply(a.value(LINE).value(attribute)
-                        , b.value(LINE).value(attribute)));
+                .apply(left.value(LINE).value(attribute)
+                        , right.value(LINE).value(attribute)));
     }
 
     private boolean isValid(Line a, Line b) {
