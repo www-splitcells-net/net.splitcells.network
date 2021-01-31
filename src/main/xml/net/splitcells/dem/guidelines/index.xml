@@ -423,7 +423,11 @@
         </paragraph>
         <chapter>
             <title>Identifiers</title>
-            <paragraph>Readability is preferred over compactness.</paragraph>
+            <paragraph>Readability is preferred over compactness.
+                Every name should be unique. This means a renaming
+                would be valid, if every instance of the name can be renamed,
+                while still maintaining the correct meaning.
+            </paragraph>
             <paragraph>Static final variables are identified by all upper case
                 natural description, where each word is separated by an underscore.
             </paragraph>
