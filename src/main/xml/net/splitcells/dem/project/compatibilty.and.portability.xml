@@ -8,6 +8,9 @@
         <priority>
             <queue>
                 <toDo>Define a minimal Java EBNF grammar via "java.code.verify" and antlr.
+                    <toDo xl:href="https://github.com/antlr/grammars-v4/blob/master/java/java8/Test.java">
+                        Create code scanner.
+                    </toDo>
                     <toDo xl:href="https://github.com/antlr/antlr4"/>
                     <toDo xl:href="https://github.com/antlr/grammars-v4/tree/master/java/java8/examples"/>
                 </toDo>

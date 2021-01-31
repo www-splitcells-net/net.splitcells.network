@@ -10,15 +10,6 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <dependency>
             <groupId>commons-io</groupId>
@@ -26,4 +17,54 @@
             <version>2.4</version>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <!-- Used for grammar parsing. -->
+            <id>antlr4</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <antlr.version>4.9.1</antlr.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
+                    <version>${antlr.version}</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.7.1</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.antlr</groupId>
+                        <artifactId>antlr4-maven-plugin</artifactId>
+                        <version>${antlr.version}</version>
+                        <configuration>
+                            <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/code</sourceDirectory>
+                            <includes>
+                                <include>Java_11_lexer.g4</include>
+                                <include>Java_11_parser.g4</include>
+                            </includes>
+                            <visitor>true</visitor>
+                            <listener>true</listener>
+                            <outputDirectory>src/main/java/net/splitcells/dem/source/code/antlr4</outputDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>antlr4</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

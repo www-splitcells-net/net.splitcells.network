@@ -8,6 +8,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.host.interaction.Domsole;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
+import net.splitcells.dem.source.code.SourceCodeCheck;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
@@ -154,5 +155,9 @@ public final class Dem {
             return ensuredInitialized();
         }
         return CURRENT.get();
+    }
+
+    public static void check_source_code() {
+        SourceCodeCheck.main();
     }
 }
