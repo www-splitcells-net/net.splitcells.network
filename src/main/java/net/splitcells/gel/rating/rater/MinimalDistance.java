@@ -86,7 +86,7 @@ public class MinimalDistance<T> implements Rater {
         final var sortedLines = sortedStream(lines)
                 .filter(e -> e.value(LINE).equals(removal.value(LINE)))
                 .collect(toList());
-        return rateDistance(sortedLines, children);
+        return rateDistance(sortedLines, children, Optional.empty());
     }
 
     @Override
@@ -97,22 +97,28 @@ public class MinimalDistance<T> implements Rater {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             checkConsistency(ratingsBeforeAddition);
         }
-        return rateDistance(sorted(lines), children);
+        return rateDistance(sorted(lines), children, Optional.of(addition));
     }
 
-    private RatingEvent rateDistance(List<Line> sortedLines, List<Constraint> children) {
+    private RatingEvent rateDistance(List<Line> sortedLines, List<Constraint> children, Optional<Line> potential_new_line) {
         final var ratingEvent = ratingEvent();
         range(0, sortedLines.size()).forEach(i -> {
+            final var current_line = sortedLines.get(i);
+            potential_new_line.ifPresent(new_line -> {
+                if (!new_line.equalsTo(current_line)) {
+                    ratingEvent.removal().add(sortedLines.get(i).value(LINE));
+                }
+            });
             ratingEvent.addRating_viaAddition
-                    (sortedLines.get(i)
+                    (current_line
                             , noCost()
                             , children
                             , Optional.empty());
             range(0, i).takeWhile(left -> {
-                final var pairRating = pairRating(sortedLines.get(left), sortedLines.get(i));
+                final var pairRating = pairRating(sortedLines.get(left), current_line);
                 if (!pairRating.equalz(noCost())) {
                     ratingEvent.addRating_viaAddition
-                            (sortedLines.get(i)
+                            (current_line
                                     , pairRating
                                     , children
                                     , Optional.empty());
@@ -121,10 +127,10 @@ public class MinimalDistance<T> implements Rater {
                 return false;
             });
             range(i + 1, sortedLines.size()).takeWhile(right -> {
-                final var pairRating = pairRating(sortedLines.get(i), sortedLines.get(right));
+                final var pairRating = pairRating(current_line, sortedLines.get(right));
                 if (!pairRating.equalz(noCost())) {
                     ratingEvent.addRating_viaAddition
-                            (sortedLines.get(i)
+                            (current_line
                                     , pairRating
                                     , children
                                     , Optional.empty());
