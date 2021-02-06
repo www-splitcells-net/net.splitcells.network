@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+maven.execute net.splitcells.dem.source.code.SourceCodeCheck
