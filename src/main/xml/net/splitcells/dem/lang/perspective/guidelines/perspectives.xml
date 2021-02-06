@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet attribute="text/xsl" href="xofi.html.xslt"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Guidelines for Discovery based Perspectives</title>
+        <description></description>
+        <publication_date year="2020" month="01" day_of_month="06"/>
+        <license>standard</license>
+        <d:toDo>
+            <d:toDo>Create Definitions at index page of project.
+                <d:toDo>discovery based Networks of Perspectives and Changes</d:toDo>
+            </d:toDo>
+            <d:toDo>Implementation guide lines for concepts.
+                <d:toDo>Implement tree set representation.
+                    <d:toDo>Implement via construction tree.</d:toDo>
+                    <d:toDo>Implement via builders.
+                        <d:toDo>Implement via named arguments.</d:toDo>
+                        <d:toDo>Implement via fluent interface.</d:toDo>
+                    </d:toDo>
+                    <d:toDo>Implement overview features.
+                        <d:toDo>Implement multiple interactions on same objects.
+                        </d:toDo>
+                        <d:toDo>Implement pipelines.
+                            <d:toDo>Use for path set representation.</d:toDo>
+                            <d:toDo>Use for function call chain.</d:toDo>
+                        </d:toDo>
+                    </d:toDo>
+                </d:toDo>
+                <d:toDo>Implement relation registry representation.
+                    <d:toDo>Relation registry is a set of applications of predicates with multiple arguments.</d:toDo>
+                    <d:toDo>Implement public and private attributes via 2 related objects representing public and
+                        private parts
+                        of object.
+                    </d:toDo>
+                    <d:toDo>RDF, OWL, SKOF, onthologies, thesaurus and relations in databases are examples of this.
+                    </d:toDo>
+                </d:toDo>
+                <d:toDo>Implement access and linking.
+                    <d:toDo>Function Argument Convention
+                        <d:toDo>Lookup functions with certain type at nth argument.
+                            Returns list sorted by the type of nth argument in hierarchy descending.
+                        </d:toDo>
+                        <d:toDo>Later arguments should preferably be related only to previous arguments or not at all.
+                        </d:toDo>
+                    </d:toDo>
+                    <d:toDo>Implement relation via file location in folder structure as an alternative to direct and
+                        explicit
+                        linking.
+                    </d:toDo>
+                </d:toDo>
+            </d:toDo>
+        </d:toDo>
+    </meta>
+    <chapter>
+        <title>Minimize Size of Perspectives</title>
+        <paragraph>The smaller a perspective is, the easier it is, to split a perspective path
+            in many smaller parts. This in turn makes it easier to construct such paths.
+            Additionally this makes it easier to create a new branch of the path, with minimal changes.
+            Furthermore, it gets easier and faster to select fitting children, when the size of the perspective is
+            decreased,
+            provided a fast evaluation of network traversal's direction.
+        </paragraph>
+        <paragraph>Therefore, perspectives that do not represent lists, should a have a minimal number of children of
+            the same
+            type. Perspectives representing a list, should only have elements of the same type,
+            in order to make it clear, that these are lists.
+            Thereby, perspectives, where it is hard to determine the searched path, are more separated from
+            the rest of the network. This in turn makes the management of complexity more easy.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Path Specificity</title>
+        <paragraph>The longer a path is, the more detailed and specific something is described by it.
+            In other words the, the longer the path is, the smaller the set of things is that complies with the meaning
+            of the path.
+            This also holds true for links, as even absolute links can be or get incorrect over time.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Path's Meaning</title>
+        <paragraph>The interpretation of the path element names should match the actually referenced object as close as
+            possible.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Naming and Wording</title>
+        <paragraph>Prefer words and names where there is no singular and plural version,
+            as this helps to minimize the size of perspectives.
+            Also prefer using only nouns, adjectives or verbs.
+        </paragraph>
+    </chapter>
+</article>

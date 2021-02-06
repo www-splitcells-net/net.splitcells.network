@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Discovery based Networks of Perspectives and Changes</title>
+        <description></description>
+        <publication_date year="2020" month="01" day_of_month="06"/>
+        <license>standard</license>
+    </meta>
+    <chapter>
+        <title>Introduction</title>
+        <paragraph>The name
+            <quote>Discovery based Networks of Perspectives and Changes</quote>
+            or in short
+            <quote>Den</quote>
+            is quite long, in order to provide a name, that is also kind of the definition
+            of the thing in question. It is a concept in order to describe, understand and work with
+            any information and changes done on these.
+        </paragraph>
+        <chapter>
+            <title>Formal Introduction</title>
+            <paragraph>A perspective is a node in a directed graph.
+                A <quote>network of perspectives</quote> is a directed graph.
+                A <quote>discovery based network of perspectives</quote> is a graph with multiple conditions:
+            </paragraph>
+            <list>
+                <item>There is a formal root node, which is the starting point.</item>
+                <item>All perspectives are reachable from the root node.</item>
+                <item>There is a known in/formal grammar (i.e. a context free grammar) for the graph,
+                    that also creates a semantic meaning of the graph from the point of view of the root node.
+                </item>
+            </list>
+            <paragraph>A
+                <quote>Discovery based Network of Perspectives and Changes</quote>
+                is a <quote>Discovery based Network of Perspectives</quote>, where a formalism
+                for the history of changes exists.
+                It may or may not constraint the possible changes of such a system.
+            </paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Definitions</title>
+        <d:toDo/>
+    </chapter>
+</article>
