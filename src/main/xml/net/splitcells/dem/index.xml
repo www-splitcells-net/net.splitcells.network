@@ -30,6 +30,7 @@
                         </d:toDo>
                         <d:toDo>Console should print message asynchronously.</d:toDo>
                         <d:toDo>Implement test injection and recursive test injection.</d:toDo>
+                        <d:toDo>Create functional effect system.</d:toDo>
                     </d:priority>
                 </d:queues>
                 <d:service xl:href="compatibilty-and-portability.xml"/>
