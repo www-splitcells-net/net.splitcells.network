@@ -38,10 +38,7 @@ public class ConfigurationI implements Configuration {
         config_store = map();
         subscribers = map();
     }
-
-    /**
-     * REFACTOR Split into smaller functions.
-     */
+    
     @Override
     public <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T new_value) {
         try {
