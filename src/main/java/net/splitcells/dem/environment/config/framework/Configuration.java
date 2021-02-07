@@ -1,14 +1,8 @@
 package net.splitcells.dem.environment.config.framework;
 
-import net.splitcells.dem.environment.resource.Resource;
-import net.splitcells.dem.lang.annotations.Private;
+import net.splitcells.dem.lang.annotations.Secret;
 import net.splitcells.dem.lang.annotations.Returns_this;
-import net.splitcells.dem.resource.communication.Closeable;
-import net.splitcells.dem.resource.communication.Flushable;
 
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -28,7 +22,7 @@ public interface Configuration extends ConfigurationV {
     @Returns_this
     <T> Configuration withConfigValue(Class<? extends Option<T>> key, T value);
 
-    <T> void subscribe(Class<? extends Option<T>> option, @Private OptionSubscriber<Object> consumer);
+    <T> void subscribe(Class<? extends Option<T>> option, @Secret OptionSubscriber<Object> consumer);
 
     /**
      * Process a certain type of resource values.
