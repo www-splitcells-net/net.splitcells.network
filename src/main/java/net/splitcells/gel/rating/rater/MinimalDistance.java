@@ -104,11 +104,13 @@ public class MinimalDistance<T> implements Rater {
         final var ratingEvent = ratingEvent();
         range(0, sortedLines.size()).forEach(i -> {
             final var current_line = sortedLines.get(i);
-            potential_new_line.ifPresent(new_line -> {
-                if (!new_line.equalsTo(current_line)) {
-                    ratingEvent.removal().add(sortedLines.get(i).value(LINE));
-                }
-            });
+            potential_new_line.ifPresentOrElse(new_line -> {
+                        if (!new_line.equalsTo(current_line)) {
+                            ratingEvent.removal().add(sortedLines.get(i).value(LINE));
+                        }
+                    },
+                    () -> ratingEvent.removal().add(sortedLines.get(i).value(LINE)))
+            ;
             ratingEvent.addRating_viaAddition
                     (current_line
                             , noCost()
