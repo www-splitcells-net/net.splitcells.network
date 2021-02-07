@@ -19,4 +19,24 @@ public interface Java_11_parserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSource_unit(Java_11_parser.Source_unitContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Java_11_parser#package_declaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterPackage_declaration(Java_11_parser.Package_declarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Java_11_parser#package_declaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitPackage_declaration(Java_11_parser.Package_declarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Java_11_parser#package_name}.
+	 * @param ctx the parse tree
+	 */
+	void enterPackage_name(Java_11_parser.Package_nameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Java_11_parser#package_name}.
+	 * @param ctx the parse tree
+	 */
+	void exitPackage_name(Java_11_parser.Package_nameContext ctx);
 }

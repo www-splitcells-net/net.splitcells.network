@@ -6,5 +6,12 @@ options {
     tokenVocab=Java_11_lexer;
 }
 source_unit
-    : EOF
+    : package_declaration Whitespace* EOF
+    ;
+package_declaration
+    : Keyword_package Whitespace+ package_name Statement_terminator
+    ;
+package_name
+    : Name
+    | package_name Object_accessor Name
     ;

@@ -25,6 +25,30 @@ public class Java_11_parserBaseListener implements Java_11_parserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSource_unit(Java_11_parser.Source_unitContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPackage_declaration(Java_11_parser.Package_declarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPackage_declaration(Java_11_parser.Package_declarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPackage_name(Java_11_parser.Package_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPackage_name(Java_11_parser.Package_nameContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

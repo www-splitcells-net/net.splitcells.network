@@ -1,2 +1,9 @@
-ABSTRACT=1
-'abstract'=1
+Statement_terminator=1
+Whitespace=2
+Keyword_package=3
+Object_accessor=4
+Name=5
+';'=1
+' '=2
+'package'=3
+'.'=4
