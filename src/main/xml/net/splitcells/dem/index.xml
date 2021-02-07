@@ -22,13 +22,11 @@
                             <d:toDo>Implement test injection.</d:toDo>
                         </d:toDo>
                         <d:toDo>Clean up ConfigurationI.</d:toDo>
-                        <d:idea>Dem programs are constructors of linked values.</d:idea>
                         <d:toDo>Console should print message asynchronously.</d:toDo>
-                        <d:toDo>Create logging context, which creates a wrapper for Domsole.</d:toDo>
                         <d:toDo>Implement test injection and recursive test injection.</d:toDo>
                     </d:priority>
                 </d:queues>
-                <d:service xl:href="compatibilty.and.portability.xml"/>
+                <d:service xl:href="compatibilty-and-portability.xml"/>
             </d:scheduling>
             <d:unscheduled>
                 <d:toDo>Why are certain things done? i.e. object factory with static
