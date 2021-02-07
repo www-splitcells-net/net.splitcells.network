@@ -19,7 +19,7 @@ public interface Configuration extends ConfigurationV {
     @Returns_this
     default <T> Configuration with_inited_option(Class<? extends Option<T>> key) {
         try {
-            return withConfigValue(key, key.newInstance().defaultValue());
+            return withConfigValue(key, key.getDeclaredConstructor().newInstance().defaultValue());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

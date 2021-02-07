@@ -42,14 +42,13 @@ public class ConfigurationI implements Configuration {
     /**
      * REFACTOR Split into smaller functions.
      */
-    @SuppressWarnings({"deprecation", "unchecked"})
     @Override
     public <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T new_value) {
         try {
             final Set<BiConsumer<Object, Object>> key_subscribers;
             if (!config_store.containsKey(key)) {
                 assert !subscribers.containsKey(key);
-                final Option<T> option = key.newInstance();
+                final Option<T> option = key.getDeclaredConstructor().newInstance();
                 key_subscribers = setOfUniques();
                 subscribers.put(key, key_subscribers);
             } else {
