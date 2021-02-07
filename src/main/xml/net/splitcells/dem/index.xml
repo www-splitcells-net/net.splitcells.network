@@ -11,6 +11,7 @@
             <d:scheduling>
                 <d:queues>
                     <d:priority>
+                        <d:toDo>Clean up ConfigurationI.</d:toDo>
                         <d:toDo>Create echo paging, when Domsole outputs to file.</d:toDo>
                         <d:toDo>Fix up code guide lines.</d:toDo>
                         <d:toDo>Make unit tests.</d:toDo>
@@ -21,7 +22,6 @@
                             <d:toDo>Check consistency.</d:toDo>
                             <d:toDo>Implement test injection.</d:toDo>
                         </d:toDo>
-                        <d:toDo>Clean up ConfigurationI.</d:toDo>
                         <d:toDo>Console should print message asynchronously.</d:toDo>
                         <d:toDo>Implement test injection and recursive test injection.</d:toDo>
                     </d:priority>

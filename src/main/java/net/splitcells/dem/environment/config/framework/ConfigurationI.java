@@ -20,7 +20,9 @@ public class ConfigurationI implements Configuration {
      * <p>
      * TODOC old reactor value, new actor value -> reactor value change
      */
-    private final Map<Class<?>, Map<Class<? extends Option<?>>, BiFunction<Object, Object, Object>>> config_consistency_enforcers;
+    private final Map<Class<?>
+            , Map<Class<? extends Option<?>>
+            , BiFunction<Object, Object, Object>>> config_consistency_enforcers;
     /**
      * TODO Keys are Options and not only Objects.
      * <p>
@@ -119,7 +121,7 @@ public class ConfigurationI implements Configuration {
         assert !this.subscribers.get(option).contains(consumer);
         this.subscribers.get(option).add(consumer);
     }
-    
+
     @Override
     public <T> void process(Class<? extends T> type, Function<T, T> processor) {
         config_store.entrySet().forEach(entry -> {
