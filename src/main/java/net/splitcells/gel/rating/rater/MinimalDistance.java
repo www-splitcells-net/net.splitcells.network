@@ -204,7 +204,7 @@ public class MinimalDistance<T> implements Rater {
         if (actualDistance >= minimumDistance) {
             return noCost();
         } else {
-            return cost(actualDistance - minimumDistance);
+            return cost((minimumDistance - actualDistance) / 2.0);
         }
     }
 
