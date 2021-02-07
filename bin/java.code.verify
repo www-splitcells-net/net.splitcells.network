@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-maven.execute net.splitcells.dem.source.code.SourceCodeCheck
+mvn compile exec:java -Dexec.mainClass="net.splitcells.dem.source.code.SourceCodeCheck"

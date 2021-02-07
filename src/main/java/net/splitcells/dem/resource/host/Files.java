@@ -6,6 +6,8 @@ import org.w3c.dom.Node;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
 import static net.splitcells.dem.lang.Xml.toPrettyString;
@@ -26,6 +28,18 @@ public interface Files {
     static void ensureAbsence(Path path) {
         if (isDirectory(path)) {
             deleteDirectory(path);
+        }
+    }
+
+    static boolean is_file(Path path) {
+        return java.nio.file.Files.isRegularFile(path);
+    }
+
+    static Stream<Path> walk_recursively(Path path) {
+        try {
+            return java.nio.file.Files.walk(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

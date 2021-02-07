@@ -19,7 +19,7 @@ public class Java_11_lexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		ABSTRACT=1;
+		ANYTHING=1;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -30,20 +30,19 @@ public class Java_11_lexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"ABSTRACT"
+			"ANYTHING"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'abstract'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "ABSTRACT"
+			null, "ANYTHING"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -105,10 +104,9 @@ public class Java_11_lexer extends Lexer {
 	public ATN getATN() { return _ATN; }
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\3\16\b\1\4\2\t\2"+
-		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\2\2\3\3\3\3\2\2\2\r\2\3\3\2\2\2\3"+
-		"\5\3\2\2\2\5\6\7c\2\2\6\7\7d\2\2\7\b\7u\2\2\b\t\7v\2\2\t\n\7t\2\2\n\13"+
-		"\7c\2\2\13\f\7e\2\2\f\r\7v\2\2\r\4\3\2\2\2\3\2\2";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\3\7\b\1\4\2\t\2\3"+
+		"\2\3\2\2\2\3\3\3\3\2\2\2\6\2\3\3\2\2\2\3\5\3\2\2\2\5\6\13\2\2\2\6\4\3"+
+		"\2\2\2\3\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
