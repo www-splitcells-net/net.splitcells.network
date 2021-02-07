@@ -48,9 +48,9 @@ public class GroupId implements Domable {
 
     @Override
     public Element toDom() {
-        final var dom = element("grupa");
+        final var dom = element("group");
         if (vārds.isPresent()) {
-            dom.appendChild(element("vārds", textNode(vārds.get())));
+            dom.appendChild(element("name", textNode(vārds.get())));
         }
         dom.appendChild(element("id", textNode(this.hashCode() + "")));
         return dom;
