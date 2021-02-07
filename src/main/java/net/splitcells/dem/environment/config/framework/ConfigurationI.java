@@ -5,6 +5,7 @@ import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -43,34 +44,25 @@ public class ConfigurationI implements Configuration {
      */
     @SuppressWarnings({"deprecation", "unchecked"})
     @Override
-    public <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T proposed_new_value) {
-        final Set<BiConsumer<Object, Object>> arg_subscribers;
-        final T final_new_value;
-        if (!config_store.containsKey(key)) {
-            assert !subscribers.containsKey(key);
-            final Option<T> option;
-            try {
-                option = key.newInstance();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            if (proposed_new_value == null) {
-                final_new_value = (T) option.defaultValue();
+    public <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T new_value) {
+        try {
+            final Set<BiConsumer<Object, Object>> key_subscribers;
+            if (!config_store.containsKey(key)) {
+                assert !subscribers.containsKey(key);
+                final Option<T> option = key.newInstance();
+                key_subscribers = setOfUniques();
+                subscribers.put(key, key_subscribers);
             } else {
-                final_new_value = proposed_new_value;
+                key_subscribers = subscribers.get(key);
             }
-            arg_subscribers = setOfUniques();
-            subscribers.put(key, arg_subscribers);
-        } else {
-            arg_subscribers = subscribers.get(key);
-            final_new_value = proposed_new_value;
+            final Object old_value = config_store.get(key);
+            config_store.put(key, new_value);
+            subscribers.get(key).stream().forEach(subscriber -> {
+                subscriber.accept(old_value, new_value);
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        final Object old_value = config_store.get(key);
-        config_store.put(key, final_new_value);
-
-        subscribers.get(key).stream().forEach(subscriber -> {
-            subscriber.accept(old_value, final_new_value);
-        });
         return this;
     }
 
