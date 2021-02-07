@@ -88,7 +88,7 @@ public class MinimalDistance<T> implements Rater {
             checkConsistency(ratingsBeforeRemoval);
         }
         final var sortedLines = sortedStream(lines)
-                .filter(e -> e.value(LINE).equals(removal.value(LINE)))
+                .filter(e -> !e.value(LINE).equals(removal.value(LINE)))
                 .collect(toList());
         return rateDistance(sortedLines, children, Optional.empty());
     }
