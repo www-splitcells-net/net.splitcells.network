@@ -109,8 +109,7 @@ public class MinimalDistance<T> implements Rater {
                             ratingEvent.removal().add(sortedLines.get(i).value(LINE));
                         }
                     },
-                    () -> ratingEvent.removal().add(sortedLines.get(i).value(LINE)))
-            ;
+                    () -> ratingEvent.removal().add(sortedLines.get(i).value(LINE)));
             ratingEvent.addRating_viaAddition
                     (current_line
                             , noCost()
