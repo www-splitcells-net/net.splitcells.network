@@ -43,6 +43,9 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.OptionalAssert;
 import org.w3c.dom.Node;
 
+/**
+ * The cost value of defiance for a {@link GroupId} is equals to the sum of additionally required distances.
+ */
 public class MinimalDistance<T> implements Rater {
     public static MinimalDistance<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
         return minimalDistance(attribute, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
