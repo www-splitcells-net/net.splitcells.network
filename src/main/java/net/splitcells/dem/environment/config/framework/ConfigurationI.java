@@ -19,16 +19,8 @@ import static net.splitcells.dem.data.set.map.Maps.map;
  * TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
  */
 public class ConfigurationI implements Configuration {
-    /**
-     * TODO Keys are Options and not only Objects.
-     * <p>
-     * HACK Make private
-     */
     private final Map<Object, Object> config_store;
-    /**
-     * TODOC old actor value, new actor value
-     */
-    private final Map<Class<?>, Set<BiConsumer<Object, Object>>> subscribers;
+    private final Map<Class<?>, Set<OptionSubscriber<Object>>> subscribers;
 
     public static Configuration configuration() {
         return new ConfigurationI();
@@ -38,11 +30,11 @@ public class ConfigurationI implements Configuration {
         config_store = map();
         subscribers = map();
     }
-    
+
     @Override
     public <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T new_value) {
         try {
-            final Set<BiConsumer<Object, Object>> key_subscribers;
+            final Set<OptionSubscriber<Object>> key_subscribers;
             if (!config_store.containsKey(key)) {
                 assert !subscribers.containsKey(key);
                 final Option<T> option = key.getDeclaredConstructor().newInstance();
@@ -72,7 +64,7 @@ public class ConfigurationI implements Configuration {
     }
 
     @Override
-    public <T> void subscribe(Class<? extends Option<T>> option, BiConsumer<Object, Object> consumer) {
+    public <T> void subscribe(Class<? extends Option<T>> option, OptionSubscriber<Object> consumer) {
         if (!this.subscribers.containsKey(option)) {
             this.subscribers.put(option, setOfUniques());
         }
