@@ -14,15 +14,10 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
+/**
+ * TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
+ */
 public class ConfigurationI implements Configuration {
-    /**
-     * TODOC actor -> reactor -> enforcer
-     * <p>
-     * TODOC old reactor value, new actor value -> reactor value change
-     */
-    private final Map<Class<?>
-            , Map<Class<? extends Option<?>>
-            , BiFunction<Object, Object, Object>>> config_consistency_enforcers;
     /**
      * TODO Keys are Options and not only Objects.
      * <p>
@@ -39,7 +34,6 @@ public class ConfigurationI implements Configuration {
     }
 
     private ConfigurationI() {
-        config_consistency_enforcers = map();
         config_store = map();
         subscribers = map();
     }
@@ -50,11 +44,9 @@ public class ConfigurationI implements Configuration {
     @SuppressWarnings({"deprecation", "unchecked"})
     @Override
     public <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T proposed_new_value) {
-        final Map<Class<? extends Option<?>>, BiFunction<Object, Object, Object>> arg_consistency_enforcers;
         final Set<BiConsumer<Object, Object>> arg_subsribers;
         final T final_new_value;
         if (!config_store.containsKey(key)) {
-            assert !config_consistency_enforcers.containsKey(key);
             assert !subscribers.containsKey(key);
             final Option<T> option;
             try {
@@ -68,36 +60,15 @@ public class ConfigurationI implements Configuration {
             } else {
                 final_new_value = proposed_new_value;
             }
-            {
-                final Map<Class<? extends Option<?>>, BiFunction<Object, Object, Object>> reactors
-                        = option.consistencyEnforcers();
-                reactors.entrySet().stream().forEach(enforcer -> {
-                    if (!config_consistency_enforcers.containsKey(enforcer.getKey())) {
-                        config_consistency_enforcers.put(enforcer.getKey(), map());
-                    }
-                    config_consistency_enforcers.get(enforcer.getKey()).put(key, enforcer.getValue());
-                });
-                if (!config_consistency_enforcers.containsKey(key)) {
-                    config_consistency_enforcers.put(key, map());
-                }
-            }
             arg_subsribers = setOfUniques();
             subscribers.put(key, arg_subsribers);
         } else {
             arg_subsribers = subscribers.get(key);
             final_new_value = proposed_new_value;
         }
-        arg_consistency_enforcers = config_consistency_enforcers.get(key);
         final Object old_value = config_store.get(key);
         config_store.put(key, final_new_value);
 
-        arg_consistency_enforcers.entrySet().forEach(consistency_enforcer -> {
-            withConfigValue
-                    ((Class<Option<Object>>) consistency_enforcer.getKey()
-                            , consistency_enforcer.getValue().apply(
-                            config_store.get(consistency_enforcer.getKey()), final_new_value)
-                    );
-        });
         subscribers.get(key).stream().forEach(subscriber -> {
             subscriber.accept(old_value, final_new_value);
         });
