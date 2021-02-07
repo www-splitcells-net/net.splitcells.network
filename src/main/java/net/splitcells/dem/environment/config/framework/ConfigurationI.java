@@ -58,7 +58,7 @@ public class ConfigurationI implements Configuration {
     @Override
     public <T> T configValue(Class<? extends Option<T>> key) {
         if (!this.config_store.containsKey(key)) {
-            withConfigValue(key, null);
+            with_inited_option(key);
         }
         return (T) this.config_store.get(key);
     }
