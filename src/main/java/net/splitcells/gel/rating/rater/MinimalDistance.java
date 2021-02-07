@@ -18,6 +18,7 @@ import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.IntStream;
@@ -115,29 +116,23 @@ public class MinimalDistance<T> implements Rater {
                             , noCost()
                             , children
                             , Optional.empty());
-            range(0, i).takeWhile(left -> {
+            range(0, i).forEach(left -> {
                 final var pairRating = pairRating(sortedLines.get(left), current_line);
-                if (!pairRating.equalz(noCost())) {
-                    ratingEvent.addRating_viaAddition
-                            (current_line
-                                    , pairRating
-                                    , children
-                                    , Optional.empty());
-                    return true;
-                }
-                return false;
+                // TODO PERFORAMNCE Only check rating, where it is needed.
+                ratingEvent.addRating_viaAddition
+                        (current_line
+                                , pairRating
+                                , children
+                                , Optional.empty());
             });
-            range(i + 1, sortedLines.size()).takeWhile(right -> {
+            range(i + 1, sortedLines.size()).forEach(right -> {
                 final var pairRating = pairRating(current_line, sortedLines.get(right));
-                if (!pairRating.equalz(noCost())) {
-                    ratingEvent.addRating_viaAddition
-                            (current_line
-                                    , pairRating
-                                    , children
-                                    , Optional.empty());
-                    return true;
-                }
-                return false;
+                // TODO PERFORAMNCE Only check rating, where it is needed.
+                ratingEvent.addRating_viaAddition
+                        (current_line
+                                , pairRating
+                                , children
+                                , Optional.empty());
             });
         });
         return ratingEvent;
