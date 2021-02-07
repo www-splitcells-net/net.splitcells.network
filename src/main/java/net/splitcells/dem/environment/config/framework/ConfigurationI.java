@@ -44,14 +44,13 @@ public class ConfigurationI implements Configuration {
     @SuppressWarnings({"deprecation", "unchecked"})
     @Override
     public <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T proposed_new_value) {
-        final Set<BiConsumer<Object, Object>> arg_subsribers;
+        final Set<BiConsumer<Object, Object>> arg_subscribers;
         final T final_new_value;
         if (!config_store.containsKey(key)) {
             assert !subscribers.containsKey(key);
             final Option<T> option;
             try {
-                option = (Option<T>) key.newInstance();
-                assert option != null;
+                option = key.newInstance();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -60,10 +59,10 @@ public class ConfigurationI implements Configuration {
             } else {
                 final_new_value = proposed_new_value;
             }
-            arg_subsribers = setOfUniques();
-            subscribers.put(key, arg_subsribers);
+            arg_subscribers = setOfUniques();
+            subscribers.put(key, arg_subscribers);
         } else {
-            arg_subsribers = subscribers.get(key);
+            arg_subscribers = subscribers.get(key);
             final_new_value = proposed_new_value;
         }
         final Object old_value = config_store.get(key);
