@@ -1,10 +1,12 @@
 package net.splitcells.gel;
 
+import net.splitcells.dem.DemTest;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
+import net.splitcells.dem.testing.Test;
 import net.splitcells.gel.constraint.ConstraintTest;
 import net.splitcells.gel.rating.rater.MinimalDistanceTest;
 import net.splitcells.gel.test.integration.OralExamsTest;
@@ -21,9 +23,11 @@ public final class GelDev {
 
     public static void main(String... arg) {
         process(() -> {
-            new MinimalDistanceTest().testMultipleLineAdditionAndRemoval();
+            new MinimalDistanceTest().testRating();
+            //new MinimalDistanceTest().test_multiple_line_addition_and_removal();
             //new ConstraintTest().test_incomingGroupsOfConstraintPath();
             //new OralExamsTest().testCurrent();
+            Test.test(OralExamsTest.class);
         }, standardConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class

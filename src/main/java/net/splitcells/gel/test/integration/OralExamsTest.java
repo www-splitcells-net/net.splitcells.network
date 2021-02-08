@@ -274,13 +274,13 @@ public class OralExamsTest extends TestSuiteI {
                                 .for_each(STUDENTS)
                                 .then(has_minimal_distance_of(DATE, 3.0))
                                 .rating()
-                        ).isEqualTo(cost(1));
+                        ).isEqualTo(cost(3));
                 assertThat
                         (testSubject.constraint().query()
                                 .for_each(STUDENTS)
                                 .then(has_minimal_distance_of(DATE, 5.0))
                                 .rating()
-                        ).isEqualTo(cost(1));
+                        ).isEqualTo(cost(5));
             }
         }
         {
@@ -298,7 +298,7 @@ public class OralExamsTest extends TestSuiteI {
                     (testSubject.constraint().query()
                             .for_each(STUDENTS)
                             .rating()
-                    ).isEqualTo(cost(3));
+                    ).isEqualTo(cost(9));
             assertThat(
                     testSubject.constraint().query()
                             .for_all_combinations_of(DATE, SHIFT, ROOM_NUMBER)
@@ -306,8 +306,8 @@ public class OralExamsTest extends TestSuiteI {
                             .rating()
             ).isEqualTo(cost(1));
         }
-        assertThat(testSubject.constraint().query().rating()).isEqualTo(cost(6));
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(6));
+        assertThat(testSubject.constraint().query().rating()).isEqualTo(cost(12));
+        assertThat(testSubject.constraint().rating()).isEqualTo(cost(12));
     }
 
     @Tag(CAPABILITY_TEST)
@@ -340,13 +340,13 @@ public class OralExamsTest extends TestSuiteI {
                             .for_each(STUDENTS)
                             .then(has_minimal_distance_of(DATE, 3.0))
                             .rating()
-                    ).isEqualTo(cost(10));
+                    ).isEqualTo(cost(26));
             assertThat
                     (testSubject.constraint().query()
                             .for_each(STUDENTS)
                             .then(has_minimal_distance_of(DATE, 5.0))
                             .rating()
-                    ).isEqualTo(cost(10));
+                    ).isEqualTo(cost(46));
             assertThat
                     (testSubject.constraint().query()
                             .for_each(EXAMINER)
@@ -368,8 +368,8 @@ public class OralExamsTest extends TestSuiteI {
                             .rating()
                     ).isEqualTo(cost(1));
         }
-        assertThat(testSubject.constraint().query().rating()).isEqualTo(cost(27));
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(27));
+        assertThat(testSubject.constraint().query().rating()).isEqualTo(cost(79));
+        assertThat(testSubject.constraint().rating()).isEqualTo(cost(79));
     }
 
     @Tag(CAPABILITY_TEST)
@@ -386,20 +386,19 @@ public class OralExamsTest extends TestSuiteI {
                                         , list(1, 1, 2))
                 ).asSolution();
         testSubject.optimize(linearInitialization());
-        testSubject.createStandardAnalysis();
         {
             assertThat
                     (testSubject.constraint().query()
                             .for_each(STUDENTS)
                             .then(has_minimal_distance_of(DATE, 3.0))
                             .rating()
-                    ).isEqualTo(cost(3));
+                    ).isEqualTo(cost(9));
             assertThat
                     (testSubject.constraint().query()
                             .for_each(STUDENTS)
                             .then(has_minimal_distance_of(DATE, 5.0))
                             .rating()
-                    ).isEqualTo(cost(3));
+                    ).isEqualTo(cost(15));
             assertThat
                     (testSubject.constraint().query()
                             .for_each(STUDENTS)
@@ -411,7 +410,7 @@ public class OralExamsTest extends TestSuiteI {
                     (testSubject.constraint().query()
                             .for_each(STUDENTS)
                             .rating()
-                    ).isEqualTo(cost(7));
+                    ).isEqualTo(cost(25));
             assertThat
                     (testSubject.constraint().query()
                             .for_each(OBSERVER)
@@ -433,8 +432,8 @@ public class OralExamsTest extends TestSuiteI {
                             .rating()
                     ).isEqualTo(noCost());
         }
-        assertThat(testSubject.constraint().query().rating()).isEqualTo(cost(9));
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(9));
+        assertThat(testSubject.constraint().query().rating()).isEqualTo(cost(27));
+        assertThat(testSubject.constraint().rating()).isEqualTo(cost(27));
     }
 
     /**
