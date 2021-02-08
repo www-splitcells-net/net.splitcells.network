@@ -6,20 +6,23 @@
          xmlns:e="http://splitcells.net/sen.xsd" description="compatibility and portability">
     <objective>
         <objective>Find out, if this works efficiently and effectively.</objective>
-        <objective>Write documents and programs in one language i.e. documentation as code.</objective>
-        <objective>The idea is to model syntax trees like XML and JSON
-            via the Perspective class.
+        <objective>Write documents and programs in one language i.e. documentation as code.
+            <objective>The idea is to model syntax trees like XML and JSON
+                via the Perspective class.
+            </objective>
+            <problem>How to document methods and functions?
+                Name can be linked via annotations and static final Strings.
+                Each document has to be linked to a package/path, attribute and argument path.
+            </problem>
         </objective>
-        <objective>This base language could make it easier to apply automatic refactoring via the
-            Java's IDEs, to apply custom checks via Java's type system and runtime systems.
-            This also makes it possible to integrate document with the program code much easier
-            by linking from data to source code.
+        <objective>Use automatic refactoring capabilities of Java IDE in order to automatically refactor code and
+            documents.
+            <problem>Refactoring of XML via XSL or custom tree processing code is not hard.</problem>
         </objective>
         <objective>Ensure this via an Example document, that this is indeed a good idea.
             <objective>Needs to be fully compatible to XML and JSON.</objective>
         </objective>
-        <objective>Introduce this by migrating to this system.
-            <toDo>Create a program that translates XML or Text to this Perspective model.</toDo>
+        <objective>Introduce this, if it suits, by migrating to this system.
             <objective>XML and JSON still need to be supported,
                 but should be used for secondary content or for rendering only.
                 Also the acceptance for such a system will not be good, so XML, XSD, XSL and JSON

@@ -20,7 +20,7 @@ public class PerspectiveI implements Perspective {
 	private final NameSpace nameSpace;
 	private final List<Perspective> children = list();
 
-	private PerspectiveI(String value, NameSpace nameSpace) {
+	protected PerspectiveI(String value, NameSpace nameSpace) {
 		this.value = value;
 		this.nameSpace = nameSpace;
 	}

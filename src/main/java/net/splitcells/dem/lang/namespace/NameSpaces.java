@@ -16,6 +16,7 @@ public class NameSpaces {
     public static final NameSpace FODS_TABLE = nameSpace("table",
             "urn:oasis:names:tc:opendocument:xmlns:table:1.0");
     public static final NameSpace FODS_TEXT = nameSpace("text", "urn:oasis:names:tc:opendocument:xmlns:text:1.0");
+    @Deprecated
     public static final NameSpace TEXT = nameSpace("nt", "http://splitcells.net/text.xsd");
     public static final NameSpace STRING = nameSpace("str", "http://splitcells.net/string.xsd");
     public static final NameSpace NAME_SPACE = nameSpace("ns", "http://splitcells.net/namespace.xsd");
