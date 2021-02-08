@@ -356,13 +356,15 @@
                     tickets.
                 </name>
                 <tree>
+                    <name>Every task should start with <quote>TODO</quote>, which is recognized by many tools.
+                    </name>
                     <name>Eclipse like task tags followed by optional flowing text.
                         Each paragraph stands for a
                         ticket
                         and may be divided
                         by additional
                         task
-                        tags into sub tickets. A description of the
+                        tags into sub tickets in the same package. A description of the
                         ticket
                         is not
                         required if the location of the tag makes
@@ -371,15 +373,6 @@
                         above
                         a
                         variable declaration).
-                    </name>
-                </tree>
-                <tree>
-                    <name>XML nodes with an appropriate schema. Note that Eclipse does
-                        format XML as flowing text
-                        and does not allow
-                        XML
-                        naviagation via
-                        outline.
                     </name>
                 </tree>
             </tree>
