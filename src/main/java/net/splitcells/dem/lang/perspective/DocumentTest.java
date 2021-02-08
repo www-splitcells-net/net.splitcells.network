@@ -74,16 +74,16 @@ public class DocumentTest {
                                     scheduling(
                                             queue(
                                                     priority(
-                                                            todo().withText("Clean up ConfigurationI.")
-                                                            , todo().withText("Support deterministic mode.")
-                                                            , todo().withText("This is a long text with bla bla bla."
-                                                                    + "A little bit more bla bla."
-                                                                    + "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id tortor ante."
-                                                                    + "Donec gravida a lectus varius cursus. Vestibulum ultricies vestibulum enim vehicula semper"
-                                                                    + "Vestibulum scelerisque egestas viverra. Ut pharetra neque at tellus tincidunt rhoncus."
-                                                                    + "Duis erat purus, gravida et nisl ac, blandit pharetra leo. Praesent semper sem tellus, sit amet interdum felis consequat a."
-                                                                    + "Suspendisse cursus, augue ac dictum egestas, ligula massa bibendum ex, eget consectetur purus mi eu leo."
-                                                                    + "Nullam felis orci, aliquam vel venenatis ultrices, tristique at dui.")))
+                                                            todo("Clean up ConfigurationI.")
+                                                            , todo("Support deterministic mode.")
+                                                            , todo("This is a long text with bla bla bla."
+                                                                    + " A little bit more bla bla."
+                                                                    + " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id tortor ante."
+                                                                    + " Donec gravida a lectus varius cursus. Vestibulum ultricies vestibulum enim vehicula semper"
+                                                                    + " Vestibulum scelerisque egestas viverra. Ut pharetra neque at tellus tincidunt rhoncus."
+                                                                    + " Duis erat purus, gravida et nisl ac, blandit pharetra leo. Praesent semper sem tellus, sit amet interdum felis consequat a."
+                                                                    + " Suspendisse cursus, augue ac dictum egestas, ligula massa bibendum ex, eget consectetur purus mi eu leo."
+                                                                    + " Nullam felis orci, aliquam vel venenatis ultrices, tristique at dui.")))
                                             , queue()))
                             , val("logging")
                             , val("side-effects"))
@@ -106,6 +106,10 @@ public class DocumentTest {
     }
 
     private static Perspective todo(Perspective... arg) {
+        return perspective("todo");
+    }
+
+    private static Perspective todo(String text, Perspective... arg) {
         return perspective("todo");
     }
 
