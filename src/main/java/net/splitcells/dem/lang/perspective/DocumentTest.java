@@ -42,8 +42,8 @@ public class DocumentTest {
              * because the IDE can take care of it.
              */
             Domsole.domsole().append(
-                    project().withProperty("name", "Dependency Manager").withValues
-                            (solution().withValues(
+                    project().withProperty("name", "Dependency Manager").withValues(
+                            solution().withValues(
                                     scheduling().withValues(
                                             queue().withValues(
                                                     priority().withValues(
@@ -57,10 +57,9 @@ public class DocumentTest {
                                                                     + "Duis erat purus, gravida et nisl ac, blandit pharetra leo. Praesent semper sem tellus, sit amet interdum felis consequat a."
                                                                     + "Suspendisse cursus, augue ac dictum egestas, ligula massa bibendum ex, eget consectetur purus mi eu leo."
                                                                     + "Nullam felis orci, aliquam vel venenatis ultrices, tristique at dui.")))
-                                            , queue()
-                                    ))
-                                    , perspective("logging")
-                                    , perspective("side-effects"))
+                                            , queue()))
+                            , perspective("logging")
+                            , perspective("side-effects"))
                             .toDom()
                     , () -> list()
                     , LogLevel.INFO);
