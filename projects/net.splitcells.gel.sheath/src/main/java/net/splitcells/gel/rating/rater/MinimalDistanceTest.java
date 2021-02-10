@@ -157,19 +157,19 @@ public class MinimalDistanceTest {
             testSubject.register(testValues.get(1));
             assertThat(testSubject.complying()).isEmpty();
             assertThat(testSubject.defying()).hasSize(2);
-            assertThat(testSubject.rating()).isEqualTo(cost(1));
+            assertThat(testSubject.rating()).isEqualTo(cost(2));
         }
         {
             testSubject.register(testValues.get(2));
             assertThat(testSubject.defying()).hasSize(3);
             assertThat(testSubject.complying()).isEmpty();
-            assertThat(testSubject.rating()).isEqualTo(cost(3));
+            assertThat(testSubject.rating()).isEqualTo(cost(6));
         }
         {
             testSubject.register_before_removal(testValues.get(0));
             assertThat(testSubject.defying()).hasSize(2);
             assertThat(testSubject.complying()).isEmpty();
-            assertThat(testSubject.rating()).isEqualTo(cost(1));
+            assertThat(testSubject.rating()).isEqualTo(cost(2));
         }
         {
             testSubject.register_before_removal(testValues.get(1));
