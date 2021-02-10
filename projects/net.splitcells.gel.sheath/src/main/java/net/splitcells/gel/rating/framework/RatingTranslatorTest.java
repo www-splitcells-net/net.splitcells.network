@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class RatingTranslatorTest {
     @Test
     public void testIdentityTranslation() {
-        final Cost rating = cost(-1);
+        final Cost rating = cost(1);
         assertThat(ratingTranslator(Maps.<Class<? extends Rating>, Rating>map().with(Cost.class, rating)).translate(Cost.class)).isEqualTo(rating);
     }
 
     @Test
     public void testTranslatorChoice() {
-        final var rating = cost(-1);
+        final var rating = cost(1);
         final var expectedRatingClass = Profit.class;
         final var expectedRating = profit(1);
         final var unexpectedRatingClass = Optimality.class;

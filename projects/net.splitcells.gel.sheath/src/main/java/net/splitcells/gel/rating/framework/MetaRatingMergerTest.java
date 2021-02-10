@@ -59,11 +59,12 @@ public class MetaRatingMergerTest {
                     Map<Class<? extends Rating>, Rating> rVal = map();
                     final var oldProfit = (Profit) base.get(Profit.class);
                     final var newProfit = (Cost) addition.get(Cost.class);
-                    rVal.put(Profit.class, cost(newProfit.value() - oldProfit.value()));
+                    rVal.put(Profit.class, cost(newProfit.value() + oldProfit.value()));
                     return rVal;
                 });
         MetaRating firstResult = testSubject.combine(cost(1));
-        assertThat(firstResult.content().get(Profit.class).compare_partially_to(cost(-2)).get()).isEqualTo(EQUAL);
+        assertThat(firstResult.content().get(Profit.class)).isEqualTo(cost(2));
+        assertThat(firstResult.content().get(Profit.class).compare_partially_to(cost(2)).get()).isEqualTo(EQUAL);
     }
 
     @Test

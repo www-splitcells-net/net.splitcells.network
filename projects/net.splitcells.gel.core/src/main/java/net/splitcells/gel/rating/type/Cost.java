@@ -1,12 +1,14 @@
 package net.splitcells.gel.rating.type;
 
 import static net.splitcells.dem.data.order.Ordering.*;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.Xml.element;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 import java.util.Objects;
 import java.util.Optional;
 
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Element;
@@ -41,6 +43,11 @@ public class Cost implements Rating {
     }
 
     protected Cost(double value) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            if (value < 0) {
+                throw new IllegalArgumentException("" + value);
+            }
+        }
         this.value = value;
     }
 
