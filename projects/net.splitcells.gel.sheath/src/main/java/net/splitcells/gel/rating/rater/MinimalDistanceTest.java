@@ -6,6 +6,7 @@ import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MinimalDistanceTest {
 
+    @Disabled
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_multiple_line_addition_and_removal() {
