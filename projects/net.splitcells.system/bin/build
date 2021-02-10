@@ -1,30 +1,5 @@
 #!/usr/bin/env bash
-# TODO Make this command platform independent.
-# TODO Currently only initial build is supported.
-    # Support multiple builds with this command.
 set -e
 chmod +x ./bin/*
 export JAVA_VERSION=11 # This is required on FreeBSD, if an older Java version is set as default.
-cd ..
-    mkdir net.splitcells.gel
-    cd net.splitcells.gel
-    git clone https://github.com/www-splitcells-net/net.splitcells.gel.git .
-    ./bin/build
-cd ..
-    mkdir net.splitcells.os.state.interface
-    cd net.splitcells.os.state.interface
-    git clone https://github.com/www-splitcells-net/net.splitcells.os.state.interface.git .
-cd ..
-    mkdir net.splitcells.os.state.interface.lib
-    cd net.splitcells.os.state.interface.lib
-    git clone https://github.com/www-splitcells-net/net.splitcells.os.state.interface.lib.git .
-cd ..
-    mkdir net.splitcells.os.state.interface.lib.gpl.2
-    cd net.splitcells.os.state.interface.lib.gpl.2
-    git clone https://github.com/www-splitcells-net/net.splitcells.os.state.interface.lib.gpl.2.git .
-cd ..
-    mkdir net.splitcells.os.state.interface.lib.gpl.3
-    cd net.splitcells.os.state.interface.lib.gpl.3
-    git clone https://github.com/www-splitcells-net/net.splitcells.os.state.interface.lib.gpl.3.git .
-cd ../net.splitcells
-    mvn clean install
+mvn clean install

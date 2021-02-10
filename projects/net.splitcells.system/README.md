@@ -1,6 +1,12 @@
-# splitcells.net
+# splitcells.net System
 
-This is the root project of a project cluster. 
+## Description
+
+This is the root project of an integrated project system.
+The focus is on the [Generic Allocator](../net.splitcells.gel/README.md),
+which is an optimization and problem modeling framework.
+
+## Contact
 
 * [Rendered Documentation](http://splitcells.net/net/splitcells/index.html)
 * [Twitch Channel](https://www.twitch.tv/splitcellsnet)
@@ -14,10 +20,8 @@ This is the root project of a project cluster.
 | GitHub CI | ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells/workflows/Continous%20Integration/badge.svg) |
 | GitLab CI | ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells/badges/master/pipeline.svg) |
 
-## Building The Cluster
+## Building The System
 
-Build Project via [build command](./bin/build).
-Related repositories are not included as submodules.
-Instead the repositories are cloned into this repository's parent folder.
+Build this project via [build command](./bin/build).
 
 ![splitcells.net Project's Logo](http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/starting-to-learn-how-to-draw-a-face.jpg)

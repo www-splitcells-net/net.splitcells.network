@@ -4,10 +4,9 @@
     <groupId>net.splitcells</groupId>
     <artifactId>gel</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <name>Generic Allocator</name>
     <packaging>pom</packaging>
     <modules>
-        <module>../net.splitcells.pom.java.defaults</module>
-        <module>../net.splitcells.dem</module>
         <module>../net.splitcells.gel.core</module>
         <module>../net.splitcells.gel.sheath</module>
         <module>../net.splitcells.gel.doc</module>
