@@ -1,0 +1,10 @@
+image: freebsd/latest
+packages:
+  - openjdk11
+  - maven
+sources:
+  - https://git.sr.ht/~splitcells-net/net.splitcells.gel
+tasks:
+  - build: |
+      cd net.splitcells.gel
+      ./bin/build

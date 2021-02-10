@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# TODO Make this command platform dependent.
+# TODO Currently only initial build is supported.
+    # Support multiple builds with this command.
+set -e
+chmod +x ./bin/*
+export JAVA_VERSION=11 # This is required on FreeBSD, if an older Java version is set as default.
+cd ..
+    mkdir net.splitcells.pom.java.defaults
+    cd net.splitcells.pom.java.defaults
+    git clone https://github.com/www-splitcells-net/net.splitcells.pom.java.defaults.git .
+cd ..
+    mkdir net.splitcells.dem
+    cd net.splitcells.dem
+    git clone https://github.com/www-splitcells-net/net.splitcells.dem.git .
+cd ..
+    mkdir net.splitcells.gel.core
+    cd net.splitcells.gel.core
+    git clone https://github.com/www-splitcells-net/net.splitcells.gel.core.git .
+cd ..
+    mkdir net.splitcells.gel.doc
+    cd net.splitcells.gel.doc
+    git clone https://github.com/www-splitcells-net/net.splitcells.gel.doc.git .
+cd ..
+    mkdir net.splitcells.gel.sheath
+    cd net.splitcells.gel.sheath
+    git clone https://github.com/www-splitcells-net/net.splitcells.gel.sheath.git .
+cd ../net.splitcells.gel
+    mvn clean install -Dmaven.compiler.showDeprecation=true -Dmaven.compiler.showWarnings=true
