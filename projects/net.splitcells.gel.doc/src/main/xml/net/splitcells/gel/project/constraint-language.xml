@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:e="http://splitcells.net/sen.xsd">
+    <solution>
+        <objective>
+            <objective>Create constraint language, that can be parsed.
+                <solution>Make it text based, so it easy to edit and create.</solution>
+                <solution>Try to do it via simplified Java code, that is automatically translated to the appropriate
+                    Java code.
+                </solution>
+            </objective>
+        </objective>
+    </solution>
+</project>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd"
+         xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Linear Assignment Problem</title>
+        <description></description>
+        <descriptive_imagery>
+            <image license="standard">white.project.logo.generic.allocator.jpg</image>
+        </descriptive_imagery>
+        <related_to>
+            <url>
+                <site_instance_purl/>
+                /2016/10/11/projects
+            </url>
+            <url>
+                <site_instance_purl/>
+                /2015/03/04/about-this-site
+            </url>
+            <url>
+                <site_instance_purl/>
+                /2016/10/12/project-generic-allocator
+            </url>
+        </related_to>
+        <arbitrary_publication_date/>
+        <license>standard</license>
+    </meta>
+    <d:toDo/>
+    <chapter>
+        <title>Assignment Problem Level 0</title>
+        <d:toDo/>
+    </chapter>
+    <chapter>
+        <title>Assignment Problem Level 1</title>
+        <d:toDo/>
+    </chapter>
+</article>

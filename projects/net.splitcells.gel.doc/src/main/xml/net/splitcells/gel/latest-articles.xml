@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet attribute="text/xsl" href="xofi.html.xslt"?>
+<article
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:xi="http://www.w3.org/2001/XInclude"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		xmlns:x="http://www.w3.org/1999/xhtml"
+		xmlns="http://splitcells.net/sew.xsd"
+		xmlns:d="http://splitcells.net/den.xsd"
+		xmlns:p="http://splitcells.net/private.xsd"
+		xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+	<meta>
+		<title>Latest Posts Regarding the Project Generic Allocator</title>
+		<description>Program which allows modeling and solving of
+			constraint based problems. One of the goals is to have a problem model which is compatible
+			with multiple problem models. Some of those are constraint satisfaction problem
+			and assignment problems.
+		</description>
+		<related_to>
+			<url>
+				<site_instance_purl/>
+				/2016/10/11/projects
+			</url>
+			<url>
+				<site_instance_purl/>/2015/03/04/about-this-site
+			</url>
+			<url>
+				<site_instance_purl/>
+				/2016/10/12/project-generic-allocator
+			</url>
+		</related_to>
+		<arbitrary_publication_date/>
+		<license>standard</license>
+	</meta>
+	<for-each-article>
+		<related_to>
+			<site_instance_purl/>
+			/2016/10/12/project-generic-allocator
+		</related_to>
+	</for-each-article>
+</article>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet attribute="text/xsl" href="xofi.html.xslt"?>
+<article
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:xi="http://www.w3.org/2001/XInclude"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		xmlns:x="http://www.w3.org/1999/xhtml"
+		xmlns="http://splitcells.net/sew.xsd"
+		xmlns:d="http://splitcells.net/den.xsd"
+		xmlns:p="http://splitcells.net/private.xsd"
+		xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+	<meta>
+		<title>Generic Allocator's Documentation Format</title>
+		<description>Some Notes Regarding the Generic Allocator's Documentation Format
+		</description>
+		<related_to>
+			<url>
+				<site_instance_purl/>
+				/2016/10/11/projects
+			</url>
+			<url>
+				<site_instance_purl/>/2015/03/04/about-this-site
+			</url>
+			<url>
+				<site_instance_purl/>
+				/2016/10/12/project-generic-allocator
+			</url>
+		</related_to>
+		<arbitrary_publication_date/>
+		<license>standard</license>
+	</meta>
+	<paragraph>This documentation is a work in progress(WIP) and consists of a set of articles which are related to each
+		other. It describes the objectives of this project in detail. This is followed by some planning and some
+		historic documents. Theories, software and research which are useful to the project are aggregated at a
+		different
+		<link>
+			<text>project.</text>
+			<post>/2017/05/16/aggregation-of-information-related-to-computer-science</post>
+		</link>
+		Afterwards the architecture and
+		implementation is discussed. In the end an evaluation of the results is provided.
+	</paragraph>
+	<paragraph>The specification of the project's application programming interface(API) is integrated into this
+		documentation and is not separated into different and isolated documents.
+	</paragraph>
+</article>

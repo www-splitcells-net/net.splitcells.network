@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd"
+         xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Generic Allocation Project</title>
+        <description></description>
+        <descriptive_imagery>
+            <image license="standard">white.project.logo.generic.allocator.jpg</image>
+        </descriptive_imagery>
+        <related_to>
+            <url>
+                <site_instance_purl/>
+                /2016/10/11/projects
+            </url>
+            <url>
+                <site_instance_purl/>
+                /2015/03/04/about-this-site
+            </url>
+            <url>
+                <site_instance_purl/>
+                /2016/10/12/project-generic-allocator
+            </url>
+        </related_to>
+        <arbitrary_publication_date/>
+        <license>standard</license>
+        <d:toDo>
+            <d:toDo>Correct Dem's and Gel's history articles.</d:toDo>
+            <d:toDo>
+                <d:toDo>Good and descriptive project phrase.</d:toDo>
+                <d:toDo>Create "net.splitcells.gel" and "net.splitcells.gel.doc".</d:toDo>
+            </d:toDo>
+            <d:idea>
+                <d:idea xl:href="http://www1.informatik.uni-wuerzburg.de/abschlussarbeiten/"/>
+                <d:idea>Komplexität von Constraint Satisfaction Problemen über endlichen Teilmengen der natürlichen
+                    Zahlen
+                </d:idea>
+                <d:idea>Trust region</d:idea>
+                <d:idea xl:href="https://en.wikipedia.org/wiki/Cutting-plane_method"/>
+                <d:idea>Backpropagation</d:idea>
+                <d:idea xl:href="https://en.wikipedia.org/wiki/Machine_learning"/>
+                <d:idea xl:href="https://en.wikipedia.org/wiki/Rprop"/>
+                <d:idea xl:href="https://en.wikipedia.org/wiki/Gradient_descent"/>
+                <d:idea xl:href="Berndt–Hall–Hall–Hausman algorithm"/>
+                <d:idea>Inductive bias</d:idea>
+                <d:idea xl:href="https://en.wikipedia.org/wiki/Inductive_bias"/>
+                <d:idea xl:href="https://en.wikipedia.org/wiki/Backward_induction"/>
+                <d:idea xl:href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-852j-distributed-algorithms-fall-2009/"/>
+                <d:idea xl:href="http://www.codingninja.co.uk/best-programmers-quotes/"/>
+            </d:idea>
+        </d:toDo>
+    </meta>
+    <chapter>
+        <title>Introduction</title>
+        <paragraph>The Generic Allocator (Gel) is a framework for solving of
+            computational problems where the problem
+            model is defined separately from its solving routines.
+            It is not meant to just be an application framework or a piece of software.
+            This project is also meant to support in other aspect of this topic as well.
+            One can look at it as an support for any tasks related to this topic.
+        </paragraph>
+        <paragraph>
+            The framework's primary objective is to
+            provide
+            helpful information regarding a given problem or a
+            solving routine.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Development</title>
+        <paragraph>The main functions are located at the class
+            <quote>net.splitcells.gel.Gel</quote>
+            of the core project (<quote>net.splitcells.gel.core</quote>).
+        </paragraph>
+    </chapter>
+</article>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns="http://splitcells.net/sew.xsd"
+        xmlns:d="http://splitcells.net/den.xsd"
+        xmlns:p="http://splitcells.net/private.xsd"
+        xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Typed Ratings and Dependency Injection via Ratings</title>
+        <related_to>
+            <url>
+                <site_instance_purl/>
+                /2016/10/12/project-generic-allocator
+            </url>
+        </related_to>
+        <license>standard</license>
+        <related_to>
+            <url>
+                <site_instance_purl/>
+                /2016/10/12/project-generic-allocator
+            </url>
+        </related_to>
+    </meta>
+    <paragraph>
+        A rating function determines
+        the fitness of a given solution to the problem in question.
+        They are generally used in order to guide problem solvers.
+        However, rating functions can also be used in order to
+        inject additional code into solvers.
+        This can be seen as a form of
+        <link>
+            <text>dependency injection.</text>
+            <url>https://en.wikipedia.org/wiki/Dependency_injection</url>
+        </link>
+        A simple example is provided at the end of this article.
+    </paragraph>
+    <paragraph>
+        <strong>Note:</strong>
+        During the design phase of the second version of Gel
+        I searched for methods to create complex constraints out of relatively
+        simple constraints. Typed ratings can be used in order to i.e. negate
+        a given constraint with high quality.
+        I also looked for ways to organize complex manipulations
+        of solutions. However, typed ratings were of no use for the solvers
+        during my master thesis. Instead, the given solution
+        was queried for variables that dissatisfy certain aspects of the
+        constraints.
+    </paragraph>
+    <paragraph>
+        <strong>Note:</strong>This article does currently not consider
+        existing research yet.
+    </paragraph>
+    <chapter>
+        <title>Usage of Typed Ratings</title>
+        <chapter>
+            <title>The Absolute Adaptability of the Hill Climber</title>
+            <paragraph>
+                The hill climber for discrete values
+                is able to imitate any discrete solving algorithm
+                that optimizes a given complete solution.
+                For a given history of intermediate solutions one has to determine
+                a path in the search space visiting all intermediate solutions in the
+                given order. The rating function can be used in order to determine the next step of the hill climber at
+                the
+                current step of the solution path.
+            </paragraph>
+            <paragraph>
+                If there is a high number of neighbors at the current position of
+                the problem space, then the performance of the hill climber might
+                be inappropriate. This can be compensated by adjusting the problem
+                space dynamically in order to minimize the number of neighbors
+                during a hill climbing step. This shows that the
+                solution space can also be used in order to inject code into
+                solving programs.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Annealing Hill Climber</title>
+            <paragraph>
+                The following Python code shows how
+                <link>
+                    <text>Simulated Annealing</text>
+                    <url>https://en.wikipedia.org/wiki/Simulated_annealing</url>
+                </link>
+                can be injected into the
+                <link>
+                    <text>hill climbing algorithm.</text>
+                    <url>https://en.wikipedia.org/wiki/Hill_climbing</url>
+                </link>
+                Note that the implemented rating functions are based on side effects
+                and are therefore not suitable for certain local search algorithms.
+            </paragraph>
+            <code_block
+                    language="python"
+                    asset="annealing-hill-climber.py"/>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Rating Signature</title>
+        <d:toDo/>
+    </chapter>
+    <chapter>
+        <title>Basic Rating Types</title>
+        <paragraph>Every rating function is of one of the following types:</paragraph>
+        <chapter>
+            <title>Profit Function</title>
+            <paragraph>
+                The higher the rating the better the solution.
+                <link>
+                    <text>Such a function is also called an objective function, a reward function, a object function, a
+                        utility function or a fitness function.
+                    </text>
+                    <url>https://en.wikipedia.org/wiki/Loss_function</url>
+                </link>
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Cost Function</title>
+            <paragraph>The lower the rating the better the solution.
+                <link>
+                    <text>A cost function is also called loss function.</text>
+                    <url>https://en.wikipedia.org/wiki/Loss_function</url>
+                </link>
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Qualities of Rating Functions</title>
+        <paragraph>Consecutively, some properties related to the quality of
+            rating functions are listed.
+        </paragraph>
+        <chapter>
+            <title>Proportional Rating Function</title>
+            <paragraph>
+                A proportional object function evaluates the compliance of a
+                solution to a given problem:
+                if the rating of a solution A is X-times higher as the
+                rating of another solution B then B
+                disagrees the given constraints X-times as much as A.
+                Constraint weights are considered in this context.
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Exact Rating Function</title>
+            <paragraph>
+                An exact cost function is a proportional cost function
+                where an optimal solution is rated with zero.
+                Note that a rating function that only returns the number
+                of dissatisfied constraints may not be exact. An exact object
+                function needs to respect the weights of the constraints
+                in questions.
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Invertible Rating Function</title>
+            <paragraph>An invertible objective function has a return
+                value with a known upper bound.
+                This means that one can take an invertible cost function
+                and create a negation of that function.
+                This is equal to a conversion of a fitness function into a loss function and vice versa.
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Distorted / Disproportional Rating Function</title>
+            <paragraph>
+                For a given distorted cost function:
+                If the rating of a solution A is X times higher as the
+                rating of another solution B then A
+                might not disagree the given constraints X-times more than B.
+                Constraint weights are considered in this context.
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Deterministic Rating Function</title>
+            <paragraph>
+                If a given solution is rated multiple times with such a function,
+                then the result is always the same.
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Random Rating Function</title>
+            <paragraph>
+                If a given solution is rated multiple times with such a function
+                than the rating may not be the same:
+                i.e. a learning program that learned a rating function but still
+                adjusts its weightings.
+                If a side effect free system is used, then
+                this can be implemented via the concept of time.
+                This can be done by adding a parameter
+                to the rating function representing
+                the current time:
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+            <paragraph>An alternative approach is to implement the
+                rating function as a monad:
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Unreliable Rating Function</title>
+            <paragraph>
+                A rating function where every solving algorithm
+                has a low probability to find an optimal solution
+                to a randomly chosen problem instance for a given problem:
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Types of Object Functions</title>
+        <paragraph>
+            Subsequently, some types of object functions with different qualities
+            are listed:
+        </paragraph>
+        <chapter>
+            <title>Closeness to an Optimum</title>
+            <paragraph>
+                For a given solution and search space this
+                cost function returns the minimum distance between the given
+                solution and any optimal solution:
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Expected Remaining Path Length to Optimum</title>
+            <paragraph>
+                For a given solution, feasible region and solver this
+                cost function returns the expected minimal distance
+                between the given solution and any optimal solution:
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Expected Improvements</title>
+            <paragraph>For a given feasible region, solution, local search
+                algorithm and a maximum search space walk distance this profit function returns the
+                rating improvements that the search algorithm
+                is expected to find for a given neighbor of the current
+                solution:
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+        <chapter>
+            <title>Expected Probability of Finding an Optimum</title>
+            <paragraph>
+                For a given feasible region, solution, local search
+                algorithm and a maximum search space walk distance this fitness function returns
+                the probability that the search algorithm
+                will find an optimal solution:
+            </paragraph>
+            <d:toDo>
+                mathematical formalization
+            </d:toDo>
+        </chapter>
+    </chapter>
+</article>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns="http://splitcells.net/den.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:n="http://splitcells.net/natural.xsd" xmlns:e="http://splitcells.net/sen.xsd">
+    <scheduling>
+        <usncheduled>
+            <toDo>
+                <toDo>Unify Constraint#Discoverable#path and reasoning system.</toDo>
+                <todo>Unify Group#name and reasoning system.</todo>
+            </toDo>
+            <idea>
+                <idea>Support incremental and stateless constraint processing.</idea>
+                <idea>Implement derived lines, where the lines derived from allocations are created and
+                    propagated.
+                </idea>
+            </idea>
+        </usncheduled>
+    </scheduling>
+</project>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet attribute="text/xsl" href="xofi.html.xslt"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:x="http://www.w3.org/1999/xhtml"
+	xmlns="http://splitcells.net/sew.xsd"
+	xmlns:d="http://splitcells.net/den.xsd"
+	xmlns:p="http://splitcells.net/private.xsd"
+	xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+	<meta>
+		<title>Origin of The Project Generic Allocator</title>
+		<description>This post explains how the Gel project came to light.
+		</description>
+		<publication_date year="2017" month="04"
+			day_of_month="22" />
+		<related_to>
+			<url>
+				<site_instance_purl />
+				/2016/10/11/projects
+			</url>
+			<url>
+				<site_instance_purl />
+				/2015/03/04/about-this-site
+			</url>
+			<url>
+				<site_instance_purl />
+				/2016/10/12/project-generic-allocator
+			</url>
+		</related_to>
+		<arbitrary_publication_date />
+		<license>standard</license>
+	</meta>
+	<chapter>
+		<title>Universal Allocation Program</title>
+		<paragraph>
+			The idea of this project originated from an internship
+			during my
+			studies of computer science. During the internship the
+			assignment
+			problem solver
+			<link>
+				<text>Universal Allocation Program</text>
+				<post>/2015/04/20/universal-allocation-program-manual</post>
+			</link>
+			was
+			developed. This program had two purposes.
+		</paragraph>
+		<paragraph>First of all it had to assign pupils to a set of courses
+			where each pupil had one or more preferred courses. Additionally, the
+			number of pupil in each course was limited. Each course which took
+			place also had to have more pupil than specified by a certain
+			threshold.
+		</paragraph>
+		<paragraph>The second goal of the program was to provide an expressive
+			problem model. This was tested with a second problem. The task was to
+			schedule exams of pupils. The problem could be modeled by the
+			program. Unfortunately, the program was not able to solve it because
+			a more advanced solving algorithm than present was
+			needed.
+		</paragraph>
+	</chapter>
+	<chapter>
+		<title>A Fresh Start via the Generic Allocator</title>
+		<paragraph>The goal of my master thesis was to create a new framework
+			for
+			assignment problems that had an improved problem model and
+			superior
+			solving routines compared to the Universal Allocation
+			Program.
+			Three
+			scheduling problems of schools were used in order to
+			validate the
+			framework. Two of the problems were optimally solved for
+			the given
+			test cases. The third problem was nearly solved but in the
+			end correct
+			solutions were not produced (for a given problem instance
+			about 5 out
+			of 508 assignments were done incorrectly). In addition,
+			each problem
+			required its own solving routine.
+		</paragraph>
+	</chapter>
+	<chapter>
+		<title>The Rewrite of the Generic Allocator</title>
+		<paragraph>After getting my master's degree in computer science I
+			wanted to learn more about solution problems, artificial
+			intelligence(AI) and programming. Therefore, I have created this
+			hobby project in order to organize my learning process in this field.
+			The framework of my master thesis (which is used as the project's
+			name) is recycled for this undertaking. Unfortunately the foundation
+			of the framework needs some improvement which in practice leads to a
+			rewrite of the framework.
+		</paragraph>
+	</chapter>
+</article>
