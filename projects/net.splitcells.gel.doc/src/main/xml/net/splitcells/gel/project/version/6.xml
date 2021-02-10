@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:e="http://splitcells.net/sen.xsd">
+    <solution>
+        <objective>
+            <objective>Implement constraint calculation via recalculation instead of event based system.
+                <objective>Support constraints based on recalculation and events.</objective>
+            </objective>
+        </objective>
+        <scheduling>
+            <priority>
+                <queue>
+                </queue>
+            </priority>
+        </scheduling>
+    </solution>
+    <unscheduled>
+    </unscheduled>
+</project>
