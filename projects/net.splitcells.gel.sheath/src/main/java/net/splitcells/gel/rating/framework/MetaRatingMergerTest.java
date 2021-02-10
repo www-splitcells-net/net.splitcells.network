@@ -19,18 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MetaRatingMergerTest {
 
-    private MetaRatingMerger testSubject;
-    private Map<Class<? extends Rating>, Rating> testContent = map();
-
-    @BeforeEach
-    public void setup() {
-        testContent.clear();
-        testContent.put(Profit.class, profit(3));
-        testSubject = MetaRatingMergerI.metaRatingMerger(testContent);
-    }
-
     @Test
     public void testCombinationOfSame() {
+        final Map<Class<? extends Rating>, Rating> testContent = map();
+        testContent.put(Profit.class, profit(3));
+        final var testSubject = MetaRatingMergerI.metaRatingMerger(testContent);
         testSubject.registerMerger(
                 (base, addition) -> base.containsKey(Profit.class) && addition.containsKey(Profit.class),
                 (based, addition) -> {
@@ -50,6 +43,9 @@ public class MetaRatingMergerTest {
 
     @Test
     public void testCombinationOfCompatible() {
+        final Map<Class<? extends Rating>, Rating> testContent = map();
+        testContent.put(Profit.class, profit(5));
+        final var testSubject = MetaRatingMergerI.metaRatingMerger(testContent);
         testSubject.registerMerger(
                 (base, addition) -> base.containsKey(Profit.class) && addition.containsKey(Cost.class),
                 // TODO Use this for combination method library.
@@ -63,12 +59,14 @@ public class MetaRatingMergerTest {
                     return rVal;
                 });
         MetaRating firstResult = testSubject.combine(cost(1));
-        assertThat(firstResult.content().get(Profit.class)).isEqualTo(cost(2));
-        assertThat(firstResult.content().get(Profit.class).compare_partially_to(cost(2)).get()).isEqualTo(EQUAL);
+        assertThat(firstResult.content().get(Profit.class).compare_partially_to(cost(6)).get()).isEqualTo(EQUAL);
     }
 
     @Test
     public void testCombinationOfIncompatible() {
+        final Map<Class<? extends Rating>, Rating> testContent = map();
+        testContent.put(Profit.class, profit(7));
+        final var testSubject = MetaRatingMergerI.metaRatingMerger(testContent);
         assertThrows(RuntimeException.class, () -> {
             testSubject.registerMerger((base, addition) -> false, (base, addition) -> {
                 throw new RuntimeException();
