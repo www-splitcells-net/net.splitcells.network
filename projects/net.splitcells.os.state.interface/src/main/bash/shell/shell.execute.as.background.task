@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Executes command in the background that are closed when the current console is closed.
+# Should be executed like this: ". shell.execute.as.background.task command_1 & command_2"
+
+trap "exit" INT TERM ERR
+trap "kill 0" EXIT
+
+$@ &

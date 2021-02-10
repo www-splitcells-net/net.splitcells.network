@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Creates overview of system resources.
+# As many resources as possible should be used.
+
+command.managed.execute disjunction system.resource.usage.overview

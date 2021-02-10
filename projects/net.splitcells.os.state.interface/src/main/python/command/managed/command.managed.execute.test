@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+if [[ "$(command.managed.execute disjunction unknown-command 2>&1)" != *'Could not execute "unknown-command".'* ]]; then
+	echo.error '"command.managed.execute" executed not present command in disjunction.'
+	exit 1
+fi
+if [[ "$(command.managed.execute conjunction unknown-command 2>&1)" != *'Could not execute "unknown-command".'* ]]; then
+	echo.error '"command.managed.execute" executed not present command in conjunction.'
+	exit 1
+fi

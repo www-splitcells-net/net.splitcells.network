@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+mkdir -p ~/bin/net.splitcells.os.state.interface.commands.disabled
+echo "#!/usr/bin/env sh" >> ~/bin/net.splitcells.os.state.interface.commands.disabled/$1
+	echo "echo $1 is disabled." >> ~/bin/net.splitcells.os.state.interface.commands.disabled/$1
+	echo "exit 1" >> ~/bin/net.splitcells.os.state.interface.commands.disabled/$1
+chmod +x ~/bin/net.splitcells.os.state.interface.commands.disabled/$1

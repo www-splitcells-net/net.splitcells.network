@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# TODO This is an workaround. The API with arguments is not stable.
+if [ -z "$1" ]; then
+	userFolder=$HOME
+else
+	userFolder=$1
+fi
+
+
+mkdir -p $userFolder/bin/net.splitcells.os.state.interface.commands.managed
+mkdir -p $userFolder/.config/net.splitcells.os.state.interface
+
+# Adds this framework only to interactive shells.
+# Therefore only ".bashrc" is currently configured.
+
+# TODO Support alternative shells.
+
+grep -q -F '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin' $userFolder/.bashrc
+if [ "$?" -ne "0" ]; then
+	echo '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin' >> $userFolder/.bashrc
+	echo '' >> $userFolder/.bashrc
+	echo You may need to restart the computer in order to access the installed programs.
+	echo At the very least you need to execute "'". ~/.bashrc"'" or open a new terminal in order to access these programs.
+fi
+chmod +x $userFolder/.bashrc

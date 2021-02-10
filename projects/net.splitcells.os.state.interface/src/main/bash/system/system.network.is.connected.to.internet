@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Checks wether this computer is connected to the Internet from a practical point of view.
+
+# TODO Create command "system.network.to.internet.require" in order to simplify error messaging via generic erro message.
+# TODO Rename this to "system.network.to.internet.available" in order make this command more discoverable.
+
+output=$(ping -q -c 1 splitcells.net)
+if [ $? == 0 ]; then
+	echo true
+else
+	echo false
+fi

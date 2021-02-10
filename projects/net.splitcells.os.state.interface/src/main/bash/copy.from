@@ -1,0 +1,11 @@
+#!/bin/sh
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+if [ "$2" != "to" ]; then
+  echo "The second argument is invalid: $2"
+  echo 'It should be "to"'
+  exit 1
+fi
+# TODO Check if 3 arguments are present.
+cp $1 $3

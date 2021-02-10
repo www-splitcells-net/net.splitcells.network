@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Configures the current user's resources, that are reachable by network.
+# For example, this command may setup or update another computer.
+
+# It is recommended, that every instance of this command should connect to
+# the resource via a local host name or via DNS.
+
+command.managed.execute conjunction network.configure

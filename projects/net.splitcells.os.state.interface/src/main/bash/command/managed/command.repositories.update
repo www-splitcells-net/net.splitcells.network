@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Updates user command repositories.
+
+repoList=~/.config/net.splitcells.os.state.interface/repositories
+hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
+while IFS= read -r property
+do
+	if hasPrefix 'repo=' "$property"; then
+		echo Updating "'$property'".
+		propertyValue=$(echo $property | cut -c6-)
+		cd $propertyValue
+		repu.pull
+	fi
+done < "$repoList"

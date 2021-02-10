@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# TODO Document supported repository file structure.
+# Installs user commands.
+
+mkdir -p ~/bin/net.splitcells.os.state.interface.commands.managed
+find ~/bin/net.splitcells.os.state.interface.commands.managed -maxdepth 1 -type f -delete
+
+repoList=~/.config/net.splitcells.os.state.interface/repositories
+hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
+bootstrapRepoProperty=$(head -n 1 $repoList)
+if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
+	bootstrapRepo=$(echo $bootstrapRepoProperty | cut -c6-)
+		cd $bootstrapRepo
+	setupEnvironment=$bootstrapRepo/src/main/bash/command/managed/command.managed.environment.configure
+		chmod +x $setupEnvironment
+		$setupEnvironment
+	chmod +x $bootstrapRepo/src/main/bash/echo/*
+		PATH=$bootstrapRepo/src/main/bash/echo:$PATH
+	chmod +x $bootstrapRepo/src/main/python/*
+		PATH=$bootstrapRepo/src/main/python:$PATH
+	chmod +x $bootstrapRepo/src/main/bash/shell/*
+		PATH=$bootstrapRepo/src/main/bash/shell:$PATH
+	export PATH
+	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install
+		chmod +x $installer
+		$installer $installer
+	chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+fi
+while IFS= read -r property
+do
+	echo Installing "'$property'".
+	if hasPrefix 'repo=' "$property"; then
+		propertyValue=$(echo $property | cut -c6-)
+		cd $propertyValue
+		cd src/main # It is assumed, that all repositories are source code projects.
+			find . -type f | sort -n | xargs -r -n 1 $installer
+			chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+		if [ -d ../doc/man ]; then
+			cd ../doc/man
+			# TODO Support multiple sections.
+			find . -type f | sort -n | xargs -i cp {} ~/.local/share/man/man1/
+		fi
+	fi
+done < "$repoList"
+if test -d "$HOME/.config/net.splitcells.os.state.interface/src"; then
+	cd "$HOME/.config/net.splitcells.os.state.interface/src"
+	find . -mindepth 1 -type f -exec command.managed.install {} \;
+fi

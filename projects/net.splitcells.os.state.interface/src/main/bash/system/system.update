@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# This command install all available updates.
+# If not all update repositories are reachable, a warning is echoed and the program exits successfully.
+# In this case "system.state" should also echo, that not all system updates are available.
+# If an update requires a system restart this is managed by the appropriate program.
+# Therefore, an restart is not required for all system updates.
+
+command.managed.execute conjunction system.update
