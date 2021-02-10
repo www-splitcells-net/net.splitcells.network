@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mvn test -P test-via-mutation-with-pitest
