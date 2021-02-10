@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+# 1$ = Simple or fully qualified name of the test class.
+
+firstArg="$1"
+shift
+allArgsExceptFirst=$@
+
+mvn -Dtest=$firstArg test $allArgsExceptFirst

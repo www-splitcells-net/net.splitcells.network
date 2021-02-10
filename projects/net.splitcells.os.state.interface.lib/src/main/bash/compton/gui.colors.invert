@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Linking seems to be allowed: https://github.com/chjj/compton/blob/master/LICENSE
+. this.requires compton
+compton --invert-color-include 'name != "4363737895678"'

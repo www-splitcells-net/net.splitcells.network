@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+export _JAVA_AWT_WM_NONREPARENTING=1 # This is needed in order to use IntelliJ in Sway.
+flatpak run com.jetbrains.IntelliJ-IDEA-Community

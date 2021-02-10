@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# TODO Try without sudo first.
+
+. this.active.if.presence.of docker
+
+if [ "$(sudo docker images --quiet) 2> /dev/null" == "" ]
+then
+	echo "All docker images are already up to date, because there are no images."
+else
+	#sudo.at.current.env "docker images | grep -v 'REPOSITORY.*TAG.*IMAGE ID.*CREATED.*SIZE' | awk '{print \$1}'| xargs sudo docker pull"
+	docker images |grep -v REPOSITORY|awk '{print $1}'|xargs -L1 docker pull
+	exit 0
+fi

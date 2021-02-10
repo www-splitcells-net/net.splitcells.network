@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# This Bash variable contains the process id (PID) of the last executed command
+echo $!

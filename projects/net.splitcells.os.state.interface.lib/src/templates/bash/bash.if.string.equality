@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+variable='a'
+if [ 'a' == "$variable" ]
+then
+  echo "\$variable is 'a'."
+else
+  echo "\$variable is NOT 'a'."
+fi

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Tested on Ubuntu 20.04.1.
+set -e
+cd ~/Documents
+if [ -d "sway" ]
+then
+	cd sway
+	git pull --rebase
+else
+	git clone git@github.com:swaywm/sway.git
+	cd sway
+fi
+if [ -d "subprojects/wlroots" ]
+then
+	cd subprojects/wlroots
+	git pull --rebase
+	cd ../..
+else
+	git clone git@github.com:swaywm/wlroots.git subprojects/wlroots
+fi
+dependencies="libgles2-mesa-dev libgbm-dev libinput-dev libxkbcommon-dev libpixman-1-dev libjson-c-dev libcairo2-dev libpango1.0-dev"
+if [ "$(dpkg -s $dependencies)" ]
+then
+  echo All dependencies are present.
+else
+  echo Installing all dependencies.
+  sudo apt install -y $dependencies
+fi
+pwd
+meson build/
+ninja -C build/
+echo Does not currently work on Ubuntu. It may be caused by this: https://github.com/swaywm/wlroots/issues/2580
+echo We are currently waiting for an Ubuntu update regarding this.
+echo
+echo Executable is located at "/build/sway/sway" and can be executed inside sway.

@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Flatpak is licensed under LGPL so runtime linking is ok.
+	# Eclipse is licensed under EPL and seems only to require to the publication of EPL code. EPL explanation https://resources.whitesourcesoftware.com/blog-whitesource/top-10-eclipse-public-license-questions-answered
+	# Lombok is licensed under the permissive MIT license.
+	# Gnome is licensed under GPL but there is no interaction with it directly other than installing it.
+	# TODO Check license of installed Eclipse plugins. 
+# One can only upgrade eclipse plugins dependencies by uninstalling and installing them.
+# TODO Maybe use yatta: https://marketplace.eclipse.org/content/yatta-launcher-eclipse#group-details
+package.install flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo # Default repo
+flatpak install -y flathub org.eclipse.Java
+# Install common plugins.
+	# TODO Manage Eclipse configuration via https://wiki.eclipse.org/Eclipse_Oomph_Authoring#What_is_Oomph.3F
+		# and https://marketplace.eclipse.org/content/yatta-launcher-eclipse?mpc=true&mpc_state=
+	# Install maven integration.
+		# TODO Install m2e connectors.
+		flatpak run org.eclipse.Java \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/latest \
+			-installIU org.eclipse.m2e.feature.feature.group # Maven integration
+		flatpak run org.eclipse.Java \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/latest \
+			-installIU com.ianbrandt.tools.m2e.mdp.feature.feature.group # Maven connector
+		flatpak run org.eclipse.Java \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/latest \
+			-installIU org.eclipse.egit \
+			-installIU org.eclipse.egit.ui # Git integration
+		flatpak run org.eclipse.Java \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/latest \
+			-installIU org.eclipse.epp.mpc.feature.group # Marketplace clinet
+		flatpak run org.eclipse.Java \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/latest \
+			-installIU de.anbos.eclipse.easyshell.feature.feature.group # Open files and projects via i.e terminals in Package Explorer
+		flatpak run org.eclipse.Java \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/latest \
+			-installIU org.eclipse.eclemma.feature.feature.group	# Java execution coverage
+		flatpak run org.eclipse.Java \
+			-application org.eclipse.equinox.p2.director \
+			-noSplash \
+			-repository http://download.eclipse.org/releases/latest \
+			-installIU eu.musoft.eclipse.xpath.evaluation.plugin.feature.group	# XPath Evaluation # TODO Move this into other script?
+# Install Lombok support
+	mkdir -p ~/opt
+	if [ ! -f ~/opt/lombok.jar ]; then
+		echo Lombok not found.
+		cd ~/opt
+    	wget https://projectlombok.org/downloads/lombok.jar
+	fi
+	eclipseIniPath=/home/$(whoami)/.local/share/flatpak/app/org.eclipse.Java/current/active/files/eclipse/eclipse.ini
+	lombokJavaAgent=-javaagent:/home/$(whoami)/opt/lombok.jar
+	if eval grep -F -- "'"$lombokJavaAgent"'" $eclipseIniPath; then
+		echo "Lombok agent already installed."
+	else
+		echo $lombokJavaAgent >> $eclipseIniPath
+	fi
+	echo You may need to clean and rebuild all projects in order to remove Lombok related errors.

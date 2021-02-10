@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+echo "Obtaining root rights via sudo."
+sudo echo "Root rights obtained via sudo."

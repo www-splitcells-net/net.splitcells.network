@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+mvn versions:display-plugin-updates
