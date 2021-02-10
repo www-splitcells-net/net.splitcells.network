@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xl="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:m="http://www.w3.org/1998/Math/MathML" xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>
+            <siteName/>
+            's Experimental Code Guidelines
+        </title>
+        <description>
+            I created these code guidelines in order to to do some thought
+            experiments.
+            Do not consider
+            these code
+            guide lines for
+            your own
+            code.
+            <link>
+                <text>If you do, people will hate you, and you’ll be scorned by
+                    friends and family.
+                </text>
+                <url>https://git-scm.com/book/en/v1/Git-Branching-Rebasing#The-Perils-of-Rebasing
+                </url>
+            </link>
+            It currently focues mainly on Java but also refers to things outside
+            of Java.
+        </description>
+        <publication_date year="2018" month="04" day_of_month="29"/>
+        <license>standard</license>
+        <related_to>
+            <url>
+                <site_instance_purl/>
+                /2020/01/06/discovery-based-networks-of-perspectives-and-changes
+            </url>
+        </related_to>
+        <d:toDo>
+            <d:toDo>Define complete life cycle of project in advance and do not ignore the end of the project thereby.
+            </d:toDo>
+            <d:toDo>Make project as portable, extendable, changeable deletable as possible.</d:toDo>
+            <d:todo>Create code guidelines that are not Java specific.</d:todo>
+            <d:todo>
+                If a concrete generic type is needed for testing use Integer.
+            </d:todo>
+            <d:toDo>Documentation has to contain all relevant information
+                (like reason for implementation) not visible in direct program source.
+            </d:toDo>
+            <d:todo>
+                Meta Code Guidelines
+                <d:todo>https://github.com/icy/bash-coding-style</d:todo>
+                <d:todo>http://localhost:4000/white/index.html</d:todo>
+            </d:todo>
+            <d:toDo xl:href="https://en.wikipedia.org/wiki/Dynamic_program_analysis"/>
+            <d:todo>
+                assertions (error detecting during execution and testing)
+                <d:todo>When to use assertions and when not.</d:todo>
+                <d:todo>Assert condition on actual objects directly.
+                    Do not assert
+                    variables representing the
+                    presence of a condition,
+                    as it makes
+                    debugging and error reporting
+                    harder.
+                    https://blog.smartcoders.xyz/2018/02/14/asserttrue-vs-assertthat-vs-assertj/
+                </d:todo>
+                <d:todo>Assertions should have access to the underlining objects for
+                    better error reporting.
+                </d:todo>
+            </d:todo>
+            <d:todo>consistency checks</d:todo>
+            <d:todo>unit test</d:todo>
+            <d:todo>integration test</d:todo>
+            <d:todo>complete test</d:todo>
+            <d:todo>naming conventions: suffixes</d:todo>
+            <d:todo>naming conventions: verb, attribute, getter and setter
+            </d:todo>
+            <d:todo>naming conventions: Ensure state via active verbs as it makes
+                short names and allows
+                inefficient but simple
+                implementations. i.e.
+                package.state(INSTALLED) -> package.install (Note that
+                the first
+                version makes more sense
+                in some
+                cases. The first one can also be
+                implemented as a wrapper
+                for the second one.)
+            </d:todo>
+            <d:todo>up cast convention</d:todo>
+            <d:todo>side effect free interfaces</d:todo>
+            <d:todo>down cast convention: down casted objects should be not lead
+                to interfaces with side
+                effects (i.e. parting
+                collection interface in
+                multiple interfaces representing different access
+                rights.).
+            </d:todo>
+            <d:todo>technical and domain specific interface: inheritance and
+                composition rule
+            </d:todo>
+            <d:todo>Minimize the number of current migration to 1 migration per
+                component.
+            </d:todo>
+            <d:todo>Avoid assertThat((boolean) ...)... in AssertJ as one may
+                forget to write isTrue().
+            </d:todo>
+            <d:todo>Multi thread/process programming should not be about
+                thread/process but about removing
+                instruction
+                dependencies.
+            </d:todo>
+            <d:todo>
+                Every persistent task is part of a software project or a software
+                project itself and should
+                be
+                contained inside a
+                folder.
+                <d:todo>A software project is metadata like the .git files of Git
+                    repositories.
+                    Another example are
+                    the .idea folders of
+                    Intellji IDE
+                    projects.
+                </d:todo>
+                <d:todo>
+                    If multiple software projects are added to the task folder,
+                    it is
+                    preferred to add software
+                    projects to the task
+                    folder. Wrapping the
+                    task
+                    folder
+                    with software projects recursively does not
+                    scale.
+                    <d:todo>If possible one could create a software project folder
+                        inside the folder
+                        where all
+                        software project files are
+                        put. Make sure
+                        to
+                        make the folder name unique
+                        i.e. ".meta.238" .
+                    </d:todo>
+                </d:todo>
+            </d:todo>
+            <d:todo>Make all assumtions visible (i.e. nullable variables via
+                Optional).
+            </d:todo>
+            <d:todo>https://devhints.io/</d:todo>
+            <d:todo>
+                https://www.jwz.org/doc/worse-is-better.html
+                <d:todo>Make consistent by making more simple things the consistent
+                    ones.
+                </d:todo>
+                <d:todo>Make correct by making more simple things the correct ones.
+                </d:todo>
+            </d:todo>
+            <d:toDo>Avoid software rewrites and prefer migration based development.</d:toDo>
+            <d:toDo>Projects are likely to grow and get out of scope.</d:toDo>
+        </d:toDo>
+    </meta>
+    <chapter>
+        <title>Goals
+        </title>
+        <paragraph>These are my experimental Java code guidelines.
+            These may
+            not comply to common best
+            practices and might be
+            even harmful.
+            They
+            only
+            represent the current state of some personal thought
+            experiments.
+        </paragraph>
+        <paragraph>
+            Do not consider these Java code guidelines for your own code.
+            <link>
+                <text>If you do, people will hate you, and you’ll be scorned by
+                    friends and family.
+                </text>
+                <url>https://git-scm.com/book/en/v1/Git-Branching-Rebasing#The-Perils-of-Rebasing
+                </url>
+            </link>
+        </paragraph>
+        <paragraph>Guide lines are just that. They are nothing more and nothing less, but if these guidelines are
+            applied
+            a reason should be present.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Alternative Guidelines</title>
+        <d:todo>
+            <link>
+                <text>Better Java by Daniel Dietrich</text>
+                <url>https://github.com/danieldietrich/better-java</url>
+            </link>
+        </d:todo>
+    </chapter>
+    <chapter>
+        <title>Base Rule</title>
+        <paragraph>The project structure and its contents has to represent a
+            discovery based network of perspectives and changes.
+            The project and its parts should be portable, extendable, adaptable and
+            <link>
+                <text>deletable</text>
+                <url>https://programmingisterrible.com/post/139222674273/how-to-write-disposable-code-in-large-systems
+                </url>
+            </link>
+            .
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Life Cycle</title>
+        <d:todo>Cyclic Version Destruction and Restruction</d:todo>
+        <chapter>
+            <title>Version Control</title>
+            <d:todo>
+                <link>
+                    <text>Vincent Driessen's branching model</text>
+                    <url>https://nvie.com/posts/a-successful-git-branching-model/</url>
+                </link>
+            </d:todo>
+            <d:todo>
+                <link>
+                    <text>Git Flow Extensions</text>
+                    <url>https://github.com/nvie/gitflow</url>
+                </link>
+            </d:todo>
+            <d:todo>
+                <link>
+                    <text>Git Flow Cheatsheet</text>
+                    <url>https://danielkummer.github.io/git-flow-cheatsheet/</url>
+                </link>
+            </d:todo>
+            <chapter>
+                <title>Commit Log</title>
+                <paragraph>The commit log is a program, that describes the development of the project.</paragraph>
+            </chapter>
+            <chapter>
+                <title>Changelog</title>
+                <d:todo>https://github.com/olivierlacan/keep-a-changelog</d:todo>
+            </chapter>
+            <chapter>
+                <title>Versioning</title>
+                <chapter>
+                    <title>Semantic Versioning as Default Versioning Format</title>
+                    <d:todo>https://semver.org/</d:todo>
+                </chapter>
+                <chapter>
+                    <title>Compatibility</title>
+                    <d:toDo>Prefer backward compatible changes to backward incompatible changes.</d:toDo>
+                    <d:toDo>When a thing of the API needs to be changed in an incompatible way,
+                        prefer creating a new thing and deprecated
+                        the old API thing over change existing API things.
+                    </d:toDo>
+                    <d:toDo>Make as much undefined as possible, for not essential things, but make clear what is
+                        essential.
+                        This way one
+                        can adapt the API more easily
+                        without changing API without breaking compatibility.
+                        Breaking other software because it
+                        relied on implementation specifics is better, than
+                        breaking other software via incompatible API changes.
+                    </d:toDo>
+                </chapter>
+            </chapter>
+        </chapter>
+        <chapter>
+            <title>Development Process</title>
+            <paragraph>The development process greatly influence the code and its format.
+                Therefore some points regarding the development process that influence the code
+                are included here as well.
+            </paragraph>
+            <paragraph>Prefer test driven development. Use unit and integration tests.</paragraph>
+            <d:toDo>Minimize backlog.
+                <d:toDo>While doing a task do also at least one other task that is related to the topic of the current
+                    task.
+                </d:toDo>
+            </d:toDo>
+            <d:toDo>Priorize the working condition of the software during the whole development stage.
+                <d:toDo>Prefer small tasks over big tasks.</d:toDo>
+                <d:toDo>Ensure that the whole project works after each task.</d:toDo>
+                <d:toDo>Ensure the projects work without additional software like Eclipse.
+                    Software like Eclipse likes to hide errors and can create a big surprise in the middle of a task
+                    and thereby invalidate current planing.
+                </d:toDo>
+            </d:toDo>
+            <chapter>
+                <title>API Backwards Compatibility</title>
+                <paragraph>It is recommended to not break backwards compatibility at all,
+                    regarding the features that are part of a test suite.
+                    If backwards compatibility has to be broken, it should be first deprecated and than removed.
+                    A feature should never be changed in an incompatible way.
+                    Instead a new version of this feature should be introduced, while the older version of the
+                    new version is deprecated.
+                    After the deprecation of the old feature, the old one can be removed.
+                </paragraph>
+                <paragraph>If there are no project dependants or these accept breaking compatibility changes this rule
+                    does not apply.
+                    This is especially true during an experimental or initial development phase of a project or
+                    if the developer of the project is the only user of the project.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>ABI Backwards Compatibility</title>
+                <paragraph>Forcing project dependants to rebuild their software in order to update
+                    their dependencies is acceptable. In other words application binary interface (ABI) backwards
+                    compatibility has a lot lower priority than the compatibility application programming interface
+                    (API).
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>Migration based Development</title>
+                <paragraph>It preferred that each version of the project works.
+                    This does also apply to individual commits.
+                    This increases development effectiveness and efficiency.
+                    It also provides an easy guideline how to implement changes.
+                </paragraph>
+                <paragraph>If one can develop multiple features on the same repository branch without affecting each
+                    other,
+                    then it is likely, that the migration based development is working.
+                </paragraph>
+            </chapter>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Documentation and Management</title>
+        <chapter>
+            <title>Task Organization</title>
+            <paragraph>
+                Tickets should be stored at the location where these are
+                used or matter. It should be
+                easy to figure
+                out
+                which tickets apply to
+                a certain portion of a project. If a person is working
+                on a part of
+                the
+                project in question,
+                relevant tickets should be available with
+                little work.
+            </paragraph>
+            <paragraph>Tickets with a low amount of content should
+                be stored as a
+                (Javadoc) comment at the
+                relevant source code
+                location.
+            </paragraph>
+            <tree>
+                <name>Depending on the IDE's formatting, rendering and auto
+                    completion capabilities following
+                    techniques
+                    can be used
+                    for inline
+                    tickets.
+                </name>
+                <tree>
+                    <name>Every task should start with <quote>TODO</quote>, which is recognized by many tools.
+                    </name>
+                    <name>Eclipse like task tags followed by optional flowing text.
+                        Each paragraph stands for a
+                        ticket
+                        and may be divided
+                        by additional
+                        task
+                        tags into sub tickets in the same package. A description of the
+                        ticket
+                        is not
+                        required if the location of the tag makes
+                        the task obvious (i.e.
+                        RENAME tag
+                        above
+                        a
+                        variable declaration).
+                    </name>
+                </tree>
+            </tree>
+        </chapter>
+        <chapter>
+            <title>Task Tags</title>
+            <d:todo>
+                <link>
+                    <text>see out-dated article</text>
+                    <post>2016-04-03-task-based-information-process-management</post>
+                </link>
+            </d:todo>
+        </chapter>
+        <chapter>
+            <title>Internal and External Documentation</title>
+            <paragraph>Prefer internal documentation inside source code over external documentation,
+                if internal documentation can be rendered to a fitting format
+                and the language of internal documentation fits the needs and is supported well enough.
+                Internal and external documentation can be used simultaneously, if the can
+                be renderer as one documentation and if internal and external documentation
+                do not describe the same thing.
+            </paragraph>
+            <paragraph>Used tools should support to update the documentation based automatic refactoring
+                of source code.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Documentation Content</title>
+            <paragraph>Updating the documentation is always a problem.
+                Minimize the need for documentation.
+                Documentation can sometimes replaced by programs (i.e. build script instead of describing how to build
+                software).
+                Prefer documenting justifications instead of functionality.
+            </paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Program Code</title>
+        <paragraph>The programming code should prioritize adaptability.
+            This can be made by making it easy to refactor the code or to translate it to a completely other language.
+        </paragraph>
+        <chapter>
+            <title>Identifiers</title>
+            <paragraph>Readability is preferred over compactness.
+                Every name should be unique. This means a renaming
+                would be valid, if every instance of the name can be renamed,
+                while still maintaining the correct meaning.
+            </paragraph>
+            <paragraph>Static final variables are identified by all upper case
+                natural description, where each word is separated by an underscore.
+            </paragraph>
+            <paragraph>Type identifiers start with an upper case letter.
+                The identifier consist of a natural description.
+                Every word in the name is separated by an underscore and special symbols can be omitted or be replaced
+                by underscore.
+            </paragraph>
+            <paragraph>
+                Every other identifier also consist of a natural description.
+                Every word in the name is separated by an underscore and special symbols can be omitted or be replaced
+                by underscore.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Type Declaration</title>
+            <paragraph>
+                In Java 8-9 Types should be declared implicitly via the
+                <link>
+                    <text>Lombok</text>
+                    <url>https://projectlombok.org</url>
+                </link>
+                types val and var most of the time. In Java 10 and later the new
+                <quote>var</quote>
+                and
+                <quote>val
+                </quote>
+                keywords should be used.
+                In most cases there should be no need to
+                explicitly specify the
+                variable's type via additional
+                text. In these
+                cases this type declarations waste resources.
+                If a
+                variable is
+                initialized with null or similar things
+                that don't provide
+                a concrete
+                type
+                than
+                explicit type definitions can be considered in order to
+                avoid casting.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>State Machine via Object Orientation</title>
+            <paragraph>Any kind of state machine with valid and invalid states
+                should to be implemented as objects in order to disallow any invalid state.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Variable Assignment</title>
+            <paragraph>
+                Assignments to variables that are not used should be
+                avoided in order to minimize the
+                number of state
+                transitions
+                that need
+                to
+                be considered.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Access, Ownership and Side Effects</title>
+            <d:toDo>name, currentName and anyName
+            </d:toDo>
+            <d:toDo>Class names only typed if multiple classes with different
+                types.
+            </d:toDo>
+            <chapter>
+                <title>Access Rights</title>
+                <paragraph>
+                    Every interface type has its own read, write and
+                    execution rights.
+                    This
+                    means that the right to functionally read an
+                    object is not
+                    equivalent to the right read a borrowed object or to
+                    read a
+                    connected object.
+                    A method name should only
+                    be used for one
+                    interface
+                    type.
+                    <d:toDo>classification of interfaces without meta data.
+                    </d:toDo>
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>Modeling Ownership and Side Effects with Interfaces</title>
+                <chapter>
+                    <title>Functional Interface</title>
+                    <paragraph>
+                        Access via functional interface
+                        uses
+                        adjectives to work on them.
+                        This highlights that the objects are
+                        not changed
+                        itself. For example
+                        a query of list will create a new
+                        list
+                        <quote>cars.where(car -> car.name().equals("a name"))</quote>
+                        and will not modify the list.
+                    </paragraph>
+                    <paragraph>Creation of objects without side effects
+                        is done via functions with nouns as identifiers.
+                    </paragraph>
+                </chapter>
+                <chapter>
+                    <title>Borrowed Interface</title>
+                    <paragraph>
+                        Access via burrowed interface uses verbs in order to
+                        signal
+                        that the
+                        object in question is changed:
+                        <quote>cars.ensureOnlyContains(car -> car.name().equals("a name"))
+                        </quote>
+                    </paragraph>
+                </chapter>
+                <chapter>
+                    <title>Connected Interface</title>
+                    <paragraph>
+                        Access via connected interfaces uses verbs that signal
+                        the
+                        unclarity of the effect of the actions.
+                        This highlights
+                        the fact
+                        that
+                        properties of
+                        the connected objects may be unclear:
+                        <quote>cars.clearDissatisfyingSoon(car -> car.name().equals("a
+                            name"))
+                        </quote>
+                    </paragraph>
+                </chapter>
+                <chapter>
+                    <title>Mixed Interface</title>
+                    <d:toDo></d:toDo>
+                </chapter>
+                <chapter>
+                    <title>Pure Interface</title>
+                    <d:toDo></d:toDo>
+                </chapter>
+            </chapter>
+        </chapter>
+        <chapter>
+            <title>Testing</title>
+            <paragraph>It should be possible to execute the tests programmatically inside the program.
+                An appropriate main method should be provided, so the tests can be executed as a program.
+                This ensures that tests are nothing special and therefore independent of the build system.
+            </paragraph>
+            <paragraph>Every implemented feature should be tested.</paragraph>
+            <chapter>
+                <title>Naming Convention</title>
+                <paragraph>
+                    Every test name starts with a verb like every other method that's primary function is an action.
+                    Every test name should refer to the primarily tested thing (Object/Method/Function/Class),
+                    the tested feature, the tested situation and the tested result in that order
+                    (This is based on
+                    <link>
+                        <text>Naming standards for unit tests by Roy Osherove</text>
+                        <url>https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html</url>
+                    </link>
+                    ).
+                    All referred things in the method name, should be referred to, by its original name.
+                    All references in the method name should be delimited by underscores.
+                </paragraph>
+                <paragraph>Inside tests following naming scheme can be used: a test subject is creating a test product
+                    that is verified or validated in order to create a test result. A test is successful, if the test
+                    result is positive.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>Optionality of Tests</title>
+                <paragraph>
+                    Tests are generally speaking optional and not part of the
+                    main
+                    interface contract.
+                    In other words no
+                    <d:todo>direct</d:todo>
+                    code is allowed to rely on the fact, that it will be informed about
+                    errors explicitly or implicitly. It should be
+                    possible to enable or disable
+                    tests via an option. The option also determines the way that errors
+                    are handled.
+                    <tree>
+                        <name>There are generally 3 kinds of error reactions:
+                        </name>
+                        <tree>
+                            <name>Abort program execution.</name>
+                        </tree>
+                        <tree>
+                            <name>Abort thread execution.</name>
+                        </tree>
+                        <tree>
+                            <name>Log error and continue execution. This can be used while
+                                testing in order to get a more complete error
+                                report as it
+                                avoids
+                                ending the execution when the first error is found.
+                            </name>
+                        </tree>
+                    </tree>
+                </paragraph>
+                <paragraph>It has to be explicitly stated, if argument checking is
+                    part of the interface. These types of checks are
+                    not considered to
+                    be
+                    tests in this context.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>Self Testing</title>
+                <paragraph>Each test should have an error message, in order to
+                    minimize the time in order to understand an error.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>Unit Testing</title>
+                <d:todo></d:todo>
+            </chapter>
+            <chapter>
+                <title>Integration Testing</title>
+                <d:todo></d:todo>
+            </chapter>
+            <chapter>
+                <title>Property Testing</title>
+                <d:todo>dynamic tests of JUnit 5 and vavr-test</d:todo>
+            </chapter>
+            <chapter>
+                <title>Mutation Testing</title>
+                <d:todo></d:todo>
+            </chapter>
+            <chapter>
+                <title>Test Injection</title>
+                <d:todo></d:todo>
+            </chapter>
+        </chapter>
+        <chapter>
+            <title>Formatting</title>
+            <paragraph>The code should be formatted in such a way that the
+                required space is minimized and
+                the readability and navigability of the text is maximized.
+                Empty lines are omitted, if indentation is enough to easily separate code
+                blocks.
+            </paragraph>
+            <paragraph>Automatic code styling/formatting should never remove already present new line
+                characters, as otherwise it is hard to structure large code statements.
+            </paragraph>
+            <paragraph>It is preferred that symbols that structure the code are located
+                at the most left side instead at the most right side when whitespace is ignored.
+                This allows the navigate the code structure easily while minimizing
+                the need to look into the meaning of the code.
+            </paragraph>
+            <paragraph>Prefer tabbing, if automatic source code formatting is preferred and details of the format are
+                not important, in order to prefer writing speed.
+                Prefer whitespace, if formatting details are important.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Dependencies</title>
+            <paragraph>
+                Maximize the exchangeability of external dependencies.
+                Minimize dependency on concrete versions of the dependencies.
+                Prefer own interfaces and avoid accessing external things. Use dependency injection via static methods
+                as this supports
+                most paradigms and implementations. This also supports
+                dependency injection of general objects like lists nicely.
+            </paragraph>
+            <paragraph>Minimize the number of extern dependencies that are explicitly supported as these can cause
+                a maintenance burden. Minimize side effects between dependencies.
+                For example, in an ideal case transitive dependencies are not shared between dependencies.
+            </paragraph>
+            <paragraph>If there are not enough resources or if it is not optimal to develop
+                and maintain a piece of required functionality, then use a dependency in order to get this functionality
+                and declare the functionality of the dependency as something that is out of scope of the project.
+                The support, usage and extension of the dependency might still be part of the project.
+            </paragraph>
+            <paragraph>Minimize direct dependencies between different things inside the project
+                in order to easier analyse the effect of one piece of code to the rest of the project.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>State Intent and Not Actions</title>
+            <paragraph>Therefore, pointer or index arithmetic should be avoided.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Namespace</title>
+            <paragraph>Try to create a common dictionary of words. Each word
+                should be used for one meaning if possible.
+                This makes
+                it easier to
+                create names for new things, to find new things by its name and to
+                understand described things.ß
+            </paragraph>
+            <paragraph>Use prefixes if multiple dictionaries have to be used in a
+                document.
+                This helps to associate each text with
+                its correct meaning.
+            </paragraph>
+            <paragraph>Avoid importing the same things over and over again in
+                each file.
+                If possible create dictionary documents
+                that contain all
+                imports and link
+                to these dictionaries in each document. Minimize the
+                number of dictionary documents
+                which
+                are linked to from a given
+                document.
+                Minimize the number of individual imports in non dictionary
+                documents.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Event Logs</title>
+            <paragraph>Model the (interactive) console and log files as event
+                logs/queues.
+                The
+                subject/publisher of the event
+                should
+                always be
+                directly
+                or indirectly identifiable.
+                This way it is
+                ensured that the
+                history of
+                the execution is shown, which
+                allows one understand the
+                execution
+                and
+                interact with it. In the ideal case one can reproduce the
+                history of
+                each object.
+            </paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Complexity Management</title>
+        <d:toDo>Remove coding details.</d:toDo>
+        <paragraph>
+            The complexity of project should be planned.
+            If the
+            project's complexity becomes greater than planned, it
+            may be a
+            indicator that the project needs to be
+            simplified.
+            This can be done by
+            splitting the project into multiple
+            ones.
+        </paragraph>
+        <paragraph>Minimize the amount of complexity.
+            Minimize the set of required programming language features.
+            The set of actually used programming features is not important.
+        </paragraph>
+        <paragraph>General code is easier to manage than domain specific functions
+            as domain specific functions tend to grow in complexity over time.
+            It is easier to limit the maximum complexity of general code, because its easier
+            to exactly define the content of such a function.
+            , that it relies on predefined interfaces, which may
+            The downside of general code is, that it may provide more functionality
+            than currently needed, which may require more code than strictly needed.
+            This can be omitted by not implementing not used parts of the general code.
+            There are 2 ways to do this: one can call a function with some arguments set to null,
+            which are not valid, but are not used by the function because
+            the other arguments are have certain values.
+            Another way is to explicitly throw an exception, if a not implemented part is
+            used. In this case it is best to create a dedicated exception class for this in order
+            unambiguous mark unfinished code parts.
+            Both methods create an exception, if an unfinished part of a code is executed.
+        </paragraph>
+        <chapter>
+            <title>Complex Projects</title>
+            <paragraph>Complex projects consist of multiple projects called sub.
+                A complex project is represented by a project called root.
+                A sub project should be classifiable as on of 4 types: core, merger, sheath and environment.
+                An merger project contains interfaces and abstract factories,
+                An core project provides interface implementations and provide factories, that are used by the abstract
+                factories of the merger project via dependency injection.
+                Sheath code are explicit external dependencies of the project.
+                Environment code are implicit dependencies of the root project
+            </paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Dependency Management</title>
+        <paragraph>Every folder containing source files should be regarded as its own project.</paragraph>
+        <d:toDo>Define core, merger, core.merger, sheath and environment concept.</d:toDo>
+        <paragraph>
+            Prefer deterministic builds strongly.
+            Update dependencies explicitly and not implicitly.
+            Thereby one has control over the update time,
+            quality
+            and repeatability.
+            If possible create a command in order to automatically
+            update dependencies.
+        </paragraph>
+        <chapter>
+            <title>External Dependency</title>
+            <paragraph>
+                Dependencies on external implementations has to be indirect/abstract.
+                Dependencies on external interfaces are allowed but discouraged.
+            </paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Build Infrastructure</title>
+        <paragraph>If there are multiple projects, create a builder project.
+            Its objective is to build all other projects.
+            Its purpose is to enforce a set of standard project formats, which all projects need to adhere.
+            Thereby, the size build scripts in other projects is reduced.
+            This leads to a situation, where for simple project formats
+            the project format only needs to be declared.
+        </paragraph>
+        <paragraph>All possible build and related tasks should be documented.
+            One way is it to provide a command with no arguments for each task.
+        </paragraph>
+        <paragraph>Builds should be regularly be done via all build systems
+            used, in order to ensure that the code complies
+            with each build
+            system.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Code Convention</title>
+        <d:toDo>AI=abstract implementation,I=Impl=Implementation, D=Doc=Documentation, L=Log=Logging, R=Ref=Reflection
+        </d:toDo>
+    </chapter>
+</article>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:e="http://splitcells.net/sen.xsd" description="compatibility and portability">
+    <objective>
+        <objective>Find out, if this works efficiently and effectively.</objective>
+        <objective>Write documents and programs in one language i.e. documentation as code.
+            <objective>The idea is to model syntax trees like XML and JSON
+                via the Perspective class.
+            </objective>
+            <problem>How to document methods and functions?
+                Name can be linked via annotations and static final Strings.
+                Each document has to be linked to a package/path, attribute and argument path.
+            </problem>
+        </objective>
+        <objective>Use automatic refactoring capabilities of Java IDE in order to automatically refactor code and
+            documents.
+            <problem>Refactoring of XML via XSL or custom tree processing code is not hard.</problem>
+        </objective>
+        <objective>Ensure this via an Example document, that this is indeed a good idea.
+            <objective>Needs to be fully compatible to XML and JSON.</objective>
+        </objective>
+        <objective>Introduce this, if it suits, by migrating to this system.
+            <objective>XML and JSON still need to be supported,
+                but should be used for secondary content or for rendering only.
+                Also the acceptance for such a system will not be good, so XML, XSD, XSL and JSON
+                should still be supported.
+            </objective>
+        </objective>
+    </objective>
+    <scheduling>
+        <priority>
+            <queue>
+                <toDo>Use DemTest as a testing ground.</toDo>
+                <toDo>Create an example class, because the formatting seems to be a problem,
+                    according to experience.
+                </toDo>
+                <toDo>Create a testsuite which states all requirements to the Perspective in order
+                    to support data as source code.
+                </toDo>
+                <toDo>Create a framework in order to support data schemes.</toDo>
+            </queue>
+        </priority>
+    </scheduling>
+</project>

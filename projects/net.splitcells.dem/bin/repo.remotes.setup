@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+git remote add github git@github.com:www-splitcells-net/net.splitcells.dem.git

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:e="http://splitcells.net/sen.xsd" description="compatibility and portability">
+    <solution>
+        <priority>
+            <queue>
+                <toDo>Define a minimal Java EBNF grammar via "java.code.verify" and antlr.
+                    <toDo>Create Grammar.</toDo>
+                    <toDo xl:href="https://github.com/antlr/antlr4"/>
+                    <toDo xl:href="https://github.com/antlr/grammars-v4/tree/master/java/java8/examples"/>
+                    <toDo>Check only files, which are not part of the bootstrapping implementation.</toDo>
+                </toDo>
+                <toDo>Create a translation tool to a target language.
+                    Consider it a success, when the result compiles and represents the structure of the source code.
+                    The concrete functionality in the resulting program is not of concern.
+                </toDo>
+                <toDo>Create a way to automatically generate the skeleton of environment integration code.</toDo>
+                <toDo>Translate Dem to a Lisp langauge.</toDo>
+                <toDo>Translate an actual project to a Lisp langauge.</toDo>
+            </queue>
+            <unscheduled>
+                <toDo>Learn OCaml.</toDo>
+            </unscheduled>
+        </priority>
+    </solution>
+    <objective>Ensure that a software project's dependencies like language, framework and platforms
+        are easily replaceable. The replacement can be automatic or manual.
+        <solution>Ensure that the software project is valid and only uses certain features,
+            that makes it easy to migrate the project.
+            <toDo>Standardize usage of Java feature by defining a subset of valid Java grammar and checking it.
+                <toDo>Use different Grammar for Dem and subsequent projects,
+                    because Dem is the base for subsequent projects, which should have higher restriction.
+                    <toDo>Only some parts of Dem should use a different/unrestricted part.
+                        This part should only be the Java-specific code.
+                    </toDo>
+                </toDo>
+            </toDo>
+            <toDo>Ensure that the code is easily translatable to other languages with minimal effort and manual work.
+                <idea>Support different paradigmas.
+                    <toDo>Object-Orientation mainly provides polymorphic tree transformations.</toDo>
+                    <todo>Support a very simple and basic version of functional programming
+                        with an simple statically typed object system.
+                        The object system, which is kind of an OOP-System only provides state interfaces.
+                        The functions define the state transitions of the objects.
+                    </todo>
+                </idea>
+                <toDo>Always translate code to other language automatically and test it, in order to be sure
+                    that the code is portable. A good target would be a minimal language.
+                    It may be easier to start with a dynamically typed language.
+                </toDo>
+            </toDo>
+        </solution>
+    </objective>
+</project>

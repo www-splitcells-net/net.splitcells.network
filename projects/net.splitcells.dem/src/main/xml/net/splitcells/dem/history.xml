@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:n="http://splitcells.net/natural.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Dem's History</title>
+        <publication_date year="2020" month="06" day_of_month="06"/>
+        <license>standard</license>
+    </meta>
+    <paragraph>I write down the history of the library in order to make sure,
+        that I know, why this piece of programming exists.
+        It also helps me to limit the scope of the project and to determine, if this project is still needed.
+    </paragraph>
+    <chapter>
+        <title>Dem's Precursor</title>
+        <paragraph>
+            While implementing
+            <link>
+                <text>an solution program</text>
+                <url>net/splitcells/martins/avots/website/2017/04/22/origin-of-the-project-generic-allocator.html</url>
+            </link>
+            during my master's internship, I created some generic helper code, configuration storage
+            and an integration into log4j.
+            These utilities helped me to organize my knowledge and try out things regarding programming in
+            Java, which was relatively new to me.
+            I also noticed that some things in the standard and external libraries of Java did not seem to ideal.
+            A needed araised to create code in order to easier integrate these libraries.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>First Version of the Dependency Manager</title>
+        <paragraph>During my master thesis I implemented a successor to the
+            <link>
+                <text>previously mentioned solution program</text>
+                <url>net/splitcells/martins/avots/website/2017/04/22/origin-of-the-project-generic-allocator.html</url>
+            </link>
+            .
+            For this I created a library that wrapped all dependencies and integrated these into the optimizer.
+            It worked as intended but was over engineered and I implemented too many things on my own.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Improving and Using the Dependency Manager</title>
+        <paragraph>After my master thesis I used this framework for some other personal projects
+            and noticed that some things were of with my library.
+            I also recognized, that I invested too much time into it.
+        </paragraph>
+        <paragraph>I therefore formally defined the goals of the library and decided
+            that as many parts as possible should not be implemented in Dem.
+            Some guidelines were needed on how to integrate foreign software.
+            So I made the library Dem a little bit smaller and drafted an experimental guideline.
+            The library was still too big and the quality of the guide could be better.
+        </paragraph>
+        <paragraph>During my programming escapades I noticed, that
+            I needed to write some things down regarding the art of coding.
+            There existed to many useful bits of information to keep them in mind
+            and to apply them in practice.
+            I therefore expanded the scope of the guidelines.
+            Now I use the guidelines for any kind of practical bits regarding software development,
+            as long as it does not apply to only one language.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Publishing Dem as an Open Source Project</title>
+        <paragraph>So I wanted to force myself to improve this piece of software, that I
+            use for multiple projects, and make it more useful to me.
+            Therefore, I forced myself to make this project public and open source.
+            This motivated me clean the up this project.
+        </paragraph>
+    </chapter>
+</article>

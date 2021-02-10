@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet attribute="text/xsl" href="xofi.html.xslt"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Guidelines for Networks of Discovery based Perspectives</title>
+        <description></description>
+        <publication_date year="2021" month="02" day_of_month="05"/>
+        <license>standard</license>
+    </meta>
+    <chapter>
+        <title>Globalization</title>
+        <paragraph>Globalization is the act of minimizing the number
+            of networks or making it easy to translate, connect and traverse such network clusters.
+        </paragraph>
+        <paragraph>It is often not possible, to make a single global unified network,
+            that is valid for everyone.
+            This is often not needed. Instead one can use shared global networks,
+            where each network has its own root perspective and therefore path space.
+        </paragraph>
+        <paragraph>Every non global network can just link to these globally shared networks.
+            The root perspectives of each network needs to isolated in such a way,
+            that these are not mixed.
+            This ensures that paths are unambiguous and can be shared across networks.
+            Thereby, networks can be integrated.
+        </paragraph>
+        <paragraph>Generally speaking, the number of networks, should be minimized
+            in order to have minimal cost of optimizing and using the networks.
+            Nevertheless, one has to keep in mind, that each actor/project needs its own root perspective
+            and therefore network. It may be enough to use virtual networks.
+        </paragraph>
+    </chapter>
+</article>
