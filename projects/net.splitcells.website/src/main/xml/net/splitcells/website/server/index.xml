@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://splitcells.net/den.xsd">
+    <name>Website Server</name>
+    <solution>
+        <optimization>
+            <toDo>Support XML refactoring/transformation.</toDo>
+        </optimization>
+        <objective>
+            <objective>Create a project view, that shows multiple projects as one project in a unified namespace.
+                <objective>Serve the project's files via HTTPs and via the file system.</objective>
+            </objective>
+        </objective>
+    </solution>
+</project>

@@ -8,6 +8,7 @@
     <modules>
         <module>../net.splitcells.pom.java.defaults</module>
         <module>../net.splitcells.dem</module>
+        <module>../net.splitcells.website</module>
         <module>../net.splitcells.gel</module>
         <module>../net.splitcells.os.state.interface</module>
         <module>../net.splitcells.os.state.interface.lib</module>
