@@ -16,4 +16,3 @@ This network consists of three parts:
   A set of integrated projects focused on optimization and problem modeling.
 * Unintegrated projects:
   This projects are not inside this repository and managed more independently.
-
