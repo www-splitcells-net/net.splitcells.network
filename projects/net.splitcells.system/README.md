@@ -1,4 +1,4 @@
-# splitcells.net System
+# Split Cells System
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/starting-to-learn-how-to-draw-a-face.jpg" height="500" alt="Logo"/>
 
