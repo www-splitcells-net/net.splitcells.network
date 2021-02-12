@@ -1,4 +1,4 @@
-# Split Cells Network
+# net.splitcells.network
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
 
