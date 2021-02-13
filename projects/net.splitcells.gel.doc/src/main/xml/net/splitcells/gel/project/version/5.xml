@@ -6,7 +6,11 @@
          xmlns:e="http://splitcells.net/sen.xsd">
     <solution>
         <objective>
-            <objective>Support interactive problem solving via Website.</objective>
+            <objective>Support interactive problem solving via Website.
+                <solution>Use pseudo CSV format (variable length lines) as input, where the first row describes the
+                    line type. This means that multiple tables can be extracted from the single CSV.
+                </solution>
+            </objective>
         </objective>
         <scheduling>
             <priority>

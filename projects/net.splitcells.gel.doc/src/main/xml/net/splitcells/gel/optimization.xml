@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<optimization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+              xmlns="http://splitcells.net/den.xsd"
+              xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+              xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+              xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+              xmlns:e="http://splitcells.net/sen.xsd">
+    <scheduling>
+        <current>
+            <toDo xl:href="./projec/version/3.xml"/>
+            <toDo>Document future version development process.</toDo>
+        </current>
+    </scheduling>
+    <unscheduled>
+        <toDo>Line index randomizer in order to test index calculations.</toDo>
+    </unscheduled>
+</optimization>
