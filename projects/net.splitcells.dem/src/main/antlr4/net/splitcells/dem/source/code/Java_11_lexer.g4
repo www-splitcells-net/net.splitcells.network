@@ -5,6 +5,7 @@ lexer grammar Java_11_lexer;
 Statement_terminator: ';';
 Whitespace: ' ';
 Keyword_package: 'package';
+Keyword_import: 'import';
 Object_accessor: '.';
 Name
 	: Name_prefix Name_suffix*

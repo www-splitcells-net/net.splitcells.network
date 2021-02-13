@@ -1,9 +1,11 @@
 Statement_terminator=1
 Whitespace=2
 Keyword_package=3
-Object_accessor=4
-Name=5
+Keyword_import=4
+Object_accessor=5
+Name=6
 ';'=1
 ' '=2
 'package'=3
-'.'=4
+'import'=4
+'.'=5
