@@ -23,11 +23,11 @@ public final class GelDev {
 
     public static void main(String... arg) {
         process(() -> {
-            new MinimalDistanceTest().testRating();
+            new MinimalDistanceTest().test_multiple_line_addition_and_removal();
             //new MinimalDistanceTest().test_multiple_line_addition_and_removal();
             //new ConstraintTest().test_incomingGroupsOfConstraintPath();
             //new OralExamsTest().testCurrent();
-            Test.test(OralExamsTest.class);
+            //Test.test(OralExamsTest.class);
         }, standardConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class
