@@ -13,6 +13,9 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.resource.host.Files.createDirectory;
 
+/**
+ * TODO Use alternative async backend.
+ */
 public final class Console extends ResourceI<Sender<String>> {
 
     public Console() {
