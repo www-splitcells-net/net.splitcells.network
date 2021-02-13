@@ -161,14 +161,11 @@ public class Java_11_parser extends Parser {
 
 	public static class Package_declarationContext extends ParserRuleContext {
 		public TerminalNode Keyword_package() { return getToken(Java_11_parser.Keyword_package, 0); }
+		public TerminalNode Whitespace() { return getToken(Java_11_parser.Whitespace, 0); }
 		public Package_nameContext package_name() {
 			return getRuleContext(Package_nameContext.class,0);
 		}
 		public TerminalNode Statement_terminator() { return getToken(Java_11_parser.Statement_terminator, 0); }
-		public List<TerminalNode> Whitespace() { return getTokens(Java_11_parser.Whitespace); }
-		public TerminalNode Whitespace(int i) {
-			return getToken(Java_11_parser.Whitespace, i);
-		}
 		public Package_declarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -191,29 +188,16 @@ public class Java_11_parser extends Parser {
 	public final Package_declarationContext package_declaration() throws RecognitionException {
 		Package_declarationContext _localctx = new Package_declarationContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_package_declaration);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(15);
 			match(Keyword_package);
-			setState(17); 
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			do {
-				{
-				{
-				setState(16);
-				match(Whitespace);
-				}
-				}
-				setState(19); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( _la==Whitespace );
-			setState(21);
+			setState(16);
+			match(Whitespace);
+			setState(17);
 			package_name(0);
-			setState(22);
+			setState(18);
 			match(Statement_terminator);
 			}
 		}
@@ -269,13 +253,13 @@ public class Java_11_parser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(25);
+			setState(21);
 			match(Name);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(32);
+			setState(28);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -284,18 +268,18 @@ public class Java_11_parser extends Parser {
 					{
 					_localctx = new Package_nameContext(_parentctx, _parentState);
 					pushNewRecursionContext(_localctx, _startState, RULE_package_name);
-					setState(27);
+					setState(23);
 					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-					setState(28);
+					setState(24);
 					match(Object_accessor);
-					setState(29);
+					setState(25);
 					match(Name);
 					}
 					} 
 				}
-				setState(34);
+				setState(30);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			}
 			}
 		}
@@ -326,17 +310,15 @@ public class Java_11_parser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\7&\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\3\2\3\2\7\2\13\n\2\f\2\16\2\16\13\2\3\2\3\2\3\3\3\3\6\3\24"+
-		"\n\3\r\3\16\3\25\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4!\n\4\f\4\16\4"+
-		"$\13\4\3\4\2\3\6\5\2\4\6\2\2\2%\2\b\3\2\2\2\4\21\3\2\2\2\6\32\3\2\2\2"+
-		"\b\f\5\4\3\2\t\13\7\4\2\2\n\t\3\2\2\2\13\16\3\2\2\2\f\n\3\2\2\2\f\r\3"+
-		"\2\2\2\r\17\3\2\2\2\16\f\3\2\2\2\17\20\7\2\2\3\20\3\3\2\2\2\21\23\7\5"+
-		"\2\2\22\24\7\4\2\2\23\22\3\2\2\2\24\25\3\2\2\2\25\23\3\2\2\2\25\26\3\2"+
-		"\2\2\26\27\3\2\2\2\27\30\5\6\4\2\30\31\7\3\2\2\31\5\3\2\2\2\32\33\b\4"+
-		"\1\2\33\34\7\7\2\2\34\"\3\2\2\2\35\36\f\3\2\2\36\37\7\6\2\2\37!\7\7\2"+
-		"\2 \35\3\2\2\2!$\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#\7\3\2\2\2$\"\3\2\2\2\5"+
-		"\f\25\"";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\7\"\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\3\2\3\2\7\2\13\n\2\f\2\16\2\16\13\2\3\2\3\2\3\3\3\3\3\3\3\3"+
+		"\3\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4\35\n\4\f\4\16\4 \13\4\3\4\2\3\6\5\2\4"+
+		"\6\2\2\2 \2\b\3\2\2\2\4\21\3\2\2\2\6\26\3\2\2\2\b\f\5\4\3\2\t\13\7\4\2"+
+		"\2\n\t\3\2\2\2\13\16\3\2\2\2\f\n\3\2\2\2\f\r\3\2\2\2\r\17\3\2\2\2\16\f"+
+		"\3\2\2\2\17\20\7\2\2\3\20\3\3\2\2\2\21\22\7\5\2\2\22\23\7\4\2\2\23\24"+
+		"\5\6\4\2\24\25\7\3\2\2\25\5\3\2\2\2\26\27\b\4\1\2\27\30\7\7\2\2\30\36"+
+		"\3\2\2\2\31\32\f\3\2\2\32\33\7\6\2\2\33\35\7\7\2\2\34\31\3\2\2\2\35 \3"+
+		"\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37\7\3\2\2\2 \36\3\2\2\2\4\f\36";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

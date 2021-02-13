@@ -9,7 +9,7 @@ source_unit
     : package_declaration Whitespace* EOF
     ;
 package_declaration
-    : Keyword_package Whitespace+ package_name Statement_terminator
+    : Keyword_package Whitespace package_name Statement_terminator
     ;
 package_name
     : Name

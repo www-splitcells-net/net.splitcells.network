@@ -16,7 +16,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 public class SourceCodeCheck {
     public static void main(String... arg) {
         // TODO REMOVE "test.txt", when this feature is implemented.
-        check_Java_source_code(Paths.get("src/main/resources/test.txt"));
+        check_Java_source_code(Paths.get("src/main/java/net/splitcells/dem/Dem.java"));
         /*walk_recursively(Paths.get("src/main/java/"))
                 .filter(Files::is_file)
                 .forEach(SourceCodeCheck::check_Java_source_code);*/
