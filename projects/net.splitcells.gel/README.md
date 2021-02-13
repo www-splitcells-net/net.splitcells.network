@@ -1,7 +1,6 @@
 # Generic Allocator System (Gas)
 
 * [Rendered Documentation](http://splitcells.net/net/splitcells/gel/index.html)
-* [Social Media](https://twitter.com/splitcells)
 
 ## Introduction
 
