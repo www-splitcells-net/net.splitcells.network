@@ -33,7 +33,8 @@
     <scheduling>
         <priority>
             <queue>
-                <toDo>Use DemTest as a testing ground.</toDo>
+                <toDo>Use DocumentTest as a testing ground and model <quote>index.xml</quote>.
+                </toDo>
                 <toDo>Create an example class, because the formatting seems to be a problem,
                     according to experience.
                 </toDo>
