@@ -141,6 +141,9 @@ public class MinimalDistance<T> implements Rater {
         return ratingEvent;
     }
 
+    /**
+     * TODO Move this to sheath project.
+     */
     private void checkConsistency(Table lineProcessing) {
         final var sortedProcessingLines = sorted(lineProcessing);
         try {
@@ -176,7 +179,15 @@ public class MinimalDistance<T> implements Rater {
                             assertThat(noCost().betterThan(sortedProcessingLines.get(i).value(RATING)))
                                     .isTrue();
                         } else {
-                            assertThat(sortedProcessingLines.get(i).value(RATING).equalz(noCost())).isTrue();
+                            assertThat(sortedProcessingLines.get(i).value(RATING).equalz(noCost()))
+                                    .describedAs("Line at "
+                                            + i
+                                            + " with value "
+                                            + sortedProcessingLines.get(i).value(LINE).value(attribute)
+                                            + " should have no cost, but has rating of "
+                                            + sortedProcessingLines.get(i).value(RATING)
+                                            + ".")
+                                    .isTrue();
                         }
                     });
             if (sortedProcessingLines.size() > 2) {
