@@ -6,16 +6,13 @@ import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.perspective.Den.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 public class DocumentTest {
-    public static void index() {
-
-    }
 
     public static void main(String... args) {
         Dem.process(() -> {
-            index();
         }, (env) -> {
             env.config()
                     .withConfigValue(MessageFilter.class, (message) -> true);
@@ -52,6 +49,8 @@ public class DocumentTest {
          * Loose grammars without restrictions can be created very fast.
          * Keep in mind, that with such a technology automatic refactoring is easier to implement,
          * because the IDE can take care of it.
+         *
+         * We cannot do real typing without much boilerplate without using inheritance.
          */
         Domsole.domsole().append(
                 project().withProperty("name", "Dependency Manager").withValues(
@@ -103,37 +102,5 @@ public class DocumentTest {
                         .toDom()
                 , () -> list()
                 , LogLevel.INFO);
-    }
-
-    private static Perspective val(String name) {
-        return perspective("val").withProperty("name", name);
-    }
-
-    private static Perspective project(Perspective... arg) {
-        return perspective("project");
-    }
-
-    private static Perspective todo(Perspective... arg) {
-        return perspective("todo");
-    }
-
-    private static Perspective todo(String text, Perspective... arg) {
-        return perspective("todo");
-    }
-
-    private static Perspective priority(Perspective... arg) {
-        return perspective("priority");
-    }
-
-    private static Perspective queue(Perspective... arg) {
-        return perspective("queue");
-    }
-
-    private static Perspective scheduling(Perspective... arg) {
-        return perspective("scheduling");
-    }
-
-    private static Perspective solution(Perspective... arg) {
-        return perspective("solution");
     }
 }

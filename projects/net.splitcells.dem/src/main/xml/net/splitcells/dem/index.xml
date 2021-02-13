@@ -12,7 +12,7 @@
                 <d:queues>
                     <d:priority>
                         <d:toDo>Clean up ConfigurationI.
-                            <d:toDo>Create to validation framework.</d:toDo>
+                            <d:toDo>Create to validate framework.</d:toDo>
                         </d:toDo>
                         <d:toDo>Support deterministic mode.
                             <d:toDo>Maps</d:toDo>

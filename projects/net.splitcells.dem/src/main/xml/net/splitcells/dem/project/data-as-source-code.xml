@@ -33,13 +33,18 @@
     <scheduling>
         <priority>
             <queue>
-                <toDo>Use DocumentTest as a testing ground and model <quote>index.xml</quote>.
+                <toDo>Translate XML documents via XSL automatically to Perspective code.
+                    <toDo>Create XSL</toDo>
+                    <toDo>Create example translation.</toDo>
+                    <toDo>Format code XSL acceptably.</toDo>
+                    <toDo>Translate files in folder structure recursively.</toDo>
                 </toDo>
                 <toDo>Create an example class, because the formatting seems to be a problem,
                     according to experience.
                 </toDo>
                 <toDo>Create a testsuite which states all requirements to the Perspective in order
                     to support data as source code.
+                    Use DocumentTest as basis.
                 </toDo>
                 <toDo>Create a framework in order to support data schemes.</toDo>
             </queue>
