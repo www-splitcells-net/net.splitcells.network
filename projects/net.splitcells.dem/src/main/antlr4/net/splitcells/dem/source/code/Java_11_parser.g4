@@ -9,6 +9,13 @@ source_unit
     : package_declaration import_declaration* EOF
     ;
 import_declaration
+    : import_static_declaration
+    | import_type_declaration
+    ;
+import_static_declaration
+    : Whitespace* Keyword_import Whitespace Keyword_static Whitespace type_name Statement_terminator
+    ;
+import_type_declaration
     : Whitespace* Keyword_import Whitespace type_name Statement_terminator
     ;
 package_declaration

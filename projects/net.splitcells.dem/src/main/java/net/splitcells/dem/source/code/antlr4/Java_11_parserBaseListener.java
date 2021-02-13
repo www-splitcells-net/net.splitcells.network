@@ -42,6 +42,30 @@ public class Java_11_parserBaseListener implements Java_11_parserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterImport_static_declaration(Java_11_parser.Import_static_declarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImport_static_declaration(Java_11_parser.Import_static_declarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterImport_type_declaration(Java_11_parser.Import_type_declarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImport_type_declaration(Java_11_parser.Import_type_declarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPackage_declaration(Java_11_parser.Package_declarationContext ctx) { }
 	/**
 	 * {@inheritDoc}

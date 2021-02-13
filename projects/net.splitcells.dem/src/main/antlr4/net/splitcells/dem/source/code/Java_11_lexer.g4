@@ -6,6 +6,7 @@ Statement_terminator: ';';
 Whitespace: ' ';
 Keyword_package: 'package';
 Keyword_import: 'import';
+Keyword_static: 'static';
 Object_accessor: '.';
 Name
 	: Name_prefix Name_suffix*

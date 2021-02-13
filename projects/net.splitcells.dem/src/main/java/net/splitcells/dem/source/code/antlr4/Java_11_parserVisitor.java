@@ -25,6 +25,18 @@ public interface Java_11_parserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitImport_declaration(Java_11_parser.Import_declarationContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link Java_11_parser#import_static_declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImport_static_declaration(Java_11_parser.Import_static_declarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Java_11_parser#import_type_declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImport_type_declaration(Java_11_parser.Import_type_declarationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link Java_11_parser#package_declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
