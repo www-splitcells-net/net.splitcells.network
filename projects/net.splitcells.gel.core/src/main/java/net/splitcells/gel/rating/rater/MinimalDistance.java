@@ -166,9 +166,9 @@ public class MinimalDistance<T> implements Rater {
                                 = minimumDistance
                                 - distance(sortedProcessingLines.get(i), sortedProcessingLines.get(i + 1));
                         final double remainingDistance;
-                        if (remainingLeftDistance > 0 && remainingRightDistance == 0) {
+                        if (remainingLeftDistance > 0 && remainingRightDistance <= 0) {
                             remainingDistance = remainingLeftDistance;
-                        } else if (remainingRightDistance > 0 && remainingLeftDistance == 0) {
+                        } else if (remainingRightDistance > 0 && remainingLeftDistance <= 0) {
                             remainingDistance = remainingRightDistance;
                         } else if (remainingLeftDistance > 0 && remainingRightDistance > 0) {
                             remainingDistance = remainingLeftDistance + remainingRightDistance;
