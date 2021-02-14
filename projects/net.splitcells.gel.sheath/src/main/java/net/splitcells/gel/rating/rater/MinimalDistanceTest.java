@@ -28,7 +28,7 @@ import static net.splitcells.gel.solution.optimization.primitive.LinearInitializ
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MinimalDistanceTest {
-    
+
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_multiple_line_addition_and_removal() {
