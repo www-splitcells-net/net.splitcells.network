@@ -56,8 +56,11 @@
         </d:toDo>
     </meta>
     <chapter>
-        <title>Introduction</title>
-        <paragraph>The Generic Allocator (Gel) is a framework for solving of
+        <title>Introduction for Developers</title>
+        <paragraph>The Generic Allocator (Gel) is a Java framework for optimization
+
+
+            solving of
             computational problems where the problem
             model is defined separately from its solving routines.
             It is not meant to just be an application framework or a piece of software.
