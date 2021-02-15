@@ -9,6 +9,7 @@
 This is a set of open source projects centered around optimization and code supporting and integrating such projects.
 The center of all this is the [Generic Allocator](./projects/net.splitcells.gel).
 It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
+An introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
 ## Structure
 
