@@ -18,9 +18,9 @@ which is an optimization and problem modeling framework.
 
 | Attribute | Status |
 | --- | --- |
-| sourcehut CI | [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net/net.splitcells.network?) |
 | GitHub CI | ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg) |
 | GitLab CI | ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg) |
+| sourcehut CI | [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net/net.splitcells.network?) |
 
 ## Building The System
 
