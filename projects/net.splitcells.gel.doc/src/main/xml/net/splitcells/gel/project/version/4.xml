@@ -32,6 +32,7 @@
                 </objective>
             </objective>
             <objective>Extend solving capabilities by solving Killer Sudoku.</objective>
+            <objective>Support parallelism via Dem's effect system.</objective>
         </objective>
         <scheduling>
             <priority>
