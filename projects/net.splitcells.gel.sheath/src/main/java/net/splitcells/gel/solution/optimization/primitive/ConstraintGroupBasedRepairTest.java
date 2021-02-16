@@ -74,7 +74,7 @@ public class ConstraintGroupBasedRepairTest {
                 .asSolution();
         solution.optimize(linearInitialization());
         final var testSubject = constraintGroupBasedRepair(
-                constraintGroup -> Optional.of(constraintGroup.get(6)) // Select the first defying group.
+                constraintGroup -> list(constraintGroup.get(6)) // Select the first defying group.
                 , (freeDemandGroups, freedSupplies) -> currentSolution -> {
                     final List<OptimizationEvent> repairs = list();
                     final int i[] = {0};
@@ -91,14 +91,15 @@ public class ConstraintGroupBasedRepairTest {
                     return repairs;
                 }
         );
-        final var groupOfConstraintGroup = testSubject.groupOfConstraintGroup(solution);
-        final var demandClassification = groupOfConstraintGroup
+        final var groupsOfConstraintGroup = testSubject.groupOfConstraintGroup(solution);
+        final var demandClassifications = groupsOfConstraintGroup
+                .stream()
                 .map(e -> e
                         .lastValue()
                         .map(f -> testSubject.demandGrouping(f, solution))
                         .orElseGet(() -> map()))
-                .orElseGet(() -> map());
-        final var testProduct = testSubject.repair(solution, demandClassification, list());
+                .collect(toList());
+        final var testProduct = testSubject.repair(solution, demandClassifications.get(0), list());
         assertThat(testProduct).hasSize(4);
         final var freeSupplyIndexes = testProduct.stream()
                 .map(optimizationEvent -> optimizationEvent.supply().index())
