@@ -11,7 +11,8 @@
                 adaptability on source code level, better analysis and logging capabilities.
                 Reuse as much code as possible.
             </objective>
-            <done>Translate to English.</done>
+            <objective>Improve optimization results compared to previous Version.</objective>
+            <objective>Translate to English.</objective>
         </objective>
         <scheduling>
             <priority>
@@ -20,10 +21,10 @@
                         Solve oral exams problem.
                         <toDo>maven.test OralExamsTest#testCurrent
                             <toDo>OralExamsTest#oralExamOptimizationTests
-                                <toDo>Use ConstraintGroupBasedRepair.
+                                <toDo name="Use ConstraintGroupBasedRepair.">
+                                    <toDo>Original version combines overlapping groups. Imitate that.</toDo>
                                     <toDo>Implement custom constraint group optimization order.</toDo>
                                     <toDo>Implement custom heuristics.</toDo>
-                                    <toDo>Make it a meta optimization.</toDo>
                                 </toDo>
                                 <toDo>Use Escalator.</toDo>
                                 <toDo>Manually validate the solution.</toDo>
