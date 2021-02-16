@@ -1,11 +1,18 @@
 package net.splitcells.dem.utils.random;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 import static java.lang.Math.abs;
+import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,6 +41,29 @@ public interface Randomness extends BasicRndSrc {
 
     @JavaLegacy
     Random asRandom();
+
+    default <T> List<T> choose_at_most_multiple_of(int number_of_things_to_choose, List<T> args) {
+        if (args.isEmpty()) {
+            return list();
+        }
+        if (number_of_things_to_choose >= args.size()) {
+            return listWithValuesOf(args);
+        }
+        final List<T> choosen_args = list();
+        final Set<Integer> choosen_indexes = setOfUniques();
+        range(0, number_of_things_to_choose)
+                .forEach(i -> {
+                    while (true) {
+                        final var next_index_candidate = this.integer(0, args.size() - 1);
+                        if (choosen_indexes.contains(next_index_candidate)) {
+                            continue;
+                        }
+                        choosen_indexes.add(next_index_candidate);
+                        choosen_args.add(args.get(next_index_candidate));
+                    }
+                });
+        return choosen_args;
+    }
 
     default <T> T chooseOneOf(List<T> arg) {
         if (arg.isEmpty()) {
