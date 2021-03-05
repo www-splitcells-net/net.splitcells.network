@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 echo ../$1
 cd ../$1
 git remote show sourcehut || git remote add sourcehut git@git.sr.ht:~splitcells-net/"$1"

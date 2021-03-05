@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Pushes a repo to all known remotes.
+set -e
 git push github
 git push gitlab
 git push sourcehut

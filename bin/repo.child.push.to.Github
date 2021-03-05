@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 echo ../$1
 cd ../$1
 git remote show github || git remote add github git@github.com:www-splitcells-net/"$1".git

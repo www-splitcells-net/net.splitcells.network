@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This tests every command.
+set -e
+./repos.push
+mvn clean install
+
