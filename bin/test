@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # This tests every command.
 set -e
-./repos.push
+./bin/repos.push
 mvn clean install
-
+cd projects/net.splitcells.os.state.interface
+    ./bin/test
