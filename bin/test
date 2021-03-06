@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
 # This tests every command.
-set -e
-./bin/repos.push
-mvn clean install
-cd projects/net.splitcells.os.state.interface
-    ./bin/test
+./bin/test.routine
+./bin/test.via.gitlab-runner
