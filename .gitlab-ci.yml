@@ -1,4 +1,9 @@
 image: maven:3.6.3-openjdk-11
+net-splitcells-os-state-interface-test:
+  script:
+    - . $HOME/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin
+    - cd projects/net.splitcells.os.state.interface
+    - ./bin/test.routine
 test:
   script:
     - cd projects/net.splitcells.system

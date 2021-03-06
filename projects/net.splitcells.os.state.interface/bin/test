@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 set -e
-projectFolder=$(pwd)
-	mkdir -p target/test
-	cd target/test
-command.managed.execute.test
-user.ssh.key.generate.test
-cd $projectFolder # Leave current folder before it is deleted.
-	rm -rf $projectFolder/target/test
+./test.routine
+./bin/test.via.gitlab-runner

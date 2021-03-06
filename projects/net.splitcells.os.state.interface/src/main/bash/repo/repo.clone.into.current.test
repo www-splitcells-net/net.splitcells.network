@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 set -e
-# Define test configuration.
+# Define test.routine configuration.
 	baseFolder=$(pwd)
 	testContent='h8u9w4f'
 # Create repository for testing.
@@ -9,7 +9,7 @@ set -e
 	repo.create
 	echo $testContent >> ./text
 	repo.commit.all
-# Create and test clone.
+# Create and test.routine clone.
 	cd $baseFolder
 	mkdir b
 	cd b

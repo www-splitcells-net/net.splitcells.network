@@ -38,4 +38,4 @@ jobs:
         chmod +x ./bin/install
         ./bin/install
         . $HOME/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin
-        ./bin/test
+        ./bin/test.routine

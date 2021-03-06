@@ -1,2 +1,8 @@
 #!/usr/bin/env bash
-gitlab-runner exec docker test
+if command -v gitlab-runner &> /dev/null
+then
+  cd ../..
+  gitlab-runner exec docker net-splitcells-os-state-interface-test
+else
+  >&2 echo $PWD": test.via.gitlab-runner: test not executed, because of missing system dependency."
+fi
