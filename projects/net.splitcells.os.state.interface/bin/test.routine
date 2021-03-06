@@ -4,8 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 set -e
 ./bin/install
-  ls ~/bin/net.splitcells.os.state.interface.commands.managed/
-  . ~/.bashrc
   . ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin
 projectFolder=$(pwd)
 	mkdir -p target/test
