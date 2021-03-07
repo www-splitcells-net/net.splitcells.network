@@ -572,7 +572,9 @@
                 An appropriate main method should be provided, so the tests can be executed as a program.
                 This ensures that tests are nothing special and therefore independent of the build system.
             </paragraph>
-            <paragraph>Every implemented feature should be tested.</paragraph>
+            <paragraph>Every implemented feature should be tested.
+                Also every project command should be tested as well.
+            </paragraph>
             <chapter>
                 <title>Naming Convention</title>
                 <paragraph>
@@ -600,30 +602,8 @@
                     main
                     interface contract.
                     In other words no
-                    <d:todo>direct</d:todo>
                     code is allowed to rely on the fact, that it will be informed about
-                    errors explicitly or implicitly. It should be
-                    possible to enable or disable
-                    tests via an option. The option also determines the way that errors
-                    are handled.
-                    <tree>
-                        <name>There are generally 3 kinds of error reactions:
-                        </name>
-                        <tree>
-                            <name>Abort program execution.</name>
-                        </tree>
-                        <tree>
-                            <name>Abort thread execution.</name>
-                        </tree>
-                        <tree>
-                            <name>Log error and continue execution. This can be used while
-                                testing in order to get a more complete error
-                                report as it
-                                avoids
-                                ending the execution when the first error is found.
-                            </name>
-                        </tree>
-                    </tree>
+                    errors explicitly or implicitly.
                 </paragraph>
                 <paragraph>It has to be explicitly stated, if argument checking is
                     part of the interface. These types of checks are
