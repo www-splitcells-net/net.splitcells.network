@@ -147,7 +147,8 @@ public class ConstraintGroupBasedRepair implements Optimization {
                                     .map(f -> freeDefyingGroupOfConstraintGroup(solution, f))
                                     .orElseGet(() -> list()))
                             .flatMap(e -> e.stream())
-                            .collect(toSetOfUniques());
+                            .distinct()
+                            .collect(toList());
                     if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
                         defyingGroupFreeing.forEach(e -> {
                             if (!REMOVAL.equals(e.stepType())) {
