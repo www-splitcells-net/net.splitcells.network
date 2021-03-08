@@ -11,6 +11,14 @@
                     <toDo>Create Grammar.</toDo>
                     <toDo xl:href="https://github.com/antlr/antlr4"/>
                     <toDo>Check only files, which are not part of the bootstrapping implementation.</toDo>
+                    <idea>
+                        <toDo>Remove dependency injection and only have basic configuration via static immutable
+                            variables in order to simplify code for translation.
+                        </toDo>
+                        <toDo>Create an project to reintroduce dependency injection after the translation
+                            project is working.
+                        </toDo>
+                    </idea>
                 </toDo>
                 <toDo>Create a translation tool to a target language.
                     Consider it a success, when the result compiles and represents the structure of the source code.
