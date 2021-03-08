@@ -53,9 +53,8 @@
             <objective>Support automatic refactoring.</objective>
             <objective>Provide an environment for programs that acts as an generic interface
                 and abstracts away implementation details of the environment.
-                Environment is implemented via interfaces and object, but only accessed via interfaces.
+                Environment is implemented via interfaces and things, but only accessed via interfaces.
                 Implement side effects like input and output only over this environment.
-                <toDo>Implement path, file and network connection system.</toDo>
             </objective>
             <objective>Minimize complexity.
                 <objective>Maximize compatibility to other programming paradigms
@@ -80,6 +79,18 @@
                         with an acceptable amount of resources.
                     </solution>
                 </solution>
+            </objective>
+            <objective>Every thing has a state machine (even immutable) and only valid states/values should be
+                reachable.
+                <objective>The value space and transition functions of an thing should be split
+                    in order to be able to define stateless programs.
+                </objective>
+                <objective>The basic transition functions, that define all valid transitions, should form a group
+                    that cannot be extended from the outside and are therefore inherently coupled with the value space.
+                    <objective>This function set should be as small as possible.</objective>
+                </objective>
+                <objective>Complex things are a tree of things and every action on them is an transformation of tree.
+                </objective>
             </objective>
         </objective>
     </solution>
