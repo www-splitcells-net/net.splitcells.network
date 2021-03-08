@@ -167,6 +167,7 @@ public class Constraint_group_based_repair implements Optimization {
                     return defyingGroupFreeing;
                 })
                 .flatMap(e -> e.stream())
+                .distinct()
                 .collect(toList());
     }
 
