@@ -3,6 +3,7 @@ package net.splitcells.gel.solution.optimization.primitive;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.solution.SolutionView;
@@ -11,10 +12,12 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
+import net.splitcells.gel.solution.optimization.StepType;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
@@ -140,7 +143,7 @@ public class Constraint_group_based_repair implements Optimization {
                         .map(f -> demand_grouping(f, solution))
                         .orElseGet(() -> map()))
                 .collect(toList());
-        return demandGroupings
+        final var optimization_with_duplicate_additions = demandGroupings
                 .stream()
                 .map(demandGrouping -> {
                     demandGrouping.put(null, setOfUniques(solution.demands_unused().getLines()));
@@ -169,6 +172,11 @@ public class Constraint_group_based_repair implements Optimization {
                 .flatMap(e -> e.stream())
                 .distinct()
                 .collect(toList());
+        final var optimization = optimization_with_duplicate_additions
+                .stream()
+                .filter(event -> ADDITION.equals(event.stepType()))
+                .collect(toList());
+        return optimization;
     }
 
     public List<OptimizationEvent> repair(SolutionView solution
