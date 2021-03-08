@@ -31,7 +31,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
 import static net.splitcells.gel.solution.optimization.meta.Escalator.escalator;
-import static net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
+import static net.splitcells.gel.solution.optimization.primitive.Constraint_group_based_repair.constraint_group_based_repair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.TemplateInitializer.templateInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,7 +74,7 @@ public class OralExamsTest extends TestSuiteI {
                     // TODO
                     //ierobežojumGrupaBalstītsRemonts();
                     //funkcionālsKalnāKāpējs(ierobežojumGrupaBalstītsRemonts(), 2);
-                    return constraintGroupBasedRepair(0);
+                    return constraint_group_based_repair(0);
                 }
         ));
         arguments.solution.createStandardAnalysis();
@@ -106,11 +106,11 @@ public class OralExamsTest extends TestSuiteI {
         testSubject.optimize(linearInitialization());
         IntStream.rangeClosed(1, 10).forEach(a -> {
             IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(constraintGroupBasedRepair(4));
+                testSubject.optimizeOnce(constraint_group_based_repair(4));
             });
-            testSubject.optimizeOnce(constraintGroupBasedRepair(3));
+            testSubject.optimizeOnce(constraint_group_based_repair(3));
             IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(constraintGroupBasedRepair(4));
+                testSubject.optimizeOnce(constraint_group_based_repair(4));
             });
         });
         /*IntStream.rangeClosed(1, 100).forEach(j -> {
