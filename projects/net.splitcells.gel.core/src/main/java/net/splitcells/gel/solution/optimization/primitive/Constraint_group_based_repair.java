@@ -6,6 +6,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.GroupId;
@@ -50,7 +51,7 @@ public class Constraint_group_based_repair implements Optimization {
 
     public static Constraint_group_based_repair simple_constraint_group_based_repair
             (int minimum_constraint_group_path
-            , int number_of_groups_selected_per_defiance) {
+                    , int number_of_groups_selected_per_defiance) {
         final var randomness = randomness();
         return new Constraint_group_based_repair
                 (allocationsGroups -> {
@@ -125,6 +126,7 @@ public class Constraint_group_based_repair implements Optimization {
 
     private final Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector;
     private final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer;
+    private final Randomness randomness = randomness();
 
     protected Constraint_group_based_repair
             (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector
@@ -180,6 +182,13 @@ public class Constraint_group_based_repair implements Optimization {
                 .stream()
                 .filter(event -> ADDITION.equals(event.stepType()))
                 .collect(Collectors.groupingBy(event -> event.demand()));
+        final var choosen_demand_allocations = demand_to_proposed_addition
+                .values()
+                .stream()
+                .map(proposals -> Lists.listWithValuesOf(randomness.chooseOneOf(proposals)))
+                .flatMap(e -> e.stream())
+                .collect(toList());
+        optimization.addAll(choosen_demand_allocations);
         return optimization;
     }
 

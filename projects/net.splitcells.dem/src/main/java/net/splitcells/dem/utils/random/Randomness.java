@@ -65,6 +65,13 @@ public interface Randomness extends BasicRndSrc {
         return choosen_args;
     }
 
+    default <T> T chooseOneOf(java.util.List<T> arg) {
+        if (arg.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return arg.get(asRandom().nextInt(arg.size()));
+    }
+
     default <T> T chooseOneOf(List<T> arg) {
         if (arg.isEmpty()) {
             throw new IllegalArgumentException();
