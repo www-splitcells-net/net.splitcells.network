@@ -163,7 +163,9 @@ public class AllocationsIRef extends AllocationsI {
     @Override
     public Set<Line> allocations_of_supply(Line supply) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(usedSupplyIndexes_to_allocationIndexes).containsKey(supply.index());
+            assertThat(usedSupplyIndexes_to_allocationIndexes)
+                    .describedAs("No allocations for the given supply are present.")
+                    .containsKey(supply.index());
         }
         return super.allocations_of_supply(supply);
     }
