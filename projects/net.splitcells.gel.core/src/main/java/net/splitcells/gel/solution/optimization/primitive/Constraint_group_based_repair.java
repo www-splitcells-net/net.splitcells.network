@@ -182,13 +182,13 @@ public class Constraint_group_based_repair implements Optimization {
                 .stream()
                 .filter(event -> ADDITION.equals(event.stepType()))
                 .collect(Collectors.groupingBy(event -> event.demand()));
-        final var choosen_demand_allocations = demand_to_proposed_addition
+        final var chosen_demand_allocations = demand_to_proposed_addition
                 .values()
                 .stream()
                 .map(proposals -> Lists.listWithValuesOf(randomness.chooseOneOf(proposals)))
                 .flatMap(e -> e.stream())
                 .collect(toList());
-        optimization.addAll(choosen_demand_allocations);
+        optimization.addAll(chosen_demand_allocations);
         return optimization;
     }
 
