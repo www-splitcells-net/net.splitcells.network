@@ -30,22 +30,22 @@ import static net.splitcells.gel.solution.optimization.primitive.SupplySelection
 
 public class Constraint_group_based_repair implements Optimization {
 
-    public static Constraint_group_based_repair constraint_group_based_repair
+    public static Constraint_group_based_repair simple_constraint_group_based_repair
             (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector
                     , BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer) {
         return new Constraint_group_based_repair(groupSelector, repairer);
     }
 
-    public static Constraint_group_based_repair constraint_group_based_repair
+    public static Constraint_group_based_repair simple_constraint_group_based_repair
             (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector) {
         return new Constraint_group_based_repair(groupSelector, random_repairer());
     }
 
-    public static Constraint_group_based_repair constraint_group_based_repair(int minimum_constraint_group_path) {
-        return constraint_group_based_repair(minimum_constraint_group_path, 1);
+    public static Constraint_group_based_repair simple_constraint_group_based_repair(int minimum_constraint_group_path) {
+        return simple_constraint_group_based_repair(minimum_constraint_group_path, 1);
     }
 
-    public static Constraint_group_based_repair constraint_group_based_repair
+    public static Constraint_group_based_repair simple_constraint_group_based_repair
             (int minimum_constraint_group_path
             , int number_of_groups_selected_per_defiance) {
         final var randomness = randomness();

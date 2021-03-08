@@ -17,7 +17,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
-import static net.splitcells.gel.solution.optimization.primitive.Constraint_group_based_repair.constraint_group_based_repair;
+import static net.splitcells.gel.solution.optimization.primitive.Constraint_group_based_repair.simple_constraint_group_based_repair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -71,7 +71,7 @@ public class ConstraintGroupbasedrepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        final var testSubject = Constraint_group_based_repair.constraint_group_based_repair(
+        final var testSubject = Constraint_group_based_repair.simple_constraint_group_based_repair(
                 constraintGroup -> list(constraintGroup.get(6)) // Select the first defying group.
                 , (freeDemandGroups, freedSupplies) -> currentSolution -> {
                     final List<OptimizationEvent> repairs = list();
@@ -151,7 +151,7 @@ public class ConstraintGroupbasedrepairTest {
         solution.optimize(linearInitialization());
         assertThat(solution.getLines()).hasSize(7);
 
-        final var testSubject = constraint_group_based_repair(0);
+        final var testSubject = Constraint_group_based_repair.simple_constraint_group_based_repair(0);
         solution.optimize(testSubject.free_defying_group_of_constraint_group(solution, defyingConstraintA));
         assertThat(solution.getLines()).hasSize(3);
         solution.optimize(testSubject.free_defying_group_of_constraint_group(solution, defyingConstraintB));
@@ -200,7 +200,7 @@ public class ConstraintGroupbasedrepairTest {
         solution.optimize(linearInitialization());
         assertThat(solution.getLines()).hasSize(7);
 
-        final var testSubject = constraint_group_based_repair(0);
+        final var testSubject = Constraint_group_based_repair.simple_constraint_group_based_repair(0);
         final var testProduct = testSubject.demand_grouping
                 (solution.constraint().childrenView().get(3).childrenView().get(0)
                         , solution);
