@@ -106,11 +106,13 @@ public class OralExamsTest extends TestSuiteI {
         testSubject.optimize(linearInitialization());
         IntStream.rangeClosed(1, 10).forEach(a -> {
             IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(constraint_group_based_repair(4));
+                testSubject.optimizeOnce(constraint_group_based_repair(4, 3));
             });
-            testSubject.optimizeOnce(constraint_group_based_repair(3));
             IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(constraint_group_based_repair(4));
+                testSubject.optimizeOnce(constraint_group_based_repair(4, 2));
+            });
+            IntStream.rangeClosed(1, 100).forEach(j -> {
+                testSubject.optimizeOnce(constraint_group_based_repair(4, 1));
             });
         });
         /*IntStream.rangeClosed(1, 100).forEach(j -> {
