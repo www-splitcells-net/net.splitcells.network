@@ -1,10 +1,10 @@
 package net.splitcells.dem.utils.random;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
-import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 

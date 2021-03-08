@@ -42,6 +42,12 @@ public class Constraint_group_based_repair implements Optimization {
     }
 
     public static Constraint_group_based_repair constraint_group_based_repair(int minimum_constraint_group_path) {
+        return constraint_group_based_repair(minimum_constraint_group_path, 1);
+    }
+
+    public static Constraint_group_based_repair constraint_group_based_repair
+            (int minimum_constraint_group_path
+            , int number_of_groups_selected_per_defiance) {
         final var randomness = randomness();
         return new Constraint_group_based_repair
                 (allocationsGroups -> {
@@ -67,7 +73,7 @@ public class Constraint_group_based_repair implements Optimization {
                     if (candidates.isEmpty()) {
                         return list();
                     }
-                    return list(randomness.chooseOneOf(candidates));
+                    return randomness.choose_at_most_multiple_of(number_of_groups_selected_per_defiance, candidates);
                 }, random_repairer());
     }
 
