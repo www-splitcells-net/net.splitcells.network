@@ -174,8 +174,12 @@ public class Constraint_group_based_repair implements Optimization {
                 .collect(toList());
         final var optimization = optimization_with_duplicate_additions
                 .stream()
-                .filter(event -> ADDITION.equals(event.stepType()))
+                .filter(event -> REMOVAL.equals(event.stepType()))
                 .collect(toList());
+        final var demand_to_proposed_addition = optimization_with_duplicate_additions
+                .stream()
+                .filter(event -> ADDITION.equals(event.stepType()))
+                .collect(Collectors.groupingBy(event -> event.demand()));
         return optimization;
     }
 
