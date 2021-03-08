@@ -82,7 +82,6 @@
                 </solution>
             </objective>
         </objective>
-        <val name="history" xl:href="./history.xml"/>
     </solution>
     <val name="logging">
         <solution>There is no differences between logs and console output.
