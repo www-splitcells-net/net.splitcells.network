@@ -59,8 +59,8 @@ public class AllocationsIRef extends AllocationsI {
     @Override
     public Line allocate(Line demand, Line supply) {
         if (TRACING) {
-            assertThat(demand).isNotNull();
-            assertThat(supply).isNotNull();
+            assertThat(demand).withFailMessage("Cannot allocate without demand.").isNotNull();
+            assertThat(supply).withFailMessage("Cannot allocate without supply.").isNotNull();
             domsole().append
                     (event(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Allocations.class.getSimpleName()
                             , path().toString()
