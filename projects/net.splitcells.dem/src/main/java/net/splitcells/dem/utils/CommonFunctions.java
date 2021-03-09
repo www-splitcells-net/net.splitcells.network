@@ -5,6 +5,7 @@ import java.nio.channels.FileLock;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -22,6 +23,10 @@ public class CommonFunctions {
 		final T rVal = arg.iterator().next();
 		arg.remove(rVal);
 		return rVal;
+	}
+
+	public static int hash_code(Object... args) {
+		return Objects.hash(args);
 	}
 
 	public static void findSystemOutput() {

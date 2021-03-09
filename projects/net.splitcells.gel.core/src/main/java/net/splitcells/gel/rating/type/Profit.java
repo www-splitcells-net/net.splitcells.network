@@ -6,6 +6,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 import java.util.Optional;
 
+import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
@@ -62,6 +63,11 @@ public class Profit implements Rating {
     @Override
     public boolean equals(Object other) {
         return compare_partially_to((Rating) other).get().equals(EQUAL);
+    }
+
+    @Override
+    public int hashCode() {
+        return CommonFunctions.hash_code(value);
     }
 
     @SuppressWarnings("unchecked")
