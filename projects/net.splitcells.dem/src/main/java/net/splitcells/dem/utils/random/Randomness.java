@@ -24,7 +24,9 @@ public interface Randomness extends BasicRndSrc {
 
     default boolean truthValue(float chance) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(chance).isBetween(0f, 1f);
+            assertThat(chance)
+                    .withFailMessage("Invalid chance given.")
+                    .isBetween(0f, 1f);
         }
         final int scaleFactor = 10_000;
         final var scaledChance = chance * scaleFactor;
