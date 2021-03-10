@@ -5,6 +5,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.SolutionView;
@@ -149,50 +150,38 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         .map(f -> demandGrouping(f, solution))
                         .orElseGet(() -> map()))
                 .collect(toList());
-        final var optimizationWithDuplicateAdditions = demandGroupings
+        final var demandGrouping = demandGroupings
                 .stream()
-                .map(demandGrouping -> {
-                    demandGrouping.put(null, setOfUniques(solution.demands_unused().getLines()));
-                    final var defyingGroupFreeing = groupsOfConstraintGroup
-                            .stream()
-                            .map(e -> e
-                                    .lastValue()
-                                    .map(f -> freeDefyingGroupOfConstraintGroup(solution, f))
-                                    .orElseGet(() -> list()))
-                            .flatMap(e -> e.stream())
-                            .distinct()
-                            .collect(toList());
-                    if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-                        defyingGroupFreeing.forEach(e -> {
-                            if (!REMOVAL.equals(e.stepType())) {
-                                throw new IllegalStateException();
-                            }
-                        });
-                    }
-                    defyingGroupFreeing.addAll(repair(solution, demandGrouping,
-                            defyingGroupFreeing.stream()
-                                    .map(e -> e.supply().interpret().get())
-                                    .collect(toList())));
-                    return defyingGroupFreeing;
-                })
+                .reduce(map(), (a, b) -> {
+                    a.forEach(
+                            (aKey, aVal) -> b.merge(aKey, aVal, (aVal2, bVal2) -> {
+                                aVal2.addAll(bVal2);
+                                return aVal2;
+                            })
+                    );
+                    return a;
+                });
+        demandGrouping.put(null, setOfUniques(solution.demands_unused().getLines()));
+        final var optimization = groupsOfConstraintGroup
+                .stream()
+                .map(e -> e
+                        .lastValue()
+                        .map(f -> freeDefyingGroupOfConstraintGroup(solution, f))
+                        .orElseGet(() -> list()))
                 .flatMap(e -> e.stream())
-                .distinct()
+                .distinct() // TODO Is this needed anymore?
                 .collect(toList());
-        final var optimization = optimizationWithDuplicateAdditions
-                .stream()
-                .filter(event -> REMOVAL.equals(event.stepType()))
-                .collect(toList());
-        final var demandToProposedAddition = optimizationWithDuplicateAdditions
-                .stream()
-                .filter(event -> ADDITION.equals(event.stepType()))
-                .collect(Collectors.groupingBy(event -> event.demand()));
-        final var chosenDemandAllocations = demandToProposedAddition
-                .values()
-                .stream()
-                .map(proposals -> Lists.listWithValuesOf(randomness.chooseOneOf(proposals)))
-                .flatMap(e -> e.stream())
-                .collect(toList());
-        optimization.addAll(chosenDemandAllocations);
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            optimization.forEach(e -> {
+                if (!REMOVAL.equals(e.stepType())) {
+                    throw new IllegalStateException();
+                }
+            });
+        }
+        optimization.addAll(repair(solution, demandGrouping,
+                optimization.stream()
+                        .map(e -> e.supply().interpret().get())
+                        .collect(toList())));
         return optimization;
     }
 
