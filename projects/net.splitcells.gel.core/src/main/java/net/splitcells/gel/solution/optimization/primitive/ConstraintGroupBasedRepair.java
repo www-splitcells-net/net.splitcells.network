@@ -99,12 +99,17 @@ public class ConstraintGroupBasedRepair implements Optimization {
         return (freeDemandGroups, freedSupplies) -> solution -> {
             final Set<OptimizationEvent> repairs = setOfUniques();
             final var suppliesFree = solution.supplies_free().getLines();
+            final var demandsUsed = Sets.<Line>setOfUniques();
             freeDemandGroups.entrySet().forEach(group -> {
                 group.getValue().forEach(demand -> {
+                    if (demandsUsed.contains(demand)) {
+                        return;
+                    }
                     final var supplySelection = indexSelector
                             .apply(suppliesFree.size() - 1
                                     , freedSupplies.size() - 1);
                     if (!supplySelection.isEmpty()) {
+                        demandsUsed.add(demand);
                         final Line selectedSupply;
                         if (supplySelection.get().isCurrentlyFree()) {
                             selectedSupply = suppliesFree.remove(supplySelection.get().selectedIndex());
