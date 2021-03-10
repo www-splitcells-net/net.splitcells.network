@@ -411,76 +411,18 @@
     </chapter>
     <chapter>
         <title>Program Code</title>
-        <paragraph>The programming code should prioritize adaptability.
+        <paragraph>The programming code should prioritize adaptability and readability.
             This can be made by making it easy to refactor the code or to translate it to a completely other language.
+            The use of standard/common code conventions also makes it easier to integrate other code easier
+            and in a more consistent way.
         </paragraph>
         <chapter>
             <title>Identifiers</title>
-            <paragraph>Readability is preferred over compactness.
-                Every name should be unique. This means a renaming
+            <paragraph>Readability is preferred over compactness,
+                but compactness is still important.
+                Every name should have an unambiguous meaning. This means a renaming
                 would be valid, if every instance of the name can be renamed,
                 while still maintaining the correct meaning.
-            </paragraph>
-            <paragraph>Static final variables are identified by all upper case
-                natural description, where each word is separated by an underscore.
-            </paragraph>
-            <paragraph>Type identifiers start with an upper case letter.
-                The identifier consist of a natural description.
-                Every word in the name is separated by an underscore and special symbols can be omitted or be replaced
-                by underscore.
-            </paragraph>
-            <paragraph>
-                Every other identifier also consist of a natural description.
-                Every word in the name is separated by an underscore and special symbols can be omitted or be replaced
-                by underscore.
-            </paragraph>
-        </chapter>
-        <chapter>
-            <title>Type Declaration</title>
-            <paragraph>
-                In Java 8-9 Types should be declared implicitly via the
-                <link>
-                    <text>Lombok</text>
-                    <url>https://projectlombok.org</url>
-                </link>
-                types val and var most of the time. In Java 10 and later the new
-                <quote>var</quote>
-                and
-                <quote>val
-                </quote>
-                keywords should be used.
-                In most cases there should be no need to
-                explicitly specify the
-                variable's type via additional
-                text. In these
-                cases this type declarations waste resources.
-                If a
-                variable is
-                initialized with null or similar things
-                that don't provide
-                a concrete
-                type
-                than
-                explicit type definitions can be considered in order to
-                avoid casting.
-            </paragraph>
-        </chapter>
-        <chapter>
-            <title>State Machine via Object Orientation</title>
-            <paragraph>Any kind of state machine with valid and invalid states
-                should to be implemented as objects in order to disallow any invalid state.
-            </paragraph>
-        </chapter>
-        <chapter>
-            <title>Variable Assignment</title>
-            <paragraph>
-                Assignments to variables that are not used should be
-                avoided in order to minimize the
-                number of state
-                transitions
-                that need
-                to
-                be considered.
             </paragraph>
         </chapter>
         <chapter>
@@ -588,7 +530,6 @@
                     </link>
                     ).
                     All referred things in the method name, should be referred to, by its original name.
-                    All references in the method name should be delimited by underscores.
                 </paragraph>
                 <paragraph>Inside tests following naming scheme can be used: a test subject is creating a test product
                     that is verified or validated in order to create a test result. A test is successful, if the test
