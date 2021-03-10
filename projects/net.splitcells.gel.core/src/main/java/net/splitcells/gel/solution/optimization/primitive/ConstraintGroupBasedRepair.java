@@ -3,9 +3,7 @@ package net.splitcells.gel.solution.optimization.primitive;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.SolutionView;
@@ -18,7 +16,6 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
@@ -42,7 +39,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
             (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector) {
-        return new ConstraintGroupBasedRepair(groupSelector, randomRepairer());
+        return new ConstraintGroupBasedRepair(groupSelector, supplySelector());
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair(int minimumConstraintGroupPath) {
@@ -78,10 +75,10 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         return list();
                     }
                     return randomness.choose_at_most_multiple_of(numberOfGroupsSelectedPerDefiance, candidates);
-                }, randomRepairer());
+                }, supplySelector());
     }
 
-    private static final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> randomRepairer() {
+    private static final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> supplySelector() {
         final var randomness = randomness();
         return indexBasedRepairer((suppliesFree, freedSupplies) -> {
             if (suppliesFree.floatValue() + freedSupplies.floatValue() <= 0) {
