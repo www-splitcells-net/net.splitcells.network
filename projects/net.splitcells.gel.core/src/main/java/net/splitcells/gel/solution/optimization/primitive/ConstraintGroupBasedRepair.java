@@ -80,14 +80,14 @@ public class ConstraintGroupBasedRepair implements Optimization {
 
     private static final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> supplySelector() {
         final var randomness = randomness();
-        return indexBasedRepairer((suppliesFree, freedSupplies) -> {
-            if (suppliesFree.floatValue() + freedSupplies.floatValue() <= 0) {
+        return indexBasedRepairer((freeSupplyCount, supplyFreedCount) -> {
+            if (freeSupplyCount.floatValue() + supplyFreedCount.floatValue() <= 0) {
                 return Optional.empty();
             }
-            if (randomness.truthValue(suppliesFree.floatValue() / (suppliesFree.floatValue() + freedSupplies.floatValue()))) {
-                return Optional.of(supplySelection(randomness.integer(0, suppliesFree - 1), true));
+            if (randomness.truthValue(freeSupplyCount.floatValue() / (freeSupplyCount.floatValue() + supplyFreedCount.floatValue()))) {
+                return Optional.of(supplySelection(randomness.integer(0, freeSupplyCount - 1), true));
             } else {
-                return Optional.of(supplySelection(randomness.integer(0, freedSupplies - 1), false));
+                return Optional.of(supplySelection(randomness.integer(0, supplyFreedCount - 1), false));
             }
         });
     }
@@ -104,8 +104,8 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         return;
                     }
                     final var supplySelection = indexSelector
-                            .apply(suppliesFree.size() - 1
-                                    , freedSupplies.size() - 1);
+                            .apply(suppliesFree.size()
+                                    , freedSupplies.size());
                     if (!supplySelection.isEmpty()) {
                         demandsUsed.add(demand);
                         final Line selectedSupply;
