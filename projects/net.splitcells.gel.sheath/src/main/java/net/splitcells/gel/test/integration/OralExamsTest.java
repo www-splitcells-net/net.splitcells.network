@@ -9,7 +9,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.optimization.primitive.Constraint_group_based_repair;
+import net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair;
 import org.junit.jupiter.api.*;
 
 import java.nio.file.Files;
@@ -32,7 +32,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
 import static net.splitcells.gel.solution.optimization.meta.Escalator.escalator;
-import static net.splitcells.gel.solution.optimization.primitive.Constraint_group_based_repair.simple_constraint_group_based_repair;
+import static net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.TemplateInitializer.templateInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -75,7 +75,7 @@ public class OralExamsTest extends TestSuiteI {
                     // TODO
                     //ierobežojumGrupaBalstītsRemonts();
                     //funkcionālsKalnāKāpējs(ierobežojumGrupaBalstītsRemonts(), 2);
-                    return Constraint_group_based_repair.simple_constraint_group_based_repair(0);
+                    return ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
                 }
         ));
         arguments.solution.createStandardAnalysis();
@@ -107,13 +107,13 @@ public class OralExamsTest extends TestSuiteI {
         testSubject.optimize(linearInitialization());
         IntStream.rangeClosed(1, 10).forEach(a -> {
             IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(simple_constraint_group_based_repair(4, 3));
+                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 3));
             });
             IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(simple_constraint_group_based_repair(4, 2));
+                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 2));
             });
             IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(simple_constraint_group_based_repair(4, 1));
+                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 1));
             });
         });
         /*IntStream.rangeClosed(1, 100).forEach(j -> {

@@ -169,7 +169,7 @@ public abstract class ConstraintAI implements Constraint {
         final Set<Line> complying = setOfUniques();
         allocations.forEach(allocation -> {
             if (event(group, allocation.value(LINE)).equals(noCost())) {
-                complying.add(lineProcessing.demand_of_allocation(allocation).value(LINE));
+                complying.add(lineProcessing.demandOfAllocation(allocation).value(LINE));
             }
         });
         return complying;
@@ -179,7 +179,7 @@ public abstract class ConstraintAI implements Constraint {
         final Set<Line> defying = setOfUniques();
         allocations.forEach(allocation -> {
             if (!event(group, allocation.value(LINE)).equals(noCost())) {
-                defying.add(lineProcessing.demand_of_allocation(allocation).value(LINE));
+                defying.add(lineProcessing.demandOfAllocation(allocation).value(LINE));
             }
         });
         return defying;

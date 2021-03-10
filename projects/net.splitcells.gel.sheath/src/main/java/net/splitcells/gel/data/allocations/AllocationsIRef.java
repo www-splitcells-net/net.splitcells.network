@@ -32,9 +32,9 @@ import static org.assertj.core.api.Assertions.fail;
  * because {@link Database} lines can be remove from the {@link Allocations} completely
  * or they can be moved to the respectively used tables.
  * <p/>
- * TODO Fix {@link #demand_of_allocation(Line)} by using {@link #demands_used}.
+ * TODO Fix {@link #demandOfAllocation(Line)} by using {@link #demands_used}.
  * <p/>
- * TODO Fix {@link #supply_of_allocation} by using {@link #supplies_used}.
+ * TODO Fix {@link #supplyOfAllocation} by using {@link #supplies_used}.
  * <p/>
  * TODO {@link #add(Line)}: The input argument has to be split into a supply and a demand part and a fitting supply and
  * demand pair already would be searched and used on {@code allocate(supply, demand)}.
@@ -122,8 +122,8 @@ public class AllocationsIRef extends AllocationsI {
 
     @Override
     public void remove(Line allocation) {
-        final var demand = demand_of_allocation(allocation);
-        final var supply = supply_of_allocation(allocation);
+        final var demand = demandOfAllocation(allocation);
+        final var supply = supplyOfAllocation(allocation);
         if (TRACING) {
             domsole().append
                     (Xml.event(REMOVE.value()

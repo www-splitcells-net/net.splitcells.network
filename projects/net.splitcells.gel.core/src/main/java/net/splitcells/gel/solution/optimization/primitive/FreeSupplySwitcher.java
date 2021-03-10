@@ -71,7 +71,7 @@ public class FreeSupplySwitcher implements Optimization {
                 return list();
             }
             final var allocation = solution.allocations_of_demand(usedDemand).iterator().next();
-            final var usedSupply = solution.supply_of_allocation(allocation);
+            final var usedSupply = solution.supplyOfAllocation(allocation);
             final var usedSupplyPointer = usedSupply.toLinePointer();
             if (processedSupplies.contains(usedSupplyPointer)) {
                 return list();

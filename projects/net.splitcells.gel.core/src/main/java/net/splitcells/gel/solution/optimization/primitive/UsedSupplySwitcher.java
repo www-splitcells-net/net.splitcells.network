@@ -66,11 +66,11 @@ public class UsedSupplySwitcher implements Optimization {
             }
             final var usedDemandA = solution.demands().getLines(selectionA);
             final var oldAllocationA = solution.allocations_of_demand(usedDemandA).iterator().next();
-            final var usedSupplyA = solution.supply_of_allocation(oldAllocationA);
+            final var usedSupplyA = solution.supplyOfAllocation(oldAllocationA);
 
             final var usedDemandB = solution.demands().getLines(selectionB);
             final var oldAllocationB = solution.allocations_of_demand(usedDemandB).iterator().next();
-            final var usedSupplyB = solution.supply_of_allocation(oldAllocationB);
+            final var usedSupplyB = solution.supplyOfAllocation(oldAllocationB);
 
             final var usedDemandAPointer = usedDemandA.toLinePointer();
             final var usedDemandBPointer = usedDemandB.toLinePointer();

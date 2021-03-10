@@ -116,13 +116,13 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line demand_of_allocation(final Line allocation) {
-		return this.problem.demand_of_allocation(allocation);
+	public Line demandOfAllocation(final Line allocation) {
+		return this.problem.demandOfAllocation(allocation);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Line supply_of_allocation(final Line allocation) {
-		return this.problem.supply_of_allocation(allocation);
+	public Line supplyOfAllocation(final Line allocation) {
+		return this.problem.supplyOfAllocation(allocation);
 	}
 
 	@java.lang.SuppressWarnings("all")

@@ -1,7 +1,6 @@
 package net.splitcells.gel.data.allocations;
 
 import net.splitcells.dem.testing.TestSuiteI;
-import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.Databases;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class AllocationsTest extends TestSuiteI {
         final var supplies = Databases.database();
         final var allocations = allocations("test", demands, supplies);
         allocations.subscribe_to_afterAdditions(
-                pieķiršana -> assertThat(allocations.demand_of_allocation(pieķiršana)).isNotNull());
+                pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)).isNotNull());
         allocations.allocate
                 (demands.addTranslated(list())
                         , supplies.addTranslated(list()));
@@ -35,7 +34,7 @@ public class AllocationsTest extends TestSuiteI {
         final var supplies = Databases.database();
         final var allocations = allocations("test", demands, supplies);
         allocations.subscriber_to_beforeRemoval
-                (pieķiršana -> assertThat(allocations.demand_of_allocation(pieķiršana)).isNotNull());
+                (pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)).isNotNull());
         allocations.remove(
                 allocations.allocate
                         (demands.addTranslated(list())
@@ -51,7 +50,7 @@ public class AllocationsTest extends TestSuiteI {
             final var supplies = Databases.database();
             final var allocations = allocations("test", demands, supplies);
             allocations.subscriber_to_afterRemoval
-                    (pieķiršana -> assertThat(allocations.demand_of_allocation(pieķiršana)));
+                    (pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)));
             allocations.remove(
                     allocations.allocate
                             (demands.addTranslated(list())

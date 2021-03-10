@@ -123,13 +123,13 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Line demand_of_allocation(Line allocation) {
-        return allocations.demand_of_allocation(allocation);
+    public Line demandOfAllocation(Line allocation) {
+        return allocations.demandOfAllocation(allocation);
     }
 
     @Override
-    public Line supply_of_allocation(Line allocation) {
-        return allocations.supply_of_allocation(allocation);
+    public Line supplyOfAllocation(Line allocation) {
+        return allocations.supplyOfAllocation(allocation);
     }
 
     @Override

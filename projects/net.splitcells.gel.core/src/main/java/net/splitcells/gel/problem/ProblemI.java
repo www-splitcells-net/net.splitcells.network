@@ -104,13 +104,13 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Line demand_of_allocation(final Line allocation) {
-        return this.allocations.demand_of_allocation(allocation);
+    public Line demandOfAllocation(final Line allocation) {
+        return this.allocations.demandOfAllocation(allocation);
     }
 
     @Override
-    public Line supply_of_allocation(final Line allocation) {
-        return this.allocations.supply_of_allocation(allocation);
+    public Line supplyOfAllocation(final Line allocation) {
+        return this.allocations.supplyOfAllocation(allocation);
     }
 
     @Override

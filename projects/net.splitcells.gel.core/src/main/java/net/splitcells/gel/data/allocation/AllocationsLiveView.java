@@ -21,9 +21,9 @@ public interface AllocationsLiveView extends Table {
 
     Database demands_unused();
 
-    Line demand_of_allocation(Line piešķiršana);
+    Line demandOfAllocation(Line piešķiršana);
 
-    Line supply_of_allocation(Line piešķiršana);
+    Line supplyOfAllocation(Line piešķiršana);
 
     Set<Line> allocations_of_supply(Line peidāvājums);
 
@@ -32,7 +32,7 @@ public interface AllocationsLiveView extends Table {
     default Set<Line> supply_of_demand(Line prasība) {
         final Set<Line> peidāvājumi_no_prasībam = setOfUniques();
         allocations_of_demand(prasība)
-                .forEach(piešķiršana -> peidāvājumi_no_prasībam.add(supply_of_allocation(piešķiršana)));
+                .forEach(piešķiršana -> peidāvājumi_no_prasībam.add(supplyOfAllocation(piešķiršana)));
         return peidāvājumi_no_prasībam;
     }
 }

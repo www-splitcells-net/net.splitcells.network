@@ -4,7 +4,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.Returns_this;
-import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -28,7 +27,6 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.gel.common.Language.RATING;
-import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -191,13 +189,13 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Line demand_of_allocation(Line allocation) {
-        return solution.demand_of_allocation(allocation);
+    public Line demandOfAllocation(Line allocation) {
+        return solution.demandOfAllocation(allocation);
     }
 
     @Override
-    public Line supply_of_allocation(Line allocation) {
-        return solution.supply_of_allocation(allocation);
+    public Line supplyOfAllocation(Line allocation) {
+        return solution.supplyOfAllocation(allocation);
     }
 
     @Override

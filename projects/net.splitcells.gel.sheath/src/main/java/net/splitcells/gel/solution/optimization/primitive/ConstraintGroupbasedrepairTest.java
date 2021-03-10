@@ -17,7 +17,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
-import static net.splitcells.gel.solution.optimization.primitive.Constraint_group_based_repair.simple_constraint_group_based_repair;
+import static net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -71,7 +71,7 @@ public class ConstraintGroupbasedrepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        final var testSubject = Constraint_group_based_repair.simple_constraint_group_based_repair(
+        final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(
                 constraintGroup -> list(constraintGroup.get(6)) // Select the first defying group.
                 , (freeDemandGroups, freedSupplies) -> currentSolution -> {
                     final List<OptimizationEvent> repairs = list();
@@ -89,12 +89,12 @@ public class ConstraintGroupbasedrepairTest {
                     return repairs;
                 }
         );
-        final var groupsOfConstraintGroup = testSubject.group_of_constraint_group(solution);
+        final var groupsOfConstraintGroup = testSubject.groupOfConstraintGroup(solution);
         final var demandClassifications = groupsOfConstraintGroup
                 .stream()
                 .map(e -> e
                         .lastValue()
-                        .map(f -> testSubject.demand_grouping(f, solution))
+                        .map(f -> testSubject.demandGrouping(f, solution))
                         .orElseGet(() -> map()))
                 .collect(toList());
         final var testProduct = testSubject.repair(solution, demandClassifications.get(0), list());
@@ -151,10 +151,10 @@ public class ConstraintGroupbasedrepairTest {
         solution.optimize(linearInitialization());
         assertThat(solution.getLines()).hasSize(7);
 
-        final var testSubject = Constraint_group_based_repair.simple_constraint_group_based_repair(0);
-        solution.optimize(testSubject.free_defying_group_of_constraint_group(solution, defyingConstraintA));
+        final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
+        solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA));
         assertThat(solution.getLines()).hasSize(3);
-        solution.optimize(testSubject.free_defying_group_of_constraint_group(solution, defyingConstraintB));
+        solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB));
         assertThat(solution.getLines()).hasSize(1);
     }
 
@@ -200,8 +200,8 @@ public class ConstraintGroupbasedrepairTest {
         solution.optimize(linearInitialization());
         assertThat(solution.getLines()).hasSize(7);
 
-        final var testSubject = Constraint_group_based_repair.simple_constraint_group_based_repair(0);
-        final var testProduct = testSubject.demand_grouping
+        final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
+        final var testProduct = testSubject.demandGrouping
                 (solution.constraint().childrenView().get(3).childrenView().get(0)
                         , solution);
         assertThat(testProduct).hasSize(1);

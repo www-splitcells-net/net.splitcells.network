@@ -181,13 +181,13 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Line demand_of_allocation(Line allocation) {
+    public Line demandOfAllocation(Line allocation) {
         return demands.rawLinesView()
                 .get(allocationsIndex_to_usedDemandIndex.get(allocation.index()));
     }
 
     @Override
-    public Line supply_of_allocation(Line allocation) {
+    public Line supplyOfAllocation(Line allocation) {
         return supplies.rawLinesView()
                 .get(allocationsIndex_to_usedSupplyIndex.get(allocation.index()));
     }
@@ -204,8 +204,8 @@ public class AllocationsI implements Allocations {
 
     @Override
     public void remove(Line allocation) {
-        final var demand = demand_of_allocation(allocation);
-        final var supply = supply_of_allocation(allocation);
+        final var demand = demandOfAllocation(allocation);
+        final var supply = supplyOfAllocation(allocation);
         beforeRemovalSubscriptions.forEach(subscriber -> subscriber.register_before_removal(allocation));
         allocations.remove(allocation);
         // TODO Make following code a remove subscription to allocations.

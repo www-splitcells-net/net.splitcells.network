@@ -67,8 +67,8 @@ public class HistoryI implements History {
                 = demands().addTranslated(list(
                 moveLastEventIdForward()
                 , allocations(ADDITION
-                        , solution.demand_of_allocation(allocationValues)
-                        , solution.supply_of_allocation(allocationValues))));
+                        , solution.demandOfAllocation(allocationValues)
+                        , solution.supplyOfAllocation(allocationValues))));
         allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
     }
 
@@ -83,8 +83,8 @@ public class HistoryI implements History {
                 = demands().addTranslated(list(
                 moveLastEventIdForward()
                 , allocations(REMOVAL
-                        , solution.demand_of_allocation(removal)
-                        , solution.supply_of_allocation(removal))));
+                        , solution.demandOfAllocation(removal)
+                        , solution.supplyOfAllocation(removal))));
         allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
     }
 
@@ -223,13 +223,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line demand_of_allocation(Line piešķiršana) {
-        return allocations.demand_of_allocation(piešķiršana);
+    public Line demandOfAllocation(Line piešķiršana) {
+        return allocations.demandOfAllocation(piešķiršana);
     }
 
     @Override
-    public Line supply_of_allocation(Line piešķiršana) {
-        return allocations.supply_of_allocation(piešķiršana);
+    public Line supplyOfAllocation(Line piešķiršana) {
+        return allocations.supplyOfAllocation(piešķiršana);
     }
 
     @Override
