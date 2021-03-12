@@ -10,6 +10,9 @@
                 <solution>Use pseudo CSV format (variable length lines) as input, where the first row describes the
                     line type. This means that multiple tables can be extracted from the single CSV.
                 </solution>
+                <solution>Create and publish Flathub image.
+                    <solution>Create electron and server version.</solution>
+                </solution>
             </objective>
         </objective>
         <scheduling>
