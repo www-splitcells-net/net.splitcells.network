@@ -3,7 +3,10 @@
     <name>Website Server</name>
     <solution>
         <optimization>
-            <toDo>Support XML refactoring/transformation.</toDo>
+            <unscheduled>
+                <toDo>Make website server generic and not specific to "net.splitcells.martins.avots.website".</toDo>
+                <toDo>Support XML refactoring/transformation.</toDo>
+            </unscheduled>
         </optimization>
         <objective>
             <objective>Create a project view, that shows multiple projects as one project in a unified namespace.
