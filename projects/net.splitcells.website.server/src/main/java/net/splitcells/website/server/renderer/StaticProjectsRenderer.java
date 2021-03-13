@@ -1,10 +1,10 @@
-package net.splitcells.website;
+package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.resource.host.Files;
 
 import java.nio.file.Paths;
 
-//import static net.splitcells.website.ProjectsRenderer.publicProjectsRenderer;
+//import static net.splitcells.website.server.renderer.ProjectsRenderer.publicProjectsRenderer;
 
 public class StaticProjectsRenderer {
     public static void main(String... args) {

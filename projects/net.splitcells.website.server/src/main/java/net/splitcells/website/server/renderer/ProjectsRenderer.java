@@ -1,4 +1,4 @@
-package net.splitcells.website;
+package net.splitcells.website.server.renderer;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;

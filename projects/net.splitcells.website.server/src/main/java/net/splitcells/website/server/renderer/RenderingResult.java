@@ -1,4 +1,4 @@
-package net.splitcells.website;
+package net.splitcells.website.server.renderer;
 
 public class RenderingResult {
     public static RenderingResult renderingResult(byte[] content, String format) {

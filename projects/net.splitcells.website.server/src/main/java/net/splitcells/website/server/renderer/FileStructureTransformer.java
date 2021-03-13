@@ -1,4 +1,4 @@
-package net.splitcells.website;
+package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.website.server.Validator;

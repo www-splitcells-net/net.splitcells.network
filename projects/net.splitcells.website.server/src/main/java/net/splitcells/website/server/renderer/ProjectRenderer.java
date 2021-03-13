@@ -1,4 +1,4 @@
-package net.splitcells.website;
+package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
@@ -22,7 +22,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.website.RenderingResult.renderingResult;
+import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**
  * TODO Use resource folder for xml, txt and etc.

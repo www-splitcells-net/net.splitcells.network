@@ -1,4 +1,4 @@
-package net.splitcells.website;
+package net.splitcells.website.server.renderer;
 
 import com.google.common.collect.Streams;
 import net.splitcells.dem.data.set.list.List;
@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.website.ProjectsRenderer.publicProjectsRenderer;
+import static net.splitcells.website.server.renderer.ProjectsRenderer.publicProjectsRenderer;
 
 public class LayoutRenderer {
     public static void main(String... args) throws Exception {
