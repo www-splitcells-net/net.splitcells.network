@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+        xmlns:xl="http://www.w3.org/1999/xlink"
+        xmlns:x="http://www.w3.org/1999/xhtml"
+        xmlns:s="http://splitcells.net/sew.xsd"
+        xmlns="http://splitcells.net/den.xsd"
+        xmlns:p="http://splitcells.net/private.xsd"
+        xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <name>Reasoning System</name>
+    <optimization>
+        <objective>Create a system which extracts and validates statements regarding a solution or a problem.
+            <solution>
+                This seems to be a theorem system/prover.
+                <toDo xl:href="https://hol-theorem-prover.org/">
+                    Check if this is the case.
+                </toDo>
+            </solution>
+        </objective>
+    </optimization>
+</project>
