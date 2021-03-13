@@ -13,6 +13,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.Files;
+import net.splitcells.website.server.Server;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -110,107 +111,12 @@ public class ProjectsRenderer {
 
     public void serveToHttpAt(int port, boolean useHttps) {
         build();
-        {
-            System.setProperty("vertx.disableFileCaching", "true");
-            System.setProperty("log4j.rootLogger", "DEBUG, stdout");
-            Vertx vertx = Vertx.vertx();
-            vertx.deployVerticle(new AbstractVerticle() {
-                @Override
-                public void start() {
-                    // TODO Errors are not logged.
-                    final var webServerOptions = new HttpServerOptions()//
-                            .setLogActivity(true)//
-                            .setSsl(useHttps)//
-                            .setKeyCertOptions(new PfxOptions().setPath("src/main/resources.private/keystore.p12").setPassword("password"))//
-                            .setTrustOptions(new PfxOptions().setPath("src/main/resources.private/keystore.p12").setPassword("password"))//
-                            .setPort(port);//
-                    final var router = Router.router(vertx);
-                    router.route("/favicon.ico").handler(a -> {
-                    });
-                    router.route("/*").handler(routingContext -> {
-                        HttpServerResponse response = routingContext.response();
-                        vertx.<byte[]>executeBlocking((promise) -> {
-                            final String requestPath;
-                            if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
-                                requestPath = "index.html";
-                            } else {
-                                requestPath = routingContext.request().path();
-                            }
-                            final var result = render(requestPath);
-                            response.putHeader("content-type", result.getFormat());
-                            promise.complete(result.getContent());
-                        }, (result) -> {
-                            if (result.failed()) {
-                                result.cause().printStackTrace();
-                                response.setStatusCode(500);
-                                response.end();
-                            } else {
-                                response.end(Buffer.buffer().appendBytes(result.result()));
-                            }
-                        });
-                    });
-                    router.errorHandler(500, e -> {
-                        e.failure().printStackTrace();
-                    });
-                    final var server = vertx.createHttpServer(webServerOptions);//
-                    server.requestHandler(router);//
-                    server.listen();
-                }
-            });
-        }
+        new Server().serveToHttpAt(port, useHttps, requestPath -> render(requestPath));
     }
 
     public void serveAsAuthenticatedHttpsAt(int port) {
         build();
-        {
-            System.setProperty("vertx.disableFileCaching", "true");
-            System.setProperty("log4j.rootLogger", "DEBUG, stdout");
-            Vertx vertx = Vertx.vertx();
-            vertx.deployVerticle(new AbstractVerticle() {
-                @Override
-                public void start() {
-                    // TODO Errors are not logged.
-                    final var webServerOptions = new HttpServerOptions()//
-                            .setSsl(true)//
-                            .setKeyCertOptions(new PfxOptions().setPath("src/main/resources.private/keystore.p12").setPassword("password"))//
-                            .setTrustOptions(new PfxOptions().setPath("src/main/resources.private/keystore.p12").setPassword("password"))//
-                            .setClientAuth(ClientAuth.REQUIRED)//
-                            .setLogActivity(true)//
-                            .setPort(port);//
-                    final var router = Router.router(vertx);
-                    router.route("/favicon.ico").handler(a -> {
-                    });
-                    router.route("/*").handler(routingContext -> {
-                        HttpServerResponse response = routingContext.response();
-                        vertx.<byte[]>executeBlocking((promise) -> {
-                            final String requestPath;
-                            if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
-                                requestPath = "index.html";
-                            } else {
-                                requestPath = routingContext.request().path();
-                            }
-                            final var result = render(requestPath);
-                            response.putHeader("content-type", result.getFormat());
-                            promise.complete(result.getContent());
-                        }, (result) -> {
-                            if (result.failed()) {
-                                result.cause().printStackTrace();
-                                response.setStatusCode(500);
-                                response.end();
-                            } else {
-                                response.end(Buffer.buffer().appendBytes(result.result()));
-                            }
-                        });
-                    });
-                    router.errorHandler(500, e -> {
-                        e.failure().printStackTrace();
-                    });
-                    final var server = vertx.createHttpServer(webServerOptions);//
-                    server.requestHandler(router);//
-                    server.listen();
-                }
-            });
-        }
+        new Server().serveAsAuthenticatedHttpsAt(port, requestPath -> render(requestPath));
     }
 
     public static void main(String... args) {
