@@ -10,12 +10,6 @@
         <description>Common file and folder structure in software projects</description>
         <publication_date year="2019" month="11" day_of_month="06"/>
         <license>standard</license>
-        <related_to>
-            <url>
-                <site_instance_purl/>
-                /2019/11/10/open-source-infrastructure
-            </url>
-        </related_to>
         <todo>
             Article regarding legalities.
             <todo>This is no legal Beratung.</todo>
