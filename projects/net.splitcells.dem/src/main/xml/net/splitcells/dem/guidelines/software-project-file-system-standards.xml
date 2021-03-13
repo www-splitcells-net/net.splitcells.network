@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet attribute="text/xsl" href="xofi.html.xslt"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xl="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Software Project File System Standards</title>
+        <description>Common file and folder structure in software projects</description>
+        <publication_date year="2019" month="11" day_of_month="06"/>
+        <license>standard</license>
+        <related_to>
+            <url>
+                <site_instance_purl/>
+                /2019/11/10/open-source-infrastructure
+            </url>
+        </related_to>
+        <todo>
+            Article regarding legalities.
+            <todo>This is no legal Beratung.</todo>
+            <copyright-license-agreement/>
+            <copyright-assignment-agreement/>
+            <todo>
+                <todo xl:href="http://contributoragreements.org/"/>
+                <todo xl:href="http://contributoragreements.org/"/>
+                <todo xl:href="http://selector.harmonyagreements.org/preview_formatted"/>
+                <todo xl:jref="http://wiki.civiccommons.org/Contributor_Agreements/#how-to-accept-code-and-documentation-contributions-legally"/>
+            </todo>
+        </todo>
+    </meta>
+    <chapter>
+        <title>Files at
+            <quote>./*</quote>
+        </title>
+        <paragraph>Files a the top level should represent an entry point to the project.
+            A readme describing the project and linking to other documents is such files.
+            The project should contain only one readme a the top level.
+            Files specifying the project are another type of these files (i.e.
+            <quote>Makefile</quote>, <quote>pom.xml</quote> etc.).
+            These are used to import the project and to do tasks related to the project like compiling
+            the software.
+        </paragraph>
+        <chapter>
+            <title>
+                <quote>./CHANGELOG.*</quote>
+                and
+                <quote>./changelog/**</quote>
+            </title>
+            <paragraph>
+                <link>
+                    <text>
+                        <quote>Keep a Changelog</quote>
+                    </text>
+                    <url>https://keepachangelog.com/en/1.0.0/</url>
+                </link>
+                is a site describing a standard how changes to the project based on versioning can be documented.
+                Its source code can
+                be found on
+                <link>
+                    <text>Github</text>
+                    <url>https://github.com/olivierlacan/keep-a-changelog</url>
+                </link>
+                .
+                If the project uses Semantic Versioning, it may make sense to use the chapters
+                <quote>Major Changes</quote>
+                ,
+                <quote>Minor Changes</quote>
+                and
+                <quote>Patches</quote>
+                for each release.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>
+                <quote>./LICENSE.*</quote>
+                and
+                <quote>./license/**</quote>
+            </title>
+            <paragraph>
+                Contains licensing information. For the most part it contains copies of licenses.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>
+                <quote>./README.*</quote>
+                and
+                <quote>./doc/readme/**</quote>
+            </title>
+            <paragraph>Contains the initial description of the project.
+                Description in alternative languages should be placed under
+                <quote>./doc/readme/**</quote>.
+            </paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>
+            <quote>./.*</quote>
+        </title>
+        <paragraph>Contains meta data like IDE configuration files or version control data.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>
+            <quote>./bin/*</quote>
+        </title>
+        <paragraph>Contains executable programs regarding tasks of the project.
+            It is preferred, if the scripts are written in such a way, that the current folder is located at the
+            project's root folder.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>
+            <quote>./doc/*</quote>
+        </title>
+        <paragraph>Contains projects documentation.</paragraph>
+        <chapter>
+            <title>
+                <quote>./doc/task</quote>
+                and
+                <quote>./doc/task/*</quote>
+            </title>
+            <paragraph>Contains task of the projects that are relevant.</paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>
+            <quote>./lib/*</quote>
+        </title>
+        <paragraph>Contains dependencies of the project.</paragraph>
+    </chapter>
+    <chapter>
+        <title>
+            <quote>./src/*</quote>
+        </title>
+        <paragraph>Contains the source code of the project.</paragraph>
+    </chapter>
+    <chapter>
+        <title>
+            <quote>./target/*</quote>
+        </title>
+        <paragraph>Contains results of the build and test system. Also contains the results of executing other project
+            tasks.
+        </paragraph>
+    </chapter>
+</article>
