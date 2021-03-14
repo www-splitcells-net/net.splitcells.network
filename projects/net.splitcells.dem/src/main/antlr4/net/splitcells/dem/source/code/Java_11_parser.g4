@@ -6,20 +6,37 @@ options {
     tokenVocab=Java_11_lexer;
 }
 source_unit
-    : package_declaration import_declaration* EOF
+    : package_declaration import_declaration* class_definition EOF
+    ;
+class_definition
+    : javadoc?
+    ;
+javadoc
+    : Javadoc_start javadoc_content* Javadoc_end Whitespace*
+    ;
+javadoc_content
+    : Object_accessor
+    | Statement_terminator
+    | Whitespace
+    | Keyword_package
+    | Keyword_import
+    | Keyword_static
+    | Javadoc_start
+    | Name
+    | Javadoc_content
     ;
 import_declaration
     : import_static_declaration
     | import_type_declaration
     ;
 import_static_declaration
-    : Whitespace* Keyword_import Whitespace Keyword_static Whitespace type_name Statement_terminator
+    : Keyword_import Whitespace Keyword_static Whitespace type_name Statement_terminator Whitespace*
     ;
 import_type_declaration
-    : Whitespace* Keyword_import Whitespace type_name Statement_terminator
+    : Keyword_import Whitespace type_name Statement_terminator Whitespace*
     ;
 package_declaration
-    : Whitespace* Keyword_package Whitespace package_name Statement_terminator
+    : Keyword_package Whitespace package_name Statement_terminator Whitespace*
     ;
 type_name
     : Name
