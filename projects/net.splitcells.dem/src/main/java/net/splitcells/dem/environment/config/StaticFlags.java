@@ -7,7 +7,9 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  */
 public final class StaticFlags {
 	public static final boolean ENFORCING_UNIT_CONSISTENCY = true;
+	@Deprecated
 	public static final boolean FUZZING = true;
+	@Deprecated
 	public static final boolean ENFORCING_INTEGRATION_CONSISTENCY = true;
 	@Deprecated
 	public static final boolean PROFILING_RUNTIME = true;
