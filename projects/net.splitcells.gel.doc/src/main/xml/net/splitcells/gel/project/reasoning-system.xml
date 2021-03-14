@@ -16,6 +16,7 @@
                 <toDo xl:href="https://hol-theorem-prover.org/">
                     Check if this is the case.
                 </toDo>
+                <toDo>What is the difference between a theorem prover and Prolog.</toDo>
             </solution>
         </objective>
     </optimization>
