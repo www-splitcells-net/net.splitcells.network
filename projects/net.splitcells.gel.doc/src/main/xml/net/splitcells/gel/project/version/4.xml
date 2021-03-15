@@ -6,51 +6,25 @@
          xmlns:e="http://splitcells.net/sen.xsd">
     <solution>
         <objective>
-            <objective>Create docker image.</objective>
-            <objective>Implement test injection.</objective>
-            <objective>
-                Ensure full and detailed test coverage in order to stabilize functionality and avoid regressions.
-                <toDo>
-                    <toDo xl:href="https://blog.ssanj.net/posts/2016-06-26-property-based-testing-patterns.html"/>
-                    <toDo>Create test for each caching/performance decision.</toDo>
-                    <toDo>Address Randomization test for creation of Lines in each Table implementation.</toDo>
-                    <toDo>Implement mutation tests via PIT.</toDo>
-                </toDo>
-                <objective>Long running and random unit tests used for fuzzy mining.</objective>
-                <objective>Use declarative tests that are injected into program during runtime.</objective>
-                <objective>Use mutation tests.</objective>
+            <objective>Support interactive problem solving via Website.
+                <solution>Use pseudo CSV format (variable length lines) as input, where the first row describes the
+                    line type. This means that multiple tables can be extracted from the single CSV.
+                </solution>
+                <solution>Create and publish Flathub image.
+                    <solution>Create electron and server version.</solution>
+                </solution>
             </objective>
-            <objective>
-                Implement benchmarking of memory usage and run
-                time and the storing of its results, in order to have a feeling for the hardware requirements.
-                <idea>Use TestsuiteI/JUnit and performance counters..</idea>
-            </objective>
-            <objective>Externalize constraint state.
-                <objective>Create wrapper for new constraint interface
-                    which is imprinted to a solution instance and where
-                    the solution does not have to be passed explicitly.
-                    (The wrapper interface is like the old interface.)
-                </objective>
-            </objective>
-            <objective>Extend solving capabilities by solving Killer Sudoku.</objective>
-            <objective>Support parallelism via Dem's effect system.</objective>
         </objective>
         <scheduling>
             <priority>
                 <queue>
-                    <toDo>Create test for Killer Sudoku.</toDo>
+                    <toDo xl:href="https://www.heise.de/news/Testing-Mit-Jazzer-erscheint-ein-Open-Source-Fuzzer-fuer-JVM-Anwendungen-5050930.html">
+                        Implement fuzzing.
+                    </toDo>
                 </queue>
             </priority>
         </scheduling>
     </solution>
     <unscheduled>
-        <toDo>History should only contain primary demand/supply references and
-            no references to used or unused demand/supply, in order to preserve line pointer validity.
-        </toDo>
-        <idea>
-            <idea>Implement GroupId#name as constraint path like in reasoning system.</idea>
-            <idea>Used/unused demand/supply should be a lookup of the primary demand/supply table.</idea>
-            <idea>Make Rating immutable.</idea>
-        </idea>
     </unscheduled>
 </project>
