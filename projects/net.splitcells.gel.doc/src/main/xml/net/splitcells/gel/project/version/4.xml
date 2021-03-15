@@ -13,6 +13,7 @@
                 <solution>Create and publish Flathub image.
                     <solution>Create electron and server version.</solution>
                 </solution>
+                <solution>Create docker image.</solution>
             </objective>
         </objective>
         <scheduling>

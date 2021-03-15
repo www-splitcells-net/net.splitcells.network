@@ -6,7 +6,6 @@
          xmlns:e="http://splitcells.net/sen.xsd">
     <solution>
         <objective>
-            <objective>Create docker image.</objective>
             <objective>Implement test injection.</objective>
             <objective>
                 Ensure full and detailed test coverage in order to stabilize functionality and avoid regressions.
