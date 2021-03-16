@@ -52,17 +52,10 @@ public interface Randomness extends BasicRndSrc {
             return listWithValuesOf(args);
         }
         final List<T> choosen_args = list();
-        final Set<Integer> choosen_indexes = setOfUniques();
         range(0, number_of_things_to_choose)
                 .forEach(i -> {
-                    while (true) {
-                        final var next_index_candidate = this.integer(0, args.size() - 1);
-                        if (choosen_indexes.contains(next_index_candidate)) {
-                            continue;
-                        }
-                        choosen_indexes.add(next_index_candidate);
-                        choosen_args.add(args.get(next_index_candidate));
-                    }
+                    final var next_index_candidate = this.integer(0, args.size() - 1);
+                    choosen_args.remove(args.get(next_index_candidate));
                 });
         return choosen_args;
     }

@@ -97,6 +97,7 @@ public class OralExamsTest extends TestSuiteI {
                         , 6
                         , randomness(0L))
                 .asSolution();
+        // TODO REMOVE
         /*try {
             Thread.sleep(10_000);
         } catch (InterruptedException e) {
@@ -110,7 +111,7 @@ public class OralExamsTest extends TestSuiteI {
                                     , Xml.parse(initialSolutionTemplate).getDocumentElement())));
         }
         testSubject.optimize(linearInitialization());
-        /*IntStream.rangeClosed(1, 10).forEach(a -> {
+        IntStream.rangeClosed(1, 10).forEach(a -> {
             IntStream.rangeClosed(1, 100).forEach(j -> {
                 testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4));
             });
@@ -118,8 +119,8 @@ public class OralExamsTest extends TestSuiteI {
             IntStream.rangeClosed(1, 100).forEach(j -> {
                 testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4));
             });
-        })*/;/*
-        IntStream.rangeClosed(1, 10).forEach(a -> {
+        });
+        /*IntStream.rangeClosed(1, 10).forEach(a -> {
             IntStream.rangeClosed(1, 100).forEach(j -> {
                 testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 1));
             });
