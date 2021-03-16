@@ -26,7 +26,7 @@ package net.splitcells.dem.execution;
  * TODO Understand actor model.
  * <ol>
  *     <li>TODO https://medium.com/@zakgof/type-safe-actor-model-for-java-7133857a9f72</li>
- *     <li>TODO https://github.com/zakgof/actr</li>
+ *     <li>TODO https://github.com/zakgof/actr This seems to be the most promising, regarding API.</li>
  *     <li>TODO https://www.baeldung.com/akka-actors-java</li>
  * </ol>
  * </p>
