@@ -338,12 +338,12 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        final var reasoning = Xml.element("min-distance");
+        final var reasoning = Xml.elementWithChildren("min-distance");
         reasoning.appendChild(
-                Xml.element("minimum"
+                Xml.elementWithChildren("minimum"
                         , Xml.textNode(minimumDistance + "")));
         reasoning.appendChild(
-                Xml.element("order"
+                Xml.elementWithChildren("order"
                         , Xml.textNode(comparator.toString())));
         defyingSorted(allocations).forEach(e -> reasoning.appendChild(e.toDom()));
         return reasoning;
@@ -352,10 +352,10 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     @Override
     public List<Domable> arguments() {
         return Lists.list
-                (() -> Xml.element("minimumDistance", Xml.textNode("" + minimumDistance))
-                        , () -> Xml.element("attribute", attribute.toDom())
-                        , () -> Xml.element("comparator", Xml.textNode("" + comparator))
-                        , () -> Xml.element("distanceMeassurer", Xml.textNode("" + distanceMeassurer))
+                (() -> Xml.elementWithChildren("minimumDistance", Xml.textNode("" + minimumDistance))
+                        , () -> Xml.elementWithChildren("attribute", attribute.toDom())
+                        , () -> Xml.elementWithChildren("comparator", Xml.textNode("" + comparator))
+                        , () -> Xml.elementWithChildren("distanceMeassurer", Xml.textNode("" + distanceMeassurer))
                 );
     }
 

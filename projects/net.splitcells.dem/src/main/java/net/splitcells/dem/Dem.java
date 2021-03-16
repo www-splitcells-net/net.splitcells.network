@@ -4,7 +4,6 @@ import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.host.interaction.Domsole;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
@@ -61,8 +60,8 @@ public final class Dem {
             } catch (Throwable t) {
                 // TOFIX Additional namespace decleration should not be needed.
                 final var error = Xml.rElement(DEN, "error");
-                final var stackTrace = Xml.element(DEN, "stack-trace");
-                final var errorMessage = Xml.element(DEN, "message");
+                final var stackTrace = Xml.elementWithChildren(DEN, "stack-trace");
+                final var errorMessage = Xml.elementWithChildren(DEN, "message");
                 {
                     final var stackTraceValue = new ByteArrayOutputStream();
                     t.printStackTrace(new PrintWriter(stackTraceValue));

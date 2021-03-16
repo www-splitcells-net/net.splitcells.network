@@ -2,7 +2,7 @@ package net.splitcells.gel.rating.type;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 
 import java.util.Optional;
 
@@ -62,7 +62,7 @@ public class Compliance implements Rating {
 
     @Override
     public Element toDom() {
-        final var dom = element(this.getClass().getSimpleName());
+        final var dom = Xml.elementWithChildren(this.getClass().getSimpleName());
         dom.appendChild(Xml.textNode("" + value));
         return dom;
     }

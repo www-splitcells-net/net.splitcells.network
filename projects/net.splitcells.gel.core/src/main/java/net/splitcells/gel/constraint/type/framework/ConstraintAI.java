@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toSet;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Xml.textNode;
@@ -91,9 +91,9 @@ public abstract class ConstraintAI implements Constraint {
         // TODO Move this to a different project.
         if (TRACING) {
             domsole().append
-                    (element("register-additions." + Constraint.class.getSimpleName()
-                            , element("additions", addition.toDom())
-                            , element("injectionGroup", textNode(injectionGroup.toString()))
+                    (Xml.elementWithChildren("register-additions." + Constraint.class.getSimpleName()
+                            , Xml.elementWithChildren("additions", addition.toDom())
+                            , Xml.elementWithChildren("injectionGroup", textNode(injectionGroup.toString()))
                             )
                             , this
                             , DEBUG);
@@ -311,13 +311,13 @@ public abstract class ConstraintAI implements Constraint {
 
     @Override
     public Element toDom() {
-        final var dom = Xml.element(type().getSimpleName());
+        final var dom = Xml.elementWithChildren(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
+            arguments().forEach(arg -> dom.appendChild(Xml.elementWithChildren(ARGUMENTATION.value(), arg.toDom())));
         }
-        dom.appendChild(Xml.element("rating", rating().toDom()));
+        dom.appendChild(Xml.elementWithChildren("rating", rating().toDom()));
         {
-            final var ratings = Xml.element("ratings");
+            final var ratings = Xml.elementWithChildren("ratings");
             dom.appendChild(ratings);
             lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
                     .lookup(injectionGroup())
@@ -335,13 +335,13 @@ public abstract class ConstraintAI implements Constraint {
 
     @Override
     public Element toDom(Set<GroupId> groups) {
-        final var dom = Xml.element(type().getSimpleName());
+        final var dom = Xml.elementWithChildren(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
+            arguments().forEach(arg -> dom.appendChild(Xml.elementWithChildren(ARGUMENTATION.value(), arg.toDom())));
         }
-        dom.appendChild(Xml.element("rating", rating(groups).toDom()));
+        dom.appendChild(Xml.elementWithChildren("rating", rating(groups).toDom()));
         {
-            final var ratings = Xml.element("ratings");
+            final var ratings = Xml.elementWithChildren("ratings");
             dom.appendChild(ratings);
             groups.forEach(group ->
                     lineProcessing

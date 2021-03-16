@@ -217,7 +217,7 @@ public class DatabaseI implements Database {
 
     @Override
     public Element toDom() {
-        final var dom = element(Database.class.getSimpleName());
+        final var dom = elementWithChildren(Database.class.getSimpleName());
         rawLinesView().stream()
                 .filter(rinda -> rinda != null)
                 .forEach(rinda -> dom.appendChild(rinda.toDom()));

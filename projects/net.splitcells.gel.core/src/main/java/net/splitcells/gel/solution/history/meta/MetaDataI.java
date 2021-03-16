@@ -44,12 +44,12 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
 
     @Override
     public Node toDom() {
-        final var dom = Xml.element(META_DATA.value());
+        final var dom = Xml.elementWithChildren(META_DATA.value());
         data.forEach((key, value) -> {
-            final var data = Xml.element(META_DATA.value());
-            final var keyData = Xml.element(KEY.value());
+            final var data = Xml.elementWithChildren(META_DATA.value());
+            final var keyData = Xml.elementWithChildren(KEY.value());
             keyData.appendChild(textNode(key.getName()));
-            final var valueData = Xml.element(VALUE.value());
+            final var valueData = Xml.elementWithChildren(VALUE.value());
             {
                 if (value instanceof Domable) {
                     valueData.appendChild(((Domable) value).toDom());

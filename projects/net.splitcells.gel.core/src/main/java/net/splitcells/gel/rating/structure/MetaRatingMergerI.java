@@ -3,7 +3,7 @@ package net.splitcells.gel.rating.structure;
 import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Maps.typeMapping;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
@@ -13,6 +13,7 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.lang.Xml;
 import org.w3c.dom.Element;
 import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
@@ -86,6 +87,6 @@ public class MetaRatingMergerI implements MetaRatingMerger {
 
     @Override
     public Element toDom() {
-        return element(MetaRatingMerger.class.getSimpleName());
+        return Xml.elementWithChildren(MetaRatingMerger.class.getSimpleName());
     }
 }

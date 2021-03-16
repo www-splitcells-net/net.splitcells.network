@@ -107,35 +107,35 @@ public interface Table extends Discoverable, Domable {
 
     default Element toFods() {
         final var fods = rElement(FODS_OFFICE, "document");
-        final var body = element(FODS_OFFICE, "body");
+        final var body = elementWithChildren(FODS_OFFICE, "body");
         fods.setAttributeNode
                 (attribute(FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
         fods.appendChild(body);
         {
-            final var spreadsheet = element(FODS_OFFICE, "spreadsheet");
+            final var spreadsheet = elementWithChildren(FODS_OFFICE, "spreadsheet");
             body.appendChild(spreadsheet);
             final var table = rElement(FODS_TABLE, "table");
             spreadsheet.appendChild(table);
             table.setAttributeNode(attribute(FODS_TABLE, "name", "values"));
             {
-                final var header = element(FODS_TABLE, "table-row");
+                final var header = elementWithChildren(FODS_TABLE, "table-row");
                 table.appendChild(header);
                 headerView().stream()
                         .map(att -> att.name())
                         .map(attName -> {
-                            final var tabulasElements = element(FODS_TABLE, "table-cell");
+                            final var tabulasElements = elementWithChildren(FODS_TABLE, "table-cell");
                             final var tabulasVertība = rElement(FODS_TEXT, "p");
                             tabulasElements.appendChild(tabulasVertība);
                             tabulasVertība.appendChild(textNode(attName));
                             return tabulasElements;
                         }).forEach(attDesc -> header.appendChild(attDesc));
                 getLines().forEach(line -> {
-                    final var tableLine = element(FODS_TABLE, "table-row");
+                    final var tableLine = elementWithChildren(FODS_TABLE, "table-row");
                     table.appendChild(tableLine);
                     headerView().stream()
                             .map(attribute -> line.value(attribute))
                             .map(value -> {
-                                final var cellElement = element(FODS_TABLE, "table-cell");
+                                final var cellElement = elementWithChildren(FODS_TABLE, "table-cell");
                                 final var cellValue = rElement(FODS_TEXT, "p");
                                 cellElement.appendChild(cellValue);
                                 if (value instanceof Domable) {

@@ -14,7 +14,6 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
 import static net.splitcells.gel.rating.structure.MetaRating.neutral;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
@@ -203,7 +202,7 @@ public interface Constraint extends AfterAdditionSubscriber, BeforeRemovalSubscr
     default Element graph() {
         final var graph = Xml.rElement(GEL, type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> graph.appendChild(Xml.element(ARGUMENTATION.value(), arg.toDom())));
+            arguments().forEach(arg -> graph.appendChild(Xml.elementWithChildren(ARGUMENTATION.value(), arg.toDom())));
         }
         childrenView().forEach(child -> {
             graph.appendChild(child.graph());

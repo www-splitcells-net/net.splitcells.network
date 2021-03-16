@@ -1,9 +1,10 @@
 package net.splitcells.gel.data.table.attribute;
 
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.atom.BoolI.bool;
 
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.common.Language;
 import org.w3c.dom.Element;
 
@@ -62,9 +63,9 @@ public final class AttributeI<T> implements Attribute<T> {
 
     @Override
     public Element toDom() {
-        return element(Attribute.class.getSimpleName()
-                , element(Language.NAME.value(), textNode(name))
-                , element(type.getSimpleName())
+        return Xml.elementWithChildren(Attribute.class.getSimpleName()
+                , Xml.elementWithChildren(Language.NAME.value(), textNode(name))
+                , Xml.elementWithChildren(type.getSimpleName())
         );
     }
 

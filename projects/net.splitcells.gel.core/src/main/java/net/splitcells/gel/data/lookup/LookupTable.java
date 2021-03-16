@@ -2,7 +2,7 @@ package net.splitcells.gel.data.lookup;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Set;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -121,11 +122,11 @@ public class LookupTable implements Table {
 
     @Override
     public Element toDom() {
-        final var rVal = element(LookupTable.class.getSimpleName());
+        final var rVal = Xml.elementWithChildren(LookupTable.class.getSimpleName());
         // REMOVE
         rVal.appendChild(textNode("" + hashCode()));
-        rVal.appendChild(element("subject", textNode(path().toString())));
-        rVal.appendChild(element("content", textNode(content.toString())));
+        rVal.appendChild(Xml.elementWithChildren("subject", textNode(path().toString())));
+        rVal.appendChild(Xml.elementWithChildren("content", textNode(content.toString())));
         content.forEach(i -> rVal.appendChild(rawLinesView().get(i).toDom()));
         return rVal;
     }

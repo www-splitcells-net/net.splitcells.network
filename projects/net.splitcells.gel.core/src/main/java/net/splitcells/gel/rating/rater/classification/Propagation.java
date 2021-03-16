@@ -1,7 +1,7 @@
 package net.splitcells.gel.rating.rater.classification;
 
 import static java.util.stream.Collectors.toList;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.common.Language.PROPAGTION;
@@ -12,7 +12,7 @@ import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import java.util.Collection;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.common.Language;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
@@ -54,7 +54,7 @@ public class Propagation implements Rater {
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        return element(PROPAGTION.value());
+        return Xml.elementWithChildren(PROPAGTION.value());
     }
 
     @Override

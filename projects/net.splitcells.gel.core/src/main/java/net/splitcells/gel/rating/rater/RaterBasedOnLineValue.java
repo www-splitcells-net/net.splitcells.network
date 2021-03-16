@@ -88,12 +88,12 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.element(getClass().getSimpleName(), Xml.textNode(raterBasedOnLineValue.toString())));
+        return list(() -> Xml.elementWithChildren(getClass().getSimpleName(), Xml.textNode(raterBasedOnLineValue.toString())));
     }
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.element(Language.GROUP.value());
+        final var argumentation = Xml.elementWithChildren(Language.GROUP.value());
         argumentation.appendChild
                 (Xml.textNode(group.vārds().orElse("missing-group-name")));
         return argumentation;
@@ -111,8 +111,8 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public Element toDom() {
-        final Element dom = Xml.element(getClass().getSimpleName());
-        dom.appendChild(Xml.element("args", arguments().get(0).toDom()));
+        final Element dom = Xml.elementWithChildren(getClass().getSimpleName());
+        dom.appendChild(Xml.elementWithChildren("args", arguments().get(0).toDom()));
         return dom;
     }
 

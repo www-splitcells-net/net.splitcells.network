@@ -77,9 +77,9 @@ public class ForAllAttributeValues implements Rater {
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.element("for-all");
+        final var argumentation = Xml.elementWithChildren("for-all");
         argumentation.appendChild(
-                Xml.element("words"
+                Xml.elementWithChildren("words"
                         , Xml.textNode(getClass().getSimpleName())));
         argumentation.appendChild(attribute.toDom());
         return argumentation;

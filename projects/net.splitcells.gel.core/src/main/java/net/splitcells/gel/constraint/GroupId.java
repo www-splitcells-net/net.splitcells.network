@@ -1,10 +1,11 @@
 package net.splitcells.gel.constraint;
 
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 
 import java.util.Optional;
 
+import net.splitcells.dem.lang.Xml;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
 
@@ -48,11 +49,11 @@ public class GroupId implements Domable {
 
     @Override
     public Element toDom() {
-        final var dom = element("group");
+        final var dom = Xml.elementWithChildren("group");
         if (vārds.isPresent()) {
-            dom.appendChild(element("name", textNode(vārds.get())));
+            dom.appendChild(Xml.elementWithChildren("name", textNode(vārds.get())));
         }
-        dom.appendChild(element("id", textNode(this.hashCode() + "")));
+        dom.appendChild(Xml.elementWithChildren("id", textNode(this.hashCode() + "")));
         return dom;
     }
 }

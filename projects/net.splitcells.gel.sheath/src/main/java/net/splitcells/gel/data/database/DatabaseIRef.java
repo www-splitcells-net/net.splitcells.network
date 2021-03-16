@@ -111,8 +111,8 @@ public class DatabaseIRef extends DatabaseI {
             domsole().append(
                     event("addTranslatingAt." + Database.class.getSimpleName()
                             , path().toString()
-                            , element("index", textNode("" + index))
-                            , element("line-values", textNode(lineValues.toString()))
+                            , elementWithChildren("index", textNode("" + index))
+                            , elementWithChildren("line-values", textNode(lineValues.toString()))
                     )
                     , this
                     , DEBUG
@@ -146,8 +146,8 @@ public class DatabaseIRef extends DatabaseI {
             domsole().append(
                     event("addTranslating." + Database.class.getSimpleName()
                             , path().toString()
-                            , element("index", textNode("" + translatedAddition.index()))
-                            , element("line-values", textNode(lineValues.toString())))
+                            , elementWithChildren("index", textNode("" + translatedAddition.index()))
+                            , elementWithChildren("line-values", textNode(lineValues.toString())))
                     , this, DEBUG
             );
         }
@@ -178,7 +178,7 @@ public class DatabaseIRef extends DatabaseI {
                             + PATH_ACCESS_SYMBOL.value()
                             + Database.class.getSimpleName()
                     , path().toString()
-                    , element(LINE.value(), line.toDom()))
+                    , elementWithChildren(LINE.value(), line.toDom()))
                     , this, LogLevel.DEBUG);
         }
         super.remove(line);

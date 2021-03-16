@@ -1,7 +1,7 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -11,7 +11,7 @@ import org.w3c.dom.Element;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
@@ -60,8 +60,8 @@ public class LookupTableRef extends LookupTable {
             assert !content.contains(line.index());
         }
         if (TRACING) {
-            domsole().append(element("register.LookupTable"
-                    , element("subject", textNode(path().toString()))
+            domsole().append(Xml.elementWithChildren("register.LookupTable"
+                    , Xml.elementWithChildren("subject", textNode(path().toString()))
                     , line.toDom()
                     )
                     , this, DEBUG);
@@ -75,9 +75,9 @@ public class LookupTableRef extends LookupTable {
     @Override
     public void removeRegistration(Line line) {
         if (TRACING) {
-            domsole().append(element("deregister." + getClass().getSimpleName()
-                    , element("subject", textNode(path().toString()))
-                    , element("content", textNode(content.toString()))
+            domsole().append(Xml.elementWithChildren("deregister." + getClass().getSimpleName()
+                    , Xml.elementWithChildren("subject", textNode(path().toString()))
+                    , Xml.elementWithChildren("content", textNode(content.toString()))
                     , line.toDom()
                     )
                     , this, DEBUG);
@@ -88,9 +88,9 @@ public class LookupTableRef extends LookupTable {
         super.removeRegistration(line);
         if (TRACING) {
             domsole().append(
-                    element("after.deregister." + getClass().getSimpleName()
-                            , element("subject", textNode(path().toString()))
-                            , element("content", textNode(content.toString()))
+                    Xml.elementWithChildren("after.deregister." + getClass().getSimpleName()
+                            , Xml.elementWithChildren("subject", textNode(path().toString()))
+                            , Xml.elementWithChildren("content", textNode(content.toString()))
                             , line.toDom())
                     , this, DEBUG);
         }

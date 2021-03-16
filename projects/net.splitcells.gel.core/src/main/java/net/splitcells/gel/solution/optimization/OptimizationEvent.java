@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
 import java.util.Objects;
 
 import static net.splitcells.dem.lang.Xml.attribute;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 
 public final class OptimizationEvent implements Domable {
 
@@ -42,10 +42,10 @@ public final class OptimizationEvent implements Domable {
 
     @Override
     public Node toDom() {
-        final var dom = element(getClass().getSimpleName());
+        final var dom = Xml.elementWithChildren(getClass().getSimpleName());
         dom.setAttribute(StepType.class.getSimpleName(), stepType.name());
-        dom.appendChild(Xml.element(Language.DEMAND.value(), demand.toDom()));
-        dom.appendChild(Xml.element(Language.SUPPLY.value(), supply.toDom()));
+        dom.appendChild(Xml.elementWithChildren(Language.DEMAND.value(), demand.toDom()));
+        dom.appendChild(Xml.elementWithChildren(Language.SUPPLY.value(), supply.toDom()));
         return dom;
     }
 

@@ -5,7 +5,6 @@ import static java.util.Comparator.naturalOrder;
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
-import static net.splitcells.dem.data.order.Ordering.GREATER_THAN;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
@@ -14,17 +13,13 @@ import static net.splitcells.gel.constraint.Constraint.RATING;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.utils.MathUtils;
@@ -39,8 +34,6 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.structure.Rating;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.OptionalAssert;
 import org.w3c.dom.Node;
 
 /**
@@ -238,12 +231,12 @@ public class MinimalDistance<T> implements Rater {
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        final var reasoning = Xml.element("min-distance");
+        final var reasoning = Xml.elementWithChildren("min-distance");
         reasoning.appendChild(
-                Xml.element("minimum"
+                Xml.elementWithChildren("minimum"
                         , Xml.textNode(minimumDistance + "")));
         reasoning.appendChild(
-                Xml.element("order"
+                Xml.elementWithChildren("order"
                         , Xml.textNode(comparator.toString())));
         defyingSorted(allocations).forEach(e -> reasoning.appendChild(e.toDom()));
         return reasoning;
@@ -252,10 +245,10 @@ public class MinimalDistance<T> implements Rater {
     @Override
     public List<Domable> arguments() {
         return Lists.list
-                (() -> Xml.element("minimumDistance", Xml.textNode("" + minimumDistance))
-                        , () -> Xml.element("attribute", attribute.toDom())
-                        , () -> Xml.element("comparator", Xml.textNode("" + comparator))
-                        , () -> Xml.element("distanceMeassurer", Xml.textNode("" + distanceMeassurer))
+                (() -> Xml.elementWithChildren("minimumDistance", Xml.textNode("" + minimumDistance))
+                        , () -> Xml.elementWithChildren("attribute", attribute.toDom())
+                        , () -> Xml.elementWithChildren("comparator", Xml.textNode("" + comparator))
+                        , () -> Xml.elementWithChildren("distanceMeassurer", Xml.textNode("" + distanceMeassurer))
                 );
     }
 

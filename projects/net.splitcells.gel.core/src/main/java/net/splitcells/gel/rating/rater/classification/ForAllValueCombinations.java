@@ -102,9 +102,9 @@ public class ForAllValueCombinations implements Rater {
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        final var reasoning = Xml.element(getClass().getSimpleName());
+        final var reasoning = Xml.elementWithChildren(getClass().getSimpleName());
         {
-            final var attributeDescription = Xml.element("attribute");
+            final var attributeDescription = Xml.elementWithChildren("attribute");
             reasoning.appendChild(attributeDescription);
             attributes.forEach(att -> attributeDescription.appendChild(att.toDom()));
         }

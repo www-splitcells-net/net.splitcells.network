@@ -36,9 +36,9 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
     private static final String ENTRY_POINT = "ENTRY.POINT.237048021";
 
     public static Dsui dsui(Sender<String> output, Predicate<LogMessage<Node>> messageFilter) {
-        Element execution = element(//
+        Element execution = elementWithChildren(//
                 rElement(DEN, "execution"), //
-                element(DEN, "name", environment().config().configValue(ProgramName.class)), //
+                elementWithChildren(DEN, "name", environment().config().configValue(ProgramName.class)), //
                 textNode(ENTRY_POINT));
         return dsui(output, execution, messageFilter);
     }

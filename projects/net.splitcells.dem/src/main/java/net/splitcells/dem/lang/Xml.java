@@ -75,26 +75,26 @@ public final class Xml {
         return TRANSFORMER;
     }
 
-    public static Element element(NameSpace nameSpace, String name) {
+    public static Element elementWithChildren(NameSpace nameSpace, String name) {
         return ROOT_DOCUMENT.createElement(nameSpace.prefixedName(name));
     }
 
     public static Element rElement(NameSpace nameSpace, String name) {
         final var rVal = ROOT_DOCUMENT.createElement(nameSpace.prefixedName(name));
-        element(rVal, nameSpaceDecleration(nameSpace));
+        elementWithChildren(rVal, nameSpaceDecleration(nameSpace));
         return rVal;
     }
 
-    public static Element element(NameSpace nameSpace, String name, String value) {
+    public static Element elementWithChildren(NameSpace nameSpace, String name, String value) {
         final var rVal = ROOT_DOCUMENT.createElement(nameSpace.prefixedName(name));
-        element(rVal, textNode(value));
+        elementWithChildren(rVal, textNode(value));
         return rVal;
     }
 
     @Deprecated
     public static Element event(String name, String subject, Node... arguments) {
-        final var rVal = element(name);
-        final var subjectNode = element("subject");
+        final var rVal = elementWithChildren(name);
+        final var subjectNode = elementWithChildren("subject");
         subjectNode.appendChild(textNode(subject));
         rVal.appendChild(subjectNode);
         asList(arguments).forEach(arg -> rVal.appendChild(arg));
@@ -105,7 +105,7 @@ public final class Xml {
         return ROOT_DOCUMENT.createTextNode(text);
     }
 
-    public static Element element(String name) {
+    public static Element elementWithChildren(String name) {
         try {
             return ROOT_DOCUMENT.createElement(name);
         } catch (RuntimeException e) {
@@ -114,7 +114,7 @@ public final class Xml {
         }
     }
 
-    public static Element element(Element element, Attr... attributes) {
+    public static Element elementWithChildren(Element element, Attr... attributes) {
         for (Attr attribute : attributes) {
             element.setAttributeNode(attribute);
         }
@@ -122,32 +122,32 @@ public final class Xml {
     }
 
     public static Element element2(String name, Stream<Node> nodes) {
-        return element(element(name), nodes.collect(toList()));
+        return elementWithChildren(elementWithChildren(name), nodes.collect(toList()));
     }
 
-    public static Element element(String name, Stream<Node> nodes) {
-        return element(element(name), nodes.collect(toList()));
+    public static Element elementWithChildren(String name, Stream<Node> nodes) {
+        return elementWithChildren(elementWithChildren(name), nodes.collect(toList()));
     }
 
-    public static Element element(String name, Node... nodes) {
-        return element(element(name), nodes);
+    public static Element elementWithChildren(String name, Node... nodes) {
+        return elementWithChildren(elementWithChildren(name), nodes);
     }
 
-    public static Element element(String name, NameSpace nameSpace, Node... nodes) {
-        return element(name, nameSpace, asList(nodes));
+    public static Element elementWithChildren(String name, NameSpace nameSpace, Node... nodes) {
+        return elementWithChildren(name, nameSpace, asList(nodes));
     }
 
-    public static Element element(String name, NameSpace nameSpace, Collection<Node> nodes) {
-        final var element = element(name, nameSpace);
+    public static Element elementWithChildren(String name, NameSpace nameSpace, Collection<Node> nodes) {
+        final var element = elementWithChildren(name, nameSpace);
         nodes.forEach(node -> element.appendChild(node));
         return element;
     }
 
-    public static Element element(Element element, Node... nodes) {
-        return element(element, asList(nodes));
+    public static Element elementWithChildren(Element element, Node... nodes) {
+        return elementWithChildren(element, asList(nodes));
     }
 
-    public static Element element(Element element, Collection<Node> nodes) {
+    public static Element elementWithChildren(Element element, Collection<Node> nodes) {
         for (Node node : nodes) {
             if (node != null) {
                 element.appendChild(node);

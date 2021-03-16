@@ -68,12 +68,12 @@ public class HasSize implements Rater {
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.element(HasSize.class.getSimpleName());
+        final var argumentation = Xml.elementWithChildren(HasSize.class.getSimpleName());
         argumentation.appendChild(
-                Xml.element("target-size"
+                Xml.elementWithChildren("target-size"
                         , Xml.textNode(targetSize + "")));
         argumentation.appendChild(
-                Xml.element("actual-size"
+                Xml.elementWithChildren("actual-size"
                         , Xml.textNode(allocations.size() + "")));
         return argumentation;
     }
@@ -118,7 +118,7 @@ public class HasSize implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.element(HasSize.class.getSimpleName(), Xml.textNode("" + targetSize)));
+        return list(() -> Xml.elementWithChildren(HasSize.class.getSimpleName(), Xml.textNode("" + targetSize)));
     }
 
     @Override

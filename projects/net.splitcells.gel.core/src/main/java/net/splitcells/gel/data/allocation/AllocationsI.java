@@ -1,7 +1,7 @@
 package net.splitcells.gel.data.allocation;
 
 import static java.util.Objects.requireNonNull;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -17,6 +17,7 @@ import java.util.Set;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -336,7 +337,7 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Element toDom() {
-        final var dom = element(Allocations.class.getSimpleName());
+        final var dom = Xml.elementWithChildren(Allocations.class.getSimpleName());
         dom.appendChild(textNode(path().toString()));
         rawLinesView().stream()
                 .filter(rinda -> rinda != null)

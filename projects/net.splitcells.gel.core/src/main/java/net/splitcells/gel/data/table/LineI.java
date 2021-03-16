@@ -1,12 +1,13 @@
 package net.splitcells.gel.data.table;
 
 import static java.util.Objects.requireNonNull;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.Xml.toFlatString;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.common.Language.*;
 
+import net.splitcells.dem.lang.Xml;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.dom.Domable;
@@ -61,8 +62,8 @@ public class LineI implements Line {
 
     @Override
     public Element toDom() {
-        final var dom = element(Line.class.getSimpleName());
-        dom.appendChild(element(INDEX.value(), textNode("" + index)));
+        final var dom = Xml.elementWithChildren(Line.class.getSimpleName());
+        dom.appendChild(Xml.elementWithChildren(INDEX.value(), textNode("" + index)));
         context.headerView().forEach(attribute -> {
             final var value = context.columnView(attribute).get(index);
             final Node domValue;
@@ -75,7 +76,7 @@ public class LineI implements Line {
                     domValue = textNode(value.toString());
                 }
             }
-            final var valueElement = element(VALUE.value());
+            final var valueElement = Xml.elementWithChildren(VALUE.value());
             valueElement.setAttribute(TYPE.value(), attribute.name());
             valueElement.appendChild(domValue);
             dom.appendChild(valueElement);

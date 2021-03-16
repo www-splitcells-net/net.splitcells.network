@@ -15,7 +15,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.event;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
@@ -64,8 +64,8 @@ public class AllocationsIRef extends AllocationsI {
             domsole().append
                     (event(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Allocations.class.getSimpleName()
                             , path().toString()
-                            , element(DEMAND.value(), demand.toDom())
-                            , element(SUPPLY.value(), supply.toDom()))
+                            , Xml.elementWithChildren(DEMAND.value(), demand.toDom())
+                            , Xml.elementWithChildren(SUPPLY.value(), supply.toDom()))
                             , this
                             , DEBUG
                     );
@@ -130,11 +130,11 @@ public class AllocationsIRef extends AllocationsI {
                                     + PATH_ACCESS_SYMBOL.value()
                                     + Allocations.class.getSimpleName()
                             , path().toString()
-                            , element(ALLOCATION.value()
+                            , Xml.elementWithChildren(ALLOCATION.value()
                                     , allocation.toDom())
-                            , element(DEMAND.value()
+                            , Xml.elementWithChildren(DEMAND.value()
                                     , demand.toDom())
-                            , element(SUPPLY.value()
+                            , Xml.elementWithChildren(SUPPLY.value()
                                     , supply.toDom()))
                             , this
                             , DEBUG

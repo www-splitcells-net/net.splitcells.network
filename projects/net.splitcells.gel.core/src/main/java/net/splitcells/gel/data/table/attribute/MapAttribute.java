@@ -42,9 +42,9 @@ public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
 
     @Override
     public Element toDom() {
-        return Xml.element(name
-                , Xml.element(getClass().getSimpleName())
-                , Xml.element(type.getSimpleName())
+        return Xml.elementWithChildren(name
+                , Xml.elementWithChildren(getClass().getSimpleName())
+                , Xml.elementWithChildren(type.getSimpleName())
         );
     }
 }

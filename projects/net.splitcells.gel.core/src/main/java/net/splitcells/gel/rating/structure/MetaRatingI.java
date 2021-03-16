@@ -2,7 +2,7 @@ package net.splitcells.gel.rating.structure;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.rating.structure.MetaRatingMergerI.metaRatingMerger;
@@ -226,7 +226,7 @@ public class MetaRatingI implements MetaRating {
         if (1 == ratingMap.size()) {
             return ratingMap.values().iterator().next().toDom();
         }
-        final var dom = element(MetaRating.class.getSimpleName());
+        final var dom = Xml.elementWithChildren(MetaRating.class.getSimpleName());
         return dom;
     }
 

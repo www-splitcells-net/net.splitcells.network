@@ -1,6 +1,6 @@
 package net.splitcells.gel.rating.type;
 
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,7 +72,7 @@ public class Optimality implements Rating {
 
     @Override
     public Element toDom() {
-        final var dom = element(this.getClass().getSimpleName());
+        final var dom = Xml.elementWithChildren(this.getClass().getSimpleName());
         dom.appendChild(Xml.textNode("" + value));
         return dom;
     }

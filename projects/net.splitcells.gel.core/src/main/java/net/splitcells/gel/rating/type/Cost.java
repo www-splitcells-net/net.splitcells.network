@@ -2,13 +2,12 @@ package net.splitcells.gel.rating.type;
 
 import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 import java.util.Objects;
 import java.util.Optional;
 
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 import org.w3c.dom.Element;
@@ -122,7 +121,7 @@ public class Cost implements Rating {
 
     @Override
     public Element toDom() {
-        final var dom = element(this.getClass().getSimpleName());
+        final var dom = Xml.elementWithChildren(this.getClass().getSimpleName());
         dom.appendChild(Xml.textNode("" + value));
         return dom;
     }

@@ -21,7 +21,6 @@ import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 import org.w3c.dom.Element;
 
 import java.nio.file.Path;
-import java.util.Optional;
 
 import static com.google.common.collect.Streams.concat;
 import static net.splitcells.dem.Dem.environment;
@@ -32,7 +31,6 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
 import static net.splitcells.dem.resource.host.Files.*;
-import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.rating.type.Cost.cost;
 
 public interface SolutionView extends ProblemView {
@@ -118,11 +116,11 @@ public interface SolutionView extends ProblemView {
         fodsTableAnalysis.setAttribute("xmlns:fo", FODS_FO.uri());
         fodsTableAnalysis.setAttribute("xmlns:style", FODS_STYLE.uri());
         fodsTableAnalysis.appendChild(fodsStyling());
-        final var analysisContent = element(FODS_OFFICE, "body");
+        final var analysisContent = elementWithChildren(FODS_OFFICE, "body");
         fodsTableAnalysis.setAttributeNode(attribute(FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
         fodsTableAnalysis.appendChild(analysisContent);
         {
-            final var spreadsheet = element(FODS_OFFICE, "spreadsheet");
+            final var spreadsheet = elementWithChildren(FODS_OFFICE, "spreadsheet");
             analysisContent.appendChild(spreadsheet);
             final var table = rElement(NameSpaces.FODS_TABLE, "table");
             spreadsheet.appendChild(table);
@@ -153,12 +151,12 @@ public interface SolutionView extends ProblemView {
         style.setAttributeNodeNS(attribute(FODS_STYLE, "family", "table-cell"));
         style.setAttributeNodeNS(attribute(FODS_STYLE, "parent-style-name", "Default"));
         {
-            final var table_cell_properties = element(FODS_STYLE, "table-cell-properties");
+            final var table_cell_properties = elementWithChildren(FODS_STYLE, "table-cell-properties");
             table_cell_properties.setAttributeNodeNS(attribute(FODS_FO, "background-color", backgroundColor));
             style.appendChild(table_cell_properties);
         }
         {
-            final var textProperties = element(FODS_STYLE, "text-properties");
+            final var textProperties = elementWithChildren(FODS_STYLE, "text-properties");
             textProperties.setAttributeNodeNS(attribute(FODS_FO, "color", "#000000"));
             style.appendChild(textProperties);
         }
@@ -166,30 +164,30 @@ public interface SolutionView extends ProblemView {
     }
 
     default Element attributesOfFodsAnalysis() {
-        final var attributes = element(NameSpaces.FODS_TABLE, "table-row");
+        final var attributes = elementWithChildren(NameSpaces.FODS_TABLE, "table-row");
         headerView().stream().map(att -> att.name()).map(attName -> {
-            final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var tableElement = elementWithChildren(NameSpaces.FODS_TABLE, "table-cell");
             final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
             tableElement.appendChild(tableValue);
             tableValue.appendChild(Xml.textNode(attName));
             return tableElement;
         }).forEach(attributeDescription -> attributes.appendChild(attributeDescription));
         {
-            final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var tableElement = elementWithChildren(NameSpaces.FODS_TABLE, "table-cell");
             final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
             tableElement.appendChild(tableValue);
             tableValue.appendChild(Xml.textNode("cost"));
             attributes.appendChild(tableElement);
         }
         {
-            final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var tableElement = elementWithChildren(NameSpaces.FODS_TABLE, "table-cell");
             final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
             tableElement.appendChild(tableValue);
             tableValue.appendChild(Xml.textNode("allocation cost argumentation"));
             attributes.appendChild(tableElement);
         }
         {
-            final var rating = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var rating = elementWithChildren(NameSpaces.FODS_TABLE, "table-cell");
             final var ratingValue = rElement(NameSpaces.FODS_TEXT, "p");
             rating.appendChild(ratingValue);
             attributes.appendChild(rating);
@@ -205,10 +203,10 @@ public interface SolutionView extends ProblemView {
     }
 
     default Element toLinesFodsAnalysis(Line allocation) {
-        final var tableLine = element(NameSpaces.FODS_TABLE, "table-row");
+        final var tableLine = elementWithChildren(NameSpaces.FODS_TABLE, "table-row");
         {
             headerView().stream().map(attribute -> allocation.value(attribute)).map(value -> {
-                final var tableElement = element(NameSpaces.FODS_TABLE, "table-cell");
+                final var tableElement = elementWithChildren(NameSpaces.FODS_TABLE, "table-cell");
                 final var tableValue = rElement(NameSpaces.FODS_TEXT, "p");
                 tableElement.appendChild(tableValue);
                 tableValue.appendChild(Xml.textNode(value.toString()));
@@ -216,7 +214,7 @@ public interface SolutionView extends ProblemView {
             }).forEach(tableCell -> tableLine.appendChild(tableCell));
         }
         {
-            final var allocationCost = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var allocationCost = elementWithChildren(NameSpaces.FODS_TABLE, "table-cell");
             tableLine.appendChild(allocationCost);
             final var allocation_cost_value = rElement(NameSpaces.FODS_TEXT, "p");
             allocationCost.appendChild(allocation_cost_value);
@@ -228,7 +226,7 @@ public interface SolutionView extends ProblemView {
                             .value()));
         }
         {
-            final var allocationArgumentation = element(NameSpaces.FODS_TABLE, "table-cell");
+            final var allocationArgumentation = elementWithChildren(NameSpaces.FODS_TABLE, "table-cell");
             final var allocationArgumentationValue = rElement(NameSpaces.FODS_TEXT, "p");
             tableLine.appendChild(allocationArgumentation);
             allocationArgumentation.appendChild(allocationArgumentationValue);

@@ -1,6 +1,6 @@
 package net.splitcells.gel.rating.type;
 
-import static net.splitcells.dem.lang.Xml.element;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
@@ -83,7 +83,7 @@ public class Profit implements Rating {
 
     @Override
     public Element toDom() {
-        final org.w3c.dom.Element dom = element(this.getClass().getSimpleName());
+        final org.w3c.dom.Element dom = Xml.elementWithChildren(this.getClass().getSimpleName());
         dom.appendChild(Xml.textNode("" + value));
         return dom;
     }
