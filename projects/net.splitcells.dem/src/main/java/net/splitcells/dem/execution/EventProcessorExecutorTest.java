@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 import static net.splitcells.dem.execution.EventProcessorExecutor.eventProcessorExecutor;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Deprecated
 public class EventProcessorExecutorTest {
     @Test
     public void test() {

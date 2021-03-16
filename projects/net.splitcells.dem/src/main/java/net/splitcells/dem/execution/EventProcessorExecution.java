@@ -11,6 +11,7 @@ import static net.splitcells.dem.execution.EventProcessorExecutor.eventProcessor
 /**
  * Provides an event based effect system, that can be used by programs without side effects.
  */
+@Deprecated
 public class EventProcessorExecution extends ResourceI<EventProcessorExecutor> {
     public EventProcessorExecution() {
         super(() -> {

@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+@Deprecated
 public class EventProcessorExecutor implements Closeable, Flushable {
     public static EventProcessorExecutor eventProcessorExecutor() {
         return new EventProcessorExecutor();
