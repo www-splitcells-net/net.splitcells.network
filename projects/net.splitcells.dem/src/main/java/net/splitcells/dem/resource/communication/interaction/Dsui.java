@@ -3,8 +3,10 @@ package net.splitcells.dem.resource.communication.interaction;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.data.set.SetWA;
 import net.splitcells.dem.data.set.list.ListWA;
+import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.dem.resource.communication.Sender;
@@ -21,6 +23,7 @@ import static java.util.Objects.requireNonNull;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
+import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.host.interaction.LogMessageI.logMessage;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
@@ -36,9 +39,10 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
     private static final String ENTRY_POINT = "ENTRY.POINT.237048021";
 
     public static Dsui dsui(Sender<String> output, Predicate<LogMessage<Node>> messageFilter) {
-        Element execution = elementWithChildren(//
-                rElement(DEN, "execution"), //
-                elementWithChildren(DEN, "name", environment().config().configValue(ProgramName.class)), //
+        Element execution = elementWithChildren(
+                elementWithChildren(rElement(DEN, "execution"), nameSpaceDecleration(NATURAL)),
+                elementWithChildren(DEN, "name", environment().config().configValue(ProgramName.class)),
+                elementWithChildren(NATURAL, "start-time", environment().config().configValue(StartTime.class).toString()),
                 textNode(ENTRY_POINT));
         return dsui(output, execution, messageFilter);
     }

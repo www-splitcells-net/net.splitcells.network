@@ -158,7 +158,6 @@ public final class Xml {
         return element;
     }
 
-    @Deprecated
     public static Attr nameSpaceDecleration(NameSpace nameSpace) {
         final var rVal = ROOT_DOCUMENT.createAttribute("xmlns:" + nameSpace.defaultPrefix());
         rVal.setNodeValue(nameSpace.uri());
