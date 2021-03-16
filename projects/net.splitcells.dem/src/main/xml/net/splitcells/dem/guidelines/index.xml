@@ -36,8 +36,6 @@
             </url>
         </related_to>
         <d:toDo>
-            <d:toDo>Define complete life cycle of project in advance and do not ignore the end of the project thereby.
-            </d:toDo>
             <d:toDo>Make project as portable, extendable, changeable deletable as possible.</d:toDo>
             <d:todo>Create code guidelines that are not Java specific.</d:todo>
             <d:todo>
@@ -163,7 +161,7 @@
     <chapter>
         <title>Goals
         </title>
-        <paragraph>These are my experimental Java code guidelines.
+        <paragraph>These are my experimental code guidelines.
             These may
             not comply to common best
             practices and might be
@@ -184,8 +182,9 @@
             </link>
         </paragraph>
         <paragraph>Guide lines are just that. They are nothing more and nothing less, but if these guidelines are
-            applied
-            a reason should be present.
+            not applied a reason should be present.
+            These guide lines main goal is to set priorities and paradigms.
+            The details should be handled by project or language specific guide lines.
         </paragraph>
     </chapter>
     <chapter>
@@ -212,34 +211,13 @@
     </chapter>
     <chapter>
         <title>Life Cycle</title>
-        <d:todo>Cyclic Version Destruction and Restruction</d:todo>
+        <paragraph>It should be known, why a project is created and under which conditions it will be dismantled.
+        </paragraph>
         <chapter>
             <title>Version Control</title>
-            <d:todo>
-                <link>
-                    <text>Vincent Driessen's branching model</text>
-                    <url>https://nvie.com/posts/a-successful-git-branching-model/</url>
-                </link>
-            </d:todo>
-            <d:todo>
-                <link>
-                    <text>Git Flow Extensions</text>
-                    <url>https://github.com/nvie/gitflow</url>
-                </link>
-            </d:todo>
-            <d:todo>
-                <link>
-                    <text>Git Flow Cheatsheet</text>
-                    <url>https://danielkummer.github.io/git-flow-cheatsheet/</url>
-                </link>
-            </d:todo>
             <chapter>
                 <title>Commit Log</title>
                 <paragraph>The commit log is a program, that describes the development of the project.</paragraph>
-            </chapter>
-            <chapter>
-                <title>Changelog</title>
-                <d:todo>https://github.com/olivierlacan/keep-a-changelog</d:todo>
             </chapter>
             <chapter>
                 <title>Versioning</title>
@@ -250,16 +228,12 @@
                 <chapter>
                     <title>Compatibility</title>
                     <d:toDo>Prefer backward compatible changes to backward incompatible changes.</d:toDo>
-                    <d:toDo>When a thing of the API needs to be changed in an incompatible way,
-                        prefer creating a new thing and deprecated
-                        the old API thing over change existing API things.
-                    </d:toDo>
                     <d:toDo>Make as much undefined as possible, for not essential things, but make clear what is
                         essential.
                         This way one
                         can adapt the API more easily
-                        without changing API without breaking compatibility.
-                        Breaking other software because it
+                        without changing API and breaking compatibility.
+                        Breaking other software, because it
                         relied on implementation specifics is better, than
                         breaking other software via incompatible API changes.
                     </d:toDo>
@@ -420,93 +394,15 @@
             <title>Identifiers</title>
             <paragraph>Readability is preferred over compactness,
                 but compactness is still important.
-                Every name should have an unambiguous meaning. This means a renaming
+                Every name should have an unambiguous meaning.
+            </paragraph>
+            <paragraph>This means a renaming
                 would be valid, if every instance of the name can be renamed,
                 while still maintaining the correct meaning.
+                Symbols, whose meaning are already contained in other symbols,
+                should be omitted.
+                Names are preferred to abbreviation and abbreviation are preferred to symbols as a shorthand.
             </paragraph>
-        </chapter>
-        <chapter>
-            <title>Access, Ownership and Side Effects</title>
-            <d:toDo>name, currentName and anyName
-            </d:toDo>
-            <d:toDo>Class names only typed if multiple classes with different
-                types.
-            </d:toDo>
-            <chapter>
-                <title>Access Rights</title>
-                <paragraph>
-                    Every interface type has its own read, write and
-                    execution rights.
-                    This
-                    means that the right to functionally read an
-                    object is not
-                    equivalent to the right read a borrowed object or to
-                    read a
-                    connected object.
-                    A method name should only
-                    be used for one
-                    interface
-                    type.
-                    <d:toDo>classification of interfaces without meta data.
-                    </d:toDo>
-                </paragraph>
-            </chapter>
-            <chapter>
-                <title>Modeling Ownership and Side Effects with Interfaces</title>
-                <chapter>
-                    <title>Functional Interface</title>
-                    <paragraph>
-                        Access via functional interface
-                        uses
-                        adjectives to work on them.
-                        This highlights that the objects are
-                        not changed
-                        itself. For example
-                        a query of list will create a new
-                        list
-                        <quote>cars.where(car -> car.name().equals("a name"))</quote>
-                        and will not modify the list.
-                    </paragraph>
-                    <paragraph>Creation of objects without side effects
-                        is done via functions with nouns as identifiers.
-                    </paragraph>
-                </chapter>
-                <chapter>
-                    <title>Borrowed Interface</title>
-                    <paragraph>
-                        Access via burrowed interface uses verbs in order to
-                        signal
-                        that the
-                        object in question is changed:
-                        <quote>cars.ensureOnlyContains(car -> car.name().equals("a name"))
-                        </quote>
-                    </paragraph>
-                </chapter>
-                <chapter>
-                    <title>Connected Interface</title>
-                    <paragraph>
-                        Access via connected interfaces uses verbs that signal
-                        the
-                        unclarity of the effect of the actions.
-                        This highlights
-                        the fact
-                        that
-                        properties of
-                        the connected objects may be unclear:
-                        <quote>cars.clearDissatisfyingSoon(car -> car.name().equals("a
-                            name"))
-                        </quote>
-                    </paragraph>
-                </chapter>
-                <chapter>
-                    <title>Mixed Interface</title>
-                    <d:toDo></d:toDo>
-                </chapter>
-                <chapter>
-                    <title>Pure Interface</title>
-                    <d:toDo></d:toDo>
-                </chapter>
-            </chapter>
         </chapter>
         <chapter>
             <title>Testing</title>
