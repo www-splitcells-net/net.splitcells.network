@@ -44,20 +44,20 @@ public interface Randomness extends BasicRndSrc {
     @JavaLegacy
     Random asRandom();
 
-    default <T> List<T> choose_at_most_multiple_of(int number_of_things_to_choose, List<T> args) {
+    default <T> List<T> chooseAtMostMultipleOf(int numberOfThingsToChoose, List<T> args) {
         if (args.isEmpty()) {
             return list();
         }
-        if (number_of_things_to_choose >= args.size()) {
+        if (numberOfThingsToChoose >= args.size()) {
             return listWithValuesOf(args);
         }
-        final List<T> choosen_args = list();
-        range(0, number_of_things_to_choose)
+        final List<T> choosenArgs = list();
+        range(0, numberOfThingsToChoose)
                 .forEach(i -> {
-                    final var next_index_candidate = this.integer(0, args.size() - 1);
-                    choosen_args.remove(args.get(next_index_candidate));
+                    final var nextIndexCandidate = this.integer(0, args.size() - 1);
+                    choosenArgs.remove(args.get(nextIndexCandidate));
                 });
-        return choosen_args;
+        return choosenArgs;
     }
 
     default <T> T chooseOneOf(java.util.List<T> arg) {

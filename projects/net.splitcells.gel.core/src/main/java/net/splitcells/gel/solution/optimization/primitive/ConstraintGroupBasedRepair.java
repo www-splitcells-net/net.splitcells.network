@@ -74,7 +74,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                     if (candidates.isEmpty()) {
                         return list();
                     }
-                    return randomness.choose_at_most_multiple_of(numberOfGroupsSelectedPerDefiance, candidates);
+                    return randomness.chooseAtMostMultipleOf(numberOfGroupsSelectedPerDefiance, candidates);
                 }, supplySelector());
     }
 
