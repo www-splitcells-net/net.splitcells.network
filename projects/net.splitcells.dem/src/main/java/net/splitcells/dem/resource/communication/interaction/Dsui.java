@@ -1,5 +1,6 @@
 package net.splitcells.dem.resource.communication.interaction;
 
+import net.splitcells.dem.environment.config.EndTime;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.data.set.SetWA;
 import net.splitcells.dem.data.set.list.ListWA;
@@ -15,6 +16,8 @@ import net.splitcells.dem.resource.host.interaction.LogMessage;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -96,12 +99,16 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
     @Deprecated
     public <R extends ListWA<LogMessage<Node>>> R append(LogMessage<Node> arg) {
         if (messageFilter.test(arg)) {
-            asList(
-                    Xml.toPrettyWithoutHeaderString(arg.content())
-                            .split("\\R"))
-                    .forEach(contentOutput::append);
+            print(arg.content());
         }
         return (R) this;
+    }
+
+    private void print(Node arg) {
+        asList(
+                Xml.toPrettyWithoutHeaderString(arg)
+                        .split("\\R"))
+                .forEach(contentOutput::append);
     }
 
     @SuppressWarnings("unchecked")
@@ -117,12 +124,33 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
         if (isClosed) {
             throw new IllegalStateException();
         }
+        final var endTime = environment().config().configValue(EndTime.class);
+        if (endTime.isPresent()) {
+            print(Xml.elementWithChildren(
+                    Xml.rElement(NATURAL, "end-time"),
+                    Xml.textNode(endTime.get().toString())));
+            print(Xml.elementWithChildren(
+                    Xml.rElement(NATURAL, "runtime-in-seconds"),
+                    Xml.textNode("" + Duration.between
+                            (environment().config().configValue(StartTime.class)
+                                    , endTime.get())
+                            .toSeconds())));
+            print(Xml.elementWithChildren(
+                    Xml.rElement(NATURAL, "runtime-in-nanoseconds"),
+                    Xml.textNode("" + Duration.between
+                            (environment().config().configValue(StartTime.class)
+                                    , endTime.get())
+                            .toNanos())));
+        }
         String endingMessage = Xml.toPrettyString(root);
         if (!endingMessage.contains(Dsui.ENTRY_POINT)) {
             throw new IllegalArgumentException(endingMessage);
         }
         baseOutput.append(endingMessage.split(Dsui.ENTRY_POINT)[1]);
 
+        /**
+         * TODO FIX This does sometimes not work. See {@link Dem}.
+         */
         contentOutput.flush();
         contentOutput.close();
 

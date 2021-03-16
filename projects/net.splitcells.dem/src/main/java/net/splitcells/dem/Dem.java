@@ -3,6 +3,7 @@ package net.splitcells.dem;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
+import net.splitcells.dem.environment.config.EndTime;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.host.interaction.Domsole;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
@@ -11,6 +12,7 @@ import net.splitcells.dem.source.code.SourceCodeCheck;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -53,7 +55,7 @@ public final class Dem {
      */
     public static void process(Runnable program, Consumer<Environment> configurator) {
         Thread root = new Thread(() -> {
-            initializeProcess(program.getClass(), configurator);
+            final var processEnvironment = initializeProcess(program.getClass(), configurator);
             try {
                 // TOFIX Does not write log file on short programs that throws an exception.
                 program.run();
@@ -76,6 +78,7 @@ public final class Dem {
                 Domsole.domsole().append(error, Optional.empty(), LogLevel.CRITICAL);
                 throw t;
             } finally {
+                processEnvironment.config().withConfigValue(EndTime.class, Optional.of(ZonedDateTime.now()));
                 environment().close();
                 CURRENT.remove();
                 try {

@@ -158,6 +158,14 @@ public final class Xml {
         return element;
     }
 
+    /**
+     * Namespace declaration is deprecated, because we need an alternative.
+     * Currently there is a problem, when creating single elements with certain namespaces.
+     *
+     * @param nameSpace
+     * @return
+     */
+    @Deprecated()
     public static Attr nameSpaceDecleration(NameSpace nameSpace) {
         final var rVal = ROOT_DOCUMENT.createAttribute("xmlns:" + nameSpace.defaultPrefix());
         rVal.setNodeValue(nameSpace.uri());
