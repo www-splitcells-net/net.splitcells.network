@@ -2,22 +2,29 @@ package net.splitcells.gel.test.integration;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.resource.host.interaction.Domsole;
+import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair;
 import org.junit.jupiter.api.*;
 
 import java.nio.file.Files;
+import java.time.ZonedDateTime;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.lang.Math.floorMod;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -97,47 +104,41 @@ public class OralExamsTest extends TestSuiteI {
                         , 6
                         , randomness(0L))
                 .asSolution();
-        // TODO REMOVE
-        /*try {
-            Thread.sleep(10_000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
         final var initialSolutionTemplate = testSubject.dataContainer().resolve("previous").resolve("results.fods");
+        /*
         if (Files.exists(initialSolutionTemplate)) {
             testSubject.optimize
                     (templateInitializer
                             (databaseOfFods(objectAttributes(testSubject.headerView())
                                     , Xml.parse(initialSolutionTemplate).getDocumentElement())));
-        }
+        }*/
         testSubject.optimize(linearInitialization());
         IntStream.rangeClosed(1, 10).forEach(a -> {
             IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4));
+                Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
+                        , () -> list("debugging")
+                        , LogLevel.DEBUG);
+                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(3));
             });
-            testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(3));
             IntStream.rangeClosed(1, 100).forEach(j -> {
+                Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
+                        , () -> list("debugging")
+                        , LogLevel.DEBUG);
+                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 3));
+            });
+            IntStream.rangeClosed(1, 100).forEach(j -> {
+                Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
+                        , () -> list("debugging")
+                        , LogLevel.DEBUG);
+                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 2));
+            });
+            IntStream.rangeClosed(1, 100).forEach(j -> {
+                Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
+                        , () -> list("debugging")
+                        , LogLevel.DEBUG);
                 testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4));
             });
         });
-        /*IntStream.rangeClosed(1, 10).forEach(a -> {
-            IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 1));
-            });
-            IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(3, 1));
-            });
-            IntStream.rangeClosed(1, 100).forEach(j -> {
-                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 1));
-            });
-        });*/
-        /*IntStream.rangeClosed(1, 100).forEach(j -> {
-                    testSubject.optimize(escalator(i -> {
-                        return repeater(constraintGroupBasedRepair(i), 100);
-                    }, 3, 2, 4));
-                }
-
-        );*/
         testSubject.createStandardAnalysis();
         testSubject.constraint().persistGraphState();
     }

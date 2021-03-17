@@ -29,9 +29,10 @@ public final class GelDev {
         }, standardConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class
+                            , a -> a.path().equals(list("debugging")))
+                    /*.withConfigValue(MessageFilter.class
                             , a -> a.path().equals(list("demands", "Solution", "optimization", "Escalator"))
-                                    || a.path().equals(list("demands", "Solution"))
-                    )
+                                    || a.path().equals(list("demands", "Solution")))*/
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(ProcessHostPath.class
                             , Paths.userHome("connections", "tmp.storage", "dem"));
