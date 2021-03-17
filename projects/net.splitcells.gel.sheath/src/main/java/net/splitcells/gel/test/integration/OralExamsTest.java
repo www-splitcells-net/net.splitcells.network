@@ -113,6 +113,16 @@ public class OralExamsTest extends TestSuiteI {
                                     , Xml.parse(initialSolutionTemplate).getDocumentElement())));
         }*/
         testSubject.optimize(linearInitialization());
+        testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3), (currentSolution, step) -> {
+            Domsole.domsole().append(
+                    perspective(ZonedDateTime.now().toString()
+                                    + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                    + currentSolution.isComplete()
+                            , STRING)
+                    , () -> list("debugging")
+                    , LogLevel.DEBUG);
+            return step <= 100 && !currentSolution.isOptimal();
+        });/*
         IntStream.rangeClosed(1, 10).forEach(a -> {
             IntStream.rangeClosed(1, 100).forEach(j -> {
                 Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
@@ -138,7 +148,7 @@ public class OralExamsTest extends TestSuiteI {
                         , LogLevel.DEBUG);
                 testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4));
             });
-        });
+        });*/
         testSubject.createStandardAnalysis();
         testSubject.constraint().persistGraphState();
     }

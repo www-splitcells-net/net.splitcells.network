@@ -16,7 +16,9 @@ import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
+import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public interface Solution extends Problem, SolutionView {
 
@@ -26,12 +28,19 @@ public interface Solution extends Problem, SolutionView {
     }
 
     @Returns_this
-    default Solution optimizeWithFunction(Function<Solution, List<OptimizationEvent>> optimizationFunction) {
-        while (!isOptimal()) {
-            final var recommendations = optimizationFunction.apply(this);
+    default Solution optimizeWithFunction(Optimization optimizationFunction) {
+        return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal());
+    }
+
+    @Returns_this
+    default Solution optimizeWithFunction(Optimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
+        int i = 0;
+        while (continuationCondition.test(this, i)) {
+            final var recommendations = optimizationFunction.optimize(this);
             if (recommendations.isEmpty()) {
                 break;
             }
+            ++i;
             optimize(recommendations);
         }
         return this;
