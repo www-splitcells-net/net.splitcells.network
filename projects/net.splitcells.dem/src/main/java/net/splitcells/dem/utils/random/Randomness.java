@@ -55,7 +55,7 @@ public interface Randomness extends BasicRndSrc {
         range(0, numberOfThingsToChoose)
                 .forEach(i -> {
                     final var nextIndexCandidate = this.integer(0, args.size() - 1);
-                    chosenArgs.remove(args.get(nextIndexCandidate));
+                    chosenArgs.add(args.remove(nextIndexCandidate));
                 });
         return chosenArgs;
     }

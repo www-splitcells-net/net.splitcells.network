@@ -1,11 +1,13 @@
 package net.splitcells.dem.utils.random;
 
+import net.splitcells.dem.data.set.list.Lists;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.random.Randomness.assertPlausibility;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,12 +51,18 @@ public class RandomnessTest {
     }
 
     @Test
-    public void test_chooseOneOf_on_empty_list() {
+    public void testChooseOneOfOnEmptyList() {
         assertThrows(IllegalArgumentException.class, () -> randomness().chooseOneOf(list()));
     }
 
     @Test
-    public void test_removeOneOf_on_empty_list() {
+    public void testRemoveOneOfOnEmptyList() {
         assertThrows(IllegalArgumentException.class, () -> randomness().removeOneOf(list()));
+    }
+
+    @Test
+    public void testChooseAtMostMultipleOf() {
+        assertThat(randomness(0L).chooseAtMostMultipleOf(2, listWithValuesOf(1, 2, 3)))
+                .hasSize(2);
     }
 }
