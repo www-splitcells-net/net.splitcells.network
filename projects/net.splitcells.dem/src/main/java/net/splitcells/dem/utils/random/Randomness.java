@@ -51,13 +51,13 @@ public interface Randomness extends BasicRndSrc {
         if (numberOfThingsToChoose >= args.size()) {
             return listWithValuesOf(args);
         }
-        final List<T> choosenArgs = list();
+        final List<T> chosenArgs = list();
         range(0, numberOfThingsToChoose)
                 .forEach(i -> {
                     final var nextIndexCandidate = this.integer(0, args.size() - 1);
-                    choosenArgs.remove(args.get(nextIndexCandidate));
+                    chosenArgs.remove(args.get(nextIndexCandidate));
                 });
-        return choosenArgs;
+        return chosenArgs;
     }
 
     default <T> T chooseOneOf(java.util.List<T> arg) {
