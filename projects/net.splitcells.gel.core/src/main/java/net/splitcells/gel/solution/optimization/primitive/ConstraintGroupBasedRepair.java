@@ -5,7 +5,10 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.resource.host.interaction.Domsole;
+import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.utils.random.Randomness;
+import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.GroupId;
@@ -13,11 +16,14 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.*;
 import static net.splitcells.dem.data.set.list.Lists.*;
@@ -119,6 +125,8 @@ public class ConstraintGroupBasedRepair implements Optimization {
                                         (ADDITION
                                                 , demand.toLinePointer()
                                                 , selectedSupply.toLinePointer()));
+                    } else {
+                        throw new RuntimeException();
                     }
                 });
             });
@@ -159,24 +167,25 @@ public class ConstraintGroupBasedRepair implements Optimization {
                     return a;
                 });
         demandGrouping.put(null, setOfUniques(solution.demands_unused().getLines()));
-        final var optimization = groupsOfConstraintGroup
+        final var demandFreeing = groupsOfConstraintGroup
                 .stream()
                 .map(e -> e
                         .lastValue()
                         .map(f -> freeDefyingGroupOfConstraintGroup(solution, f))
                         .orElseGet(() -> list()))
                 .flatMap(e -> e.stream())
-                .distinct() // TODO Is this needed anymore?
+                //.distinct() // TODO Is this needed anymore?
                 .collect(toList());
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            optimization.forEach(e -> {
+            demandFreeing.forEach(e -> {
                 if (!REMOVAL.equals(e.stepType())) {
                     throw new IllegalStateException();
                 }
             });
         }
+        final var optimization = demandFreeing;
         optimization.addAll(repair(solution, demandGrouping,
-                optimization.stream()
+                demandFreeing.stream()
                         .map(e -> e.supply().interpret().get())
                         .collect(toList())));
         return optimization;

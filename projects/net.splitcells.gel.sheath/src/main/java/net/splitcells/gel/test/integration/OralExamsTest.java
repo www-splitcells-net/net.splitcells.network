@@ -118,11 +118,46 @@ public class OralExamsTest extends TestSuiteI {
                     perspective(ZonedDateTime.now().toString()
                                     + testSubject.constraint().rating().getContentValue(Cost.class).value()
                                     + currentSolution.isComplete()
+                                    + currentSolution.demands_unused().size()
                             , STRING)
                     , () -> list("debugging")
                     , LogLevel.DEBUG);
             return step <= 100 && !currentSolution.isOptimal();
-        });/*
+        });
+        testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3), (currentSolution, step) -> {
+            Domsole.domsole().append(
+                    perspective(ZonedDateTime.now().toString()
+                                    + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                    + currentSolution.isComplete()
+                                    + currentSolution.demands_unused().size()
+                            , STRING)
+                    , () -> list("debugging")
+                    , LogLevel.DEBUG);
+            return step <= 100 && !currentSolution.isOptimal();
+        });
+        testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2), (currentSolution, step) -> {
+            Domsole.domsole().append(
+                    perspective(ZonedDateTime.now().toString()
+                                    + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                    + currentSolution.isComplete()
+                                    + currentSolution.demands_unused().size()
+                            , STRING)
+                    , () -> list("debugging")
+                    , LogLevel.DEBUG);
+            return step <= 100 && !currentSolution.isOptimal();
+        });
+        testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) -> {
+            Domsole.domsole().append(
+                    perspective(ZonedDateTime.now().toString()
+                                    + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                    + currentSolution.isComplete()
+                                    + currentSolution.demands_unused().size()
+                            , STRING)
+                    , () -> list("debugging")
+                    , LogLevel.DEBUG);
+            return step <= 100 && !currentSolution.isOptimal();
+        });
+        /*
         IntStream.rangeClosed(1, 10).forEach(a -> {
             IntStream.rangeClosed(1, 100).forEach(j -> {
                 Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
