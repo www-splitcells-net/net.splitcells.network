@@ -1,3 +1,2 @@
 #!/usr/bin/env sh
-chmod +x ./bin/*
 mvn verify exec:java -Dexec.mainClass='net.splitcells.website.server.renderer.LayoutRenderer'

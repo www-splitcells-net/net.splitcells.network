@@ -4,6 +4,7 @@ import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
 import net.splitcells.dem.environment.config.EndTime;
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.host.interaction.Domsole;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
@@ -157,6 +158,10 @@ public final class Dem {
             return ensuredInitialized();
         }
         return CURRENT.get();
+    }
+
+    public static <T> T configValue(Class<? extends Option<T>> key) {
+        return environment().config().configValue(key);
     }
 
     public static void check_source_code() {

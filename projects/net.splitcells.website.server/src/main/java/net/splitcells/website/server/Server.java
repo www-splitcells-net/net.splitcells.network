@@ -12,8 +12,16 @@ import net.splitcells.website.server.renderer.RenderingResult;
 
 import java.util.function.Function;
 
+import static net.splitcells.dem.Dem.configValue;
+
 public class Server {
-    public void serveToHttpAt(int port, boolean useHttps, Function<String, RenderingResult> renderer) {
+    /**
+     * TODO This is code duplication.
+     *
+     * @param port
+     * @param renderer
+     */
+    public void serveToHttpAt(int port, Function<String, RenderingResult> renderer) {
         {
             System.setProperty("vertx.disableFileCaching", "true");
             System.setProperty("log4j.rootLogger", "DEBUG, stdout");
@@ -24,9 +32,13 @@ public class Server {
                     // TODO Errors are not logged.
                     final var webServerOptions = new HttpServerOptions()//
                             .setLogActivity(true)//
-                            .setSsl(useHttps)//
-                            .setKeyCertOptions(new PfxOptions().setPath("src/main/resources.private/keystore.p12").setPassword("password"))//
-                            .setTrustOptions(new PfxOptions().setPath("src/main/resources.private/keystore.p12").setPassword("password"))//
+                            .setSsl(true)//
+                            .setKeyCertOptions(new PfxOptions()
+                                    .setPath(configValue(SslKeystore.class).toString())
+                                    .setPassword(configValue(SslKeystorePassword.class)))
+                            .setTrustOptions(new PfxOptions()
+                                    .setPath(configValue(SslKeystore.class).toString())
+                                    .setPassword(configValue(SslKeystorePassword.class)))
                             .setPort(port);//
                     final var router = Router.router(vertx);
                     router.route("/favicon.ico").handler(a -> {
@@ -72,13 +84,17 @@ public class Server {
             @Override
             public void start() {
                 // TODO Errors are not logged.
-                final var webServerOptions = new HttpServerOptions()//
-                        .setSsl(true)//
-                        .setKeyCertOptions(new PfxOptions().setPath("src/main/resources.private/keystore.p12").setPassword("password"))//
-                        .setTrustOptions(new PfxOptions().setPath("src/main/resources.private/keystore.p12").setPassword("password"))//
-                        .setClientAuth(ClientAuth.REQUIRED)//
-                        .setLogActivity(true)//
-                        .setPort(port);//
+                final var webServerOptions = new HttpServerOptions()
+                        .setSsl(true)
+                        .setKeyCertOptions(new PfxOptions()
+                                .setPath(configValue(SslKeystore.class).toString())
+                                .setPassword(configValue(SslKeystorePassword.class)))
+                        .setTrustOptions(new PfxOptions()
+                                .setPath(configValue(SslKeystore.class).toString())
+                                .setPassword(configValue(SslKeystorePassword.class)))
+                        .setClientAuth(ClientAuth.REQUIRED)
+                        .setLogActivity(true)
+                        .setPort(port);
                 final var router = Router.router(vertx);
                 router.route("/favicon.ico").handler(a -> {
                 });

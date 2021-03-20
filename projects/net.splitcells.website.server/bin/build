@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+set -e
+chmod +x ./bin/*
+mvn verify
+test -f ./target/keystore.p12 || keytool -genkey \
+	-noprompt \
+	-alias 'cert' \
+	-keypass 'password' \
+	-keyalg 'RSA' \
+	-validity 365 \
+	-dname 'CN=localhost' \
+	-keysize 4096 \
+	-keystore ./target/keystore.p12 \
+	-storepass 'password' \
+	-storetype  'PKCS12'

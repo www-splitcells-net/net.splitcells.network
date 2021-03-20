@@ -109,9 +109,9 @@ public class ProjectsRenderer {
                 });
     }
 
-    public void serveToHttpAt(int port, boolean useHttps) {
+    public void serveToHttpAt(int port) {
         build();
-        new Server().serveToHttpAt(port, useHttps, requestPath -> render(requestPath));
+        new Server().serveToHttpAt(port, requestPath -> render(requestPath));
     }
 
     public void serveAsAuthenticatedHttpsAt(int port) {
@@ -121,8 +121,8 @@ public class ProjectsRenderer {
 
     public static void main(String... args) {
         // TODO privateProjectsRenderer().serveAsAuthenticatedHttpsAt(8444);
-        publicProjectsRenderer().serveToHttpAt(8443, true);
-        publicProjectsRenderer().serveToHttpAt(8080, false);
+        publicProjectsRenderer().serveToHttpAt(8443);
+        publicProjectsRenderer().serveToHttpAt(8080);
     }
 
     private final String profile;
