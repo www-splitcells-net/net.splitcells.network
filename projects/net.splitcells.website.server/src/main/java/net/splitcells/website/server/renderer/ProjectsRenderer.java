@@ -31,56 +31,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProjectsRenderer {
 
-    public static ProjectsRenderer publicProjectsRenderer() {
-        final var userHome = Paths.get(System.getProperty("user.home"));
-        final var projectRepositories = userHome.resolve("Documents/projects/net.splitcells.martins.avots.support.system/private");
-        final var profile = "public";
-        return projectsRenderer(profile, fallbackProjectRenderer(profile, projectRepositories), publicProjectsRenderer(profile, projectRepositories));
-    }
-
-    public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories) {
-        return new ProjectRenderer(profile
-                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/")
-                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                , "/");
-    }
-
-    public static List<ProjectRenderer> publicProjectsRenderer(String profile, Path projectRepositories) {
-        return list
-                (new ProjectRenderer
-                                (profile,
-                                        projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                        , "/net/splitcells/martins/avots/website")
-                        , new ProjectRenderer
-                                (profile
-                                        , projectRepositories.resolve("..").resolve("public/net.splitcells.network/projects/net.splitcells.dem/src/main/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                        , "/net/splitcells/dem")
-                        , new ProjectRenderer
-                                (profile
-                                        , projectRepositories.resolve("..").resolve("public/net.splitcells.network/projects/net.splitcells.gel.doc/src/main/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                        , "/net/splitcells/gel")
-                        , new ProjectRenderer
-                                (profile
-                                        , projectRepositories.resolve("..").resolve("public/net.splitcells.network/projects/net.splitcells.system/src/main/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                        , "/net/splitcells")
-                        , new ProjectRenderer
-                                (profile
-                                        , projectRepositories.resolve("..").resolve("public/net.splitcells.network/src/main/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                        , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                        , "/net/splitcells/network")
-                );
-    }
-
     public static ProjectsRenderer projectsRenderer(String name, ProjectRenderer fallbackRenderer, List<ProjectRenderer> renderers) {
         return new ProjectsRenderer(name, fallbackRenderer, renderers);
     }
@@ -117,12 +67,6 @@ public class ProjectsRenderer {
     public void serveAsAuthenticatedHttpsAt(int port) {
         build();
         new Server().serveAsAuthenticatedHttpsAt(port, requestPath -> render(requestPath));
-    }
-
-    public static void main(String... args) {
-        // TODO privateProjectsRenderer().serveAsAuthenticatedHttpsAt(8444);
-        publicProjectsRenderer().serveToHttpAt(8443);
-        publicProjectsRenderer().serveToHttpAt(8080);
     }
 
     private final String profile;

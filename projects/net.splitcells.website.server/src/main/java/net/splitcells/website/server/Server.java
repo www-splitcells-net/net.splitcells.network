@@ -18,8 +18,8 @@ public class Server {
     /**
      * TODO This is code duplication.
      *
-     * @param port
-     * @param renderer
+     * @param port port
+     * @param renderer  renderer
      */
     public void serveToHttpAt(int port, Function<String, RenderingResult> renderer) {
         {
