@@ -1,4 +1,4 @@
-package net.splitcells.website;
+package net.splitcells.website.server;
 
 import net.splitcells.dem.resource.host.Files;
 

@@ -1,20 +1,15 @@
-package net.splitcells.website.server;
+package net.splitcells.website;
 
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URL;
 import java.nio.file.Path;
-import java.time.Instant;
-import java.util.Arrays;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;

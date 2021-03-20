@@ -1,7 +1,7 @@
 package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.resource.Paths;
-import net.splitcells.website.server.Validator;
+import net.splitcells.website.Validator;
 import net.splitcells.website.server.translation.to.html.PathBasedUriResolver;
 import net.splitcells.website.server.translation.to.html.XslTransformer;
 
