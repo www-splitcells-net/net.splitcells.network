@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+chmod +x ./bin/*
+mvn compile
+mvn exec:java -Dexec.mainClass='net.splitcells.website.StaticProjectsRenderer'
