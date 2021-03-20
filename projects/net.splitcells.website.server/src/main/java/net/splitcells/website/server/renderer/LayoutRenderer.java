@@ -18,23 +18,25 @@ public class LayoutRenderer {
     public static void main(String... args) throws Exception {
         // TODO privateProjectsRenderer().build();
         publicProjectsRenderer().build();
-        if (false) { // TODO REMOVE
-            final var layout = perspective("layout", NATURAL);
-            Streams.concat(
-                    Files.walk(Paths.get("/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.os.state.interface/src/main/bash"))
-                            .filter(Files::isRegularFile)
-                    , Files.walk(Paths.get("/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.os.state.interface/src/main/python"))
-                            .filter(Files::isRegularFile))
-                    .sorted()
-                    .forEach(file -> extend(layout, list(file.toFile().getName().split("\\."))));
-            net.splitcells.dem.resource.host.Files.writeToFile(
-                    Paths.get(System.getProperty("user.home"))
-                            .resolve("Documents/projects/net.splitcells.martins.avots.support.system/private")
-                            .resolve("net.splitcells.martins.avots.support.system/src/main/")
-                            .resolve("xml/net/splitcells/martins/avots/support/system/layout.xml")
-                    , Xml.toPrettyString(perspective("", NameSpaces.NATURAL)
-                            .withChild(layout).toDom()));
-        }
+        final var layout = perspective("layout", NATURAL);
+        Streams.concat(
+                Files.walk(Paths.get("../net.splitcells.os.state.interface/src/main/bash"))
+                        .filter(Files::isRegularFile)
+                , Files.walk(Paths.get("../net.splitcells.os.state.interface/src/main/python"))
+                        .filter(Files::isRegularFile))
+                .sorted()
+                .forEach(file -> extend(layout, list(file.toFile().getName().split("\\."))));
+        System.out.println(Paths.get(System.getProperty("user.home"))
+                .resolve("Documents/projects/net.splitcells.martins.avots.support.system/private")
+                .resolve("net.splitcells.martins.avots.support.system/src/main/")
+                .resolve("xml/net/splitcells/martins/avots/support/system/layout.xml"));
+        net.splitcells.dem.resource.host.Files.writeToFile(
+                Paths.get(System.getProperty("user.home"))
+                        .resolve("Documents/projects/net.splitcells.martins.avots.support.system/private")
+                        .resolve("net.splitcells.martins.avots.support.system/src/main/")
+                        .resolve("xml/net/splitcells/martins/avots/support/system/layout.xml")
+                , Xml.toPrettyString(perspective("", NameSpaces.NATURAL)
+                        .withChild(layout).toDom()));
     }
 
     public static void extend(Perspective perspective, List<String> path) {
