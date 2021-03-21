@@ -4,6 +4,7 @@
     <artifactId>website.default.content</artifactId>
     <parent>
         <groupId>net.splitcells</groupId>
+        <artifactId>pom-java-defaults</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
