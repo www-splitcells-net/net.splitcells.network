@@ -13,6 +13,7 @@ import net.splitcells.dem.source.code.SourceCodeCheck;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -66,9 +67,9 @@ public final class Dem {
                 final var stackTrace = Xml.elementWithChildren(DEN, "stack-trace");
                 final var errorMessage = Xml.elementWithChildren(DEN, "message");
                 {
-                    final var stackTraceValue = new ByteArrayOutputStream();
+                    final var stackTraceValue = new StringWriter();
                     t.printStackTrace(new PrintWriter(stackTraceValue));
-                    stackTrace.appendChild(textNode(new String(stackTraceValue.toByteArray())));
+                    stackTrace.appendChild(textNode(stackTraceValue.toString()));
                 }
                 errorMessage.appendChild(textNode(t.getMessage()));
                 {
