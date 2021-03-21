@@ -14,6 +14,10 @@ import static net.splitcells.website.server.renderer.ProjectsRenderer.projectsRe
 
 public class Projects {
     public static ProjectsRenderer projectsRenderer() {
+        return projectsRenderer(list());
+    }
+
+    public static ProjectsRenderer projectsRenderer(List<ProjectRenderer> additionalProjects) {
         final var projectRepository = Paths.get("../");
         final var profile = "public";
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer(profile, projectRepository)
@@ -29,6 +33,13 @@ public class Projects {
     }
 
     public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories) {
-        return list();
+        return list(
+                new ProjectRenderer
+                        (profile
+                                , projectRepositories.resolve("net.splitcells.dem/src/main/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , "/net/splitcells/dem")
+        );
     }
 }
