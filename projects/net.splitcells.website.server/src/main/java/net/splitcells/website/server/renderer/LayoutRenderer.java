@@ -12,12 +12,12 @@ import java.nio.file.Paths;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.website.server.renderer.ProjectsRenderer.publicProjectsRenderer;
+import static net.splitcells.website.Projects.projectsRenderer;
 
 public class LayoutRenderer {
     public static void main(String... args) throws Exception {
         // TODO privateProjectsRenderer().build();
-        publicProjectsRenderer().build();
+        projectsRenderer().build();
         final var layout = perspective("layout", NATURAL);
         Streams.concat(
                 Files.walk(Paths.get("../net.splitcells.os.state.interface/src/main/bash"))

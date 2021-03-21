@@ -14,15 +14,18 @@ import static net.splitcells.website.server.renderer.ProjectsRenderer.projectsRe
 
 public class Projects {
     public static ProjectsRenderer projectsRenderer() {
-        final var userHome = Paths.get(System.getProperty("user.home"));
-        final var projectRepositories = userHome.resolve("Documents/projects/net.splitcells.martins.avots.support.system/private");
+        final var projectRepository = Paths.get("../");
         final var profile = "public";
-        return projectsRenderer(profile, fallbackProjectRenderer(profile, projectRepositories)
-                , publicProjectsRenderer(profile, projectRepositories));
+        return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer(profile, projectRepository)
+                , projectRenderers(profile, projectRepository));
     }
 
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories) {
-        throw not_implemented_yet();
+        return new ProjectRenderer(profile
+                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/")
+                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/content")
+                , "/");
     }
 
     public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories) {
