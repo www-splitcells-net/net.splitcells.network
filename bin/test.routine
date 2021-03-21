@@ -5,3 +5,6 @@ set -e
 mvn clean install
 cd projects/net.splitcells.os.state.interface
     ./bin/test
+    cd ../..
+cd projects/net.splitcells.website.server
+  ./bin/serve.to.folder
