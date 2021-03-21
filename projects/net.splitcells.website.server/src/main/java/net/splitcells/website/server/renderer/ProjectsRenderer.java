@@ -69,6 +69,7 @@ public class ProjectsRenderer {
         new Server().serveAsAuthenticatedHttpsAt(port, requestPath -> render(requestPath));
     }
 
+    @Deprecated
     private final String profile;
     private final Map<String, ProjectRenderer> renderers = map();
     private final ProjectRenderer fallbackRenderer;
