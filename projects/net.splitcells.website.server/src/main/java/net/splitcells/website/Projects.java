@@ -14,14 +14,19 @@ import static net.splitcells.website.server.renderer.ProjectsRenderer.projectsRe
 
 public class Projects {
     public static ProjectsRenderer projectsRenderer() {
-        return projectsRenderer(Paths.get("../"), list());
+        final var profile = "public";
+        final var projectsRepository = Paths.get("../");
+        return projectsRenderer(projectsRepository
+                , profile
+                , fallbackProjectRenderer(profile, projectsRepository)
+                , list());
     }
 
-    public static ProjectsRenderer projectsRenderer(Path projectRepository
+    public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
+            , ProjectRenderer fallbackProjectRenderer
             , List<ProjectRenderer> additionalProjects) {
-        final var profile = "public";
-        return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer(profile, projectRepository)
-                , projectRenderers(profile, projectRepository));
+        return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
+                , additionalProjects.withAppended(projectRenderers(profile, projectRepository)));
     }
 
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories) {
@@ -33,13 +38,6 @@ public class Projects {
     }
 
     public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories) {
-        return list(
-                new ProjectRenderer
-                        (profile
-                                , projectRepositories.resolve("net.splitcells.dem/src/main/")
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
-                                , "/net/splitcells/dem")
-        );
+        return list();
     }
 }
