@@ -14,11 +14,11 @@ import static net.splitcells.website.server.renderer.ProjectsRenderer.projectsRe
 
 public class Projects {
     public static ProjectsRenderer projectsRenderer() {
-        return projectsRenderer(list());
+        return projectsRenderer(Paths.get("../"), list());
     }
 
-    public static ProjectsRenderer projectsRenderer(List<ProjectRenderer> additionalProjects) {
-        final var projectRepository = Paths.get("../");
+    public static ProjectsRenderer projectsRenderer(Path projectRepository
+            , List<ProjectRenderer> additionalProjects) {
         final var profile = "public";
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer(profile, projectRepository)
                 , projectRenderers(profile, projectRepository));
