@@ -64,17 +64,16 @@ public final class Dem {
             } catch (Throwable t) {
                 // TOFIX Additional namespace decleration should not be needed.
                 final var error = Xml.rElement(DEN, "error");
-                final var stackTrace = Xml.elementWithChildren(DEN, "stack-trace");
-                final var errorMessage = Xml.elementWithChildren(DEN, "message");
                 {
+                    final var errorMessage = Xml.elementWithChildren(DEN, "message");
+                    errorMessage.appendChild(textNode(t.getMessage()));
+                    error.appendChild(errorMessage);
+                }
+                {
+                    final var stackTrace = Xml.elementWithChildren(DEN, "stack-trace");
                     final var stackTraceValue = new StringWriter();
                     t.printStackTrace(new PrintWriter(stackTraceValue));
                     stackTrace.appendChild(textNode(stackTraceValue.toString()));
-                }
-                errorMessage.appendChild(textNode(t.getMessage()));
-                {
-                    // TOFIX Error message and stack trace are empty.
-                    error.appendChild(errorMessage);
                     error.appendChild(stackTrace);
                 }
                 Domsole.domsole().append(error, Optional.empty(), LogLevel.CRITICAL);
