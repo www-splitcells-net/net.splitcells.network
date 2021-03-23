@@ -158,8 +158,8 @@ public class ConstraintGroupBasedRepair implements Optimization {
         final var demandGrouping = demandGroupings
                 .stream()
                 .reduce(map(), (a, b) -> {
-                    a.forEach(
-                            (aKey, aVal) -> b.merge(aKey, aVal, (aVal2, bVal2) -> {
+                    b.forEach(
+                            (aKey, aVal) -> a.merge(aKey, aVal, (aVal2, bVal2) -> {
                                 aVal2.addAll(bVal2);
                                 return aVal2;
                             })
