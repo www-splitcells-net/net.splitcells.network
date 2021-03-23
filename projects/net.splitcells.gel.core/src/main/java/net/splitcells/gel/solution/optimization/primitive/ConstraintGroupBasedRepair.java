@@ -166,7 +166,6 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         .map(f -> freeDefyingGroupOfConstraintGroup(solution, f))
                         .orElseGet(() -> list()))
                 .flatMap(e -> e.stream())
-                //.distinct() // TODO Is this needed anymore?
                 .collect(toList());
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             demandFreeing.forEach(e -> {
