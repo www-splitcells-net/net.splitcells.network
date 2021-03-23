@@ -35,14 +35,23 @@ public class Maps {
 
 
     /**
-     * RENAME
+     * TODO Remove this, because it is not used anywhere.
      */
+    @Deprecated
     public static <T> Map<Class<? extends T>, T> variadicTypeMapping(@SuppressWarnings("unchecked") T... values) {
         return typeMapping(asList(values));
     }
 
+    /**
+     * TODO Remove this, because it is not used anywhere.
+     *
+     * @param values values
+     * @param <T>    type
+     * @return return
+     */
     @SuppressWarnings("unchecked")
-	public static <T> Map<Class<? extends T>, T> typeMapping(Collection<T> values) {
+    @Deprecated
+    public static <T> Map<Class<? extends T>, T> typeMapping(Collection<T> values) {
         Map<Class<? extends T>, T> rVal = map();
         values.forEach(value -> {
             if (rVal.containsKey(value.getClass())) {
