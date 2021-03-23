@@ -33,7 +33,6 @@ public class Maps {
         );
     }
 
-
     /**
      * TODO Remove this, because it is not used anywhere.
      */
