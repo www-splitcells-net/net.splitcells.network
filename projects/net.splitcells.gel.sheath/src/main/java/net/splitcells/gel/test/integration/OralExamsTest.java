@@ -25,6 +25,7 @@ import static java.lang.Math.floorMod;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -113,49 +114,59 @@ public class OralExamsTest extends TestSuiteI {
                                     , Xml.parse(initialSolutionTemplate).getDocumentElement())));
         }*/
         testSubject.optimize(linearInitialization());
-        testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3), (currentSolution, step) -> {
-            Domsole.domsole().append(
-                    perspective(ZonedDateTime.now().toString()
-                                    + testSubject.constraint().rating().getContentValue(Cost.class).value()
-                                    + currentSolution.isComplete()
-                                    + currentSolution.demands_unused().size()
+        IntStream.rangeClosed(1, 100).forEach(i -> {
+            if (testSubject.isOptimal()) {
+                return;
+            }
+            domsole().append(
+                    perspective(i + ""
                             , STRING)
                     , () -> list("debugging")
                     , LogLevel.DEBUG);
-            return step <= 100 && !currentSolution.isOptimal();
-        });
-        testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3), (currentSolution, step) -> {
-            Domsole.domsole().append(
-                    perspective(ZonedDateTime.now().toString()
-                                    + testSubject.constraint().rating().getContentValue(Cost.class).value()
-                                    + currentSolution.isComplete()
-                                    + currentSolution.demands_unused().size()
-                            , STRING)
-                    , () -> list("debugging")
-                    , LogLevel.DEBUG);
-            return step <= 100 && !currentSolution.isOptimal();
-        });
-        testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2), (currentSolution, step) -> {
-            Domsole.domsole().append(
-                    perspective(ZonedDateTime.now().toString()
-                                    + testSubject.constraint().rating().getContentValue(Cost.class).value()
-                                    + currentSolution.isComplete()
-                                    + currentSolution.demands_unused().size()
-                            , STRING)
-                    , () -> list("debugging")
-                    , LogLevel.DEBUG);
-            return step <= 100 && !currentSolution.isOptimal();
-        });
-        testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) -> {
-            Domsole.domsole().append(
-                    perspective(ZonedDateTime.now().toString()
-                                    + testSubject.constraint().rating().getContentValue(Cost.class).value()
-                                    + currentSolution.isComplete()
-                                    + currentSolution.demands_unused().size()
-                            , STRING)
-                    , () -> list("debugging")
-                    , LogLevel.DEBUG);
-            return step <= 100 && !currentSolution.isOptimal();
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3), (currentSolution, step) -> {
+                domsole().append(
+                        perspective(ZonedDateTime.now().toString()
+                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                        + currentSolution.isComplete()
+                                        + currentSolution.demands_unused().size()
+                                , STRING)
+                        , () -> list("debugging")
+                        , LogLevel.DEBUG);
+                return step <= 10 && !currentSolution.isOptimal();
+            });
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3), (currentSolution, step) -> {
+                domsole().append(
+                        perspective(ZonedDateTime.now().toString()
+                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                        + currentSolution.isComplete()
+                                        + currentSolution.demands_unused().size()
+                                , STRING)
+                        , () -> list("debugging")
+                        , LogLevel.DEBUG);
+                return step <= 10 && !currentSolution.isOptimal();
+            });
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2), (currentSolution, step) -> {
+                domsole().append(
+                        perspective(ZonedDateTime.now().toString()
+                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                        + currentSolution.isComplete()
+                                        + currentSolution.demands_unused().size()
+                                , STRING)
+                        , () -> list("debugging")
+                        , LogLevel.DEBUG);
+                return step <= 10 && !currentSolution.isOptimal();
+            });
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) -> {
+                domsole().append(
+                        perspective(ZonedDateTime.now().toString()
+                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                        + currentSolution.isComplete()
+                                        + currentSolution.demands_unused().size()
+                                , STRING)
+                        , () -> list("debugging")
+                        , LogLevel.DEBUG);
+                return step <= 10 && !currentSolution.isOptimal();
+            });
         });
         /*
         IntStream.rangeClosed(1, 10).forEach(a -> {
