@@ -1,5 +1,6 @@
 package net.splitcells.gel.solution.optimization.primitive;
 
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
@@ -20,6 +21,7 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
@@ -34,6 +36,7 @@ import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimiz
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.primitive.SupplySelection.supplySelection;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConstraintGroupBasedRepair implements Optimization {
 
@@ -179,6 +182,9 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 demandFreeing.stream()
                         .map(e -> e.supply().interpret().get())
                         .collect(toList())));
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            assertThat((Predicate<Integer>) Integers::isEven).accepts(optimization.size());
+        }
         return optimization;
     }
 
