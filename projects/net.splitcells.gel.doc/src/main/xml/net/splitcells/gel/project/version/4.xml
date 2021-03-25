@@ -6,6 +6,7 @@
          xmlns:e="http://splitcells.net/sen.xsd">
     <solution>
         <objective>
+            Make Gel a usable program
             <objective>Support interactive problem solving via Website.
                 <solution>Use pseudo CSV format (variable length lines) as input, where the first row describes the
                     line type. This means that multiple tables can be extracted from the single CSV.
@@ -16,10 +17,22 @@
                 <solution>Create docker image.</solution>
             </objective>
             <objective>Create docker image, so Gel tests can be easily run on another server .
-                <solution>Some monitoring server software is required in order to retrieve data.
+                <problem>
                     The Gel docker image could sent the results to the server software.
-                </solution>
+                    <solution>Save execution results/logs into monitoring software (Prometheus) and visualize (Grafana)
+                        it.
+                        <toDo>Create project "net.splitcells.network.host", which is the source code of the
+                            infrastructure.
+                            <objective>Should be deployable via one command and extendable with other projects for i.e.
+                                private
+                                projects.
+                            </objective>
+                        </toDo>
+                    </solution>
+                </problem>
             </objective>
+            <objective>Render constraint tree to HTML.</objective>
+            <objective>Render logs.</objective>
         </objective>
         <scheduling>
             <priority>
