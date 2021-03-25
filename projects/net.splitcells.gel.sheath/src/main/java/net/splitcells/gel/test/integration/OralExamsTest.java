@@ -132,18 +132,7 @@ public class OralExamsTest extends TestSuiteI {
                                 , STRING)
                         , () -> list("debugging")
                         , LogLevel.DEBUG);
-                return step <= 10 && !currentSolution.isOptimal();
-            });
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3), (currentSolution, step) -> {
-                domsole().append(
-                        perspective(ZonedDateTime.now().toString()
-                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
-                                        + currentSolution.isComplete()
-                                        + currentSolution.demands_unused().size()
-                                , STRING)
-                        , () -> list("debugging")
-                        , LogLevel.DEBUG);
-                return step <= 10 && !currentSolution.isOptimal();
+                return step <= 100 && !currentSolution.isOptimal();
             });
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2), (currentSolution, step) -> {
                 domsole().append(
@@ -154,7 +143,18 @@ public class OralExamsTest extends TestSuiteI {
                                 , STRING)
                         , () -> list("debugging")
                         , LogLevel.DEBUG);
-                return step <= 10 && !currentSolution.isOptimal();
+                return step <= 100 && !currentSolution.isOptimal();
+            });
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3), (currentSolution, step) -> {
+                domsole().append(
+                        perspective(ZonedDateTime.now().toString()
+                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                        + currentSolution.isComplete()
+                                        + currentSolution.demands_unused().size()
+                                , STRING)
+                        , () -> list("debugging")
+                        , LogLevel.DEBUG);
+                return step <= 100 && !currentSolution.isOptimal();
             });
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) -> {
                 domsole().append(
@@ -165,7 +165,7 @@ public class OralExamsTest extends TestSuiteI {
                                 , STRING)
                         , () -> list("debugging")
                         , LogLevel.DEBUG);
-                return step <= 10 && !currentSolution.isOptimal();
+                return step <= 100 && !currentSolution.isOptimal();
             });
         });
         /*
