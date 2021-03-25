@@ -40,6 +40,7 @@
                     <toDo xl:href="https://www.heise.de/news/Testing-Mit-Jazzer-erscheint-ein-Open-Source-Fuzzer-fuer-JVM-Anwendungen-5050930.html">
                         Implement fuzzing.
                     </toDo>
+                    <toDo>Implement a Meta Optimization based on Input like TemplateInitializer's input.</toDo>
                 </queue>
             </priority>
         </scheduling>
