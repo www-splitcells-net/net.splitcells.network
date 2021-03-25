@@ -16,7 +16,7 @@
                 <solution>Create docker image.</solution>
             </objective>
             <objective>Create docker image, so Gel tests can be easily run on another server .
-                <solution>Some monitorng server software is required in order to retrieve data.
+                <solution>Some monitoring server software is required in order to retrieve data.
                     The Gel docker image could sent the results to the server software.
                 </solution>
             </objective>
