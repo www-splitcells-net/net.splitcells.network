@@ -12,6 +12,7 @@
         <scheduling>
             <queues>
                 <priority>
+                    <toDo>Clean up guide lines.</toDo>
                     <toDo>Clean up ConfigurationI.
                         <toDo>Create to validate framework.</toDo>
                     </toDo>
@@ -32,6 +33,7 @@
                     <toDo>Console should print message asynchronously.</toDo>
                     <toDo>Implement test injection and recursive test injection.</toDo>
                     <toDo>Create functional effect system.</toDo>
+                    <idea>Create BNF grammar for XML and check files with it, instead of using XSD.</idea>
                 </priority>
             </queues>
             <service xl:href="compatibilty-and-portability.xml"/>

@@ -46,7 +46,7 @@
                 </toDo>
             </toDo>
             <toDo>Ensure that the code is easily translatable to other languages with minimal effort and manual work.
-                <idea>Support different paradigmas.
+                <idea>Support different paradigms.
                     <toDo>Object-Orientation mainly provides polymorphic tree transformations.</toDo>
                     <todo>Support a very simple and basic version of functional programming
                         with an simple statically typed object system.
@@ -57,6 +57,7 @@
                 <toDo>Always translate code to other language automatically and test it, in order to be sure
                     that the code is portable. A good target would be a minimal language.
                     It may be easier to start with a dynamically typed language.
+                    <result>This would allow to check additional properties of the program before running it.</result>
                 </toDo>
             </toDo>
         </solution>
