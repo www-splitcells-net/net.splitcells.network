@@ -62,21 +62,8 @@ public final class Dem {
                 // TOFIX Does not write log file on short programs that throws an exception.
                 program.run();
             } catch (Throwable t) {
-                // TOFIX Additional namespace decleration should not be needed.
-                final var error = Xml.rElement(DEN, "error");
-                {
-                    final var errorMessage = Xml.elementWithChildren(DEN, "message");
-                    errorMessage.appendChild(textNode(t.getMessage()));
-                    error.appendChild(errorMessage);
-                }
-                {
-                    final var stackTrace = Xml.elementWithChildren(DEN, "stack-trace");
-                    final var stackTraceValue = new StringWriter();
-                    t.printStackTrace(new PrintWriter(stackTraceValue));
-                    stackTrace.appendChild(textNode(stackTraceValue.toString()));
-                    error.appendChild(stackTrace);
-                }
-                Domsole.domsole().append(error, Optional.empty(), LogLevel.CRITICAL);
+                // TODO Somehow mark this error specially, so its clear, that this error caused execution failure.
+                Domsole.domsole().appendError(t);
                 throw t;
             } finally {
                 processEnvironment.config().withConfigValue(EndTime.class, Optional.of(ZonedDateTime.now()));

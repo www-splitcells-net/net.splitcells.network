@@ -11,12 +11,15 @@ import io.vertx.ext.web.Router;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.Files;
+import net.splitcells.dem.resource.host.interaction.Domsole;
 import net.splitcells.website.server.Server;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -27,6 +30,7 @@ import static net.splitcells.dem.resource.Paths.generateFolderPath;
 import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.host.Files.createDirectory;
 import static net.splitcells.dem.resource.host.Files.writeToFile;
+import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProjectsRenderer {
@@ -55,18 +59,18 @@ public class ProjectsRenderer {
                 .forEach(path -> {
                     final var targetPath = path(target, path.substring(1));
                     createDirectory(targetPath.getParent());
-                    writeToFile(targetPath, render(path).getContent());
+                    writeToFile(targetPath, render(path).get().getContent());
                 });
     }
 
     public void serveToHttpAt(int port) {
         build();
-        new Server().serveToHttpAt(port, requestPath -> render(requestPath));
+        new Server().serveToHttpAt(port, requestPath -> render(requestPath).get());
     }
 
     public void serveAsAuthenticatedHttpsAt(int port) {
         build();
-        new Server().serveAsAuthenticatedHttpsAt(port, requestPath -> render(requestPath));
+        new Server().serveAsAuthenticatedHttpsAt(port, requestPath -> render(requestPath).get());
     }
 
     @Deprecated
@@ -82,7 +86,7 @@ public class ProjectsRenderer {
         }
     }
 
-    public RenderingResult render(String path) {
+    public Optional<RenderingResult> render(String path) {
         final var matchingRoots = renderers.keySet().stream().filter(root -> path.startsWith(root)).collect(toList());
         if (matchingRoots.isEmpty()) {
             // System.out.println("No match for: " + path);

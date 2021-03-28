@@ -13,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.file.Files.readAllBytes;
@@ -22,6 +23,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**
@@ -58,7 +60,7 @@ public class ProjectRenderer {
 
     /**
      * A new renderer is created each time, in order to use updated XSL transformations.
-     *
+     * <p>
      * IDEA Create mode where the renderer ist cached.
      */
     private FileStructureTransformer renderer() {
@@ -68,7 +70,7 @@ public class ProjectRenderer {
     /**
      * TODO Create root for each file type, that needs its one processing method.
      */
-    public RenderingResult render(String path) {
+    public Optional<RenderingResult> render(String path) {
         if (path.length() > 0 && path.charAt(0) == '/') {
             path = path.substring(1);
         }
@@ -78,23 +80,23 @@ public class ProjectRenderer {
                 (routingContext.request().path().split("/")
                 ).stream().filter(e -> !e.isBlank()).collect(toList());*/
         if (path.endsWith(".txt")) {
-            return renderingResult(renderTextFile(path), TEXT_HTML.toString());
+            return Optional.of(renderingResult(renderTextFile(path), TEXT_HTML.toString()));
         } else if (path.endsWith(".png")) {
-            return renderingResult(readArtifact(path), "image/png");
+            return Optional.of(renderingResult(readArtifact(path), "image/png"));
         } else if (path.endsWith(".jpg")) {
-            return renderingResult(readArtifact(path), "image/jpg");
+            return Optional.of(renderingResult(readArtifact(path), "image/jpg"));
         } else if (path.endsWith(".css")) {
-            return renderingResult(readArtifact(path), "text/css");
+            return Optional.of(renderingResult(readArtifact(path), "text/css"));
         } else if (path.endsWith(".js")) {
-            return renderingResult(readArtifact(path), "text/javascript");
+            return Optional.of(renderingResult(readArtifact(path), "text/javascript"));
         } else if (path.endsWith(".html")) {
-            return renderingResult(renderFile(path), TEXT_HTML.toString());
+            return Optional.of(renderingResult(renderFile(path), TEXT_HTML.toString()));
         } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
-            return renderingResult(renderFile(path), TEXT_HTML.toString());//, "application/xml");
+            return Optional.of(renderingResult(renderFile(path), TEXT_HTML.toString()));//, "application/xml");
         } else if (path.endsWith(".svg")) {
-            return renderingResult(readArtifact(path), "image/svg+xml");
+            return Optional.of(renderingResult(readArtifact(path), "image/svg+xml"));
         } else {
-            return renderingResult(readArtifact(path), TEXT_HTML.toString());
+            return Optional.of(renderingResult(readArtifact(path), TEXT_HTML.toString()));
         }
     }
 
@@ -177,18 +179,20 @@ public class ProjectRenderer {
 
     public Perspective projectLayout() {
         final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
+        final Path folder;
+        if (typedFolder) {
+            folder = project.resolve("xml");
+        } else {
+            folder = project;
+        }
         try {
-            final Path folder;
-            if (typedFolder) {
-                folder = project.resolve("xml");
-            } else {
-                folder = project;
-            }
             java.nio.file.Files.walk(folder)
                     .filter(java.nio.file.Files::isRegularFile)
                     .forEach(file -> extendPerspectiveWithPath(layout, folder.relativize(file)));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            final var we = new RuntimeException(folder.toAbsolutePath().toString(), e);
+            domsole().appendError(we);
+            throw we;
         }
         return layout;
     }

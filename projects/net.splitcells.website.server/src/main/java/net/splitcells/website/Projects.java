@@ -46,7 +46,7 @@ public class Projects {
                                 , "/net/splitcells/dem")
                 , new ProjectRenderer
                         (profile
-                                , projectRepositories.resolve("../../net.splitcells.network/src/main/")
+                                , projectRepositories.resolve("../src/main/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/network")

@@ -11,11 +11,14 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.dem.resource.communication.Sender;
+import net.splitcells.dem.resource.host.interaction.Domsole;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.LogMessage;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -74,6 +77,24 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
             baseOutput.append(tmp.split(Dsui.ENTRY_POINT)[0]);
         }
         contentOutput = Sender.extend(baseOutput, "   ", "");
+    }
+
+    public <R extends ListWA<LogMessage<Node>>> R appendError(Throwable throwable) {
+        // TOFIX Additional namespace declaration should not be needed.
+        final var error = Xml.rElement(DEN, "error");
+        {
+            final var errorMessage = Xml.elementWithChildren(DEN, "message");
+            errorMessage.appendChild(textNode(throwable.getMessage()));
+            error.appendChild(errorMessage);
+        }
+        {
+            final var stackTrace = Xml.elementWithChildren(DEN, "stack-trace");
+            final var stackTraceValue = new StringWriter();
+            throwable.printStackTrace(new PrintWriter(stackTraceValue));
+            stackTrace.appendChild(textNode(stackTraceValue.toString()));
+            error.appendChild(stackTrace);
+        }
+        return Domsole.domsole().append(error, Optional.empty(), LogLevel.CRITICAL);
     }
 
     public <R extends ListWA<LogMessage<Node>>> R append(Node domable, Optional<Discoverable> context,
