@@ -38,6 +38,29 @@ public class Projects {
     }
 
     public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories) {
-        return list();
+        return list(new ProjectRenderer
+                        (profile
+                                , projectRepositories.resolve("net.splitcells.dem/src/main/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , "/net/splitcells/dem")
+                , new ProjectRenderer
+                        (profile
+                                , projectRepositories.resolve("../../net.splitcells.network/src/main/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/net/splitcells/network")
+                , new ProjectRenderer
+                        (profile
+                                , projectRepositories.resolve("net.splitcells.gel.doc/src/main/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/net/splitcells/gel")
+                , new ProjectRenderer
+                        (profile
+                                , projectRepositories.resolve("net.splitcells.system/src/main/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/net/splitcells"));
     }
 }
