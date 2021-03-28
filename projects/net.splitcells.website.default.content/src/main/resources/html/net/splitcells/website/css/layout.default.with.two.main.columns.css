@@ -1,0 +1,7 @@
+@charset "UTF-8";
+/* Sorted from smallest to biggest widths in media queries. */
+@media (min-width: 95em) and (max-width: 99em) {
+    .rightDecoration {
+        display: none !important;
+        }
+    }

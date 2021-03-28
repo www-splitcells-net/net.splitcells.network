@@ -1,0 +1,468 @@
+@charset "UTF-8";
+/* Guidlines:
+- Use 100% of width by default and no specific height values by default.
+  In other words grow in one direction and fille the other one.
+- Use names with namespaces.
+*/
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.beginningOfContent {
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image:url('/net/splitcells/martins/avots/website//images/license.standard/white.background.blog.discovery.0.jpg');
+}
+* {
+	word-break: normal;
+	}
+.net-splitcells-website-hidden-by-default {
+    /* We hide errors by default and only show them via Javascript. */
+    }
+.splitcells-net-title-logo {
+    text-align: center;
+    }
+.splitcells-net-window-menu {
+    min-height: 4.75em;
+    }
+.splitcells-net-background-window {
+    flex:auto;
+    }
+.net-splitcells-quote-display input:not(:checked) ~ div {
+    overflow: auto;
+}
+.net-splitcells-quote-display input:checked ~ div {
+    max-height: 30em;
+    overflow: auto;
+}
+mjx-container {
+    /* Prevents that any formula displayed as block, goes outside of its container. */
+    overflow-y: scroll;
+    }
+*, *:before, *:after {
+	box-sizing: inherit; /* Let other css overwrite this attribute if they want. */
+}
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-left: 1em;
+    padding-top: 0;
+    }
+.NonStandard {}
+.HeaderLinkButton {
+	margin-left: .0625em;
+	margin-right: .0625em;
+	}
+.contentCell {
+    /* The content itself should manage overflow.*/
+    }
+.search_bar {
+	width: 100%;
+	outline: medium none;
+	border: medium none;
+	height: 1.75em;
+	text-indent: .25em;
+	margin-top: .05em;
+	margin-bottom: 0.05em;
+	}
+*.div_row {
+	display: flex;
+	flex-direction: row;
+	}
+.highlighted_button {
+	display: inline-block;
+	font-weight: bold;
+	line-height: 1.5em;
+	vertical-align: middle;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	}
+.structural_guide {
+	/* For overlays use 2000000000 <= index < 2147483647. */
+	z-index: 1000000000;
+	}
+.Button {
+	display: inline-block;
+	font-weight: bold;
+	line-height: 1.5em;
+	vertical-align: middle;
+	padding-left: 1em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	padding-right: 1em;
+	float: right;
+	}
+/*deprecated*/
+.HeaderButton {
+	margin-bottom: 0.06125em;
+	font-weight: bold;
+	line-height: 1.5em;
+	vertical-align: middle;
+	padding-left: .5em;
+	padding-right: .5em;
+	height: 2em;
+	margin-top: 0em;
+	text-align: center;
+	vertical-align: middle;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-indent: 0em;
+	}
+.HeaderButton_structure {
+	margin-left: .0625em;
+	margin-right: .0625em;
+	font-weight: bold;
+	line-height: 1.5em;
+	vertical-align: middle;
+	padding-left: .5em;
+	padding-right: .5em;
+	height: 2em;
+	margin-top: 0em;
+	text-align: center;
+	vertical-align: middle;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-indent: 0em;
+	margin-left: .0625em;
+	margin-right: .0625em;
+	}
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	}
+.Borderless {
+	border: none;
+	border-width: 0px;
+	padding: 0;
+	margin: 0;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	}
+td.TextCell {
+	vertical-align: top;
+	/*text-align: justify;*/
+	}
+.FirstLineIndented {
+	text-indent: 25px;
+	}
+.FLI {
+	/*alias for FirstLineIndented*/
+	text-indent: 25px;
+	}
+.Button_S {
+	font-weight: bold;
+	margin-top: 0.1em;
+	margin-bottom: 0.1em;
+	line-height: 1.5em;
+	vertical-align: middle;
+	}
+.Button_S:hover {}
+.Message {
+	text-indent: 1em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	font-weight: bold;
+	width: 100%;
+	line-height: 1.5em;
+	vertical-align: middle;
+	}
+.TopMobileMainButton_S {
+	text-indent: 1em;
+	font-weight: bold;
+	width: 100%;
+	line-height: 1.5em;
+	vertical-align: middle;
+	}
+.Path_element_S {
+	margin-top: .05em;
+	margin-left: 0.05em;
+	margin-right: 0.05em;
+	padding-left: .5em;
+	padding-right: .5em;
+	margin-bottom: .05em;
+	font-weight: bold;
+	vertical-align: middle;
+	transform: skewx(12deg);
+	}
+.Path_element_content_S {
+	transform: skewx(-12deg);
+	}
+.MainButton_S {
+	text-indent: 1em;
+	margin-top: .05em;
+	/*padding-top: .25em;*/
+	margin-bottom: .05em;
+	/*padding-bottom: .25em;*/
+	font-weight: bold;
+	width: 100%;
+	line-height: 1.5em;
+	vertical-align: middle;
+	}
+.tree_name {
+	margin-top: .7em;
+	margin-bottom: .7em;
+}
+.tree {
+	margin-left: 1em;
+	margin-top: .7em;
+	margin-bottom: .7em;
+}
+.tree .tree {
+	margin-left: 1em;
+}
+.tree input:not(:checked) ~ div {
+	display: none;
+}
+.tree input:checked ~ div {
+
+}
+.MainButton_S:hover {}
+.linkButton {
+	text-decoration: none;
+	}
+.heading_text{
+	font-size: 125%;
+	font-weight: bold;
+	}
+.heading {
+	font-size: 125%;
+	font-weight: bold;
+	margin-top: 3em;
+	margin-bottom: 2em;
+	}
+.chapter .heading {
+	padding-left: .2em;
+	font-size: 125%;
+	font-weight: bold;
+	margin-top: 3em;
+	margin-bottom: 2em;
+	}
+.chapter .chapter .heading {
+	font-size: 125%;
+	font-weight: bold;
+	padding-left: .8em;
+	margin-top: 3em;
+	margin-bottom: 2em;
+	}
+.chapter .chapter .chapter .heading {
+	font-size: 125%;
+	font-weight: bold;
+	padding-left: 1.6em;
+	margin-top: 3em;
+	margin-bottom: 2em;
+	}
+.chapter .chapter .chapter .chapter .heading {
+	font-size: 125%;
+	font-weight: bold;
+	padding-left: 2.4em;
+	margin-top: 3em;
+	margin-bottom: 2em;
+	}
+.chapter .chapter .chapter .chapter .chapter .heading {
+	font-size: 125%;
+	font-weight: bold;
+	padding-left: 3.2em;
+	margin-top: 3em;
+	margin-bottom: 2em;
+	}
+.Text {
+	font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+	}
+p:not(.NonStandard) {
+	font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+	}
+article {
+	width: 100%;
+	}
+a {
+	/* TODO font-family: Arial,Helvetica,sans-serif;*/
+	}
+*.hidden {
+	display:none;
+	}
+*.highlighted {
+	padding-top: .5em;
+	padding-right: 1em;
+	padding-bottom: .5em;
+	padding-left: 1em;
+	}
+*.standard-margin {
+	margin: .5%;
+	width: 99%;
+	}
+*.standardborder {
+	padding-top: .5em;
+	padding-right: 1em;
+	padding-bottom: .5em;
+	padding-left: 1em;
+	}
+*.highlightedShortSummary {
+	/* DEPRECATED */
+	margin: 0em;
+	padding-top: .5em;
+	padding-right: 1em;
+	padding-bottom: .5em;
+	padding-left: 1em;
+	}
+*.tableStyle {
+	display: block;
+	/*margin-left:auto; 
+	margin-right:auto;*/
+	max-width: 100%;
+	overflow-y: auto;
+	overflow-x: auto;
+	}
+*.Layout {}
+.table {
+	display: block;
+	overflow-y: auto;
+	overflow-x: auto;
+	border-collapse: separate;
+	border-spacing: .2em;
+	}
+.row {
+	display: table-row;
+	}
+.tag_cell {
+	padding: .3em;
+	}
+.cell {
+	display: table-cell;
+	padding: .3em;
+	}
+.toc_chapter_1 {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.toc_chapter_2 {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.toc_chapter_3 {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.toc_chapter_4 {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.toc_chapter_5 {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.toc_chapter_6 {	
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.toc_chapter_7 {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.toc_chapter_8 {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.toc_chapter_9 {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.toc_chapter_10 {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin-left: .5em;
+	margin-right: .25em;
+	margin-top: .125em;
+	margin-bottom: .125em;
+	}
+.MainButtonDescription {
+	margin-top: .05em;
+	margin-bottom: .05em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	}
+.premature_paragraph {
+	padding-left: .5em;
+	padding-right: .5em;
+	}
+.paragraph {
+	font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif;
+	margin-top: 1.4em;
+	margin-bottom: 1.4em;
+	padding-left: 1em;
+	padding-right: 1em;
+	}
+.net-splitcells-den-paragraph {
+	font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif;
+	padding-left: 1em;
+	padding-right: 1em;
+	}
+.highlighted_paragraph {
+	padding-left: .5em;
+	padding-right: .5em;
+	font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif;
+	}
+/* dependency specific: particleground */
+.pg-canvas
+	{position: absolute;
+	}

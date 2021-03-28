@@ -1,0 +1,132 @@
+@charset "UTF-8";
+@media (max-width: 73.5em) {
+    .HeaderButton {
+        line-height: 2em;
+    }
+    #description_column_3 {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    #mainOptions_column_3 {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    #news_column_3 {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    #furtherInfo_column_3 {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    #trademark {
+        margin-top: 4.5em !important;
+        margin-bottom: 1.5em !important;
+    }
+}
+
+@media (min-width: 49em) and (max-width: 73.5em) {
+    #description_column_1 {
+        width: 50% !important;
+    }
+    #mainOptions_column_1 {
+        width: 50% !important;
+    }
+    #news_column_1 {
+        width: 50% !important;
+    }
+    #furtherInfo_column_1 {
+        width: 50% !important;
+    }
+    #description_column_2 {
+        width: 50% !important;
+    }
+    #mainOptions_column_2 {
+        width: 50% !important;
+    }
+    #news_column_2 {
+        width: 50% !important;
+    }
+    #furtherInfo_column_2 {
+        width: 50% !important;
+    }
+}
+
+@media (max-width: 49em) {
+    #description_column_2 {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    #mainOptions_column_2 {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    #news_column_2 {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    #furtherInfo_column_2 {
+        visibility: hidden !important;
+        display: none !important;
+    }
+}
+
+@media (max-width: 49em) {
+    .HeaderButton {
+        line-height: 2em !important;
+    }
+    #description_column_1 {
+        width: initial !important;
+    }
+    #mainOptions_column_1 {
+        width: initial !important;
+    }
+    #news_column_1 {
+        width: initial !important;
+    }
+    #furtherInfo_column_1 {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 25em) {
+    #menu_project {
+        visibility: hidden !important;
+        display: none !important;
+    }
+}
+
+@media (max-width: 20em) {
+    #menu_contact {
+        visibility: hidden !important;
+        display: none !important;
+    }
+}
+@media (max-width: 51em) {
+    #menu_use_inverted_theme {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    #trademark {
+        margin-top: 2.5em !important;
+        margin-bottom: .75em !important;
+    }
+}
+@media (max-width: 42em) {
+        #menu_invert_colors {
+        visibility: hidden !important;
+        display: none !important;
+    }
+}
+@media (max-width: 34em) {
+        #menu_about {
+        visibility: hidden !important;
+        display: none !important;
+    }
+}
+@media (max-width: 31em) {
+        #menu_licensing {
+        visibility: hidden !important;
+        display: none !important;
+    }
+}

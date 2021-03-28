@@ -1,0 +1,11 @@
+@charset "UTF-8";
+.graphml_node > rect {
+	fill:silver;
+}
+.graphml_node > text {
+	font-size:24;
+	font-weight:bold;
+}
+.graphml_edge {
+	fill:black;
+}

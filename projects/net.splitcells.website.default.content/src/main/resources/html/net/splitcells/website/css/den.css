@@ -1,0 +1,123 @@
+@charset "UTF-8";
+/* TODO .net-splitcells-den-perspective li {
+     border-left: 1px solid rgb(100,100,100);
+   }
+   .net-splitcells-den-perspective li {
+        border-left: 1px solid rgb(100,100,100);
+      }
+ul.net-splitcells-den-perspective li:last-child {
+    border-left:none;
+   }
+.net-splitcells-den-perspective li:last-child:before {
+    border-left: 1px solid rgb(100,100,100);
+    content: "";
+   }
+.net-splitcells-den-perspective li:before {
+      position:relative;
+      top:-0.3em;
+      border-bottom:1px solid rgb(100,100,100);
+      content: "";
+      width: 1em;
+      height: 1em;
+      display:inline-block;
+   }*/
+li.net-splitcells-den-perspective {
+   border-left: 1px solid rgb(100,100,100);
+   padding-left: .5em;
+   }
+.void {
+    display: none;
+    }
+.perspective-children {
+	margin-left: 1em;
+	}
+.perspective-namespace-link-to-value {
+	width: .01em;
+	display: inline-block;
+    }
+.perspective > input {
+	display: none;
+	}
+.perspective > .hide-children:not(:checked) ~ .perspective-children {
+    }
+.perspective > .hide-children:checked ~ .perspective-children {
+    display: none;
+    }
+.hide-current-node:not(:checked) ~ .perspective-value {
+    }
+.hide-current-node:checked ~ .perspective-value {
+    display: none;
+    }
+.show-in-row {
+    display: flex;
+    flex-direction: row;
+    }
+.perspective-namespace > .paragraph {
+    margin-top: 1.4em;
+    margin-bottom: 1.4em;
+    }
+.perspective > .hide-children:not(:checked) ~ .perspective-menu::after {
+	/* BLACK DOWN-POINTING SMALL TRIANGLE */
+	content: "\25BE";
+	padding-left: .125em;
+	padding-right: .125em;
+    }
+.perspective > .hide-children:checked ~ .perspective-menu::after {
+	/* BLACK RIGHT-POINTING SMALL TRIANGLE */
+	content: "\25B8";
+	padding-left: .125em;
+    padding-right: .125em;
+    }
+.perspective > .show-children:not(:checked) ~ .perspective-children {
+    display: none;
+    }
+.perspective > .show-children:checked ~ .perspective-children {
+    }
+.perspective-value-prefix {
+    display: flex;
+    flex-direction: row;
+	box-shadow: .125em .125em .1em 0em rgba(0, 0, 0, 0.06125), -.06125em 0em
+		.1em 0em rgba(0, 0, 0, 0.06125), 0em -.06125em .1em 0em
+		rgba(0, 0, 0, 0.06125);
+    }
+.perspective-menu {
+	box-shadow: .125em .125em .1em 0em rgba(0, 0, 0, 0.06125), -.06125em 0em
+       	.1em 0em rgba(0, 0, 0, 0.06125), 0em -.06125em .1em 0em
+       	rgba(0, 0, 0, 0.06125);
+    font-weight: bold;
+	}
+.perspective-name-as-text {
+    margin-top: -1em;/* This is an hack, in order to remove space about this element caused by paraggraphs. */
+    box-shadow: .125em .125em .1em 0em rgba(0, 0, 0, 0.06125), -.06125em 0em
+    	.1em 0em rgba(0, 0, 0, 0.06125), 0em -.06125em .1em 0em
+    	rgba(0, 0, 0, 0.06125);
+    }
+.perspective-name {
+    display: inline-block;
+    /* TODO Create option to toggle: max-width: 40em; */
+	}
+.Standard_content.perspective-value {
+    background-color: var(--background-color-priority-0);
+    color: var(--foreground-color-priority-0);
+}
+.perspective-name {
+	/*margin-left: 1em;*/
+    display: inline-flex;
+    flex-direction: row;
+    flex-direction: row;
+    }
+.perspective-options {
+    display: flex;
+    flex-direction: row;
+    }
+.perspective-namespace {
+    margin-right: .25em;
+    box-shadow: .125em .125em .1em 0em rgba(0, 0, 0, 0.06125), -.06125em 0em
+        	.1em 0em rgba(0, 0, 0, 0.06125), 0em -.06125em .1em 0em
+        	rgba(0, 0, 0, 0.06125);
+    }
+.perspective-word {
+    box-shadow: .125em .125em .1em 0em rgba(0, 0, 0, 0.06125), -.06125em 0em
+        	.1em 0em rgba(0, 0, 0, 0.06125), 0em -.06125em .1em 0em
+        	rgba(0, 0, 0, 0.06125);
+    }

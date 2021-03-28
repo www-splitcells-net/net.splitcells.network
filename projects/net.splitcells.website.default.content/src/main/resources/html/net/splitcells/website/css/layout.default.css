@@ -1,0 +1,233 @@
+@charset "UTF-8";
+/* Sorted from smallest to biggest widths in media queries. */
+html {
+    overflow-wrap: break-word;
+    box-sizing: border-box; /* Padding and borders are part of width. */
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+footer {
+    flex: auto;
+    min-height: 5em;
+    z-index: 100;
+}
+.net-splitcells-website-column-background-1 {
+    order: 1;
+}
+.column_0 {
+    display: flex;
+    flex-direction: row;
+    }
+.column_1 {
+    display: flex;
+    flex-direction: row;
+    }
+@media (max-width: 23.25em) {
+    .change_menu_logo {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .optional {
+    	/* TOREMOVE This is replaces by minimal-only. */
+        visibility: hidden !important;
+        display: none !important;
+        }
+    }
+@media (max-width: 30em) {
+    .optional {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .beginningOfContent {
+        background-image: none;
+        }
+    .MainButton_S {
+        line-height: 2em !important;
+        }
+    .HeaderButton {
+        line-height: 2em !important;
+        }
+    .change_menu_content {
+        font-size: 1em !important;
+        }
+    .title_structural_guide {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .optional_structural_guide {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .title_logo {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .header {
+        z-index: 1000 !important;
+        }
+    .mainElement_Container {
+        /* TODO Not sure why this does not work. On the other hand not needed because divs are 'column' based by default.
+        display: flex !important;
+        flex-direction: column !important;*/
+        }
+    .rightDecoration {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .column_0 {
+        width: 100% !important;
+        }
+    .column_1 {
+            width: 100%;
+            }
+    .content {
+        padding-left: .25em !important;
+        }
+    .mainElement {
+        width: 100% !important;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        background: transparent linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, var(--background-color-priority-7) 100em) repeat scroll 0% 0%;
+        }
+    .section_gallery,
+    .change_menu_visibility {
+        visibility: visible !important;
+        display: block !important;
+        font-size: 1.5em;
+        }
+    }
+@media (max-width: 53.25em) {
+    .minimal-only {
+    	display: none;
+    	visibility: hidden:
+    	}
+    }
+@media (max-width: 53.25em) {
+	.minimal-not {
+		display: none;
+        visibility: hidden:
+    	}
+    .beginningOfContent {
+        background-image: none;
+        }
+    .MainButton_S {
+        line-height: 2em !important;
+        }
+    .HeaderButton {
+        line-height: 2em !important;
+        }
+    .title_logo {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    .header {
+        z-index: 1000 !important;
+        }
+    .change_menu_content {
+        font-size: 1em !important;
+        }
+    .change_menu_visibility {
+        visibility: visible !important;
+        display: block !important;
+        }
+    .rightDecoration {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .column_0 {
+        width: 100%;
+        }
+    .column_1 {
+        width: 100%;
+        }
+    .section_gallery {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .mainElement {
+        width: 100% !important;
+        }
+    .menu {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .change_menu_visibility {
+        visibility: visible;/*!important*/
+        display: block;/*!important*/
+        font-size: 1.375em;
+        }
+    .topElement {
+        font-size: 1em;
+        }
+    .optional_structural_guide {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    }
+@media (max-width: 59em) {
+    .content-column {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            }
+	.column_0 {
+		width: 100%;
+		}
+	.column_1 {
+    	width: 100%;
+    	}
+	}
+@media (min-width: 59em) {
+    .mainElement_Container {
+        display: flex;
+        flex-direction: row;
+        visibility: inherit;
+        min-height: 100%;
+        z-index: 1;
+        }
+    .content-column {
+        display: flex;
+        flex-direction: column;
+        }
+    .column_0 {
+        width: var(--column-standard-width);
+        }
+    .column_1 {
+        width: var(--column-standard-width);
+        }
+    }
+@media (max-width: 59em) and (min-width: 53.25em) {
+    /* TODO (max-width: 59em) should be (max-width: 57.5em) but is not working.*/
+    .mainElement_Container {
+        display: flex;
+        flex-direction: row;
+        }
+    .rightDecoration {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    .rightDecoration {
+        visibility: hidden !important;
+        display: none !important;
+        }
+    }
+@media (min-width: 99em) {
+	.content-column {
+        display: flex;
+        flex-direction: row;
+        }
+    }
+@media (min-width: 99em) and (max-width: 102.5em) {
+    /* 137.5 = 13+ .25+40 +.25+40 + .25+40em */
+    /*(max-width: 99em) should be (max-width: 97.5em) but is not working.*/
+    /*(min-width: 94.5em) should be (min-width: 93em) but is not working.*/
+    .rightDecoration {
+        display: none !important;
+        }
+    .rightDecoration {
+        display: none !important;
+        }
+    }

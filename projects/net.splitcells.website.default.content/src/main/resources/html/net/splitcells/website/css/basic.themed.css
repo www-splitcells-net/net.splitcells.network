@@ -1,0 +1,284 @@
+@charset "UTF-8";
+:target {
+   background-color: var(--background-color-priority-0) !important;
+}
+.net-splitcells-quote-display > .label {
+    background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
+    width: 100%;
+    line-height: 1.4em;
+    padding-left: .5em;
+    padding-right: .5em;
+    font-weight: bold;
+    }
+.splitcells-net-background-window-menu {
+    background-color: var(--background-color-priority-5);
+    color: var(--foreground-color-priority-5);
+    box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-5);
+    }
+ol.table-of-content > li.table-of-content {
+    counter-increment: item;
+	}
+ol.table-of-content > li.table-of-content:first-child {
+  counter-reset: item;
+	}
+ol.table-of-content > li.table-of-content {
+    display: block;
+	}
+ol.table-of-content > li.table-of-content:before {
+    content: counters(item, ".") ". ";
+    margin-left: -1em;
+	}
+*.structural_guide {
+	background-color: var(--background-color-structural-guide);
+	color: var(--foreground-color-structural-guide);
+	box-shadow:  0em 0em .2em -.1em var(--shadow-color-structural-guide);
+	}
+.Standard_p2 .Standard_highlighted {
+	background-color: var(--background-color-priority-1);
+}
+*.Standard_highlighted {
+	background-color: var(--background-color-priority-0);
+	color: var(--foreground-color-priority-0);
+	}
+*.Standard_content {
+	background-color: var(--background-color-priority-1);
+	color: var(--foreground-color-priority-1);
+	}
+*.Standard_p2 {
+	background-color: var(--background-color-priority-2);
+	color: var(--foreground-color-priority-2);
+	}
+*.Standard_p3 {
+	/*third most important*/
+	background-color: var(--background-color-priority-3);
+	color: var(--foreground-color-priority-3);
+	}
+*.text_p3 {
+	color: var(--foreground-color-priority-3);
+	}
+*.user-specific {
+	}
+*.Standard_p4 {
+	background-color: var(--background-color-priority-4);
+	color: var(--foreground-color-priority-4);
+	}
+*.Standard_p5 {
+	background-color: var(--background-color-priority-5);
+	color: var(--foreground-color-priority-5);
+	}
+*.text_p5 {
+	color: var(--foreground-color-priority-5);
+	}
+*.text_standrad_very_low_priority {
+	color: var(--foreground-color-priority-6);
+	}
+*.background_not_important {
+	background-color: var(--background-color-priority-7);
+	}
+.VeryLightBorder {
+	border-right: var(--background-color-priority-0);
+	border-left: var(--background-color-priority-0);
+	}
+.VeryLightRightBorder {
+	border-right: .25em solid var(--background-color-priority-0);
+	}
+.VeryLightLeftBorder {
+	border-left: .25em solid var(--background-color-priority-0);
+	}
+.text_error {
+	color: var(--error-foreground-color-priority-1);
+	}
+.PresentationBox {
+	box-shadow: .15em .15em .1em 0em var(--shadow-color-priority-1);
+	margin-top: .5em;
+	margin-bottom: .5em;
+	margin-left: 0;
+	margin-right: .3em;
+	padding-top: .5em;
+	padding-right: 1em;
+	padding-bottom: .5em;
+	padding-left: 1em;
+	}
+.post_description_leftBorder {
+	box-shadow: -.35em 0em .25em -.25em var(--shadow-color-priority-2);
+	}
+.summary_footer {
+	box-shadow: 0em -.25em .125em -.25em var(--shadow-color-priority-3);
+	}
+.HeaderButton:hover {
+	background-color: var(--background-color-selected-priority-1);
+	}
+.HeaderButton {
+	background-color: var(--background-color-priority-1);
+	color: var(--foreground-color-priority-1);
+	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-1);
+	}
+.main-logo-button {
+	background-image: url(/net/splitcells/martins/avots/website/images/icon.svg);
+	background-size: 100%;
+	width: 2em;
+	}
+.HeaderButton_p2:hover {
+	background-color: var(--background-color-selected-priority-2);
+	}
+.HeaderButton_p2 {
+	background-color: var(--background-color-priority-2);
+	color: var(--foreground-color-priority-2);
+	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-2);
+	}
+.HeaderButton_highlighted:hover {
+	background-color: var(--background-color-selected-priority-0);
+	}
+.HeaderButton_highlighted {
+	background-color: var(--background-color-priority-0);
+	color: var(--foreground-color-priority-0);
+	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-0);
+}
+*.title_underlined_shadow {
+	box-shadow: 0em .5em .125em -.5em var(--shadow-color-priority-1);
+}
+*.underlined_shadow {
+	box-shadow: 0em 0.15em 0.1em -0.15em var(--shadow-color-priority-0);
+}
+.search_bar {
+	color: var(--foreground-color-priority-1);
+	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-2);
+}
+.highlighted_button {
+	background-color: var(--background-color-priority-0);
+	color: var(--foreground-color-priority-0);
+	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-2);
+}
+.MainButton {
+	background-color: var(--background-color-priority-3);
+	color: var(--foreground-color-priority-3);
+	box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-2);
+}
+.premature {
+	background: repeating-linear-gradient(45deg, var(--background-color-priority-4), var(--background-color-priority-4) 1em, var(--background-color-priority-3) 1em, var(--background-color-priority-3) 2em);
+}
+.MainButton:hover {
+	background-color: var(--background-color-selected-priority-3);
+	color: var(--foreground-color-selected-priority-3);
+}
+.MainButtonDescription:hover {
+	background-color: var(--background-color-selected-priority-0);
+	color: var(--foreground-color-selected-priority-0);
+}
+.Top_shadow {
+	box-shadow: 0em -.06em .1em 0em var(--shadow-color-priority-2);
+}
+.Bottom_shadow {
+	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-2);
+}
+.Left_shadow {
+	box-shadow: -0.3em 0em 0.3em -0.1em var(--shadow-color-priority-2);
+}
+.Right_shadow {
+	box-shadow: 0.3em 0em 0.3em -0.1em var(--shadow-color-priority-2);
+}
+a.NonStandard {
+	text-decoration: none;
+	color: inherit;
+	}
+a {
+	text-decoration: none;
+	font-weight: bold;
+    color: var(--foreground-color-priority-0);
+	}
+.paragraph a,
+.highlighted_paragraph a {
+	border-bottom: 0.08em solid var(--foreground-color-priority-0);
+}
+.IndexPostHeader {
+	box-shadow: 0em 0.1em 0.2em -.2em var(--shadow-color-priority-2);
+}
+.paragraph {
+	line-height: 1.4em;
+	background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
+	background-size: 100% 2.8em;
+	padding-left: .25em;
+	padding-right: .25em;
+}
+.net-splitcells-den-paragraph {
+    line-height: 1.4em;
+    background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
+    background-size: 100% 2.8em;
+    padding-left: .25em;
+    padding-right: .25em;
+}
+.highlighted_paragraph {
+	line-height: 1.4em;
+	background-image: linear-gradient(var(--paragraph-background-color-priority-0-a) 50%, var(--paragraph-background-color-priority-0-b) 50%);
+	background-size: 100% 2.8em;
+	padding-left: .25em;
+	padding-right: .25em;
+}
+.boxRightShadowed_middle {
+	box-shadow: .06em .15em .2em 0em var(--shadow-color-priority-0);
+}
+.decorationBoxRight {
+	box-shadow: -.3em 0em .1em -.3em var(--shadow-color-priority-2);
+}
+.decorationBox_LeftRight {
+	box-shadow: .3em 0em .2em -.1em var(--shadow-color-priority-3), -.3em 0em .2em -.1em var(--shadow-color-priority-3);
+}
+.topLightShadow {
+	box-shadow: 0em -.1em 0em 0em var(--shadow-color-priority-2);
+}
+.bottomLightShadow {
+	box-shadow: 0em .1em 0em 0em var(--shadow-color-priority-2);
+}
+*.post_archive_post_image {
+	box-shadow: .1em .1em .1em 0em var(--shadow-color-priority-1);
+}
+*.highlightedShortSummary {
+	box-shadow: .1em 0em .1em -.1em var(--shadow-color-priority-2), 0em .1em .1em -.1em var(--shadow-color-priority-2);
+}
+.table {
+	display: table;
+	border-collapse: separate;
+	padding: .5em;
+	margin-right: .25em;
+}
+.row {
+	display: table-row;
+}
+.tag_cell {
+	padding: .1em;
+	box-shadow: .05em .05em .25em 0em var(--shadow-color-priority-3), .05em .05em .125em 0em var(--shadow-color-priority-3);
+	}
+.cell {
+	padding: .1em;
+	box-shadow: .05em .05em .25em 0em var(--shadow-color-priority-3), .05em .05em .125em 0em var(--shadow-color-priority-3);
+}
+.toc_chapter_1 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}
+.toc_chapter_2 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}
+.toc_chapter_3 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}
+.toc_chapter_4 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}
+.toc_chapter_5 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}
+.toc_chapter_6 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}
+.toc_chapter_7 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}
+.toc_chapter_8 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}
+.toc_chapter_9 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}
+.toc_chapter_10 {
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
+}

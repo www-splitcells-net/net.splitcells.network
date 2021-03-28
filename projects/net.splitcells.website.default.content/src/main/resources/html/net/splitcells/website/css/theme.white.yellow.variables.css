@@ -1,0 +1,57 @@
+@charset "UTF-8";
+:root {
+	/* TODO Move to own file. */
+	--foreground-color-structural-guide:#000000;
+	--foreground-color-priority-0:#000000;
+	--foreground-color-priority-1:#101000;/*standard priority*/
+	--foreground-color-priority-2:#505000;
+	--foreground-color-priority-3:#505050;
+	--foreground-color-priority-4:#606060;
+	--foreground-color-priority-5:#707070;
+	--foreground-color-priority-6:#808080;
+
+	--background-color-structural-guide:#FFFFD0;
+	--background-color-priority-0:#FFFFB0;
+	--background-color-priority-1:#F6F6A0;
+	--background-color-priority-2:#EDED90;
+	--background-color-priority-3:#E4E480;
+	--background-color-priority-4:#DBDB70;
+	--background-color-priority-5:#D2D260;
+	--background-color-priority-6:#C0C050;
+	--background-color-priority-7:#AEAE40;
+	
+	--paragraph-background-color-priority-1-a:#FCFCFC;
+	--paragraph-background-color-priority-1-b:#EFEFEF;
+	--paragraph-background-color-priority-2-a:#EEEEEE;
+	--paragraph-background-color-priority-2-b:#E1E1E1;
+
+	--foreground-color-selected-priority-0:#303030;
+	--foreground-color-selected-priority-1:#303030;
+	--foreground-color-selected-priority-2:#303030;
+	--foreground-color-selected-priority-3:#303030;
+	--foreground-color-selected-priority-4:#303030;
+	--foreground-color-selected-priority-5:#303030;
+	--foreground-color-selected-priority-6:#303030;
+
+
+	--background-color-selected-priority-0:#FFFFFF;
+	--background-color-selected-priority-1:#FFFFFF;
+	--background-color-selected-priority-2:#FFFFFF;
+	--background-color-selected-priority-3:#FFFFFF;
+	--background-color-selected-priority-4:#FFFFFF;
+	--background-color-selected-priority-5:#FFFFFF;
+	--background-color-selected-priority-6:#FFFFFF;
+	
+	--shadow-color-structural-guide:rgba(0, 0, 0, 0.75);
+	--shadow-color-priority-0:rgba(0, 0, 0, 0.5);
+	--shadow-color-priority-1:rgba(0, 0, 0, 0.25);
+	--shadow-color-priority-2:rgba(0, 0, 0, 0.125);
+	--shadow-color-priority-3:rgba(0, 0, 0, 0.06125);
+	--shadow-color-priority-4:rgba(0, 0, 0, 0.0306125);
+
+	--error-foreground-color-priority-0:#000000;
+	--error-foreground-color-priority-1:#FF0000;
+	
+	--error-background-color-priority-0:#FFFFFF;
+	--error-background-color-priority-1:#F6F6F6;
+	}

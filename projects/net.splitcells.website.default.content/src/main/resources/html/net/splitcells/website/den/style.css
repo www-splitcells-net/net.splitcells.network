@@ -1,0 +1,44 @@
+.marked {
+    /* REMOVE border-style: solid;
+    border-width: 1px; */
+    }
+.Discovery {
+    margin: .25em;
+    }
+.path_horizontal_element:before {
+	content: "";
+	z-index: -1;
+	position: absolute;
+	box-shadow:
+	    .125em .125em .1em 0 rgba(0, 0, 0, 0.06125),
+	    -.06125em 0 .1em 0 rgba(0, 0, 0, 0.06125),
+		0 -.06125em .1em 0 rgba(0, 0, 0, 0.06125);
+	}
+.path_horizontal_element {
+    margin-top: .125em;
+    margin-bottom: .125em;
+    display: flex;
+    flex-direction: row;
+    /* REMOVE height: 1em; */
+    }
+.element_prefix {
+    color: grey;
+    }
+.Perspective {
+    /* REMOVE border-style: solid;
+    border-width: 1px; */
+    /* REMOVE box-shadow: .125em .125em .1em 0em rgba(0, 0, 0, 0.06125), .125em 0em .1em 0em rgba(0, 0, 0, 0.06125), 0em .125em .1em 0em rgba(0, 0, 0, 0.06125), -.06125em -.06125em .1em 0em rgba(0, 0, 0, 0.06125), -.06125em 0em .1em 0em rgba(0, 0, 0, 0.06125), 0em -.06125em .1em 0em rgba(0, 0, 0, 0.06125); */
+    /* REMOVE margin: .25em; */
+    }
+.Neighbor {
+    margin: .25em;
+    height: 1em;
+    }
+.horizontal_path {
+    /* REMOVE height: 1.5em; */
+    margin-left: .125em;
+    margin-right: .125em;
+    }
+.text_container {
+    padding: .25em;
+    }

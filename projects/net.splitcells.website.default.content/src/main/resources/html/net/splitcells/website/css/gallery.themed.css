@@ -1,0 +1,5 @@
+.gallery_image{
+	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-1)
+							,.1em .1em .1em 0em var(--shadow-color-priority-1)
+							,.3em .3em .4em 0em var(--shadow-color-priority-1);
+}
