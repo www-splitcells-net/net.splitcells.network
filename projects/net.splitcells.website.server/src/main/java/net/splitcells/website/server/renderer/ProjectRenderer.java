@@ -190,9 +190,7 @@ public class ProjectRenderer {
                     .filter(java.nio.file.Files::isRegularFile)
                     .forEach(file -> extendPerspectiveWithPath(layout, folder.relativize(file)));
         } catch (IOException e) {
-            final var we = new RuntimeException(folder.toAbsolutePath().toString(), e);
-            domsole().appendError(we);
-            throw we;
+            throw new RuntimeException(folder.toAbsolutePath().toString(), e);
         }
         return layout;
     }
