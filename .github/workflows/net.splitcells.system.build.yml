@@ -20,6 +20,6 @@ jobs:
           java-package: 'jdk'
       - name: Build
         run: |
-          cd $GITHUB_WORKSPACE/projects/net.splitcells.system
+          cd $GITHUB_WORKSPACE
           echo $GITHUB_WORKSPACE
           ./bin/build
