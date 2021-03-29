@@ -87,7 +87,11 @@ public class ProjectsRenderer {
     }
 
     public Optional<RenderingResult> render(String path) {
-        final var matchingRoots = renderers.keySet().stream().filter(root -> path.startsWith(root)).collect(toList());
+        final var matchingRoots = renderers
+                .keySet()
+                .stream()
+                .filter(root -> path.startsWith(root))
+                .collect(toList());
         if (matchingRoots.isEmpty()) {
             // System.out.println("No match for: " + path);
             //System.out.println("Patterns: " + renderers.keySet());
@@ -95,9 +99,15 @@ public class ProjectsRenderer {
         }
         // System.out.println("Match for: " + path);
         // System.out.println("Match on: " + matchingRoots.get(0));
+        // Sort descending.
         matchingRoots.sort((a, b) -> Integer.valueOf(a.length()).compareTo(b.length()));
         matchingRoots.reverse();
-        return renderers.get(matchingRoots.get(0)).render(path);
+        return matchingRoots.stream()
+                .map(renderers::get)
+                .map(renderer -> renderer.render(path))
+                .filter(Optional::isPresent)
+                .findFirst()
+                .get();
     }
 
     public Set<Path> projectsPaths() {

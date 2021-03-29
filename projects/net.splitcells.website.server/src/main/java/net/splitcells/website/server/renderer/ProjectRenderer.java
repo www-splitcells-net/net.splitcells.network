@@ -12,10 +12,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
 import static java.util.stream.Stream.concat;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
@@ -23,6 +25,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
@@ -81,30 +84,30 @@ public class ProjectRenderer {
                 (routingContext.request().path().split("/")
                 ).stream().filter(e -> !e.isBlank()).collect(toList());*/
             if (path.endsWith(".txt")) {
-                return Optional.of(renderingResult(renderTextFile(path), TEXT_HTML.toString()));
+                return renderTextFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".png")) {
-                return Optional.of(renderingResult(readArtifact(path), "image/png"));
+                return readArtifact(path).map(r -> renderingResult(r, "image/png"));
             } else if (path.endsWith(".jpg")) {
-                return Optional.of(renderingResult(readArtifact(path), "image/jpg"));
+                return readArtifact(path).map(r -> renderingResult(r, "image/jpg"));
             } else if (path.endsWith(".css")) {
-                return Optional.of(renderingResult(readArtifact(path), "text/css"));
+                return readArtifact(path).map(r -> renderingResult(r, "image/css"));
             } else if (path.endsWith(".js")) {
-                return Optional.of(renderingResult(readArtifact(path), "text/javascript"));
+                return readArtifact(path).map(r -> renderingResult(r, "text/javascript"));
             } else if (path.endsWith(".html")) {
-                return Optional.of(renderingResult(renderFile(path), TEXT_HTML.toString()));
+                return renderFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
-                return Optional.of(renderingResult(renderFile(path), TEXT_HTML.toString()));//, "application/xml");
+                return renderFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".svg")) {
-                return Optional.of(renderingResult(readArtifact(path), "image/svg+xml"));
+                return readArtifact(path).map(r -> renderingResult(r, "image/svg+xml"));
             } else {
-                return Optional.of(renderingResult(readArtifact(path), TEXT_HTML.toString()));
+                return readArtifact(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             }
         } catch (Exception e) {
             throw new RuntimeException(resourceRootPath, e);
         }
     }
 
-    private byte[] renderFile(String path) {
+    private Optional<byte[]> renderFile(String path) {
         // TODO REMOVE Split by dot.
         final var splitByDot = path.split("\\.");
         final var suffix = splitByDot[splitByDot.length - 1];
@@ -118,9 +121,9 @@ public class ProjectRenderer {
             // TODO HACK Use optional instead of manual file checking.
             if (java.nio.file.Files.isRegularFile(absolutePath)) {
                 // System.out.println("Rendering: " + path);
-                return renderer()
+                return Optional.of(renderer()
                         .transform(absolutePath)
-                        .getBytes(Charset.forName("UTF-8"));
+                        .getBytes(Charset.forName("UTF-8")));
             }
             // System.out.println("Reading artifact: " + path);
             return readArtifact(path);
@@ -149,7 +152,7 @@ public class ProjectRenderer {
         }
     }
 
-    private byte[] renderTextFile(String path) {
+    private Optional<byte[]> renderTextFile(String path) {
         try {
             final var absolutePath = resolveSourceFolder(path, "txt");
             if (java.nio.file.Files.isRegularFile(absolutePath)) {
@@ -159,9 +162,9 @@ public class ProjectRenderer {
                                 (new String
                                         (readAllBytes
                                                 (absolutePath))));
-                return renderer()
+                return Optional.of(renderer()
                         .transform(Xml.toPrettyString(content))
-                        .getBytes(Charset.forName("UTF-8"));
+                        .getBytes(UTF_8));
             }
             return readArtifact(path);
         } catch (Exception e) {
@@ -169,9 +172,13 @@ public class ProjectRenderer {
         }
     }
 
-    private byte[] readArtifact(String path) {
+    private Optional<byte[]> readArtifact(String path) {
+        final var resourcePath = resources.resolve(path);
+        if (!is_file(resourcePath)) {
+            return Optional.empty();
+        }
         try {
-            return readAllBytes(resources.resolve(path));
+            return Optional.of(readAllBytes(resourcePath));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
