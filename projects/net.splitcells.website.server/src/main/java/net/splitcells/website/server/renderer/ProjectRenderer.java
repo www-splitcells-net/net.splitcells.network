@@ -71,32 +71,36 @@ public class ProjectRenderer {
      * TODO Create root for each file type, that needs its one processing method.
      */
     public Optional<RenderingResult> render(String path) {
-        if (path.length() > 0 && path.charAt(0) == '/') {
-            path = path.substring(1);
-        }
-        // System.out.println(path);
-        // TODO Devide rendering function into routing and content type determination.
+        try {
+            if (path.length() > 0 && path.charAt(0) == '/') {
+                path = path.substring(1);
+            }
+            // System.out.println(path);
+            // TODO Devide rendering function into routing and content type determination.
         /* REMOVE final var path = Lists.<String>list
                 (routingContext.request().path().split("/")
                 ).stream().filter(e -> !e.isBlank()).collect(toList());*/
-        if (path.endsWith(".txt")) {
-            return Optional.of(renderingResult(renderTextFile(path), TEXT_HTML.toString()));
-        } else if (path.endsWith(".png")) {
-            return Optional.of(renderingResult(readArtifact(path), "image/png"));
-        } else if (path.endsWith(".jpg")) {
-            return Optional.of(renderingResult(readArtifact(path), "image/jpg"));
-        } else if (path.endsWith(".css")) {
-            return Optional.of(renderingResult(readArtifact(path), "text/css"));
-        } else if (path.endsWith(".js")) {
-            return Optional.of(renderingResult(readArtifact(path), "text/javascript"));
-        } else if (path.endsWith(".html")) {
-            return Optional.of(renderingResult(renderFile(path), TEXT_HTML.toString()));
-        } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
-            return Optional.of(renderingResult(renderFile(path), TEXT_HTML.toString()));//, "application/xml");
-        } else if (path.endsWith(".svg")) {
-            return Optional.of(renderingResult(readArtifact(path), "image/svg+xml"));
-        } else {
-            return Optional.of(renderingResult(readArtifact(path), TEXT_HTML.toString()));
+            if (path.endsWith(".txt")) {
+                return Optional.of(renderingResult(renderTextFile(path), TEXT_HTML.toString()));
+            } else if (path.endsWith(".png")) {
+                return Optional.of(renderingResult(readArtifact(path), "image/png"));
+            } else if (path.endsWith(".jpg")) {
+                return Optional.of(renderingResult(readArtifact(path), "image/jpg"));
+            } else if (path.endsWith(".css")) {
+                return Optional.of(renderingResult(readArtifact(path), "text/css"));
+            } else if (path.endsWith(".js")) {
+                return Optional.of(renderingResult(readArtifact(path), "text/javascript"));
+            } else if (path.endsWith(".html")) {
+                return Optional.of(renderingResult(renderFile(path), TEXT_HTML.toString()));
+            } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
+                return Optional.of(renderingResult(renderFile(path), TEXT_HTML.toString()));//, "application/xml");
+            } else if (path.endsWith(".svg")) {
+                return Optional.of(renderingResult(readArtifact(path), "image/svg+xml"));
+            } else {
+                return Optional.of(renderingResult(readArtifact(path), TEXT_HTML.toString()));
+            }
+        }catch (Exception e) {
+            throw new RuntimeException(resourceRootPath, e);
         }
     }
 
