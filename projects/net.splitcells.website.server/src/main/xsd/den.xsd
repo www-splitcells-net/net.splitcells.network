@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://splitcells.net/den.xsd"
+        attributeFormDefault="qualified"
+        vc:minVersion="1.1"
+        xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xl="http://www.w3.org/1999/xlink"
+        xmlns:d="http://splitcells.net/den.xsd"
+        xmlns:p="http://splitcells.net/private.xsd"
+        xmlns:s="http://splitcells.net/sew.xsd"
+        xmlns:g="http://splitcells.net/gal.xsd"
+        xmlns:e="http://splitcells.net/sen.xsd"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+        xmlns:svg="http://www.w3.org/2000/svg"
+        xmlns:x="http://www.w3.org/1999/xhtml"
+        xmlns:m="http://www.w3.org/1998/Math/MathML"
+        xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:n="http://splitcells.net/natural.xsd"
+        xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+        xmlns:t="http://splitcells.net/text.xsd"
+        xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0">
+    <!--import namespace="http://www.w3.org/1999/xlink"
+            schemaLocation="xlink.xsd"/-->
+    <annotation>
+        <documentation>
+            <d:task xl:href="https://www.tutorialspoint.com/xsd/xsd_quick_guide.htm">
+                Enable automatic XML validation via XSD in Eclipse.
+            </d:task>
+            <d:solution>
+                <d:solution>There is not a natural namespace for random structures,
+                    because it is hard reanable schema validation in natural namespaces for non natural elemnts.
+                </d:solution>
+                <d:solution>
+                    Only mix namespaces inside an element, if they are compatible to each other.
+                    In worst case, create an own file for an instances of a namespace and link to it.
+                </d:solution>
+                <d:solution>We do not use own namespace for different types of accesses like referencing and accessing
+                    and unrestricted element name.
+                    Otherwise, the structure of the project can not be verified.
+                </d:solution>
+            </d:solution>
+        </documentation>
+    </annotation>
+    <simpleType name="string-without-whitespace">
+        <restriction base="string">
+            <minLength value="1"/>
+            <pattern value="[^\s]+"/>
+        </restriction>
+    </simpleType>
+    <complexType name="val" mixed="true">
+        <choice minOccurs="0" maxOccurs="unbounded">
+            <any minOccurs="0" maxOccurs="unbounded"
+                 namespace="http://splitcells.net/den.xsd"
+                 processContents="strict"/>
+            <any minOccurs="0" maxOccurs="unbounded"
+                 namespace="http://splitcells.net/sew.xsd" processContents="strict"/>
+            <any minOccurs="0" maxOccurs="unbounded"
+                 namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" processContents="strict"/>
+        </choice>
+        <attribute name="name" type="d:string-without-whitespace"/>
+        <attribute name="description" type="string"/>
+        <!-- TODO Name attribute from different namespaces. -->
+        <attribute name="href" type="string"/>
+    </complexType>
+    <element name="pipe" type="d:val"/>
+    <element name="acc" type="d:val">
+        <annotation>
+            <documentation>Access attribute of parent object.
+                This is required, in order to be able to construct graphs via discovery paths and links.
+            </documentation>
+        </annotation>
+    </element>
+    <element name="ref" type="d:val">
+        <annotation>
+            <documentation>References to object in current namespace by name.
+            </documentation>
+        </annotation>
+    </element>
+    <element name="val" type="d:val">
+        <annotation>
+            <documentation>Creates a value and a name in the current scope.</documentation>
+        </annotation>
+    </element>
+    <element name="arg" type="d:val">
+        <annotation>
+            <documentation>Its content describe the values used in order to access or create the parent element.
+            </documentation>
+        </annotation>
+    </element>
+    <element name="var" type="d:val">
+        <annotation>
+            <documentation>Creates a new variable and a name in the current scope.</documentation>
+        </annotation>
+    </element>
+    <element name="core" type="d:val"/>
+    <element name="environment" type="d:val"/>
+    <element name="merge" type="d:val"/>
+    <element name="mixed" type="d:val"/>
+    <element name="names" type="d:val"/>
+    <element name="name" type="d:val"/>
+    <element name="nick-name" type="d:val"/>
+    <element name="objective" type="d:val"/>
+    <element name="solution" type="d:val"/>
+    <element name="project" type="d:val"/>
+    <element name="scheduling" type="d:val"/>
+    <element name="sheath" type="d:val"/>
+    <element name="unscheduled" type="d:val"/>
+    <element name="result" type="d:val"/>
+    <element name="prioritization" type="d:val"/>
+    <element name="abbreviation" type="d:val"/>
+    <element name="queue" type="d:val"/>
+    <element name="toDo" type="d:val"/>
+    <element name="asynchronous" type="d:val"/>
+    <element name="current" type="d:val"/>
+</schema> 

@@ -16,8 +16,7 @@ public class FileStructureTransformer {
     /**
      * This is cached, because it takes a lot of time to reinitialize it.
      */
-    private static final Validator validator = Validator.validator(Paths.path(System.getProperty("user.home")
-            + "/Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/src/main/resources/den.xsd"));
+    private static final Validator validator = Validator.validator(Paths.path("src/main/xsd/den.xsd"));
 
     private final Path fileStructureRoot;
     private final XslTransformer transformer;
