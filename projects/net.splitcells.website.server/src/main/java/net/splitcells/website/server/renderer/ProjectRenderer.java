@@ -99,7 +99,7 @@ public class ProjectRenderer {
             } else {
                 return Optional.of(renderingResult(readArtifact(path), TEXT_HTML.toString()));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(resourceRootPath, e);
         }
     }
