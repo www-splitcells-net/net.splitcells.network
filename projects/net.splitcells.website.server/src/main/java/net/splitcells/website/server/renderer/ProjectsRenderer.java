@@ -87,27 +87,31 @@ public class ProjectsRenderer {
     }
 
     public Optional<RenderingResult> render(String path) {
-        final var matchingRoots = renderers
-                .keySet()
-                .stream()
-                .filter(root -> path.startsWith(root))
-                .collect(toList());
-        if (matchingRoots.isEmpty()) {
-            // System.out.println("No match for: " + path);
-            //System.out.println("Patterns: " + renderers.keySet());
-            return fallbackRenderer.render(path);
+        try {
+            final var matchingRoots = renderers
+                    .keySet()
+                    .stream()
+                    .filter(root -> path.startsWith(root))
+                    .collect(toList());
+            if (matchingRoots.isEmpty()) {
+                // System.out.println("No match for: " + path);
+                //System.out.println("Patterns: " + renderers.keySet());
+                return fallbackRenderer.render(path);
+            }
+            // System.out.println("Match for: " + path);
+            // System.out.println("Match on: " + matchingRoots.get(0));
+            // Sort descending.
+            matchingRoots.sort((a, b) -> Integer.valueOf(a.length()).compareTo(b.length()));
+            matchingRoots.reverse();
+            return matchingRoots.stream()
+                    .map(renderers::get)
+                    .map(renderer -> renderer.render(path))
+                    .filter(Optional::isPresent)
+                    .findFirst()
+                    .get();
+        } catch (Exception e) {
+            throw new RuntimeException(path, e);
         }
-        // System.out.println("Match for: " + path);
-        // System.out.println("Match on: " + matchingRoots.get(0));
-        // Sort descending.
-        matchingRoots.sort((a, b) -> Integer.valueOf(a.length()).compareTo(b.length()));
-        matchingRoots.reverse();
-        return matchingRoots.stream()
-                .map(renderers::get)
-                .map(renderer -> renderer.render(path))
-                .filter(Optional::isPresent)
-                .findFirst()
-                .get();
     }
 
     public Set<Path> projectsPaths() {
