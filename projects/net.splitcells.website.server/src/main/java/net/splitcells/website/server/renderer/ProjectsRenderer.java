@@ -57,9 +57,13 @@ public class ProjectsRenderer {
                     return path;
                 })
                 .forEach(path -> {
-                    final var targetPath = path(target, path.substring(1));
-                    createDirectory(targetPath.getParent());
-                    writeToFile(targetPath, render(path).get().getContent());
+                    try {
+                        final var targetPath = path(target, path.substring(1));
+                        createDirectory(targetPath.getParent());
+                        writeToFile(targetPath, render(path).get().getContent());
+                    } catch (Exception e) {
+                        throw new RuntimeException(target.toString() + path, e);
+                    }
                 });
     }
 

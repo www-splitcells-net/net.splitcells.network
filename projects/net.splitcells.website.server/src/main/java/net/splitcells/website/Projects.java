@@ -61,6 +61,13 @@ public class Projects {
                                 , projectRepositories.resolve("net.splitcells.system/src/main/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                , "/net/splitcells"));
+                                , "/net/splitcells")
+                , new ProjectRenderer
+                        (profile
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , "/net/splitcells/website")
+        );
     }
 }
