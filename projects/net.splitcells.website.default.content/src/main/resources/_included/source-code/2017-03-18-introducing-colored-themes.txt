@@ -1,0 +1,52 @@
+colors:
+    priorities:
+        content:
+            background:
+                p0: '#FFFFFF'#highlighted content
+                p1: '#F6F6F6'#standard content
+                p2: '#EDEDED'#
+                p3: '#E4E4E4'#
+                p4: '#DBDBDB'#
+                p5: '#D2D2D2'#
+                p6: '#C0C0C0'#very low priority
+                p7: '#AEAEAE'#lowest priority
+            foreground:
+                p0: '#000000'
+                p1: '#101010'
+                p2: '#303030'
+                p3: '#505050'
+                p4: '#606060'
+                p5: '#707070'
+                p6: '#808080'
+            paragraph:
+                p0: ['#FFFFFF','#F9F9F9']
+                p1: ['#FAFAFA','#F2F2F2']
+            foreground_selected:
+                p0: '#303030'
+                p1: '#303030'
+                p2: '#303030'
+                p3: '#303030'
+                p4: '#303030'
+                p5: '#303030'
+                p6: '#303030'
+            background_selected:
+                p0: '#FFFFFF'
+                p1: '#FFFFFF'
+                p2: '#FFFFFF'
+                p3: '#FFFFFF'
+                p4: '#FFFFFF'
+                p5: '#FFFFFF'
+                p6: '#FFFFFF'
+            shadow:
+                p0: 'rgba(0, 0, 0, 0.5)'
+                p1: 'rgba(0, 0, 0, 0.25)'
+                p2: 'rgba(0, 0, 0, 0.125)'
+                p3: 'rgba(0, 0, 0, 0.06125)'
+                p4: 'rgba(0, 0, 0, 0.0306125)'
+        error:
+            foreground:
+                p0: '#000000'
+                p1: '#FF0000'
+            background:
+                p0: '#FFFFFF'
+                p1: '#F6F6F6'

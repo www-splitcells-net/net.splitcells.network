@@ -5,11 +5,11 @@
 	<xsl:variable name="siteFolder"
 		select="'/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/'" />
 	<xsl:variable name="layoutFolder"
-		select="concat($siteFolder, 'src/main/resources/html/')" />
+		select="concat('', '../net.splitcells.website.default.content/src/main/resources/html/')" />
 	<xsl:variable name="source_asset_folder"
-		select="concat($siteFolder, 'src/main/resources.private/_includes')" />
+		select="concat('', '../net.splitcells.gel.doc/src/main/resources.private/_includes')" />
 	<xsl:variable name="source_asset_sourceCode_folder"
-		select="concat($siteFolder, 'src/main/resources.private/_includes/source-code/')" />
+		select="concat('', '../net.splitcells.website.default.content/src/main/resources/_includes/source-code/')" />
 	<xsl:variable name="apostroph">'</xsl:variable>
 	<xsl:variable name="source.folder"
 				  select="concat($siteFolder, './src/main/xml/')" />
