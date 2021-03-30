@@ -6,5 +6,5 @@ mvn clean install
 cd ../net.splitcells.os.state.interface
     ./bin/test.routine
 cd ../net.splitcells.website.server
-  ./bin/serve.to.folder
+  # TODO ./bin/serve.to.folder
   cd ..
