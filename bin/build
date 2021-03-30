@@ -4,8 +4,3 @@ set -e
 chmod +x ./bin/*
 export JAVA_VERSION=11 # This is required on FreeBSD, if an older Java version is set as default.
 mvn clean install
-cd projects/net.splitcells.os.state.interface
-    ./bin/test
-    cd ../..
-cd projects/net.splitcells.website.server
-  ./bin/serve.to.folder
