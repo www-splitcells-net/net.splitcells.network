@@ -15,6 +15,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.interaction.Domsole;
+import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.website.server.Server;
 
 import java.nio.file.Path;
@@ -24,6 +25,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.generateFolderPath;
@@ -69,12 +71,12 @@ public class ProjectsRenderer {
 
     public void serveToHttpAt(int port) {
         build();
-        new Server().serveToHttpAt(port, requestPath -> render(requestPath).get());
+        new Server().serveToHttpAt(port, requestPath -> render(requestPath));
     }
 
     public void serveAsAuthenticatedHttpsAt(int port) {
         build();
-        new Server().serveAsAuthenticatedHttpsAt(port, requestPath -> render(requestPath).get());
+        new Server().serveAsAuthenticatedHttpsAt(port, requestPath -> render(requestPath));
     }
 
     @Deprecated
@@ -107,12 +109,16 @@ public class ProjectsRenderer {
             // Sort descending.
             matchingRoots.sort((a, b) -> Integer.valueOf(a.length()).compareTo(b.length()));
             matchingRoots.reverse();
-            return matchingRoots.stream()
+            final var renderingResult = matchingRoots.stream()
                     .map(renderers::get)
                     .map(renderer -> renderer.render(path))
                     .filter(Optional::isPresent)
-                    .findFirst()
-                    .get();
+                    .findFirst();
+            if (renderingResult.isEmpty()) {
+                domsole().append(textNode("Path could not be found: " + path), LogLevel.ERROR);
+                return Optional.empty();
+            }
+            return renderingResult.get();
         } catch (Exception e) {
             throw new RuntimeException(path, e);
         }

@@ -97,6 +97,20 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
         return Domsole.domsole().append(error, Optional.empty(), LogLevel.CRITICAL);
     }
 
+    public <R extends ListWA<LogMessage<Node>>> R append(Node domable, LogLevel logLevel) {
+        return append(logMessage(domable, NO_CONTEXT, logLevel));
+    }
+
+    /**
+     * There is no real usage for the optionality of context.
+     *
+     * @param domable  domable
+     * @param context  context
+     * @param logLevel logLevel
+     * @param <R>      type
+     * @return return
+     */
+    @Deprecated
     public <R extends ListWA<LogMessage<Node>>> R append(Node domable, Optional<Discoverable> context,
                                                          LogLevel logLevel) {
         return append(logMessage(domable, context.orElse(NO_CONTEXT), logLevel));

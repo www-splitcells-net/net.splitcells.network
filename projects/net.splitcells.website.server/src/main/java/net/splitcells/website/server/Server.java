@@ -10,6 +10,7 @@ import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
 import net.splitcells.website.server.renderer.RenderingResult;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
@@ -18,10 +19,10 @@ public class Server {
     /**
      * TODO This is code duplication.
      *
-     * @param port port
-     * @param renderer  renderer
+     * @param port     port
+     * @param renderer renderer
      */
-    public void serveToHttpAt(int port, Function<String, RenderingResult> renderer) {
+    public void serveToHttpAt(int port, Function<String, Optional<RenderingResult>> renderer) {
         {
             System.setProperty("vertx.disableFileCaching", "true");
             System.setProperty("log4j.rootLogger", "DEBUG, stdout");
@@ -53,8 +54,12 @@ public class Server {
                                 requestPath = routingContext.request().path();
                             }
                             final var result = renderer.apply(requestPath);
-                            response.putHeader("content-type", result.getFormat());
-                            promise.complete(result.getContent());
+                            if (result.isPresent()) {
+                                response.putHeader("content-type", result.get().getFormat());
+                                promise.complete(result.get().getContent());
+                            } else {
+                                promise.fail("Could not render path:" + requestPath);
+                            }
                         }, (result) -> {
                             if (result.failed()) {
                                 result.cause().printStackTrace();
@@ -76,7 +81,7 @@ public class Server {
         }
     }
 
-    public void serveAsAuthenticatedHttpsAt(int port, Function<String, RenderingResult> renderer) {
+    public void serveAsAuthenticatedHttpsAt(int port, Function<String, Optional<RenderingResult>> renderer) {
         System.setProperty("vertx.disableFileCaching", "true");
         System.setProperty("log4j.rootLogger", "DEBUG, stdout");
         Vertx vertx = Vertx.vertx();
@@ -108,8 +113,12 @@ public class Server {
                             requestPath = routingContext.request().path();
                         }
                         final var result = renderer.apply(requestPath);
-                        response.putHeader("content-type", result.getFormat());
-                        promise.complete(result.getContent());
+                        if (result.isPresent()) {
+                            response.putHeader("content-type", result.get().getFormat());
+                            promise.complete(result.get().getContent());
+                        } else {
+                            promise.fail("Could not render path:" + requestPath);
+                        }
                     }, (result) -> {
                         if (result.failed()) {
                             result.cause().printStackTrace();
