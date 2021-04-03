@@ -19,5 +19,5 @@
         If this would not be supported, it would be harder to link between projects.-->
     </xsl:variable>
     <xsl:variable name="site-instance-root-path-default"
-                  select="concat($site-instance-host-root-path, '/net/splitcells/website/')"/>
+                  select="concat($site-instance-host-root-path, 'net/splitcells/website')"/>
 </xsl:stylesheet>
