@@ -252,7 +252,7 @@
                 </link>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <xsl:element name="link">
-                    <!-- Mobile browsers only support pngs as favicons. -->
+                    <!-- Some Mobile browsers only support pngs as favicons. -->
                     <xsl:attribute name="rel">
                         <xsl:value-of select="'apple-touch-icon'"/>
                     </xsl:attribute>
@@ -303,66 +303,6 @@
                                 select="s:root-relative-url('/css/theme.white.variables.css')"/>
                     </xsl:attribute>
                 </xsl:element>
-                <!--TODO  xsl:element name="link">
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'stylesheet'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="media">
-                        <xsl:value-of select="'none'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'text/css'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:root-relative-url('/css/theme.white.red.blue.variables.css')"/>
-                    </xsl:attribute>
-                </xsl:element-->
-                <!--TODO xsl:element name="link">
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'stylesheet'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="media">
-                        <xsl:value-of select="'none'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'text/css'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:root-relative-url('/css/theme.black.variables.css')"/>
-                    </xsl:attribute>
-                </xsl:element-->
-                <!--TODO  xsl:element name="link">
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'stylesheet'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="media">
-                        <xsl:value-of select="'none'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'text/css'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:root-relative-url('/css/theme.black.red.variables.css')"/>
-                    </xsl:attribute>
-                </xsl:element-->
-                <!--TODO xsl:element name="link">
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'stylesheet'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="media">
-                        <xsl:value-of select="'none'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'text/css'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:root-relative-url('/css/theme.white.yellow.variables.css')"/>
-                    </xsl:attribute>
-                </xsl:element-->
                 <xsl:element name="link">
                     <xsl:attribute name="rel">
                         <xsl:value-of select="'stylesheet'"/>
