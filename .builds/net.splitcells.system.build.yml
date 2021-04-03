@@ -8,4 +8,5 @@ sources:
 tasks:
   - build: |
       cd net.splitcells.network/projects/net.splitcells.system
+      export JAVA_VERSION=11
       mvn install # TODO ./bin/build
