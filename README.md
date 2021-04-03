@@ -29,6 +29,7 @@ This network consists of three parts:
 * [Rendered Documentation](http://splitcells.net/net/splitcells/index.html)
 * [Twitch Channel](https://www.twitch.tv/splitcellsnet)
 * [Twitter](https://twitter.com/splitcells)
+* [Mastadon](https://fosstodon.org/@splitcells)
 
 ## Status
 
