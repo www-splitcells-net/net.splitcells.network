@@ -8,4 +8,4 @@ sources:
 tasks:
   - build: |
       cd net.splitcells.network/projects/net.splitcells.system
-      mvn install # ./bin/build
+      mvn install # TODO ./bin/build
