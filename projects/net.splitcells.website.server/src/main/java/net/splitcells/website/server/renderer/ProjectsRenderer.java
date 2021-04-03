@@ -81,23 +81,20 @@ public class ProjectsRenderer {
 
     @Deprecated
     private final String profile;
-    private final Map<String, ProjectRenderer> renderers = map();
+    private final List<ProjectRenderer> renderers;
     private final ProjectRenderer fallbackRenderer;
 
     private ProjectsRenderer(String name, ProjectRenderer fallbackRenderer, List<ProjectRenderer> renderers) {
         this.profile = name;
         this.fallbackRenderer = fallbackRenderer;
-        for (var renderer : renderers) {
-            this.renderers.put(renderer.resourceRootPath(), renderer);
-        }
+        this.renderers = renderers;
     }
 
     public Optional<RenderingResult> render(String path) {
         try {
             final var matchingRoots = renderers
-                    .keySet()
                     .stream()
-                    .filter(root -> path.startsWith(root))
+                    .filter(root -> path.startsWith(root.resourceRootPath()))
                     .collect(toList());
             if (matchingRoots.isEmpty()) {
                 // System.out.println("No match for: " + path);
@@ -107,10 +104,9 @@ public class ProjectsRenderer {
             // System.out.println("Match for: " + path);
             // System.out.println("Match on: " + matchingRoots.get(0));
             // Sort descending.
-            matchingRoots.sort((a, b) -> Integer.valueOf(a.length()).compareTo(b.length()));
+            matchingRoots.sort((a, b) -> Integer.valueOf(a.resourceRootPath().length()).compareTo(b.resourceRootPath().length()));
             matchingRoots.reverse();
             final var renderingResult = matchingRoots.stream()
-                    .map(renderers::get)
                     .map(renderer -> renderer.render(path))
                     .filter(Optional::isPresent)
                     .findFirst();
@@ -125,14 +121,14 @@ public class ProjectsRenderer {
     }
 
     public Set<Path> projectsPaths() {
-        return renderers.values().stream()
+        return renderers.stream()
                 .map(renderer -> renderer.projectPaths())
                 .reduce((a, b) -> a.with(b)).get();
     }
 
     public Perspective projectsLayout() {
         final var layout = perspective(VAL, NATURAL);
-        renderers.values().forEach(renderer -> {
+        renderers.forEach(renderer -> {
             var current = layout;
             for (final var element : list(renderer.resourceRootPath().split("/")).stream().filter(e -> !"".contentEquals(e)).collect(toList())) {
                 final var children = s(current, element);
