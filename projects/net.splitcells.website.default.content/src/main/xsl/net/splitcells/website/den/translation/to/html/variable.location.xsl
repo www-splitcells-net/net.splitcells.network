@@ -6,9 +6,9 @@
 	<xsl:variable name="site.url"
 		select="'http://splitcells.net'" />
 		<!-- purl = pseudo url = root relative url -->
-	<!-- TODO site_instance_purl may be deprecated as themes are now handled 
-		in pure html/cs/js without mutlipe instances. -->
+	<!-- TODO REMOVE This is the base path to the main additional resources. -->
 	<xsl:variable name="site_instance_purl" select="'/net/splitcells/martins/avots/website/'" />
+	<xsl:variable name="site-instance-root-path-default" select="'/net/splitcells/website/'" />
 	<xsl:variable name="site_generic_asset_purl" select="$site_instance_purl" />
 	<xsl:variable name="site_instance_burl"
 		select="concat('http://', $site_domain)" />

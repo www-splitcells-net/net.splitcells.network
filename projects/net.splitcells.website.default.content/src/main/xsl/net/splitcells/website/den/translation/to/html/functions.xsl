@@ -3,6 +3,11 @@
 	xmlns:s="http://splitcells.net/sew.xsd"
 	xmlns:d="http://splitcells.net/den.xsd"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:function name="s:default-root-relative-url">
+		<xsl:param name="default-layout-relative-path" />
+		<xsl:value-of
+				select="concat($site-instance-root-path-default, $default-layout-relative-path)" />
+	</xsl:function>
 	<xsl:function name="s:root-relative-url">
 		<xsl:param name="layout-relative-path" />
 		<xsl:value-of
