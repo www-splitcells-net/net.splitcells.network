@@ -67,11 +67,6 @@ footer {
     .header {
         z-index: 1000 !important;
         }
-    .mainElement_Container {
-        /* TODO Not sure why this does not work. On the other hand not needed because divs are 'column' based by default.
-        display: flex !important;
-        flex-direction: column !important;*/
-        }
     .rightDecoration {
         visibility: hidden !important;
         display: none !important;
@@ -185,7 +180,6 @@ footer {
         display: flex;
         flex-direction: row;
         visibility: inherit;
-        min-height: 100%;
         z-index: 1;
         }
     .content-column {
