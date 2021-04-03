@@ -8,20 +8,6 @@ This is the root project of an integrated project system.
 The focus is on the [Generic Allocator](../net.splitcells.gel/README.md),
 which is an optimization and problem modeling framework.
 
-## Contact
-
-* [Rendered Documentation](http://splitcells.net/net/splitcells/index.html)
-* [Twitch Channel](https://www.twitch.tv/splitcellsnet)
-* [Twitter](https://twitter.com/splitcells)
-
-## Status
-
-| Attribute | Status |
-| --- | --- |
-| GitHub CI | ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg) |
-| GitLab CI | ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg) |
-| sourcehut CI | [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net/net.splitcells.network?) |
-
 ## Building The System
 
 Build this project via [build command](./bin/build).
