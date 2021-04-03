@@ -6,6 +6,28 @@
 ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
 ![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
 
+## Introduction
+
+Model and optimize problems. 🚀
+
+Analyze and organize your operations and prepare schedules. 🔬
+
+Collaborate large decision-making networks. 🤝
+
+Research optimization. 🔭
+
+Get structured documentation. 📚
+
+Contribute to projects. ✍
+
+| Model and optimize problems. 🚀 | |
+| --- | --- |
+| | Analyze and organize your operations and prepare schedules. 🔬 |
+| Collaborate large decision-making networks. 🤝 | |
+| | Research optimization. 🔭 |
+| Get structured documentation. 📚 | |
+| | Contribute to projects. ✍ |
+
 ## Description
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
