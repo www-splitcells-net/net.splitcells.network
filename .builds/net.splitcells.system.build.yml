@@ -2,6 +2,7 @@ image: freebsd/latest
 packages:
   - openjdk11
   - maven
+  - python3
 sources:
   - https://git.sr.ht/~splitcells-net/net.splitcells.network
 tasks:
