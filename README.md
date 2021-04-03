@@ -19,7 +19,7 @@ This network consists of three parts:
   A set of integrated projects focused on optimization and problem modeling.
 * [net.splitcells.network](http://splitcells.net):
   This project integrates all repositories and hosting services,
-  that are part of the network.i
+  that are part of the network.
   It also helps to manage the repository for users.
 * Unintegrated projects:
   These projects are not inside this repository and managed more independently.
