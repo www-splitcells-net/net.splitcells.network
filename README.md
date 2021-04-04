@@ -33,13 +33,13 @@ found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
 This is the root project of a project cluster. This network consists of three parts:
 
-* [net.splitcells.system](./projects/net.splitcells.system):
+* [net.splitcells.system](./projects/net.splitcells.system/README.md):
   A set of integrated projects focused on optimization and problem modeling.
 * [net.splitcells.network](http://splitcells.net):
-  This project integrates all repositories and hosting services, that are part of the network. It also helps to manage
-  the repository for users.
+  This project integrates all repositories and hosting services, that are part of the network.
 * Unintegrated projects:
-  These projects are not inside this repository and managed more independently.
+  These projects are not inside this repository and managed are more independently.
+  They may be managed by users with [OS state interface](./projects/net.splitcells.os.state.interface/README.md).
 
 ## Contact
 
