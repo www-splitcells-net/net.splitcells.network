@@ -20,6 +20,8 @@ Get structured documentation. 📚
 
 Contribute to projects. ✍
 
+Donate to the [developer](https://www.patreon.com/splitcells_net) 💰
+
 ## Description
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
