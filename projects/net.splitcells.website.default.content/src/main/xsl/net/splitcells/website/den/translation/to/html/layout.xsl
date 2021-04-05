@@ -370,7 +370,7 @@
                     </div>
                     <div class="menu Left_shadow TextCell Layout Standard_p4"
                          style="width: 13em; vertical-align: top; visibility: inherit; display: flex; flex-direction: column; padding-bottom: 1em; order: 2;">
-                        <div class="title_logo Left_shadow structural_guide splitcells-net-title-logo splitcells-net-window-menu"
+                        <!--div class="title_logo Left_shadow structural_guide splitcells-net-title-logo splitcells-net-window-menu"
                              style="width: 13em; padding-top: .5em;">
                             <a class="NonStandard underlined_shadow page_header_sitename_normal">
                                 <span style="font-size: 1.5em;">
@@ -384,6 +384,28 @@
                             <div class="Text"
                                  style="font-weight: normal; font-size: 0.75em; position: relative; right: .5em;">
                                 N O S
+                            </div>
+                        </div-->
+                        <div class="Left_shadow structural_guide splitcells-net-title-logo splitcells-net-window-menu">
+                            <div class="splitcells-net-window-menu-line-1">
+                                <a class="net-splitcells-button net-splitcells-project-logo-button">
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
+                                    </xsl:attribute>
+                                </a>
+                                <a class="net-splitcells-button">
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="$siteName"/>
+                                </a>
+                                <div class="net-splitcells-button">nos</div>
+                            </div>
+                            <div class="structural_guide" style="height: .25em;"></div>
+                            <div class="splitcells-net-window-menu-line-2">
+                                <input type="text" class="net-splitcells-search-bar" placeholder="search"></input>
                             </div>
                         </div>
                         <br></br>
@@ -695,7 +717,7 @@
                                      style="display: flex; flex-direction: column; width: 100%;">
                                     <div class="Standard_p3 bottomLightShadow "
                                          style="display: flex; flex-direction: row; z-index: 1; flex-wrap: wrap;">
-                                        <a class="HeaderButton_structure HeaderButton main-logo-button minimal-only">
+                                        <a class="HeaderButton_structure HeaderButton net-splitcells-project-logo-button">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
                                                         select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>

@@ -113,11 +113,11 @@ ol.table-of-content > li.table-of-content:before {
 	color: var(--foreground-color-priority-1);
 	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-1);
 	}
-.main-logo-button {
-	background-image: url(/net/splitcells/martins/avots/website/images/icon.svg);
-	background-size: 100%;
-	width: 2em;
-	}
+.net-splitcells-project-logo-button {
+    	background-image: url(/net/splitcells/martins/avots/website/images/icon.svg);
+    	background-size: 100%;
+        	width: 2em;
+    	}
 .HeaderButton_p2:hover {
 	background-color: var(--background-color-selected-priority-2);
 	}

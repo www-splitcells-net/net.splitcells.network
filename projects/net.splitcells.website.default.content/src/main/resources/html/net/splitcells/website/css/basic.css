@@ -56,14 +56,12 @@ ul {
 .contentCell {
     /* The content itself should manage overflow.*/
     }
-.search_bar {
+.net-splitcells-search-bar {
 	width: 100%;
 	outline: medium none;
 	border: medium none;
-	height: 1.75em;
-	text-indent: .25em;
-	margin-top: .05em;
-	margin-bottom: 0.05em;
+	height: 100%;/* Hack for main search bar. */
+	text-indent: .5em;
 	}
 *.div_row {
 	display: flex;
@@ -109,6 +107,33 @@ ul {
 	align-items: center;
 	text-indent: 0em;
 	}
+.splitcells-net-window-menu-line-1 {
+    display: flex;
+    flex-direction: row;
+    height: 2em;
+    }
+.splitcells-net-window-menu-line-2 {
+    height: 2.5em;
+    }
+.net-splitcells-button {
+	margin-left: .0625em;
+	margin-right: .0625em;
+	font-weight: bold;
+	line-height: 1.5em;
+	vertical-align: middle;
+	padding-left: .5em;
+	padding-right: .5em;
+	height: 2em;
+	margin-top: 0em;
+	text-align: center;
+	vertical-align: middle;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-indent: 0em;
+	margin-left: .0625em;
+	margin-right: .0625em;
+    }
 .HeaderButton_structure {
 	margin-left: .0625em;
 	margin-right: .0625em;

@@ -96,6 +96,7 @@ footer {
     }
 @media (max-width: 53.25em) {
     .minimal-only {
+        /* TODO Rename the class name, so it represents its real meaning. */
     	display: none;
     	visibility: hidden:
     	}
