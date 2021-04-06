@@ -2,8 +2,8 @@
 <xsl:stylesheet version="2.0"
                 xmlns:s="http://splitcells.net/sew.xsd"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-    <xsl:variable name="siteFolder"
-                  select="'/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network/projects/'"/>
+    <xsl:param name="siteFolder"
+               select="'/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network/projects/'"/>
     <xsl:variable name="privateFolder"
                   select="'/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/'"/>
     <xsl:variable name="layoutFolder"
@@ -18,5 +18,5 @@
     <xsl:variable name="articles.folder"
                   select="concat($privateFolder, 'src/main/xml/net/splitcells/martins/avots/website/')"/>
     <xsl:variable name="generated-files"
-                  select="concat($siteFolder, 'net.splitcells.website.server/target/generated')"/>
+                  select="concat($siteFolder, 'target/generated')"/>
 </xsl:stylesheet>

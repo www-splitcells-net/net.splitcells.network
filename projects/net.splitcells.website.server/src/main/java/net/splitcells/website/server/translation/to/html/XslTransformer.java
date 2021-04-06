@@ -4,6 +4,7 @@ import net.splitcells.dem.lang.Xml;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -36,6 +37,7 @@ public class XslTransformer {
         try {
             Templates template = factory.newTemplates(new StreamSource(xsl));
             transformer = template.newTransformer();
+            transformer.setParameter("siteFolder", Paths.get(".").toAbsolutePath().toString() + File.separator);
         } catch (TransformerConfigurationException e) {
             throw new RuntimeException(e);
         }
