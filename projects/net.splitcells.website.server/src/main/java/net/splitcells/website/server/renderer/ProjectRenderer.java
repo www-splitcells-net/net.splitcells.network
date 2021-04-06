@@ -25,6 +25,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
@@ -197,9 +198,11 @@ public class ProjectRenderer {
             folder = project;
         }
         try {
-            java.nio.file.Files.walk(folder)
-                    .filter(java.nio.file.Files::isRegularFile)
-                    .forEach(file -> extendPerspectiveWithPath(layout, folder.relativize(file)));
+            if (isDirectory(folder)) {
+                java.nio.file.Files.walk(folder)
+                        .filter(java.nio.file.Files::isRegularFile)
+                        .forEach(file -> extendPerspectiveWithPath(layout, folder.relativize(file)));
+            }
         } catch (IOException e) {
             throw new RuntimeException(folder.toAbsolutePath().toString(), e);
         }
