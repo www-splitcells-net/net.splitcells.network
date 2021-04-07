@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *     </li>
  *     <li>Determine all {@link GroupId}s in the selected {@link Constraint}s, that
  *     have a {@link Cost} bigger than zero. Free all demands of these groups.
- *     This deletes the values of all variables, which are part of some constraint defying group<./li>
+ *     This deletes the values of all variables, which are part of some constraint defying group.</li>
  *     <li>Set the values to all free demands and thereby perform actual repair process.</li>
  * </ol>
  */
