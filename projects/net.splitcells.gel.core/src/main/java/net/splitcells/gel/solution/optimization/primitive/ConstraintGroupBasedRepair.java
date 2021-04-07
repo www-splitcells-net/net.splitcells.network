@@ -38,6 +38,18 @@ import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.primitive.SupplySelection.supplySelection;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * This {@link Optimization} consists of three phases.
+ * <ol>
+ *     <li>Select a set of {@link Constraint} in the {@link net.splitcells.gel.solution.Solution#constraint} tree
+ *     and therefore decide, which constraints of the problems are repaired during the optimization.
+ *     </li>
+ *     <li>Determine all {@link GroupId}s in the selected {@link Constraint}s, that
+ *     have a {@link Cost} bigger than zero. Free all demands of these groups.
+ *     This deletes the values of all variables, which are part of some constraint defying group<./li>
+ *     <li>Set the values to all free demands and thereby perform actual repair process.</li>
+ * </ol>
+ */
 public class ConstraintGroupBasedRepair implements Optimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
