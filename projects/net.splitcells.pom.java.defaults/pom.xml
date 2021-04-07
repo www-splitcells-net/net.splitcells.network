@@ -481,7 +481,7 @@
             <id>report</id>
             <!-- Generate all reports via "mvn site". -->
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <plugins>
