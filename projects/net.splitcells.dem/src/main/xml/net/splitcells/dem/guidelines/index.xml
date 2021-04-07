@@ -300,6 +300,7 @@
     </chapter>
     <chapter>
         <title>Documentation and Management</title>
+        <paragraph>Documentation links syntax to semantics or represents meta data.</paragraph>
         <chapter>
             <title>Task Organization</title>
             <paragraph>
@@ -317,69 +318,42 @@
             </paragraph>
             <paragraph>Tickets with a low amount of content should
                 be stored as a
-                (Javadoc) comment at the
+                (i.e. Javadoc) comment at the
                 relevant source code
-                location.
+                location. Every task should start with <quote>TODO</quote>, which is recognized by many tools.
             </paragraph>
-            <tree>
-                <name>Depending on the IDE's formatting, rendering and auto
-                    completion capabilities following
-                    techniques
-                    can be used
-                    for inline
-                    tickets.
-                </name>
-                <tree>
-                    <name>Every task should start with <quote>TODO</quote>, which is recognized by many tools.
-                    </name>
-                    <name>Eclipse like task tags followed by optional flowing text.
-                        Each paragraph stands for a
-                        ticket
-                        and may be divided
-                        by additional
-                        task
-                        tags into sub tickets in the same package. A description of the
-                        ticket
-                        is not
-                        required if the location of the tag makes
-                        the task obvious (i.e.
-                        RENAME tag
-                        above
-                        a
-                        variable declaration).
-                    </name>
-                </tree>
-            </tree>
-        </chapter>
-        <chapter>
-            <title>Task Tags</title>
-            <d:todo>
-                <link>
-                    <text>see out-dated article</text>
-                    <post>2016-04-03-task-based-information-process-management</post>
-                </link>
-            </d:todo>
-        </chapter>
-        <chapter>
-            <title>Internal and External Documentation</title>
-            <paragraph>Prefer internal documentation inside source code over external documentation,
-                if internal documentation can be rendered to a fitting format
-                and the language of internal documentation fits the needs and is supported well enough.
-                Internal and external documentation can be used simultaneously, if the can
-                be renderer as one documentation and if internal and external documentation
-                do not describe the same thing.
-            </paragraph>
-            <paragraph>Used tools should support to update the documentation based automatic refactoring
-                of source code.
+            <paragraph>Use Eclipse like task tags followed by optional flowing text.
+                Each paragraph stands for a ticket
+                and may be divided by additional task
+                tags into sub tickets. A description of the
+                ticket is not required if the location of the tag makes
+                the task obvious (i.e. RENAME tag above a variable declaration).
             </paragraph>
         </chapter>
         <chapter>
             <title>Documentation Content</title>
+            <paragraph>The documentation needs to at least define the goal or the result of the thing in question.
+                Everything needs documentation.
+                Classic documentation can sometimes be replaced by programs (i.e. build script named <quote>
+                    build.service
+                </quote> instead of
+                describing how to
+                build software), but everything needs documentation.
+            </paragraph>
             <paragraph>Updating the documentation is always a problem.
-                Minimize the need for documentation.
-                Documentation can sometimes replaced by programs (i.e. build script instead of describing how to build
-                software).
-                Prefer documenting justifications instead of functionality.
+                Minimize the amount of documentation.
+                In the best case, the name of a thing is its documentation.
+                Documenting justifications may also be required in order to omit regressions
+                or development things in a circle.
+            </paragraph>
+            <paragraph>If larger than minimal documentation is required, make it a project of its own.
+                Otherwise, documentation and the software development will hinder each other,
+                because of the combined complexity.
+            </paragraph>
+            <paragraph>Every public API component should not only have a name/id but also have at least an naturally
+                described
+                summary of its functionality in order to merge syntax and semantics.
+                This can be omitted if the name/id is also a natural description.
             </paragraph>
         </chapter>
     </chapter>
