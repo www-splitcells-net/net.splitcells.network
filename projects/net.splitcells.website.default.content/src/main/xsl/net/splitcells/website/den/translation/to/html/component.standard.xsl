@@ -545,10 +545,13 @@
     </xsl:template>
     <xsl:template match="s:code_block">
         <!-- "overflow: auto;"is used because some syntax highlighter do not use scrollbars by default. -->
+        <xsl:if test="@asset!=''">
+            <xsl:message select="'asdasd'" terminate="true"/>
+        </xsl:if>
         <xsl:variable name="tmp">
             <xsl:element name="s:tree">
                 <xsl:element name="s:name">
-                    <xsl:value-of select="@asset"/>
+                    <xsl:value-of select="''"/>
                 </xsl:element>
                 <xsl:element name="s:tree">
                     <xsl:element name="s:name">
@@ -561,7 +564,7 @@
                                         <xsl:copy-of select="./@language"/>
                                     </xsl:attribute>
                                     <xsl:value-of
-                                            select="unparsed-text(concat('file://',$source_asset_sourceCode_folder, ./@asset))"/>
+                                            select="node()"/>
                                 </xsl:element>
                             </xsl:element>
                         </xsl:element>
@@ -590,7 +593,7 @@
                         <xsl:copy-of select="./@language"/>
                     </xsl:attribute>
                     <xsl:value-of
-                            select="unparsed-text(concat('file://',$source_asset_sourceCode_folder, ./@asset))"/>
+                            select="node()"/>
                 </xsl:element>
             </div>
         </div>

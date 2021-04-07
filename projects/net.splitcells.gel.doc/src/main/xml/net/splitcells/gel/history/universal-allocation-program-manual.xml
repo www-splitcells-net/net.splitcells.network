@@ -1,1184 +1,1182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet attribute="text/xsl" href="xofi.html.xslt"?>
 <article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:xi="http://www.w3.org/2001/XInclude"
-	xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns="http://splitcells.net/sew.xsd"
-	xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
-	<meta>
-		<title>Universal Allocation Program Manual</title>
-		<title_detailed>Universal Allocation Program Manual</title_detailed>
-		<description>This manual describes how to use the Universal Allocation
-			Program
-			in order to solve assignment problems. Note that this program
-			is deprecated
-			and replaced by the Generic Allocator.
-		</description>
-		<related_to>
-			<url>
-				<site_instance_purl />
-				/2016/10/12/project-generic-allocator
-			</url>
-		</related_to>
-		<tags>
-			<tag name="Gel" />
-		</tags>
-		<publication_date year="2015" month="04"
-			day_of_month="20" />
-		<arbitrary_publication_date />
-		<license>standard</license>
-	</meta>
-	<content>
-		<paragraph>
-			Note that this program is deprecated and replaced by the
-			<link>
-				<post>
-					/2016/10/12/project-generic-allocator
-				</post>
-				<text>Generic Allocator.</text>
-			</link>
-		</paragraph>
-		<chapter>
-			<title>Sources</title>
-			<paragraph>
-				This program was created during an internship at the
-				<link>
-					<text>chair in informatics 6</text>
-					<url>http://www.is.informatik.uni-wuerzburg.de/startseite/</url>
-				</link>
-				of the
-				<link>
-					<text>Julius-Maximilians-Universität Würzburg</text>
-					<url>http://www.uni-wuerzburg.de/</url>
-				</link>
-				by Martins Avots and Kirill Djebko with assistance of
-				<link>
-					<text>Prof. Dr. Frank Puppe.</text>
-					<url>http://www.is.informatik.uni-wuerzburg.de/mitarbeiter/puppe_frank/
-					</url>
-				</link>
-			</paragraph>
-		</chapter>
-		<chapter>
-			<title>Assignment Problem</title>
-			<paragraph>Given a set of supplies and a set of demands an allocation
-				assigns
-				each object of a subset of demands an element of supplies.
-				Each supply can
-				only be assigned to a single demand. A set of
-				preferences contain for some
-				demands one or more preferred supplies.
-				A set of constraints describe some
-				properties which should be met by
-				an allocation. The rating of an allocation
-				quantifies its compliance
-				with the given preferences and constraints. The
-				higher the rating the
-				more constraints and preferences are not met by an
-				allocation. A
-				rating of zero means that every preference and constraint is
-				met by
-				an allocation. An optimal allocation is an allocation in which each
-				demand is assigned to a supply and where the rating is minimal.
-			</paragraph>
-			<paragraph> A classical example for such an assignment problem would
-				be the
-				Sudoku puzzle in which a set of numbers needs to be placed
-				onto a grid
-				following certain rules. Another problem is the graph
-				coloring problem in
-				which each node of a graph is colored and
-				neighboring nodes have to have
-				different colors.
-			</paragraph>
-			<paragraph>This program solves given problems with the help of
-				multiple
-				algorithms. Nevertheless, there are problems that can be
-				modeled as an
-				assignment problem but cannot be solved by the
-				Universal Allocation Program.
-			</paragraph>
-		</chapter>
-		<chapter>
-			<title>User interface</title>
-			<paragraph>The problem which is solved by the program is stored
-				inside an
-				Excel file. The program can be started via the following
-				shell command:
-			</paragraph>
-			<code_block language="bash"
-				asset="universal-allocation-program-cmd.txt" />
-			<paragraph>For further information of the command line options
-				following
-				command can be used:
-			</paragraph>
-			<code_block language="bash"
-				asset="universal-allocation-program-cmd-2.txt" />
-			<paragraph>
-				On some platforms the
-				<quote>java -jar</quote>
-				part can be omitted. An alternative way to start the program is to
-				double
-				click at the nap.jar file which will start a very basic web
-				server. In this
-				case the standard web browser will open a site to
-				which the Excel files can
-				be uploaded. During the calculations the
-				browser will show the loading page
-				animation specified by the
-				browser. When the calculations are done a
-				download is started. Note
-				that this method does not require an internet
-				connection as
-				everything is done on the local computer.
-			</paragraph>
-		</chapter>
-		<chapter>
-			<title>Stages</title>
-			<paragraph>A pipeline of assignment problems can be used in order to
-				describe
-				more complex problems. Such a pipeline consists of multiple
-				stages which
-				have an absolute order. The set of supplies and the set
-				of demands need to
-				be explicitly stated for first assignment problem
-				of such a pipeline. The
-				subsequent problems only require an explicit
-				enumeration of the supply
-				elements. The respective set of demands is
-				defined by the solution of the
-				previous assignment problem of the
-				pipeline. In the following, the stage
-				number is the position of a
-				problem inside the pipeline. A single assignment
-				problem without
-				connections to other problems is formally a pipeline with
-				one element
-				in this context.
-			</paragraph>
-		</chapter>
-		<chapter>
-			<title>Supply definition</title>
-			<paragraph>
-				The set of supplies is defined by a table. The supply header line
-				defines
-				the attributes of which each supply consists of. Each entry
-				has a name and
-				ends with
-				<quote>(int)</quote>
-				if the attribute is an integer. Otherwise the entry ends with
-				<quote>(ref)</quote>
-				. The following rows of the table contain the supply elements and
-				use the
-				same columns as the header. Each row describes a unique
-				element of the
-				supply set but their content do not have to be unique.
-				This table is stored
-				into a sheet called
-				<quote>Angebot_0</quote>
-				. The following example shows a supply definition which consists of
-				a Group
-				of 4. Note that the first and second supply have the same
-				content but still
-				are two different supplies. This example shows that
-				a project with the id
-				<quote>K1</quote>
-				needs 4 peoples with different primary and secondary duties.
-			</paragraph>
-			<table>
-				<row>
-					<cell>ProjectId(ref)</cell>
-					<cell>Primary Duty(ref)</cell>
-					<cell>Secondary Duty(ref)</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Testing</cell>
-					<cell>Planning</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Planning</cell>
-					<cell>Documentation</cell>
-				</row>
-			</table>
-		</chapter>
-		<chapter>
-			<title>Demand definition</title>
-			<paragraph>
-				The demand definition has the same format as the supply definition.
-				The only
-				difference is that the sheet's name is
-				<quote>Nachrage_&lt;stage&gt;</quote>.
-				Where &lt;stage&gt; is the number of the problem's stage. Note that
-				most
-				problems probably will only contain one stage. Which means that
-				most users
-				won't bother with stages at all as they can be ignored in
-				such cases. The
-				following table shows a demand definition suited for
-				the previous supply
-				definition. In this case the sheet's name is
-				<quote>Nachfrage_0</quote>
-				because it is the first and only stage of this example. As you can
-				see the
-				people which need to be assigned to a Project do not have
-				perfectly fit
-				skills.
-			</paragraph>
-		</chapter>
-		<table>
-			<row>
-				<cell>Name(ref)</cell>
-				<cell>Many experience in(ref)</cell>
-				<cell>Some experience in(ref)</cell>
-			</row>
-			<row>
-				<cell>Alpha</cell>
-				<cell>Programming</cell>
-				<cell>None</cell>
-			</row>
-			<row>
-				<cell>Bravo</cell>
-				<cell>Testing</cell>
-				<cell>Programming</cell>
-			</row>
-			<row>
-				<cell>Charlie</cell>
-				<cell>Programming</cell>
-				<cell>None</cell>
-			</row>
-			<row>
-				<cell>Delta</cell>
-				<cell>Programming</cell>
-				<cell>Documentation</cell>
-			</row>
-		</table>
-		<chapter>
-			<title>Preferences definition</title>
-			<paragraph>
-				The preference definition is stored into a sheet named
-				<quote>Präferenzen_&lt;stage&gt;</quote>
-				where &lt;stage&gt; is the stage number of the corresponding
-				assignment
-				problem of the pipeline. The header of the preferences
-				sheet is defined by
-				the concatenation of the headers' of the supplies
-				and the demands of
-				respective stage and a weight attribute called
-				<quote>Gewicht(lb)</quote>
-				. This means that the header of the preference is the header of the
-				solution
-				for a given stage plus the
-				<quote>Gewicht(lb)</quote>
-				attribute.
-			</paragraph>
-			<paragraph>
-				The preferences table contains assignments which the user wishes to
-				be part
-				of the solution. The
-				<quote>Gewicht(lb)</quote>
-				attribute of a preference describes how important it is for the user
-				that
-				this assignment is located in the solution. It consists of a
-				positive
-				integer. The lower the number the more important the
-				preference is. The
-				preference of a demand with the highest number
-				defines how important it is
-				that this demand will get any of its
-				preferences. The higher this number is
-				the more it is likely that any
-				preference of this demand will be met. In
-				most cases the
-				<quote>Gewicht(lb)</quote>
-				attribute should be a very low number which guarantees that
-				constraints are
-				more important than preferences. The following table
-				shows a preferences
-				definition based on the previous tables. This
-				examples also show that nearly
-				all persons want to get a role as a
-				programmer which is not possible.
-				Preferences are often less
-				important than constraints because in the other
-				case the preference
-				would already be part of a correct solution and
-				therefore the
-				corresponding supply and demand could be removed from the
-				input in
-				order to get better results or to calculate the solution more
-				quickly.
-			</paragraph>
-			<table>
-				<row>
-					<cell>ProjectId(ref)</cell>
-					<cell>PrimaryDuty(ref)</cell>
-					<cell>SecondaryDuty(ref)</cell>
-					<cell>Name(ref)</cell>
-					<cell>Many experience in(ref)</cell>
-					<cell>Some experience in (ref)</cell>
-					<cell>Gewicht(lb)</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>Alpha</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>1</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Testing</cell>
-					<cell>Planning</cell>
-					<cell>Bravo</cell>
-					<cell>Testing</cell>
-					<cell>Programming</cell>
-					<cell>1</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>Charlie</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>1</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>Delta</cell>
-					<cell>Programming</cell>
-					<cell>Documentation</cell>
-					<cell>1</cell>
-				</row>
-			</table>
-		</chapter>
-		<chapter>
-			<title>Constraints definition</title>
-			<paragraph>
-				The constraint definition of an assignment problem is stored into a
-				sheet
-				named
-				<quote>Constraints_&lt;stage&gt;</quote>
-				where &lt;stage&gt; is the stage number of the concerned problem. It
-				has the
-				same header as the preference table of the same stage. Each
-				row describes
-				one constraint. A constraint defines the following
-				abstract rule: the
-				biggest assignment subset which complies with IF
-				has also to comply with
-				THEN. To put it in other words: every cluster
-				which is created by the
-				condition IF also must comply with the
-				condition THEN.
-			</paragraph>
-			<paragraph>Lets assume following solution in order to explain the
-				functioning
-				of constraints by example:
-			</paragraph>
-			<table>
-				<row>
-					<cell>ProjectId(cell)</cell>
-					<cell>Primary Duty(ref)</cell>
-					<cell>Secondary Duty(ref)</cell>
-					<cell>Name(ref)</cell>
-					<cell>Many experience in(ref)</cell>
-					<cell>Some experience in(ref)</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>Charlie</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>Alpha</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Testing</cell>
-					<cell>Planning</cell>
-					<cell>Bravo</cell>
-					<cell>Testing</cell>
-					<cell>Programming</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Planning</cell>
-					<cell>Documentation</cell>
-					<cell>Delta</cell>
-					<cell>Programming</cell>
-					<cell>Documentation</cell>
-				</row>
-			</table>
-			<paragraph>
-				Every entry of a constraint's row which has the format
-				<quote>&lt;value&gt;</quote>
-				is part of IF. Such an entry means that every element in each
-				cluster, which
-				is formed by this constraint, has to have the Value
-				&lt;value&gt; at the
-				attribute of the same column. The following
-				constraint creates a cluster
-				consisting of Charlie and Alpha because
-				they are the only people who got the
-				role as a programmer in the
-				assumed solution. Note that this constraint does
-				not have any effect
-				as there is no entry which is part of THEN. Constraint
-				which selects
-				every assignment in the solution where the primary duty is
-				<quote>Programming</quote>
-				:
-			</paragraph>
-			<table>
-				<row>
-					<cell>ProjectId(ref)</cell>
-					<cell>Primary Duty(ref)</cell>
-					<cell>Secondary Duty(ref)</cell>
-					<cell>Name(ref)</cell>
-					<cell>Many experience in(ref)</cell>
-					<cell>Some experience in(ref)</cell>
-					<cell>Gewicht(lb)</cell>
-				</row>
-				<row>
-					<cell></cell>
-					<cell>Programming</cell>
-					<cell></cell>
-					<cell></cell>
-					<cell></cell>
-					<cell></cell>
-					<cell>1000</cell>
-				</row>
-			</table>
-			<paragraph>The cluster which is formed by the IF part of the previous
-				constraint:
-			</paragraph>
-			<table>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>Charlie</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>Alpha</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-				</row>
-			</table>
-			<paragraph>
-				Every entry of a constraint which consists of
-				<quote>*</quote>
-				is part of IF. Such an entry means that the cluster which is created
-				by this
-				constraint is parted into multiple clusters. For each cluster
-				all elements
-				have the same value at the column of such an entry. The
-				following tables
-				show the clusters created by a constraint which
-				consists of a
-				<quote>*</quote>
-				at the
-				<quote>Primary Duty(ref)</quote>
-				attribute. Constraint which clusters the solution according to the
-				<quote>Primary Duty</quote>
-				attribute:
-			</paragraph>
-			<table>
-				<row>
-					<cell>ProjectId(ref)</cell>
-					<cell>Primary Duty(ref)</cell>
-					<cell>Secondary Duty(ref)</cell>
-					<cell>Name(ref)</cell>
-					<cell>Many experience in(ref)</cell>
-					<cell>Some experience in(ref)</cell>
-					<cell>Gewicht(lb)</cell>
-				</row>
-				<row>
-					<cell></cell>
-					<cell>*</cell>
-					<cell></cell>
-					<cell></cell>
-					<cell></cell>
-					<cell></cell>
-					<cell>1000</cell>
-				</row>
-			</table>
-			<paragraph>First cluster which is formed by the IF part of the
-				previous
-				constraint:
-			</paragraph>
-			<table>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>Charlie</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-				</row>
-				<row>
-					<cell>K1</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-					<cell>Alpha</cell>
-					<cell>Programming</cell>
-					<cell>None</cell>
-				</row>
-			</table>
-			<paragraph>Cluster 2 which is formed by the IF part of the previous
-				constraint:
-			</paragraph>
-			<table>
-				<row>
-					<cell>K1</cell>
-					<cell>Testing</cell>
-					<cell>Planning</cell>
-					<cell>Bravo</cell>
-					<cell>Testing</cell>
-					<cell>Programming</cell>
-				</row>
-			</table>
-			<paragraph>Last cluster which is formed by the IF part of the
-				previous
-				constraint:
-			</paragraph>
-			<table>
-				<row>
-					<cell>K1</cell>
-					<cell>Planning</cell>
-					<cell>Documentation</cell>
-					<cell>Delta</cell>
-					<cell>Programming</cell>
-					<cell>Documentation</cell>
-				</row>
-			</table>
-			<paragraph>
-				Every other entry which starts with
-				<quote>#</quote>
-				followed by a function call is part of THEN. Possible function calls
-				are
-				listed at the chapter constraint functions. These function calls
-				describe
-				which conditions has to be met by the clusters which are
-				created by the IF
-				part of the same constraint. The following table
-				shows the constraints which
-				were used in order to generate the
-				solution mentioned at the beginning of
-				this chapter:
-			</paragraph>
-			<table>
-				<row>
-					<cell>ProjectId(ref)</cell>
-					<cell>Primary Duty(ref)</cell>
-					<cell>Secondary Duty(ref)</cell>
-					<cell>Name(ref)</cell>
-					<cell>Many experience in(ref)</cell>
-					<cell>Some experience in(ref)</cell>
-					<cell>Gewicht(lb)</cell>
-				</row>
-				<row>
-					<cell></cell>
-					<cell>Programming</cell>
-					<cell></cell>
-					<cell></cell>
-					<cell>#OR(Programming)</cell>
-					<cell></cell>
-					<cell>1 000 000 000</cell>
-				</row>
-				<row>
-					<cell></cell>
-					<cell>Testing</cell>
-					<cell></cell>
-					<cell></cell>
-					<cell>#OR(Testing)</cell>
-					<cell></cell>
-					<cell>1 000 000 000</cell>
-				</row>
-				<row>
-					<cell></cell>
-					<cell>Planning</cell>
-					<cell></cell>
-					<cell></cell>
-					<cell>#OR(Planning)</cell>
-					<cell></cell>
-					<cell>1 000 000</cell>
-				</row>
-				<row>
-					<cell></cell>
-					<cell></cell>
-					<cell>Planning</cell>
-					<cell></cell>
-					<cell></cell>
-					<cell>#OR(Planning)</cell>
-					<cell>1 000 000</cell>
-				</row>
-				<row>
-					<cell></cell>
-					<cell></cell>
-					<cell>Testing</cell>
-					<cell></cell>
-					<cell></cell>
-					<cell>#OR(Testing)</cell>
-					<cell>1 000 000</cell>
-				</row>
-			</table>
-			<paragraph>
-				The first, second and third constraints say that the guy whose
-				primary duty
-				is X should also have many experience in X (i.e. that
-				the people whose
-				primary duty is programming should also have many
-				experience in
-				programming). Each of these constraints has the same
-				value for the
-				<quote>Gewicht(lb)</quote>
-				attribute which means that each of them is equally important. The
-				last two
-				constraints demand that the people whose secondary duty is
-				planning or
-				testing also should have some experience in it. These two
-				constraints have a
-				lower value at the
-				<quote>Gewicht(lb)</quote>
-				attribute which means that these two constraints are less important
-				than the
-				first three constraints. The
-				<quote>Gewicht(lb)</quote>
-				is often set to very high values in order to ensure that the
-				constraints are
-				more important than the preferences and is limited to
-				the values between 0
-				and 922337203685477.
-			</paragraph>
-		</chapter>
-		<chapter>
-			<title>Constraint Functions</title>
-			<paragraph>The THEN part of each constraint consists of constraint
-				functions
-				which describe the conditions that have to be meet by the
-				clusters formed by
-				the IF part of the same constraint. All available
-				functions are listed
-				below.
-			</paragraph>
-			<chapter>
-				<title>ISCOUNT(Value, Integer)</title>
-				<paragraph>Demands that each cluster defined by the IF part of a
-					constraint
-					has exactly &lt;Integer&gt; elements which have the value
-					&lt;Value&gt; at
-					the same column as the appearance of this function.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>MINCOUNT(Value, Integer)</title>
-				<paragraph>Demands that each cluster defined by the IF part of a
-					constraint
-					has at least &lt;Integer&gt; elements which have the
-					value &lt;Value&gt; at
-					the same column as the appearance of this
-					function.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>MAXCOUNT(Value, Integer)</title>
-				<paragraph>Demands that each cluster defined by the IF part of a
-					constraint
-					has at at most &lt;Integer&gt; many elements which have
-					the value
-					&lt;Value&gt; at the same column as the appearance of this
-					function.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>OR(Values...)</title>
-				<paragraph>Demands that each cluster defined by the IF part of a
-					constraint
-					has only elements containing a value of the enumartion
-					&lt;Values...&gt; at
-					the same column as the appearance of this
-					function. Each element of
-					&lt;Values...&gt; is separated by a comma.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>NOT(Value...)</title>
-				<paragraph>Demands that each cluster defined by the IF part of a
-					constraint
-					has only elements which has no value at the same column
-					as the appearance
-					of this function that is an element of
-					&lt;Values...&gt;. Each element of
-					&lt;Values...&gt; is separated by
-					a comma.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>MINDIFF(Integer)</title>
-				<paragraph>Demands
-					that each cluster defined by the IF part of a constraint has only
-					elements
-					which have a pairwise minimum distance of &lt;Integer&gt;
-					or greater. The
-					distance between two elements is defined by the
-					difference of the two
-					integer values of these two elements which are
-					located at the same column
-					as the appearance of this constraint
-					function. Therefore this function can
-					only meaningfully be used at
-					columns which are of the attribute
-					<quote>(int)</quote>
-					.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>MAXDIFF(Integer)</title>
-				<paragraph>Demands
-					that each cluster defined by the IF part of a constraint has only
-					elements
-					which have a pairwise maximum distance of &lt;Integer&gt;
-					or less. The
-					distance between two elements is defined by the
-					difference of the two
-					integer values of these two elements which are
-					located at the same column
-					as the appearance of this constraint
-					function. Therefore this function can
-					only meaningfully be used at
-					columns which are of the attribute
-					<quote>(int)</quote>
-					.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>CONSECUTIVE()</title>
-				<paragraph>Demands that each cluster defined by the IF part of a
-					constraint
-					has only elements which are consecutive. This means that
-					for each element
-					in one cluster there is exactly one element at the
-					same cluster which is
-					adjacent to this element. Two elements are
-					adjacent if their pairwise
-					distance is exactly 1. The distance
-					between two elements is defined by the
-					difference of the two integer
-					values of these two elements which are
-					located at the same column as
-					the appearance of this constraint function.
-				</paragraph>
-			</chapter>
-			<paragraph>
-				In other words this constraint function demands that the elements of
-				a
-				cluster form an ordered queue without any gap between two elements
-				and
-				therefore this function is only sensibly usable at columns which
-				are of the
-				attribute
-				<quote>(int)</quote>
-				.
-			</paragraph>
-		</chapter>
-		<chapter>
-			<title>Configuration definition</title>
-			<paragraph>The
-				configuration definition is stored in a table named
-				"config_&lt;stage&gt;"
-				where &lt;stage&gt; is the stage number of the
-				affected assignment problem.
-				This table consists of two the columns
-				with the header
-				<quote>Key</quote>
-				and
-				<quote>Value</quote>
-				. In the next subsection the possible options are listed.
-			</paragraph>
-			<chapter>
-				<title>
-					Key:
-					<quote>number of restarts:</quote>
-				</title>
-				<paragraph>
-					<marked>Value:</marked>
-					an integer describing how many restarts are used during problem
-					solving.
-				</paragraph>
-				<paragraph>
-					<marked>Default:</marked>
-					<quote>false</quote>
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>
-					Key:
-					<quote>is flusher enabled:</quote>
-				</title>
-				<paragraph>
-					<marked>Value:</marked>
-					the flusher is enabled if set to "true" and in the other case set
-					to
-					"false". See chapter Flusher for information about the flusher.
-				</paragraph>
-				<paragraph>
-					<marked>Default:</marked>
-					<quote>false</quote>
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>
-					Key:
-					<quote>runs parallel:</quote>
-				</title>
-				<paragraph>
-					<marked>Value:</marked>
-					random restarts are computed in parallel if set to "true" and in
-					the other
-					case set to "false".
-				</paragraph>
-				<paragraph>
-					<marked>Default:</marked>
-					<quote>false</quote>
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>
-					Key:
-					<quote>maximum number of plateau steps:</quote>
-				</title>
-				<paragraph>
-					<marked>Value:</marked>
-					maximal number of plateau steps which should be walked by the hill
-					climber
-					before aborting the computation.
-				</paragraph>
-				<paragraph>
-					<marked>Default:</marked>
-					<quote>10</quote>
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>
-					Key:
-					<quote>sort solution in order:</quote>
-				</title>
-				<paragraph>
-					<marked>Value:</marked>
-					a list of column numbers which are separated via semicolon. The
-					column
-					numbering is starting with 1 and after each number there have
-					to be a
-					semicolon. The list describes in which order the columns of
-					the solution
-					are going to be sorted.
-				</paragraph>
-				<paragraph>
-					<marked>Default:</marked>
-					Empty String (no sorting).
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>
-					Key:
-					<quote>temperature function:</quote>
-				</title>
-				<paragraph>
-					<marked>Value:</marked>
-					a string which describes the temperature function which is used for
-					simulated annealing. The following values are valid:
-				</paragraph>
-				<paragraph>
-					<marked>Default:</marked>
-					simulated annealing is disabled
-				</paragraph>
-				<paragraph>
-					<marked>
-						<quote>ONEDIVX:</quote>
-					</marked>
-					<link>
-						<url>http://www.wolframalpha.com/input/?i=[log%282%29+%2F+log%28x^1.5%29]+%E2%80%93+0.05&amp;dataset=
-						</url>
-						<text>f(x) = [log(2) / log(x^1.5)] - 0.05</text>
-					</link>
-				</paragraph>
-				<paragraph>
-					<marked>
-						<quote>LOGTWO:</quote>
-					</marked>
-					<link>
-						<url>http://www.wolframalpha.com/input/?i=[log%282%29+%2F+log%28x^1.5%29]+%E2%80%93+0.05&amp;dataset=
-						</url>
-						<text>f(x) = [log(2) / log(x^1.5)] - 0.05</text>
-					</link>
-				</paragraph>
-				<paragraph>
-					<marked>
-						<quote>LOGTHREE:</quote>
-					</marked>
-					<link>
-						<url>http://www.wolframalpha.com/input/?i=[log%283%29+%2F+log%28x^1.5%29]+%E2%80%93+0.05&amp;dataset=
-						</url>
-						<text>f(x) = [log(3) / log(x^1.5)] - 0.05</text>
-					</link>
-				</paragraph>
-				<paragraph>
-					<marked>
-						<quote>LOGFOUR:</quote>
-					</marked>
-					<link>
-						<url>http://www.wolframalpha.com/input/?i=[log%284%29+%2F+log%28x^2%29]+%E2%80%93+0.05
-						</url>
-						<text>f(x) = [log(4) / log(x^2)] - 0.05</text>
-					</link>
-				</paragraph>
-				<paragraph>
-					<marked>
-						<quote>LOGFIVE:</quote>
-					</marked>
-					<link>
-						<url>http://www.wolframalpha.com/input/?i=[log%285%29+%2F+log%28x^2%29]+%E2%80%93+0.05
-						</url>
-						<text>f(x) = [log(5) / log(x^2)] - 0.05</text>
-					</link>
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>
-					Key:
-					<quote>repeat optimizers until no improvement found:</quote>
-				</title>
-				<paragraph>
-					<marked>Value:</marked>
-					repeats hill climbing algorithm with enabled flusher and without
-					restarted
-					temperature function as long as there is an improvement
-					found if set to
-					<quote>true</quote>
-					.
-				</paragraph>
-				<paragraph>
-					<marked>Default:</marked>
-					<quote>false</quote>
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>
-					Key:
-					<quote>number of threads:</quote>
-				</title>
-				<paragraph>
-					<marked>Value:</marked>
-					the maximum number of threads which are used during Random Restart.
-				</paragraph>
-				<paragraph>
-					<marked>Default:</marked>
-					3
-				</paragraph>
-			</chapter>
-		</chapter>
-		<chapter>
-			<title>Functioning</title>
-			<paragraph>The following chapters describe the problem solving
-				components of
-				the program in the order they are used in the program.
-				Some of them can be
-				disabled.
-			</paragraph>
-			<chapter>
-				<title>Initializer</title>
-				<paragraph>The Initializer assigns demands to supplies. At the first
-					stage
-					it assigns demands to supplies based on preferences only. It
-					iterates
-					multiple times over all not yet assigned demands. At the
-					first iteration it
-					tries to assign to each demand the most preferred
-					supply if there is one
-					available. At the second iteration it tries
-					to assign to each demand the
-					second most preferred supply if there
-					is one available and so on. The first
-					stage ends if all demands are
-					assigned or if there are no preferred
-					supplies left for not yet
-					assigned demands. At the second stage supplies
-					are assigned to
-					demands based on proposals which are created via
-					constraints. If
-					there are multiple proposed supplies for one demand then
-					the supply
-					is assigned to the demand which complies best to the
-					constraints. At
-					the third stage the initializer assigns any supplies left
-					to each
-					free demand randomly.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>Hill Climber</title>
-				<paragraph>The hill climber tries to improve the current solution by
-					swapping. There are 3 types of swaps. The first attribute, which is
-					used most of
-					the time in general, selects two assigned demands and
-					swaps their
-					respective supplies. The next attribute replaces the
-					supply of an assigned
-					demand with a supply which is not assigned to
-					any demand. The last attribute
-					replaces the demand of an assigned
-					supply with a demand that is not
-					assigned to any supply. The hill
-					climber works in two phases. At the first
-					phase at each hill
-					climbing step swaps are proposed by the constraints. The
-					hill
-					climber checks which proposed swap improves the solution the most.
-					At
-					the end of the step the best proposed swap is executed. If no
-					proposed swap
-					improves the solution a plateau step is done. This
-					step changes the current
-					assignment of demands to supplies by one
-					step without downgrading the
-					current assignment. The first phase
-					runs as long it finds swaps which
-					improve the current assignment, as
-					long not too many consecutively plateau
-					steps are done or if no swap
-					can be found which does not downgrade the
-					solution. At the second
-					phase the hill climber uses proposed swaps which
-					are generated by
-					preferences but aside from that works like in the first
-					phase.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>Flusher</title>
-				<paragraph>If the flusher is enabled it removes some assignments of
-					the
-					solution created by the hill climber based on proposals of the
-					constraints.
-					This is only done if the removal of each assignment
-					improves the compliance
-					of the current solution with the given
-					preferences and constraints. After
-					that the initializer and hill
-					climber are used again. This is repeated as
-					long the flusher removes
-					assignments from the solution provided by the hill
-					climber and as
-					long each iteration improves the solution.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>Simulated Annealing</title>
-				<paragraph>If simulated annealing is activated there is a
-					probability that a
-					random swap is done during an hill climbing step.
-					A downgrade by this
-					random swap is accepted. This probability is
-					defined by the temperature
-					function and gets lower as the time
-					progresses during problem solving.
-				</paragraph>
-			</chapter>
-			<chapter>
-				<title>Random Restart</title>
-				<paragraph>If random restart is activated the complete calculation
-					of the
-					solution is repeated multiple times. The solution with the
-					best rating is
-					returned as the result. These calculations can be
-					executed in parallel. If
-					one of these solutions is complying with
-					all constraints and preferences
-					than every other remaining
-					calculations are aborted.
-				</paragraph>
-			</chapter>
-		</chapter>
-		<chapter>
-			<title>Output</title>
-			<paragraph>If the program is used via console the output of the
-				solution is
-				stored in an excel table and the path of this file is
-				printed to the
-				console. If the program is used via web browser a
-				download of the excel
-				table is started.
-			</paragraph>
-		</chapter>
-		<chapter>
-			<title>Examples</title>
-			<paragraph>
-				There are multiple examples at the folder
-				<quote>testData</quote>
-				of the provided program of this program. At the end of each entry
-				the
-				corresponding command is listed in order to execute the example
-				from the
-				console.
-			</paragraph>
-			<table>
-				<row>
-					<cell>Problem</cell>
-					<cell>Excel file name</cell>
-					<cell>Command for console</cell>
-				</row>
-				<row>
-					<cell>graph coloring</cell>
-					<cell>graph_coloring.xlsx</cell>
-					<cell>java -jar nap.jar -s ./testData/graph_coloring.xlsx</cell>
-				</row>
-				<row>
-					<cell>8-Queen problem</cell>
-					<cell>queen_8.xlsx</cell>
-					<cell>java -jar nap.jar -s ./testData/queen_8.xlsx</cell>
-				</row>
-				<row>
-					<cell>sudoku</cell>
-					<cell>Sudoku_hard.xlsx</cell>
-					<cell>java -jar nap.jar -s ./testData/Sudoku_hard.xlsx</cell>
-				</row>
-				<row>
-					<cell>class scheduling problem</cell>
-					<cell>class_scheduling.xlsx</cell>
-					<cell>java -jar nap.jar -s ./testData/class_scheduling.xlsx</cell>
-				</row>
-			</table>
-		</chapter>
-	</content>
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Universal Allocation Program Manual</title>
+        <title_detailed>Universal Allocation Program Manual</title_detailed>
+        <description>This manual describes how to use the Universal Allocation
+            Program
+            in order to solve assignment problems. Note that this program
+            is deprecated
+            and replaced by the Generic Allocator.
+        </description>
+        <related_to>
+            <url>
+                <site_instance_purl/>
+                /2016/10/12/project-generic-allocator
+            </url>
+        </related_to>
+        <tags>
+            <tag name="Gel"/>
+        </tags>
+        <publication_date year="2015" month="04"
+                          day_of_month="20"/>
+        <arbitrary_publication_date/>
+        <license>standard</license>
+    </meta>
+    <content>
+        <paragraph>
+            Note that this program is deprecated and replaced by the
+            <link>
+                <post>
+                    /2016/10/12/project-generic-allocator
+                </post>
+                <text>Generic Allocator.</text>
+            </link>
+        </paragraph>
+        <chapter>
+            <title>Sources</title>
+            <paragraph>
+                This program was created during an internship at the
+                <link>
+                    <text>chair in informatics 6</text>
+                    <url>http://www.is.informatik.uni-wuerzburg.de/startseite/</url>
+                </link>
+                of the
+                <link>
+                    <text>Julius-Maximilians-Universität Würzburg</text>
+                    <url>http://www.uni-wuerzburg.de/</url>
+                </link>
+                by Martins Avots and Kirill Djebko with assistance of
+                <link>
+                    <text>Prof. Dr. Frank Puppe.</text>
+                    <url>http://www.is.informatik.uni-wuerzburg.de/mitarbeiter/puppe_frank/
+                    </url>
+                </link>
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Assignment Problem</title>
+            <paragraph>Given a set of supplies and a set of demands an allocation
+                assigns
+                each object of a subset of demands an element of supplies.
+                Each supply can
+                only be assigned to a single demand. A set of
+                preferences contain for some
+                demands one or more preferred supplies.
+                A set of constraints describe some
+                properties which should be met by
+                an allocation. The rating of an allocation
+                quantifies its compliance
+                with the given preferences and constraints. The
+                higher the rating the
+                more constraints and preferences are not met by an
+                allocation. A
+                rating of zero means that every preference and constraint is
+                met by
+                an allocation. An optimal allocation is an allocation in which each
+                demand is assigned to a supply and where the rating is minimal.
+            </paragraph>
+            <paragraph>A classical example for such an assignment problem would
+                be the
+                Sudoku puzzle in which a set of numbers needs to be placed
+                onto a grid
+                following certain rules. Another problem is the graph
+                coloring problem in
+                which each node of a graph is colored and
+                neighboring nodes have to have
+                different colors.
+            </paragraph>
+            <paragraph>This program solves given problems with the help of
+                multiple
+                algorithms. Nevertheless, there are problems that can be
+                modeled as an
+                assignment problem but cannot be solved by the
+                Universal Allocation Program.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>User interface</title>
+            <paragraph>The problem which is solved by the program is stored
+                inside an
+                Excel file. The program can be started via the following
+                shell command:
+            </paragraph>
+            <code_block language="bash"><![CDATA[java -jar nap.jar -s <Path to the Excel file >]]></code_block>
+            <paragraph>For further information of the command line options
+                following
+                command can be used:
+            </paragraph>
+            <code_block language="bash"><![CDATA[java -jar nap.jar -h]]></code_block>
+            <paragraph>
+                On some platforms the
+                <quote>java -jar</quote>
+                part can be omitted. An alternative way to start the program is to
+                double
+                click at the nap.jar file which will start a very basic web
+                server. In this
+                case the standard web browser will open a site to
+                which the Excel files can
+                be uploaded. During the calculations the
+                browser will show the loading page
+                animation specified by the
+                browser. When the calculations are done a
+                download is started. Note
+                that this method does not require an internet
+                connection as
+                everything is done on the local computer.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Stages</title>
+            <paragraph>A pipeline of assignment problems can be used in order to
+                describe
+                more complex problems. Such a pipeline consists of multiple
+                stages which
+                have an absolute order. The set of supplies and the set
+                of demands need to
+                be explicitly stated for first assignment problem
+                of such a pipeline. The
+                subsequent problems only require an explicit
+                enumeration of the supply
+                elements. The respective set of demands is
+                defined by the solution of the
+                previous assignment problem of the
+                pipeline. In the following, the stage
+                number is the position of a
+                problem inside the pipeline. A single assignment
+                problem without
+                connections to other problems is formally a pipeline with
+                one element
+                in this context.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Supply definition</title>
+            <paragraph>
+                The set of supplies is defined by a table. The supply header line
+                defines
+                the attributes of which each supply consists of. Each entry
+                has a name and
+                ends with
+                <quote>(int)</quote>
+                if the attribute is an integer. Otherwise the entry ends with
+                <quote>(ref)</quote>
+                . The following rows of the table contain the supply elements and
+                use the
+                same columns as the header. Each row describes a unique
+                element of the
+                supply set but their content do not have to be unique.
+                This table is stored
+                into a sheet called
+                <quote>Angebot_0</quote>
+                . The following example shows a supply definition which consists of
+                a Group
+                of 4. Note that the first and second supply have the same
+                content but still
+                are two different supplies. This example shows that
+                a project with the id
+                <quote>K1</quote>
+                needs 4 peoples with different primary and secondary duties.
+            </paragraph>
+            <table>
+                <row>
+                    <cell>ProjectId(ref)</cell>
+                    <cell>Primary Duty(ref)</cell>
+                    <cell>Secondary Duty(ref)</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Testing</cell>
+                    <cell>Planning</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Planning</cell>
+                    <cell>Documentation</cell>
+                </row>
+            </table>
+        </chapter>
+        <chapter>
+            <title>Demand definition</title>
+            <paragraph>
+                The demand definition has the same format as the supply definition.
+                The only
+                difference is that the sheet's name is
+                <quote>Nachrage_&lt;stage&gt;</quote>.
+                Where &lt;stage&gt; is the number of the problem's stage. Note that
+                most
+                problems probably will only contain one stage. Which means that
+                most users
+                won't bother with stages at all as they can be ignored in
+                such cases. The
+                following table shows a demand definition suited for
+                the previous supply
+                definition. In this case the sheet's name is
+                <quote>Nachfrage_0</quote>
+                because it is the first and only stage of this example. As you can
+                see the
+                people which need to be assigned to a Project do not have
+                perfectly fit
+                skills.
+            </paragraph>
+        </chapter>
+        <table>
+            <row>
+                <cell>Name(ref)</cell>
+                <cell>Many experience in(ref)</cell>
+                <cell>Some experience in(ref)</cell>
+            </row>
+            <row>
+                <cell>Alpha</cell>
+                <cell>Programming</cell>
+                <cell>None</cell>
+            </row>
+            <row>
+                <cell>Bravo</cell>
+                <cell>Testing</cell>
+                <cell>Programming</cell>
+            </row>
+            <row>
+                <cell>Charlie</cell>
+                <cell>Programming</cell>
+                <cell>None</cell>
+            </row>
+            <row>
+                <cell>Delta</cell>
+                <cell>Programming</cell>
+                <cell>Documentation</cell>
+            </row>
+        </table>
+        <chapter>
+            <title>Preferences definition</title>
+            <paragraph>
+                The preference definition is stored into a sheet named
+                <quote>Präferenzen_&lt;stage&gt;</quote>
+                where &lt;stage&gt; is the stage number of the corresponding
+                assignment
+                problem of the pipeline. The header of the preferences
+                sheet is defined by
+                the concatenation of the headers' of the supplies
+                and the demands of
+                respective stage and a weight attribute called
+                <quote>Gewicht(lb)</quote>
+                . This means that the header of the preference is the header of the
+                solution
+                for a given stage plus the
+                <quote>Gewicht(lb)</quote>
+                attribute.
+            </paragraph>
+            <paragraph>
+                The preferences table contains assignments which the user wishes to
+                be part
+                of the solution. The
+                <quote>Gewicht(lb)</quote>
+                attribute of a preference describes how important it is for the user
+                that
+                this assignment is located in the solution. It consists of a
+                positive
+                integer. The lower the number the more important the
+                preference is. The
+                preference of a demand with the highest number
+                defines how important it is
+                that this demand will get any of its
+                preferences. The higher this number is
+                the more it is likely that any
+                preference of this demand will be met. In
+                most cases the
+                <quote>Gewicht(lb)</quote>
+                attribute should be a very low number which guarantees that
+                constraints are
+                more important than preferences. The following table
+                shows a preferences
+                definition based on the previous tables. This
+                examples also show that nearly
+                all persons want to get a role as a
+                programmer which is not possible.
+                Preferences are often less
+                important than constraints because in the other
+                case the preference
+                would already be part of a correct solution and
+                therefore the
+                corresponding supply and demand could be removed from the
+                input in
+                order to get better results or to calculate the solution more
+                quickly.
+            </paragraph>
+            <table>
+                <row>
+                    <cell>ProjectId(ref)</cell>
+                    <cell>PrimaryDuty(ref)</cell>
+                    <cell>SecondaryDuty(ref)</cell>
+                    <cell>Name(ref)</cell>
+                    <cell>Many experience in(ref)</cell>
+                    <cell>Some experience in (ref)</cell>
+                    <cell>Gewicht(lb)</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>Alpha</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>1</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Testing</cell>
+                    <cell>Planning</cell>
+                    <cell>Bravo</cell>
+                    <cell>Testing</cell>
+                    <cell>Programming</cell>
+                    <cell>1</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>Charlie</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>1</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>Delta</cell>
+                    <cell>Programming</cell>
+                    <cell>Documentation</cell>
+                    <cell>1</cell>
+                </row>
+            </table>
+        </chapter>
+        <chapter>
+            <title>Constraints definition</title>
+            <paragraph>
+                The constraint definition of an assignment problem is stored into a
+                sheet
+                named
+                <quote>Constraints_&lt;stage&gt;</quote>
+                where &lt;stage&gt; is the stage number of the concerned problem. It
+                has the
+                same header as the preference table of the same stage. Each
+                row describes
+                one constraint. A constraint defines the following
+                abstract rule: the
+                biggest assignment subset which complies with IF
+                has also to comply with
+                THEN. To put it in other words: every cluster
+                which is created by the
+                condition IF also must comply with the
+                condition THEN.
+            </paragraph>
+            <paragraph>Lets assume following solution in order to explain the
+                functioning
+                of constraints by example:
+            </paragraph>
+            <table>
+                <row>
+                    <cell>ProjectId(cell)</cell>
+                    <cell>Primary Duty(ref)</cell>
+                    <cell>Secondary Duty(ref)</cell>
+                    <cell>Name(ref)</cell>
+                    <cell>Many experience in(ref)</cell>
+                    <cell>Some experience in(ref)</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>Charlie</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>Alpha</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Testing</cell>
+                    <cell>Planning</cell>
+                    <cell>Bravo</cell>
+                    <cell>Testing</cell>
+                    <cell>Programming</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Planning</cell>
+                    <cell>Documentation</cell>
+                    <cell>Delta</cell>
+                    <cell>Programming</cell>
+                    <cell>Documentation</cell>
+                </row>
+            </table>
+            <paragraph>
+                Every entry of a constraint's row which has the format
+                <quote>&lt;value&gt;</quote>
+                is part of IF. Such an entry means that every element in each
+                cluster, which
+                is formed by this constraint, has to have the Value
+                &lt;value&gt; at the
+                attribute of the same column. The following
+                constraint creates a cluster
+                consisting of Charlie and Alpha because
+                they are the only people who got the
+                role as a programmer in the
+                assumed solution. Note that this constraint does
+                not have any effect
+                as there is no entry which is part of THEN. Constraint
+                which selects
+                every assignment in the solution where the primary duty is
+                <quote>Programming</quote>
+                :
+            </paragraph>
+            <table>
+                <row>
+                    <cell>ProjectId(ref)</cell>
+                    <cell>Primary Duty(ref)</cell>
+                    <cell>Secondary Duty(ref)</cell>
+                    <cell>Name(ref)</cell>
+                    <cell>Many experience in(ref)</cell>
+                    <cell>Some experience in(ref)</cell>
+                    <cell>Gewicht(lb)</cell>
+                </row>
+                <row>
+                    <cell></cell>
+                    <cell>Programming</cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell>1000</cell>
+                </row>
+            </table>
+            <paragraph>The cluster which is formed by the IF part of the previous
+                constraint:
+            </paragraph>
+            <table>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>Charlie</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>Alpha</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                </row>
+            </table>
+            <paragraph>
+                Every entry of a constraint which consists of
+                <quote>*</quote>
+                is part of IF. Such an entry means that the cluster which is created
+                by this
+                constraint is parted into multiple clusters. For each cluster
+                all elements
+                have the same value at the column of such an entry. The
+                following tables
+                show the clusters created by a constraint which
+                consists of a
+                <quote>*</quote>
+                at the
+                <quote>Primary Duty(ref)</quote>
+                attribute. Constraint which clusters the solution according to the
+                <quote>Primary Duty</quote>
+                attribute:
+            </paragraph>
+            <table>
+                <row>
+                    <cell>ProjectId(ref)</cell>
+                    <cell>Primary Duty(ref)</cell>
+                    <cell>Secondary Duty(ref)</cell>
+                    <cell>Name(ref)</cell>
+                    <cell>Many experience in(ref)</cell>
+                    <cell>Some experience in(ref)</cell>
+                    <cell>Gewicht(lb)</cell>
+                </row>
+                <row>
+                    <cell></cell>
+                    <cell>*</cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell>1000</cell>
+                </row>
+            </table>
+            <paragraph>First cluster which is formed by the IF part of the
+                previous
+                constraint:
+            </paragraph>
+            <table>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>Charlie</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                </row>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                    <cell>Alpha</cell>
+                    <cell>Programming</cell>
+                    <cell>None</cell>
+                </row>
+            </table>
+            <paragraph>Cluster 2 which is formed by the IF part of the previous
+                constraint:
+            </paragraph>
+            <table>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Testing</cell>
+                    <cell>Planning</cell>
+                    <cell>Bravo</cell>
+                    <cell>Testing</cell>
+                    <cell>Programming</cell>
+                </row>
+            </table>
+            <paragraph>Last cluster which is formed by the IF part of the
+                previous
+                constraint:
+            </paragraph>
+            <table>
+                <row>
+                    <cell>K1</cell>
+                    <cell>Planning</cell>
+                    <cell>Documentation</cell>
+                    <cell>Delta</cell>
+                    <cell>Programming</cell>
+                    <cell>Documentation</cell>
+                </row>
+            </table>
+            <paragraph>
+                Every other entry which starts with
+                <quote>#</quote>
+                followed by a function call is part of THEN. Possible function calls
+                are
+                listed at the chapter constraint functions. These function calls
+                describe
+                which conditions has to be met by the clusters which are
+                created by the IF
+                part of the same constraint. The following table
+                shows the constraints which
+                were used in order to generate the
+                solution mentioned at the beginning of
+                this chapter:
+            </paragraph>
+            <table>
+                <row>
+                    <cell>ProjectId(ref)</cell>
+                    <cell>Primary Duty(ref)</cell>
+                    <cell>Secondary Duty(ref)</cell>
+                    <cell>Name(ref)</cell>
+                    <cell>Many experience in(ref)</cell>
+                    <cell>Some experience in(ref)</cell>
+                    <cell>Gewicht(lb)</cell>
+                </row>
+                <row>
+                    <cell></cell>
+                    <cell>Programming</cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell>#OR(Programming)</cell>
+                    <cell></cell>
+                    <cell>1 000 000 000</cell>
+                </row>
+                <row>
+                    <cell></cell>
+                    <cell>Testing</cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell>#OR(Testing)</cell>
+                    <cell></cell>
+                    <cell>1 000 000 000</cell>
+                </row>
+                <row>
+                    <cell></cell>
+                    <cell>Planning</cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell>#OR(Planning)</cell>
+                    <cell></cell>
+                    <cell>1 000 000</cell>
+                </row>
+                <row>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell>Planning</cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell>#OR(Planning)</cell>
+                    <cell>1 000 000</cell>
+                </row>
+                <row>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell>Testing</cell>
+                    <cell></cell>
+                    <cell></cell>
+                    <cell>#OR(Testing)</cell>
+                    <cell>1 000 000</cell>
+                </row>
+            </table>
+            <paragraph>
+                The first, second and third constraints say that the guy whose
+                primary duty
+                is X should also have many experience in X (i.e. that
+                the people whose
+                primary duty is programming should also have many
+                experience in
+                programming). Each of these constraints has the same
+                value for the
+                <quote>Gewicht(lb)</quote>
+                attribute which means that each of them is equally important. The
+                last two
+                constraints demand that the people whose secondary duty is
+                planning or
+                testing also should have some experience in it. These two
+                constraints have a
+                lower value at the
+                <quote>Gewicht(lb)</quote>
+                attribute which means that these two constraints are less important
+                than the
+                first three constraints. The
+                <quote>Gewicht(lb)</quote>
+                is often set to very high values in order to ensure that the
+                constraints are
+                more important than the preferences and is limited to
+                the values between 0
+                and 922337203685477.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Constraint Functions</title>
+            <paragraph>The THEN part of each constraint consists of constraint
+                functions
+                which describe the conditions that have to be meet by the
+                clusters formed by
+                the IF part of the same constraint. All available
+                functions are listed
+                below.
+            </paragraph>
+            <chapter>
+                <title>ISCOUNT(Value, Integer)</title>
+                <paragraph>Demands that each cluster defined by the IF part of a
+                    constraint
+                    has exactly &lt;Integer&gt; elements which have the value
+                    &lt;Value&gt; at
+                    the same column as the appearance of this function.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>MINCOUNT(Value, Integer)</title>
+                <paragraph>Demands that each cluster defined by the IF part of a
+                    constraint
+                    has at least &lt;Integer&gt; elements which have the
+                    value &lt;Value&gt; at
+                    the same column as the appearance of this
+                    function.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>MAXCOUNT(Value, Integer)</title>
+                <paragraph>Demands that each cluster defined by the IF part of a
+                    constraint
+                    has at at most &lt;Integer&gt; many elements which have
+                    the value
+                    &lt;Value&gt; at the same column as the appearance of this
+                    function.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>OR(Values...)</title>
+                <paragraph>Demands that each cluster defined by the IF part of a
+                    constraint
+                    has only elements containing a value of the enumartion
+                    &lt;Values...&gt; at
+                    the same column as the appearance of this
+                    function. Each element of
+                    &lt;Values...&gt; is separated by a comma.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>NOT(Value...)</title>
+                <paragraph>Demands that each cluster defined by the IF part of a
+                    constraint
+                    has only elements which has no value at the same column
+                    as the appearance
+                    of this function that is an element of
+                    &lt;Values...&gt;. Each element of
+                    &lt;Values...&gt; is separated by
+                    a comma.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>MINDIFF(Integer)</title>
+                <paragraph>Demands
+                    that each cluster defined by the IF part of a constraint has only
+                    elements
+                    which have a pairwise minimum distance of &lt;Integer&gt;
+                    or greater. The
+                    distance between two elements is defined by the
+                    difference of the two
+                    integer values of these two elements which are
+                    located at the same column
+                    as the appearance of this constraint
+                    function. Therefore this function can
+                    only meaningfully be used at
+                    columns which are of the attribute
+                    <quote>(int)</quote>
+                    .
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>MAXDIFF(Integer)</title>
+                <paragraph>Demands
+                    that each cluster defined by the IF part of a constraint has only
+                    elements
+                    which have a pairwise maximum distance of &lt;Integer&gt;
+                    or less. The
+                    distance between two elements is defined by the
+                    difference of the two
+                    integer values of these two elements which are
+                    located at the same column
+                    as the appearance of this constraint
+                    function. Therefore this function can
+                    only meaningfully be used at
+                    columns which are of the attribute
+                    <quote>(int)</quote>
+                    .
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>CONSECUTIVE()</title>
+                <paragraph>Demands that each cluster defined by the IF part of a
+                    constraint
+                    has only elements which are consecutive. This means that
+                    for each element
+                    in one cluster there is exactly one element at the
+                    same cluster which is
+                    adjacent to this element. Two elements are
+                    adjacent if their pairwise
+                    distance is exactly 1. The distance
+                    between two elements is defined by the
+                    difference of the two integer
+                    values of these two elements which are
+                    located at the same column as
+                    the appearance of this constraint function.
+                </paragraph>
+            </chapter>
+            <paragraph>
+                In other words this constraint function demands that the elements of
+                a
+                cluster form an ordered queue without any gap between two elements
+                and
+                therefore this function is only sensibly usable at columns which
+                are of the
+                attribute
+                <quote>(int)</quote>
+                .
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Configuration definition</title>
+            <paragraph>The
+                configuration definition is stored in a table named
+                "config_&lt;stage&gt;"
+                where &lt;stage&gt; is the stage number of the
+                affected assignment problem.
+                This table consists of two the columns
+                with the header
+                <quote>Key</quote>
+                and
+                <quote>Value</quote>
+                . In the next subsection the possible options are listed.
+            </paragraph>
+            <chapter>
+                <title>
+                    Key:
+                    <quote>number of restarts:</quote>
+                </title>
+                <paragraph>
+                    <marked>Value:</marked>
+                    an integer describing how many restarts are used during problem
+                    solving.
+                </paragraph>
+                <paragraph>
+                    <marked>Default:</marked>
+                    <quote>false</quote>
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>
+                    Key:
+                    <quote>is flusher enabled:</quote>
+                </title>
+                <paragraph>
+                    <marked>Value:</marked>
+                    the flusher is enabled if set to "true" and in the other case set
+                    to
+                    "false". See chapter Flusher for information about the flusher.
+                </paragraph>
+                <paragraph>
+                    <marked>Default:</marked>
+                    <quote>false</quote>
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>
+                    Key:
+                    <quote>runs parallel:</quote>
+                </title>
+                <paragraph>
+                    <marked>Value:</marked>
+                    random restarts are computed in parallel if set to "true" and in
+                    the other
+                    case set to "false".
+                </paragraph>
+                <paragraph>
+                    <marked>Default:</marked>
+                    <quote>false</quote>
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>
+                    Key:
+                    <quote>maximum number of plateau steps:</quote>
+                </title>
+                <paragraph>
+                    <marked>Value:</marked>
+                    maximal number of plateau steps which should be walked by the hill
+                    climber
+                    before aborting the computation.
+                </paragraph>
+                <paragraph>
+                    <marked>Default:</marked>
+                    <quote>10</quote>
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>
+                    Key:
+                    <quote>sort solution in order:</quote>
+                </title>
+                <paragraph>
+                    <marked>Value:</marked>
+                    a list of column numbers which are separated via semicolon. The
+                    column
+                    numbering is starting with 1 and after each number there have
+                    to be a
+                    semicolon. The list describes in which order the columns of
+                    the solution
+                    are going to be sorted.
+                </paragraph>
+                <paragraph>
+                    <marked>Default:</marked>
+                    Empty String (no sorting).
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>
+                    Key:
+                    <quote>temperature function:</quote>
+                </title>
+                <paragraph>
+                    <marked>Value:</marked>
+                    a string which describes the temperature function which is used for
+                    simulated annealing. The following values are valid:
+                </paragraph>
+                <paragraph>
+                    <marked>Default:</marked>
+                    simulated annealing is disabled
+                </paragraph>
+                <paragraph>
+                    <marked>
+                        <quote>ONEDIVX:</quote>
+                    </marked>
+                    <link>
+                        <url>http://www.wolframalpha.com/input/?i=[log%282%29+%2F+log%28x^1.5%29]+%E2%80%93+0.05&amp;dataset=
+                        </url>
+                        <text>f(x) = [log(2) / log(x^1.5)] - 0.05</text>
+                    </link>
+                </paragraph>
+                <paragraph>
+                    <marked>
+                        <quote>LOGTWO:</quote>
+                    </marked>
+                    <link>
+                        <url>http://www.wolframalpha.com/input/?i=[log%282%29+%2F+log%28x^1.5%29]+%E2%80%93+0.05&amp;dataset=
+                        </url>
+                        <text>f(x) = [log(2) / log(x^1.5)] - 0.05</text>
+                    </link>
+                </paragraph>
+                <paragraph>
+                    <marked>
+                        <quote>LOGTHREE:</quote>
+                    </marked>
+                    <link>
+                        <url>http://www.wolframalpha.com/input/?i=[log%283%29+%2F+log%28x^1.5%29]+%E2%80%93+0.05&amp;dataset=
+                        </url>
+                        <text>f(x) = [log(3) / log(x^1.5)] - 0.05</text>
+                    </link>
+                </paragraph>
+                <paragraph>
+                    <marked>
+                        <quote>LOGFOUR:</quote>
+                    </marked>
+                    <link>
+                        <url>http://www.wolframalpha.com/input/?i=[log%284%29+%2F+log%28x^2%29]+%E2%80%93+0.05
+                        </url>
+                        <text>f(x) = [log(4) / log(x^2)] - 0.05</text>
+                    </link>
+                </paragraph>
+                <paragraph>
+                    <marked>
+                        <quote>LOGFIVE:</quote>
+                    </marked>
+                    <link>
+                        <url>http://www.wolframalpha.com/input/?i=[log%285%29+%2F+log%28x^2%29]+%E2%80%93+0.05
+                        </url>
+                        <text>f(x) = [log(5) / log(x^2)] - 0.05</text>
+                    </link>
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>
+                    Key:
+                    <quote>repeat optimizers until no improvement found:</quote>
+                </title>
+                <paragraph>
+                    <marked>Value:</marked>
+                    repeats hill climbing algorithm with enabled flusher and without
+                    restarted
+                    temperature function as long as there is an improvement
+                    found if set to
+                    <quote>true</quote>
+                    .
+                </paragraph>
+                <paragraph>
+                    <marked>Default:</marked>
+                    <quote>false</quote>
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>
+                    Key:
+                    <quote>number of threads:</quote>
+                </title>
+                <paragraph>
+                    <marked>Value:</marked>
+                    the maximum number of threads which are used during Random Restart.
+                </paragraph>
+                <paragraph>
+                    <marked>Default:</marked>
+                    3
+                </paragraph>
+            </chapter>
+        </chapter>
+        <chapter>
+            <title>Functioning</title>
+            <paragraph>The following chapters describe the problem solving
+                components of
+                the program in the order they are used in the program.
+                Some of them can be
+                disabled.
+            </paragraph>
+            <chapter>
+                <title>Initializer</title>
+                <paragraph>The Initializer assigns demands to supplies. At the first
+                    stage
+                    it assigns demands to supplies based on preferences only. It
+                    iterates
+                    multiple times over all not yet assigned demands. At the
+                    first iteration it
+                    tries to assign to each demand the most preferred
+                    supply if there is one
+                    available. At the second iteration it tries
+                    to assign to each demand the
+                    second most preferred supply if there
+                    is one available and so on. The first
+                    stage ends if all demands are
+                    assigned or if there are no preferred
+                    supplies left for not yet
+                    assigned demands. At the second stage supplies
+                    are assigned to
+                    demands based on proposals which are created via
+                    constraints. If
+                    there are multiple proposed supplies for one demand then
+                    the supply
+                    is assigned to the demand which complies best to the
+                    constraints. At
+                    the third stage the initializer assigns any supplies left
+                    to each
+                    free demand randomly.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>Hill Climber</title>
+                <paragraph>The hill climber tries to improve the current solution by
+                    swapping. There are 3 types of swaps. The first attribute, which is
+                    used most of
+                    the time in general, selects two assigned demands and
+                    swaps their
+                    respective supplies. The next attribute replaces the
+                    supply of an assigned
+                    demand with a supply which is not assigned to
+                    any demand. The last attribute
+                    replaces the demand of an assigned
+                    supply with a demand that is not
+                    assigned to any supply. The hill
+                    climber works in two phases. At the first
+                    phase at each hill
+                    climbing step swaps are proposed by the constraints. The
+                    hill
+                    climber checks which proposed swap improves the solution the most.
+                    At
+                    the end of the step the best proposed swap is executed. If no
+                    proposed swap
+                    improves the solution a plateau step is done. This
+                    step changes the current
+                    assignment of demands to supplies by one
+                    step without downgrading the
+                    current assignment. The first phase
+                    runs as long it finds swaps which
+                    improve the current assignment, as
+                    long not too many consecutively plateau
+                    steps are done or if no swap
+                    can be found which does not downgrade the
+                    solution. At the second
+                    phase the hill climber uses proposed swaps which
+                    are generated by
+                    preferences but aside from that works like in the first
+                    phase.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>Flusher</title>
+                <paragraph>If the flusher is enabled it removes some assignments of
+                    the
+                    solution created by the hill climber based on proposals of the
+                    constraints.
+                    This is only done if the removal of each assignment
+                    improves the compliance
+                    of the current solution with the given
+                    preferences and constraints. After
+                    that the initializer and hill
+                    climber are used again. This is repeated as
+                    long the flusher removes
+                    assignments from the solution provided by the hill
+                    climber and as
+                    long each iteration improves the solution.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>Simulated Annealing</title>
+                <paragraph>If simulated annealing is activated there is a
+                    probability that a
+                    random swap is done during an hill climbing step.
+                    A downgrade by this
+                    random swap is accepted. This probability is
+                    defined by the temperature
+                    function and gets lower as the time
+                    progresses during problem solving.
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>Random Restart</title>
+                <paragraph>If random restart is activated the complete calculation
+                    of the
+                    solution is repeated multiple times. The solution with the
+                    best rating is
+                    returned as the result. These calculations can be
+                    executed in parallel. If
+                    one of these solutions is complying with
+                    all constraints and preferences
+                    than every other remaining
+                    calculations are aborted.
+                </paragraph>
+            </chapter>
+        </chapter>
+        <chapter>
+            <title>Output</title>
+            <paragraph>If the program is used via console the output of the
+                solution is
+                stored in an excel table and the path of this file is
+                printed to the
+                console. If the program is used via web browser a
+                download of the excel
+                table is started.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Examples</title>
+            <paragraph>
+                There are multiple examples at the folder
+                <quote>testData</quote>
+                of the provided program of this program. At the end of each entry
+                the
+                corresponding command is listed in order to execute the example
+                from the
+                console.
+            </paragraph>
+            <table>
+                <row>
+                    <cell>Problem</cell>
+                    <cell>Excel file name</cell>
+                    <cell>Command for console</cell>
+                </row>
+                <row>
+                    <cell>graph coloring</cell>
+                    <cell>graph_coloring.xlsx</cell>
+                    <cell>java -jar nap.jar -s ./testData/graph_coloring.xlsx</cell>
+                </row>
+                <row>
+                    <cell>8-Queen problem</cell>
+                    <cell>queen_8.xlsx</cell>
+                    <cell>java -jar nap.jar -s ./testData/queen_8.xlsx</cell>
+                </row>
+                <row>
+                    <cell>sudoku</cell>
+                    <cell>Sudoku_hard.xlsx</cell>
+                    <cell>java -jar nap.jar -s ./testData/Sudoku_hard.xlsx</cell>
+                </row>
+                <row>
+                    <cell>class scheduling problem</cell>
+                    <cell>class_scheduling.xlsx</cell>
+                    <cell>java -jar nap.jar -s ./testData/class_scheduling.xlsx</cell>
+                </row>
+            </table>
+        </chapter>
+    </content>
 </article>
