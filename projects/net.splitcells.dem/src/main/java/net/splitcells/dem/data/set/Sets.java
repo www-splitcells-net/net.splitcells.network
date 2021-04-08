@@ -1,15 +1,24 @@
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.Dem;
+import net.splitcells.dem.environment.resource.ResourceI;
+
 import java.util.Collection;
 import java.util.stream.Collector;
 
 import static java.util.Arrays.asList;
+import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.data.set.SetFI_configured.setFiConfigured;
 
-public interface Sets {
-    static <T> Collector<T, ?, Set<T>> toSetOfUniques() {
+public class Sets extends ResourceI<SetF> {
+    public Sets() {
+        super(() -> setFiConfigured());
+    }
+
+    public static <T> Collector<T, ?, Set<T>> toSetOfUniques() {
         return Collector.of(
-                () -> setOfUniques(),
-                (a, b) -> a.addAll(b),
+                Sets::<T>setOfUniques,
+                Set::addAll,
                 (a, b) -> {
                     a.addAll(b);
                     return a;
@@ -18,25 +27,25 @@ public interface Sets {
     }
 
     @SafeVarargs
-    static <T> Set<T> merge(Collection<T>... collections) {
-        final var rVal = Sets.<T>setOfUniques();
+    public static <T> Set<T> merge(Collection<T>... collections) {
+        final var rVal = configValue(Sets.class).<T>set();
         for (Collection<T> collection : collections) {
             rVal.addAll(collection);
         }
         return rVal;
     }
 
-    static <T> Set<T> setOfUniques() {
-        return SetI.make();
+    public static <T> Set<T> setOfUniques() {
+        return configValue(Sets.class).<T>set();
     }
 
     @SafeVarargs
-    static <T> Set<T> setOfUniques(T... args) {
+    public static <T> Set<T> setOfUniques(T... args) {
         return setOfUniques(asList(args));
     }
 
-    static <T> Set<T> setOfUniques(Collection<T> arg) {
-        final var rVal = SetI.make();
+    public static <T> Set<T> setOfUniques(Collection<T> arg) {
+        final var rVal = configValue(Sets.class).<T>set();
         rVal.addAll(arg);
         return rVal;
     }

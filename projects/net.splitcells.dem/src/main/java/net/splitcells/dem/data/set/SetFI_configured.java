@@ -1,49 +1,64 @@
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bool;
+import net.splitcells.dem.environment.config.IsDeterministic;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
+import static net.splitcells.dem.data.set.SetFI_deterministic.setFI_deterministic;
+import static net.splitcells.dem.data.set.SetFI_random.setFI_random;
 import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 
 public class SetFI_configured implements SetF {
-	private SetF setF = new SetFI();
+    public static SetF setFiConfigured() {
+        return new SetFI_configured();
+    }
 
-	public SetFI_configured() {
-	}
+    private SetF setF;
 
-	@Override
-	public <T> Set<T> lagacySet() {
-		return setF.lagacySet();
-	}
+    private SetFI_configured() {
+        final var isDeterministic = Dem.configValue(IsDeterministic.class);
+        if (isDeterministic.isPresent() && isDeterministic.get().is_true()) {
+            setF = setFI_deterministic();
+        } else {
+            setF = setFI_random();
+        }
+    }
 
-	@Override
-	public <T> Set<T> legacySet(Collection<T> arg) {
-		return setF.legacySet(arg);
-	}
+    @Override
+    public <T> Set<T> lagacySet() {
+        return setF.lagacySet();
+    }
 
-	/**
-	 * TODO Prevent unnecessary object construction.
-	 */
-	public void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
-		if (newValue.isEmpty()) {
-			setF = new SetFI();
-		} else if (newValue.get().is_true()) {
-			setF = new SetFI_deterministic();
-		} else {
-			setF = new SetFI_random();
-		}
-	}
+    @Override
+    public <T> Set<T> legacySet(Collection<T> arg) {
+        return setF.legacySet(arg);
+    }
 
-	@Override
-	public <T> net.splitcells.dem.data.set.Set<T> set() {
-		return setLegacyWrapper();
-	}
+    /**
+     * TODO Prevent unnecessary object construction.
+     */
+    @Deprecated
+    private void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
+        if (newValue.isEmpty()) {
+            setF = new SetFI();
+        } else if (newValue.get().is_true()) {
+            setF = setFI_deterministic();
+        } else {
+            setF = setFI_random();
+        }
+    }
 
-	@Override
-	public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
-		return SetLegacyWrapper.<T>setLegacyWrapper().with(arg);
-	}
+    @Override
+    public <T> net.splitcells.dem.data.set.Set<T> set() {
+        return setLegacyWrapper();
+    }
+
+    @Override
+    public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
+        return SetLegacyWrapper.<T>setLegacyWrapper().with(arg);
+    }
 }

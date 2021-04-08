@@ -4,6 +4,7 @@ import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class ConfigurationI implements Configuration {
             if (!config_store.containsKey(key)) {
                 assert !subscribers.containsKey(key);
                 final Option<T> option = key.getDeclaredConstructor().newInstance();
-                key_subscribers = setOfUniques();
+                key_subscribers = new HashSet<>();
                 subscribers.put(key, key_subscribers);
             } else {
                 key_subscribers = subscribers.get(key);

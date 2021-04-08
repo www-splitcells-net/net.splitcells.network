@@ -8,6 +8,14 @@ import java.util.Set;
 
 public class SetFI_random implements SetF {
 
+    public static SetF setFI_random() {
+        return new SetFI_random();
+    }
+
+    private SetFI_random() {
+
+    }
+
     @Override
     public <T> Set<T> lagacySet() {
         return new HashSet<>();
