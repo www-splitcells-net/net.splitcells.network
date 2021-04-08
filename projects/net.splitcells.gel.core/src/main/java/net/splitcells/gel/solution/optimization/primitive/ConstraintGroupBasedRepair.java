@@ -39,6 +39,15 @@ import static net.splitcells.gel.solution.optimization.primitive.SupplySelection
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * <p>
+ * Optimize a problem by find faulty groups and reallocating them.
+ * </p>
+ * <p>
+ * “When the Japanese mend broken objects, they aggrandize the damage by filling the cracks with gold.
+ * They believe that when something's suffered damage and has a history it becomes more beautiful.”
+ * ― Barbara Bloom
+ * </p>
+ * <p>
  * This {@link Optimization} consists of three phases.
  * <ol>
  *     <li>Select a set of {@link Constraint} in the {@link net.splitcells.gel.solution.Solution#constraint} tree
