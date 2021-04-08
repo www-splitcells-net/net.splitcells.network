@@ -27,6 +27,14 @@
                 <toDo>Create a way to automatically generate the skeleton of environment integration code.</toDo>
                 <toDo>Translate Dem to a Lisp langauge.</toDo>
                 <toDo>Translate an actual project to a Lisp langauge.</toDo>
+                <toDo>Remove reflection code.
+                    <toDo>Generic configuration class can be implemented via a tree/stack
+                        of config class and thereby removing the need for type mapping.
+                    </toDo>
+                    <toDo>Let Gel's table columns just use one common type
+                        in order to omit downcasting.
+                    </toDo>
+                </toDo>
             </queue>
             <unscheduled>
                 <toDo>Learn OCaml.</toDo>
