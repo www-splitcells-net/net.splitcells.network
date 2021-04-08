@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
-./bin/part.with.java
-./bin/part.with.python
+./bin/build.part.with.java
+./bin/build.part.with.python
