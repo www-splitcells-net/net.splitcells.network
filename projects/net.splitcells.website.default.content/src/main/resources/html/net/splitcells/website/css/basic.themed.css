@@ -118,7 +118,7 @@ ol.table-of-content > li.table-of-content:before {
 	color: var(--foreground-color-priority-1);
 	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-1);
 	}
-.net-splitcells-project-logo-button, net-splitcells-main-button-project-logo {
+.net-splitcells-main-button-project-logo {
     	background-image: url(/net/splitcells/martins/avots/website/images/icon.svg);
     	background-size: 100%;
         min-width: 2em;
