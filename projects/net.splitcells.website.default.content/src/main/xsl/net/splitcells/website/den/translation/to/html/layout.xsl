@@ -657,7 +657,7 @@
                                      style="display: flex; flex-direction: column; width: 100%;">
                                     <div class="Standard_p3 bottomLightShadow "
                                          style="display: flex; flex-direction: row; z-index: 1; flex-wrap: wrap;">
-                                        <a class="HeaderButton_structure HeaderButton net-splitcells-project-logo-button">
+                                        <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
                                                         select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
