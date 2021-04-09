@@ -122,6 +122,7 @@ ol.table-of-content > li.table-of-content:before {
     	background-image: url(/net/splitcells/martins/avots/website/images/icon.svg);
     	background-size: 100%;
         min-width: 2em;
+        max-width: 2em;
     	}
 .HeaderButton_p2:hover {
 	background-color: var(--background-color-selected-priority-2);
