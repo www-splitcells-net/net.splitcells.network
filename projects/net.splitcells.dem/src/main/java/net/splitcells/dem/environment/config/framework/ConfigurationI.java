@@ -4,10 +4,7 @@ import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -28,8 +25,8 @@ public class ConfigurationI implements Configuration {
     }
 
     private ConfigurationI() {
-        config_store = map();
-        subscribers = map();
+        config_store = new HashMap<>();
+        subscribers = new HashMap<>();
     }
 
     @Override
