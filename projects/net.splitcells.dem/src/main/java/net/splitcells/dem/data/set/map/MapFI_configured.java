@@ -2,14 +2,9 @@ package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bool;
-import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.config.IsDeterministic;
 
-import java.util.Map;
 import java.util.Optional;
-
-import static net.splitcells.dem.data.set.SetFI_deterministic.setFI_deterministic;
-import static net.splitcells.dem.data.set.SetFI_random.setFI_random;
 
 public class MapFI_configured implements MapF {
 
@@ -34,13 +29,14 @@ public class MapFI_configured implements MapF {
     }
 
     @Override
-    public <K, V> Map<K, V> map(Map<K, V> arg) {
+    public <K, V> Map<K, V> map(java.util.Map<K, V> arg) {
         return mapF.map(arg);
     }
 
-    public void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
+    @Deprecated
+    private void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
         if (newValue.isEmpty()) {
-            mapF = new MapFI();
+            mapF = new MapFI_random();
         } else if (newValue.get().is_true()) {
             mapF = new MapFI_deterministic();
         } else {

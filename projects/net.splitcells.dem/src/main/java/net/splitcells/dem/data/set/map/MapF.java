@@ -5,9 +5,9 @@ import net.splitcells.dem.resource.communication.Flushable;
 
 public interface MapF extends Closeable, Flushable {
 
-    <K, V> java.util.Map<K, V> map();
+    <K, V> Map<K, V> map();
 
-    <K, V> java.util.Map<K, V> map(java.util.Map<K, V> arg);
+    <K, V> Map<K, V> map(java.util.Map<K, V> arg);
 
     /**
      * Usually nothing needs to be done.
