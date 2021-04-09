@@ -388,7 +388,7 @@
                         </div-->
                         <div class="Left_shadow structural_guide splitcells-net-title-logo splitcells-net-window-menu">
                             <div class="splitcells-net-window-menu-line-1">
-                                <a class="net-splitcells-button net-splitcells-project-logo-button">
+                                <a class="net-splitcells-button net-splitcells-main-button-project-logo">
                                     <xsl:attribute name="href">
                                         <xsl:value-of
                                                 select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
@@ -401,7 +401,7 @@
                                     </xsl:attribute>
                                     <xsl:value-of select="$siteName"/>
                                 </a>
-                                <div class="net-splitcells-button">nos</div>
+                                <a class="net-splitcells-button" href="#">nos</a>
                             </div>
                             <div class="structural_guide" style="height: .25em;"></div>
                             <div class="splitcells-net-window-menu-line-2">
@@ -410,7 +410,7 @@
                             </div>
                         </div>
                         <br></br>
-                        <a class="net-splitcells-button" href="#content">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">
                             Content
                         </a>
                         <a class="net-splitcells-button premature">
@@ -420,14 +420,14 @@
                             </xsl:attribute>
                             Tabs
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/01/impressum.html')"/>
                             </xsl:attribute>
                             Impressum
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/01/privacy-policy.html')"/>
@@ -445,75 +445,75 @@
                             <br/>
                         </div>
                         <h3 style="padding-left: .25em;">Sections</h3>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/04/about-this-site.html')"/>
                             </xsl:attribute>
                             About
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of select="s:root-relative-url('/2015/03/03/contact.html')"/>
                             </xsl:attribute>
                             Contact
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of select="s:root-relative-url('/2015/03/06/gallery.html')"/>
                             </xsl:attribute>
                             Gallery
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/01/impressum.html')"/>
                             </xsl:attribute>
                             Impressum
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/02/licensing.html')"/>
                             </xsl:attribute>
                             Licensing
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
                             </xsl:attribute>
                             Main Page
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/05/post-archive.html')"/>
                             </xsl:attribute>
                             Post Archive
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/01/privacy-policy.html')"/>
                             </xsl:attribute>
                             Privacy Policy
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/programs/programs.html')"/>
                             </xsl:attribute>
                             Programs
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/projects.html')"/>
                             </xsl:attribute>
                             Projects
                         </a>
-                        <a class="net-splitcells-button">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/programs/search.html')"/>
@@ -521,33 +521,33 @@
                             Search
                         </a>
                         <h3 style="padding-left: .25em;">Instances</h3>
-                        <a class="net-splitcells-button" href="http://splitcells.net">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3" href="http://splitcells.net">
                             Public Site
                         </a>
-                        <a class="net-splitcells-button" href="https://localhost:8443">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3" href="https://localhost:8443">
                             Local Public Site
                         </a>
-                        <a class="net-splitcells-button user-specific"
+                        <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
                            href="https://localhost:8444">Local Private Site
                         </a>
                         <h3 style="padding-left: .25em;">Mārtiņš Avots's Support System</h3>
-                        <a class="net-splitcells-button user-specific"
+                        <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
                            href="https://localhost:8444/net/splitcells/martins/avots/support/system/index.html">
                             Root
                         </a>
-                        <a class="net-splitcells-button user-specific"
+                        <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
                            href="https://localhost:8444/net/splitcells/martins/avots/support/system/projects.html">
                             Discovery
                         </a>
                         <div style="display: none; visibility: hidden">
                             <h3 style="padding-left: .25em;">Additional Functions</h3>
-                            <a class="net-splitcells-button">
+                            <a class="net-splitcells-button net-splitcells-component-priority-3">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="s:root-relative-url('/feed.atom.xml')"/>
                                 </xsl:attribute>
                                 Atom feed
                             </a>
-                            <a class="net-splitcells-button">
+                            <a class="net-splitcells-button net-splitcells-component-priority-3">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="s:root-relative-url('/feed.rss.xml')"/>
                                 </xsl:attribute>
@@ -555,11 +555,11 @@
                             </a>
                         </div>
                         <h3 style="padding-left: .25em;">Layouts</h3>
-                        <a class="net-splitcells-button"
+                        <a class="net-splitcells-button net-splitcells-component-priority-3"
                            href="/net/splitcells/martins/avots/website/experimental/browser.layout.html">
                             Experimental Browser
                         </a>
-                        <a class="net-splitcells-button"
+                        <a class="net-splitcells-button net-splitcells-component-priority-3"
                            href="/net/splitcells/martins/avots/website/experimental/desktop.layout.html">
                             Experimental Desktop
                         </a>
@@ -572,7 +572,7 @@
                                                        select="'display: none; visibility: hidden;'"/>
                                     </xsl:if>
                                     <xsl:attribute name="href" select="@rdf:resource"/>
-                                    <div class="net-splitcells-button">
+                                    <div class="net-splitcells-button net-splitcells-component-priority-3">
                                         <xsl:value-of select="./rdf:label"/>
                                         <div class="MainButtonDescription Standard_p4"
                                              style="text-indent: 0em; display: block; font-weight: normal; padding-left: .25em;">
@@ -591,7 +591,7 @@
                                                        select="'display: none; visibility: hidden;'"/>
                                     </xsl:if>
                                     <xsl:attribute name="href" select="@rdf:resource"/>
-                                    <div class="net-splitcells-button">
+                                    <div class="net-splitcells-button net-splitcells-component-priority-3">
                                         <xsl:value-of select="./rdf:label"/>
                                         <div class="MainButtonDescription Standard_p4"
                                              style="text-indent: 0em; display: block; font-weight: normal; padding-left: .25em;">
@@ -603,7 +603,7 @@
                         </div>
                         <h4 style="padding-left: .25em;">This Site Uses Amongst Others</h4>
                         <a class="linkButton" href="https://alexgorbatchev.com/SyntaxHighlighter/">
-                            <div class="net-splitcells-button">
+                            <div class="net-splitcells-button net-splitcells-component-priority-3">
                                 SyntaxHighlighter
                                 <div class="MainButtonDescription Standard_p4"
                                      style="text-indent: 0em; display: block; font-weight: normal; padding-left: .25em;">

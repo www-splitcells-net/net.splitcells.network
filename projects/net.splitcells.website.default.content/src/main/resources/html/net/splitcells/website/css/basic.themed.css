@@ -53,6 +53,11 @@ ol.table-of-content > li.table-of-content:before {
 	background-color: var(--background-color-priority-3);
 	color: var(--foreground-color-priority-3);
 	}
+.net-splitcells-component-priority-3 {
+    background-color: var(--background-color-priority-3);
+	color: var(--foreground-color-priority-3);
+	box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-3);
+    }
 *.text_p3 {
 	color: var(--foreground-color-priority-3);
 	}
@@ -113,10 +118,10 @@ ol.table-of-content > li.table-of-content:before {
 	color: var(--foreground-color-priority-1);
 	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-1);
 	}
-.net-splitcells-project-logo-button {
+.net-splitcells-project-logo-button, net-splitcells-main-button-project-logo {
     	background-image: url(/net/splitcells/martins/avots/website/images/icon.svg);
     	background-size: 100%;
-        	width: 2em;
+        min-width: 2em;
     	}
 .HeaderButton_p2:hover {
 	background-color: var(--background-color-selected-priority-2);
@@ -149,7 +154,7 @@ ol.table-of-content > li.table-of-content:before {
 	color: var(--foreground-color-priority-0);
 	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-2);
 }
-.MainButton, .net-splitcells-button {
+.MainButton {
 	background-color: var(--background-color-priority-3);
 	color: var(--foreground-color-priority-3);
 	box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-2);
@@ -157,7 +162,7 @@ ol.table-of-content > li.table-of-content:before {
 .premature {
 	background: repeating-linear-gradient(45deg, var(--background-color-priority-4), var(--background-color-priority-4) 1em, var(--background-color-priority-3) 1em, var(--background-color-priority-3) 2em);
 }
-.MainButton:hover {
+.MainButton:hover, .net-splitcells-component-priority-3:hover {
 	background-color: var(--background-color-selected-priority-3);
 	color: var(--foreground-color-selected-priority-3);
 }
