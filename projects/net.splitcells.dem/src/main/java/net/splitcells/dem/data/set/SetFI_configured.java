@@ -54,11 +54,11 @@ public class SetFI_configured implements SetF {
 
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set() {
-        return setLegacyWrapper();
+        return setF.set();
     }
 
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
-        return SetLegacyWrapper.<T>setLegacyWrapper().with(arg);
+        return setF.set(arg);
     }
 }

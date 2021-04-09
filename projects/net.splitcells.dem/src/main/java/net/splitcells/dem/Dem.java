@@ -1,5 +1,6 @@
 package net.splitcells.dem;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
@@ -18,6 +19,8 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static net.splitcells.dem.ProcessResult.processResult;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.resource.host.interaction.LogLevel.UNKNOWN_ERROR;
@@ -55,7 +58,8 @@ public final class Dem {
      * <p>
      * TODO Support cactus stacking.
      */
-    public static void process(Runnable program, Consumer<Environment> configurator) {
+    public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
+        ProcessResult processResult = processResult();
         Thread root = new Thread(() -> {
             final var processEnvironment = initializeProcess(program.getClass(), configurator);
             try {
@@ -77,6 +81,7 @@ public final class Dem {
                      */
                     Thread.sleep(1000L);
                 } catch (InterruptedException e) {
+                    processResult.hasError(true);
                     throw new RuntimeException(e);
                 }
             }
@@ -88,6 +93,7 @@ public final class Dem {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        return processResult;
     }
 
     /**

@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
+
 public class SetFI_random implements SetF {
 
     public static SetF setFI_random() {
@@ -28,11 +30,11 @@ public class SetFI_random implements SetF {
 
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set() {
-        return SetI.make();
+        return setLegacyWrapper(new HashSet<>(), false);
     }
 
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
-        return SetI.make().with(arg);
+        return setLegacyWrapper(new HashSet<T>(), false).with(arg);
     }
 }

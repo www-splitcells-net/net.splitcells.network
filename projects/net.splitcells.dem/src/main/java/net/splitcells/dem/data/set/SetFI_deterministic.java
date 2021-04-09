@@ -28,12 +28,12 @@ public class SetFI_deterministic implements SetF {
 
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set() {
-        return setLegacyWrapper(new LinkedHashSet<>());
+        return setLegacyWrapper(new LinkedHashSet<>(), true);
     }
 
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
-        return setLegacyWrapper(new LinkedHashSet<>(arg));
+        return setLegacyWrapper(new LinkedHashSet<>(arg), true);
     }
 
 }

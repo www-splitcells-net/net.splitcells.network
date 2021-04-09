@@ -3,11 +3,13 @@ package net.splitcells.dem.data.set;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
+import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 
 public interface Set<T> extends java.util.Set<T> {
-    
+
     default boolean add(T e) {
         if (contains(e)) {
             throw new IllegalArgumentException("Element " + e + " already present in " + this);
@@ -44,5 +46,16 @@ public interface Set<T> extends java.util.Set<T> {
         if (!remove(arg)) {
             throw new IllegalArgumentException("" + arg);
         }
+    }
+
+    /**
+     * Determines if actions on this {@link Set} are deterministic.
+     * <p>
+     * This is only used in order to test {@link Set} factories.
+     *
+     * @return Is this determinstic.
+     */
+    default Optional<Boolean> _isDeterministic() {
+        return Optional.empty();
     }
 }
