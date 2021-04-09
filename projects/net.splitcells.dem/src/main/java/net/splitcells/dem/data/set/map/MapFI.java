@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class MapFI implements MapF {
+
 	@Override
 	public <K, V> Map<K, V> map() {
 		return new HashMap<K, V>();
