@@ -370,22 +370,6 @@
                     </div>
                     <div class="menu Left_shadow TextCell Layout Standard_p4"
                          style="width: 13em; vertical-align: top; visibility: inherit; display: flex; flex-direction: column; padding-bottom: 1em; order: 2;">
-                        <!--div class="title_logo Left_shadow structural_guide splitcells-net-title-logo splitcells-net-window-menu"
-                             style="width: 13em; padding-top: .5em;">
-                            <a class="NonStandard underlined_shadow page_header_sitename_normal">
-                                <span style="font-size: 1.5em;">
-                                    <xsl:value-of select="$siteName"/>
-                                </span>
-                            </a>
-                            <div class="Text"
-                                 style="font-weight: normal; position: relative; left: 1em;">by
-                                Mārtiņš Avots
-                            </div>
-                            <div class="Text"
-                                 style="font-weight: normal; font-size: 0.75em; position: relative; right: .5em;">
-                                N O S
-                            </div>
-                        </div-->
                         <div class="Left_shadow structural_guide splitcells-net-title-logo splitcells-net-window-menu">
                             <div class="splitcells-net-window-menu-line-1">
                                 <a class="net-splitcells-button net-splitcells-main-button-project-logo">
