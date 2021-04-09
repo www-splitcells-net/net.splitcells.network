@@ -45,8 +45,8 @@ public final class Dem {
      */
     private static final InheritableThreadLocal<Environment> CURRENT = new InheritableThreadLocal<Environment>();
 
-    public static void process(Runnable program) {
-        process(program, m -> {
+    public static ProcessResult process(Runnable program) {
+        return process(program, m -> {
             // Default configured is not changed.
         });
     }
