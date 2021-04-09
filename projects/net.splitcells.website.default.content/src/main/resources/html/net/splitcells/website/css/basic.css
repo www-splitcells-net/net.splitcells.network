@@ -116,25 +116,6 @@ ul {
     height: 2.5em;
     padding-top: .2em;
     }
-.net-splitcells-button {
-	margin-left: .0625em;
-	margin-right: .0625em;
-	font-weight: bold;
-	line-height: 1.5em;
-	vertical-align: middle;
-	padding-left: .5em;
-	padding-right: .5em;
-	height: 2em;
-	margin-top: 0em;
-	text-align: center;
-	vertical-align: middle;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-indent: 0em;
-	margin-left: .0625em;
-	margin-right: .0625em;
-    }
 .HeaderButton_structure {
 	margin-left: .0625em;
 	margin-right: .0625em;
@@ -218,7 +199,7 @@ td.TextCell {
 .Path_element_content_S {
 	transform: skewx(-12deg);
 	}
-.MainButton_S {
+.MainButton_S, .net-splitcells-button {
 	text-indent: 1em;
 	margin-top: .05em;
 	/*padding-top: .25em;*/

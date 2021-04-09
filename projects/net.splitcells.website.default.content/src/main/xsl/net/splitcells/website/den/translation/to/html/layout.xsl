@@ -405,40 +405,35 @@
                             </div>
                             <div class="structural_guide" style="height: .25em;"></div>
                             <div class="splitcells-net-window-menu-line-2">
-                                <input type="text" class="net-splitcells-search-bar" placeholder="search (TODO)"></input>
+                                <input type="text" class="net-splitcells-search-bar"
+                                       placeholder="search (TODO)"></input>
                             </div>
                         </div>
                         <br></br>
-                        <a class="linkButton MainButton MainButton_S" href="#content">
+                        <a class="net-splitcells-button" href="#content">
                             Content
                         </a>
-                        <a class="linkButton MainButton MainButton_S premature">
+                        <a class="net-splitcells-button premature">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2016/10/10/premature-content.html')"/>
                             </xsl:attribute>
                             Tabs
                         </a>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/01/impressum.html')"/>
                             </xsl:attribute>
                             Impressum
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/01/privacy-policy.html')"/>
                             </xsl:attribute>
                             Privacy Policy
-                        </xsl:element>
+                        </a>
                         <div class="messages">
                             <h3>Messages</h3>
                             <div class="noScriptMessage TextCell text_error"
@@ -450,160 +445,121 @@
                             <br/>
                         </div>
                         <h3 style="padding-left: .25em;">Sections</h3>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/04/about-this-site.html')"/>
                             </xsl:attribute>
                             About
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of select="s:root-relative-url('/2015/03/03/contact.html')"/>
                             </xsl:attribute>
                             Contact
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of select="s:root-relative-url('/2015/03/06/gallery.html')"/>
                             </xsl:attribute>
                             Gallery
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/01/impressum.html')"/>
                             </xsl:attribute>
                             Impressum
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/02/licensing.html')"/>
                             </xsl:attribute>
                             Licensing
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
                             </xsl:attribute>
                             Main Page
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/05/post-archive.html')"/>
                             </xsl:attribute>
                             Post Archive
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/2015/03/01/privacy-policy.html')"/>
                             </xsl:attribute>
                             Privacy Policy
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/programs/programs.html')"/>
                             </xsl:attribute>
                             Programs
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/projects.html')"/>
                             </xsl:attribute>
                             Projects
-                        </xsl:element>
-                        <xsl:element name="a">
-                            <xsl:attribute name="class">
-                                <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                            </xsl:attribute>
+                        </a>
+                        <a class="net-splitcells-button">
                             <xsl:attribute name="href">
                                 <xsl:value-of
                                         select="s:root-relative-url('/programs/search.html')"/>
                             </xsl:attribute>
                             Search
-                        </xsl:element>
+                        </a>
                         <h3 style="padding-left: .25em;">Instances</h3>
-                        <a class="linkButton MainButton MainButton_S" href="http://splitcells.net">
+                        <a class="net-splitcells-button" href="http://splitcells.net">
                             Public Site
                         </a>
-                        <a class="linkButton MainButton MainButton_S" href="https://localhost:8443">
+                        <a class="net-splitcells-button" href="https://localhost:8443">
                             Local Public Site
                         </a>
-                        <a class="linkButton MainButton MainButton_S user-specific"
+                        <a class="net-splitcells-button user-specific"
                            href="https://localhost:8444">Local Private Site
                         </a>
                         <h3 style="padding-left: .25em;">Mārtiņš Avots's Support System</h3>
-                        <a class="linkButton MainButton MainButton_S user-specific"
+                        <a class="net-splitcells-button user-specific"
                            href="https://localhost:8444/net/splitcells/martins/avots/support/system/index.html">
                             Root
                         </a>
-                        <a class="linkButton MainButton MainButton_S user-specific"
+                        <a class="net-splitcells-button user-specific"
                            href="https://localhost:8444/net/splitcells/martins/avots/support/system/projects.html">
                             Discovery
                         </a>
                         <div style="display: none; visibility: hidden">
                             <h3 style="padding-left: .25em;">Additional Functions</h3>
-                            <xsl:element name="a">
-                                <xsl:attribute name="class">
-                                    <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                                </xsl:attribute>
+                            <a class="net-splitcells-button">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="s:root-relative-url('/feed.atom.xml')"/>
                                 </xsl:attribute>
                                 Atom feed
-                            </xsl:element>
-                            <xsl:element name="a">
-                                <xsl:attribute name="class">
-                                    <xsl:value-of select="'linkButton MainButton MainButton_S'"/>
-                                </xsl:attribute>
+                            </a>
+                            <a class="net-splitcells-button">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="s:root-relative-url('/feed.rss.xml')"/>
                                 </xsl:attribute>
                                 Rss feed
-                            </xsl:element>
+                            </a>
                         </div>
                         <h3 style="padding-left: .25em;">Layouts</h3>
-                        <a class="linkButton MainButton MainButton_S"
+                        <a class="net-splitcells-button"
                            href="/net/splitcells/martins/avots/website/experimental/browser.layout.html">
                             Experimental Browser
                         </a>
-                        <a class="linkButton MainButton MainButton_S"
+                        <a class="net-splitcells-button"
                            href="/net/splitcells/martins/avots/website/experimental/desktop.layout.html">
                             Experimental Desktop
                         </a>
@@ -616,7 +572,7 @@
                                                        select="'display: none; visibility: hidden;'"/>
                                     </xsl:if>
                                     <xsl:attribute name="href" select="@rdf:resource"/>
-                                    <div class="MainButton MainButton_S">
+                                    <div class="net-splitcells-button">
                                         <xsl:value-of select="./rdf:label"/>
                                         <div class="MainButtonDescription Standard_p4"
                                              style="text-indent: 0em; display: block; font-weight: normal; padding-left: .25em;">
@@ -635,7 +591,7 @@
                                                        select="'display: none; visibility: hidden;'"/>
                                     </xsl:if>
                                     <xsl:attribute name="href" select="@rdf:resource"/>
-                                    <div class="MainButton MainButton_S">
+                                    <div class="net-splitcells-button">
                                         <xsl:value-of select="./rdf:label"/>
                                         <div class="MainButtonDescription Standard_p4"
                                              style="text-indent: 0em; display: block; font-weight: normal; padding-left: .25em;">
@@ -647,7 +603,7 @@
                         </div>
                         <h4 style="padding-left: .25em;">This Site Uses Amongst Others</h4>
                         <a class="linkButton" href="https://alexgorbatchev.com/SyntaxHighlighter/">
-                            <div class="MainButton MainButton_S">
+                            <div class="net-splitcells-button">
                                 SyntaxHighlighter
                                 <div class="MainButtonDescription Standard_p4"
                                      style="text-indent: 0em; display: block; font-weight: normal; padding-left: .25em;">

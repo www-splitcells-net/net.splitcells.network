@@ -149,7 +149,7 @@ ol.table-of-content > li.table-of-content:before {
 	color: var(--foreground-color-priority-0);
 	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-2);
 }
-.MainButton {
+.MainButton, .net-splitcells-button {
 	background-color: var(--background-color-priority-3);
 	color: var(--foreground-color-priority-3);
 	box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-2);
