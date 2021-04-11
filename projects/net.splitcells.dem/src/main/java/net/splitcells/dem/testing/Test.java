@@ -2,11 +2,13 @@ package net.splitcells.dem.testing;
 
 import net.splitcells.dem.Dem;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
+import org.junit.platform.launcher.TagFilter;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 
 import static net.splitcells.dem.testing.FailureDetector.failureDetector;
 import static net.splitcells.dem.testing.LiveReporter.liveReporter;
+import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 
@@ -16,7 +18,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
  * If a developer wrote a test, than it most likely wants to also execute the test, if it is not stated otherwise.
  * Tests are also not filtered, because the developer might not know, that such a thing happens.
  * He needs at least a warning for such things during test execution.
- *
+ * <p>
  * TODO Simplify code by removing duplicate code.
  */
 public class Test {
@@ -25,6 +27,22 @@ public class Test {
             System.exit(1);
         }
     }
+
+    public static boolean testIntegration() {
+        // TODO REMOVE
+        System.setProperty("net.splitcells.mode.build", "true");
+        Dem.ensuredInitialized();
+        final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
+                .selectors(selectPackage(""))
+                .filters(TagFilter.includeTags(INTEGRATION_TEST))
+                .build();
+        final var testExecutor = LauncherFactory.create();
+        final var failureDetector = failureDetector();
+        testExecutor.discover(testDiscovery);
+        testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        return !failureDetector.hasWatchedErrors();
+    }
+
     public static boolean test() {
         // TODO REMOVE
         System.setProperty("net.splitcells.mode.build", "true");
@@ -51,7 +69,7 @@ public class Test {
         testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
         return !failureDetector.hasWatchedErrors();
     }
-    
+
     public static boolean testMethod(Class<?> type, String methodeName) {
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
