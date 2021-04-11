@@ -11,6 +11,7 @@ import static net.splitcells.dem.testing.LiveReporter.liveReporter;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
+import static org.junit.platform.launcher.TagFilter.includeTags;
 
 /**
  * Executes any test by default.
@@ -34,7 +35,22 @@ public class Test {
         Dem.ensuredInitialized();
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectPackage(""))
-                .filters(TagFilter.includeTags(INTEGRATION_TEST))
+                .filters(includeTags(INTEGRATION_TEST))
+                .build();
+        final var testExecutor = LauncherFactory.create();
+        final var failureDetector = failureDetector();
+        testExecutor.discover(testDiscovery);
+        testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        return !failureDetector.hasWatchedErrors();
+    }
+
+    public static boolean testUnits() {
+        // TODO REMOVE
+        System.setProperty("net.splitcells.mode.build", "true");
+        Dem.ensuredInitialized();
+        final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
+                .selectors(selectPackage(""))
+                .filters(includeTags("none() | " + TestTypes.UNIT_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
         final var failureDetector = failureDetector();
