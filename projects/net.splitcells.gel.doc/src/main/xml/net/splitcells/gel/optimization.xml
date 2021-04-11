@@ -9,6 +9,7 @@
         <current>
             <toDo xl:href="./projec/version/3.xml"/>
             <toDo>Document future version development process.</toDo>
+            <toDo xl:href="https://www.passbolt.com/roadmap">Create a roadmap/project status overview site.</toDo>
         </current>
     </scheduling>
     <unscheduled>
