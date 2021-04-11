@@ -1,18 +1,25 @@
 package net.splitcells.dem.data.set.map;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
 
     public static <Key, Value> Map<Key, Value> mapLegacyWrapper(java.util.Map<Key, Value> content) {
-        return new MapLegacyWrapper(content);
+        return new MapLegacyWrapper(content, Optional.empty());
+    }
+
+    public static <Key, Value> Map<Key, Value> mapLegacyWrapper(java.util.Map<Key, Value> content, Boolean isDeterministic) {
+        return new MapLegacyWrapper(content, Optional.of(isDeterministic));
     }
 
     private final java.util.Map<Key, Value> content;
+    private final Optional<Boolean> isDeterministic;
 
-    private MapLegacyWrapper(java.util.Map<Key, Value> content) {
+    private MapLegacyWrapper(java.util.Map<Key, Value> content, Optional<Boolean> isDeterministic) {
         this.content = content;
+        this.isDeterministic = isDeterministic;
     }
 
     @Override
@@ -73,5 +80,10 @@ public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
     @Override
     public Set<Entry<Key, Value>> entrySet() {
         return content.entrySet();
+    }
+
+    @Override
+    public Optional<Boolean> _isDeterministic() {
+        return isDeterministic;
     }
 }

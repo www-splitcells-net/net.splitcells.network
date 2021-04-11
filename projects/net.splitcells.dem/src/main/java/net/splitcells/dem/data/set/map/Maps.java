@@ -57,7 +57,7 @@ public class Maps extends ResourceI<MapF> {
     @SuppressWarnings("unchecked")
     @Deprecated
     public static <T> Map<Class<? extends T>, T> typeMapping(Collection<T> values) {
-        Map<Class<? extends T>, T> rVal = configValue(Maps.class).map();
+        final Map<Class<? extends T>, T> rVal = configValue(Maps.class).map();
         values.forEach(value -> {
             if (rVal.containsKey(value.getClass())) {
                 throw new RuntimeException();

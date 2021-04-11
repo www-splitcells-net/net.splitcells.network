@@ -1,5 +1,8 @@
 package net.splitcells.dem.data.set.map;
 
+import net.splitcells.dem.data.set.Set;
+
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -25,5 +28,16 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
             put(key, rVal);
         }
         return rVal;
+    }
+
+    /**
+     * Determines if actions on this {@link Map} are deterministic.
+     * <p>
+     * This is only used in order to test {@link Map} factories.
+     *
+     * @return Is this determinstic.
+     */
+    default Optional<Boolean> _isDeterministic() {
+        return Optional.empty();
     }
 }

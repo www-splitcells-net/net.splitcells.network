@@ -14,46 +14,43 @@ package.install flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo # Default repo
 flatpak install -y flathub org.eclipse.Java
 # Install common plugins.
-	# TODO Manage Eclipse configuration via https://wiki.eclipse.org/Eclipse_Oomph_Authoring#What_is_Oomph.3F
-		# and https://marketplace.eclipse.org/content/yatta-launcher-eclipse?mpc=true&mpc_state=
-	# Install maven integration.
-		# TODO Install m2e connectors.
-		flatpak run org.eclipse.Java \
-			-application org.eclipse.equinox.p2.director \
-			-noSplash \
-			-repository http://download.eclipse.org/releases/latest \
-			-installIU org.eclipse.m2e.feature.feature.group # Maven integration
-		flatpak run org.eclipse.Java \
-			-application org.eclipse.equinox.p2.director \
-			-noSplash \
-			-repository http://download.eclipse.org/releases/latest \
-			-installIU com.ianbrandt.tools.m2e.mdp.feature.feature.group # Maven connector
-		flatpak run org.eclipse.Java \
-			-application org.eclipse.equinox.p2.director \
-			-noSplash \
-			-repository http://download.eclipse.org/releases/latest \
-			-installIU org.eclipse.egit \
-			-installIU org.eclipse.egit.ui # Git integration
-		flatpak run org.eclipse.Java \
-			-application org.eclipse.equinox.p2.director \
-			-noSplash \
-			-repository http://download.eclipse.org/releases/latest \
-			-installIU org.eclipse.epp.mpc.feature.group # Marketplace clinet
-		flatpak run org.eclipse.Java \
-			-application org.eclipse.equinox.p2.director \
-			-noSplash \
-			-repository http://download.eclipse.org/releases/latest \
-			-installIU de.anbos.eclipse.easyshell.feature.feature.group # Open files and projects via i.e terminals in Package Explorer
-		flatpak run org.eclipse.Java \
-			-application org.eclipse.equinox.p2.director \
-			-noSplash \
-			-repository http://download.eclipse.org/releases/latest \
-			-installIU org.eclipse.eclemma.feature.feature.group	# Java execution coverage
-		flatpak run org.eclipse.Java \
-			-application org.eclipse.equinox.p2.director \
-			-noSplash \
-			-repository http://download.eclipse.org/releases/latest \
-			-installIU eu.musoft.eclipse.xpath.evaluation.plugin.feature.group	# XPath Evaluation # TODO Move this into other script?
+	# Install maven integration. TODO Remove, if after reinstallation maven integration still works.
+		#flatpak run org.eclipse.Java \
+		#	-application org.eclipse.equinox.p2.director \
+		#	-noSplash \
+		#	-repository http://download.eclipse.org/releases/latest \
+		#	-installIU org.eclipse.m2e.feature.feature.group # Maven integration
+		#flatpak run org.eclipse.Java \
+		#	-application org.eclipse.equinox.p2.director \
+		#	-noSplash \
+		#	-repository http://download.eclipse.org/releases/latest \
+		#	-installIU com.ianbrandt.tools.m2e.mdp.feature.feature.group # Maven connector
+		#flatpak run org.eclipse.Java \
+		#	-application org.eclipse.equinox.p2.director \
+		#	-noSplash \
+		#	-repository http://download.eclipse.org/releases/latest \
+		#	-installIU org.eclipse.egit \
+		#	-installIU org.eclipse.egit.ui # Git integration
+		#flatpak run org.eclipse.Java \
+		#	-application org.eclipse.equinox.p2.director \
+		#	-noSplash \
+		#	-repository http://download.eclipse.org/releases/latest \
+		#	-installIU org.eclipse.epp.mpc.feature.group # Marketplace clinet
+		#flatpak run org.eclipse.Java \
+		#	-application org.eclipse.equinox.p2.director \
+		#	-noSplash \
+		#	-repository http://download.eclipse.org/releases/latest \
+		#	-installIU de.anbos.eclipse.easyshell.feature.feature.group # Open files and projects via i.e terminals in Package Explorer
+		#flatpak run org.eclipse.Java \
+		#	-application org.eclipse.equinox.p2.director \
+		#	-noSplash \
+		#	-repository http://download.eclipse.org/releases/latest \
+		#	-installIU org.eclipse.eclemma.feature.feature.group	# Java execution coverage
+		#flatpak run org.eclipse.Java \
+		#	-application org.eclipse.equinox.p2.director \
+		#	-noSplash \
+		#	-repository http://download.eclipse.org/releases/latest \
+		#	-installIU eu.musoft.eclipse.xpath.evaluation.plugin.feature.group	# XPath Evaluation # TODO Move this into other script?
 # Install Lombok support
 	mkdir -p ~/opt
 	if [ ! -f ~/opt/lombok.jar ]; then

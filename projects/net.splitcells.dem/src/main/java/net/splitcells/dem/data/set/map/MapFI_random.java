@@ -11,12 +11,12 @@ import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
 public class MapFI_random implements MapF {
     @Override
     public <K, V> Map<K, V> map() {
-        return mapLegacyWrapper(new HashMap<K, V>());
+        return mapLegacyWrapper(new HashMap<K, V>(), false);
     }
 
     @Override
     public <K, V> Map<K, V> map(java.util.Map<K, V> arg) {
-        return mapLegacyWrapper(new HashMap<K, V>(arg));
+        return mapLegacyWrapper(new HashMap<K, V>(arg), false);
     }
 
     @Override
