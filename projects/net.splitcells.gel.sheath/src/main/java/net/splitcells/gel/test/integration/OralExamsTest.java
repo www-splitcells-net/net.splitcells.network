@@ -91,9 +91,9 @@ public class OralExamsTest extends TestSuiteI {
         assertThat(arguments.solution.constraint().rating()).isEqualTo(arguments.rating);
     }
 
-    @Tag(INTEGRATION_TEST)
+    @Disabled
     @Test
-    public void testCurrent() {
+    public void testCurrentDevelopment() {
         final var testSubject = randomOralExams
                 (88
                         , 177
