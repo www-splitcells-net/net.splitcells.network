@@ -25,7 +25,7 @@ public final class GelDev {
         process(() -> {
             //new MinimalDistanceTest().test_multiple_line_addition_and_removal();
             //new ConstraintTest().test_incomingGroupsOfConstraintPath();
-            new OralExamsTest().testCurrent();
+            new OralExamsTest().testCurrentDevelopment();
         }, standardConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class
