@@ -1,6 +1,6 @@
 package net.splitcells.dem.data.set.map;
 
-import net.splitcells.dem.data.atom.BoolI;
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import org.junit.jupiter.api.Test;
 
@@ -27,12 +27,12 @@ public class MapsTest {
     public void testForDeterministicFactory() {
         assertThat
                 (process(() -> assertThat(configValue(Maps.class).map()._isDeterministic()).contains(true)
-                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(BoolI.truthful()))
+                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                 ).hasError())
                 .isFalse();
         assertThat
                 (process(() -> assertThat(configValue(Maps.class).map(map())._isDeterministic()).contains(true)
-                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(BoolI.truthful()))
+                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                 ).hasError())
                 .isFalse();
     }

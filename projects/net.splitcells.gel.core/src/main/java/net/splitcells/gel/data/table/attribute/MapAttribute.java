@@ -1,7 +1,7 @@
 package net.splitcells.gel.data.table.attribute;
 
-import static net.splitcells.dem.data.atom.BoolI.bool;
-import static net.splitcells.dem.data.atom.BoolI.untrue;
+import static net.splitcells.dem.data.atom.Bools.bool;
+import static net.splitcells.dem.data.atom.Bools.untrue;
 
 import java.util.Map;
 

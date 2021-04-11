@@ -13,4 +13,16 @@ public class Bools {
             throw new AssertionError();
         }
     }
+
+    public static Bool bool(boolean arg) {
+        return new BoolI(arg);
+    }
+
+    public static Bool truthful() {
+        return new BoolI(true);
+    }
+
+    public static Bool untrue() {
+        return new BoolI(false);
+    }
 }

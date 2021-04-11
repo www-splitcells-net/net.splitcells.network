@@ -1,6 +1,6 @@
 package net.splitcells.dem.data.order;
 
-import static net.splitcells.dem.data.atom.BoolI.bool;
+import static net.splitcells.dem.data.atom.Bools.bool;
 
 /**
  * natural order is ascending (from lower to higher)

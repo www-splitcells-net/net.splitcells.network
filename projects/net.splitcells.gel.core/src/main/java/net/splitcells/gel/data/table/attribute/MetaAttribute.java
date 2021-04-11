@@ -1,6 +1,6 @@
 package net.splitcells.gel.data.table.attribute;
 
-import static net.splitcells.dem.data.atom.BoolI.bool;
+import static net.splitcells.dem.data.atom.Bools.bool;
 
 import org.w3c.dom.Element;
 

@@ -2,7 +2,7 @@ package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.data.atom.BoolI.bool;
+import static net.splitcells.dem.data.atom.Bools.bool;
 
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.common.Language;

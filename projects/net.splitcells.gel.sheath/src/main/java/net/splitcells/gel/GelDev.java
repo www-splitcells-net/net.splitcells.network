@@ -1,15 +1,14 @@
 package net.splitcells.gel;
 
-import net.splitcells.dem.DemTest;
-import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
-import net.splitcells.dem.testing.Test;
-import net.splitcells.gel.constraint.ConstraintTest;
-import net.splitcells.gel.rating.rater.MinimalDistanceTest;
 import net.splitcells.gel.test.integration.OralExamsTest;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -34,6 +33,7 @@ public final class GelDev {
                             , a -> a.path().equals(list("demands", "Solution", "optimization", "Escalator"))
                                     || a.path().equals(list("demands", "Solution")))*/
                     .withConfigValue(IsEchoToFile.class, true)
+                    .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(ProcessHostPath.class
                             , Paths.userHome("connections", "tmp.storage", "dem"));
         }));

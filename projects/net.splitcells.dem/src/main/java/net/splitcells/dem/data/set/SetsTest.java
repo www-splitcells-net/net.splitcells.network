@@ -1,7 +1,6 @@
 package net.splitcells.dem.data.set;
 
-import net.splitcells.dem.data.atom.BoolI;
-import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import org.junit.jupiter.api.Test;
 
@@ -28,12 +27,12 @@ public class SetsTest {
     public void testForDeterministicFactory() {
         assertThat
                 (process(() -> assertThat(configValue(Sets.class).set()._isDeterministic()).contains(true)
-                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(BoolI.truthful()))
+                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                 ).hasError())
                 .isFalse();
         assertThat
                 (process(() -> assertThat(configValue(Sets.class).set(list())._isDeterministic()).contains(true)
-                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(BoolI.truthful()))
+                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                 ).hasError())
                 .isFalse();
     }

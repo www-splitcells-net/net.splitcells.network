@@ -5,18 +5,6 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
 public class BoolI implements Bool {
     private final boolean value;
 
-    public static Bool bool(boolean arg) {
-        return new BoolI(arg);
-    }
-
-    public static Bool truthful() {
-        return new BoolI(true);
-    }
-
-    public static Bool untrue() {
-        return new BoolI(false);
-    }
-
     @Deprecated
     public BoolI(final boolean arg_val) {
         value = arg_val;
@@ -104,7 +92,7 @@ public class BoolI implements Bool {
 
     @Deprecated
     public <A extends Bool> Bool equalContent(A arg) {
-        return bool(value == arg.toJavaPrimitive());
+        return Bools.bool(value == arg.toJavaPrimitive());
     }
 
 }
