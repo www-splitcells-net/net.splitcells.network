@@ -1,0 +1,1344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ForAll>
+   <argumentation>
+      <RaterBasedOnGrouping>
+         <argumentation>
+            <Propagation/>
+         </argumentation>
+      </RaterBasedOnGrouping>
+   </argumentation>
+   <rating>
+      <Cost>2.0</Cost>
+   </rating>
+   <ratings>
+      <Line>
+         <index>0</index>
+         <value type="line">
+            <Line>
+               <index>0</index>
+               <value type="students">1</value>
+               <value type="examiner">1</value>
+               <value type="observer">1</value>
+               <value type="date">1</value>
+               <value type="shift">1</value>
+               <value type="room-number">1</value>
+            </Line>
+         </value>
+         <value type="incoming constraint group">
+            <group>
+               <name>for-all</name>
+               <id>1449218102</id>
+            </group>
+         </value>
+         <value type="resulting constraint group">
+            <group>
+               <name>for-all</name>
+               <id>1449218102</id>
+            </group>
+         </value>
+         <value type="rating">
+            <Cost>0.0</Cost>
+         </value>
+         <value type="propagation to">[net.splitcells.gel.constraint.type.ForAll@3be6dbe, net.splitcells.gel.constraint.type.ForAll@71cc0735, net.splitcells.gel.constraint.type.ForAll@32b167e2, net.splitcells.gel.constraint.type.ForAll@4df414c4, net.splitcells.gel.constraint.type.ForAll@3d575359, net.splitcells.gel.constraint.type.ForAll@2c330e69, net.splitcells.gel.constraint.type.ForAll@1504e27a]</value>
+      </Line>
+      <Line>
+         <index>1</index>
+         <value type="line">
+            <Line>
+               <index>1</index>
+               <value type="students">1</value>
+               <value type="examiner">1</value>
+               <value type="observer">1</value>
+               <value type="date">4</value>
+               <value type="shift">1</value>
+               <value type="room-number">1</value>
+            </Line>
+         </value>
+         <value type="incoming constraint group">
+            <group>
+               <name>for-all</name>
+               <id>1449218102</id>
+            </group>
+         </value>
+         <value type="resulting constraint group">
+            <group>
+               <name>for-all</name>
+               <id>1449218102</id>
+            </group>
+         </value>
+         <value type="rating">
+            <Cost>0.0</Cost>
+         </value>
+         <value type="propagation to">[net.splitcells.gel.constraint.type.ForAll@3be6dbe, net.splitcells.gel.constraint.type.ForAll@71cc0735, net.splitcells.gel.constraint.type.ForAll@32b167e2, net.splitcells.gel.constraint.type.ForAll@4df414c4, net.splitcells.gel.constraint.type.ForAll@3d575359, net.splitcells.gel.constraint.type.ForAll@2c330e69, net.splitcells.gel.constraint.type.ForAll@1504e27a]</value>
+      </Line>
+   </ratings>
+   <ForAll>
+      <argumentation>
+         <RaterBasedOnGrouping>
+            <argumentation>
+               <ForAllAttributeValues>
+                  <argumentation>
+                     <Attribute>
+                        <name>observer</name>
+                        <Integer/>
+                     </Attribute>
+                  </argumentation>
+               </ForAllAttributeValues>
+            </argumentation>
+         </RaterBasedOnGrouping>
+      </argumentation>
+      <rating>
+         <Cost>0.0</Cost>
+      </rating>
+      <ratings>
+         <Line>
+            <index>0</index>
+            <value type="line">
+               <Line>
+                  <index>0</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">1</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>1</name>
+                  <id>925806553</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[net.splitcells.gel.constraint.type.ForAll@1fc630ab]</value>
+         </Line>
+         <Line>
+            <index>1</index>
+            <value type="line">
+               <Line>
+                  <index>1</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">4</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>1</name>
+                  <id>925806553</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[net.splitcells.gel.constraint.type.ForAll@1fc630ab]</value>
+         </Line>
+      </ratings>
+      <ForAll>
+         <argumentation>
+            <RaterBasedOnGrouping>
+               <argumentation>
+                  <ForAllValueCombinations>
+                     <argumentation>
+                        <Attribute>
+                           <name>date</name>
+                           <Integer/>
+                        </Attribute>
+                        <Attribute>
+                           <name>shift</name>
+                           <Integer/>
+                        </Attribute>
+                     </argumentation>
+                  </ForAllValueCombinations>
+               </argumentation>
+            </RaterBasedOnGrouping>
+         </argumentation>
+         <rating>
+            <Cost>0.0</Cost>
+         </rating>
+         <ratings>
+            <Line>
+               <index>0</index>
+               <value type="line">
+                  <Line>
+                     <index>0</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">1</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>925806553</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>1,1</name>
+                     <id>1927842673</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[net.splitcells.gel.constraint.type.Then@5cb026d9]</value>
+            </Line>
+            <Line>
+               <index>1</index>
+               <value type="line">
+                  <Line>
+                     <index>1</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">4</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>925806553</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>4,1</name>
+                     <id>1578801388</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[net.splitcells.gel.constraint.type.Then@5cb026d9]</value>
+            </Line>
+         </ratings>
+         <Then>
+            <argumentation>
+               <HasSize>
+                  <argumentation>
+                     <HasSize>1</HasSize>
+                  </argumentation>
+               </HasSize>
+            </argumentation>
+            <rating>
+               <Cost>0.0</Cost>
+            </rating>
+            <ratings>
+               <Line>
+                  <index>1</index>
+                  <value type="line">
+                     <Line>
+                        <index>1</index>
+                        <value type="students">1</value>
+                        <value type="examiner">1</value>
+                        <value type="observer">1</value>
+                        <value type="date">4</value>
+                        <value type="shift">1</value>
+                        <value type="room-number">1</value>
+                     </Line>
+                  </value>
+                  <value type="incoming constraint group">
+                     <group>
+                        <name>4,1</name>
+                        <id>1578801388</id>
+                     </group>
+                  </value>
+                  <value type="resulting constraint group">
+                     <group>
+                        <name>4,1</name>
+                        <id>1578801388</id>
+                     </group>
+                  </value>
+                  <value type="rating">
+                     <Cost>0.0</Cost>
+                  </value>
+                  <value type="propagation to">[]</value>
+               </Line>
+               <Line>
+                  <index>0</index>
+                  <value type="line">
+                     <Line>
+                        <index>0</index>
+                        <value type="students">1</value>
+                        <value type="examiner">1</value>
+                        <value type="observer">1</value>
+                        <value type="date">1</value>
+                        <value type="shift">1</value>
+                        <value type="room-number">1</value>
+                     </Line>
+                  </value>
+                  <value type="incoming constraint group">
+                     <group>
+                        <name>1,1</name>
+                        <id>1927842673</id>
+                     </group>
+                  </value>
+                  <value type="resulting constraint group">
+                     <group>
+                        <name>1,1</name>
+                        <id>1927842673</id>
+                     </group>
+                  </value>
+                  <value type="rating">
+                     <Cost>0.0</Cost>
+                  </value>
+                  <value type="propagation to">[]</value>
+               </Line>
+            </ratings>
+         </Then>
+      </ForAll>
+   </ForAll>
+   <ForAll>
+      <argumentation>
+         <RaterBasedOnGrouping>
+            <argumentation>
+               <ForAllAttributeValues>
+                  <argumentation>
+                     <Attribute>
+                        <name>examiner</name>
+                        <Integer/>
+                     </Attribute>
+                  </argumentation>
+               </ForAllAttributeValues>
+            </argumentation>
+         </RaterBasedOnGrouping>
+      </argumentation>
+      <rating>
+         <Cost>0.0</Cost>
+      </rating>
+      <ratings>
+         <Line>
+            <index>0</index>
+            <value type="line">
+               <Line>
+                  <index>0</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">1</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>1</name>
+                  <id>1567287980</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[net.splitcells.gel.constraint.type.ForAll@57e09efe]</value>
+         </Line>
+         <Line>
+            <index>1</index>
+            <value type="line">
+               <Line>
+                  <index>1</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">4</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>1</name>
+                  <id>1567287980</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[net.splitcells.gel.constraint.type.ForAll@57e09efe]</value>
+         </Line>
+      </ratings>
+      <ForAll>
+         <argumentation>
+            <RaterBasedOnGrouping>
+               <argumentation>
+                  <ForAllValueCombinations>
+                     <argumentation>
+                        <Attribute>
+                           <name>date</name>
+                           <Integer/>
+                        </Attribute>
+                        <Attribute>
+                           <name>shift</name>
+                           <Integer/>
+                        </Attribute>
+                     </argumentation>
+                  </ForAllValueCombinations>
+               </argumentation>
+            </RaterBasedOnGrouping>
+         </argumentation>
+         <rating>
+            <Cost>0.0</Cost>
+         </rating>
+         <ratings>
+            <Line>
+               <index>0</index>
+               <value type="line">
+                  <Line>
+                     <index>0</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">1</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1567287980</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>1,1</name>
+                     <id>1600820109</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[net.splitcells.gel.constraint.type.Then@3978ec53]</value>
+            </Line>
+            <Line>
+               <index>1</index>
+               <value type="line">
+                  <Line>
+                     <index>1</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">4</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1567287980</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>4,1</name>
+                     <id>1965236237</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[net.splitcells.gel.constraint.type.Then@3978ec53]</value>
+            </Line>
+         </ratings>
+         <Then>
+            <argumentation>
+               <HasSize>
+                  <argumentation>
+                     <HasSize>1</HasSize>
+                  </argumentation>
+               </HasSize>
+            </argumentation>
+            <rating>
+               <Cost>0.0</Cost>
+            </rating>
+            <ratings>
+               <Line>
+                  <index>0</index>
+                  <value type="line">
+                     <Line>
+                        <index>0</index>
+                        <value type="students">1</value>
+                        <value type="examiner">1</value>
+                        <value type="observer">1</value>
+                        <value type="date">1</value>
+                        <value type="shift">1</value>
+                        <value type="room-number">1</value>
+                     </Line>
+                  </value>
+                  <value type="incoming constraint group">
+                     <group>
+                        <name>1,1</name>
+                        <id>1600820109</id>
+                     </group>
+                  </value>
+                  <value type="resulting constraint group">
+                     <group>
+                        <name>1,1</name>
+                        <id>1600820109</id>
+                     </group>
+                  </value>
+                  <value type="rating">
+                     <Cost>0.0</Cost>
+                  </value>
+                  <value type="propagation to">[]</value>
+               </Line>
+               <Line>
+                  <index>1</index>
+                  <value type="line">
+                     <Line>
+                        <index>1</index>
+                        <value type="students">1</value>
+                        <value type="examiner">1</value>
+                        <value type="observer">1</value>
+                        <value type="date">4</value>
+                        <value type="shift">1</value>
+                        <value type="room-number">1</value>
+                     </Line>
+                  </value>
+                  <value type="incoming constraint group">
+                     <group>
+                        <name>4,1</name>
+                        <id>1965236237</id>
+                     </group>
+                  </value>
+                  <value type="resulting constraint group">
+                     <group>
+                        <name>4,1</name>
+                        <id>1965236237</id>
+                     </group>
+                  </value>
+                  <value type="rating">
+                     <Cost>0.0</Cost>
+                  </value>
+                  <value type="propagation to">[]</value>
+               </Line>
+            </ratings>
+         </Then>
+      </ForAll>
+   </ForAll>
+   <ForAll>
+      <argumentation>
+         <RaterBasedOnGrouping>
+            <argumentation>
+               <ForAllAttributeValues>
+                  <argumentation>
+                     <Attribute>
+                        <name>students</name>
+                        <Integer/>
+                     </Attribute>
+                  </argumentation>
+               </ForAllAttributeValues>
+            </argumentation>
+         </RaterBasedOnGrouping>
+      </argumentation>
+      <rating>
+         <Cost>2.0</Cost>
+      </rating>
+      <ratings>
+         <Line>
+            <index>0</index>
+            <value type="line">
+               <Line>
+                  <index>0</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">1</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>1</name>
+                  <id>1308214666</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[net.splitcells.gel.constraint.type.ForAll@1ebb50d, net.splitcells.gel.constraint.type.Then@20178769, net.splitcells.gel.constraint.type.Then@69ef996d]</value>
+         </Line>
+         <Line>
+            <index>1</index>
+            <value type="line">
+               <Line>
+                  <index>1</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">4</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>1</name>
+                  <id>1308214666</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[net.splitcells.gel.constraint.type.ForAll@1ebb50d, net.splitcells.gel.constraint.type.Then@20178769, net.splitcells.gel.constraint.type.Then@69ef996d]</value>
+         </Line>
+      </ratings>
+      <ForAll>
+         <argumentation>
+            <RaterBasedOnGrouping>
+               <argumentation>
+                  <ForAllValueCombinations>
+                     <argumentation>
+                        <Attribute>
+                           <name>date</name>
+                           <Integer/>
+                        </Attribute>
+                        <Attribute>
+                           <name>shift</name>
+                           <Integer/>
+                        </Attribute>
+                     </argumentation>
+                  </ForAllValueCombinations>
+               </argumentation>
+            </RaterBasedOnGrouping>
+         </argumentation>
+         <rating>
+            <Cost>0.0</Cost>
+         </rating>
+         <ratings>
+            <Line>
+               <index>0</index>
+               <value type="line">
+                  <Line>
+                     <index>0</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">1</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>1,1</name>
+                     <id>78174914</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[net.splitcells.gel.constraint.type.Then@597e9bfe]</value>
+            </Line>
+            <Line>
+               <index>1</index>
+               <value type="line">
+                  <Line>
+                     <index>1</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">4</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>4,1</name>
+                     <id>363813421</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[net.splitcells.gel.constraint.type.Then@597e9bfe]</value>
+            </Line>
+         </ratings>
+         <Then>
+            <argumentation>
+               <HasSize>
+                  <argumentation>
+                     <HasSize>1</HasSize>
+                  </argumentation>
+               </HasSize>
+            </argumentation>
+            <rating>
+               <Cost>0.0</Cost>
+            </rating>
+            <ratings>
+               <Line>
+                  <index>1</index>
+                  <value type="line">
+                     <Line>
+                        <index>1</index>
+                        <value type="students">1</value>
+                        <value type="examiner">1</value>
+                        <value type="observer">1</value>
+                        <value type="date">4</value>
+                        <value type="shift">1</value>
+                        <value type="room-number">1</value>
+                     </Line>
+                  </value>
+                  <value type="incoming constraint group">
+                     <group>
+                        <name>4,1</name>
+                        <id>363813421</id>
+                     </group>
+                  </value>
+                  <value type="resulting constraint group">
+                     <group>
+                        <name>4,1</name>
+                        <id>363813421</id>
+                     </group>
+                  </value>
+                  <value type="rating">
+                     <Cost>0.0</Cost>
+                  </value>
+                  <value type="propagation to">[]</value>
+               </Line>
+               <Line>
+                  <index>0</index>
+                  <value type="line">
+                     <Line>
+                        <index>0</index>
+                        <value type="students">1</value>
+                        <value type="examiner">1</value>
+                        <value type="observer">1</value>
+                        <value type="date">1</value>
+                        <value type="shift">1</value>
+                        <value type="room-number">1</value>
+                     </Line>
+                  </value>
+                  <value type="incoming constraint group">
+                     <group>
+                        <name>1,1</name>
+                        <id>78174914</id>
+                     </group>
+                  </value>
+                  <value type="resulting constraint group">
+                     <group>
+                        <name>1,1</name>
+                        <id>78174914</id>
+                     </group>
+                  </value>
+                  <value type="rating">
+                     <Cost>0.0</Cost>
+                  </value>
+                  <value type="propagation to">[]</value>
+               </Line>
+            </ratings>
+         </Then>
+      </ForAll>
+      <Then>
+         <argumentation>
+            <MinimalDistance>
+               <argumentation>
+                  <minimumDistance>3.0</minimumDistance>
+                  <attribute>
+                     <Attribute>
+                        <name>date</name>
+                        <Integer/>
+                     </Attribute>
+                  </attribute>
+                  <comparator>net.splitcells.dem.data.order.Comparators@235390c1</comparator>
+                  <distanceMeassurer>net.splitcells.gel.rating.rater.MinimalDistance$$Lambda$721/0x000000084051e840@69b89746</distanceMeassurer>
+               </argumentation>
+            </MinimalDistance>
+         </argumentation>
+         <rating>
+            <Cost>0.0</Cost>
+         </rating>
+         <ratings>
+            <Line>
+               <index>0</index>
+               <value type="line">
+                  <Line>
+                     <index>0</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">1</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[]</value>
+            </Line>
+            <Line>
+               <index>1</index>
+               <value type="line">
+                  <Line>
+                     <index>1</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">4</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[]</value>
+            </Line>
+         </ratings>
+      </Then>
+      <Then>
+         <argumentation>
+            <MinimalDistance>
+               <argumentation>
+                  <minimumDistance>5.0</minimumDistance>
+                  <attribute>
+                     <Attribute>
+                        <name>date</name>
+                        <Integer/>
+                     </Attribute>
+                  </attribute>
+                  <comparator>net.splitcells.dem.data.order.Comparators@27988f2d</comparator>
+                  <distanceMeassurer>net.splitcells.gel.rating.rater.MinimalDistance$$Lambda$721/0x000000084051e840@69b89746</distanceMeassurer>
+               </argumentation>
+            </MinimalDistance>
+         </argumentation>
+         <rating>
+            <Cost>2.0</Cost>
+         </rating>
+         <ratings>
+            <Line>
+               <index>0</index>
+               <value type="line">
+                  <Line>
+                     <index>0</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">1</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>1.0</Cost>
+               </value>
+               <value type="propagation to">[]</value>
+            </Line>
+            <Line>
+               <index>1</index>
+               <value type="line">
+                  <Line>
+                     <index>1</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">4</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>1</name>
+                     <id>1308214666</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>1.0</Cost>
+               </value>
+               <value type="propagation to">[]</value>
+            </Line>
+         </ratings>
+      </Then>
+   </ForAll>
+   <ForAll>
+      <argumentation>
+         <RaterBasedOnGrouping>
+            <argumentation>
+               <ForAllValueCombinations>
+                  <argumentation>
+                     <Attribute>
+                        <name>date</name>
+                        <Integer/>
+                     </Attribute>
+                     <Attribute>
+                        <name>shift</name>
+                        <Integer/>
+                     </Attribute>
+                     <Attribute>
+                        <name>room-number</name>
+                        <Integer/>
+                     </Attribute>
+                  </argumentation>
+               </ForAllValueCombinations>
+            </argumentation>
+         </RaterBasedOnGrouping>
+      </argumentation>
+      <rating>
+         <Cost>0.0</Cost>
+      </rating>
+      <ratings>
+         <Line>
+            <index>0</index>
+            <value type="line">
+               <Line>
+                  <index>0</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">1</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>1,1,1</name>
+                  <id>922269348</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[net.splitcells.gel.constraint.type.Then@311849d9]</value>
+         </Line>
+         <Line>
+            <index>1</index>
+            <value type="line">
+               <Line>
+                  <index>1</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">4</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>4,1,1</name>
+                  <id>2048827327</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[net.splitcells.gel.constraint.type.Then@311849d9]</value>
+         </Line>
+      </ratings>
+      <Then>
+         <argumentation>
+            <HasSize>
+               <argumentation>
+                  <HasSize>1</HasSize>
+               </argumentation>
+            </HasSize>
+         </argumentation>
+         <rating>
+            <Cost>0.0</Cost>
+         </rating>
+         <ratings>
+            <Line>
+               <index>1</index>
+               <value type="line">
+                  <Line>
+                     <index>1</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">4</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>4,1,1</name>
+                     <id>2048827327</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>4,1,1</name>
+                     <id>2048827327</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[]</value>
+            </Line>
+            <Line>
+               <index>0</index>
+               <value type="line">
+                  <Line>
+                     <index>0</index>
+                     <value type="students">1</value>
+                     <value type="examiner">1</value>
+                     <value type="observer">1</value>
+                     <value type="date">1</value>
+                     <value type="shift">1</value>
+                     <value type="room-number">1</value>
+                  </Line>
+               </value>
+               <value type="incoming constraint group">
+                  <group>
+                     <name>1,1,1</name>
+                     <id>922269348</id>
+                  </group>
+               </value>
+               <value type="resulting constraint group">
+                  <group>
+                     <name>1,1,1</name>
+                     <id>922269348</id>
+                  </group>
+               </value>
+               <value type="rating">
+                  <Cost>0.0</Cost>
+               </value>
+               <value type="propagation to">[]</value>
+            </Line>
+         </ratings>
+      </Then>
+   </ForAll>
+   <ForAll>
+      <argumentation>
+         <RaterBasedOnGrouping>
+            <argumentation>
+               <Propagation/>
+            </argumentation>
+         </RaterBasedOnGrouping>
+      </argumentation>
+      <rating>
+         <Cost>0.0</Cost>
+      </rating>
+      <ratings>
+         <Line>
+            <index>0</index>
+            <value type="line">
+               <Line>
+                  <index>0</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">1</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[]</value>
+         </Line>
+         <Line>
+            <index>1</index>
+            <value type="line">
+               <Line>
+                  <index>1</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">4</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[]</value>
+         </Line>
+      </ratings>
+   </ForAll>
+   <ForAll>
+      <argumentation>
+         <RaterBasedOnGrouping>
+            <argumentation>
+               <Propagation/>
+            </argumentation>
+         </RaterBasedOnGrouping>
+      </argumentation>
+      <rating>
+         <Cost>0.0</Cost>
+      </rating>
+      <ratings>
+         <Line>
+            <index>0</index>
+            <value type="line">
+               <Line>
+                  <index>0</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">1</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[]</value>
+         </Line>
+         <Line>
+            <index>1</index>
+            <value type="line">
+               <Line>
+                  <index>1</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">4</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[]</value>
+         </Line>
+      </ratings>
+   </ForAll>
+   <ForAll>
+      <argumentation>
+         <RaterBasedOnGrouping>
+            <argumentation>
+               <Propagation/>
+            </argumentation>
+         </RaterBasedOnGrouping>
+      </argumentation>
+      <rating>
+         <Cost>0.0</Cost>
+      </rating>
+      <ratings>
+         <Line>
+            <index>0</index>
+            <value type="line">
+               <Line>
+                  <index>0</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">1</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[]</value>
+         </Line>
+         <Line>
+            <index>1</index>
+            <value type="line">
+               <Line>
+                  <index>1</index>
+                  <value type="students">1</value>
+                  <value type="examiner">1</value>
+                  <value type="observer">1</value>
+                  <value type="date">4</value>
+                  <value type="shift">1</value>
+                  <value type="room-number">1</value>
+               </Line>
+            </value>
+            <value type="incoming constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="resulting constraint group">
+               <group>
+                  <name>for-all</name>
+                  <id>1449218102</id>
+               </group>
+            </value>
+            <value type="rating">
+               <Cost>0.0</Cost>
+            </value>
+            <value type="propagation to">[]</value>
+         </Line>
+      </ratings>
+   </ForAll>
+</ForAll>
