@@ -91,7 +91,7 @@ public class OralExamsTest extends TestSuiteI {
         assertThat(arguments.solution.constraint().rating()).isEqualTo(arguments.rating);
     }
 
-    @Disabled
+    @Tag(INTEGRATION_TEST)
     @Test
     public void testCurrent() {
         final var testSubject = randomOralExams
@@ -199,7 +199,6 @@ public class OralExamsTest extends TestSuiteI {
         testSubject.constraint().persistGraphState();
     }
 
-    @Disabled
     @Tag(INTEGRATION_TEST)
     @TestFactory
     public Stream<DynamicTest> oralExamOptimizationTests() {
