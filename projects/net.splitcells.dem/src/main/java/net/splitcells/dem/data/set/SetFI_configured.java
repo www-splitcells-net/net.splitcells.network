@@ -21,7 +21,7 @@ public class SetFI_configured implements SetF {
 
     private SetFI_configured() {
         final var isDeterministic = Dem.configValue(IsDeterministic.class);
-        if (isDeterministic.isPresent() && isDeterministic.get().is_true()) {
+        if (isDeterministic.isPresent() && isDeterministic.get().isTrue()) {
             setF = setFI_deterministic();
         } else {
             setF = setFI_random();
@@ -45,7 +45,7 @@ public class SetFI_configured implements SetF {
     private void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
         if (newValue.isEmpty()) {
             setF = new SetFI();
-        } else if (newValue.get().is_true()) {
+        } else if (newValue.get().isTrue()) {
             setF = setFI_deterministic();
         } else {
             setF = setFI_random();

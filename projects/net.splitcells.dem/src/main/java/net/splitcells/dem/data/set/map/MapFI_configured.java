@@ -16,7 +16,7 @@ public class MapFI_configured implements MapF {
 
     private MapFI_configured() {
         final var isDeterministic = Dem.configValue(IsDeterministic.class);
-        if (isDeterministic.isPresent() && isDeterministic.get().is_true()) {
+        if (isDeterministic.isPresent() && isDeterministic.get().isTrue()) {
             mapF = new MapFI_deterministic();
         } else {
             mapF = new MapFI_random();
@@ -37,7 +37,7 @@ public class MapFI_configured implements MapF {
     private void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
         if (newValue.isEmpty()) {
             mapF = new MapFI_random();
-        } else if (newValue.get().is_true()) {
+        } else if (newValue.get().isTrue()) {
             mapF = new MapFI_deterministic();
         } else {
             mapF = new MapFI_random();

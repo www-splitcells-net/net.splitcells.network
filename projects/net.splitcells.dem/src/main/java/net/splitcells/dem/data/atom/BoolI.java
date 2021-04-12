@@ -11,18 +11,18 @@ public class BoolI implements Bool {
     }
 
     @Override
-    public boolean is_true() {
+    public boolean isTrue() {
         return value;
     }
 
     @Override
-    public boolean is_false() {
+    public boolean isFalse() {
         return !value;
     }
 
     @Override
     public Bool or(Bool arg) {
-        return new BoolI(value || arg.is_true());
+        return new BoolI(value || arg.isTrue());
     }
 
     @Override
@@ -32,7 +32,7 @@ public class BoolI implements Bool {
 
     @Override
     public Bool xor(Bool arg) {
-        return new BoolI(value != arg.is_true());
+        return new BoolI(value != arg.isTrue());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BoolI implements Bool {
 
     @Override
     public Bool and(Bool arg) {
-        return new BoolI(value && arg.is_true());
+        return new BoolI(value && arg.isTrue());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class BoolI implements Bool {
     }
 
     public Bool equals(Bool arg) {
-        if (value == arg.is_true()) {
+        if (value == arg.isTrue()) {
             return new BoolI(true);
         } else {
             return new BoolI(false);
@@ -70,7 +70,7 @@ public class BoolI implements Bool {
 
     @Override
     public boolean equals(Object arg) {
-        return equals((Bool) arg).is_true();
+        return equals((Bool) arg).isTrue();
     }
 
     @Override

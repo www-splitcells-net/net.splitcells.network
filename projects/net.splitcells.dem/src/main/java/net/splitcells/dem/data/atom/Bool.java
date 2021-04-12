@@ -27,17 +27,17 @@ public interface Bool extends ShallowCopyable, DeepCloneable {
     /**
      * RENAME
      */
-    boolean is_true();
+    boolean isTrue();
 
     /**
      * RENAME
      */
-    boolean is_false();
+    boolean isFalse();
 
     @SuppressWarnings("unchecked")
     @Returns_this
     public default <R extends DeepCloneable> R required() {
-        if (is_false()) {
+        if (isFalse()) {
             throw new RuntimeException();
         }
         return (R) this;
@@ -46,7 +46,7 @@ public interface Bool extends ShallowCopyable, DeepCloneable {
     @SuppressWarnings("unchecked")
     @Returns_this
     public default <R extends DeepCloneable> R if_(Runnable run) {
-        if (is_true()) {
+        if (isTrue()) {
             run.run();
         }
         return (R) this;
@@ -58,7 +58,7 @@ public interface Bool extends ShallowCopyable, DeepCloneable {
     @SuppressWarnings("unchecked")
     @Returns_this
     public default <R extends DeepCloneable> R if_not(Runnable run) {
-        if (is_false()) {
+        if (isFalse()) {
             run.run();
         }
         return (R) this;
