@@ -21,13 +21,18 @@ public class LiveReporter implements TestExecutionListener {
 
     }
 
+    @Override
+    public void dynamicTestRegistered(TestIdentifier testIdentifier) {
+        System.out.println("Executing: " + testIdentifier.getUniqueId());
+    }
+
     /**
      * TODO Make this somehow optional.
      * @param testIdentifier
      */
     @Override
     public void executionStarted(TestIdentifier testIdentifier) {
-        System.out.println("Executed: " + testIdentifier.getUniqueId());
+        System.out.println("Executing: " + testIdentifier.getUniqueId());
     }
 
     @Override
