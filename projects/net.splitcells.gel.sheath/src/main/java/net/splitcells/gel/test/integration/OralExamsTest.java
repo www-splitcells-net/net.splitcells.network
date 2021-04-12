@@ -141,6 +141,7 @@ public class OralExamsTest extends TestSuiteI {
 
     @Disabled
     @Test
+    @Deprecated
     public void testCurrentDevelopment() {
         final var testSubject = randomOralExams
                 (88
