@@ -4,7 +4,7 @@ import net.splitcells.dem.utils.ConstructorIllegal;
 
 public class RandomnessSource {
 
-	private static final BuilderRandomConfigable factory = new BuilderRandomConfigable();
+	private static final BuilderRandomConfigurable factory = new BuilderRandomConfigurable();
 
 	private RandomnessSource() {
 		throw new ConstructorIllegal();

@@ -7,11 +7,11 @@ import java.util.Optional;
 
 import static net.splitcells.dem.Dem.environment;
 
-public class BuilderRandomConfigable implements RndSrcF {
+public class BuilderRandomConfigurable implements RndSrcF {
 
     private RndSrcF builderRandom;
 
-    protected BuilderRandomConfigable() {
+    protected BuilderRandomConfigurable() {
         if (environment().config().configValue(IsDeterministic.class).isEmpty() || environment().config().configValue(IsDeterministic.class).get().is_true()) {
             deterministic_builder(environment().config().configValue(DeterministicRootSourceSeed.class));
         } else {
@@ -19,11 +19,11 @@ public class BuilderRandomConfigable implements RndSrcF {
         }
     }
 
-    protected BuilderRandomConfigable(Optional<Bool> deterministic) {
+    protected BuilderRandomConfigurable(Optional<Bool> deterministic) {
         update_determinism(deterministic);
     }
 
-    protected BuilderRandomConfigable(Long seed) {
+    protected BuilderRandomConfigurable(Long seed) {
         deterministic_builder(seed);
     }
 
