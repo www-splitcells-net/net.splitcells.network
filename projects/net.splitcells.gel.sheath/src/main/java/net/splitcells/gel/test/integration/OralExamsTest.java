@@ -216,33 +216,6 @@ public class OralExamsTest extends TestSuiteI {
                 return step <= 100 && !currentSolution.isOptimal();
             });
         });
-        /*
-        IntStream.rangeClosed(1, 10).forEach(a -> {
-            IntStream.rangeClosed(1, 100).forEach(j -> {
-                Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
-                        , () -> list("debugging")
-                        , LogLevel.DEBUG);
-                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(3));
-            });
-            IntStream.rangeClosed(1, 100).forEach(j -> {
-                Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
-                        , () -> list("debugging")
-                        , LogLevel.DEBUG);
-                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 3));
-            });
-            IntStream.rangeClosed(1, 100).forEach(j -> {
-                Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
-                        , () -> list("debugging")
-                        , LogLevel.DEBUG);
-                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4, 2));
-            });
-            IntStream.rangeClosed(1, 100).forEach(j -> {
-                Domsole.domsole().append(perspective(ZonedDateTime.now().toString() + testSubject.constraint().rating().getContentValue(Cost.class).value(), STRING)
-                        , () -> list("debugging")
-                        , LogLevel.DEBUG);
-                testSubject.optimizeOnce(simpleConstraintGroupBasedRepair(4));
-            });
-        });*/
         testSubject.createStandardAnalysis();
         testSubject.constraint().persistGraphState();
     }
