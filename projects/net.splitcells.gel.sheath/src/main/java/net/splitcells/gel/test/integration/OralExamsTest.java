@@ -87,17 +87,6 @@ public class OralExamsTest extends TestSuiteI {
         public final Rating rating;
     }
 
-    public void testOralExamOptimization(OralExamOptimizationArguments arguments) {
-        arguments.solution.optimize(linearInitialization());
-        arguments.solution.optimize(escalator(i -> {
-                    return ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
-                }
-        ));
-        arguments.solution.createStandardAnalysis();
-        assertThat(arguments.solution.isComplete()).isTrue();
-        assertThat(arguments.solution.constraint().rating()).isEqualTo(arguments.rating);
-    }
-
     @Tag(INTEGRATION_TEST)
     @Test
     public void testRandomInstanceSolving() {
@@ -216,30 +205,6 @@ public class OralExamsTest extends TestSuiteI {
         });
         testSubject.createStandardAnalysis();
         testSubject.constraint().persistGraphState();
-    }
-
-    @Tag(INTEGRATION_TEST)
-    @TestFactory
-    public Stream<DynamicTest> oralExamOptimizationTests() {
-        return dynamicTests(this::testOralExamOptimization
-                , OralExamOptimizationArguments.create
-                        (randomOralExams
-                                        (1
-                                                , 1
-                                                , 1
-                                                , 1
-                                                , 1
-                                                , 1
-                                                , 1
-                                                , 1
-                                                , randomness(0L))
-                                        .asSolution()
-                                , noCost())
-                , OralExamOptimizationArguments.create(two_oral_exams_with_multiple_possible_choices().asSolution()
-                        , noCost())
-                , OralExamOptimizationArguments.create(two_oral_exams_with_multiple_bad_choices().asSolution()
-                        , cost(1))
-        );
     }
 
     private Problem two_oral_exams_with_multiple_possible_choices() {
