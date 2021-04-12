@@ -1,6 +1,7 @@
 package net.splitcells.gel;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.ProcessResult;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.host.Files;
@@ -34,8 +35,8 @@ public final class GelEnv {
         process(program, standardConfigurator());
     }
 
-    public static void process(Runnable program, Consumer<Environment> configurator) {
-        Dem.process(() -> {
+    public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
+        return Dem.process(() -> {
             Files.createDirectory(environment().config().configValue(ProcessPath.class));
             writeToFile(environment().config().configValue(ProcessPath.class).resolve("index.xml"), Xml.rElement(SEW, "article"));
             program.run();

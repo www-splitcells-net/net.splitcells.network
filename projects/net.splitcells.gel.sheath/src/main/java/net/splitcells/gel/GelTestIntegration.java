@@ -21,15 +21,17 @@ public final class GelTestIntegration {
     }
 
     public static void main(String... arg) {
-        GelEnv.process(() -> {
+        if (GelEnv.process(() -> {
                     if (testIntegration()) {
-                        System.exit(1);
+                        throw new RuntimeException();
                     }
                 }
                 , standardConfigurator().andThen(env -> {
                     env.config()
                             .withConfigValue(MessageFilter.class, a -> false)
                             .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
-                }));
+                })).hasError()) {
+            System.exit(1);
+        }
     }
 }
