@@ -90,9 +90,6 @@ public class OralExamsTest extends TestSuiteI {
     public void testOralExamOptimization(OralExamOptimizationArguments arguments) {
         arguments.solution.optimize(linearInitialization());
         arguments.solution.optimize(escalator(i -> {
-                    // TODO
-                    //ierobežojumGrupaBalstītsRemonts();
-                    //funkcionālsKalnāKāpējs(ierobežojumGrupaBalstītsRemonts(), 2);
                     return ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
                 }
         ));
