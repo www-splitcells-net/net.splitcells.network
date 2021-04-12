@@ -6,6 +6,7 @@ import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
+import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
 import net.splitcells.gel.test.integration.OralExamsTest;
 
 import java.util.Optional;
@@ -21,7 +22,8 @@ public final class GelDev {
     }
 
     public static void main(String... arg) {
-        process(() -> {
+        new OralExamsTest().testRandomInstanceSolving();
+        /*process(() -> {
             //new MinimalDistanceTest().test_multiple_line_addition_and_removal();
             //new ConstraintTest().test_incomingGroupsOfConstraintPath();
             new OralExamsTest().testCurrentDevelopment();
@@ -29,13 +31,14 @@ public final class GelDev {
             env.config()
                     .withConfigValue(MessageFilter.class
                             , a -> a.path().equals(list("debugging")))
-                    /*.withConfigValue(MessageFilter.class
-                            , a -> a.path().equals(list("demands", "Solution", "optimization", "Escalator"))
-                                    || a.path().equals(list("demands", "Solution")))*/
+                    //.withConfigValue(MessageFilter.class
+                    //        , a -> a.path().equals(list("demands", "Solution", "optimization", "Escalator"))
+                    //                || a.path().equals(list("demands", "Solution")))
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                    .withConfigValue(DeterministicRootSourceSeed.class, 1000L)
                     .withConfigValue(ProcessHostPath.class
                             , Paths.userHome("connections", "tmp.storage", "dem"));
-        }));
+        }));*/
     }
 }

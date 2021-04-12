@@ -1,11 +1,18 @@
 package net.splitcells.gel.test.integration;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.resource.Paths;
+import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.host.interaction.Domsole;
+import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -18,6 +25,7 @@ import org.junit.jupiter.api.*;
 
 import java.nio.file.Files;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -29,6 +37,8 @@ import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
+import static net.splitcells.gel.GelEnv.process;
+import static net.splitcells.gel.GelEnv.standardConfigurator;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.database.Databases.databaseOfFods;
@@ -89,6 +99,44 @@ public class OralExamsTest extends TestSuiteI {
         arguments.solution.createStandardAnalysis();
         assertThat(arguments.solution.isComplete()).isTrue();
         assertThat(arguments.solution.constraint().rating()).isEqualTo(arguments.rating);
+    }
+
+    @Tag(INTEGRATION_TEST)
+    @Test
+    public void testRandomInstanceSolving() {
+        process(() -> {
+            final var testSubject = randomOralExams
+                    (88
+                            , 177
+                            , 40
+                            , 41
+                            , 2
+                            , 5
+                            , 5
+                            , 6
+                            , randomness(0L))
+                    .asSolution();
+            testSubject.optimize(linearInitialization());
+            IntStream.rangeClosed(1, 100).forEach(i -> {
+                if (testSubject.isOptimal()) {
+                    return;
+                }
+                testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+                testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+                testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+                testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) ->
+                        step <= 100 && !currentSolution.isOptimal());
+            });
+            assertThat(testSubject.isOptimal()).isTrue();
+        }, standardConfigurator().andThen(env -> {
+            env.config()
+                    .withConfigValue(MessageFilter.class, a -> false)
+                    .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                    .withConfigValue(DeterministicRootSourceSeed.class, 1000L);
+        })).requireErrorFree();
     }
 
     @Disabled
@@ -243,7 +291,8 @@ public class OralExamsTest extends TestSuiteI {
                                         , list(4, 1, 1)));
     }
 
-    public Problem randomOralExams(int studentCount, int examCount, int examinerCount, int checkerCount, int weekCount
+    public Problem randomOralExams(int studentCount, int examCount, int examinerCount, int checkerCount,
+                                   int weekCount
             , int examDayCountPerWeek, int shiftsPerDayCount, int roomCount, Randomness randomness) {
         final List<List<Object>> supplies = list();
         for (int room = 1; room <= roomCount; ++room) {
