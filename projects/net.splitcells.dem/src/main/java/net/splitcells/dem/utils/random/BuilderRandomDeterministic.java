@@ -10,8 +10,6 @@ public class BuilderRandomDeterministic implements RndSrcF {
     // HACK constructor argument should be parameterized
     private final SecureRandom seedGenerator_crypt;
 
-    public final Random seedSrc = new Random(0);
-
     public BuilderRandomDeterministic(long seed) {
         seedGenerator = new Random(seed);
         seedGenerator_crypt = new SecureRandom(
