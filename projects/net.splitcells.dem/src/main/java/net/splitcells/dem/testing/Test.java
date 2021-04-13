@@ -8,6 +8,7 @@ import org.junit.platform.launcher.core.LauncherFactory;
 
 import static net.splitcells.dem.testing.FailureDetector.failureDetector;
 import static net.splitcells.dem.testing.LiveReporter.liveReporter;
+import static net.splitcells.dem.testing.TestTypes.FUNCTIONAL_TEST;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
@@ -27,6 +28,21 @@ public class Test {
         if (!test()) {
             System.exit(1);
         }
+    }
+
+    public static boolean testFunctionality() {
+        // TODO REMOVE
+        System.setProperty("net.splitcells.mode.build", "true");
+        Dem.ensuredInitialized();
+        final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
+                .selectors(selectPackage(""))
+                .filters(includeTags(FUNCTIONAL_TEST))
+                .build();
+        final var testExecutor = LauncherFactory.create();
+        final var failureDetector = failureDetector();
+        testExecutor.discover(testDiscovery);
+        testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        return !failureDetector.hasWatchedErrors();
     }
 
     public static boolean testIntegration() {

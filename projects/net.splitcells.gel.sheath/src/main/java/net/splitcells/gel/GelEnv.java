@@ -35,10 +35,22 @@ public final class GelEnv {
         process(program, standardConfigurator());
     }
 
-    public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
+    public static ProcessResult analyseProcess(Runnable program, Consumer<Environment> configurator) {
         return Dem.process(() -> {
             Files.createDirectory(environment().config().configValue(ProcessPath.class));
             writeToFile(environment().config().configValue(ProcessPath.class).resolve("index.xml"), Xml.rElement(SEW, "article"));
+            program.run();
+            try {
+                // Wait in order for log files to be written completely.
+                Thread.sleep(3_000L);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }, configurator);
+    }
+
+    public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
+        return Dem.process(() -> {
             program.run();
             try {
                 // Wait in order for log files to be written completely.

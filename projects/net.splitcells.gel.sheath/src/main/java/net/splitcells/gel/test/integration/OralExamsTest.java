@@ -34,11 +34,9 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
-import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
+import static net.splitcells.dem.testing.TestTypes.*;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.GelEnv.process;
-import static net.splitcells.gel.GelEnv.standardConfigurator;
+import static net.splitcells.gel.GelEnv.*;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.database.Databases.databaseOfFods;
@@ -87,10 +85,10 @@ public class OralExamsTest extends TestSuiteI {
         public final Rating rating;
     }
 
-    @Tag(INTEGRATION_TEST)
+    @Tag(FUNCTIONAL_TEST)
     @Test
     public void testRandomInstanceSolving() {
-        process(() -> {
+        analyseProcess(() -> {
             final var testSubject = randomOralExams
                     (88
                             , 177
@@ -203,8 +201,6 @@ public class OralExamsTest extends TestSuiteI {
                 return step <= 100 && !currentSolution.isOptimal();
             });
         });
-        testSubject.createStandardAnalysis();
-        testSubject.constraint().persistGraphState();
     }
 
     private Problem two_oral_exams_with_multiple_possible_choices() {
