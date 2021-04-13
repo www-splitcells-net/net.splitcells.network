@@ -1,9 +1,12 @@
 package net.splitcells.gel.solution.optimization.meta;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
+
+import java.util.Arrays;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,6 +15,10 @@ public class LinearIterator implements Optimization {
 
     private final List<Optimization> optimizations;
     private int counter = -1;
+
+    public static LinearIterator linearIterator(Optimization... optimization) {
+        return new LinearIterator(list(optimization));
+    }
 
     public static LinearIterator linearIterator(List<Optimization> optimization) {
         return new LinearIterator(optimization);

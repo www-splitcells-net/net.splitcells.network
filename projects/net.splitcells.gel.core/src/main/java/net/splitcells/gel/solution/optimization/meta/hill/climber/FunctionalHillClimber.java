@@ -13,8 +13,28 @@ import java.util.function.Supplier;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
+import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;
+import static net.splitcells.gel.solution.optimization.primitive.FreeSupplySwitcher.freeSupplySwitcher;
+import static net.splitcells.gel.solution.optimization.primitive.UsedSupplySwitcher.usedSupplySwitcher;
 
 public class FunctionalHillClimber implements Optimization {
+
+    public static FunctionalHillClimber functionalHillClimber(int i) {
+        return new FunctionalHillClimber
+                (linearIterator
+                        (usedSupplySwitcher()
+                                , freeSupplySwitcher())
+                        , new Supplier<Boolean>() {
+                    int counter = 0;
+
+                    @Override
+                    public Boolean get() {
+                        final var rVal = counter < i;
+                        counter += 1;
+                        return rVal;
+                    }
+                });
+    }
 
     public static FunctionalHillClimber functionalHillClimber(Optimization optimization, int i) {
         return new FunctionalHillClimber(optimization, new Supplier<Boolean>() {

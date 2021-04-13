@@ -22,8 +22,8 @@ public final class GelTestIntegration {
 
     public static void main(String... arg) {
         testIntegration();
-        /*if (GelEnv.process(() -> {
-                    if (testIntegration()) {
+        if (GelEnv.process(() -> {
+                    if (!testIntegration()) {
                         throw new RuntimeException();
                     }
                 }
@@ -33,6 +33,6 @@ public final class GelTestIntegration {
                             .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
                 })).hasError()) {
             System.exit(1);
-        }*/
+        }
     }
 }

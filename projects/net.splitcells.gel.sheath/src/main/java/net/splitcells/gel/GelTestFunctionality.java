@@ -12,7 +12,7 @@ import static net.splitcells.gel.GelEnv.standardConfigurator;
 public class GelTestFunctionality {
     public static void main(String... args) {
         if (GelEnv.process(() -> {
-                    if (testFunctionality()) {
+                    if (!testFunctionality()) {
                         throw new RuntimeException();
                     }
                 }

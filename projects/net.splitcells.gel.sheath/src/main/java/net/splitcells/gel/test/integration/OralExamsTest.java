@@ -20,6 +20,7 @@ import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
+import net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber;
 import net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair;
 import org.junit.jupiter.api.*;
 
@@ -48,6 +49,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
 import static net.splitcells.gel.solution.optimization.meta.Escalator.escalator;
+import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.TemplateInitializer.templateInitializer;
@@ -87,20 +89,46 @@ public class OralExamsTest extends TestSuiteI {
                             , randomness(0L))
                     .asSolution();
             testSubject.optimize(linearInitialization());
-            IntStream.rangeClosed(1, 100).forEach(i -> {
-                if (testSubject.isOptimal()) {
-                    return;
-                }
-                testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
-                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-                testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2)
-                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-                testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3)
-                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-                testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) ->
-                        step <= 100 && !currentSolution.isOptimal());
-            });
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
+                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2)
+                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3)
+                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) ->
+                    step <= 100 && !currentSolution.isOptimal());
             assertThat(testSubject.isOptimal()).isTrue();
+        }, standardConfigurator().andThen(env -> {
+            env.config()
+                    .withConfigValue(MessageFilter.class, a -> false)
+                    .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                    .withConfigValue(DeterministicRootSourceSeed.class, 1000L);
+        })).requireErrorFree();
+    }
+
+    /**
+     * This test shows, that the {@link FunctionalHillClimber} is not able to solve this problem
+     * as efficiently as the {@link ConstraintGroupBasedRepair}.
+     * This is done by trying as many allocations via the {@link FunctionalHillClimber} as is done
+     * in {@link #testRandomInstanceSolving} via the {@link ConstraintGroupBasedRepair}.
+     */
+    @Tag(FUNCTIONAL_TEST)
+    @Test
+    public void testComplexity() {
+        analyseProcess(() -> {
+            final var testSubject = randomOralExams
+                    (88
+                            , 177
+                            , 40
+                            , 41
+                            , 2
+                            , 5
+                            , 5
+                            , 6
+                            , randomness(0L))
+                    .asSolution();
+            testSubject.optimize(functionalHillClimber(400 * 177));
+            assertThat(testSubject.isOptimal()).isFalse();
         }, standardConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class, a -> false)

@@ -15,7 +15,7 @@ public final class GelTestUnits {
 
     public static void main(String... arg) {
         GelEnv.process(() -> {
-                    if (testUnits()) {
+                    if (!testUnits()) {
                         System.exit(1);
                     }
                 }
