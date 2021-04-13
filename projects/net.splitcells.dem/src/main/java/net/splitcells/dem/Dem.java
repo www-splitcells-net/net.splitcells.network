@@ -68,6 +68,7 @@ public final class Dem {
             } catch (Throwable t) {
                 // TODO Somehow mark this error specially, so its clear, that this error caused execution failure.
                 Domsole.domsole().appendError(t);
+                processResult.hasError(true);
                 throw t;
             } finally {
                 processEnvironment.config().withConfigValue(EndTime.class, Optional.of(ZonedDateTime.now()));
