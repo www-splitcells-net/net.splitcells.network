@@ -203,26 +203,6 @@ public class OralExamsTest extends TestSuiteI {
         });
     }
 
-    private Problem two_oral_exams_with_multiple_possible_choices() {
-        return oralExams
-                (list
-                                (list(1, 1, 1)
-                                        , list(1, 1, 1))
-                        , list
-                                (list(1, 1, 1)
-                                        , list(8, 1, 1)));
-    }
-
-    private Problem two_oral_exams_with_multiple_bad_choices() {
-        return oralExams
-                (list
-                                (list(1, 1, 1)
-                                        , list(1, 1, 1))
-                        , list
-                                (list(1, 1, 1)
-                                        , list(4, 1, 1)));
-    }
-
     public Problem randomOralExams(int studentCount, int examCount, int examinerCount, int checkerCount,
                                    int weekCount
             , int examDayCountPerWeek, int shiftsPerDayCount, int roomCount, Randomness randomness) {
