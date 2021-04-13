@@ -43,6 +43,35 @@ public interface Sender<T> extends ListWA<T>, Flushable, Closeable {
         };
     }
 
+    static Sender<String> stringSenderWithoutClosing(OutputStream output) {
+        return new Sender<String>() {
+
+            @Override
+            public void close() {
+            }
+
+            private PrintWriter printer = new PrintWriter(output);
+
+            @Override
+            public <R extends ListWA<String>> R append(String arg) {
+                printer.println(arg);
+                printer.flush();
+                return (R) this;
+            }
+
+            @Override
+            public void flush() {
+                printer.flush();
+            }
+
+            @Override
+            public <R extends SetWA<String>> R add(String value) {
+                throw new UnsupportedOperationException();
+            }
+
+        };
+    }
+
     /**
      * RENAME
      */

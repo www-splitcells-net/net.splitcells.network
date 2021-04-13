@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
+import static net.splitcells.dem.resource.communication.Sender.stringSenderWithoutClosing;
 import static net.splitcells.dem.resource.host.Files.createDirectory;
 
 /**
@@ -37,7 +38,7 @@ public final class Console extends ResourceI<Sender<String>> {
                     throw new RuntimeException(e);
                 }
             } else {
-                return stringSender(System.out);
+                return stringSenderWithoutClosing(System.out);
             }
         });
     }
