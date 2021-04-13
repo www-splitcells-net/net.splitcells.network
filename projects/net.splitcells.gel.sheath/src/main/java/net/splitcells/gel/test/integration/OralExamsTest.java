@@ -71,20 +71,6 @@ public class OralExamsTest extends TestSuiteI {
     public static final Attribute<Integer> DATE = integerAttribute("date");
     public static final Attribute<Integer> ROOM_NUMBER = integerAttribute("room-number");
 
-    private static class OralExamOptimizationArguments {
-        public static OralExamOptimizationArguments create(Solution solution, Rating rating) {
-            return new OralExamOptimizationArguments(solution, rating);
-        }
-
-        private OralExamOptimizationArguments(Solution solution, Rating rating) {
-            this.solution = solution;
-            this.rating = rating;
-        }
-
-        public final Solution solution;
-        public final Rating rating;
-    }
-
     @Tag(FUNCTIONAL_TEST)
     @Test
     public void testRandomInstanceSolving() {
