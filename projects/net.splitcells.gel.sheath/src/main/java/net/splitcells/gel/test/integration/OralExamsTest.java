@@ -265,7 +265,7 @@ public class OralExamsTest extends TestSuiteI {
                         ).toProblem();
     }
 
-    @Tag(CAPABILITY_TEST)
+    @Tag(INTEGRATION_TEST)
     @Test
     public void testRatingsOfSingleOralExam() {
         Solution testSubject = oralExams(list(list(1, 1, 1)), list(list(1, 1, 1))).asSolution();
@@ -273,7 +273,7 @@ public class OralExamsTest extends TestSuiteI {
         assertThat(testSubject.constraint().rating()).isEqualTo(noCost());
     }
 
-    @Tag(CAPABILITY_TEST)
+    @Tag(INTEGRATION_TEST)
     @Test
     public void testRatingsOfPeopleWithMultipleExamClones() {
         Solution testSubject = oralExams
@@ -345,7 +345,7 @@ public class OralExamsTest extends TestSuiteI {
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(12));
     }
 
-    @Tag(CAPABILITY_TEST)
+    @Tag(INTEGRATION_TEST)
     @Test
     public void testRatingsOfExamsInSameTimeslot() {
         Solution testSubject = oralExams
@@ -407,7 +407,7 @@ public class OralExamsTest extends TestSuiteI {
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(79));
     }
 
-    @Tag(CAPABILITY_TEST)
+    @Tag(INTEGRATION_TEST)
     @Test
     public void testRatingsOfStudentWithMultipleExamsInSameDay() {
         Solution testSubject = oralExams
