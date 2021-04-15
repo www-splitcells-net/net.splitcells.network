@@ -72,8 +72,8 @@ public abstract class ConstraintAI implements Constraint {
         this.injectionGroup = injectionGroup;
         lines = Databases.database(name + ".lines", this, LINE, INCOMING_CONSTRAINT_GROUP);
         lineProcessing = allocations("linesProcessing", lines, results);
-        lineProcessing.subscribe_to_afterAdditions(this::propagateAddition);
-        lineProcessing.subscriber_to_beforeRemoval(this::propagateRemoval);
+        lineProcessing.subscribe_to_afterAdditions(ConstraintAI::propagateAddition);
+        lineProcessing.subscriber_to_beforeRemoval(ConstraintAI::propagateRemoval);
         lines.subscribe_to_afterAdditions(this::process_line_addition);
     }
 
@@ -142,14 +142,14 @@ public abstract class ConstraintAI implements Constraint {
                 .forEach(freeSupply -> results.remove(freeSupply));
     }
 
-    protected void propagateAddition(Line addition) {
+    private static void propagateAddition(Line addition) {
         addition.value(PROPAGATION_TO).forEach(child ->
                 child.register_additions
                         (addition.value(RESULTING_CONSTRAINT_GROUP)
                                 , addition.value(LINE)));
     }
 
-    protected void propagateRemoval(Line removal) {
+    private static void propagateRemoval(Line removal) {
         removal.value(PROPAGATION_TO).forEach(child ->
                 child.register_before_removal
                         (removal.value(RESULTING_CONSTRAINT_GROUP)
