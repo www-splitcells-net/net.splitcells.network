@@ -1,33 +1,24 @@
 package net.splitcells.gel.test.integration;
 
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.problem.Problem;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.rating.rater.HasSize.has_size;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static org.assertj.core.api.Assertions.fail;
 
 public class SchoolSchedulingTest {
 
-    public static final Attribute<String> TEACHER = attribute(String.class, "teacher");
-    // RENAME
-    public static final Attribute<String> SUBJECT = attribute(String.class, "can teach");
-    public static final Attribute<Integer> SUBJECT_LENGTH = attribute(Integer.class, "subject length");
-    public static final Attribute<Integer> SESSION_LENGTH = attribute(Integer.class, "session length");
-
-    // RENAME
-    public static final Attribute<Integer> PARALLEL_EXECUTION_GROUPS = attribute(Integer.class,
-            "parallel execution groups");
-
-    public static final Attribute<String> STUDENT = attribute(String.class, "student");
-    public static final Attribute<String> SUBJECT_REQUIRED = attribute(String.class, "subject required");
-
-    public static final Attribute<String> WEEKDAY = attribute(String.class, "week day");
-    // RENAME
-    public static final Attribute<String> HOUR = attribute(String.class, "hour");
-    public static final Attribute<Integer> ROOM_NUMBER = attribute(Integer.class, "room number");
+    public static final Attribute<Integer> TEACHER = attribute(Integer.class, "teacher");
+    public static final Attribute<Integer> SCHOOL_SUBJECT = attribute(Integer.class, "school subject");
+    public static final Attribute<Integer> VINTAGE = attribute(Integer.class, "vintage");
+    public static final Attribute<Integer> HOURS = attribute(Integer.class, "hours");
+    public static final Attribute<Integer> RAIL = attribute(Integer.class, "rail");
 
     /**
      * TODO
@@ -61,6 +52,16 @@ public class SchoolSchedulingTest {
                 .toProblem()
                 .toSolution();*/
         fail("Test not implemented");
+    }
+
+    private Problem defineRailsForSchoolScheduling() {
+        return defineProblem()
+                .withDemandAttributes(TEACHER, SCHOOL_SUBJECT, VINTAGE)
+                .withSupplyAttributes(HOURS, RAIL)
+                .withConstraint(r -> {
+                    r.then(has_size(0));
+                    return r;
+                }).toProblem();
     }
 
 }
