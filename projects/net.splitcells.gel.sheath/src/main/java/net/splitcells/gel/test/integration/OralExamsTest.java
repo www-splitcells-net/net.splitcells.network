@@ -3,12 +3,6 @@ package net.splitcells.gel.test.integration;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.resource.Paths;
-import net.splitcells.dem.resource.host.ProcessHostPath;
-import net.splitcells.dem.resource.host.interaction.Domsole;
-import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
@@ -17,18 +11,15 @@ import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
-import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber;
 import net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair;
 import org.junit.jupiter.api.*;
 
-import java.nio.file.Files;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static java.lang.Math.floorMod;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -40,19 +31,16 @@ import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.GelEnv.*;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.constraint.type.Then.then;
-import static net.splitcells.gel.data.database.Databases.databaseOfFods;
-import static net.splitcells.gel.data.database.Databases.objectAttributes;
 import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.rating.rater.HasSize.has_size;
 import static net.splitcells.gel.rating.rater.MinimalDistance.has_minimal_distance_of;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.meta.Escalator.escalator;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
-import static net.splitcells.gel.solution.optimization.primitive.TemplateInitializer.templateInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -245,7 +233,7 @@ public class OralExamsTest extends TestSuiteI {
     }
 
     public Problem oralExams(List<List<Object>> demands, List<List<Object>> supplies) {
-        return define_problem()
+        return defineProblem()
                 .withDemandAttributes(STUDENTS, EXAMINER, OBSERVER)
                 .withDemands(demands)
                 .withSupplyAttributes(DATE, SHIFT, ROOM_NUMBER)

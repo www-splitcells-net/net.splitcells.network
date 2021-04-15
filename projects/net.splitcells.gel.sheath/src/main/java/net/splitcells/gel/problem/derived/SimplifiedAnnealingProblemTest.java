@@ -11,7 +11,7 @@ import static net.splitcells.gel.problem.derived.SimplifiedAnnealingProblem.simp
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +21,7 @@ public class SimplifiedAnnealingProblemTest {
     @Test
     public void test_host_start_rating_with_single_line() {
         final var rating = cost(7);
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes()
                 .withEmptyDemands(1)
                 .withSupplyAttributes()
@@ -39,7 +39,7 @@ public class SimplifiedAnnealingProblemTest {
     @Test
     public void test_cold_start_rating_with_single_line() {
         final var rating = cost(7);
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes()
                 .withEmptyDemands(1)
                 .withSupplyAttributes()
@@ -58,7 +58,7 @@ public class SimplifiedAnnealingProblemTest {
     public void test_host_start_rating_with_multiple_lines() {
         final var defianceCost = 7;
         final var lineCount = 3;
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes()
                 .withEmptyDemands(lineCount)
                 .withSupplyAttributes()
@@ -78,7 +78,7 @@ public class SimplifiedAnnealingProblemTest {
     public void test_cold_start_rating_with_multiple_lines() {
         final var defianceCost = 7;
         final var lineCount = 3;
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes()
                 .withEmptyDemands(lineCount)
                 .withSupplyAttributes()
@@ -100,7 +100,7 @@ public class SimplifiedAnnealingProblemTest {
         final var tryCount = 100;
         final var defianceCost = 7;
         final var lineCount = 3;
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes()
                 .withEmptyDemands(lineCount)
                 .withSupplyAttributes()

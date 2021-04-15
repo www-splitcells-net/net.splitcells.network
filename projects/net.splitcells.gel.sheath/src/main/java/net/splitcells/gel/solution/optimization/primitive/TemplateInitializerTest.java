@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.ForAlls.for_all;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.TemplateInitializer.templateInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +15,7 @@ public class TemplateInitializerTest {
     public void testTemplate() {
         final var demandNumber = attribute(Integer.class, "demand-number");
         final var supplyNumber = attribute(Integer.class, "supply-number");
-        final var testProduct = define_problem()
+        final var testProduct = defineProblem()
                 .withDemandAttributes(demandNumber)
                 .withDemands(list(
                         list(1)

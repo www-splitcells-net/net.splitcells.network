@@ -11,7 +11,7 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueBasedOnRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,7 +25,7 @@ public class DerivedSolutionTest {
         final var defianceValue = 7;
         final var defianceCost = 3;
         final var attribute = AttributeI.attribute(Integer.class);
-        final var rootSolution = define_problem()
+        final var rootSolution = defineProblem()
                 .withDemandAttributes()
                 .withDemands(
                         list()
@@ -69,7 +69,7 @@ public class DerivedSolutionTest {
         final var defianceValue = 7;
         final var defianceCost = 3;
         final var attribute = AttributeI.attribute(Integer.class);
-        final var rootSolution = define_problem()
+        final var rootSolution = defineProblem()
                 .withDemandAttributes()
                 .withDemands(
                         list()

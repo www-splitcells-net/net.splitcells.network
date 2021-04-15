@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
 import static org.assertj.core.api.Assertions.fail;
 
 public class SchoolSchedulingTest {

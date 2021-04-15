@@ -14,7 +14,7 @@ import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
@@ -33,7 +33,7 @@ public class ConstraintGroupbasedrepairTest {
         final var defyingGroupA = then(cost(1));
         final var defyingGroupB = then(cost(1));
         @SuppressWarnings("unchecked") final var solution
-                = define_problem()
+                = defineProblem()
                 .withDemandAttributes(a, b)
                 .withDemands
                         (list(invalidValueA, 1)
@@ -119,7 +119,7 @@ public class ConstraintGroupbasedrepairTest {
         final var defyingConstraintA = then(cost(1));
         final var defyingConstraintB = then(cost(1));
         @SuppressWarnings("unchecked") final var solution
-                = define_problem()
+                = defineProblem()
                 .withDemandAttributes(a, b)
                 .withDemands
                         (list(invalidValueA, 1)
@@ -168,7 +168,7 @@ public class ConstraintGroupbasedrepairTest {
         final var defyingConstraintA = then(cost(1));
         final var defyingConstraintB = then(cost(1));
         @SuppressWarnings("unchecked") final var solution
-                = define_problem()
+                = defineProblem()
                 .withDemandAttributes(a, b)
                 .withDemands
                         (list(invalidValueA, validValue)

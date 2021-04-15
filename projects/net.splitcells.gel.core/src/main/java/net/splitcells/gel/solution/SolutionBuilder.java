@@ -33,7 +33,7 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
     protected SolutionBuilder() {
     }
 
-    public static Define_Demand_Attributes define_problem() {
+    public static Define_Demand_Attributes defineProblem() {
         return new SolutionBuilder();
     }
 

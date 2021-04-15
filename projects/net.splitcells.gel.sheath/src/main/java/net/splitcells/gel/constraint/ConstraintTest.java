@@ -8,7 +8,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.gel.constraint.Constraint.incomingGroupsOfConstraintPath;
 import static net.splitcells.gel.constraint.type.ForAlls.for_all;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,7 +19,7 @@ public class ConstraintTest {
         final var attribute = attribute(Integer.class, "a");
         final int valueA = 1;
         final int valueB = 3;
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes(attribute)
                 .withDemands
                         (list
@@ -59,7 +59,7 @@ public class ConstraintTest {
         final var constraint_4 = for_all();
         final var constraint_5 = for_all();
         @SuppressWarnings("unchecked") final var solution
-                = define_problem()
+                = defineProblem()
                 .withDemandAttributes()
                 .withSupplyAttributes()
                 .withConstraint(constraint_1
@@ -84,7 +84,7 @@ public class ConstraintTest {
         final var B = attribute(Integer.class, "b");
         final var C = attribute(Integer.class, "c");
         final var D = attribute(Integer.class, "d");
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes(A, B)
                 .withSupplyAttributes(C, D)
                 .withConstraint(

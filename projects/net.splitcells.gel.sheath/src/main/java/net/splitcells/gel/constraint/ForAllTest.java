@@ -16,7 +16,7 @@ import static net.splitcells.gel.constraint.type.ForAlls.for_all;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -88,7 +88,7 @@ public class ForAllTest extends TestSuiteI {
         final var a = AttributeI.attribute(Integer.class, "a");
         final var b = AttributeI.attribute(Integer.class, "b");
         @SuppressWarnings("unchecked") final var testSubject
-                = define_problem()
+                = defineProblem()
                 .withDemandAttributes(a, b)
                 .withDemands
                         (list(1, 1)

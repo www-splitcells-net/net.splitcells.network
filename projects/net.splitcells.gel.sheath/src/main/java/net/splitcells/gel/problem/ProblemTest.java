@@ -11,7 +11,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,7 +19,7 @@ class ProblemTest {
 
     @Test
     void testEmptyProblem() {
-        Solution solution = define_problem()
+        Solution solution = defineProblem()
                 .withDemandAttributes()
                 .withSupplyAttributes()
                 .withConstraint(Then.then(constantRater(cost(7))))
@@ -34,7 +34,7 @@ class ProblemTest {
     void testUnbalancedProblem() {
         var defaultCost = 7;
         @SuppressWarnings("unchecked") //
-        Solution solution = define_problem()
+        Solution solution = defineProblem()
                 .withDemandAttributes()
                 .withDemands(list(), list())
                 .withSupplyAttributes()

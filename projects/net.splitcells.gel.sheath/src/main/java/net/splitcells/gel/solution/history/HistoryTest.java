@@ -10,7 +10,7 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.solution.SolutionBuilder.define_problem;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.history.History.ALLOCATION_EVENT;
 import static net.splitcells.gel.solution.history.History.META_DATA;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.ADDITION;
@@ -22,7 +22,7 @@ public class HistoryTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_reset_to_beginning() {
-        final var testSubject = define_problem()
+        final var testSubject = defineProblem()
                 .withDemandAttributes()
                 .withDemands(list(list()))
                 .withSupplyAttributes()
@@ -40,7 +40,7 @@ public class HistoryTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_reset_to_middle() {
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes()
                 .withDemands
                         (list(list(), list()))
@@ -63,7 +63,7 @@ public class HistoryTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_subscription_of_history_to_solution() {
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes()
                 .withDemands(list(list()))
                 .withSupplyAttributes()
@@ -97,7 +97,7 @@ public class HistoryTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void pārbaudiIeraksītuPieškiršanasNovērtejumu() {
-        final var solution = define_problem()
+        final var solution = defineProblem()
                 .withDemandAttributes()
                 .withDemands(list(list()))
                 .withSupplyAttributes()

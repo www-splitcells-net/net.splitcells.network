@@ -25,7 +25,6 @@ import static net.splitcells.dem.resource.host.Files.createDirectory;
 import static net.splitcells.dem.resource.host.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
-import static net.splitcells.gel.constraint.type.ForAlls.for_all;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.HasSize.has_size;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
@@ -90,7 +89,7 @@ public class NQueenProblemTest extends TestSuiteI {
                 rangeClosed(1, rows).
                         mapToObj(i -> list((Object) i)).
                         collect(toList()));
-        return SolutionBuilder.define_problem()
+        return SolutionBuilder.defineProblem()
                 .withDemandAttributes(COLUMN)
                 .withDemands(demands)
                 .withSupplyAttributes(ROW)
