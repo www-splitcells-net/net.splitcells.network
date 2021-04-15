@@ -364,6 +364,13 @@
             The use of standard/common code conventions also makes it easier to integrate other code easier
             and in a more consistent way.
         </paragraph>
+        <paragraph>Avoid side effects, as it makes it harder to understand a program.
+            Avoid inheritance, because it makes it harder to write easily portable
+            side effect free code under certain conditions.
+            Inheritance works great as adhoc wrappers and type and implementation extenders.
+            Inheritance does not support swapping out the parent implementation,
+            which makes it often not portable in practice.
+        </paragraph>
         <chapter>
             <title>Identifiers</title>
             <paragraph>Readability is preferred over compactness,
