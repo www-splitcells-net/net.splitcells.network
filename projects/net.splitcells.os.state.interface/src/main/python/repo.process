@@ -40,7 +40,9 @@ Objective
 The necessary meta info should be stored as simple and portable as possible.
 In best case scenario only the relative paths of the sub repos and its possible remote servers has to be stored.
 
-TODO Add switch in order to skip already present folders.
+TODO Use only python for recursion and not shell, in order simplify command.
+TODO Improve documentation.
+TODO Remove duplicate code.
 """
 
 import subprocess
@@ -61,7 +63,7 @@ def execute(relativePath, host, command):
 		logging.error('	Error processing repository with return code ' + str(returnCode) + '.')
 		return False
 	return True
-def process(relativePath, host, command):
+def process(relativePath, host, command, commandForMissing, commandForUnknown):
 	if not execute(relativePath, host, command):
 		return False
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
@@ -69,10 +71,34 @@ def process(relativePath, host, command):
 		# TODO Check if "!/.net.splitcells.os.state.interface.repo/" is present in gitignore. If not pr
 		with open(subListPath, 'r') as subListFile:
 			repoList=json.load(subListFile)
+			for currentSubDir in Path('.').iterdir():
+				if not currentSubDir.name.startswith('.'):
+					subName = currentSubDir.name
+					if not currentSubDir.name in repoList['subs']:
+						unknownSubRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; repo.process' + " --command='" + commandForUnknown + "' --host=" + host + ' --relative-path=' + relativePath
+						unknownSubRepoScript = unknownSubRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
+						logging.debug('unknownSubRepoScript: ' + unknownSubRepoScript)
+						returnCode = subprocess.call(unknownSubRepoScript, shell='True')
+						if returnCode != 0:
+							logging.error('Error processing unknown sub repository with return code ' + str(returnCode) + '.')
+							return False
 			for subName in repoList['subs'].keys():
+				subRepoPath=Path('./' + subName)
+				if not subRepoPath.is_dir():
+					# TODO Echo to stderr.
+					print('Folder of subrepository "' + str(subRepoPath) + '" is missing.')
+					missingSubRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; repo.process' + " --command='" + commandForMissing + "' --host=" + host + ' --relative-path=' + relativePath
+					missingSubRepoScript = missingSubRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
+					logging.debug('missingSubRepoScript: ' + missingSubRepoScript)
+					returnCode = subprocess.call(missingSubRepoScript, shell='True')
+					if returnCode != 0:
+						logging.error('Error processing missing sub repository with return code ' + str(returnCode) + '.')
+						return False
 				r='repo.process'
 				# TODO Do not rely on Bash specific command syntax.
 				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
+				subRepoScript += " --command-for-missing='" + commandForMissing + "'"
+				subRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
 				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 				logging.debug('subRepoScript: ' + subRepoScript)
 				returnCode = subprocess.call(subRepoScript, shell='True')
@@ -87,6 +113,8 @@ if __name__ == '__main__':
 	parser.add_argument('--relative-path', dest='relativePath', default='./')
 	parser.add_argument('--host', dest='host', default="''")
 	parser.add_argument('--command', dest='command', required=True)
+	parser.add_argument('--command-for-missing', dest='commandForMissing', default="exit 1")
+	parser.add_argument('--command-for-unknown', dest='commandForUnknown', default="exit 1")
 	parsedArgs = parser.parse_args()
-	if not process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command):
+	if not process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command, parsedArgs.commandForMissing, parsedArgs.commandForUnknown):
 		exit(1)
