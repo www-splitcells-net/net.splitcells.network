@@ -26,7 +26,7 @@ import static net.splitcells.dem.resource.host.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.rating.rater.HasSize.has_size;
+import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
 import static net.splitcells.gel.rating.rater.classification.GroupMultiplier.groupMultiplier;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -96,11 +96,11 @@ public class NQueenProblemTest extends TestSuiteI {
                 .withSupplies(supplies)
                 .withConstraint(
                         r -> {
-                            r.for_each(ROW).for_each(COLUMN).then(has_size(1));
-                            r.for_each(ROW).then(has_size(1));
-                            r.for_each(COLUMN).then(has_size(1));
-                            r.for_each(ascDiagonals(rows, columns)).then(has_size(1));
-                            r.for_each(descDiagonals(rows, columns)).then(has_size(1));
+                            r.for_each(ROW).for_each(COLUMN).then(hasSize(1));
+                            r.for_each(ROW).then(hasSize(1));
+                            r.for_each(COLUMN).then(hasSize(1));
+                            r.for_each(ascDiagonals(rows, columns)).then(hasSize(1));
+                            r.for_each(descDiagonals(rows, columns)).then(hasSize(1));
                             return r;
                         }
                 )

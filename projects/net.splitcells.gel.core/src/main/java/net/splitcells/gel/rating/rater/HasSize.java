@@ -24,7 +24,7 @@ import net.splitcells.gel.rating.structure.Rating;
 
 
 public class HasSize implements Rater {
-    public static HasSize has_size(int targetSize) {
+    public static HasSize hasSize(int targetSize) {
         return new HasSize(targetSize);
     }
 

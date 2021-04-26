@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.rating.rater.HasSize.has_size;
+import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -59,7 +59,7 @@ public class SchoolSchedulingTest {
                 .withDemandAttributes(TEACHER, SCHOOL_SUBJECT, VINTAGE)
                 .withSupplyAttributes(HOURS, RAIL)
                 .withConstraint(r -> {
-                    r.then(has_size(0));
+                    r.then(hasSize(0));
                     return r;
                 }).toProblem();
     }
