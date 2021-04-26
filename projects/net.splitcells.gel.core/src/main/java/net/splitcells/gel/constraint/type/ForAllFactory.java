@@ -6,7 +6,7 @@ import net.splitcells.gel.rating.rater.Rater;
 import static net.splitcells.gel.rating.rater.classification.ForAllValueCombinations.forAllValueCombinations;
 import static net.splitcells.gel.rating.rater.classification.Propagation.propagation;
 import static net.splitcells.gel.rating.rater.classification.ForAllWithCondition.forAllWithCondition;
-import static net.splitcells.gel.rating.rater.classification.ForAllAttributeValues.forAllAtributeValues;
+import static net.splitcells.gel.rating.rater.classification.ForAllAttributeValues.forAllAttributeValues;
 
 public class ForAllFactory {
     protected static final ForAllFactory INSTANCE = new ForAllFactory();
@@ -29,7 +29,7 @@ public class ForAllFactory {
     }
 
     public ForAllI forAll(final Attribute<?> attribute) {
-        return ForAllI.forAll(forAllAtributeValues(attribute));
+        return ForAllI.forAll(forAllAttributeValues(attribute));
     }
 
     public ForAllI forAll(Rater classifier) {

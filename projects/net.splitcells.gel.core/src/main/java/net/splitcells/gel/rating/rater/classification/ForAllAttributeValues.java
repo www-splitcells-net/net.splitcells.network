@@ -26,7 +26,7 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 @Deprecated
 public class ForAllAttributeValues implements Rater {
-    public static ForAllAttributeValues forAllAtributeValues(final Attribute<?> attribute) {
+    public static ForAllAttributeValues forAllAttributeValues(final Attribute<?> attribute) {
         return new ForAllAttributeValues(attribute);
     }
 
