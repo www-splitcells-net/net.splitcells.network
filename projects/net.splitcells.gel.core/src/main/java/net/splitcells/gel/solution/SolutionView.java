@@ -67,7 +67,7 @@ public interface SolutionView extends ProblemView {
     private static List<Attribute<?>> forAllAttributesOfGroups(Rater classifier) {
         final List<Attribute<?>> forAllAttributesOfGroups = list();
         classifier.casted(ForAllAttributeValues.class)
-                .ifPresent(e -> forAllAttributesOfGroups.add(e.atttribute()));
+                .ifPresent(e -> forAllAttributesOfGroups.add(e.attribute()));
         classifier.casted(ForAllValueCombinations.class)
                 .ifPresent(e -> forAllAttributesOfGroups.addAll(e.attributes()));
         return forAllAttributesOfGroups;

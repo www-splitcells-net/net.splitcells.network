@@ -39,7 +39,7 @@ public class ForAllAttributeValues implements Rater {
     protected final Map<GroupId, Map<Object, GroupId>> group = map();
     private final List<Discoverable> contexts = list();
 
-    public Attribute<?> atttribute() {
+    public Attribute<?> attribute() {
         return attribute;
     }
 
