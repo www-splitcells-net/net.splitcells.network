@@ -1,4 +1,4 @@
-package net.splitcells.gel.test.integration;
+package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;

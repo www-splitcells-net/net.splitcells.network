@@ -1,4 +1,4 @@
-package net.splitcells.gel.test.integration;
+package net.splitcells.gel.test.functionality;
 
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;

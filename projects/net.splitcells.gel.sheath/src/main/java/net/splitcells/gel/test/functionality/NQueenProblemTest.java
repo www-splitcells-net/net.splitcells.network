@@ -1,4 +1,4 @@
-package net.splitcells.gel.test.integration;
+package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.resource.host.interaction.LogLevel;

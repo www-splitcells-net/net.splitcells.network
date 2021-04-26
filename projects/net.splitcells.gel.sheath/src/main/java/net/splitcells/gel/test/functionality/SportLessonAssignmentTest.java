@@ -1,4 +1,4 @@
-package net.splitcells.gel.test.integration;
+package net.splitcells.gel.test.functionality;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
