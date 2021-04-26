@@ -45,7 +45,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query for_each(Rater rater) {
+    public Query for_each(Rater classifier) {
         var resultBase = constraint
                 .childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
@@ -53,7 +53,7 @@ public class QueryI implements Query {
                 .filter(child -> child.arguments().get(0).getClass().equals(RaterBasedOnGrouping.class))
                 .filter(child -> {
                     final var classification = (RaterBasedOnGrouping) child.arguments().get(0);
-                    return classification.arguments().get(0).equals(rater);
+                    return classification.arguments().get(0).equals(classifier);
                 }).reduce(ensureSingle());
         final var resultingGroups = Sets.<GroupId>setOfUniques();
         if (resultBase.isPresent()) {
@@ -67,7 +67,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(ForAlls.for_each(rater));
+            resultBase = Optional.of(ForAlls.for_each(classifier));
             constraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
