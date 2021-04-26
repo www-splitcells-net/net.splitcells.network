@@ -30,10 +30,10 @@ public class ConstraintTest {
                 .withSupplyAttributes()
                 .withEmptySupplies(4)
                 .withConstraint
-                        (ForAlls.for_each(attribute)
-                                .withChildren(ForAlls.for_each(attribute)
-                                        , ForAlls.for_each(attribute)
-                                                .withChildren(ForAlls.for_each(attribute))))
+                        (ForAlls.forEach(attribute)
+                                .withChildren(ForAlls.forEach(attribute)
+                                        , ForAlls.forEach(attribute)
+                                                .withChildren(ForAlls.forEach(attribute))))
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
@@ -88,10 +88,10 @@ public class ConstraintTest {
                 .withDemandAttributes(A, B)
                 .withSupplyAttributes(C, D)
                 .withConstraint(
-                        ForAlls.for_each(A)
-                                .withChildren(ForAlls.for_each(B)
-                                        , ForAlls.for_each(C)
-                                                .withChildren(ForAlls.for_each(D))))
+                        ForAlls.forEach(A)
+                                .withChildren(ForAlls.forEach(B)
+                                        , ForAlls.forEach(C)
+                                                .withChildren(ForAlls.forEach(D))))
                 .toProblem()
                 .asSolution();
         final var testData = Constraint.allocationGroups(solution.constraint());

@@ -25,11 +25,11 @@ public class ForAlls {
      * @param attribute
      * @return
      */
-    public static ForAll for_each(final Attribute<?> attribute) {
+    public static ForAll forEach(final Attribute<?> attribute) {
         return ForAllFactory.instance().forAll(attribute);
     }
 
-    public static ForAll for_each(Rater classifier) {
+    public static ForAll forEach(Rater classifier) {
         return ForAllFactory.instance().forAll(classifier);
     }
 

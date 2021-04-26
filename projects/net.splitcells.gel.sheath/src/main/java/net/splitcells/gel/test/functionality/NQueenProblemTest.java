@@ -96,11 +96,11 @@ public class NQueenProblemTest extends TestSuiteI {
                 .withSupplies(supplies)
                 .withConstraint(
                         r -> {
-                            r.for_each(ROW).for_each(COLUMN).then(hasSize(1));
-                            r.for_each(ROW).then(hasSize(1));
-                            r.for_each(COLUMN).then(hasSize(1));
-                            r.for_each(ascDiagonals(rows, columns)).then(hasSize(1));
-                            r.for_each(descDiagonals(rows, columns)).then(hasSize(1));
+                            r.forEach(ROW).forEach(COLUMN).then(hasSize(1));
+                            r.forEach(ROW).then(hasSize(1));
+                            r.forEach(COLUMN).then(hasSize(1));
+                            r.forEach(ascDiagonals(rows, columns)).then(hasSize(1));
+                            r.forEach(descDiagonals(rows, columns)).then(hasSize(1));
                             return r;
                         }
                 )

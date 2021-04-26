@@ -45,7 +45,7 @@ public class ForAllTest extends TestSuiteI {
     public void testNoGrouping() {
         final var attribute = attribute(Integer.class);
         final var lineSupplier = database(attribute);
-        final var testSubject = ForAlls.for_each(attribute);
+        final var testSubject = ForAlls.forEach(attribute);
         final var validator = for_all();
         testSubject.withChildren(validator);
         final List<Line> lines = list();
@@ -105,7 +105,7 @@ public class ForAllTest extends TestSuiteI {
                                 , list()
                                 , list()
                                 , list())
-                .withConstraint(ForAlls.for_each(a)
+                .withConstraint(ForAlls.forEach(a)
                         .withChildren(Then.then(cost(1))))
                 .toProblem()
                 .asSolution();

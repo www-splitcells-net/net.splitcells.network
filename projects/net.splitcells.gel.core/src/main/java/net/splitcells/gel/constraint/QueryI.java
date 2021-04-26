@@ -45,7 +45,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query for_each(Rater classifier) {
+    public Query forEach(Rater classifier) {
         var resultBase = constraint
                 .childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
@@ -67,7 +67,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(ForAlls.for_each(classifier));
+            resultBase = Optional.of(ForAlls.forEach(classifier));
             constraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
@@ -79,7 +79,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query for_each(Attribute<?> attribute) {
+    public Query forEach(Attribute<?> attribute) {
         var resultBase
                 = constraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
@@ -103,7 +103,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(ForAlls.for_each(attribute));
+            resultBase = Optional.of(ForAlls.forEach(attribute));
             constraint.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
         }
@@ -115,7 +115,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query for_all() {
+    public Query forAll() {
         final var resultBase
                 = constraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
@@ -174,7 +174,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query for_all_combinations_of(Attribute<?>... attributes) {
+    public Query forAllCombinationsOf(Attribute<?>... attributes) {
         final Constraint resultBase
                 = constraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))

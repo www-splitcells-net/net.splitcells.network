@@ -8,11 +8,11 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public interface Query {
 
-	Query for_each(Attribute<?> args);
+	Query forEach(Attribute<?> args);
 
-	Query for_each(Rater classifier);
+	Query forEach(Rater classifier);
 
-	Query for_all();
+	Query forAll();
 
 	Query then();
 
@@ -20,7 +20,7 @@ public interface Query {
 
 	Query then(Rating rating);
 
-	Query for_all_combinations_of(Attribute<?>... args);
+	Query forAllCombinationsOf(Attribute<?>... args);
 
 	Rating rating();
 
