@@ -48,7 +48,7 @@ public class ForAllValueCombinations implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition
+    public RatingEvent ratingAfterAddition
             (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final List<Object> groupValues = list();
         final var lineValue = addition.value(Constraint.LINE);

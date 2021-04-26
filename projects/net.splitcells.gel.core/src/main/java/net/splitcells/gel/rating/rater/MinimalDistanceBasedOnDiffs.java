@@ -211,7 +211,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines
+    public RatingEvent ratingAfterAddition(Table lines
             , Line addition
             , List<Constraint> children
             , Table ratingsBeforeAddition) {

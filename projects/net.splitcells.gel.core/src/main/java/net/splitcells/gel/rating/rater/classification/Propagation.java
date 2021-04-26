@@ -34,7 +34,7 @@ public class Propagation implements Rater {
     private final List<Discoverable> contexts = list();
 
     @Override
-    public RatingEvent rating_after_addition
+    public RatingEvent ratingAfterAddition
             (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final RatingEvent ratingEvent = ratingEvent();
         ratingEvent.additions().put

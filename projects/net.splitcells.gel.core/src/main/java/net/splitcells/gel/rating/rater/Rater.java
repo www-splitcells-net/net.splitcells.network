@@ -28,7 +28,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * @param ratingsBeforeAddition
      * @return
      */
-    RatingEvent rating_after_addition(Table  lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition);
+    RatingEvent ratingAfterAddition(Table  lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition);
 
     /**
      *

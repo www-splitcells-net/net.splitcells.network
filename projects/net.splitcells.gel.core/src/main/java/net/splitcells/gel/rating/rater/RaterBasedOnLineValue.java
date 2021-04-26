@@ -63,7 +63,7 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines, Line addition, List<Constraint> children
+    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children
             , Table ratingsBeforeAddition) {
         final RatingEvent rating = ratingEvent();
         rating.additions().put

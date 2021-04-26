@@ -34,9 +34,9 @@ public class RaterBasedOnGrouping implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final var ratingEvent = ratingEvent();
-        final var rBase = grouping.rating_after_addition(lines, addition, children, ratingsBeforeAddition);
+        final var rBase = grouping.ratingAfterAddition(lines, addition, children, ratingsBeforeAddition);
         ratingEvent.removal().addAll(rBase.removal());
         rBase.additions().forEach((line, localRating) ->
                 ratingEvent.additions()

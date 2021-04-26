@@ -36,7 +36,7 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines, Line addition, List<Constraint> children
+    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children
             , Table ratingsBeforeAddition) {
         final var individualRating = rating(lines, false);
         final var additionalRatings

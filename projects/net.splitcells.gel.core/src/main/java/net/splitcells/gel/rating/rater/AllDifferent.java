@@ -49,7 +49,7 @@ public class AllDifferent<T> implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines, Line addition, List<Constraint> children
+    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children
             , Table ratingsBeforeAddition) {
         final T value = addition.value(Constraint.LINE).value(attribute);
         final var group = lines.columnView(Constraint.LINE).lookup(predicate(value));

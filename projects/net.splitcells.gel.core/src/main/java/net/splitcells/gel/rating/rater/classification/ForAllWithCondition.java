@@ -39,7 +39,7 @@ public class ForAllWithCondition<T> implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition
+    public RatingEvent ratingAfterAddition
             (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final List<Constraint> targetChildren;
         if (condition.test(addition.value(LINE))) {

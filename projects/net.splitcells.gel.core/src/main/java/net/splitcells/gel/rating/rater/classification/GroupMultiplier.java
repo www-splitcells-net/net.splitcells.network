@@ -52,13 +52,13 @@ public class GroupMultiplier implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition
+    public RatingEvent ratingAfterAddition
             (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final var ratingEvent = ratingEvent();
         List<GroupId> groupingOfAddition = listWithValuesOf(
                 classifiers.stream()
                         .map(classifier -> classifier
-                                .rating_after_addition(lines, addition, children, ratingsBeforeAddition))
+                                .ratingAfterAddition(lines, addition, children, ratingsBeforeAddition))
                         .map(nn -> nn.additions())
                         .flatMap(additions -> additions.values().stream())
                         .map(additionRating -> additionRating.resultingConstraintGroupId())

@@ -44,7 +44,7 @@ public class ForAllAttributeValues implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition
+    public RatingEvent ratingAfterAddition
             (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final var groupingValue = addition.value(Constraint.LINE).value(attribute);
         final var incomingGroup = addition.value(Constraint.INCOMING_CONSTRAINT_GROUP);

@@ -32,7 +32,7 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public RatingEvent rating_after_addition(Table lines, Line addition, List<Constraint> children
+    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children
             , Table ratingsBeforeAddition) {
         final var ratingEvent = ratingEvent();
         ratingEvent.additions().put(
