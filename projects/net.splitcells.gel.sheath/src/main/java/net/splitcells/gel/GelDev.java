@@ -7,7 +7,7 @@ import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
-import net.splitcells.gel.test.integration.OralExamsTest;
+import net.splitcells.gel.test.functionality.OralExamsTest;
 
 import java.util.Optional;
 
