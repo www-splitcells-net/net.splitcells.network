@@ -5,7 +5,7 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public class ForAlls {
 
-    public static <T> ForAll forAllWithValue(Attribute<T> attribute, T value) {
+    public static <T> ForAllI forAllWithValue(Attribute<T> attribute, T value) {
         return ForAllFactory.instance().forAllWithValue(attribute, value);
     }
 
@@ -14,7 +14,7 @@ public class ForAlls {
      * <p>
      * TODO TEST
      */
-    public static ForAll for_all() {
+    public static ForAllI for_all() {
         return ForAllFactory.instance().forAll();
     }
 
@@ -25,11 +25,11 @@ public class ForAlls {
      * @param attribute
      * @return
      */
-    public static ForAll forEach(final Attribute<?> attribute) {
+    public static ForAllI forEach(final Attribute<?> attribute) {
         return ForAllFactory.instance().forAll(attribute);
     }
 
-    public static ForAll forEach(Rater classifier) {
+    public static ForAllI forEach(Rater classifier) {
         return ForAllFactory.instance().forAll(classifier);
     }
 
@@ -39,7 +39,7 @@ public class ForAlls {
      * @param arguments
      * @return
      */
-    public static ForAll for_all_combinations_of(final Attribute<?>... arguments) {
+    public static ForAllI for_all_combinations_of(final Attribute<?>... arguments) {
         return ForAllFactory.instance().forAllCombinations(arguments);
     }
 }

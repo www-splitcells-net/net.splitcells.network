@@ -2,7 +2,6 @@ package net.splitcells.gel.constraint.type;
 
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
-import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
 
 import static net.splitcells.gel.rating.rater.classification.ForAllValueCombinations.forAllValueCombinations;
 import static net.splitcells.gel.rating.rater.classification.Propagation.propagation;
@@ -20,25 +19,25 @@ public class ForAllFactory {
 
     }
 
-    public <T> ForAll forAllWithValue(Attribute<T> attribute, T value) {
-        return ForAll.forAll(
+    public <T> ForAllI forAllWithValue(Attribute<T> attribute, T value) {
+        return ForAllI.forAll(
                 forAllWithCondition(line -> value.equals(line.value(attribute))));
     }
 
-    public ForAll forAll() {
-        return ForAll.forAll(propagation());
+    public ForAllI forAll() {
+        return ForAllI.forAll(propagation());
     }
 
-    public ForAll forAll(final Attribute<?> attribute) {
-        return ForAll.forAll(forAllAtributeValues(attribute));
+    public ForAllI forAll(final Attribute<?> attribute) {
+        return ForAllI.forAll(forAllAtributeValues(attribute));
     }
 
-    public ForAll forAll(Rater classifier) {
-        return ForAll.forAll(classifier);
+    public ForAllI forAll(Rater classifier) {
+        return ForAllI.forAll(classifier);
     }
 
-    public ForAll forAllCombinations(final Attribute<?>... attributes) {
-        return ForAll.forAll(forAllValueCombinations(attributes));
+    public ForAllI forAllCombinations(final Attribute<?>... attributes) {
+        return ForAllI.forAll(forAllValueCombinations(attributes));
     }
 
 }
