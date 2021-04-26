@@ -132,7 +132,7 @@
                             <useUnlimitedThreads>true</useUnlimitedThreads>
                             <!-- TODO Execute tests in parallel. parallel>all</parallel>
                             <useUnlimitedThreads>true</useUnlimitedThreads-->
-                            <excludedGroups>testing.integration</excludedGroups>
+                            <excludedGroups>testing.functional</excludedGroups>
                         </configuration>
                     </plugin>
                 </plugins>
