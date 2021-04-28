@@ -48,8 +48,8 @@ public class RaterBasedOnLineValue implements Rater {
                 , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP));
     }
 
-    public static Rater raterBasedOnLineValue(Function<Line, GroupId> clasifierBasedOnLineValue) {
-        return new RaterBasedOnLineValue(additionalLine -> noCost(), clasifierBasedOnLineValue);
+    public static Rater raterBasedOnLineValue(Function<Line, GroupId> classifierBasedOnLineValue) {
+        return new RaterBasedOnLineValue(additionalLine -> noCost(), classifierBasedOnLineValue);
     }
 
     private final Function<Line, Rating> raterBasedOnLineValue;
