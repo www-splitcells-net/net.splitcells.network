@@ -54,18 +54,18 @@ public class RaterBasedOnLineValue implements Rater {
         return new RaterBasedOnLineValue(additionalLine -> noCost(), classifierBasedOnLineValue
                 , (addition, children) -> children);
     }
-
-    private final Function<Line, Rating> raterBasedOnLineValue;
-    private final Function<Line, GroupId> classifierBasedOnLineValue;
-    private final BiFunction<Line, List<Constraint>, List<Constraint>> propagationBasedOnLineValue;
+    
+    private final Function<Line, Rating> rater;
+    private final Function<Line, GroupId> classifier;
+    private final BiFunction<Line, List<Constraint>, List<Constraint>> propagation;
     private final List<Discoverable> contexts = list();
 
-    private RaterBasedOnLineValue(Function<Line, Rating> raterBasedOnLineValue
+    private RaterBasedOnLineValue(Function<Line, Rating> rater
             , Function<Line, GroupId> classifierBasedOnLineValue
             , BiFunction<Line, List<Constraint>, List<Constraint>> propagationBasedOnLineValue) {
-        this.raterBasedOnLineValue = raterBasedOnLineValue;
-        this.classifierBasedOnLineValue = classifierBasedOnLineValue;
-        this.propagationBasedOnLineValue = propagationBasedOnLineValue;
+        this.rater = rater;
+        this.classifier = classifierBasedOnLineValue;
+        this.propagation = propagationBasedOnLineValue;
     }
 
     @Override
@@ -75,9 +75,9 @@ public class RaterBasedOnLineValue implements Rater {
         rating.additions().put
                 (addition
                         , localRating()
-                                .withPropagationTo(propagationBasedOnLineValue.apply(addition, children))
-                                .withResultingGroupId(classifierBasedOnLineValue.apply(addition))
-                                .withRating(raterBasedOnLineValue.apply(addition.value(Constraint.LINE))));
+                                .withPropagationTo(propagation.apply(addition, children))
+                                .withResultingGroupId(classifier.apply(addition))
+                                .withRating(rater.apply(addition.value(Constraint.LINE))));
         return rating;
     }
 
@@ -94,7 +94,7 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.elementWithChildren(getClass().getSimpleName(), Xml.textNode(raterBasedOnLineValue.toString())));
+        return list(() -> Xml.elementWithChildren(getClass().getSimpleName(), Xml.textNode(rater.toString())));
     }
 
     @Override
@@ -124,11 +124,11 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
-        return classifierBasedOnLineValue.toString();
+        return classifier.toString();
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ", " + raterBasedOnLineValue + ", " + classifierBasedOnLineValue;
+        return getClass().getSimpleName() + ", " + rater + ", " + classifier;
     }
 }

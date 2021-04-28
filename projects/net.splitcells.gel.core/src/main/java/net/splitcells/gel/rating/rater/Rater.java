@@ -15,6 +15,9 @@ import net.splitcells.dem.object.DiscoverableFromMultiplePathsSetter;
 import net.splitcells.dem.utils.reflection.PubliclyConstructed;
 import net.splitcells.dem.utils.reflection.PubliclyTyped;
 
+/**
+ * TODO RENAME Rater seems to be an incorrect name, because it produces more than a rating.
+ */
 public interface Rater extends PubliclyTyped<Rater>
         , PubliclyConstructed<Domable>
         , DiscoverableFromMultiplePathsSetter
