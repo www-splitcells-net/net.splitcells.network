@@ -8,9 +8,9 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public interface Query {
 
-	Query forEach(Attribute<?> args);
+	Query forAll(Attribute<?> args);
 
-	Query forEach(Rater classifier);
+	Query forAll(Rater classifier);
 
 	Query forAll();
 

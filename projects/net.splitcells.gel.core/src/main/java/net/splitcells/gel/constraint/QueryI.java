@@ -45,7 +45,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query forEach(Rater classifier) {
+    public Query forAll(Rater classifier) {
         var resultBase = constraint
                 .childrenView().stream()
                 .filter(child -> ForAllI.class.equals(child.type()))
@@ -79,7 +79,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query forEach(Attribute<?> attribute) {
+    public Query forAll(Attribute<?> attribute) {
         var resultBase
                 = constraint.childrenView().stream()
                 .filter(child -> ForAllI.class.equals(child.type()))

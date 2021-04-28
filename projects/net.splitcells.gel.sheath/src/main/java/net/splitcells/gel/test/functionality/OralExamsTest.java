@@ -287,13 +287,13 @@ public class OralExamsTest extends TestSuiteI {
         testSubject.optimize(linearInitialization());
         {
             assertThat(testSubject.constraint().query()
-                    .forEach(OBSERVER)
+                    .forAll(OBSERVER)
                     .forAllCombinationsOf(DATE, SHIFT)
                     .then(hasSize(1))
                     .rating()
             ).isEqualTo(cost(1));
             assertThat(testSubject.constraint().query()
-                    .forEach(EXAMINER)
+                    .forAll(EXAMINER)
                     .forAllCombinationsOf(DATE, SHIFT)
                     .then(hasSize(1))
                     .rating()
@@ -301,20 +301,20 @@ public class OralExamsTest extends TestSuiteI {
             {
                 assertThat
                         (testSubject.constraint().query()
-                                .forEach(STUDENTS)
+                                .forAll(STUDENTS)
                                 .forAllCombinationsOf(DATE, SHIFT)
                                 .then(hasSize(1))
                                 .rating()
                         ).isEqualTo(cost(1));
                 assertThat
                         (testSubject.constraint().query()
-                                .forEach(STUDENTS)
+                                .forAll(STUDENTS)
                                 .then(has_minimal_distance_of(DATE, 3.0))
                                 .rating()
                         ).isEqualTo(cost(3));
                 assertThat
                         (testSubject.constraint().query()
-                                .forEach(STUDENTS)
+                                .forAll(STUDENTS)
                                 .then(has_minimal_distance_of(DATE, 5.0))
                                 .rating()
                         ).isEqualTo(cost(5));
@@ -323,17 +323,17 @@ public class OralExamsTest extends TestSuiteI {
         {
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(OBSERVER)
+                            .forAll(OBSERVER)
                             .rating()
                     ).isEqualTo(cost(1));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(EXAMINER)
+                            .forAll(EXAMINER)
                             .rating()
                     ).isEqualTo(cost(1));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(STUDENTS)
+                            .forAll(STUDENTS)
                             .rating()
                     ).isEqualTo(cost(9));
             assertThat(
@@ -368,32 +368,32 @@ public class OralExamsTest extends TestSuiteI {
         {
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(STUDENTS)
+                            .forAll(STUDENTS)
                             .forAllCombinationsOf(DATE, SHIFT)
                             .then(hasSize(1)).rating()
                     ).isEqualTo(cost(2));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(STUDENTS)
+                            .forAll(STUDENTS)
                             .then(has_minimal_distance_of(DATE, 3.0))
                             .rating()
                     ).isEqualTo(cost(26));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(STUDENTS)
+                            .forAll(STUDENTS)
                             .then(has_minimal_distance_of(DATE, 5.0))
                             .rating()
                     ).isEqualTo(cost(46));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(EXAMINER)
+                            .forAll(EXAMINER)
                             .forAllCombinationsOf(DATE, SHIFT)
                             .then(hasSize(1))
                             .rating()
                     ).isEqualTo(cost(2));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(OBSERVER)
+                            .forAll(OBSERVER)
                             .forAllCombinationsOf(DATE, SHIFT)
                             .then(hasSize(1))
                             .rating()
@@ -426,38 +426,38 @@ public class OralExamsTest extends TestSuiteI {
         {
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(STUDENTS)
+                            .forAll(STUDENTS)
                             .then(has_minimal_distance_of(DATE, 3.0))
                             .rating()
                     ).isEqualTo(cost(9));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(STUDENTS)
+                            .forAll(STUDENTS)
                             .then(has_minimal_distance_of(DATE, 5.0))
                             .rating()
                     ).isEqualTo(cost(15));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(STUDENTS)
+                            .forAll(STUDENTS)
                             .forAllCombinationsOf(DATE, SHIFT)
                             .then(hasSize(1))
                             .rating()
                     ).isEqualTo(cost(1));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(STUDENTS)
+                            .forAll(STUDENTS)
                             .rating()
                     ).isEqualTo(cost(25));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(OBSERVER)
+                            .forAll(OBSERVER)
                             .forAllCombinationsOf(DATE, SHIFT)
                             .then(hasSize(1))
                             .rating()
                     ).isEqualTo(cost(1));
             assertThat
                     (testSubject.constraint().query()
-                            .forEach(EXAMINER)
+                            .forAll(EXAMINER)
                             .forAllCombinationsOf(DATE, SHIFT)
                             .then(hasSize(1))
                             .rating()
