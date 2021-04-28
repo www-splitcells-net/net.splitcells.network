@@ -45,7 +45,7 @@ public class RaterBasedOnLineValue implements Rater {
 
     public static Rater lineValueBasedOnRater(Function<Line, Rating> raterBasedOnLineValue) {
         return new RaterBasedOnLineValue(raterBasedOnLineValue
-                , papildinājums -> papildinājums.value(Constraint.INCOMING_CONSTRAINT_GROUP));
+                , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP));
     }
 
     public static Rater raterBasedOnLineValue(Function<Line, GroupId> clasifierBasedOnLineValue) {
