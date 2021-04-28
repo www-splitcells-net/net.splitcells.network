@@ -10,6 +10,7 @@ import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import java.util.Collection;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.common.Language;
@@ -44,6 +45,18 @@ public class RaterBasedOnLineValue implements Rater {
         });
     }
 
+    public static Rater lineValueSelector(Predicate<Line> classifier) {
+        return new RaterBasedOnLineValue(line -> noCost()
+                , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
+                , (addition, children) -> {
+            if (classifier.test(addition)) {
+                return children;
+            } else {
+                return list();
+            }
+        });
+    }
+
     public static Rater lineValueBasedOnRater(Function<Line, Rating> raterBasedOnLineValue) {
         return new RaterBasedOnLineValue(raterBasedOnLineValue
                 , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
@@ -54,7 +67,7 @@ public class RaterBasedOnLineValue implements Rater {
         return new RaterBasedOnLineValue(additionalLine -> noCost(), classifierBasedOnLineValue
                 , (addition, children) -> children);
     }
-    
+
     private final Function<Line, Rating> rater;
     private final Function<Line, GroupId> classifier;
     private final BiFunction<Line, List<Constraint>, List<Constraint>> propagation;
