@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.rating.rater.AllDifferent.allDifferent;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueRater;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueSelector;
+import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static org.assertj.core.api.Assertions.fail;
@@ -64,6 +64,9 @@ public class SchoolSchedulingTest {
                 .withConstraint(r -> {
                     r.forAll(lineValueSelector(line -> line.value(RAIL) == 0))
                             .then(lineValueRater(line -> line.value(HOURS) == 0, line -> cost(1)));
+                    r.forAll(SCHOOL_SUBJECT)
+                            .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
+                            .then(allDifferent(RAIL));
                     return r;
                 }).toProblem();
     }
