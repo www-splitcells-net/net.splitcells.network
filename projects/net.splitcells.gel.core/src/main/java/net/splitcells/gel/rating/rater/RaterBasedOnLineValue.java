@@ -45,8 +45,8 @@ public class RaterBasedOnLineValue implements Rater {
         });
     }
 
-    public static Rater lineValueSelector(Predicate<Line> classifier) {
-        return new RaterBasedOnLineValue(line -> noCost()
+    public static Rater lineValueRater(Predicate<Line> classifier, Function<Line, Rating> rater) {
+        return new RaterBasedOnLineValue(rater
                 , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
                 , (addition, children) -> {
             if (classifier.test(addition)) {
@@ -55,6 +55,10 @@ public class RaterBasedOnLineValue implements Rater {
                 return list();
             }
         });
+    }
+
+    public static Rater lineValueSelector(Predicate<Line> classifier) {
+        return lineValueRater(classifier, line -> noCost());
     }
 
     public static Rater lineValueBasedOnRater(Function<Line, Rating> raterBasedOnLineValue) {
