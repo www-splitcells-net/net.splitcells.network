@@ -8,8 +8,11 @@
         <objective>
             Make Gel a usable program
             <objective>Support interactive problem solving via Website.
-                <solution>Use pseudo CSV format (variable length lines) as input, where the first row describes the
-                    line type. This means that multiple tables can be extracted from the single CSV.
+                <solution> Create constraint language.
+                    <solution>Use pseudo CSV format (variable length lines) as input, where the first row describes the
+                        line type. This means that multiple tables can be extracted from the single CSV.
+                    </solution>
+                    <solution>Implement parsers via wrappers around i.e. rater and constraint builders</solution>
                 </solution>
                 <solution>Create and publish Flathub image and AppImage (KDE).
                     <solution>Create electron and server version.</solution>
