@@ -8,6 +8,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
 import java.util.Collection;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import net.splitcells.dem.data.set.list.List;
@@ -45,21 +46,26 @@ public class RaterBasedOnLineValue implements Rater {
 
     public static Rater lineValueBasedOnRater(Function<Line, Rating> raterBasedOnLineValue) {
         return new RaterBasedOnLineValue(raterBasedOnLineValue
-                , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP));
+                , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
+                , (addition, children) -> children);
     }
 
     public static Rater raterBasedOnLineValue(Function<Line, GroupId> classifierBasedOnLineValue) {
-        return new RaterBasedOnLineValue(additionalLine -> noCost(), classifierBasedOnLineValue);
+        return new RaterBasedOnLineValue(additionalLine -> noCost(), classifierBasedOnLineValue
+                , (addition, children) -> children);
     }
 
     private final Function<Line, Rating> raterBasedOnLineValue;
     private final Function<Line, GroupId> classifierBasedOnLineValue;
+    private final BiFunction<Line, List<Constraint>, List<Constraint>> propagationBasedOnLineValue;
     private final List<Discoverable> contexts = list();
 
     private RaterBasedOnLineValue(Function<Line, Rating> raterBasedOnLineValue
-            , Function<Line, GroupId> classifierBasedOnLineValue) {
+            , Function<Line, GroupId> classifierBasedOnLineValue
+            , BiFunction<Line, List<Constraint>, List<Constraint>> propagationBasedOnLineValue) {
         this.raterBasedOnLineValue = raterBasedOnLineValue;
         this.classifierBasedOnLineValue = classifierBasedOnLineValue;
+        this.propagationBasedOnLineValue = propagationBasedOnLineValue;
     }
 
     @Override
@@ -69,7 +75,7 @@ public class RaterBasedOnLineValue implements Rater {
         rating.additions().put
                 (addition
                         , localRating()
-                                .withPropagationTo(children)
+                                .withPropagationTo(propagationBasedOnLineValue.apply(addition, children))
                                 .withResultingGroupId(classifierBasedOnLineValue.apply(addition))
                                 .withRating(raterBasedOnLineValue.apply(addition.value(Constraint.LINE))));
         return rating;
