@@ -5,4 +5,4 @@
 
 # Clones a repository into the current folder.
 
-repo.process --command 'command.managed.execute disjunction repo.clone.into.current '$@'/$subRepo'
+repo.process --command 'command.managed.execute disjunction repo.clone.into.current '$@'/$subRepo' --command-for-missing 'command.managed.execute disjunction repo.clone.into.current '$@'/$subRepo'
