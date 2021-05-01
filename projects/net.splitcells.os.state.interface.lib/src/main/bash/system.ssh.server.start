@@ -26,7 +26,9 @@ echo There should be no prompt for a password during this test.
 		exit 1
 	fi
 	if [ "$loginlog" == *'No more authentication methods to try.'* ]; then
-		echo.error "Login with password is enabled, but should be disabled."
+		echo.error 'Login with password is enabled, but should be disabled.'
+		echo.error 'If ssh service configured via "/etc/ssh/sshd_config":'
+    echo.error 'Set "PubkeyAuthentication" and "PasswordAuthentication" to "no" and restart ssh service.'
 		exit 1
 	fi
 echo SSH server test completed.
