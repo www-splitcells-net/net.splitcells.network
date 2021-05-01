@@ -2,31 +2,7 @@
 set -e
 # Currently there is only one dependency test and therefore this test type only consists of one file.
 mkdir -p ~/.config/net.splitcells.os.state.interface/testing
-    cd ~/.config/net.splitcells.os.state.interface/testing
     rm -rf ~/.config/net.splitcells.os.state.interface/testing/*
-host=$(pwd)
-mkdir -p $host/root/.net.splitcells.os.state.interface.repo
-    echo '{"subs":{"sub-1":{},"sub-2":{}}}' > $host/root/.net.splitcells.os.state.interface.repo/subs.json
-    mkdir $host/root/sub-1
-    mkdir -p $host/root/sub-2/.net.splitcells.os.state.interface.repo
-	cd $host/root
-	repo.create
-	repo.commit.all
-cd $host/root/sub-1
-	repo.create
-	repo.commit.all
-cd $host/root/sub-2
-    mkdir $host/root/sub-2/sub-sub-1
-    echo '{"subs":{"sub-sub-1":{}}}' > $host/root/sub-2/.net.splitcells.os.state.interface.repo/subs.json
-	repo.create
-	repo.commit.all
-cd $host/root/sub-2/sub-sub-1
-	repo.create
-	repo.commit.all
-mkdir $host/clone
-	cd $host/clone
-	repo.clone.into.current $host/root
-path.is.folder $host/clone/sub-1
-path.is.folder $host/clone/sub-2
-path.is.folder $host/clone/sub-2/sub-sub-1
+    cd ~/.config/net.splitcells.os.state.interface/testing
+repo.clone.into.current.test > /dev/null 2>&1 || echo.error '"'repo.clone.into.current'"' has no valid implementation.
 rm -rf ~/.config/net.splitcells.os.state.interface/testing

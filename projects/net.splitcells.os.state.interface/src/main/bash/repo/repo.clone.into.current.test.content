@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+set -e
+# Define test.routine configuration.
+	baseFolder=$(pwd)
+	testContent='h8u9w4f'
+# Create repository for testing.
+	mkdir a
+	cd a
+	repo.create
+	echo $testContent >> ./text
+	repo.commit.all
+# Create and test.routine clone.
+	cd $baseFolder
+	mkdir b
+	cd b
+	repo.clone.into.current ../a
+	if [ "$testContent" != "$(cat ./text)" ]; then
+		echo.error '"repo.clone.into.current" does not work.'
+		exit 1
+	fi
+# Clean up all files.
+	cd $baseFolder
+	rm -rf ./a
+	rm -rf ./b
