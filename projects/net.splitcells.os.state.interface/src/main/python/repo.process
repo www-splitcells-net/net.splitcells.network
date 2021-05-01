@@ -88,12 +88,15 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown):
 					# TODO Echo to stderr.
 					print('Folder of subrepository "' + str(subRepoPath) + '" is missing.')
 					missingSubRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; repo.process' + " --command='" + commandForMissing + "' --host=" + host + ' --relative-path=' + relativePath
+					missingSubRepoScript += " --command-for-missing='" + commandForMissing + "'"
+					missingSubRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
 					missingSubRepoScript = missingSubRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 					logging.debug('missingSubRepoScript: ' + missingSubRepoScript)
 					returnCode = subprocess.call(missingSubRepoScript, shell='True')
 					if returnCode != 0:
 						logging.error('Error processing missing sub repository with return code ' + str(returnCode) + '.')
 						return False
+					continue
 				r='repo.process'
 				# TODO Do not rely on Bash specific command syntax.
 				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
