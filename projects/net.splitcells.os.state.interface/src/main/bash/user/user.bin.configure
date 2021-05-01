@@ -5,3 +5,4 @@
 
 command.managed.execute conjunction user.bin.configure
 command.repositories.install
+test.dependencies
