@@ -31,6 +31,11 @@ The center of all this is the [Generic Allocator](./projects/net.splitcells.gel)
 modeling, analytic and solving capabilities regarding optimization problems. An introduction and documentation can be
 found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
+## Good to Know
+
+Another interesting subproject is [OS State Interface](./projects/net.splitcells.os.state.interface).
+It helps the user to organize and execute commands in the terminal. 
+
 ## Structure
 
 This is the root project of a project cluster. This network consists of three parts:
