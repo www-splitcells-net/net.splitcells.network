@@ -4,7 +4,7 @@ lexer grammar Java_11_lexer;
 }
 Object_accessor: '.';
 Statement_terminator: ';';
-Whitespace: [ \t\n\r];
+Whitespace: [ \t\n\r]+;
 Keyword_package: 'package';
 Keyword_import: 'import';
 Keyword_static: 'static';

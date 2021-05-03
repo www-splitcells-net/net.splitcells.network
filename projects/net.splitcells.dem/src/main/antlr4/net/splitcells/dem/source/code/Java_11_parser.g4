@@ -9,7 +9,8 @@ source_unit
     : package_declaration import_declaration* class_definition EOF
     ;
 class_definition
-    : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name Whitespace? Scope_start Whitespace? Scope_end
+    : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
+        Whitespace? Scope_start Whitespace? javadoc? Whitespace? Scope_end
     ;
 javadoc
     : Javadoc_start javadoc_content* Javadoc_end Whitespace*
