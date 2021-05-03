@@ -84,6 +84,7 @@ public class SchoolSchedulingTest {
                             .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
                             .then(allDifferent(RAIL));
                     r.forAll(COURSE_ID)
+                            // TODO Implement this via derived values. This concept is not implemented yet.
                             .then(new Rater() {
 
                                 @Override
