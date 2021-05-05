@@ -19,7 +19,7 @@ public class AllSame {
                         valueCounter.computeIfPresent(value, (k, v) -> valueCounter.put(k, v + 1));
                         valueCounter.computeIfAbsent(value, v -> valueCounter.put(v, 1));
                     });
-            return addition.map(a -> cost((valueCounter.size() - 1) / (lines.size() + 1)))
+            return addition.map(a -> cost((valueCounter.size() - 1) / (lines.size())))
                     .orElseGet(() -> cost((valueCounter.size() - 1) / (lines.size() - 1)));
         });
     }

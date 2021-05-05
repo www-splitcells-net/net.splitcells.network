@@ -98,7 +98,8 @@ public class SchoolSchedulingTest {
                                         .map(sum -> sum + addition.map(a -> a.value(ALLOCATED_HOURS)).orElse(0))
                                         .orElse(0);
                                 final var totalCost = distance(requiredHours, allocatedHours);
-                                return cost(totalCost / (lines.getLines().size() + 1));
+                                return addition.map(a -> cost(totalCost / (lines.getLines().size())))
+                                        .orElseGet(() -> cost(totalCost / (lines.getLines().size() - 1)));
                             }));
                     r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;
