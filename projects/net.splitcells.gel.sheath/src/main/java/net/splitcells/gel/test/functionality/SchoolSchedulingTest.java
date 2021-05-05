@@ -22,6 +22,7 @@ import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.AllDifferent.allDifferent;
+import static net.splitcells.gel.rating.rater.AllSame.allSame;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.raterBasedOnLineGroup;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
@@ -116,6 +117,7 @@ public class SchoolSchedulingTest {
                                                                 (line.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
                                 return ratingEvent;
                             }));
+                    r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;
                 }).toProblem();
     }
