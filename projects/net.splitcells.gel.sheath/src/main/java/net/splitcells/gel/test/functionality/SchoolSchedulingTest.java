@@ -23,7 +23,7 @@ import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.AllDifferent.allDifferent;
 import static net.splitcells.gel.rating.rater.AllSame.allSame;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.raterBasedOnLineGroup;
+import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRater;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
@@ -86,8 +86,7 @@ public class SchoolSchedulingTest {
                             .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
                             .then(allDifferent(RAIL));
                     r.forAll(COURSE_ID)
-                            .then(raterBasedOnLineGroup((lines, addition, removal, children) -> {
-                                final var ratingEvent = ratingEvent();
+                            .then(groupRater((lines, addition, removal) -> {
                                 final int requiredHours = addition
                                         .map(e -> e.value(REQUIRED_HOURS))
                                         .orElseGet(() -> removal.get().value(REQUIRED_HOURS));
@@ -99,23 +98,7 @@ public class SchoolSchedulingTest {
                                         .map(sum -> sum + addition.map(a -> a.value(ALLOCATED_HOURS)).orElse(0))
                                         .orElse(0);
                                 final var totalCost = distance(requiredHours, allocatedHours);
-                                final var lineCost = cost(totalCost / (lines.getLines().size() + 1));
-                                lines.getLines().stream()
-                                        .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
-                                        .forEach(e -> ratingEvent.updateRating_withReplacement(e
-                                                , localRating()
-                                                        .withPropagationTo(children)
-                                                        .withRating(lineCost)
-                                                        .withResultingGroupId
-                                                                (e.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
-                                addition.ifPresent(line -> ratingEvent.additions()
-                                        .put(line
-                                                , localRating()
-                                                        .withPropagationTo(children)
-                                                        .withRating(lineCost)
-                                                        .withResultingGroupId
-                                                                (line.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
-                                return ratingEvent;
+                                return cost(totalCost / (lines.getLines().size() + 1));
                             }));
                     r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;

@@ -7,14 +7,41 @@ import net.splitcells.dem.utils.lambdas.TriFunction;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.rating.structure.Rating;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.type.Cost.cost;
 
 public class RaterBasedOnLineGroup implements Rater {
+
+    public static RaterBasedOnLineGroup groupRater(GroupRater rater) {
+        return raterBasedOnLineGroup((lines, addition, removal, children) -> {
+            final var lineRating = rater.lineRating(lines, addition, removal);
+            final var ratingEvent = ratingEvent();
+            lines.getLines().stream()
+                    .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
+                    .forEach(e -> ratingEvent.updateRating_withReplacement(e
+                            , localRating()
+                                    .withPropagationTo(children)
+                                    .withRating(lineRating)
+                                    .withResultingGroupId
+                                            (e.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
+            addition.ifPresent(line -> ratingEvent.additions()
+                    .put(line
+                            , localRating()
+                                    .withPropagationTo(children)
+                                    .withRating(lineRating)
+                                    .withResultingGroupId
+                                            (line.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
+            return ratingEvent;
+        });
+    }
 
     public static RaterBasedOnLineGroup raterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater) {
         return new RaterBasedOnLineGroup(rater);
