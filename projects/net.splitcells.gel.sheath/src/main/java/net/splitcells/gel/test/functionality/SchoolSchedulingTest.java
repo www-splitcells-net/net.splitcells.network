@@ -22,6 +22,7 @@ import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.AllDifferent.allDifferent;
+import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.raterBasedOnLineGroup;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
@@ -84,59 +85,37 @@ public class SchoolSchedulingTest {
                             .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
                             .then(allDifferent(RAIL));
                     r.forAll(COURSE_ID)
-                            // TODO Implement this via derived values. This concept is not implemented yet.
-                            .then(new Rater() {
-
-                                @Override
-                                public RatingEvent ratingAfterAddition(Table lines, Line addition
-                                        , List<Constraint> children, Table ratingsBeforeAddition) {
-                                    final var additionRating = ratingEvent();
-                                    final int requiredHours = addition.value(REQUIRED_HOURS);
-                                    final var allocatedHours = lines.getLines()
-                                            .stream()
-                                            .map(line -> line.value(ALLOCATED_HOURS))
-                                            .reduce(Integer::sum)
-                                            .orElse(0);
-                                    final var totalCost = distance(requiredHours, allocatedHours);
-                                    final var lineCost = cost(totalCost / lines.getLines().size());
-                                    lines.getLines().stream()
-                                            .filter(e -> e.index() != addition.index())
-                                            .forEach(e -> additionRating.updateRating_withReplacement(e
-                                                    , localRating()
-                                                            .withPropagationTo(children)
-                                                            .withRating(lineCost)
-                                                            .withResultingGroupId
-                                                                    (e.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
-                                    additionRating.additions().put(addition
-                                            , localRating()
-                                                    .withPropagationTo(children)
-                                                    .withRating(lineCost)
-                                                    .withResultingGroupId
-                                                            (addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
-                                    return additionRating;
-                                }
-
-                                @Override
-                                public RatingEvent rating_before_removal(Table lines, Line removal
-                                        , List<Constraint> children, Table ratingsBeforeRemoval) {
-                                    return ratingEvent();
-                                }
-
-                                @Override
-                                public List<Domable> arguments() {
-                                    throw not_implemented_yet();
-                                }
-
-                                @Override
-                                public void addContext(Discoverable context) {
-                                    throw not_implemented_yet();
-                                }
-
-                                @Override
-                                public Collection<List<String>> paths() {
-                                    throw not_implemented_yet();
-                                }
-                            });
+                            .then(raterBasedOnLineGroup((lines, addition, removal, children) -> {
+                                final var ratingEvent = ratingEvent();
+                                final int requiredHours = addition
+                                        .map(e -> e.value(REQUIRED_HOURS))
+                                        .orElseGet(() -> removal.get().value(REQUIRED_HOURS));
+                                final var allocatedHours = lines.getLines()
+                                        .stream()
+                                        .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
+                                        .map(line -> line.value(ALLOCATED_HOURS))
+                                        .reduce(Integer::sum)
+                                        .map(sum -> sum + addition.map(a -> a.value(ALLOCATED_HOURS)).orElse(0))
+                                        .orElse(0);
+                                final var totalCost = distance(requiredHours, allocatedHours);
+                                final var lineCost = cost(totalCost / (lines.getLines().size() + 1));
+                                lines.getLines().stream()
+                                        .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
+                                        .forEach(e -> ratingEvent.updateRating_withReplacement(e
+                                                , localRating()
+                                                        .withPropagationTo(children)
+                                                        .withRating(lineCost)
+                                                        .withResultingGroupId
+                                                                (e.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
+                                addition.ifPresent(line -> ratingEvent.additions()
+                                        .put(line
+                                                , localRating()
+                                                        .withPropagationTo(children)
+                                                        .withRating(lineCost)
+                                                        .withResultingGroupId
+                                                                (line.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
+                                return ratingEvent;
+                            }));
                     return r;
                 }).toProblem();
     }
