@@ -3,6 +3,7 @@ package net.splitcells.gel.test.functionality;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.RegulatedLength;
+import net.splitcells.gel.solution.Solution;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -76,6 +77,10 @@ public class SchoolSchedulingTest {
                     r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;
                 }).toProblem();
+    }
+    
+    private Problem defineTeacherAllocationForCourses(Solution solution) {
+        throw not_implemented_yet();
     }
 
 }
