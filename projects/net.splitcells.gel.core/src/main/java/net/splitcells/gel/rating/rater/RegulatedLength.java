@@ -3,7 +3,7 @@ package net.splitcells.gel.rating.rater;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
 import static net.splitcells.dem.utils.MathUtils.distance;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 

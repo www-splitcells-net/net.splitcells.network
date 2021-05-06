@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static net.splitcells.dem.resource.host.Files.walk_recursively;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class SourceCodeCheck {
     public static void main(String... arg) {

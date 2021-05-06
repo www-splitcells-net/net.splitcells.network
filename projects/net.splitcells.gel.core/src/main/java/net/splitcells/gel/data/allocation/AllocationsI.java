@@ -3,7 +3,7 @@ package net.splitcells.gel.data.allocation;
 import static java.util.Objects.requireNonNull;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.concat;
 import static net.splitcells.dem.data.set.list.Lists.list;

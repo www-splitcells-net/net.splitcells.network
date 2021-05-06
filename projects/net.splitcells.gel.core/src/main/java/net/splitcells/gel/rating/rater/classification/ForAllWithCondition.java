@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;

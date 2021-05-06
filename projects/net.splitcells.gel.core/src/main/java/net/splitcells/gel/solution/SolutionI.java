@@ -20,7 +20,7 @@ import net.splitcells.gel.rating.structure.MetaRating;
 
 import java.util.function.Function;
 
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class SolutionI implements Solution {
 	private final Problem problem;

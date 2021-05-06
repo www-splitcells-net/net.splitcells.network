@@ -7,7 +7,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.order.Comparator.comparator_;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;

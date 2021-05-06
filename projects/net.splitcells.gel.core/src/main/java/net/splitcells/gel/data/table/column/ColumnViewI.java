@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class ColumnViewI<T> implements ColumnView<T> {
     public static <T> ColumnView<T> columnView(Column<T> kolonna) {

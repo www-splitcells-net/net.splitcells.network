@@ -7,7 +7,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.resource.host.Files.createDirectory;
 import static net.splitcells.dem.resource.host.Files.writeToFile;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;

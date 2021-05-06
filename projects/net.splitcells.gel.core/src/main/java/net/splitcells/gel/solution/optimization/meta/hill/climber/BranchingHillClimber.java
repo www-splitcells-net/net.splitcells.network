@@ -11,7 +11,7 @@ import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 @Deprecated
 public class BranchingHillClimber implements Optimization {

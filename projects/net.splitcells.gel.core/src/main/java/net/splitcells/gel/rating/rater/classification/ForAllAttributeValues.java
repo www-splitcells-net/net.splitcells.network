@@ -1,7 +1,7 @@
 package net.splitcells.gel.rating.rater.classification;
 
 import static java.util.stream.Collectors.toList;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;

@@ -1,7 +1,7 @@
 package net.splitcells.gel.rating.structure;
 
 import static java.util.Arrays.asList;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.map.Maps.map;

@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public final class Derivation implements Constraint {
 

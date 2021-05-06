@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.type.Cost.cost;

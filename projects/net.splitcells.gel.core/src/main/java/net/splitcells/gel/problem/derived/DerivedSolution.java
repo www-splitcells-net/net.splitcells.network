@@ -21,7 +21,7 @@ import org.w3c.dom.Node;
 import java.util.Set;
 import java.util.function.Function;
 
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.type.Derivation.derivation;
 
 

@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Maps.typeMapping;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
 import java.util.function.BiFunction;

@@ -21,7 +21,7 @@ import org.w3c.dom.Node;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.problem.derived.DerivedSolution.derivedSolution;
 
 public class ProblemI implements Problem {

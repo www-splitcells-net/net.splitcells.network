@@ -5,7 +5,7 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 public class Repeater implements Optimization {

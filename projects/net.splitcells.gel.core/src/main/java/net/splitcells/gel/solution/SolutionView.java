@@ -27,7 +27,7 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
 import static net.splitcells.dem.resource.host.Files.*;

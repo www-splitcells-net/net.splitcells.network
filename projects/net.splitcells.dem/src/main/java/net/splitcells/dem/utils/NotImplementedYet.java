@@ -6,7 +6,7 @@ public final class NotImplementedYet extends RuntimeException {
         return new NotImplementedYet();
     }
     
-    public static NotImplementedYet not_implemented_yet(String message) {
+    public static NotImplementedYet notImplementedYet(String message) {
         return new NotImplementedYet(message);
     }
 

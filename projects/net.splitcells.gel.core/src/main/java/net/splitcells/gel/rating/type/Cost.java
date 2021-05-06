@@ -3,7 +3,7 @@ package net.splitcells.gel.rating.type;
 import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Objects;
 import java.util.Optional;

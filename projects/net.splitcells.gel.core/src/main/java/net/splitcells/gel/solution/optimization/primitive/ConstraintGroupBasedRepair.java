@@ -26,7 +26,7 @@ import java.util.function.Predicate;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.*;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Pair.pair;

@@ -1,7 +1,7 @@
 package net.splitcells.gel.data.table.column;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Collection;
 import java.util.Iterator;
