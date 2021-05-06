@@ -1,6 +1,6 @@
 package net.splitcells.dem.data.set;
 
-import net.splitcells.dem.utils.Not_implemented_yet;
+import net.splitcells.dem.utils.NotImplementedYet;
 
 import java.util.Collection;
 import java.util.HashSet;

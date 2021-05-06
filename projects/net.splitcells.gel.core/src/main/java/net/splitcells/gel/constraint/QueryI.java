@@ -1,7 +1,7 @@
 package net.splitcells.gel.constraint;
 
 import static java.util.stream.IntStream.range;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -135,7 +135,7 @@ public class QueryI implements Query {
 
     @Override
     public Query then() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

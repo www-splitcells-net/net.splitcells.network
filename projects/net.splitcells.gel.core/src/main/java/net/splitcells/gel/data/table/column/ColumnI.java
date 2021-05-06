@@ -1,7 +1,7 @@
 package net.splitcells.gel.data.table.column;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -75,7 +75,7 @@ public class ColumnI<T> implements Column<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		throw not_implemented_yet();
+		throw notImplementedYet();
 	}
 
 	@Override
@@ -94,17 +94,17 @@ public class ColumnI<T> implements Column<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		throw not_implemented_yet();
+		throw notImplementedYet();
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
-		throw not_implemented_yet();
+		throw notImplementedYet();
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		throw not_implemented_yet();
+		throw notImplementedYet();
 	}
 
 	@Override
@@ -125,12 +125,12 @@ public class ColumnI<T> implements Column<T> {
 
 	@Override
 	public void add(int index, T element) {
-		throw not_implemented_yet();
+		throw notImplementedYet();
 	}
 
 	@Override
 	public T remove(int index) {
-		throw not_implemented_yet();
+		throw notImplementedYet();
 	}
 
 	@Override

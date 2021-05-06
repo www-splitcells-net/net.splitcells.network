@@ -32,7 +32,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.host.interaction.LogMessageI.logMessage;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 /**
  * IDEA Support recursive stacking.
@@ -199,7 +199,7 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
 
     @Override
     public <R extends SetWA<LogMessage<Node>>> R add(LogMessage<Node> value) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
 }

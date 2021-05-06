@@ -1,7 +1,7 @@
 package net.splitcells.gel.rating.structure;
 
 import static java.util.Arrays.asList;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -161,7 +161,7 @@ public class MetaRatingI implements MetaRating {
         if (arg instanceof Rating) {
             return compare_partially_to((Rating) arg).get().equals(EQUAL);
         }
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -180,7 +180,7 @@ public class MetaRatingI implements MetaRating {
             if (content().containsKey(Profit.class)) {
                 return this.getContentValue(Profit.class).compare_partially_to(arg);
             }
-            throw not_implemented_yet();
+            throw notImplementedYet();
         }
         if (arg instanceof Cost) {
             if (content().containsKey(Cost.class)) {
@@ -192,14 +192,14 @@ public class MetaRatingI implements MetaRating {
             if (content().containsKey(Optimality.class)) {
                 return this.getContentValue(Optimality.class).compare_partially_to(arg);
             }
-            throw not_implemented_yet();
+            throw notImplementedYet();
         }
         if (arg instanceof Optimality) {
             if (content().containsKey(Cost.class)) {
                 return this.getContentValue(Cost.class).compare_partially_to(arg);
             }
         }
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

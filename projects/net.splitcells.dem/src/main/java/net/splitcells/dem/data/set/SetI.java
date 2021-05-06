@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 public class SetI<T> implements Set<T> {
 
@@ -45,7 +45,7 @@ public class SetI<T> implements Set<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] t1s) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

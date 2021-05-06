@@ -1,6 +1,6 @@
 package net.splitcells.gel.solution;
 
-import net.splitcells.dem.utils.Not_implemented_yet;
+import net.splitcells.dem.utils.NotImplementedYet;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.solution.history.History;
@@ -20,7 +20,7 @@ import net.splitcells.gel.rating.structure.MetaRating;
 
 import java.util.function.Function;
 
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 public class SolutionI implements Solution {
 	private final Problem problem;
@@ -47,7 +47,7 @@ public class SolutionI implements Solution {
 	}
 
 	public boolean tolerable(final long error_threshold) {
-		throw new Not_implemented_yet();
+		throw new NotImplementedYet();
 	}
 
 	@Override

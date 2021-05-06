@@ -2,7 +2,7 @@ package net.splitcells.gel.rating.type;
 
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
@@ -56,7 +56,7 @@ public class Optimality implements Rating {
 
     @Override
     public Rating combine(Rating... addtionalRatings) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @SuppressWarnings("unchecked")

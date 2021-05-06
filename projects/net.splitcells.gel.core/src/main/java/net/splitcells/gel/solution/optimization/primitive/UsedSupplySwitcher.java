@@ -11,7 +11,7 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;

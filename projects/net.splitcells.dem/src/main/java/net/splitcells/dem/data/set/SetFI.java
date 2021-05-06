@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 public final class SetFI implements SetF {
 
@@ -25,7 +25,7 @@ public final class SetFI implements SetF {
 
 	@Override
 	public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
-		throw not_implemented_yet();
+		throw notImplementedYet();
 	}
 
 }

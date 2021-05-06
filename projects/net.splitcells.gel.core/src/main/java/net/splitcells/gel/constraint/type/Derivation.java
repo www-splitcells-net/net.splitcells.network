@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 public final class Derivation implements Constraint {
 
@@ -54,7 +54,7 @@ public final class Derivation implements Constraint {
 
     @Override
     public Perspective naturalArgumentation(GroupId group) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -65,7 +65,7 @@ public final class Derivation implements Constraint {
     @Override
     public Optional<Perspective> naturalArgumentation
             (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -75,47 +75,47 @@ public final class Derivation implements Constraint {
 
     @Override
     public void register_additions(GroupId group, Line line) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public void register_before_removal(GroupId group, Line line) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public List<Constraint> childrenView() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Set<Line> complying(GroupId group) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Set<Line> defying(GroupId group) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Line addResult(LocalRating localRating) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Allocations lineProcessing() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Element toDom() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Element toDom(Set<GroupId> groups) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -127,31 +127,31 @@ public final class Derivation implements Constraint {
 
     @Override
     public net.splitcells.dem.data.set.list.List<Domable> arguments() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Class<? extends Constraint> type() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Constraint withChildren(Constraint... constraints) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Constraint withChildren(Function<Query, Query> builder) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public void addContext(Discoverable context) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Collection<net.splitcells.dem.data.set.list.List<String>> paths() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 }

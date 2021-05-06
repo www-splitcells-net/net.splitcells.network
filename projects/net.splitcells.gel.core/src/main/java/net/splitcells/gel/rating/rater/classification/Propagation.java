@@ -2,7 +2,7 @@ package net.splitcells.gel.rating.rater.classification;
 
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.common.Language.PROPAGTION;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;

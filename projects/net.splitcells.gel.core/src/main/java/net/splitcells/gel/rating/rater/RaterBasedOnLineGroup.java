@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -55,17 +55,17 @@ public class RaterBasedOnLineGroup implements Rater {
 
     @Override
     public Collection<List<String>> paths() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public void addContext(Discoverable context) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public List<Domable> arguments() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

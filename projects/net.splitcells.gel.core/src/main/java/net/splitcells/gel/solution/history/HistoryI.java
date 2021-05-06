@@ -1,7 +1,7 @@
 package net.splitcells.gel.solution.history;
 
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
 import static net.splitcells.gel.common.Language.*;
@@ -146,7 +146,7 @@ public class HistoryI implements History {
 
     @Override
     public void remove(Line rinda) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -166,18 +166,18 @@ public class HistoryI implements History {
 
     @Override
     public Line addTranslated(List<?> vertības) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Line add(Line rinda) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public void remove(int indekss) {
         if (size() != indekss + 1) {
-            throw not_implemented_yet();
+            throw notImplementedYet();
         }
         allocations.remove(rawLinesView().get(indekss));
     }
@@ -189,7 +189,7 @@ public class HistoryI implements History {
 
     @Override
     public Line allocate(Line prasība, Line piedāvājums) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -279,7 +279,7 @@ public class HistoryI implements History {
 
     @Override
     public Node toDom() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

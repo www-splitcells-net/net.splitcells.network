@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 public class ColumnViewI<T> implements ColumnView<T> {
     public static <T> ColumnView<T> columnView(Column<T> kolonna) {
@@ -66,7 +66,7 @@ public class ColumnViewI<T> implements ColumnView<T> {
 
     @Override
     public List<T> subList(int i, int i1) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

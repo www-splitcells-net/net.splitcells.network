@@ -21,7 +21,7 @@ import org.w3c.dom.Node;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static net.splitcells.gel.problem.derived.DerivedSolution.derivedSolution;
 
 public class ProblemI implements Problem {
@@ -52,7 +52,7 @@ public class ProblemI implements Problem {
 
     @Override
     public Solution toSolution() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

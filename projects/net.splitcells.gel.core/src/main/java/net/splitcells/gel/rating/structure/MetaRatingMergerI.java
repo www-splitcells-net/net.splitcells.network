@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Maps.typeMapping;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -72,7 +72,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
 
     @Override
     public <R extends Rating> R _clone() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -82,7 +82,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

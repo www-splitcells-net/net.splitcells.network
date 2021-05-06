@@ -1,7 +1,7 @@
 package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.utils.ConstructorIllegal;
-import net.splitcells.dem.utils.Not_implemented_yet;
+import net.splitcells.dem.utils.NotImplementedYet;
 
 public class LineSF {
 
@@ -10,7 +10,7 @@ public class LineSF {
 	}
 
 	public static Line emptyLine(Table table) {
-		throw new Not_implemented_yet();
+		throw new NotImplementedYet();
 	}
 
 }

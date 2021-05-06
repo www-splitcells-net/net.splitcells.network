@@ -8,7 +8,7 @@ import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.resource.communication.interaction.Sui;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -44,7 +44,7 @@ public class PerspectiveXmlRenderer implements Sui<Perspective> {
 	public String prefix(NameSpace nameSpace) {
 		if (!nameSpace_to_prefix.containsKey(nameSpace)) {
 			if (nameSpace_to_prefix.containsValue(nameSpace.defaultPrefix())) {
-				throw not_implemented_yet();
+				throw notImplementedYet();
 			}
 			nameSpace_to_prefix.put(nameSpace, nameSpace.defaultPrefix());
 			new_nameSpace_to_prefix.put(nameSpace, nameSpace.defaultPrefix());
@@ -89,6 +89,6 @@ public class PerspectiveXmlRenderer implements Sui<Perspective> {
 
 	@Override
 	public void close() {
-		throw not_implemented_yet();
+		throw notImplementedYet();
 	}
 }

@@ -3,7 +3,7 @@ package net.splitcells.gel.rating.type;
 import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -96,11 +96,11 @@ public class Cost implements Rating {
             if (additionalRating instanceof Optimality) {
                 final Optimality additionalOptimality = (Optimality) additionalRating;
                 if (additionalOptimality.value() == 1 && value == 0) {
-                    throw not_implemented_yet();
+                    throw notImplementedYet();
                 }
             }
         }
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

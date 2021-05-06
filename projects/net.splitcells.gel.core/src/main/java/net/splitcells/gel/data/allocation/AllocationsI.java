@@ -3,7 +3,7 @@ package net.splitcells.gel.data.allocation;
 import static java.util.Objects.requireNonNull;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.concat;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -195,12 +195,12 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Line addTranslated(List<?> values) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Line add(Line line) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -347,7 +347,7 @@ public class AllocationsI implements Allocations {
 
     @Override
     public List<Line> rawLines() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

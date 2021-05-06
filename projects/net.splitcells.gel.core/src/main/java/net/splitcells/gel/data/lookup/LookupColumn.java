@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import net.splitcells.dem.utils.Not_implemented_yet;
+import net.splitcells.dem.utils.NotImplementedYet;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -39,12 +39,12 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public boolean isEmpty() {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public boolean contains(Object o) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
@@ -54,52 +54,52 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public Object[] toArray() {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public boolean add(T e) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public boolean remove(Object o) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public void clear() {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
@@ -116,37 +116,37 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public void add(int index, T value) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public T remove(int index) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public int indexOf(Object o) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public ListIterator<T> listIterator() {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public ListIterator<T> listIterator(int index) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     @Override
     public List<T> subList(int startIndex, int endIndex) {
-        throw new Not_implemented_yet();
+        throw new NotImplementedYet();
     }
 
     private void ensureInitializedLookup() {

@@ -1,6 +1,6 @@
 package net.splitcells.gel.rating.rater;
 
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
@@ -50,7 +50,7 @@ public interface Rater extends PubliclyTyped<Rater>
 
     @Deprecated
     default Node argumentation(GroupId group, Table allocations) {
-        throw not_implemented_yet(getClass().getName());
+        throw notImplementedYet(getClass().getName());
     }
 
     @Override
@@ -63,6 +63,6 @@ public interface Rater extends PubliclyTyped<Rater>
     }
     
     default String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
-        throw not_implemented_yet(getClass().getName());
+        throw notImplementedYet(getClass().getName());
     }
 }

@@ -21,7 +21,7 @@ import org.w3c.dom.Node;
 import java.util.Set;
 import java.util.function.Function;
 
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 import static net.splitcells.gel.constraint.type.Derivation.derivation;
 
 
@@ -74,17 +74,17 @@ public class DerivedSolution implements Solution {
 
     @Override
     public Solution toSolution() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public Solution asSolution() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
     public DerivedSolution derived(Function<MetaRating, MetaRating> derivation) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -214,7 +214,7 @@ public class DerivedSolution implements Solution {
 
     @Override
     public Node toDom() {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override

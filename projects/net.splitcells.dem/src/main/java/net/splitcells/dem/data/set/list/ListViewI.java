@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
 
-import static net.splitcells.dem.utils.Not_implemented_yet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
 
 public class ListViewI<T> implements ListView<T> {
     public static <R> ListView<R> listView(List<R> list) {
@@ -64,7 +64,7 @@ public class ListViewI<T> implements ListView<T> {
 
     @Override
     public List<T> subList(int i, int i1) {
-        throw not_implemented_yet();
+        throw notImplementedYet();
     }
 
     @Override
