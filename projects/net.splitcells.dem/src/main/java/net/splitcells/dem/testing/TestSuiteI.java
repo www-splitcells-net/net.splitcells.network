@@ -15,7 +15,7 @@ import static java.util.Arrays.asList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.ReportEntryKey.END_TIME;
 import static net.splitcells.dem.testing.ReportEntryKey.START_TIME;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * TODO Support multi threaded test execution.

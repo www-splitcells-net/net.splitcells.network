@@ -8,7 +8,7 @@ import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.resource.communication.interaction.Sui;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

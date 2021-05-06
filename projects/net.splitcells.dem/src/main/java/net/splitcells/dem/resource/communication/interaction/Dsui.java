@@ -32,7 +32,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.host.interaction.LogMessageI.logMessage;
-import static net.splitcells.dem.utils.NotImplementedYet.not_implemented_yet;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * IDEA Support recursive stacking.
