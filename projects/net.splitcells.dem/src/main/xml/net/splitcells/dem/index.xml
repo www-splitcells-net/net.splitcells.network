@@ -34,6 +34,9 @@
                     <toDo>Implement test injection and recursive test injection.</toDo>
                     <toDo>Create functional effect system.</toDo>
                     <idea>Create BNF grammar for XML and check files with it, instead of using XSD.</idea>
+                    <toDo>Create a mode, which makes dependency injection fast via a standard value.
+                        <toDo>Create a resource class, that marks a resource as supporting such functionality.</toDo>
+                    </toDo>
                 </priority>
             </queues>
             <service xl:href="compatibilty-and-portability.xml"/>
