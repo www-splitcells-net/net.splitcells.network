@@ -36,8 +36,8 @@ public class FileStructureTransformer {
         });
     }
 
-    public FileStructureTransformer(Path supportSystem, Path xslLibs, String transformerXsl) {
-        this.fileStructureRoot = supportSystem;
+    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl) {
+        this.fileStructureRoot = fileStructureRoot;
         try {
             transformer = new XslTransformer(
                     newInputStream(xslLibs.resolve(transformerXsl)), new PathBasedUriResolver(xslLibs));
