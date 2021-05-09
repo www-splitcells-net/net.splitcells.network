@@ -179,7 +179,7 @@
                     <s:name>Page's Errors</s:name>
                     <s:url>
                         <xsl:value-of
-                                select="concat('/net/splitcells/martins/avots/website/log/', ./s:path, '/', ./s:name, '.errors.txt')"/>
+                                select="concat(./s:path, '/', ./s:name, '.errors.txt')"/>
                     </s:url>
                 </s:option>
             </div>
