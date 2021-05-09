@@ -179,7 +179,7 @@
                     <s:name>Page's Errors</s:name>
                     <s:url>
                         <xsl:value-of
-                                select="concat(./s:path, '/', ./s:name, '.errors.txt')"/>
+                                select="concat(./s:name, '.errors.txt')"/>
                     </s:url>
                 </s:option>
             </div>
@@ -505,10 +505,12 @@
                             Search
                         </a>
                         <h3 style="padding-left: .25em;">Instances</h3>
-                        <a class="net-splitcells-button net-splitcells-component-priority-3" href="http://splitcells.net">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3"
+                           href="http://splitcells.net">
                             Public Site
                         </a>
-                        <a class="net-splitcells-button net-splitcells-component-priority-3" href="https://localhost:8443">
+                        <a class="net-splitcells-button net-splitcells-component-priority-3"
+                           href="https://localhost:8443">
                             Local Public Site
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
