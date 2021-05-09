@@ -9,12 +9,13 @@ import java.nio.file.Paths;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.website.ValidatorViaSchema.validatorViaSchema;
 
 public class Projects {
     public static ProjectsRenderer projectsRenderer() {
         final var profile = "public";
         final var projectsRepository = Paths.get("../");
-        final var validator = ValidatorViaSchema.validatorViaSchema(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
+        final var validator = validatorViaSchema(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
         return projectsRenderer(projectsRepository
                 , profile
                 , fallbackProjectRenderer(profile, projectsRepository, validator)
