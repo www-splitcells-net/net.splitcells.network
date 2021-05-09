@@ -101,6 +101,10 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
         return append(logMessage(domable, NO_CONTEXT, logLevel));
     }
 
+    public <R extends ListWA<LogMessage<Node>>> R append(Domable domable, LogLevel logLevel) {
+        return append(logMessage(domable.toDom(), NO_CONTEXT, logLevel));
+    }
+
     /**
      * There is no real usage for the optionality of context.
      *

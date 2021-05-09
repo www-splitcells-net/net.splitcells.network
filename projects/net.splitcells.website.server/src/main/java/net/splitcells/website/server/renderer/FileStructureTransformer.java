@@ -1,6 +1,10 @@
 package net.splitcells.website.server.renderer;
 
+import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.lang.perspective.PerspectiveI;
 import net.splitcells.dem.resource.Paths;
+import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.website.Validator;
 import net.splitcells.website.ValidatorViaSchema;
 import net.splitcells.website.server.translation.to.html.PathBasedUriResolver;
@@ -12,6 +16,10 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static java.nio.file.Files.newInputStream;
+import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.utils.CommonFunctions.appendToFile;
 
 public class FileStructureTransformer {
 
@@ -19,6 +27,7 @@ public class FileStructureTransformer {
     private final XslTransformer transformer;
     private final Path loggingProject = Paths.path(System.getProperty("user.home")
             + "/connections/tmp.storage/dem");
+    private final Validator validator;
 
     @Deprecated
     public static void main(String... args) throws IOException {
@@ -42,6 +51,7 @@ public class FileStructureTransformer {
             e.printStackTrace();
             throw new RuntimeException();
         }
+        this.validator = validator;
     }
 
     public String transform(List<String> path) {
@@ -52,8 +62,10 @@ public class FileStructureTransformer {
         final var t = loggingProject.resolve("net/splitcells/martins/avots/website/log")
                 .resolve(fileStructureRoot.relativize(file).getParent());
         Paths.generateFolderPath(t);
-        // TODO
-        // validator.validate(file).ifPresent(error -> CommonFunctions.appendToFile(t.resolve(file.getFileName() + ".errors.txt"), error));
+        validator.validate(file).ifPresent(error -> {
+            appendToFile(t.resolve(file.getFileName() + ".errors.txt"), error);
+            domsole().append(perspective(error, STRING), LogLevel.ERROR);
+        });
         return new String(transformer.transform(file));
     }
 
