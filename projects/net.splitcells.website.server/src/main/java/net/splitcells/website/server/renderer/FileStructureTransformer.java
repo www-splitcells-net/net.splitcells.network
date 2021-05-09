@@ -30,6 +30,7 @@ public class FileStructureTransformer {
             + "/connections/tmp.storage/dem");
     private final Validator validator;
 
+    /* TODO REMOVE by 2022
     @Deprecated
     public static void main(String... args) throws IOException {
         final var articles = java.nio.file.Paths.get(System.getProperty("user.home")
@@ -41,7 +42,7 @@ public class FileStructureTransformer {
             generateFolderPath(folder);
             Paths.copyFileFrom(a, folder.resolve(a.getFileName().toString().substring(11)));
         });
-    }
+    }*/
 
     public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, Validator validator) {
         this.fileStructureRoot = fileStructureRoot;
