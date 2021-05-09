@@ -18,6 +18,7 @@ import java.util.List;
 import static java.nio.file.Files.newInputStream;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.Paths.generateFolderPath;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.utils.CommonFunctions.appendToFile;
 
@@ -37,7 +38,7 @@ public class FileStructureTransformer {
             final var folder = articles.resolve(a.getFileName().toString().split("-")[0])
                     .resolve(a.getFileName().toString().split("-")[1])
                     .resolve(a.getFileName().toString().split("-")[2]);
-            Paths.generateFolderPath(folder);
+            generateFolderPath(folder);
             Paths.copyFileFrom(a, folder.resolve(a.getFileName().toString().substring(11)));
         });
     }
@@ -59,11 +60,10 @@ public class FileStructureTransformer {
     }
 
     public String transform(Path file) {
-        final var t = loggingProject.resolve("net/splitcells/martins/avots/website/log")
-                .resolve(fileStructureRoot.relativize(file).getParent());
-        Paths.generateFolderPath(t);
         validator.validate(file).ifPresent(error -> {
-            appendToFile(t.resolve(file.getFileName() + ".errors.txt"), error);
+            final var loggingFolder = loggingProject.resolve(fileStructureRoot.relativize(file).getParent());
+            generateFolderPath(loggingFolder);
+            appendToFile(loggingFolder.resolve(file.getFileName() + ".errors.txt"), error);
             domsole().append(perspective(error, STRING), LogLevel.ERROR);
         });
         return new String(transformer.transform(file));
