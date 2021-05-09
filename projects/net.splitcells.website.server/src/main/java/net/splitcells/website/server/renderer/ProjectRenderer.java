@@ -7,12 +7,13 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.Files;
+import net.splitcells.website.Validator;
+import net.splitcells.website.ValidatorViaSchema;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -27,7 +28,6 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.dem.resource.host.Files.is_file;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**
@@ -47,12 +47,13 @@ public class ProjectRenderer {
     private final boolean flatRepository;
     private final String profile;
     private final boolean typedFolder;
+    private final Validator validator;
 
-    public ProjectRenderer(String renderer, Path project, Path xslLibs, Path resources, String resourceRootPath) {
-        this(renderer, project, xslLibs, resources, resourceRootPath, true, false);
+    public ProjectRenderer(String renderer, Path project, Path xslLibs, Path resources, String resourceRootPath, Validator validator) {
+        this(renderer, project, xslLibs, resources, resourceRootPath, true, false, validator);
     }
 
-    public ProjectRenderer(String renderer, Path project, Path xslLibs, Path resources, String resourceRootPath, boolean typedFolder, boolean flatRepository) {
+    public ProjectRenderer(String renderer, Path project, Path xslLibs, Path resources, String resourceRootPath, boolean typedFolder, boolean flatRepository, Validator validator) {
         this.typedFolder = typedFolder;
         this.profile = renderer;
         this.project = project;
@@ -60,6 +61,7 @@ public class ProjectRenderer {
         this.resources = resources;
         this.resourceRootPath = resourceRootPath;
         this.flatRepository = flatRepository;
+        this.validator = validator;
     }
 
     /**
@@ -68,7 +70,7 @@ public class ProjectRenderer {
      * IDEA Create mode where the renderer ist cached.
      */
     private FileStructureTransformer renderer() {
-        return new FileStructureTransformer(project.resolve("xml"), xslLibs, "main." + profile + ".xsl");
+        return new FileStructureTransformer(project.resolve("xml"), xslLibs, "main." + profile + ".xsl", validator);
     }
 
     /**

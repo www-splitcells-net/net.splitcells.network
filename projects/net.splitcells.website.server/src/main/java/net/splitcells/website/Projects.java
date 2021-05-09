@@ -1,5 +1,6 @@
 package net.splitcells.website;
 
+import io.vavr.control.Validation;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.website.server.renderer.ProjectRenderer;
@@ -16,58 +17,67 @@ public class Projects {
     public static ProjectsRenderer projectsRenderer() {
         final var profile = "public";
         final var projectsRepository = Paths.get("../");
+        final var validator = ValidatorViaSchema.validator(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
         return projectsRenderer(projectsRepository
                 , profile
-                , fallbackProjectRenderer(profile, projectsRepository)
-                , list());
+                , fallbackProjectRenderer(profile, projectsRepository, validator)
+                , list()
+                , validator);
     }
 
     public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
             , ProjectRenderer fallbackProjectRenderer
-            , List<ProjectRenderer> additionalProjects) {
+            , List<ProjectRenderer> additionalProjects
+            , Validator validator) {
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
-                , additionalProjects.withAppended(projectRenderers(profile, projectRepository)));
+                , additionalProjects.withAppended(projectRenderers(profile, projectRepository, validator)));
     }
 
-    public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories) {
+    public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories, Validator validator) {
         return new ProjectRenderer(profile
                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/")
                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/content")
-                , "/");
+                , "/"
+                , validator);
     }
 
-    public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories) {
+    public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories, Validator validator) {
         return list(new ProjectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.dem/src/main/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
-                                , "/net/splitcells/dem")
+                                , "/net/splitcells/dem"
+                                , validator)
                 , new ProjectRenderer
                         (profile
                                 , projectRepositories.resolve("../src/main/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                , "/net/splitcells/network")
+                                , "/net/splitcells/network"
+                                , validator)
                 , new ProjectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.gel.doc/src/main/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                , "/net/splitcells/gel")
+                                , "/net/splitcells/gel"
+                                , validator)
                 , new ProjectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.system/src/main/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                , "/net/splitcells")
+                                , "/net/splitcells"
+                                , validator)
                 , new ProjectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
-                                , "/net/splitcells/website")
+                                , "/net/splitcells/website"
+                                , validator)
         );
     }
 }

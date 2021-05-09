@@ -2,6 +2,7 @@ package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.website.Validator;
+import net.splitcells.website.ValidatorViaSchema;
 import net.splitcells.website.server.translation.to.html.PathBasedUriResolver;
 import net.splitcells.website.server.translation.to.html.XslTransformer;
 
@@ -13,10 +14,6 @@ import java.util.List;
 import static java.nio.file.Files.newInputStream;
 
 public class FileStructureTransformer {
-    /**
-     * This is cached, because it takes a lot of time to reinitialize it.
-     */
-    private static final Validator validator = Validator.validator(Paths.path("src/main/xsd/den.xsd"));
 
     private final Path fileStructureRoot;
     private final XslTransformer transformer;
@@ -36,7 +33,7 @@ public class FileStructureTransformer {
         });
     }
 
-    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl) {
+    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, Validator validator) {
         this.fileStructureRoot = fileStructureRoot;
         try {
             transformer = new XslTransformer(
