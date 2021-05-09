@@ -15,7 +15,7 @@ import java.util.Optional;
 import static java.util.Arrays.asList;
 
 public class ValidatorViaSchema implements Validator {
-    public static ValidatorViaSchema validator(Path schemaPath) {
+    public static ValidatorViaSchema validatorViaSchema(Path schemaPath) {
         return new ValidatorViaSchema(schemaPath);
     }
 

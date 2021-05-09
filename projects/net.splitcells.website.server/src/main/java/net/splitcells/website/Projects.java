@@ -1,8 +1,6 @@
 package net.splitcells.website;
 
-import io.vavr.control.Validation;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.ProjectsRenderer;
 
@@ -11,13 +9,12 @@ import java.nio.file.Paths;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.website.server.renderer.ProjectsRenderer.projectsRenderer;
 
 public class Projects {
     public static ProjectsRenderer projectsRenderer() {
         final var profile = "public";
         final var projectsRepository = Paths.get("../");
-        final var validator = ValidatorViaSchema.validator(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
+        final var validator = ValidatorViaSchema.validatorViaSchema(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
         return projectsRenderer(projectsRepository
                 , profile
                 , fallbackProjectRenderer(profile, projectsRepository, validator)
