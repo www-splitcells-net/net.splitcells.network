@@ -10,7 +10,31 @@ source_unit
     ;
 class_definition
     : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
-        Whitespace? Scope_start Whitespace? javadoc? Whitespace? Scope_end
+        Whitespace? Scope_start Whitespace? class_member_value_declaration? Whitespace? Scope_end
+    ;
+class_member_value_declaration
+    : javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
+        type_declaration? Whitespace? Name Whitespace? Equals Whitespace? statement?
+    ;
+statement
+    : Keyword_new Whitespace? type_declaration call_arguments Statement_terminator
+    ;
+call_arguments
+    : Brace_round_open Name? Brace_round_closed
+    ;
+type_declaration
+    : Name type_argument
+    ;
+type_argument
+    : Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
+    ;
+type_argument_content
+    : type_argument Whitespace? type_argument_content_next?
+    | Name Whitespace? type_argument_content_next?
+    ;
+type_argument_content_next
+    : Comma Whitespace? type_argument Whitespace? type_argument_content_next?
+    | Comma Whitespace? Name Whitespace? type_argument_content_next?
     ;
 javadoc
     : Javadoc_start javadoc_content* Javadoc_end Whitespace*
@@ -25,6 +49,11 @@ javadoc_content
     | Javadoc_start
     | Name
     | Javadoc_content
+    | Comma
+    | Less_than
+    | Bigger_than
+    | Brace_round_open
+    | Brace_round_closed
     ;
 import_declaration
     : import_static_declaration
