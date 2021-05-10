@@ -20,7 +20,9 @@ Get structured documentation. 📚
 
 Contribute to projects. ✍
 
-Donate to the [developer](https://www.patreon.com/splitcells_net). 💰
+Support [contributors](https://www.patreon.com/splitcells_net). 💰
+
+Spread the word! 📣
 
 ## Description
 
