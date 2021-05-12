@@ -20,10 +20,8 @@
                         </toDo>
                     </idea>
                 </toDo>
-                <toDo>Create a translation tool to a target language.
-                    Consider it a success, when the result compiles and represents the structure of the source code.
-                    The concrete functionality in the resulting program is not of concern.
-                </toDo>
+                <toDo>Create a translator that translates the program to Dlang,
+                        because Dlang is very similar to Java und allows functional side effect free programming.</toDo>
                 <toDo>Create a way to automatically generate the skeleton of environment integration code.</toDo>
                 <toDo>Translate Dem to a Lisp langauge.</toDo>
                 <toDo>Translate an actual project to a Lisp langauge.</toDo>
@@ -55,18 +53,21 @@
             </toDo>
             <toDo>Ensure that the code is easily translatable to other languages with minimal effort and manual work.
                 <idea>Support different paradigms.
-                    <toDo>Object-Orientation mainly provides polymorphic tree transformations.</toDo>
+                    <toDo>Object-Orientation mainly provides polymorphic tree transformations.
+                        Dlang seems to be a good choice.</toDo>
                     <todo>Support a very simple and basic version of functional programming
                         with an simple statically typed object system.
                         The object system, which is kind of an OOP-System only provides state interfaces.
                         The functions define the state transitions of the objects.
                     </todo>
                 </idea>
-                <toDo>Always translate code to other language automatically and test it, in order to be sure
-                    that the code is portable. A good target would be a minimal language.
-                    It may be easier to start with a dynamically typed language.
+                <objective>Always translate code to other language automatically and test it, in order to be sure
+                    that the code is portable.
+                    <toDo>Create a translator which translate other projects to a different language.
+                        The translator only has to translate projects complying with this project (compatibility and portability).
+                    </toDo>
                     <result>This would allow to check additional properties of the program before running it.</result>
-                </toDo>
+                </objective>
             </toDo>
         </solution>
     </objective>
