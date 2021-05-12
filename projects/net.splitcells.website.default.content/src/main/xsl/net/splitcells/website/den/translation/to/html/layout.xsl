@@ -387,7 +387,7 @@
                                 </a>
                                 <a class="net-splitcells-button" href="#">nos</a>
                             </div>
-                            <div class="structural_guide" style="height: .25em;"></div>
+                            <div class="structural_guide"></div>
                             <div class="splitcells-net-window-menu-line-2">
                                 <input type="text" class="net-splitcells-search-bar"
                                        placeholder="search (TODO)"></input>

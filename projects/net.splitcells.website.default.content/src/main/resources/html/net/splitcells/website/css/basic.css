@@ -78,6 +78,7 @@ ul {
 .structural_guide {
 	/* For overlays use 2000000000 <= index < 2147483647. */
 	z-index: 1000000000;
+	min-height: .25em;
 	}
 .Button {
 	display: inline-block;
