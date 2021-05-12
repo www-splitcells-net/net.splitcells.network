@@ -16,6 +16,9 @@ footer {
 .net-splitcells-website-column-background-1 {
     order: 1;
 }
+.menu h3 {
+    padding-left: .25em;
+}
 .column_0 {
     display: flex;
     flex-direction: row;

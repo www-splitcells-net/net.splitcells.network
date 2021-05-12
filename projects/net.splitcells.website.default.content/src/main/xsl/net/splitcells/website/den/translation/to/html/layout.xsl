@@ -428,7 +428,7 @@
                             </div>
                             <br/>
                         </div>
-                        <h3 style="padding-left: .25em;">Sections</h3>
+                        <h3>Sections</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
@@ -504,7 +504,7 @@
                             </xsl:attribute>
                             Search
                         </a>
-                        <h3 style="padding-left: .25em;">Instances</h3>
+                        <h3>Instances</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3"
                            href="http://splitcells.net">
                             Public Site
@@ -516,7 +516,7 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
                            href="https://localhost:8444">Local Private Site
                         </a>
-                        <h3 style="padding-left: .25em;">Mārtiņš Avots's Support System</h3>
+                        <h3>Mārtiņš Avots's Support System</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
                            href="https://localhost:8444/net/splitcells/martins/avots/support/system/index.html">
                             Root
@@ -526,7 +526,7 @@
                             Discovery
                         </a>
                         <div style="display: none; visibility: hidden">
-                            <h3 style="padding-left: .25em;">Additional Functions</h3>
+                            <h3>Additional Functions</h3>
                             <a class="net-splitcells-button net-splitcells-component-priority-3">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="s:root-relative-url('/feed.atom.xml')"/>
@@ -540,7 +540,7 @@
                                 Rss feed
                             </a>
                         </div>
-                        <h3 style="padding-left: .25em;">Layouts</h3>
+                        <h3>Layouts</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3"
                            href="/net/splitcells/martins/avots/website/experimental/browser.layout.html">
                             Experimental Browser
@@ -549,7 +549,7 @@
                            href="/net/splitcells/martins/avots/website/experimental/desktop.layout.html">
                             Experimental Desktop
                         </a>
-                        <h3 style="padding-left: .25em;">Interesting Third Party Sites</h3>
+                        <h3>Interesting Third Party Sites</h3>
                         <div class="advertise-one-of">
                             <xsl:for-each select="$advertisement-object-social/rdf:RDF/rdf:Description">
                                 <a class="linkButton">
@@ -587,7 +587,7 @@
                                 </a>
                             </xsl:for-each>
                         </div>
-                        <h4 style="padding-left: .25em;">This Site Uses Amongst Others</h4>
+                        <h3>This Site Uses Amongst Others</h3>
                         <a class="linkButton" href="https://alexgorbatchev.com/SyntaxHighlighter/">
                             <div class="net-splitcells-button net-splitcells-component-priority-3">
                                 SyntaxHighlighter
@@ -597,7 +597,7 @@
                                 </div>
                             </div>
                         </a>
-                        <h3 style="padding-left: .25em;">Metadata About This Document</h3>
+                        <h3>Metadata About This Document</h3>
                         <xsl:if test="./s:license">
                             <xsl:if test="./s:license/node() = 'standard'">
                                 <a class="linkButton" href="/license-CC-BY-SA-4.txt">
@@ -630,7 +630,7 @@
                                     select="concat(./s:publication_date/@year, '.', ./s:publication_date/@month, '.', ./s:publication_date/@day_of_month)"/>
                         </div>
                         <xsl:if test="./s:arbitrary_publication_date">
-                            <h3 style="padding-left: .25em;">Notes</h3>
+                            <h3>Notes</h3>
                             <div class="MainButtonDescription Standard_p3 Text">This document has an
                                 arbitrary creation date.
                             </div>
@@ -644,7 +644,7 @@
                             </div>
                         </a>
                         <div style="flex: auto;"></div>
-                        <h3 style="padding-left: .25em;">Footer Functions</h3>
+                        <h3>Footer Functions</h3>
                         <a class="linkButton" style="margin-bottom: .5em;" href="#topElement">
                             <div class="MainButton MainButton_S">back to top</div>
                         </a>
