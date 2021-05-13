@@ -8,10 +8,10 @@ options {
 }
 call_arguments
     : Brace_round_open Brace_round_closed
-    | Brace_round_open Whitespace? expression Whitespace? call_arguments_next* Whitespace? Brace_round_closed
+    | Brace_round_open Whitespace? reference Whitespace? call_arguments_next* Whitespace? Brace_round_closed
     ;
 call_arguments_next
-    : Comma Whitespace expression
+    : Comma Whitespace reference
     ;
 class_definition
     : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
@@ -73,6 +73,10 @@ package_declaration
 package_name
     : Name
     | package_name Dot Name
+    ;
+reference
+    : expression
+    | Name
     ;
 statement
     : Keyword_return? Whitespace expression Statement_terminator
