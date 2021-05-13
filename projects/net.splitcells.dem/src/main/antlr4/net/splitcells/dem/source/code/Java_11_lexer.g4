@@ -20,6 +20,7 @@ Keyword_static: 'static';
 Javadoc_start: '/**';
 Javadoc_end: '*/';
 Less_than: '<';
+Minus: '-';
 Scope_start: '{';
 Scope_end: '}';
 Statement_terminator: ';';

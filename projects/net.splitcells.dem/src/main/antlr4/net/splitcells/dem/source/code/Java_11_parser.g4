@@ -77,6 +77,8 @@ package_name
 reference
     : expression
     | Name
+    | Name Whitespace? '->' Whitespace? reference
+    | Name Whitespace? '->' Whitespace? Scope_start Whitespace? statement* Whitespace? Scope_end
     ;
 statement
     : Keyword_return? Whitespace expression Statement_terminator
