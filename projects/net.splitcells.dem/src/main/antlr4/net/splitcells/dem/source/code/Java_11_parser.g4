@@ -34,10 +34,10 @@ import_declaration
     | import_type_declaration
     ;
 import_static_declaration
-    : Keyword_import Whitespace Keyword_static Whitespace type_name Statement_terminator Whitespace*
+    : Keyword_import Whitespace Keyword_static Whitespace type_path Statement_terminator Whitespace*
     ;
 import_type_declaration
-    : Keyword_import Whitespace type_name Statement_terminator Whitespace*
+    : Keyword_import Whitespace type_path Statement_terminator Whitespace*
     ;
 javadoc
     : Javadoc_start javadoc_content* Javadoc_end Whitespace*
@@ -89,9 +89,9 @@ type_argument_content_next
     : Comma Whitespace? type_argument Whitespace? type_argument_content_next?
     | Comma Whitespace? Name Whitespace? type_argument_content_next?
     ;
-type_name
+type_path
     : Name
-    | type_name Object_accessor Name
+    | type_path Object_accessor Name
     ;
 variable_declaration
     : type_declaration Whitespace Name
