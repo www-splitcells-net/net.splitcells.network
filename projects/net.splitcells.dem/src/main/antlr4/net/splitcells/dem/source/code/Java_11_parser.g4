@@ -43,7 +43,7 @@ javadoc
     : Javadoc_start javadoc_content* Javadoc_end Whitespace*
     ;
 javadoc_content
-    : Object_accessor
+    : Dot
     | Statement_terminator
     | Whitespace
     | Keyword_package
@@ -67,7 +67,7 @@ package_declaration
     ;
 package_name
     : Name
-    | package_name Object_accessor Name
+    | package_name Dot Name
     ;
 statement
     : Keyword_new Whitespace? type_declaration call_arguments Statement_terminator
@@ -91,7 +91,7 @@ type_argument_content_next
     ;
 type_path
     : Name
-    | type_path Object_accessor Name
+    | type_path Dot Name
     ;
 variable_declaration
     : type_declaration Whitespace Name
