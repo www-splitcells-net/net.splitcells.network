@@ -76,7 +76,7 @@ source_unit
     : package_declaration import_declaration* class_definition EOF
     ;
 type_declaration
-    : Name type_argument
+    : Name type_argument?
     ;
 type_argument
     : Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
