@@ -10,7 +10,11 @@ call_arguments
     ;
 class_definition
     : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
-        Whitespace? Scope_start Whitespace? class_member_value_declaration? Whitespace? Scope_end
+        Whitespace? Scope_start Whitespace? class_member* Whitespace? Scope_end
+    ;
+class_member
+    : class_member_method_definition
+    | class_member_value_declaration
     ;
 class_member_method_definition
     : javadoc? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
