@@ -15,6 +15,7 @@ Keyword_package: 'package';
 Keyword_private: 'private';
 Keyword_public: 'public';
 Keyword_new: 'new';
+Keyword_return: 'return';
 Keyword_static: 'static';
 Javadoc_start: '/**';
 Javadoc_end: '*/';
