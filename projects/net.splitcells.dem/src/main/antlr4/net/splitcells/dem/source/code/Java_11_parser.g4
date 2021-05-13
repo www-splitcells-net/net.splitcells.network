@@ -12,6 +12,10 @@ class_definition
     : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
         Whitespace? Scope_start Whitespace? class_member_value_declaration? Whitespace? Scope_end
     ;
+class_member_method_definition
+    : javadoc? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
+        Name Brace_round_open Brace_round_closed
+    ;
 class_member_value_declaration
     : javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
         type_declaration? Whitespace? Name Whitespace? Equals Whitespace? statement?
@@ -75,4 +79,8 @@ type_name
 package_name
     : Name
     | package_name Object_accessor Name
+    ;
+modifier_visibility
+    : Keyword_public
+    | Keyword_private
     ;
