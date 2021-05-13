@@ -31,7 +31,7 @@ class_member_value_declaration
     ;
 expression
     : Keyword_new Whitespace? type_declaration call_arguments
-    | Whitespace? type_declaration call_arguments
+    | Name Whitespace? call_arguments
     ;
 import_declaration
     : import_static_declaration
