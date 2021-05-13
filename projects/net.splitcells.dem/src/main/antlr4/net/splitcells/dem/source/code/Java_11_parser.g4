@@ -8,7 +8,7 @@ options {
 }
 call_arguments
     : Brace_round_open Brace_round_closed
-    | Brace_round_open Whitespace? type_declaration Name? Whitespace? call_arguments_next* Whitespace? Brace_round_closed
+    | Brace_round_open Whitespace? type_declaration Whitespace Name? Whitespace? call_arguments_next* Whitespace? Brace_round_closed
     ;
 call_arguments_next
     : Comma Whitespace type_declaration Whitespace Name?
