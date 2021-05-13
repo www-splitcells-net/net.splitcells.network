@@ -8,10 +8,10 @@ options {
 }
 call_arguments
     : Brace_round_open Brace_round_closed
-    | Brace_round_open Whitespace? variable_declaration Whitespace? call_arguments_next* Whitespace? Brace_round_closed
+    | Brace_round_open Whitespace? expression Whitespace? call_arguments_next* Whitespace? Brace_round_closed
     ;
 call_arguments_next
-    : Comma Whitespace variable_declaration
+    : Comma Whitespace expression
     ;
 class_definition
     : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
@@ -32,6 +32,7 @@ class_member_value_declaration
 expression
     : Keyword_new Whitespace? type_declaration call_arguments
     | Name Whitespace? call_arguments
+    | variable_declaration
     ;
 import_declaration
     : import_static_declaration
