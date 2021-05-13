@@ -7,7 +7,11 @@ options {
     tokenVocab=Java_11_lexer;
 }
 call_arguments
-    : Brace_round_open Name? Brace_round_closed
+    : Brace_round_open Brace_round_closed
+    | Brace_round_open type_declaration Name? call_arguments_next* Brace_round_closed
+    ;
+call_arguments_next
+    : Comma type_declaration Name?
     ;
 class_definition
     : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
