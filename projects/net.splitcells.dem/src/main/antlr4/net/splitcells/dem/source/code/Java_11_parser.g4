@@ -19,7 +19,7 @@ class_member
     ;
 class_member_method_definition
     : javadoc? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
-        Name Brace_round_open Brace_round_closed
+        Name Whitespace? call_arguments
     ;
 class_member_value_declaration
     : javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
