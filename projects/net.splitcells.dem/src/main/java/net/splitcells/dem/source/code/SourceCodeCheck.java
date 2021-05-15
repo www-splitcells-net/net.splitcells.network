@@ -1,6 +1,7 @@
 package net.splitcells.dem.source.code;
 
 import net.splitcells.dem.resource.host.Files;
+import net.splitcells.dem.source.code.antlr.Java_11_parserLexer;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -24,9 +25,10 @@ public class SourceCodeCheck {
     private static void check_Java_source_code(Path file) {
         try {
             System.out.println("Checking file: " + file);
-            final var lexer = new net.splitcells.dem.source.code.antlr.Java_11_lexer
+            final var lexer = new net.splitcells.dem.source.code.antlr.Java_11_parserLexer
                     (CharStreams.fromFileName(file.toString()));
-            final var parser = new net.splitcells.dem.source.code.antlr.Java_11_parser(new CommonTokenStream(lexer));
+            final var parser = new net.splitcells.dem.source.code.antlr.Java_11_parserParser
+                    (new CommonTokenStream(lexer));
             // TODO REMOVE this, when this feature is implemented.
             //parser.addErrorListener(new DiagnosticErrorListener());
             //parser.setErrorHandler(new BailErrorStrategy());

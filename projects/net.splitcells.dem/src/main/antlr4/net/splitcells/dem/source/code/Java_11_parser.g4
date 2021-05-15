@@ -1,4 +1,4 @@
-parser grammar Java_11_parser;
+grammar Java_11_parser;
 /* source_unit is the root rule. */
 @header {
     package net.splitcells.dem.source.code.antlr;
