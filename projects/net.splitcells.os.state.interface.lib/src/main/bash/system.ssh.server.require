@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+echo Check if SSH server runs and only allows authentication without password by connecting to the SSH server.
+echo There should be no prompt for a password during this test.
+	loginLog=$(ssh -o PasswordAuthentication=yes -o PubkeyAuthentication=no -vvv "$USER@localhost" exit 2>&1 >/dev/null)
+	if [ "0" -eq "$?" ]; then
+		echo.error "Login with password is enabled, but should be disabled."
+		echo.error 'Set "PubkeyAuthentication" and "PasswordAuthentication" to "no" and restart ssh service.'
+		exit 1
+	fi
+	if [ "$loginlog" == *'No more authentication methods to try.'* ]; then
+		echo.error 'Login with password is enabled, but should be disabled.'
+		echo.error 'If ssh service configured via "/etc/ssh/sshd_config":'
+		exit 1
+	fi
+echo SSH server test completed.
