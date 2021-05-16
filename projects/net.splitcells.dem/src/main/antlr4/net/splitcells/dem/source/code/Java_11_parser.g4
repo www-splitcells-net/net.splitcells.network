@@ -42,13 +42,14 @@ import_type_declaration
     : 'import' Whitespace type_path ';' Whitespace*
     ;
 javadoc
-    : Javadoc_start javadoc_content* Javadoc_end Whitespace*
+    : '/**' javadoc_content* '*/' Whitespace*
     ;
 javadoc_content
-    :Javadoc_content_character
+    : Javadoc_content_character
     ;
 fragment Javadoc_content_character
-    :[\n\r\t @*{}/a-zA-Z]
+    : [\n\r\t @*{}/a-zA-Z]
+    | Whitespace
     ;
 modifier_visibility
     : 'public'
@@ -74,7 +75,7 @@ statement
     : 'return'? Whitespace expression ';'
     ;
 source_unit
-    : package_declaration import_declaration* class_definition EOF
+    : package_declaration import_declaration* Whitespace? class_definition EOF
     ;
 type_declaration
     : Name type_argument?
