@@ -71,6 +71,7 @@ reference
     ;
 statement
     : Keyword_return? Whitespace expression Semicolon
+    | Whitespace? Line_comment Whitespace?
     ;
 source_unit
     : package_declaration import_declaration* Whitespace? class_definition EOF
