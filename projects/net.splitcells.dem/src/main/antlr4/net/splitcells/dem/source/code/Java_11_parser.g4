@@ -3,34 +3,31 @@ grammar Java_11_parser;
 @header {
     package net.splitcells.dem.source.code.antlr;
 }
-options {
-    tokenVocab=Java_11_lexer;
-}
 call_arguments
-    : Brace_round_open Brace_round_closed
-    | Brace_round_open Whitespace? reference Whitespace? call_arguments_next* Whitespace? Brace_round_closed
+    : '()'
+    | '(' Whitespace? reference Whitespace? call_arguments_next* Whitespace? ')'
     ;
 call_arguments_next
-    : Comma Whitespace reference
+    : ',' Whitespace reference
     ;
 class_definition
-    : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
-        Whitespace? Scope_start Whitespace? class_member* Whitespace? Scope_end
+    : javadoc? Whitespace? 'public'? Whitespace? 'final'? Whitespace? 'class'? Whitespace? Name
+        Whitespace? '{' Whitespace? class_member* Whitespace? '}'
     ;
 class_member
     : class_member_method_definition
     | class_member_value_declaration
     ;
 class_member_method_definition
-    : javadoc? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
-        Name Whitespace? call_arguments Whitespace? Scope_start Whitespace? statement* Whitespace? Scope_end
+    : javadoc? Whitespace? modifier_visibility? Whitespace? 'static'? Whitespace? type_declaration Whitespace?
+        Name Whitespace? call_arguments Whitespace? '{' Whitespace? statement* Whitespace? '}'
     ;
 class_member_value_declaration
-    : javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
-        type_declaration? Whitespace? Name Whitespace? Equals Whitespace? statement?
+    : javadoc? Whitespace? 'private'? Whitespace? 'static'? Whitespace? 'final'? Whitespace?
+        type_declaration? Whitespace? Name Whitespace? '=' Whitespace? statement?
     ;
 expression
-    : Keyword_new Whitespace? type_declaration call_arguments
+    : 'new' Whitespace? type_declaration call_arguments
     | Name Whitespace? call_arguments
     | variable_declaration
     ;
@@ -39,49 +36,42 @@ import_declaration
     | import_type_declaration
     ;
 import_static_declaration
-    : Keyword_import Whitespace Keyword_static Whitespace type_path Statement_terminator Whitespace*
+    : 'import' Whitespace 'static' Whitespace type_path ';' Whitespace*
     ;
 import_type_declaration
-    : Keyword_import Whitespace type_path Statement_terminator Whitespace*
+    : 'import' Whitespace type_path ';' Whitespace*
     ;
 javadoc
     : Javadoc_start javadoc_content* Javadoc_end Whitespace*
     ;
 javadoc_content
-    : Dot
-    | Statement_terminator
-    | Whitespace
-    | Keyword_package
-    | Keyword_import
-    | Keyword_static
-    | Javadoc_start
-    | Name
-    | Javadoc_content
-    | Comma
-    | Less_than
-    | Bigger_than
-    | Brace_round_open
-    | Brace_round_closed
+    :Javadoc_content_character
+    ;
+fragment Javadoc_content_character
+    :[\n\r\t @*{}/a-zA-Z]
     ;
 modifier_visibility
-    : Keyword_public
-    | Keyword_private
+    : 'public'
+    | 'private'
+    ;
+Name
+    : [a-zA-Z0-9_] [a-zA-Z0-9_]*
     ;
 package_declaration
-    : Keyword_package Whitespace package_name Statement_terminator Whitespace*
+    : 'package' Whitespace package_name ';' Whitespace*
     ;
 package_name
     : Name
-    | package_name Dot Name
+    | package_name '.' Name
     ;
 reference
     : expression
     | Name
     | Name Whitespace? '->' Whitespace? reference
-    | Name Whitespace? '->' Whitespace? Scope_start Whitespace? statement* Whitespace? Scope_end
+    | Name Whitespace? '->' Whitespace? '{' Whitespace? statement* Whitespace? '}'
     ;
 statement
-    : Keyword_return? Whitespace expression Statement_terminator
+    : 'return'? Whitespace expression ';'
     ;
 source_unit
     : package_declaration import_declaration* class_definition EOF
@@ -90,20 +80,21 @@ type_declaration
     : Name type_argument?
     ;
 type_argument
-    : Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
+    : '<' Whitespace? type_argument_content? Whitespace? '>'
     ;
 type_argument_content
     : type_argument Whitespace? type_argument_content_next?
     | Name Whitespace? type_argument_content_next?
     ;
 type_argument_content_next
-    : Comma Whitespace? type_argument Whitespace? type_argument_content_next?
-    | Comma Whitespace? Name Whitespace? type_argument_content_next?
+    : ',' Whitespace? type_argument Whitespace? type_argument_content_next?
+    | ',' Whitespace? Name Whitespace? type_argument_content_next?
     ;
 type_path
     : Name
-    | type_path Dot Name
+    | type_path '.' Name
     ;
 variable_declaration
     : type_declaration Whitespace Name
     ;
+Whitespace: [ \t\n\r]+;
