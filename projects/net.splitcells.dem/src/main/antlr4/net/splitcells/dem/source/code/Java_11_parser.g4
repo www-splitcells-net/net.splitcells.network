@@ -98,4 +98,6 @@ type_path
 variable_declaration
     : type_declaration Whitespace Name
     ;
-Whitespace: [ \t\n\r]+;
+Whitespace
+    : [ \t\n\r]+
+    ;
