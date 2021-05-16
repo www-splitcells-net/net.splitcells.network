@@ -25,7 +25,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <antlr.version>4.9.1</antlr.version>
+                <antlr.version>4.9.2</antlr.version>
             </properties>
             <dependencies>
                 <dependency>
@@ -48,6 +48,7 @@
                         <configuration>
                             <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/code</sourceDirectory>
                             <includes>
+                                <include>Java_11_lexer.g4</include>
                                 <include>Java_11_parser.g4</include>
                             </includes>
                             <visitor>true</visitor>

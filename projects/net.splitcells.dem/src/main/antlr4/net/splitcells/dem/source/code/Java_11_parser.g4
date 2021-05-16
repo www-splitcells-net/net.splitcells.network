@@ -1,33 +1,40 @@
-grammar Java_11_parser;
+parser grammar Java_11_parser;
 /* source_unit is the root rule. */
+/* A grammar files with implicit tokens, would be easier to write, understand and maintain.
+ * Implicit tokens are not used, because they have caused many cryptic errors.
+ * The author of this does not understand how implicit tokens really work in ANLTR4.
+ */
 @header {
     package net.splitcells.dem.source.code.antlr;
 }
+options {
+    tokenVocab=Java_11_lexer;
+}
 call_arguments
-    : '()'
-    | '(' Whitespace? reference Whitespace? call_arguments_next* Whitespace? ')'
+    : Brace_round_open Brace_round_closed
+    | Brace_round_open Whitespace? reference Whitespace? call_arguments_next* Whitespace? Brace_round_closed
     ;
 call_arguments_next
-    : ',' Whitespace reference
+    : Comma Whitespace reference
     ;
 class_definition
-    : javadoc? Whitespace? 'public'? Whitespace? 'final'? Whitespace? 'class'? Whitespace? Name
-        Whitespace? '{' Whitespace? class_member* Whitespace? '}'
+    : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
+        Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
     ;
 class_member
     : class_member_method_definition
     | class_member_value_declaration
     ;
 class_member_method_definition
-    : javadoc? Whitespace? modifier_visibility? Whitespace? 'static'? Whitespace? type_declaration Whitespace?
-        Name Whitespace? call_arguments Whitespace? '{' Whitespace? statement* Whitespace? '}'
+    : javadoc? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
+        Name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 class_member_value_declaration
-    : javadoc? Whitespace? 'private'? Whitespace? 'static'? Whitespace? 'final'? Whitespace?
-        type_declaration? Whitespace? Name Whitespace? '=' Whitespace? statement?
+    : javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
+        type_declaration? Whitespace? Name Whitespace? Equals Whitespace? statement?
     ;
 expression
-    : 'new' Whitespace? type_declaration call_arguments
+    : Keyword_new Whitespace? type_declaration call_arguments
     | Name Whitespace? call_arguments
     | variable_declaration
     ;
@@ -36,43 +43,33 @@ import_declaration
     | import_type_declaration
     ;
 import_static_declaration
-    : 'import' Whitespace 'static' Whitespace type_path ';' Whitespace*
+    : Keyword_import Whitespace Keyword_static Whitespace type_path Semicolon Whitespace*
     ;
 import_type_declaration
-    : 'import' Whitespace type_path ';' Whitespace*
+    : Keyword_import Whitespace type_path Semicolon Whitespace*
     ;
 javadoc
-    : '/**' javadoc_content* '*/' Whitespace*
-    ;
-javadoc_content
-    : Javadoc_content_character
-    ;
-fragment Javadoc_content_character
-    : [\n\r\t @*{}/a-zA-Z]
-    | Whitespace
+    : Javadoc /*Javadoc_start Javadoc_end*/ Whitespace?
     ;
 modifier_visibility
-    : 'public'
-    | 'private'
-    ;
-Name
-    : [a-zA-Z0-9_] [a-zA-Z0-9_]*
+    : Keyword_public
+    | Keyword_private
     ;
 package_declaration
-    : 'package' Whitespace package_name ';' Whitespace*
+    : 'package' Whitespace package_name Semicolon Whitespace*
     ;
 package_name
     : Name
-    | package_name '.' Name
+    | package_name Dot Name
     ;
 reference
     : expression
     | Name
-    | Name Whitespace? '->' Whitespace? reference
-    | Name Whitespace? '->' Whitespace? '{' Whitespace? statement* Whitespace? '}'
+    | Name Whitespace? Arrow Whitespace? reference
+    | Name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 statement
-    : 'return'? Whitespace expression ';'
+    : Keyword_return? Whitespace expression Semicolon
     ;
 source_unit
     : package_declaration import_declaration* Whitespace? class_definition EOF
@@ -81,23 +78,21 @@ type_declaration
     : Name type_argument?
     ;
 type_argument
-    : '<' Whitespace? type_argument_content? Whitespace? '>'
+    : Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
     ;
 type_argument_content
     : type_argument Whitespace? type_argument_content_next?
     | Name Whitespace? type_argument_content_next?
     ;
 type_argument_content_next
-    : ',' Whitespace? type_argument Whitespace? type_argument_content_next?
-    | ',' Whitespace? Name Whitespace? type_argument_content_next?
+    : Comma Whitespace? type_argument Whitespace? type_argument_content_next?
+    | Comma Whitespace? Name Whitespace? type_argument_content_next?
     ;
 type_path
     : Name
-    | type_path '.' Name
+    | type_path Dot Name
     ;
 variable_declaration
     : type_declaration Whitespace Name
     ;
-Whitespace
-    : [ \t\n\r]+
-    ;
+
