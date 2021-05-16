@@ -627,9 +627,9 @@
                              style="text-indent: 0em; display: block; font-weight: normal; padding-left: 0.25em;">
                             Publication Date:
                             <xsl:value-of
-                                    select="concat(./s:publication_date/@year, '.', ./s:publication_date/@month, '.', ./s:publication_date/@day_of_month)"/>
+                                    select="concat(./s:meta/s:publication_date/@year, '.', ./s:meta/s:publication_date/@month, '.', ./s:meta/s:publication_date/@day_of_month)"/>
                         </div>
-                        <xsl:if test="./s:arbitrary_publication_date">
+                        <xsl:if test="./s:meta/s:arbitrary_publication_date">
                             <h3>Notes</h3>
                             <div class="MainButtonDescription Standard_p3 Text">This document has an
                                 arbitrary creation date.
