@@ -18,7 +18,7 @@ call_arguments_next
     : Comma Whitespace reference
     ;
 class_definition
-    : javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
+    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
         Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
     ;
 class_member
@@ -26,11 +26,11 @@ class_member
     | class_member_value_declaration
     ;
 class_member_method_definition
-    : javadoc? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
+    : Whitespace? javadoc? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
         Name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 class_member_value_declaration
-    : javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
+    : Whitespace? javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
         type_declaration? Whitespace? Name Whitespace? Equals Whitespace? statement?
     ;
 expression
