@@ -65,6 +65,7 @@ package_name
 reference
     : expression
     | Name
+    /* This is an Lambda definition. */
     | Name Whitespace? Arrow Whitespace? reference
     | Name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;

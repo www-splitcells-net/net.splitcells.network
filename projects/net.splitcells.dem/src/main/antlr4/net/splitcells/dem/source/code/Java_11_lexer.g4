@@ -26,6 +26,8 @@ Keyword_public: 'public';
 Keyword_return: 'return';
 Keyword_static: 'static';
 Less_than: '<';
+Line_comment: '//' .*? Line_ending;
+fragment Line_ending: [\n\r]+;
 Name
     : [a-zA-Z0-9_] [a-zA-Z0-9_]*
     ;
