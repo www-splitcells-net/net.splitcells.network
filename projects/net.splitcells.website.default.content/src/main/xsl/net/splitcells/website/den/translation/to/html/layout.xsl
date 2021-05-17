@@ -810,8 +810,8 @@
                                 <article class="Standard_p2">
                                     <xsl:if test="$column_1 != ''">
                                         <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
-                                            <div class="Standard_p3 bottomLightShadow "
-                                                 style="display: flex; flex-direction: row; z-index: 1; flex-wrap: wrap; height: 2em;">
+                                            <div class="Standard_p3 bottomLightShadow splitcells-net-line"
+                                                 style=" z-index: 1; height: 2em;">
                                                 <div style="flex: auto;"></div>
                                                 <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional minimal-not"
                                                      onclick="javascript: fullScreenEnable();
