@@ -658,8 +658,7 @@
                                  style="width:.25em;"></div>
                             <article>
                                 <div class="Right_shadow splitcells-net-window-menu">
-                                    <div class="Standard_p3 bottomLightShadow "
-                                         style="display: flex; flex-direction: row; z-index: 1; flex-wrap: wrap;">
+                                    <div class="Standard_p3 bottomLightShadow splitcells-net-line">
                                         <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
