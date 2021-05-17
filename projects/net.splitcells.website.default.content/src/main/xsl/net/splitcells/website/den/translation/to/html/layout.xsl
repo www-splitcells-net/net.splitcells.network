@@ -654,8 +654,7 @@
                     <div class="content-column" style="order: 3;">
                         <div id="content" class="column_0 contentCell Standard_content Right_shadow"
                              style="order: 3;">
-                            <div class="optional_structural_guide structural_guide"
-                                 style="width:.25em;"></div>
+                            <div class="optional_structural_guide structural_guide"></div>
                             <article>
                                 <div class="Right_shadow splitcells-net-window-menu">
                                     <div class="Standard_p3 bottomLightShadow splitcells-net-line">
