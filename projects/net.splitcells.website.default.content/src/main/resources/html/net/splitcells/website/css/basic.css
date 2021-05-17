@@ -23,6 +23,8 @@ html {
     }
 .splitcells-net-window-menu {
     min-height: 4.75em;
+    display: flex;
+    flex-direction: column;
     }
 .splitcells-net-background-window {
     flex:auto;

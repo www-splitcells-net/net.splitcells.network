@@ -657,8 +657,7 @@
                             <div class="optional_structural_guide structural_guide"
                                  style="width:.25em;"></div>
                             <article>
-                                <div class="Right_shadow splitcells-net-window-menu"
-                                     style="display: flex; flex-direction: column;">
+                                <div class="Right_shadow splitcells-net-window-menu">
                                     <div class="Standard_p3 bottomLightShadow "
                                          style="display: flex; flex-direction: row; z-index: 1; flex-wrap: wrap;">
                                         <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
@@ -810,8 +809,7 @@
                                      style="width:.25em;"></div>
                                 <article class="Standard_p2">
                                     <xsl:if test="$column_1 != ''">
-                                        <div class="Right_shadow Standard_p2 splitcells-net-window-menu"
-                                             style="display: flex; flex-direction: column;  width: 100%;">
+                                        <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
                                             <div class="Standard_p3 bottomLightShadow "
                                                  style="display: flex; flex-direction: row; z-index: 1; flex-wrap: wrap; height: 2em;">
                                                 <div style="flex: auto;"></div>
