@@ -78,9 +78,15 @@ public class SchoolSchedulingTest {
                     return r;
                 }).toProblem();
     }
-    
+
     private Problem defineTeacherAllocationForCourses(Solution solution) {
-        throw notImplementedYet();
+        return defineProblem()
+                .withDemandAttributes()
+                .withSupplyAttributes()
+                .withConstraint(r -> {
+                    return r;
+                })
+                .toProblem();
     }
 
 }
