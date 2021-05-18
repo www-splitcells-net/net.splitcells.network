@@ -15,14 +15,10 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.problem.DefineDemands;
-import net.splitcells.gel.problem.DefineSupply;
-import net.splitcells.gel.problem.Define_Demand_Attributes;
-import net.splitcells.gel.problem.Problem;
-import net.splitcells.gel.problem.ProblemGenerator;
+import net.splitcells.gel.problem.*;
 
 
-public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands, DefineSupply, ProblemGenerator {
+public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands, DefineSupply, ProblemGenerator, DefineSupplyAttributes {
 
     private List<Attribute<? extends Object>> demandAttributes = list();
     private List<List<Object>> demands = list();
@@ -98,7 +94,7 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
     }
 
     @Override
-    public DefineSupply withDemands(Database demands) {
+    public DefineSupplyAttributes withDemands(Database demands) {
         throw notImplementedYet();
     }
 

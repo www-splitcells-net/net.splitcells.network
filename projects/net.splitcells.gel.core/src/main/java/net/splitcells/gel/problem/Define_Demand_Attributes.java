@@ -9,5 +9,5 @@ public interface Define_Demand_Attributes {
 
     DefineDemands withDemandAttributes(List<Attribute<?>> demandAttributes);
 
-    DefineSupply withDemands(Database demands);
+    DefineSupplyAttributes withDemands(Database demands);
 }
