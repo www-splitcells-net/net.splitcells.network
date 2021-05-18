@@ -23,6 +23,7 @@ public class SchoolSchedulingTest {
 
     public static final Attribute<Integer> TEACHER = attribute(Integer.class, "teacher");
     public static final Attribute<Integer> SCHOOL_SUBJECT = attribute(Integer.class, "school subject");
+    public static final Attribute<Integer> TEACH_SUBJECT_SUITABILITY = attribute(Integer.class, "teach subject suitability");
     public static final Attribute<Integer> COURSE_ID = attribute(Integer.class, "course id");
     public static final Attribute<Integer> VINTAGE = attribute(Integer.class, "vintage");
     public static final Attribute<Integer> REQUIRED_HOURS = attribute(Integer.class, "required hours");
@@ -82,7 +83,7 @@ public class SchoolSchedulingTest {
     private Problem defineTeacherAllocationForCourses(Solution solution) {
         return defineProblem()
                 .withDemandAttributes()
-                .withSupplyAttributes()
+                .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
                 .withConstraint(r -> {
                     return r;
                 })
