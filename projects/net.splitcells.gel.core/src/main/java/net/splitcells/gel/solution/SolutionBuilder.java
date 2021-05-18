@@ -2,6 +2,7 @@ package net.splitcells.gel.solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 
@@ -11,6 +12,7 @@ import java.util.Arrays;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.DefineDemands;
@@ -93,6 +95,11 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
     public DefineDemands withDemandAttributes(List<Attribute<? extends Object>> demandAttributes) {
         this.demandAttributes = demandAttributes.mapped(a -> (Attribute<Object>) a);
         return this;
+    }
+
+    @Override
+    public DefineSupply withDemands(Database demands) {
+        throw notImplementedYet();
     }
 
     @Override

@@ -82,7 +82,7 @@ public class SchoolSchedulingTest {
 
     private Problem defineTeacherAllocationForCourses(Solution solution) {
         return defineProblem()
-                .withDemandAttributes()
+                .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
                 .withConstraint(r -> {
                     return r;
