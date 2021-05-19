@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.fail;
 public class SchoolSchedulingTest {
 
     public static final Attribute<Integer> TEACHER = attribute(Integer.class, "teacher");
-    public static final Attribute<Integer> SCHOOL_SUBJECT = attribute(Integer.class, "school subject");
+    public static final Attribute<Integer> SUBJECT = attribute(Integer.class, "subject");
     public static final Attribute<Integer> TEACH_SUBJECT_SUITABILITY = attribute(Integer.class, "teach subject suitability");
     public static final Attribute<Integer> COURSE_ID = attribute(Integer.class, "course id");
     public static final Attribute<Integer> VINTAGE = attribute(Integer.class, "vintage");
@@ -66,12 +66,12 @@ public class SchoolSchedulingTest {
 
     private Problem defineRailsForSchoolScheduling() {
         return defineProblem()
-                .withDemandAttributes(COURSE_ID, SCHOOL_SUBJECT, VINTAGE, REQUIRED_HOURS)
+                .withDemandAttributes(COURSE_ID, SUBJECT, VINTAGE, REQUIRED_HOURS)
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
                 .withConstraint(r -> {
                     r.forAll(lineValueSelector(line -> line.value(RAIL) == 0))
                             .then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0, line -> cost(1)));
-                    r.forAll(SCHOOL_SUBJECT)
+                    r.forAll(SUBJECT)
                             .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
                             .then(allDifferent(RAIL));
                     r.forAll(COURSE_ID).then(RegulatedLength.regulatedLength(REQUIRED_HOURS, ALLOCATED_HOURS));
@@ -87,7 +87,7 @@ public class SchoolSchedulingTest {
                 .withConstraint(r -> {
                     r.forAll(COURSE_ID).then(allSame(TEACHER));
                     r.forAll(TEACHER)
-                            .then(lineValueRater(line -> line.value(SCHOOL_SUBJECT).equals(TEACH_SUBJECT_SUITABILITY)
+                            .then(lineValueRater(line -> line.value(SUBJECT).equals(TEACH_SUBJECT_SUITABILITY)
                                     , line -> cost(1)));
                     return r;
                 })
