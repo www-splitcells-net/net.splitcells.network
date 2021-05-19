@@ -14,6 +14,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.AllDifferent.allDifferent;
 import static net.splitcells.gel.rating.rater.AllSame.allSame;
+import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
@@ -80,6 +81,13 @@ public class SchoolSchedulingTest {
                 }).toProblem();
     }
 
+    /**
+     * All {@link #COURSE_ID} in a {@link #RAIL} need to have different teachers,
+     * so that all of them can be hold in parallel.
+     *
+     * @param solution The demands of this problem.
+     * @return A problem modelling allocations of teachers to courses.
+     */
     private Problem defineTeacherAllocationForCourses(Solution solution) {
         return defineProblem()
                 .withDemands(solution)
@@ -89,6 +97,7 @@ public class SchoolSchedulingTest {
                     r.forAll(TEACHER)
                             .then(lineValueRater(line -> line.value(SUBJECT).equals(TEACH_SUBJECT_SUITABILITY)
                                     , line -> cost(1)));
+                    r.forAll(RAIL).forAll(TEACHER).then(hasSize(1));
                     return r;
                 })
                 .toProblem();
