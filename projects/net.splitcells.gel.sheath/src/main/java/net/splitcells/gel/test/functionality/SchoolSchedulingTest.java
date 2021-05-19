@@ -86,6 +86,9 @@ public class SchoolSchedulingTest {
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
                 .withConstraint(r -> {
                     r.forAll(COURSE_ID).then(allSame(TEACHER));
+                    r.forAll(TEACHER)
+                            .then(lineValueRater(line -> line.value(SCHOOL_SUBJECT).equals(TEACH_SUBJECT_SUITABILITY)
+                                    , line -> cost(1)));
                     return r;
                 })
                 .toProblem();
