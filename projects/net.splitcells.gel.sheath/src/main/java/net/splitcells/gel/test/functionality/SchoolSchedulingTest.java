@@ -85,6 +85,7 @@ public class SchoolSchedulingTest {
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
                 .withConstraint(r -> {
+                    r.forAll(COURSE_ID).then(allSame(TEACHER));
                     return r;
                 })
                 .toProblem();
