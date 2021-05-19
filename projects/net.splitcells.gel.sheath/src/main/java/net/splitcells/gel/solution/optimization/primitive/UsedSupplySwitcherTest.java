@@ -50,7 +50,7 @@ public class UsedSupplySwitcherTest {
             assertThat(testSolution.allocations().getLines(1).value(A)).isEqualTo(2);
             assertThat(testSolution.allocations().getLines(1).value(B)).isEqualTo(2);
             assertThat(testSolution.demands_unused().getLines()).isEmpty();
-            assertThat(testSolution.supplies_free().getLines()).isEmpty();
+            assertThat(testSolution.suppliesFree().getLines()).isEmpty();
         }
         final var randomness = mock(Randomness.class);
         doReturn(0, 1)
@@ -90,7 +90,7 @@ public class UsedSupplySwitcherTest {
             assertThat(testSolution.allocations().getLines(1).value(A)).isEqualTo(2);
             assertThat(testSolution.allocations().getLines(1).value(B)).isEqualTo(2);
             assertThat(testSolution.demands_unused().getLines()).isEmpty();
-            assertThat(testSolution.supplies_free().getLines()).hasSize(1);
+            assertThat(testSolution.suppliesFree().getLines()).hasSize(1);
         }
         final var randomness = mock(Randomness.class);
         doReturn(0, 1)
@@ -130,7 +130,7 @@ public class UsedSupplySwitcherTest {
             assertThat(testSolution.allocations().getLines(1).value(A)).isEqualTo(2);
             assertThat(testSolution.allocations().getLines(1).value(B)).isEqualTo(2);
             assertThat(testSolution.demands_unused().getLines()).hasSize(1);
-            assertThat(testSolution.supplies_free().getLines()).isEmpty();
+            assertThat(testSolution.suppliesFree().getLines()).isEmpty();
         }
         final var randomness = mock(Randomness.class);
         doReturn(0, 1)
@@ -165,7 +165,7 @@ public class UsedSupplySwitcherTest {
             assertThat(testSolution.allocations().size()).isEqualTo(4);
             range(0, variables).forEach(i -> assertThat(testSolution.allocations().getLines(i).value(A)).isEqualTo(i));
             assertThat(testSolution.demands_unused().getLines()).isEmpty();
-            assertThat(testSolution.supplies_free().getLines()).isEmpty();
+            assertThat(testSolution.suppliesFree().getLines()).isEmpty();
         }
         final var randomness = mock(Randomness.class);
         doAnswer(returnsElementsOf(range(0, variables).boxed().collect(toList())))

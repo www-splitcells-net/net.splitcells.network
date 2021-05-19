@@ -86,13 +86,13 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database supplies_used() {
-		return this.problem.supplies_used();
+	public Database suppliesUsed() {
+		return this.problem.suppliesUsed();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database supplies_free() {
-		return this.problem.supplies_free();
+	public Database suppliesFree() {
+		return this.problem.suppliesFree();
 	}
 
 	@java.lang.SuppressWarnings("all")

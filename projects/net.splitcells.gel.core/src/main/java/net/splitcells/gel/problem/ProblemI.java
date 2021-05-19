@@ -74,13 +74,13 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Database supplies_used() {
-        return this.allocations.supplies_used();
+    public Database suppliesUsed() {
+        return this.allocations.suppliesUsed();
     }
 
     @Override
-    public Database supplies_free() {
-        return this.allocations.supplies_free();
+    public Database suppliesFree() {
+        return this.allocations.suppliesFree();
     }
 
     @Override

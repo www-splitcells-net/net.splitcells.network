@@ -137,7 +137,7 @@ public abstract class ConstraintAI implements Constraint {
     protected abstract void process_line_addition(Line addition);
 
     protected void process_lines_beforeRemoval(GroupId injectionGroup, Line removal) {
-        lineProcessing.supplies_free().rawLinesView().stream()
+        lineProcessing.suppliesFree().rawLinesView().stream()
                 .filter(e -> e != null)
                 .forEach(freeSupply -> results.remove(freeSupply));
     }

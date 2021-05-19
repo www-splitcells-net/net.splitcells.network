@@ -35,7 +35,7 @@ public class TemplateInitializer implements Optimization {
                     .stream()
                     .map(attribute -> line.value(attribute))
                     .collect(toList());
-            final var supplyValues = solution.supplies_free()
+            final var supplyValues = solution.suppliesFree()
                     .headerView()
                     .stream()
                     .map(attribute -> line.value(attribute))
@@ -44,7 +44,7 @@ public class TemplateInitializer implements Optimization {
                     .lookupEquals(demandValues)
                     .filter(e -> !usedDemands.contains(e))
                     .findFirst();
-            final var selectedSupply = solution.supplies_free()
+            final var selectedSupply = solution.suppliesFree()
                     .lookupEquals(supplyValues)
                     .filter(e -> !usedSupplies.contains(e))
                     .findFirst();

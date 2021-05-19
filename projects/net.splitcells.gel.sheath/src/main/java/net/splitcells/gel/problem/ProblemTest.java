@@ -49,7 +49,7 @@ class ProblemTest {
         {
             firstAllocation = solution.allocate
                     (solution.demands_unused().rawLinesView().get(0)
-                            , solution.supplies_free().rawLinesView().get(0));
+                            , solution.suppliesFree().rawLinesView().get(0));
             assertThat(solution.size()).isEqualTo(1);
             assertThat(solution.isComplete()).isFalse();
             assertThat(solution.constraint().rating().compare_partially_to(cost(defaultCost)).get())
@@ -59,7 +59,7 @@ class ProblemTest {
         {
             secondAllocation = solution.allocate
                     (solution.demands_unused().rawLinesView().get(1)
-                            , solution.supplies_free().rawLinesView().get(1));
+                            , solution.suppliesFree().rawLinesView().get(1));
             assertThat(solution.size()).isEqualTo(2);
             assertThat(solution.isComplete()).isTrue();
             assertThat(solution.constraint().rating().compare_partially_to(cost(2 * defaultCost)).get())
@@ -72,9 +72,9 @@ class ProblemTest {
                  */
                 assertThat(solution.size()).isEqualTo(1);
                 assertThat(solution.demands_unused().size()).isEqualTo(1);
-                assertThat(solution.supplies_free().size()).isEqualTo(2);
+                assertThat(solution.suppliesFree().size()).isEqualTo(2);
                 assertThat(solution.demands_used().size()).isEqualTo(1);
-                assertThat(solution.supplies_used().size()).isEqualTo(1);
+                assertThat(solution.suppliesUsed().size()).isEqualTo(1);
             }
             assertThat(solution.isComplete()).isFalse();
             assertThat(solution.constraint().rating().compare_partially_to(cost(defaultCost)).get())

@@ -93,13 +93,13 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Database supplies_used() {
-        return allocations.supplies_used();
+    public Database suppliesUsed() {
+        return allocations.suppliesUsed();
     }
 
     @Override
-    public Database supplies_free() {
-        return allocations.supplies_free();
+    public Database suppliesFree() {
+        return allocations.suppliesFree();
     }
 
     @Override

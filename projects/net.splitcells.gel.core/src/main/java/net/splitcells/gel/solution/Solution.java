@@ -18,7 +18,6 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 public interface Solution extends Problem, SolutionView {
 
@@ -83,7 +82,7 @@ public interface Solution extends Problem, SolutionView {
         if (event.stepType().equals(ADDITION)) {
             this.allocate(
                     demands_unused().getRawLine(event.demand().interpret().get().index()),
-                    supplies_free().getRawLine(event.supply().interpret().get().index()));
+                    suppliesFree().getRawLine(event.supply().interpret().get().index()));
         } else if (event.stepType().equals(REMOVAL)) {
             final var demandBeforeRemoval = event.demand().interpret();
             final var supplyBeforeRemoval = event.supply().interpret();

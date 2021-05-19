@@ -112,12 +112,12 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Database supplies_used() {
+    public Database suppliesUsed() {
         return supplies_used;
     }
 
     @Override
-    public Database supplies_free() {
+    public Database suppliesFree() {
         return supplies_free;
     }
 

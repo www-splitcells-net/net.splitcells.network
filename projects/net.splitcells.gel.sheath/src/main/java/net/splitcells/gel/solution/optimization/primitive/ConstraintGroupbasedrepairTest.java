@@ -82,7 +82,7 @@ public class ConstraintGroupbasedrepairTest {
                                     optimizationEvent(
                                             ADDITION
                                             , freeDemand.toLinePointer()
-                                            , currentSolution.supplies_free().getLines().get(i[0]++).toLinePointer()
+                                            , currentSolution.suppliesFree().getLines().get(i[0]++).toLinePointer()
                                     ));
                         });
                     });

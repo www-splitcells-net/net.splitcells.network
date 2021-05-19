@@ -83,7 +83,7 @@ public class SolutionAspect implements Solution {
                     .interpret()
                     .ifPresent(supplyForRemoval
                             -> assertThat(list(supplyForRemoval.context()))
-                            .containsAnyOf(solution.supplies(), solution.supplies_used()));
+                            .containsAnyOf(solution.supplies(), solution.suppliesUsed()));
         }
         return solution.optimize(event, parameters);
     }
@@ -164,13 +164,13 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Database supplies_used() {
-        return solution.supplies_used();
+    public Database suppliesUsed() {
+        return solution.suppliesUsed();
     }
 
     @Override
-    public Database supplies_free() {
-        return solution.supplies_free();
+    public Database suppliesFree() {
+        return solution.suppliesFree();
     }
 
     @Override

@@ -11,9 +11,9 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 public interface AllocationsLiveView extends Table {
     Database supplies();
 
-    Database supplies_used();
+    Database suppliesUsed();
 
-    Database supplies_free();
+    Database suppliesFree();
 
     Database demands();
 

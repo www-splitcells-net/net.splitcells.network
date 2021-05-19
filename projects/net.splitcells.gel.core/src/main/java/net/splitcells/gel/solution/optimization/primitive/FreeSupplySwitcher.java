@@ -63,7 +63,7 @@ public class FreeSupplySwitcher implements Optimization {
             (SolutionView solution
                     , Set<LinePointer> processedDemands
                     , Set<LinePointer> processedSupplies) {
-        if (solution.demands_used().hasContent() && solution.supplies_free().hasContent()) {
+        if (solution.demands_used().hasContent() && solution.suppliesFree().hasContent()) {
             final int usedDemandIndex = randomness.integer(0, solution.demands_used().size() - 1);
             final var usedDemand = solution.demands_used().getLines(usedDemandIndex);
             final var usedDemandPointer = usedDemand.toLinePointer();
@@ -89,7 +89,7 @@ public class FreeSupplySwitcher implements Optimization {
                                     , solution
                                             .supplies()
                                             .getRawLine
-                                                    (randomness.integer(0, solution.supplies_free().size()))
+                                                    (randomness.integer(0, solution.suppliesFree().size()))
                                             .toLinePointer()
                             ));
         }

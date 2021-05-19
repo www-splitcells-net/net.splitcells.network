@@ -6,8 +6,6 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.resource.host.interaction.Domsole;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.SolutionView;
@@ -17,14 +15,12 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
-import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.*;
@@ -126,7 +122,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
             (BiFunction<Integer, Integer, Optional<SupplySelection>> indexSelector) {
         return (freeDemandGroups, freedSupplies) -> solution -> {
             final Set<OptimizationEvent> repairs = setOfUniques();
-            final var suppliesFree = solution.supplies_free().getLines();
+            final var suppliesFree = solution.suppliesFree().getLines();
             final var demandsUsed = Sets.<Line>setOfUniques();
             freeDemandGroups.entrySet().forEach(group -> {
                 group.getValue().forEach(demand -> {
