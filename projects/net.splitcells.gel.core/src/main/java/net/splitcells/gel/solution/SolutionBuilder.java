@@ -9,6 +9,7 @@ import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.problem.ProblemI.problem;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
@@ -22,6 +23,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     private List<Attribute<? extends Object>> demandAttributes = list();
     private List<List<Object>> demands = list();
+    private Optional<Database> demandsDatabase;
 
     private List<Attribute<? extends Object>> supplyAttributes = list();
     private List<List<Object>> supplies = list();
@@ -37,14 +39,17 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     @Override
     public Problem toProblem() {
-        final var demandDatabase = Databases.database(DEMANDS.value(), null, demandAttributes);
+        final var problemsDemands = demandsDatabase.orElseGet(() -> {
+            final var d = Databases.database(DEMANDS.value(), null, demandAttributes);
+            demands.forEach(demand -> d.addTranslated(demand));
+            return d;
+        });
         final var supplyDatabase = Databases.database(SUPPLIES.value(), null, supplyAttributes);
-        demands.forEach(demand -> demandDatabase.addTranslated(demand));
         supplies.forEach(supplies -> supplyDatabase.addTranslated(supplies));
         return problem(
                 allocations(
                         Solution.class.getSimpleName()
-                        , demandDatabase
+                        , problemsDemands
                         , supplyDatabase)
                 , constraint);
     }
@@ -95,7 +100,8 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     @Override
     public DefineSupplyAttributes withDemands(Database demands) {
-        throw notImplementedYet();
+        demandsDatabase = Optional.of(demands);
+        return this;
     }
 
     @Override
