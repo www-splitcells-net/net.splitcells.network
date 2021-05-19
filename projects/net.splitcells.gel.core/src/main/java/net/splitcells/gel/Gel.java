@@ -1,7 +1,7 @@
 package net.splitcells.gel;
 
 import net.splitcells.gel.solution.SolutionBuilder;
-import net.splitcells.gel.problem.Define_Demand_Attributes;
+import net.splitcells.gel.problem.DefineDemandAttributes;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
@@ -19,7 +19,7 @@ public final class Gel {
         throw constructorIllegal();
     }
 
-    public static Define_Demand_Attributes defineProblem() {
+    public static DefineDemandAttributes defineProblem() {
         return SolutionBuilder.defineProblem();
     }
 }

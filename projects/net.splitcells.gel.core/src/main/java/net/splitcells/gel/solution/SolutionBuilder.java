@@ -18,7 +18,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.*;
 
 
-public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands, DefineSupply, ProblemGenerator, DefineSupplyAttributes {
+public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, DefineSupply, ProblemGenerator, DefineSupplyAttributes {
 
     private List<Attribute<? extends Object>> demandAttributes = list();
     private List<List<Object>> demands = list();
@@ -31,7 +31,7 @@ public class SolutionBuilder implements Define_Demand_Attributes, DefineDemands,
     protected SolutionBuilder() {
     }
 
-    public static Define_Demand_Attributes defineProblem() {
+    public static DefineDemandAttributes defineProblem() {
         return new SolutionBuilder();
     }
 
