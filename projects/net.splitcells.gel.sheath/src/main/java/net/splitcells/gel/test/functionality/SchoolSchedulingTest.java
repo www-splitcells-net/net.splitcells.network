@@ -66,7 +66,7 @@ public class SchoolSchedulingTest {
 
     private Problem defineRailsForSchoolScheduling() {
         return defineProblem()
-                .withDemandAttributes(SCHOOL_SUBJECT, VINTAGE, REQUIRED_HOURS)
+                .withDemandAttributes(COURSE_ID, SCHOOL_SUBJECT, VINTAGE, REQUIRED_HOURS)
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
                 .withConstraint(r -> {
                     r.forAll(lineValueSelector(line -> line.value(RAIL) == 0))
