@@ -62,8 +62,8 @@ public class DatabaseI implements Database {
             columns.add(ColumnI.column(this, att));
         });
         this.attributes = listWithValuesOf(headerAttributes);
-        columns.forEach(this::subscribe_to_afterAdditions);
-        columns.forEach(this::subscriber_to_beforeRemoval);
+        columns.forEach(this::subscribeToAfterAdditions);
+        columns.forEach(this::subscriberToBeforeRemoval);
     }
 
     @Deprecated
@@ -98,12 +98,12 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber) {
+    public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
         this.additionSubscriber.add(subscriber);
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber) {
+    public void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
         beforeRemovalSubscriber.add(subscriber);
     }
 
@@ -191,7 +191,7 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber subscriber) {
+    public void subscriberToAfterRemoval(BeforeRemovalSubscriber subscriber) {
         afterRemovalSubscriber.add(subscriber);
     }
 

@@ -178,7 +178,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
         final var demandGrouping = demandGroupings
                 .stream()
                 .reduce(map(), (a, b) -> a.withMerged(b, Set::with));
-        demandGrouping.put(null, setOfUniques(solution.demands_unused().getLines()));
+        demandGrouping.put(null, setOfUniques(solution.demandsUnused().getLines()));
         final var demandFreeing = groupsOfConstraintGroup
                 .stream()
                 .map(e -> e

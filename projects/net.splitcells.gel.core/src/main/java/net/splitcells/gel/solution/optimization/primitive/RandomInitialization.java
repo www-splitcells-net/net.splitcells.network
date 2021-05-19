@@ -24,11 +24,11 @@ public class RandomInitialization implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimize(SolutionView solution) {
-        if (solution.demands_unused().hasContent() && solution.suppliesFree().hasContent()) {
+        if (solution.demandsUnused().hasContent() && solution.suppliesFree().hasContent()) {
             return list(
                     optimizationEvent
                             (ADDITION
-                                    , randomness.chooseOneOf(solution.demands_unused().getLines()).toLinePointer()
+                                    , randomness.chooseOneOf(solution.demandsUnused().getLines()).toLinePointer()
                                     , randomness.chooseOneOf(solution.suppliesFree().getLines()).toLinePointer()));
 
         }

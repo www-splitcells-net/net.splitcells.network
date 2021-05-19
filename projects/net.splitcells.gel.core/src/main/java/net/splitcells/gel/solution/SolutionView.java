@@ -80,7 +80,7 @@ public interface SolutionView extends ProblemView {
     }
 
     default boolean isComplete() {
-        return demands_unused().size() == 0 || (suppliesFree().size() == 0 && demands_unused().size() > 0);
+        return demandsUnused().size() == 0 || (suppliesFree().size() == 0 && demandsUnused().size() > 0);
     }
 
     default boolean isOptimal() {

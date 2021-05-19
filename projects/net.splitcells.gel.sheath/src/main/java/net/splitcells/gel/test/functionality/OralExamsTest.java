@@ -163,7 +163,7 @@ public class OralExamsTest extends TestSuiteI {
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
-                                        + currentSolution.demands_unused().size()
+                                        + currentSolution.demandsUnused().size()
                                 , STRING)
                         , () -> list("debugging")
                         , LogLevel.DEBUG);
@@ -174,7 +174,7 @@ public class OralExamsTest extends TestSuiteI {
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
-                                        + currentSolution.demands_unused().size()
+                                        + currentSolution.demandsUnused().size()
                                 , STRING)
                         , () -> list("debugging")
                         , LogLevel.DEBUG);
@@ -185,7 +185,7 @@ public class OralExamsTest extends TestSuiteI {
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
-                                        + currentSolution.demands_unused().size()
+                                        + currentSolution.demandsUnused().size()
                                 , STRING)
                         , () -> list("debugging")
                         , LogLevel.DEBUG);
@@ -196,7 +196,7 @@ public class OralExamsTest extends TestSuiteI {
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
-                                        + currentSolution.demands_unused().size()
+                                        + currentSolution.demandsUnused().size()
                                 , STRING)
                         , () -> list("debugging")
                         , LogLevel.DEBUG);

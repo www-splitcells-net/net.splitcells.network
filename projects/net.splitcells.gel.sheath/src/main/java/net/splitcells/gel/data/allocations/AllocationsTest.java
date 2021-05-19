@@ -20,7 +20,7 @@ public class AllocationsTest extends TestSuiteI {
         final var demands = Databases.database();
         final var supplies = Databases.database();
         final var allocations = allocations("test", demands, supplies);
-        allocations.subscribe_to_afterAdditions(
+        allocations.subscribeToAfterAdditions(
                 pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)).isNotNull());
         allocations.allocate
                 (demands.addTranslated(list())
@@ -33,7 +33,7 @@ public class AllocationsTest extends TestSuiteI {
         final var demands = Databases.database();
         final var supplies = Databases.database();
         final var allocations = allocations("test", demands, supplies);
-        allocations.subscriber_to_beforeRemoval
+        allocations.subscriberToBeforeRemoval
                 (pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)).isNotNull());
         allocations.remove(
                 allocations.allocate
@@ -49,7 +49,7 @@ public class AllocationsTest extends TestSuiteI {
             final var demands = Databases.database();
             final var supplies = Databases.database();
             final var allocations = allocations("test", demands, supplies);
-            allocations.subscriber_to_afterRemoval
+            allocations.subscriberToAfterRemoval
                     (pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)));
             allocations.remove(
                     allocations.allocate

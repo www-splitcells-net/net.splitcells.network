@@ -64,8 +64,8 @@ public class AllocationsI implements Allocations {
             demands_free = new DatabaseI("demands-free", this, demand.headerView());
             demands_used = new DatabaseI("demands-used", this, demand.headerView());
             demand.rawLinesView().forEach(demands_free::add);
-            demand.subscribe_to_afterAdditions(demands_free::add);
-            demand.subscriber_to_beforeRemoval(removalOf -> {
+            demand.subscribeToAfterAdditions(demands_free::add);
+            demand.subscriberToBeforeRemoval(removalOf -> {
                 if (usedDemandIndexes_to_allocationIndexes.containsKey(removalOf.index())) {
                     listWithValuesOf(
                             usedDemandIndexes_to_allocationIndexes.get(removalOf.index()))
@@ -85,10 +85,10 @@ public class AllocationsI implements Allocations {
             supplies_free = new DatabaseI("supply-free", this, supply.headerView());
             supplies_used = new DatabaseI("supply-used", this, supply.headerView());
             supply.rawLinesView().forEach(supplies_free::add);
-            supply.subscribe_to_afterAdditions(i -> {
+            supply.subscribeToAfterAdditions(i -> {
                 supplies_free.add(i);
             });
-            supply.subscriber_to_beforeRemoval(noņemšanaNo -> {
+            supply.subscriberToBeforeRemoval(noņemšanaNo -> {
                 if (usedSupplyIndexes_to_allocationIndexes.containsKey(noņemšanaNo.index())) {
                     listWithValuesOf
                             (usedSupplyIndexes_to_allocationIndexes.get(noņemšanaNo.index()))
@@ -127,12 +127,12 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Database demands_used() {
+    public Database demandsUsed() {
         return demands_used;
     }
 
     @Override
-    public Database demands_unused() {
+    public Database demandsUnused() {
         return demands_free;
     }
 
@@ -250,7 +250,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber) {
+    public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
         additionSubscriptions.add(subscriber);
     }
 
@@ -270,7 +270,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber) {
+    public void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
         beforeRemovalSubscriptions.add(subscriber);
     }
 
@@ -289,12 +289,12 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber subscriber) {
+    public void subscriberToAfterRemoval(BeforeRemovalSubscriber subscriber) {
         afterRemovalSubscriptions.add(subscriber);
     }
 
     @Override
-    public Set<Line> allocations_of_supply(Line supply) {
+    public Set<Line> allocationsOfSupply(Line supply) {
         final Set<Line> piešķiršanas_no_piedāvājuma = setOfUniques();
         try {
             usedSupplyIndexes_to_allocationIndexes
@@ -308,7 +308,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Set<Line> allocations_of_demand(Line demand) {
+    public Set<Line> allocationsOfDemand(Line demand) {
         final Set<Line> allocations_of_demand = setOfUniques();
         usedDemandIndexes_to_allocationIndexes
                 .get(demand.index())

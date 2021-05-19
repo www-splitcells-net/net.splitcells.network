@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
- * {@link #demands_used()} ()} and {@link #demands_unused()} contain all {@link Line} of {@link #demands()}.
+ * {@link #demandsUsed()} ()} and {@link #demandsUnused()} contain all {@link Line} of {@link #demands()}.
  * {@link Line} with the same conceptional identity und different {@link Database} contexts have the same {@link Line#index()}.
  * The same applies to {@link #supplies()}.
  * <p/>
@@ -161,17 +161,17 @@ public class AllocationsIRef extends AllocationsI {
     }
 
     @Override
-    public Set<Line> allocations_of_supply(Line supply) {
+    public Set<Line> allocationsOfSupply(Line supply) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             assertThat(usedSupplyIndexes_to_allocationIndexes)
                     .describedAs("No allocations for the given supply are present.")
                     .containsKey(supply.index());
         }
-        return super.allocations_of_supply(supply);
+        return super.allocationsOfSupply(supply);
     }
 
     @Override
-    public Set<Line> allocations_of_demand(Line demand) {
+    public Set<Line> allocationsOfDemand(Line demand) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             try {
                 assertThat(usedDemandIndexes_to_allocationIndexes).containsKey(demand.index());
@@ -179,6 +179,6 @@ public class AllocationsIRef extends AllocationsI {
                 throw new RuntimeException(e);
             }
         }
-        return super.allocations_of_demand(demand);
+        return super.allocationsOfDemand(demand);
     }
 }

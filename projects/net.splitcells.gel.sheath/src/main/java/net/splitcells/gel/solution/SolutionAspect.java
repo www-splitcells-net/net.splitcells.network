@@ -78,7 +78,7 @@ public class SolutionAspect implements Solution {
                     .interpret()
                     .ifPresent(demandsForRemoval
                             -> assertThat(list(demandsForRemoval.context()))
-                            .containsAnyOf(solution.demands(), solution.demands_used()));
+                            .containsAnyOf(solution.demands(), solution.demandsUsed()));
             event.supply()
                     .interpret()
                     .ifPresent(supplyForRemoval
@@ -129,18 +129,18 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber) {
-        solution.subscribe_to_afterAdditions(subscriber);
+    public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
+        solution.subscribeToAfterAdditions(subscriber);
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber) {
-        solution.subscriber_to_beforeRemoval(subscriber);
+    public void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
+        solution.subscriberToBeforeRemoval(subscriber);
     }
 
     @Override
-    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber subscriber) {
-        solution.subscriber_to_afterRemoval(subscriber);
+    public void subscriberToAfterRemoval(BeforeRemovalSubscriber subscriber) {
+        solution.subscriberToAfterRemoval(subscriber);
     }
 
     @Override
@@ -179,13 +179,13 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Database demands_used() {
-        return solution.demands_used();
+    public Database demandsUsed() {
+        return solution.demandsUsed();
     }
 
     @Override
-    public Database demands_unused() {
-        return solution.demands_unused();
+    public Database demandsUnused() {
+        return solution.demandsUnused();
     }
 
     @Override
@@ -199,13 +199,13 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Set<Line> allocations_of_supply(Line supply) {
-        return solution.allocations_of_supply(supply);
+    public Set<Line> allocationsOfSupply(Line supply) {
+        return solution.allocationsOfSupply(supply);
     }
 
     @Override
-    public Set<Line> allocations_of_demand(Line demand) {
-        return solution.allocations_of_demand(demand);
+    public Set<Line> allocationsOfDemand(Line demand) {
+        return solution.allocationsOfDemand(demand);
     }
 
     @Override

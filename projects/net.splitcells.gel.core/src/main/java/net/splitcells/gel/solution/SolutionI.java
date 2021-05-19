@@ -37,9 +37,9 @@ public class SolutionI implements Solution {
 
 	@Override
 	public boolean isComplete() {
-		return demands_unused().size() == 0
+		return demandsUnused().size() == 0
 				|| demands().size() < supplies().size()
-				&& demands_used().size() == supplies().size();
+				&& demandsUsed().size() == supplies().size();
 	}
 
 	public boolean balanced() {
@@ -101,13 +101,13 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database demands_used() {
-		return this.problem.demands_used();
+	public Database demandsUsed() {
+		return this.problem.demandsUsed();
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public Database demands_unused() {
-		return this.problem.demands_unused();
+	public Database demandsUnused() {
+		return this.problem.demandsUnused();
 	}
 
 	@java.lang.SuppressWarnings("all")
@@ -126,8 +126,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Line> allocations_of_supply(final Line supply) {
-		return this.problem.allocations_of_supply(supply);
+	public java.util.Set<Line> allocationsOfSupply(final Line supply) {
+		return this.problem.allocationsOfSupply(supply);
 	}
 
 	@java.lang.SuppressWarnings("all")
@@ -136,8 +136,8 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public java.util.Set<Line> allocations_of_demand(final Line demand) {
-		return this.problem.allocations_of_demand(demand);
+	public java.util.Set<Line> allocationsOfDemand(final Line demand) {
+		return this.problem.allocationsOfDemand(demand);
 	}
 
 	@java.lang.SuppressWarnings("all")
@@ -176,18 +176,18 @@ public class SolutionI implements Solution {
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void subscribe_to_afterAdditions(final AfterAdditionSubscriber subscriber) {
-		this.problem.subscribe_to_afterAdditions(subscriber);
+	public void subscribeToAfterAdditions(final AfterAdditionSubscriber subscriber) {
+		this.problem.subscribeToAfterAdditions(subscriber);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void subscriber_to_beforeRemoval(final BeforeRemovalSubscriber subscriber) {
-		this.problem.subscriber_to_beforeRemoval(subscriber);
+	public void subscriberToBeforeRemoval(final BeforeRemovalSubscriber subscriber) {
+		this.problem.subscriberToBeforeRemoval(subscriber);
 	}
 
 	@java.lang.SuppressWarnings("all")
-	public void subscriber_to_afterRemoval(final BeforeRemovalSubscriber listener) {
-		this.problem.subscriber_to_afterRemoval(listener);
+	public void subscriberToAfterRemoval(final BeforeRemovalSubscriber listener) {
+		this.problem.subscriberToAfterRemoval(listener);
 	}
 
 	@java.lang.SuppressWarnings("all")

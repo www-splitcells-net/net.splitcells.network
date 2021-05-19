@@ -95,8 +95,8 @@ public class DatabaseTest extends TestSuiteI {
     public void test_subscriptions(Database voidDatabase) {
         final var additionCounter = new AtomicInteger(0);// Mutable integer Object required.
         final var removalCounter = new AtomicInteger(0);// Mutable integer Object required.
-        voidDatabase.subscribe_to_afterAdditions(additionOf -> additionCounter.incrementAndGet());
-        voidDatabase.subscriber_to_beforeRemoval(removalOf -> removalCounter.incrementAndGet());
+        voidDatabase.subscribeToAfterAdditions(additionOf -> additionCounter.incrementAndGet());
+        voidDatabase.subscriberToBeforeRemoval(removalOf -> removalCounter.incrementAndGet());
         test_single_addition_and_removal(voidDatabase);
         assertThat(additionCounter).hasValue(1);
         assertThat(removalCounter).hasValue(1);

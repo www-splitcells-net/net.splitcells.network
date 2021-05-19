@@ -23,13 +23,13 @@ public interface Database extends Table {
 	}
 
 	default <T extends AfterAdditionSubscriber & BeforeRemovalSubscriber> void synchronize(T subscriber) {
-		subscribe_to_afterAdditions(subscriber);
-		subscriber_to_beforeRemoval(subscriber);
+		subscribeToAfterAdditions(subscriber);
+		subscriberToBeforeRemoval(subscriber);
 	}
 
-	void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber);
+	void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber);
 
-	void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber);
+	void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber);
 
-	void subscriber_to_afterRemoval(BeforeRemovalSubscriber subscriber);
+	void subscriberToAfterRemoval(BeforeRemovalSubscriber subscriber);
 }

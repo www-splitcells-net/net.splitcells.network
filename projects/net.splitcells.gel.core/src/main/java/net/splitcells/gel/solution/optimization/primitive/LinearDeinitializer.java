@@ -21,12 +21,12 @@ public class LinearDeinitializer implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimize(SolutionView solution) {
-        if (solution.demands_used().hasContent() && solution.suppliesUsed().hasContent()) {
+        if (solution.demandsUsed().hasContent() && solution.suppliesUsed().hasContent()) {
             return
                     list(
                             optimizationEvent
                                     (REMOVAL
-                                            , solution.demands_used().getLines().get(0).toLinePointer()
+                                            , solution.demandsUsed().getLines().get(0).toLinePointer()
                                             , solution.suppliesUsed().getLines().get(0).toLinePointer()));
         }
         return list();

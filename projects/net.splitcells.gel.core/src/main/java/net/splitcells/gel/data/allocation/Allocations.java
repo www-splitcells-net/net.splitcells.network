@@ -17,8 +17,8 @@ public interface Allocations extends Database, AllocationsLiveView {
     Line allocate(Line demand, Line supply);
 
     default Set<Line> allocationsOf(Line demand, Line supply) {
-        final var allocationsOf = allocations_of_supply(supply);
-        return allocations_of_demand(demand)
+        final var allocationsOf = allocationsOfSupply(supply);
+        return allocationsOfDemand(demand)
                 .stream()
                 .filter(allocationsOf::contains)
                 .collect(toSet());

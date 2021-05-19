@@ -58,18 +58,18 @@ public class UsedSupplySwitcher implements Optimization {
             (SolutionView solution
                     , Set<LinePointer> processedDemands
                     , Set<LinePointer> preocessedSupplies) {
-        if (solution.demands_used().size() >= 2) {
-            final int selectionA = randomness.integer(0, solution.demands_used().size() - 1);
-            final int selectionB = randomness.integer(0, solution.demands_used().size() - 1);
+        if (solution.demandsUsed().size() >= 2) {
+            final int selectionA = randomness.integer(0, solution.demandsUsed().size() - 1);
+            final int selectionB = randomness.integer(0, solution.demandsUsed().size() - 1);
             if (selectionA == selectionB) {
                 return list();
             }
             final var usedDemandA = solution.demands().getLines(selectionA);
-            final var oldAllocationA = solution.allocations_of_demand(usedDemandA).iterator().next();
+            final var oldAllocationA = solution.allocationsOfDemand(usedDemandA).iterator().next();
             final var usedSupplyA = solution.supplyOfAllocation(oldAllocationA);
 
             final var usedDemandB = solution.demands().getLines(selectionB);
-            final var oldAllocationB = solution.allocations_of_demand(usedDemandB).iterator().next();
+            final var oldAllocationB = solution.allocationsOfDemand(usedDemandB).iterator().next();
             final var usedSupplyB = solution.supplyOfAllocation(oldAllocationB);
 
             final var usedDemandAPointer = usedDemandA.toLinePointer();

@@ -52,8 +52,8 @@ public class HistoryI implements History {
                                         , () -> solution.path().withAppended(HISTORY.value())
                                         , META_DATA));
         this.solution = solution;
-        solution.subscribe_to_afterAdditions(this);
-        solution.subscriber_to_beforeRemoval(this);
+        solution.subscribeToAfterAdditions(this);
+        solution.subscriberToBeforeRemoval(this);
     }
 
     @Override
@@ -150,18 +150,18 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void subscribe_to_afterAdditions(AfterAdditionSubscriber subscriber) {
-        allocations.subscribe_to_afterAdditions(subscriber);
+    public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
+        allocations.subscribeToAfterAdditions(subscriber);
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(BeforeRemovalSubscriber subscriber) {
-        allocations.subscriber_to_beforeRemoval(subscriber);
+    public void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
+        allocations.subscriberToBeforeRemoval(subscriber);
     }
 
     @Override
-    public void subscriber_to_afterRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        allocations.subscriber_to_afterRemoval(pirmsNoņemšanasKlausītājs);
+    public void subscriberToAfterRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
+        allocations.subscriberToAfterRemoval(pirmsNoņemšanasKlausītājs);
     }
 
     @Override
@@ -213,13 +213,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database demands_used() {
-        return allocations.demands_used();
+    public Database demandsUsed() {
+        return allocations.demandsUsed();
     }
 
     @Override
-    public Database demands_unused() {
-        return allocations.demands_unused();
+    public Database demandsUnused() {
+        return allocations.demandsUnused();
     }
 
     @Override
@@ -233,13 +233,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Set<Line> allocations_of_supply(Line piedāvājums) {
-        return allocations.allocations_of_supply(piedāvājums);
+    public Set<Line> allocationsOfSupply(Line piedāvājums) {
+        return allocations.allocationsOfSupply(piedāvājums);
     }
 
     @Override
-    public Set<Line> allocations_of_demand(Line prasība) {
-        return allocations.allocations_of_demand(prasība);
+    public Set<Line> allocationsOfDemand(Line prasība) {
+        return allocations.allocationsOfDemand(prasība);
     }
 
     @Override

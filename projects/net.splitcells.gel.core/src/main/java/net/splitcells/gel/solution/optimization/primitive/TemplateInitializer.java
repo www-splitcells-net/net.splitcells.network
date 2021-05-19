@@ -30,7 +30,7 @@ public class TemplateInitializer implements Optimization {
         final Set<Line> usedDemands = setOfUniques();
         final Set<Line> usedSupplies = setOfUniques();
         template.getLines().forEach(line -> {
-            final var demandValues = solution.demands_unused()
+            final var demandValues = solution.demandsUnused()
                     .headerView()
                     .stream()
                     .map(attribute -> line.value(attribute))
@@ -40,7 +40,7 @@ public class TemplateInitializer implements Optimization {
                     .stream()
                     .map(attribute -> line.value(attribute))
                     .collect(toList());
-            final var selectedDemand = solution.demands_unused()
+            final var selectedDemand = solution.demandsUnused()
                     .lookupEquals(demandValues)
                     .filter(e -> !usedDemands.contains(e))
                     .findFirst();

@@ -72,9 +72,9 @@ public abstract class ConstraintAI implements Constraint {
         this.injectionGroup = injectionGroup;
         lines = Databases.database(name + ".lines", this, LINE, INCOMING_CONSTRAINT_GROUP);
         lineProcessing = allocations("linesProcessing", lines, results);
-        lineProcessing.subscribe_to_afterAdditions(ConstraintAI::propagateAddition);
-        lineProcessing.subscriber_to_beforeRemoval(ConstraintAI::propagateRemoval);
-        lines.subscribe_to_afterAdditions(this::process_line_addition);
+        lineProcessing.subscribeToAfterAdditions(ConstraintAI::propagateAddition);
+        lineProcessing.subscriberToBeforeRemoval(ConstraintAI::propagateRemoval);
+        lines.subscribeToAfterAdditions(this::process_line_addition);
     }
 
     protected ConstraintAI() {

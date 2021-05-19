@@ -89,13 +89,13 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Database demands_used() {
-        return this.allocations.demands_used();
+    public Database demandsUsed() {
+        return this.allocations.demandsUsed();
     }
 
     @Override
-    public Database demands_unused() {
-        return this.allocations.demands_unused();
+    public Database demandsUnused() {
+        return this.allocations.demandsUnused();
     }
 
     @Override
@@ -114,8 +114,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public java.util.Set<Line> allocations_of_supply(final Line supply) {
-        return this.allocations.allocations_of_supply(supply);
+    public java.util.Set<Line> allocationsOfSupply(final Line supply) {
+        return this.allocations.allocationsOfSupply(supply);
     }
 
     @Override
@@ -124,8 +124,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public java.util.Set<Line> allocations_of_demand(final Line demand) {
-        return this.allocations.allocations_of_demand(demand);
+    public java.util.Set<Line> allocationsOfDemand(final Line demand) {
+        return this.allocations.allocationsOfDemand(demand);
     }
 
     @Override
@@ -165,18 +165,18 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public void subscribe_to_afterAdditions(final AfterAdditionSubscriber subscriber) {
-        this.allocations.subscribe_to_afterAdditions(subscriber);
+    public void subscribeToAfterAdditions(final AfterAdditionSubscriber subscriber) {
+        this.allocations.subscribeToAfterAdditions(subscriber);
     }
 
     @Override
-    public void subscriber_to_beforeRemoval(final BeforeRemovalSubscriber subscriber) {
-        this.allocations.subscriber_to_beforeRemoval(subscriber);
+    public void subscriberToBeforeRemoval(final BeforeRemovalSubscriber subscriber) {
+        this.allocations.subscriberToBeforeRemoval(subscriber);
     }
 
     @Override
-    public void subscriber_to_afterRemoval(final BeforeRemovalSubscriber subscriber) {
-        this.allocations.subscriber_to_afterRemoval(subscriber);
+    public void subscriberToAfterRemoval(final BeforeRemovalSubscriber subscriber) {
+        this.allocations.subscriberToAfterRemoval(subscriber);
     }
 
     @Override
