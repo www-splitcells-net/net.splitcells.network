@@ -24,7 +24,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     private List<Attribute<? extends Object>> demandAttributes = list();
     private List<List<Object>> demands = list();
-    private Optional<Database> demandsDatabase;
+    private Optional<Database> demandsDatabase = Optional.empty();
 
     private List<Attribute<? extends Object>> supplyAttributes = list();
     private List<List<Object>> supplies = list();
