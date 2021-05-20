@@ -76,7 +76,7 @@ public class SchoolSchedulingTest {
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
                 .withConstraint(r -> {
                     r.forAll(lineValueSelector(line -> line.value(RAIL) == 0))
-                            .then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0, line -> cost(1)));
+                            .then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
                     r.forAll(SUBJECT)
                             .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
                             .then(allDifferent(RAIL));
@@ -115,6 +115,7 @@ public class SchoolSchedulingTest {
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(PREFERRED_SUBJECT))));
                     r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))));
+                    r.forAll(COURSE_POSITION).then(allSame(STUDENT));
                     return r;
                 })
                 .toProblem();
