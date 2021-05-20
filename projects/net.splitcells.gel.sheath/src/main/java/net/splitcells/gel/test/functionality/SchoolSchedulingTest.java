@@ -103,4 +103,14 @@ public class SchoolSchedulingTest {
                 .toProblem();
     }
 
+    private Problem definePupilAllocationsForCourses(Solution solution) {
+        return defineProblem()
+                .withDemands(null)
+                .withSupplyAttributes()
+                .withConstraint(r -> {
+                    return r;
+                })
+                .toProblem();
+    }
+
 }
