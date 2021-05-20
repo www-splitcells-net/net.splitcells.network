@@ -116,6 +116,7 @@ public class SchoolSchedulingTest {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(PREFERRED_SUBJECT))));
                     r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))));
                     r.forAll(COURSE_POSITION).then(allSame(STUDENT));
+                    r.forAll(RAIL).forAll(STUDENT).then(allSame(COURSE_ID));
                     return r;
                 })
                 .toProblem();
