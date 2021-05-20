@@ -22,14 +22,14 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class SchoolSchedulingTest {
 
-    public static final Attribute<Integer> TEACHER = attribute(Integer.class, "teacher");
-    public static final Attribute<Integer> SUBJECT = attribute(Integer.class, "subject");
-    public static final Attribute<Integer> TEACH_SUBJECT_SUITABILITY = attribute(Integer.class, "teach subject suitability");
-    public static final Attribute<Integer> COURSE_ID = attribute(Integer.class, "course id");
-    public static final Attribute<Integer> VINTAGE = attribute(Integer.class, "vintage");
-    public static final Attribute<Integer> REQUIRED_HOURS = attribute(Integer.class, "required hours");
-    public static final Attribute<Integer> ALLOCATED_HOURS = attribute(Integer.class, "allocated hours");
-    public static final Attribute<Integer> RAIL = attribute(Integer.class, "rail");
+    private static final Attribute<Integer> TEACHER = attribute(Integer.class, "teacher");
+    private static final Attribute<Integer> SUBJECT = attribute(Integer.class, "subject");
+    private static final Attribute<Integer> TEACH_SUBJECT_SUITABILITY = attribute(Integer.class, "teach subject suitability");
+    private static final Attribute<Integer> COURSE_ID = attribute(Integer.class, "course id");
+    private static final Attribute<Integer> VINTAGE = attribute(Integer.class, "vintage");
+    private static final Attribute<Integer> REQUIRED_HOURS = attribute(Integer.class, "required hours");
+    private static final Attribute<Integer> ALLOCATED_HOURS = attribute(Integer.class, "allocated hours");
+    private static final Attribute<Integer> RAIL = attribute(Integer.class, "rail");
 
     /**
      * TODO
