@@ -24,7 +24,8 @@ public class SchoolSchedulingTest {
 
     private static final Attribute<Integer> TEACHER = attribute(Integer.class, "teacher");
     private static final Attribute<Integer> SUBJECT = attribute(Integer.class, "subject");
-    private static final Attribute<Integer> TEACH_SUBJECT_SUITABILITY = attribute(Integer.class, "teach subject suitability");
+    private static final Attribute<Integer> TEACH_SUBJECT_SUITABILITY = attribute(Integer.class
+            , "teach subject suitability");
     private static final Attribute<Integer> COURSE_ID = attribute(Integer.class, "course id");
     private static final Attribute<Integer> COURSE_S_VINTAGE = attribute(Integer.class, "course's vintage");
     private static final Attribute<Integer> REQUIRED_HOURS = attribute(Integer.class, "required hours");
@@ -98,7 +99,8 @@ public class SchoolSchedulingTest {
                 .withConstraint(r -> {
                     r.forAll(COURSE_ID).then(allSame(TEACHER));
                     r.forAll(TEACHER)
-                            .then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(TEACH_SUBJECT_SUITABILITY))));
+                            .then(lineValueRater(line -> line.value(SUBJECT).equals
+                                    (line.value(TEACH_SUBJECT_SUITABILITY))));
                     r.forAll(RAIL).forAll(TEACHER).then(hasSize(1));
                     return r;
                 })
