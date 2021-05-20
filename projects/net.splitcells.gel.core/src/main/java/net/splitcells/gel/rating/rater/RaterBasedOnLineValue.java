@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
 
@@ -43,6 +44,10 @@ public class RaterBasedOnLineValue implements Rater {
                 return description;
             }
         });
+    }
+
+    public static Rater lineValueRater(Predicate<Line> classifier) {
+        return lineValueRater(classifier, line -> cost(1));
     }
 
     public static Rater lineValueRater(Predicate<Line> classifier, Function<Line, Rating> rater) {
