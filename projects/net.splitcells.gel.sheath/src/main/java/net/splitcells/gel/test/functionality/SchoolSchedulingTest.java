@@ -113,6 +113,7 @@ public class SchoolSchedulingTest {
                 .withSupplyAttributes2(solution.headerView())
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(PREFERRED_SUBJECT))));
+                    r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))));
                     return r;
                 })
                 .toProblem();
