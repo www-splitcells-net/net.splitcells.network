@@ -28,6 +28,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     private List<Attribute<? extends Object>> supplyAttributes = list();
     private List<List<Object>> supplies = list();
+    private Optional<Database> suppliesDatabase = Optional.empty();
 
     private Constraint constraint;
 
@@ -45,13 +46,16 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
             demands.forEach(demand -> d.addTranslated(demand));
             return d;
         });
-        final var supplyDatabase = Databases.database(SUPPLIES.value(), null, supplyAttributes);
-        supplies.forEach(supplies -> supplyDatabase.addTranslated(supplies));
+        final var problemsSupplies = suppliesDatabase.orElseGet(() -> {
+            final var s = Databases.database(SUPPLIES.value(), null, supplyAttributes);
+            supplies.forEach(supply -> s.addTranslated(supply));
+            return s;
+        });
         return problem(
                 allocations(
                         Solution.class.getSimpleName()
                         , problemsDemands
-                        , supplyDatabase)
+                        , problemsSupplies)
                 , constraint);
     }
 
@@ -95,6 +99,12 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     @Override
     public DefineSupply withSupplyAttributes(List<Attribute<? extends Object>> supplyAttributes) {
+        this.supplyAttributes = supplyAttributes.mapped(a -> (Attribute<Object>) a);
+        return this;
+    }
+
+    @Override
+    public DefineSupply withSupplyAttributes2(List<Attribute<Object>> supplyAttributes) {
         this.supplyAttributes = supplyAttributes.mapped(a -> (Attribute<Object>) a);
         return this;
     }

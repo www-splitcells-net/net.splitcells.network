@@ -108,8 +108,8 @@ public class SchoolSchedulingTest {
 
     private Problem definePupilAllocationsForCourses(Solution solution) {
         return defineProblem()
-                .withDemandAttributes2(solution.headerView())
-                .withSupplyAttributes(PUPIL, PUPIL_S_VINTAGE, PREFERRED_SUBJECT)
+                .withDemandAttributes(PUPIL, PUPIL_S_VINTAGE, PREFERRED_SUBJECT)
+                .withSupplyAttributes2(solution.headerView())
                 .withConstraint(r -> {
                     return r;
                 })

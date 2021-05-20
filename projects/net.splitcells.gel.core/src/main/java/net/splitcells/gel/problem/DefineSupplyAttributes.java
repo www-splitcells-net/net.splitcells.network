@@ -8,4 +8,6 @@ public interface DefineSupplyAttributes {
     DefineSupply withSupplyAttributes(Attribute<?>... supplyAttributes);
 
     DefineSupply withSupplyAttributes(List<Attribute<?>> supplyAttributes);
+
+    DefineSupply withSupplyAttributes2(List<Attribute<Object>> supplyAttributes);
 }
