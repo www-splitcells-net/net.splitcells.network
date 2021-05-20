@@ -98,7 +98,7 @@ public class SchoolSchedulingTest {
                 .withConstraint(r -> {
                     r.forAll(COURSE_ID).then(allSame(TEACHER));
                     r.forAll(TEACHER)
-                            .then(lineValueRater(line -> line.value(SUBJECT).equals(TEACH_SUBJECT_SUITABILITY)
+                            .then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(TEACH_SUBJECT_SUITABILITY))
                                     , line -> cost(1)));
                     r.forAll(RAIL).forAll(TEACHER).then(hasSize(1));
                     return r;
