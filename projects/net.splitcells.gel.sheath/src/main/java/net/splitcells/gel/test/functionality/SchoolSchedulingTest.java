@@ -34,6 +34,7 @@ public class SchoolSchedulingTest {
     private static final Attribute<Integer> STUDENT = attribute(Integer.class, "student");
     private static final Attribute<Integer> STUDENT_S_VINTAGE = attribute(Integer.class, "student's vintage");
     private static final Attribute<Integer> PREFERRED_SUBJECT = attribute(Integer.class, "preferred subject");
+    private static final Attribute<Integer> COURSE_POSITION = attribute(Integer.class, "course position");
 
     /**
      * TODO
