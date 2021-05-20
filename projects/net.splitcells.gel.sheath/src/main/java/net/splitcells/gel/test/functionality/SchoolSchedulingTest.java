@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.database.Databases.database2;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.AllDifferent.allDifferent;
 import static net.splitcells.gel.rating.rater.AllSame.allSame;
@@ -109,8 +111,9 @@ public class SchoolSchedulingTest {
     }
 
     private Problem definePupilAllocationsForCourses(Solution solution) {
+        final var demands = database2(solution.headerView());
         return defineProblem()
-                .withDemandAttributes(STUDENT, STUDENT_S_VINTAGE, PREFERRED_SUBJECT)
+                .withDemands(demands)
                 .withSupplyAttributes2(solution.headerView())
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(PREFERRED_SUBJECT))));

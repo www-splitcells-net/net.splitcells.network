@@ -39,6 +39,10 @@ public class Databases extends ResourceI<DatabaseFactory> {
         return environment().config().configValue(Databases.class).database(attributes);
     }
 
+    public static Database database2(List<Attribute<Object>> attributes) {
+        return environment().config().configValue(Databases.class).database(attributes.mapped(a -> (Attribute<Object>) a));
+    }
+
     public static Database databaseOfFods(List<Attribute<?>> attributes, Element fods) {
         return environment().config().configValue(Databases.class).databaseOfFods(attributes, fods);
     }
