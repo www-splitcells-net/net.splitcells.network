@@ -26,10 +26,13 @@ public class SchoolSchedulingTest {
     private static final Attribute<Integer> SUBJECT = attribute(Integer.class, "subject");
     private static final Attribute<Integer> TEACH_SUBJECT_SUITABILITY = attribute(Integer.class, "teach subject suitability");
     private static final Attribute<Integer> COURSE_ID = attribute(Integer.class, "course id");
-    private static final Attribute<Integer> VINTAGE = attribute(Integer.class, "vintage");
+    private static final Attribute<Integer> COURSE_S_VINTAGE = attribute(Integer.class, "course's vintage");
     private static final Attribute<Integer> REQUIRED_HOURS = attribute(Integer.class, "required hours");
     private static final Attribute<Integer> ALLOCATED_HOURS = attribute(Integer.class, "allocated hours");
     private static final Attribute<Integer> RAIL = attribute(Integer.class, "rail");
+    private static final Attribute<Integer> PUPIL = attribute(Integer.class, "pupil");
+    private static final Attribute<Integer> PUPIL_S_VINTAGE = attribute(Integer.class, "pupil's vintage");
+    private static final Attribute<Integer> PREFERRED_SUBJECT = attribute(Integer.class, "preferred subject");
 
     /**
      * TODO
@@ -67,7 +70,7 @@ public class SchoolSchedulingTest {
 
     private Problem defineRailsForSchoolScheduling() {
         return defineProblem()
-                .withDemandAttributes(COURSE_ID, SUBJECT, VINTAGE, REQUIRED_HOURS)
+                .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, REQUIRED_HOURS)
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
                 .withConstraint(r -> {
                     r.forAll(lineValueSelector(line -> line.value(RAIL) == 0))
@@ -106,7 +109,7 @@ public class SchoolSchedulingTest {
     private Problem definePupilAllocationsForCourses(Solution solution) {
         return defineProblem()
                 .withDemandAttributes2(solution.headerView())
-                .withSupplyAttributes()
+                .withSupplyAttributes(PUPIL, PUPIL_S_VINTAGE, PREFERRED_SUBJECT)
                 .withConstraint(r -> {
                     return r;
                 })
