@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.Databases;
@@ -68,6 +69,12 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     @Override
     public DefineDemands withDemandAttributes(Attribute<? extends Object>... demandAttributes) {
+        this.demandAttributes = list(demandAttributes).mapped(a -> (Attribute<Object>) a);
+        return this;
+    }
+
+    @Override
+    public DefineDemands withDemandAttributes2(List<Attribute<Object>> demandAttributes) {
         this.demandAttributes = list(demandAttributes).mapped(a -> (Attribute<Object>) a);
         return this;
     }

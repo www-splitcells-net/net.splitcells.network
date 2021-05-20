@@ -7,6 +7,8 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 public interface DefineDemandAttributes {
     DefineDemands withDemandAttributes(Attribute<?>... demandAttributes);
 
+    DefineDemands withDemandAttributes2(List<Attribute<Object>> demandAttributes);
+
     DefineDemands withDemandAttributes(List<Attribute<?>> demandAttributes);
 
     DefineSupplyAttributes withDemands(Database demands);
