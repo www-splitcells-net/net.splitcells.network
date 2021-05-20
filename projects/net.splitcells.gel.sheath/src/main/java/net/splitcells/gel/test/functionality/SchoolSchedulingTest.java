@@ -30,8 +30,8 @@ public class SchoolSchedulingTest {
     private static final Attribute<Integer> REQUIRED_HOURS = attribute(Integer.class, "required hours");
     private static final Attribute<Integer> ALLOCATED_HOURS = attribute(Integer.class, "allocated hours");
     private static final Attribute<Integer> RAIL = attribute(Integer.class, "rail");
-    private static final Attribute<Integer> PUPIL = attribute(Integer.class, "pupil");
-    private static final Attribute<Integer> PUPIL_S_VINTAGE = attribute(Integer.class, "pupil's vintage");
+    private static final Attribute<Integer> STUDENT = attribute(Integer.class, "student");
+    private static final Attribute<Integer> STUDENT_S_VINTAGE = attribute(Integer.class, "student's vintage");
     private static final Attribute<Integer> PREFERRED_SUBJECT = attribute(Integer.class, "preferred subject");
 
     /**
@@ -108,7 +108,7 @@ public class SchoolSchedulingTest {
 
     private Problem definePupilAllocationsForCourses(Solution solution) {
         return defineProblem()
-                .withDemandAttributes(PUPIL, PUPIL_S_VINTAGE, PREFERRED_SUBJECT)
+                .withDemandAttributes(STUDENT, STUDENT_S_VINTAGE, PREFERRED_SUBJECT)
                 .withSupplyAttributes2(solution.headerView())
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(PREFERRED_SUBJECT))));
