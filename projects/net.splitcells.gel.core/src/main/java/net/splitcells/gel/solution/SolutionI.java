@@ -3,7 +3,7 @@ package net.splitcells.gel.solution;
 import net.splitcells.dem.utils.NotImplementedYet;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.database.Synchronization;
+import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.table.Line;
@@ -172,7 +172,7 @@ public class SolutionI implements Solution {
     }
 
     @java.lang.SuppressWarnings("all")
-    public void synchronize(Synchronization subscriber) {
+    public void synchronize(DatabaseSynchronization subscriber) {
         this.problem.synchronize(subscriber);
     }
 

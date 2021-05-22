@@ -1,5 +1,7 @@
 package net.splitcells.gel.test.functionality;
 
+import net.splitcells.gel.data.database.DatabaseSynchronization;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.RegulatedLength;

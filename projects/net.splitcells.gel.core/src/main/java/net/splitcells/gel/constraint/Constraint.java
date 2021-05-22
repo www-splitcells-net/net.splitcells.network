@@ -24,7 +24,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.gel.data.database.Synchronization;
+import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import org.w3c.dom.Element;
@@ -35,14 +35,12 @@ import net.splitcells.dem.utils.reflection.PubliclyConstructed;
 import net.splitcells.dem.utils.reflection.PubliclyTyped;
 import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
-import net.splitcells.gel.data.database.AfterAdditionSubscriber;
-import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.structure.LocalRating;
 import net.splitcells.gel.rating.structure.MetaRating;
 import net.splitcells.gel.rating.structure.Rating;
 
-public interface Constraint extends Synchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
+public interface Constraint extends DatabaseSynchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
     Attribute<Line> LINE = attribute(Line.class, "line");
     Attribute<java.util.List<Constraint>> PROPAGATION_TO = listAttribute(Constraint.class, "propagation to");
     Attribute<GroupId> INCOMING_CONSTRAINT_GROUP = attribute(GroupId.class, "incoming constraint group");

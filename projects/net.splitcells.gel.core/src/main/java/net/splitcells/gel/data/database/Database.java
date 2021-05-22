@@ -22,7 +22,7 @@ public interface Database extends Table {
         add(newLine);
     }
 
-    default void synchronize(Synchronization subscriber) {
+    default void synchronize(DatabaseSynchronization subscriber) {
         subscribeToAfterAdditions(subscriber);
         subscriberToBeforeRemoval(subscriber);
     }

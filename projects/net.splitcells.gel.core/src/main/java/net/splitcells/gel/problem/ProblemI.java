@@ -2,7 +2,7 @@ package net.splitcells.gel.problem;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.database.Synchronization;
+import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -161,7 +161,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public void synchronize(Synchronization subscriber) {
+    public void synchronize(DatabaseSynchronization subscriber) {
         this.allocations.synchronize(subscriber);
     }
 
