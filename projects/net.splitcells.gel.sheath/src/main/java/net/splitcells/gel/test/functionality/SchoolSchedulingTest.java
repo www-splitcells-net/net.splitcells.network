@@ -114,6 +114,17 @@ public class SchoolSchedulingTest {
 
     private Problem definePupilAllocationsForCourses(Solution solution) {
         final var demands = database2(solution.headerView());
+        solution.synchronize(new DatabaseSynchronization() {
+            @Override
+            public void register_addition(Line line) {
+                demands.add(line);
+            }
+
+            @Override
+            public void register_before_removal(Line line) {
+                demands.remove(line.index());
+            }
+        });
         return defineProblem()
                 .withDemands(demands)
                 .withSupplyAttributes2(solution.headerView())
