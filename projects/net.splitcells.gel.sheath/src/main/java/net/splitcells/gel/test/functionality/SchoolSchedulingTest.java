@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -112,17 +115,16 @@ public class SchoolSchedulingTest {
                 .toProblem();
     }
 
-    private Problem definePupilAllocationsForCourses(Solution solution) {
+    private Problem definePupilAllocationsForCourses(Solution solution, int maximumStudentsPerCourse) {
         final var demands = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
             public void register_addition(Line line) {
-                demands.add(line);
+                rangeClosed(1, maximumStudentsPerCourse).forEach(i -> demands.addTranslated(line.values()));
             }
 
             @Override
             public void register_before_removal(Line line) {
-                demands.remove(line.index());
             }
         });
         return defineProblem()
