@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * TODO Make tests deterministic, otherwise the test can cause a error from time to time."
- * 
+ *
  */
 public class SimplifiedAnnealingProblemTest {
 
@@ -100,7 +100,7 @@ public class SimplifiedAnnealingProblemTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void testProbability() {
-        final var probabilty = .5f;
+        final var propabilty = .5f;
         final var tryCount = 100;
         final var defianceCost = 7;
         final var lineCount = 3;
@@ -115,8 +115,8 @@ public class SimplifiedAnnealingProblemTest {
                 .asSolution();
         solution.optimize(linearInitialization());
         assertThat(solution.constraint().rating()).isEqualTo(cost(defianceCost * lineCount));
-        final var testSubject = simplifiedAnnealingProblem(solution, i -> probabilty);
-        assertPlausibility(probabilty, tryCount,
+        final var testSubject = simplifiedAnnealingProblem(solution, i -> propabilty);
+        assertPlausibility(propabilty, tryCount,
                 (int) rangeClosed(1, 100)
                         .mapToObj(i -> testSubject.constraint().rating().equalz(cost(defianceCost * lineCount)))
                         .filter(result -> result)
