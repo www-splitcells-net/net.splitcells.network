@@ -94,17 +94,17 @@ public class HasSize implements Rater {
 
     private Rating rating(Table lines, boolean beforeRemoval) {
         final Rating rating;
-        final int size;
+        final int actualSize;
         if (beforeRemoval) {
-            size = lines.size() - 1;
+            actualSize = lines.size() - 1;
         } else {
-            size = lines.size();
+            actualSize = lines.size();
         }
-        if (size > 0) {
-            final int difference = abs(targetSize - size);
-            rating = cost(difference / ((double) size));
+        if (actualSize > 0) {
+            final int difference = abs(targetSize - actualSize);
+            rating = cost(difference / ((double) actualSize));
         } else {
-            throw new AssertionError("negative size is: " + size);
+            throw new AssertionError("negative size is: " + actualSize);
         }
         return rating;
     }
