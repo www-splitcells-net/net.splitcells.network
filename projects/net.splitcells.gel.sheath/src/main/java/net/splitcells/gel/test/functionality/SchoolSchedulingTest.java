@@ -125,6 +125,10 @@ public class SchoolSchedulingTest {
 
             @Override
             public void register_before_removal(Line line) {
+                demands.columnView(COURSE_ID)
+                        .lookup(line.value(COURSE_ID))
+                        .getLines()
+                        .forEach(demands::remove);
             }
         });
         return defineProblem()
