@@ -101,8 +101,8 @@ public class HasSize implements Rater {
             size = lines.size();
         }
         if (size > 0) {
-            final int atšķirība = abs(targetSize - size);
-            rating = cost(atšķirība / ((double) size));
+            final int difference = abs(targetSize - size);
+            rating = cost(difference / ((double) size));
         } else {
             throw new AssertionError("negative size is: " + size);
         }
