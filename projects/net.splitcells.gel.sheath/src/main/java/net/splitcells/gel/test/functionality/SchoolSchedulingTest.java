@@ -22,6 +22,7 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.AllDifferent.allDifferent;
 import static net.splitcells.gel.rating.rater.AllSame.allSame;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.MinimalSize.minimalSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
@@ -133,6 +134,7 @@ public class SchoolSchedulingTest {
                     r.forAll(COURSE_POSITION).then(allSame(STUDENT));
                     r.forAll(RAIL).forAll(STUDENT).then(allSame(COURSE_ID));
                     r.forAll(COURSE_ID).then(hasSize(optimalNumberOfStudentsPerCourse));
+                    r.forAll(COURSE_ID).then(minimalSize(minimalNumberOfStudentsPerCourse));
                     return r;
                 })
                 .toProblem()
