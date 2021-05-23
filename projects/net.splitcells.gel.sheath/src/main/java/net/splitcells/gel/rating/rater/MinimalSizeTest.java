@@ -24,36 +24,36 @@ public class MinimalSizeTest {
         {
             assertThat(testValue.defying()).isEmpty();
             assertThat(testValue.complying()).isEmpty();
-            assertThat(testValue.rating()).isEqualTo(cost(1));
-        }
-        {
-            testValue.register(firstTestValue);
-            assertThat(testValue.defying()).isEmpty();
-            assertThat(testValue.complying()).hasSize(1);
             assertThat(testValue.rating()).isEqualTo(noCost());
         }
         {
-            testValue.register(secondTestValue);
-            assertThat(testValue.defying()).hasSize(2);
+            testValue.register(firstTestValue);
+            assertThat(testValue.defying()).hasSize(1);
             assertThat(testValue.complying()).isEmpty();
+            assertThat(testValue.rating()).isEqualTo(cost(1));
+        }
+        {
+            testValue.register(secondTestValue);
+            assertThat(testValue.defying()).isEmpty();
+            assertThat(testValue.complying()).hasSize(2);
             assertThat(testValue.rating()).isEqualTo(noCost());
         }
         {
             testValue.register(thirdTestVaLUE);
-            assertThat(testValue.defying()).hasSize(3);
-            assertThat(testValue.complying()).isEmpty();
+            assertThat(testValue.defying()).isEmpty();
+            assertThat(testValue.complying()).hasSize(3);
             assertThat(testValue.rating()).isEqualTo(noCost());
         }
         {
             testValue.register_before_removal(thirdTestVaLUE);
-            assertThat(testValue.defying()).hasSize(2);
-            assertThat(testValue.complying()).isEmpty();
+            assertThat(testValue.defying()).isEmpty();
+            assertThat(testValue.complying()).hasSize(2);
             assertThat(testValue.rating()).isEqualTo(noCost());
         }
         {
             testValue.register_before_removal(secondTestValue);
-            assertThat(testValue.defying()).isEmpty();
-            assertThat(testValue.complying()).hasSize(1);
+            assertThat(testValue.defying()).hasSize(1);
+            assertThat(testValue.complying()).isEmpty();
             assertThat(testValue.rating()).isEqualTo(cost(1));
         }
         {
