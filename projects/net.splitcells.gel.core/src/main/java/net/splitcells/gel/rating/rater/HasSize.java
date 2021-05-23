@@ -7,6 +7,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 import java.util.Collection;
 
@@ -100,7 +101,9 @@ public class HasSize implements Rater {
         } else {
             actualSize = lines.size();
         }
-        if (actualSize > 0) {
+        if (actualSize == 0) {
+            rating = noCost();
+        } else if (actualSize > 0) {
             final int difference = abs(targetSize - actualSize);
             rating = cost(difference / ((double) actualSize));
         } else {

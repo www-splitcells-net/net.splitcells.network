@@ -100,7 +100,9 @@ public class MinimalSize implements Rater {
         } else {
             actualSize = lines.size();
         }
-        if (actualSize < minimalSize) {
+        if (actualSize == 0) {
+            rating = noCost();
+        } else if (actualSize < minimalSize) {
             final int difference = minimalSize - actualSize;
             rating = cost(difference / ((double) actualSize));
         } else {
