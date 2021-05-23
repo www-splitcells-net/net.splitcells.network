@@ -22,6 +22,11 @@ public interface Database extends Table {
         add(newLine);
     }
 
+    /**
+     * This methods signifies, that the removal and addition subscribers belong together.
+     *
+     * @param subscriber This is the synchronize.
+     */
     default void synchronize(DatabaseSynchronization subscriber) {
         subscribeToAfterAdditions(subscriber);
         subscriberToBeforeRemoval(subscriber);
