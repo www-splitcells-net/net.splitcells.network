@@ -50,11 +50,11 @@ public class SchoolSchedulingTest {
     @Disabled
     @Test
     public void testSchoolScheduling() {
-        schoolScheduling(30, 15);
+        schoolScheduling(15, 30);
         fail("Test not implemented");
     }
 
-    private Solution schoolScheduling(int maximumStudentsPerCourse, int minimalNumberOfStudentsPerCourse) {
+    private Solution schoolScheduling(int minimalNumberOfStudentsPerCourse, int maximumStudentsPerCourse) {
         return definePupilAllocationsForCourses
                 (defineTeacherAllocationForCourses
                                 (defineRailsForSchoolScheduling())
