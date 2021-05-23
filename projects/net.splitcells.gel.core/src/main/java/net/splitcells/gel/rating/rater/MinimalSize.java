@@ -24,7 +24,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 
 public class MinimalSize implements Rater {
-    public static MinimalSize hasSize(int minimalSize) {
+    public static MinimalSize minimalSize(int minimalSize) {
         return new MinimalSize(minimalSize);
     }
 
