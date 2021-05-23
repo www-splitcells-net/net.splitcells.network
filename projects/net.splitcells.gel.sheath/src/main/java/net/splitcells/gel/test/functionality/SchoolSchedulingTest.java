@@ -56,13 +56,13 @@ public class SchoolSchedulingTest {
 
     private Solution schoolScheduling(int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
-            , int maximumStudentsPerCourse) {
+            , int maximumNumberOfStudentsPerCourse) {
         return definePupilAllocationsForCourses
                 (defineTeacherAllocationForCourses
                                 (defineRailsForSchoolScheduling())
                         , minimalNumberOfStudentsPerCourse
                         , optimalNumberOfStudentsPerCourse
-                        , maximumStudentsPerCourse);
+                        , maximumNumberOfStudentsPerCourse);
     }
 
     private Solution defineRailsForSchoolScheduling() {
@@ -108,12 +108,12 @@ public class SchoolSchedulingTest {
     private Solution definePupilAllocationsForCourses(Solution solution
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
-            , int maximumStudentsPerCourse) {
+            , int maximumNumberOfStudentsPerCourse) {
         final var demands = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
             public void register_addition(Line line) {
-                rangeClosed(1, maximumStudentsPerCourse).forEach(i -> demands.addTranslated(line.values()));
+                rangeClosed(1, maximumNumberOfStudentsPerCourse).forEach(i -> demands.addTranslated(line.values()));
             }
 
             @Override
