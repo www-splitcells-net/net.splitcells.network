@@ -3,14 +3,11 @@ package net.splitcells.gel.test.functionality;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.RegulatedLength;
 import net.splitcells.gel.solution.Solution;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
@@ -22,9 +19,8 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.AllDifferent.allDifferent;
 import static net.splitcells.gel.rating.rater.AllSame.allSame;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
-import static net.splitcells.gel.rating.rater.MinimalSize.minimalSize;
+import static net.splitcells.gel.rating.rater.HasMinimalSize.hasMinimalSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
-import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -134,7 +130,7 @@ public class SchoolSchedulingTest {
                     r.forAll(COURSE_POSITION).then(allSame(STUDENT));
                     r.forAll(RAIL).forAll(STUDENT).then(allSame(COURSE_ID));
                     r.forAll(COURSE_ID).then(hasSize(optimalNumberOfStudentsPerCourse));
-                    r.forAll(COURSE_ID).then(minimalSize(minimalNumberOfStudentsPerCourse));
+                    r.forAll(COURSE_ID).then(hasMinimalSize(minimalNumberOfStudentsPerCourse));
                     return r;
                 })
                 .toProblem()

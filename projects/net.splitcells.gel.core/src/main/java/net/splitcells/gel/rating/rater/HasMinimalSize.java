@@ -9,7 +9,6 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.structure.Rating;
-import net.splitcells.gel.rating.type.Cost;
 import org.w3c.dom.Node;
 
 import java.util.Collection;
@@ -23,15 +22,15 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 
-public class MinimalSize implements Rater {
-    public static MinimalSize minimalSize(int minimalSize) {
-        return new MinimalSize(minimalSize);
+public class HasMinimalSize implements Rater {
+    public static HasMinimalSize hasMinimalSize(int minimalSize) {
+        return new HasMinimalSize(minimalSize);
     }
 
     private final int minimalSize;
     private final List<Discoverable> contexts = list();
 
-    protected MinimalSize(int minimalSize) {
+    protected HasMinimalSize(int minimalSize) {
         this.minimalSize = minimalSize;
     }
 
@@ -68,7 +67,7 @@ public class MinimalSize implements Rater {
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.elementWithChildren(MinimalSize.class.getSimpleName());
+        final var argumentation = Xml.elementWithChildren(HasMinimalSize.class.getSimpleName());
         argumentation.appendChild(
                 Xml.elementWithChildren("minimal-size"
                         , Xml.textNode(minimalSize + "")));
@@ -113,18 +112,18 @@ public class MinimalSize implements Rater {
 
     @Override
     public Class<? extends Rater> type() {
-        return MinimalSize.class;
+        return HasMinimalSize.class;
     }
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.elementWithChildren(MinimalSize.class.getSimpleName(), Xml.textNode("" + minimalSize)));
+        return list(() -> Xml.elementWithChildren(HasMinimalSize.class.getSimpleName(), Xml.textNode("" + minimalSize)));
     }
 
     @Override
     public boolean equals(Object arg) {
-        if (arg != null && arg instanceof MinimalSize) {
-            return this.minimalSize == ((MinimalSize) arg).minimalSize;
+        if (arg != null && arg instanceof HasMinimalSize) {
+            return this.minimalSize == ((HasMinimalSize) arg).minimalSize;
         }
         return false;
     }

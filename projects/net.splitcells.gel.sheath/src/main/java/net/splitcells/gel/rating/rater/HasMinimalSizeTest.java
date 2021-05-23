@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.data.database.Databases.database;
-import static net.splitcells.gel.rating.rater.MinimalSize.minimalSize;
+import static net.splitcells.gel.rating.rater.HasMinimalSize.hasMinimalSize;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MinimalSizeTest {
+public class HasMinimalSizeTest {
     @Test
     public void testRating() {
         final var lineSupplier = database();
-        final var testValue = Then.then(minimalSize(2));
+        final var testValue = Then.then(hasMinimalSize(2));
         assertThat(testValue.complying()).isEmpty();
         assertThat(testValue.defying()).isEmpty();
         final var firstTestValue = lineSupplier.addTranslated(list());
