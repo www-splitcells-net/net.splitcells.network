@@ -15,6 +15,10 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * TODO Make tests deterministic, otherwise the test can cause a error from time to time."
+ * 
+ */
 public class SimplifiedAnnealingProblemTest {
 
     @Tag(INTEGRATION_TEST)
