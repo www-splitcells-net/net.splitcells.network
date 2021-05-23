@@ -54,11 +54,12 @@ public class SchoolSchedulingTest {
         fail("Test not implemented");
     }
 
-    private Solution schoolScheduling(int maximumStudentsPerCourse) {
+    private Solution schoolScheduling(int maximumStudentsPerCourse, int minimalNumberOfStudentsPerCourse) {
         return definePupilAllocationsForCourses
                 (defineTeacherAllocationForCourses
                                 (defineRailsForSchoolScheduling())
-                        , maximumStudentsPerCourse);
+                        , maximumStudentsPerCourse
+                        , minimalNumberOfStudentsPerCourse);
     }
 
     private Solution defineRailsForSchoolScheduling() {
@@ -101,7 +102,8 @@ public class SchoolSchedulingTest {
                 .toSolution();
     }
 
-    private Solution definePupilAllocationsForCourses(Solution solution, int maximumStudentsPerCourse) {
+    private Solution definePupilAllocationsForCourses(Solution solution, int maximumStudentsPerCourse
+            , int minimalNumberOfStudentsPerCourse) {
         final var demands = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
