@@ -50,12 +50,14 @@ public class SchoolSchedulingTest {
     @Disabled
     @Test
     public void testSchoolScheduling() {
-        final var maximumStudentsPerCourse = 20;
-        definePupilAllocationsForCourses
+        fail("Test not implemented");
+    }
+    
+    private Solution schoolScheduling(int maximumStudentsPerCourse) {
+        return definePupilAllocationsForCourses
                 (defineTeacherAllocationForCourses
                                 (defineRailsForSchoolScheduling())
                         , maximumStudentsPerCourse);
-        fail("Test not implemented");
     }
 
     private Solution defineRailsForSchoolScheduling() {
