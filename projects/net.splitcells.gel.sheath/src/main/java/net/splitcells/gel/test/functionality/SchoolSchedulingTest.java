@@ -50,34 +50,15 @@ public class SchoolSchedulingTest {
     @Disabled
     @Test
     public void testSchoolScheduling() {
-        /*final var sessionsByTeachers = define_problem()
-                .withDemandAttributes(TEACHER, SUBJECT, SUBJECT_LENGTH)
-                .withSupplyAttributes(SESSION_LENGTH)
-                .withConstraint(null)
-                .toProblem()
-                .toSolution();
-        final var teachersActivityParallelism = define_problem()
-                .withDemandAttributes()
-                .withSupplyAttributes(PARALLEL_EXECUTION_GROUPS)
-                .withConstraint(null)
-                .toProblem()
-                .toSolution();
-        final var studentAssignment = define_problem()
-                .withDemandAttributes()
-                .withSupplyAttributes(STUDENT, SUBJECT_REQUIRED)
-                .withConstraint(null)
-                .toProblem()
-                .toSolution();
-        final var schoolScheduling = define_problem()
-                .withDemandAttributes()
-                .withSupplyAttributes(WEEKDAY, HOUR, ROOM_NUMBER)
-                .withConstraint(null)
-                .toProblem()
-                .toSolution();*/
+        final var maximumStudentsPerCourse = 20;
+        definePupilAllocationsForCourses
+                (defineTeacherAllocationForCourses
+                                (defineRailsForSchoolScheduling())
+                        , maximumStudentsPerCourse);
         fail("Test not implemented");
     }
 
-    private Problem defineRailsForSchoolScheduling() {
+    private Solution defineRailsForSchoolScheduling() {
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, REQUIRED_HOURS)
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
@@ -90,7 +71,8 @@ public class SchoolSchedulingTest {
                     r.forAll(COURSE_ID).then(RegulatedLength.regulatedLength(REQUIRED_HOURS, ALLOCATED_HOURS));
                     r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;
-                }).toProblem();
+                }).toProblem()
+                .toSolution();
     }
 
     /**
@@ -100,7 +82,7 @@ public class SchoolSchedulingTest {
      * @param solution The demands of this problem.
      * @return A problem modelling allocations of teachers to courses.
      */
-    private Problem defineTeacherAllocationForCourses(Solution solution) {
+    private Solution defineTeacherAllocationForCourses(Solution solution) {
         return defineProblem()
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
@@ -112,10 +94,11 @@ public class SchoolSchedulingTest {
                     r.forAll(RAIL).forAll(TEACHER).then(hasSize(1));
                     return r;
                 })
-                .toProblem();
+                .toProblem()
+                .toSolution();
     }
 
-    private Problem definePupilAllocationsForCourses(Solution solution, int maximumStudentsPerCourse) {
+    private Solution definePupilAllocationsForCourses(Solution solution, int maximumStudentsPerCourse) {
         final var demands = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
@@ -141,7 +124,8 @@ public class SchoolSchedulingTest {
                     r.forAll(RAIL).forAll(STUDENT).then(allSame(COURSE_ID));
                     return r;
                 })
-                .toProblem();
+                .toProblem()
+                .toSolution();
     }
 
 }
