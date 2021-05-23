@@ -132,6 +132,7 @@ public class SchoolSchedulingTest {
                     r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))));
                     r.forAll(COURSE_POSITION).then(allSame(STUDENT));
                     r.forAll(RAIL).forAll(STUDENT).then(allSame(COURSE_ID));
+                    r.forAll(COURSE_ID).then(hasSize(optimalNumberOfStudentsPerCourse));
                     return r;
                 })
                 .toProblem()
