@@ -50,7 +50,7 @@ public class SchoolSchedulingTest {
     @Disabled
     @Test
     public void testSchoolScheduling() {
-        schoolScheduling(30);
+        schoolScheduling(30, 15);
         fail("Test not implemented");
     }
 
