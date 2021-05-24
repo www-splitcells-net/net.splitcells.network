@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-if [ system.ssh.server.require 2>&1 >/dev/null ]; then
-	exit
-fi
+system.ssh.server.require 2>&1 >/dev/null && exit
 # TODO Create script to disable passwordless authentication:
 	# Replace string "PasswordAuthentication yes" by "PasswordAuthentication no" in /etc/ssh/sshd_config.
 if [ "1" -eq "$(system.is.Ubuntu)" ]; then
