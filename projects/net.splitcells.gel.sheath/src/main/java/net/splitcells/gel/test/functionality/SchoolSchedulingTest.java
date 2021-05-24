@@ -56,7 +56,7 @@ public class SchoolSchedulingTest {
             , int maximumNumberOfStudentsPerCourse) {
         return definePupilAllocationsForCourses
                 (defineTeacherAllocationForCourses
-                                (defineRailsForSchoolScheduling()
+                                (defineRailsForSchoolScheduling(2)
                                         , 56
                                         , 30
                                         , 56d / 158d
@@ -66,7 +66,7 @@ public class SchoolSchedulingTest {
                         , maximumNumberOfStudentsPerCourse);
     }
 
-    private Solution defineRailsForSchoolScheduling() {
+    private Solution defineRailsForSchoolScheduling(int numberOfVintages) {
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, REQUIRED_HOURS)
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
