@@ -56,9 +56,8 @@ public class SchoolSchedulingTest {
             , int maximumNumberOfStudentsPerCourse) {
         return defineStudentAllocationsForCourses
                 (defineTeacherAllocationForCourses
-                                (defineRailsForSchoolScheduling(2, 30, 410d / 158d)
+                                (defineRailsForSchoolScheduling(2, 30, 30, 410d / 158d)
                                         , 56
-                                        , 30
                                         , 56d / 158d)
                         , 92
                         , 12
@@ -67,7 +66,7 @@ public class SchoolSchedulingTest {
                         , maximumNumberOfStudentsPerCourse);
     }
 
-    private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfCourses
+    private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
             , double averageCourseLength) {
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
@@ -93,7 +92,6 @@ public class SchoolSchedulingTest {
      * @return A problem modelling allocations of teachers to courses.
      */
     private Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
-            , int numberOfSubjects
             , double averageNumberOfSubjectsPerTeacher) {
         return defineProblem()
                 .withDemands(solution)
