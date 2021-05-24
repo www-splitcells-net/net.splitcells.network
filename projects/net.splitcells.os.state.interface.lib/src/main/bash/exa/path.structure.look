@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# TODO Can be installed via "cargo install exa".
+# Exa is licensed under MIT license.
+~/.cargo/bin/exa --tree --level=2

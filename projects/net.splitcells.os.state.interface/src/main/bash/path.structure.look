@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+command.managed.execute disjunction path.structure.look
