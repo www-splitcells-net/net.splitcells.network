@@ -57,7 +57,8 @@ public class SchoolSchedulingTest {
         return definePupilAllocationsForCourses
                 (defineTeacherAllocationForCourses
                                 (defineRailsForSchoolScheduling()
-                                        , 56)
+                                        , 56
+                                        , 56 / 158)
                         , minimalNumberOfStudentsPerCourse
                         , optimalNumberOfStudentsPerCourse
                         , maximumNumberOfStudentsPerCourse);
@@ -87,7 +88,8 @@ public class SchoolSchedulingTest {
      * @param solution The demands of this problem.
      * @return A problem modelling allocations of teachers to courses.
      */
-    private Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers) {
+    private Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
+            , double averageNumberOfSubjectsPerTeacher) {
         return defineProblem()
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
