@@ -1,5 +1,7 @@
 package net.splitcells.gel.test.functionality;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -68,9 +70,13 @@ public class SchoolSchedulingTest {
 
     private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
             , double averageCourseLength) {
+        final var courses = Lists.<List<Object>>list();
+        final var railCapacity = Lists.<List<Object>>list();
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
+                .withDemands(courses)
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
+                .withSupplies(railCapacity)
                 .withConstraint(r -> {
                     r.forAll(lineValueSelector(line -> line.value(RAIL) == 0))
                             .then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
