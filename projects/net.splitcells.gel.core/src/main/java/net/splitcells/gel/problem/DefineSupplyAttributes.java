@@ -10,4 +10,6 @@ public interface DefineSupplyAttributes {
     DefineSupply withSupplyAttributes(List<Attribute<?>> supplyAttributes);
 
     DefineSupply withSupplyAttributes2(List<Attribute<Object>> supplyAttributes);
+
+    DefineSupply withSupplies(Database supplies);
 }

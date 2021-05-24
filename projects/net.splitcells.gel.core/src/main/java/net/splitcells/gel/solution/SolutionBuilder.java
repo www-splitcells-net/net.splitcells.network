@@ -98,6 +98,12 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     }
 
     @Override
+    public DefineDemands withDemands(List<List<Object>> demands) {
+        this.demands = demands;
+        return this;
+    }
+
+    @Override
     public DefineSupply withSupplyAttributes(List<Attribute<? extends Object>> supplyAttributes) {
         this.supplyAttributes = supplyAttributes.mapped(a -> (Attribute<Object>) a);
         return this;
@@ -128,8 +134,8 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     }
 
     @Override
-    public DefineDemands withDemands(List<List<Object>> supplies) {
-        this.demands = supplies;
+    public DefineSupply withSupplies(Database supplies) {
+        suppliesDatabase = Optional.of(supplies);
         return this;
     }
 

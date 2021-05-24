@@ -113,24 +113,24 @@ public class SchoolSchedulingTest {
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
-        final var demands = database2(solution.headerView());
+        final var supplies = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
             public void register_addition(Line line) {
-                rangeClosed(1, maximumNumberOfStudentsPerCourse).forEach(i -> demands.addTranslated(line.values()));
+                rangeClosed(1, maximumNumberOfStudentsPerCourse).forEach(i -> supplies.addTranslated(line.values()));
             }
 
             @Override
             public void register_before_removal(Line line) {
-                demands.columnView(COURSE_ID)
+                supplies.columnView(COURSE_ID)
                         .lookup(line.value(COURSE_ID))
                         .getLines()
-                        .forEach(demands::remove);
+                        .forEach(supplies::remove);
             }
         });
         return defineProblem()
-                .withDemands(demands)
-                .withSupplyAttributes2(solution.headerView())
+                .withDemandAttributes2(solution.headerView())
+                .withSupplies(supplies)
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(PREFERRED_SUBJECT))));
                     r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))));
