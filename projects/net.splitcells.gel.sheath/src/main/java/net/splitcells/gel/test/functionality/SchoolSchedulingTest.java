@@ -54,7 +54,7 @@ public class SchoolSchedulingTest {
     private Solution schoolScheduling(int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
-        return definePupilAllocationsForCourses
+        return defineStudentAllocationsForCourses
                 (defineTeacherAllocationForCourses
                                 (defineRailsForSchoolScheduling(2)
                                         , 56
@@ -109,7 +109,7 @@ public class SchoolSchedulingTest {
                 .toSolution();
     }
 
-    private Solution definePupilAllocationsForCourses(Solution solution
+    private Solution defineStudentAllocationsForCourses(Solution solution
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
