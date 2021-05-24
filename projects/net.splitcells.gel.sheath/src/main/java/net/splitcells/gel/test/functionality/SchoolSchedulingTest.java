@@ -32,7 +32,7 @@ public class SchoolSchedulingTest {
             , "teach subject suitability");
     private static final Attribute<Integer> COURSE_ID = attribute(Integer.class, "course id");
     private static final Attribute<Integer> COURSE_S_VINTAGE = attribute(Integer.class, "course's vintage");
-    private static final Attribute<Integer> REQUIRED_HOURS = attribute(Integer.class, "required hours");
+    private static final Attribute<Integer> COURSE_LENGTH = attribute(Integer.class, "course length");
     private static final Attribute<Integer> ALLOCATED_HOURS = attribute(Integer.class, "allocated hours");
     private static final Attribute<Integer> RAIL = attribute(Integer.class, "rail");
     private static final Attribute<Integer> STUDENT = attribute(Integer.class, "student");
@@ -56,11 +56,10 @@ public class SchoolSchedulingTest {
             , int maximumNumberOfStudentsPerCourse) {
         return defineStudentAllocationsForCourses
                 (defineTeacherAllocationForCourses
-                                (defineRailsForSchoolScheduling(2, 30)
+                                (defineRailsForSchoolScheduling(2, 30, 410d / 158d)
                                         , 56
                                         , 30
-                                        , 56d / 158d
-                                        , 410d / 158d)
+                                        , 56d / 158d)
                         , 92
                         , 12
                         , minimalNumberOfStudentsPerCourse
@@ -68,9 +67,10 @@ public class SchoolSchedulingTest {
                         , maximumNumberOfStudentsPerCourse);
     }
 
-    private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfCourses) {
+    private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfCourses
+            , double averageCourseLength) {
         return defineProblem()
-                .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, REQUIRED_HOURS)
+                .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
                 .withConstraint(r -> {
                     r.forAll(lineValueSelector(line -> line.value(RAIL) == 0))
@@ -78,7 +78,7 @@ public class SchoolSchedulingTest {
                     r.forAll(SUBJECT)
                             .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
                             .then(allDifferent(RAIL));
-                    r.forAll(COURSE_ID).then(RegulatedLength.regulatedLength(REQUIRED_HOURS, ALLOCATED_HOURS));
+                    r.forAll(COURSE_ID).then(RegulatedLength.regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
                     r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;
                 }).toProblem()
@@ -94,8 +94,7 @@ public class SchoolSchedulingTest {
      */
     private Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
             , int numberOfSubjects
-            , double averageNumberOfSubjectsPerTeacher
-            , double averageNumberOfTeachingCapacity) {
+            , double averageNumberOfSubjectsPerTeacher) {
         return defineProblem()
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
