@@ -62,6 +62,7 @@ public class SchoolSchedulingTest {
                                         , 56d / 158d
                                         , 410d / 158d)
                         , 92
+                        , 12
                         , minimalNumberOfStudentsPerCourse
                         , optimalNumberOfStudentsPerCourse
                         , maximumNumberOfStudentsPerCourse);
@@ -112,6 +113,7 @@ public class SchoolSchedulingTest {
 
     private Solution defineStudentAllocationsForCourses(Solution solution
             , int numberOfStudents
+            , int numberOfSubjectsPerStudents
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
