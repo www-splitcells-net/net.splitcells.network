@@ -58,8 +58,8 @@ public class SchoolSchedulingTest {
                 (defineTeacherAllocationForCourses
                                 (defineRailsForSchoolScheduling()
                                         , 56
-                                        , 56 / 158
-                                        , 410 / 158)
+                                        , 56d / 158d
+                                        , 410d / 158d)
                         , minimalNumberOfStudentsPerCourse
                         , optimalNumberOfStudentsPerCourse
                         , maximumNumberOfStudentsPerCourse);
