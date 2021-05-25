@@ -198,15 +198,19 @@
     </chapter>
     <chapter>
         <title>Base Rule</title>
-        <paragraph>The project structure and its contents has to represent a
+        <paragraph>The project structure, its contents and products has to represent a
             discovery based network of perspectives and changes.
-            The project and its parts should be portable, extendable, adaptable and
+            The project and its parts should be portable, extendable, adaptable,
             <link>
                 <text>deletable</text>
                 <url>https://programmingisterrible.com/post/139222674273/how-to-write-disposable-code-in-large-systems
                 </url>
             </link>
-            .
+            and comply with
+            <link>
+                <text>Perspective's guidelines</text>
+                <post>/net/splitcells/dem/lang/perspective/index</post>
+            </link>.
         </paragraph>
     </chapter>
     <chapter>
