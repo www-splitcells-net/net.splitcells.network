@@ -24,8 +24,6 @@
                 <url>https://git-scm.com/book/en/v1/Git-Branching-Rebasing#The-Perils-of-Rebasing
                 </url>
             </link>
-            It currently focues mainly on Java but also refers to things outside
-            of Java.
         </description>
         <publication_date year="2018" month="04" day_of_month="29"/>
         <license>standard</license>
@@ -38,8 +36,6 @@
         <d:toDo>
             <d:toDo>Move framework specific guides to framework documentation or delete it,
                 if this is covered by frameworks API.</d:toDo>
-            <d:toDo>Make project as portable, extendable, changeable deletable as possible.</d:toDo>
-            <d:todo>Create code guidelines that are not Java specific.</d:todo>
             <d:todo>
                 If a concrete generic type is needed for testing use Integer.
             </d:todo>
@@ -174,7 +170,7 @@
             experiments.
         </paragraph>
         <paragraph>
-            Do not consider these Java code guidelines for your own code.
+            Do not consider these code guidelines for your own code.
             <link>
                 <text>If you do, people will hate you, and you’ll be scorned by
                     friends and family.
@@ -323,8 +319,7 @@
                 little work.
             </paragraph>
             <paragraph>Tickets with a low amount of content should
-                be stored as a
-                (i.e. Javadoc) comment at the
+                be stored as a comment at the
                 relevant source code
                 location. Every task should start with <quote>TODO</quote>, which is recognized by many tools.
             </paragraph>
