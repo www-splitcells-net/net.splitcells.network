@@ -18,10 +18,14 @@ options {
 }
 call_arguments
     : Brace_round_open Brace_round_closed
-    | Brace_round_open Whitespace? reference Whitespace? call_arguments_next* Whitespace? Brace_round_closed
+    | Brace_round_open Whitespace? call_arguments_element Whitespace? call_arguments_next* Whitespace? Brace_round_closed
+    ;
+call_arguments_element
+    : reference
+    | variable_declaration
     ;
 call_arguments_next
-    : Comma Whitespace reference
+    : Comma Whitespace call_arguments_element
     ;
 class_definition
     : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
@@ -42,7 +46,6 @@ class_member_value_declaration
 expression
     : Keyword_new Whitespace? type_declaration call_arguments
     | Name Whitespace? call_arguments
-    | variable_declaration
     ;
 import_declaration
     : import_static_declaration
@@ -78,6 +81,7 @@ reference
 statement
     : Keyword_return? Whitespace expression Semicolon
     | Whitespace? Line_comment Whitespace?
+    | Whitespace? variable_declaration Semicolon
     ;
 source_unit
     : package_declaration import_declaration* Whitespace? class_definition EOF
