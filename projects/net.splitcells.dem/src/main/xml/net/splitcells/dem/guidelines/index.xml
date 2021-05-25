@@ -36,9 +36,6 @@
         <d:toDo>
             <d:toDo>Move framework specific guides to framework documentation or delete it,
                 if this is covered by frameworks API.</d:toDo>
-            <d:todo>
-                If a concrete generic type is needed for testing use Integer.
-            </d:todo>
             <d:toDo>Documentation has to contain all relevant information
                 (like reason for implementation) not visible in direct program source.
             </d:toDo>
