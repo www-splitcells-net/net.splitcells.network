@@ -2,6 +2,7 @@ package net.splitcells.dem.utils.random;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
+import net.splitcells.dem.utils.MathUtils;
 
 import java.util.Random;
 
@@ -20,6 +21,19 @@ public interface Randomness {
     }
 
     int integer(final Integer min, final Integer max);
+
+    default int integer(int min, int mean, int max) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            assertThat(min).isLessThanOrEqualTo(mean);
+            assertThat(mean).isLessThanOrEqualTo(max);
+        }
+        final var distance = MathUtils.distance(min, max);
+        if (truthValue()) {
+            return integer(min, mean);
+        } else {
+            return integer(mean, max);
+        }
+    }
 
     default boolean truthValue() {
         return 1 == integer(0, 1);
