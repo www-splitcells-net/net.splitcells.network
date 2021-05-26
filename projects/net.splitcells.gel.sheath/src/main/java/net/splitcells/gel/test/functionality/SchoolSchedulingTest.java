@@ -58,7 +58,7 @@ public class SchoolSchedulingTest {
             , int maximumNumberOfStudentsPerCourse) {
         return defineStudentAllocationsForCourses
                 (defineTeacherAllocationForCourses
-                                (defineRailsForSchoolScheduling(2, 30, 30, 410d / 158d)
+                                (defineRailsForSchoolScheduling(2, 30, 30, 410d / 158d, 4)
                                         , 56
                                         , 56d / 158d)
                         , 92
@@ -69,7 +69,8 @@ public class SchoolSchedulingTest {
     }
 
     private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
-            , double averageCourseLength) {
+            , double averageCourseLength
+            , int maximumCourseLength) {
         final var courses = Lists.<List<Object>>list();
         final var railCapacity = Lists.<List<Object>>list();
         return defineProblem()
