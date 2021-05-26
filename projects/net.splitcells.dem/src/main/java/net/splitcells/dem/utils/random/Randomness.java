@@ -1,12 +1,9 @@
 package net.splitcells.dem.utils.random;
 
-import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Random;
-import java.util.stream.IntStream;
 
 import static java.lang.Math.abs;
 import static java.util.stream.IntStream.range;
@@ -16,7 +13,13 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public interface Randomness extends BasicRndSrc {
+public interface Randomness {
+
+    default int integer() {
+        return integer(Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    int integer(final Integer min, final Integer max);
 
     default boolean truthValue() {
         return 1 == integer(0, 1);
