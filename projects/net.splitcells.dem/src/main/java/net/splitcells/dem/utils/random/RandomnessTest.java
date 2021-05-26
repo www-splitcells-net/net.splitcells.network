@@ -31,7 +31,7 @@ public class RandomnessTest {
         final var chance = 0.75f;
         final var randomness = randomness(0L);
         final var truthCounter = new AtomicInteger(0);
-        final var runs = 1_000_000;
+        final var runs = 1_000;
         final var deviation = 0.1f;
         rangeClosed(1, runs).forEach(i -> {
             if (randomness.truthValue(chance)) {
