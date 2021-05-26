@@ -12,6 +12,14 @@ public final class MathUtils {
         return Math.toIntExact(Math.round(arg));
     }
 
+    public static double intToDouble(int arg) {
+        return Double.valueOf(arg);
+    }
+
+    public static float doubleToFloat(double arg) {
+        return Double.valueOf(arg).floatValue();
+    }
+
     /**
      * TODO RENAME
      *
