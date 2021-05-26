@@ -30,10 +30,10 @@ public interface Randomness {
         }
         final var distance = distance(min, max);
         final var distanceHalf = roundToInt(distance / 2d);
-        if (truthValue(mean / MathUtils.intToDouble(max))) {
-            return integer(min, min + distanceHalf);
-        } else {
+        if (truthValue((mean) / MathUtils.intToDouble(max))) {
             return integer(min + distanceHalf, max);
+        } else {
+            return integer(min, min + distanceHalf);
         }
     }
 
