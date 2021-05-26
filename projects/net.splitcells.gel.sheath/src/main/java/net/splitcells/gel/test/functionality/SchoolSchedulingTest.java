@@ -78,6 +78,7 @@ public class SchoolSchedulingTest {
         final var randomness = randomness();
         IntStream.rangeClosed(1, numberOfCourses).forEach(course -> {
             final var subject = randomness.integer(1, numberOfSubjects);
+            final var courseLength = randomness.integer(1, averageCourseLength, maximumCourseLength);
         });
         final var railCapacity = Lists.<List<Object>>list();
         return defineProblem()
