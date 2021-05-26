@@ -11,10 +11,13 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.database.Databases.database2;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -72,6 +75,11 @@ public class SchoolSchedulingTest {
             , double averageCourseLength
             , int maximumCourseLength) {
         final var courses = Lists.<List<Object>>list();
+        final var randomness = randomness();
+        IntStream.rangeClosed(1, numberOfCourses).forEach(course -> {
+            final var subject = randomness.integer(1, numberOfSubjects);
+            
+        });
         final var railCapacity = Lists.<List<Object>>list();
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
