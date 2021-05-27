@@ -35,7 +35,9 @@
         </related_to>
         <d:toDo>
             <d:toDo>Move framework specific guides to framework documentation or delete it,
-                if this is covered by frameworks API.</d:toDo>
+                if this is covered by frameworks API.
+            </d:toDo>
+            <d:toDo>Document dependency lifecycle of injection and integration.</d:toDo>
             <d:todo>
                 Meta Code Guidelines
                 <d:todo>https://github.com/icy/bash-coding-style</d:todo>
@@ -202,7 +204,8 @@
             <link>
                 <text>Perspective's guidelines</text>
                 <post>/net/splitcells/dem/lang/perspective/index</post>
-            </link>.
+            </link>
+            .
         </paragraph>
     </chapter>
     <chapter>
