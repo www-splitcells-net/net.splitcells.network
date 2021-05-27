@@ -95,7 +95,18 @@ public class SchoolSchedulingTest {
                 })
                 .flatMap(e -> e.stream())
                 .collect(toList());
-        final var railCapacity = Lists.<List<Object>>list();
+        final var railCapacity = IntStream.rangeClosed(1, numberOfRails)
+                .mapToObj(railId ->
+                        IntStream.rangeClosed(1, courses.size())
+                                .mapToObj(i -> IntStream.rangeClosed(1, maximumCourseLength)
+                                        .mapToObj(railLength -> Lists.<Object>list(railLength, railId))
+                                        .collect(toList())
+                                )
+                                .flatMap(e -> e.stream())
+                                .collect(toList())
+                )
+                .flatMap(e -> e.stream())
+                .collect(toList());
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
                 .withDemands(courses)
