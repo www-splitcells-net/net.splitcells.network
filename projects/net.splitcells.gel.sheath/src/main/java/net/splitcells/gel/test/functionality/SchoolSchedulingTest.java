@@ -63,7 +63,7 @@ public class SchoolSchedulingTest {
             , int maximumNumberOfStudentsPerCourse) {
         return defineStudentAllocationsForCourses
                 (defineTeacherAllocationForCourses
-                                (defineRailsForSchoolScheduling(2, 30, 30, 410d / 158d, 4)
+                                (defineRailsForSchoolScheduling(2, 30, 30, 410d / 158d, 4, 17)
                                         , 56
                                         , 56d / 158d)
                         , 92
@@ -75,7 +75,8 @@ public class SchoolSchedulingTest {
 
     private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
             , double averageCourseLength
-            , int maximumCourseLength) {
+            , int maximumCourseLength
+            , int numberOfRails) {
         final var randomness = randomness();
         final var courses = IntStream.rangeClosed(1, numberOfCourses)
                 .mapToObj(courseId -> {
