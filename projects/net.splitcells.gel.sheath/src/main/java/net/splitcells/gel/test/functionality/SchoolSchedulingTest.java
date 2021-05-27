@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -76,10 +77,11 @@ public class SchoolSchedulingTest {
             , int maximumCourseLength) {
         final var courses = Lists.<List<Object>>list();
         final var randomness = randomness();
-        IntStream.rangeClosed(1, numberOfCourses).forEach(course -> {
+        IntStream.rangeClosed(1, numberOfCourses).mapToObj(courseId -> {
             final var subject = randomness.integer(1, numberOfSubjects);
             final var length = randomness.integer(1, averageCourseLength, maximumCourseLength);
             final var vintage = randomness.integer(1, numberOfVintages);
+            return list(courseId, subject, length, vintage);
         });
         final var railCapacity = Lists.<List<Object>>list();
         return defineProblem()
