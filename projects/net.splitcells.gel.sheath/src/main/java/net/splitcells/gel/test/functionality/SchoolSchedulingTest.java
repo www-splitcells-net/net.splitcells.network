@@ -81,7 +81,9 @@ public class SchoolSchedulingTest {
             final var subject = randomness.integer(1, numberOfSubjects);
             final var length = randomness.integer(1, averageCourseLength, maximumCourseLength);
             final var vintage = randomness.integer(1, numberOfVintages);
-            return list(courseId, subject, length, vintage);
+            return IntStream.rangeClosed(1, length)
+                    .mapToObj(i -> list(courseId, subject, length, vintage))
+                    .collect(Lists.toList());
         });
         final var railCapacity = Lists.<List<Object>>list();
         return defineProblem()
