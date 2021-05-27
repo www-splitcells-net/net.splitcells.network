@@ -15,6 +15,7 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -75,16 +76,17 @@ public class SchoolSchedulingTest {
     private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
             , double averageCourseLength
             , int maximumCourseLength) {
-        final var courses = Lists.<List<Object>>list();
         final var randomness = randomness();
-        IntStream.rangeClosed(1, numberOfCourses).mapToObj(courseId -> {
+        final var courses = IntStream.rangeClosed(1, numberOfCourses).mapToObj(courseId -> {
             final var subject = randomness.integer(1, numberOfSubjects);
             final var length = randomness.integer(1, averageCourseLength, maximumCourseLength);
             final var vintage = randomness.integer(1, numberOfVintages);
             return IntStream.rangeClosed(1, length)
-                    .mapToObj(i -> list(courseId, subject, length, vintage))
-                    .collect(Lists.toList());
-        });
+                    .mapToObj(i -> Lists.<Object>list(courseId, subject, length, vintage))
+                    .collect(toList());
+        })
+                .flatMap(e -> e.stream())
+                .collect(toList());
         final var railCapacity = Lists.<List<Object>>list();
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
