@@ -77,14 +77,15 @@ public class SchoolSchedulingTest {
             , double averageCourseLength
             , int maximumCourseLength) {
         final var randomness = randomness();
-        final var courses = IntStream.rangeClosed(1, numberOfCourses).mapToObj(courseId -> {
-            final var subject = randomness.integer(1, numberOfSubjects);
-            final var length = randomness.integer(1, averageCourseLength, maximumCourseLength);
-            final var vintage = randomness.integer(1, numberOfVintages);
-            return IntStream.rangeClosed(1, length)
-                    .mapToObj(i -> Lists.<Object>list(courseId, subject, length, vintage))
-                    .collect(toList());
-        })
+        final var courses = IntStream.rangeClosed(1, numberOfCourses)
+                .mapToObj(courseId -> {
+                    final var subject = randomness.integer(1, numberOfSubjects);
+                    final var length = randomness.integer(1, averageCourseLength, maximumCourseLength);
+                    final var vintage = randomness.integer(1, numberOfVintages);
+                    return IntStream.rangeClosed(1, length)
+                            .mapToObj(i -> Lists.<Object>list(courseId, subject, length, vintage))
+                            .collect(toList());
+                })
                 .flatMap(e -> e.stream())
                 .collect(toList());
         final var railCapacity = Lists.<List<Object>>list();
