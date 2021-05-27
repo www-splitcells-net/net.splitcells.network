@@ -4,6 +4,7 @@
          xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
          xmlns:e="http://splitcells.net/sen.xsd" description="interfaces">
+    <objective>Create public APIs and UIs for this projects.</objective>
     <scheduling>
         <priority>
             <queue>
