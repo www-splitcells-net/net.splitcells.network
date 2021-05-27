@@ -21,7 +21,8 @@
                     </idea>
                 </toDo>
                 <toDo>Create a translator that translates the program to Dlang,
-                        because Dlang is very similar to Java und allows functional side effect free programming.</toDo>
+                    because Dlang is very similar to Java und allows functional side effect free programming.
+                </toDo>
                 <toDo>Create a way to automatically generate the skeleton of environment integration code.</toDo>
                 <toDo>Translate Dem to a Lisp langauge.</toDo>
                 <toDo>Translate an actual project to a Lisp langauge.</toDo>
@@ -32,6 +33,14 @@
                     <toDo>Let Gel's table columns just use one common type
                         in order to omit downcasting.
                     </toDo>
+                </toDo>
+                <toDo>Split code into bootstrapping code and normal code.
+                    Bootstrapping code contains Java or external dependency specific code.
+                    Normal code has no Java or other external dependencies with exception to specific external
+                    interfaces.
+                    The amount of external dependencies should be minimized and be kept as simple as possible.
+                    Minimize boostrapping code size.
+                    <toDo>Replace assertj with reasoning system based on Bool.</toDo>
                 </toDo>
             </queue>
             <unscheduled>
@@ -54,7 +63,8 @@
             <toDo>Ensure that the code is easily translatable to other languages with minimal effort and manual work.
                 <idea>Support different paradigms.
                     <toDo>Object-Orientation mainly provides polymorphic tree transformations.
-                        Dlang seems to be a good choice.</toDo>
+                        Dlang seems to be a good choice.
+                    </toDo>
                     <todo>Support a very simple and basic version of functional programming
                         with an simple statically typed object system.
                         The object system, which is kind of an OOP-System only provides state interfaces.
@@ -64,7 +74,8 @@
                 <objective>Always translate code to other language automatically and test it, in order to be sure
                     that the code is portable.
                     <toDo>Create a translator which translate other projects to a different language.
-                        The translator only has to translate projects complying with this project (compatibility and portability).
+                        The translator only has to translate projects complying with this project (compatibility and
+                        portability).
                     </toDo>
                     <result>This would allow to check additional properties of the program before running it.</result>
                 </objective>
