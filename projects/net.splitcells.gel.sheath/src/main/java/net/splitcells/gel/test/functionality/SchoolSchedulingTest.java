@@ -63,7 +63,13 @@ public class SchoolSchedulingTest {
             , int maximumNumberOfStudentsPerCourse) {
         return defineStudentAllocationsForCourses
                 (defineTeacherAllocationForCourses
-                                (defineRailsForSchoolScheduling(2, 30, 30, 410d / 158d, 4, 17)
+                                (defineRailsForSchoolScheduling
+                                                (2
+                                                        , 30
+                                                        , 30
+                                                        , 410d / 158d
+                                                        , 4
+                                                        , 17)
                                         , 56
                                         , 56d / 158d)
                         , 92
