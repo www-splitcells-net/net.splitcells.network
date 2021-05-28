@@ -40,6 +40,21 @@ An overview of the projects can be found [here](#networks-structure).
 
 ## Network's Structure
 
+```
+Project Cluster
+├── net.splitcells.network
+│   └── projects
+│       ├── net.splitcells.dem
+│       ├── net.splitcells.gel
+│       ├── net.splitcells.os.state.interface
+│       ├── net.splitcells.system
+│       └── ...
+├── net.splitcells.os.state.interface.lib.gpl.2
+├── net.splitcells.os.state.interface.lib.gpl.3
+└── ...
+```
+> This image illustrates the networks structure by showing relevant parts of the filesystem.
+
 This project is meant to be part of a project cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
 
