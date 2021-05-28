@@ -6,7 +6,7 @@
 ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
 ![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
 
-[Introduction](#introduction) | [Primary Work](#primary-work) | [Network's Structure](#networks-structure) | [Contact](#contact)
+**[Introduction](#introduction)** | **[Primary Work](#primary-work)** | **[Network's Structure](#networks-structure)** | **[Contact](#contact)**
 
 ## Introduction
 
