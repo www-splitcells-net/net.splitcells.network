@@ -33,22 +33,26 @@ The core is the [Generic Allocator](./projects/net.splitcells.gel).
 It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
 An introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
-## Secondary Product
+## Project's Filesystem
 
-Another interesting subproject is [OS State Interface](./projects/net.splitcells.os.state.interface).
-It helps the user to organize and execute commands in the terminal. 
+This is project is meant to be part of a project cluster, with a certain filesystem structure in mind.
+The cluster consists of a folder containing repositories.
 
-## Project structure Structure
-
-This is the root project of a project cluster. This network consists of three parts:
-
-* [net.splitcells.system](./projects/net.splitcells.system/README.md):
-  A set of integrated projects focused on optimization and problem modeling.
 * [net.splitcells.network](http://splitcells.net):
-  This project integrates all repositories and hosting services, that are part of the network.
-* Unintegrated projects:
-  These projects are not inside this repository and managed are more independently.
+  This repository integrates all projects, repositories and hosting services, that are part of the network.
+  * [dem](./projects/net.splitcells.dem/README.md): Provides a standardized fundament for Java projects.
+  * [gel](./projects/net.splitcells.gel/README.md): This framework delivers optimization capabilities.
+  * [os.state.interface](./projects/net.splitcells.os.state.interface/README.md):
+    The projects helps the user to organize and execute commands in the terminal via dependency injection.
+  * [system](./projects/net.splitcells.system/README.md):
+    Manages all integrated subprojects of the network.
+    In particular, it can be used to build all integrated projects.
+* **Related projects/repositories**:
+  Related projects are located in repositories, which are at the same folder as the
+  [net.splitcells.network](http://splitcells.net) project. 
+  These projects are not inside this repository and are managed more independently.
   They may be managed by users with [OS state interface](./projects/net.splitcells.os.state.interface/README.md).
+  It is recommended to not nest repositories.
 
 ## Contact
 
