@@ -6,9 +6,9 @@
 ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
 ![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
 
-**[Introduction](#introduction)** | **[Primary Work](#primary-work)** | **[Network's Structure](#networks-structure)** | **[Contact](#contact)**
+**[Introduction](#introduction)** | **[Where to start?](#where-to-start)** | **[Network's Structure](#networks-structure)** | **[Contact](#contact)**
 
-## Introduction
+## Where to start?
 
 Model and optimize problems. 🚀
 
@@ -26,11 +26,12 @@ Support [contributors](https://www.patreon.com/splitcells_net). 💰
 
 Spread the word! 📣
 
-## Primary Work
+## Introduction
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
 
 We provide a set of open source projects centered around optimization and code supporting and integrating such projects.
+
 The core is the [Generic Allocator](./projects/net.splitcells.gel).
 It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
 An introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
