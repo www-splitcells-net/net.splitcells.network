@@ -30,11 +30,11 @@ Spread the word! 📣
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
 
-We provide a set of open source projects centered around optimization and code supporting and integrating such projects.
+We provide an open source ecosystem centered around optimization and operations research.
 
-The core is the [Generic Allocator](./projects/net.splitcells.gel).
+The main project is the [Generic Allocator](./projects/net.splitcells.gel).
 It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
-An introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
+A detailed introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
 ## Network's Structure
 
