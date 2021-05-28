@@ -4,11 +4,11 @@
 
 > Together we are more than the sum of our cells.
 
+**[Introduction](#introduction)** | **[Where to start?](#where-to-start)** | **[Network's Structure](#networks-structure)** | **[Contact](#contact)**
+
 ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)
 ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
 ![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
-
-**[Introduction](#introduction)** | **[Where to start?](#where-to-start)** | **[Network's Structure](#networks-structure)** | **[Contact](#contact)**
 
 ## Introduction
 
