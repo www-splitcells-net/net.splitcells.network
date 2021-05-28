@@ -1,5 +1,7 @@
 # net.splitcells.network
 
+<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
+
 > Together we are more than the sum of our cells.
 
 ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)
@@ -27,8 +29,6 @@ Support [contributors](https://www.patreon.com/splitcells_net). 💰
 Spread the word! 📣
 
 ## Introduction
-
-<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
 
 We provide an open source ecosystem centered around optimization and operations research.
 
