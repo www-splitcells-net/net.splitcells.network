@@ -10,6 +10,14 @@
 
 **[Introduction](#introduction)** | **[Where to start?](#where-to-start)** | **[Network's Structure](#networks-structure)** | **[Contact](#contact)**
 
+## Introduction
+
+We provide an open source ecosystem centered around optimization and operations research.
+
+The main project is the [Generic Allocator](./projects/net.splitcells.gel).
+It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
+A detailed introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
+
 ## Where to start?
 
 Model and optimize problems. 🚀
@@ -27,14 +35,6 @@ Contribute to projects. ✍
 Support [contributors](https://www.patreon.com/splitcells_net). 💰
 
 Spread the word! 📣
-
-## Introduction
-
-We provide an open source ecosystem centered around optimization and operations research.
-
-The main project is the [Generic Allocator](./projects/net.splitcells.gel).
-It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
-A detailed introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
 ## Network's Structure
 
