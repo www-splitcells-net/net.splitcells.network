@@ -40,7 +40,7 @@ An overview of the projects can be found [here](#networks-structure).
 
 ## Network's Structure
 
-This project is meant to be part of a project cluster, with a certain filesystem structure in mind.
+This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
 
 ```
