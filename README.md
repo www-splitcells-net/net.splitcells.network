@@ -24,7 +24,7 @@ Support [contributors](https://www.patreon.com/splitcells_net). 💰
 
 Spread the word! 📣
 
-## Description
+## Primary Work
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
 
@@ -33,12 +33,12 @@ The core is the [Generic Allocator](./projects/net.splitcells.gel).
 It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
 An introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
-## Good to Know
+## Secondary Product
 
 Another interesting subproject is [OS State Interface](./projects/net.splitcells.os.state.interface).
 It helps the user to organize and execute commands in the terminal. 
 
-## Structure
+## Project structure Structure
 
 This is the root project of a project cluster. This network consists of three parts:
 
