@@ -20,21 +20,21 @@ A detailed introduction and documentation can be found [here](http://splitcells.
 
 ## Where to start?
 
-Model and optimize problems. 🚀
+🚀 Model and optimize problems.
 
-Analyze and organize your operations and prepare schedules. 🔬
- 
-Collaborate large decision-making networks. 🤝
+🔬 Analyze and organize your operations and prepare schedules.
 
-Research optimization. 🔭
+🤝 Collaborate large decision-making networks.
 
-Get structured documentation. 📚
+🔭 Research optimization.
 
-Contribute to projects. ✍
+📚 Get structured documentation.
 
-Support [contributors](https://www.patreon.com/splitcells_net). 💰
+✍ Contribute to projects.
 
-Spread the word! 📣
+💰 Support [contributors](https://www.patreon.com/splitcells_net).
+
+📣 Spread the word!
 
 ## Network's Structure
 
