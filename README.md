@@ -6,23 +6,25 @@
 ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
 ![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
 
+[Introduction](#introduction) | [Primary Work](#primary-work) | [Network's Structure](#networks-structure) | [Contact](#contact)
+
 ## Introduction
 
 Model and optimize problems. 🚀
 
-Analyze and organize your operations and prepare schedules. 🔬
+> Analyze and organize your operations and prepare schedules. 🔬
+> 
+> Collaborate large decision-making networks. 🤝
 
-Collaborate large decision-making networks. 🤝
-
-Research optimization. 🔭
+> Research optimization. 🔭
 
 Get structured documentation. 📚
 
-Contribute to projects. ✍
+> Contribute to projects. ✍
 
 Support [contributors](https://www.patreon.com/splitcells_net). 💰
 
-Spread the word! 📣
+> Spread the word! 📣
 
 ## Primary Work
 
@@ -33,9 +35,9 @@ The core is the [Generic Allocator](./projects/net.splitcells.gel).
 It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
 An introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
-## Project's Filesystem
+## Network's Structure
 
-This is project is meant to be part of a project cluster, with a certain filesystem structure in mind.
+This project is meant to be part of a project cluster, with a certain filesystem structure in mind.
 The cluster consists of a folder containing repositories.
 
 * [net.splitcells.network](http://splitcells.net):
