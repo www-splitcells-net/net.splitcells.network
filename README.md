@@ -12,19 +12,19 @@
 
 Model and optimize problems. 🚀
 
-> Analyze and organize your operations and prepare schedules. 🔬
-> 
-> Collaborate large decision-making networks. 🤝
+Analyze and organize your operations and prepare schedules. 🔬
+ 
+Collaborate large decision-making networks. 🤝
 
-> Research optimization. 🔭
+Research optimization. 🔭
 
 Get structured documentation. 📚
 
-> Contribute to projects. ✍
+Contribute to projects. ✍
 
 Support [contributors](https://www.patreon.com/splitcells_net). 💰
 
-> Spread the word! 📣
+Spread the word! 📣
 
 ## Primary Work
 
