@@ -40,6 +40,9 @@ An overview of the projects can be found [here](#networks-structure).
 
 ## Network's Structure
 
+This project is meant to be part of a project cluster, with a certain filesystem structure in mind.
+The cluster's filesystem consists of a folder containing repositories:
+
 ```
 Project Cluster
 ├── net.splitcells.network
@@ -54,9 +57,6 @@ Project Cluster
 └── ...
 ```
 > This image illustrates the networks structure by showing relevant parts of the filesystem.
-
-This project is meant to be part of a project cluster, with a certain filesystem structure in mind.
-The cluster's filesystem consists of a folder containing repositories:
 
 * [net.splitcells.network](http://splitcells.net):
   This repository integrates all projects, repositories and hosting services, that are part of the network.
