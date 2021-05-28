@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+dig +short "$1" | tail -n1
