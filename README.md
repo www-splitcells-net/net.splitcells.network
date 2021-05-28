@@ -56,11 +56,3 @@ This is the root project of a project cluster. This network consists of three pa
 * [Twitch Channel](https://www.twitch.tv/splitcellsnet)
 * [Twitter](https://twitter.com/splitcells)
 * [Mastadon](https://fosstodon.org/@splitcells)
-
-## Status
-
-| Attribute | Status |
-| --- | --- |
-| GitHub CI | ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg) |
-| GitLab CI | ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg) |
-| sourcehut CI | [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net/net.splitcells.network?) |
