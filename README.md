@@ -28,10 +28,10 @@ Spread the word! 📣
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
 
-This is a set of open source projects centered around optimization and code supporting and integrating such projects.
-The center of all this is the [Generic Allocator](./projects/net.splitcells.gel). It is a Java framework providing
-modeling, analytic and solving capabilities regarding optimization problems. An introduction and documentation can be
-found [here](http://splitcells.net/net/splitcells/gel/index.html).
+We provide a set of open source projects centered around optimization and code supporting and integrating such projects.
+The core is the [Generic Allocator](./projects/net.splitcells.gel).
+It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
+An introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
 ## Good to Know
 
