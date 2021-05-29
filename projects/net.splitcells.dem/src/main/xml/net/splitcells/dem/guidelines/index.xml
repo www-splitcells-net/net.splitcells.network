@@ -214,30 +214,21 @@
         </paragraph>
         <chapter>
             <title>Version Control</title>
-            <chapter>
-                <title>Commit Log</title>
-                <paragraph>The commit log is a program, that describes the development of the project.</paragraph>
-            </chapter>
-            <chapter>
-                <title>Versioning</title>
-                <chapter>
-                    <title>Semantic Versioning as Default Versioning Format</title>
-                    <d:todo>https://semver.org/</d:todo>
-                </chapter>
-                <chapter>
-                    <title>Compatibility</title>
-                    <d:toDo>Prefer backward compatible changes to backward incompatible changes.</d:toDo>
-                    <d:toDo>Make as much undefined as possible, for not essential things, but make clear what is
-                        essential.
-                        This way one
-                        can adapt the API more easily
-                        without changing API and breaking compatibility.
-                        Breaking other software, because it
-                        relied on implementation specifics is better, than
-                        breaking other software via incompatible API changes.
-                    </d:toDo>
-                </chapter>
-            </chapter>
+            <paragraph>The commit log is a program, that describes the development of the project.
+                The
+                <link>
+                    <text>semantic versioning</text>
+                    <url>https://semver.org/</url>
+                </link>
+                is used as a default versioning format.
+            </paragraph>
+            <paragraph>Make clear what is guaranteed and do this only via an explicit interface,
+                that has no implementation specifics.
+                Prefer backward compatible changes to backward incompatible changes.
+                Make as much undefined as possible for not essential things in order to minimize the set of guarantees.
+                Breaking other software, because it relied on implementation specifics is better,
+                than breaking other software via incompatible API changes.
+            </paragraph>
         </chapter>
         <chapter>
             <title>Development Process</title>
