@@ -245,30 +245,6 @@
                 in order to ensure, that the projects works.
             </paragraph>
             <chapter>
-                <title>API Backwards Compatibility</title>
-                <paragraph>It is recommended to not break backwards compatibility at all,
-                    regarding the features that are part of a test suite.
-                    If backwards compatibility has to be broken, it should be first deprecated and than removed.
-                    A feature should never be changed in an incompatible way.
-                    Instead a new version of this feature should be introduced, while the older version of the
-                    new version is deprecated.
-                    After the deprecation of the old feature, the old one can be removed.
-                </paragraph>
-                <paragraph>If there are no project dependants or these accept breaking compatibility changes this rule
-                    does not apply.
-                    This is especially true during an experimental or initial development phase of a project or
-                    if the developer of the project is the only user of the project.
-                </paragraph>
-            </chapter>
-            <chapter>
-                <title>ABI Backwards Compatibility</title>
-                <paragraph>Forcing project dependants to rebuild their software in order to update
-                    their dependencies is acceptable. In other words application binary interface (ABI) backwards
-                    compatibility has a lot lower priority than the compatibility application programming interface
-                    (API).
-                </paragraph>
-            </chapter>
-            <chapter>
                 <title>Migration based Development</title>
                 <paragraph>It preferred that each version of the project works.
                     This does also apply to individual commits.
