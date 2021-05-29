@@ -243,19 +243,9 @@
                 Prefer test driven development.
                 Ensure that the project is build, tested and executed in different environments,
                 in order to ensure, that the projects works.
+                This is called migration based development.
+
             </paragraph>
-            <chapter>
-                <title>Migration based Development</title>
-                <paragraph>It preferred that each version of the project works.
-                    This does also apply to individual commits.
-                    This increases development effectiveness and efficiency.
-                    It also provides an easy guideline how to implement changes.
-                </paragraph>
-                <paragraph>If one can develop multiple features on the same repository branch without affecting each
-                    other,
-                    then it is likely, that the migration based development is working.
-                </paragraph>
-            </chapter>
         </chapter>
     </chapter>
     <chapter>
