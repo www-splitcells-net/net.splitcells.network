@@ -116,11 +116,7 @@ public class ProjectRenderer {
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
             }
-            // System.out.println(path);
             // TODO Devide rendering function into routing and content type determination.
-        /* REMOVE final var path = Lists.<String>list
-                (routingContext.request().path().split("/")
-                ).stream().filter(e -> !e.isBlank()).collect(toList());*/
             if (path.endsWith(".txt")) {
                 return renderTextFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".png")) {
