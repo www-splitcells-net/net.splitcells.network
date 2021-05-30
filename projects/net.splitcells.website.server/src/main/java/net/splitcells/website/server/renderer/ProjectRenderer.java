@@ -285,7 +285,7 @@ public class ProjectRenderer {
                 .get()
                 .collect(toSetOfUniques());
         if (is_file(projectFolder.resolve("README.md"))) {
-            projectPaths.add(Path.of("README.md"));
+            projectPaths.add(Path.of(resourceRootPath.substring(1)).resolve("README.md"));
         }
         return projectPaths;
     }
