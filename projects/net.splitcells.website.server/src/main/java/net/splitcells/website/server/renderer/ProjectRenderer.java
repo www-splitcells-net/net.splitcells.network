@@ -73,6 +73,15 @@ public class ProjectRenderer {
                 , projectFolder);
     }
 
+    @Deprecated
+    public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
+            , boolean typedFolder
+            , boolean flatRepository
+            , Validator validator) {
+        this(renderer, projectSrcFolder, xslLibs, resources, resourceRootPath, typedFolder, flatRepository, validator
+                , projectSrcFolder.resolve("../.."));
+    }
+
     public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
@@ -254,7 +263,7 @@ public class ProjectRenderer {
             throw new RuntimeException(folder.toAbsolutePath().toString(), e);
         }
         if (is_file(projectFolder.resolve("README.md"))) {
-            layout
+            extendPerspectiveWithPath(layout, Path.of("README.md"));
         }
         return layout;
     }
