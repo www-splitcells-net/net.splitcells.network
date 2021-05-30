@@ -174,7 +174,7 @@ public class ProjectRenderer {
 
     private Optional<byte[]> renderHtmlBodyContent(String bodyContent) {
         try {
-            final var content = Xml.rElement(NameSpaces.NATURAL, "text");
+            final var content = Xml.rElement(NameSpaces.NATURAL, "html-body-content");
             content.appendChild
                     (Xml.textNode(MARKER));
             return Optional.of(renderer()

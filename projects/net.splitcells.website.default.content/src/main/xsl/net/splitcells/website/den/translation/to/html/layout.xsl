@@ -76,6 +76,27 @@
         </xsl:variable>
         <xsl:apply-templates select="$layout.config"/>
     </xsl:template>
+    <xsl:template match="/n:html-body-content">
+        <xsl:variable name="layout.config">
+            <s:layout.config>
+                <xsl:call-template name="s:path-of">
+                    <xsl:with-param name="document" select="."/>
+                </xsl:call-template>
+                <s:name>
+                    <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
+                </s:name>
+                <s:title>
+                    <xsl:value-of select="./@full-name"/>
+                </s:title>
+                <s:license>standard</s:license>
+                <s:publication_date/>
+                <s:content>
+                    <xsl:value-of select="./node()"/>
+                </s:content>
+            </s:layout.config>
+        </xsl:variable>
+        <xsl:apply-templates select="$layout.config"/>
+    </xsl:template>
     <xsl:template match="/n:text">
         <xsl:variable name="layout.config">
             <s:layout.config>
