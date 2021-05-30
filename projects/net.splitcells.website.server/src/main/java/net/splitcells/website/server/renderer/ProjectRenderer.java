@@ -113,7 +113,7 @@ public class ProjectRenderer {
     public Optional<RenderingResult> render(String path) {
         try {
             // TODO HACK
-            if (path.endsWith("README.md") && is_file(projectFolder.resolve("README.md"))) {
+            if (path.endsWith("README.html") && is_file(projectFolder.resolve("README.md"))) {
                 Parser parser = Parser.builder().build();
                 Node document = parser.parse(readString(projectFolder.resolve("README.md")));
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
@@ -264,7 +264,7 @@ public class ProjectRenderer {
         }
         if (is_file(projectFolder.resolve("README.md"))) {
             // TODO HACK
-            extendPerspectiveWithPath(layout, Path.of(resourceRootPath.substring(1)).resolve("README.md"));
+            extendPerspectiveWithPath(layout, Path.of(resourceRootPath.substring(1)).resolve("README.html"));
         }
         return layout;
     }
@@ -285,7 +285,7 @@ public class ProjectRenderer {
                 .get()
                 .collect(toSetOfUniques());
         if (is_file(projectFolder.resolve("README.md"))) {
-            projectPaths.add(Path.of(resourceRootPath.substring(1)).resolve("README.md"));
+            projectPaths.add(Path.of(resourceRootPath.substring(1)).resolve("README.html"));
         }
         return projectPaths;
     }
