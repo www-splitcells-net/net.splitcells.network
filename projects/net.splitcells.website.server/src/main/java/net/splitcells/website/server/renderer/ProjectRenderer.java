@@ -6,9 +6,13 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.website.Validator;
 import net.splitcells.website.ValidatorViaSchema;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -26,6 +30,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
@@ -78,6 +83,13 @@ public class ProjectRenderer {
      */
     public Optional<RenderingResult> render(String path) {
         try {
+            if (path.endsWith("README.md") && Files.is_file(project.resolve("../..").resolve("README.md"))) {
+                // TODO HACK
+                Parser parser = Parser.builder().build();
+                Node document = parser.parse(readString(project.resolve("../..").resolve("README.md")));
+                HtmlRenderer renderer = HtmlRenderer.builder().build();
+                return Optional.of(renderingResult(renderer.render(document).getBytes(UTF_8), TEXT_HTML.toString()));
+            }
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
             }
