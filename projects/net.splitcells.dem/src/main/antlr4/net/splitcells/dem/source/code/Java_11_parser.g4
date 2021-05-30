@@ -106,6 +106,6 @@ type_path
     | type_path Dot Name
     ;
 variable_declaration
-    : type_declaration Whitespace Name
+    : Keyword_final? Whitespace? type_declaration Whitespace Name
     ;
 
