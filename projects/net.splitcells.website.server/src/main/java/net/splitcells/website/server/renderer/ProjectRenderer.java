@@ -104,7 +104,7 @@ public class ProjectRenderer {
     public Optional<RenderingResult> render(String path) {
         try {
             // TODO HACK
-            if (path.endsWith("README.md") && Files.is_file(projectFolder.resolve("README.md"))) {
+            if (path.endsWith("README.md") && is_file(projectFolder.resolve("README.md"))) {
                 Parser parser = Parser.builder().build();
                 Node document = parser.parse(readString(projectSrcFolder.resolve("README.md")));
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
@@ -253,6 +253,9 @@ public class ProjectRenderer {
         } catch (IOException e) {
             throw new RuntimeException(folder.toAbsolutePath().toString(), e);
         }
+        if (is_file(projectFolder.resolve("README.md"))) {
+            layout
+        }
         return layout;
     }
 
@@ -279,7 +282,10 @@ public class ProjectRenderer {
      * @param relativeProjectPath Path relative to the project folders src/xml folder. This path also represent absolute path in projects namespace.
      */
     private void extendPerspectiveWithPath(Perspective current, Path relativeProjectPath) {
-        for (final var element : list(relativeProjectPath.toString().split("/")).stream().filter(e -> !"".contentEquals(e)).collect(toList())) {
+        for (final var element : list(relativeProjectPath.toString().split("/"))
+                .stream()
+                .filter(e -> !"".contentEquals(e))
+                .collect(toList())) {
             final var children = current.children().stream()
                     .filter(child -> child.nameIs(NameSpaces.VAL, NameSpaces.NATURAL))
                     .filter(child -> child.propertyInstances(NameSpaces.NAME, NameSpaces.NATURAL).stream()
