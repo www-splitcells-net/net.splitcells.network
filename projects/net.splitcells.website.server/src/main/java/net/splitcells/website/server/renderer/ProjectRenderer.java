@@ -6,10 +6,8 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.website.Validator;
-import net.splitcells.website.ValidatorViaSchema;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -44,10 +42,11 @@ public class ProjectRenderer {
     private static final String MARKER = "198032jrf013jf09j13f13f4290fj2394fj24";
 
     public Path project() {
-        return project;
+        return projectSrcFolder;
     }
 
-    private final Path project;
+    private final Path projectFolder;
+    private final Path projectSrcFolder;
     private final Path xslLibs;
     private final Path resources;
     private final String resourceRootPath;
@@ -56,19 +55,38 @@ public class ProjectRenderer {
     private final boolean typedFolder;
     private final Validator validator;
 
-    public ProjectRenderer(String renderer, Path project, Path xslLibs, Path resources, String resourceRootPath, Validator validator) {
-        this(renderer, project, xslLibs, resources, resourceRootPath, true, false, validator);
+    @Deprecated
+    public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
+            , Validator validator) {
+        this(renderer, projectSrcFolder, xslLibs, resources, resourceRootPath, true, false
+                , validator
+                , projectSrcFolder.resolve("../.."));
     }
 
-    public ProjectRenderer(String renderer, Path project, Path xslLibs, Path resources, String resourceRootPath, boolean typedFolder, boolean flatRepository, Validator validator) {
+    public static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
+            , String resourceRootPath
+            , Validator validator) {
+        return new ProjectRenderer(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
+                , true
+                , false
+                , validator
+                , projectFolder);
+    }
+
+    public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
+            , boolean typedFolder
+            , boolean flatRepository
+            , Validator validator
+            , Path projectFolder) {
         this.typedFolder = typedFolder;
         this.profile = renderer;
-        this.project = project;
+        this.projectSrcFolder = projectSrcFolder;
         this.xslLibs = xslLibs;
         this.resources = resources;
         this.resourceRootPath = resourceRootPath;
         this.flatRepository = flatRepository;
         this.validator = validator;
+        this.projectFolder = projectFolder;
     }
 
     /**
@@ -77,7 +95,7 @@ public class ProjectRenderer {
      * IDEA Create mode where the renderer ist cached.
      */
     private FileStructureTransformer renderer() {
-        return new FileStructureTransformer(project.resolve("xml"), xslLibs, "main." + profile + ".xsl", validator);
+        return new FileStructureTransformer(projectSrcFolder.resolve("xml"), xslLibs, "main." + profile + ".xsl", validator);
     }
 
     /**
@@ -85,10 +103,10 @@ public class ProjectRenderer {
      */
     public Optional<RenderingResult> render(String path) {
         try {
-            if (path.endsWith("README.md") && Files.is_file(project.resolve("../..").resolve("README.md"))) {
-                // TODO HACK
+            // TODO HACK
+            if (path.endsWith("README.md") && Files.is_file(projectFolder.resolve("README.md"))) {
                 Parser parser = Parser.builder().build();
-                Node document = parser.parse(readString(project.resolve("../..").resolve("README.md")));
+                Node document = parser.parse(readString(projectSrcFolder.resolve("README.md")));
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
                 return renderHtmlBodyContent(renderer.render(document))
                         .map(result -> renderingResult
@@ -159,13 +177,13 @@ public class ProjectRenderer {
         }
         if (typedFolder) {
             try {
-                return project.resolve(type).resolve(URLDecoder.decode(projectPath, "UTF-8"));
+                return projectSrcFolder.resolve(type).resolve(URLDecoder.decode(projectPath, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }
         } else {
             try {
-                return project.resolve(URLDecoder.decode(projectPath, "UTF-8"));
+                return projectSrcFolder.resolve(URLDecoder.decode(projectPath, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }
@@ -226,9 +244,9 @@ public class ProjectRenderer {
         final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
         final Path folder;
         if (typedFolder) {
-            folder = project.resolve("xml");
+            folder = projectSrcFolder.resolve("xml");
         } else {
-            folder = project;
+            folder = projectSrcFolder;
         }
         try {
             if (isDirectory(folder)) {
@@ -244,7 +262,7 @@ public class ProjectRenderer {
 
     public Set<Path> projectPaths() {
         final var projectPaths = Sets.<String>setOfUniques();
-        return list(project.resolve("xml"), project.resolve("txt"), resources)
+        return list(projectSrcFolder.resolve("xml"), projectSrcFolder.resolve("txt"), resources)
                 .stream()
                 .filter(folder -> Files.isDirectory(folder))
                 .map(folder -> {
