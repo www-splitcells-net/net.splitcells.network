@@ -42,6 +42,7 @@ do
 		if [ -d ../doc/man ]; then
 			cd ../doc/man
 			# TODO Support multiple sections.
+			mkdir -p ~/.local/share/man/man1/
 			find . -type f | sort -n | xargs -i cp {} ~/.local/share/man/man1/
 		fi
 	fi
