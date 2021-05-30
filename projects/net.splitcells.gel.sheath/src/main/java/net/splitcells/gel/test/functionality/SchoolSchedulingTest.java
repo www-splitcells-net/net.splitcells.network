@@ -1,5 +1,7 @@
 package net.splitcells.gel.test.functionality;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -9,10 +11,15 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.database.Databases.database2;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -32,12 +39,12 @@ public class SchoolSchedulingTest {
             , "teach subject suitability");
     private static final Attribute<Integer> COURSE_ID = attribute(Integer.class, "course id");
     private static final Attribute<Integer> COURSE_S_VINTAGE = attribute(Integer.class, "course's vintage");
-    private static final Attribute<Integer> REQUIRED_HOURS = attribute(Integer.class, "required hours");
+    private static final Attribute<Integer> COURSE_LENGTH = attribute(Integer.class, "course length");
     private static final Attribute<Integer> ALLOCATED_HOURS = attribute(Integer.class, "allocated hours");
     private static final Attribute<Integer> RAIL = attribute(Integer.class, "rail");
     private static final Attribute<Integer> STUDENT = attribute(Integer.class, "student");
     private static final Attribute<Integer> STUDENT_S_VINTAGE = attribute(Integer.class, "student's vintage");
-    private static final Attribute<Integer> PREFERRED_SUBJECT = attribute(Integer.class, "preferred subject");
+    private static final Attribute<Integer> REQUIRED_SUBJECT = attribute(Integer.class, "required subject");
     private static final Attribute<Integer> COURSE_POSITION = attribute(Integer.class, "course position");
 
     /**
@@ -54,25 +61,64 @@ public class SchoolSchedulingTest {
     private Solution schoolScheduling(int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
-        return definePupilAllocationsForCourses
+        return defineStudentAllocationsForCourses
                 (defineTeacherAllocationForCourses
-                                (defineRailsForSchoolScheduling())
+                                (defineRailsForSchoolScheduling
+                                                (2
+                                                        , 30
+                                                        , 30
+                                                        , 410d / 158d
+                                                        , 4
+                                                        , 17)
+                                        , 56
+                                        , 56d / 158d)
+                        , 92
+                        , 12
                         , minimalNumberOfStudentsPerCourse
                         , optimalNumberOfStudentsPerCourse
                         , maximumNumberOfStudentsPerCourse);
     }
 
-    private Solution defineRailsForSchoolScheduling() {
+    private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
+            , double averageCourseLength
+            , int maximumCourseLength
+            , int numberOfRails) {
+        final var randomness = randomness();
+        final var courses = IntStream.rangeClosed(1, numberOfCourses)
+                .mapToObj(courseId -> {
+                    final var subject = randomness.integer(1, numberOfSubjects);
+                    final var length = randomness.integer(1, averageCourseLength, maximumCourseLength);
+                    final var vintage = randomness.integer(1, numberOfVintages);
+                    return IntStream.rangeClosed(1, length)
+                            .mapToObj(i -> Lists.<Object>list(courseId, subject, length, vintage))
+                            .collect(toList());
+                })
+                .flatMap(e -> e.stream())
+                .collect(toList());
+        final var railCapacity = IntStream.rangeClosed(1, numberOfRails)
+                .mapToObj(railId ->
+                        IntStream.rangeClosed(1, courses.size())
+                                .mapToObj(i -> IntStream.rangeClosed(1, maximumCourseLength)
+                                        .mapToObj(railLength -> Lists.<Object>list(railLength, railId))
+                                        .collect(toList())
+                                )
+                                .flatMap(e -> e.stream())
+                                .collect(toList())
+                )
+                .flatMap(e -> e.stream())
+                .collect(toList());
         return defineProblem()
-                .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, REQUIRED_HOURS)
+                .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
+                .withDemands(courses)
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
+                .withSupplies(railCapacity)
                 .withConstraint(r -> {
                     r.forAll(lineValueSelector(line -> line.value(RAIL) == 0))
                             .then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
                     r.forAll(SUBJECT)
                             .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
                             .then(allDifferent(RAIL));
-                    r.forAll(COURSE_ID).then(RegulatedLength.regulatedLength(REQUIRED_HOURS, ALLOCATED_HOURS));
+                    r.forAll(COURSE_ID).then(RegulatedLength.regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
                     r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;
                 }).toProblem()
@@ -86,7 +132,8 @@ public class SchoolSchedulingTest {
      * @param solution The demands of this problem.
      * @return A problem modelling allocations of teachers to courses.
      */
-    private Solution defineTeacherAllocationForCourses(Solution solution) {
+    private Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
+            , double averageNumberOfSubjectsPerTeacher) {
         return defineProblem()
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
@@ -102,30 +149,32 @@ public class SchoolSchedulingTest {
                 .toSolution();
     }
 
-    private Solution definePupilAllocationsForCourses(Solution solution
+    private Solution defineStudentAllocationsForCourses(Solution solution
+            , int numberOfStudents
+            , int numberOfSubjectsPerStudents
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
-        final var demands = database2(solution.headerView());
+        final var supplies = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
             public void register_addition(Line line) {
-                rangeClosed(1, maximumNumberOfStudentsPerCourse).forEach(i -> demands.addTranslated(line.values()));
+                rangeClosed(1, maximumNumberOfStudentsPerCourse).forEach(i -> supplies.addTranslated(line.values()));
             }
 
             @Override
             public void register_before_removal(Line line) {
-                demands.columnView(COURSE_ID)
+                supplies.columnView(COURSE_ID)
                         .lookup(line.value(COURSE_ID))
                         .getLines()
-                        .forEach(demands::remove);
+                        .forEach(supplies::remove);
             }
         });
         return defineProblem()
-                .withDemands(demands)
-                .withSupplyAttributes2(solution.headerView())
+                .withDemandAttributes(STUDENT, REQUIRED_SUBJECT)
+                .withSupplies(supplies)
                 .withConstraint(r -> {
-                    r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(PREFERRED_SUBJECT))));
+                    r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))));
                     r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))));
                     r.forAll(COURSE_POSITION).then(allSame(STUDENT));
                     r.forAll(RAIL).forAll(STUDENT).then(allSame(COURSE_ID));

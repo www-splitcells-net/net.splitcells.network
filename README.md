@@ -1,66 +1,82 @@
 # net.splitcells.network
 
+<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
+
 > Together we are more than the sum of our cells.
 
 ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)
 ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
 ![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
 
+**[Introduction](#introduction)** | **[Where to start?](#where-to-start)** | **[Network's Structure](#networks-structure)** | **[Contacts](#contacts)**
+
 ## Introduction
 
-Model and optimize problems. 🚀
+We provide an open source ecosystem centered around optimization and operations research.
 
-Analyze and organize your operations and prepare schedules. 🔬
+The main project is the [Generic Allocator](./projects/net.splitcells.gel).
+It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
+A detailed introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
-Collaborate large decision-making networks. 🤝
+An overview of the projects can be found [here](#networks-structure).
 
-Research optimization. 🔭
+## Where to start?
 
-Get structured documentation. 📚
+🚀 Model and optimize problems.
 
-Contribute to projects. ✍
+🔬 Analyze and organize your operations and prepare schedules.
 
-Support [contributors](https://www.patreon.com/splitcells_net). 💰
+🤝 Collaborate large decision-making networks.
 
-Spread the word! 📣
+🔭 Research optimization.
 
-## Description
+📚 Get structured documentation.
 
-<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
+✍ Contribute to projects.
 
-This is a set of open source projects centered around optimization and code supporting and integrating such projects.
-The center of all this is the [Generic Allocator](./projects/net.splitcells.gel). It is a Java framework providing
-modeling, analytic and solving capabilities regarding optimization problems. An introduction and documentation can be
-found [here](http://splitcells.net/net/splitcells/gel/index.html).
+💰 Support [contributors](https://www.patreon.com/splitcells_net).
 
-## Good to Know
+📣 Spread the word!
 
-Another interesting subproject is [OS State Interface](./projects/net.splitcells.os.state.interface).
-It helps the user to organize and execute commands in the terminal. 
+## Network's Structure
 
-## Structure
+This project is meant to be part of a cluster, with a certain filesystem structure in mind.
+The cluster's filesystem consists of a folder containing repositories:
 
-This is the root project of a project cluster. This network consists of three parts:
+```
+Project Cluster
+├── net.splitcells.network
+│   └── projects
+│       ├── net.splitcells.dem
+│       ├── net.splitcells.gel
+│       ├── net.splitcells.os.state.interface
+│       ├── net.splitcells.system
+│       └── ...
+├── net.splitcells.os.state.interface.lib.gpl.2
+├── net.splitcells.os.state.interface.lib.gpl.3
+└── ...
+```
+> This image illustrates the networks structure by showing relevant parts of the filesystem.
 
-* [net.splitcells.system](./projects/net.splitcells.system/README.md):
-  A set of integrated projects focused on optimization and problem modeling.
 * [net.splitcells.network](http://splitcells.net):
-  This project integrates all repositories and hosting services, that are part of the network.
-* Unintegrated projects:
-  These projects are not inside this repository and managed are more independently.
+  This repository integrates all projects, repositories and hosting services, that are part of the network.
+  * [dem](./projects/net.splitcells.dem/README.md): Provides a standardized fundament for Java projects.
+  * [gel](./projects/net.splitcells.gel/README.md): This framework delivers optimization capabilities.
+  * [os.state.interface](./projects/net.splitcells.os.state.interface/README.md):
+    The projects helps the user to organize and execute commands in the terminal via dependency injection.
+  * [system](./projects/net.splitcells.system/README.md):
+    Manages all integrated subprojects of the network.
+    In particular, it can be used to build all integrated projects.
+* **Related projects/repositories**:
+  Related projects are located in repositories, which are at the same folder as the
+  [net.splitcells.network](http://splitcells.net) project. 
+  These projects are not inside this repository and are managed more independently.
   They may be managed by users with [OS state interface](./projects/net.splitcells.os.state.interface/README.md).
+  It is recommended to not nest repositories.
 
-## Contact
+## Contacts
 
 * [Rendered Documentation](http://splitcells.net/net/splitcells/index.html)
 * [Twitch Channel](https://www.twitch.tv/splitcellsnet)
 * [Twitter](https://twitter.com/splitcells)
 * [Mastadon](https://fosstodon.org/@splitcells)
-
-## Status
-
-| Attribute | Status |
-| --- | --- |
-| GitHub CI | ![Continous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg) |
-| GitLab CI | ![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg) |
-| sourcehut CI | [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net/net.splitcells.network?) |

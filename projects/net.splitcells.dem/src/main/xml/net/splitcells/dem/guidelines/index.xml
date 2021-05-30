@@ -24,8 +24,6 @@
                 <url>https://git-scm.com/book/en/v1/Git-Branching-Rebasing#The-Perils-of-Rebasing
                 </url>
             </link>
-            It currently focues mainly on Java but also refers to things outside
-            of Java.
         </description>
         <publication_date year="2018" month="04" day_of_month="29"/>
         <license>standard</license>
@@ -36,14 +34,10 @@
             </url>
         </related_to>
         <d:toDo>
-            <d:toDo>Make project as portable, extendable, changeable deletable as possible.</d:toDo>
-            <d:todo>Create code guidelines that are not Java specific.</d:todo>
-            <d:todo>
-                If a concrete generic type is needed for testing use Integer.
-            </d:todo>
-            <d:toDo>Documentation has to contain all relevant information
-                (like reason for implementation) not visible in direct program source.
+            <d:toDo>Move framework specific guides to framework documentation or delete it,
+                if this is covered by frameworks API.
             </d:toDo>
+            <d:toDo>Document dependency lifecycle of injection and integration.</d:toDo>
             <d:todo>
                 Meta Code Guidelines
                 <d:todo>https://github.com/icy/bash-coding-style</d:todo>
@@ -172,7 +166,7 @@
             experiments.
         </paragraph>
         <paragraph>
-            Do not consider these Java code guidelines for your own code.
+            Do not consider these code guidelines for your own code.
             <link>
                 <text>If you do, people will hate you, and you’ll be scorned by
                     friends and family.
@@ -198,13 +192,18 @@
     </chapter>
     <chapter>
         <title>Base Rule</title>
-        <paragraph>The project structure and its contents has to represent a
+        <paragraph>The project structure, its contents and products has to represent a
             discovery based network of perspectives and changes.
-            The project and its parts should be portable, extendable, adaptable and
+            The project and its parts should be portable, extendable, adaptable,
             <link>
                 <text>deletable</text>
                 <url>https://programmingisterrible.com/post/139222674273/how-to-write-disposable-code-in-large-systems
                 </url>
+            </link>
+            and comply with
+            <link>
+                <text>Perspective's guidelines</text>
+                <post>/net/splitcells/dem/lang/perspective/index</post>
             </link>
             .
         </paragraph>
@@ -215,30 +214,21 @@
         </paragraph>
         <chapter>
             <title>Version Control</title>
-            <chapter>
-                <title>Commit Log</title>
-                <paragraph>The commit log is a program, that describes the development of the project.</paragraph>
-            </chapter>
-            <chapter>
-                <title>Versioning</title>
-                <chapter>
-                    <title>Semantic Versioning as Default Versioning Format</title>
-                    <d:todo>https://semver.org/</d:todo>
-                </chapter>
-                <chapter>
-                    <title>Compatibility</title>
-                    <d:toDo>Prefer backward compatible changes to backward incompatible changes.</d:toDo>
-                    <d:toDo>Make as much undefined as possible, for not essential things, but make clear what is
-                        essential.
-                        This way one
-                        can adapt the API more easily
-                        without changing API and breaking compatibility.
-                        Breaking other software, because it
-                        relied on implementation specifics is better, than
-                        breaking other software via incompatible API changes.
-                    </d:toDo>
-                </chapter>
-            </chapter>
+            <paragraph>The commit log is a program, that describes the development of the project.
+                The
+                <link>
+                    <text>semantic versioning</text>
+                    <url>https://semver.org/</url>
+                </link>
+                is used as a default versioning format.
+            </paragraph>
+            <paragraph>Make clear what is guaranteed and do this only via an explicit interface,
+                that has no implementation specifics.
+                Prefer backward compatible changes to backward incompatible changes.
+                Make as much undefined as possible for not essential things in order to minimize the set of guarantees.
+                Breaking other software, because it relied on implementation specifics is better,
+                than breaking other software via incompatible API changes.
+            </paragraph>
         </chapter>
         <chapter>
             <title>Development Process</title>
@@ -246,56 +236,16 @@
                 Therefore some points regarding the development process that influence the code
                 are included here as well.
             </paragraph>
-            <paragraph>Prefer test driven development. Use unit and integration tests.</paragraph>
-            <d:toDo>Minimize backlog.
-                <d:toDo>While doing a task do also at least one other task that is related to the topic of the current
-                    task.
-                </d:toDo>
-            </d:toDo>
-            <d:toDo>Priorize the working condition of the software during the whole development stage.
-                <d:toDo>Prefer small tasks over big tasks.</d:toDo>
-                <d:toDo>Ensure that the whole project works after each task.</d:toDo>
-                <d:toDo>Ensure the projects work without additional software like Eclipse.
-                    Software like Eclipse likes to hide errors and can create a big surprise in the middle of a task
-                    and thereby invalidate current planing.
-                </d:toDo>
-            </d:toDo>
-            <chapter>
-                <title>API Backwards Compatibility</title>
-                <paragraph>It is recommended to not break backwards compatibility at all,
-                    regarding the features that are part of a test suite.
-                    If backwards compatibility has to be broken, it should be first deprecated and than removed.
-                    A feature should never be changed in an incompatible way.
-                    Instead a new version of this feature should be introduced, while the older version of the
-                    new version is deprecated.
-                    After the deprecation of the old feature, the old one can be removed.
-                </paragraph>
-                <paragraph>If there are no project dependants or these accept breaking compatibility changes this rule
-                    does not apply.
-                    This is especially true during an experimental or initial development phase of a project or
-                    if the developer of the project is the only user of the project.
-                </paragraph>
-            </chapter>
-            <chapter>
-                <title>ABI Backwards Compatibility</title>
-                <paragraph>Forcing project dependants to rebuild their software in order to update
-                    their dependencies is acceptable. In other words application binary interface (ABI) backwards
-                    compatibility has a lot lower priority than the compatibility application programming interface
-                    (API).
-                </paragraph>
-            </chapter>
-            <chapter>
-                <title>Migration based Development</title>
-                <paragraph>It preferred that each version of the project works.
-                    This does also apply to individual commits.
-                    This increases development effectiveness and efficiency.
-                    It also provides an easy guideline how to implement changes.
-                </paragraph>
-                <paragraph>If one can develop multiple features on the same repository branch without affecting each
-                    other,
-                    then it is likely, that the migration based development is working.
-                </paragraph>
-            </chapter>
+            <paragraph>Minimize the size of the main backlog.
+                Prefer smaller tasks over bigger tasks.
+            </paragraph>
+            <paragraph>Priorize a working project state at every point in the development.
+                Prefer test driven development.
+                Ensure that the project is build, tested and executed in different environments,
+                in order to ensure, that the projects works.
+                This is called migration based development.
+
+            </paragraph>
         </chapter>
     </chapter>
     <chapter>
@@ -317,8 +267,7 @@
                 little work.
             </paragraph>
             <paragraph>Tickets with a low amount of content should
-                be stored as a
-                (i.e. Javadoc) comment at the
+                be stored as a comment at the
                 relevant source code
                 location. Every task should start with <quote>TODO</quote>, which is recognized by many tools.
             </paragraph>

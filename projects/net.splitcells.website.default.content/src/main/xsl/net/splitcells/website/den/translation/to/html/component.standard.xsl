@@ -476,7 +476,7 @@
                         <xsl:apply-templates select="s:url"/>
                     </xsl:when>
                     <xsl:when test="s:post">
-                        <xsl:copy-of select="$site_instance_purl"/>
+                        <xsl:copy-of select="$site_instance_burl"/>
                         <xsl:text></xsl:text>
                         <xsl:apply-templates
                                 select="s:post/node()"/>

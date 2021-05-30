@@ -125,6 +125,12 @@
     </chapter>
     <chapter>
         <title>
+            <quote>./projects/*</quote>
+        </title>
+        <paragraph>Contains folders with subproject. Prefer to not use recursive projects.</paragraph>
+    </chapter>
+    <chapter>
+        <title>
             <quote>./src/*</quote>
         </title>
         <paragraph>Contains the source code of the project.</paragraph>

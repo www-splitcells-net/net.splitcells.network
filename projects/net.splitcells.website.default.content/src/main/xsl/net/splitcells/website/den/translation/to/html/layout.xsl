@@ -235,6 +235,11 @@
         <html>
             <head>
                 <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8"/>
+                <link rel="image_src" type="image/svg+xml">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="s:root-relative-url('images/license.standard/thumbnail/small/starting-to-learn-how-to-draw-a-face.jpg')"/>
+                    </xsl:attribute>
+                </link>
                 <link rel="icon" type="image/svg+xml">
                     <xsl:attribute name="href">
                         <xsl:value-of select="s:root-relative-url('/images/icon.svg')"/>
