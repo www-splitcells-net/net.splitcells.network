@@ -77,6 +77,7 @@ reference
     /* This is an Lambda definition. */
     | Name Whitespace? Arrow Whitespace? reference
     | Name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
+    | call_arguments Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 statement
     : Keyword_return? Whitespace expression Semicolon
