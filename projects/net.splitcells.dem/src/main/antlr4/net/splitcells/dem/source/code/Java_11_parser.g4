@@ -16,6 +16,10 @@ parser grammar Java_11_parser;
 options {
     tokenVocab=Java_11_lexer;
 }
+access
+    : Dot Whitespace? Name Whitespace? call_arguments access?
+    | Dot Whitespace? Name Whitespace? access?
+    ;
 call_arguments
     : Brace_round_open Brace_round_closed
     | Brace_round_open Whitespace? call_arguments_element Whitespace? call_arguments_next* Whitespace? Brace_round_closed
@@ -73,7 +77,7 @@ package_name
     ;
 reference
     : expression
-    | Name
+    | Name Whitespace? access?
     /* This is an Lambda definition. */
     | Name Whitespace? Arrow Whitespace? reference
     | Name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
