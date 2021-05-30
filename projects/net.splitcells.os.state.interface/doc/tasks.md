@@ -2,8 +2,7 @@
 Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
-### Current Tasks
-1. repo.pull: Create new sub repositories on the fly. 
+### Current Tasks 
 1. Remove unecessary tasks.
 1. Replaces "this.requires" and "this.active.if.present", by command
    which exits with none zero, if a command is not present and zero otherwise.
