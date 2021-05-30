@@ -41,6 +41,8 @@ import static net.splitcells.website.server.renderer.RenderingResult.renderingRe
  * TODO Merge website rendering and support system rendering. Make distinction between online and offline rendering.
  */
 public class ProjectRenderer {
+    private static final String MARKER = "198032jrf013jf09j13f13f4290fj2394fj24";
+
     public Path project() {
         return project;
     }
@@ -88,7 +90,10 @@ public class ProjectRenderer {
                 Parser parser = Parser.builder().build();
                 Node document = parser.parse(readString(project.resolve("../..").resolve("README.md")));
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
-                return Optional.of(renderingResult(renderer.render(document).getBytes(UTF_8), TEXT_HTML.toString()));
+                return renderHtmlBodyContent(renderer.render(document))
+                        .map(result -> renderingResult
+                                (result
+                                        , TEXT_HTML.toString()));
             }
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
@@ -164,6 +169,20 @@ public class ProjectRenderer {
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    private Optional<byte[]> renderHtmlBodyContent(String bodyContent) {
+        try {
+            final var content = Xml.rElement(NameSpaces.NATURAL, "text");
+            content.appendChild
+                    (Xml.textNode(MARKER));
+            return Optional.of(renderer()
+                    .transform(Xml.toPrettyString(content))
+                    .replace(MARKER, bodyContent)
+                    .getBytes(UTF_8));
+        } catch (Exception e) {
+            return Optional.empty();
         }
     }
 
