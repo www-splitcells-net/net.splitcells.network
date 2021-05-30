@@ -115,7 +115,7 @@ public class ProjectRenderer {
             // TODO HACK
             if (path.endsWith("README.md") && is_file(projectFolder.resolve("README.md"))) {
                 Parser parser = Parser.builder().build();
-                Node document = parser.parse(readString(projectSrcFolder.resolve("README.md")));
+                Node document = parser.parse(readString(projectFolder.resolve("README.md")));
                 HtmlRenderer renderer = HtmlRenderer.builder().build();
                 return renderHtmlBodyContent(renderer.render(document))
                         .map(result -> renderingResult
