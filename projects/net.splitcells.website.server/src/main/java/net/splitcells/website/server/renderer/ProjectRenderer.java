@@ -269,8 +269,7 @@ public class ProjectRenderer {
     }
 
     public Set<Path> projectPaths() {
-        final var projectPaths = Sets.<String>setOfUniques();
-        return list(projectSrcFolder.resolve("xml"), projectSrcFolder.resolve("txt"), resources)
+        final var projectPaths = list(projectSrcFolder.resolve("xml"), projectSrcFolder.resolve("txt"), resources)
                 .stream()
                 .filter(folder -> Files.isDirectory(folder))
                 .map(folder -> {
@@ -284,6 +283,10 @@ public class ProjectRenderer {
                 }).reduce((a, b) -> concat(a, b))
                 .get()
                 .collect(toSetOfUniques());
+        if (is_file(projectFolder.resolve("README.md"))) {
+            projectPaths.add(Path.of("README.md"));
+        }
+        return projectPaths;
     }
 
     /**
