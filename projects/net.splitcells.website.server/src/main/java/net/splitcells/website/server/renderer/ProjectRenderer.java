@@ -263,7 +263,8 @@ public class ProjectRenderer {
             throw new RuntimeException(folder.toAbsolutePath().toString(), e);
         }
         if (is_file(projectFolder.resolve("README.md"))) {
-            extendPerspectiveWithPath(layout, Path.of("README.md"));
+            // TODO HACK
+            extendPerspectiveWithPath(layout, Path.of(resourceRootPath.substring(1)).resolve("README.md"));
         }
         return layout;
     }
