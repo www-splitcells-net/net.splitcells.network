@@ -240,6 +240,18 @@ td.TextCell {
 	font-size: 125%;
 	font-weight: bold;
 	}
+h1 {
+    padding-left: .4em;
+    }
+h2 {
+    padding-left: .4em;
+    }
+h3 {
+    padding-left: .4em;
+    }
+h4 {
+    padding-left: .4em;
+    }
 .heading {
 	font-size: 125%;
 	font-weight: bold;
