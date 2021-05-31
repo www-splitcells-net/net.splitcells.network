@@ -2,6 +2,11 @@
 :target {
    background-color: var(--background-color-priority-0) !important;
 }
+pre {
+    background-color: var(--background-color-priority-2);
+    padding-left: 1em;
+    padding-right: 1em;
+    }
 .net-splitcells-quote-display > .label {
     background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
     width: 100%;
