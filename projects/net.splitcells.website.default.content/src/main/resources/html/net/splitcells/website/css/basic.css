@@ -456,7 +456,15 @@ a {
 	padding-left: .5em;
 	padding-right: .5em;
 	}
+p {
+	font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif;
+	margin-top: 1.4em;
+	margin-bottom: 1.4em;
+	padding-left: 1em;
+	padding-right: 1em;
+	}
 .paragraph {
+    /** TODO This class is deprecated. */
 	font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif;
 	margin-top: 1.4em;
 	margin-bottom: 1.4em;
