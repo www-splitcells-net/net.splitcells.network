@@ -125,7 +125,7 @@ public class ProjectRenderer {
                 if (pathContent.startsWith("#")) {
                     final var titleLine = pathContent.split("[\r\n]+")[0];
                     title = Optional.of(titleLine.replaceAll("#", "").trim());
-                    document = parser.parse(pathContent.substring(titleLine.length() - 1));
+                    document = parser.parse(pathContent.substring(titleLine.length()));
                 } else {
                     title = Optional.empty();
                     document = parser.parse(pathContent);
