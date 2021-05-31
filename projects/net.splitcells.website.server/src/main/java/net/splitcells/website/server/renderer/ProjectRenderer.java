@@ -4,9 +4,11 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.Files;
+import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.website.Validator;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -31,6 +33,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.dem.resource.host.Files.is_file;
+import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**
@@ -115,9 +118,19 @@ public class ProjectRenderer {
             // TODO HACK
             if (path.endsWith("README.html") && is_file(projectFolder.resolve("README.md"))) {
                 Parser parser = Parser.builder().build();
-                Node document = parser.parse(readString(projectFolder.resolve("README.md")));
-                HtmlRenderer renderer = HtmlRenderer.builder().build();
-                return renderHtmlBodyContent(renderer.render(document))
+                final var pathContent = readString(projectFolder.resolve("README.md"));
+                final HtmlRenderer renderer = HtmlRenderer.builder().build();
+                final Node document;
+                final Optional<String> title;
+                if (pathContent.startsWith("#")) {
+                    final var titleLine = pathContent.split("[\r\n]+")[0];
+                    title = Optional.of(titleLine.replaceAll("#", "").trim());
+                    document = parser.parse(pathContent.substring(titleLine.length() - 1));
+                } else {
+                    title = Optional.empty();
+                    document = parser.parse(pathContent);
+                }
+                return renderHtmlBodyContent(renderer.render(document), title)
                         .map(result -> renderingResult
                                 (result
                                         , TEXT_HTML.toString()));
@@ -195,11 +208,21 @@ public class ProjectRenderer {
         }
     }
 
-    private Optional<byte[]> renderHtmlBodyContent(String bodyContent) {
+    private Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title) {
         try {
-            final var content = Xml.rElement(NameSpaces.NATURAL, "html-body-content");
-            content.appendChild
+            final var content = Xml.rElement(NameSpaces.SEW, "article");
+            final var htmlBodyContent = Xml.rElement(NameSpaces.SEW, "html-body-content");
+            htmlBodyContent.appendChild
                     (Xml.textNode(MARKER));
+            content.appendChild(htmlBodyContent);
+            domsole().append(content, LogLevel.INFO);
+            if (title.isPresent()) {
+                final var metaElement = Xml.elementWithChildren(NameSpaces.SEW, "meta");
+                final var titleElement = Xml.elementWithChildren(NameSpaces.SEW, "title");
+                metaElement.appendChild(titleElement);
+                titleElement.appendChild(Xml.textNode(title.get()));
+                content.appendChild(metaElement);
+            }
             return Optional.of(renderer()
                     .transform(Xml.toPrettyString(content))
                     .replace(MARKER, bodyContent)

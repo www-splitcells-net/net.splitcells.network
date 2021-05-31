@@ -116,4 +116,7 @@
     <element name="toDo" type="d:val"/>
     <element name="asynchronous" type="d:val"/>
     <element name="current" type="d:val"/>
+    <!--<element name="article" type="d:val"/>
+    <element name="title" type="d:val"/>
+    <element name="d:html-body-content" type="d:val"/>-->
 </schema> 
