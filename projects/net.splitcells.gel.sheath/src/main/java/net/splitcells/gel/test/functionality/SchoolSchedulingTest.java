@@ -19,6 +19,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
+import static net.splitcells.dem.utils.MathUtils.roundToInt;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.data.database.Databases.database;
@@ -140,18 +141,20 @@ public class SchoolSchedulingTest {
             , double averageNumberOfSubjectsPerTeacher
             , int numberOfSubjects) {
         final var randomness = randomness();
-        IntStream.rangeClosed(1, numberOfTeachers)
-                .mapToObj(teacher -> {
-                    IntStream.rangeClosed(1, randomness.integer
-                            (1
-                                    , averageNumberOfSubjectsPerTeacher
-                                    , MathUtils.roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
-                    //    .mapToObj(i)
-                    ;
-                });
+        final var teacherCapacity = IntStream.rangeClosed(1, numberOfTeachers)
+                .mapToObj(teacher ->
+                        IntStream.rangeClosed(1, randomness.integer
+                                (1
+                                        , averageNumberOfSubjectsPerTeacher
+                                        , roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
+                                .mapToObj(iSubject -> Lists.<Object>list(teacher, randomness.integer(1, numberOfSubjects)))
+                                .collect(toList()))
+                .flatMap(e -> e.stream())
+                .collect(toList());
         return defineProblem()
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
+                .withSupplies(teacherCapacity)
                 .withConstraint(r -> {
                     r.forAll(COURSE_ID).then(allSame(TEACHER));
                     r.forAll(TEACHER)
