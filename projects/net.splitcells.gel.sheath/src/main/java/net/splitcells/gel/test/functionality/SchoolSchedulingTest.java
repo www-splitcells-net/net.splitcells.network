@@ -89,21 +89,21 @@ public class SchoolSchedulingTest {
             , int maximumCourseLength
             , int numberOfRails) {
         final var randomness = randomness();
-        final var courses = IntStream.rangeClosed(1, numberOfCourses)
+        final var courses = rangeClosed(1, numberOfCourses)
                 .mapToObj(courseId -> {
                     final var subject = randomness.integer(1, numberOfSubjects);
                     final var length = randomness.integer(1, averageCourseLength, maximumCourseLength);
                     final var vintage = randomness.integer(1, numberOfVintages);
-                    return IntStream.rangeClosed(1, length)
+                    return rangeClosed(1, length)
                             .mapToObj(i -> Lists.<Object>list(courseId, subject, length, vintage))
                             .collect(toList());
                 })
                 .flatMap(e -> e.stream())
                 .collect(toList());
-        final var railCapacity = IntStream.rangeClosed(1, numberOfRails)
+        final var railCapacity = rangeClosed(1, numberOfRails)
                 .mapToObj(railId ->
-                        IntStream.rangeClosed(1, courses.size())
-                                .mapToObj(i -> IntStream.rangeClosed(1, maximumCourseLength)
+                        rangeClosed(1, courses.size())
+                                .mapToObj(i -> rangeClosed(1, maximumCourseLength)
                                         .mapToObj(railLength -> Lists.<Object>list(railLength, railId))
                                         .collect(toList())
                                 )
@@ -141,9 +141,9 @@ public class SchoolSchedulingTest {
             , double averageNumberOfSubjectsPerTeacher
             , int numberOfSubjects) {
         final var randomness = randomness();
-        final var teacherCapacity = IntStream.rangeClosed(1, numberOfTeachers)
+        final var teacherCapacity = rangeClosed(1, numberOfTeachers)
                 .mapToObj(teacher ->
-                        IntStream.rangeClosed(1, randomness.integer
+                        rangeClosed(1, randomness.integer
                                 (1
                                         , averageNumberOfSubjectsPerTeacher
                                         , roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
@@ -188,8 +188,15 @@ public class SchoolSchedulingTest {
                         .forEach(supplies::remove);
             }
         });
+        final var studentDemands = rangeClosed(1, numberOfStudents)
+                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudents)
+                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject))
+                        .collect(toList()))
+                .flatMap(e -> e.stream())
+                .collect(toList());
         return defineProblem()
                 .withDemandAttributes(STUDENT, REQUIRED_SUBJECT)
+                .withDemands(studentDemands)
                 .withSupplies(supplies)
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))));
