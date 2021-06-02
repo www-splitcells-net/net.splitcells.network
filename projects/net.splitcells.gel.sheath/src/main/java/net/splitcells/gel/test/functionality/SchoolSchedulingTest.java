@@ -2,6 +2,7 @@ package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -61,17 +62,20 @@ public class SchoolSchedulingTest {
     private Solution schoolScheduling(int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
+        final var numberOfSubjects = 30;
         return defineStudentAllocationsForCourses
                 (defineTeacherAllocationForCourses
                                 (defineRailsForSchoolScheduling
                                                 (2
-                                                        , 30
+                                                        , numberOfSubjects
                                                         , 30
                                                         , 410d / 158d
                                                         , 4
                                                         , 17)
                                         , 56
-                                        , 56d / 158d)
+                                        , 56d / 158d
+                                        , numberOfSubjects
+                                )
                         , 92
                         , 12
                         , minimalNumberOfStudentsPerCourse
@@ -133,7 +137,18 @@ public class SchoolSchedulingTest {
      * @return A problem modelling allocations of teachers to courses.
      */
     private Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
-            , double averageNumberOfSubjectsPerTeacher) {
+            , double averageNumberOfSubjectsPerTeacher
+            , int numberOfSubjects) {
+        final var randomness = randomness();
+        IntStream.rangeClosed(1, numberOfTeachers)
+                .mapToObj(teacher -> {
+                    IntStream.rangeClosed(1, randomness.integer
+                            (1
+                                    , averageNumberOfSubjectsPerTeacher
+                                    , MathUtils.roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
+                    //    .mapToObj(i)
+                    ;
+                });
         return defineProblem()
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
