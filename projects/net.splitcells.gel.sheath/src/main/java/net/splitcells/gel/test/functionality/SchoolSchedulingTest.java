@@ -15,8 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.MathUtils.roundToInt;
@@ -172,7 +171,9 @@ public class SchoolSchedulingTest {
             , int numberOfSubjectsPerStudentsInSecondVintage
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
-            , int maximumNumberOfStudentsPerCourse) {
+            , int maximumNumberOfStudentsPerCourse
+            , int numberOfStudentsInFirstVintage
+            , int numberOfSubjectsPerStudentsInFirstVintage) {
         final var supplies = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
@@ -188,7 +189,13 @@ public class SchoolSchedulingTest {
                         .forEach(supplies::remove);
             }
         });
-        final var studentDemands = rangeClosed(1, numberOfStudentsInSecondVintage)
+        final var firstVintageStudentDemands = rangeClosed(1, numberOfStudentsInFirstVintage)
+                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudentsInFirstVintage)
+                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject, 1))
+                        .collect(toList()))
+                .flatMap(e -> e.stream())
+                .collect(toList());
+        final var secondVintageStudentDemands = rangeClosed(1, numberOfStudentsInSecondVintage)
                 .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudentsInSecondVintage)
                         .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject, 2))
                         .collect(toList()))
@@ -196,7 +203,7 @@ public class SchoolSchedulingTest {
                 .collect(toList());
         return defineProblem()
                 .withDemandAttributes(STUDENT, REQUIRED_SUBJECT, STUDENT_S_VINTAGE)
-                .withDemands(studentDemands)
+                .withDemands(concat(firstVintageStudentDemands, secondVintageStudentDemands))
                 .withSupplies(supplies)
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))));
