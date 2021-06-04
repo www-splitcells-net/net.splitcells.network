@@ -20,7 +20,7 @@ class Command:
 		self.binFolder = projectPosixPath.joinpath('bin')
 		self.targetFolder = targetFolder
 	def install(self):
-		logging.debug('Installing project repository ' + self.projectName + '.')
+		logging.info("Installing project repository '" + self.projectName + "'.")
 		for projectCommand in self.binFolder.rglob("*"):
 			globalProjectCommandName = self.projectName + '.' + projectCommand.name
 			targetCommandFile = self.targetFolder.joinpath(globalProjectCommandName)
