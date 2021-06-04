@@ -100,9 +100,9 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 				r='repo.process'
 				# TODO Do not rely on Bash specific command syntax.
 				currentCommand = ''
-				if command is not null:
+				if command is not None:
 					currentCommand = command
-				elif commandForCurrent is not null:
+				elif commandForCurrent is not None:
 					currentCommand = commandForCurrent
 				else:
 					logging.error("No commands present. Please specify argument '--command=[...]' or '--command-for-current=[...]'.")
@@ -110,8 +110,10 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + currentCommand + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript += " --command-for-missing='" + commandForMissing + "'"
 				subRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
-				subRepoScript += " --command-for-current='" + commandForCurrent + "'"
-				subRepoScript += " --command-for-children='" + commandForChildren + "'"
+				if commandForCurrent is not None:
+					subRepoScript += " --command-for-current='" + commandForCurrent + "'"
+				if commandForChildren is not None:
+					subRepoScript += " --command-for-children='" + commandForChildren + "'"
 				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 				logging.debug('subRepoScript: ' + subRepoScript)
 				returnCode = subprocess.call(subRepoScript, shell='True')
