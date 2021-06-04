@@ -100,7 +100,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 				r='repo.process'
 				# TODO Do not rely on Bash specific command syntax.
 				currentCommand = command
-				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
+				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + currentCommand + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript += " --command-for-missing='" + commandForMissing + "'"
 				subRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
 				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
