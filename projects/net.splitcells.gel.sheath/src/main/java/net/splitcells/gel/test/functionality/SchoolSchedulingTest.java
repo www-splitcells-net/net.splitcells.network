@@ -168,8 +168,8 @@ public class SchoolSchedulingTest {
     }
 
     private Solution defineStudentAllocationsForCourses(Solution solution
-            , int numberOfStudents
-            , int numberOfSubjectsPerStudents
+            , int numberOfStudentsInSecondVintage
+            , int numberOfSubjectsPerStudentsInSecondVintage
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
@@ -188,14 +188,14 @@ public class SchoolSchedulingTest {
                         .forEach(supplies::remove);
             }
         });
-        final var studentDemands = rangeClosed(1, numberOfStudents)
-                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudents)
-                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject))
+        final var studentDemands = rangeClosed(1, numberOfStudentsInSecondVintage)
+                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudentsInSecondVintage)
+                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject, 2))
                         .collect(toList()))
                 .flatMap(e -> e.stream())
                 .collect(toList());
         return defineProblem()
-                .withDemandAttributes(STUDENT, REQUIRED_SUBJECT)
+                .withDemandAttributes(STUDENT, REQUIRED_SUBJECT, STUDENT_S_VINTAGE)
                 .withDemands(studentDemands)
                 .withSupplies(supplies)
                 .withConstraint(r -> {
