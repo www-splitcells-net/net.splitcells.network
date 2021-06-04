@@ -99,7 +99,14 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 					continue
 				r='repo.process'
 				# TODO Do not rely on Bash specific command syntax.
-				currentCommand = command
+				currentCommand = ''
+				if command is not null:
+					currentCommand = command
+				elif commandForCurrent is not null:
+					currentCommand = commandForCurrent
+				else:
+					logging.error("No commands present. Please specify argument '--command=[...]' or '--command-for-current=[...]'.")
+					return False
 				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + currentCommand + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript += " --command-for-missing='" + commandForMissing + "'"
 				subRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
