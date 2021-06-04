@@ -5,3 +5,10 @@
 
 # Pull information from all remotes.
 repo.process --command 'command.managed.execute disjunction repo.pull'
+
+exit # TODO
+repo.process \
+	--command 'exit' \
+	--command-for-missing 'command.managed.execute disjunction repo.clone.into.current '$@'/$subRepo' \
+	--command-for-current 'exit' \
+	--command-for-children 'command.managed.execute disjunction repo.clone.into.current '$@'/$subRepo'
