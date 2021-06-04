@@ -74,8 +74,7 @@ public class SchoolSchedulingTest {
                                                         , 17)
                                         , 56
                                         , 56d / 158d
-                                        , numberOfSubjects
-                                )
+                                        , numberOfSubjects)
                         , 92
                         , 11
                         , minimalNumberOfStudentsPerCourse
