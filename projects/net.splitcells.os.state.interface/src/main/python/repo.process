@@ -63,7 +63,7 @@ def execute(relativePath, host, command):
 		logging.error('	Error processing repository with return code ' + str(returnCode) + '.')
 		return False
 	return True
-def process(relativePath, host, command, commandForMissing, commandForUnknown):
+def process(relativePath, host, command, commandForMissing, commandForUnknown, commandForCurrent, commandForChildren):
 	if not execute(relativePath, host, command):
 		return False
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
@@ -99,6 +99,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown):
 					continue
 				r='repo.process'
 				# TODO Do not rely on Bash specific command syntax.
+				currentCommand = command
 				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + command + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript += " --command-for-missing='" + commandForMissing + "'"
 				subRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
@@ -118,6 +119,8 @@ if __name__ == '__main__':
 	parser.add_argument('--command', dest='command', required=True)
 	parser.add_argument('--command-for-missing', dest='commandForMissing', default="exit 1")
 	parser.add_argument('--command-for-unknown', dest='commandForUnknown', default="exit 1")
+	parser.add_argument('--command-for-current', dest='commandForCurrent', required=False)
+	parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
 	parsedArgs = parser.parse_args()
 	if not process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command, parsedArgs.commandForMissing, parsedArgs.commandForUnknown):
 		exit(1)
