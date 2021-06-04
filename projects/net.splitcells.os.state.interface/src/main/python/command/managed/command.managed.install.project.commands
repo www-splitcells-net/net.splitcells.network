@@ -29,7 +29,9 @@ class Command:
 			shutil.copy(projectCommand, targetCommandFile) # TODO FIXME Do not copy command, but create a command that goes into the original project and executes the original one.
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
-		logging.basicConfig(level=logging.DEBUG)
+		logging.basicConfig(format='%(message)s', level=logging.DEBUG)
+	else:
+		logging.basicConfig(format='%(message)s')
 	parser = argparse.ArgumentParser(description='Installs projects command to ~/bin/net.splitcells.os.state.interface.commands.managed.')
 	parser.add_argument('--project', nargs='?', type=str, help='Path to the project to be installed.')
 	parsedArgs = parser.parse_args()
