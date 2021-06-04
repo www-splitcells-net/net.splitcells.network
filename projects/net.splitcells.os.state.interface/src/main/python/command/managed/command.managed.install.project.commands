@@ -21,6 +21,7 @@ class Command:
 		self.targetFolder = targetFolder
 	def install(self):
 		logging.debug('Installing project repository ' + self.projectName + '.')
+		print(self.binFolder)
 		for projectCommand in self.binFolder.rglob("*"):
 			globalProjectCommandName = self.projectName + '.' + projectCommand.name
 			targetCommandFile = self.targetFolder.joinpath(globalProjectCommandName)
@@ -37,7 +38,7 @@ if __name__ == '__main__':
 		repoConfig = PosixPath('~/.config/net.splitcells.os.state.interface/project.repositories').expanduser()
 		if repoConfig.exists():
 			with open(repoConfig,'r') as projectRepositories:
-				for projectRepository in projectRepositories.readlines():
+				for projectRepository in projectRepositories.read().splitlines():
 					Command(projectRepository).install()
 		else:
 			logging.debug('Nothing was installed, because no project repositories are defined.')
