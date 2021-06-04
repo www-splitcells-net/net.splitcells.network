@@ -36,13 +36,11 @@ if __name__ == '__main__':
 	if parsedArgs.project is None:
 		repoConfig = '~/.config/net.splitcells.os.state.interface/project.repositories'
 		if PosixPath(repoConfig).exists():
-			logging.debug('Installing projects commands from ' + repoConfig + ' config.')
 			with open(repoConfig,'r') as projectRepositories:
 				for projectRepository in projectRepositories.readlines():
 					Command(projectRepository).install()
 		else:
 			logging.debug('Nothing was installed, because no project repositories are defined.')
 	else:
-		logging.debug('Installing project commands from ' + parsedArgs.project + '.')
 		Command(parsedArgs.project).install()
 	
