@@ -10,6 +10,11 @@
     </parent>
     <dependencies>
         <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <version>0.17.2</version>
+        </dependency>
+        <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-core</artifactId>
         </dependency>

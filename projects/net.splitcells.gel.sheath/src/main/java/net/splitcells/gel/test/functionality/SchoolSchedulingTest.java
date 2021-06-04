@@ -2,6 +2,7 @@ package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -14,10 +15,10 @@ import org.junit.jupiter.api.Test;
 import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
+import static net.splitcells.dem.utils.MathUtils.roundToInt;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.data.database.Databases.database;
@@ -61,22 +62,26 @@ public class SchoolSchedulingTest {
     private Solution schoolScheduling(int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
+        final var numberOfSubjects = 30;
         return defineStudentAllocationsForCourses
                 (defineTeacherAllocationForCourses
                                 (defineRailsForSchoolScheduling
                                                 (2
-                                                        , 30
+                                                        , numberOfSubjects
                                                         , 30
                                                         , 410d / 158d
                                                         , 4
                                                         , 17)
                                         , 56
-                                        , 56d / 158d)
+                                        , 56d / 158d
+                                        , numberOfSubjects)
                         , 92
-                        , 12
+                        , 11
                         , minimalNumberOfStudentsPerCourse
                         , optimalNumberOfStudentsPerCourse
-                        , maximumNumberOfStudentsPerCourse);
+                        , maximumNumberOfStudentsPerCourse
+                        , 115
+                        , 11);
     }
 
     private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
@@ -84,21 +89,21 @@ public class SchoolSchedulingTest {
             , int maximumCourseLength
             , int numberOfRails) {
         final var randomness = randomness();
-        final var courses = IntStream.rangeClosed(1, numberOfCourses)
+        final var courses = rangeClosed(1, numberOfCourses)
                 .mapToObj(courseId -> {
                     final var subject = randomness.integer(1, numberOfSubjects);
                     final var length = randomness.integer(1, averageCourseLength, maximumCourseLength);
                     final var vintage = randomness.integer(1, numberOfVintages);
-                    return IntStream.rangeClosed(1, length)
+                    return rangeClosed(1, length)
                             .mapToObj(i -> Lists.<Object>list(courseId, subject, length, vintage))
                             .collect(toList());
                 })
                 .flatMap(e -> e.stream())
                 .collect(toList());
-        final var railCapacity = IntStream.rangeClosed(1, numberOfRails)
+        final var railCapacity = rangeClosed(1, numberOfRails)
                 .mapToObj(railId ->
-                        IntStream.rangeClosed(1, courses.size())
-                                .mapToObj(i -> IntStream.rangeClosed(1, maximumCourseLength)
+                        rangeClosed(1, courses.size())
+                                .mapToObj(i -> rangeClosed(1, maximumCourseLength)
                                         .mapToObj(railLength -> Lists.<Object>list(railLength, railId))
                                         .collect(toList())
                                 )
@@ -133,10 +138,23 @@ public class SchoolSchedulingTest {
      * @return A problem modelling allocations of teachers to courses.
      */
     private Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
-            , double averageNumberOfSubjectsPerTeacher) {
+            , double averageNumberOfSubjectsPerTeacher
+            , int numberOfSubjects) {
+        final var randomness = randomness();
+        final var teacherCapacity = rangeClosed(1, numberOfTeachers)
+                .mapToObj(teacher ->
+                        rangeClosed(1, randomness.integer
+                                (1
+                                        , averageNumberOfSubjectsPerTeacher
+                                        , roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
+                                .mapToObj(iSubject -> Lists.<Object>list(teacher, randomness.integer(1, numberOfSubjects)))
+                                .collect(toList()))
+                .flatMap(e -> e.stream())
+                .collect(toList());
         return defineProblem()
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
+                .withSupplies(teacherCapacity)
                 .withConstraint(r -> {
                     r.forAll(COURSE_ID).then(allSame(TEACHER));
                     r.forAll(TEACHER)
@@ -150,11 +168,13 @@ public class SchoolSchedulingTest {
     }
 
     private Solution defineStudentAllocationsForCourses(Solution solution
-            , int numberOfStudents
-            , int numberOfSubjectsPerStudents
+            , int numberOfStudentsInSecondVintage
+            , int numberOfSubjectsPerStudentsInSecondVintage
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
-            , int maximumNumberOfStudentsPerCourse) {
+            , int maximumNumberOfStudentsPerCourse
+            , int numberOfStudentsInFirstVintage
+            , int numberOfSubjectsPerStudentsInFirstVintage) {
         final var supplies = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
@@ -170,8 +190,21 @@ public class SchoolSchedulingTest {
                         .forEach(supplies::remove);
             }
         });
+        final var firstVintageStudentDemands = rangeClosed(1, numberOfStudentsInFirstVintage)
+                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudentsInFirstVintage)
+                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject, 1))
+                        .collect(toList()))
+                .flatMap(e -> e.stream())
+                .collect(toList());
+        final var secondVintageStudentDemands = rangeClosed(1, numberOfStudentsInSecondVintage)
+                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudentsInSecondVintage)
+                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject, 2))
+                        .collect(toList()))
+                .flatMap(e -> e.stream())
+                .collect(toList());
         return defineProblem()
-                .withDemandAttributes(STUDENT, REQUIRED_SUBJECT)
+                .withDemandAttributes(STUDENT, REQUIRED_SUBJECT, STUDENT_S_VINTAGE)
+                .withDemands(concat(firstVintageStudentDemands, secondVintageStudentDemands))
                 .withSupplies(supplies)
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))));

@@ -2,6 +2,11 @@
 :target {
    background-color: var(--background-color-priority-0) !important;
 }
+pre {
+    background-color: var(--background-color-priority-2);
+    padding-left: 1em;
+    padding-right: 1em;
+    }
 .net-splitcells-quote-display > .label {
     background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
     width: 100%;
@@ -199,6 +204,13 @@ a {
 .IndexPostHeader {
 	box-shadow: 0em 0.1em 0.2em -.2em var(--shadow-color-priority-2);
 }
+p {
+    line-height: 1.4em;
+    background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
+    background-size: 100% 2.8em;
+    padding-left: .25em;
+    padding-right: .25em;
+	}
 .paragraph {
 	line-height: 1.4em;
 	background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);

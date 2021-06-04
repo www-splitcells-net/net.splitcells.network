@@ -4,11 +4,13 @@ import com.google.common.io.Files;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
 import static java.nio.file.Files.createDirectories;
+import static java.nio.file.Files.readAllBytes;
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +29,7 @@ public final class Paths {
         }
         return java.nio.file.Paths.get(root, elements);
     }
-    
+
     public static Path userHome(String... relativePath) {
         return path(System.getProperty("user.home"), relativePath);
     }
@@ -58,6 +60,14 @@ public final class Paths {
     public static void generateFolderPath(Path targetFolderDescription) {
         try {
             createDirectories(targetFolderDescription);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String readString(Path path) {
+        try {
+            return java.nio.file.Files.readString(path);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

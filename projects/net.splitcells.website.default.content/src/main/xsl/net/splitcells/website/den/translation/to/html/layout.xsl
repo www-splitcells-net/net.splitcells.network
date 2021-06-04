@@ -76,6 +76,9 @@
         </xsl:variable>
         <xsl:apply-templates select="$layout.config"/>
     </xsl:template>
+    <xsl:template match="s:html-body-content">
+        <xsl:value-of select="./node()"/>
+    </xsl:template>
     <xsl:template match="/n:text">
         <xsl:variable name="layout.config">
             <s:layout.config>
@@ -237,7 +240,8 @@
                 <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8"/>
                 <link rel="image_src" type="image/svg+xml">
                     <xsl:attribute name="href">
-                        <xsl:value-of select="s:root-relative-url('images/license.standard/thumbnail/small/starting-to-learn-how-to-draw-a-face.jpg')"/>
+                        <xsl:value-of
+                                select="s:root-relative-url('images/license.standard/thumbnail/small/starting-to-learn-how-to-draw-a-face.jpg')"/>
                     </xsl:attribute>
                 </link>
                 <link rel="icon" type="image/svg+xml">

@@ -11,6 +11,7 @@ Changes to this are not considered major changes.
    Add environment variable 'log_level'.
    When set to 'debug', debug log is enabled.
 1. 'repo.verify' now also checks if sub folders, are really instances of a repository.
+1.  Create 'repo.repair' command, that downloads missing sub repositories.
 ### Patch
 1. Command "echo.error" previously did only echo the message "error" and ignored the argument.
    This was fixed.
