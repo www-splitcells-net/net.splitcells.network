@@ -46,4 +46,3 @@ if __name__ == '__main__':
 	parser.add_argument('commandToInstall', nargs='?', type=str, help='The name of the command that is installed.')
 	parsedArgs = parser.parse_args()
 	Command(parsedArgs.commandToInstall).install()
-	
