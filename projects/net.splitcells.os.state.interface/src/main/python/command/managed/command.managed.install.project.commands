@@ -21,7 +21,10 @@ class Command:
 	def install(self):
 		for projectCommand in self.binFolder.rglob("*"):
 			globalProjectCommandName = self.projectName + '.' + projectCommand.name
-			shutil.copy(projectCommand, self.targetFolder.joinpath(globalProjectCommandName))
+			targetCommandFile = self.targetFolder.joinpath(globalProjectCommandName)
+			if targetCommandFile.exists():
+				raise Exception('Cannot install ' + projectCommand.name + ' of project ' + self.projectName + ' to ' + str(targetCommandFile) + '.')
+			shutil.copy(projectCommand, targetCommandFile)
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level=logging.DEBUG)
