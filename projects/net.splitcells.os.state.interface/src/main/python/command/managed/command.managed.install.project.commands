@@ -19,11 +19,12 @@ class Command:
 		self.binFolder = projectPosixPath.joinpath('bin')
 		self.targetFolder = targetFolder
 	def install(self):
-		print('test')
+		for projectCommand in self.binFolder.rglob("*"):
+			print(projectCommand)
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level=logging.DEBUG)
 	parser = argparse.ArgumentParser(description='Installs projects command to ~/bin/net.splitcells.os.state.interface.commands.managed.')
 	parser.add_argument('--project', nargs='?', type=str, help='Path to the project to be installed.')
 	parsedArgs = parser.parse_args()
-	Command(parsedArgs.commandToInstall).install()
+	Command(parsedArgs.project).install()
