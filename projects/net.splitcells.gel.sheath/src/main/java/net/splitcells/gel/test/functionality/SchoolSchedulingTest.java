@@ -77,10 +77,12 @@ public class SchoolSchedulingTest {
                                         , numberOfSubjects
                                 )
                         , 92
-                        , 12
+                        , 11
                         , minimalNumberOfStudentsPerCourse
                         , optimalNumberOfStudentsPerCourse
-                        , maximumNumberOfStudentsPerCourse);
+                        , maximumNumberOfStudentsPerCourse
+                        , 115
+                        , 11);
     }
 
     private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
