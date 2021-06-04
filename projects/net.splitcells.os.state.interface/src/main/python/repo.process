@@ -122,5 +122,5 @@ if __name__ == '__main__':
 	parser.add_argument('--command-for-current', dest='commandForCurrent', required=False)
 	parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
 	parsedArgs = parser.parse_args()
-	if not process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command, parsedArgs.commandForMissing, parsedArgs.commandForUnknown):
+	if not process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command, parsedArgs.commandForMissing, parsedArgs.commandForUnknown, parsedArgs.commandForCurrent, parsedArgs.commandForChildren):
 		exit(1)
