@@ -66,7 +66,9 @@ def commandExists(commandName):
 	return find_executable(commandName) is not None
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
-		logging.basicConfig(level=logging.DEBUG)
+		logging.basicConfig(format='%(message)s', level=logging.DEBUG)
+	else:
+		logging.basicConfig(format='%(message)s')
 	wasExecutedSuccessfully = managedCommandExecution(sys.argv[1], sys.argv[2:])
 		# Managed commands are sometimes mixed with other commands, that do not follow the conventions of this project.
 		# The last console line is cleared, in case the last echo was filtered and is still displayed.
