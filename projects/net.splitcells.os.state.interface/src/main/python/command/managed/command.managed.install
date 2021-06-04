@@ -12,6 +12,7 @@ from pathlib import Path
 from pathlib import PosixPath
 import shutil
 import re
+from os import environ
 def currentFolder():
 	return Path.cwd()
 class Command:
