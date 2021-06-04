@@ -3,7 +3,8 @@ Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Current Tasks
-1. repo.pull: Create new sub repositories on the fly. 
+1. repo.pull: Create new sub repositories on the fly.
+1. Render project commands to bin folder, in order to integrate other projects with project commands.
 1. Remove unecessary tasks.
 1. Replaces "this.requires" and "this.active.if.present", by command
    which exits with none zero, if a command is not present and zero otherwise.
@@ -36,7 +37,6 @@ The priority of a task is just a guideline.
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
-1. Host and test on sourcehut.
 1. Create integration into user home portability projects.
 1. Create ssh deployment machanism via other frameworks like ansible.
 1. Create display brightness control commands.
