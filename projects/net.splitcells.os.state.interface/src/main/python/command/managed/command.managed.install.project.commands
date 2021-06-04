@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-"""This Source Code Form is subject to the terms of the Mozilla Public
-License, v. 2.0. If a copy of the MPL was not distributed with this
-file, You can obtain one at http://mozilla.org/MPL/2.0/.
-"""
-# TODO Create tests.
-# TODO PERFORMANCE compile to C via https://cython.org/.
 __author__ = 'Mārtiņš Avots'
 import argparse
 import os
@@ -13,36 +7,37 @@ from pathlib import PosixPath
 import shutil
 import re
 from os import environ
-import logging
 def currentFolder():
 	return Path.cwd()
 class Command:
 	def __init__(self
-			, commandPath
+			, projectPath
 			, targetFolder = Path.home().joinpath('bin', 'net.splitcells.os.state.interface.commands.managed')
 			):
-		commandPosixPath = PosixPath(commandPath)
-		self.name = commandPosixPath.name
-		self.sourceFolder = commandPosixPath.parent
+		projectPosixPath = PosixPath(projectPath)
+		self.projectName = projectPosixPath.name
+		self.binFolder = projectPosixPath.joinpath('bin')
 		self.targetFolder = targetFolder
-		self.managedCommandNaming = "commandName = '" + self.name + "'"
 	def install(self):
-		executionCounter = 0
-		targetFile = self.targetFolder.joinpath(self.name)
-		if targetFile.exists():
-			while True:
-				targetFile = self.targetFolder.joinpath(self.name + '.' + str(executionCounter))
-				executionCounter+=1
-				if not targetFile.exists():
-					break
-		shutil.copy(self.sourceFolder.joinpath(self.name), targetFile)
-		if 'current_echo_level' in os.environ:
-			if int(os.environ['current_echo_level']) >= 5:
-				print(self.name + ' installed.')
+		for projectCommand in self.binFolder.rglob("*"):
+			globalProjectCommandName = self.projectName + '.' + projectCommand.name
+			targetCommandFile = self.targetFolder.joinpath(globalProjectCommandName)
+			if targetCommandFile.exists():
+				raise Exception('Cannot install ' + projectCommand.name + ' of project ' + self.projectName + ' to ' + str(targetCommandFile) + '.')
+			shutil.copy(projectCommand, targetCommandFile)
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level=logging.DEBUG)
-	parser = argparse.ArgumentParser(description='Installs command to ~/bin and integrates commands already present.') # TODO If command already present, check if it is a manager. If this is not the case, throw an error.
-	parser.add_argument('commandToInstall', nargs='?', type=str, help='The name of the command that is installed.')
+	parser = argparse.ArgumentParser(description='Installs projects command to ~/bin/net.splitcells.os.state.interface.commands.managed.')
+	parser.add_argument('--project', nargs='?', type=str, help='Path to the project to be installed.')
 	parsedArgs = parser.parse_args()
-	Command(parsedArgs.commandToInstall).install()
+	Command(parsedArgs.project).install()
+	if parsedArgs.project is None:
+		repoConfig = '~/.config/net.splitcells.os.state.interface/project.repositories'
+		logging.debug('Installing projects commands from ' + repoConfig + ' config.')
+		with open(repoConfig,'r') as projectRepositories:
+			for projectRepository in projectRepositories.readlines():
+				Command(projectRepository).install()
+	else:
+		logging.debug('Installing project commands from ' + parsedArgs.project + '.')
+	
