@@ -51,3 +51,4 @@ if test -d "$HOME/.config/net.splitcells.os.state.interface/src"; then
 	cd "$HOME/.config/net.splitcells.os.state.interface/src"
 	find . -mindepth 1 -type f -exec command.managed.install {} \;
 fi
+command.managed.install.project.commands
