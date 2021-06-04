@@ -20,7 +20,7 @@ class Command:
 		self.targetFolder = targetFolder
 	def install(self):
 		for projectCommand in self.binFolder.rglob("*"):
-			print(projectCommand)
+			print(self.projectName + '.' + projectCommand.name)
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level=logging.DEBUG)
