@@ -20,6 +20,7 @@ class Command:
 		self.binFolder = projectPosixPath.joinpath('bin')
 		self.targetFolder = targetFolder
 	def install(self):
+		logging.debug('Installing project repository ' + self.projectName + '.')
 		for projectCommand in self.binFolder.rglob("*"):
 			globalProjectCommandName = self.projectName + '.' + projectCommand.name
 			targetCommandFile = self.targetFolder.joinpath(globalProjectCommandName)
@@ -32,7 +33,6 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Installs projects command to ~/bin/net.splitcells.os.state.interface.commands.managed.')
 	parser.add_argument('--project', nargs='?', type=str, help='Path to the project to be installed.')
 	parsedArgs = parser.parse_args()
-	Command(parsedArgs.project).install()
 	if parsedArgs.project is None:
 		repoConfig = '~/.config/net.splitcells.os.state.interface/project.repositories'
 		if PosixPath(repoConfig).exists():
@@ -44,4 +44,5 @@ if __name__ == '__main__':
 			logging.debug('Nothing was installed, because no project repositories are defined.')
 	else:
 		logging.debug('Installing project commands from ' + parsedArgs.project + '.')
+		Command(parsedArgs.project).install()
 	
