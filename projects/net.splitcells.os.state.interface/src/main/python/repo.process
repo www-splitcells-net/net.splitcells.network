@@ -110,6 +110,8 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 				subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + currentCommand + "' --host=" + host + ' --relative-path=' + relativePath
 				subRepoScript += " --command-for-missing='" + commandForMissing + "'"
 				subRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
+				subRepoScript += " --command-for-current='" + commandForCurrent + "'"
+				subRepoScript += " --command-for-children='" + commandForChildren + "'"
 				subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 				logging.debug('subRepoScript: ' + subRepoScript)
 				returnCode = subprocess.call(subRepoScript, shell='True')
