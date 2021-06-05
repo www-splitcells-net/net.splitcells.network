@@ -77,17 +77,17 @@ package_name
     ;
 reference
     : expression
-    | Name Whitespace? access?
+    | Whitespace? Name Whitespace? access?
     /* This is an Lambda definition. */
     | Name Whitespace? Arrow Whitespace? reference
     | Name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     | call_arguments Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 statement
-    : Keyword_return? Whitespace expression Semicolon
+    : Whitespace? Keyword_return? Whitespace expression Semicolon
     | Whitespace? Line_comment
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
-    | Whitespace? Keyword_try Whitespace? Brace_curly_open Whitespace? statement+ Brace_curly_closed
+    | Whitespace? Keyword_try Whitespace? Brace_curly_open statement+ Brace_curly_closed
     ;
 source_unit
     : package_declaration import_declaration* Whitespace? class_definition EOF
