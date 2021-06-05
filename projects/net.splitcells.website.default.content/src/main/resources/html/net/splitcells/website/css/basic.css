@@ -12,6 +12,9 @@ html {
     background-repeat: no-repeat;
     background-image:url('/net/splitcells/martins/avots/website//images/license.standard/white.background.blog.discovery.0.jpg');
 }
+pre {
+    overflow-x: auto;
+    }
 * {
 	word-break: normal;
 	}
