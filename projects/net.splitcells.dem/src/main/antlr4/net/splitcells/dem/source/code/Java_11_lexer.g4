@@ -30,6 +30,7 @@ Keyword_private: 'private';
 Keyword_public: 'public';
 Keyword_return: 'return';
 Keyword_static: 'static';
+Keyword_try: 'try';
 Less_than: '<';
 Line_comment: '//' .*? Line_ending;
 fragment Line_ending: [\n\r]+;
