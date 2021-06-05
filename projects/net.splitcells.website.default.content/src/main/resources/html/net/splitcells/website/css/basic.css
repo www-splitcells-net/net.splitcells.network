@@ -47,6 +47,7 @@ mjx-container {
 	box-sizing: inherit; /* Let other css overwrite this attribute if they want. */
 }
 ul {
+    font-family: var(--text-flowing-font);
     list-style-type: none;
     padding-left: 0;
     margin-top: 0;

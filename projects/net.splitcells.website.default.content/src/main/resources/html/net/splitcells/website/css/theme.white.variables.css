@@ -1,5 +1,7 @@
 @charset "UTF-8";
 :root {
+    --text-flowing-font: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+
     --column-standard-width:40em;
 	--foreground-color-structural-guide:#000000;
 	--foreground-color-priority-0:#000000;
