@@ -85,7 +85,7 @@ reference
     ;
 statement
     : Keyword_return? Whitespace expression Semicolon
-    | Whitespace? Line_comment Whitespace?
+    | Whitespace? Line_comment
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
     | Whitespace? Keyword_try Whitespace? Brace_curly_open Whitespace? statement* Brace_curly_closed
     ;
