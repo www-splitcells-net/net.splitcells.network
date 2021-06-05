@@ -4,9 +4,6 @@
   In other words grow in one direction and fille the other one.
 - Use names with namespaces.
 */
-html {
-    font-family: Arial, Helvetica, sans-serif;
-}
 .beginningOfContent {
     background-size: 100%;
     background-repeat: no-repeat;
@@ -305,9 +302,6 @@ p:not(.NonStandard) {
 	}
 article {
 	width: 100%;
-	}
-a {
-	/* TODO font-family: Arial,Helvetica,sans-serif;*/
 	}
 *.hidden {
 	display:none;
