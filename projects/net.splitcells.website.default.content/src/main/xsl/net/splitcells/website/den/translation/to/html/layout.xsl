@@ -561,39 +561,39 @@
                         <h3>Interesting Third Party Sites</h3>
                         <div class="advertise-one-of">
                             <xsl:for-each select="$advertisement-object-social/rdf:RDF/rdf:Description">
-                                <a class="linkButton">
+                                <div>
                                     <xsl:if test="position() != 1">
                                         <xsl:attribute name="style"
                                                        select="'display: none; visibility: hidden;'"/>
                                     </xsl:if>
-                                    <xsl:attribute name="href" select="@rdf:resource"/>
-                                    <div class="net-splitcells-button net-splitcells-component-priority-3">
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href" select="@rdf:resource"/>
                                         <xsl:value-of select="./rdf:label"/>
-                                        <div class="MainButtonDescription Standard_p4"
-                                             style="text-indent: 0em; display: block; font-weight: normal; padding-left: .25em;">
-                                            <xsl:value-of select="./rdf:comment"/>
-                                        </div>
-                                    </div>
-                                </a>
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-4">
+                                        <xsl:attribute name="href" select="@rdf:resource"/>
+                                        <xsl:value-of select="./rdf:comment"/>
+                                    </a>
+                                </div>
                             </xsl:for-each>
                         </div>
                         <div class="advertise-one-of">
                             <xsl:for-each
                                     select="$advertisement-object-technical/rdf:RDF/rdf:Description">
-                                <a class="linkButton">
+                                <div>
                                     <xsl:if test="position() != 1">
                                         <xsl:attribute name="style"
                                                        select="'display: none; visibility: hidden;'"/>
                                     </xsl:if>
-                                    <xsl:attribute name="href" select="@rdf:resource"/>
-                                    <div class="net-splitcells-button net-splitcells-component-priority-3">
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href" select="@rdf:resource"/>
                                         <xsl:value-of select="./rdf:label"/>
-                                        <div class="MainButtonDescription Standard_p4"
-                                             style="text-indent: 0em; display: block; font-weight: normal; padding-left: .25em;">
-                                            <xsl:value-of select="./rdf:comment"/>
-                                        </div>
+                                    </a>
+                                    <div class="net-splitcells-button net-splitcells-component-priority-4">
+                                        <xsl:attribute name="href" select="@rdf:resource"/>
+                                        <xsl:value-of select="./rdf:comment"/>
                                     </div>
-                                </a>
+                                </div>
                             </xsl:for-each>
                         </div>
                         <h3>This Site Uses Amongst Others</h3>

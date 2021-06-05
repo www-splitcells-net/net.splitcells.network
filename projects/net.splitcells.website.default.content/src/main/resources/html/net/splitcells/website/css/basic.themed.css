@@ -66,6 +66,11 @@ ol.table-of-content > li.table-of-content:before {
 	color: var(--foreground-color-priority-3);
 	box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-3);
     }
+.net-splitcells-component-priority-4 {
+    background-color: var(--background-color-priority-4);
+	color: var(--foreground-color-priority-4);
+	box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-4);
+    }
 *.text_p3 {
 	color: var(--foreground-color-priority-3);
 	}
@@ -174,6 +179,10 @@ ol.table-of-content > li.table-of-content:before {
 .MainButton:hover, .net-splitcells-component-priority-3:hover {
 	background-color: var(--background-color-selected-priority-3);
 	color: var(--foreground-color-selected-priority-3);
+}
+.net-splitcells-component-priority-4:hover {
+	background-color: var(--background-color-selected-priority-4);
+	color: var(--foreground-color-selected-priority-4);
 }
 .MainButtonDescription:hover {
 	background-color: var(--background-color-selected-priority-0);

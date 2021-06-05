@@ -207,13 +207,11 @@ td.TextCell {
 .MainButton_S, .net-splitcells-button {
 	text-indent: 1em;
 	margin-top: .05em;
-	/*padding-top: .25em;*/
 	margin-bottom: .05em;
-	/*padding-bottom: .25em;*/
 	font-weight: bold;
 	width: 100%;
 	line-height: 1.5em;
-	vertical-align: middle;
+	display: block;
 	}
 .tree_name {
 	margin-top: .7em;
