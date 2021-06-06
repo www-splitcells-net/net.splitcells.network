@@ -19,6 +19,8 @@ It is a Java framework providing modeling, analytic and solving capabilities reg
 A detailed introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
 An overview of the projects can be found [here](#networks-structure).
+Some of them are not strictly related to optimization and can be used in other contexts as well.
+[OS State Interface](./projects/net.splitcells.os.state.interface/README.md) is the main example of such.
 
 ## Where to start?
 
