@@ -6,8 +6,8 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 public interface ProjectRendererExtension {
-    Optional<byte[]> renderFile(String path, Path projectFolder);
+    Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer);
 
-    Perspective extendProjectLayout(Perspective layout, Path projectFolder, String resourceRootPath);
+    Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer);
 
 }

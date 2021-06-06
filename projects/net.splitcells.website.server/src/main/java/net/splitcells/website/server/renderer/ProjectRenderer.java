@@ -34,6 +34,7 @@ import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.website.server.renderer.CommonMarkExtension.commonMarkExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**
@@ -48,6 +49,10 @@ public class ProjectRenderer {
         return projectSrcFolder;
     }
 
+    public Path projectFolder() {
+        return projectFolder;
+    }
+
     private final Path projectFolder;
     private final Path projectSrcFolder;
     private final Path xslLibs;
@@ -57,6 +62,7 @@ public class ProjectRenderer {
     private final String profile;
     private final boolean typedFolder;
     private final Validator validator;
+    private final ProjectRendererExtension extension = commonMarkExtension();
 
     @Deprecated
     public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
@@ -115,25 +121,9 @@ public class ProjectRenderer {
      */
     public Optional<RenderingResult> render(String path) {
         try {
-            // TODO HACK
-            if (path.endsWith("README.html") && is_file(projectFolder.resolve("README.md"))) {
-                Parser parser = Parser.builder().build();
-                final var pathContent = readString(projectFolder.resolve("README.md"));
-                final HtmlRenderer renderer = HtmlRenderer.builder().build();
-                final Node document;
-                final Optional<String> title;
-                if (pathContent.startsWith("#")) {
-                    final var titleLine = pathContent.split("[\r\n]+")[0];
-                    title = Optional.of(titleLine.replaceAll("#", "").trim());
-                    document = parser.parse(pathContent.substring(titleLine.length()));
-                } else {
-                    title = Optional.empty();
-                    document = parser.parse(pathContent);
-                }
-                return renderHtmlBodyContent(renderer.render(document), title)
-                        .map(result -> renderingResult
-                                (result
-                                        , TEXT_HTML.toString()));
+            final var extensionRendering = extension.renderFile(path, this);
+            if (extensionRendering.isPresent()) {
+                return extensionRendering;
             }
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
@@ -208,7 +198,7 @@ public class ProjectRenderer {
         }
     }
 
-    private Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title) {
+    public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title) {
         try {
             final var content = Xml.rElement(NameSpaces.SEW, "article");
             final var htmlBodyContent = Xml.rElement(NameSpaces.SEW, "html-body-content");
@@ -285,11 +275,7 @@ public class ProjectRenderer {
         } catch (IOException e) {
             throw new RuntimeException(folder.toAbsolutePath().toString(), e);
         }
-        if (is_file(projectFolder.resolve("README.md"))) {
-            // TODO HACK
-            extendPerspectiveWithPath(layout, Path.of(resourceRootPath.substring(1)).resolve("README.html"));
-        }
-        return layout;
+        return extension.extendProjectLayout(layout, this);
     }
 
     public Set<Path> projectPaths() {
@@ -317,7 +303,7 @@ public class ProjectRenderer {
      * @param current
      * @param relativeProjectPath Path relative to the project folders src/xml folder. This path also represent absolute path in projects namespace.
      */
-    private void extendPerspectiveWithPath(Perspective current, Path relativeProjectPath) {
+    public Perspective extendPerspectiveWithPath(Perspective current, Path relativeProjectPath) {
         for (final var element : list(relativeProjectPath.toString().split("/"))
                 .stream()
                 .filter(e -> !"".contentEquals(e))
@@ -341,5 +327,6 @@ public class ProjectRenderer {
                 perspective(NameSpaces.LINK, NameSpaces.DEN)
                         .withChild(perspective(NameSpaces.URL, NameSpaces.DEN)
                                 .withChild(perspective("/" + relativeProjectPath.toString(), STRING))));
+        return current;
     }
 }
