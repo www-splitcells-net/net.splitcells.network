@@ -283,7 +283,7 @@
         <title>Documentation</title>
         <paragraph>Documentation links syntax to semantics or represents meta data.</paragraph>
         <chapter>
-            <title>General Documentation Content</title>
+            <title>Documentation Content</title>
             <paragraph>The documentation needs to at least define the goal or the result of the thing in question.
                 Everything needs documentation.
                 Classic documentation can sometimes be replaced by programs (i.e. build script named <quote>
@@ -292,13 +292,16 @@
                 describing how to
                 build software), but everything needs documentation.
             </paragraph>
+        </chapter>
+        <chapter>
+            <title>Documentation Complexity Management</title>
             <paragraph>Updating the documentation is always a problem.
                 Minimize the amount of documentation.
                 In the best case, the name of a thing is its documentation.
                 Documenting justifications may also be required in order to omit regressions
                 or development things in a circle.
             </paragraph>
-            <paragraph>If larger than minimal documentation is required, make it a project of its own.
+            <paragraph>If large documentation like a user manual is required, make it a project of its own.
                 Otherwise, documentation and the software development will hinder each other,
                 because of the combined complexity.
             </paragraph>
@@ -306,12 +309,6 @@
                 described
                 summary of its functionality in order to merge syntax and semantics.
                 This can be omitted if the name/id is also a natural description.
-            </paragraph>
-        </chapter>
-        <chapter>
-            <title>Documentation Style</title>
-            <paragraph>
-
             </paragraph>
         </chapter>
     </chapter>
