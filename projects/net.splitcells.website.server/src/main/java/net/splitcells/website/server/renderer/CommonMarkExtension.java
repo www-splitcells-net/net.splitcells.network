@@ -15,6 +15,9 @@ import static net.splitcells.website.server.renderer.RenderingResult.renderingRe
 
 public class CommonMarkExtension implements ProjectRendererExtension {
 
+    final Parser parser = Parser.builder().build();
+    final HtmlRenderer renderer = HtmlRenderer.builder().build();
+
     public static CommonMarkExtension commonMarkExtension() {
         return new CommonMarkExtension();
     }
@@ -26,9 +29,7 @@ public class CommonMarkExtension implements ProjectRendererExtension {
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         if (path.endsWith("README.html") && is_file(projectRenderer.projectFolder().resolve("README.md"))) {
-            Parser parser = Parser.builder().build();
             final var pathContent = readString(projectRenderer.projectFolder().resolve("README.md"));
-            final HtmlRenderer renderer = HtmlRenderer.builder().build();
             final Node document;
             final Optional<String> title;
             if (pathContent.startsWith("#")) {
