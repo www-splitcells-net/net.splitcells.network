@@ -50,6 +50,7 @@ class_member_value_declaration
 expression
     : Keyword_new Whitespace? type_declaration call_arguments
     | Name Whitespace? call_arguments
+    | Whitespace? Name Whitespace? access?
     ;
 import_declaration
     : import_static_declaration
@@ -77,7 +78,6 @@ package_name
     ;
 reference
     : expression
-    | Whitespace? Name Whitespace? access?
     /* This is an Lambda definition. */
     | Name Whitespace? Arrow Whitespace? reference
     | Name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
