@@ -50,9 +50,8 @@ public class CommonMarkExtension implements ProjectRendererExtension {
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
         if (is_file(projectRenderer.projectFolder().resolve("README.md"))) {
-            return projectRenderer.extendPerspectiveWithPath
-                    (layout
-                            , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("README.html"));
+            projectRenderer.extendPerspectiveWithPath(layout
+                    , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("README.html"));
         }
         return layout;
     }
