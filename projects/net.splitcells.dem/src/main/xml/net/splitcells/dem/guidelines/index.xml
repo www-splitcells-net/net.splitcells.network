@@ -294,6 +294,9 @@
             </paragraph>
             <paragraph>Documentation may also contain inspiration emotional content in the form of quotes
                 and haiku and should always relate to the described thing.
+                The additional emotional context provides a different perspective
+                on the semantics of the documented thing.
+                This helps the reader to better understand the project and its usage.
                 The amount of such should be minimal.
             </paragraph>
         </chapter>
