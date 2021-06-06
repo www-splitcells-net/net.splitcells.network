@@ -78,7 +78,8 @@ Project Cluster
 
 ## Contacts
 
-* [Rendered Documentation](http://splitcells.net/net/splitcells/index.html)
-* [Twitch Channel](https://www.twitch.tv/splitcellsnet)
-* [Twitter](https://twitter.com/splitcells)
-* [Mastadon](https://fosstodon.org/@splitcells)
+* [Rendered Documentation](http://splitcells.net/net/splitcells/index.html) via own website
+* [Blogs and Videos](https://odysee.com/@splitcells.net:3) via odysee
+* [Livestreaming](https://www.twitch.tv/splitcellsnet) via Twitch
+* [Messaging](https://twitter.com/splitcells) via Twitter
+* [Messaging](https://fosstodon.org/@splitcells) via Mastadon (deprecating)
