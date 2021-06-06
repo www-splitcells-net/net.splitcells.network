@@ -87,7 +87,7 @@ statement
     : Whitespace? Keyword_return? Whitespace expression Semicolon
     | Whitespace? Line_comment
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
-    | Whitespace? Keyword_try Whitespace? Brace_curly_open statement+ Brace_curly_closed
+    | Whitespace? Keyword_try Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
     ;
 source_unit
     : package_declaration import_declaration* Whitespace? class_definition EOF
