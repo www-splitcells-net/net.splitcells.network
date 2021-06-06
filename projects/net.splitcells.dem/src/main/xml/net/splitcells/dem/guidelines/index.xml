@@ -249,8 +249,7 @@
         </chapter>
     </chapter>
     <chapter>
-        <title>Documentation and Management</title>
-        <paragraph>Documentation links syntax to semantics or represents meta data.</paragraph>
+        <title>Management</title>
         <chapter>
             <title>Task Organization</title>
             <paragraph>
@@ -279,6 +278,10 @@
                 the task obvious (i.e. RENAME tag above a variable declaration).
             </paragraph>
         </chapter>
+    </chapter>
+    <chapter>
+        <title>Documentation</title>
+        <paragraph>Documentation links syntax to semantics or represents meta data.</paragraph>
         <chapter>
             <title>General Documentation Content</title>
             <paragraph>The documentation needs to at least define the goal or the result of the thing in question.
@@ -307,6 +310,9 @@
         </chapter>
         <chapter>
             <title>Documentation Style</title>
+            <paragraph>
+
+            </paragraph>
         </chapter>
     </chapter>
     <chapter>
