@@ -292,6 +292,9 @@
                 describing how to
                 build software), but everything needs documentation.
             </paragraph>
+            <paragraph>Documentation may also contain inspiration emotional content in the form of quotes
+                and haiku and should always relate to the described thing.
+            </paragraph>
         </chapter>
         <chapter>
             <title>Documentation Complexity Management</title>
