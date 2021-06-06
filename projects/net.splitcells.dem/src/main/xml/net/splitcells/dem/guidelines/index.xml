@@ -281,7 +281,9 @@
     </chapter>
     <chapter>
         <title>Documentation</title>
-        <paragraph>Documentation links syntax to semantics or represents meta data.</paragraph>
+        <paragraph>Documentation links syntax to semantics or represents meta data.
+            A single point of entry should be provided from where every part of the documentation is reachable.
+        </paragraph>
         <chapter>
             <title>Documentation Content</title>
             <paragraph>The documentation needs to at least define the goal or the result of the thing in question.
