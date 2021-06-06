@@ -280,7 +280,7 @@
             </paragraph>
         </chapter>
         <chapter>
-            <title>Documentation Content</title>
+            <title>General Documentation Content</title>
             <paragraph>The documentation needs to at least define the goal or the result of the thing in question.
                 Everything needs documentation.
                 Classic documentation can sometimes be replaced by programs (i.e. build script named <quote>
@@ -304,6 +304,9 @@
                 summary of its functionality in order to merge syntax and semantics.
                 This can be omitted if the name/id is also a natural description.
             </paragraph>
+        </chapter>
+        <chapter>
+            <title>Documentation Style</title>
         </chapter>
     </chapter>
     <chapter>
