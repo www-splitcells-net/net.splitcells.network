@@ -6,4 +6,5 @@
          xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
          xmlns:e="http://splitcells.net/sen.xsd">
     <name>Artificial Intelligence</name>
+    <solution xl:href="endless-recursion.xml"></solution>
 </project>
