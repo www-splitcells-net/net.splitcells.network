@@ -19,6 +19,9 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
+/**
+ * The 80-20 rule maintains that 80% of outcomes come from 20% of causes. - Pareto principle - Vilfredo Pareto
+ */
 public interface Solution extends Problem, SolutionView {
 
     @Returns_this
