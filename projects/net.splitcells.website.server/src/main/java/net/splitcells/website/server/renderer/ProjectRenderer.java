@@ -28,6 +28,7 @@ import static java.util.stream.Stream.concat;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.readString;
@@ -113,7 +114,11 @@ public class ProjectRenderer {
      * IDEA Create mode where the renderer ist cached.
      */
     private FileStructureTransformer renderer() {
-        return new FileStructureTransformer(projectSrcFolder.resolve("xml"), xslLibs, "main." + profile + ".xsl", validator);
+        return new FileStructureTransformer(projectSrcFolder.resolve("xml")
+                , xslLibs
+                , "main." + profile + ".xsl"
+                , validator
+                , map());
     }
 
     /**

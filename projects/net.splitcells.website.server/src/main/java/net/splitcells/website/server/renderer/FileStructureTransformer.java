@@ -1,5 +1,6 @@
 package net.splitcells.website.server.renderer;
 
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.PerspectiveI;
 import net.splitcells.dem.resource.Paths;
@@ -44,11 +45,12 @@ public class FileStructureTransformer {
         });
     }*/
 
-    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, Validator validator) {
+    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, Validator validator, Map<String, String> parameters) {
         this.fileStructureRoot = fileStructureRoot;
         try {
-            transformer = new XslTransformer(
-                    newInputStream(xslLibs.resolve(transformerXsl)), new PathBasedUriResolver(xslLibs));
+            transformer = new XslTransformer
+                    (newInputStream(xslLibs.resolve(transformerXsl)), new PathBasedUriResolver(xslLibs)
+                            , parameters);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException();

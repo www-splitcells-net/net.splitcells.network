@@ -1,5 +1,6 @@
 package net.splitcells.website.server.translation.to.html;
 
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
 
 import java.io.*;
@@ -31,13 +32,14 @@ public class XslTransformer {
 
     private final Transformer transformer;
 
-    public XslTransformer(InputStream xsl, URIResolver uriSolver) {
+    public XslTransformer(InputStream xsl, URIResolver uriSolver, Map<String, String> parameters) {
         TransformerFactory factory = TransformerFactory.newInstance();
         factory.setURIResolver(uriSolver);
         try {
             Templates template = factory.newTemplates(new StreamSource(xsl));
             transformer = template.newTransformer();
             transformer.setParameter("siteFolder", Paths.get(".").toAbsolutePath().toString() + File.separator);
+            parameters.forEach(transformer::setParameter);
         } catch (TransformerConfigurationException e) {
             throw new RuntimeException(e);
         }
