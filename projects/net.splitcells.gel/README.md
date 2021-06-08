@@ -1,9 +1,5 @@
 # Generic Allocator System (Gas)
 
-* [Rendered Introduction and Documentation](http://splitcells.net/net/splitcells/gel/index.html)
-
-## Introduction
-
-Build Project via [build command](./bin/build).
+[Read](../net.splitcells.gel.doc) about the project or build it via the [build command](./bin/build).
 
 ![Generic Allocator Logo](http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/white.project.logo.generic.allocator.jpg)
