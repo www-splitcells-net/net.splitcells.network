@@ -9,6 +9,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.website.Validator;
+import net.splitcells.website.server.renderer.commonmark.CommonMarkRenderer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -32,6 +33,7 @@ import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.commonmark.CommonMarkExtension.commonMarkExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
+import static net.splitcells.website.server.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
 /**
  * TODO Use resource folder for xml, txt and etc.
@@ -60,6 +62,8 @@ public class ProjectRenderer {
     private final Validator validator;
     private final ProjectRendererExtension extension = commonMarkExtension();
     private final Map<String, String> parameters;
+
+    private final CommonMarkRenderer commonMarkRenderer = commonMarkRenderer();
 
     @Deprecated
     public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
@@ -181,6 +185,10 @@ public class ProjectRenderer {
                 return readArtifact(path).map(r -> renderingResult(r, "image/css"));
             } else if (path.endsWith(".js")) {
                 return readArtifact(path).map(r -> renderingResult(r, "text/javascript"));
+            } else if (path.endsWith(".md.html")) {
+                return readSrc("md", path.substring(0, path.lastIndexOf(".md.html")) + ".md")
+                        .map(r -> commonMarkRenderer.render(new String(r)).getBytes(UTF_8))
+                        .map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".html")) {
                 return renderFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
@@ -281,6 +289,18 @@ public class ProjectRenderer {
             return readArtifact(path);
         } catch (Exception e) {
             return readArtifact(path);
+        }
+    }
+
+    private Optional<byte[]> readSrc(String srcType, String path) {
+        final var resourcePath = this.projectSrcFolder.resolve(srcType).resolve(path);
+        if (!is_file(resourcePath)) {
+            return Optional.empty();
+        }
+        try {
+            return Optional.of(readAllBytes(resourcePath));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -4,9 +4,6 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.ProjectRendererExtension;
 import net.splitcells.website.server.renderer.RenderingResult;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;

@@ -5,7 +5,7 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 public class CommonMarkRenderer {
-    protected static CommonMarkRenderer commonMarkRenderer() {
+    public static CommonMarkRenderer commonMarkRenderer() {
         return new CommonMarkRenderer();
     }
 
