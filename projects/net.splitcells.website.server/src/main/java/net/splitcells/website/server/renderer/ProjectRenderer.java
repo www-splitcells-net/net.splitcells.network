@@ -1,19 +1,14 @@
 package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.website.Validator;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -32,11 +27,10 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.website.server.renderer.CommonMarkExtension.commonMarkExtension;
+import static net.splitcells.website.server.renderer.commonmark.CommonMarkExtension.commonMarkExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**

@@ -1,6 +1,9 @@
-package net.splitcells.website.server.renderer;
+package net.splitcells.website.server.renderer.commonmark;
 
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.website.server.renderer.ProjectRenderer;
+import net.splitcells.website.server.renderer.ProjectRendererExtension;
+import net.splitcells.website.server.renderer.RenderingResult;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
