@@ -97,6 +97,16 @@ public class ProjectRenderer {
                 , parameters);
     }
 
+    public static ProjectRenderer projectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
+            , boolean typedFolder
+            , boolean flatRepository
+            , Validator validator
+            , Map<String, String> parameters) {
+        return new ProjectRenderer(renderer, projectSrcFolder, xslLibs, resources, resourceRootPath, typedFolder, flatRepository, validator
+                , projectSrcFolder.resolve("../..")
+                , parameters);
+    }
+
     @Deprecated
     public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
