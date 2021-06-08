@@ -26,7 +26,6 @@
     <xsl:include href="template.utilities.xsl"/>
     <xsl:include href="natural.xsl"/>
     <xsl:include href="variable.xsl"/>
-    <xsl:include href="variable.advertisement.xsl"/>
     <xsl:include href="variable.location.project.xsl"/>
     <xsl:include href="variable.location.xsl"/>
     <!-- Following templates are only applied if previous templates did not match. -->
