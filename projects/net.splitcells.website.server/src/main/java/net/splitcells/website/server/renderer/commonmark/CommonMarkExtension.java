@@ -15,15 +15,15 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
+import static net.splitcells.website.server.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
 public class CommonMarkExtension implements ProjectRendererExtension {
-
-    final Parser parser = Parser.builder().build();
-    final HtmlRenderer renderer = HtmlRenderer.builder().build();
 
     public static CommonMarkExtension commonMarkExtension() {
         return new CommonMarkExtension();
     }
+
+    private final CommonMarkRenderer renderer = commonMarkRenderer();
 
     private CommonMarkExtension() {
 
@@ -33,17 +33,17 @@ public class CommonMarkExtension implements ProjectRendererExtension {
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         if (path.endsWith("README.html") && is_file(projectRenderer.projectFolder().resolve("README.md"))) {
             final var pathContent = readString(projectRenderer.projectFolder().resolve("README.md"));
-            final Node document;
             final Optional<String> title;
+            final String contentToRender;
             if (pathContent.startsWith("#")) {
                 final var titleLine = pathContent.split("[\r\n]+")[0];
                 title = Optional.of(titleLine.replaceAll("#", "").trim());
-                document = parser.parse(pathContent.substring(titleLine.length()));
+                contentToRender = pathContent.substring(titleLine.length());
             } else {
                 title = Optional.empty();
-                document = parser.parse(pathContent);
+                contentToRender = pathContent;
             }
-            return projectRenderer.renderHtmlBodyContent(renderer.render(document), title)
+            return projectRenderer.renderHtmlBodyContent(renderer.render(contentToRender), title)
                     .map(result -> renderingResult
                             (result
                                     , TEXT_HTML.toString()));
