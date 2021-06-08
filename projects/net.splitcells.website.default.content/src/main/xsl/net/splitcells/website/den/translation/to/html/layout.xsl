@@ -580,7 +580,7 @@
                         </div>
                         <div class="advertise-one-of">
                             <xsl:for-each
-                                    select="$advertisement-object-technical/rdf:RDF/rdf:Description">
+                                    select="document('/net.splitcells.website/current/xml/net/splitcells/martins/avots/website/advertisement-object-technical.xml')/rdf:RDF/rdf:Description">
                                 <div>
                                     <xsl:if test="position() != 1">
                                         <xsl:attribute name="style"
