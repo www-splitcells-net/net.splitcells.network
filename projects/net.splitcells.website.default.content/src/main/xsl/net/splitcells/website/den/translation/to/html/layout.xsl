@@ -560,7 +560,8 @@
                         </a>
                         <h3>Interesting Third Party Sites</h3>
                         <div class="advertise-one-of">
-                            <xsl:for-each select="$advertisement-object-social/rdf:RDF/rdf:Description">
+                            <xsl:for-each
+                                    select="document('/net.splitcells.website/current/xml/net/splitcells/martins/avots/website/advertisement-object-social.xml')/rdf:RDF/rdf:Description">
                                 <div>
                                     <xsl:if test="position() != 1">
                                         <xsl:attribute name="style"

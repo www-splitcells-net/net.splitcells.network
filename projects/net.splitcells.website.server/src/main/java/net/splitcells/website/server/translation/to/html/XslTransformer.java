@@ -43,7 +43,6 @@ public class XslTransformer {
         } catch (TransformerConfigurationException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public byte[] transform(Path input) {

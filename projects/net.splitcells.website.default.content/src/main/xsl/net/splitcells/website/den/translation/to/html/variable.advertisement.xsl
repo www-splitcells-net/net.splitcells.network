@@ -5,8 +5,6 @@
                 xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <!-- TODO Make advertisment object data part of support system.-->
-    <xsl:variable name="advertisement-object-social">
-    </xsl:variable>
     <xsl:variable name="advertisement-object-technical">
         <r:RDF>
             <r:Description r:resource="https://www.phoronix.com/">

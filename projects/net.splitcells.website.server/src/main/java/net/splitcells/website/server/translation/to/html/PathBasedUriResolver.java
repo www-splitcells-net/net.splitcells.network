@@ -25,7 +25,9 @@ public class PathBasedUriResolver implements URIResolver {
     public Source resolve(String href, String base) throws TransformerException {
         try {
             final Path path;
-            if (Paths.get(href).isAbsolute()) {
+            if (href.startsWith("/net.splitcells.website/current/xml")) {
+                path = Paths.get("./src/main/xml/" + href.substring("/net.splitcells.website/current/xml".length()));
+            } else if (Paths.get(href).isAbsolute()) {
                 path = Paths.get(href);
             } else {
                 path = folder.resolve(href);
