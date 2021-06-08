@@ -39,6 +39,7 @@ public class XslTransformer {
             Templates template = factory.newTemplates(new StreamSource(xsl));
             transformer = template.newTransformer();
             transformer.setParameter("siteFolder", Paths.get(".").toAbsolutePath().toString() + File.separator);
+            // TODO REMOVE
             parameters.forEach(transformer::setParameter);
         } catch (TransformerConfigurationException e) {
             throw new RuntimeException(e);
