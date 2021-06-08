@@ -6,40 +6,6 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <!-- TODO Make advertisment object data part of support system.-->
     <xsl:variable name="advertisement-object-social">
-        <r:RDF>
-            <r:Description r:resource="https://makroskop.eu/">
-                <r:label>MAKROSKOP</r:label>
-                <r:comment>German Page about Economy and Politics</r:comment>
-            </r:Description>
-            <r:Description r:resource="https://www.flassbeck-economics.com/">
-                <r:label>https://www.flassbeck-economics.com/</r:label>
-                <r:comment>International Page about Economy and Politics</r:comment>
-            </r:Description>
-            <r:Description r:resource="http://slatestarcodex.com">
-                <r:label>Slate Star Codex</r:label>
-                <r:comment>A Blog About Science, Medicine, Philosophy, Politics, and Futurism</r:comment>
-            </r:Description>
-            <r:Description r:resource="https://alternativlos-aquarium.blogspot.com/2017/09/ueber-mich.html">
-                <r:label>Das Alternativlos-Aquarium</r:label>
-                <r:comment>Political Blog</r:comment>
-            </r:Description>
-            <r:Description r:resource="https://danisch.de">
-                <r:label>Danisch</r:label>
-                <r:comment>Challenging Political Blog</r:comment>
-            </r:Description>
-            <r:Description r:resource="https://www.youtube.com/user/LianaK/videos">
-                <r:label>Liana K</r:label>
-                <r:comment>Lady Bits</r:comment>
-            </r:Description>
-            <r:Description r:resource="https://www.youtube.com/user/rossmanngroup/videos">
-                <r:label>Louis Rossmann</r:label>
-                <r:comment>Repair Group</r:comment>
-            </r:Description>
-            <r:Description r:resource="https://www.youtube.com/channel/UCEh7V-I77Cs9st5gtH4wd7w/videos">
-                <r:label>Roma Army</r:label>
-                <r:comment>Equality Advocate</r:comment>
-            </r:Description>
-        </r:RDF>
     </xsl:variable>
     <xsl:variable name="advertisement-object-technical">
         <r:RDF>
