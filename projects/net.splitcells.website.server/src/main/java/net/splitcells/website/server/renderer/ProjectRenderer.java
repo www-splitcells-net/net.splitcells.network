@@ -3,6 +3,7 @@ package net.splitcells.website.server.renderer;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
@@ -64,6 +65,7 @@ public class ProjectRenderer {
     private final boolean typedFolder;
     private final Validator validator;
     private final ProjectRendererExtension extension = commonMarkExtension();
+    private final Map<String, String> parameters;
 
     @Deprecated
     public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
@@ -83,6 +85,18 @@ public class ProjectRenderer {
                 , projectFolder);
     }
 
+    public static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
+            , String resourceRootPath
+            , Validator validator
+            , Map<String, String> parameters) {
+        return new ProjectRenderer(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
+                , true
+                , false
+                , validator
+                , projectFolder
+                , parameters);
+    }
+
     @Deprecated
     public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
@@ -97,6 +111,24 @@ public class ProjectRenderer {
             , boolean flatRepository
             , Validator validator
             , Path projectFolder) {
+        this(renderer
+                , projectSrcFolder
+                , xslLibs
+                , resources
+                , resourceRootPath
+                , typedFolder
+                , flatRepository
+                , validator
+                , projectFolder
+                , map());
+    }
+
+    private ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
+            , boolean typedFolder
+            , boolean flatRepository
+            , Validator validator
+            , Path projectFolder
+            , Map<String, String> parameters) {
         this.typedFolder = typedFolder;
         this.profile = renderer;
         this.projectSrcFolder = projectSrcFolder;
@@ -106,6 +138,7 @@ public class ProjectRenderer {
         this.flatRepository = flatRepository;
         this.validator = validator;
         this.projectFolder = projectFolder;
+        this.parameters = parameters;
     }
 
     /**
