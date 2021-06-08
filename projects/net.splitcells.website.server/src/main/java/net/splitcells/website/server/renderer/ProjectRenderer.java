@@ -89,7 +89,7 @@ public class ProjectRenderer {
             , String resourceRootPath
             , Validator validator
             , Map<String, String> parameters) {
-        return new ProjectRenderer(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
+        return new ProjectRenderer(renderer, projectFolder, xslLibs, resources, resourceRootPath
                 , true
                 , false
                 , validator
