@@ -189,7 +189,7 @@ public class ProjectRenderer {
             } else if (path.endsWith(".html")) {
                 final var renderedFile = renderFile(path);
                 final var commonMarkSrc = readSrc("md", path.substring(0, path.lastIndexOf(".html")) + ".md");
-                assertThat(commonMarkSrc.isPresent() && commonMarkSrc.isPresent()).isFalse();
+                assertThat(renderedFile.isPresent() && commonMarkSrc.isPresent()).isFalse();
                 if (commonMarkSrc.isPresent()) {
                     return commonMarkSrc
                             .map(r -> commonMarkRenderer.render(new String(r)).getBytes(UTF_8))
