@@ -31,7 +31,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.website.server.renderer.commonmark.CommonMarkExtension.commonMarkExtension;
+import static net.splitcells.website.server.renderer.commonmark.CommonMarkReadmeExtension.commonMarkExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

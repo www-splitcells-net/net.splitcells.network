@@ -14,15 +14,15 @@ import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
-public class CommonMarkExtension implements ProjectRendererExtension {
+public class CommonMarkReadmeExtension implements ProjectRendererExtension {
 
-    public static CommonMarkExtension commonMarkExtension() {
-        return new CommonMarkExtension();
+    public static CommonMarkReadmeExtension commonMarkExtension() {
+        return new CommonMarkReadmeExtension();
     }
 
     private final CommonMarkRenderer renderer = commonMarkRenderer();
 
-    private CommonMarkExtension() {
+    private CommonMarkReadmeExtension() {
     }
 
     @Override
