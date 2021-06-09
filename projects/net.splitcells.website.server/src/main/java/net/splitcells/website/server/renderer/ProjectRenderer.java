@@ -192,7 +192,7 @@ public class ProjectRenderer {
                 assertThat(renderedFile.isPresent() && commonMarkSrc.isPresent()).isFalse();
                 if (commonMarkSrc.isPresent()) {
                     return commonMarkSrc
-                            .map(r -> commonMarkRenderer.render(new String(r)).getBytes(UTF_8))
+                            .map(r -> commonMarkRenderer.render(new String(r), this))
                             .map(r -> renderingResult(r, TEXT_HTML.toString()));
                 }
                 if (renderedFile.isPresent()) {
