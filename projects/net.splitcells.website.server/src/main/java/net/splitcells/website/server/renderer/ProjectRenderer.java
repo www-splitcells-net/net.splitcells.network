@@ -34,6 +34,7 @@ import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.commonmark.CommonMarkExtension.commonMarkExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * TODO Use resource folder for xml, txt and etc.
@@ -185,12 +186,19 @@ public class ProjectRenderer {
                 return readArtifact(path).map(r -> renderingResult(r, "image/css"));
             } else if (path.endsWith(".js")) {
                 return readArtifact(path).map(r -> renderingResult(r, "text/javascript"));
-            } else if (path.endsWith(".md.html")) {
-                return readSrc("md", path.substring(0, path.lastIndexOf(".md.html")) + ".md")
-                        .map(r -> commonMarkRenderer.render(new String(r)).getBytes(UTF_8))
-                        .map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".html")) {
-                return renderFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
+                final var renderedFile = renderFile(path);
+                final var commonMarkSrc = readSrc("md", path.substring(0, path.lastIndexOf(".md.html")) + ".md");
+                assertThat(commonMarkSrc.isPresent() && commonMarkSrc.isPresent()).isFalse();
+                if (commonMarkSrc.isPresent()) {
+                    return commonMarkSrc
+                            .map(r -> commonMarkRenderer.render(new String(r)).getBytes(UTF_8))
+                            .map(r -> renderingResult(r, TEXT_HTML.toString()));
+                }
+                if (renderedFile.isPresent()) {
+                    return renderedFile.map(r -> renderingResult(r, TEXT_HTML.toString()));
+                }
+                return Optional.empty();
             } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
                 return renderFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".svg")) {
