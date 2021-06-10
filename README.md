@@ -14,7 +14,7 @@
 
 We provide an open source ecosystem centered around optimization and operations research.
 
-The main project is the [Generic Allocator](./projects/net.splitcells.gel).
+The main project is the [Generic Allocator](projects/net.splitcells.gel.doc/src/main/md/net/splitcells/gel/index.md).
 It is a Java framework providing modeling, analytic and solving capabilities regarding optimization problems.
 A detailed introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
@@ -24,7 +24,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 ## Where to start?
 
-🚀 Model and optimize problems.
+🚀 [Model and optimize problems.](projects/net.splitcells.gel.doc/src/main/md/net/splitcells/gel/index.md)
 
 🔬 Analyze and organize your operations and prepare schedules.
 
