@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.structure;
+package net.splitcells.gel.rating.framework;
 
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.lang.dom.Domable;

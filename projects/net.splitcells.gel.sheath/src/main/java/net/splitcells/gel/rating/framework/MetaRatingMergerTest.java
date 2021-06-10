@@ -1,13 +1,8 @@
 package net.splitcells.gel.rating.framework;
 
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.gel.rating.structure.MetaRating;
-import net.splitcells.gel.rating.structure.MetaRatingMerger;
-import net.splitcells.gel.rating.structure.MetaRatingMergerI;
-import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.rating.type.Profit;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.order.Ordering.EQUAL;

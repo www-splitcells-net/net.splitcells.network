@@ -1,13 +1,12 @@
 package net.splitcells.gel.rating.framework;
 
 import net.splitcells.dem.data.set.map.Maps;
-import net.splitcells.gel.rating.structure.Rating;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.rating.type.Optimality;
 import net.splitcells.gel.rating.type.Profit;
 import org.junit.jupiter.api.Test;
 
-import static net.splitcells.gel.rating.structure.RatingTranslatorI.ratingTranslator;
+import static net.splitcells.gel.rating.framework.RatingTranslatorI.ratingTranslator;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Optimality.optimality;
 import static net.splitcells.gel.rating.type.Profit.profit;

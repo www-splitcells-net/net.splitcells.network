@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.structure;
+package net.splitcells.gel.rating.framework;
 
 import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;

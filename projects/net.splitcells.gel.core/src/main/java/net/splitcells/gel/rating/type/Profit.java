@@ -7,7 +7,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import java.util.Optional;
 
 import net.splitcells.dem.utils.CommonFunctions;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;

@@ -1,7 +1,5 @@
 package net.splitcells.gel.rating.framework;
 
-import net.splitcells.gel.rating.structure.MetaRating;
-import net.splitcells.gel.rating.structure.MetaRatingI;
 import net.splitcells.gel.rating.type.Profit;
 import org.junit.jupiter.api.Test;
 

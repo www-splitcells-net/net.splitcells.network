@@ -5,7 +5,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.gel.rating.structure.MetaRatingI.metaRating;
+import static net.splitcells.gel.rating.framework.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 
 import java.util.Collection;
@@ -18,7 +18,7 @@ import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
 import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 
 public class QueryI implements Query {

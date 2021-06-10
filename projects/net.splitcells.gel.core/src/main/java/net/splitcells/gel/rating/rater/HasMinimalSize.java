@@ -8,7 +8,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Node;
 
 import java.util.Collection;
@@ -17,7 +17,7 @@ import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
-import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 

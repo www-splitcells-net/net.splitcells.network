@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;

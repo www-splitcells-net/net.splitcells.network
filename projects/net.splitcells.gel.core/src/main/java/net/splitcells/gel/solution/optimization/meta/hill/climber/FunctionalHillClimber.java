@@ -3,7 +3,7 @@ package net.splitcells.gel.solution.optimization.meta.hill.climber;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 

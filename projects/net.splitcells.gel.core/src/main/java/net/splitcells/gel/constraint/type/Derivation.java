@@ -10,8 +10,8 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.allocation.Allocations;
-import net.splitcells.gel.rating.structure.LocalRating;
-import net.splitcells.gel.rating.structure.MetaRating;
+import net.splitcells.gel.rating.framework.LocalRating;
+import net.splitcells.gel.rating.framework.MetaRating;
 import org.w3c.dom.Element;
 
 import java.util.Collection;

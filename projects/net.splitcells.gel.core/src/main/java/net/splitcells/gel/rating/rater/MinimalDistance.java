@@ -33,7 +33,7 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Node;
 
 /**

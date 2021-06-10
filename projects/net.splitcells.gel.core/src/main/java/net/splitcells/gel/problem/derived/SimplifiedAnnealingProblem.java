@@ -4,8 +4,7 @@ import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.type.Derivation;
-import net.splitcells.gel.rating.structure.MetaRating;
+import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.type.Optimality;
 
 import java.util.function.Function;

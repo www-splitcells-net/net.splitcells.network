@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.structure;
+package net.splitcells.gel.rating.framework;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static org.junit.jupiter.api.Assertions.assertTrue;

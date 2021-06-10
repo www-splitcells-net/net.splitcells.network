@@ -1,12 +1,12 @@
-package net.splitcells.gel.rating.structure;
+package net.splitcells.gel.rating.framework;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.rating.structure.MetaRatingMergerI.metaRatingMerger;
-import static net.splitcells.gel.rating.structure.RatingTranslatorI.ratingTranslator;
+import static net.splitcells.gel.rating.framework.MetaRatingMergerI.metaRatingMerger;
+import static net.splitcells.gel.rating.framework.RatingTranslatorI.ratingTranslator;
 
 import java.util.Optional;
 import java.util.function.BiFunction;

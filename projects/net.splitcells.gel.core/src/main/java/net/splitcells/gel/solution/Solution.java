@@ -11,7 +11,7 @@ import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.Returns_this;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;

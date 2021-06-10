@@ -1,7 +1,7 @@
 package net.splitcells.gel.constraint;
 
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 
 public final class Report {
 	public static Report report(Line line, GroupId group, Rating rating) {

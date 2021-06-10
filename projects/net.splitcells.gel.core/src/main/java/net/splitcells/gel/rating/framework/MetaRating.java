@@ -1,6 +1,6 @@
-package net.splitcells.gel.rating.structure;
+package net.splitcells.gel.rating.framework;
 
-import static net.splitcells.gel.rating.structure.MetaRatingI.metaRating;
+import static net.splitcells.gel.rating.framework.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 import net.splitcells.dem.data.set.map.Map;

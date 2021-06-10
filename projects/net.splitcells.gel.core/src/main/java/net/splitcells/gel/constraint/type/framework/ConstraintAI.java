@@ -18,7 +18,7 @@ import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.lineRating;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
-import static net.splitcells.gel.rating.structure.MetaRatingI.metaRating;
+import static net.splitcells.gel.rating.framework.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,9 +49,9 @@ import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.QueryI;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.rating.structure.LocalRating;
-import net.splitcells.gel.rating.structure.MetaRating;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.LocalRating;
+import net.splitcells.gel.rating.framework.MetaRating;
+import net.splitcells.gel.rating.framework.Rating;
 
 @Deprecated
 public abstract class ConstraintAI implements Constraint {

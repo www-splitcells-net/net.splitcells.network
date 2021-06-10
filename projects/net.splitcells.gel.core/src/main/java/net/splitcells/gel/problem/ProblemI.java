@@ -14,7 +14,7 @@ import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.structure.MetaRating;
+import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

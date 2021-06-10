@@ -15,7 +15,7 @@ import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.rating.structure.MetaRating;
+import net.splitcells.gel.rating.framework.MetaRating;
 import org.w3c.dom.Node;
 
 import java.util.Set;

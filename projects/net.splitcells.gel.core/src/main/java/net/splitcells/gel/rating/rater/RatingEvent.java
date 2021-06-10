@@ -2,7 +2,7 @@ package net.splitcells.gel.rating.rater;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -12,8 +12,8 @@ import java.util.Set;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.rating.structure.LocalRating;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.LocalRating;
+import net.splitcells.gel.rating.framework.Rating;
 import org.assertj.core.api.Assertions;
 
 public interface RatingEvent {

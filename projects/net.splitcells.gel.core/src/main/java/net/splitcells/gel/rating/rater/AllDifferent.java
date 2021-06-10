@@ -8,7 +8,7 @@ import static net.splitcells.dem.utils.IncorrectImplementation.incorrectImplemen
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;

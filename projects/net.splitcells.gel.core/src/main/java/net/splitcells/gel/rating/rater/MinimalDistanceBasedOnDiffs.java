@@ -13,7 +13,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Node;
 
 import java.util.Collection;
@@ -29,7 +29,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
-import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;

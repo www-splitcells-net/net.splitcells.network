@@ -3,7 +3,7 @@ package net.splitcells.gel.rating.rater;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
-import static net.splitcells.gel.rating.structure.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
 import java.util.Collection;
 
@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Node;
 
 public class ConstantRater implements Rater {

@@ -7,7 +7,7 @@ import java.util.Set;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.rating.structure.LocalRating;
+import net.splitcells.gel.rating.framework.LocalRating;
 
 public class RatingEventI implements RatingEvent {
 

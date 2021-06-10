@@ -17,7 +17,7 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.DerivedSolution;
-import net.splitcells.gel.rating.structure.MetaRating;
+import net.splitcells.gel.rating.framework.MetaRating;
 
 import java.util.function.Function;
 

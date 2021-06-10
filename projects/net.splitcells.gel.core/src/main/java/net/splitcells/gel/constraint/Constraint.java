@@ -12,7 +12,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
-import static net.splitcells.gel.rating.structure.MetaRating.neutral;
+import static net.splitcells.gel.rating.framework.MetaRating.neutral;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -36,9 +36,9 @@ import net.splitcells.dem.utils.reflection.PubliclyTyped;
 import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.structure.LocalRating;
-import net.splitcells.gel.rating.structure.MetaRating;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.LocalRating;
+import net.splitcells.gel.rating.framework.MetaRating;
+import net.splitcells.gel.rating.framework.Rating;
 
 public interface Constraint extends DatabaseSynchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
     Attribute<Line> LINE = attribute(Line.class, "line");

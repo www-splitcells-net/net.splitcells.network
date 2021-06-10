@@ -12,7 +12,7 @@ import net.splitcells.gel.constraint.type.ForAllI;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.ProblemView;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;

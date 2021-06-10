@@ -1,7 +1,7 @@
 package net.splitcells.gel.solution.history.meta.type;
 
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.gel.rating.structure.Rating;
+import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Node;
 
 public class AllocationRating implements MetaData<Rating> {

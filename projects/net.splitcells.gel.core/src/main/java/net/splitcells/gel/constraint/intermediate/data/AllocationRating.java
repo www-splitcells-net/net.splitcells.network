@@ -1,7 +1,7 @@
 package net.splitcells.gel.constraint.intermediate.data;
 
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.rating.structure.MetaRating;
+import net.splitcells.gel.rating.framework.MetaRating;
 
 public class AllocationRating {
 	public static AllocationRating lineRating(Line line, MetaRating rating) {
