@@ -2,9 +2,7 @@
 
 ## Introduction for Users
 
-TODO: dsadasd
-
-## Introduction for Developers
+TODO
 
 The Generic Allocator (Gel) is a Java framework for optimization problems.
 The framework's primary objective is to provide helpful information regarding a given problem and/or a
@@ -17,10 +15,7 @@ Simultaneously it gives the information on how to produce such data.
 
 TODO
 
-## Development
+## Introduction for Developers
 
-The main functions are located at the class
-
->net.splitcells.gel.Gel 
-
-of the core project (<quote>net.splitcells.gel.core</quote>).
+The main functions are located at the class `net.splitcells.gel.Gel`
+of the core project `net.splitcells.gel.core`.
