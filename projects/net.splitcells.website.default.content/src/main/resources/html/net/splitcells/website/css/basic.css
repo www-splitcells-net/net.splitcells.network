@@ -243,7 +243,20 @@ h1 {
     padding-left: .4em;
     }
 h2 {
-    padding-left: .4em;
+    font-size: 125%;
+	font-weight: bold;
+	margin-top: 3em;
+	margin-bottom: 2em;
+    padding-top: .5em;
+    padding-right: 1em;
+    padding-bottom: .5em;
+    padding-left: 1em;
+
+    margin-left: .2em;
+	font-size: 125%;
+	font-weight: bold;
+	margin-top: 3em;
+	margin-bottom: 2em;
     }
 h3 {
     padding-left: .4em;
@@ -261,10 +274,6 @@ h4 {
     padding-bottom: .5em;
     padding-left: 1em;
 	}
-.net-splitcells-component-priority-1 .heading {
-    background-color: var(--background-color-selected-priority-1);
-    color: var(--foreground-color-selected-priority-1);
-    }
 .chapter .heading {
 	margin-left: .2em;
 	font-size: 125%;
