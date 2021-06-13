@@ -146,6 +146,9 @@ body {
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
+	/* Ensures that px can be used in child elements, if required.
+	 * EM should always preferred over px, because it's mostly about text.
+	 */
 	font-size: 18px;
 	}
 .Borderless {
