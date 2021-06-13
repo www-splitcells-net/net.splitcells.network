@@ -226,17 +226,19 @@ a {
 .IndexPostHeader {
 	box-shadow: 0em 0.1em 0.2em -.2em var(--shadow-color-priority-2);
 }
+.paragraph,
 p {
-    line-height: 1.4em;
-    background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
-    background-size: 100% 2.8em;
-    padding-left: .25em;
-    padding-right: .25em;
-	}
-.paragraph {
-	line-height: 1.4em;
-	background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
-	background-size: 100% 2.8em;
+	/*line-height: 1.4em;
+	background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);*/
+	line-height: 24px;
+    background-image: repeating-linear-gradient(
+    var(--paragraph-background-color-priority-1-a),
+    var(--paragraph-background-color-priority-1-a) 24px,
+    var(--paragraph-background-color-priority-1-b) 24px,
+    var(--paragraph-background-color-priority-1-b) 48px
+
+    );
+	/*background-size: 100% 2.8em;*/
 	padding-left: .25em;
 	padding-right: .25em;
 }
