@@ -176,6 +176,10 @@ ol.table-of-content > li.table-of-content:before {
 .premature {
 	background: repeating-linear-gradient(45deg, var(--background-color-priority-4), var(--background-color-priority-4) 1em, var(--background-color-priority-3) 1em, var(--background-color-priority-3) 2em);
 }
+.net-splitcells-component-priority-1 {
+    background-color: var(--background-color-selected-priority-1);
+	color: var(--foreground-color-selected-priority-1);
+}
 .MainButton:hover, .net-splitcells-component-priority-3:hover {
 	background-color: var(--background-color-selected-priority-3);
 	color: var(--foreground-color-selected-priority-3);

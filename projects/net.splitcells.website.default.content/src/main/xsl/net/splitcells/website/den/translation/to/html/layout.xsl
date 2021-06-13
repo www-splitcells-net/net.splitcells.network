@@ -661,7 +661,7 @@
                             <div class="MainButton MainButton_S">back to top</div>
                         </a>
                     </div>
-                    <div class="content-column" style="order: 3;">
+                    <div class="content-column net-splitcells-component-priority-1" style="order: 3;">
                         <div id="content" class="column_0 contentCell Standard_content Right_shadow"
                              style="order: 3;">
                             <div class="optional_structural_guide structural_guide"></div>
