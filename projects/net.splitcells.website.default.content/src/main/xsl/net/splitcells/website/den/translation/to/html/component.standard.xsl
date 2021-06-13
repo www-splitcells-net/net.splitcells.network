@@ -228,16 +228,14 @@
     <xsl:template match="s:chapter">
         <div class="chapter">
             <xsl:attribute name="id" select="generate-id(.)"/>
-            <div class="heading">
-                <div class="highlightedShortSummary Standard_highlighted">
-                    <div style="width: 100%;">
-                        <a>
-                            <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
-                            <xsl:apply-templates select="./s:title/node()"/>
-                        </a>
-                        <a href="#topElement" style="float: right;">↑
-                        </a>
-                    </div>
+            <div class="highlightedShortSummary Standard_highlighted heading">
+                <div style="width: 100%;">
+                    <a>
+                        <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
+                        <xsl:apply-templates select="./s:title/node()"/>
+                    </a>
+                    <a href="#topElement" style="float: right;">↑
+                    </a>
                 </div>
             </div>
             <xsl:apply-templates select="node()[not(self::s:title)]"/>

@@ -258,7 +258,7 @@ h4 {
 	margin-bottom: 2em;
 	}
 .chapter .heading {
-	padding-left: .2em;
+	margin-left: .2em;
 	font-size: 125%;
 	font-weight: bold;
 	margin-top: 3em;
@@ -267,28 +267,28 @@ h4 {
 .chapter .chapter .heading {
 	font-size: 125%;
 	font-weight: bold;
-	padding-left: .8em;
+	margin-left: .8em;
 	margin-top: 3em;
 	margin-bottom: 2em;
 	}
 .chapter .chapter .chapter .heading {
 	font-size: 125%;
 	font-weight: bold;
-	padding-left: 1.6em;
+	margin-left: 1.6em;
 	margin-top: 3em;
 	margin-bottom: 2em;
 	}
 .chapter .chapter .chapter .chapter .heading {
 	font-size: 125%;
 	font-weight: bold;
-	padding-left: 2.4em;
+	margin-left: 2.4em;
 	margin-top: 3em;
 	margin-bottom: 2em;
 	}
 .chapter .chapter .chapter .chapter .chapter .heading {
 	font-size: 125%;
 	font-weight: bold;
-	padding-left: 3.2em;
+	margin-left: 3.2em;
 	margin-top: 3em;
 	margin-bottom: 2em;
 	}
