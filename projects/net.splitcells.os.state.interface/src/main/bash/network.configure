@@ -5,6 +5,7 @@
 
 # Configures the current user's resources, that are reachable by network.
 # For example, this command may setup or update another computer.
+# Other use case is backing up or synchronizing personal data.
 
 # It is recommended, that every instance of this command should connect to
 # the resource via a local host name or via DNS.

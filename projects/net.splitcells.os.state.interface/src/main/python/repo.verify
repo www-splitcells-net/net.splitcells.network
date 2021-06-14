@@ -27,7 +27,7 @@ if subListPath.is_file():
 				# TODO Echo to stderr.
 				sys.exit(1)
 		for currentSubDir in Path('.').iterdir():
-			if not currentSubDir.name.startswith('.'):
+			if not currentSubDir.name.startswith('.') and currentSubDir.is_dir():
 				if not currentSubDir.name in repoList['subs']:
 					print('Unknown subrepository "' + currentSubDir.name + '" is present.')
 					sys.exit(1)
