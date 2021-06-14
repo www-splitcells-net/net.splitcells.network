@@ -72,7 +72,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 		with open(subListPath, 'r') as subListFile:
 			repoList=json.load(subListFile)
 			for currentSubDir in Path('.').iterdir():
-				if not currentSubDir.name.startswith('.'):
+				if not currentSubDir.name.startswith('.') and currentSubDir.is_dir():
 					subName = currentSubDir.name
 					if not currentSubDir.name in repoList['subs']:
 						unknownSubRepoScript = 'set -e; cd ' + subName + ' ; repo.process' + " --command='" + commandForUnknown + "' --host=" + host + ' --relative-path=' + relativePath
