@@ -181,9 +181,9 @@
     </xsl:template>
     <xsl:template match="s:paragraph">
         <!-- TODO why is margin used? -->
-        <div class="paragraph">
+        <p>
             <xsl:apply-templates/>
-        </div>
+        </p>
     </xsl:template>
     <xsl:template match="s:line">
         <div>

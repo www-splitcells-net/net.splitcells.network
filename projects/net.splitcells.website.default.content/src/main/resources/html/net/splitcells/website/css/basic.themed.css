@@ -229,12 +229,12 @@ a {
 .paragraph,
 p {
 	/* Use px in order to prevent bug on webkit. */
-	line-height: 24px;
+	line-height: 28px;
     background-image: repeating-linear-gradient(
     var(--paragraph-background-color-priority-1-a),
-    var(--paragraph-background-color-priority-1-a) 24px,
-    var(--paragraph-background-color-priority-1-b) 24px,
-    var(--paragraph-background-color-priority-1-b) 48px
+    var(--paragraph-background-color-priority-1-a) 28px,
+    var(--paragraph-background-color-priority-1-b) 28px,
+    var(--paragraph-background-color-priority-1-b) 56px
 
     );
 	/*background-size: 100% 2.8em;*/
