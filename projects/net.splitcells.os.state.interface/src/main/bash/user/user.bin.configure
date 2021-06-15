@@ -5,4 +5,5 @@
 
 command.managed.execute conjunction user.bin.configure
 command.repositories.install
+command.managed.install.project.commands
 user.bin.configure.uses.dependencies.test && dependencies.test || echo "Dependencies are not validated during this installation."
