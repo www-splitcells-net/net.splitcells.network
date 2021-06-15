@@ -41,7 +41,9 @@ class Command:
 				print(self.name + ' installed.')
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
-		logging.basicConfig(level=logging.DEBUG)
+		logging.basicConfig(format='%(message)s', level=logging.DEBUG)
+	else:
+	    logging.basicConfig(format='%(message)s', level=logging.INFO)
 	parser = argparse.ArgumentParser(description='Installs command to ~/bin and integrates commands already present.') # TODO If command already present, check if it is a manager. If this is not the case, throw an error.
 	parser.add_argument('commandToInstall', nargs='?', type=str, help='The name of the command that is installed.')
 	parsedArgs = parser.parse_args()
