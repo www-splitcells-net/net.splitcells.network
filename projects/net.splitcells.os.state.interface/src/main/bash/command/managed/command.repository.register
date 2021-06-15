@@ -8,7 +8,7 @@ mkdir -p $configFolder
 repoList=$configFolder/repositories
 touch $repoList
 if grep -q "^repo=$1$" "$repoList"; then
-	echo Repository "'"$1"'" is already registered.
+	echo.debug Repository "'"$1"'" is already registered.
 else
 	echo "repo=$1" >> $repoList
 fi
