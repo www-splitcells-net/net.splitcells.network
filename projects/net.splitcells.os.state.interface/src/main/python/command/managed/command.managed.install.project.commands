@@ -33,7 +33,7 @@ if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(format='%(message)s', level=logging.DEBUG)
 	else:
-		logging.basicConfig(format='%(message)s')
+		logging.basicConfig(format='%(message)s', level=logging.INFO)
 	parser = argparse.ArgumentParser(description='Installs projects command to ~/bin/net.splitcells.os.state.interface.commands.managed.')
 	parser.add_argument('--project', nargs='?', type=str, help='Path to the project to be installed.')
 	parsedArgs = parser.parse_args()
