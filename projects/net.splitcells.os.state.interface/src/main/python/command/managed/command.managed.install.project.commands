@@ -38,11 +38,14 @@ if __name__ == '__main__':
 	parser.add_argument('--project', nargs='?', type=str, help='Path to the project to be installed.')
 	parsedArgs = parser.parse_args()
 	if parsedArgs.project is None:
-		repoConfig = PosixPath('~/.config/net.splitcells.os.state.interface/project.repositories').expanduser()
+		repoConfig = PosixPath('~/.config/net.splitcells.os.state.interface/repositories').expanduser()
 		if repoConfig.exists():
 			with open(repoConfig,'r') as projectRepositories:
 				for projectRepository in projectRepositories.read().splitlines():
-					Command(projectRepository).install()
+				    repoPrefix = 'repo='
+				    if projectRepository.startswith(repoPrefix):
+				        projectRepository = projectRepository[len(repoPrefix):]
+				    Command(projectRepository).install()
 		else:
 			logging.debug('Nothing was installed, because no project repositories are defined.')
 	else:
