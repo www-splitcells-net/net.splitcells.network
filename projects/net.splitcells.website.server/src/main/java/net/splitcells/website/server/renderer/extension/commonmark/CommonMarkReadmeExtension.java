@@ -16,7 +16,7 @@ import static net.splitcells.website.server.renderer.extension.commonmark.Common
 
 public class CommonMarkReadmeExtension implements ProjectRendererExtension {
 
-    public static CommonMarkReadmeExtension commonMarkExtension() {
+    public static CommonMarkReadmeExtension commonMarkReadmeExtension() {
         return new CommonMarkReadmeExtension();
     }
 
