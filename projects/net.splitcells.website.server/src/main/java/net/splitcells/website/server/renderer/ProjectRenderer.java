@@ -9,6 +9,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.website.Validator;
+import net.splitcells.website.server.renderer.extension.ProjectRendererExtension;
 import net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer;
 
 import java.io.IOException;

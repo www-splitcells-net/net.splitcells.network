@@ -1,6 +1,8 @@
-package net.splitcells.website.server.renderer;
+package net.splitcells.website.server.renderer.extension;
 
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.website.server.renderer.ProjectRenderer;
+import net.splitcells.website.server.renderer.RenderingResult;
 
 import java.nio.file.Path;
 import java.util.Optional;
