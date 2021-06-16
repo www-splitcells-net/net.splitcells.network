@@ -19,7 +19,7 @@ public class UserCommandExtension implements ProjectRendererExtension {
         return new UserCommandExtension();
     }
 
-    private static final String RENDERING_PATH = "net/splitcells/os/state/interface/installed/index.html";
+    private static final String RENDERING_PATH = "/net/splitcells/os/state/interface/installed/index.html";
 
     private UserCommandExtension() {
 
