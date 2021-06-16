@@ -212,6 +212,18 @@ public class ProjectRenderer {
         }
     }
 
+    /**
+     * TODO The handling of the transformer seems to be too complicated.
+     *
+     * @param arg
+     * @return
+     */
+    public Optional<byte[]> renderString(String arg) {
+        return Optional.of(renderer()
+                .transform(arg)
+                .getBytes(UTF_8));
+    }
+
     private Optional<byte[]> renderFile(String path) {
         // TODO REMOVE Split by dot.
         final var splitByDot = path.split("\\.");
