@@ -374,7 +374,7 @@ public class ProjectRenderer {
      * @param current
      * @param relativeProjectPath Path relative to the project folders src/xml folder. This path also represent absolute path in projects namespace.
      */
-    public Perspective extendPerspectiveWithPath(Perspective current, Path relativeProjectPath) {
+    public static Perspective extendPerspectiveWithPath(Perspective current, Path relativeProjectPath) {
         for (final var element : list(relativeProjectPath.toString().split("/"))
                 .stream()
                 .filter(e -> !"".contentEquals(e))
