@@ -28,6 +28,7 @@ public class ExtensionMerger implements ProjectRendererExtension {
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         final var rendering = extensions.stream()
                 .map(e -> e.renderFile(path, projectRenderer))
+                .filter(e -> e.isPresent())
                 .collect(Lists.toList());
         if (rendering.size() > 1) {
             throw new RuntimeException(rendering.toString());
