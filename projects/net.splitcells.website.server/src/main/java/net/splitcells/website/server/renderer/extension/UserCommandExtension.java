@@ -20,6 +20,7 @@ public class UserCommandExtension implements ProjectRendererExtension {
     }
 
     private static final String RENDERING_PATH = "/net/splitcells/os/state/interface/installed/index.html";
+    private static final Path BIN_FOLDER = userHome().resolve("bin/net.splitcells.os.state.interface.commands.managed");
 
     private UserCommandExtension() {
 
@@ -37,7 +38,7 @@ public class UserCommandExtension implements ProjectRendererExtension {
 
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        if (Files.isDirectory(userHome().resolve("bin/net.splitcells.os.state.interface.commands.managed"))) {
+        if (Files.isDirectory(BIN_FOLDER)) {
             projectRenderer.extendPerspectiveWithPath(layout
                     , Path.of(RENDERING_PATH));
         }
