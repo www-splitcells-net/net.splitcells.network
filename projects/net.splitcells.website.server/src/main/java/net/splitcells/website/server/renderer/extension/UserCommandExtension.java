@@ -16,6 +16,7 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.userHome;
+import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**
@@ -36,7 +37,7 @@ public class UserCommandExtension implements ProjectRendererExtension {
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
-        if (RENDERING_PATH.equals(path)) {
+        if (RENDERING_PATH.equals(path) && isDirectory(BIN_FOLDER)) {
             final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
             try {
                 java.nio.file.Files.walk(BIN_FOLDER).forEach(command -> {
@@ -59,7 +60,7 @@ public class UserCommandExtension implements ProjectRendererExtension {
 
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        if (Files.isDirectory(BIN_FOLDER)) {
+        if (isDirectory(BIN_FOLDER)) {
             projectRenderer.extendPerspectiveWithPath(layout
                     , Path.of(RENDERING_PATH));
         }
