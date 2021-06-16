@@ -18,6 +18,10 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
+/**
+ * Renders all commands, that are installed via 'net.splitcells.os.state.interface' for the current user
+ * at '/net/splitcells/os/state/interface/installed/index.html'.
+ */
 public class UserCommandExtension implements ProjectRendererExtension {
     public static UserCommandExtension userCommandExtension() {
         return new UserCommandExtension();
@@ -37,6 +41,7 @@ public class UserCommandExtension implements ProjectRendererExtension {
             try {
                 java.nio.file.Files.walk(BIN_FOLDER).forEach(command -> {
                             final var commandName = listWithValuesOf(command.getFileName().toString().split("\\."));
+                            // Filters commands installed via 'command.managed.install'.
                             if (!commandName.lastValue().get().matches("[0-9]+")) {
                                 LayoutRenderer.extend(layout
                                         , commandName);
