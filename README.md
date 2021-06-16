@@ -80,8 +80,8 @@ Project Cluster
 
 ## Contacts
 
-* [Rendered Documentation](http://splitcells.net/net/splitcells/index.html) via own website
-* [Blogging and Videos](https://odysee.com/@splitcells.net:3) via odysee
-* [Livestreaming](https://www.twitch.tv/splitcellsnet) via Twitch
-* [Messaging](https://twitter.com/splitcells) via Twitter (deprecating)
-* [Messaging](https://fosstodon.org/@splitcells) via Mastadon
+* Rendered Documentation via [my own website](http://splitcells.net/net/splitcells/index.html) 
+* Livestreaming via [Twitch](https://www.twitch.tv/splitcellsnet) 
+* Messaging via [Twitter](https://twitter.com/splitcells) (deprecating)
+* Messaging via [Mastadon](https://fosstodon.org/@splitcells) (deprecating)
+* Writings on [Medium](https://martins-avots.medium.com/)
