@@ -13,13 +13,13 @@ public class ExtensionMerger implements ProjectRendererExtension {
     public static ExtensionMerger extensionMerger() {
         return new ExtensionMerger();
     }
-    
+
     private final List<ProjectRendererExtension> extensions = list();
-    
+
     private ExtensionMerger() {
-        
+
     }
-    
+
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         return Optional.empty();
@@ -29,5 +29,8 @@ public class ExtensionMerger implements ProjectRendererExtension {
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
         return null;
     }
-    
+
+    public void registerExtension(ProjectRendererExtension extension) {
+        extensions.add(extension);
+    }
 }
