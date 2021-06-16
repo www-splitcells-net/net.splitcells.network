@@ -24,7 +24,7 @@ public class UserCommandExtension implements ProjectRendererExtension {
     }
 
     private static final String RENDERING_PATH = "/net/splitcells/os/state/interface/installed/index.html";
-    private static final Path BIN_FOLDER = userHome().resolve("bin/net.splitcells.os.state.interface.commands.managed");
+    private static final Path BIN_FOLDER = userHome().resolve("bin/net.splitcells.os.state.interface.commands.managed/");
 
     private UserCommandExtension() {
 
