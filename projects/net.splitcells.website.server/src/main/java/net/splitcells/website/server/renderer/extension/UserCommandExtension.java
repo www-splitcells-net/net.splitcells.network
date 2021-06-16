@@ -6,24 +6,22 @@ import net.splitcells.dem.resource.host.Files;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
-public class UserCommandRenderer implements ProjectRendererExtension {
-    public static UserCommandRenderer userCommandRenderer() {
-        return new UserCommandRenderer();
+public class UserCommandExtension implements ProjectRendererExtension {
+    public static UserCommandExtension userCommandExtension() {
+        return new UserCommandExtension();
     }
 
     private static final String RENDERING_PATH = "net/splitcells/os/state/interface/installed/index.html";
 
-    private UserCommandRenderer() {
+    private UserCommandExtension() {
 
     }
 

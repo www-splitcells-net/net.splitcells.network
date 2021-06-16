@@ -10,7 +10,6 @@ import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.website.Validator;
 import net.splitcells.website.server.renderer.extension.ExtensionMerger;
-import net.splitcells.website.server.renderer.extension.ProjectRendererExtension;
 import net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer;
 
 import java.io.IOException;
@@ -34,7 +33,7 @@ import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
-import static net.splitcells.website.server.renderer.extension.UserCommandRenderer.userCommandRenderer;
+import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
@@ -68,7 +67,7 @@ public class ProjectRenderer {
     private final ExtensionMerger extension = extensionMerger();
     {
         extension.registerExtension(commonMarkReadmeExtension());
-        extension.registerExtension(userCommandRenderer());
+        extension.registerExtension(userCommandExtension());
     }
     private final Map<String, String> parameters;
     private final CommonMarkRenderer commonMarkRenderer = commonMarkRenderer();
