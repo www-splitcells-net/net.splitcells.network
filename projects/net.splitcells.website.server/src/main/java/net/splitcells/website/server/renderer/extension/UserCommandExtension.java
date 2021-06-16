@@ -35,9 +35,13 @@ public class UserCommandExtension implements ProjectRendererExtension {
         if (RENDERING_PATH.equals(path)) {
             final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
             try {
-                java.nio.file.Files.walk(BIN_FOLDER).forEach(command ->
-                        LayoutRenderer.extend(layout
-                                , listWithValuesOf(command.getFileName().toString().split("\\.")))
+                java.nio.file.Files.walk(BIN_FOLDER).forEach(command -> {
+                            final var commandName = listWithValuesOf(command.getFileName().toString().split("\\."));
+                            if (!commandName.lastValue().get().matches("[0-9]+")) {
+                                LayoutRenderer.extend(layout
+                                        , commandName);
+                            }
+                        }
                 );
             } catch (IOException e) {
                 throw new RuntimeException(e);
