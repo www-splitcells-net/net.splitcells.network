@@ -1,4 +1,4 @@
-package net.splitcells.website.server.renderer.commonmark;
+package net.splitcells.website.server.renderer.extension.commonmark;
 
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.renderer.ProjectRenderer;
@@ -12,7 +12,7 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
-import static net.splitcells.website.server.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
+import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
 public class CommonMarkReadmeExtension implements ProjectRendererExtension {
 

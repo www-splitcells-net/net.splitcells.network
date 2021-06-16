@@ -9,7 +9,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.website.Validator;
-import net.splitcells.website.server.renderer.commonmark.CommonMarkRenderer;
+import net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -31,9 +31,9 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.Files.isDirectory;
 import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.website.server.renderer.commonmark.CommonMarkReadmeExtension.commonMarkExtension;
+import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkReadmeExtension.commonMarkExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
-import static net.splitcells.website.server.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
+import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
