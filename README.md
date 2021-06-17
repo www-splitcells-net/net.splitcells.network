@@ -97,4 +97,4 @@ Project Cluster
 
 ## Contributions
 
-* [Source Code Guidelines](./projects/net.splitcells.dem/src/main/md/net/splitcells/dem/guidelines/index.md)
+* [Source Code Guidelines](http://splitcells.net/net/splitcells/dem/guidelines/index.html)
