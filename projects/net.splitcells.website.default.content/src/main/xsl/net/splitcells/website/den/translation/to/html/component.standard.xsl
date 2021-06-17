@@ -457,11 +457,9 @@
     </xsl:template>
     <xsl:template match="s:quote">
         <xsl:text> </xsl:text>
-        <div style="font-style:italic; display: inline;">
-            <strong>“</strong>
+        <q>
             <xsl:apply-templates/>
-            <strong>“</strong>
-        </div>
+        </q>
         <xsl:text> </xsl:text>
     </xsl:template>
     <xsl:template match="s:link">
