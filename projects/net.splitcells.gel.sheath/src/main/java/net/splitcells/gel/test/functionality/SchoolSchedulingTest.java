@@ -3,6 +3,7 @@ package net.splitcells.gel.test.functionality;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.utils.MathUtils;
+import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -217,9 +218,20 @@ public class SchoolSchedulingTest {
                         .collect(toList()))
                 .flatMap(e -> e.stream())
                 .collect(toList());
+        return defineStudentAllocationsForCourses(solution
+                , supplies
+                , concat(firstVintageStudentDemands, secondVintageStudentDemands)
+                , minimalNumberOfStudentsPerCourse
+                , optimalNumberOfStudentsPerCourse);
+    }
+
+    private Solution defineStudentAllocationsForCourses(Solution solution, Database supplies
+            , List<List<Object>> studentDemands
+            , int minimalNumberOfStudentsPerCourse
+            , int optimalNumberOfStudentsPerCourse) {
         return defineProblem()
                 .withDemandAttributes(STUDENT, REQUIRED_SUBJECT, STUDENT_S_VINTAGE)
-                .withDemands(concat(firstVintageStudentDemands, secondVintageStudentDemands))
+                .withDemands(studentDemands)
                 .withSupplies(supplies)
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))));
