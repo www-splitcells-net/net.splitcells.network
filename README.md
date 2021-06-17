@@ -79,9 +79,9 @@ Project Cluster
   It is recommended to not nest repositories.
 
 ## Contacts
-
-* Rendered Documentation via [my own website](http://splitcells.net/net/splitcells/index.html) 
+ 
 * Livestreaming via [Twitch](https://www.twitch.tv/splitcellsnet) 
-* Messaging via [Twitter](https://twitter.com/splitcells) (deprecating)
-* Messaging via [Mastadon](https://fosstodon.org/@splitcells) (deprecating)
+* Messaging via [Twitter](https://twitter.com/splitcells)
+* Messaging via [Mastadon](https://fosstodon.org/@splitcells)
+* Rendered Documentation via [my own website](http://splitcells.net/net/splitcells/index.html)
 * Writings on [Medium](https://martins-avots.medium.com/)
