@@ -183,12 +183,10 @@
     </chapter>
     <chapter>
         <title>Alternative Guidelines</title>
-        <d:todo>
-            <link>
-                <text>Better Java by Daniel Dietrich</text>
-                <url>https://github.com/danieldietrich/better-java</url>
-            </link>
-        </d:todo>
+        <paragraph>For (programming) languages or parts of it without explicit guidelines, please use
+            other public guidelines, as long it does not conflict with already
+            implemented guides. Most accepted public guidelines are preferred.
+        </paragraph>
     </chapter>
     <chapter>
         <title>Base Rule</title>
