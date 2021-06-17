@@ -191,6 +191,30 @@ public class SchoolSchedulingTest {
             , int maximumNumberOfStudentsPerCourse
             , int numberOfStudentsInFirstVintage
             , int numberOfSubjectsPerStudentsInFirstVintage) {
+        final var firstVintageStudentDemands = rangeClosed(1, numberOfStudentsInFirstVintage)
+                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudentsInFirstVintage)
+                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject, 1))
+                        .collect(toList()))
+                .flatMap(e -> e.stream())
+                .collect(toList());
+        final var secondVintageStudentDemands = rangeClosed(1, numberOfStudentsInSecondVintage)
+                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudentsInSecondVintage)
+                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject, 2))
+                        .collect(toList()))
+                .flatMap(e -> e.stream())
+                .collect(toList());
+        return defineStudentAllocationsForCourses(solution
+                , concat(firstVintageStudentDemands, secondVintageStudentDemands)
+                , minimalNumberOfStudentsPerCourse
+                , optimalNumberOfStudentsPerCourse
+                , maximumNumberOfStudentsPerCourse);
+    }
+
+    private Solution defineStudentAllocationsForCourses(Solution solution
+            , List<List<Object>> studentDemands
+            , int minimalNumberOfStudentsPerCourse
+            , int optimalNumberOfStudentsPerCourse
+            , int maximumNumberOfStudentsPerCourse) {
         final var supplies = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
@@ -206,29 +230,6 @@ public class SchoolSchedulingTest {
                         .forEach(supplies::remove);
             }
         });
-        final var firstVintageStudentDemands = rangeClosed(1, numberOfStudentsInFirstVintage)
-                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudentsInFirstVintage)
-                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject, 1))
-                        .collect(toList()))
-                .flatMap(e -> e.stream())
-                .collect(toList());
-        final var secondVintageStudentDemands = rangeClosed(1, numberOfStudentsInSecondVintage)
-                .mapToObj(student -> rangeClosed(1, numberOfSubjectsPerStudentsInSecondVintage)
-                        .mapToObj(studentSubject -> Lists.<Object>list(student, studentSubject, 2))
-                        .collect(toList()))
-                .flatMap(e -> e.stream())
-                .collect(toList());
-        return defineStudentAllocationsForCourses(solution
-                , supplies
-                , concat(firstVintageStudentDemands, secondVintageStudentDemands)
-                , minimalNumberOfStudentsPerCourse
-                , optimalNumberOfStudentsPerCourse);
-    }
-
-    private Solution defineStudentAllocationsForCourses(Solution solution, Database supplies
-            , List<List<Object>> studentDemands
-            , int minimalNumberOfStudentsPerCourse
-            , int optimalNumberOfStudentsPerCourse) {
         return defineProblem()
                 .withDemandAttributes(STUDENT, REQUIRED_SUBJECT, STUDENT_S_VINTAGE)
                 .withDemands(studentDemands)
