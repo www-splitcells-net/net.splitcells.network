@@ -162,6 +162,10 @@ public class SchoolSchedulingTest {
                                 .collect(toList()))
                 .flatMap(e -> e.stream())
                 .collect(toList());
+        return defineTeacherAllocationForCourses(solution, teacherCapacity);
+    }
+
+    private Solution defineTeacherAllocationForCourses(Solution solution, List<List<Object>> teacherCapacity) {
         return defineProblem()
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
