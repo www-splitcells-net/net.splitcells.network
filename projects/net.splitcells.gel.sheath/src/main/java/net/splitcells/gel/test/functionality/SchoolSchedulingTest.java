@@ -2,19 +2,14 @@ package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.utils.MathUtils;
-import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.RegulatedLength;
 import net.splitcells.gel.solution.Solution;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.*;
@@ -54,7 +49,7 @@ public class SchoolSchedulingTest {
         return list(courseId, subject, coursesVintage, courseLength);
     }
 
-    private List<Object> railCapicity(int allocatedHours, int rail) {
+    private List<Object> railCapacity(int allocatedHours, int rail) {
         return list(allocatedHours, rail);
     }
 
@@ -72,7 +67,7 @@ public class SchoolSchedulingTest {
         final List<List<Object>> courses = list(
                 course(1, 1, 1, 1));
         final List<List<Object>> railCapacity = list(
-                railCapicity(1, 1));
+                railCapacity(1, 1));
         final var railsForSchoolScheduling = defineRailsForSchoolScheduling(courses, railCapacity);
         final List<List<Object>> teacherCapacity = list(
                 teacherCapacity(1, 1));
