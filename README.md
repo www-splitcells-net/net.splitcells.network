@@ -95,6 +95,6 @@ Project Cluster
   * [Gitlab](https://github.com/www-splitcells-net/net.splitcells.network) (Currently only used for CI.)
   * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network)
 
-## Contributions
+## Contributing
 
 * [Source Code Guidelines](http://splitcells.net/net/splitcells/dem/guidelines/index.html)
