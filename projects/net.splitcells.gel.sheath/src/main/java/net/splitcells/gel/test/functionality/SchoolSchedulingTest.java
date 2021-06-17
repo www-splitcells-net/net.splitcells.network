@@ -50,13 +50,28 @@ public class SchoolSchedulingTest {
     private static final Attribute<Integer> REQUIRED_SUBJECT = attribute(Integer.class, "required subject");
     private static final Attribute<Integer> COURSE_POSITION = attribute(Integer.class, "course position");
 
+    private List<Object> course(int courseId, int subject, int coursesVintage, int courseLength) {
+        return list(courseId, subject, coursesVintage, courseLength);
+    }
+
+    private List<Object> railCapicity(int allocatedHours, int rail) {
+        return list(allocatedHours, rail);
+    }
+
+    private List<Object> teacherCapacity(int teacher, int teachSubjectSuitability) {
+        return list(teacher, teachSubjectSuitability);
+    }
+
     @Disabled
     @Test
     public void currentDevelopment() {
-        final List<List<Object>> courses = list();
-        final List<List<Object>> railCapacity = list();
+        final List<List<Object>> courses = list(
+                course(1, 1, 1, 1));
+        final List<List<Object>> railCapacity = list(
+                railCapicity(1, 1));
         final var railsForSchoolScheduling = defineRailsForSchoolScheduling(courses, railCapacity);
-        final List<List<Object>> teacherCapacity = list();
+        final List<List<Object>> teacherCapacity = list(
+                teacherCapacity(1, 1));
         final var teacherAllocationForCourses
                 = defineTeacherAllocationForCourses(railsForSchoolScheduling, teacherCapacity);
         final List<List<Object>> studentDemands = list();
