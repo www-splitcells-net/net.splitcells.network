@@ -80,6 +80,8 @@ Project Cluster
 
 ## Contacts
 
+* [Changelog](./CHANGELOG.md)
+
 ### Social Contacts
 
 * Livestreaming via [Twitch](https://www.twitch.tv/splitcellsnet) 
