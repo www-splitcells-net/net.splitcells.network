@@ -281,7 +281,24 @@
         <title>Documentation</title>
         <paragraph>Documentation links syntax to semantics or represents meta data.
             A single point of entry should be provided from where every part of the documentation is reachable.
+            Multiple points of additional entries may be provided.
+            It should be possible to render all documentation as one site, were everything can be easily accessed
+            and searched.
         </paragraph>
+        <chapter>
+            <title>Documentation Types</title>
+            <paragraph>Manuals describe the implemented concept and how to use the described things.
+                Thereby, all relevant words with special meaning have to be explained.
+                This includes all words, that are used in implementation.
+                The manual should not describe the API.
+                For simplicity this should only consist of flowing structured text and inlines objects (i.e. images).
+                In Java this is done via CommonMark files.
+            </paragraph>
+            <paragraph>API documentation describes all things that can be accessed legally.
+                Implementation internals should not be noted here.
+                In Java this is done via Javadoc.
+            </paragraph>
+        </chapter>
         <chapter>
             <title>Documentation Content</title>
             <paragraph>The documentation needs to at least define the goal or the result of the thing in question.
