@@ -62,6 +62,10 @@ public class SchoolSchedulingTest {
         return list(teacher, teachSubjectSuitability);
     }
 
+    private List<Object> studentDemand(int student, int requiredSubject, int studentsVintage) {
+        return list(student, requiredSubject, studentsVintage);
+    }
+
     @Disabled
     @Test
     public void currentDevelopment() {
@@ -74,10 +78,11 @@ public class SchoolSchedulingTest {
                 teacherCapacity(1, 1));
         final var teacherAllocationForCourses
                 = defineTeacherAllocationForCourses(railsForSchoolScheduling, teacherCapacity);
-        final List<List<Object>> studentDemands = list();
-        final int minimalNumberOfStudentsPerCourse = 0;
-        final int optimalNumberOfStudentsPerCourse = 0;
-        final int maximumNumberOfStudentsPerCourse = 0;
+        final List<List<Object>> studentDemands = list(
+                studentDemand(1, 1, 1));
+        final int minimalNumberOfStudentsPerCourse = 1;
+        final int optimalNumberOfStudentsPerCourse = 1;
+        final int maximumNumberOfStudentsPerCourse = 1;
         defineStudentAllocationsForCourses(teacherAllocationForCourses
                 , studentDemands
                 , minimalNumberOfStudentsPerCourse
