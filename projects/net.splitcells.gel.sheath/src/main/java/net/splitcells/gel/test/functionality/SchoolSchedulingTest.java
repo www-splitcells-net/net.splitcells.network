@@ -48,6 +48,13 @@ public class SchoolSchedulingTest {
     private static final Attribute<Integer> REQUIRED_SUBJECT = attribute(Integer.class, "required subject");
     private static final Attribute<Integer> COURSE_POSITION = attribute(Integer.class, "course position");
 
+    @Disabled
+    @Test
+    public void currentDevelopment() {
+        schoolScheduling(15, 20, 30);
+        fail("Test not implemented");
+    }
+
     /**
      * TODO
      */
@@ -112,6 +119,10 @@ public class SchoolSchedulingTest {
                 )
                 .flatMap(e -> e.stream())
                 .collect(toList());
+        return defineRailsForSchoolScheduling(courses, railCapacity);
+    }
+
+    private Solution defineRailsForSchoolScheduling(List<List<Object>> courses, List<List<Object>> railCapacity) {
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
                 .withDemands(courses)
