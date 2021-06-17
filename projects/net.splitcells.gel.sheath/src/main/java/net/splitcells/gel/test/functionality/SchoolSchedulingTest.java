@@ -7,6 +7,7 @@ import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.RegulatedLength;
 import net.splitcells.gel.solution.Solution;
 import org.junit.jupiter.api.Disabled;
@@ -52,8 +53,21 @@ public class SchoolSchedulingTest {
     @Disabled
     @Test
     public void currentDevelopment() {
-        schoolScheduling(15, 20, 30);
-        fail("Test not implemented");
+        final List<List<Object>> courses = list();
+        final List<List<Object>> railCapacity = list();
+        final var railsForSchoolScheduling = defineRailsForSchoolScheduling(courses, railCapacity);
+        final List<List<Object>> teacherCapacity = list();
+        final var teacherAllocationForCourses
+                = defineTeacherAllocationForCourses(railsForSchoolScheduling, teacherCapacity);
+        final List<List<Object>> studentDemands = list();
+        final int minimalNumberOfStudentsPerCourse = 0;
+        final int optimalNumberOfStudentsPerCourse = 0;
+        final int maximumNumberOfStudentsPerCourse = 0;
+        defineStudentAllocationsForCourses(teacherAllocationForCourses
+                , studentDemands
+                , minimalNumberOfStudentsPerCourse
+                , optimalNumberOfStudentsPerCourse
+                , maximumNumberOfStudentsPerCourse);
     }
 
     /**
