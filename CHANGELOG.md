@@ -4,6 +4,6 @@ Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec
 This file adheres to the [CommonMark](https://spec.commonmark.org/0.29) specification.
 ## [Unreleased]
 ### Minor Changes
-1. Create command convention `repo.is.clean`.
+1. 2021-06-19: Create command convention `repo.is.clean`.
    Exits with 0, if this repo can be synchronized and else exits 1.
    This can be used as a safeguard for automated synchronization commands.
