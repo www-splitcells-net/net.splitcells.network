@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Exits with 0, if this repo can be synchronized and else exits 1.
+# If uncommitted changes are present, the repo cannot be synchronized.
+
+# This can be used as a safe guard for automated synchronization commands.
+
+repo.process --command 'command.managed.execute disjunction repo.is.clean'
