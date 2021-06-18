@@ -7,5 +7,7 @@
 # If uncommitted changes are present, the repo cannot be synchronized.
 
 # This can be used as a safe guard for automated synchronization commands.
+# An implementation has to exit with 0, if the implementation is not suited for the current repo type.
+# For example, an implementation for Git has to exit with 0 for SVN repositories.
 
 repo.process --command 'command.managed.execute disjunction repo.is.clean'
