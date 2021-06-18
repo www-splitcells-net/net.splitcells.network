@@ -4,7 +4,6 @@ system.ssh.server.require 2>&1 >/dev/null && exit
 	# Replace string "PasswordAuthentication yes" by "PasswordAuthentication no" in /etc/ssh/sshd_config.
 if [ "1" -eq "$(system.is.Ubuntu)" ]; then
 	sudo apt install -y openssh-server
-	sudo systemctl disable ssh
 	sudo systemctl start ssh
 	sudo systemctl is-active --quiet ssh
 	if [ "0" -ne "$?" ]; then
