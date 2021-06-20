@@ -37,6 +37,7 @@
                     <toDo>Create a mode, which makes dependency injection fast via a standard value.
                         <toDo>Create a resource class, that marks a resource as supporting such functionality.</toDo>
                     </toDo>
+                    <toDo>Define XML schemas for own format and ensure compliance.</toDo>
                 </priority>
             </queues>
             <service xl:href="compatibilty-and-portability.xml"/>

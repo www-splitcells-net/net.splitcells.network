@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://splitcells.net/den.xsd">
     <name>Website Server</name>
+    <scheduling>
+        <unscheduled>
+            <toDo>Reenable error reporting on webiste via logging project.</toDo>
+        </unscheduled>
+    </scheduling>
     <solution>
         <optimization>
             <unscheduled>

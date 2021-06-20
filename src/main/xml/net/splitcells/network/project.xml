@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://splitcells.net/den.xsd">
+    <scheduling>
+        <service>
+            <task>Process TODOs inside source code.</task>
+        </service>
+    </scheduling>
+</project>

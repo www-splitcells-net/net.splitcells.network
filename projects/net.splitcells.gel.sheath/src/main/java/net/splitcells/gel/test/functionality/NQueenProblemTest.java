@@ -35,6 +35,9 @@ import static net.splitcells.gel.solution.optimization.meta.hill.climber.Functio
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * TODO Clean up this.
+ */
 public class NQueenProblemTest extends TestSuiteI {
     public static final Attribute<Integer> COLUMN = attribute(Integer.class, "column");
     public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
