@@ -514,26 +514,34 @@
             </paragraph>
         </chapter>
         <chapter>
-            <title>Event Logs</title>
-            <paragraph>Model the (interactive) console and log files as event
-                logs/queues.
-                The
-                subject/publisher of the event
-                should
-                always be
-                directly
-                or indirectly identifiable.
-                This way it is
-                ensured that the
-                history of
-                the execution is shown, which
-                allows one understand the
-                execution
-                and
-                interact with it. In the ideal case one can reproduce the
-                history of
-                each object.
-            </paragraph>
+            <title>Logging</title>
+            <chapter>
+                <title>By default settings only events that require action or signal execution progress for the
+                    log inspector should be shown.
+                </title>
+            </chapter>
+            <chapter>
+                <title>Logging as Event Log</title>
+                <paragraph>Model the (interactive) console and log files as event
+                    logs/queues.
+                    The
+                    subject/publisher of the event
+                    should
+                    always be
+                    directly
+                    or indirectly identifiable.
+                    This way it is
+                    ensured that the
+                    history of
+                    the execution is shown, which
+                    allows one understand the
+                    execution
+                    and
+                    interact with it. In the ideal case one can reproduce the
+                    history of
+                    each object.
+                </paragraph>
+            </chapter>
         </chapter>
     </chapter>
     <chapter>
