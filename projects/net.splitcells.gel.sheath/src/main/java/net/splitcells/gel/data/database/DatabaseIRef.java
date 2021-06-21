@@ -75,6 +75,7 @@ public class DatabaseIRef extends DatabaseI {
                     .describedAs(attributes.stream()
                             .map(a -> a.name() + ", ")
                             .reduce((a, b) -> a + b)
+                            .orElse("")
                             + ": " + attribute.name())
                     .isTrue();
         }
