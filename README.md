@@ -42,6 +42,10 @@ Some of them are not strictly related to optimization and can be used in other c
 
 📣 Spread the word!
 
+## Development Status
+
+* [Changelog](./CHANGELOG.md)
+
 ## Network's Structure
 
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
@@ -78,17 +82,13 @@ Project Cluster
   They may be managed by users with [OS state interface](./projects/net.splitcells.os.state.interface/README.md).
   It is recommended to not nest repositories.
 
-## Contacts
-
-* [Changelog](./CHANGELOG.md)
-
-### Social Contacts
+## Social Contacts
 
 * Livestreaming via [Twitch](https://www.twitch.tv/splitcellsnet) 
 * Messaging via [Mastadon](https://fosstodon.org/@splitcells) and [Twitter](https://twitter.com/splitcells)
 * Writings on [Medium](https://martins-avots.medium.com/)
 
-### Infrastructure
+## Infrastructure
 
 * Rendered Documentation via [my own website](http://splitcells.net/net/splitcells/index.html)
 * Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) and [Sourcehut](https://todo.sr.ht/~splitcells-net/net.splitcells.network).
