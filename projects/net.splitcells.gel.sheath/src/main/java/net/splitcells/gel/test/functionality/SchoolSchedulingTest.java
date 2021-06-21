@@ -47,25 +47,29 @@ public class SchoolSchedulingTest {
     private static final Attribute<Integer> REQUIRED_SUBJECT = attribute(Integer.class, "required subject");
     private static final Attribute<Integer> COURSE_POSITION = attribute(Integer.class, "course position");
 
-    private List<Object> course(int courseId, int subject, int coursesVintage, int courseLength) {
+    private static List<Object> course(int courseId, int subject, int coursesVintage, int courseLength) {
         return list(courseId, subject, coursesVintage, courseLength);
     }
 
-    private List<Object> railCapacity(int allocatedHours, int rail) {
+    private static List<Object> railCapacity(int allocatedHours, int rail) {
         return list(allocatedHours, rail);
     }
 
-    private List<Object> teacherCapacity(int teacher, int teachSubjectSuitability) {
+    private static List<Object> teacherCapacity(int teacher, int teachSubjectSuitability) {
         return list(teacher, teachSubjectSuitability);
     }
 
-    private List<Object> studentDemand(int student, int requiredSubject, int studentsVintage) {
+    private static List<Object> studentDemand(int student, int requiredSubject, int studentsVintage) {
         return list(student, requiredSubject, studentsVintage);
     }
 
+    /**
+     * maven.execute net.splitcells.gel.test.functionality.SchoolSchedulingTest
+     * @param args
+     */
     @Disabled
     @Test
-    public void currentDevelopment() {
+    public static void main(String... args) {
         final List<List<Object>> courses = list(
                 course(1, 1, 1, 1));
         final List<List<Object>> railCapacity = list(
@@ -104,7 +108,7 @@ public class SchoolSchedulingTest {
         fail("Test not implemented");
     }
 
-    private Solution schoolScheduling(int minimalNumberOfStudentsPerCourse
+    private static Solution schoolScheduling(int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
         final var numberOfSubjects = 30;
@@ -129,7 +133,7 @@ public class SchoolSchedulingTest {
                         , 11);
     }
 
-    private Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
+    private static Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
             , double averageCourseLength
             , int maximumCourseLength
             , int numberOfRails) {
@@ -160,7 +164,7 @@ public class SchoolSchedulingTest {
         return defineRailsForSchoolScheduling(courses, railCapacity);
     }
 
-    private Solution defineRailsForSchoolScheduling(List<List<Object>> courses, List<List<Object>> railCapacity) {
+    private static Solution defineRailsForSchoolScheduling(List<List<Object>> courses, List<List<Object>> railCapacity) {
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
                 .withDemands(courses)
@@ -186,7 +190,7 @@ public class SchoolSchedulingTest {
      * @param solution The demands of this problem.
      * @return A problem modelling allocations of teachers to courses.
      */
-    private Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
+    private static Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
             , double averageNumberOfSubjectsPerTeacher
             , int numberOfSubjects) {
         final var randomness = randomness();
@@ -203,7 +207,7 @@ public class SchoolSchedulingTest {
         return defineTeacherAllocationForCourses(solution, teacherCapacity);
     }
 
-    private Solution defineTeacherAllocationForCourses(Solution solution, List<List<Object>> teacherCapacity) {
+    private static Solution defineTeacherAllocationForCourses(Solution solution, List<List<Object>> teacherCapacity) {
         return defineProblem()
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
@@ -220,7 +224,7 @@ public class SchoolSchedulingTest {
                 .asSolution();
     }
 
-    private Solution defineStudentAllocationsForCourses(Solution solution
+    private static Solution defineStudentAllocationsForCourses(Solution solution
             , int numberOfStudentsInSecondVintage
             , int numberOfSubjectsPerStudentsInSecondVintage
             , int minimalNumberOfStudentsPerCourse
@@ -247,7 +251,7 @@ public class SchoolSchedulingTest {
                 , maximumNumberOfStudentsPerCourse);
     }
 
-    private Solution defineStudentAllocationsForCourses(Solution solution
+    private static Solution defineStudentAllocationsForCourses(Solution solution
             , List<List<Object>> studentDemands
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
