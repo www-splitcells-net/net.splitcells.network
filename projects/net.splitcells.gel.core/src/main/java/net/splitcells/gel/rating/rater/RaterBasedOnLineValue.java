@@ -3,6 +3,7 @@ package net.splitcells.gel.rating.rater;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -35,7 +36,7 @@ public class RaterBasedOnLineValue implements Rater {
             @Override
             public GroupId apply(Line arg) {
                 return lineNumbering.computeIfAbsent
-                        (classifier.apply(arg.value(Constraint.LINE))
+                        (classifier.apply(arg.value(LINE))
                                 , classification -> GroupId.group(description + ": " + classification));
             }
 
@@ -99,7 +100,7 @@ public class RaterBasedOnLineValue implements Rater {
                         , localRating()
                                 .withPropagationTo(propagation.apply(addition, children))
                                 .withResultingGroupId(classifier.apply(addition))
-                                .withRating(rater.apply(addition.value(Constraint.LINE))));
+                                .withRating(rater.apply(addition.value(LINE))));
         return rating;
     }
 
