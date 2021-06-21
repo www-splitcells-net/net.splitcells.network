@@ -2,6 +2,8 @@ package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.gel.GelDev;
+import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -65,36 +67,39 @@ public class SchoolSchedulingTest {
 
     /**
      * maven.execute net.splitcells.gel.test.functionality.SchoolSchedulingTest
+     *
      * @param args
      */
     @Disabled
     @Test
     public static void main(String... args) {
-        final List<List<Object>> courses = list(
-                course(1, 1, 1, 1));
-        final List<List<Object>> railCapacity = list(
-                railCapacity(1, 1));
-        final var railsForSchoolScheduling = defineRailsForSchoolScheduling(courses, railCapacity);
-        final List<List<Object>> teacherCapacity = list(
-                teacherCapacity(1, 1));
-        final var teacherAllocationForCourses
-                = defineTeacherAllocationForCourses(railsForSchoolScheduling, teacherCapacity);
-        final List<List<Object>> studentDemands = list(
-                studentDemand(1, 1, 1));
-        final int minimalNumberOfStudentsPerCourse = 1;
-        final int optimalNumberOfStudentsPerCourse = 1;
-        final int maximumNumberOfStudentsPerCourse = 1;
-        final var studentAllocationsForCourses = defineStudentAllocationsForCourses(teacherAllocationForCourses
-                , studentDemands
-                , minimalNumberOfStudentsPerCourse
-                , optimalNumberOfStudentsPerCourse
-                , maximumNumberOfStudentsPerCourse);
-        railsForSchoolScheduling.optimize(linearInitialization());
-        teacherAllocationForCourses.optimize(linearInitialization());
-        studentAllocationsForCourses.optimize(linearInitialization());
-        assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
-        assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
-        assertThat(studentAllocationsForCourses.isOptimal()).isTrue();
+        GelEnv.process(() -> {
+            final List<List<Object>> courses = list(
+                    course(1, 1, 1, 1));
+            final List<List<Object>> railCapacity = list(
+                    railCapacity(1, 1));
+            final var railsForSchoolScheduling = defineRailsForSchoolScheduling(courses, railCapacity);
+            final List<List<Object>> teacherCapacity = list(
+                    teacherCapacity(1, 1));
+            final var teacherAllocationForCourses
+                    = defineTeacherAllocationForCourses(railsForSchoolScheduling, teacherCapacity);
+            final List<List<Object>> studentDemands = list(
+                    studentDemand(1, 1, 1));
+            final int minimalNumberOfStudentsPerCourse = 1;
+            final int optimalNumberOfStudentsPerCourse = 1;
+            final int maximumNumberOfStudentsPerCourse = 1;
+            final var studentAllocationsForCourses = defineStudentAllocationsForCourses(teacherAllocationForCourses
+                    , studentDemands
+                    , minimalNumberOfStudentsPerCourse
+                    , optimalNumberOfStudentsPerCourse
+                    , maximumNumberOfStudentsPerCourse);
+            railsForSchoolScheduling.optimize(linearInitialization());
+            teacherAllocationForCourses.optimize(linearInitialization());
+            studentAllocationsForCourses.optimize(linearInitialization());
+            assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
+            assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
+            assertThat(studentAllocationsForCourses.isOptimal()).isTrue();
+        });
     }
 
     /**
