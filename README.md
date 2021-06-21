@@ -50,7 +50,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 * [Changelog](./CHANGELOG.md)
 * Current Tickets:
-  * [#8 Solve Schienen-Planung.](https://github.com/www-splitcells-net/net.splitcells.network/issues/8)
+  * [#8 Solve school scheduling problem.](https://github.com/www-splitcells-net/net.splitcells.network/issues/8)
   * [#10 Create minimal Java grammar for this project in order to make code less complex.](https://github.com/www-splitcells-net/net.splitcells.network/issues/10)
   * [#26 Support arbitrary renderers for website server.](https://github.com/www-splitcells-net/net.splitcells.network/issues/26)
   * [#37 Simplify default web layout.](https://github.com/www-splitcells-net/net.splitcells.network/issues/37)
