@@ -27,6 +27,8 @@ import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.HasMinimalSize.hasMinimalSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
+import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 public class SchoolSchedulingTest {
@@ -78,11 +80,17 @@ public class SchoolSchedulingTest {
         final int minimalNumberOfStudentsPerCourse = 1;
         final int optimalNumberOfStudentsPerCourse = 1;
         final int maximumNumberOfStudentsPerCourse = 1;
-        defineStudentAllocationsForCourses(teacherAllocationForCourses
+        final var studentAllocationsForCourses = defineStudentAllocationsForCourses(teacherAllocationForCourses
                 , studentDemands
                 , minimalNumberOfStudentsPerCourse
                 , optimalNumberOfStudentsPerCourse
                 , maximumNumberOfStudentsPerCourse);
+        railsForSchoolScheduling.optimize(linearInitialization());
+        teacherAllocationForCourses.optimize(linearInitialization());
+        studentAllocationsForCourses.optimize(linearInitialization());
+        assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
+        assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
+        assertThat(studentAllocationsForCourses.isOptimal()).isTrue();
     }
 
     /**
