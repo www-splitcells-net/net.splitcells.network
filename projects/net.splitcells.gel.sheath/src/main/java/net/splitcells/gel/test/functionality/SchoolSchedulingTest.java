@@ -20,6 +20,7 @@ import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.MathUtils.roundToInt;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
+import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.database.Databases.database2;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;

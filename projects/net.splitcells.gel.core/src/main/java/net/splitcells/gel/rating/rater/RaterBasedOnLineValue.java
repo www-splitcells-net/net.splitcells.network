@@ -55,7 +55,7 @@ public class RaterBasedOnLineValue implements Rater {
         return new RaterBasedOnLineValue(rater
                 , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
                 , (addition, children) -> {
-            if (classifier.test(addition)) {
+            if (classifier.test(addition.value(LINE))) {
                 return children;
             } else {
                 return list();
