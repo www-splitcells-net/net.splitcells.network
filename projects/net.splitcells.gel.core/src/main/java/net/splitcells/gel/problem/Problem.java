@@ -4,7 +4,5 @@ import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.solution.Solution;
 
 public interface Problem extends Allocations, ProblemView {
-	Solution toSolution();
-
 	Solution asSolution();
 }

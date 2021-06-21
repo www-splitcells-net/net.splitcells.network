@@ -67,11 +67,6 @@ public class SolutionI implements Solution {
     }
 
     @java.lang.SuppressWarnings("all")
-    public Solution toSolution() {
-        return this.problem.toSolution();
-    }
-
-    @java.lang.SuppressWarnings("all")
     public Solution asSolution() {
         return this.problem.asSolution();
     }

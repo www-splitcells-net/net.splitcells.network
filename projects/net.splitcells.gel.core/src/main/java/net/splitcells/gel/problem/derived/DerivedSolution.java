@@ -73,11 +73,6 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Solution toSolution() {
-        throw notImplementedYet();
-    }
-
-    @Override
     public Solution asSolution() {
         throw notImplementedYet();
     }

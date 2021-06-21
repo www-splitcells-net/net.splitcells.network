@@ -32,13 +32,14 @@ public class ProblemI implements Problem {
     protected Solution asSolution;
 
     public static Problem problem(Allocations allocations, Constraint constraint) {
-        return new ProblemI(allocations, constraint);
+        final var problem = new ProblemI(allocations, constraint);
+        problem.synchronize(constraint);
+        return problem;
     }
 
     protected ProblemI(Allocations allocations, Constraint constraint) {
         this.allocations = allocations;
         this.constraint = constraint;
-        synchronize(constraint);
     }
 
     @Override
@@ -49,11 +50,6 @@ public class ProblemI implements Problem {
     @Override
     public Allocations allocations() {
         return allocations;
-    }
-
-    @Override
-    public Solution toSolution() {
-        throw notImplementedYet();
     }
 
     @Override

@@ -94,11 +94,6 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Solution toSolution() {
-        return solution.toSolution();
-    }
-
-    @Override
     public Solution asSolution() {
         return solution.asSolution();
     }
