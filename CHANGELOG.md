@@ -8,3 +8,4 @@ This file adheres to the [CommonMark](https://spec.commonmark.org/0.29) specific
    Exits with 0, if this repo can be synchronized and else exits 1.
    This can be used as a safeguard for automated synchronization command
    by exiting a command, when uncommitted changes are present.
+1. 2021-06-06: #54 Integrate CommonMark documentation into project rendering.
