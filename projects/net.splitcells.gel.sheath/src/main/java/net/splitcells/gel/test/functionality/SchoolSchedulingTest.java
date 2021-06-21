@@ -176,7 +176,7 @@ public class SchoolSchedulingTest {
                     r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;
                 }).toProblem()
-                .toSolution();
+                .asSolution();
     }
 
     /**
@@ -217,7 +217,7 @@ public class SchoolSchedulingTest {
                     return r;
                 })
                 .toProblem()
-                .toSolution();
+                .asSolution();
     }
 
     private Solution defineStudentAllocationsForCourses(Solution solution
@@ -281,7 +281,7 @@ public class SchoolSchedulingTest {
                     return r;
                 })
                 .toProblem()
-                .toSolution();
+                .asSolution();
     }
 
 }
