@@ -71,7 +71,7 @@ public class DatabaseIRef extends DatabaseI {
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assert this.attributes.contains(attribute) : this.attributes.toString() + attribute;
+            assertThat(attributes.contains(attribute)).isTrue();
         }
         return super.columnView(attribute);
     }
