@@ -48,7 +48,9 @@ Some of them are not strictly related to optimization and can be used in other c
 ![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
 ![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
 
-* Current Version: 3.0.0-SNAPSHOT
+* Current Version: 3.0.0-SNAPSHOT:
+  The development plan for this version was badly made.
+  This version therefore takes a lot of time until it is done.
 * [Changelog](./CHANGELOG.md)
 * Current Tickets:
   * [#10 Create minimal Java grammar for this project in order to make code less complex.](https://github.com/www-splitcells-net/net.splitcells.network/issues/10)
