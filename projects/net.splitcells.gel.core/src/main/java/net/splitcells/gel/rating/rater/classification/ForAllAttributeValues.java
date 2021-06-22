@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -52,7 +53,7 @@ public class ForAllAttributeValues implements Rater {
             group.put(incomingGroup, map());
         }
         if (!group.get(incomingGroup).containsKey(groupingValue)) {
-            group.get(incomingGroup).put(groupingValue, GroupId.group(groupingValue.toString()));
+            group.get(incomingGroup).put(groupingValue, group(groupingValue.toString()));
         }
         final var ratingEvent = ratingEvent();
         ratingEvent.additions().put(addition
