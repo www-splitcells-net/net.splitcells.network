@@ -19,3 +19,12 @@ Partially completed tickets are not listed here.
    This can be used as a safeguard for automated synchronization command
    by exiting a command, when uncommitted changes are present.
 1. **2021-06-06**: [#54 Integrate CommonMark documentation into project rendering.](https://github.com/www-splitcells-net/net.splitcells.network/issues/54)
+1. Some undocumented work.
+1. **2020-12-31**: Create public git repository.
+1. Some undocumented work.
+1. **2019-05-05**: Create private git repositories.
+1. Some undocumented work.
+## [2.0.0]
+Second version created during master thesis.
+## [1.0.0]
+First version created during practical course in university study. 
