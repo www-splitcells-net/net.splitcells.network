@@ -28,6 +28,8 @@ For change items without a ticket, the following format is used:
 1. **2021-04-07**: #42: Make Gel workspace visible in website.
 1. **2021-04-12**: #46: Use deterministic environment and execution in CI.
 ### Minor Changes
+1. \#8 Create RegulatedLength AllSame.
+1. \#8 Create RegulatedLength Rater.
 1. **2021-06-19**: Create command convention `repo.is.clean`.
    Exits with 0, if this repo can be synchronized and else exits 1.
    This can be used as a safeguard for automated synchronization command
