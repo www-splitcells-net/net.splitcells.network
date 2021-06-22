@@ -21,6 +21,7 @@ public class RaterBasedOnLineGroup implements Rater {
             final var lineRating = rater.lineRating(lines, addition, removal);
             final var ratingEvent = ratingEvent();
             lines.getLines().stream()
+                    .filter(e -> addition.map(line -> e.index() != line.index()).orElse(true))
                     .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
                     .forEach(e -> ratingEvent.updateRating_withReplacement(e
                             , localRating()
