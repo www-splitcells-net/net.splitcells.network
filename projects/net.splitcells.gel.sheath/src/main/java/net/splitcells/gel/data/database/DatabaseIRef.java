@@ -78,6 +78,14 @@ public class DatabaseIRef extends DatabaseI {
                             .orElse("")
                             + ": " + attribute.name())
                     .isTrue();
+            assertThat(typed_column_index.containsKey(attribute))
+                    .describedAs(attribute.name() + " is not present in "
+                            + typed_column_index.keySet().stream()
+                            .map(a -> a.name())
+                            .reduce((a, b) -> a + ", " + b)
+                            .get()
+                    )
+                    .isTrue();
         }
         return super.columnView(attribute);
     }
