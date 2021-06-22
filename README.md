@@ -44,7 +44,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 ## Project Status
 
-![Continous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)
+![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)
 ![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
 ![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
 
