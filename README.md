@@ -50,7 +50,6 @@ Some of them are not strictly related to optimization and can be used in other c
 
 * [Changelog](./CHANGELOG.md)
 * Current Tickets:
-  * [#8 Solve school scheduling problem.](https://github.com/www-splitcells-net/net.splitcells.network/issues/8)
   * [#10 Create minimal Java grammar for this project in order to make code less complex.](https://github.com/www-splitcells-net/net.splitcells.network/issues/10)
   * [#26 Support arbitrary renderers for website server.](https://github.com/www-splitcells-net/net.splitcells.network/issues/26)
   * [#37 Simplify default web layout.](https://github.com/www-splitcells-net/net.splitcells.network/issues/37)
@@ -58,6 +57,13 @@ Some of them are not strictly related to optimization and can be used in other c
   * [#58 Publish private documentation of Version 2.0.](https://github.com/www-splitcells-net/net.splitcells.network/issues/58)
   * [#61 Fix XSL parameters.](https://github.com/www-splitcells-net/net.splitcells.network/issues/61)
   * [#64 Create git based ticket system.](https://github.com/www-splitcells-net/net.splitcells.network/issues/69)
+  * [#70 Create Version 3 of Gel.](https://github.com/www-splitcells-net/net.splitcells.network/issues/70)
+    * [#8 Solve school scheduling problem.](https://github.com/www-splitcells-net/net.splitcells.network/issues/8)
+    * [#9 Solve sport lesson assignment.](https://github.com/www-splitcells-net/net.splitcells.network/issues/9)
+    * [#2 Determine Licensing and Contribution protocol.](https://github.com/www-splitcells-net/net.splitcells.network/issues/2)
+    * [#34 Try to get 1 optimization configuration, that solves all 3 new major problems.](https://github.com/www-splitcells-net/net.splitcells.network/issues/34)
+    * [#63 Define API development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/63)
+    * [#64 Define project development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/64)
 
 ## Network's Structure
 
