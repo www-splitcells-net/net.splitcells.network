@@ -313,7 +313,7 @@ public class AllocationsI implements Allocations {
         usedDemandIndexes_to_allocationIndexes
                 .get(demand.index())
                 .forEach(piešķiršanasIndekss ->
-                    allocations_of_demand.add(allocations.rawLinesView().get(piešķiršanasIndekss)));
+                        allocations_of_demand.add(allocations.rawLinesView().get(piešķiršanasIndekss)));
         return allocations_of_demand;
     }
 
