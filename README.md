@@ -4,9 +4,9 @@
 
 > Together we are more than the sum of our cells.
 
-![Continous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)
-![Gitlab Continous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
-![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
+[![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
+[![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
+[![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
 
 #### **[Introduction](#introduction)** | **[Where to start?](#where-to-start)** | **[Network's Structure](#networks-structure)** | **[Contacts](#contacts)** | **[Website](http://splitcells.net/net/splitcells/network/README.html)**
 
@@ -44,9 +44,9 @@ Some of them are not strictly related to optimization and can be used in other c
 
 ## Project Status
 
-![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)
-![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)
-![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)
+[![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
+[![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
+[![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
 
 * Current Version: 3.0.0-SNAPSHOT:
   The development plan for this version was badly made.
