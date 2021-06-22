@@ -24,7 +24,6 @@ public class RegulatedLength {
                     .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
                     .map(line -> line.value(LINE).value(lengthElement))
                     .reduce(Integer::sum)
-                    .map(sum -> sum + addition.map(a -> a.value(LINE).value(lengthElement)).orElse(0))
                     .orElse(0);
             final var totalCost = distance(requiredLength, currentLength);
             return addition.map(a -> cost(totalCost / (lines.getLines().size())))
