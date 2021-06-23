@@ -27,6 +27,8 @@ public interface DatabaseFactory extends Closeable, Flushable {
 
     Database database(List<Attribute<?>> attributes);
 
+    Database database2(String name, Discoverable parent, List<Attribute<Object>> attributes);
+
     Database database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues);
 
     @Deprecated

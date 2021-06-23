@@ -24,6 +24,11 @@ public class DatabaseIFactory implements DatabaseFactory {
     }
 
     @Override
+    public Database database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+        return new DatabaseI(name, parent, attributes);
+    }
+
+    @Override
     public Database database(List<Attribute<? extends Object>> atribūti, List<List<Object>> rindasVertības) {
         return new DatabaseI(atribūti, rindasVertības);
     }

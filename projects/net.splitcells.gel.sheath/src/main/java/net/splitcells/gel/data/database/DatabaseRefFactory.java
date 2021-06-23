@@ -23,6 +23,11 @@ public class DatabaseRefFactory implements DatabaseFactory {
     }
 
     @Override
+    public Database database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+        return new DatabaseIRef(name, parent, attributes);
+    }
+
+    @Override
     public Database database(List<Attribute<?>> headers, List<List<Object>> linesValues) {
         return new DatabaseIRef(headers, linesValues);
     }

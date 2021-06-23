@@ -9,6 +9,8 @@ import static net.splitcells.dem.data.set.list.Lists.concat;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.database.Databases.database2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -61,7 +63,7 @@ public class AllocationsI implements Allocations {
         // TODO Remove code and comment duplications.
         {
             this.demands = demand;
-            demands_free = new DatabaseI("demands-free", this, demand.headerView());
+            demands_free = database2("demands-free", this, demand.headerView());
             demands_used = new DatabaseI("demands-used", this, demand.headerView());
             demand.rawLinesView().forEach(demands_free::add);
             demand.subscribeToAfterAdditions(demands_free::add);

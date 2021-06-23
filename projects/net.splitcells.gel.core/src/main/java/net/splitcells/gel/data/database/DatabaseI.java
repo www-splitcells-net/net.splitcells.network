@@ -89,7 +89,11 @@ public class DatabaseI implements Database {
     @SuppressWarnings("unchecked")
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
-        return ColumnViewI.columnView((Column<T>) columns.get(typed_column_index.get(attribute)));
+        try {
+            return ColumnViewI.columnView((Column<T>) columns.get(typed_column_index.get(attribute)));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
