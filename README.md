@@ -108,7 +108,7 @@ Project Cluster
 
 * Livestreaming via [Twitch](https://www.twitch.tv/splitcellsnet) 
 * Messaging via [Mastadon](https://fosstodon.org/@splitcells) and [Twitter](https://twitter.com/splitcells)
-* Writings on [Medium](https://martins-avots.medium.com/)
+* Blogging on [Medium](https://martins-avots.medium.com/)
 
 ## Infrastructure
 
