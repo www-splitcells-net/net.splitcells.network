@@ -64,7 +64,7 @@ public class AllocationsI implements Allocations {
         {
             this.demands = demand;
             demands_free = database2("demands-free", this, demand.headerView());
-            demands_used = new DatabaseI("demands-used", this, demand.headerView());
+            demands_used = database2("demands-used", this, demand.headerView());
             demand.rawLinesView().forEach(demands_free::add);
             demand.subscribeToAfterAdditions(demands_free::add);
             demand.subscriberToBeforeRemoval(removalOf -> {
@@ -84,8 +84,8 @@ public class AllocationsI implements Allocations {
         }
         {
             this.supplies = requireNonNull(supply);
-            supplies_free = new DatabaseI("supply-free", this, supply.headerView());
-            supplies_used = new DatabaseI("supply-used", this, supply.headerView());
+            supplies_free = database2("supply-free", this, supply.headerView());
+            supplies_used = database2("supply-used", this, supply.headerView());
             supply.rawLinesView().forEach(supplies_free::add);
             supply.subscribeToAfterAdditions(i -> {
                 supplies_free.add(i);
