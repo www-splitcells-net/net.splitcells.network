@@ -16,7 +16,7 @@ A detailed introduction and documentation can be found [here](projects/net.split
 
 An overview of the projects can be found [here](#networks-structure).
 Some of them are not strictly related to optimization and can be used in other contexts as well.
-[OS State Interface](./projects/net.splitcells.os.state.interface/README.md) is the main example of such.
+[OS State Interface](projects/net.splitcells.os.state.interface/README.md) is the main example of such.
 
 ## Where to start?
 
