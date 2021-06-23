@@ -29,6 +29,9 @@ import org.w3c.dom.Element;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
 
+/**
+ * TODO Make all constructors private. One can use configurators for {@link DatabaseFactory} instead.
+ */
 public class DatabaseI implements Database {
     protected final String name;
     protected final Optional<Discoverable> parent;

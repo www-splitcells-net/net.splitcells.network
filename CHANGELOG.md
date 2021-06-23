@@ -22,6 +22,8 @@ For change items without a ticket, the following format is used:
 ```
 ## [Unreleased]
 ### Major Changes
+1. **2021-06-23**: #8 Remove deprecated usage of `net.splitcells.gel.data.database.DatabaseI` and mark these as protected.
+   These constructors will be made private in the future.
 1. **2021-06-21**: Remove `net.splitcells.gel.problem.Problem#toSolution()`,
    because it is not used and was not implemented yet.
 1. **2021-04-13**: #7: Model and solve oral exam problem.
