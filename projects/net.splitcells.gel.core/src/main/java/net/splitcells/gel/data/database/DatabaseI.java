@@ -46,13 +46,13 @@ public class DatabaseI implements Database {
 
 
     @Deprecated
-    public DatabaseI(List<Attribute<? extends Object>> attributes) {
+    protected DatabaseI(List<Attribute<? extends Object>> attributes) {
         this("", null, attributes.mapped(a -> (Attribute<Object>) a));
     }
 
     @Deprecated
     @SuppressWarnings("unchecked")
-    public DatabaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+    protected DatabaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         this.name = name;
         this.parent = Optional.ofNullable(parent);
         final List<Attribute<Object>> headerAttributes = list();
@@ -67,12 +67,12 @@ public class DatabaseI implements Database {
     }
 
     @Deprecated
-    public DatabaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
+    protected DatabaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
         this(attributes);
         linesValues.forEach(line_values -> addTranslated(line_values));
     }
 
-    public DatabaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+    protected DatabaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
         this(name, parent, listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a));
     }
 

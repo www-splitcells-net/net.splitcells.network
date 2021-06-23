@@ -4,6 +4,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.DatabaseI;
 import net.splitcells.gel.data.database.DatabaseSF;
+import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
 import java.util.function.Function;
@@ -21,6 +22,6 @@ public class TableSF {
     }
 
     public static List<Function<List<Attribute<? extends Object>>, Table>> testTableFactory() {
-        return list((a) -> new DatabaseI(a));
+        return list((a) -> Databases.database(a));
     }
 }
