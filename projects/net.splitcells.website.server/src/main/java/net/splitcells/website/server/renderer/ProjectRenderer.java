@@ -102,13 +102,13 @@ public class ProjectRenderer {
                 , parameters);
     }
 
-    public static ProjectRenderer projectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
+    public static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
             , Validator validator
             , Map<String, String> parameters) {
-        return new ProjectRenderer(renderer, projectSrcFolder, xslLibs, resources, resourceRootPath, typedFolder, flatRepository, validator
-                , projectSrcFolder.resolve("../..")
+        return new ProjectRenderer(renderer, projectFolder.resolve("../.."), xslLibs, resources, resourceRootPath, typedFolder, flatRepository, validator
+                , projectFolder
                 , parameters);
     }
 

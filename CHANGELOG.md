@@ -51,6 +51,8 @@ For change items without a ticket, the following format is used:
 1. Some undocumented work.
 1. **2019-05-05**: Create private git repositories.
 1. Some undocumented work.
+#### Patches
+1. **2021-06-25** Determine project's source folder correctly in ProjectRenderer.
 ## [2.0.0]
 Second version created during master thesis.
 ## [1.0.0]
