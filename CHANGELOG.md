@@ -22,7 +22,10 @@ For change items without a ticket, the following format is used:
 ```
 ## [Unreleased]
 ### Major Changes
-1. **2021-06-24**: #8 Rename ForallI to ForAll, in order to simplify name.
+1. **2021-06-24**:
+   1. \#8 Rename ForallI to ForAll, in order to simplify name.
+   1. \#8 Create valid XML for natural argumentation.
+   1. Use established px default value for default font-size in default web layout.
 1. **2021-06-23**: #8 Remove deprecated usage of `net.splitcells.gel.data.database.DatabaseI` and mark these as protected.
    These constructors will be made private in the future.
 1. **2021-06-21**: Remove `net.splitcells.gel.problem.Problem#toSolution()`,
