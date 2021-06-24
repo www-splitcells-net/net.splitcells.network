@@ -24,13 +24,23 @@ public class SimplifiedAnnealingProblem extends DerivedSolution {
         return new SimplifiedAnnealingProblem(solution.allocations(), solution.constraint(), temperatureFunction);
     }
 
+    public static Solution simplifiedAnnealingProblem(Solution solution, Function<Integer, Float> temperatureFunction
+            , Randomness randomness) {
+        return new SimplifiedAnnealingProblem(solution.allocations(), solution.constraint(), temperatureFunction
+                , randomness);
+    }
+
     protected SimplifiedAnnealingProblem(Allocations allocations, Constraint originalConstraint
             , Function<Integer, Float> temperatureFunction) {
+        this(allocations, originalConstraint, temperatureFunction, randomness());
+    }
+
+    protected SimplifiedAnnealingProblem(Allocations allocations, Constraint originalConstraint
+            , Function<Integer, Float> temperatureFunction
+            , Randomness randomness) {
         super(() -> list(), allocations);
         constraint = derivation(originalConstraint,
                 new Function<>() {
-                    private final Randomness randomness = randomness();
-
                     @Override
                     public MetaRating apply(MetaRating rating) {
                         if (randomness.truthValue(temperatureFunction.apply(SimplifiedAnnealingProblem.this.history().size()))) {

@@ -30,6 +30,7 @@ For change items without a ticket, the following format is used:
    1. Rename `ConstraintAI#register_before_removal` to `registerBeforeRemoval` in order to unify naming.
    1. Rename `ConstraintAI#register_additions` to `registerAdditions` in order to unify naming.
    1. Rename `ConstraintAI#process_line_addition` to `processLineAddition` in order to unify naming.
+   1. Prevent random test error in `SimplifiedAnnealingProblemTest#testProbability`.
 1. **2021-06-23**: #8 Remove deprecated usage of `net.splitcells.gel.data.database.DatabaseI` and mark these as protected.
    These constructors will be made private in the future.
 1. **2021-06-21**: Remove `net.splitcells.gel.problem.Problem#toSolution()`,

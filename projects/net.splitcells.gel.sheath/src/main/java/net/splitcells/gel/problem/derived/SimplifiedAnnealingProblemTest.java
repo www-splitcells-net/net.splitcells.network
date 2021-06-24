@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.random.Randomness.assertPlausibility;
+import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.problem.derived.SimplifiedAnnealingProblem.simplifiedAnnealingProblem;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -17,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * TODO Make tests deterministic, otherwise the test can cause a error from time to time."
- *
  */
 public class SimplifiedAnnealingProblemTest {
 
@@ -115,7 +115,7 @@ public class SimplifiedAnnealingProblemTest {
                 .asSolution();
         solution.optimize(linearInitialization());
         assertThat(solution.constraint().rating()).isEqualTo(cost(defianceCost * lineCount));
-        final var testSubject = simplifiedAnnealingProblem(solution, i -> probability);
+        final var testSubject = simplifiedAnnealingProblem(solution, i -> probability, randomness(1L));
         assertPlausibility(probability, tryCount,
                 (int) rangeClosed(1, 100)
                         .mapToObj(i -> testSubject.constraint().rating().equalz(cost(defianceCost * lineCount)))
