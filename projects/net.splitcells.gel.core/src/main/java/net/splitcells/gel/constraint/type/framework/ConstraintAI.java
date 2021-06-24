@@ -118,7 +118,7 @@ public abstract class ConstraintAI implements Constraint {
         if (ENFORCING_UNIT_CONSISTENCY) {
             Assertions.assertThat(removal.isValid()).isTrue();
         }
-        process_lines_beforeRemoval(injectionGroup, removal);
+        processLinesBeforeRemoval(injectionGroup, removal);
         lineProcessing
                 .columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(injectionGroup)
@@ -136,7 +136,7 @@ public abstract class ConstraintAI implements Constraint {
 
     protected abstract void process_line_addition(Line addition);
 
-    protected void process_lines_beforeRemoval(GroupId injectionGroup, Line removal) {
+    protected void processLinesBeforeRemoval(GroupId injectionGroup, Line removal) {
         lineProcessing.suppliesFree().rawLinesView().stream()
                 .filter(e -> e != null)
                 .forEach(freeSupply -> results.remove(freeSupply));

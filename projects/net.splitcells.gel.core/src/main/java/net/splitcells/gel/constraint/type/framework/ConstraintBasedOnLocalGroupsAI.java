@@ -59,7 +59,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     }
 
     @Override
-    protected void process_lines_beforeRemoval(GroupId incomingGroup, Line removal) {
+    protected void processLinesBeforeRemoval(GroupId incomingGroup, Line removal) {
         processRatingEvent(
                 rater.rating_before_removal(
                         lines.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)
@@ -70,7 +70,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
                                 .getLines(0)
                         , children
                         , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
-        super.process_lines_beforeRemoval(incomingGroup, removal);
+        super.processLinesBeforeRemoval(incomingGroup, removal);
     }
 
     @Override
