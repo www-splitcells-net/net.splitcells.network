@@ -20,7 +20,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 ## Where to start?
 
-🗞️️ Keep updated via a [blog](https://martins-avots.medium.com/) or the repos [changelog](./CHANGELOG.md).
+🗞️️ Keep updated via a [blog](https://martins-avots.medium.com/) or the repo's [changelog](./CHANGELOG.md).
 
 🚀 [Model and optimize problems.](projects/net.splitcells.gel.doc/src/main/md/net/splitcells/gel/index.md)
 
