@@ -48,7 +48,6 @@ public class SchoolSchedulingTest {
     private static final Attribute<Integer> STUDENT = attribute(Integer.class, "student");
     private static final Attribute<Integer> STUDENT_S_VINTAGE = attribute(Integer.class, "student's vintage");
     private static final Attribute<Integer> REQUIRED_SUBJECT = attribute(Integer.class, "required subject");
-    private static final Attribute<Integer> COURSE_POSITION = attribute(Integer.class, "course position");
 
     private static List<Object> course(int courseId, int subject, int coursesVintage, int courseLength) {
         return list(courseId, subject, coursesVintage, courseLength);
@@ -284,7 +283,6 @@ public class SchoolSchedulingTest {
                 .withConstraint(r -> {
                     r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))));
                     r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))));
-                    r.forAll(COURSE_POSITION).then(allSame(STUDENT));
                     r.forAll(RAIL).forAll(STUDENT).then(allSame(COURSE_ID));
                     r.forAll(COURSE_ID).then(hasMinimalSize(minimalNumberOfStudentsPerCourse));
                     r.forAll(COURSE_ID).then(hasSize(optimalNumberOfStudentsPerCourse));
