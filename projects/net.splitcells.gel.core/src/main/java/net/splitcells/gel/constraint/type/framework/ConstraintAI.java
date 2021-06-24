@@ -74,7 +74,7 @@ public abstract class ConstraintAI implements Constraint {
         lineProcessing = allocations("linesProcessing", lines, results);
         lineProcessing.subscribeToAfterAdditions(ConstraintAI::propagateAddition);
         lineProcessing.subscriberToBeforeRemoval(ConstraintAI::propagateRemoval);
-        lines.subscribeToAfterAdditions(this::process_line_addition);
+        lines.subscribeToAfterAdditions(this::processLineAddition);
     }
 
     protected ConstraintAI() {
@@ -134,7 +134,7 @@ public abstract class ConstraintAI implements Constraint {
                 .forEach(lines::remove);
     }
 
-    protected abstract void process_line_addition(Line addition);
+    protected abstract void processLineAddition(Line addition);
 
     protected void processLinesBeforeRemoval(GroupId injectionGroup, Line removal) {
         lineProcessing.suppliesFree().rawLinesView().stream()

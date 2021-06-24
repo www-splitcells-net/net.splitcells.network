@@ -35,7 +35,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     }
 
     @Override
-    public void process_line_addition(Line addition) {
+    public void processLineAddition(Line addition) {
         final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
         processRatingEvent(
                 rater.ratingAfterAddition(
