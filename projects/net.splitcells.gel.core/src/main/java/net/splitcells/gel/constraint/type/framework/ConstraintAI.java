@@ -113,7 +113,7 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public void register_before_removal(GroupId injectionGroup, Line removal) {
+    public void registerBeforeRemoval(GroupId injectionGroup, Line removal) {
         // TODO Move this to a different project.
         if (ENFORCING_UNIT_CONSISTENCY) {
             Assertions.assertThat(removal.isValid()).isTrue();
@@ -151,7 +151,7 @@ public abstract class ConstraintAI implements Constraint {
 
     private static void propagateRemoval(Line removal) {
         removal.value(PROPAGATION_TO).forEach(child ->
-                child.register_before_removal
+                child.registerBeforeRemoval
                         (removal.value(RESULTING_CONSTRAINT_GROUP)
                                 , removal.value(LINE)));
     }

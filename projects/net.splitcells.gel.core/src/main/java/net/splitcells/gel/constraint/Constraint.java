@@ -116,10 +116,10 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         register_additions(injectionGroup(), line);
     }
 
-    void register_before_removal(GroupId group, Line line);
+    void registerBeforeRemoval(GroupId group, Line line);
 
     default void register_before_removal(Line line) {
-        register_before_removal(injectionGroup(), line);
+        registerBeforeRemoval(injectionGroup(), line);
     }
 
     List<Constraint> childrenView();

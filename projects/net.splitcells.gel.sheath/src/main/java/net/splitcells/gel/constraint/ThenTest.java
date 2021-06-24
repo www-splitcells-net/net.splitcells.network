@@ -157,11 +157,11 @@ public class ThenTest {
         assertThat(testSubject.complying())
                 .containsExactlyInAnyOrder(testValue, additionalLine);
         assertThat(testSubject.defying()).isEmpty();
-        testSubject.register_before_removal(testGroup, testValue);
+        testSubject.registerBeforeRemoval(testGroup, testValue);
         assertThat(testSubject.rating(additionalGroup)).isEqualTo(noCost());
         assertThat(testSubject.complying()).containsExactly(additionalLine);
         assertThat(testSubject.defying()).isEmpty();
-        testSubject.register_before_removal(additionalGroup, additionalLine);
+        testSubject.registerBeforeRemoval(additionalGroup, additionalLine);
         assertThat(testSubject.rating()).isEqualTo(noCost());
         testEmptyThen(testSubject, testGroup, additionalGroup);
     }
@@ -193,12 +193,12 @@ public class ThenTest {
                 .isEqualTo(cost(defianceCost));
         assertThat(testSubject.defying()).containsExactly(defyingLine);
         assertThat(testSubject.complying()).containsExactly(complyingLine);
-        testSubject.register_before_removal(complyingGroup, complyingLine);
+        testSubject.registerBeforeRemoval(complyingGroup, complyingLine);
         assertThat(testSubject.rating(complyingGroup))
                 .isEqualTo(cost(defianceCost));
         assertThat(testSubject.defying()).containsExactly(defyingLine);
         assertThat(testSubject.complying()).isEmpty();
-        testSubject.register_before_removal(defyingGroup, defyingLine);
+        testSubject.registerBeforeRemoval(defyingGroup, defyingLine);
         testEmptyThen(testSubject, complyingGroup, defyingGroup);
     }
 

@@ -79,7 +79,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public void register_before_removal(GroupId group, Line line) {
+    public void registerBeforeRemoval(GroupId group, Line line) {
         throw notImplementedYet();
     }
 
