@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * TODO Test if only incoming groups are used.
  */
-public class ForAllITest extends TestSuiteI {
+public class ForAllTest extends TestSuiteI {
     @Tag(UNIT_TEST)
     @Test
     public void testPropagation() {

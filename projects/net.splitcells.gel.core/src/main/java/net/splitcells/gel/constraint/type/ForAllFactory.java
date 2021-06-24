@@ -19,25 +19,25 @@ public class ForAllFactory {
 
     }
 
-    public <T> ForAllI forAllWithValue(Attribute<T> attribute, T value) {
-        return ForAllI.forAll(
+    public <T> ForAll forAllWithValue(Attribute<T> attribute, T value) {
+        return ForAll.forAll(
                 forAllWithCondition(line -> value.equals(line.value(attribute))));
     }
 
-    public ForAllI forAll() {
-        return ForAllI.forAll(propagation());
+    public ForAll forAll() {
+        return ForAll.forAll(propagation());
     }
 
-    public ForAllI forAll(final Attribute<?> attribute) {
-        return ForAllI.forAll(forAllAttributeValues(attribute));
+    public ForAll forAll(final Attribute<?> attribute) {
+        return ForAll.forAll(forAllAttributeValues(attribute));
     }
 
-    public ForAllI forAll(Rater classifier) {
-        return ForAllI.forAll(classifier);
+    public ForAll forAll(Rater classifier) {
+        return ForAll.forAll(classifier);
     }
 
-    public ForAllI forAllCombinations(final Attribute<?>... attributes) {
-        return ForAllI.forAll(forAllValueCombinations(attributes));
+    public ForAll forAllCombinations(final Attribute<?>... attributes) {
+        return ForAll.forAll(forAllValueCombinations(attributes));
     }
 
 }

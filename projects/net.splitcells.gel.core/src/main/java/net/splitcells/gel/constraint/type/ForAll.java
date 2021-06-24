@@ -11,18 +11,18 @@ import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
 import net.splitcells.gel.rating.rater.classification.Propagation;
 import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 
-public class ForAllI extends ConstraintBasedOnLocalGroupsAI {
+public class ForAll extends ConstraintBasedOnLocalGroupsAI {
 
-    public static ForAllI forAll(Rater classifier) {
+    public static ForAll forAll(Rater classifier) {
         return create(classifier);
     }
 
     @Deprecated
-    public static ForAllI create(Rater classifier) {
-        return new ForAllI(classifier);
+    public static ForAll create(Rater classifier) {
+        return new ForAll(classifier);
     }
 
-    protected ForAllI(Rater classifier) {
+    protected ForAll(Rater classifier) {
         super(raterBasedGrouping(classifier));
     }
 
@@ -32,7 +32,7 @@ public class ForAllI extends ConstraintBasedOnLocalGroupsAI {
 
     @Override
     public Class<? extends Constraint> type() {
-        return ForAllI.class;
+        return ForAll.class;
     }
 
     @Override

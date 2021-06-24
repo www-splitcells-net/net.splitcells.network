@@ -8,7 +8,7 @@ import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.constraint.type.ForAllI;
+import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -42,7 +42,7 @@ public interface SolutionView extends ProblemView {
     default List<List<Constraint>> demandsGroups(Constraint constraint, List<Constraint> parentPath) {
         final var constraintPath = parentPath.shallowCopy().withAppended(constraint);
         final List<List<Constraint>> freeGroups = list();
-        constraint.casted(ForAllI.class)
+        constraint.casted(ForAll.class)
                 .ifPresent(forAllConstraints -> {
                     final var forAllAttributes = forAllAttributesOfGroups
                             (forAllConstraints.classification())

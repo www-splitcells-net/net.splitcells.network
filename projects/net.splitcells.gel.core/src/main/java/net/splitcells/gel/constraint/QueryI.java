@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.constraint.type.ForAllI;
+import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
@@ -48,7 +48,7 @@ public class QueryI implements Query {
     public Query forAll(Rater classifier) {
         var resultBase = constraint
                 .childrenView().stream()
-                .filter(child -> ForAllI.class.equals(child.type()))
+                .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> child.arguments().size() == 1)
                 .filter(child -> child.arguments().get(0).getClass().equals(RaterBasedOnGrouping.class))
                 .filter(child -> {
@@ -82,7 +82,7 @@ public class QueryI implements Query {
     public Query forAll(Attribute<?> attribute) {
         var resultBase
                 = constraint.childrenView().stream()
-                .filter(child -> ForAllI.class.equals(child.type()))
+                .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
                     final var classification = (Rater) child.arguments().get(0);
@@ -118,7 +118,7 @@ public class QueryI implements Query {
     public Query forAll() {
         final var resultBase
                 = constraint.childrenView().stream()
-                .filter(child -> ForAllI.class.equals(child.type()))
+                .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
                     final var classification = (Rater) child.arguments().get(0);
@@ -177,7 +177,7 @@ public class QueryI implements Query {
     public Query forAllCombinationsOf(Attribute<?>... attributes) {
         final Constraint resultBase
                 = constraint.childrenView().stream()
-                .filter(child -> ForAllI.class.equals(child.type()))
+                .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
                     final var classification = (Rater) child.arguments().get(0);
