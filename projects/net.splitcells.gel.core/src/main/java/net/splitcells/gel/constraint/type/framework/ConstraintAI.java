@@ -87,7 +87,7 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public void register_additions(GroupId injectionGroup, Line addition) {
+    public void registerAdditions(GroupId injectionGroup, Line addition) {
         // TODO Move this to a different project.
         if (TRACING) {
             domsole().append
@@ -144,7 +144,7 @@ public abstract class ConstraintAI implements Constraint {
 
     private static void propagateAddition(Line addition) {
         addition.value(PROPAGATION_TO).forEach(child ->
-                child.register_additions
+                child.registerAdditions
                         (addition.value(RESULTING_CONSTRAINT_GROUP)
                                 , addition.value(LINE)));
     }

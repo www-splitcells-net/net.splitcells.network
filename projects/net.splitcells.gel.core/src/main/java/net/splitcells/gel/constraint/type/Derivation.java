@@ -74,7 +74,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public void register_additions(GroupId group, Line line) {
+    public void registerAdditions(GroupId group, Line line) {
         throw notImplementedYet();
     }
 

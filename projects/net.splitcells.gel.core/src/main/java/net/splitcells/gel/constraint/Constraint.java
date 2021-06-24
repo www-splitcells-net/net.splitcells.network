@@ -104,16 +104,16 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     default GroupId register(Line line) {
         final var injectionGroup = injectionGroup();
-        register_additions(injectionGroup, line);
+        registerAdditions(injectionGroup, line);
         return injectionGroup;
     }
 
     GroupId groupOf(Line line);
 
-    void register_additions(GroupId group, Line line);
+    void registerAdditions(GroupId group, Line line);
 
     default void register_addition(Line line) {
-        register_additions(injectionGroup(), line);
+        registerAdditions(injectionGroup(), line);
     }
 
     void registerBeforeRemoval(GroupId group, Line line);
