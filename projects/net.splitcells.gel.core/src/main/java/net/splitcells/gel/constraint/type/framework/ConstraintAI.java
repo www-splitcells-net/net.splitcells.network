@@ -421,7 +421,8 @@ public abstract class ConstraintAI implements Constraint {
         if (localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
             return Optional.empty();
         } else if (!localArgumentation.isEmpty()) {
-            return Optional.of(perspective(localArgumentation.get(), NameSpaces.STRING)
+            return Optional.of(perspective(ARGUMENTATION.value(), GEL)
+                    .withChild(perspective(localArgumentation.get(), NameSpaces.STRING))
                     .withChildren(childrenArgumentation));
         } else {
             return Optional.of(perspective(ARGUMENTATION.value(), GEL)
