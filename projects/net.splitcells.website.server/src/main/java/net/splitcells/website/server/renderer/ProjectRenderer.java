@@ -107,7 +107,7 @@ public class ProjectRenderer {
             , boolean flatRepository
             , Validator validator
             , Map<String, String> parameters) {
-        return new ProjectRenderer(renderer, projectFolder.resolve("../.."), xslLibs, resources, resourceRootPath, typedFolder, flatRepository, validator
+        return new ProjectRenderer(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath, typedFolder, flatRepository, validator
                 , projectFolder
                 , parameters);
     }
