@@ -3,6 +3,7 @@ package net.splitcells.gel.rating.rater;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.Lambdas.describedFunction;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -15,6 +16,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.Lambdas;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -67,7 +69,9 @@ public class RaterBasedOnLineValue implements Rater {
 
     public static Rater lineValueRater(Predicate<Line> classifier, Function<Line, Rating> rater) {
         return new RaterBasedOnLineValue(rater
-                , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
+                , describedFunction
+                (addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
+                        , classifier.toString())
                 , (addition, children) -> {
             if (classifier.test(addition.value(LINE))) {
                 return children;
@@ -131,7 +135,11 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.elementWithChildren(getClass().getSimpleName(), Xml.textNode(rater.toString())));
+        return list(() -> Xml.elementWithChildren(getClass().getSimpleName()
+                , Xml.textNode(classifier.toString()
+                        + " "
+                        + rater.toString()
+                )));
     }
 
     @Override
