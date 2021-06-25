@@ -98,6 +98,7 @@ public class ProjectsRenderer {
     public Optional<RenderingResult> render(String path) {
         try {
             if (path.equals(LAYOUT_PATH)) {
+                domsole().append(textNode("Refreshing layout."), LogLevel.INFO);
                 this.build();
                 return Optional.empty();
             }
