@@ -97,8 +97,8 @@ public class SchoolSchedulingTest {
             teacherAllocationForCourses.optimize(linearInitialization());
             studentAllocationsForCourses.optimize(linearInitialization());
             assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
-            teacherAllocationForCourses.createStandardAnalysis();
             assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
+            studentAllocationsForCourses.createStandardAnalysis();
             assertThat(studentAllocationsForCourses.isOptimal()).isTrue();
         });
     }
@@ -283,8 +283,10 @@ public class SchoolSchedulingTest {
                 .withDemands(studentDemands)
                 .withSupplies(supplies)
                 .withConstraint(r -> {
-                    r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))));
-                    r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))));
+                    r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))
+                            , "Student gets course in required subject."));
+                    r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))
+                            , "Student gets courses of the same vintage."));
                     r.forAll(RAIL).forAll(STUDENT).then(allSame(COURSE_ID));
                     r.forAll(COURSE_ID).then(hasMinimalSize(minimalNumberOfStudentsPerCourse));
                     r.forAll(COURSE_ID).then(hasSize(optimalNumberOfStudentsPerCourse));
