@@ -55,9 +55,6 @@ public class ProjectsRenderer {
 
     public void serveTo(Path target) {
         build();
-        if (target.toString().equals(LAYOUT_PATH)) {
-            this.build();
-        }
         projectsPaths().stream()
                 .map(path -> "/" + path.toString())
                 .map(path -> {
@@ -100,6 +97,10 @@ public class ProjectsRenderer {
 
     public Optional<RenderingResult> render(String path) {
         try {
+            if (path.equals(LAYOUT_PATH)) {
+                this.build();
+                return Optional.empty();
+            }
             final var matchingRoots = renderers
                     .stream()
                     .filter(root -> path.startsWith(root.resourceRootPath()))
