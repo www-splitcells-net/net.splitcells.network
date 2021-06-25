@@ -515,6 +515,10 @@
                         </a>
                         <h3>Instances</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3"
+                           href="javascript:void(0);" onclick="const Http = new XMLHttpRequest(); Http.open('GET', '/net/splitcells/website/layout/build'); Http.send();">
+                            Refresh layout.
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3"
                            href="http://splitcells.net">
                             Public Site
                         </a>
