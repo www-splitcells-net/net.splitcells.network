@@ -28,9 +28,6 @@ For change items without a ticket, the following format is used:
       in order to refresh project layout.
    1. \#8 Clean up error logging in HttpServer.
    1. \#8 Add description to RaterBasedOnLineValue based on classifier.
-### Minor Changes
-1. **2021-06-25**:
-   1. \#8 Create index file, for standard analysis.
 1. **2021-06-24**:
    1. \#8 Rename ForallI to ForAll, in order to simplify name.
    1. \#8 Create valid XML for natural argumentation.
@@ -50,6 +47,8 @@ For change items without a ticket, the following format is used:
 1. **2021-04-07**: #42: Make Gel workspace visible in website.
 1. **2021-04-12**: #46: Use deterministic environment and execution in CI.
 ### Minor Changes
+1. **2021-06-25**:
+   1. \#8 Create index file, for standard analysis.
 1. \#8 Create RegulatedLength AllSame.
 1. \#8 Create RegulatedLength Rater.
 1. **2021-06-19**: Create command convention `repo.is.clean`.
