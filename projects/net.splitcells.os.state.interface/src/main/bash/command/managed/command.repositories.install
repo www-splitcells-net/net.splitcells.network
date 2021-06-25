@@ -9,7 +9,7 @@
 mkdir -p ~/bin/net.splitcells.os.state.interface.commands.managed
 find ~/bin/net.splitcells.os.state.interface.commands.managed -maxdepth 1 -type f -delete
 
-repoList=~/.config/net.splitcells.os.state.interface/repositories
+repoList=~/.config/net.splitcells.os.state.interface/command.repositories
 hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
 bootstrapRepoProperty=$(head -n 1 $repoList)
 if hasPrefix 'repo=' "$bootstrapRepoProperty"; then

@@ -5,7 +5,7 @@
 
 configFolder=~/.config/net.splitcells.os.state.interface
 mkdir -p $configFolder
-repoList=$configFolder/repositories
+repoList=$configFolder/command.repositories
 touch $repoList
 if grep -q "^repo=$1$" "$repoList"; then
 	echo.debug Repository "'"$1"'" is already registered.

@@ -1,7 +1,7 @@
 # Uninstall This Software
 
 ## Delete All Repositories
-Open the text file "~/.config/net.splitcells.os.state.interface/repositories".
+Open the text file "~/.config/net.splitcells.os.state.interface/command.repositories".
 Delete every path that is assigned to repo.
 
 For example:
