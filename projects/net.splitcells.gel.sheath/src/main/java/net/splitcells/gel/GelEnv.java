@@ -73,7 +73,9 @@ public final class GelEnv {
                     .withConfigValue(Allocationss.class, new AllocationsIRefFactory())
                     .withConfigValue(Databases.class, new DatabaseRefFactory())
                     .withConfigValue(Lookups.class, new LookupRefFactory())
-                    .withConfigValue(ProcessPath.class, Paths.userHome("connections", "tmp.storage"));
+                    .withConfigValue(ProcessPath.class, Paths.userHome("connections"
+                            , "tmp.storage"
+                            , "net.splitcells.dem"));
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
         };
     }
