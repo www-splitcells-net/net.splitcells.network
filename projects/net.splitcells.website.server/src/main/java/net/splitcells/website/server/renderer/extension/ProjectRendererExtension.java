@@ -10,6 +10,13 @@ import java.util.Optional;
 public interface ProjectRendererExtension {
     Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer);
 
+    /**
+     * TODO A list of paths should be returned instead. Also the layout would not be needed anymore in this case.
+     *
+     * @param layout
+     * @param projectRenderer
+     * @return
+     */
     Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer);
 
 }
