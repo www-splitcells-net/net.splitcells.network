@@ -103,6 +103,9 @@ public interface SolutionView extends ProblemView {
 
     default void createAnalysis(Path targetFolder) {
         createDirectory(targetFolder);
+        writeToFile(targetFolder.resolve("index.xml"), "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<project xmlns=\"http://splitcells.net/den.xsd\">"
+                + "</project>");
         writeToFile(targetFolder.resolve("result.analysis.fods"), toFodsTableAnalysis());
         writeToFile(targetFolder.resolve("constraint.graph.xml"), constraint().graph());
         writeToFile(targetFolder.resolve("constraint.rating.xml"), constraint().rating().toDom());
