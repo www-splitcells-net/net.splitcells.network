@@ -51,6 +51,20 @@ public class RaterBasedOnLineValue implements Rater {
         return lineValueRater(classifier, line -> cost(1));
     }
 
+    public static Rater lineValueRater(Predicate<Line> classifier, String description) {
+        return lineValueRater(new Predicate<Line>() {
+            @Override
+            public boolean test(Line line) {
+                return classifier.test(line);
+            }
+
+            @Override
+            public String toString() {
+                return description;
+            }
+        }, line -> cost(1));
+    }
+
     public static Rater lineValueRater(Predicate<Line> classifier, Function<Line, Rating> rater) {
         return new RaterBasedOnLineValue(rater
                 , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
