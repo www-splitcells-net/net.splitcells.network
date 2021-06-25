@@ -104,6 +104,7 @@ public interface ProjectRenderer {
         return current;
     }
 
+    @Deprecated
     Path project();
 
     Path projectFolder();
