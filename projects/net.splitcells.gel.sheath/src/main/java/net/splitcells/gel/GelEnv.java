@@ -60,6 +60,12 @@ public final class GelEnv {
         }, configurator);
     }
 
+    /**
+     * Uses a folder of the user in order to store files, in order to prevent unnecessary file changes
+     * in the project repo, if the user executes Gel with an IDE and default settings.
+     *
+     * @return
+     */
     public static Consumer<Environment> standardDeveloperConfigurator() {
         return env -> {
             env.config()
