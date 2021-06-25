@@ -30,6 +30,12 @@ For change items without a ticket, the following format is used:
    1. \#8 Add description to RaterBasedOnLineValue based on classifier.
    1. Remove verification step after repair inside `repo.repair` in order to
       prevent duplicate verification calls.
+   1. Install project commands in OSSI from repos listed in `/home/splitcells/.config/net.splitcells.os.state.interface/project.repositories`.
+      In other words: `command.repositories.install` and `command.managed.install.project.commands`
+      now each have their own repo list.
+      The reason for this is the fact, that repos for projects cannot be installed like repos for commands in OSSI.
+      The reason for this, is the fact, that files located in the src folder of the project repo,
+      may not work as an independent command.
 1. **2021-06-24**:
    1. \#8 Rename ForallI to ForAll, in order to simplify name.
    1. \#8 Create valid XML for natural argumentation.
