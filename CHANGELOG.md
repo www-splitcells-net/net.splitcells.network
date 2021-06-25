@@ -28,6 +28,8 @@ For change items without a ticket, the following format is used:
       in order to refresh project layout.
    1. \#8 Clean up error logging in HttpServer.
    1. \#8 Add description to RaterBasedOnLineValue based on classifier.
+   1. Remove verification step after repair inside `repo.repair` in order to
+      prevent duplicate verification calls.
 1. **2021-06-24**:
    1. \#8 Rename ForallI to ForAll, in order to simplify name.
    1. \#8 Create valid XML for natural argumentation.

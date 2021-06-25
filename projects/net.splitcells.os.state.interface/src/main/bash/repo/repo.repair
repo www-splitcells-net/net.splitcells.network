@@ -6,4 +6,3 @@
 # TODO Remove argument to repo.
 
 repo.process --command 'exit' --command-for-missing 'command.managed.execute disjunction repo.clone.into.current '$@'/$subRepo'
-repo.verify
