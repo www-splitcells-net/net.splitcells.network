@@ -10,12 +10,15 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
+import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.website.server.renderer.RenderingResult;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.lang.Xml.textNode;
+import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 
 public class Server {
     /**
@@ -64,7 +67,7 @@ public class Server {
                             }
                         }, (result) -> {
                             if (result.failed()) {
-                                result.cause().printStackTrace();
+                                domsole().append(textNode(result.cause().toString()), LogLevel.ERROR);
                                 response.setStatusCode(500);
                                 response.end();
                             } else {
