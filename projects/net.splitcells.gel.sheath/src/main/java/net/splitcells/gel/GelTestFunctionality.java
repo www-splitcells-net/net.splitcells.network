@@ -7,7 +7,7 @@ import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import java.util.Optional;
 
 import static net.splitcells.dem.testing.Test.testFunctionality;
-import static net.splitcells.gel.GelEnv.standardConfigurator;
+import static net.splitcells.gel.GelEnv.standardDeveloperConfigurator;
 
 public class GelTestFunctionality {
     public static void main(String... args) {
@@ -16,7 +16,7 @@ public class GelTestFunctionality {
                         throw new RuntimeException();
                     }
                 }
-                , standardConfigurator().andThen(env -> {
+                , standardDeveloperConfigurator().andThen(env -> {
                     env.config()
                             .withConfigValue(MessageFilter.class, a -> false)
                             .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));

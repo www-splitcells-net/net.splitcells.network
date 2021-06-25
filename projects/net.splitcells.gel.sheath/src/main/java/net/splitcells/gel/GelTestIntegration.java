@@ -2,18 +2,14 @@ package net.splitcells.gel;
 
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.resource.Paths;
-import net.splitcells.dem.resource.host.ProcessHostPath;
-import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
-import net.splitcells.dem.testing.Test;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Test.testIntegration;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.gel.GelEnv.standardConfigurator;
+import static net.splitcells.gel.GelEnv.standardDeveloperConfigurator;
 
 public final class GelTestIntegration {
     private GelTestIntegration() {
@@ -27,7 +23,7 @@ public final class GelTestIntegration {
                         throw new RuntimeException();
                     }
                 }
-                , standardConfigurator().andThen(env -> {
+                , standardDeveloperConfigurator().andThen(env -> {
                     env.config()
                             .withConfigValue(MessageFilter.class, a -> false)
                             .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));

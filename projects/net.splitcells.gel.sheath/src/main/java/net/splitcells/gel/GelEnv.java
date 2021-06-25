@@ -7,12 +7,10 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.allocation.Allocationss;
 import net.splitcells.gel.data.allocations.AllocationsIRefFactory;
 import net.splitcells.gel.data.database.DatabaseRefFactory;
 import net.splitcells.gel.data.database.Databases;
-import net.splitcells.gel.data.lookup.LookupFactory;
 import net.splitcells.gel.data.lookup.LookupRefFactory;
 import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.solution.SolutionAspect;
@@ -33,7 +31,7 @@ public final class GelEnv {
     }
 
     public static void process(Runnable program) {
-        process(program, standardConfigurator());
+        process(program, standardDeveloperConfigurator());
     }
 
     public static ProcessResult analyseProcess(Runnable program, Consumer<Environment> configurator) {
@@ -62,7 +60,7 @@ public final class GelEnv {
         }, configurator);
     }
 
-    public static Consumer<Environment> standardConfigurator() {
+    public static Consumer<Environment> standardDeveloperConfigurator() {
         return env -> {
             env.config()
                     .withConfigValue(Histories.class, new HistoryRefFactory())

@@ -86,7 +86,7 @@ public class OralExamsTest extends TestSuiteI {
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) ->
                     step <= 100 && !currentSolution.isOptimal());
             assertThat(testSubject.isOptimal()).isTrue();
-        }, standardConfigurator().andThen(env -> {
+        }, standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class, a -> false)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
@@ -117,7 +117,7 @@ public class OralExamsTest extends TestSuiteI {
                     .asSolution();
             testSubject.optimize(functionalHillClimber(400 * 177));
             assertThat(testSubject.isOptimal()).isFalse();
-        }, standardConfigurator().andThen(env -> {
+        }, standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class, a -> false)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
