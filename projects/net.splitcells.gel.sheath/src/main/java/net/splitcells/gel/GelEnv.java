@@ -4,6 +4,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.ProcessResult;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.host.Files;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -67,7 +68,8 @@ public final class GelEnv {
                     .withConfigValue(Histories.class, new HistoryRefFactory())
                     .withConfigValue(Allocationss.class, new AllocationsIRefFactory())
                     .withConfigValue(Databases.class, new DatabaseRefFactory())
-                    .withConfigValue(Lookups.class, new LookupRefFactory());
+                    .withConfigValue(Lookups.class, new LookupRefFactory())
+                    .withConfigValue(ProcessPath.class, Paths.userHome("connections", "tmp.storage"));
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
         };
     }
