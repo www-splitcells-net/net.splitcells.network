@@ -28,7 +28,7 @@ public class FileStructureTransformer {
     private final Path fileStructureRoot;
     private final XslTransformer transformer;
     private final Path loggingProject = Paths.path(System.getProperty("user.home")
-            + "/connections/tmp.storage/dem");
+            + "/connections/tmp.storage/net.splitcells.dem");
     private final Validator validator;
 
     /* TODO REMOVE by 2022
@@ -64,7 +64,8 @@ public class FileStructureTransformer {
 
     public String transform(Path file) {
         validator.validate(file).ifPresent(error -> {
-            final var loggingFolder = loggingProject.resolve(fileStructureRoot.relativize(file).getParent());
+            final var loggingFolder = loggingProject.resolve("src/main/txt")
+                    .resolve(fileStructureRoot.relativize(file).getParent());
             generateFolderPath(loggingFolder);
             appendToFile(loggingFolder.resolve(file.getFileName() + ".errors.txt"), error);
             domsole().append(perspective(error, STRING), LogLevel.ERROR);

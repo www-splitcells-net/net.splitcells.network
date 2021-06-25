@@ -4,7 +4,8 @@
     <scheduling>
         <unscheduled>
             <toDo>Remove not needed Javascript in default layout.</toDo>
-            <toDo>Reenable error reporting on webiste via logging project.</toDo>
+            <toDo>Reenable error reporting on website via logging project.</toDo>
+            <toDo>Create tests.</toDo>
         </unscheduled>
     </scheduling>
     <solution>
