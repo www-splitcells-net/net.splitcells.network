@@ -48,11 +48,6 @@ public class ProjectRendererI implements ProjectRenderer {
     private static final String MARKER = "198032jrf013jf09j13f13f4290fj2394fj24";
 
     @Override
-    public Path project() {
-        return projectSrcFolder;
-    }
-
-    @Override
     public Path projectFolder() {
         return projectFolder;
     }

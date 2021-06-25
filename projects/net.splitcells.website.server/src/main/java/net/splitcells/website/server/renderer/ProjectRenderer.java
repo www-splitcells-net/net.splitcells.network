@@ -104,9 +104,6 @@ public interface ProjectRenderer {
         return current;
     }
 
-    @Deprecated
-    Path project();
-
     Path projectFolder();
 
     Optional<RenderingResult> render(String path);
