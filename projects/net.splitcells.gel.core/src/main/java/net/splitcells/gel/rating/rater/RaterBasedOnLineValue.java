@@ -66,9 +66,9 @@ public class RaterBasedOnLineValue implements Rater {
             }
         }, line -> {
             if (classifier.test(line)) {
-                return cost(1);
-            } else {
                 return noCost();
+            } else {
+                return cost(1);
             }
         });
     }
