@@ -27,6 +27,7 @@ For change items without a ticket, the following format is used:
    1. \#8 Provide path `/net/splitcells/website/layout/build` in server,
       in order to refresh project layout.
    1. \#8 Clean up error logging in HttpServer.
+   1. \#8 Add description to RaterBasedOnLineValue based on classifier.
 ### Minor Changes
 1. **2021-06-25**:
    1. \#8 Create index file, for standard analysis.
