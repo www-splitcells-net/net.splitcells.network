@@ -1,6 +1,7 @@
 package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
@@ -104,16 +105,20 @@ public interface ProjectRenderer {
         return current;
     }
 
+    @Deprecated
     Path projectFolder();
 
     Optional<RenderingResult> render(String path);
 
+    @Deprecated
     Optional<byte[]> renderString(String arg);
 
+    @Deprecated
     Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title);
 
     String resourceRootPath();
 
+    @Deprecated
     Perspective projectLayout();
 
     Set<Path> projectPaths();

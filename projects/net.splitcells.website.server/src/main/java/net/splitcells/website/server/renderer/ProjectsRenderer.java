@@ -35,7 +35,12 @@ import static net.splitcells.dem.resource.host.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * TODO Create extension system meta project rendering.
+ */
 public class ProjectsRenderer {
+
+    private static final String LAYOUT_PATH = "/net/splitcells/website/layout/build";
 
     public static ProjectsRenderer projectsRenderer(String name, ProjectRenderer fallbackRenderer, List<ProjectRenderer> renderers) {
         return new ProjectsRenderer(name, fallbackRenderer, renderers);
@@ -50,6 +55,9 @@ public class ProjectsRenderer {
 
     public void serveTo(Path target) {
         build();
+        if (target.toString().equals(LAYOUT_PATH)) {
+            this.build();
+        }
         projectsPaths().stream()
                 .map(path -> "/" + path.toString())
                 .map(path -> {
