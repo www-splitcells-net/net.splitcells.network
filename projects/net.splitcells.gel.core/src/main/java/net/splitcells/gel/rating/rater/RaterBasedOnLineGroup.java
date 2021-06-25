@@ -1,15 +1,18 @@
 package net.splitcells.gel.rating.rater;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import org.w3c.dom.Node;
 
 import java.util.Collection;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -62,7 +65,13 @@ public class RaterBasedOnLineGroup implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        throw notImplementedYet();
+        // TODO
+        return list(new Domable() {
+            @Override
+            public Node toDom() {
+                return Xml.textNode("Arguments not implemented.");
+            }
+        });
     }
 
     @Override
