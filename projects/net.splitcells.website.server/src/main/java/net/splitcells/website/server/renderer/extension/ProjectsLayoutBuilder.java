@@ -22,5 +22,6 @@ public class ProjectsLayoutBuilder implements ProjectRendererExtension {
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
         projectRenderer.extendPerspectiveWithPath(layout
                 , Path.of(LAYOUT_PATH));
+        return layout;
     }
 }
