@@ -20,7 +20,7 @@ public class ProjectsLayoutBuilder implements ProjectRendererExtension {
 
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        projectRenderer.extendPerspectiveWithPath(layout
+        ProjectRenderer.extendPerspectiveWithPath(layout
                 , Path.of(LAYOUT_PATH));
         return layout;
     }

@@ -39,7 +39,7 @@ public class CommonMarkReadmeExtension implements ProjectRendererExtension {
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
         if (is_file(projectRenderer.projectFolder().resolve("README.md"))) {
-            projectRenderer.extendPerspectiveWithPath(layout
+            ProjectRenderer.extendPerspectiveWithPath(layout
                     , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("README.html"));
         }
         return layout;

@@ -61,7 +61,7 @@ public class UserCommandExtension implements ProjectRendererExtension {
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
         if (isDirectory(BIN_FOLDER)) {
-            projectRenderer.extendPerspectiveWithPath(layout
+            ProjectRenderer.extendPerspectiveWithPath(layout
                     , Path.of(RENDERING_PATH));
         }
         return layout;
