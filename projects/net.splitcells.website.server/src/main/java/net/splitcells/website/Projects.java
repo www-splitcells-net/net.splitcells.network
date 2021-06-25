@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.ValidatorViaSchema.validatorViaSchema;
+import static net.splitcells.website.server.renderer.ProjectRenderer.projectRenderer;
 
 public class Projects {
     public static ProjectsRenderer projectsRenderer() {
@@ -32,8 +33,8 @@ public class Projects {
     }
 
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories, Validator validator) {
-        return new ProjectRenderer(profile
-                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/")
+        return projectRenderer(profile
+                , projectRepositories.resolve("net.splitcells.website.default.content/")
                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/content")
                 , "/"
@@ -41,37 +42,37 @@ public class Projects {
     }
 
     public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories, Validator validator) {
-        return list(new ProjectRenderer
+        return list(projectRenderer
                         (profile
-                                , projectRepositories.resolve("net.splitcells.dem/src/main/")
+                                , projectRepositories.resolve("net.splitcells.dem/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/dem"
                                 , validator)
-                , new ProjectRenderer
+                ,projectRenderer
                         (profile
-                                , projectRepositories.resolve("../src/main/")
+                                , projectRepositories.resolve("../")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/network"
                                 , validator)
-                , new ProjectRenderer
+                , projectRenderer
                         (profile
-                                , projectRepositories.resolve("net.splitcells.gel.doc/src/main/")
+                                , projectRepositories.resolve("net.splitcells.gel.doc/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
                                 , validator)
-                , new ProjectRenderer
+                , projectRenderer
                         (profile
-                                , projectRepositories.resolve("net.splitcells.system/src/main/")
+                                , projectRepositories.resolve("net.splitcells.system/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells"
                                 , validator)
-                , new ProjectRenderer
+                , projectRenderer
                         (profile
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/website"

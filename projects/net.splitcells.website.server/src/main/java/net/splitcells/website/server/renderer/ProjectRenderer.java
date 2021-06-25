@@ -72,14 +72,6 @@ public class ProjectRenderer {
     private final Map<String, String> parameters;
     private final CommonMarkRenderer commonMarkRenderer = commonMarkRenderer();
 
-    @Deprecated
-    public ProjectRenderer(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
-            , Validator validator) {
-        this(renderer, projectSrcFolder, xslLibs, resources, resourceRootPath, true, false
-                , validator
-                , projectSrcFolder.resolve("../.."));
-    }
-
     public static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
             , String resourceRootPath
             , Validator validator) {

@@ -23,6 +23,9 @@ For change items without a ticket, the following format is used:
 ## [Unreleased]
 ### Major Changes
 1. **2021-06-25**:
+   1. \#8 Remove deprecated constructor ProjectRenderer.
+### Minor Changes
+1. **2021-06-25**:
    1. \#8 Create index file, for standard analysis.
 1. **2021-06-24**:
    1. \#8 Rename ForallI to ForAll, in order to simplify name.
