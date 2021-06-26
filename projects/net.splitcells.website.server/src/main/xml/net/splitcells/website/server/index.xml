@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://splitcells.net/den.xsd">
     <name>Website Server</name>
-    <scheduling>
-        <unscheduled>
-            <toDo>Remove not needed Javascript in default layout.</toDo>
-            <toDo>Reenable error reporting on website via logging project.</toDo>
-            <toDo>Create tests.</toDo>
-        </unscheduled>
-    </scheduling>
-    <solution>
-        <optimization>
+    <optimization>
+        <scheduling>
+            <unscheduled>
+                <toDo>Remove not needed Javascript in default layout.</toDo>
+                <toDo>Reenable error reporting on website via logging project.</toDo>
+                <toDo>Create tests.</toDo>
+            </unscheduled>
+        </scheduling>
+        <solution>
             <unscheduled>
                 <toDo>Make website server generic and not specific to "net.splitcells.martins.avots.website".</toDo>
                 <toDo>Support XML refactoring/transformation.</toDo>
             </unscheduled>
-        </optimization>
-        <objective>
-            <objective>Create a project view, that shows multiple projects as one project in a unified namespace.
-                <objective>Serve the project's files via HTTPs and via the file system.</objective>
+            <objective>
+                <objective>Create a project view, that shows multiple projects as one project in a unified namespace.
+                    <objective>Serve the project's files via HTTPs and via the file system.</objective>
+                </objective>
             </objective>
-        </objective>
-    </solution>
+        </solution>
+    </optimization>
 </project>
