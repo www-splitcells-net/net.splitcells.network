@@ -7,6 +7,7 @@
                 <toDo>Remove not needed Javascript in default layout.</toDo>
                 <toDo>Reenable error reporting on website via logging project.</toDo>
                 <toDo>Create tests.</toDo>
+                <toDo>Make website as book.</toDo>
             </unscheduled>
         </scheduling>
         <solution>
