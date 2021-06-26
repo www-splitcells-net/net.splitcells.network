@@ -13,5 +13,6 @@
         <module>../net.splitcells.os.state.interface.lib</module>
         <module>../net.splitcells.website.server</module>
         <module>../net.splitcells.website.default.content</module>
+        <module>../net.splitcells.ses</module>
     </modules>
 </project>

@@ -57,6 +57,7 @@ For change items without a ticket, the following format is used:
 1. **2021-04-07**: #42: Make Gel workspace visible in website.
 1. **2021-04-12**: #46: Use deterministic environment and execution in CI.
 ### Minor Changes
+1. **2021-06-27**: Publish Ses project.
 1. **2021-06-25**:
    1. \#8 Create index file, for standard analysis.
 1. \#8 Create RegulatedLength AllSame.

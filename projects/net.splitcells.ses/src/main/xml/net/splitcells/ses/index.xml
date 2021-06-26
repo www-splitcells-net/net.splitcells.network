@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://splitcells.net/den.xsd">
+    <names>
+        <name>Ses</name>
+        <name>State Network Simulation, Analyzation and Optimization</name>
+    </names>
+    <optimization>
+        <scheduling>
+            <toDo>
+                <toDo>Implement project scheduling problem in Sen instead of Gel.</toDo>
+                <toDo>Create guideline.</toDo>
+            </toDo>
+            <idea>Create optimization war game.
+                <idea>Use biological cell visualization.</idea>
+            </idea>
+        </scheduling>
+    </optimization>
+</project>

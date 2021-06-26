@@ -114,6 +114,7 @@
     <element name="abbreviation" type="d:val"/>
     <element name="queue" type="d:val"/>
     <element name="toDo" type="d:val"/>
+    <element name="idea" type="d:val"/>
     <element name="asynchronous" type="d:val"/>
     <element name="current" type="d:val"/>
     <element name="optimization" type="d:val"/>
