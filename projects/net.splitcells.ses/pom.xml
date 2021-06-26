@@ -12,9 +12,9 @@
     </parent>
     <dependencies>
         <dependency>
-	    <groupId>net.splitcells</groupId>
-	    <artifactId>gel</artifactId>
-	    <version>0.0.1-SNAPSHOT</version>
+            <groupId>net.splitcells</groupId>
+            <artifactId>gel.core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
