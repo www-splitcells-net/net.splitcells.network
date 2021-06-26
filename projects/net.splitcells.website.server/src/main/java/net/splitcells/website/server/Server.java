@@ -71,6 +71,7 @@ public class Server {
                         }, (result) -> {
                             if (result.failed()) {
                                 domsole().append(textNode(result.cause().toString()), LogLevel.ERROR);
+                                domsole().appendError(result.cause());
                                 response.setStatusCode(500);
                                 response.end();
                             } else {
