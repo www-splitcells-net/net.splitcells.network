@@ -20,6 +20,9 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 
+/**
+ * TODO Create and use server interface, instead of implementation.
+ */
 public class Server {
     /**
      * TODO This is code duplication.
