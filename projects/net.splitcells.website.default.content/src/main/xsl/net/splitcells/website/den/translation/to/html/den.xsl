@@ -68,77 +68,85 @@
         <!-- TODO uri-collection: https://www.w3.org/TR/xpath-functions/#func-doc-available -->
         <xsl:param name="path"/>
         <xsl:param name="layout"/>
+        <xsl:param name="previous-depth" select="0"/>
+        <xsl:param name="max-depth" select="4"/>
         <!-- TODO Process path.
         <xsl:variable name="path-child" select="s:path.element.first($path)"/>
         /node() = s:path.element.first($path)
         -->
-        <xsl:choose>
-            <xsl:when test="$path = ''">
-                <li class="table-of-content">
+        <xsl:if test="$previous-depth &lt;= $max-depth">
+            <xsl:choose>
+                <xsl:when test="$path = ''">
+                    <li class="table-of-content">
+                        <xsl:choose>
+                            <xsl:when test="$layout/d:link/d:url">
+                                <a>
+                                    <xsl:attribute name="href"
+                                                   select="s:convert-internal-project-relative-path-to-public-project-relative-path($layout/d:link/d:url/node())"/>
+                                    <xsl:variable name="file-path"
+                                                  select="concat($source.folder, $layout/d:link/d:url/node())"/>
+                                    <xsl:choose>
+                                        <xsl:when test="doc-available($file-path)">
+                                            <xsl:variable name="linked-document"
+                                                          select="document($file-path)"/>
+                                            <xsl:choose>
+                                                <xsl:when test="local-name($linked-document/s:article) = 'article'">
+                                                    <xsl:apply-templates
+                                                            select="$linked-document/s:article/s:meta/s:title/node()"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:apply-templates select="$layout/n:name/node()"/>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="$layout/n:name/node()"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$layout/n:name/node()"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </li>
                     <xsl:choose>
-                        <xsl:when test="$layout/d:link/d:url">
-                            <a>
-                                <xsl:attribute name="href"
-                                               select="s:convert-internal-project-relative-path-to-public-project-relative-path($layout/d:link/d:url/node())"/>
-                                <xsl:variable name="file-path"
-                                              select="concat($source.folder, $layout/d:link/d:url/node())"/>
-                                <xsl:choose>
-                                    <xsl:when test="doc-available($file-path)">
-                                        <xsl:variable name="linked-document"
-                                                      select="document($file-path)"/>
-                                        <xsl:choose>
-                                            <xsl:when test="local-name($linked-document/s:article) = 'article'">
-                                                <xsl:apply-templates select="$linked-document/s:article/s:meta/s:title/node()"/>
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                <xsl:apply-templates select="$layout/n:name/node()"/>
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$layout/n:name/node()"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </a>
+                        <xsl:when test="count($layout/n:val) &gt; 0">
+                            <ol class="table-of-content">
+                                <xsl:for-each select="$layout/n:val">
+                                    <xsl:call-template name="file-path-environment-of-layout-node">
+                                        <xsl:with-param name="path" select="$path"/>
+                                        <xsl:with-param name="layout"
+                                                        select="."/>
+                                        <xsl:with-param name="previous-depth" select="$previous-depth + 1"/>
+                                    </xsl:call-template>
+                                </xsl:for-each>
+                            </ol>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="$layout/n:name/node()"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </li>
-                <xsl:choose>
-                    <xsl:when test="count($layout/n:val) &gt; 0">
-                        <ol class="table-of-content">
                             <xsl:for-each select="$layout/n:val">
                                 <xsl:call-template name="file-path-environment-of-layout-node">
                                     <xsl:with-param name="path" select="$path"/>
                                     <xsl:with-param name="layout"
                                                     select="."/>
+                                    <xsl:with-param name="previous-depth" select="$previous-depth + 1"/>
                                 </xsl:call-template>
                             </xsl:for-each>
-                        </ol>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:for-each select="$layout/n:val">
-                            <xsl:call-template name="file-path-environment-of-layout-node">
-                                <xsl:with-param name="path" select="$path"/>
-                                <xsl:with-param name="layout"
-                                                select="."/>
-                            </xsl:call-template>
-                        </xsl:for-each>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:for-each select="$layout/n:val[n:name/node() = s:path.element.first($path)]">
-                    <xsl:call-template name="file-path-environment-of-layout-node">
-                        <xsl:with-param name="path" select="s:path.without.element.first($path)"/>
-                        <xsl:with-param name="layout"
-                                        select="."/>
-                    </xsl:call-template>
-                </xsl:for-each>
-            </xsl:otherwise>
-        </xsl:choose>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:for-each select="$layout/n:val[n:name/node() = s:path.element.first($path)]">
+                        <xsl:call-template name="file-path-environment-of-layout-node">
+                            <xsl:with-param name="path" select="s:path.without.element.first($path)"/>
+                            <xsl:with-param name="layout"
+                                            select="."/>
+                            <xsl:with-param name="previous-depth" select="$previous-depth"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
     </xsl:template>
     <xsl:function name="s:can-show-text-as-line">
         <!-- TODO Parameterize. -->
