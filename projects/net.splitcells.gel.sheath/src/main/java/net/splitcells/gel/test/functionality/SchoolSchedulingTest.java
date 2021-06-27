@@ -103,6 +103,7 @@ public class SchoolSchedulingTest {
         });
     }
 
+    @Tag(INTEGRATION_TEST)
     @Test
     public void testSingleCourseAssignment() {
         final List<List<Object>> courses = list(
