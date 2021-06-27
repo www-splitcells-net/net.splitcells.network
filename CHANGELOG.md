@@ -60,6 +60,7 @@ For change items without a ticket, the following format is used:
 1. **2021-06-27**:
    1. Publish Ses project.
    1. Limit depth of `Local Path Context` in default web layout.
+   1. Render `Local Path Context` for CommonMark documents.
 1. **2021-06-25**:
    1. \#8 Create index file, for standard analysis.
 1. \#8 Create RegulatedLength AllSame.

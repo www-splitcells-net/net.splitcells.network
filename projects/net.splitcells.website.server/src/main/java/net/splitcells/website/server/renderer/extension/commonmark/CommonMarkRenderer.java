@@ -17,7 +17,7 @@ public class CommonMarkRenderer {
     private CommonMarkRenderer() {
     }
 
-    public byte[] render(String arg, ProjectRenderer projectRenderer) {
+    public byte[] render(String arg, ProjectRenderer projectRenderer, String path) {
         final Optional<String> title;
         final String contentToRender;
         if (arg.startsWith("#")) {
@@ -29,7 +29,9 @@ public class CommonMarkRenderer {
             contentToRender = arg;
         }
         return projectRenderer
-                .renderHtmlBodyContent(renderer.render(parser.parse(contentToRender)), title)
+                .renderHtmlBodyContent(renderer.render(parser.parse(contentToRender))
+                        , title
+                        , Optional.of(path))
                 .get();
     }
 }

@@ -133,6 +133,8 @@ public class ProjectRendererI implements ProjectRenderer {
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
             }
+            // TODO Do not use path, in the following code.
+            final var normalizedPath = path;
             // TODO Devide rendering function into routing and content type determination.
             if (path.endsWith(".txt")) {
                 return renderTextFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
@@ -150,7 +152,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 assertThat(renderedFile.isPresent() && commonMarkSrc.isPresent()).isFalse();
                 if (commonMarkSrc.isPresent()) {
                     return commonMarkSrc
-                            .map(r -> commonMarkRenderer.render(new String(r), this))
+                            .map(r -> commonMarkRenderer.render(new String(r), this, normalizedPath))
                             .map(r -> renderingResult(r, TEXT_HTML.toString()));
                 }
                 if (renderedFile.isPresent()) {
@@ -228,7 +230,7 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title) {
+    public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path) {
         try {
             final var content = Xml.rElement(NameSpaces.SEW, "article");
             final var htmlBodyContent = Xml.rElement(NameSpaces.SEW, "html-body-content");
@@ -242,6 +244,11 @@ public class ProjectRendererI implements ProjectRenderer {
                 metaElement.appendChild(titleElement);
                 titleElement.appendChild(Xml.textNode(title.get()));
                 content.appendChild(metaElement);
+                if (path.isPresent()) {
+                    final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
+                    pathElement.appendChild(Xml.textNode(path.get()));
+                    content.appendChild(pathElement.getFirstChild());
+                }
             }
             return Optional.of(renderer()
                     .transform(Xml.toPrettyString(content))

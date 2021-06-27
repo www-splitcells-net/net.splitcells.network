@@ -30,7 +30,7 @@ public class CommonMarkReadmeExtension implements ProjectRendererExtension {
         if (path.endsWith("README.html") && is_file(projectRenderer.projectFolder().resolve("README.md"))) {
             final var pathContent = readString(projectRenderer.projectFolder().resolve("README.md"));
             return Optional.of(
-                    renderingResult(renderer.render(pathContent, projectRenderer)
+                    renderingResult(renderer.render(pathContent, projectRenderer, path)
                             , TEXT_HTML.toString()));
         }
         return Optional.empty();

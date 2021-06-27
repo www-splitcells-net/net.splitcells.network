@@ -113,8 +113,7 @@ public interface ProjectRenderer {
     @Deprecated
     Optional<byte[]> renderString(String arg);
 
-    @Deprecated
-    Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title);
+    Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path);
 
     String resourceRootPath();
 
