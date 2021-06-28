@@ -9,7 +9,7 @@ public class DescriptiveLambda {
         throw constructorIllegal();
     }
 
-    public <T> Predicate<T> describedPredicate(Predicate<T> predicate, String description) {
+    public static <T> Predicate<T> describedPredicate(Predicate<T> predicate, String description) {
         return new Predicate<>() {
 
             @Override

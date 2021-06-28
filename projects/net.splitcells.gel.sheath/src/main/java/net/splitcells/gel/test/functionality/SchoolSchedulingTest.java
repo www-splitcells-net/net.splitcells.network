@@ -211,7 +211,7 @@ public class SchoolSchedulingTest {
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
                 .withSupplies(railCapacity)
                 .withConstraint(r -> {
-                    r.forAll(lineValueSelector(line -> line.value(RAIL) == 0))
+                    r.forAll(lineValueSelector(describedPredicate(line -> line.value(RAIL) == 0, "")))
                             .then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
                     r.forAll(SUBJECT)
                             .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
