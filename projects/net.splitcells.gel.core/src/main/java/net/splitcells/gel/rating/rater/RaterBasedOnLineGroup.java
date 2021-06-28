@@ -5,6 +5,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import org.w3c.dom.Node;
@@ -82,5 +83,10 @@ public class RaterBasedOnLineGroup implements Rater {
     @Override
     public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
         return rater.rating(lines, Optional.empty(), Optional.of(removal), children);
+    }
+
+    @Override
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+        return rater.toString();
     }
 }
