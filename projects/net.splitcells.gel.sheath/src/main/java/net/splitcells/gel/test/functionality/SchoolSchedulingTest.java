@@ -19,6 +19,7 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.MathUtils.roundToInt;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.lambdas.DescriptiveLambda.describedPredicate;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.data.database.Databases.database;
@@ -211,10 +212,10 @@ public class SchoolSchedulingTest {
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
                 .withSupplies(railCapacity)
                 .withConstraint(r -> {
-                    r.forAll(lineValueSelector(describedPredicate(line -> line.value(RAIL) == 0, "")))
+                    r.forAll(lineValueSelector(describedPredicate(line -> line.value(RAIL) == 0, "void rail")))
                             .then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
                     r.forAll(SUBJECT)
-                            .forAll(lineValueSelector(line -> line.value(RAIL) != 0))
+                            .forAll(lineValueSelector(describedPredicate(line -> line.value(RAIL) != 0, "not void rail")))
                             .then(allDifferent(RAIL));
                     r.forAll(COURSE_ID).then(RegulatedLength.regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
                     r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
