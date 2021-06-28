@@ -75,9 +75,11 @@ public class SchoolSchedulingTest {
     public static void main(String... args) {
         GelEnv.process(() -> {
             final List<List<Object>> courses = list(
-                    course(1, 1, 1, 1));
+                    course(1, 1, 1, 1)
+                    , course(1, 1, 1, 1));
             final List<List<Object>> railCapacity = list(
-                    railCapacity(1, 1));
+                    railCapacity(1, 1)
+                    , railCapacity(1, 1));
             final var railsForSchoolScheduling = defineRailsForSchoolScheduling(courses, railCapacity);
             final List<List<Object>> teacherCapacity = list(
                     teacherCapacity(1, 1));
@@ -96,6 +98,7 @@ public class SchoolSchedulingTest {
             railsForSchoolScheduling.optimize(linearInitialization());
             teacherAllocationForCourses.optimize(linearInitialization());
             studentAllocationsForCourses.optimize(linearInitialization());
+            railsForSchoolScheduling.createStandardAnalysis();
             assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
             assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
             studentAllocationsForCourses.createStandardAnalysis();
