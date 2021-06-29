@@ -234,6 +234,10 @@
                 Therefore some points regarding the development process that influence the code
                 are included here as well.
             </paragraph>
+            <paragraph>Keep in mind that development is not just coding and it is affected by many different things.
+                For example doing things always fast or slowly is propably not the best thing.
+                Resources like documentation or the GUI may need to consider this.
+            </paragraph>
             <paragraph>Minimize the size of the main backlog.
                 Prefer smaller tasks over bigger tasks.
             </paragraph>
