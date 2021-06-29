@@ -555,6 +555,10 @@
     <chapter>
         <title>Complexity Management</title>
         <d:toDo>Remove coding details.</d:toDo>
+        <paragraph>Prefer using existing standards instead of a new one.
+            If a standard does not fulfill ones need, one can use a restricted version of the standard:
+            only a part of the standard is used, which in turn allows one to add new functionality to the standard.
+        </paragraph>
         <paragraph>
             The complexity of project should be planned.
             If the
