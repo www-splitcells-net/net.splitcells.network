@@ -30,6 +30,7 @@ import static net.splitcells.gel.rating.rater.AllSame.allSame;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.HasMinimalSize.hasMinimalSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
+import static net.splitcells.gel.rating.rater.RegulatedLength.regulatedLength;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -217,7 +218,7 @@ public class SchoolSchedulingTest {
                     r.forAll(SUBJECT)
                             .forAll(lineValueSelector(describedPredicate(line -> line.value(RAIL) != 0, "not void rail")))
                             .then(allDifferent(RAIL));
-                    r.forAll(COURSE_ID).then(RegulatedLength.regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
+                    r.forAll(COURSE_ID).then(regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
                     r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;
                 }).toProblem()
