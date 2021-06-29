@@ -525,11 +525,9 @@
         </chapter>
         <chapter>
             <title>Logging</title>
-            <chapter>
-                <title>By default settings only events that require action or signal execution progress for the
-                    log inspector should be shown.
-                </title>
-            </chapter>
+            <paragraph>By default settings only events that require action or signal execution progress for the
+                log inspector should be shown.
+            </paragraph>
             <chapter>
                 <title>Logging as Event Log</title>
                 <paragraph>Model the (interactive) console and log files as event
