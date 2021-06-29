@@ -21,26 +21,35 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 public class RaterBasedOnLineGroup implements Rater {
 
     public static RaterBasedOnLineGroup groupRater(GroupRater rater) {
-        return raterBasedOnLineGroup((lines, addition, removal, children) -> {
-            final var lineRating = rater.lineRating(lines, addition, removal);
-            final var ratingEvent = ratingEvent();
-            lines.getLines().stream()
-                    .filter(e -> addition.map(line -> e.index() != line.index()).orElse(true))
-                    .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
-                    .forEach(e -> ratingEvent.updateRating_withReplacement(e
-                            , localRating()
-                                    .withPropagationTo(children)
-                                    .withRating(lineRating)
-                                    .withResultingGroupId
-                                            (e.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
-            addition.ifPresent(line -> ratingEvent.additions()
-                    .put(line
-                            , localRating()
-                                    .withPropagationTo(children)
-                                    .withRating(lineRating)
-                                    .withResultingGroupId
-                                            (line.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
-            return ratingEvent;
+        return raterBasedOnLineGroup(new RaterBasedOnLineGroupLambda() {
+
+            @Override
+            public RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, java.util.List<Constraint> children) {
+                final var lineRating = rater.lineRating(lines, addition, removal);
+                final var ratingEvent = ratingEvent();
+                lines.getLines().stream()
+                        .filter(e -> addition.map(line -> e.index() != line.index()).orElse(true))
+                        .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
+                        .forEach(e -> ratingEvent.updateRating_withReplacement(e
+                                , localRating()
+                                        .withPropagationTo(children)
+                                        .withRating(lineRating)
+                                        .withResultingGroupId
+                                                (e.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
+                addition.ifPresent(line -> ratingEvent.additions()
+                        .put(line
+                                , localRating()
+                                        .withPropagationTo(children)
+                                        .withRating(lineRating)
+                                        .withResultingGroupId
+                                                (line.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
+                return ratingEvent;
+            }
+
+            @Override
+            public String toString() {
+                return rater.toString();
+            }
         });
     }
 
