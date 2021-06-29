@@ -150,10 +150,12 @@
             </d:todo>
             <d:toDo>Avoid software rewrites and prefer migration based development.</d:toDo>
             <d:toDo>Projects are likely to grow and get out of scope.</d:toDo>
-            <d:toDo>Fork and join development protocol.</d:toDo>
+            <d:toDo>Fork, join and cathedral development protocol.</d:toDo>
             <d:toDo>Programs should be primarily seen as tree/table transformers in order
                 to simplify programming paradigma and language use.
             </d:toDo>
+            <d:toDo>Migration based Development</d:toDo>
+            <d:toDo>Configuration automation guidelines.</d:toDo>
         </d:toDo>
     </meta>
     <chapter>

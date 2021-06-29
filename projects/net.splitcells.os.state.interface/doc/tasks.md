@@ -23,6 +23,7 @@ The priority of a task is just a guideline.
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
 1. Move tasks to other projects if suitable.
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
+1. Support project specific repo commands.
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
 1. General advertisment.
@@ -113,6 +114,7 @@ The priority of a task is just a guideline.
    1. Ideas:
       1. https://opensource.stackexchange.com/questions/668/are-there-reusable-clas
       1. http://www.apache.org/licenses/#clas
+1. Support alternative repo managers.
 # Ideas
 1. Support partial installation of repository.
    In this case only scripts related to a topic or program are installed.

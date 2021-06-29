@@ -9,6 +9,8 @@
                 <toDo>Create tests.</toDo>
                 <toDo>Make website as book.</toDo>
                 <toDo>Validate all documents.</toDo>
+                <toDo>Add path as breadcrumb bar.</toDo>
+                <toDo>Support and publish gemini protocol.</toDo>
             </unscheduled>
         </scheduling>
         <solution>

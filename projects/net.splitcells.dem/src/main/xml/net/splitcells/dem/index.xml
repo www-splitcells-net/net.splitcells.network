@@ -38,6 +38,7 @@
                         <toDo>Create a resource class, that marks a resource as supporting such functionality.</toDo>
                     </toDo>
                     <toDo>Define XML schemas for own format and ensure compliance.</toDo>
+                    <toDo>Split Dem into core, merger and Java bootstrapping subproject.</toDo>
                 </priority>
             </queues>
             <service xl:href="compatibilty-and-portability.xml"/>
