@@ -31,6 +31,7 @@ import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.HasMinimalSize.hasMinimalSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.rating.rater.RegulatedLength.regulatedLength;
+import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -77,18 +78,20 @@ public class SchoolSchedulingTest {
     public static void main(String... args) {
         GelEnv.process(() -> {
             final List<List<Object>> courses = list(
-                    course(1, 1, 1, 1)
-                    , course(1, 1, 1, 1));
+                    course(1, 1, 1, 2)
+                    , course(1, 1, 1, 2));
             final List<List<Object>> railCapacity = list(
                     railCapacity(1, 1)
-                    , railCapacity(1, 1));
+                    , railCapacity(1, 2));
             final var railsForSchoolScheduling = defineRailsForSchoolScheduling(courses, railCapacity);
             final List<List<Object>> teacherCapacity = list(
-                    teacherCapacity(1, 1));
+                    teacherCapacity(1, 1)
+                    , teacherCapacity(1, 1));
             final var teacherAllocationForCourses
                     = defineTeacherAllocationForCourses(railsForSchoolScheduling, teacherCapacity);
             final List<List<Object>> studentDemands = list(
-                    studentDemand(1, 1, 1));
+                    studentDemand(1, 1, 1)
+                    , studentDemand(1, 1, 1));
             final int minimalNumberOfStudentsPerCourse = 1;
             final int optimalNumberOfStudentsPerCourse = 1;
             final int maximumNumberOfStudentsPerCourse = 1;
@@ -104,8 +107,44 @@ public class SchoolSchedulingTest {
             assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
             assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
             studentAllocationsForCourses.createStandardAnalysis();
-            assertThat(studentAllocationsForCourses.isOptimal()).isTrue();
+            assertThat(studentAllocationsForCourses.constraint().rating()).isEqualTo(cost(1));
         });
+    }
+
+    @Tag(INTEGRATION_TEST)
+    @Test
+    public void testCourseWithTooManyStudents() {
+        final List<List<Object>> courses = list(
+                course(1, 1, 1, 2)
+                , course(1, 1, 1, 2));
+        final List<List<Object>> railCapacity = list(
+                railCapacity(1, 1)
+                , railCapacity(1, 2));
+        final var railsForSchoolScheduling = defineRailsForSchoolScheduling(courses, railCapacity);
+        // TODO This should not be multiplied.
+        final List<List<Object>> teacherCapacity = list(
+                teacherCapacity(1, 1)
+                , teacherCapacity(1, 1));
+        final var teacherAllocationForCourses
+                = defineTeacherAllocationForCourses(railsForSchoolScheduling, teacherCapacity);
+        // TODO This should not be multiplied.
+        final List<List<Object>> studentDemands = list(
+                studentDemand(1, 1, 1)
+                , studentDemand(1, 1, 1));
+        final int minimalNumberOfStudentsPerCourse = 1;
+        final int optimalNumberOfStudentsPerCourse = 1;
+        final int maximumNumberOfStudentsPerCourse = 1;
+        final var studentAllocationsForCourses = defineStudentAllocationsForCourses(teacherAllocationForCourses
+                , studentDemands
+                , minimalNumberOfStudentsPerCourse
+                , optimalNumberOfStudentsPerCourse
+                , maximumNumberOfStudentsPerCourse);
+        railsForSchoolScheduling.optimize(linearInitialization());
+        teacherAllocationForCourses.optimize(linearInitialization());
+        studentAllocationsForCourses.optimize(linearInitialization());
+        assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
+        assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
+        assertThat(studentAllocationsForCourses.constraint().rating()).isEqualTo(cost(1));
     }
 
     @Tag(INTEGRATION_TEST)
