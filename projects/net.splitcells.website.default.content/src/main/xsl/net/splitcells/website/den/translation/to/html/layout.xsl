@@ -515,7 +515,8 @@
                         </a>
                         <h3>Instances</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3"
-                           href="javascript:void(0);" onclick="const Http = new XMLHttpRequest(); Http.open('GET', '/net/splitcells/website/layout/build'); Http.send();">
+                           href="javascript:void(0);"
+                           onclick="const Http = new XMLHttpRequest(); Http.open('GET', '/net/splitcells/website/layout/build'); Http.send();">
                             Refresh layout.
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3"
@@ -553,15 +554,6 @@
                                 Rss feed
                             </a>
                         </div>
-                        <h3>Layouts</h3>
-                        <a class="net-splitcells-button net-splitcells-component-priority-3"
-                           href="/net/splitcells/martins/avots/website/experimental/browser.layout.html">
-                            Experimental Browser
-                        </a>
-                        <a class="net-splitcells-button net-splitcells-component-priority-3"
-                           href="/net/splitcells/martins/avots/website/experimental/desktop.layout.html">
-                            Experimental Desktop
-                        </a>
                         <h3>Interesting Third Party Sites</h3>
                         <div class="advertise-one-of">
                             <xsl:for-each

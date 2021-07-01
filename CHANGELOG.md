@@ -22,6 +22,8 @@ For change items without a ticket, the following format is used:
 ```
 ## [Unreleased]
 ### Major Changes
+1. **2021-08-01**:
+   1. Remove experimental web layouts.
 1. **2021-06-25**:
    1. \#8 Remove deprecated constructor ProjectRenderer.
    1. \#8 Provide path `/net/splitcells/website/layout/build` in server,
