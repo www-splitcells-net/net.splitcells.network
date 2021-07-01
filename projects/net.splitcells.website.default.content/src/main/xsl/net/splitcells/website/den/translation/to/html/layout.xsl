@@ -474,7 +474,7 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
+                                        select="s:root-relative-url('/index.html')"/>
                             </xsl:attribute>
                             Main Page
                         </a>
