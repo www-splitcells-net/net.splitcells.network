@@ -384,13 +384,13 @@
                                 <a class="net-splitcells-button net-splitcells-main-button-project-logo">
                                     <xsl:attribute name="href">
                                         <xsl:value-of
-                                                select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
+                                                select="s:root-relative-url('/index.html')"/>
                                     </xsl:attribute>
                                 </a>
                                 <a class="net-splitcells-button">
                                     <xsl:attribute name="href">
                                         <xsl:value-of
-                                                select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
+                                                select="s:root-relative-url('/index.html')"/>
                                     </xsl:attribute>
                                     <xsl:value-of select="$siteName"/>
                                 </a>
@@ -667,7 +667,7 @@
                                         <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
-                                                        select="s:root-relative-url('/2017/12/31/updated-main-page.html')"/>
+                                                        select="s:root-relative-url('/index.html')"/>
                                             </xsl:attribute>
                                         </a>
                                         <div class="HeaderButton_structure HeaderButton_p2">
