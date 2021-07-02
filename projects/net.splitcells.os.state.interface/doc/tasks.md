@@ -2,40 +2,29 @@
 Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
+### Services
+1. Document commands.
+1. Add tests.
+1. Improve echo output and make it nice, for a certain setting.
 ### Current Tasks
 1. Remove unecessary tasks.
-1. Replaces "this.requires" and "this.active.if.present", by command
-   which exits with none zero, if a command is not present and zero otherwise.
-1. Document commands.
-1. Implement tests:
-   Tests are implemented as normal commands.
-   They are executed in a sandbox.
-   1. Test injection in order to test implementations of managed commands.
-      1. Format for test command name: all commands ending with ".test".
-      1. Create command which executes all tests.
-      1. Find or create a test framework. 
-   1. Test without additional rights.
-   1. Test with sudo rights.
-   1. Fix Gitlab Test and ensure that test failures are automatically found,
+1. Implement testing:
+   1. Fix Gitlab-Runner Test and ensure that test failures are automatically found,
       which is currently not the case.
    1. Use [toolbox](https://github.com/containers/toolbox).
       1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
-1. Move tasks to other projects if suitable.
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
 1. Support project specific repo commands.
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
-1. General advertisment.
-1. Actively support Linux users in order to advertise this and related projects.
-1. Create community guidelines and contribution agreement.
-1. Create/find text based ticket system.
 1. Define break points of this project.
 1. Fork Wars
 ### Todos
 1. Create integration into user home portability projects.
 1. Create ssh deployment machanism via other frameworks like ansible.
 1. Create display brightness control commands.
+1. Create sound control command.
 1. Create installation script for Windows.
    1. Installation of Git Bash.
    1. Installation of Choco.
@@ -115,9 +104,5 @@ The priority of a task is just a guideline.
       1. https://opensource.stackexchange.com/questions/668/are-there-reusable-clas
       1. http://www.apache.org/licenses/#clas
 1. Support alternative repo managers.
-# Ideas
-1. Support partial installation of repository.
-   In this case only scripts related to a topic or program are installed.
-   This requires that the repository has a certain structure.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
