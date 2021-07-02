@@ -265,7 +265,8 @@ p {
 .decorationBox_LeftRight {
 	box-shadow: .3em 0em .2em -.1em var(--shadow-color-priority-3), -.3em 0em .2em -.1em var(--shadow-color-priority-3);
 }
-.topLightShadow {
+.topLightShadow,
+ main {
 	box-shadow: 0em -.1em 0em 0em var(--shadow-color-priority-2);
 }
 .bottomLightShadow {
