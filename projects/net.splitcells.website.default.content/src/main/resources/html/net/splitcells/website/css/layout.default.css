@@ -185,7 +185,7 @@ footer {
     	}
 	}
 @media (min-width: 59em) {
-    .mainElement_Container {
+    main {
         display: flex;
         flex-direction: row;
         visibility: inherit;
@@ -204,7 +204,7 @@ footer {
     }
 @media (max-width: 59em) and (min-width: 53.25em) {
     /* TODO (max-width: 59em) should be (max-width: 57.5em) but is not working.*/
-    .mainElement_Container {
+    .main {
         display: flex;
         flex-direction: row;
         }
