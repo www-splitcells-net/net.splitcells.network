@@ -373,7 +373,7 @@
             </head>
             <body>
                 <main id="topElement"
-                      class="Standard_highlighted topElement beginningOfContent background_not_important topLightShadow mainElement Layout mainElement_Container">
+                      class="topElement beginningOfContent background_not_important topLightShadow mainElement Layout mainElement_Container">
                     <div class="splitcells-net-background-window minimal-only net-splitcells-website-column-background-1">
                         <div class="splitcells-net-window-menu splitcells-net-background-window-menu"></div>
                     </div>

@@ -44,7 +44,8 @@ ol.table-of-content > li.table-of-content:before {
 .Standard_p2 .Standard_highlighted {
 	background-color: var(--background-color-priority-1);
 }
-*.Standard_highlighted {
+*.Standard_highlighted,
+main {
 	background-color: var(--background-color-priority-0);
 	color: var(--foreground-color-priority-0);
 	}
