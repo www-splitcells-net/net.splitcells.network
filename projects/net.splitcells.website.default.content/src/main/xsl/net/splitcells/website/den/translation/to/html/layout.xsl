@@ -629,28 +629,6 @@
                             Files and other contents, which are linked to by this
                             HTML file, have their own rulings.
                         </div>
-                        <xsl:if test="./s:meta/s:publication_date">
-                            <div class="MainButtonDescription Standard_p3 Text"
-                                 style="text-indent: 0em; display: block; font-weight: normal; padding-left: 0.25em;">
-                                Publication Date:
-                                <xsl:value-of
-                                        select="concat(./s:meta/s:publication_date/@year, '.', ./s:meta/s:publication_date/@month, '.', ./s:meta/s:publication_date/@day_of_month)"/>
-                            </div>
-                        </xsl:if>
-                        <xsl:if test="./s:meta/s:arbitrary_publication_date">
-                            <h3>Notes</h3>
-                            <div class="MainButtonDescription Standard_p3 Text">This document has an
-                                arbitrary creation date.
-                            </div>
-                        </xsl:if>
-                        <a class="linkButton"
-                           href="https://html.spec.whatwg.org/multipage/microdata.html">
-                            <div class="MainButtonDescription Standard_p3"
-                                 style="text-indent: 0em; display: block; font-weight: normal;">
-                                <div style="padding-left: 0.25em;">This site uses Microdata a bit.
-                                </div>
-                            </div>
-                        </a>
                         <div style="flex: auto;"></div>
                         <h3>Footer Functions</h3>
                         <a class="linkButton" style="margin-bottom: .5em;" href="#topElement">
