@@ -372,8 +372,7 @@
                 </xsl:element>
             </head>
             <body>
-                <main id="topElement"
-                      class="topElement">
+                <main id="topElement">
                     <div class="splitcells-net-background-window minimal-only net-splitcells-website-column-background-1">
                         <div class="splitcells-net-window-menu splitcells-net-background-window-menu"></div>
                     </div>
