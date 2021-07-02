@@ -7,7 +7,6 @@ The priority of a task is just a guideline.
 1. Add tests.
 1. Improve echo output and make it nice, for a certain setting.
 ### Current Tasks
-1. Remove unecessary tasks.
 1. Implement testing:
    1. Fix Gitlab-Runner Test and ensure that test failures are automatically found,
       which is currently not the case.
@@ -16,6 +15,7 @@ The priority of a task is just a guideline.
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
 1. Support project specific repo commands.
+1. Remove unecessary tasks.
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
 1. Define break points of this project.
