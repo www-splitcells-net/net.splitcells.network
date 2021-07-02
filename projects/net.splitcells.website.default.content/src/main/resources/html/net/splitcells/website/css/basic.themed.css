@@ -91,7 +91,7 @@ main {
 *.text_standrad_very_low_priority {
 	color: var(--foreground-color-priority-6);
 	}
-*.background_not_important {
+main {
 	background-color: var(--background-color-priority-7);
 	}
 .VeryLightBorder {
