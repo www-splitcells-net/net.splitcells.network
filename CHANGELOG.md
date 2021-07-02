@@ -22,7 +22,11 @@ For change items without a ticket, the following format is used:
 ```
 ## [Unreleased]
 ### Major Changes
-1. **2021-08-01**:
+1. **2021-07-03**:
+   1. Port 'repo.synchronize.with' to Python, add standardized argument handling
+      and use better sub commands for each synchronization step.
+      Also adds a logging message in case of error.
+1. **2021-07-01**:
    1. Remove experimental web layouts.
 1. **2021-06-25**:
    1. \#8 Remove deprecated constructor ProjectRenderer.
