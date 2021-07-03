@@ -88,10 +88,14 @@ statement
     | Whitespace? Line_comment
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
     | Whitespace? Keyword_try Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_catch?
+        statement_finally?
     ;
 statement_catch
     : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? Name Whitespace? Name Whitespace?
         Brace_round_closed Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
+    ;
+statement_finally
+    : Whitespace? Keyword_finally Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
     ;
 source_unit
     : package_declaration import_declaration* Whitespace? class_definition EOF
