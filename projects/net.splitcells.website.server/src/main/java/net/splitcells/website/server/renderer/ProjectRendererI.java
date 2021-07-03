@@ -116,8 +116,7 @@ public class ProjectRendererI implements ProjectRenderer {
         return new FileStructureTransformer(projectSrcFolder.resolve("xml")
                 , xslLibs
                 , "main." + profile + ".xsl"
-                , validator
-                , map());
+                , validator);
     }
 
     /**

@@ -45,12 +45,11 @@ public class FileStructureTransformer {
         });
     }*/
 
-    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, Validator validator, Map<String, String> parameters) {
+    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, Validator validator) {
         this.fileStructureRoot = fileStructureRoot;
         try {
             transformer = new XslTransformer
-                    (newInputStream(xslLibs.resolve(transformerXsl)), new PathBasedUriResolver(xslLibs)
-                            , parameters);
+                    (newInputStream(xslLibs.resolve(transformerXsl)), new PathBasedUriResolver(xslLibs));
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException();
