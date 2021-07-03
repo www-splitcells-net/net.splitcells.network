@@ -44,6 +44,18 @@ public interface ProjectRenderer {
 
     static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
             , String resourceRootPath
+            , boolean typedFolder
+            , boolean flatRepository
+            , Validator validator) {
+        return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
+                , true
+                , false
+                , validator
+                , projectFolder);
+    }
+
+    static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
+            , String resourceRootPath
             , Validator validator) {
         return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
                 , true
