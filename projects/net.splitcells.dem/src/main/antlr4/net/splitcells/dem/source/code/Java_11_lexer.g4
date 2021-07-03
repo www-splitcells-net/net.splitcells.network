@@ -22,6 +22,7 @@ Dot: '.';
 Equals: '=';
 Javadoc: '/**' .*? '*/';
 Keyword_class: 'class';
+Keyword_catch: 'catch';
 Keyword_final: 'final';
 Keyword_import: 'import';
 Keyword_new: 'new';
