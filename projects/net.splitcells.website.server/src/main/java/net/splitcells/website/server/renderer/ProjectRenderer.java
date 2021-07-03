@@ -52,28 +52,6 @@ public interface ProjectRenderer {
                 , projectFolder);
     }
 
-    static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
-            , String resourceRootPath
-            , Validator validator
-            , Map<String, String> parameters) {
-        return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
-                , true
-                , false
-                , validator
-                , projectFolder
-                , parameters);
-    }
-
-    static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources, String resourceRootPath
-            , boolean typedFolder
-            , boolean flatRepository
-            , Validator validator
-            , Map<String, String> parameters) {
-        return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath, typedFolder, flatRepository, validator
-                , projectFolder
-                , parameters);
-    }
-
     /**
      * @param current
      * @param relativeProjectPath Path relative to the project folders src/xml folder. This path also represent absolute path in projects namespace.

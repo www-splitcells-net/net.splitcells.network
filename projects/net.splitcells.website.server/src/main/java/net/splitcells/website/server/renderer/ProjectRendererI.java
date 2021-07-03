@@ -68,33 +68,13 @@ public class ProjectRendererI implements ProjectRenderer {
         extension.registerExtension(userCommandExtension());
     }
 
-    private final Map<String, String> parameters;
     private final CommonMarkRenderer commonMarkRenderer = commonMarkRenderer();
-
 
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
             , Validator validator
             , Path projectFolder) {
-        this(renderer
-                , projectSrcFolder
-                , xslLibs
-                , resources
-                , resourceRootPath
-                , typedFolder
-                , flatRepository
-                , validator
-                , projectFolder
-                , map());
-    }
-
-    protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
-            , boolean typedFolder
-            , boolean flatRepository
-            , Validator validator
-            , Path projectFolder
-            , Map<String, String> parameters) {
         this.typedFolder = typedFolder;
         this.profile = renderer;
         this.projectSrcFolder = projectSrcFolder;
@@ -104,7 +84,6 @@ public class ProjectRendererI implements ProjectRenderer {
         this.flatRepository = flatRepository;
         this.validator = validator;
         this.projectFolder = projectFolder;
-        this.parameters = parameters;
     }
 
     /**
