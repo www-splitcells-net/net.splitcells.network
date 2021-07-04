@@ -1,9 +1,3 @@
----
-title: Fostering a culture that values stability and reliability
-date: 2021-01-04
-outputs: [html, gemtext]
----
-
 # net.splitcells.network
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
