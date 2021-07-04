@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://splitcells.net/den.xsd">
+<project xmlns="http://splitcells.net/den.xsd"
+         xmlns:xl="http://www.w3.org/1999/xlink">
     <name>Website Server</name>
     <optimization>
         <scheduling>
@@ -11,6 +12,7 @@
                 <toDo>Validate all documents.</toDo>
                 <toDo>Add path as breadcrumb bar.</toDo>
                 <toDo>Support and publish gemini protocol.</toDo>
+                <toDo xl:href="https://git.sr.ht/~sircmpwn/openring">Support openring.</toDo>
             </unscheduled>
         </scheduling>
         <solution>
