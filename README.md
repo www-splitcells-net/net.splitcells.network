@@ -26,7 +26,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 ## Where to start?
 
-🗞️️ Keep updated via a [blog](https://martins-avots.medium.com/) or the repo's [changelog](./CHANGELOG.md).
+🗞️️ Keep updated via a [blog](https://splitcells-net.srht.site/) or the repo's [changelog](./CHANGELOG.md).
 
 🚀 [Model and optimize problems.](projects/net.splitcells.gel.doc/src/main/md/net/splitcells/gel/index.md)
 
@@ -112,9 +112,10 @@ Project Cluster
 
 ## Social Contacts
 
+* [Main Blog](https://splitcells-net.srht.site/)
 * Livestreaming via [Twitch](https://www.twitch.tv/splitcellsnet) 
 * Messaging via [Mastadon/Fosstodon](https://fosstodon.org/@splitcells)
-* Blogging on [Medium](https://martins-avots.medium.com/)
+* Blogging with Images on [Medium](https://martins-avots.medium.com/)
 
 ## Infrastructure
 
