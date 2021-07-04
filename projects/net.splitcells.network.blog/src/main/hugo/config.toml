@@ -1,6 +1,6 @@
 baseURL = "https://splitcells-net.srht.site/"
 languageCode = "en-us"
-title = "Split Cells Network Blog"
+title = "Splitcells Network Blog"
 theme = "HugoTeX"
 
 [outputs]
