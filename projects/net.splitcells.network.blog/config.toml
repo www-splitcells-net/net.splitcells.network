@@ -1,6 +1,6 @@
-baseURL = "http://example.org/"
+baseURL = "https://splitcells-net.srht.site/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Split Cells Network Blog"
 theme = "HugoTeX"
 
 [outputs]
