@@ -1,3 +1,13 @@
 #!/usr/bin/env bash
 set -e
-hugo
+projectPath=$(pwd)
+cd src/main/hugo
+if [ ! -d themes/HugoTeX ]
+then
+  mkdir -p themes/HugoTeX
+  cd themes
+  git clone https://github.com/HelloRusk/HugoTeX
+  cd ..
+fi
+mkdir -p $projectPath/site
+hugo --destination $projectPath/target/site

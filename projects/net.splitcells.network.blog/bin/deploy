@@ -1,15 +1,6 @@
 #!/usr/bin/env bash
-set -e
-if [ ! -d themes/HugoTeX ]
-then
-  mkdir -p themes/HugoTeX
-  cd themes
-  git clone https://github.com/HelloRusk/HugoTeX
-  cd ..
-fi
-hugo
-mkdir -p target
-tar -C public -cvz . > target/site.tar.gz
+./bin/build
+tar -C target/site -cvz . > target/site.tar.gz
 curl --oauth2-bearer $net_splitcells_network_blog_srht_site_access_token \
     -Fcontent=@target/site.tar.gz \
     https://pages.sr.ht/publish/splitcells-net.srht.site

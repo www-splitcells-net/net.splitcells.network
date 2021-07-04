@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-hugo server -D
+projectPath=$(pwd)
+hugo server --destination $projectPath/target/site
+
