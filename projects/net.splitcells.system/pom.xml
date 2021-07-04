@@ -14,5 +14,6 @@
         <module>../net.splitcells.website.server</module>
         <module>../net.splitcells.website.default.content</module>
         <module>../net.splitcells.ses</module>
+        <module>../net.splitcells.network.blog</module>
     </modules>
 </project>
