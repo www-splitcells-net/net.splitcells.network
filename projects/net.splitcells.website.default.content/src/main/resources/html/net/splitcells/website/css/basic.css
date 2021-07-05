@@ -17,6 +17,8 @@ pre {
 	}
 .net-splitcells-website-hidden-by-default {
     /* We hide errors by default and only show them via Javascript. */
+    visibility: hidden;
+    display: none;
     }
 .splitcells-net-title-logo {
     text-align: center;
