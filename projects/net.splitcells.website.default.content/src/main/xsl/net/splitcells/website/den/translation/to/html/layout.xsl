@@ -512,7 +512,7 @@
                             </xsl:attribute>
                             Search
                         </a>
-                        <h3>Instances</h3>
+                        <h3>Local Instances</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3"
                            href="javascript:void(0);"
                            onclick="const Http = new XMLHttpRequest(); Http.open('GET', '/net/splitcells/website/layout/build'); Http.send();">
@@ -528,6 +528,10 @@
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
                            href="https://localhost:8444">Local Private Site
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
+                           href="http://localhost:1313/">
+                            Local Hugo Site
                         </a>
                         <h3>Mārtiņš Avots's Support System</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
