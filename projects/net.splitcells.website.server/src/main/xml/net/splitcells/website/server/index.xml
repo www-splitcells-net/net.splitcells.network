@@ -13,7 +13,9 @@
                 <toDo>Add path as breadcrumb bar.</toDo>
                 <toDo>Support and publish gemini protocol.</toDo>
                 <toDo xl:href="https://git.sr.ht/~sircmpwn/openring">Support openring.</toDo>
-                <toDo>Show error link of page, if errors are found.</toDo>
+                <toDo>Show error link of page, if errors are found. Ensure that errors of private sites are not
+                    leaked.
+                </toDo>
             </unscheduled>
         </scheduling>
         <solution>
