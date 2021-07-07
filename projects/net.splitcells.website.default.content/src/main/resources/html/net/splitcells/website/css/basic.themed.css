@@ -42,8 +42,13 @@ ol.table-of-content > li.table-of-content:before {
 	box-shadow:  0em 0em .2em -.1em var(--shadow-color-structural-guide);
 	}
 .Standard_p2 .Standard_highlighted {
-	background-color: var(--background-color-priority-1);
-}
+    background-color: var(--background-color-priority-1);
+    }
+.net-splitcells-component-priority-2 .heading,
+.net-splitcells-component-priority-2 h2 {
+    background-color: var(--background-color-priority-1);
+    color: var(--foreground-color-priority-1);
+    }
 *.Standard_highlighted,
 main {
 	background-color: var(--background-color-priority-0);

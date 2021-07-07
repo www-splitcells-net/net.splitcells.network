@@ -638,8 +638,8 @@
                             <div class="MainButton MainButton_S">back to top</div>
                         </a>
                     </div>
-                    <div class="content-column net-splitcells-component-priority-1" style="order: 3;">
-                        <div id="content" class="column_0 contentCell Standard_content Right_shadow"
+                    <div class="content-column" style="order: 3;">
+                        <div id="content" class="net-splitcells-component-priority-1 column_0 contentCell Standard_content Right_shadow"
                              style="order: 3;">
                             <div class="optional_structural_guide structural_guide"></div>
                             <article>
@@ -792,7 +792,7 @@
                                  style="order: 4;">
                                 <div class="optional_structural_guide structural_guide"
                                      style="width:.25em;"></div>
-                                <article class="Standard_p2">
+                                <article class="Standard_p2 net-splitcells-component-priority-2">
                                     <xsl:if test="$column_1 != ''">
                                         <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
                                             <div class="Standard_p3 bottomLightShadow splitcells-net-line">
