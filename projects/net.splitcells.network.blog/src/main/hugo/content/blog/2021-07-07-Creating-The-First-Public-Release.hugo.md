@@ -1,6 +1,6 @@
 ---
 title: On Creating The First Public Release
-date: 2021-07-08
+date: 2021-07-07
 author: Mārtiņš Avots
 ---
 # Human's Software Development
