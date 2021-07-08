@@ -185,7 +185,7 @@ public class SchoolSchedulingTest {
         final var teacherAllocationForCourses = defineTeacherAllocationForCourses
                 (railsForSchoolScheduling
                         , 56
-                        , 56d / 158d
+                        , 158d / 56d
                         , numberOfSubjects);
         final var studentAllocationsForCourses = defineStudentAllocationsForCourses
                 (teacherAllocationForCourses
@@ -265,7 +265,7 @@ public class SchoolSchedulingTest {
                         rangeClosed(1, randomness.integer
                                 (1
                                         , averageNumberOfSubjectsPerTeacher
-                                        , 1 + roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
+                                        , roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
                                 .mapToObj(iSubject -> Lists.<Object>list(teacher, randomness.integer(1, numberOfSubjects)))
                                 .collect(toList()))
                 .flatMap(e -> e.stream())
