@@ -1,7 +1,9 @@
 package net.splitcells.gel.test.functionality;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -12,6 +14,8 @@ import net.splitcells.gel.solution.Solution;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.*;
@@ -78,7 +82,9 @@ public class SchoolSchedulingTest {
     public static void main(String... args) {
         GelEnv.process(() -> {
             var input = schoolScheduling(15, 20, 30);
-        });
+        }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
+            env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
+        }));
     }
 
     @Tag(INTEGRATION_TEST)
