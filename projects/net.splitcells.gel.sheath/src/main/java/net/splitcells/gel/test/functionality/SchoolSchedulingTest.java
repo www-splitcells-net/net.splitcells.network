@@ -86,6 +86,7 @@ public class SchoolSchedulingTest {
             final var teacherAllocationForCourses = input.get(1);
             final var studentAllocationsForCourses = input.get(2);
             railsForSchoolScheduling.optimize(linearInitialization());
+            railsForSchoolScheduling.createStandardAnalysis();
             teacherAllocationForCourses.optimize(linearInitialization());
             studentAllocationsForCourses.optimize(linearInitialization());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
@@ -264,7 +265,7 @@ public class SchoolSchedulingTest {
                         rangeClosed(1, randomness.integer
                                 (1
                                         , averageNumberOfSubjectsPerTeacher
-                                        , roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
+                                        , 1 + roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
                                 .mapToObj(iSubject -> Lists.<Object>list(teacher, randomness.integer(1, numberOfSubjects)))
                                 .collect(toList()))
                 .flatMap(e -> e.stream())

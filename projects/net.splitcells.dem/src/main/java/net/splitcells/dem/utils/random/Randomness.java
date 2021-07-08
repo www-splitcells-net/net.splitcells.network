@@ -25,8 +25,12 @@ public interface Randomness {
 
     default int integer(int min, double mean, int max) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(intToDouble(min)).isLessThanOrEqualTo(mean);
-            assertThat(mean).isLessThanOrEqualTo(max);
+            assertThat(intToDouble(min))
+                    .describedAs("min: " + min + " mean: " + mean + " max: " + max)
+                    .isLessThanOrEqualTo(mean);
+            assertThat(mean)
+                    .describedAs("min: " + min + " mean: " + mean + " max: " + max)
+                    .isLessThanOrEqualTo(max);
         }
         final var distance = distance(min, max);
         final var distanceHalf = roundToInt(distance / 2d);
