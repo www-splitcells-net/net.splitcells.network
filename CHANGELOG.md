@@ -3,6 +3,9 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
 The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 ## [Unreleased]
 ### Major Changes
+1. **2021-07-08**:
+   1. Default configuration of Dem's process does not ensure determinism
+      or randomness.
 1. **2021-07-04**:
    1. \#61 Remove XSL parameter from rendering API in webserver.
 1. **2021-07-03**:

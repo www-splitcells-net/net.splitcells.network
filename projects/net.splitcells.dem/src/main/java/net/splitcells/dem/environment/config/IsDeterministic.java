@@ -13,7 +13,7 @@ public class IsDeterministic extends OptionI<Optional<Bool>> {
      * Programs are not required to deterministic by default, because performance is more important by default.
      */
     public IsDeterministic() {
-        super(() -> Optional.of(untrue()));
+        super(() -> Optional.empty());
     }
 
 }
