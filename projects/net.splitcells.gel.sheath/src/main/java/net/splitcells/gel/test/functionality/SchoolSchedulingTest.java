@@ -178,7 +178,7 @@ public class SchoolSchedulingTest {
     private static List<Solution> schoolScheduling(int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
-        final var numberOfSubjects = 30;
+        final var numberOfSubjects =27;
         final var railsForSchoolScheduling = defineRailsForSchoolScheduling(2
                 , numberOfSubjects
                 , 30
