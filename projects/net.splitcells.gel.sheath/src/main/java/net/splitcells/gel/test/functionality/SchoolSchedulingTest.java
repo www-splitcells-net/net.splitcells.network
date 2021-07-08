@@ -257,16 +257,16 @@ public class SchoolSchedulingTest {
      * @return A problem modelling allocations of teachers to courses.
      */
     private static Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
-            , double averageNumberOfSubjectsPerTeacher
-            , int numberOfSubjects) {
+            , double averageNumberOfCoursesPerTeacher
+            , int numberOfCourses) {
         final var randomness = randomness();
         final var teacherCapacity = rangeClosed(1, numberOfTeachers)
                 .mapToObj(teacher ->
                         rangeClosed(1, randomness.integer
                                 (1
-                                        , averageNumberOfSubjectsPerTeacher
-                                        , roundToInt(2 * averageNumberOfSubjectsPerTeacher)))
-                                .mapToObj(iSubject -> Lists.<Object>list(teacher, randomness.integer(1, numberOfSubjects)))
+                                        , averageNumberOfCoursesPerTeacher
+                                        , roundToInt(2 * averageNumberOfCoursesPerTeacher)))
+                                .mapToObj(iSubject -> Lists.<Object>list(teacher, randomness.integer(1, numberOfCourses)))
                                 .collect(toList()))
                 .flatMap(e -> e.stream())
                 .collect(toList());
