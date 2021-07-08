@@ -186,7 +186,7 @@ public class SchoolSchedulingTest {
                 (railsForSchoolScheduling
                         , 56
                         , 158d / 56d
-                        , numberOfSubjects);
+                        , 158);
         final var studentAllocationsForCourses = defineStudentAllocationsForCourses
                 (teacherAllocationForCourses
                         , 92
