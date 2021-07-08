@@ -82,6 +82,9 @@ public class SchoolSchedulingTest {
     public static void main(String... args) {
         GelEnv.process(() -> {
             var input = schoolScheduling(15, 20, 30);
+            final var railsForSchoolScheduling = input.get(0);
+            final var teacherAllocationForCourses = input.get(1);
+            final var studentAllocationsForCourses = input.get(2);
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
         }));
