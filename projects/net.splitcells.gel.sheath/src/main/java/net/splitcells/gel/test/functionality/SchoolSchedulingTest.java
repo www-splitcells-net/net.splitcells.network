@@ -85,6 +85,9 @@ public class SchoolSchedulingTest {
             final var railsForSchoolScheduling = input.get(0);
             final var teacherAllocationForCourses = input.get(1);
             final var studentAllocationsForCourses = input.get(2);
+            railsForSchoolScheduling.optimize(linearInitialization());
+            teacherAllocationForCourses.optimize(linearInitialization());
+            studentAllocationsForCourses.optimize(linearInitialization());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
         }));
