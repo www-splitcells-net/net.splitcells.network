@@ -4,6 +4,7 @@ import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -90,7 +91,9 @@ public class SchoolSchedulingTest {
             teacherAllocationForCourses.optimize(linearInitialization());
             studentAllocationsForCourses.optimize(linearInitialization());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
-            env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
+            env.config()
+                    .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                    .withConfigValue(MessageFilter.class, logMessage -> false);
         }));
     }
 
