@@ -77,37 +77,7 @@ public class SchoolSchedulingTest {
     @Test
     public static void main(String... args) {
         GelEnv.process(() -> {
-            final List<List<Object>> courses = list(
-                    course(1, 1, 1, 2)
-                    , course(1, 1, 1, 2));
-            final List<List<Object>> railCapacity = list(
-                    railCapacity(1, 1)
-                    , railCapacity(1, 2));
-            final var railsForSchoolScheduling = defineRailsForSchoolScheduling(courses, railCapacity);
-            final List<List<Object>> teacherCapacity = list(
-                    teacherCapacity(1, 1)
-                    , teacherCapacity(1, 1));
-            final var teacherAllocationForCourses
-                    = defineTeacherAllocationForCourses(railsForSchoolScheduling, teacherCapacity);
-            final List<List<Object>> studentDemands = list(
-                    studentDemand(1, 1, 1)
-                    , studentDemand(1, 1, 1));
-            final int minimalNumberOfStudentsPerCourse = 1;
-            final int optimalNumberOfStudentsPerCourse = 1;
-            final int maximumNumberOfStudentsPerCourse = 1;
-            final var studentAllocationsForCourses = defineStudentAllocationsForCourses(teacherAllocationForCourses
-                    , studentDemands
-                    , minimalNumberOfStudentsPerCourse
-                    , optimalNumberOfStudentsPerCourse
-                    , maximumNumberOfStudentsPerCourse);
-            railsForSchoolScheduling.optimize(linearInitialization());
-            teacherAllocationForCourses.optimize(linearInitialization());
-            studentAllocationsForCourses.optimize(linearInitialization());
-            railsForSchoolScheduling.createStandardAnalysis();
-            assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
-            assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
-            studentAllocationsForCourses.createStandardAnalysis();
-            assertThat(studentAllocationsForCourses.constraint().rating()).isEqualTo(cost(1));
+            var input = schoolScheduling(15, 20, 30);
         });
     }
 
@@ -189,22 +159,23 @@ public class SchoolSchedulingTest {
         fail("Test not implemented");
     }
 
-    private static Solution schoolScheduling(int minimalNumberOfStudentsPerCourse
+    private static List<Solution> schoolScheduling(int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
         final var numberOfSubjects = 30;
-        return defineStudentAllocationsForCourses
-                (defineTeacherAllocationForCourses
-                                (defineRailsForSchoolScheduling
-                                                (2
-                                                        , numberOfSubjects
-                                                        , 30
-                                                        , 410d / 158d
-                                                        , 4
-                                                        , 17)
-                                        , 56
-                                        , 56d / 158d
-                                        , numberOfSubjects)
+        final var railsForSchoolScheduling = defineRailsForSchoolScheduling(2
+                , numberOfSubjects
+                , 30
+                , 410d / 158d
+                , 4
+                , 17);
+        final var teacherAllocationForCourses = defineTeacherAllocationForCourses
+                (railsForSchoolScheduling
+                        , 56
+                        , 56d / 158d
+                        , numberOfSubjects);
+        final var studentAllocationsForCourses = defineStudentAllocationsForCourses
+                (teacherAllocationForCourses
                         , 92
                         , 11
                         , minimalNumberOfStudentsPerCourse
@@ -212,6 +183,7 @@ public class SchoolSchedulingTest {
                         , maximumNumberOfStudentsPerCourse
                         , 115
                         , 11);
+        return list(railsForSchoolScheduling, teacherAllocationForCourses, studentAllocationsForCourses);
     }
 
     private static Solution defineRailsForSchoolScheduling(int numberOfVintages, int numberOfSubjects, int numberOfCourses
