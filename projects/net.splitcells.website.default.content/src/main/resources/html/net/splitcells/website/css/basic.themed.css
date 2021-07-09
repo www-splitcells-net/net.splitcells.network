@@ -182,6 +182,7 @@ main {
 .premature {
 	background: repeating-linear-gradient(45deg, var(--background-color-priority-4), var(--background-color-priority-4) 1em, var(--background-color-priority-3) 1em, var(--background-color-priority-3) 2em);
 }
+.net-splitcells-content-main,
 .net-splitcells-component-priority-1 {
     background-color: var(--background-color-priority-1);
 	color: var(--foreground-color-priority-1);

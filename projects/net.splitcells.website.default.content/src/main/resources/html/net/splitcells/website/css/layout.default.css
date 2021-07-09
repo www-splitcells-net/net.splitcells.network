@@ -13,6 +13,9 @@ footer {
     min-height: 5em;
     z-index: 100;
 }
+.net-splitcells-content-main {
+    order: 3;
+    }
 .net-splitcells-content-column {
     order: 3;
     }

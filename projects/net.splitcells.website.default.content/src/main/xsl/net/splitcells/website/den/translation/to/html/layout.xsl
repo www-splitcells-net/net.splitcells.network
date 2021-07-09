@@ -625,8 +625,7 @@
                     </div>
                     <div class="net-splitcells-content-column">
                         <div id="content"
-                             class="net-splitcells-component-priority-1 column_0 contentCell Standard_content Right_shadow"
-                             style="order: 3;">
+                             class="net-splitcells-content-main column_0 contentCell Standard_content Right_shadow">
                             <div class="optional_structural_guide structural_guide"></div>
                             <article>
                                 <div class="Right_shadow splitcells-net-window-menu">
