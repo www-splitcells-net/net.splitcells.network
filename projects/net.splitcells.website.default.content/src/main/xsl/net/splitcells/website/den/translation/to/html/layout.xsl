@@ -597,14 +597,13 @@
                             </xsl:for-each>
                         </div>
                         <h3>This Site Uses Amongst Others</h3>
-                        <a class="linkButton" href="https://alexgorbatchev.com/SyntaxHighlighter/">
-                            <div class="net-splitcells-button net-splitcells-component-priority-3">
-                                SyntaxHighlighter
-                                <div class="MainButtonDescription Standard_p4"
-                                     style="text-indent: 0em; display: block; font-weight: normal; padding-left: .25em;">
-                                    Code Syntax Highlighter
-                                </div>
-                            </div>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3"
+                           href="https://alexgorbatchev.com/SyntaxHighlighter/">
+                            SyntaxHighlighter
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-4"
+                           href="https://alexgorbatchev.com/SyntaxHighlighter/">
+                            for Code Syntax Highlighting
                         </a>
                         <h3>Metadata About This Document</h3>
                         <p>Unless otherwise noted, the
