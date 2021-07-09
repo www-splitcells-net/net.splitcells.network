@@ -607,31 +607,17 @@
                             </div>
                         </a>
                         <h3>Metadata About This Document</h3>
-                        <xsl:if test="./s:license">
-                            <xsl:if test="./s:license/node() = 'standard'">
-                                <a class="linkButton" href="/license-CC-BY-SA-4.txt">
-                                    <div class="MainButtonDescription Standard_p3"
-                                         style="text-indent: 0em; display: block; font-weight: normal;">
-                                        <div style="padding-left: 0.25em;">Unless otherwise noted, the
-                                            content of this
-                                            html file is licensed under the
-                                        </div>
-                                        <div class="MainButtonDescription Standard_p2"
-                                             style="padding-left: 0.25em;">
-                                            Creative Commons
-                                            Attribution-ShareAlike 4.0
-                                            International Public
-                                            License.
-                                        </div>
-                                    </div>
-                                </a>
-                            </xsl:if>
-                        </xsl:if>
-                        <div class="MainButtonDescription Standard_p3 Text"
-                             style="text-indent: 0em; display: block; font-weight: normal; padding-left: 0.25em;">
-                            Files and other contents, which are linked to by this
+                        <p>Unless otherwise noted, the
+                            content of this
+                            html file is licensed under the
+                            <a href="/net/splitcells/website/license-CC-BY-SA-4.txt">Creative Commons
+                                Attribution-ShareAlike 4.0
+                                International Public
+                                License</a>.
+                        </p>
+                        <p>Files and other contents, which are linked to by this
                             HTML file, have their own rulings.
-                        </div>
+                        </p>
                         <div style="flex: auto;"></div>
                         <h3>Footer Functions</h3>
                         <a class="linkButton" style="margin-bottom: .5em;" href="#topElement">
@@ -639,7 +625,8 @@
                         </a>
                     </div>
                     <div class="content-column" style="order: 3;">
-                        <div id="content" class="net-splitcells-component-priority-1 column_0 contentCell Standard_content Right_shadow"
+                        <div id="content"
+                             class="net-splitcells-component-priority-1 column_0 contentCell Standard_content Right_shadow"
                              style="order: 3;">
                             <div class="optional_structural_guide structural_guide"></div>
                             <article>

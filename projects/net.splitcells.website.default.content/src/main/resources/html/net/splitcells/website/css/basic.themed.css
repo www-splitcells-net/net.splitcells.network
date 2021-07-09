@@ -232,8 +232,8 @@ a {
 .IndexPostHeader {
 	box-shadow: 0em 0.1em 0.2em -.2em var(--shadow-color-priority-2);
 }
-.paragraph,
-p {
+article .paragraph,
+article p {
 	/* Use px in order to prevent bug on webkit. */
 	line-height: 28px;
     background-image: repeating-linear-gradient(
