@@ -7,6 +7,7 @@ The concrete echo format of each command is not stable.
 Changes to this are not considered major changes.
 ## Unreleased
 ### Major Changes
+1. Remove deprecated command `command.managed.define`.
 1. Disable debug logging by default.
    Add environment variable 'log_level'.
    When set to 'debug', debug log is enabled.
