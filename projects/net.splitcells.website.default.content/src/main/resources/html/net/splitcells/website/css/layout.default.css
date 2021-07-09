@@ -172,7 +172,7 @@ footer {
         }
     }
 @media (max-width: 59em) {
-    .content-column {
+    .net-splitcells-website-content-column {
             min-height: 100%;
             display: flex;
             flex-direction: column;
@@ -191,7 +191,7 @@ footer {
         visibility: inherit;
         z-index: 1;
         }
-    .content-column {
+    .net-website-content-column {
         display: flex;
         flex-direction: column;
         }
@@ -218,7 +218,7 @@ footer {
         }
     }
 @media (min-width: 99em) {
-	.content-column {
+	.net-splitcells-content-column {
         display: flex;
         flex-direction: row;
         }
