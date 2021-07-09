@@ -3,6 +3,7 @@ Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Services
+1. Update project documentation.
 1. Document commands.
 1. Add tests.
 1. Improve echo output and make it nice, for a certain setting.
