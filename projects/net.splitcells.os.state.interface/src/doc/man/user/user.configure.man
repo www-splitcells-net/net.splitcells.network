@@ -1,7 +1,8 @@
 .Dd 14/11/2020
 .Dt user.configure
 .Sh NAME
-"user.configure": Configures the current user.
+.Nm user.configure
+Configures the current user.
 .Sh Description
 
 Configures the current user.
