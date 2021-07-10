@@ -10,6 +10,7 @@
                 <toDo>Define a minimal Java EBNF grammar via "java.code.verify" and antlr.
                     <toDo>For source code translations name resolution is required in order to support some,
                         basic Java class etc. like Stream.
+                        <toDo>Consider donating to JavaParser if this works in the end as intended.</toDo>
                     </toDo>
                     <toDo>Create Grammar.</toDo>
                     <toDo xl:href="https://github.com/antlr/antlr4"/>
