@@ -21,7 +21,7 @@ function addapt_menu_visibility() {
 	show_contentCell();
 	}
 function hide_contentCell() {
-	var contentCell_elements = document.getElementsByClassName('contentCell');
+	var contentCell_elements = document.getElementsByClassName('net-splitcells-content-main');
 	for (var i = 0; i < contentCell_elements.length; i++) {
 		contentCell_elements[i].style.setProperty('visibility', 'hidden', 'important');
 		contentCell_elements[i].style.setProperty('display', 'none', 'important');
@@ -39,7 +39,7 @@ function hide_menu() {
 		}
 	}
 function show_contentCell() {
-	var contentCell_elements = document.getElementsByClassName('contentCell');
+	var contentCell_elements = document.getElementsByClassName('net-splitcells-content-main');
 	for (var i = 0; i < contentCell_elements.length; i++) {
 		contentCell_elements[i].style.setProperty('visibility', 'visible', 'important');
 		contentCell_elements[i].style.setProperty('display', 'flex', 'important');

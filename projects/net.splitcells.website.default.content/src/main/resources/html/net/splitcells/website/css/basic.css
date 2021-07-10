@@ -58,7 +58,7 @@ ul {
 	margin-left: .0625em;
 	margin-right: .0625em;
 	}
-.contentCell {
+.net-splitcells-content-main {
     /* The content itself should manage overflow.*/
     }
 .net-splitcells-search-bar {
