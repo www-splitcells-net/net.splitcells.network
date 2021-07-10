@@ -625,7 +625,7 @@
                     </div>
                     <div class="net-splitcells-content-column">
                         <div id="content"
-                             class="net-splitcells-content-main column_0 contentCell Standard_content Right_shadow">
+                             class="net-splitcells-content-main contentCell Standard_content Right_shadow">
                             <div class="optional_structural_guide structural_guide"></div>
                             <article>
                                 <div class="Right_shadow splitcells-net-window-menu">
@@ -785,7 +785,7 @@
                                                 <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional minimal-not"
                                                      onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-1-full-screen');
-										                unshowByCssClass('column_0');
+										                unshowByCssClass('net-splitcells-content-main');
 										                showByCssClass('page-column-1-windowed');">
                                                     wide screen
                                                 </div>
@@ -795,7 +795,7 @@
 													hide('page-column-1-windowed');
 														unshowByCssClass('page-column-1-windowed');
 														showByCssClass('page-column-1-full-screen');
-														showByCssClass('column_0');">
+														showByCssClass('net-splitcells-content-main');">
                                                     windowed
                                                 </div>
                                             </div>

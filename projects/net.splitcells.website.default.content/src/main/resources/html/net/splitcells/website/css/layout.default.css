@@ -30,7 +30,7 @@ footer {
 .menu h3 {
     padding-left: .25em;
 }
-.column_0 {
+.net-splitcells-content-main {
     display: flex;
     flex-direction: row;
     }
@@ -85,7 +85,7 @@ footer {
         visibility: hidden !important;
         display: none !important;
         }
-    .column_0 {
+    .net-splitcells-content-main {
         width: 100% !important;
         }
     .column_1 {
@@ -147,7 +147,7 @@ footer {
         visibility: hidden !important;
         display: none !important;
         }
-    .column_0 {
+    .net-splitcells-content-main {
         width: 100%;
         }
     .column_1 {
@@ -183,7 +183,7 @@ footer {
             display: flex;
             flex-direction: column;
             }
-	.column_0 {
+	.net-splitcells-content-main {
 		width: 100%;
 		}
 	.column_1 {
@@ -201,7 +201,7 @@ footer {
         display: flex;
         flex-direction: column;
         }
-    .column_0 {
+    .net-splitcells-content-main {
         width: var(--column-standard-width);
         }
     .column_1 {
