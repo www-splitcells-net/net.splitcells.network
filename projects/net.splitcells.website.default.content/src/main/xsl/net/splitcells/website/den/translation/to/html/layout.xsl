@@ -617,6 +617,47 @@
                         <p>Files and other contents, which are linked to by this
                             HTML file, have their own rulings.
                         </p>
+                        <h4>Validation</h4>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
+                            <xsl:attribute name="href"
+                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, '/', ./s:path/text(), '/', substring(./s:name, 1, string-length(./s:name) - 4), '.html')"/>
+                            HTML Validation
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
+                            <xsl:attribute name="href"
+                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/basic.themed.css'))"/>
+                            basic.themed.css
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
+                            <xsl:attribute name="href"
+                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/basic.css'))"/>
+                            basic.css
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
+                            <xsl:attribute name="href"
+                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/theme.white.variables.css'))"/>
+                            theme.white.variables.css
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
+                            <xsl:attribute name="href"
+                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/layout.column.main.fullscreen.css'))"/>
+                            layout.column.main.fullscreen.css
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
+                            <xsl:attribute name="href"
+                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/den.css'))"/>
+                            den.css
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
+                            <xsl:attribute name="href"
+                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/layout.default.css'))"/>
+                            layout.default.css
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3">
+                            <xsl:attribute name="href"
+                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/theme.css'))"/>
+                            theme.css
+                        </a>
                         <div style="flex: auto;"></div>
                         <h3>Footer Functions</h3>
                         <a class="linkButton" style="margin-bottom: .5em;" href="#topElement">
