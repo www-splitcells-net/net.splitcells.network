@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+mvn compile exec:java -Dexec.mainClass="net.splitcells.dem.source.code.SourceCodeCheckExperiment"
