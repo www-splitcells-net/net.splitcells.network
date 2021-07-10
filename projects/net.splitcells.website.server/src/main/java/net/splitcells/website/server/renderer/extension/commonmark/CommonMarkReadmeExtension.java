@@ -14,6 +14,9 @@ import static net.splitcells.dem.resource.host.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
+/**
+ * TODO Add support for header outline.
+ */
 public class CommonMarkReadmeExtension implements ProjectRendererExtension {
 
     public static CommonMarkReadmeExtension commonMarkReadmeExtension() {
