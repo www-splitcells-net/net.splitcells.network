@@ -23,12 +23,7 @@ public class SourceCodeCheckExperiment {
         final var symbolSolver = new JavaSymbolSolver(typeSolver);
         StaticJavaParser.getConfiguration().setSymbolResolver(symbolSolver);
         StaticJavaParser.getConfiguration().getPostProcessors().add(
-                new TypedValidator() {
-
-                    @Override
-                    public void accept(Object o, Object o2) {
-                        throw notImplementedYet();
-                    }
+                new TypedValidator<Node>() {
 
                     @Override
                     public void accept(Node node, ProblemReporter problemReporter) {
