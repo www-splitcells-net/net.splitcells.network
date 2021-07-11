@@ -22,8 +22,10 @@ The priority of a task is just a guideline.
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
 1. Define break points of this project.
-1. Fork Wars
 ### Todos
+1. Do not use recursion via shell in repo commands.
+   Use recursion via Python functions.
+1. Clean up python implementations of repo commands.
 1. Create integration into user home portability projects.
 1. Create ssh deployment machanism via other frameworks like ansible.
 1. Create display brightness control commands.
