@@ -43,6 +43,7 @@ Some of them are not strictly related to optimization and can be used in other c
 [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
 [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
+[![Dependabot Badge](https://badgen.net/dependabot/forem/forem?icon=dependabot)](https://badgen.net/dependabot/forem/forem?icon=dependabot)
 
 * Current Version: 3.0.0-SNAPSHOT:
   The development plan for this version was badly made.
