@@ -1,0 +1,5 @@
+extraction:
+  java:
+    index:
+      java_version: "11"
+    build_command: "cd projects/net.splitcells.system & ./bin/build.part.with.java"
