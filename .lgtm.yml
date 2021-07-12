@@ -2,3 +2,5 @@ extraction:
   java:
     index:
       java_version: "11"
+    build_command: |
+      export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 & export JAVACMD=$JAVA_HOME/bin/java & cd projects/net.splitcells.system & ./bin/build.part.with.java
