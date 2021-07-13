@@ -52,11 +52,11 @@ Some of them are not strictly related to optimization and can be used in other c
 
 * [Changelog](./CHANGELOG.md)
 * Current Version: 3.0.0-SNAPSHOT:
-This version therefore takes a lot of time until it is done.
+  This version therefore takes a lot of time until it is done.
 * Also, drastic changes are not planned, API is currently not stable.
 * Some integration and production like tests are present, but the software is currently not used in production.
 * Licensing is currently not cleaned up.
-Contributing on source code level is therefore currently not encouraged.
+  Contributing on source code level is therefore currently not encouraged.
 
 ### Planning
 * Current Tickets:
