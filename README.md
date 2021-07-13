@@ -50,12 +50,16 @@ Some of them are not strictly related to optimization and can be used in other c
 
 * [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security)
 
-### Planning
-
+* [Changelog](./CHANGELOG.md)
 * Current Version: 3.0.0-SNAPSHOT:
   The development plan for this version was badly made.
   This version therefore takes a lot of time until it is done.
-* [Changelog](./CHANGELOG.md)
+* Also, drastic changes are not planned, API is currently not stable.
+* Some integration and production like tests are present, but the software is currently not used in production.
+* Licensing is currently not cleaned up.
+  Contributing on source code level is therefore currently not encouraged.
+
+### Planning
 * Current Tickets:
   * [#10 Create minimal Java grammar for this project in order to make code less complex.](https://github.com/www-splitcells-net/net.splitcells.network/issues/10)
   * [#26 Support arbitrary renderers for website server.](https://github.com/www-splitcells-net/net.splitcells.network/issues/26)
@@ -71,10 +75,6 @@ Some of them are not strictly related to optimization and can be used in other c
     * [#34 Try to get 1 optimization configuration, that solves all 3 new major problems.](https://github.com/www-splitcells-net/net.splitcells.network/issues/34)
     * [#63 Define API development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/63)
     * [#64 Define project development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/64)
-* Also, drastic changes are not planned, API is currently not stable.
-* Licensing is currently not cleaned up.
-  Contributing on source code level is therefore currently not encouraged.
-* Some integration and production like tests are present, but the software is currently not used in production.
 
 ## Network's Structure
 
