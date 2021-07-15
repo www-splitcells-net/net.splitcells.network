@@ -134,4 +134,4 @@ The gods know, how bad I am in social and many other settings.
 On the other hand, this creates uncertainty, which in turn makes this whole
 journey a lot more exciting.
 
-We'll see, what will happen...
+We'll see, what will happen.
