@@ -20,13 +20,13 @@ Some of them are not strictly related to optimization and can be used in other c
 
 ## Where to start?
 
-🗞️️ Get an insight in our thoughts via our [blog](https://splitcells-net.srht.site/) and programming progress via our [changelog](./CHANGELOG.md).
-
 🚀 [Model and optimize problems.](projects/net.splitcells.gel.doc/src/main/md/net/splitcells/gel/index.md)
 
 🔬 Analyze and organize your operations and prepare schedules.
 
 🤝 Collaborate large decision-making networks.
+
+🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) and programming progress via our [changelog](./CHANGELOG.md).
 
 🔭 Research optimization.
 
