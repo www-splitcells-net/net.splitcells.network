@@ -10,6 +10,9 @@ main {
     background-image:url('/net/splitcells/martins/avots/website//images/license.standard/white.background.blog.discovery.0.jpg');
 }
 ol {
+    padding-left: 1em;
+    }
+ol > ol {
     padding-left: 2em;
     }
 pre {
