@@ -57,7 +57,7 @@
     <xsl:template name="file-path-environment-of-layout">
         <xsl:param name="path"/>
         <xsl:param name="layout"/>
-        <ol class="table-of-content">
+        <ol>
             <xsl:call-template name="file-path-environment-of-layout-node">
                 <xsl:with-param name="path" select="$path"/>
                 <xsl:with-param name="layout" select="$layout"/>
@@ -77,7 +77,7 @@
         <xsl:if test="$previous-depth &lt;= $max-depth">
             <xsl:choose>
                 <xsl:when test="$path = ''">
-                    <li class="table-of-content">
+                    <li>
                         <xsl:choose>
                             <xsl:when test="$layout/d:link/d:url">
                                 <a>
@@ -112,7 +112,7 @@
                     </li>
                     <xsl:choose>
                         <xsl:when test="count($layout/n:val) &gt; 0">
-                            <ol class="table-of-content">
+                            <ol>
                                 <xsl:for-each select="$layout/n:val">
                                     <xsl:call-template name="file-path-environment-of-layout-node">
                                         <xsl:with-param name="path" select="$path"/>

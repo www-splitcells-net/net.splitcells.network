@@ -19,13 +19,13 @@
         <xsl:apply-templates select="./node()" mode="content.outline"/>
     </xsl:template>
     <xsl:template match="s:chapter" mode="content.outline">
-        <li class="table-of-content">
+        <li class="">
             <a>
                 <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
                 <xsl:value-of select="./s:title/node()"/>
             </a>
             <xsl:if test=".//s:chapter">
-                <ol class="table-of-content">
+                <ol class="">
                     <xsl:apply-templates select="./node()" mode="content.outline"/>
                 </ol>
             </xsl:if>
@@ -35,7 +35,7 @@
         <xsl:param name="content"/>
         <xsl:param name="style" select="'Standard_p1'"/>
         <ol>
-            <xsl:attribute name="class" select="concat('table-of-content ', $style)"/>
+            <xsl:attribute name="class" select="$style"/>
             <xsl:apply-templates select="$content/node()" mode="content.outline"/>
         </ol>
     </xsl:template>

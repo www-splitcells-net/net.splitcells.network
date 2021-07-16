@@ -23,19 +23,6 @@ pre {
     color: var(--foreground-color-priority-5);
     box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-5);
     }
-ol.table-of-content > li.table-of-content {
-    counter-increment: item;
-	}
-ol.table-of-content > li.table-of-content:first-child {
-  counter-reset: item;
-	}
-ol.table-of-content > li.table-of-content {
-    display: block;
-	}
-ol.table-of-content > li.table-of-content:before {
-    content: counters(item, ".") ". ";
-    margin-left: -1em;
-	}
 *.structural_guide {
 	background-color: var(--background-color-structural-guide);
 	color: var(--foreground-color-structural-guide);
