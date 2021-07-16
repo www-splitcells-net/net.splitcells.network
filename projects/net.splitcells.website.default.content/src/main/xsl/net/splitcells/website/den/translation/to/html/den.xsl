@@ -69,7 +69,7 @@
         <xsl:param name="path"/>
         <xsl:param name="layout"/>
         <xsl:param name="previous-depth" select="0"/>
-        <xsl:param name="max-depth" select="2"/>
+        <xsl:param name="max-depth" select="3"/>
         <!-- TODO Process path.
         <xsl:variable name="path-child" select="s:path.element.first($path)"/>
         /node() = s:path.element.first($path)
