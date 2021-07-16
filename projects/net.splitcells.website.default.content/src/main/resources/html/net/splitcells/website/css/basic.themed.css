@@ -10,6 +10,11 @@ pre {
     padding-left: 1em;
     padding-right: 1em;
     }
+ol {
+    list-style-type: none;
+    border-left: 1px solid rgb(100,100,100);
+    padding-left: 2em;
+    }
 .net-splitcells-quote-display > .label {
     background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
     width: 100%;
