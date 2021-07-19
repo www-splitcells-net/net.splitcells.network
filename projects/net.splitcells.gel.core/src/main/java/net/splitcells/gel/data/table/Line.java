@@ -20,6 +20,11 @@ public interface Line extends Domable {
 
     <T> T value(Attribute<T> attribute);
 
+    /**
+     * Minimize usage of index as the this is prone to errors.
+     *
+     * @return The index of the {@link Line}in {@link Line#context}.
+     */
     int index();
 
     default LinePointer toLinePointer() {
