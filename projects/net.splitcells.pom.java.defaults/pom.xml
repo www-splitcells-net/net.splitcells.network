@@ -501,6 +501,11 @@
             <reporting>
                 <plugins>
                     <plugin>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <version>4.2.0</version>
+                    </plugin>
+                    <plugin>
                         <!-- Prevent ClassNotFoundException inside "org.apache.maven.plugins:maven-site-plugin" during "mvn site". -->
                         <!-- See: https://stackoverflow.com/questions/51091539/maven-site-plugins-3-3-java-lang-classnotfoundexception-org-apache-maven-doxia/51108927#51108927 -->
                         <groupId>org.apache.maven.plugins</groupId>
