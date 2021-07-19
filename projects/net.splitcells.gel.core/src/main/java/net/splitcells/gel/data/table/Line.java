@@ -21,7 +21,11 @@ public interface Line extends Domable {
     <T> T value(Attribute<T> attribute);
 
     /**
-     * Minimize usage of index as the this is prone to errors.
+     * Minimize usage of index as it is prone to errors.
+     * Access by identity is more secure, than access by integer,
+     * because one can do calculations with indexes,
+     * which is prone to errors.
+     * See references vs pointers in programming languages.
      *
      * @return The index of the {@link Line}in {@link Line#context}.
      */
