@@ -74,9 +74,9 @@ Some of them are not strictly related to optimization and can be used in other c
     * [#34 Try to get 1 optimization configuration, that solves all 3 new major problems.](https://github.com/www-splitcells-net/net.splitcells.network/issues/34)
     * [#63 Define API development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/63)
     * [#64 Define project development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/64)
-
+### Service
+* [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
 ## Network's Structure
-
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
 

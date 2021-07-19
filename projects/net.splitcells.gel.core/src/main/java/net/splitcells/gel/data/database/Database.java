@@ -4,6 +4,9 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 
+/**
+ * TODO Line index randomizer in order to test index calculations.
+ */
 public interface Database extends Table {
 
     Line addTranslated(List<? extends Object> values);
