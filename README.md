@@ -39,7 +39,6 @@ Some of them are not strictly related to optimization and can be used in other c
 📣 Spread the word!
 
 ## Project Status
-
 [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
 [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
@@ -49,9 +48,13 @@ Some of them are not strictly related to optimization and can be used in other c
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:javascript)
 
 * [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security)
-
 * [Changelog](./CHANGELOG.md)
-
+* API: Interfaces and the main class `net.splitcells.gel.Gel` can be considered semi stable.
+  Breaking changes are tried to be omitted, but there is no guarantee for that.
+  You can watch the [changelog](./CHANGELOG.md) for breaking changes.
+  You can try to decrease the likelihood of breaking a certain feature,
+  by contributing an appropriate test case/suite for this feature.
+  Regardless of that, keep in mind, that there is no guarantee of backwards compatibility.
 ### Planning
 * Current Tickets:
   * Solve new problems.
