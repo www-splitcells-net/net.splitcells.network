@@ -32,7 +32,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 📚 Get [structured documentation](projects/net.splitcells.gel.doc/README.md).
 
-✍ Contribute to projects.
+✍ [Contribute](./CONTRIBUTING.md) to projects.
 
 💰 Support [contributors](https://www.patreon.com/splitcells_net).
 
