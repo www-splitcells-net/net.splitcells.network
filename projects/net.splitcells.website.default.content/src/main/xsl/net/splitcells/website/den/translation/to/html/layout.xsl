@@ -452,7 +452,7 @@
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/2015/03/06/gallery.html')"/>
+                                <xsl:value-of select="s:root-relative-url('gallery.html')"/>
                             </xsl:attribute>
                             Gallery
                         </a>
@@ -476,13 +476,6 @@
                                         select="s:root-relative-url('/index.html')"/>
                             </xsl:attribute>
                             Main Page
-                        </a>
-                        <a class="net-splitcells-button net-splitcells-component-priority-3">
-                            <xsl:attribute name="href">
-                                <xsl:value-of
-                                        select="s:root-relative-url('/2015/03/05/post-archive.html')"/>
-                            </xsl:attribute>
-                            Post Archive
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
