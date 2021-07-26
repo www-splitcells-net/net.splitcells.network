@@ -487,7 +487,7 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/programs/programs.html')"/>
+                                        select="s:root-relative-url('/programs/index.html')"/>
                             </xsl:attribute>
                             Programs
                         </a>
