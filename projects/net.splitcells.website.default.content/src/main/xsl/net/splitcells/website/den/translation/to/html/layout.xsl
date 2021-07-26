@@ -408,21 +408,21 @@
                         <a class="net-splitcells-button premature">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/2016/10/10/premature-content.html')"/>
+                                        select="s:root-relative-url('/premature-content.html')"/>
                             </xsl:attribute>
                             Tabs
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/2015/03/01/impressum.html')"/>
+                                        select="s:root-relative-url('/legality/impressum.html')"/>
                             </xsl:attribute>
                             Impressum
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/2015/03/01/privacy-policy.html')"/>
+                                        select="s:root-relative-url('/legality/privacy-policy.html')"/>
                             </xsl:attribute>
                             Privacy Policy
                         </a>
@@ -440,13 +440,13 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/2015/03/04/about-this-site.html')"/>
+                                        select="s:root-relative-url('/about-this-site.html')"/>
                             </xsl:attribute>
                             About
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/2015/03/03/contact.html')"/>
+                                <xsl:value-of select="s:root-relative-url('contact.html')"/>
                             </xsl:attribute>
                             Contact
                         </a>
@@ -459,14 +459,14 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/2015/03/01/impressum.html')"/>
+                                        select="s:root-relative-url('/legality/impressum.html')"/>
                             </xsl:attribute>
                             Impressum
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/2015/03/02/licensing.html')"/>
+                                        select="s:root-relative-url('/legality/licensing.html')"/>
                             </xsl:attribute>
                             Licensing
                         </a>
@@ -480,7 +480,7 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/2015/03/01/privacy-policy.html')"/>
+                                        select="s:root-relative-url('/legality/privacy-policy.html')"/>
                             </xsl:attribute>
                             Privacy Policy
                         </a>
@@ -677,7 +677,7 @@
                                                 </xsl:attribute>
                                                 <xsl:attribute name="href">
                                                     <xsl:value-of
-                                                            select="s:root-relative-url('/2018/01/11/dedicated-menu-page.html')"/>
+                                                            select="s:root-relative-url('/dedicated-menu-page.html')"/>
                                                 </xsl:attribute>
                                                 <xsl:attribute name="style">
                                                     <xsl:value-of select="'z-index: 1;'"/>
@@ -692,7 +692,7 @@
                                                 </xsl:attribute>
                                                 <xsl:attribute name="href">
                                                     <xsl:value-of
-                                                            select="s:root-relative-url('/2016/10/10/premature-content.html')"/>
+                                                            select="s:root-relative-url('/premature-content.html')"/>
                                                 </xsl:attribute>
                                                 <xsl:attribute name="style">
                                                     <xsl:value-of select="'z-index: 1;'"/>
@@ -707,7 +707,7 @@
                                                 </xsl:attribute>
                                                 <xsl:attribute name="href">
                                                     <xsl:value-of
-                                                            select="s:root-relative-url('/2015/03/01/impressum.html')"/>
+                                                            select="s:root-relative-url('/legality/impressum.html')"/>
                                                 </xsl:attribute>
                                                 <xsl:attribute name="style">
                                                     <xsl:value-of select="'z-index: 1;'"/>
@@ -722,7 +722,7 @@
                                                 </xsl:attribute>
                                                 <xsl:attribute name="href">
                                                     <xsl:value-of
-                                                            select="s:root-relative-url('/2015/03/01/privacy-policy.html')"/>
+                                                            select="s:root-relative-url('/legality/privacy-policy.html')"/>
                                                 </xsl:attribute>
                                                 <xsl:attribute name="style">
                                                     <xsl:value-of select="'z-index: 1;'"/>
