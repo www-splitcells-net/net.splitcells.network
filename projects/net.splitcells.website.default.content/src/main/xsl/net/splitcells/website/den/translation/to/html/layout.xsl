@@ -452,7 +452,7 @@
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('gallery.html')"/>
+                                <xsl:value-of select="s:root-relative-url('art/gallery.html')"/>
                             </xsl:attribute>
                             Gallery
                         </a>
