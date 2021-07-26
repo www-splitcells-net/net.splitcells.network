@@ -440,13 +440,13 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/about-this-site.html')"/>
+                                        select="s:root-relative-url('/info/about-this-site.html')"/>
                             </xsl:attribute>
                             About
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('contact.html')"/>
+                                <xsl:value-of select="s:root-relative-url('/info/contact.html')"/>
                             </xsl:attribute>
                             Contact
                         </a>
