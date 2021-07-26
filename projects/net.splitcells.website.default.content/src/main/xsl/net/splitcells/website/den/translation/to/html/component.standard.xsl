@@ -55,7 +55,7 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:copy-of select="$site_instance_purl"/>
-                    /2016/10/10/premature-content.html
+                    premature-content.html
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
