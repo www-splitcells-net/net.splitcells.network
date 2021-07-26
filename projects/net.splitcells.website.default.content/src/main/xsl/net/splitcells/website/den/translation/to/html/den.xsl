@@ -114,6 +114,7 @@
                         <xsl:when test="count($layout/n:val) &gt; 0">
                             <ol>
                                 <xsl:for-each select="$layout/n:val">
+                                    <xsl:sort select="n:name/node()"/>
                                     <xsl:call-template name="file-path-environment-of-layout-node">
                                         <xsl:with-param name="path" select="$path"/>
                                         <xsl:with-param name="layout"
@@ -125,6 +126,7 @@
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:for-each select="$layout/n:val">
+                                <xsl:sort select="n:name/node()"/>
                                 <xsl:call-template name="file-path-environment-of-layout-node">
                                     <xsl:with-param name="path" select="$path"/>
                                     <xsl:with-param name="layout"
