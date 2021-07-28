@@ -27,4 +27,32 @@ SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0 WITH Classpath-exception-2.0
 
 The licenses of the transitive dependencies are not listed here.
 
-TODO
+com.github.javaparser:javaparser-symbol-solver-core
+
+* Version: 3.6.2
+* License: GNU Lesser General Public License or Apache License, Version 2.0
+
+io.vavr:vavr 
+
+* Version: 0.10.3
+* License: The Apache Software License, Version 2.0
+
+net.sf.saxon:Saxon-HE
+
+* Version: 9.8.0-11
+* License: Mozilla Public License Version 2.0
+
+org.apache.commons:commons-lang3
+
+* Version: 3.8.1
+* Apache License, Version 2.0
+
+org.assertj:assertj-core
+
+* Version: 3.13.2
+* Apache License, Version 2.0
+
+org.mockito:mockito-core
+
+* Version: 3.2.4 
+* License: The MIT License
