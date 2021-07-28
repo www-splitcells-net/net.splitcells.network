@@ -25,4 +25,6 @@ SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0 WITH Classpath-exception-2.0
 
 ## Third Party Content
 
+The licenses of the transitive dependencies are not listed here.
+
 TODO
