@@ -86,3 +86,13 @@ org.mockito:mockito-core
 
 * Version: 3.2.4
 * License: The MIT License
+
+org.apache.commons:commons-csv
+
+* Version: 1.7
+* License: Apache License, Version 2.0
+
+org.apache.poi:poi-ooxml
+
+* Version: 4.1.0
+* License: The Apache Software License, Version 2.0
