@@ -106,3 +106,23 @@ Hugo Theme HugoTeX
 
 * License: The MIT License
 * Source: https://github.com/HelloRusk/HugoTeX
+
+com.github.sys1yagi.mastodon4j:mastodon4j
+
+* Version: 1.6.0
+* License: MIT License
+
+org.commonmark:commonmark
+
+* Version: 0.17.2
+* License: BSD 2-Clause License
+
+org.facebook4j:facebook4j-core
+
+* Version: 2.4.11
+* Version: Apache License 2.0
+
+org.twitter4j:twitter4j-core
+
+* Version: 4.0.6
+* License: Apache License 2.0
