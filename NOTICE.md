@@ -31,7 +31,7 @@ The licenses of the transitive dependencies are not listed here.
 
 com.github.javaparser:javaparser-symbol-solver-core
 
-* Version: 3.6.2
+* Version: 3.22.0
 * License: GNU Lesser General Public License or Apache License, Version 2.0
 
 io.vavr:vavr 
