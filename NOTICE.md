@@ -45,12 +45,12 @@ net.sf.saxon:Saxon-HE
 org.apache.commons:commons-lang3
 
 * Version: 3.8.1
-* Apache License, Version 2.0
+* License: Apache License, Version 2.0
 
 org.assertj:assertj-core
 
 * Version: 3.13.2
-* Apache License, Version 2.0
+* License: Apache License, Version 2.0
 
 org.mockito:mockito-core
 
@@ -60,7 +60,7 @@ org.mockito:mockito-core
 commons-io:commons-io
 
 * Version: 2.4
-* The Apache Software License, Version 2.0
+* License: The Apache Software License, Version 2.0
 
 org.antlr:antlr4-runtime
 
@@ -96,3 +96,13 @@ org.apache.poi:poi-ooxml
 
 * Version: 4.1.0
 * License: The Apache Software License, Version 2.0
+
+Blog Framework Hugo
+
+* License: The Apache Software License, Version 2.0
+* Source: https://github.com/gohugoio/hugo
+
+Hugo Theme HugoTeX
+
+* License: The MIT License
+* Source: https://github.com/HelloRusk/HugoTeX
