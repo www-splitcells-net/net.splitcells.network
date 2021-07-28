@@ -56,3 +56,33 @@ org.mockito:mockito-core
 
 * Version: 3.2.4 
 * License: The MIT License
+
+commons-io:commons-io
+
+* Version: 2.4
+* The Apache Software License, Version 2.0
+
+org.antlr:antlr4-runtime
+
+* Version: 4.9.2
+* License: The BSD License
+
+org.junit.jupiter:junit-jupiter-api
+
+* Version: 5.5.2
+* License: Eclipse Public License v2.0
+
+org.junit.jupiter:junit-jupiter-engine
+
+* Version: 5.5.2
+* License: Eclipse Public License v2.0
+
+org.junit.platform:junit-platform-launcher
+
+* Version: 1.6.0
+* License: Eclipse Public License v2.0
+
+org.mockito:mockito-core
+
+* Version: 3.2.4
+* License: The MIT License
