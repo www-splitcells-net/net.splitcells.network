@@ -16,7 +16,6 @@
         <encoding.default>UTF-8</encoding.default>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
-        <gwt.version>2.8.2</gwt.version>
         <packaging>jar</packaging>
     </properties>
     <build>
