@@ -25,6 +25,8 @@ SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0 WITH Classpath-exception-2.0
 
 ## Third Party Content
 
+### Dependencies
+
 The licenses of the transitive dependencies are not listed here.
 
 com.github.javaparser:javaparser-symbol-solver-core
@@ -126,3 +128,78 @@ org.twitter4j:twitter4j-core
 
 * Version: 4.0.6
 * License: Apache License 2.0
+
+Maven
+
+* License: The Apache Software License, Version 2.0
+* Source: https://github.com/apache/maven
+
+### Used Third Party Tools
+
+pip - The Python Package Installer
+
+* License: The MIT License
+* Source: https://github.com/pypa/pip
+
+zellij
+
+* License: The MIT License
+* Source: https://github.com/zellij-org/zellij
+
+dig - DNS lookup utility
+
+* License: ISC
+
+ytop - A TUI system monitor written in Rust
+
+* License: The MIT License
+* Source: https://github.com/cjbassi/ytop
+
+ssh — OpenSSH remote login client
+
+* License: BSD
+
+systemd
+
+* License: LGPL 2.1
+* Source: https://github.com/systemd/systemd
+
+Sway
+
+* License: The MIT License
+* Source: https://github.com/swaywm/sway
+
+Pulsemixer
+
+* License: The MIT License
+* Source: https://github.com/GeorgeFilipkin/pulsemixer
+
+libnotify - notify-send
+
+* License: The MIT License
+* Source: https://github.com/GNOME/libnotify
+
+i3
+
+* License: BSD 3-Clause
+* Source: https://github.com/i3/i3
+
+Flatpak
+
+* License: LGPL 2.1
+* Source: https://github.com/flatpak/flatpak
+
+exa
+
+* License: The MIT License
+* Source: https://github.com/ogham/exa
+
+Docker
+
+* License: The Apache Software License, Version 2.0
+* Source: https://github.com/docker/engine
+
+Compton
+
+* License: The MIT License
+* Source: https://github.com/chjj/compton
