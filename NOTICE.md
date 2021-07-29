@@ -21,7 +21,7 @@ Public License, v. 2.0 are satisfied: GNU General Public License, version 2
 or any later versions with the GNU Classpath Exception which is
 available at https://www.gnu.org/software/classpath/license.html.
 
-SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0 WITH Classpath-exception-2.0
+SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-exception-2.0
 
 ## Third Party Content
 
