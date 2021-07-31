@@ -2,6 +2,7 @@
 title: On Creating The First Public Release
 date: 2021-07-07
 author: Mārtiņš Avots
+license: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-exception-2.0
 ---
 # Human's Software Development
 Have you heard of phrases like
