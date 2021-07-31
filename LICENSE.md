@@ -16,7 +16,7 @@ SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-excep
 # License Info
 
 Copies of legal documents like licenses are
-located [here](src/main/txt/net/splitcells/network/legality).
+located [here](src/main/txt/net/splitcells/network/legal).
 Detailed licensing of this project is located in the [NOTICE](./NOTICE.md) file.
 It contains info about third-party content like dependencies
 (the license of such content should be indicated in the source file itself

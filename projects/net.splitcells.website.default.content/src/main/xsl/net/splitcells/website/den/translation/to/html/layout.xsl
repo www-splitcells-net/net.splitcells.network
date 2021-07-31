@@ -415,14 +415,14 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/legality/impressum.html')"/>
+                                        select="s:root-relative-url('/legal/impressum.html')"/>
                             </xsl:attribute>
                             Impressum
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/legality/privacy-policy.html')"/>
+                                        select="s:root-relative-url('/legal/privacy-policy.html')"/>
                             </xsl:attribute>
                             Privacy Policy
                         </a>
@@ -453,14 +453,14 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/legality/impressum.html')"/>
+                                        select="s:root-relative-url('/legal/impressum.html')"/>
                             </xsl:attribute>
                             Impressum
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/legality/licensing.html')"/>
+                                        select="s:root-relative-url('/legal/licensing.html')"/>
                             </xsl:attribute>
                             Licensing
                         </a>
@@ -474,7 +474,7 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('/legality/privacy-policy.html')"/>
+                                        select="s:root-relative-url('/legal/privacy-policy.html')"/>
                             </xsl:attribute>
                             Privacy Policy
                         </a>
@@ -701,7 +701,7 @@
                                                 </xsl:attribute>
                                                 <xsl:attribute name="href">
                                                     <xsl:value-of
-                                                            select="s:root-relative-url('/legality/impressum.html')"/>
+                                                            select="s:root-relative-url('/legal/impressum.html')"/>
                                                 </xsl:attribute>
                                                 <xsl:attribute name="style">
                                                     <xsl:value-of select="'z-index: 1;'"/>
@@ -716,7 +716,7 @@
                                                 </xsl:attribute>
                                                 <xsl:attribute name="href">
                                                     <xsl:value-of
-                                                            select="s:root-relative-url('/legality/privacy-policy.html')"/>
+                                                            select="s:root-relative-url('/legal/privacy-policy.html')"/>
                                                 </xsl:attribute>
                                                 <xsl:attribute name="style">
                                                     <xsl:value-of select="'z-index: 1;'"/>
