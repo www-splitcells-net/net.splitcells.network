@@ -25,6 +25,10 @@ SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-excep
 
 ## Third Party Content
 
+projects/net.splitcells.os.state.interface.lib/src/main/bash/bash/session.sudo.timeout.disable
+
+* License: CC-BY-SA 3.0
+
 ### Dependencies
 
 The licenses of the transitive dependencies are not listed here.
