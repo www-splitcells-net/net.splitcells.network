@@ -23,11 +23,31 @@ available at https://www.gnu.org/software/classpath/license.html.
 
 SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-exception-2.0
 
+## Notes
+
+When referring to a license use its full name or its SPDX-License-Identifier.
+
 ## Third Party Content
 
 projects/net.splitcells.os.state.interface.lib/src/main/bash/bash/session.sudo.timeout.disable
 
 * License: CC-BY-SA 3.0
+
+### Third Party Content License List
+
+All third party content licenses are listed here in order to have an overview of
+all licenses present.
+
+* Apache-2.0
+* BSD-2-Clause
+* BSD-3-Clause
+* CC-BY-SA 3.0
+* GPL-2.0-or-later WITH Classpath-exception-2.0
+* EPL-2.0
+* ISC
+* LGPL-2.1-or-later
+* MIT
+* MPL 2.0
 
 ### Dependencies
 
@@ -71,7 +91,7 @@ commons-io:commons-io
 org.antlr:antlr4-runtime
 
 * Version: 4.9.2
-* License: The BSD License
+* License: BSD-3-Clause OR MIT
 
 org.junit.jupiter:junit-jupiter-api
 
@@ -165,7 +185,7 @@ ssh — OpenSSH remote login client
 
 systemd
 
-* License: LGPL 2.1
+* License: LGPL-2.1-or-later
 * Source: https://github.com/systemd/systemd
 
 Sway
