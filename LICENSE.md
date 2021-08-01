@@ -13,13 +13,16 @@ available at https://www.gnu.org/software/classpath/license.html.
 
 SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-exception-2.0
 
-# License Info
+# Additional Info
+
+Complete copies of the licenses are present bellow. 
 
 Copies of legal documents like licenses are
 located [here](src/main/txt/net/splitcells/network/legal).
-Detailed licensing of this project is located in the [NOTICE](./NOTICE.md) file.
+Additional legal notices and attributions of this project is located in the
+[NOTICE](./NOTICE.md) file.
 It contains info about third-party content like dependencies
-(the license of such content should be indicated in the source file itself
+(the licensing of such content should be indicated in the source file itself
 and is also stated in the [NOTICE](./NOTICE.md) file).
 
 # MIT License

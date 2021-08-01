@@ -25,8 +25,6 @@ SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-excep
 
 ## Notes
 
-When referring to a license use its full name or its SPDX-License-Identifier.
-
 ## Third Party Content
 
 projects/net.splitcells.os.state.interface.lib/src/main/bash/bash/session.sudo.timeout.disable
