@@ -2,7 +2,7 @@
 
 ## Building The Project
 
-Java 11, Maven, Python and Bash 3 is required in order to build this project.
+Java 11, Maven, Python 3 and Bash is required in order to build this project.
 Execute `./bin/build`, that's it. ✨
 
 ## Submitting via Pull Request
