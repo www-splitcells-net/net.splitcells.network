@@ -1,4 +1,7 @@
-# Overview of Splitcells Network
+# Bird's-eye View of Splitcells Network
+
+You can use browser extensions like [PlantUML Visualizer for Firefox](https://addons.mozilla.org/en-US/firefox/addon/plantuml-visualizer/)
+to view the following diagram.
 
 ```puml
 @startuml
@@ -7,9 +10,9 @@
 related_projects .up.> [os.state.interface.lib.gpl.2]
 related_projects .up.> [os.state.interface.lib.gpl.3]
 [net.splitcells.network] .up.> infrastructure
-infrastructure .up.> Github
-infrastructure .up.> Gitlab
-infrastructure .up.> sourcehut
+infrastructure <.up.> Github
+infrastructure <.up.> Gitlab
+infrastructure <.up.> sourcehut
 [net.splitcells.network] -down-> [pom.java.defaults]
 
 [pom.java.defaults] -down-> [Dem.process]

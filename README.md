@@ -28,6 +28,8 @@ Some of them are not strictly related to optimization and can be used in other c
 
 🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) and programming progress via our [changelog](./CHANGELOG.md).
 
+🦉 Get an bird's-eye view.
+
 🔭 Research optimization.
 
 📚 Get [structured documentation](projects/net.splitcells.gel.doc/README.md).
