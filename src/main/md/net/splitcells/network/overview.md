@@ -3,6 +3,9 @@
 You can use browser extensions like [PlantUML Visualizer for Firefox](https://addons.mozilla.org/en-US/firefox/addon/plantuml-visualizer/)
 to view the following diagram.
 
+This overview shows the most important connections and components of this
+project.
+
 ## Components
 
 ```puml
