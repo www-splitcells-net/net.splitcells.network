@@ -8,7 +8,6 @@ project.
 
 ## Components
 
-```puml
 @startuml
 
 [net.splitcells.network] .up.> related_projects
@@ -19,6 +18,7 @@ related_projects .up.> [os.state.interface.lib.gpl.3]
 [pom.java.defaults] -down-> [Dem.process]
 [Dem.process] -right-> [Configuration]
 [Configuration] -right-> [Domsole]
+[Domsole] -right-> [Console]
 [Dem.process] -down-> [Gel.defineProblem]
 gel_user .down.> [Gel.defineProblem]
 [Gel.defineProblem] -down-> [Problem]
@@ -57,7 +57,6 @@ osi_user .down.> [os.state.interface]
 website .down.> net.splitcells
 
 @enduml
-```
 
 ## Infrastructure
 
