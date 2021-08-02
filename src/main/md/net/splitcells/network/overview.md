@@ -62,6 +62,7 @@ website .down.> net.splitcells
 
 ## Infrastructure
 
+```puml
 @startuml
 
 [net.splitcells.network] <.up. maven_central
@@ -72,3 +73,4 @@ repo <.up.> sourcehut
 [net.splitcells.network] .down.> www.splitcells.net
 
 @enduml
+```
