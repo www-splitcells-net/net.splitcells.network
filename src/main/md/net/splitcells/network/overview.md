@@ -3,6 +3,8 @@
 You can use browser extensions like [PlantUML Visualizer for Firefox](https://addons.mozilla.org/en-US/firefox/addon/plantuml-visualizer/)
 to view the following diagram.
 
+## Components
+
 ```puml
 @startuml
 
@@ -16,6 +18,8 @@ infrastructure <.up.> sourcehut
 [net.splitcells.network] -down-> [pom.java.defaults]
 
 [pom.java.defaults] -down-> [Dem.process]
+[Dem.process] -right-> [Configuration]
+[Configuration] -right-> [Domsole]
 [Dem.process] -down-> [Gel.defineProblem]
 gel_user .down.> [Gel.defineProblem]
 [Gel.defineProblem] -down-> [Problem]
@@ -46,7 +50,7 @@ osi_user .down.> [os.state.interface]
 [command] -down-> [command.managed]
 [os.state.interface.lib] .down.> users_system
 
-[Dem.process] -down-> [ProjectsRenderer]
+[Dem.process] -left-> [ProjectsRenderer]
 [ProjectsRenderer] .down.> website
 [ProjectsRenderer] -down-> [Extension]
 [Extension] -down-> [Validator]
@@ -55,3 +59,16 @@ website .down.> net.splitcells
 
 @enduml
 ```
+
+## Infrastructure
+
+@startuml
+
+[net.splitcells.network] <.up. maven_central
+[net.splitcells.network] <.up.> repo
+repo <.up.> Github
+repo <.up.> Gitlab
+repo <.up.> sourcehut
+[net.splitcells.network] .down.> www.splitcells.net
+
+@enduml
