@@ -1,6 +1,7 @@
 ### Intellji
 *.iml
 .idea/
+.asciidoctorconfig.adoc
 ### Eclipse
 .settings/
 .classpath
