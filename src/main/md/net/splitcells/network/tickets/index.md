@@ -18,6 +18,16 @@ if this ticket is done.
 If a done ticket is update, this should only be done, if the update is complete,
 in order to minimize the number of changes.
 
+## Ticket Numbering
+
+This repo determines how tickets are numbered.
+Ticket numbers already used in this repo therefore cannot be used for new
+tickets.
+There is no dedicated ticketing system of truth also currently Github
+is being used for this job.
+The reason for this, is the fact that there is no real portable shared
+ticketing file standard.
+
 ## Content Guideline
 
 ```
