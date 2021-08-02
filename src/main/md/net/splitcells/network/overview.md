@@ -11,10 +11,6 @@ to view the following diagram.
 [net.splitcells.network] .up.> related_projects
 related_projects .up.> [os.state.interface.lib.gpl.2]
 related_projects .up.> [os.state.interface.lib.gpl.3]
-[net.splitcells.network] .up.> infrastructure
-infrastructure <.up.> Github
-infrastructure <.up.> Gitlab
-infrastructure <.up.> sourcehut
 [net.splitcells.network] -down-> [pom.java.defaults]
 
 [pom.java.defaults] -down-> [Dem.process]
