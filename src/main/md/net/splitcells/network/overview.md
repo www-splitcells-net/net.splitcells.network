@@ -8,6 +8,7 @@ project.
 
 ## Components
 
+```
 @startuml
 
 [net.splitcells.network] .up.> related_projects
@@ -57,6 +58,7 @@ osi_user .down.> [os.state.interface]
 website .down.> net.splitcells
 
 @enduml
+```
 
 ## Infrastructure
 
