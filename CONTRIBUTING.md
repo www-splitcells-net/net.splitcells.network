@@ -11,3 +11,5 @@ Execute `./bin/build`, that's it. ✨
   You thereby confirm compliance with the DCO.
 * At least the main author has to sign the last commit with its PGP key.
   PGP signing helps to ensure source code integrity.
+  A quickstart and further guidelines for PGP can be found
+  [here](src/main/md/net/splitcells/network/guidelines/pgp.md).

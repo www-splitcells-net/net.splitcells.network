@@ -130,3 +130,7 @@ Project Cluster
 
 * [Licensing](./LICENSE.md) of This Project
 * [Source Code Guidelines](http://splitcells.net/net/splitcells/dem/guidelines/index.html)
+
+## Credits
+
+* [Main Author's Public Key](https://keys.openpgp.org/search?q=F844A8297DEB16D9B9486323A6A6108FC3486F37)
