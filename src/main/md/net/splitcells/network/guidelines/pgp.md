@@ -1,5 +1,8 @@
 # PGP Guidelines
 
+These guidelines only show the most relevant parts for this project regarding
+PGP usage.
+
 ## Quickstart
 
 Consider this guideline as a starting point and not a complete guide.
@@ -11,7 +14,7 @@ It is used for nothing else.
 Use the primary identity as the name and its e-mail address:
 `gpg --quick-generate-key 'Example Engineer <example@example.org>' rsa4096 cert`
 
-List all keys: ` gpg --list-key`
+List all keys: `gpg --list-key`
 
 Create subkey for signing: `gpg --quick-add-key [fingerprint  of key] ed25519 sign`
 
@@ -28,6 +31,8 @@ Consider creating a hard copy backup of the certificate key as last resort
 backup.
 Hide the certificate key.
 Hide the revocation certificate.
+
+## Git Integration
 
 ## Helpful Detailed Guides
 
