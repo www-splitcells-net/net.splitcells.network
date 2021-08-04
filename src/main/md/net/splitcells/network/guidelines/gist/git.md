@@ -1,4 +1,4 @@
-# Git Guidelines
+# Git Gist Guidelines
 
 These guidelines only show the most relevant parts for this project regarding
 Git usage.

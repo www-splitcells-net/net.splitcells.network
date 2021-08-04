@@ -1,4 +1,4 @@
-# PGP Guidelines
+# PGP Gist Guidelines
 
 These guidelines only show the most relevant parts for this project regarding
 PGP usage.
