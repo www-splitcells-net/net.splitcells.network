@@ -17,6 +17,7 @@ Use the primary identity as the name and its e-mail address:
 List all keys: `gpg --list-key`
 
 Create subkey for signing: `gpg --quick-add-key [fingerprint  of key] ed25519 sign`
+Create subkey for encryption and decryption: `gpg --quick-add-key [fingerprint  of key] cv25519 encr`
 
 Backup `~/.gnupg` to protected storage.
 
