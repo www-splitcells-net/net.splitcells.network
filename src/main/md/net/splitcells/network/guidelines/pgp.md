@@ -3,7 +3,7 @@
 These guidelines only show the most relevant parts for this project regarding
 PGP usage.
 
-## Quickstart
+## Quickstart For Key Creation and Management
 
 Consider this guideline as a starting point and not a complete guide.
 It should contain notes to all important operations and considerations in a
@@ -18,19 +18,21 @@ List all keys: `gpg --list-key`
 
 Create subkey for signing: `gpg --quick-add-key [fingerprint  of key] ed25519 sign`
 
-Export public key to console: `gpg --export --armor [fingerprint of key]`
-
-Upload key to public [openpgp](https://keys.openpgp.org/about/usage#gnupg-upload)
-server: `gpg --export [your_address@example.net] | curl -T - https://keys.openpgp.org`.
-Consider commands output and verify upload.
-The public URL for the uploaded key can be used for public key distribution.
-
 Backup `~/.gnupg` to protected storage.
 
 Consider creating a hard copy backup of the certificate key as last resort
 backup.
 Hide the certificate key.
 Hide the revocation certificate.
+
+## Key Publication
+
+Export public key to console: `gpg --export --armor [fingerprint of key]`
+
+Upload key to public [openpgp](https://keys.openpgp.org/about/usage#gnupg-upload)
+server: `gpg --export [your_address@example.net] | curl -T - https://keys.openpgp.org`.
+Consider commands output and verify upload.
+The public URL for the uploaded key can be used for public key distribution.
 
 ## Git Integration
 
