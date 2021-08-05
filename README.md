@@ -70,7 +70,6 @@ Some of them are not strictly related to optimization and can be used in other c
   * [#58 Publish private documentation of Version 2.0.](https://github.com/www-splitcells-net/net.splitcells.network/issues/58)
   * [#64 Create git based ticket system.](https://github.com/www-splitcells-net/net.splitcells.network/issues/69)
   * [#70 Create Version 3 of Gel.](https://github.com/www-splitcells-net/net.splitcells.network/issues/70)
-    * [#2 Determine Licensing and Contribution protocol.](https://github.com/www-splitcells-net/net.splitcells.network/issues/2)
     * [#63 Define API development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/63)
     * [#64 Define project development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/64)
 ### Service

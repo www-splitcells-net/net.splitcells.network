@@ -42,3 +42,4 @@ The public URL for the uploaded key can be used for public key distribution.
 * [Quick-start guide to GPG](https://github.com/bfrg/gpg-guide)
 * [Protecting Code Integrity With PGP](https://github.com/lfit/itpol/blob/master/protecting-code-integrity.md)
 * [keys.openpgp.org Usage Guide](https://keys.openpgp.org/about/usage)
+* [Kernel Maintainer PGP guide](https://www.kernel.org/doc/html/latest/process/maintainer-pgp-guide.html)
