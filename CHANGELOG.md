@@ -1,6 +1,7 @@
 # Changelog
 The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
 The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
+Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
 ### Major Changes
 1. **2021-07-08**:
