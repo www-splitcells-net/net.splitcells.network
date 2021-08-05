@@ -3,7 +3,11 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
 The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
-## [3.0.0]
+#### Patches
+1 **2021-08-05**:
+   1. Fix Dependabot alert.
+   1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
+## [3.0.0] - 2021-08-05
 ### Major Changes
 1. **2021-07-08**:
    1. Default configuration of Dem's process does not ensure determinism

@@ -41,7 +41,7 @@ public class CommonFunctions {
 		return rVal;
 	}
 
-	public static int hash_code(Object... args) {
+	public static int hashCode(Object... args) {
 		return Objects.hash(args);
 	}
 

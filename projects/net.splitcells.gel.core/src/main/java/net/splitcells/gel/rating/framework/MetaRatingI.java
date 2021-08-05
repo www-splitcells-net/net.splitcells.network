@@ -181,6 +181,11 @@ public class MetaRatingI implements MetaRating {
     }
 
     @Override
+    public int hashCode() {
+        return ;
+    }
+
+    @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof MetaRating) {
             final MetaRating other = (MetaRating) arg;

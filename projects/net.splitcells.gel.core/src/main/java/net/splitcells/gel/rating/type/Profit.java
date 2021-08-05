@@ -83,7 +83,7 @@ public class Profit implements Rating {
 
     @Override
     public int hashCode() {
-        return CommonFunctions.hash_code(value);
+        return CommonFunctions.hashCode(value);
     }
 
     @SuppressWarnings("unchecked")
