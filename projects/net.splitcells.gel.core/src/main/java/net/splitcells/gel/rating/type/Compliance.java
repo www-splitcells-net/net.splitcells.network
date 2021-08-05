@@ -22,6 +22,7 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 
 import java.util.Optional;
 
+import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
@@ -63,6 +64,11 @@ public class Compliance implements Rating {
             return this.value == ((Compliance) arg).value;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return CommonFunctions.hashCode(value);
     }
 
     @SuppressWarnings("unchecked")

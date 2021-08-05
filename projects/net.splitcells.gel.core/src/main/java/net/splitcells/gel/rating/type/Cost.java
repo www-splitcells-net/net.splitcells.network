@@ -24,6 +24,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import java.util.Objects;
 import java.util.Optional;
 
+import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
@@ -122,6 +123,11 @@ public class Cost implements Rating {
     @Override
     public boolean equals(Object ob) {
         return compare_partially_to((Rating) ob).get().equals(EQUAL);
+    }
+
+    @Override
+    public int hashCode() {
+        return CommonFunctions.hashCode(value);
     }
 
     @SuppressWarnings("unchecked")

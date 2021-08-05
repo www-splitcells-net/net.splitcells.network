@@ -38,6 +38,7 @@ import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -277,6 +278,11 @@ public class MinimalDistance<T> implements Rater {
                     && this.distanceMeassurer.equals(((MinimalDistance) arg).distanceMeassurer);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return CommonFunctions.hashCode(minimumDistance, attribute, comparator, distanceMeassurer);
     }
 
     @Override

@@ -35,9 +35,13 @@ public class Comparators<T> implements Comparator<T> {
 	@Override
 	public boolean equals(Object arg) {
 		if (arg != null && arg instanceof Comparators) {
-			return this.comparator.equals(((Comparators) arg).comparator)//
-			;
+			return this.comparator.equals(((Comparators) arg).comparator);
 		}
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return comparator.hashCode();
 	}
 }

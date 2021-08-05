@@ -17,6 +17,7 @@
 package net.splitcells.dem.data.atom;
 
 import net.splitcells.dem.lang.annotations.JavaLegacy;
+import net.splitcells.dem.utils.CommonFunctions;
 
 public class BoolI implements Bool {
     private final boolean value;
@@ -87,6 +88,11 @@ public class BoolI implements Bool {
     @Override
     public boolean equals(Object arg) {
         return equals((Bool) arg).isTrue();
+    }
+
+    @Override
+    public int hashCode() {
+        return CommonFunctions.hashCode(value);
     }
 
     @Override

@@ -28,6 +28,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import java.util.Collection;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
@@ -143,6 +144,11 @@ public class HasSize implements Rater {
             return this.targetSize == ((HasSize) arg).targetSize;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return CommonFunctions.hashCode(targetSize);
     }
 
     @Override

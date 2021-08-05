@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.splitcells</groupId>
     <artifactId>ses</artifactId>
-    <name>State Network Simulation, Analyzation and Optimization</name>
+    <name>State Network Optimization</name>
     <parent>
         <groupId>net.splitcells</groupId>
         <artifactId>pom-java-defaults</artifactId>

@@ -23,6 +23,7 @@ import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
@@ -384,6 +385,11 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                     && this.distanceMeassurer.equals(((MinimalDistanceBasedOnDiffs) arg).distanceMeassurer);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return CommonFunctions.hashCode(minimumDistance, attribute, comparator, distanceMeassurer);
     }
 
     @Override
