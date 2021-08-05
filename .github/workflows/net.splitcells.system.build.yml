@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.7]
+        language: [ 'java']
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
@@ -26,6 +27,6 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
-          languages: [ 'java']
+          languages: ${{ matrix.language }}
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
