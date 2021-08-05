@@ -7,6 +7,8 @@ Releases are done everytime a relevant ticket is completed.
 1 **2021-08-05**:
    1. Fix Dependabot alert.
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
+   1. Make `hashCode` and `equals` of `net.splitcells.gel.rating.framework.MetaRatingI`
+      consistent.
 ## [3.0.0] - 2021-08-05
 ### Major Changes
 1. **2021-07-08**:

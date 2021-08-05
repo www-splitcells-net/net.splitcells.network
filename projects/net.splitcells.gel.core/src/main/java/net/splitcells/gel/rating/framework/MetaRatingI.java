@@ -30,6 +30,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.rating.type.Optimality;
 import net.splitcells.gel.rating.type.Profit;
@@ -175,20 +176,27 @@ public class MetaRatingI implements MetaRating {
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof Rating) {
-            return compare_partially_to((Rating) arg).get().equals(EQUAL);
+            final var equality =  compare_partially_to((Rating) arg);
+            if (equality.isEmpty()) {
+                return false;
+            }
+            return equality.get().equals(EQUAL);
         }
         throw notImplementedYet();
     }
 
     @Override
     public int hashCode() {
-        return ;
+        return CommonFunctions.hashCode(ratingMap, translator, merger);
     }
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof MetaRating) {
             final MetaRating other = (MetaRating) arg;
+            if (!translator.equals(other.translator()) || !merger.equals(other.merger())) {
+                return Optional.empty();
+            }
             if (other.content().isEmpty() && ratingMap.isEmpty()) {
                 return Optional.of(EQUAL);
             }
@@ -254,5 +262,15 @@ public class MetaRatingI implements MetaRating {
     @Override
     public String toString() {
         return Xml.toPrettyString(toDom());
+    }
+
+    @Override
+    public RatingTranslator translator() {
+        return translator;
+    }
+
+    @Override
+    public MetaRatingMerger merger() {
+        return merger;
     }
 }

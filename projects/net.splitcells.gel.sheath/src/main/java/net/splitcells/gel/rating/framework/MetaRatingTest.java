@@ -32,4 +32,11 @@ public class MetaRatingTest {
         assertThat(testProduct.content().get(Profit.class)).isEqualTo(profit(4));
         assertThat(testProduct.translate(Profit.class)).isEqualTo(profit(4));
     }
+
+    @Test
+    public void testUnequalContent() {
+        final var testSubject = MetaRatingI.metaRating().combine(profit(1));
+        final var otherTestSubject = MetaRatingI.metaRating().combine(profit(3));
+        assertThat(testSubject).isNotEqualTo(otherTestSubject);
+    }
 }

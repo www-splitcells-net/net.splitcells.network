@@ -39,4 +39,8 @@ public interface MetaRating extends Rating, RatingTranslator, MetaRatingMerger {
     default MetaRating asMetaRating() {
         return this;
     }
+
+    RatingTranslator translator();
+
+    MetaRatingMerger merger();
 }
