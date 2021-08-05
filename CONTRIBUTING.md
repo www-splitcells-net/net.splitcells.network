@@ -1,9 +1,19 @@
 # Contributing to Splitcells Network
 
-## Building The Project
+## Building the Project
 
 Java 11, Maven, Python 3 and Bash is required in order to build this project.
 Execute `./bin/build`, that's it. ✨
+
+## Browsing Repository in Browser
+
+When browsing the repo in the web some browser addons/extension might help
+to visualize its content:
+* PlantUML Visualizer for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/plantuml-visualizer/)
+  or [Chrome](https://chrome.google.com/webstore/detail/plantuml-visualizer/ffaloebcmkogfdkemcekamlmfkkmgkcf).
+  renders PlantUML images.
+* [TeX All the Things](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn/)
+  for Chrome can be used for rendering math formulas in a neat way.
 
 ## Submitting via Pull Request
 
@@ -20,3 +30,8 @@ Execute `./bin/build`, that's it. ✨
 
 * [Submitting patches: the essential guide to getting your code into the kernel](https://www.kernel.org/doc/html/latest/process/submitting-patches.html)
 * [Creating Pull Requests](https://www.kernel.org/doc/html/latest/maintainer/pull-requests.html)
+
+## Helpful Development Tools
+
+This [PlantUML Editor](https://plantuml-editor.kkeisuke.com/) can be used to
+edit PlantUMLs without installing software locally.
