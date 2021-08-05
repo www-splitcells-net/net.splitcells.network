@@ -23,3 +23,5 @@ jobs:
           cd $GITHUB_WORKSPACE/projects/net.splitcells.system
           echo $GITHUB_WORKSPACE
           ./bin/build
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
