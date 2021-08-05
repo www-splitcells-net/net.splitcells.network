@@ -68,10 +68,6 @@ Some of them are not strictly related to optimization and can be used in other c
   * [#37 Simplify default web layout.](src/main/md/net/splitcells/network/tickets/open/37.md)
   * [#55 Minimize number of used languages and protocols.](https://github.com/www-splitcells-net/net.splitcells.network/issues/55)
   * [#58 Publish private documentation of Version 2.0.](https://github.com/www-splitcells-net/net.splitcells.network/issues/58)
-  * [#64 Create git based ticket system.](https://github.com/www-splitcells-net/net.splitcells.network/issues/69)
-  * [#70 Create Version 3 of Gel.](https://github.com/www-splitcells-net/net.splitcells.network/issues/70)
-    * [#63 Define API development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/63)
-    * [#64 Define project development model.](https://github.com/www-splitcells-net/net.splitcells.network/issues/64)
 ### Service
 * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
 ## Network's Structure

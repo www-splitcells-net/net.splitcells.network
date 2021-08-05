@@ -3,6 +3,7 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
 The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
+## [3.0.0]
 ### Major Changes
 1. **2021-07-08**:
    1. Default configuration of Dem's process does not ensure determinism
