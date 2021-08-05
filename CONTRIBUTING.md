@@ -15,3 +15,8 @@ Execute `./bin/build`, that's it. ✨
   PGP signing helps to ensure source code integrity.
   A quickstart and further guidelines for PGP can be found
   [here](src/main/md/net/splitcells/network/guidelines/gist/pgp.md).
+
+## Inspirational External Guidelines
+
+* [Submitting patches: the essential guide to getting your code into the kernel](https://www.kernel.org/doc/html/latest/process/submitting-patches.html)
+* [Creating Pull Requests](https://www.kernel.org/doc/html/latest/maintainer/pull-requests.html)
