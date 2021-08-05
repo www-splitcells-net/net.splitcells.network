@@ -49,7 +49,6 @@ Some of them are not strictly related to optimization and can be used in other c
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:python)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:javascript)
 
-* [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security)
 * [Changelog](./CHANGELOG.md)
 * API: Interfaces and the main class `net.splitcells.gel.Gel` can be considered semi stable.
   Breaking changes are tried to be omitted, but there is no guarantee for that.
@@ -57,6 +56,11 @@ Some of them are not strictly related to optimization and can be used in other c
   You can try to decrease the likelihood of breaking a certain feature,
   by contributing an appropriate test case/suite for this feature.
   Regardless of that, keep in mind, that there is no guarantee of backwards compatibility.
+* [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security)
+  The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
+  workflow has to be run manually.
+  The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
+
 ### Planning
 * Current Tickets:
   * Solve new problems.
