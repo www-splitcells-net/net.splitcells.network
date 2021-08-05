@@ -8,9 +8,13 @@ license: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-exception-2.0
 # Emotional Relief
 
 I created the first public release of the network project.
+
 I pulled the rip line.
+
 It's over. Its finally over
+
 **Insert Frodo meme.**
+
 **Insert** `I'm somewhat an open source developer myself` **Meme.**
 
 **It ain't much, but it's honest work.**
