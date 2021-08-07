@@ -51,11 +51,13 @@ import static net.splitcells.dem.resource.host.interaction.LogMessageI.logMessag
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
+ * DSUI ^= Dom Stream and Stack based User Interface
+ * <p>
  * IDEA Support recursive stacking.
  * <p>
  * TOFIX Remove duplicate name space declaration.
  * <p>
- * DSUI ^= Dom Stream and Stack based User Interface
+ * TODO Split log file into multiple, in order to avoid files that are too large for easy processing.
  */
 public class Dsui implements Sui<LogMessage<Node>>, Flushable {
     private static final String ENTRY_POINT = "ENTRY.POINT.237048021";
