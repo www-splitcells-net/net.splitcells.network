@@ -12,7 +12,7 @@ Releases are done everytime a relevant ticket is completed.
    1. Make `hashCode` of `HasMinimalSize`, `HasSize`, `MinimalDistance`,
       `MinimalDistanceBasedOnDiffs`, `Compliance`, `Cost`, `BoolI`,
       `Comparators` more consistent to `equals`, in order to improve Code
-      quality score in [lgtm.com](https://lgtm.com)`.
+      quality score in [lgtm.com](https://lgtm.com).
 ## [3.0.0] - 2021-08-05
 ### Major Changes
 1. **2021-07-08**:
