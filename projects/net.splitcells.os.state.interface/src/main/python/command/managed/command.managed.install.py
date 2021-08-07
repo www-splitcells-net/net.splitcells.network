@@ -40,7 +40,12 @@ class Command:
 		self.managedCommandNaming = "commandName = '" + self.name + "'"
 	def install(self):
 		executionCounter = 0
-		targetFile = self.targetFolder.joinpath(self.name)
+		targetFileName = self.name
+		if (self.name.endswith('.sh')):
+			targetFileName = self.name[:-3]
+		if (self.name.endswith('.py')):
+			targetFileName = self.name[:-3]
+		targetFile = self.targetFolder.joinpath(targetFileName) # TODO Create test, where a command is installed and check if suffix processing works correctly.
 		if targetFile.exists():
 			while True:
 				targetFile = self.targetFolder.joinpath(self.name + '.' + str(executionCounter))

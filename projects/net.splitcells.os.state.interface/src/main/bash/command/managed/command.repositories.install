@@ -36,7 +36,7 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	chmod +x $bootstrapRepo/src/main/bash/shell/*
 		PATH=$bootstrapRepo/src/main/bash/shell:$PATH
 	export PATH
-	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install
+	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install.py
 		chmod +x $installer
 		$installer $installer
 	chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*

@@ -3,6 +3,11 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
 The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
+### Minor Changes
+1 **2021-08-08**: `command.repositories.install` now strips known file
+   suffixes during installation.
+   This way `os.state.interface` repos can now state their file endings and
+   thereby have better IDE support in such repos.
 #### Patches
 1 **2021-08-05**:
    1. Fix Dependabot alert.

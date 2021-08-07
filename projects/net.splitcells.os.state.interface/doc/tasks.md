@@ -8,8 +8,7 @@ The priority of a task is just a guideline.
 1. Add tests.
 1. Improve echo output and make it nice, for a certain setting.
 ### Current Tasks
-1. Support usage of file endings in files of src.
-   This way IDEs and other text editors can be integrated better.
+1. Add file endings to all source files.
 1. Implement testing:
    1. Fix Gitlab-Runner Test and ensure that test failures are automatically found,
       which is currently not the case.

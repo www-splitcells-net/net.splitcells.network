@@ -36,7 +36,7 @@ if __name__ == '__main__':
 	&& repo.repair {1} \\
 	&& repo.pull \\
 	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo, "\n")
-	logging.debug('Executing: ' + synchronizationScript)
+	logging.debug('Executing: ' + synchronizationScrip	t)
 	returnCode = subprocess.call(synchronizationScript, shell='True')
 	if returnCode != 0:
 		exit(1)
