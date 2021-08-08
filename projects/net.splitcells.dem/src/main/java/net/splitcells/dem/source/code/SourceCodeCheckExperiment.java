@@ -20,8 +20,8 @@ import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.validator.ProblemReporter;
-import com.github.javaparser.ast.validator.TypedValidator;
+import com.github.javaparser.ast.validator.*;
+import com.github.javaparser.ast.visitor.TreeVisitor;
 import com.github.javaparser.symbolsolver.JavaSymbolSolver;
 import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.reflection.ClassesRelated.downCast;
 
 public class SourceCodeCheckExperiment {
     public static void main(String... args) throws IOException {
@@ -39,10 +40,15 @@ public class SourceCodeCheckExperiment {
         final var symbolSolver = new JavaSymbolSolver(typeSolver);
         StaticJavaParser.getConfiguration().setSymbolResolver(symbolSolver);
         StaticJavaParser.getConfiguration().getPostProcessors().add(
-                new TypedValidator<Node>() {
-
+                new Validator() {
                     @Override
                     public void accept(Node node, ProblemReporter problemReporter) {
+                        downCast(CompilationUnit.class, node).ifPresent(c -> {
+                            if (c.getComment().isEmpty()) {
+                                throw notImplementedYet();
+                            }
+
+                        });
                         throw notImplementedYet();
                     }
                 }.postProcessor());

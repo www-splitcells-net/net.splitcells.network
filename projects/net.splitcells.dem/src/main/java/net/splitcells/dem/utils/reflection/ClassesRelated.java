@@ -20,6 +20,7 @@ import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 import static net.splitcells.dem.utils.reflection.ClassRelatedI.classRelated;
 
@@ -54,6 +55,14 @@ public class ClassesRelated {
     public static boolean isSubClass(Class<?> superClass, Class<?> subClass) {
         return superClass.isAssignableFrom(subClass);
     }
+
+	@SuppressWarnings("unchecked")
+    public static <T> Optional<T> downCast(Class<T> type, Object arg) {
+		if (isSubClass(type, arg.getClass())) {
+			return Optional.of((T) arg);
+		}
+		return Optional.empty();
+	}
 
 	/**
 	 * Loads the resources of a class, typically located in the src/main/resources of the projects source.
