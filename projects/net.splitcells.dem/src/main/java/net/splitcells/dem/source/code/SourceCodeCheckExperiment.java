@@ -19,7 +19,11 @@ package net.splitcells.dem.source.code;
 import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.PackageDeclaration;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.validator.*;
 import com.github.javaparser.ast.visitor.TreeVisitor;
 import com.github.javaparser.symbolsolver.JavaSymbolSolver;
@@ -43,13 +47,20 @@ public class SourceCodeCheckExperiment {
                 new Validator() {
                     @Override
                     public void accept(Node node, ProblemReporter problemReporter) {
-                        downCast(CompilationUnit.class, node).ifPresent(c -> {
-                            if (c.getComment().isEmpty()) {
+                        downCast(CompilationUnit.class, node).ifPresent(cu -> {
+                            if (cu.getComment().isEmpty()) {
                                 throw notImplementedYet();
                             }
-
+                            cu.getChildNodes().forEach(c -> {
+                                if (downCast(PackageDeclaration.class, c).isPresent()
+                                        || downCast(ImportDeclaration.class, c).isPresent()
+                                        || downCast(ClassOrInterfaceDeclaration.class, c).isPresent()) {
+                                    return;
+                                }
+                                throw new IllegalArgumentException(c.getClass().toString());
+                            });
                         });
-                        throw notImplementedYet();
+                        throw new IllegalArgumentException(node.getClass().toString());
                     }
                 }.postProcessor());
         CompilationUnit cu = StaticJavaParser.parse(Paths.get("./src/main/java/net/splitcells/dem/Dem.java"));
