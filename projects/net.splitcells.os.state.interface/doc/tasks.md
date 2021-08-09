@@ -38,5 +38,7 @@ The priority of a task is just a guideline.
    1. https://github.com/debarshiray/libpod
 1. Filesystem/harddrive checking. See fsck.
 1. Support alternative repo managers.
+1. Support script mode by default, where a script is generated,
+   instead of executing commands directly.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
