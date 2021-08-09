@@ -43,26 +43,30 @@ public class SourceCodeCheckExperiment {
         typeSolver.add(new JavaParserTypeSolver(Paths.get("./src/main/java")));
         final var symbolSolver = new JavaSymbolSolver(typeSolver);
         StaticJavaParser.getConfiguration().setSymbolResolver(symbolSolver);
-        StaticJavaParser.getConfiguration().getPostProcessors().add(
-                new Validator() {
-                    @Override
-                    public void accept(Node node, ProblemReporter problemReporter) {
-                        downCast(CompilationUnit.class, node).ifPresent(cu -> {
-                            if (cu.getComment().isEmpty()) {
-                                throw notImplementedYet();
-                            }
-                            cu.getChildNodes().forEach(c -> {
-                                if (downCast(PackageDeclaration.class, c).isPresent()
-                                        || downCast(ImportDeclaration.class, c).isPresent()
-                                        || downCast(ClassOrInterfaceDeclaration.class, c).isPresent()) {
-                                    return;
-                                }
-                                throw new IllegalArgumentException(c.getClass().toString());
-                            });
-                        });
-                        throw new IllegalArgumentException(node.getClass().toString());
+        StaticJavaParser.getConfiguration().getPostProcessors().add(new TreeVisitorValidator(new Validator() {
+            @Override
+            public void accept(Node node, ProblemReporter problemReporter) {
+                System.out.println(node.getClass());
+                final var accepted = downCast(CompilationUnit.class, node).map(cu -> {
+                    if (cu.getComment().isEmpty()) {
+                        throw notImplementedYet();
                     }
-                }.postProcessor());
+                    cu.getChildNodes().forEach(c -> {
+                        if (downCast(PackageDeclaration.class, c).isPresent()
+                                || downCast(ImportDeclaration.class, c).isPresent()
+                                || downCast(ClassOrInterfaceDeclaration.class, c).isPresent()) {
+                            return;
+                        }
+                        throw new IllegalArgumentException(c.getClass().toString());
+                    });
+                    return true;
+                }).orElse(false);
+                if (accepted) {
+                    return;
+                }
+                throw new IllegalArgumentException(node.getClass().toString());
+            }
+        }).postProcessor());
         CompilationUnit cu = StaticJavaParser.parse(Paths.get("./src/main/java/net/splitcells/dem/Dem.java"));
         System.out.println(cu);
     }
