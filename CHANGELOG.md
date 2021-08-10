@@ -4,8 +4,11 @@ The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
 ### Major Changes
-1. **2021-08-10**: `command.repositories.install` now only install sh, Bash and
-   Python commands.
+1. **2021-08-10**:
+   1. `command.repositories.install` now only install sh, Bash and
+      Python commands.
+   2. Create command `project.repository.register` in order to omit editing
+      config files manually.
 ### Minor Changes
 1. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
    the build process on multiple computers.
