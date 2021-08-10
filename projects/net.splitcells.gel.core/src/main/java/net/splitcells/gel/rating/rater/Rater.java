@@ -32,6 +32,10 @@ import net.splitcells.dem.utils.reflection.PubliclyConstructed;
 import net.splitcells.dem.utils.reflection.PubliclyTyped;
 
 /**
+ * <p>Someone will be said to have spoken ill of you; think whether you did not first speak ill of him; think of how
+ * many persons you have yourself spoken ill. - Lucius Annaeus Seneca
+ * </p>
+ *
  * TODO RENAME Rater seems to be an incorrect name, because it produces more than a rating.
  */
 public interface Rater extends PubliclyTyped<Rater>
@@ -77,7 +81,7 @@ public interface Rater extends PubliclyTyped<Rater>
         }
         return dom;
     }
-    
+
     default String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         throw notImplementedYet(getClass().getName());
     }
