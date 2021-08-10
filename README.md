@@ -48,6 +48,8 @@ Some of them are not strictly related to optimization and can be used in other c
 [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:java)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:python)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:javascript)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_small)
 
 * [Changelog](./CHANGELOG.md)
 * API: Interfaces and the main class `net.splitcells.gel.Gel` can be considered semi stable.
