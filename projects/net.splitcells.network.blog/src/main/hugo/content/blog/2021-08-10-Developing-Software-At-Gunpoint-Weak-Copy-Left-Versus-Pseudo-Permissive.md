@@ -8,8 +8,12 @@ I am not a lawyer: This is no legal advice,
 the following only represents some of my opinions and understandings.
 Make sure to consult someone, who knows what they're talking about.
 
-Don't take this article to seriously,
+Don't take this article too seriously,
 you probably have better ways to waste your time. 🍺
+
+This just summarizes the key distinction between the Apache 2.0 and the EPL 2.0
+from my point of view,
+because both were considered as a license for this project.
 # Comparing Apache 2.0 with EPL 2.0
 Also, the Apache 2.0 is considered to be a permissive license,
 it defines the term `Derivative Works` and places additional demands on these.
@@ -49,6 +53,8 @@ common functionalities.
 Nobody want's to reimplement their own archive file formats,
 just to be sure, that they exclusively possess the code and can control
 its binary distribution (just like you hopefully did not buy WinRAR).
+Buying a license for such code/program in order to use it as a dependency does
+also not seem to be worth it most of the time.
 
 In order for both parties to cooperate in a predictable manner a framework
 for the group work is being created, where licensing is our biggest concern.
@@ -61,7 +67,7 @@ proprietary or license it under the GPL, which also adds new restrictions.
 
 The Apache 2.0 does not allow this.
 Source code licensed under the Apache 2.0 stays under this license,
-also this does not apply to modification of such source code.
+also this does not apply to modifications of such source code.
 
 Especially, code licensed just under Apache 2.0 cannot be combined with code
 licensed under the GPL licenses.
