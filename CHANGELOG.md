@@ -3,6 +3,9 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
 The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
+### Major Changes
+1. **2021-08-10**: `command.repositories.install` now only install sh, Bash and
+   Python commands.
 ### Minor Changes
 1. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
    the build process on multiple computers.
