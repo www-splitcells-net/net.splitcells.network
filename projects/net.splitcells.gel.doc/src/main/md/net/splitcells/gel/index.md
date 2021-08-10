@@ -1,15 +1,11 @@
 # Introduction to the Generic Allocator
-
 ## Introduction for Users
-
 The Generic Allocator (Gel) is a Java framework
 providing modeling, analytic and solving capabilities regarding optimization problems.
 
 Gel provides tools to model problems simply and understandably,
 because without this ability such endeavours become unnecessarily hard and time-consuming.
-
 ## Introduction for Developers
-
 The main entry points is located at the class `net.splitcells.gel.Gel`
 of the core project `net.splitcells.gel.core`.
 Every functionality and public API is reachable via its functions.
@@ -21,3 +17,5 @@ This interface helps the programmer to understand the possibilities
 and best practices using this framework,
 by providing the information,
 where it is used.
+## Introduction to the Underlying Theories
+* [One-Dimensional Assignment Problems](../../../../../../src/main/md/net/splitcells/gel/solution/theory/one-dimensional-assignment-problems.md)
