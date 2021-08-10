@@ -1,10 +1,14 @@
 # Changelog
-This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
+This changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Please, create a one sentence summary for each release.
 
 The concrete echo format of each command is not stable.
 Changes to this are not considered major changes.
+
+This changelog is deprecated.
+Changes are now written to the root changelog instead.
+
 ## Unreleased
 ### Major Changes
 1. Remove deprecated command `command.managed.define`.
