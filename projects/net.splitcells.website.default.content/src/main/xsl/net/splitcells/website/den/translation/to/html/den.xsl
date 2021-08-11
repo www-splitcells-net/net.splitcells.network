@@ -47,7 +47,7 @@
                 <xsl:when test="./d:path">
                     <xsl:value-of select="./d:path/node()"/>
                 </xsl:when>
-                <xsl:when test="./s:path">
+                <xsl:when test="./s:meta/s:path">
                     <xsl:value-of select="./s:meta/s:path/node()"/>
                 </xsl:when>
                 <xsl:otherwise>

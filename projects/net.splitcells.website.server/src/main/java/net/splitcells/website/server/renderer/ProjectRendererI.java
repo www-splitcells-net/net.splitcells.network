@@ -33,6 +33,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
@@ -249,7 +250,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 content.appendChild(metaElement);
                 if (path.isPresent()) {
                     final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
-                    pathElement.appendChild(Xml.textNode(path.get()));
+                    pathElement.appendChild(Xml.textNode(Paths.get(path.get()).getParent().toString()));
                     metaElement.appendChild(pathElement);
                 }
             }
