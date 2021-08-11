@@ -75,6 +75,10 @@ public class ProjectRendererI implements ProjectRenderer {
     private final String resourceRootPath;
     private final boolean flatRepository;
     private final String profile;
+    /**
+     * TODO REMOVE This is always true.
+     */
+    @Deprecated
     private final boolean typedFolder;
     private final Validator validator;
     private final ExtensionMerger extension = extensionMerger();
@@ -310,13 +314,7 @@ public class ProjectRendererI implements ProjectRenderer {
     @Override
     public Perspective projectLayout() {
         final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
-        final Path folder;
-        if (typedFolder) {
-            folder = projectSrcFolder.resolve("xml");
-        } else {
-            folder = projectSrcFolder;
-        }
-        extendProjectLayout(layout, folder);
+        extendProjectLayout(layout, projectSrcFolder.resolve("xml"));
         extendProjectLayout(layout, projectSrcFolder.resolve("svg"));
         return extension.extendProjectLayout(layout, this);
     }
