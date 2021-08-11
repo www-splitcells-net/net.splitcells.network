@@ -941,6 +941,17 @@
                     apply_to_elements_of('advertise-one-of', function(element){showOneOfChildren(element);});
                     checkAvailibility('net-splitcells-website-log-error');
                 </script>
+                <!-- Integration of https://www.mathjax.org. TODO Use local copy in future. -->
+                <script type="text/x-mathjax-config">
+                    MathJax = {
+                    tex: {
+                    inlineMath: [['$', '$'], ["\\(", "\\)"]],
+                    processEscapes: true,
+                    }
+                    }
+                </script>
+                <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+                <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
             </body>
         </html>
     </xsl:template>
