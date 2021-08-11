@@ -44,8 +44,10 @@ public class CommonMarkRenderer {
             title = Optional.empty();
             contentToRender = arg;
         }
+        final var parsed = parser.parse(contentToRender);
+        parsed.accept(new LinkTranslator());
         return projectRenderer
-                .renderHtmlBodyContent(renderer.render(parser.parse(contentToRender))
+                .renderHtmlBodyContent(renderer.render(parsed)
                         , title
                         , Optional.of(path))
                 .get();
