@@ -317,21 +317,20 @@ public class ProjectRendererI implements ProjectRenderer {
             folder = projectSrcFolder;
         }
         try {
-            if (isDirectory(folder)) {
-                java.nio.file.Files.walk(folder)
-                        .filter(java.nio.file.Files::isRegularFile)
-                        .forEach(file -> ProjectRenderer.extendPerspectiveWithPath(layout, folder.relativize(file)));
-            }
-            final var svgFolder = projectSrcFolder.resolve("svg");
-            if (isDirectory(svgFolder)) {
-                java.nio.file.Files.walk(svgFolder)
-                        .filter(java.nio.file.Files::isRegularFile)
-                        .forEach(file -> ProjectRenderer.extendPerspectiveWithPath(layout, folder.relativize(file)));
-            }
+            extendProjectLayout(layout, folder);
+            extendProjectLayout(layout, projectSrcFolder.resolve("svg"));
         } catch (IOException e) {
             throw new RuntimeException(folder.toAbsolutePath().toString(), e);
         }
         return extension.extendProjectLayout(layout, this);
+    }
+    
+    private static void extendProjectLayout(Perspective layout, Path folder) {
+        if (isDirectory(folder)) {
+            java.nio.file.Files.walk(folder)
+                    .filter(java.nio.file.Files::isRegularFile)
+                    .forEach(file -> ProjectRenderer.extendPerspectiveWithPath(layout, folder.relativize(file)));
+        }
     }
 
     @Override
