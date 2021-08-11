@@ -10,4 +10,9 @@ variable $x_{na}$.
 The actual assignments for a given solution are represented by the set $X$ as
 following:
 
-TODO
+$R(x_{11}, ...,x_{NA}) = 
+\begin{cases}
+    wahr, & \text{falls Variablenbelegung richtig},\\
+    falsch, & \text{sonst}.
+    \end{cases}
+\end{gather*}$
