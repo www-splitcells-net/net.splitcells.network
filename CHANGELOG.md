@@ -10,10 +10,11 @@ Releases are done everytime a relevant ticket is completed.
    2. Create command `project.repository.register` in order to omit editing
       config files manually.
 ### Minor Changes
-1. **2021-08-11**: Server SVG images from source folder by webserver.
-1. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
+1. **2021-08-11**:
+   1. Server SVG images from source folder by webserver and add them to the layout.
+2. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
    the build process on multiple computers.
-2. **2021-08-08**: `command.repositories.install` now strips known file
+3. **2021-08-08**: `command.repositories.install` now strips known file
    suffixes during installation.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
