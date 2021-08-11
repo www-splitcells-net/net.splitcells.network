@@ -125,12 +125,12 @@ public class ProjectRendererI implements ProjectRenderer {
     @Override
     public Optional<RenderingResult> render(String path) {
         try {
+            if (path.length() > 0 && path.charAt(0) == '/') {
+                path = path.substring(1);
+            }
             final var extensionRendering = extension.renderFile(path, this);
             if (extensionRendering.isPresent()) {
                 return extensionRendering;
-            }
-            if (path.length() > 0 && path.charAt(0) == '/') {
-                path = path.substring(1);
             }
             // TODO Do not use path, in the following code.
             final var normalizedPath = path;
