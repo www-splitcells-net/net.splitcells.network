@@ -245,6 +245,9 @@ article p mjx-container {
     /* The following makes the container as big as the containing paragraph. */
     margin-right: -0.25em !important;
     }
+article p img {
+    background-color:  var(--background-color-priority-1);
+}
 article blockquote p {
     background-image: none;
 }
