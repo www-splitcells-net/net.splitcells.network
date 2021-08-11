@@ -47,6 +47,9 @@
                 <xsl:when test="./d:path">
                     <xsl:value-of select="./d:path/node()"/>
                 </xsl:when>
+                <xsl:when test="./s:path">
+                    <xsl:value-of select="./s:meta/s:path/node()"/>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of
                             select="s:path.without.element.last(s:to-projects-relative-path(document-uri(/)))"/>
