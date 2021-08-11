@@ -72,11 +72,8 @@
         <xsl:param name="path"/>
         <xsl:param name="layout"/>
         <xsl:param name="previous-depth" select="0"/>
-        <xsl:param name="max-depth" select="3"/>
-        <!-- TODO Process path.
-        <xsl:variable name="path-child" select="s:path.element.first($path)"/>
-        /node() = s:path.element.first($path)
-        -->
+        <!-- max-depth was chosen in such way, that the indention takes up half of the default content column width.-->
+        <xsl:param name="max-depth" select="7"/>
         <xsl:if test="$previous-depth &lt;= $max-depth">
             <xsl:choose>
                 <xsl:when test="$path = ''">
