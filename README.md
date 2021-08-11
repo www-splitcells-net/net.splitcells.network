@@ -20,7 +20,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 ## Where to start?
 
-🚀 [Model and optimize problems.](projects/net.splitcells.gel.doc/src/main/md/net/splitcells/gel/index.md)
+🚀 [Model and optimize problems.](http://splitcells.net/net/splitcells/gel/introduction.html)
 
 🔬 Analyze and organize your operations and prepare schedules.
 
