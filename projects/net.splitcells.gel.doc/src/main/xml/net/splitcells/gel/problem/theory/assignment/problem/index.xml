@@ -80,7 +80,7 @@
     </math>
     <chapter>
         <title>One Dimensional Assignment Problem</title>
-        <d:toDo>Create visualization.</d:toDo>
+        <image xl:href="/net/splitcells/gel/problem/theory/assignment/problem/index.illustration.svg"/>
         <paragraph>
             As shown in the imagery a one dimensional assignment problem
             demands <quote>D</quote> that each element of demands is assigned to a

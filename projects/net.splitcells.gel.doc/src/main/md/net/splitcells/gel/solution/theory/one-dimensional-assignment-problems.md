@@ -1,5 +1,5 @@
 # One-Dimensional Assignment Problems
-![One-Dimensional Assignment Problems](../../../../../../../../src/main/svg/net/splitcells/gel/solution/theory/one-dimensional-assignment-problems.svg)
+![One-Dimensional Assignment Problems](../../../../../../svg/net/splitcells/gel/problem/theory/assignment/problem/index.illustration.svg)
 > Solution For An One-Dimensional Assignment Problem
 
 As shown above in an one-dimensional assignment problem

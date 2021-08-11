@@ -167,9 +167,18 @@
     </xsl:template>
     <xsl:template match="s:image">
         <xsl:element name="img">
-            <xsl:attribute name="src">
-                <xsl:copy-of select="s:image_location(@license, node())"/>
-            </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="./@xl:href">
+                    <xsl:attribute name="src">
+                        <xsl:copy-of select="./@xl:href"/>
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="src">
+                        <xsl:copy-of select="s:image_location(@license, node())"/>
+                    </xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
             <xsl:attribute name="alt"></xsl:attribute>
             <xsl:attribute name="style">
                 <xsl:copy-of select="'width: 100%; vertical-align: middle; margin-bottom: 2em;'"/>
