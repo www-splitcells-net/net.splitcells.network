@@ -226,11 +226,6 @@ a {
 .IndexPostHeader {
 	box-shadow: 0em 0.1em 0.2em -.2em var(--shadow-color-priority-2);
 }
-article p mjx-container {
-    background-color: var(--background-color-priority-1);
-    /* The following makes the container as big as the containing paragraph. */
-    margin-right: -0.25em !important;
-    }
 article .paragraph,
 article p {
 	/* Use px in order to prevent bug on webkit. */
@@ -244,6 +239,14 @@ article p {
     );
 	padding-left: .25em;
 	padding-right: .25em;
+}
+article p mjx-container {
+    background-color: var(--background-color-priority-1);
+    /* The following makes the container as big as the containing paragraph. */
+    margin-right: -0.25em !important;
+    }
+article blockquote p {
+    background-image: none;
 }
 .net-splitcells-den-paragraph {
     line-height: 1.4em;
