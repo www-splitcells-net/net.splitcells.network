@@ -11,9 +11,9 @@ The actual assignments for a given solution are represented by the set $X$ as
 following:
 
 $
-R(x_{11}, ...,x_{NA}) = 
+x_{na} \in X: x_{na} =
 \begin{cases}
-    wahr, & \text{falls Variablenbelegung richtig},\\
-    falsch, & \text{sonst}.
+    1, & \text{if $d$ is assigned to $s$},\\
+    0, & otherwise.
     \end{cases}
 $
