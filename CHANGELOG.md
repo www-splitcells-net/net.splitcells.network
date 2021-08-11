@@ -13,6 +13,7 @@ Releases are done everytime a relevant ticket is completed.
 1. **2021-08-11**:
    1. Server SVG images from source folder by webserver and add them to the layout.
    2. Deprecated untyped repositories in webserver.
+   3. Render LaTex math formulas via MathJax in website.
 2. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
    the build process on multiple computers.
 3. **2021-08-08**: `command.repositories.install` now strips known file
