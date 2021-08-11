@@ -315,8 +315,11 @@ public class ProjectRendererI implements ProjectRenderer {
     @Override
     public Perspective projectLayout() {
         final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
+        // TODO Do this via extensions.
         extendProjectLayout(layout, projectSrcFolder.resolve("xml"));
         extendProjectLayout(layout, projectSrcFolder.resolve("svg"));
+        extendProjectLayout(layout, projectSrcFolder.resolve("md"));
+        extendProjectLayout(layout, projectSrcFolder.resolve("txt"));
         return extension.extendProjectLayout(layout, this);
     }
 
