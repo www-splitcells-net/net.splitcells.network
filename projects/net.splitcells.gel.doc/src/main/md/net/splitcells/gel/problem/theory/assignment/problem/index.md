@@ -17,7 +17,7 @@ elements of the demand set \\(D\\) are assigned to elements of the supply set
 Every possible assignment of a demand \\(d\\) to a supply \\(s\\) is represented by the
 variable \\(x_{na}\\) .
 The actual assignments for a given solution are represented by the set \\(X\\)
-as following [[related](../../../../../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/bibliography/1995.DISKI.md#pages-12-to-14)]:
+as following [[DISKI](../../../../../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/bibliography/1995.DISKI.md#pages-12-to-14)]:
 
 \\[
 x_{na} \in X: x_{na} =
