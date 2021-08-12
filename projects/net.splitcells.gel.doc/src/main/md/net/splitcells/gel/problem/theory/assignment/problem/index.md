@@ -1,6 +1,6 @@
 # Assignment Problems
 An assignment problem requires that demands are assigned to supplies.
-For a given assignment set \\(X\\) the assignment problem's `acceptable` function
+For a given assignment set \\(X\\) the assignment problem's \\(acceptable\\) function
 returns \\(1\\) ,
 if the assignment set is an acceptable solution, and \\(0\\) otherwise.
 
