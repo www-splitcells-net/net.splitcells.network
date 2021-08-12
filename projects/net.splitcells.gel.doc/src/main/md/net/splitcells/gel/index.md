@@ -18,4 +18,4 @@ and best practices using this framework,
 by providing the information,
 where it is used.
 ## Introduction to the Underlying Theories
-* [One-Dimensional Assignment Problems](../../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/index.md)
+* [One-Dimensional Assignment Problems](../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/index.md)
