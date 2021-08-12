@@ -8,7 +8,7 @@ if the assignment set is an acceptable solution, and \\(0\\) otherwise.
 acceptable(X) \\rightarrow \\Set{0,1}
 \\]
 ## One-Dimensional Assignment Problems
-![One-Dimensional Assignment Problems](../../../../../../../../../../net/splitcells/gel/problem/theory/assignment/problem/index.illustration.svg)
+![One-Dimensional Assignment Problems](../../../../../../../../../../src/main/svg/net/splitcells/gel/problem/theory/assignment/problem/index.illustration.svg)
 > Solution For An One-Dimensional Assignment Problem
 
 As shown above in an one-dimensional assignment problem
