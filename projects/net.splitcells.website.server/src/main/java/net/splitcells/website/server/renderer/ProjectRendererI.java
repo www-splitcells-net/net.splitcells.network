@@ -316,19 +316,29 @@ public class ProjectRendererI implements ProjectRenderer {
     public Perspective projectLayout() {
         final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
         // TODO Do this via extensions.
-        extendProjectLayout(layout, projectSrcFolder.resolve("xml"));
-        extendProjectLayout(layout, projectSrcFolder.resolve("svg"));
-        extendProjectLayout(layout, projectSrcFolder.resolve("md"));
-        extendProjectLayout(layout, projectSrcFolder.resolve("txt"));
+        extendProjectLayout(layout, projectSrcFolder.resolve("xml"), false);
+        extendProjectLayout(layout, projectSrcFolder.resolve("svg"), false);
+        extendProjectLayout(layout, projectSrcFolder.resolve("md"), true);
+        extendProjectLayout(layout, projectSrcFolder.resolve("txt"), false);
         return extension.extendProjectLayout(layout, this);
     }
 
-    private static void extendProjectLayout(Perspective layout, Path folder) {
+    private static void extendProjectLayout(Perspective layout, Path folder, boolean replaceFileSuffix) {
         if (isDirectory(folder)) {
             try {
                 java.nio.file.Files.walk(folder)
                         .filter(java.nio.file.Files::isRegularFile)
-                        .forEach(file -> ProjectRenderer.extendPerspectiveWithPath(layout, folder.relativize(file)));
+                        .forEach(file -> {
+                            final var relativePath = folder.relativize(file);
+                            if (replaceFileSuffix) {
+                                final var fileName = relativePath.getFileName().toString();
+                                final var newFileName = fileName.substring(0, fileName.lastIndexOf('.')) + ".html";
+                                final var adjustedRelativePath = relativePath.getParent().resolve(newFileName);
+                                ProjectRenderer.extendPerspectiveWithPath(layout, adjustedRelativePath);
+                            } else {
+                                ProjectRenderer.extendPerspectiveWithPath(layout, relativePath);
+                            }
+                        });
             } catch (IOException e) {
                 throw new RuntimeException(folder.toAbsolutePath().toString(), e);
             }
