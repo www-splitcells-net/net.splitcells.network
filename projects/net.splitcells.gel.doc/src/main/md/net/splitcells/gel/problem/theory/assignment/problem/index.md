@@ -26,3 +26,13 @@ x_{na} \in X: x_{na} =
     0, & otherwise.
     \end{cases}
 \\]
+
+A complete solution is an assignment set \\(X\\),
+where each demand has assigned at least one supply.
+Often it is also required that each demand has at most one supply.
+If there has to be exactly one supply for each demand,
+then it can be called an 1 on 1 problem.
+In this case, the set of demands and the set of supplies has to have the same
+size.
+If one demand are allowed to be assigned to N supplies,
+this can be called an 1 on N Problem.
