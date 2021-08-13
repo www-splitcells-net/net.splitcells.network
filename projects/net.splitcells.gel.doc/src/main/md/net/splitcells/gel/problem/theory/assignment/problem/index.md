@@ -36,6 +36,16 @@ In this case, the set of demands and the set of supplies has to have the same
 size.
 If one demand are allowed to be assigned to N supplies,
 this can be called an 1 on N Problem.
+# Assignment Rating
+Often it is the case, that there are multiple acceptable solutions to a problem.
+Simultaneously, often these acceptable solutions have not the same worth,
+so a way is needed to differentiate between these.
+This is done by calculating a rating \\(R\\) for the assignment of a solution,
+which in turn are can be sorted by worth.
+
+\\[
+X \\rightarrow R
+\\]
 # A Semantic Extension of the Assignment Problem
 The assignment problem itself does not model the semantic meaning of the problem
 at hand.
