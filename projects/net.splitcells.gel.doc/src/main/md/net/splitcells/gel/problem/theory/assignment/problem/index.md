@@ -5,7 +5,7 @@ returns \\(1\\) ,
 if the assignment set is an acceptable solution, and \\(0\\) otherwise.
 
 \\[
-acceptable(X) \\rightarrow \{0,1\}
+acceptable(X) \\rightarrow \\{0,1\\}
 \\]
 ## One-Dimensional Assignment Problems
 ![One-Dimensional Assignment Problems](../../../../../../../../../../src/main/svg/net/splitcells/gel/problem/theory/assignment/problem/index.illustration.svg)
