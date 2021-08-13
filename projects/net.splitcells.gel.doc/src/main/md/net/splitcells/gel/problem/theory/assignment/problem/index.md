@@ -73,7 +73,7 @@ compatible with a lot of other types.
 > Generic Attribute Function Set Signature
  
 \\[
-\\forall a \\in A: \\forall o \\in ( D \\cup S \\cup X ) =
+\\forall a \\in A_\mathbb{N}: \\forall o \\in ( D \\cup S \\cup X ) =
 \\begin{cases}
 a(o) \\in \mathbb{N}, \\text{if defined},\\\\
 \\text{undefined, otherwise}.
