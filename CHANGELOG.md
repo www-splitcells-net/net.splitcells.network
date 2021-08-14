@@ -4,7 +4,11 @@ The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
 ### Major Changes
-1. **2021-08-10**:
+1. **2021-08-14**:
+   1. `user.bin.configure` now does not require additional user specific
+      implementation.
+      The command now works out of the box without an error message.
+2. **2021-08-10**:
    1. `command.repositories.install` now only install sh, Bash and
       Python commands.
    2. Create command `project.repository.register` in order to omit editing
