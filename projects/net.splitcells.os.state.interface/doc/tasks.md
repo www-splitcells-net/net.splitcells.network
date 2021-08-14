@@ -16,8 +16,6 @@ The priority of a task is just a guideline.
       1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
 1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
-1. Support project specific repo commands.
-1. Remove unecessary tasks.
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
 1. Define break points of this project.
