@@ -37,6 +37,7 @@ public class SourceCodeCheckExperiment {
         typeSolver.add(new JavaParserTypeSolver(Paths.get("./src/main/java")));
         final var symbolSolver = new JavaSymbolSolver(typeSolver);
         StaticJavaParser.getConfiguration().setSymbolResolver(symbolSolver);
+        // TODO REMOVE When #10 Is one.
         StaticJavaParser.getConfiguration().getPostProcessors().add(new TreeVisitorValidator(new Validator() {
             @Override
             public void accept(Node node, ProblemReporter problemReporter) {
