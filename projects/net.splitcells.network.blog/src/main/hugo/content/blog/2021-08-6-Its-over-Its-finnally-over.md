@@ -2,7 +2,7 @@
 title: It's over. Its finally over
 date: 2021-08-05
 author: Mārtiņš Avots
-license: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-exception-2.0
+license: EPL-2.0 OR MIT
 ---
 
 # Emotional Relief
