@@ -41,6 +41,13 @@ all licenses present.
 * MIT
 * MPL 2.0
 
+### Third Party Content
+
+SyntaxHighlighter
+
+* License: The MIT License
+* Source: https://github.com/syntaxhighlighter/syntaxhighlighter
+
 ### Third Party Dependencies
 
 The licenses of the transitive dependencies are not listed here.
