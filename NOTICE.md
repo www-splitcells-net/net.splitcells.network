@@ -8,6 +8,9 @@ listed source code repository logs.
 
 ## Project Licenses
 
+[License files/text](./src/main/txt/net/splitcells/network/legal/licenses) have
+their own copyright and licensing.
+
 Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
 
 This program and the accompanying materials are made available under the
