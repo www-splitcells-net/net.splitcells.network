@@ -62,7 +62,7 @@ public class TemplateInitializerTest {
          * or any later versions with the GNU Classpath Exception which is
          * available at https://www.gnu.org/software/classpath/license.html.
          *
-         * SPDX-License-Identifier: EPL-2.0 OR MIT OR GPL-2.0-or-later WITH Classpath-exception-2.0
+         * SPDX-License-Identifier: EPL-2.0 OR MIT
          */
         assertThat(testProduct.getLines().get(3).values()).isEqualTo(list(1, 2));
         assertThat(testProduct.getLines().get(4).values()).isEqualTo(list(1, 1));
