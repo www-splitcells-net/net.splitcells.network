@@ -1,11 +1,11 @@
 # Assignment Problems
 An assignment problem requires that demands are assigned to supplies.
-For a given assignment set \\(X\\) the assignment problem's \\(acceptable\\) function
+For a given assignment set \\(X\\) the assignment problem's \\(valid\\) function
 returns \\(1\\) ,
-if the assignment set is an acceptable solution, and \\(0\\) otherwise.
+if the assignment set is an valid solution, and \\(0\\) otherwise.
 
 \\[
-acceptable(X) \\rightarrow \\{0,1\\}
+valid(X) \\rightarrow \\{0,1\\}
 \\]
 ## One-Dimensional Assignment Problems
 ![One-Dimensional Assignment Problems](../../../../../../../../../../src/main/svg/net/splitcells/gel/problem/theory/assignment/problem/index.illustration.svg)
@@ -37,8 +37,8 @@ size.
 If one demand are allowed to be assigned to N supplies,
 this can be called an 1 on N Problem.
 # Assignment Rating
-Often it is the case, that there are multiple acceptable solutions to a problem.
-Simultaneously, often these acceptable solutions have not the same worth,
+Often it is the case, that there are multiple valid solutions to a problem.
+Simultaneously, often these valid solutions have not the same worth,
 so a way is needed to differentiate between these.
 This is done by calculating a rating \\(R\\) for the assignment of a solution,
 which in turn are can be sorted by worth.
@@ -56,7 +56,7 @@ there is no inherent semantic meaning of an identity.
 
 When the N-Queen puzzle is modeled as an assignment problem,
 each demand and supply is just an identity.
-The problem also restricts the set of valid assignments via the \\(acceptable\\)
+The problem also restricts the set of valid assignments via the \\(valid\\)
 function.
 The function itself does describe, if a given solution is incorrect.
 The model does not state which row corresponds to which elements of the
