@@ -49,3 +49,11 @@ inequalities as following
         \\end{aligned}
     \\end{align*}
 \\]
+
+This validity criteria only allows certain specific assignments.
+A linear assignment problem of the level 1 can be modeled via linear integer
+programming (ILP) and is therefore NP complete.
+Thus, this problem is not solvable with reasonable amount of resources
+for big instances.
+Instead, approximate and heuristic algorithms can be used in order to create a
+good enough solution.
