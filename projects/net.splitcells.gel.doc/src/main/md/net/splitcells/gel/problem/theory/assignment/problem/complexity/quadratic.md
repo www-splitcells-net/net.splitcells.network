@@ -4,7 +4,8 @@ The rating function has quadratic terms,
 that models the rating for the presence of 2 specific assignments
 in the assignment set.
 Therefore, the rating of one assignment depends on the presence of
-an other assignment in the solution.
+an other assignment in the solution
+[[DISKI 86](../../../../../../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/bibliography/1995.DISKI.86.md#page-26)].
 
 \\[
 \\begin{align*}
@@ -15,6 +16,5 @@ an other assignment in the solution.
 \\end{align*}
 \\]
 
-QAPs are \\(NP\\) complete and even an \\(\epsilon\\)-approximation.
-
-TODO: https://www.opt.math.tugraz.at/~cela/papers/qap_bericht.pdf
+QAPs are \\(NP\\) complete and even an \\(\epsilon\\)-approximation
+[[10.1145/321958.321975](../../../../../../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/bibliography/10.1145.321958.321975.md#pages-555-565)].
