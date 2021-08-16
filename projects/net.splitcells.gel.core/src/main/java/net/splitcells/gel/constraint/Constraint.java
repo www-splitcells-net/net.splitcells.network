@@ -56,6 +56,8 @@ import net.splitcells.gel.rating.framework.Rating;
  * TODO Use  parallelization.
  * <p>
  * IDEA Render constraint tree to HTML.
+ * <p>
+ * IDEA Combine the constraint system with theorem proofing.
  */
 public interface Constraint extends DatabaseSynchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
     Attribute<Line> LINE = attribute(Line.class, "line");
