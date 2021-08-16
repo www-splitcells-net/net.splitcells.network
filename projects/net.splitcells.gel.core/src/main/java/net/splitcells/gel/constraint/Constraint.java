@@ -51,7 +51,10 @@ import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 
 /**
+ * <p>
  * TODO Create non incremental constraint system as an alternative and double check.
+ * <p>
+ * IDEA Render constraint tree to HTML.
  */
 public interface Constraint extends DatabaseSynchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
     Attribute<Line> LINE = attribute(Line.class, "line");
