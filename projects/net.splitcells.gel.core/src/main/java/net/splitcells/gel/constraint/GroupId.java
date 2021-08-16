@@ -19,6 +19,9 @@ import net.splitcells.dem.lang.Xml;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
 
+/**
+ * IDEA Implement GroupId#name as constraint path like in reasoning system.
+ */
 public class GroupId implements Domable {
     @Deprecated
     public GroupId() {

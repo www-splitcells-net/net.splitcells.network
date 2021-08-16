@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:e="http://splitcells.net/sen.xsd">
+    <objective>Support interactive problem solving via Website.
+        <solution> Create constraint language.
+            <solution>Use pseudo CSV format (variable length lines) as input, where the first row describes the
+                line type. This means that multiple tables can be extracted from the single CSV.
+            </solution>
+            <solution>Implement parsers via wrappers around i.e. rater and constraint builders</solution>
+        </solution>
+        <solution>Create and publish Flathub image and AppImage (KDE).
+            <solution>Create electron and server version.</solution>
+        </solution>
+        <solution>Create docker image.</solution>
+    </objective>
+</project>

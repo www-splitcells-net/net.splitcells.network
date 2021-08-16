@@ -19,6 +19,10 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.history.meta.MetaDataView;
 
+/**
+ * IDEA History should only contain primary demand/supply references and no references to used or unused demand/supply,
+ * in order to preserve line pointer validity.
+ */
 public interface History extends Allocations, AfterAdditionSubscriber, BeforeRemovalSubscriber {
     Attribute<Integer> ALLOCATION_ID = attribute(Integer.class, "allocation-id");
     Attribute<Allocation> ALLOCATION_EVENT = attribute(Allocation.class, "allocation-notikums");

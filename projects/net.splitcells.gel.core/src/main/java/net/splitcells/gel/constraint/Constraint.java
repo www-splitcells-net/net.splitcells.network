@@ -51,8 +51,9 @@ import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 
 /**
- * <p>
  * TODO Create non incremental constraint system as an alternative and double check.
+ * <p>
+ * TODO Use  parallelization.
  * <p>
  * IDEA Render constraint tree to HTML.
  */
