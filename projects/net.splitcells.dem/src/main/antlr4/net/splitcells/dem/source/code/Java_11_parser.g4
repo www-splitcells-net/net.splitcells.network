@@ -75,6 +75,9 @@ import_type_declaration
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/ Whitespace?
     ;
+license_declaration
+    : Comment_multiline
+    ;
 modifier_visibility
     : Keyword_public
     | Keyword_private
@@ -108,7 +111,7 @@ statement_finally
     : Whitespace? Keyword_finally Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
     ;
 source_unit
-    : package_declaration import_declaration* Whitespace? class_definition EOF
+    : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition EOF
     ;
 type_declaration
     : Name type_argument?
