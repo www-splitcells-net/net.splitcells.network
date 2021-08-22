@@ -59,7 +59,7 @@ class_member_value_declaration
     ;
 expression
     : Keyword_new Whitespace? type_declaration call_arguments
-    | name Whitespace? call_arguments
+    | name Whitespace? call_arguments access?
     | Whitespace? name Whitespace? access?
     ;
 import_declaration
