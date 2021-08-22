@@ -623,12 +623,12 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
                                            select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/theme.white.variables.css'))"/>
-                            theme.white.variables.css
+                            theme.white.variables .css
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
                                            select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/layout.column.main.fullscreen.css'))"/>
-                            layout.column.main.fullscreen.css
+                            layout.column.main. fullscreen.css
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"

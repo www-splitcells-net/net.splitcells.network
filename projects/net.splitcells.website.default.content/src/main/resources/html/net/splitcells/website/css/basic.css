@@ -220,7 +220,7 @@ td.TextCell {
 	transform: skewx(-12deg);
 	}
 .MainButton_S, .net-splitcells-button {
-	text-indent: 1em;
+	padding-left: 1em;
 	margin-top: .05em;
 	margin-bottom: .05em;
 	font-weight: bold;
