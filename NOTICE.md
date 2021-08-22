@@ -8,6 +8,8 @@ listed source code repository logs.
 
 ## Project Licenses
 
+This does not apply to third party content.
+
 [License files/text](./src/main/txt/net/splitcells/network/legal/licenses) have
 their own copyright and licensing.
 
