@@ -27,8 +27,8 @@ options {
     tokenVocab=Java_11_lexer;
 }
 access
-    : Dot Whitespace? Name Whitespace? call_arguments access?
-    | Dot Whitespace? Name Whitespace? access?
+    : Dot Whitespace? name Whitespace? call_arguments access?
+    | Dot Whitespace? name Whitespace? access?
     ;
 call_arguments
     : Brace_round_open Brace_round_closed
@@ -42,7 +42,7 @@ call_arguments_next
     : Comma Whitespace call_arguments_element
     ;
 class_definition
-    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? Name
+    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? name
         Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
     ;
 class_member
@@ -51,16 +51,16 @@ class_member
     ;
 class_member_method_definition
     : Whitespace? javadoc? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
-        Name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
+        name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 class_member_value_declaration
     : Whitespace? javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
-        type_declaration? Whitespace? Name Whitespace? Equals Whitespace? statement?
+        type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement?
     ;
 expression
     : Keyword_new Whitespace? type_declaration call_arguments
-    | Name Whitespace? call_arguments
-    | Whitespace? Name Whitespace? access?
+    | name Whitespace? call_arguments
+    | Whitespace? name Whitespace? access?
     ;
 import_declaration
     : import_static_declaration
@@ -82,18 +82,25 @@ modifier_visibility
     : Keyword_public
     | Keyword_private
     ;
+name
+    /* This is needed, because token fragments can currently only be used in tokens.
+     * Combined grammars would allow this, but it could not be getting worked.
+     */
+    : Name
+    | Keyword_class
+    ;
 package_declaration
     : 'package' Whitespace package_name Semicolon Whitespace*
     ;
 package_name
-    : Name
-    | package_name Dot Name
+    : name
+    | package_name Dot name
     ;
 reference
     : expression
     /* This is an Lambda definition. */
-    | Name Whitespace? Arrow Whitespace? reference
-    | Name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
+    | name Whitespace? Arrow Whitespace? reference
+    | name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     | call_arguments Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 statement
@@ -104,7 +111,7 @@ statement
         statement_finally?
     ;
 statement_catch
-    : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? Name Whitespace? Name Whitespace?
+    : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? name Whitespace? name Whitespace?
         Brace_round_closed Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
     ;
 statement_finally
@@ -114,24 +121,24 @@ source_unit
     : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition EOF
     ;
 type_declaration
-    : Name type_argument?
+    : name type_argument?
     ;
 type_argument
     : Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
     ;
 type_argument_content
     : type_argument Whitespace? type_argument_content_next?
-    | Name Whitespace? type_argument_content_next?
+    | name Whitespace? type_argument_content_next?
     ;
 type_argument_content_next
     : Comma Whitespace? type_argument Whitespace? type_argument_content_next?
-    | Comma Whitespace? Name Whitespace? type_argument_content_next?
+    | Comma Whitespace? name Whitespace? type_argument_content_next?
     ;
 type_path
-    : Name
-    | type_path Dot Name
+    : name
+    | type_path Dot name
     ;
 variable_declaration
-    : Keyword_final? Whitespace? type_declaration Whitespace Name
+    : Keyword_final? Whitespace? type_declaration Whitespace name
     ;
 
