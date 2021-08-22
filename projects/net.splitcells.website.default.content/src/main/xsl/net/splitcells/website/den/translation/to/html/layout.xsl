@@ -596,7 +596,7 @@
                         <p>Unless otherwise noted, the
                             content of this
                             html file is licensed under the
-                            EPL-2.0 OR MIT
+                            EPL-2.0 OR MIT.
                         </p>
                         <p>Files and other contents, which are linked to by this
                             HTML file, have their own rulings.
