@@ -22,11 +22,22 @@ SPDX-License-Identifier: EPL-2.0 OR MIT
 
 ## Notes
 
-## Third Party Content
+### Third Party Content
 
-Currently, there is none present.
+SyntaxHighlighter
 
-### Third Party Dependencies License List
+* License: The MIT License
+* Source: https://github.com/syntaxhighlighter/syntaxhighlighter
+  SyntaxHighlighter
+
+MathJax
+
+* License: Apache 2.0 License
+* Site: https://www.mathjax.org/
+
+### Third Party Dependencies
+
+#### Third Party Dependencies License List
 
 All third party content licenses are listed here in order to have an overview of
 all licenses present.
@@ -41,14 +52,7 @@ all licenses present.
 * MIT
 * MPL 2.0
 
-### Third Party Content
-
-SyntaxHighlighter
-
-* License: The MIT License
-* Source: https://github.com/syntaxhighlighter/syntaxhighlighter
-
-### Third Party Dependencies
+#### Third Party Dependencies List
 
 The licenses of the transitive dependencies are not listed here.
 
