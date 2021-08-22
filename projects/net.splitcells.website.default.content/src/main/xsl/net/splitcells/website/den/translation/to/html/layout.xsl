@@ -596,10 +596,7 @@
                         <p>Unless otherwise noted, the
                             content of this
                             html file is licensed under the
-                            <a href="/net/splitcells/website/license-CC-BY-SA-4.txt">Creative Commons
-                                Attribution-ShareAlike 4.0
-                                International Public
-                                License</a>.
+                            EPL-2.0 OR MIT
                         </p>
                         <p>Files and other contents, which are linked to by this
                             HTML file, have their own rulings.
