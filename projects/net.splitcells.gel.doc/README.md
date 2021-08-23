@@ -1,4 +1,4 @@
-# Generic Allocator Documentation (God)
+# Generic Allocator Documentation
 
 The source code of the introduction can be found [here](src/main/md/net/splitcells/gel/index.md),
 where further documentation code can be found.
