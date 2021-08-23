@@ -16,6 +16,8 @@ Releases are done everytime a relevant ticket is completed.
 ### Minor Changes
 1. **2021-08-24**:
    1. Add secondary arguments to `maven.execute` command.
+   2. Add `ENFORCING_UNIT_CONSISTENCY` environment property to Dem,
+      so it can be set during program startup without programming.
 2. **2021-08-11**:
    1. Server SVG images from source folder by webserver and add them to the layout.
    2. Deprecated untyped repositories in webserver.

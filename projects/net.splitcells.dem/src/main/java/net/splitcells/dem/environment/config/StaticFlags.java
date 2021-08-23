@@ -16,22 +16,24 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  * IDEA Get values out of properties file.
  */
 public final class StaticFlags {
-	public static final boolean ENFORCING_UNIT_CONSISTENCY = true;
-	@Deprecated
-	public static final boolean FUZZING = true;
-	@Deprecated
-	public static final boolean ENFORCING_INTEGRATION_CONSISTENCY = true;
-	@Deprecated
-	public static final boolean PROFILING_RUNTIME = true;
-	@Deprecated
-	public static final boolean PROFILING_MEMORY_USAGE = true;
-	@Deprecated
-	public static final boolean TELLING_STORY = true;
-	@Deprecated
-	public static final boolean WARNING = true;
-	public static final boolean TRACING = true;
+    public static final boolean ENFORCING_UNIT_CONSISTENCY
+            = Boolean.parseBoolean
+            (System.getProperty("net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY", "true"));
+    @Deprecated
+    public static final boolean FUZZING = true;
+    @Deprecated
+    public static final boolean ENFORCING_INTEGRATION_CONSISTENCY = true;
+    @Deprecated
+    public static final boolean PROFILING_RUNTIME = true;
+    @Deprecated
+    public static final boolean PROFILING_MEMORY_USAGE = true;
+    @Deprecated
+    public static final boolean TELLING_STORY = true;
+    @Deprecated
+    public static final boolean WARNING = true;
+    public static final boolean TRACING = true;
 
-	private StaticFlags() {
-		throw constructorIllegal();
-	}
+    private StaticFlags() {
+        throw constructorIllegal();
+    }
 }
