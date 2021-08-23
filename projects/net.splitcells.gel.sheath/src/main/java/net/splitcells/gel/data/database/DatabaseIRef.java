@@ -185,7 +185,7 @@ public class DatabaseIRef extends DatabaseI {
             assertThat(lineIndex).isNotNegative();
             assert lineIndex < rawLines.size() : lineIndex + ":" + rawLines.size() + path();
             assertThat(rawLines.get(lineIndex)).isNotNull();
-            assertThat(lines).containsOnlyOnce(rawLines.get(lineIndex));
+            lines.hasOnlyOnce(rawLines.get(lineIndex));
             columns.forEach(column -> {
                 assert lineIndex < column.size();
                 assert rawLines.size() == column.size();
@@ -199,10 +199,10 @@ public class DatabaseIRef extends DatabaseI {
     public void remove(Line line) {
         if (TRACING) {
             domsole().append(event(REMOVE.value()
-                            + PATH_ACCESS_SYMBOL.value()
-                            + Database.class.getSimpleName()
-                    , path().toString()
-                    , elementWithChildren(LINE.value(), line.toDom()))
+                                    + PATH_ACCESS_SYMBOL.value()
+                                    + Database.class.getSimpleName()
+                            , path().toString()
+                            , elementWithChildren(LINE.value(), line.toDom()))
                     , this, LogLevel.DEBUG);
         }
         super.remove(line);

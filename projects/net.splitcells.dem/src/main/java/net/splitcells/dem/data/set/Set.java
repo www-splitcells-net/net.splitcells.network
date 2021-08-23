@@ -10,6 +10,9 @@
  */
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.data.atom.Bool;
+import net.splitcells.dem.data.atom.Bools;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -67,5 +70,12 @@ public interface Set<T> extends java.util.Set<T> {
      */
     default Optional<Boolean> _isDeterministic() {
         return Optional.empty();
+    }
+
+    default Bool hasOnlyOnce(T arg) {
+        final var argCount = stream()
+                .filter(e -> e.equals(arg))
+                .count();
+        return Bools.bool(argCount <= 1);
     }
 }
