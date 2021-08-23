@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
 #
 # This program and the accompanying materials are made available under the
@@ -7,5 +7,5 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-mvn compile exec:java -Dexec.mainClass="$1"
+mvn compile exec:java -Dexec.mainClass="$1" "${*:2}"
 	# If compile goal is not used, there is an error when the program is not already compiled.

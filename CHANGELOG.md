@@ -4,24 +4,26 @@ The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
 ### Major Changes
-1. **2021-08-14**:
+3. **2021-08-14**:
    1. `user.bin.configure` now does not require additional user specific
       implementation.
       The command now works out of the box without an error message.
-2. **2021-08-10**:
+4. **2021-08-10**:
    1. `command.repositories.install` now only install sh, Bash and
       Python commands.
    2. Create command `project.repository.register` in order to omit editing
       config files manually.
 ### Minor Changes
-1. **2021-08-11**:
+1. **2021-08-24**:
+   1. Add secondary arguments to `maven.execute` command.
+2. **2021-08-11**:
    1. Server SVG images from source folder by webserver and add them to the layout.
    2. Deprecated untyped repositories in webserver.
    3. Render LaTex math formulas via MathJax in website.
    4. Translate local image links in CommonMark to the link of the website.
-2. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
+3. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
    the build process on multiple computers.
-3. **2021-08-08**: `command.repositories.install` now strips known file
+4. **2021-08-08**: `command.repositories.install` now strips known file
    suffixes during installation.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
