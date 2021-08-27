@@ -9,10 +9,10 @@ Releases are done everytime a relevant ticket is completed.
       implementation.
       The command now works out of the box without an error message.
 4. **2021-08-10**:
-   1. `command.repositories.install` now only install sh, Bash and
+   1. `command.repositories.install` now only installs sh, Bash and
       Python commands.
-   2. Create command `project.repository.register` in order to omit editing
-      config files manually.
+4. **2021-08-05**:
+   3. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
 1. **2021-08-24**:
    1. Add secondary arguments to `maven.execute` command.
@@ -25,16 +25,18 @@ Releases are done everytime a relevant ticket is completed.
    2. Deprecated untyped repositories in webserver.
    3. Render LaTex math formulas via MathJax in website.
    4. Translate local image links in CommonMark to the link of the website.
-3. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
+3. **2021-08-10**:
+   1. Create command `project.repository.register` in order to omit editing
+      config files manually.
+4. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
    the build process on multiple computers.
-4. **2021-08-08**: `command.repositories.install` now strips known file
+5. **2021-08-08**: `command.repositories.install` now strips known file
    suffixes during installation.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 #### Patches
 1. **2021-08-05**:
    1. Fix Dependabot alert.
-   1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
    1. Make `hashCode` and `equals` of `net.splitcells.gel.rating.framework.MetaRatingI`
       consistent.
    1. Make `hashCode` of `HasMinimalSize`, `HasSize`, `MinimalDistance`,
