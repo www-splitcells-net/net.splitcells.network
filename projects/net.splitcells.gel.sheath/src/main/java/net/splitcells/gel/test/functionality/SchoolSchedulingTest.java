@@ -14,6 +14,7 @@ import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
@@ -91,18 +92,19 @@ public class SchoolSchedulingTest {
     @Disabled
     @Test
     public static void main(String... args) {
-        GelEnv.process(() -> {
+        GelDev.process(() -> {
             var input = schoolScheduling(15, 20, 30);
             final var railsForSchoolScheduling = input.get(0);
             final var teacherAllocationForCourses = input.get(1);
             final var studentAllocationsForCourses = input.get(2);
             railsForSchoolScheduling.optimize(linearInitialization());
-            railsForSchoolScheduling.createStandardAnalysis();
             teacherAllocationForCourses.optimize(linearInitialization());
             studentAllocationsForCourses.optimize(linearInitialization());
+            teacherAllocationForCourses.createStandardAnalysis();
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                    .withConfigValue(IsEchoToFile.class, false)
                     .withConfigValue(MessageFilter.class, logMessage -> false);
         }));
     }
@@ -188,7 +190,7 @@ public class SchoolSchedulingTest {
     private static List<Solution> schoolScheduling(int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
-        final var numberOfSubjects =27;
+        final var numberOfSubjects = 27;
         final var railsForSchoolScheduling = defineRailsForSchoolScheduling(2
                 , numberOfSubjects
                 , 30

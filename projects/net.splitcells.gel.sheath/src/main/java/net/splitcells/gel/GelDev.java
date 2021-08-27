@@ -10,7 +10,30 @@
  */
 package net.splitcells.gel;
 
+import net.splitcells.dem.ProcessResult;
+import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.environment.Environment;
+import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.resource.Paths;
+import net.splitcells.dem.resource.host.ProcessHostPath;
+import net.splitcells.dem.resource.host.ProcessPath;
+import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
+import net.splitcells.dem.resource.host.interaction.MessageFilter;
+import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
+import net.splitcells.gel.data.allocation.Allocationss;
+import net.splitcells.gel.data.allocations.AllocationsIRefFactory;
+import net.splitcells.gel.data.database.DatabaseRefFactory;
+import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.lookup.LookupRefFactory;
+import net.splitcells.gel.data.lookup.Lookups;
+import net.splitcells.gel.solution.SolutionAspect;
+import net.splitcells.gel.solution.Solutions;
+import net.splitcells.gel.solution.history.Histories;
+import net.splitcells.gel.solution.history.HistoryRefFactory;
 import net.splitcells.gel.test.functionality.OralExamsTest;
+
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -40,5 +63,26 @@ public final class GelDev {
                     .withConfigValue(ProcessHostPath.class
                             , Paths.userHome("connections", "tmp.storage", "dem"));
         }));*/
+    }
+
+    public static void process(Runnable program) {
+        GelEnv.process(program, standardDeveloperConfigurator());
+    }
+
+    public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
+        return GelEnv.analyseProcess(program, standardDeveloperConfigurator().andThen(configurator));
+    }
+
+    public static Consumer<Environment> standardDeveloperConfigurator() {
+        return GelEnv.standardDeveloperConfigurator().andThen(env -> {
+            env.config()
+                    .withConfigValue(MessageFilter.class
+                            , a -> a.path().equals(list("debugging")))
+                    .withConfigValue(IsEchoToFile.class, true)
+                    .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                    .withConfigValue(DeterministicRootSourceSeed.class, 1000L)
+                    .withConfigValue(ProcessHostPath.class
+                            , Paths.userHome("connections", "tmp.storage", "dem"));
+        });
     }
 }
