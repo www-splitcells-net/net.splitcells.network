@@ -4,33 +4,36 @@ The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
 ### Major Changes
-3. **2021-08-14**:
+1. **2021-08-14**:
    1. `user.bin.configure` now does not require additional user specific
       implementation.
       The command now works out of the box without an error message.
-4. **2021-08-10**:
-   1. `command.repositories.install` now only installs sh, Bash and
+2**2021-08-10**:
+   1`command.repositories.install` now only installs sh, Bash and
       Python commands.
-4. **2021-08-05**:
-   3. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
+3**2021-08-05**:
+   1Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-1. **2021-08-24**:
+1. **2021-08-28**:
+   1. Create helper command `wait.interactively.until` in order to wait until
+      condition is fulfilled.
+2. **2021-08-24**:
    1. Add secondary arguments to `maven.execute` command.
    2. Add `ENFORCING_UNIT_CONSISTENCY` environment property to Dem,
       so it can be set during program startup without programming.
    3. Create project command `execute.example` for `gel.sheath` in order to make
       easy to create custom execution command.
-2. **2021-08-11**:
+3. **2021-08-11**:
    1. Server SVG images from source folder by webserver and add them to the layout.
    2. Deprecated untyped repositories in webserver.
    3. Render LaTex math formulas via MathJax in website.
    4. Translate local image links in CommonMark to the link of the website.
-3. **2021-08-10**:
+4. **2021-08-10**:
    1. Create command `project.repository.register` in order to omit editing
       config files manually.
-4. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
+5. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
    the build process on multiple computers.
-5. **2021-08-08**: `command.repositories.install` now strips known file
+6. **2021-08-08**: `command.repositories.install` now strips known file
    suffixes during installation.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
