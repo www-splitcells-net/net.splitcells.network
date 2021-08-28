@@ -129,9 +129,7 @@ public class ProjectRendererI implements ProjectRenderer {
             // TODO Do not use path, in the following code.
             final var normalizedPath = path;
             // TODO Devide rendering function into routing and content type determination.
-            if (path.endsWith(".txt")) {
-                return renderTextFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
-            } else if (path.endsWith(".png")) {
+            if (path.endsWith(".png")) {
                 return readArtifact(path).map(r -> renderingResult(r, "image/png"));
             } else if (path.endsWith(".jpg")) {
                 return readArtifact(path).map(r -> renderingResult(r, "image/jpg"));
@@ -141,8 +139,19 @@ public class ProjectRendererI implements ProjectRenderer {
                 return readArtifact(path).map(r -> renderingResult(r, "text/javascript"));
             } else if (path.endsWith(".html")) {
                 final var renderedFile = renderFile(path);
+                final var renderedTextFile = renderTextFile(path.substring(0, path.lastIndexOf(".html")) + ".txt");
                 final var commonMarkSrc = readSrc("md", path.substring(0, path.lastIndexOf(".html")) + ".md");
-                assertThat(renderedFile.isPresent() && commonMarkSrc.isPresent()).isFalse();
+                int renderingCounter = 0;
+                if (renderedFile.isPresent()) {
+                    ++renderingCounter;
+                }
+                if (commonMarkSrc.isPresent()) {
+                    ++renderingCounter;
+                }
+                if (renderedTextFile.isPresent()) {
+                    ++renderingCounter;
+                }
+                assertThat(renderingCounter).isLessThan(2);
                 if (commonMarkSrc.isPresent()) {
                     return commonMarkSrc
                             .map(r -> commonMarkRenderer.render(new String(r), this, normalizedPath))
@@ -150,6 +159,9 @@ public class ProjectRendererI implements ProjectRenderer {
                 }
                 if (renderedFile.isPresent()) {
                     return renderedFile.map(r -> renderingResult(r, TEXT_HTML.toString()));
+                }
+                if (renderedTextFile.isPresent()) {
+                    return renderedTextFile.map(r -> renderingResult(r, TEXT_HTML.toString()));
                 }
                 return Optional.empty();
             } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
