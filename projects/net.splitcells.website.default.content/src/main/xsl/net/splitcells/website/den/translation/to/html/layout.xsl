@@ -643,7 +643,7 @@
                                            select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/theme.css'))"/>
                             theme.css
                         </a>
-                        <div style="flex: auto;"></div>
+                        <div class="net-splitcells-space-filler"></div>
                         <h3>Footer Functions</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3" href="#topElement">
                             back to top

@@ -21,6 +21,9 @@ pre {
 * {
 	word-break: normal;
 	}
+.net-splitcells-space-filler {
+	flex: auto;
+	}
 .net-splitcells-website-hidden-by-default {
     /* We hide errors by default and only show them via Javascript. */
     visibility: hidden;
