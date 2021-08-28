@@ -596,7 +596,8 @@
                         <p>Unless otherwise noted, the
                             content of this
                             html file is licensed under the
-                            EPL-2.0 OR MIT.
+                            <a href="/net/splitcells/network/legal/licenses/EPL-2.0.html">EPL-2.0</a>
+                            OR <a href="/net/splitcells/network/legal/licenses/MIT.html">MIT</a>.
                         </p>
                         <p>Files and other contents, which are linked to by this
                             HTML file, have their own rulings.
@@ -948,7 +949,8 @@
                     }
                 </script>
                 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-                <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+                <script id="MathJax-script" async=""
+                        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
             </body>
         </html>
     </xsl:template>
