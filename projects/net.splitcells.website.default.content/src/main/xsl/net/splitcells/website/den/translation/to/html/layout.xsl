@@ -651,7 +651,7 @@
                     </div>
                     <div class="net-splitcells-content-column">
                         <div id="content"
-                             class="net-splitcells-content-main Standard_content Right_shadow">
+                             class="net-splitcells-content-main Right_shadow">
                             <div class="optional_structural_guide structural_guide"></div>
                             <article>
                                 <div class="Right_shadow splitcells-net-window-menu">
@@ -799,7 +799,7 @@
                         </div>
 
                         <xsl:if test="$column_1 != ''">
-                            <div class="column_1 contentCell Standard_content Right_shadow"
+                            <div class="column_1 contentCell Right_shadow"
                                  style="order: 4;">
                                 <div class="optional_structural_guide structural_guide"
                                      style="width:.25em;"></div>

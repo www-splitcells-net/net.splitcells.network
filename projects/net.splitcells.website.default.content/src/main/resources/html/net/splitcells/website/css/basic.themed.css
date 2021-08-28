@@ -51,10 +51,6 @@ main {
 	background-color: var(--background-color-priority-0);
 	color: var(--foreground-color-priority-0);
 	}
-*.Standard_content {
-	background-color: var(--background-color-priority-1);
-	color: var(--foreground-color-priority-1);
-	}
 *.Standard_p2 {
 	background-color: var(--background-color-priority-2);
 	color: var(--foreground-color-priority-2);

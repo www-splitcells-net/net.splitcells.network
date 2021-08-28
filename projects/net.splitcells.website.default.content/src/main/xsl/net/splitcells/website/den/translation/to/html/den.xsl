@@ -355,7 +355,7 @@
                 <div class="perspective-namespace-link-to-value"/>
             </xsl:if>
             <xsl:if test="$perspective-value != ''">
-                <div class="perspective-value Standard_content">
+                <div class="perspective-value">
                     <xsl:copy-of select="$perspective-value"/>
                 </div>
             </xsl:if>
@@ -365,7 +365,7 @@
                         <xsl:when test="self::text()">
                             <xsl:if test="normalize-space(.) != ''">
                                 <div class="perspective">
-                                    <div class="perspective-value Standard_content">
+                                    <div class="perspective-value">
                                         <xsl:choose>
                                             <xsl:when test="true() = s:can-show-text-as-line(.)">
                                                 <xsl:for-each select="tokenize(., '\n\n')">
