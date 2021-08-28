@@ -109,6 +109,7 @@ statement
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
     | Whitespace? Keyword_try Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_catch?
         statement_finally?
+    | Whitespace? javadoc
     ;
 statement_catch
     : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? name Whitespace? name Whitespace?
