@@ -654,7 +654,7 @@
                              class="net-splitcells-content-main">
                             <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
                             <article>
-                                <div class="Right_shadow splitcells-net-window-menu">
+                                <div class="splitcells-net-window-menu">
                                     <div class="Standard_p3 bottomLightShadow splitcells-net-line">
                                         <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
