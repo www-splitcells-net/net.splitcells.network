@@ -89,7 +89,7 @@ ul {
 	padding-top: .25em;
 	padding-bottom: .25em;
 	}
-.structural_guide {
+.net-splitcells-structural-guide {
 	/* For overlays use 2000000000 <= index < 2147483647. */
 	z-index: 1000000000;
 	min-height: .25em;

@@ -29,7 +29,7 @@ ol > ol {
     color: var(--foreground-color-priority-5);
     box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-5);
     }
-*.structural_guide {
+*.net-splitcells-structural-guide {
 	background-color: var(--background-color-structural-guide);
 	color: var(--foreground-color-structural-guide);
 	box-shadow:  0em 0em .2em -.1em var(--shadow-color-structural-guide);

@@ -378,7 +378,7 @@
                     </div>
                     <div class="menu Left_shadow TextCell Layout Standard_p4"
                          style="width: 13em; vertical-align: top; visibility: inherit; display: flex; flex-direction: column; padding-bottom: 1em; order: 2;">
-                        <div class="Left_shadow structural_guide splitcells-net-title-logo splitcells-net-window-menu">
+                        <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">
                             <div class="splitcells-net-window-menu-line-1">
                                 <a class="net-splitcells-button net-splitcells-main-button-project-logo">
                                     <xsl:attribute name="href">
@@ -395,7 +395,7 @@
                                 </a>
                                 <a class="net-splitcells-button" href="#">nos</a>
                             </div>
-                            <div class="structural_guide"></div>
+                            <div class="net-splitcells-structural-guide"></div>
                             <div class="splitcells-net-window-menu-line-2">
                                 <input type="text" class="net-splitcells-search-bar"
                                        placeholder="search (TODO)"></input>
@@ -652,7 +652,7 @@
                     <div class="net-splitcells-content-column">
                         <div id="content"
                              class="net-splitcells-content-main">
-                            <div class="net-splitcells-structural-guide-optional structural_guide"></div>
+                            <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
                             <article>
                                 <div class="Right_shadow splitcells-net-window-menu">
                                     <div class="Standard_p3 bottomLightShadow splitcells-net-line">
@@ -751,7 +751,7 @@
                                             windowed
                                         </div>
                                     </div>
-                                    <div class="structural_guide" style="height: .25em;"></div>
+                                    <div class="net-splitcells-structural-guide" style="height: .25em;"></div>
                                     <div class="Standard_highlighted"
                                          style="display: flex; flex-direction: row; padding-left: .25em; flex: auto;">
                                         <div style="font-size: 1.75em; text-align: left; padding: 0.1em; font-weight: bold;">
@@ -801,7 +801,7 @@
                         <xsl:if test="$column_1 != ''">
                             <div class="column_1 contentCell Right_shadow"
                                  style="order: 4;">
-                                <div class="net-splitcells-structural-guide-optional structural_guide"
+                                <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"
                                      style="width:.25em;"></div>
                                 <article class="Standard_p2 net-splitcells-component-priority-2">
                                     <xsl:if test="$column_1 != ''">
@@ -825,7 +825,7 @@
                                                     windowed
                                                 </div>
                                             </div>
-                                            <div class="structural_guide" style="height: .25em;"></div>
+                                            <div class="net-splitcells-structural-guide" style="height: .25em;"></div>
                                             <div class="Standard_highlighted"
                                                  style="display: flex; flex-direction: row; padding-left: .25em; flex: auto;">
                                                 <div style="font-size: 1.75em; text-align: left; padding: 0.1em;">
