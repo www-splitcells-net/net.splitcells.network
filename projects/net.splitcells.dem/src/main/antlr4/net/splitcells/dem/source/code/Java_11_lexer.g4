@@ -42,6 +42,7 @@ Keyword_private: 'private';
 Keyword_public: 'public';
 Keyword_return: 'return';
 Keyword_static: 'static';
+Keyword_throw: 'throw';
 Keyword_try: 'try';
 Less_than: '<';
 Comment_multiline: '/*' .*? '*/';

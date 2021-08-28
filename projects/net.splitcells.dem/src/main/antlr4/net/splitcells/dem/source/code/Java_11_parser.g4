@@ -58,8 +58,8 @@ class_member_value_declaration
         type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement?
     ;
 expression
-    : Keyword_new Whitespace? type_declaration call_arguments
-    | name Whitespace? call_arguments access?
+    : Whitespace? Keyword_new Whitespace? type_declaration call_arguments
+    | Whitespace? name Whitespace? call_arguments access?
     | Whitespace? name Whitespace? access?
     ;
 import_declaration
@@ -110,6 +110,7 @@ statement
     | Whitespace? Keyword_try Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_catch?
         statement_finally?
     | Whitespace? javadoc
+    | Whitespace? Keyword_throw expression Whitespace? Semicolon
     ;
 statement_catch
     : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? name Whitespace? name Whitespace?
