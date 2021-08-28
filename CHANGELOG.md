@@ -14,26 +14,29 @@ Releases are done everytime a relevant ticket is completed.
 3**2021-08-05**:
    1Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-1. **2021-08-28**:
+1. **2021-08-29**:
+   1. Create method `Paths.removeFileSuffix` in order to unify file suffix
+      manipulation implementations.
+2. **2021-08-28**:
    1. Create helper command `wait.interactively.until` in order to wait until
       condition is fulfilled.
-2. **2021-08-24**:
+3. **2021-08-24**:
    1. Add secondary arguments to `maven.execute` command.
    2. Add `ENFORCING_UNIT_CONSISTENCY` environment property to Dem,
       so it can be set during program startup without programming.
    3. Create project command `execute.example` for `gel.sheath` in order to make
       easy to create custom execution command.
-3. **2021-08-11**:
+4. **2021-08-11**:
    1. Server SVG images from source folder by webserver and add them to the layout.
    2. Deprecated untyped repositories in webserver.
    3. Render LaTex math formulas via MathJax in website.
    4. Translate local image links in CommonMark to the link of the website.
-4. **2021-08-10**:
+5. **2021-08-10**:
    1. Create command `project.repository.register` in order to omit editing
       config files manually.
-5. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
+6. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
    the build process on multiple computers.
-6. **2021-08-08**: `command.repositories.install` now strips known file
+7. **2021-08-08**: `command.repositories.install` now strips known file
    suffixes during installation.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.

@@ -82,4 +82,8 @@ public final class Paths {
             throw new RuntimeException(e);
         }
     }
+    
+    public static String removeFileSuffix(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf('.'));
+    }
 }
