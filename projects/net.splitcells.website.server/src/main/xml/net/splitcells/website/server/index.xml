@@ -23,9 +23,10 @@
                 <toDo>Make website server generic and not specific to "net.splitcells.martins.avots.website".</toDo>
                 <toDo>Support XML refactoring/transformation.</toDo>
             </unscheduled>
-            <objective>
-                <objective>Create a project view, that shows multiple projects as one project in a unified namespace.
-                    <objective>Serve the project's files via HTTPs and via the file system.</objective>
+            <objective>Create a project view, that shows multiple projects as one project in a unified namespace.
+                <objective>Render project view to suitable formats and protocols.
+                    <objective>Provide an portable API in order to plug multiple project view software together.
+                    </objective>
                 </objective>
             </objective>
         </solution>
