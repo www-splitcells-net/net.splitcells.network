@@ -52,17 +52,30 @@ Some of them are not strictly related to optimization and can be used in other c
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_small)
 
 * [Changelog](./CHANGELOG.md)
-* API: Interfaces and the main class `net.splitcells.gel.Gel` can be considered semi stable.
-  Breaking changes are tried to be omitted, but there is no guarantee for that.
-  You can watch the [changelog](./CHANGELOG.md) for breaking changes.
-  You can try to decrease the likelihood of breaking a certain feature,
-  by contributing an appropriate test case/suite for this feature.
-  Regardless of that, keep in mind, that there is no guarantee of backwards compatibility.
 * [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security)
   The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
   workflow has to be run manually.
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
+### API
+Only interfaces and the main class `net.splitcells.gel.Gel` should be used,
+in order to get the most stable API usage.
 
+All API changes are located and categorized in the [Changelog](./CHANGELOG.md).
+Breaking changes are tried to be omitted, but there is no guarantee for that.
+The author of the software use this project as a dependency for their own
+private code.
+So there is at least an interest, to keep breaking changes to a minimum.
+
+Absolute backward compatibility creates a maintenance burden and if any kind
+of backward compatibility is required it may be best to just contact this
+project.
+We do not break backward compatibility just for fun and would like to support
+efforts to minimize breaking changes.
+
+You can try to decrease the likelihood of breaking a certain feature,
+by contributing an appropriate test case/suite for this feature.
+Regardless of that, keep in mind, that there is no guarantee of backwards
+compatibility.
 ### Planning
 * Current Tickets:
   * Solve new problems.
