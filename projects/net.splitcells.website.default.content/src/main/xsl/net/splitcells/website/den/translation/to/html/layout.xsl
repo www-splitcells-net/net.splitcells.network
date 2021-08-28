@@ -645,8 +645,8 @@
                         </a>
                         <div style="flex: auto;"></div>
                         <h3>Footer Functions</h3>
-                        <a class="linkButton" style="margin-bottom: .5em;" href="#topElement">
-                            <div class="MainButton MainButton_S">back to top</div>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3" href="#topElement">
+                            back to top
                         </a>
                     </div>
                     <div class="net-splitcells-content-column">
