@@ -652,7 +652,7 @@
                     <div class="net-splitcells-content-column">
                         <div id="content"
                              class="net-splitcells-content-main">
-                            <div class="optional_structural_guide structural_guide"></div>
+                            <div class="net-splitcells-structural-guide-optional structural_guide"></div>
                             <article>
                                 <div class="Right_shadow splitcells-net-window-menu">
                                     <div class="Standard_p3 bottomLightShadow splitcells-net-line">
@@ -801,7 +801,7 @@
                         <xsl:if test="$column_1 != ''">
                             <div class="column_1 contentCell Right_shadow"
                                  style="order: 4;">
-                                <div class="optional_structural_guide structural_guide"
+                                <div class="net-splitcells-structural-guide-optional structural_guide"
                                      style="width:.25em;"></div>
                                 <article class="Standard_p2 net-splitcells-component-priority-2">
                                     <xsl:if test="$column_1 != ''">
