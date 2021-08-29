@@ -44,7 +44,7 @@ Releases are done everytime an important ticket is completed.
    1. Create method `Paths.removeFileSuffix` in order to unify file suffix
       manipulation implementations.
    2. **\#79**: [Render new license info on website](https://github.com/www-splitcells-net/net.splitcells.network/issues/79).
-   3. **\#s2**: Create Host independent ticket numbering.
+   3. **\#s2**: [Create Host independent ticket numbering.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/2)
       Numbering is done via a prefix, that indicates the server hosting the
       ticket.
       This is documented in the changelog description located at the start.
