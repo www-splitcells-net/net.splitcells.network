@@ -1,22 +1,29 @@
 # Changelog Guidelines
 ## Content
-Only completed ticket are listed here.
-Partially completed tickets are not listed here.
+Only completed tickets or the start of important tickets are listed here.
+Partially completed tickets should not be listed here by default.
 ## Format
 This Changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 This file adheres to the [CommonMark](https://spec.commonmark.org/0.29) specification.
 
-Change items, that represent a ticket,
-states the ticket's title after the ticket number with a colon:
+## Format by Example
+
 ```
-1. **<Date of Completion If Known>**#<Ticket Number>: <Ticket Title>
-```
-For items ony related to a ticket, the following format is used:
-```
-1. **<Date of Completion If Known>**#<Ticket Number> <Description>
-```
-For change items without a ticket, the following format is used:
-```
-1. **<Date of Completion If Known>** <Description>
+# Changelog
+The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
+<Links to Ticketing Systems>
+<Further Comments>
+## [Unreleased]
+<Release Comments>
+### Major Changes
+* **<Date Of Completion If Known>
+  * **\#<Ticket Number>**: <Ticket Title>
+     <Ticket Description And Comments>
+  * **\#<Related Ticket Number>**: <Description>
+  * <Description>
+### Minor Changes
+<Like Major Changes>
+### Patches
+<Like Major Changes>
 ```

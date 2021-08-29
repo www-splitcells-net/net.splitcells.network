@@ -4,8 +4,8 @@ The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
 ### Major Changes
-1. **2021-08-29**:
-   1. \#79 `net.splitcells.website.server` now renders text files with the file
+* **2021-08-29**:
+   1. **\#79**: `net.splitcells.website.server` now renders text files with the file
       suffix `.html` instead of `.txt`.
       For the end user it means, that links to these file needs to be adjusted.
       This needs to be done, because static file webservers need to know
@@ -14,46 +14,47 @@ Releases are done everytime a relevant ticket is completed.
       In practice this is used in order to serve the license
       [files](src/main/txt/net/splitcells/network/legal) to `splitcells.net`.
       See this [example](http://splitcells.net/net/splitcells/network/legal/licenses/EPL-2.0.html).
-2. **2021-08-14**:
+* **2021-08-14**:
    1. `user.bin.configure` now does not require additional user specific
       implementation.
       The command now works out of the box without an error message.
-3. **2021-08-10**:
+* **2021-08-10**:
    1. `command.repositories.install` now only installs sh, Bash and
       Python commands.
-4. **2021-08-05**:
+* **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-1. **2021-08-29**:
+* **2021-08-29**:
    1. Create method `Paths.removeFileSuffix` in order to unify file suffix
       manipulation implementations.
-2. **2021-08-28**:
+   2. **\#79**: Render new license info on website.
+* **2021-08-28**:
    1. Create helper command `wait.interactively.until` in order to wait until
       condition is fulfilled.
-3. **2021-08-24**:
+* **2021-08-24**:
    1. Add secondary arguments to `maven.execute` command.
    2. Add `ENFORCING_UNIT_CONSISTENCY` environment property to Dem,
       so it can be set during program startup without programming.
    3. Create project command `execute.example` for `gel.sheath` in order to make
       easy to create custom execution command.
-4. **2021-08-11**:
+* **2021-08-11**:
    1. Server SVG images from source folder by webserver and add them to the layout.
    2. Deprecated untyped repositories in webserver.
    3. Render LaTex math formulas via MathJax in website.
    4. Translate local image links in CommonMark to the link of the website.
-5. **2021-08-10**:
+* **2021-08-10**:
    1. Create command `project.repository.register` in order to omit editing
       config files manually.
-6. **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
+* **2021-08-09**: Create `net.splitcells.network.deploy.build` for deploying
    the build process on multiple computers.
-7. **2021-08-08**: `command.repositories.install` now strips known file
+* **2021-08-08**: `command.repositories.install` now strips known file
    suffixes during installation.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 #### Patches
-1. **2021-08-28**:
+* **2021-08-28**:
    1. Fix licensing issues found via [FOSSA](https://app.fossa.com).
-2. **2021-08-05**:
+* **2021-08-05**:
    1. Fix Dependabot alert.
    1. Make `hashCode` and `equals` of `net.splitcells.gel.rating.framework.MetaRatingI`
       consistent.
@@ -62,6 +63,7 @@ Releases are done everytime a relevant ticket is completed.
       `Comparators` more consistent to `equals`, in order to improve Code
       quality score in [lgtm.com](https://lgtm.com).
 ## [3.0.0] - 2021-08-05
+Starting from this point a deprecated changelog format is used.
 ### Major Changes
 1. **2021-07-08**:
    1. Default configuration of Dem's process does not ensure determinism
