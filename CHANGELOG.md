@@ -2,6 +2,17 @@
 The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
 Tickets that create lasting requirements can be found [here](./src/main/md/net/splitcells/network/tickets/).
 
+Tickets are referenced with a hashtag and prefix in order to indicate the
+server, that hosts the ticket:
+for example `#g1` stands for the first Github issue and `#s1` for the first
+sourcehut issue.
+Ticket references without a prefix are probably hosted on
+[Github](https://github.com/www-splitcells-net/net.splitcells.network/issues).
+
+Prefix to Server:
+* g = Github: https://github.com/www-splitcells-net/net.splitcells.network/issues
+* s = sourcehut: https://todo.sr.ht/~splitcells-net/net.splitcells.network
+
 Tickets information located on other platforms are considered throw away
 information.
 Links to such platforms may or may not be valid.
@@ -33,6 +44,10 @@ Releases are done everytime an important ticket is completed.
    1. Create method `Paths.removeFileSuffix` in order to unify file suffix
       manipulation implementations.
    2. **\#79**: [Render new license info on website](https://github.com/www-splitcells-net/net.splitcells.network/issues/79).
+   3. **\#s2**: Create Host independent ticket numbering.
+      Numbering is done via a prefix, that indicates the server hosting the
+      ticket.
+      This is documented in the changelog description located at the start.
 * **2021-08-28**:
    1. Create helper command `wait.interactively.until` in order to wait until
       condition is fulfilled.
