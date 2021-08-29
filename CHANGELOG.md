@@ -1,10 +1,12 @@
 # Changelog
 The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
 Tickets that create lasting requirements can be found [here](./src/main/md/net/splitcells/network/tickets/).
+
 Tickets information located on other platforms are considered throw away
 information.
 Links to such platforms may or may not be valid.
-Releases are done everytime a relevant ticket is completed.
+
+Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
 * **2021-08-29**:
