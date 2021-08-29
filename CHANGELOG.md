@@ -18,11 +18,11 @@ Releases are done everytime a relevant ticket is completed.
    1. `user.bin.configure` now does not require additional user specific
       implementation.
       The command now works out of the box without an error message.
-2**2021-08-10**:
-   1`command.repositories.install` now only installs sh, Bash and
+3. **2021-08-10**:
+   1. `command.repositories.install` now only installs sh, Bash and
       Python commands.
-3**2021-08-05**:
-   1Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
+4. **2021-08-05**:
+   1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
 1. **2021-08-29**:
    1. Create method `Paths.removeFileSuffix` in order to unify file suffix
