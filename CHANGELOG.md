@@ -11,7 +11,7 @@ Releases are done everytime a relevant ticket is completed.
       This needs to be done, because static file webservers need to know
       the file type. Otherwise, text files transformed to HTML are not rendered
       correctly on web browsers.
-      In practice this is used in order to server the license
+      In practice this is used in order to serve the license
       [files](src/main/txt/net/splitcells/network/legal) to `splitcells.net`.
       See this [example](http://splitcells.net/net/splitcells/network/legal/licenses/EPL-2.0.html).
 2. **2021-08-14**:
