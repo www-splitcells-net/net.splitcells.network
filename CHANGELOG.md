@@ -71,15 +71,15 @@ Starting from this point a deprecated changelog format is used.
 1. **2021-07-08**:
    1. Default configuration of Dem's process does not ensure determinism
       or randomness.
-1. **2021-07-04**:
+2. **2021-07-04**:
    1. \#61 Remove XSL parameter from rendering API in webserver.
-1. **2021-07-03**:
+3. **2021-07-03**:
    1. Port 'repo.synchronize.with' to Python, add standardized argument handling
       and use better sub commands for each synchronization step.
       Also adds a logging message in case of error.
-1. **2021-07-01**:
+4. **2021-07-01**:
    1. Remove experimental web layouts.
-1. **2021-06-25**:
+5. **2021-06-25**:
    1. \#8 Remove deprecated constructor ProjectRenderer.
    1. \#8 Provide path `/net/splitcells/website/layout/build` in server,
       in order to refresh project layout.
@@ -95,7 +95,7 @@ Starting from this point a deprecated changelog format is used.
       may not work as an independent command.
    1. Use `~/.config/net.splitcells.os.state.interface/command.repositories` for `command.repositories.install`.
       This way it is easier to understand the Ossi config files.
-1. **2021-06-24**:
+6. **2021-06-24**:
    1. \#8 Rename ForallI to ForAll, in order to simplify name.
    1. \#8 Create valid XML for natural argumentation.
    1. Use established px default value for default font-size in default web layout.
@@ -106,13 +106,14 @@ Starting from this point a deprecated changelog format is used.
    1. Prevent random test error in `SimplifiedAnnealingProblemTest#testProbability`.
    1. Adjust default value of ProcessPath, so it does not clutter project repo,
       if the program is executed with default settings inside IDE.
-1. **2021-06-23**: #8 Remove deprecated usage of `net.splitcells.gel.data.database.DatabaseI` and mark these as protected.
+7. **2021-06-23**: #8 Remove deprecated usage of `net.splitcells.gel.data.database.DatabaseI` and mark these as protected.
    These constructors will be made private in the future.
-1. **2021-06-21**: Remove `net.splitcells.gel.problem.Problem#toSolution()`,
+8. **2021-06-21**: Remove `net.splitcells.gel.problem.Problem#toSolution()`,
    because it is not used and was not implemented yet.
-1. **2021-04-13**: #7: Model and solve oral exam problem.
-1. **2021-04-07**: #42: Make Gel workspace visible in website.
-1. **2021-04-12**: #46: Use deterministic environment and execution in CI.
+9. **2021-04-13**: #7: Model and solve oral exam problem.
+10. **2021-04-07**: #42: Make Gel workspace visible in website.
+11. **2021-04-12**: #46: Use deterministic environment and execution in CI.
+12. Some undocumented work.
 ### Minor Changes
 1. **2021-06-27**:
    1. Publish Ses project.
@@ -134,8 +135,9 @@ Starting from this point a deprecated changelog format is used.
 1. Some undocumented work.
 #### Patches
 1. **2021-06-27** Log error stack traces in web server.
-1. **2021-06-26** Add optimization to `den.xsd`.
-1. **2021-06-25** Determine project's source folder correctly in ProjectRenderer.
+2. **2021-06-26** Add optimization to `den.xsd`.
+3. **2021-06-25** Determine project's source folder correctly in ProjectRenderer.
+4. Some undocumented work.
 ## [2.0.0]
 Second version created during master thesis.
 ## [1.0.0]
