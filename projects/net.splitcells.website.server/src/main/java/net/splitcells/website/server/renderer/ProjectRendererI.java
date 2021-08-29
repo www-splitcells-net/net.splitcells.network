@@ -11,6 +11,7 @@
 package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
@@ -29,11 +30,13 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
 import static java.util.stream.Stream.concat;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -353,20 +356,48 @@ public class ProjectRendererI implements ProjectRenderer {
 
     @Override
     public Set<Path> projectPaths() {
-        final var projectPaths = list(projectSrcFolder.resolve("xml"), projectSrcFolder.resolve("txt"), resources)
-                .stream()
-                .filter(folder -> Files.isDirectory(folder))
-                .map(folder -> {
-                    try {
-                        return java.nio.file.Files.walk(folder)
-                                .filter(java.nio.file.Files::isRegularFile)
-                                .map(file -> folder.relativize(file));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }).reduce((a, b) -> concat(a, b))
-                .get()
-                .collect(toSetOfUniques());
+        final Set<Path> projectPaths = setOfUniques();
+        {
+            final var renderedDocumentPaths = list(projectSrcFolder.resolve("xml"), projectSrcFolder.resolve("txt"))
+                    .stream()
+                    .filter(folder -> Files.isDirectory(folder))
+                    .map(folder -> {
+                        try {
+                            return java.nio.file.Files.walk(folder)
+                                    .filter(java.nio.file.Files::isRegularFile)
+                                    .map(file -> {
+                                        return folder.relativize(
+                                                file.getParent()
+                                                        .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
+                                                                (file.getFileName().toString() + ".html"))
+                                        );
+                                    });
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).reduce((a, b) -> concat(a, b));
+            if (renderedDocumentPaths.isPresent()) {
+                renderedDocumentPaths.get().forEach(projectPaths::add);
+            }
+        }
+        {
+            final var resourcePaths = list(resources)
+                    .stream()
+                    .filter(folder -> Files.isDirectory(folder))
+                    .map(folder -> {
+                        try {
+                            return java.nio.file.Files.walk(folder)
+                                    .filter(java.nio.file.Files::isRegularFile)
+                                    .map(file -> folder.relativize(file));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).reduce((a, b) -> concat(a, b));
+
+            if (resourcePaths.isPresent()) {
+                resourcePaths.get().forEach(projectPaths::add);
+            }
+        }
         if (is_file(projectFolder.resolve("README.md"))) {
             projectPaths.add(Path.of(resourceRootPath.substring(1)).resolve("README.html"));
         }

@@ -25,6 +25,9 @@ import static java.util.Arrays.asList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * TODO RENAME because it conflicts with {@link java.nio.file.Paths}.
+ */
 public final class Paths {
     private static final Pattern PATH_ELEMENT_SYNTAX = Pattern.compile("[a-zA-Z0-9\\-\\.-_]*");
 

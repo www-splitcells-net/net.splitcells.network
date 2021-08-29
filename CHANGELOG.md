@@ -4,7 +4,17 @@ The tickets can be found [here](./src/main/md/net/splitcells/network/tickets/).
 Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
 ### Major Changes
-1. **2021-08-14**:
+1. **2021-08-29**:
+   1. `net.splitcells.website.server` now renders text files with the file
+      suffix `.html` instead of `.txt`.
+      For the end user it means, that links to these file needs to be adjusted.
+      This needs to be done, because static file webserver needs to know
+      the file type. Otherwise, text files transformed to HTML are not rendered
+      correctly on web browsers.
+      In practice this is used in order to server the license
+      [files](src/main/txt/net/splitcells/network/legal) to `splitcells.net`.
+      See this [example](http://splitcells.net/net/splitcells/network/legal/licenses/EPL-2.0.html).
+2. **2021-08-14**:
    1. `user.bin.configure` now does not require additional user specific
       implementation.
       The command now works out of the box without an error message.
