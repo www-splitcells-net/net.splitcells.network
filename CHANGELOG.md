@@ -13,8 +13,8 @@ Prefix to Server:
 * g = Github: https://github.com/www-splitcells-net/net.splitcells.network/issues
 * s = sourcehut: https://todo.sr.ht/~splitcells-net/net.splitcells.network
 
-Tickets information located on other platforms are considered throw away
-information.
+Ticket information located on platforms and not in the repository are
+considered throw away information.
 Links to such platforms may or may not be valid.
 
 Releases are done everytime an important ticket is completed.
