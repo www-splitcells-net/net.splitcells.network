@@ -71,7 +71,7 @@ Releases are done everytime an important ticket is completed.
    suffixes during installation.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
-#### Patches
+### Patches
 * **2021-08-28**:
    1. Fix licensing issues found via [FOSSA](https://app.fossa.com).
 * **2021-08-05**:
