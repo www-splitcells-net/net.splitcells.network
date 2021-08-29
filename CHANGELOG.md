@@ -5,7 +5,7 @@ Releases are done everytime a relevant ticket is completed.
 ## [Unreleased]
 ### Major Changes
 1. **2021-08-29**:
-   1. `net.splitcells.website.server` now renders text files with the file
+   1. \#79 `net.splitcells.website.server` now renders text files with the file
       suffix `.html` instead of `.txt`.
       For the end user it means, that links to these file needs to be adjusted.
       This needs to be done, because static file webservers need to know
@@ -51,7 +51,9 @@ Releases are done everytime a relevant ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 #### Patches
-1. **2021-08-05**:
+1. **2021-08-28**:
+   1. Fix licensing issues found via [FOSSA](https://app.fossa.com).
+2. **2021-08-05**:
    1. Fix Dependabot alert.
    1. Make `hashCode` and `equals` of `net.splitcells.gel.rating.framework.MetaRatingI`
       consistent.
