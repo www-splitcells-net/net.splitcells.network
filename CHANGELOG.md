@@ -8,7 +8,7 @@ Releases are done everytime a relevant ticket is completed.
    1. `net.splitcells.website.server` now renders text files with the file
       suffix `.html` instead of `.txt`.
       For the end user it means, that links to these file needs to be adjusted.
-      This needs to be done, because static file webserver needs to know
+      This needs to be done, because static file webservers need to know
       the file type. Otherwise, text files transformed to HTML are not rendered
       correctly on web browsers.
       In practice this is used in order to server the license
