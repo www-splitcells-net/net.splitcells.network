@@ -27,7 +27,7 @@ Releases are done everytime a relevant ticket is completed.
 * **2021-08-29**:
    1. Create method `Paths.removeFileSuffix` in order to unify file suffix
       manipulation implementations.
-   2. **\#79**: Render new license info on website.
+   2. **\#79**: [Render new license info on website](https://github.com/www-splitcells-net/net.splitcells.network/issues/79).
 * **2021-08-28**:
    1. Create helper command `wait.interactively.until` in order to wait until
       condition is fulfilled.
