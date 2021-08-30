@@ -15,6 +15,7 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
+import net.splitcells.gel.rating.type.Cost;
 
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class AllSame {
     public static <T> Rater allSame(Attribute<T> attribute) {
@@ -43,7 +45,12 @@ public class AllSame {
                             valueCounter.computeIfAbsent(value, v -> valueCounter.put(v, 1));
                         });
                 return addition.map(a -> cost((valueCounter.size() - 1) / (lines.size())))
-                        .orElseGet(() -> cost((valueCounter.size() - 1) / (lines.size() - 1)));
+                        .orElseGet(() -> {
+                            if (lines.size() == 1) {
+                                return noCost();
+                            }
+                            return cost((valueCounter.size() - 1) / (lines.size() - 1));
+                        });
             }
 
             @Override
