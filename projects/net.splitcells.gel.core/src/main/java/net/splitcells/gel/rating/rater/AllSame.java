@@ -10,7 +10,10 @@
  */
 package net.splitcells.gel.rating.rater;
 
+import net.splitcells.dem.data.order.Comparator;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -18,7 +21,9 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.type.Cost;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRater;
@@ -44,13 +49,24 @@ public class AllSame {
                             valueCounter.computeIfPresent(value, (k, v) -> valueCounter.put(k, v + 1));
                             valueCounter.computeIfAbsent(value, v -> valueCounter.put(v, 1));
                         });
-                return addition.map(a -> cost((valueCounter.size() - 1) / (lines.size())))
-                        .orElseGet(() -> {
-                            if (lines.size() == 1) {
-                                return noCost();
-                            }
-                            return cost((valueCounter.size() - 1) / (lines.size() - 1));
-                        });
+                if (1 == valueCounter.size()) {
+                    return noCost();
+                }
+                final int futureLineSize;
+                if (removal.isPresent()) {
+                    futureLineSize = lines.size() - 1;
+                } else {
+                    futureLineSize = lines.size();
+                }
+                final var valueCounts = valueCounter.values()
+                        .stream()
+                        .sorted(Comparator.ASCENDING_INTEGERS)
+                        .collect(toList());
+                valueCounts.remove(valueCounts.size() - 1);
+                return cost((double) valueCounts.stream()
+                        .reduce(Integer::sum)
+                        .get()
+                        / (double) futureLineSize);
             }
 
             @Override

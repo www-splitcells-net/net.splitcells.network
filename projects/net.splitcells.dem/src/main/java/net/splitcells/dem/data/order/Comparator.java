@@ -14,7 +14,7 @@ import java.util.function.BiFunction;
 
 public interface Comparator<T> extends java.util.Comparator<T> {
 
-    public static final Comparator<Integer> ASCENDING_INTEGERS = new Comparator<>() {
+    Comparator<Integer> ASCENDING_INTEGERS = new Comparator<>() {
         @Override
         public int compare(Integer a, Integer b) {
             return a.compareTo(b);

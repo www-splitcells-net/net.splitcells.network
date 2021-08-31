@@ -39,21 +39,22 @@ public class AllSameTest {
         }
         {
             testValue.register(secondTestValue);
-            assertThat(testValue.complying()).hasSize(2);
-            assertThat(testValue.defying()).isEmpty();
-            assertThat(testValue.rating().getContentValue(Cost.class)).isEqualTo(noCost());
-        }
-        {
-            testValue.register(thirdTestValue);
-            assertThat(testValue.complying()).hasSize(1);
+            assertThat(testValue.complying()).isEmpty();
             assertThat(testValue.defying()).hasSize(2);
             assertThat(testValue.rating().getContentValue(Cost.class)).isEqualTo(cost(1));
         }
         {
+            testValue.register(thirdTestValue);
+            // IDEA This functionality is simplistic, but correct. Maybe provide alternatives?
+            assertThat(testValue.complying()).isEmpty();
+            assertThat(testValue.defying()).hasSize(3);
+            assertThat(testValue.rating().getContentValue(Cost.class)).isEqualTo(cost(1));
+        }
+        {
             testValue.register_before_removal(firstTestValue);
-            assertThat(testValue.complying()).hasSize(2);
-            assertThat(testValue.defying()).isEmpty();
-            assertThat(testValue.rating().getContentValue(Cost.class)).isEqualTo(noCost());
+            assertThat(testValue.complying()).isEmpty();
+            assertThat(testValue.defying()).hasSize(2);
+            assertThat(testValue.rating().getContentValue(Cost.class)).isEqualTo(cost(1));
         }
         {
             testValue.register_before_removal(secondTestValue);
