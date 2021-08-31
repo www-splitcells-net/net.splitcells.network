@@ -16,6 +16,9 @@ import net.splitcells.gel.rating.framework.Rating;
 
 import java.util.Optional;
 
+/**
+ * This is a helper interface, in order to create a rater based on one method.
+ */
 @FunctionalInterface
 public interface GroupRater {
 
@@ -33,5 +36,13 @@ public interface GroupRater {
         };
     }
 
+    /**
+     * The {@link Rating} of an Event, has to be applied to all {@link Line}s of a group.
+     *
+     * @param lines    lines
+     * @param addition addition
+     * @param removal  removal
+     * @return return
+     */
     Rating lineRating(Table lines, Optional<Line> addition, Optional<Line> removal);
 }
