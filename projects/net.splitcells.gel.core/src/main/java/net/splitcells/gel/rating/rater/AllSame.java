@@ -61,6 +61,9 @@ public class AllSame {
                 } else {
                     futureLineSize = lines.size();
                 }
+                if (0 == futureLineSize) {
+                    return noCost();
+                }
                 final var valueCounts = valueCounter.values()
                         .stream()
                         .sorted(Comparator.ASCENDING_INTEGERS)
