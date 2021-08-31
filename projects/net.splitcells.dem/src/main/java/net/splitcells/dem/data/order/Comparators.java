@@ -17,6 +17,7 @@ public class Comparators<T> implements Comparator<T> {
 
 	private final BiFunction<T, T, Integer> comparator;
 
+	@Deprecated
 	public Comparators(BiFunction<T, T, Integer> comparator) {
 		this.comparator = comparator;
 	}
