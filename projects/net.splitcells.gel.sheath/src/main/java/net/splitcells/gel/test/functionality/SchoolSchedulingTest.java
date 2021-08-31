@@ -49,6 +49,7 @@ import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.rating.rater.RegulatedLength.regulatedLength;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
+import static net.splitcells.gel.solution.optimization.primitive.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -98,9 +99,15 @@ public class SchoolSchedulingTest {
             final var teacherAllocationForCourses = input.get(1);
             final var studentAllocationsForCourses = input.get(2);
             railsForSchoolScheduling.optimize(linearInitialization());
-            teacherAllocationForCourses.optimize(linearInitialization());
-            studentAllocationsForCourses.optimize(linearInitialization());
-            teacherAllocationForCourses.createStandardAnalysis();
+            railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
+                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(2)
+                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(1)
+                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            railsForSchoolScheduling.createStandardAnalysis();
+            //teacherAllocationForCourses.optimize(linearInitialization());
+            //studentAllocationsForCourses.optimize(linearInitialization());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
