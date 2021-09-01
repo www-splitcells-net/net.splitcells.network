@@ -95,7 +95,11 @@ public class SolutionAspect implements Solution {
                             -> assertThat(list(supplyForRemoval.context()))
                             .containsAnyOf(solution.supplies(), solution.suppliesUsed()));
         }
-        return solution.optimize(event, parameters);
+        final var result = solution.optimize(event, parameters);
+        if (StaticFlags.TELLING_STORY) {
+            domsole().append(constraint().rating(), () -> this.path().withAppended("optimize", "after", "rating"), LogLevel.DEBUG);
+        }
+        return result;
     }
 
     @Override
