@@ -6,6 +6,8 @@
 
 #### **[Introduction](#introduction)** | **[Where to start?](#where-to-start)** | **[Project Status](#project-status)** | **[Network's Structure](#networks-structure)** | **[Contacts](#contacts)** | **[Website](http://splitcells.net/net/splitcells/network/README.html)**
 
+TODO: Simple Image Describing The Core Features
+
 ## Introduction
 
 We provide an open source ecosystem centered around optimization and operations research.
@@ -39,6 +41,10 @@ Some of them are not strictly related to optimization and can be used in other c
 💰 Support [contributors](https://www.patreon.com/splitcells_net).
 
 📣 Spread the word!
+
+## Features
+
+TODO: Short And Compact Feature Description
 
 ## Project Status
 [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
