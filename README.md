@@ -139,7 +139,7 @@ Project Cluster
 
 ## Contributing
 
-* [Licensing](./LICENSE.md) of This Project
+* [Licensing](./LICENSE.md) and [Notices](./NOTICE.md) of This Project
 * [Source Code Guidelines](http://splitcells.net/net/splitcells/dem/guidelines/index.html)
 
 ## Credits
