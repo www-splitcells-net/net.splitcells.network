@@ -18,7 +18,7 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.resource.communication.interaction.Dsui.dsui;
 
 /**
- * TODO In the future, domsole should be the counter part of the web server.
+ * TODO In the future, this should be a counter part of the web server.
  */
 public class Domsole extends ResourceI<Dsui> {
     public Domsole() {
