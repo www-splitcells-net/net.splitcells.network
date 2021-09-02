@@ -22,7 +22,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * TODO Test and use this.
+ * TODO Test and use this. Something like this should replace XML rendering in the future.
  *
  * TODO Use {@link net.splitcells.dem.lang.dom.Domable#toDom} for rendering.
  */
