@@ -36,17 +36,20 @@ public class Pdsui implements Sui<LogMessage<Perspective>>, Flushable {
         return (R) this;
     }
 
-    private static void print(Sender<String> output, Perspective perspective) {
-        throw notImplementedYet();
+    private static void print(Sender<String> output, Perspective content) {
+        output.append(content.name());
+        if (!content.children().isEmpty()) {
+            throw notImplementedYet();
+        }
     }
 
     @Override
     public void close() {
-
+        output.close();
     }
 
     @Override
     public void flush() {
-
+        output.flush();
     }
 }
