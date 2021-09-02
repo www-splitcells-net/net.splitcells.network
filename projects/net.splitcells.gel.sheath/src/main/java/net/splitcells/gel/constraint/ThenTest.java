@@ -48,8 +48,6 @@ public class ThenTest {
             assertThat(propagationValidator.defying()).hasSize(1);
             assertThat(testSubject.complying()).isEmpty();
             assertThat(propagationValidator.complying()).isEmpty();
-            domsole().append(testSubject.toDom(), empty(), LogLevel.CRITICAL);
-            domsole().append(testSubject.graph(), empty(), LogLevel.CRITICAL);
             assertThat(testSubject.rating())
                     .isEqualTo(cost(firstDefianceCost + secondDefianceCost));
         }
