@@ -27,6 +27,7 @@ import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
+import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import org.w3c.dom.Node;
@@ -35,6 +36,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.gel.common.Language.RATING;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
@@ -97,7 +99,9 @@ public class SolutionAspect implements Solution {
         }
         final var result = solution.optimize(event, parameters);
         if (StaticFlags.TELLING_STORY) {
-            domsole().append(constraint().rating(), () -> this.path().withAppended("optimize", "after", "rating"), LogLevel.DEBUG);
+            domsole().append(perspective("" + constraint().rating().getContentValue(Cost.class).value())
+                    , () -> this.path().withAppended("optimize", "after", "cost")
+                    , LogLevel.DEBUG);
         }
         return result;
     }
