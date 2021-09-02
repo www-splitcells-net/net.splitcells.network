@@ -19,6 +19,8 @@ import static net.splitcells.dem.resource.communication.interaction.Dsui.dsui;
 
 /**
  * TODO In the future, this should be a counter part of the web server.
+ * TODO Message filtering and routing should be done by dedicated classes,
+ * so that rendering can be separated from the rest.
  */
 public class Domsole extends ResourceI<Dsui> {
     public Domsole() {
