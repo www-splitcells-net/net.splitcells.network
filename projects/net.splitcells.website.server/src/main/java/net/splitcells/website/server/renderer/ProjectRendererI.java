@@ -250,7 +250,6 @@ public class ProjectRendererI implements ProjectRenderer {
             htmlBodyContent.appendChild
                     (Xml.textNode(MARKER));
             content.appendChild(htmlBodyContent);
-            domsole().append(content, LogLevel.INFO);
             if (title.isPresent()) {
                 final var metaElement = Xml.elementWithChildren(NameSpaces.SEW, "meta");
                 final var titleElement = Xml.elementWithChildren(NameSpaces.SEW, "title");
@@ -263,8 +262,10 @@ public class ProjectRendererI implements ProjectRenderer {
                     metaElement.appendChild(pathElement);
                 }
             }
+            final var contentAsString = Xml.toPrettyString(content);
+            domsole().append(perspective(contentAsString), LogLevel.INFO);
             return Optional.of(renderer()
-                    .transform(Xml.toPrettyString(content))
+                    .transform(contentAsString)
                     .replace(MARKER, bodyContent)
                     .getBytes(UTF_8));
         } catch (Exception e) {

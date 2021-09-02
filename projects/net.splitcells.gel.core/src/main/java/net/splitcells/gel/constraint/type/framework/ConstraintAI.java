@@ -101,10 +101,9 @@ public abstract class ConstraintAI implements Constraint {
         // TODO Move this to a different project.
         if (TRACING) {
             domsole().append
-                    (Xml.elementWithChildren("register-additions." + Constraint.class.getSimpleName()
-                            , Xml.elementWithChildren("additions", addition.toDom())
-                            , Xml.elementWithChildren("injectionGroup", textNode(injectionGroup.toString()))
-                            )
+                    (perspective("register-additions." + Constraint.class.getSimpleName())
+                                    .withChild(perspective("additions").withChild(addition.toPerspective()))
+                                    .withProperty("injectionGroup", injectionGroup.toString())
                             , this
                             , DEBUG);
         }

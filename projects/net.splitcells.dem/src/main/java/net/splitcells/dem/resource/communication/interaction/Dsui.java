@@ -103,7 +103,8 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
         return Domsole.domsole().append(error, Optional.empty(), LogLevel.CRITICAL);
     }
 
-    public <R extends ListWA<LogMessage<Node>>> R append(Node domable, LogLevel logLevel) {
+    @Deprecated
+    private <R extends ListWA<LogMessage<Node>>> R append(Node domable, LogLevel logLevel) {
         return append(logMessage(domable, NO_CONTEXT, logLevel));
     }
 
@@ -122,7 +123,7 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
      */
     @Deprecated
     private <R extends ListWA<LogMessage<Node>>> R append(Node domable, Optional<Discoverable> context,
-                                                         LogLevel logLevel) {
+                                                          LogLevel logLevel) {
         return append(logMessage(domable, context.orElse(NO_CONTEXT), logLevel));
     }
 

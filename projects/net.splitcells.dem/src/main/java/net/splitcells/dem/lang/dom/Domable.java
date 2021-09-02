@@ -10,12 +10,21 @@
  */
 package net.splitcells.dem.lang.dom;
 
+import net.splitcells.dem.lang.perspective.Perspective;
 import org.w3c.dom.Node;
+
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * XML descriptions for instances of this interfaces can be created.
  * This can be seen as an alternative to String.
  */
 public interface Domable {
+    @Deprecated
     Node toDom();
+
+    default Perspective toPerspective() {
+        return perspective("TODO-Not-implemented-yet");
+    }
 }

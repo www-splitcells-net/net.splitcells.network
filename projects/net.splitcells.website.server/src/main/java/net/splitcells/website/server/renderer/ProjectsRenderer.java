@@ -108,7 +108,7 @@ public class ProjectsRenderer {
     public Optional<RenderingResult> render(String path) {
         try {
             if (path.equals(LAYOUT_PATH)) {
-                domsole().append(textNode("Refreshing layout."), LogLevel.INFO);
+                domsole().append(perspective("Refreshing layout."), LogLevel.INFO);
                 this.build();
                 return Optional.empty();
             }
@@ -131,7 +131,7 @@ public class ProjectsRenderer {
                     .filter(Optional::isPresent)
                     .findFirst();
             if (renderingResult.isEmpty()) {
-                domsole().append(textNode("Path could not be found: " + path), LogLevel.ERROR);
+                domsole().append(perspective("Path could not be found: " + path), LogLevel.ERROR);
                 return Optional.empty();
             }
             return renderingResult.get();

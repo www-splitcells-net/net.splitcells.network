@@ -81,7 +81,7 @@ public class FunctionalHillClimber implements Optimization {
             if (TRACING) {
                 recommendations.forEach
                         (suggestion -> domsole().append
-                                (suggestion.toDom()
+                                (suggestion.toPerspective()
                                         , () -> solution.path().withAppended
                                                 (Optimization.class.getSimpleName()
                                                         , getClass().getSimpleName())

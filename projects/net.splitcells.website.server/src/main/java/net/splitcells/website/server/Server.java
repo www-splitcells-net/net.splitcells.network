@@ -28,6 +28,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.Xml.textNode;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 
 /**
@@ -80,7 +81,7 @@ public class Server {
                             }
                         }, (result) -> {
                             if (result.failed()) {
-                                domsole().append(textNode(result.cause().toString()), LogLevel.ERROR);
+                                domsole().append(perspective(result.cause().toString()), LogLevel.ERROR);
                                 domsole().appendError(result.cause());
                                 response.setStatusCode(500);
                                 response.end();

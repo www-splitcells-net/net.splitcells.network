@@ -81,7 +81,6 @@ public class DocumentTest {
                                         , queue()))
                         , perspective("logging")
                         , perspective("side-effects"))
-                        .toDom()
                 , () -> list()
                 , LogLevel.INFO);
         /**
@@ -109,7 +108,6 @@ public class DocumentTest {
                         , val("logging")
                         , val("side-effects"))
                         .withProperty("name", "Dependency Manager")
-                        .toDom()
                 , () -> list()
                 , LogLevel.INFO);
     }
