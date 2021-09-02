@@ -121,7 +121,7 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
      * @return return
      */
     @Deprecated
-    public <R extends ListWA<LogMessage<Node>>> R append(Node domable, Optional<Discoverable> context,
+    private <R extends ListWA<LogMessage<Node>>> R append(Node domable, Optional<Discoverable> context,
                                                          LogLevel logLevel) {
         return append(logMessage(domable, context.orElse(NO_CONTEXT), logLevel));
     }
