@@ -40,6 +40,7 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.host.interaction.LogMessageI.logMessage;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -92,19 +93,12 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
     }
 
     public <R extends ListWA<LogMessage<Node>>> R appendError(Throwable throwable) {
-        // TOFIX Additional namespace declaration should not be needed.
-        final var error = Xml.rElement(DEN, "error");
+        final var error = perspective("error");
+        error.withProperty("message", throwable.getMessage());
         {
-            final var errorMessage = Xml.elementWithChildren(DEN, "message");
-            errorMessage.appendChild(textNode(throwable.getMessage()));
-            error.appendChild(errorMessage);
-        }
-        {
-            final var stackTrace = Xml.elementWithChildren(DEN, "stack-trace");
             final var stackTraceValue = new StringWriter();
             throwable.printStackTrace(new PrintWriter(stackTraceValue));
-            stackTrace.appendChild(textNode(stackTraceValue.toString()));
-            error.appendChild(stackTrace);
+            error.withProperty("stack-trace", stackTraceValue.toString());
         }
         return Domsole.domsole().append(error, Optional.empty(), LogLevel.CRITICAL);
     }
@@ -183,14 +177,14 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
             print(Xml.elementWithChildren(
                     Xml.rElement(NATURAL, "runtime-in-seconds"),
                     Xml.textNode("" + Duration.between
-                            (environment().config().configValue(StartTime.class)
-                                    , endTime.get())
+                                    (environment().config().configValue(StartTime.class)
+                                            , endTime.get())
                             .toSeconds())));
             print(Xml.elementWithChildren(
                     Xml.rElement(NATURAL, "runtime-in-nanoseconds"),
                     Xml.textNode("" + Duration.between
-                            (environment().config().configValue(StartTime.class)
-                                    , endTime.get())
+                                    (environment().config().configValue(StartTime.class)
+                                            , endTime.get())
                             .toNanos())));
         }
         String endingMessage = Xml.toPrettyString(root);
