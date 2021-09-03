@@ -40,6 +40,10 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-09-04**:
+   1. Create command `user.ssh.key.login.allow` in order to allow login via
+      public key. This command mainly grants read access
+      to `~/.ssh/authorized_keys` for the ssh server.  
 * **2021-08-29**:
    1. Create method `Paths.removeFileSuffix` in order to unify file suffix
       manipulation implementations.
