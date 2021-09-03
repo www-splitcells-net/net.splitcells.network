@@ -71,6 +71,8 @@ Breaking changes are tried to be omitted, but there is no guarantee for that.
 The author of the software use this project as a dependency for their own
 private code.
 So there is at least an interest, to keep breaking changes to a minimum.
+On the other hand, the API is not polished,
+so there will be breaking changes to the API.
 
 Absolute backward compatibility creates a maintenance burden and if any kind
 of backward compatibility is required it may be best to just contact this
