@@ -48,7 +48,7 @@ cd <New clone of repository>
 # Register the new repository.
 command.repository.register $(pwd)
 # Install the new repository.
-user.bin.configure
+user.bin.configure.sh
 ```
 
 # Command Documentation

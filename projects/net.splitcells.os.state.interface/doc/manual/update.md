@@ -5,7 +5,7 @@ Both can be executed at any location.
 ## First Option: Reinstall program and configure user's bin folder.
 In order to just reinstall this program, one has to execute the following command in the console:
 ```sh
-user.bin.configure
+user.bin.configure.sh
 ```
 This option is faster than the second.
 
