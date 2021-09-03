@@ -1,4 +1,11 @@
 # Changelog
+
+This is an historic document.
+As this project was merged with `net.splitcells.network`
+a project global changelog file and versioning was adopted.
+This documents currently only helps a bit to understand the history of this
+project. 
+
 This changelog is inspired by [keepachangelog.com](https://keepachangelog.com/en/1.0.0/).
 Version numbers are based on [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 Please, create a one sentence summary for each release.
