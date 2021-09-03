@@ -8,14 +8,15 @@ The priority of a task is just a guideline.
 1. Add tests.
 1. Improve echo output and make it nice, for a certain setting.
 ### Current Tasks
-1. Add file endings to all source files.
 1. Implement testing:
    1. Fix Gitlab-Runner Test and ensure that test failures are automatically found,
       which is currently not the case.
    1. Use [toolbox](https://github.com/containers/toolbox).
       1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
-1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
+2. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
+3. Document reasoning for command line based dependency injection,
+   in light of the fact, that there are stability issues with that.
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
 1. Define break points of this project.
