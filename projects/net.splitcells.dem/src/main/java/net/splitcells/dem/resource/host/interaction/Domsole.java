@@ -29,8 +29,7 @@ import static net.splitcells.dem.resource.communication.interaction.Pdsui.pdsui;
 public class Domsole extends ResourceI<Ui> {
     public Domsole() {
         super(() -> pdsui(environment().config().configValue(Console.class)
-                , logMessage -> false));
-        // TODO , environment().config().configValue(MessageFilter.class)));
+                , environment().config().configValue(MessageFilter.class)));
     }
 
     public static Ui domsole() {
