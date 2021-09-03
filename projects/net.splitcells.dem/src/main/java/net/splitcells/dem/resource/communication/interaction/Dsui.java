@@ -100,7 +100,7 @@ public class Dsui implements Sui<LogMessage<Node>>, Flushable {
             throwable.printStackTrace(new PrintWriter(stackTraceValue));
             error.withProperty("stack-trace", stackTraceValue.toString());
         }
-        return Domsole.domsole().append(error, Optional.empty(), LogLevel.CRITICAL);
+        return append(error.toDom(), Optional.empty(), LogLevel.CRITICAL);
     }
 
     @Deprecated
