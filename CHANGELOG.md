@@ -43,7 +43,10 @@ Releases are done everytime an important ticket is completed.
 * **2021-09-04**:
    1. Create command `user.ssh.key.login.allow` in order to allow login via
       public key. This command mainly grants read access
-      to `~/.ssh/authorized_keys` for the ssh server.  
+      to `~/.ssh/authorized_keys` for the ssh server.
+   2. Create command `user.ssh.key.authorize` in order to import public keys
+      into `~/.ssh/authorized_keys` via command.
+      Already present entries are not inserted.
 * **2021-08-29**:
    1. Create method `Paths.removeFileSuffix` in order to unify file suffix
       manipulation implementations.
