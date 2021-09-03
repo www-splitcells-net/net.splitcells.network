@@ -11,6 +11,8 @@
 package net.splitcells.dem.utils;
 
 public final class NotImplementedYet extends RuntimeException {
+    
+    public static final String TODO_NOT_IMPLEMENTED_YET = "TODO-Not-implemented-yet";
 
     public static NotImplementedYet notImplementedYet() {
         return new NotImplementedYet();

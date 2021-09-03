@@ -81,7 +81,6 @@ public class DocumentTest {
                                         , queue()))
                         , perspective("logging")
                         , perspective("side-effects"))
-                , () -> list()
                 , LogLevel.INFO);
         /**
          * By defining constructors, we can create a loose grammars.
@@ -108,7 +107,6 @@ public class DocumentTest {
                         , val("logging")
                         , val("side-effects"))
                         .withProperty("name", "Dependency Manager")
-                , () -> list()
                 , LogLevel.INFO);
     }
 }

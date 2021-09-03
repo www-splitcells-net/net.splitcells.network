@@ -14,6 +14,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import org.w3c.dom.Node;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -25,6 +26,6 @@ public interface Domable {
     Node toDom();
 
     default Perspective toPerspective() {
-        return perspective("TODO-Not-implemented-yet");
+        return perspective(TODO_NOT_IMPLEMENTED_YET);
     }
 }

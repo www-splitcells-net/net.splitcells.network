@@ -14,9 +14,9 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 /**
  * Pdsui = Path Based Dom Stream User Interface
  */
-public class Pdsui implements Sui<LogMessage<Perspective>>, Flushable {
+public class Pdsui implements Ui {
 
-    public Pdsui pdsui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    public static Pdsui pdsui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
         return new Pdsui(output, messageFilter);
     }
 

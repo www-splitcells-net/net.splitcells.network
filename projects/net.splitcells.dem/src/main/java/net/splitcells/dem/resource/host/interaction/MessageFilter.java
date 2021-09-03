@@ -16,7 +16,7 @@ import org.w3c.dom.Node;
 import java.util.function.Predicate;
 
 public class MessageFilter extends OptionI<Predicate<LogMessage<Node>>> {
-	public MessageFilter() {
-		super(() -> logMessage -> true);
-	}
+    public MessageFilter() {
+        super(() -> logMessage -> true);
+    }
 }

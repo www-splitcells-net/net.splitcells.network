@@ -19,6 +19,7 @@ import net.splitcells.dem.resource.communication.interaction.Ui;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.resource.communication.interaction.Dsui.dsui;
+import static net.splitcells.dem.resource.communication.interaction.Pdsui.pdsui;
 
 /**
  * TODO In the future, this should be a counter part of the web server.
@@ -27,9 +28,9 @@ import static net.splitcells.dem.resource.communication.interaction.Dsui.dsui;
  */
 public class Domsole extends ResourceI<Ui> {
     public Domsole() {
-        super(() -> //dsui(environment().config().configValue(Console.class), environment().config().configValue(MessageFilter.class))
-                null
-        );
+        super(() -> pdsui(environment().config().configValue(Console.class)
+                , logMessage -> false));
+        // TODO , environment().config().configValue(MessageFilter.class)));
     }
 
     public static Ui domsole() {
