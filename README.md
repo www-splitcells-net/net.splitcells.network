@@ -62,7 +62,7 @@ TODO: Short And Compact Feature Description
   The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
   workflow has to be run manually.
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
-### API
+### API Compatibility
 There is no guarantee of backwards compatibility.
 
 All API changes are located and categorized in the [Changelog](./CHANGELOG.md).

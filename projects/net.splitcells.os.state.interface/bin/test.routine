@@ -9,7 +9,7 @@
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 set -e
 ./bin/install
-  . ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin
+  . ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin.sh
 projectFolder=$(pwd)
 	mkdir -p target/test
 	cd target/test

@@ -20,7 +20,7 @@ bootstrapRepoProperty=$(head -n 1 $repoList)
 if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	bootstrapRepo=$(echo $bootstrapRepoProperty | cut -c6-)
 		cd $bootstrapRepo
-	setupEnvironment=$bootstrapRepo/src/main/bash/command/managed/command.managed.environment.configure
+	setupEnvironment=$bootstrapRepo/src/main/bash/command/managed/command.managed.environment.configure.sh
 		chmod +x $setupEnvironment
 		$setupEnvironment
 	chmod +x $bootstrapRepo/src/main/bash/echo/*
