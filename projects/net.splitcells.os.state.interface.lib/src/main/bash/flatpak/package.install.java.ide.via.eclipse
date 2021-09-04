@@ -56,18 +56,3 @@ flatpak install -y flathub org.eclipse.Java
 		#	-noSplash \
 		#	-repository http://download.eclipse.org/releases/latest \
 		#	-installIU eu.musoft.eclipse.xpath.evaluation.plugin.feature.group	# XPath Evaluation # TODO Move this into other script?
-# Install Lombok support
-	mkdir -p ~/opt
-	if [ ! -f ~/opt/lombok.jar ]; then
-		echo Lombok not found.
-		cd ~/opt
-    	wget https://projectlombok.org/downloads/lombok.jar
-	fi
-	eclipseIniPath=/home/$(whoami)/.local/share/flatpak/app/org.eclipse.Java/current/active/files/eclipse/eclipse.ini
-	lombokJavaAgent=-javaagent:/home/$(whoami)/opt/lombok.jar
-	if eval grep -F -- "'"$lombokJavaAgent"'" $eclipseIniPath; then
-		echo "Lombok agent already installed."
-	else
-		echo $lombokJavaAgent >> $eclipseIniPath
-	fi
-	echo You may need to clean and rebuild all projects in order to remove Lombok related errors.

@@ -47,6 +47,9 @@ Releases are done everytime an important ticket is completed.
    2. Create command `user.ssh.key.authorize` in order to import public keys
       into `~/.ssh/authorized_keys` via command.
       Already present entries are not inserted.
+   3. Remove Lombok plugin installation steps inside
+      `package.install.java.ide.via.eclipse` because an update of Flatpak
+      broke this.
 * **2021-08-29**:
    1. Create method `Paths.removeFileSuffix` in order to unify file suffix
       manipulation implementations.
