@@ -60,7 +60,9 @@ class_member_value_declaration
         type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement?
     ;
 expression
-    : Whitespace? Keyword_new Whitespace? type_declaration call_arguments
+    : Whitespace expression Whitespace Keysymbol_equals Whitespace expression
+    | expression Whitespace Keysymbol_equals Whitespace expression
+    | Whitespace? Keyword_new Whitespace? type_declaration call_arguments
     | Whitespace? name Whitespace? call_arguments access?
     | Whitespace? name Whitespace? access?
     ;
@@ -106,13 +108,15 @@ reference
     | call_arguments Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 statement
-    : Whitespace? Keyword_return? Whitespace expression Semicolon
-    | Whitespace? Line_comment
-    | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
+    : Whitespace? Line_comment
     | Whitespace? Keyword_try Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_catch?
         statement_finally?
+    | Whitespace? Keyword_if Whitespace? Brace_round_open expression Whitespace? Brace_round_closed Whitespace?
+    	Brace_curly_open statement+ Whitespace? Brace_curly_closed
     | Whitespace? javadoc
     | Whitespace? Keyword_throw expression Whitespace? Semicolon
+    | Whitespace? Keyword_return? Whitespace expression Semicolon
+    | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
     ;
 statement_catch
     : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? name Whitespace? name Whitespace?

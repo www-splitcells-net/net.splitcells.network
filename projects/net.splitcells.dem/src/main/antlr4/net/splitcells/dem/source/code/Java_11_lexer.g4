@@ -21,21 +21,15 @@ lexer grammar Java_11_lexer;
 @header {
     package net.splitcells.dem.source.code.antlr;
 }
-Keysymbol_at: '@';
 Arrow: '->';
-Bigger_than: '>';
-Brace_curly_open: '{';
-Brace_curly_closed: '}';
-Brace_round_open: '(';
-Brace_round_closed: ')';
-Comma: ',';
-Dot: '.';
-Equals: '=';
 Javadoc: '/**' .*? '*/';
+Keysymbol_at: '@';
+Keysymbol_equals: '==';
 Keyword_class: 'class';
 Keyword_catch: 'catch';
 Keyword_finally: 'finally';
 Keyword_final: 'final';
+Keyword_if: 'if';
 Keyword_import: 'import';
 Keyword_new: 'new';
 Keyword_package: 'package';
@@ -45,6 +39,16 @@ Keyword_return: 'return';
 Keyword_static: 'static';
 Keyword_throw: 'throw';
 Keyword_try: 'try';
+
+Bigger_than: '>';
+Brace_curly_open: '{';
+Brace_curly_closed: '}';
+Brace_round_open: '(';
+Brace_round_closed: ')';
+Comma: ',';
+Dot: '.';
+Equals: '=';
+
 Less_than: '<';
 Comment_multiline: '/*' .*? '*/';
 Line_comment: '//' .*? Line_ending;
