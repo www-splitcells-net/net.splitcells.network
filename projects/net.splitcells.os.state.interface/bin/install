@@ -8,11 +8,11 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 
-commandRepoRegister=./src/main/bash/command/managed/command.repository.register
+commandRepoRegister=./src/main/bash/command/managed/command.repository.register.sh
 chmod +x $commandRepoRegister
 $commandRepoRegister $(pwd)
 
-installer=./src/main/bash/command/managed/command.repositories.install
+installer=./src/main/bash/command/managed/command.repositories.install.sh
 chmod +x $installer
 $installer
 
