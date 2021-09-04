@@ -63,8 +63,7 @@ TODO: Short And Compact Feature Description
   workflow has to be run manually.
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
 ### API
-Only interfaces and the main class `net.splitcells.gel.Gel` should be used,
-in order to get the most stable API usage.
+There is no guarantee of backwards compatibility.
 
 All API changes are located and categorized in the [Changelog](./CHANGELOG.md).
 Breaking changes are tried to be omitted, but there is no guarantee for that.
