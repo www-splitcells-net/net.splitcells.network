@@ -112,7 +112,7 @@ statement
     | Whitespace? Keyword_try Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_catch?
         statement_finally?
     | Whitespace? Keyword_if Whitespace? Brace_round_open expression Whitespace? Brace_round_closed Whitespace?
-    	Brace_curly_open statement+ Whitespace? Brace_curly_closed
+    	Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_if_else?
     | Whitespace? javadoc
     | Whitespace? Keyword_throw expression Whitespace? Semicolon
     | Whitespace? Keyword_return Whitespace expression Semicolon
@@ -120,6 +120,9 @@ statement
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
     | Whitespace? name Whitespace Equals Whitespace expression Semicolon
     ;
+statement_if_else
+	: Whitespace? Keyword_else Whitespace Brace_curly_open statement+ Whitespace? Brace_curly_closed
+	;
 statement_catch
     : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? name Whitespace? name Whitespace?
         Brace_round_closed Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed

@@ -27,6 +27,7 @@ Keysymbol_at: '@';
 Keysymbol_equals: '==';
 Keyword_class: 'class';
 Keyword_catch: 'catch';
+Keyword_else: 'else';
 Keyword_finally: 'finally';
 Keyword_final: 'final';
 Keyword_if: 'if';
