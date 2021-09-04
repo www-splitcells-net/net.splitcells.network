@@ -9,50 +9,7 @@
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 
 # Flatpak is licensed under LGPL so runtime linking is ok.
-	# Eclipse is licensed under EPL and seems only to require to the publication of EPL code. EPL explanation https://resources.whitesourcesoftware.com/blog-whitesource/top-10-eclipse-public-license-questions-answered
-	# Lombok is licensed under the permissive MIT license.
-	# Gnome is licensed under GPL but there is no interaction with it directly other than installing it.
-	# TODO Check license of installed Eclipse plugins. 
-# One can only upgrade eclipse plugins dependencies by uninstalling and installing them.
-# TODO Maybe use yatta: https://marketplace.eclipse.org/content/yatta-launcher-eclipse#group-details
+	# Eclipse is licensed under EPL and seems only to require to the publication of EPL code. EPL explanation https://resources.whitesourcesoftware.com/blog-whitesource/top-10-eclipse-public-license-questions-answered 
 package.install flatpak
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo # Default repo
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub org.eclipse.Java
-# Install common plugins.
-	# Install maven integration. TODO Remove, if after reinstallation maven integration still works.
-		#flatpak run org.eclipse.Java \
-		#	-application org.eclipse.equinox.p2.director \
-		#	-noSplash \
-		#	-repository http://download.eclipse.org/releases/latest \
-		#	-installIU org.eclipse.m2e.feature.feature.group # Maven integration
-		#flatpak run org.eclipse.Java \
-		#	-application org.eclipse.equinox.p2.director \
-		#	-noSplash \
-		#	-repository http://download.eclipse.org/releases/latest \
-		#	-installIU com.ianbrandt.tools.m2e.mdp.feature.feature.group # Maven connector
-		#flatpak run org.eclipse.Java \
-		#	-application org.eclipse.equinox.p2.director \
-		#	-noSplash \
-		#	-repository http://download.eclipse.org/releases/latest \
-		#	-installIU org.eclipse.egit \
-		#	-installIU org.eclipse.egit.ui # Git integration
-		#flatpak run org.eclipse.Java \
-		#	-application org.eclipse.equinox.p2.director \
-		#	-noSplash \
-		#	-repository http://download.eclipse.org/releases/latest \
-		#	-installIU org.eclipse.epp.mpc.feature.group # Marketplace clinet
-		#flatpak run org.eclipse.Java \
-		#	-application org.eclipse.equinox.p2.director \
-		#	-noSplash \
-		#	-repository http://download.eclipse.org/releases/latest \
-		#	-installIU de.anbos.eclipse.easyshell.feature.feature.group # Open files and projects via i.e terminals in Package Explorer
-		#flatpak run org.eclipse.Java \
-		#	-application org.eclipse.equinox.p2.director \
-		#	-noSplash \
-		#	-repository http://download.eclipse.org/releases/latest \
-		#	-installIU org.eclipse.eclemma.feature.feature.group	# Java execution coverage
-		#flatpak run org.eclipse.Java \
-		#	-application org.eclipse.equinox.p2.director \
-		#	-noSplash \
-		#	-repository http://download.eclipse.org/releases/latest \
-		#	-installIU eu.musoft.eclipse.xpath.evaluation.plugin.feature.group	# XPath Evaluation # TODO Move this into other script?
