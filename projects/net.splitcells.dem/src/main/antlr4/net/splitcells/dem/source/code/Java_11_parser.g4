@@ -118,6 +118,7 @@ statement
     | Whitespace? Keyword_return Whitespace expression Semicolon
     | Whitespace? expression Semicolon
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
+    | Whitespace? name Whitespace Equals Whitespace expression Semicolon
     ;
 statement_catch
     : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? name Whitespace? name Whitespace?
