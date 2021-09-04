@@ -30,6 +30,8 @@ access
     : Dot Whitespace? name Whitespace? call_arguments access?
     | Dot Whitespace? name Whitespace? access?
     ;
+annotation
+	: Whitespace? Keysymbol_at name;
 call_arguments
     : Brace_round_open Brace_round_closed
     | Brace_round_open Whitespace? call_arguments_element Whitespace? call_arguments_next* Whitespace? Brace_round_closed
@@ -50,7 +52,7 @@ class_member
     | class_member_value_declaration
     ;
 class_member_method_definition
-    : Whitespace? javadoc? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
+    : Whitespace? javadoc? Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
         name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 class_member_value_declaration

@@ -21,6 +21,7 @@ lexer grammar Java_11_lexer;
 @header {
     package net.splitcells.dem.source.code.antlr;
 }
+Keysymbol_at: '@';
 Arrow: '->';
 Bigger_than: '>';
 Brace_curly_open: '{';
