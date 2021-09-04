@@ -17,6 +17,7 @@ The priority of a task is just a guideline.
 2. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
 3. Document reasoning for command line based dependency injection,
    in light of the fact, that there are stability issues with that.
+   Also, document how to avoid stability issues.
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
 1. Define break points of this project.
