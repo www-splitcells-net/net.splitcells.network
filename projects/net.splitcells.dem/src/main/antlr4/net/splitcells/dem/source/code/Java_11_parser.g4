@@ -115,7 +115,8 @@ statement
     	Brace_curly_open statement+ Whitespace? Brace_curly_closed
     | Whitespace? javadoc
     | Whitespace? Keyword_throw expression Whitespace? Semicolon
-    | Whitespace? Keyword_return? Whitespace expression Semicolon
+    | Whitespace? Keyword_return Whitespace expression Semicolon
+    | Whitespace? expression Semicolon
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
     ;
 statement_catch
