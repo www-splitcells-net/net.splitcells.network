@@ -46,7 +46,11 @@ public class Pdsui implements Ui {
         } else if (content.children().size() > 0) {
             output.append(prefix + content.name() + ":");
         } else if (content.children().size() == 0) {
-            output.append(prefix + "." + content.name());
+            if (prefix.isEmpty()) {
+                output.append(content.name());
+            } else {
+                output.append(prefix + "." + content.name());
+            }
             return;
         } else {
             throw new UnsupportedOperationException();
