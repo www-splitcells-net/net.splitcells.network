@@ -654,74 +654,42 @@
                              class="net-splitcells-content-main">
                             <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
                             <article>
-                                <div class="splitcells-net-window-menu">
-                                    <div class="Standard_p3 bottomLightShadow splitcells-net-line">
+                                <div class="splitcells-net-window-menu net-splitcells-component-priority-3">
+                                    <div class="splitcells-net-line net-splitcells-component-priority-3">
                                         <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
                                                         select="s:root-relative-url('/index.html')"/>
                                             </xsl:attribute>
                                         </a>
-                                        <div class="HeaderButton_structure HeaderButton_p2">
-                                            <xsl:element name="a">
-                                                <xsl:attribute name="class">
-                                                    <xsl:value-of select="'NonStandard'"/>
-                                                </xsl:attribute>
-                                                <xsl:attribute name="href">
-                                                    <xsl:value-of
-                                                            select="s:root-relative-url('/dedicated-menu-page.html')"/>
-                                                </xsl:attribute>
-                                                <xsl:attribute name="style">
-                                                    <xsl:value-of select="'z-index: 1;'"/>
-                                                </xsl:attribute>
-                                                Menu
-                                            </xsl:element>
-                                        </div>
-                                        <div class="optional HeaderButton_structure premature">
-                                            <xsl:element name="a">
-                                                <xsl:attribute name="class">
-                                                    <xsl:value-of select="'NonStandard'"/>
-                                                </xsl:attribute>
-                                                <xsl:attribute name="href">
-                                                    <xsl:value-of
-                                                            select="s:root-relative-url('/premature-content.html')"/>
-                                                </xsl:attribute>
-                                                <xsl:attribute name="style">
-                                                    <xsl:value-of select="'z-index: 1;'"/>
-                                                </xsl:attribute>
-                                                Tabs
-                                            </xsl:element>
-                                        </div>
-                                        <div class="HeaderButton_structure HeaderButton_p2">
-                                            <xsl:element name="a">
-                                                <xsl:attribute name="class">
-                                                    <xsl:value-of select="'NonStandard'"/>
-                                                </xsl:attribute>
-                                                <xsl:attribute name="href">
-                                                    <xsl:value-of
-                                                            select="s:root-relative-url('/legal/impressum.html')"/>
-                                                </xsl:attribute>
-                                                <xsl:attribute name="style">
-                                                    <xsl:value-of select="'z-index: 1;'"/>
-                                                </xsl:attribute>
-                                                Impressum
-                                            </xsl:element>
-                                        </div>
-                                        <div class="HeaderButton_structure HeaderButton_p2">
-                                            <xsl:element name="a">
-                                                <xsl:attribute name="class">
-                                                    <xsl:value-of select="'NonStandard'"/>
-                                                </xsl:attribute>
-                                                <xsl:attribute name="href">
-                                                    <xsl:value-of
-                                                            select="s:root-relative-url('/legal/privacy-policy.html')"/>
-                                                </xsl:attribute>
-                                                <xsl:attribute name="style">
-                                                    <xsl:value-of select="'z-index: 1;'"/>
-                                                </xsl:attribute>
-                                                Privacy Policy
-                                            </xsl:element>
-                                        </div>
+                                        <a class="net-splitcells-button-inline">
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:root-relative-url('/dedicated-menu-page.html')"/>
+                                            </xsl:attribute>
+                                            Menu
+                                        </a>
+                                        <a class="net-splitcells-button-inline net-splitcells-premature">
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:root-relative-url('/premature-content.html')"/>
+                                            </xsl:attribute>
+                                            Tabs
+                                        </a>
+                                        <a class="net-splitcells-button-inline">
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:root-relative-url('/legal/impressum.html')"/>
+                                            </xsl:attribute>
+                                            Impressum
+                                        </a>
+                                        <a class="net-splitcells-button-inline">
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:root-relative-url('/legal/privacy-policy.html')"/>
+                                            </xsl:attribute>
+                                            Privacy Policy
+                                        </a>
                                         <div class="page_header_backToContent_1 HeaderButton_structure HeaderButton_highlighted"
                                              style="visibility: hidden; display: none;"
                                              onclick="javascript:
