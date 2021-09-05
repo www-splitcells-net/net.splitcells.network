@@ -20,6 +20,9 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-09-05**:
+   1. Disable caching for default weblayout in order to keep CSS styling in
+      webbrowser up to date.
 * **2021-08-29**:
    1. **\#79**: `net.splitcells.website.server` now renders text files with the file
       suffix `.html` instead of `.txt`.
