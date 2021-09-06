@@ -100,8 +100,13 @@ public class SolutionAspect implements Solution {
         final var result = solution.optimize(event, parameters);
         if (StaticFlags.TELLING_STORY) {
             domsole().append(perspective("" + constraint().rating().getContentValue(Cost.class).value())
-                    , () -> this.path().withAppended("optimize", "after", "cost")
+                    , () -> path().withAppended("optimize", "after", "cost")
                     , LogLevel.DEBUG);
+            if (isComplete()) {
+                domsole().append(perspective("" + constraint().rating().getContentValue(Cost.class).value())
+                        , () -> path().withAppended("isComplete", "optimize", "cost")
+                        , LogLevel.DEBUG);
+            }
         }
         return result;
     }
