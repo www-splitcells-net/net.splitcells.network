@@ -27,7 +27,9 @@ public final class StaticFlags {
     public static final boolean PROFILING_RUNTIME = true;
     @Deprecated
     public static final boolean PROFILING_MEMORY_USAGE = true;
-    public static final boolean TELLING_STORY = true;
+    public static final boolean TELLING_STORY
+            = Boolean.parseBoolean
+            (System.getProperty("net.splitcells.dem.environment.config.StaticFlags.TELLING_STORY", "true"));
     @Deprecated
     public static final boolean WARNING = true;
     public static final boolean TRACING = true;

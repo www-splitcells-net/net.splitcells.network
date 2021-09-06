@@ -9,4 +9,5 @@
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 maven.execute \
     net.splitcells.gel.test.functionality.SchoolSchedulingTest \
-    -Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false
+    -Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false \
+    -Dnet.splitcells.dem.environment.config.StaticFlags.TELLING_STORY=true
