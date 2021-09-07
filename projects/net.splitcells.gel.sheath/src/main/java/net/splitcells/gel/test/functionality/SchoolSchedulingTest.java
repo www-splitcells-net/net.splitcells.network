@@ -117,7 +117,7 @@ public class SchoolSchedulingTest {
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(IsEchoToFile.class, false)
                     .withConfigValue(MessageFilter.class, logMessage -> logMessage.path()
-                            .equals(list("demands", "Solution", "optimize", "after", "cost")));
+                            .equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")));
         }));
     }
 

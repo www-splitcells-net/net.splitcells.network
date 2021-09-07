@@ -104,7 +104,7 @@ public class SolutionAspect implements Solution {
                     , LogLevel.DEBUG);
             if (isComplete()) {
                 domsole().append(perspective("" + constraint().rating().getContentValue(Cost.class).value())
-                        , () -> path().withAppended("isComplete", "optimize", "cost")
+                        , () -> path().withAppended("isComplete", "optimize", "after", "cost")
                         , LogLevel.DEBUG);
             }
         }
