@@ -103,7 +103,7 @@ public class SolutionAspect implements Solution {
                     , () -> path().withAppended("optimize", "after", "cost")
                     , LogLevel.DEBUG);
             if (isComplete()) {
-                domsole().append(perspective("" + constraint().rating().getContentValue(Cost.class).value())
+                domsole().append(perspective(this.history().size() + ", " + constraint().rating().getContentValue(Cost.class).value())
                         , () -> path().withAppended("isComplete", "optimize", "after", "cost")
                         , LogLevel.DEBUG);
             }
