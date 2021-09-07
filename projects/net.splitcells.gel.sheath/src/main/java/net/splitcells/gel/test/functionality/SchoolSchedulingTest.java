@@ -101,7 +101,6 @@ public class SchoolSchedulingTest {
             final var railsForSchoolScheduling = input.get(0);
             final var teacherAllocationForCourses = input.get(1);
             final var studentAllocationsForCourses = input.get(2);
-            System.out.println(railsForSchoolScheduling.path());
             railsForSchoolScheduling.optimize(linearInitialization());
             railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
@@ -115,7 +114,7 @@ public class SchoolSchedulingTest {
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
-                    .withConfigValue(IsEchoToFile.class, false)
+                    .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(MessageFilter.class, logMessage -> logMessage.path()
                             .equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")));
         }));

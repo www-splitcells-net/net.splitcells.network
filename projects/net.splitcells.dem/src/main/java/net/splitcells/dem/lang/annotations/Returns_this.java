@@ -10,6 +10,9 @@
  */
 package net.splitcells.dem.lang.annotations;
 
+/**
+ * TODO Remove special casting used in context of this annotation.
+ */
 public @interface Returns_this {
 
 }

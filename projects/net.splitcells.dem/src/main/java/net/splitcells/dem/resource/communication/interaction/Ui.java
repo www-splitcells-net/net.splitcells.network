@@ -3,6 +3,7 @@ package net.splitcells.dem.resource.communication.interaction;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.LogMessage;
@@ -17,7 +18,7 @@ import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.host.interaction.LogMessageI.logMessage;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 
-public interface Ui extends Sui<LogMessage<Perspective>>, Flushable {
+public interface Ui extends Sui<LogMessage<Perspective>>, Flushable, Closeable {
 
     default Ui append(String name) {
         return append(logMessage(perspective(name), NO_CONTEXT, LogLevel.DEBUG));
