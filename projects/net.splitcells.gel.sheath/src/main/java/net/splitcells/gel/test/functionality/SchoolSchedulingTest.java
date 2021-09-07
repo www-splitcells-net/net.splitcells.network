@@ -14,6 +14,7 @@ import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.resource.host.interaction.Domsole;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
@@ -31,8 +32,10 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.interaction.UiRouter.uiRouter;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.MathUtils.distance;
@@ -116,7 +119,8 @@ public class SchoolSchedulingTest {
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(MessageFilter.class, logMessage -> logMessage.path()
-                            .equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")));
+                            .equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
+                    .withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)));
         }));
     }
 

@@ -29,9 +29,8 @@ import static net.splitcells.dem.resource.communication.interaction.UiRouter.uiR
  */
 public class Domsole extends ResourceI<Ui> {
     public Domsole() {
-        /* TODO super(() -> pdsui(environment().config().configValue(Console.class)
-                , environment().config().configValue(MessageFilter.class)));*/
-        super(() -> uiRouter(environment().config().configValue(MessageFilter.class)));
+        super(() -> pdsui(environment().config().configValue(Console.class)
+                , environment().config().configValue(MessageFilter.class)));
     }
 
     public static Ui domsole() {
