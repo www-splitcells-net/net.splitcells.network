@@ -338,6 +338,7 @@ public class ProjectRendererI implements ProjectRenderer {
         extendProjectLayout(layout, projectSrcFolder.resolve("svg"), false);
         extendProjectLayout(layout, projectSrcFolder.resolve("md"), true);
         extendProjectLayout(layout, projectSrcFolder.resolve("txt"), false);
+        extendProjectLayout(layout, projectSrcFolder.resolve("svg"), false);
         return extension.extendProjectLayout(layout, this);
     }
 
