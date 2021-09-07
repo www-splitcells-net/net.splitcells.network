@@ -40,13 +40,14 @@ public class UiRouter implements Ui {
             if (!routing.containsKey(arg.path())) {
                 final var filePath = Lists.listWithValuesOf(arg.path());
                 // TODO HACK File Suffix
-                filePath.add(filePath.remove(filePath.size() - 1) + ".csv");
+                final var file = filePath.remove(filePath.size() - 1) + ".csv";
                 var consolePath
                         = environment().config().configValue(ProcessPath.class);
                 for (String e : filePath) {
                     consolePath = consolePath.resolve(e);
                 }
                 createDirectory(consolePath);
+                consolePath = consolePath.resolve(file);
                 try {
                     routing.put(arg.path()
                             , pdsui(stringSender(new FileOutputStream(consolePath.toFile())), messageFilter));
