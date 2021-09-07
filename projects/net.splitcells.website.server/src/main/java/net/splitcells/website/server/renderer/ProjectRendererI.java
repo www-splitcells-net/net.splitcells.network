@@ -177,6 +177,13 @@ public class ProjectRendererI implements ProjectRenderer {
                             .map(r -> renderingResult(r, "image/svg+xml"));
                 }
                 return artifactResult;
+            } else if (path.endsWith(".csv")) {
+                final var file = resolveSourceFolder(path, "csv");
+                if (java.nio.file.Files.exists(file)) {
+                    return Optional.of(renderingResult(java.nio.file.Files.readAllBytes(file), "text/csv"));
+                } else {
+                    return Optional.empty();
+                }
             } else {
                 return readArtifact(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             }
