@@ -42,7 +42,10 @@ public class UiRouter implements Ui {
                 // TODO HACK File Suffix
                 final var file = filePath.remove(filePath.size() - 1) + ".csv";
                 var consolePath
-                        = environment().config().configValue(ProcessPath.class);
+                        = environment().config().configValue(ProcessPath.class)
+                        .resolve("src")
+                        .resolve("main")
+                        .resolve("csv");
                 for (String e : filePath) {
                     consolePath = consolePath.resolve(e);
                 }
