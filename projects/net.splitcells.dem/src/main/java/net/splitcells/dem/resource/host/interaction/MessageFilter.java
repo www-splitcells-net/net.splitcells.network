@@ -16,6 +16,12 @@ import org.w3c.dom.Node;
 
 import java.util.function.Predicate;
 
+/**
+ * TODO RENAME This is not a filter but a selector.
+ * 
+ * If a {@link LogMessage} is true according to this predicate,
+ * it should be printed according to this predicate.
+ */
 public class MessageFilter extends OptionI<Predicate<LogMessage<Perspective>>> {
     public MessageFilter() {
         super(() -> logMessage -> true);
