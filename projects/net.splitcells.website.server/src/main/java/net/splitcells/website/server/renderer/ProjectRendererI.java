@@ -170,7 +170,8 @@ public class ProjectRendererI implements ProjectRenderer {
             } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
                 return renderFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".svg")) {
-                final var artifactResult = readArtifact(path).map(r -> renderingResult(r, "image/svg+xml"));
+                final var artifactResult = readArtifact(path)
+                        .map(r -> renderingResult(r, "image/svg+xml"));
                 if (artifactResult.isEmpty()) {
                     return readSrc("svg", path)
                             .map(r -> renderingResult(r, "image/svg+xml"));
