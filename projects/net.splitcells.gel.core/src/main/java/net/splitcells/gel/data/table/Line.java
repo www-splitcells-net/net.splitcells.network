@@ -17,6 +17,10 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
+/**
+ * TODO {@link Line}s and {@link Table}s should be typed. Use a meta {@link Attribute}, which
+ * supports multiple types and just use one attribute type per data base.
+ */
 public interface Line extends Domable {
 
     static List<?> concat(Line... lines) {
