@@ -34,6 +34,7 @@
             </url>
         </related_to>
         <d:toDo>
+            <d:toDo>Minimize guideline.</d:toDo>
             <d:toDo>Move framework specific guides to framework documentation or delete it,
                 if this is covered by frameworks API.
             </d:toDo>

@@ -19,6 +19,8 @@ The priority of a task is just a guideline.
    in light of the fact, that there are stability issues with that.
    Also, document how to avoid stability issues.
 4. Move command documentation into the commands itself.
+5. Generate admin script instead of just executing such,
+   in order to make the software more stable.
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
 1. Define break points of this project.

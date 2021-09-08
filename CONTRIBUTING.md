@@ -2,7 +2,7 @@
 
 ## Building the Project
 
-Java 11, Maven, Python 3 and Bash is required in order to build this project.
+Java 11 (AdoptOpenJDK is preferred), Maven, Python 3 and Bash is required in order to build this project.
 Execute `./bin/build`, that's it. ✨
 
 ## Browsing Repository in Browser

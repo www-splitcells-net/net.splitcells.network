@@ -18,6 +18,8 @@ import java.util.function.BiFunction;
  * Every implementation has to have a public default constructor.
  * <p>
  * TODO Check if every option has public constructor without arguments.
+ * <p>
+ * TODO Generate dedicated Option documentation for website.
  */
 public interface Option<T extends Object> {
     T defaultValue();

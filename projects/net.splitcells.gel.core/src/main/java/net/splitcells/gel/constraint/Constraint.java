@@ -58,6 +58,9 @@ import net.splitcells.gel.rating.framework.Rating;
  * IDEA Render constraint tree to HTML.
  * <p>
  * IDEA Combine the constraint system with theorem proofing.
+ * <p>
+ * TODO Implement {@link Constraint} graph as a table for better external compatibility and as a basis for side
+ * effect free constraint tree (this is only required for side effect freedom in case of loops).
  */
 public interface Constraint extends DatabaseSynchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
     Attribute<Line> LINE = attribute(Line.class, "line");
