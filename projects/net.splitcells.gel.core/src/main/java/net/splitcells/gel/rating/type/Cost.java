@@ -26,6 +26,11 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
+/**
+ * The higher the value of a {@link Cost}'s instance, the more valuable the rated thing is.
+ * The {@link Cost}'s value cannot be below zero and a {@link Cost} of zero means, that
+ * now defiances are present.
+ */
 public class Cost implements Rating {
     private static final Cost NO_COST = cost(0.0);
     protected static final Comparator<Double> COST_VALUE_COMPARATOR = new Comparator<Double>() {
