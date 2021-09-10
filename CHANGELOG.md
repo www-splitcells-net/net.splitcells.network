@@ -40,6 +40,9 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-09-11**: Support Fedora Silverblue, by implementing `package.install` via `rpm-ostree`.
+  This package install command has the highest priority, because package managers like dnf should be ignored
+  in this case.
 * **2021-08-29**:
    1. Create method `Paths.removeFileSuffix` in order to unify file suffix
       manipulation implementations.

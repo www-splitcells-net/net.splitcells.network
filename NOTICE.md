@@ -165,6 +165,11 @@ Maven
 
 ### Used Third Party Tools
 
+ostree
+
+* License: LGPL 2.0
+* Source: https://github.com/ostreedev/ostree
+
 pip - The Python Package Installer
 
 * License: The MIT License
