@@ -20,6 +20,13 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-09-11**: `run.and.show.if.failed` now echos content of stderr to
+  the shell during the execution normally.
+  This way one knows all the errors, that appeared after a successful
+  execution of the given command.
+  If for instance one has a data synchronization script for multiple backup
+  servers, one can see which server could not be reached,
+  without marking the whole execution as failure.
 * **2021-09-05**:
    1. Disable caching for default weblayout in order to keep CSS styling in
       webbrowser up to date.
