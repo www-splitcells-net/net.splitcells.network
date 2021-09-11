@@ -52,8 +52,10 @@ class_member
     | class_member_value_declaration
     ;
 class_member_method_definition
-    : Whitespace? javadoc? Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
-        name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
+    : Whitespace? javadoc? Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static?
+    	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
+        name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace?
+        Brace_curly_closed
     ;
 class_member_value_declaration
     : Whitespace? javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
