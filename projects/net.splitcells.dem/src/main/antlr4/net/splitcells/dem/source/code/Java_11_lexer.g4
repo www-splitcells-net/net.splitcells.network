@@ -58,3 +58,5 @@ fragment Line_ending: [\n\r]+;
 Name: [a-zA-Z0-9_] [a-zA-Z0-9_]*;
 Semicolon: ';';
 Whitespace: [ \t\n\r]+;
+Quote: '"';
+fragment String_content: [a-zA-Z0-9_]*;

@@ -60,7 +60,8 @@ class_member_value_declaration
         type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement?
     ;
 expression
-    : Whitespace expression Whitespace Keysymbol_equals Whitespace expression
+    : string Whitespace? access?
+    | Whitespace expression Whitespace Keysymbol_equals Whitespace expression
     | expression Whitespace Keysymbol_equals Whitespace expression
     | Whitespace? Keyword_new Whitespace? type_declaration call_arguments
     | Whitespace? name Whitespace? call_arguments access?
@@ -101,7 +102,7 @@ package_name
     | package_name Dot name
     ;
 reference
-    : expression
+	: expression
     /* This is an Lambda definition. */
     | name Whitespace? Arrow Whitespace? reference
     | name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
@@ -133,6 +134,14 @@ statement_finally
 source_unit
     : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition EOF
     ;
+string
+	: Quote string_content Quote
+	;
+string_content
+	: String_content string_content?
+	| name string_content?
+	| Dot string_content?
+	;
 type_declaration
     : name type_argument?
     ;
