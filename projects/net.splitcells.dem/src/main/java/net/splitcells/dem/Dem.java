@@ -168,7 +168,7 @@ public final class Dem {
         return environment().config().configValue(key);
     }
 
-    public static void check_source_code() {
+    public static void checkSourceCode() {
         SourceCodeCheck.main();
     }
 }
