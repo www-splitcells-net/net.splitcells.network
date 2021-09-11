@@ -51,6 +51,7 @@ Dot: '.';
 Equals: '=';
 
 Less_than: '<';
+Question_mark: '?';
 Comment_multiline: '/*' .*? '*/';
 Line_comment: '//' .*? Line_ending;
 fragment Line_ending: [\n\r]+;
