@@ -27,8 +27,8 @@ options {
     tokenVocab=Java_11_lexer;
 }
 access
-    : Dot Whitespace? name Whitespace? call_arguments access?
-    | Dot Whitespace? name Whitespace? access?
+    : Dot Whitespace? name Whitespace? call_arguments Whitespace? access?
+    | Dot Whitespace? name Whitespace? Whitespace? access?
     ;
 annotation
 	: Whitespace? Keysymbol_at name;
@@ -63,8 +63,8 @@ expression
     : string Whitespace? access?
     | Whitespace expression Whitespace Keysymbol_equals Whitespace expression
     | expression Whitespace Keysymbol_equals Whitespace expression
-    | Whitespace? Keyword_new Whitespace? type_declaration call_arguments
-    | Whitespace? name Whitespace? call_arguments access?
+    | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
+    | Whitespace? name Whitespace? call_arguments Whitespace? access?
     | Whitespace? name Whitespace? access?
     ;
 import_declaration
