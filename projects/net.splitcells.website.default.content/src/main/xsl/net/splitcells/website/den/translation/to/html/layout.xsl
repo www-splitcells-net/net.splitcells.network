@@ -694,16 +694,6 @@
                                             </xsl:attribute>
                                             Privacy Policy
                                         </a>
-                                        <div class="page_header_backToContent_1 HeaderButton_structure HeaderButton_highlighted"
-                                             style="visibility: hidden; display: none;"
-                                             onclick="javascript:
-                                                        unshowByCssClass('page_header_backToContent_2');
-										                unshowByCssClass('page_header_backToContent_1');
-										                showByCssClass('menu');
-										                showByCssClass('contentCell');
-										                showByCssClass('rightDecoration');">
-                                            back to content
-                                        </div>
                                         <div style="flex: auto;"></div>
                                         <div class="HeaderButton_structure HeaderButton_p2 page-column-0-full-screen minimal-not"
                                              onclick="javascript: fullScreenEnable();
