@@ -787,7 +787,7 @@
                                                     windowed
                                                 </div>
                                             </div>
-                                            <div class="net-splitcells-structural-guide" style="height: .25em;"></div>
+                                            <div class="net-splitcells-structural-guide"/>
                                             <div class="Standard_highlighted"
                                                  style="display: flex; flex-direction: row; padding-left: .25em; flex: auto;">
                                                 <div style="font-size: 1.75em; text-align: left; padding: 0.1em;">
