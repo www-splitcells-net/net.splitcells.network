@@ -658,7 +658,7 @@
                              class="net-splitcells-content-main">
                             <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
                             <article>
-                                <div class="splitcells-net-window-menu net-splitcells-component-priority-3">
+                                <div class="splitcells-net-window-menu">
                                     <div class="splitcells-net-line net-splitcells-component-priority-3">
                                         <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
@@ -713,10 +713,10 @@
                                             windowed
                                         </div>
                                     </div>
-                                    <div class="net-splitcells-structural-guide" style="height: .25em;"></div>
-                                    <div class="Standard_highlighted"
-                                         style="display: flex; flex-direction: row; padding-left: .25em; flex: auto;">
-                                        <div style="font-size: 1.75em; text-align: left; padding: 0.1em; font-weight: bold;">
+                                    <div class="net-splitcells-structural-guide"/>
+                                    <div class="splitcells-net-line net-splitcells-component-priority-0">
+                                        <!-- TODO This should be just h1 in future. -->
+                                        <div class="splitcells-net-line-title">
                                             <xsl:if test="./s:title.detailed">
                                                 <xsl:value-of select="./s:title.detailed"/>
                                             </xsl:if>
@@ -724,7 +724,6 @@
                                                 <xsl:value-of select="./s:title"/>
                                             </xsl:if>
                                         </div>
-                                        <div style="flex: auto;"></div>
                                     </div>
                                 </div>
                                 <!-- TODO IDEA xsl:if test="./s:content/s:meta/s:descriptive_imagery">

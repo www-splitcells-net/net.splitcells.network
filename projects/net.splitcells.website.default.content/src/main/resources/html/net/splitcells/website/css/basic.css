@@ -276,9 +276,12 @@ td.TextCell {
 	font-size: 125%;
 	font-weight: bold;
 	}
-h1 {
-    padding-left: .4em;
-    }
+.splitcells-net-line-title {
+	font-size: 1.75em;
+	text-align: left;
+	padding: 0.1em;
+	font-weight: bold;
+	}
 h2 {
     font-size: 125%;
 	font-weight: bold;
