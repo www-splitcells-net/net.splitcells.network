@@ -695,7 +695,7 @@
                                             Privacy Policy
                                         </a>
                                         <div style="flex: auto;"></div>
-                                        <div class="HeaderButton_structure HeaderButton_p2 page-column-0-full-screen minimal-not"
+                                        <div class="net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
                                              onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-0-full-screen');
 										                unshowByCssClass('column_1');
@@ -703,7 +703,7 @@
 													">
                                             wide screen
                                         </div>
-                                        <div class="HeaderButton_structure HeaderButton_p2 page-column-0-windowed optional"
+                                        <div class="net-splitcells-button-inline page-column-0-windowed optional"
                                              style="visibility: hidden; display: none;"
                                              onclick="javascript: fullScreenDisable();
 													hide('page-column-0-windowed');
@@ -770,7 +770,7 @@
                                         <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
                                             <div class="Standard_p3 bottomLightShadow splitcells-net-line">
                                                 <div style="flex: auto;"></div>
-                                                <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional minimal-not"
+                                                <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional net-splitcells-minimal-not"
                                                      onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-1-full-screen');
 										                unshowByCssClass('net-splitcells-content-main');
