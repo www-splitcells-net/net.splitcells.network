@@ -144,6 +144,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 final var renderedFile = renderFile(path);
                 final var renderedTextFile = renderTextFile(path.substring(0, path.lastIndexOf(".html")) + ".txt");
                 final var commonMarkSrc = readSrc("md", path.substring(0, path.lastIndexOf(".html")) + ".md");
+                final var html = readSrc("html", path);
                 int renderingCounter = 0;
                 if (renderedFile.isPresent()) {
                     ++renderingCounter;
@@ -152,6 +153,9 @@ public class ProjectRendererI implements ProjectRenderer {
                     ++renderingCounter;
                 }
                 if (renderedTextFile.isPresent()) {
+                    ++renderingCounter;
+                }
+                if (html.isPresent()) {
                     ++renderingCounter;
                 }
                 assertThat(renderingCounter).isLessThan(2);
@@ -165,6 +169,10 @@ public class ProjectRendererI implements ProjectRenderer {
                 }
                 if (renderedTextFile.isPresent()) {
                     return renderedTextFile.map(r -> renderingResult(r, TEXT_HTML.toString()));
+                }
+                if (html.isPresent()) {
+                    return readSrc("html", path)
+                            .map(r -> renderingResult(r, "text/html"));
                 }
                 return Optional.empty();
             } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
@@ -339,6 +347,7 @@ public class ProjectRendererI implements ProjectRenderer {
         extendProjectLayout(layout, projectSrcFolder.resolve("md"), true);
         extendProjectLayout(layout, projectSrcFolder.resolve("txt"), false);
         extendProjectLayout(layout, projectSrcFolder.resolve("svg"), false);
+        extendProjectLayout(layout, projectSrcFolder.resolve("html"), false);
         return extension.extendProjectLayout(layout, this);
     }
 
