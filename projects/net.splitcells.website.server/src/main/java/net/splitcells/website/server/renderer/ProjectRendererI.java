@@ -338,6 +338,7 @@ public class ProjectRendererI implements ProjectRenderer {
         return resourceRootPath;
     }
 
+    @Deprecated
     @Override
     public Perspective projectLayout() {
         final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);

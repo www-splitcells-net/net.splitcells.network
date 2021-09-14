@@ -146,6 +146,7 @@ public class ProjectsRenderer {
                 .reduce((a, b) -> a.with(b)).get();
     }
 
+    @Deprecated
     public Perspective projectsLayout() {
         final var layout = perspective(VAL, NATURAL);
         renderers.forEach(renderer -> {
