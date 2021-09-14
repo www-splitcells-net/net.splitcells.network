@@ -49,6 +49,7 @@ import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
+import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -83,6 +84,7 @@ public class ProjectRendererI implements ProjectRenderer {
 
     {
         extension.registerExtension(commonMarkReadmeExtension());
+        extension.registerExtension(commonMarkChangelogExtension());
         extension.registerExtension(userCommandExtension());
     }
 

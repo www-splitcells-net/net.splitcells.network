@@ -53,6 +53,7 @@ Releases are done everytime an important ticket is completed.
 * **2021-09-14**
    1. Create concept [presentation](http://splitcells.net/net/splitcells/gel/presentation/covid.html) for Gel based on thought experiment.
    2. Support serving raw HTML files via webserver.
+   3. Render [changelog](http://splitcells.net/net/splitcells/network/CHANGELOG.html) on website.
 * **2021-09-11**: Support Fedora Silverblue, by implementing `package.install` via `rpm-ostree`.
   This package install command has the highest priority, because package managers like dnf should be ignored
   in this case.
