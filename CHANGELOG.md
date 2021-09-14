@@ -51,7 +51,7 @@ Releases are done everytime an important ticket is completed.
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
 * **2021-09-14**
-   1. Create concept presentation for Gel based on thought experiment.
+   1. Create concept [presentation](projects/net.splitcells.gel.doc/src/main/html/net/splitcells/gel/presentation/covid.html) for Gel based on thought experiment.
    2. Support serving raw HTML files via webserver.
 * **2021-09-11**: Support Fedora Silverblue, by implementing `package.install` via `rpm-ostree`.
   This package install command has the highest priority, because package managers like dnf should be ignored
