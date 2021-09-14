@@ -401,7 +401,7 @@ public class ProjectRendererI implements ProjectRenderer {
             }
         }
         {
-            final var resourcePaths = list(resources)
+            final var resourcePaths = list(resources, projectSrcFolder.resolve("html"))
                     .stream()
                     .filter(folder -> Files.isDirectory(folder))
                     .map(folder -> {
