@@ -164,7 +164,6 @@ public class ConstraintGroupBasedRepair implements Optimization {
 
     private final GroupSelector groupSelector;
     private final SupplySelector supplySelector;
-    private final Randomness randomness = randomness();
 
     protected ConstraintGroupBasedRepair
             (GroupSelector groupSelector, SupplySelector repairer) {
