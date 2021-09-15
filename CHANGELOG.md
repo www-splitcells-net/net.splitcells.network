@@ -20,6 +20,16 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-09-15**: **\#8** Migrate Domsole from XML node base to Perspective
+  base.
+  Thereby, a custom rendering format is created,
+  which is more suitable for the console,
+  as it is a lot shorter, simpler and nicer.
+  The XML rendering is currently broken and will be fixed for the website,
+  when it is used again.
+  Logging based on XML nodes is removed,
+  also some deprecated method still exists,
+  but they have no functionality.
 * **2021-09-11**: `run.and.show.if.failed` now echos content of stderr to
   the shell during the execution normally.
   This way one knows all the errors, that appeared after a successful
