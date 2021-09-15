@@ -69,13 +69,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConstraintGroupBasedRepair implements Optimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector
+            (GroupSelector groupSelector
                     , BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer) {
         return new ConstraintGroupBasedRepair(groupSelector, repairer);
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector) {
+            (GroupSelector groupSelector) {
         return new ConstraintGroupBasedRepair(groupSelector, supplySelector());
     }
 
@@ -165,12 +165,12 @@ public class ConstraintGroupBasedRepair implements Optimization {
         };
     }
 
-    private final Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector;
+    private final GroupSelector groupSelector;
     private final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer;
     private final Randomness randomness = randomness();
 
     protected ConstraintGroupBasedRepair
-            (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector
+            (GroupSelector groupSelector
                     , BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer) {
         this.groupSelector = groupSelector;
         this.repairer = repairer;
