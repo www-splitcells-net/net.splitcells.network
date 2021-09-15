@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.gel.solution.optimization.primitive;
+package net.splitcells.gel.solution.optimization.primitive.repair;
 
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
@@ -24,6 +24,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
+import net.splitcells.gel.solution.optimization.primitive.SupplySelection;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
