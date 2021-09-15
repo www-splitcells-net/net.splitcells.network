@@ -28,7 +28,6 @@ import net.splitcells.gel.solution.optimization.primitive.SupplySelection;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -69,8 +68,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConstraintGroupBasedRepair implements Optimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (GroupSelector groupSelector
-                    , BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer) {
+            (GroupSelector groupSelector, SupplySelector repairer) {
         return new ConstraintGroupBasedRepair(groupSelector, repairer);
     }
 
@@ -84,8 +82,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (int minimum_constraint_group_path
-                    , int numberOfGroupsSelectedPerDefiance) {
+            (int minimum_constraint_group_path, int numberOfGroupsSelectedPerDefiance) {
         final var randomness = randomness();
         return new ConstraintGroupBasedRepair
                 (allocationsGroups -> {
@@ -115,7 +112,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 }, supplySelector());
     }
 
-    private static final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> supplySelector() {
+    private static final SupplySelector supplySelector() {
         final var randomness = randomness();
         return indexBasedRepairer((freeSupplyCount, supplyFreedCount) -> {
             if (freeSupplyCount.floatValue() + supplyFreedCount.floatValue() <= 0) {
@@ -129,7 +126,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
         });
     }
 
-    public static final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> indexBasedRepairer
+    public static final SupplySelector indexBasedRepairer
             (BiFunction<Integer, Integer, Optional<SupplySelection>> indexSelector) {
         return (freeDemandGroups, freedSupplies) -> solution -> {
             final Set<OptimizationEvent> repairs = setOfUniques();
@@ -166,14 +163,13 @@ public class ConstraintGroupBasedRepair implements Optimization {
     }
 
     private final GroupSelector groupSelector;
-    private final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer;
+    private final SupplySelector supplySelector;
     private final Randomness randomness = randomness();
 
     protected ConstraintGroupBasedRepair
-            (GroupSelector groupSelector
-                    , BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer) {
+            (GroupSelector groupSelector, SupplySelector repairer) {
         this.groupSelector = groupSelector;
-        this.repairer = repairer;
+        this.supplySelector = repairer;
     }
 
     @Override
@@ -220,7 +216,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
     public List<OptimizationEvent> repair(SolutionView solution
             , Map<GroupId, Set<Line>> freeDemandGroups
             , List<Line> freedSupplies) {
-        return repairer.apply(freeDemandGroups, freedSupplies).optimize(solution);
+        return supplySelector.apply(freeDemandGroups, freedSupplies).optimize(solution);
     }
 
     public Map<GroupId, Set<Line>> demandGrouping(Constraint constraintGrouping, SolutionView solution) {
