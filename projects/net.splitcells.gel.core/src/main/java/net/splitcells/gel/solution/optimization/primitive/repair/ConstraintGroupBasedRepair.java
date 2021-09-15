@@ -16,7 +16,6 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.table.Line;
@@ -24,10 +23,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
-import net.splitcells.gel.solution.optimization.primitive.SupplySelection;
 
-import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -40,8 +36,7 @@ import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
-import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
-import static net.splitcells.gel.solution.optimization.primitive.SupplySelection.supplySelection;
+import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -74,7 +69,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
             (GroupSelector groupSelector) {
-        return new ConstraintGroupBasedRepair(groupSelector, supplySelector());
+        return new ConstraintGroupBasedRepair(groupSelector, SupplySelectors.supplySelector());
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair(int minimumConstraintGroupPath) {
@@ -84,89 +79,15 @@ public class ConstraintGroupBasedRepair implements Optimization {
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
             (int minimum_constraint_group_path, int numberOfGroupsSelectedPerDefiance) {
         final var randomness = randomness();
-        return new ConstraintGroupBasedRepair
-                (allocationsGroups -> {
-                    final var candidates = allocationsGroups
-                            .stream()
-                            .filter(allocationGroupsPath ->
-                                    {
-                                        if (allocationGroupsPath.size() < minimum_constraint_group_path) {
-                                            return false;
-                                        }
-                                        return incomingGroupsOfConstraintPath(allocationGroupsPath.shallowCopy())
-                                                .stream()
-                                                .map(group -> !allocationGroupsPath
-                                                        .lastValue()
-                                                        .get()
-                                                        .defying(group)
-                                                        .isEmpty())
-                                                .reduce((a, b) -> a || b)
-                                                .orElse(false);
-                                    }
-                            )
-                            .collect(toList());
-                    if (candidates.isEmpty()) {
-                        return list();
-                    }
-                    return randomness.chooseAtMostMultipleOf(numberOfGroupsSelectedPerDefiance, candidates);
-                }, supplySelector());
-    }
-
-    private static final SupplySelector supplySelector() {
-        final var randomness = randomness();
-        return indexBasedRepairer((freeSupplyCount, supplyFreedCount) -> {
-            if (freeSupplyCount.floatValue() + supplyFreedCount.floatValue() <= 0) {
-                return Optional.empty();
-            }
-            if (randomness.truthValue(freeSupplyCount.floatValue() / (freeSupplyCount.floatValue() + supplyFreedCount.floatValue()))) {
-                return Optional.of(supplySelection(randomness.integer(0, freeSupplyCount - 1), true));
-            } else {
-                return Optional.of(supplySelection(randomness.integer(0, supplyFreedCount - 1), false));
-            }
-        });
-    }
-
-    public static final SupplySelector indexBasedRepairer
-            (BiFunction<Integer, Integer, Optional<SupplySelection>> indexSelector) {
-        return (freeDemandGroups, freedSupplies) -> solution -> {
-            final Set<OptimizationEvent> repairs = setOfUniques();
-            final var suppliesFree = solution.suppliesFree().getLines();
-            final var demandsUsed = Sets.<Line>setOfUniques();
-            freeDemandGroups.entrySet().forEach(group -> {
-                group.getValue().forEach(demand -> {
-                    if (demandsUsed.contains(demand)) {
-                        return;
-                    }
-                    final var supplySelection = indexSelector
-                            .apply(suppliesFree.size()
-                                    , freedSupplies.size());
-                    if (!supplySelection.isEmpty()) {
-                        demandsUsed.add(demand);
-                        final Line selectedSupply;
-                        if (supplySelection.get().isCurrentlyFree()) {
-                            selectedSupply = suppliesFree.remove(supplySelection.get().selectedIndex());
-                        } else {
-                            selectedSupply = freedSupplies.remove(supplySelection.get().selectedIndex());
-                        }
-                        repairs.add
-                                (optimizationEvent
-                                        (ADDITION
-                                                , demand.toLinePointer()
-                                                , selectedSupply.toLinePointer()));
-                    } else {
-                        throw new RuntimeException();
-                    }
-                });
-            });
-            return listWithValuesOf(repairs);
-        };
+        return new ConstraintGroupBasedRepair(groupSelector(randomness, minimum_constraint_group_path
+                , numberOfGroupsSelectedPerDefiance)
+                , SupplySelectors.supplySelector());
     }
 
     private final GroupSelector groupSelector;
     private final SupplySelector supplySelector;
 
-    protected ConstraintGroupBasedRepair
-            (GroupSelector groupSelector, SupplySelector repairer) {
+    protected ConstraintGroupBasedRepair(GroupSelector groupSelector, SupplySelector repairer) {
         this.groupSelector = groupSelector;
         this.supplySelector = repairer;
     }
