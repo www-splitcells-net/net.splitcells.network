@@ -73,6 +73,7 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-09-17**: **\#10** Introduce the first pure project: [net.splitcells.dem.merger](projects/pure/net.splitcells.dem.merger)
 * **2021-09-14**
    1. Create concept [presentation](http://splitcells.net/net/splitcells/gel/presentation/covid.html) for Gel based on thought experiment.
    2. Support serving raw HTML files via webserver.
