@@ -134,7 +134,7 @@ statement_finally
     : Whitespace? Keyword_finally Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
     ;
 source_unit
-    : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition EOF
+    : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition Whitespace? EOF
     ;
 string
 	: Quote string_content Quote
