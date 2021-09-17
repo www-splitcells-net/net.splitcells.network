@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.dem.resource.host;
+package net.splitcells.dem.resource;
 
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;

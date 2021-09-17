@@ -11,13 +11,10 @@
 package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.host.Files;
+import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.website.Validator;
 import net.splitcells.website.server.renderer.extension.ExtensionMerger;
@@ -30,21 +27,17 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
 import static java.util.stream.Stream.concat;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.host.Files.isDirectory;
-import static net.splitcells.dem.resource.host.Files.is_file;
+import static net.splitcells.dem.resource.Files.isDirectory;
+import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;

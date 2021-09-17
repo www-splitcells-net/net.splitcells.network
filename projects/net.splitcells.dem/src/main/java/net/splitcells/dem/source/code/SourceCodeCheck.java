@@ -10,17 +10,13 @@
  */
 package net.splitcells.dem.source.code;
 
-import net.splitcells.dem.resource.host.Files;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
-import javax.xml.transform.Source;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static net.splitcells.dem.resource.host.Files.walk_recursively;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class SourceCodeCheck {

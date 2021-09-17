@@ -10,10 +10,8 @@
  */
 package net.splitcells.website.server.renderer.extension;
 
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.host.Files;
 import net.splitcells.website.server.renderer.LayoutRenderer;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
@@ -26,7 +24,7 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.userHome;
-import static net.splitcells.dem.resource.host.Files.isDirectory;
+import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**

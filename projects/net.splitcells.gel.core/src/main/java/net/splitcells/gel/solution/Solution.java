@@ -12,8 +12,8 @@ package net.splitcells.gel.solution;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.host.Files.createDirectory;
-import static net.splitcells.dem.resource.host.Files.writeToFile;
+import static net.splitcells.dem.resource.Files.createDirectory;
+import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;

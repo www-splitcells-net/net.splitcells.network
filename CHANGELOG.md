@@ -20,9 +20,13 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
-* **2021-09-17**: **\#10** Delete the interface
-  `net.splitcells.dem.resource.communication.Subscribable`,
-  because it was not used.
+* **2021-09-17**: **\#10**
+  1. Delete the interface
+     `net.splitcells.dem.resource.communication.Subscribable`,
+     because it was not used.
+  2. Make package structure more consistent.
+     1. Move Dem's Files interface from communication package to more general
+        resource package.
 * **2021-09-15**: **\#8** Migrate Domsole from XML node base to Perspective
   base.
   Thereby, a custom rendering format is created,

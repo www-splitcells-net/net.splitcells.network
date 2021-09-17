@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.resource.communication.Sender.stringSenderWithoutClosing;
-import static net.splitcells.dem.resource.host.Files.createDirectory;
+import static net.splitcells.dem.resource.Files.createDirectory;
 
 /**
  * TODO Use alternative async backend.

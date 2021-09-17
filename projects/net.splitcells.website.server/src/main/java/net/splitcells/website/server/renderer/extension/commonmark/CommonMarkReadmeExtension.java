@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.resource.Paths.readString;
-import static net.splitcells.dem.resource.host.Files.is_file;
+import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
