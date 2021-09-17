@@ -24,7 +24,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.dem.resource.host.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LookupTableRef extends LookupTable {

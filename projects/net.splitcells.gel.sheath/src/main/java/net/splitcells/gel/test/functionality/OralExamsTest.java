@@ -13,7 +13,7 @@ package net.splitcells.gel.test.functionality;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;

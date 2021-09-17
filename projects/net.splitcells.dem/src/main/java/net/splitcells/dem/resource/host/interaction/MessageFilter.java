@@ -12,7 +12,7 @@ package net.splitcells.dem.resource.host.interaction;
 
 import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.dem.lang.perspective.Perspective;
-import org.w3c.dom.Node;
+import net.splitcells.dem.resource.communication.interaction.LogMessage;
 
 import java.util.function.Predicate;
 

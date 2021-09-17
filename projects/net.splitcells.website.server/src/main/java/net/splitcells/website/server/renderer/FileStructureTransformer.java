@@ -10,19 +10,13 @@
  */
 package net.splitcells.website.server.renderer;
 
-import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.lang.perspective.PerspectiveI;
 import net.splitcells.dem.resource.Paths;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
-import net.splitcells.dem.utils.CommonFunctions;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.Validator;
-import net.splitcells.website.ValidatorViaSchema;
 import net.splitcells.website.server.translation.to.html.PathBasedUriResolver;
 import net.splitcells.website.server.translation.to.html.XslTransformer;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 

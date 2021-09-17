@@ -11,7 +11,7 @@
 package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;

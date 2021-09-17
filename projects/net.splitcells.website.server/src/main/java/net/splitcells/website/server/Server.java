@@ -11,8 +11,6 @@
 package net.splitcells.website.server;
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Handler;
-import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.ClientAuth;
@@ -20,14 +18,13 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.renderer.RenderingResult;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 

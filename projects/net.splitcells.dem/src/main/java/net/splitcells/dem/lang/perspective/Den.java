@@ -10,11 +10,6 @@
  */
 package net.splitcells.dem.lang.perspective;
 
-import net.splitcells.dem.Dem;
-import net.splitcells.dem.resource.host.interaction.Domsole;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
-import net.splitcells.dem.resource.host.interaction.MessageFilter;
-
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 

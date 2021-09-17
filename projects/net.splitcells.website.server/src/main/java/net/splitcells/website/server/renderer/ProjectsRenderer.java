@@ -14,7 +14,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.Server;
 
 import java.nio.file.Path;

@@ -10,14 +10,11 @@
  */
 package net.splitcells.gel.constraint;
 
-import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.gel.constraint.type.Then;
 import org.junit.jupiter.api.Test;
 
 import static java.util.Arrays.asList;
-import static java.util.Optional.empty;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;

@@ -27,6 +27,10 @@ Releases are done everytime an important ticket is completed.
   2. Make package structure more consistent.
      1. Move Dem's Files interface from communication package to more general
         resource package.
+     2. Move Dem's LogMessage, LogMessageI and LogLevel from the package
+        `net.splitcells.dem.resource.communication.interaction` to
+        `net.splitcells.dem.resource.host.interaction`,
+        because sees interfaces and classes are not host specific.
 * **2021-09-15**: **\#8** Migrate Domsole from XML node base to Perspective
   base.
   Thereby, a custom rendering format is created,

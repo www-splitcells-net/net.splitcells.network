@@ -7,7 +7,6 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.dem.resource.host.interaction.LogMessage;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

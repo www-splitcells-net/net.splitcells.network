@@ -3,9 +3,7 @@ package net.splitcells.dem.resource.communication.interaction;
 import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.communication.Sender;
-import net.splitcells.dem.resource.host.interaction.LogMessage;
 
-import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;

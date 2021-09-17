@@ -8,9 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.dem.resource.host.interaction;
+package net.splitcells.dem.resource.communication.interaction;
 
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 
 /**
  * TODO Support log messages without or default priority.

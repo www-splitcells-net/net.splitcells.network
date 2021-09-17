@@ -17,20 +17,15 @@ import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.dem.resource.communication.Sender;
-import net.splitcells.dem.resource.host.interaction.Domsole;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
-import net.splitcells.dem.resource.host.interaction.LogMessage;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -42,7 +37,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
-import static net.splitcells.dem.resource.host.interaction.LogMessageI.logMessage;
+import static net.splitcells.dem.resource.communication.interaction.LogMessageI.logMessage;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
