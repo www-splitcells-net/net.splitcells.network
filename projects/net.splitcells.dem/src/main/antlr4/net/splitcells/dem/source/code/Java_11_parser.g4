@@ -160,7 +160,7 @@ type_argument_content_next
     ;
 type_argument_element
 	: type_name
-	| type_name Whitespace Keyword_extends Whitespace type_argument_element
+	| type_name Whitespace Keyword_extends Whitespace type_argument_element type_argument?
 	;
 type_name
 	: name
