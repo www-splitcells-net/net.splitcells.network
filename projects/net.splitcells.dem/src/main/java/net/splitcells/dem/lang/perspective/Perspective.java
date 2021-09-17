@@ -13,15 +13,13 @@ package net.splitcells.dem.lang.perspective;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.annotations.Returns_this;
-import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import org.w3c.dom.Node;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -158,7 +156,7 @@ public interface Perspective extends PerspectiveView {
         return dom;
     }
 
-    @Returns_this
+    @ReturnsThis
     default Perspective withPath(Perspective path, String propertyName, NameSpace nameSpace) {
         return withPath(this, path, propertyName, nameSpace);
     }

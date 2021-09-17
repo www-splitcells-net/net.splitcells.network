@@ -13,7 +13,7 @@ package net.splitcells.gel.solution;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -77,7 +77,7 @@ public class SolutionAspect implements Solution {
         return rating;
     }
 
-    @Returns_this
+    @ReturnsThis
     public Solution optimize(OptimizationEvent event, OptimizationParameters parameters) {
         if (event.demand().interpret().isEmpty()) {
             throw new IllegalArgumentException("Unknown demand: " + event.demand().index() + ", " + event.demand().context().path());

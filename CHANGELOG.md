@@ -31,6 +31,8 @@ Releases are done everytime an important ticket is completed.
         `net.splitcells.dem.resource.communication.interaction` to
         `net.splitcells.dem.resource.host.interaction`,
         because sees interfaces and classes are not host specific.
+  3. Rename `net.splitcells.dem.lang.annotations.Return_this` to `ReturnThis`
+     in order to unify naming. 
 * **2021-09-15**: **\#8** Migrate Domsole from XML node base to Perspective
   base.
   Thereby, a custom rendering format is created,
