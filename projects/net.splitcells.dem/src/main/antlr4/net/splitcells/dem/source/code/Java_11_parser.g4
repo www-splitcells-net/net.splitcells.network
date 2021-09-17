@@ -79,6 +79,11 @@ import_static_declaration
 import_type_declaration
     : Keyword_import Whitespace type_path Semicolon Whitespace*
     ;
+interface_definition
+    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_interface?
+    	Whitespace? name
+        Whitespace? Brace_curly_open Whitespace? Whitespace? Brace_curly_closed
+    ;
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/ Whitespace?
     ;
@@ -134,7 +139,10 @@ statement_finally
     : Whitespace? Keyword_finally Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
     ;
 source_unit
-    : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition Whitespace? EOF
+    : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition Whitespace?
+    	EOF
+    | license_declaration Whitespace? package_declaration import_declaration* Whitespace? interface_definition
+    	Whitespace? EOF
     ;
 string
 	: Quote string_content Quote
