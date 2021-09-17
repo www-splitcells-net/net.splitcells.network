@@ -152,12 +152,16 @@ type_argument
     ;
 type_argument_content
     : type_argument Whitespace? type_argument_content_next?
-    | type_name Whitespace? type_argument_content_next?
+    | type_element Whitespace? type_argument_content_next?
     ;
 type_argument_content_next
     : Comma Whitespace? type_argument Whitespace? type_argument_content_next?
     | Comma Whitespace? name Whitespace? type_argument_content_next?
     ;
+type_element
+	: type_name
+	| type_name Whitespace Keyword_extends Whitespace type_element
+	;
 type_name
 	: name
 	| Question_mark

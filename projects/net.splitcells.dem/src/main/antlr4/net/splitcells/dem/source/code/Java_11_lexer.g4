@@ -28,6 +28,7 @@ Keysymbol_equals: '==';
 Keyword_class: 'class';
 Keyword_catch: 'catch';
 Keyword_else: 'else';
+Keyword_extends: 'extends';
 Keyword_finally: 'finally';
 Keyword_final: 'final';
 Keyword_if: 'if';
