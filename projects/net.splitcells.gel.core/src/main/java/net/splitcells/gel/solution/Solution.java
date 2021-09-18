@@ -12,14 +12,14 @@ package net.splitcells.gel.solution;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.host.Files.createDirectory;
-import static net.splitcells.dem.resource.host.Files.writeToFile;
+import static net.splitcells.dem.resource.Files.createDirectory;
+import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.Problem;
@@ -40,17 +40,17 @@ import java.util.function.Function;
  */
 public interface Solution extends Problem, SolutionView {
 
-    @Returns_this
+    @ReturnsThis
     default Solution optimize(Optimization optimization) {
         return optimizeWithFunction(s -> optimization.optimize(s));
     }
 
-    @Returns_this
+    @ReturnsThis
     default Solution optimizeWithFunction(Optimization optimizationFunction) {
         return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal());
     }
 
-    @Returns_this
+    @ReturnsThis
     default Solution optimizeWithFunction(Optimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
         int i = 0;
         while (continuationCondition.test(this, i)) {
@@ -64,12 +64,12 @@ public interface Solution extends Problem, SolutionView {
         return this;
     }
 
-    @Returns_this
+    @ReturnsThis
     default Solution optimizeOnce(Optimization optimization) {
         return optimizeWithFunctionOnce(s -> optimization.optimize(s));
     }
 
-    @Returns_this
+    @ReturnsThis
     default Solution optimizeWithFunctionOnce(Function<Solution, List<OptimizationEvent>> optimization) {
         final var recommendations = optimization.apply(this);
         if (recommendations.isEmpty()) {
@@ -79,24 +79,24 @@ public interface Solution extends Problem, SolutionView {
         return this;
     }
 
-    @Returns_this
+    @ReturnsThis
     default Solution optimize(List<OptimizationEvent> events) {
         events.forEach(this::optimize);
         return this;
     }
 
-    @Returns_this
+    @ReturnsThis
     default Solution optimize(List<OptimizationEvent> events, OptimizationParameters parameters) {
         events.forEach(e -> optimize(e, parameters));
         return this;
     }
 
-    @Returns_this
+    @ReturnsThis
     default Solution optimize(OptimizationEvent event) {
         return optimize(event, optimizationParameters());
     }
 
-    @Returns_this
+    @ReturnsThis
     default Solution optimize(OptimizationEvent event, OptimizationParameters parameters) {
         if (event.stepType().equals(ADDITION)) {
             this.allocate(

@@ -17,7 +17,6 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -41,7 +40,7 @@ public class LayoutRenderer {
                 .resolve("Documents/projects/net.splitcells.martins.avots.support.system/private")
                 .resolve("net.splitcells.martins.avots.support.system/src/main/")
                 .resolve("xml/net/splitcells/martins/avots/support/system/layout.xml"));
-        net.splitcells.dem.resource.host.Files.writeToFile(
+        net.splitcells.dem.resource.Files.writeToFile(
                 Paths.get(System.getProperty("user.home"))
                         .resolve("Documents/projects/net.splitcells.martins.avots.support.system/private")
                         .resolve("net.splitcells.martins.avots.support.system/src/main/")

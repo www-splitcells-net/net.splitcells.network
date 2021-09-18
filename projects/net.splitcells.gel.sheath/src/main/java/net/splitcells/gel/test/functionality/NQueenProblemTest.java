@@ -11,7 +11,7 @@
 package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
@@ -31,8 +31,8 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.resource.host.Files.createDirectory;
-import static net.splitcells.dem.resource.host.Files.writeToFile;
+import static net.splitcells.dem.resource.Files.createDirectory;
+import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;

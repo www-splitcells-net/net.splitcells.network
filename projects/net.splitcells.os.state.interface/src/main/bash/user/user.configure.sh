@@ -11,5 +11,4 @@
 user.bin.configure
 command.managed.execute conjunction user.configure
 system.managed.automatically.by.user.assert && system.update
-system.managed.automatically.by.user.assert && system.configure.auto
  

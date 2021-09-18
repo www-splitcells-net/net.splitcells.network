@@ -10,30 +10,22 @@
  */
 package net.splitcells.dem;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
 import net.splitcells.dem.environment.config.EndTime;
 import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.host.interaction.Domsole;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.dem.source.code.SourceCodeCheck;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.ProcessResult.processResult;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
-import static net.splitcells.dem.resource.host.interaction.LogLevel.UNKNOWN_ERROR;
+import static net.splitcells.dem.resource.communication.interaction.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 
 /**
@@ -168,7 +160,7 @@ public final class Dem {
         return environment().config().configValue(key);
     }
 
-    public static void check_source_code() {
+    public static void checkSourceCode() {
         SourceCodeCheck.main();
     }
 }

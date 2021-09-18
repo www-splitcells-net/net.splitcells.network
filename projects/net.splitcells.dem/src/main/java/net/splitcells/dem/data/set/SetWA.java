@@ -10,7 +10,7 @@
  */
 package net.splitcells.dem.data.set;
 
-import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.Collection;
 
@@ -19,11 +19,11 @@ public interface SetWA<T> {
 	/**
 	 * TODO Create method which adds one if not present and otherwise throws exception.
 	 */
-	@Returns_this
+	@ReturnsThis
 	<R extends SetWA<T>> R add(T value);
 
 	@SuppressWarnings("unchecked")
-	@Returns_this
+	@ReturnsThis
 	public default <R extends SetWA<T>> R addAll(T... values) {
 		for (int i = 0; i < values.length; ++i) {
 			add(values[i]);
@@ -32,7 +32,7 @@ public interface SetWA<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Returns_this
+	@ReturnsThis
 	default <R extends SetWA<T>> R addAll(Collection<T> values) {
 		values.forEach((value) -> add(value));
 		return (R) this;
@@ -41,7 +41,7 @@ public interface SetWA<T> {
 	static <B> SetWA<B> extend(final B prefix, final SetWA<B> sender) {
 		return new SetWA<B>() {
 			@SuppressWarnings("unchecked")
-			@Returns_this
+			@ReturnsThis
 			public <R extends SetWA<B>> R add(B arg) {
 				sender.addAll(prefix, arg);
 				return (R) this;
@@ -55,7 +55,7 @@ public interface SetWA<T> {
 			private boolean wasFirst_added = false;
 
 			@SuppressWarnings("unchecked")
-			@Returns_this
+			@ReturnsThis
 			public <R extends SetWA<B>> R add(B arg) {
 				if (wasFirst_added) {
 					sender.addAll(default_prefix, arg);

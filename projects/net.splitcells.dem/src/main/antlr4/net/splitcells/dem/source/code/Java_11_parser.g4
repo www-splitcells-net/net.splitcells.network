@@ -27,8 +27,8 @@ options {
     tokenVocab=Java_11_lexer;
 }
 access
-    : Dot Whitespace? name Whitespace? call_arguments access?
-    | Dot Whitespace? name Whitespace? access?
+    : Dot Whitespace? name Whitespace? call_arguments Whitespace? access?
+    | Dot Whitespace? name Whitespace? Whitespace? access?
     ;
 annotation
 	: Whitespace? Keysymbol_at name;
@@ -52,18 +52,21 @@ class_member
     | class_member_value_declaration
     ;
 class_member_method_definition
-    : Whitespace? javadoc? Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static? Whitespace? type_declaration Whitespace?
-        name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
+    : Whitespace? javadoc? Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static?
+    	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
+        name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace?
+        Brace_curly_closed
     ;
 class_member_value_declaration
     : Whitespace? javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
         type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement?
     ;
 expression
-    : Whitespace expression Whitespace Keysymbol_equals Whitespace expression
+    : string Whitespace? access?
+    | Whitespace expression Whitespace Keysymbol_equals Whitespace expression
     | expression Whitespace Keysymbol_equals Whitespace expression
-    | Whitespace? Keyword_new Whitespace? type_declaration call_arguments
-    | Whitespace? name Whitespace? call_arguments access?
+    | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
+    | Whitespace? name Whitespace? call_arguments Whitespace? access?
     | Whitespace? name Whitespace? access?
     ;
 import_declaration
@@ -75,6 +78,11 @@ import_static_declaration
     ;
 import_type_declaration
     : Keyword_import Whitespace type_path Semicolon Whitespace*
+    ;
+interface_definition
+    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_interface?
+    	Whitespace? name
+        Whitespace? Brace_curly_open Whitespace? Whitespace? Brace_curly_closed
     ;
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/ Whitespace?
@@ -101,7 +109,7 @@ package_name
     | package_name Dot name
     ;
 reference
-    : expression
+	: expression
     /* This is an Lambda definition. */
     | name Whitespace? Arrow Whitespace? reference
     | name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
@@ -131,8 +139,19 @@ statement_finally
     : Whitespace? Keyword_finally Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
     ;
 source_unit
-    : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition EOF
+    : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition Whitespace?
+    	EOF
+    | license_declaration Whitespace? package_declaration import_declaration* Whitespace? interface_definition
+    	Whitespace? EOF
     ;
+string
+	: Quote string_content Quote
+	;
+string_content
+	: String_content string_content?
+	| name string_content?
+	| Dot string_content?
+	;
 type_declaration
     : name type_argument?
     ;
@@ -141,12 +160,20 @@ type_argument
     ;
 type_argument_content
     : type_argument Whitespace? type_argument_content_next?
-    | name Whitespace? type_argument_content_next?
+    | type_argument_element Whitespace? type_argument_content_next?
     ;
 type_argument_content_next
     : Comma Whitespace? type_argument Whitespace? type_argument_content_next?
     | Comma Whitespace? name Whitespace? type_argument_content_next?
     ;
+type_argument_element
+	: type_name
+	| type_name Whitespace Keyword_extends Whitespace type_argument_element type_argument?
+	;
+type_name
+	: name
+	| Question_mark
+	;
 type_path
     : name
     | type_path Dot name

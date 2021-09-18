@@ -10,14 +10,7 @@
  */
 package net.splitcells.dem;
 
-import net.splitcells.dem.lang.namespace.NameSpace;
-import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.PerspectiveI;
-import net.splitcells.dem.resource.host.interaction.Domsole;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
-
-import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;

@@ -10,7 +10,7 @@
  */
 package net.splitcells.gel.solution;
 
-import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 public class OptimizationParameters {
     public static OptimizationParameters optimizationParameters() {
@@ -20,7 +20,7 @@ public class OptimizationParameters {
     private OptimizationParameters() {
         
     }
-    @Returns_this
+    @ReturnsThis
     public OptimizationParameters arDubultuNoņemšanaAtļauts(boolean arg) {
         dublicateRemovalAllowed = arg;
         return this;

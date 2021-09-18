@@ -1,16 +1,23 @@
 # Objectives of this Project
 ## Primary Objectives
 This project provides a framework in order to support the following main goals:
-1. Support operation systems that are compatible with the Thompson Shell (sh).
+1. Provide a simple language in order to execute commands,
+   where the concrete implementation for a given command may be provided by
+   other projects.
+2. Support operation systems that are compatible with the Thompson Shell (sh)
+   and Python 3.
    The current focus is on Linux distributions, but other operation systems are welcome.
-1. Let system user easily find and execute OS related functions.
+4. Let system user easily find and execute OS related functions.
    For simplicity and automation purposes this project focuses on execution via console.
-1. Help the user to deal with technical details.
-1. Minimize the number of required dependencies.
+5. Help the user to deal with technical details.
+6. Minimize the number of required dependencies.
    The number of optional dependencies is irrelevant and should be provided by other projects.
-1. Provide a dependency management mechanism in order to support the tasks on different systems.
+7. Provide a dependency management mechanism in order to support the tasks on different systems.
    This is done via dependency injection on the command line level.
-1. Provide a workflow and dictionary in order make its usage and development simple.
+8. Provide a workflow and dictionary in order make its usage and development simple.
+9. Trust the system by default.
+   The OS knows how the system should be managed best by default.
+   Only override this, if the user explicitly wants this.
 ## Secondary Objectives
 This project provides a framework in order to also support the following secondary goals:
 1. Provide reasonable defaults for complex tasks as most users just want to use the system.
@@ -27,6 +34,10 @@ This project provides a framework in order to also support the following seconda
 ## Conclusions Based on Objectives
 1. We try to be only dependent on the thompson shell (sh) and Python 3.
    Currently some scripts also use bash.
-1. We support multiple CI systems (Github and Gitlab) in order to test different environments.
+2. We support multiple CI systems (Github and Gitlab) in order to test different environments.
+3. We do not provide a default command such as `system.configure.auto` in order
+   to fix all perceived of an operation system.
+   Anyone can provide such a command, but the management of such a command is
+   currently out of scope.
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.

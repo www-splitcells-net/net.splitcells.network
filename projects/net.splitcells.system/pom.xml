@@ -7,6 +7,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>../net.splitcells.pom.java.defaults</module>
+        <module>../pure/net.splitcells.dem.merger</module>
         <module>../net.splitcells.dem</module>
         <module>../net.splitcells.gel</module>
         <module>../net.splitcells.os.state.interface</module>

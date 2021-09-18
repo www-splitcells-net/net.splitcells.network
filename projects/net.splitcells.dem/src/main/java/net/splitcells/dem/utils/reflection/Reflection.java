@@ -10,6 +10,8 @@
  */
 package net.splitcells.dem.utils.reflection;
 
+import net.splitcells.dem.lang.annotations.ReturnsThis;
+
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
@@ -21,7 +23,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  * There some execptions:
  * <ol>
  *     <li>{@link net.splitcells.dem.environment.config.framework.Configuration}</li>
- *     <li>Return value casts of methods, that are annoted with {@link net.splitcells.dem.lang.annotations.Returns_this}</li>
+ *     <li>Return value casts of methods, that are annoted with {@link ReturnsThis}</li>
  * </ol>
  */
 public final class Reflection {

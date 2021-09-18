@@ -10,13 +10,10 @@
  */
 package net.splitcells.dem.testing;
 
-import net.splitcells.dem.resource.host.interaction.LogLevel;
-import org.junit.jupiter.api.Disabled;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
 
 /**

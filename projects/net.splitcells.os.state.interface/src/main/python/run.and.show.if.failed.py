@@ -20,7 +20,7 @@ output=list()
 
 # TODO Print stderr via "echo.error".
 
-def readAndOutput(stream):
+def readAndOutput(stream, outputAsError):
 	lastEchoTime = -1
 	with stream:
 		for line in iter(stream.readline, b''):
@@ -29,6 +29,8 @@ def readAndOutput(stream):
 				lineStr = line.decode(sys.stdout.encoding)
 				output.append(lineStr)
 				currentEchoTime = time()
+				if outputAsError:
+					print(lineStr, file=sys.stderr)
 				if currentEchoTime - lastEchoTime > 3:
 					lastEchoTime = currentEchoTime
 					subprocess.call(['echo.line.current.set', lineStr])
@@ -46,8 +48,8 @@ if __name__ == '__main__':
 		stderr = subprocess.PIPE)
 	#
 	
-	outputThread = Thread(target=readAndOutput, args=[process.stdout])
-	errorThread = Thread(target=readAndOutput, args=[process.stderr])
+	outputThread = Thread(target=readAndOutput, args=[process.stdout, False])
+	errorThread = Thread(target=readAndOutput, args=[process.stderr, True])
 	outputThread.start()
 	errorThread.start()
 	#

@@ -10,7 +10,7 @@
  */
 package net.splitcells.gel.rating.framework;
 
-import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.order.PartiallyOrdered;
 
@@ -19,7 +19,7 @@ import net.splitcells.dem.data.order.PartiallyOrdered;
  */
 public interface Rating extends PartiallyOrdered<Rating>, Domable {
 
-    @Returns_this
+    @ReturnsThis
     <R extends Rating> R combine(Rating... additionalNovērtējums);
 
     default MetaRating asMetaRating() {

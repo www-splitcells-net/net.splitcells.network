@@ -10,22 +10,11 @@
  */
 package net.splitcells.website.server.renderer;
 
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Vertx;
-import io.vertx.core.buffer.Buffer;
-import io.vertx.core.http.ClientAuth;
-import io.vertx.core.http.HttpServerOptions;
-import io.vertx.core.http.HttpServerResponse;
-import io.vertx.core.net.PfxOptions;
-import io.vertx.ext.web.Router;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.host.Files;
-import net.splitcells.dem.resource.host.interaction.Domsole;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.Server;
 
 import java.nio.file.Path;
@@ -35,13 +24,12 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.generateFolderPath;
 import static net.splitcells.dem.resource.Paths.path;
-import static net.splitcells.dem.resource.host.Files.createDirectory;
-import static net.splitcells.dem.resource.host.Files.writeToFile;
+import static net.splitcells.dem.resource.Files.createDirectory;
+import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -146,6 +134,7 @@ public class ProjectsRenderer {
                 .reduce((a, b) -> a.with(b)).get();
     }
 
+    @Deprecated
     public Perspective projectsLayout() {
         final var layout = perspective(VAL, NATURAL);
         renderers.forEach(renderer -> {

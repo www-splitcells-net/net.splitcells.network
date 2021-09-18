@@ -11,7 +11,7 @@
 package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.set.SetWA;
-import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.Collection;
 
@@ -21,7 +21,7 @@ import java.util.Collection;
  * to end.
  */
 public interface ListWA<T> extends SetWA<T> {
-	@Returns_this
+	@ReturnsThis
 	<R extends ListWA<T>> R append(T arg);
 
 	@Override
@@ -30,7 +30,7 @@ public interface ListWA<T> extends SetWA<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Returns_this
+	@ReturnsThis
 	default <R extends ListWA<T>> R appendAll(T... arg) {
 		for (int i = 0; i < arg.length; ++i) {
 			append(arg[i]);
@@ -39,7 +39,7 @@ public interface ListWA<T> extends SetWA<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Returns_this
+	@ReturnsThis
 	default <R extends ListWA<T>> R appendAll(Collection<T> arg) {
 		arg.forEach(e -> this.append(e));
 		return (R) this;

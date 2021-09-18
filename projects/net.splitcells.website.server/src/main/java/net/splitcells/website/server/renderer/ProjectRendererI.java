@@ -11,14 +11,11 @@
 package net.splitcells.website.server.renderer;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.host.Files;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
+import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.Validator;
 import net.splitcells.website.server.renderer.extension.ExtensionMerger;
 import net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer;
@@ -30,25 +27,22 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
 import static java.util.stream.Stream.concat;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.host.Files.isDirectory;
-import static net.splitcells.dem.resource.host.Files.is_file;
+import static net.splitcells.dem.resource.Files.isDirectory;
+import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
+import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -83,6 +77,7 @@ public class ProjectRendererI implements ProjectRenderer {
 
     {
         extension.registerExtension(commonMarkReadmeExtension());
+        extension.registerExtension(commonMarkChangelogExtension());
         extension.registerExtension(userCommandExtension());
     }
 
@@ -144,6 +139,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 final var renderedFile = renderFile(path);
                 final var renderedTextFile = renderTextFile(path.substring(0, path.lastIndexOf(".html")) + ".txt");
                 final var commonMarkSrc = readSrc("md", path.substring(0, path.lastIndexOf(".html")) + ".md");
+                final var html = readSrc("html", path);
                 int renderingCounter = 0;
                 if (renderedFile.isPresent()) {
                     ++renderingCounter;
@@ -152,6 +148,9 @@ public class ProjectRendererI implements ProjectRenderer {
                     ++renderingCounter;
                 }
                 if (renderedTextFile.isPresent()) {
+                    ++renderingCounter;
+                }
+                if (html.isPresent()) {
                     ++renderingCounter;
                 }
                 assertThat(renderingCounter).isLessThan(2);
@@ -165,6 +164,10 @@ public class ProjectRendererI implements ProjectRenderer {
                 }
                 if (renderedTextFile.isPresent()) {
                     return renderedTextFile.map(r -> renderingResult(r, TEXT_HTML.toString()));
+                }
+                if (html.isPresent()) {
+                    return readSrc("html", path)
+                            .map(r -> renderingResult(r, "text/html"));
                 }
                 return Optional.empty();
             } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
@@ -330,6 +333,7 @@ public class ProjectRendererI implements ProjectRenderer {
         return resourceRootPath;
     }
 
+    @Deprecated
     @Override
     public Perspective projectLayout() {
         final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
@@ -339,6 +343,7 @@ public class ProjectRendererI implements ProjectRenderer {
         extendProjectLayout(layout, projectSrcFolder.resolve("md"), true);
         extendProjectLayout(layout, projectSrcFolder.resolve("txt"), false);
         extendProjectLayout(layout, projectSrcFolder.resolve("svg"), false);
+        extendProjectLayout(layout, projectSrcFolder.resolve("html"), false);
         return extension.extendProjectLayout(layout, this);
     }
 
@@ -391,7 +396,7 @@ public class ProjectRendererI implements ProjectRenderer {
             }
         }
         {
-            final var resourcePaths = list(resources)
+            final var resourcePaths = list(resources, projectSrcFolder.resolve("html"))
                     .stream()
                     .filter(folder -> Files.isDirectory(folder))
                     .map(folder -> {
@@ -408,8 +413,12 @@ public class ProjectRendererI implements ProjectRenderer {
                 resourcePaths.get().forEach(projectPaths::add);
             }
         }
+        // TODO Get this from extension.
         if (is_file(projectFolder.resolve("README.md"))) {
             projectPaths.add(Path.of(resourceRootPath.substring(1)).resolve("README.html"));
+        }
+        if (is_file(projectFolder.resolve("CHANGELOG.md"))) {
+            projectPaths.add(Path.of(resourceRootPath.substring(1)).resolve("CHANGELOG.html"));
         }
         return projectPaths;
     }

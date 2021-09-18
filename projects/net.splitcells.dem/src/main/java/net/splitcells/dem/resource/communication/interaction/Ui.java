@@ -5,8 +5,6 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
-import net.splitcells.dem.resource.host.interaction.LogLevel;
-import net.splitcells.dem.resource.host.interaction.LogMessage;
 import org.w3c.dom.Node;
 
 import java.io.PrintWriter;
@@ -15,7 +13,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
-import static net.splitcells.dem.resource.host.interaction.LogMessageI.logMessage;
+import static net.splitcells.dem.resource.communication.interaction.LogMessageI.logMessage;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 
 public interface Ui extends Sui<LogMessage<Perspective>>, Flushable, Closeable {

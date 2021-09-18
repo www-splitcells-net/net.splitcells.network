@@ -658,7 +658,7 @@
                              class="net-splitcells-content-main">
                             <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
                             <article>
-                                <div class="splitcells-net-window-menu net-splitcells-component-priority-3">
+                                <div class="splitcells-net-window-menu">
                                     <div class="splitcells-net-line net-splitcells-component-priority-3">
                                         <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
@@ -694,18 +694,8 @@
                                             </xsl:attribute>
                                             Privacy Policy
                                         </a>
-                                        <div class="page_header_backToContent_1 HeaderButton_structure HeaderButton_highlighted"
-                                             style="visibility: hidden; display: none;"
-                                             onclick="javascript:
-                                                        unshowByCssClass('page_header_backToContent_2');
-										                unshowByCssClass('page_header_backToContent_1');
-										                showByCssClass('menu');
-										                showByCssClass('contentCell');
-										                showByCssClass('rightDecoration');">
-                                            back to content
-                                        </div>
                                         <div style="flex: auto;"></div>
-                                        <div class="HeaderButton_structure HeaderButton_p2 page-column-0-full-screen minimal-not"
+                                        <div class="net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
                                              onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-0-full-screen');
 										                unshowByCssClass('column_1');
@@ -713,7 +703,7 @@
 													">
                                             wide screen
                                         </div>
-                                        <div class="HeaderButton_structure HeaderButton_p2 page-column-0-windowed optional"
+                                        <div class="net-splitcells-button-inline page-column-0-windowed optional"
                                              style="visibility: hidden; display: none;"
                                              onclick="javascript: fullScreenDisable();
 													hide('page-column-0-windowed');
@@ -723,10 +713,10 @@
                                             windowed
                                         </div>
                                     </div>
-                                    <div class="net-splitcells-structural-guide" style="height: .25em;"></div>
-                                    <div class="Standard_highlighted"
-                                         style="display: flex; flex-direction: row; padding-left: .25em; flex: auto;">
-                                        <div style="font-size: 1.75em; text-align: left; padding: 0.1em; font-weight: bold;">
+                                    <div class="net-splitcells-structural-guide"/>
+                                    <div class="splitcells-net-line net-splitcells-component-priority-0">
+                                        <!-- TODO This should be just h1 in future. -->
+                                        <div class="splitcells-net-line-title">
                                             <xsl:if test="./s:title.detailed">
                                                 <xsl:value-of select="./s:title.detailed"/>
                                             </xsl:if>
@@ -734,7 +724,6 @@
                                                 <xsl:value-of select="./s:title"/>
                                             </xsl:if>
                                         </div>
-                                        <div style="flex: auto;"></div>
                                     </div>
                                 </div>
                                 <!-- TODO IDEA xsl:if test="./s:content/s:meta/s:descriptive_imagery">
@@ -780,7 +769,7 @@
                                         <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
                                             <div class="Standard_p3 bottomLightShadow splitcells-net-line">
                                                 <div style="flex: auto;"></div>
-                                                <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional minimal-not"
+                                                <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional net-splitcells-minimal-not"
                                                      onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-1-full-screen');
 										                unshowByCssClass('net-splitcells-content-main');
@@ -797,7 +786,7 @@
                                                     windowed
                                                 </div>
                                             </div>
-                                            <div class="net-splitcells-structural-guide" style="height: .25em;"></div>
+                                            <div class="net-splitcells-structural-guide"/>
                                             <div class="Standard_highlighted"
                                                  style="display: flex; flex-direction: row; padding-left: .25em; flex: auto;">
                                                 <div style="font-size: 1.75em; text-align: left; padding: 0.1em;">

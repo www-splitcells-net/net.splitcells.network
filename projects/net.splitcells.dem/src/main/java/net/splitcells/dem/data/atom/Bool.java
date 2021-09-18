@@ -10,7 +10,7 @@
  */
 package net.splitcells.dem.data.atom;
 
-import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.object.DeepCloneable;
 import net.splitcells.dem.object.ShallowCopyable;
 
@@ -45,7 +45,7 @@ public interface Bool extends ShallowCopyable, DeepCloneable {
     boolean isFalse();
 
     @SuppressWarnings("unchecked")
-    @Returns_this
+    @ReturnsThis
     public default <R extends DeepCloneable> R required() {
         if (isFalse()) {
             throw new RuntimeException();
@@ -54,7 +54,7 @@ public interface Bool extends ShallowCopyable, DeepCloneable {
     }
 
     @SuppressWarnings("unchecked")
-    @Returns_this
+    @ReturnsThis
     public default <R extends DeepCloneable> R if_(Runnable run) {
         if (isTrue()) {
             run.run();
@@ -66,7 +66,7 @@ public interface Bool extends ShallowCopyable, DeepCloneable {
      * RENAME ?
      */
     @SuppressWarnings("unchecked")
-    @Returns_this
+    @ReturnsThis
     public default <R extends DeepCloneable> R if_not(Runnable run) {
         if (isFalse()) {
             run.run();

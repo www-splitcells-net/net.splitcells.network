@@ -8,11 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.dem.lang.annotations;
+package net.splitcells.dem.resource.communication.interaction;
+
+import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 
 /**
- * TODO Remove special casting used in context of this annotation.
+ * TODO Support log messages without or default priority.
  */
-public @interface Returns_this {
+public interface LogMessage<T> extends Discoverable {
+	T content();
 
+	LogLevel priority();
 }

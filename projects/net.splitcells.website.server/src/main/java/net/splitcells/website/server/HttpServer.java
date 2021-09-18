@@ -10,7 +10,7 @@
  */
 package net.splitcells.website.server;
 
-import net.splitcells.dem.resource.host.Files;
+import net.splitcells.dem.resource.Files;
 
 import java.nio.file.Paths;
 

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.gel.solution.optimization.primitive;
+package net.splitcells.gel.solution.optimization.primitive.repair;
 
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
@@ -16,7 +16,6 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.table.Line;
@@ -25,9 +24,6 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
-import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -40,8 +36,7 @@ import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
-import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
-import static net.splitcells.gel.solution.optimization.primitive.SupplySelection.supplySelection;
+import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -68,14 +63,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConstraintGroupBasedRepair implements Optimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector
-                    , BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer) {
+            (GroupSelector groupSelector, SupplySelector repairer) {
         return new ConstraintGroupBasedRepair(groupSelector, repairer);
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector) {
-        return new ConstraintGroupBasedRepair(groupSelector, supplySelector());
+            (GroupSelector groupSelector) {
+        return new ConstraintGroupBasedRepair(groupSelector, SupplySelectors.supplySelector());
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair(int minimumConstraintGroupPath) {
@@ -83,96 +77,19 @@ public class ConstraintGroupBasedRepair implements Optimization {
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (int minimum_constraint_group_path
-                    , int numberOfGroupsSelectedPerDefiance) {
+            (int minimum_constraint_group_path, int numberOfGroupsSelectedPerDefiance) {
         final var randomness = randomness();
-        return new ConstraintGroupBasedRepair
-                (allocationsGroups -> {
-                    final var candidates = allocationsGroups
-                            .stream()
-                            .filter(allocationGroupsPath ->
-                                    {
-                                        if (allocationGroupsPath.size() < minimum_constraint_group_path) {
-                                            return false;
-                                        }
-                                        return incomingGroupsOfConstraintPath(allocationGroupsPath.shallowCopy())
-                                                .stream()
-                                                .map(group -> !allocationGroupsPath
-                                                        .lastValue()
-                                                        .get()
-                                                        .defying(group)
-                                                        .isEmpty())
-                                                .reduce((a, b) -> a || b)
-                                                .orElse(false);
-                                    }
-                            )
-                            .collect(toList());
-                    if (candidates.isEmpty()) {
-                        return list();
-                    }
-                    return randomness.chooseAtMostMultipleOf(numberOfGroupsSelectedPerDefiance, candidates);
-                }, supplySelector());
+        return new ConstraintGroupBasedRepair(groupSelector(randomness, minimum_constraint_group_path
+                , numberOfGroupsSelectedPerDefiance)
+                , SupplySelectors.supplySelector());
     }
 
-    private static final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> supplySelector() {
-        final var randomness = randomness();
-        return indexBasedRepairer((freeSupplyCount, supplyFreedCount) -> {
-            if (freeSupplyCount.floatValue() + supplyFreedCount.floatValue() <= 0) {
-                return Optional.empty();
-            }
-            if (randomness.truthValue(freeSupplyCount.floatValue() / (freeSupplyCount.floatValue() + supplyFreedCount.floatValue()))) {
-                return Optional.of(supplySelection(randomness.integer(0, freeSupplyCount - 1), true));
-            } else {
-                return Optional.of(supplySelection(randomness.integer(0, supplyFreedCount - 1), false));
-            }
-        });
-    }
+    private final GroupSelector groupSelector;
+    private final SupplySelector supplySelector;
 
-    public static final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> indexBasedRepairer
-            (BiFunction<Integer, Integer, Optional<SupplySelection>> indexSelector) {
-        return (freeDemandGroups, freedSupplies) -> solution -> {
-            final Set<OptimizationEvent> repairs = setOfUniques();
-            final var suppliesFree = solution.suppliesFree().getLines();
-            final var demandsUsed = Sets.<Line>setOfUniques();
-            freeDemandGroups.entrySet().forEach(group -> {
-                group.getValue().forEach(demand -> {
-                    if (demandsUsed.contains(demand)) {
-                        return;
-                    }
-                    final var supplySelection = indexSelector
-                            .apply(suppliesFree.size()
-                                    , freedSupplies.size());
-                    if (!supplySelection.isEmpty()) {
-                        demandsUsed.add(demand);
-                        final Line selectedSupply;
-                        if (supplySelection.get().isCurrentlyFree()) {
-                            selectedSupply = suppliesFree.remove(supplySelection.get().selectedIndex());
-                        } else {
-                            selectedSupply = freedSupplies.remove(supplySelection.get().selectedIndex());
-                        }
-                        repairs.add
-                                (optimizationEvent
-                                        (ADDITION
-                                                , demand.toLinePointer()
-                                                , selectedSupply.toLinePointer()));
-                    } else {
-                        throw new RuntimeException();
-                    }
-                });
-            });
-            return listWithValuesOf(repairs);
-        };
-    }
-
-    private final Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector;
-    private final BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer;
-    private final Randomness randomness = randomness();
-
-    protected ConstraintGroupBasedRepair
-            (Function<List<List<Constraint>>, List<List<Constraint>>> groupSelector
-                    , BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> repairer) {
+    protected ConstraintGroupBasedRepair(GroupSelector groupSelector, SupplySelector repairer) {
         this.groupSelector = groupSelector;
-        this.repairer = repairer;
+        this.supplySelector = repairer;
     }
 
     @Override
@@ -219,7 +136,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
     public List<OptimizationEvent> repair(SolutionView solution
             , Map<GroupId, Set<Line>> freeDemandGroups
             , List<Line> freedSupplies) {
-        return repairer.apply(freeDemandGroups, freedSupplies).optimize(solution);
+        return supplySelector.apply(freeDemandGroups, freedSupplies).optimize(solution);
     }
 
     public Map<GroupId, Set<Line>> demandGrouping(Constraint constraintGrouping, SolutionView solution) {

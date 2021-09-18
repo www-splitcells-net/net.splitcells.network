@@ -11,7 +11,7 @@
 package net.splitcells.gel.problem;
 
 
-import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
@@ -25,7 +25,7 @@ import static net.splitcells.gel.constraint.type.ForAlls.for_all;
 
 public interface DefineSupply {
 
-    @Returns_this
+    @ReturnsThis
     default DefineSupply withEmptySupplies(int supplyCount) {
         final List<List<Object>> supplies = list();
         rangeClosed(1, supplyCount).forEach(i -> supplies.add(list()));

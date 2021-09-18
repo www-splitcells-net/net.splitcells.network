@@ -1,0 +1,442 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="application/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/reveal.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/theme/moon.min.css"/>
+    <style>:root {
+			--r-background-color: #450030;
+			/* var(--r-main-color); */
+			}
+			strong {color: #7CFC00;}
+			th { color:
+			var(--r-main-color);}
+			td { color:
+			var(--r-main-color);}
+			h3 {text-transform: none !important;}
+			h4 {text-transform: none
+			!important;}
+
+
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section style="height:100%">
+            <div style="display: flex; flex-direction: row; height: 100%;">
+                <div style="width: 50%; height: 100%;">
+                    <br/>
+                    <h3>Generic Allocator - Gel</h3>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    Scheduling COVID Vaccination Center
+                    <br/>
+                    <br/>
+                    <br/>
+                    By Mārtiņš Avots <br/>On <a href="http://splitcells.net">splitcells.net</a>
+                </div>
+                <div
+                        style="flex: auto; height: 100%; background-size: 100%; background-repeat: no-repeat; background-image: url(http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/starting-to-learn-how-to-draw-a-face.jpg);"></div>
+            </div>
+        </section>
+        <section>
+            <h3>Thought Experiment - Modelling A Vaccine Center</h3>
+            <ol>
+                <li><strong>Simplified</strong> Model For Understanding</li>
+                <li>Conceptional <strong>Introduction</strong> To Model</li>
+                <li>No Intro To Technical Details</li>
+            </ol>
+        </section>
+        <section>
+            <h3>COVID Vaccine Center</h3>
+            <ol>
+                <li>We want to ensure, that the center has enough workers
+                    during the working hours.<br/>
+                    During each hour, there have to be enough workers to be present,<br/>
+                    in order to be able to serve all patients.
+                </li>
+                <li>Each patient has to make<br/>its appointment in advance.</li>
+            </ol>
+        </section>
+        <section>
+            <h3>Simplified Model</h3>
+            <h4>Solution =</h4>
+            <h4>Supply + Demand</h4>
+            <br/>
+            <p>
+                Problems are modeled like <strong>markets</strong>.
+                <br/>
+                <br/>
+                For optimal solutions
+                <br/>
+                all concerns need to be considered.
+                <br/>
+                Otherwise, we get suboptimal solutions
+                <br/>
+                (i.e. climate change).
+            </p>
+        </section>
+        <section>
+            <h3>Simplified Data Model</h3>
+            <h4>Supply + Demand</h4>
+            <br/>
+            <div style="display: flex; flex-direction: row; width: 100%; flex-wrap: nowrap;">
+                <table>
+                    <tr>
+                        <th>Time</th>
+                        <th>Patient</th>
+                    </tr>
+                    <tr>
+                        <td>2021.09.14 11:00:00</td>
+                        <td>Alice</td>
+                    </tr>
+                    <tr>
+                        <td>2021.10.14 11:00:00</td>
+                        <td>Alice</td>
+                    </tr>
+                    <tr>
+                        <td>2021.09.14 11:00:00</td>
+                        <td>Bob</td>
+                    </tr>
+                    <tr>
+                        <td>2021.10.14 11:00:00</td>
+                        <td>Bob</td>
+                    </tr>
+                    <tr>
+                        <td>..</td>
+                        <td>..</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Checker</th>
+                        <th>Assistant</th>
+                    </tr>
+                    <tr>
+                        <td>Carol</td>
+                        <td>Carlos</td>
+                        <td>Charlie</td>
+                    </tr>
+                    <tr>
+                        <td>Chuck</td>
+                        <td>Craig</td>
+                        <td>Dan</td>
+                    </tr>
+                    <tr>
+                        <td>Carol</td>
+                        <td>Carlos</td>
+                        <td>Charlie</td>
+                    </tr>
+                    <tr>
+                        <td>Chuck</td>
+                        <td>Craig</td>
+                        <td>Dan</td>
+                    </tr>
+                    <tr>
+                        <td>..</td>
+                        <td>..</td>
+                        <td>..</td>
+                    </tr>
+                </table>
+            </div>
+            <h4>= Solution</h4>
+            <table>
+                <tr>
+                    <th>Time</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Checker</th>
+                    <th>Assistant</th>
+                </tr>
+                <tr>
+                    <td>2021.09.14 11:00:00</td>
+                    <td>Alice</td>
+                    <td>Carol</td>
+                    <td>Carlos</td>
+                    <td>Charlie</td>
+                </tr>
+                <tr>
+                    <td>2021.09.14 11:00:00</td>
+                    <td>Alice</td>
+                    <td>Chuck</td>
+                    <td>Craig</td>
+                    <td>Dan</td>
+                </tr>
+                <tr>
+                    <td>2021.09.14 11:00:00</td>
+                    <td>Bob</td>
+                    <td>Carol</td>
+                    <td>Carlos</td>
+                    <td>Charlie</td>
+                </tr>
+                <tr>
+                    <td>2021.09.14 11:00:00</td>
+                    <td>Bob</td>
+                    <td>Chuck</td>
+                    <td>Craig</td>
+                    <td>Dan</td>
+                </tr>
+                <tr>
+                    <td>..</td>
+                    <td>..</td>
+                    <td>..</td>
+                    <td>..</td>
+                    <td>..</td>
+                </tr>
+            </table>
+        </section>
+        <section>
+            <h3>Simplified Constraint Model</h3>
+            <br/>
+            <div style="display: flex; flex-direction: row; width: 100%; flex-wrap: nowrap;">
+                <div>
+                    <h4>Solution</h4>
+                    <table>
+                        <tr>
+                            <th>Time</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Checker</th>
+                            <th>Assistant</th>
+                        </tr>
+                        <tr>
+                            <td>2021.09.14 11:00:00</td>
+                            <td>Alice</td>
+                            <td>Carol</td>
+                            <td>Carlos</td>
+                            <td>Charlie</td>
+                        </tr>
+                        <tr>
+                            <td>2021.10.14 11:00:00</td>
+                            <td>Alice</td>
+                            <td>Chuck</td>
+                            <td>Craig</td>
+                            <td>Dan</td>
+                        </tr>
+                        <tr>
+                            <td>2021.09.14 11:00:00</td>
+                            <td>Bob</td>
+                            <td>Carol</td>
+                            <td>Carlos</td>
+                            <td>Charlie</td>
+                        </tr>
+                        <tr>
+                            <td>2021.10.14 11:00:00</td>
+                            <td>Bob</td>
+                            <td>Chuck</td>
+                            <td>Craig</td>
+                            <td>Dan</td>
+                        </tr>
+                        <tr>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                        </tr>
+                    </table>
+                </div>
+                <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </h3>
+                <div>
+                    <h4>Constraint</h4>
+                    <ol>
+                        <li>Process one appointment at a time.</li>
+                        <li>People need breaks.</li>
+                        <li>Distribute workloads evenly.</li>
+                        <li>...</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        <section data-transition="fade-out">
+            <h3>Query Based Constraints</h3>
+            <br/>
+            <br/>
+            <div style="display: flex; flex-direction: row; width: 100%; flex-wrap: nowrap;">
+                <div>
+                    <h4>Solution</h4>
+                    <table>
+                        <tr>
+                            <th>Time</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Checker</th>
+                            <th>Assistant</th>
+                        </tr>
+                        <tr>
+                            <td><strong>2021.09.14 11:00:00</strong></td>
+                            <td>Alice</td>
+                            <td><strong>Carol</strong></td>
+                            <td>Carlos</td>
+                            <td>Charlie</td>
+                        </tr>
+                        <tr>
+                            <td>2021.10.14 11:00:00</td>
+                            <td>Alice</td>
+                            <td>Chuck</td>
+                            <td>Craig</td>
+                            <td>Dan</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2021.09.14 11:00:00</strong></td>
+                            <td>Bob</td>
+                            <td><strong>Carol</strong></td>
+                            <td>Carlos</td>
+                            <td>Charlie</td>
+                        </tr>
+                        <tr>
+                            <td>2021.10.14 11:00:00</td>
+                            <td>Bob</td>
+                            <td>Chuck</td>
+                            <td>Craig</td>
+                            <td>Dan</td>
+                        </tr>
+                        <tr>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h4>Constraint</h4>
+                    <ul>
+                        <li>
+                            <strong>For All</strong>
+                            Doctors
+                        </li>
+                        <li>
+                            <strong>For All</strong>
+                            Times
+                        </li>
+                        <li>
+                            <strong>Then</strong>
+                            Only One
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </section>
+        <section data-transition="fade-in">
+            <h3>Query Based Constraints</h3>
+            <br/>
+            <br/>
+            <div style="display: flex; flex-direction: row; width: 100%; flex-wrap: nowrap;">
+                <div>
+                    <h4>Solution</h4>
+                    <table>
+                        <tr>
+                            <th>Time</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Checker</th>
+                            <th>Assistant</th>
+                        </tr>
+                        <tr>
+                            <td><strong>2021.09.14 11:00:00</strong></td>
+                            <td>Alice</td>
+                            <td><strong>Carol</strong></td>
+                            <td>Carlos</td>
+                            <td>Charlie</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2021.10.14 11:00:00</strong></td>
+                            <td>Alice</td>
+                            <td><strong>Carol</strong></td>
+                            <td>Carlos</td>
+                            <td>Charlie</td>
+                        </tr>
+                        <tr>
+                            <td>2021.09.14 11:00:00</td>
+                            <td>Bob</td>
+                            <td>Chuck</td>
+                            <td>Craig</td>
+                            <td>Dan</td>
+                        </tr>
+                        <tr>
+                            <td>2021.10.14 11:00:00</td>
+                            <td>Bob</td>
+                            <td>Chuck</td>
+                            <td>Craig</td>
+                            <td>Dan</td>
+                        </tr>
+                        <tr>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h4>Constraint</h4>
+                    <ul>
+                        <li>
+                            <strong>For All</strong>
+                            Doctors
+                        </li>
+                        <li>
+                            <strong>For All</strong>
+                            Times
+                        </li>
+                        <li>
+                            <strong>Then</strong>
+                            Only One
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <h4>⥤ Constraint Based Repair</h4>
+            <br/>
+            <br/>
+        </section>
+        <section>
+            <h3>Gel's Version History</h3>
+            <ol>
+                <li>Attempt first draft during internship in University.</li>
+                <li>
+                    Implement school scheduling
+                    <br/>
+                    during master thesis.
+                </li>
+                <li>Experimenting for a more generalized platform.</li>
+                <li>Making experimental platform <strong>more mature.</strong></li>
+            </ol>
+        </section>
+        <section style="height:100%">
+            <div style="display: flex; flex-direction: row; height: 100%;">
+                <div style="width: 50%; height: 100%;">
+                    <br/>
+                    <h3>Hope you learned something!</h3>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h4>Further Questions?</h4>
+                    <br/>
+                    <br/>
+                    More Info <br/>On <a href="http://splitcells.net">splitcells.net</a>
+                </div>
+                <div
+                        style="flex: auto; height: 100%; background-size: 100%; background-repeat: no-repeat; background-image: url(http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/starting-to-learn-how-to-draw-a-face.jpg);"></div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/reveal.js"></script>
+<script>Reveal.initialize();</script>
+</body>
+</html>

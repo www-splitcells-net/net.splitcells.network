@@ -20,6 +20,39 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-09-18**: Remove command `system.configure.auto` of OS state interface
+  project.
+  The
+* **2021-09-17**: **\#10**
+  1. Delete the interface
+     `net.splitcells.dem.resource.communication.Subscribable`,
+     because it was not used.
+  2. Make package structure more consistent.
+     1. Move Dem's Files interface from communication package to more general
+        resource package.
+     2. Move Dem's LogMessage, LogMessageI and LogLevel from the package
+        `net.splitcells.dem.resource.communication.interaction` to
+        `net.splitcells.dem.resource.host.interaction`,
+        because sees interfaces and classes are not host specific.
+  3. Rename `net.splitcells.dem.lang.annotations.Return_this` to `ReturnThis`
+     in order to unify naming. 
+* **2021-09-15**: **\#8** Migrate Domsole from XML node base to Perspective
+  base.
+  Thereby, a custom rendering format is created,
+  which is more suitable for the console,
+  as it is a lot shorter, simpler and nicer.
+  The XML rendering is currently broken and will be fixed for the website,
+  when it is used again.
+  Logging based on XML nodes is removed,
+  also some deprecated method still exists,
+  but they have no functionality.
+* **2021-09-11**: `run.and.show.if.failed` now echos content of stderr to
+  the shell during the execution normally.
+  This way one knows all the errors, that appeared after a successful
+  execution of the given command.
+  If for instance one has a data synchronization script for multiple backup
+  servers, one can see which server could not be reached,
+  without marking the whole execution as failure.
 * **2021-09-05**:
    1. Disable caching for default weblayout in order to keep CSS styling in
       webbrowser up to date.
@@ -44,6 +77,11 @@ Releases are done everytime an important ticket is completed.
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
 * **2021-09-19** Define chrome installation command via flatpak.
+* **2021-09-17**: **\#10** Introduce the first pure project: [net.splitcells.dem.merger](projects/pure/net.splitcells.dem.merger)
+* **2021-09-14**
+   1. Create concept [presentation](http://splitcells.net/net/splitcells/gel/presentation/covid.html) for Gel based on thought experiment.
+   2. Support serving raw HTML files via webserver.
+   3. Render [changelog](http://splitcells.net/net/splitcells/network/CHANGELOG.html) on website.
 * **2021-09-11**: Support Fedora Silverblue, by implementing `package.install` via `rpm-ostree`.
   This package install command has the highest priority, because package managers like dnf should be ignored
   in this case.

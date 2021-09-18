@@ -11,7 +11,7 @@
 package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.lang.annotations.Secret;
-import net.splitcells.dem.lang.annotations.Returns_this;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.function.Function;
 
@@ -20,7 +20,7 @@ import java.util.function.Function;
  */
 public interface Configuration extends ConfigurationV {
 
-    @Returns_this
+    @ReturnsThis
     default <T> Configuration with_inited_option(Class<? extends Option<T>> key) {
         try {
             return withConfigValue(key, key.getDeclaredConstructor().newInstance().defaultValue());
@@ -29,7 +29,7 @@ public interface Configuration extends ConfigurationV {
         }
     }
 
-    @Returns_this
+    @ReturnsThis
     <T> Configuration withConfigValue(Class<? extends Option<T>> key, T value);
 
     <T> void subscribe(Class<? extends Option<T>> option, @Secret OptionSubscriber<Object> consumer);
