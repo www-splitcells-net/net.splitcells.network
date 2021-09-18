@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+flatpak install -y flathub org.chromium.Chromium
