@@ -7,4 +7,4 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-sudo pip3 install $1
+pip3 install --user $1
