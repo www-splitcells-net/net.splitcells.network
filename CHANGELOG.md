@@ -24,7 +24,6 @@ Releases are done everytime an important ticket is completed.
   and therefore without admin rights.
 * **2021-09-18**: Remove command `system.configure.auto` of OS state interface
   project.
-  The
 * **2021-09-17**: **\#10**
   1. Delete the interface
      `net.splitcells.dem.resource.communication.Subscribable`,
