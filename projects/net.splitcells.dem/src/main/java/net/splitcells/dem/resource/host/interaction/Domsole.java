@@ -24,8 +24,10 @@ import static net.splitcells.dem.resource.communication.interaction.UiRouter.uiR
 
 /**
  * TODO In the future, this should be a counter part of the web server.
+ * <p>
  * TODO Message filtering and routing should be done by dedicated classes,
  * so that rendering can be separated from the rest.
+ * </p>
  */
 public class Domsole extends ResourceI<Ui> {
     public Domsole() {

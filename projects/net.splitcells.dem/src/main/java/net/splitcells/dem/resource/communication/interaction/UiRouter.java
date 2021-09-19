@@ -20,6 +20,9 @@ import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.resource.communication.interaction.Pdsui.pdsui;
 import static net.splitcells.dem.resource.Files.createDirectory;
 
+/**
+ * TODO Log all used {@link LogMessage#path()} to dedicated file.
+ */
 public class UiRouter implements Ui {
 
     public static UiRouter uiRouter(Predicate<LogMessage<Perspective>> messageFilter) {
