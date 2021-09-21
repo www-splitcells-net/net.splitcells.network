@@ -23,6 +23,9 @@ import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
+import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
+import net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -53,6 +56,8 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.supplySelector;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -101,23 +106,23 @@ public class SchoolSchedulingTest {
             final var teacherAllocationForCourses = input.get(1);
             final var studentAllocationsForCourses = input.get(2);
             railsForSchoolScheduling.optimize(linearInitialization());
-            IntStream.rangeClosed(1, 100).forEach(i -> {
-                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(4)
+            IntStream.rangeClosed(1, 1).forEach(i -> {
+                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
 
-                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
+                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(3)
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
-                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(4)
+                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
 
-                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(2)
+                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(2)
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
-                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(4)
+                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
 
-                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(1)
+                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(1)
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
-                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(4)
+                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
             });
             railsForSchoolScheduling.createStandardAnalysis();
@@ -131,6 +136,12 @@ public class SchoolSchedulingTest {
                             .equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
                     .withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)));
         }));
+    }
+
+    public static Optimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
+        return simpleConstraintGroupBasedRepair(groupSelector(randomness(), minimumConstraintGroupPath
+                        , 1)
+                , supplySelector());
     }
 
     @Tag(INTEGRATION_TEST)
