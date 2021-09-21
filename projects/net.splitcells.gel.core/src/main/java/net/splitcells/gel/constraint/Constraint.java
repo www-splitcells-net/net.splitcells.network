@@ -85,6 +85,13 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         return allocationGroups(list(constraint));
     }
 
+    default int longestConstraintPathLength() {
+        final var longestChildPath = this.childrenView().stream()
+                .map(Constraint::longestConstraintPathLength)
+                .max(Integer::compareTo);
+        return longestChildPath.map(i -> i + 1).orElse(1);
+    }
+    
     GroupId injectionGroup();
 
     default MetaRating rating() {

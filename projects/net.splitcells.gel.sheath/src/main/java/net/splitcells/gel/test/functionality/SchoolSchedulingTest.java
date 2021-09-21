@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.*;
@@ -100,12 +101,25 @@ public class SchoolSchedulingTest {
             final var teacherAllocationForCourses = input.get(1);
             final var studentAllocationsForCourses = input.get(2);
             railsForSchoolScheduling.optimize(linearInitialization());
-            railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
-                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(2)
-                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(1)
-                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            IntStream.rangeClosed(1, 100).forEach(i -> {
+                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(4)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+
+                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
+                        , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
+                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(4)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+
+                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(2)
+                        , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
+                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(4)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+
+                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(1)
+                        , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
+                railsForSchoolScheduling.optimizeWithFunction(simpleConstraintGroupBasedRepair(4)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            });
             railsForSchoolScheduling.createStandardAnalysis();
             //teacherAllocationForCourses.optimize(linearInitialization());
             //studentAllocationsForCourses.optimize(linearInitialization());
