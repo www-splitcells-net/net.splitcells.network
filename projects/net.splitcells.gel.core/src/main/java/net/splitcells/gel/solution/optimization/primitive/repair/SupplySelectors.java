@@ -64,7 +64,9 @@ public class SupplySelectors {
             if (freeSupplyCount.floatValue() + supplyFreedCount.floatValue() <= 0) {
                 return Optional.empty();
             }
-            if (randomness.truthValue(freeSupplyCount.floatValue() / (freeSupplyCount.floatValue() + supplyFreedCount.floatValue()))) {
+            if (randomness.truthValue(freeSupplyCount.floatValue()
+                    / (freeSupplyCount.floatValue()
+                    + supplyFreedCount.floatValue()))) {
                 return Optional.of(supplySelection(randomness.integer(0, freeSupplyCount - 1), true));
             } else {
                 return Optional.of(supplySelection(randomness.integer(0, supplyFreedCount - 1), false));
