@@ -11,8 +11,11 @@
 package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.host.interaction.Domsole;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
@@ -34,6 +37,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.interaction.UiRouter.uiRouter;
@@ -139,6 +143,27 @@ public class SchoolSchedulingTest {
     }
 
     public static Optimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
+        simpleConstraintGroupBasedRepair(groupSelector(randomness(), minimumConstraintGroupPath
+                        , 1)
+                , (freeSupplyCount, supplyFreedCount) -> solution -> {
+                    final var courses = Maps.<Integer, Set<Line>>map();
+                    solution.columnView(COURSE_ID).values().stream().distinct()
+                            .forEach(e -> courses.put(e, setOfUniques()));
+                    courses.keySet().forEach(course -> courses.get(course)
+                            .addAll(solution.columnView(COURSE_ID).lookup(course).getLines()));
+                    final var allocatedCourseHours = Maps.<Integer, Integer>map();
+                    courses.keySet().forEach(course -> {
+                        allocatedCourseHours.put(course
+                                , courses.get(course).stream()
+                                        .map(c -> c.value(ALLOCATED_HOURS))
+                                        .reduce((a, b) -> a + b)
+                                        .get());
+                    });
+                    final var targetedCourseHours = Maps.<Integer, Integer>map();
+                    courses.keySet().forEach(course
+                            -> targetedCourseHours.put(course, courses.get(course).iterator().next().value(COURSE_LENGTH)));
+                    return null;
+                });
         return simpleConstraintGroupBasedRepair(groupSelector(randomness(), minimumConstraintGroupPath
                         , 1)
                 , supplySelector());
