@@ -162,6 +162,16 @@ public class SchoolSchedulingTest {
                     final var targetedCourseHours = Maps.<Integer, Integer>map();
                     courses.keySet().forEach(course
                             -> targetedCourseHours.put(course, courses.get(course).iterator().next().value(COURSE_LENGTH)));
+                    solution.demandsUnused()
+                            .columnView(COURSE_ID)
+                            .values()
+                            .stream()
+                            .distinct()
+                            .forEach(course -> {
+                                solution.demandsUnused()
+                                        .columnView(COURSE_ID)
+                                        .lookup(course);
+                            });
                     return null;
                 });
         return simpleConstraintGroupBasedRepair(groupSelector(randomness(), minimumConstraintGroupPath
