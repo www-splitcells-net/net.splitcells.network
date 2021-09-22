@@ -26,6 +26,8 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OptimizationEvent;
+import net.splitcells.gel.solution.optimization.StepType;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -55,6 +57,7 @@ import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.*;
 import static net.splitcells.gel.rating.rater.RegulatedLength.regulatedLength;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
+import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
@@ -159,7 +162,16 @@ public class SchoolSchedulingTest {
                     });
                     final var targetedCourseHours = Maps.<Integer, Integer>map();
                     courses.keySet().forEach(course
-                            -> targetedCourseHours.put(course, courses.get(course).iterator().next().value(COURSE_LENGTH)));
+                            -> targetedCourseHours.put(course
+                            , courses.get(course)
+                                    .iterator()
+                                    .next()
+                                    .value(COURSE_LENGTH)));
+                    final List<OptimizationEvent> optimization = list();
+                    final var freeNulls = solution.suppliesFree()
+                            .columnView(ALLOCATED_HOURS)
+                            .lookup(0)
+                            .getLines();
                     solution.demandsFree()
                             .columnView(COURSE_ID)
                             .values()
@@ -171,10 +183,17 @@ public class SchoolSchedulingTest {
                                 final var freeSlots = solution.demandsFree()
                                         .columnView(COURSE_ID)
                                         .lookup(course)
-                                        .size();
-                                final var nonEmptySlotCount = randomness.integer(1, freeSlots);
-                                final var emptySlotCount = freeSlots - nonEmptySlotCount;
+                                        .getLines();
+                                final var nonEmptySlotCount = randomness.integer(1, freeSlots.size());
+                                final var emptySlotCount = freeSlots.size() - nonEmptySlotCount;
                                 var plannedHours = allocatedHours;
+                                IntStream.rangeClosed(1, emptySlotCount).forEach(i -> {
+                                    final var freeSlot = freeSlots.remove(0);
+                                    final var nullHour = freeNulls.remove(0);
+                                    optimization.add(optimizationEvent(StepType.ADDITION
+                                            , freeSlot.toLinePointer()
+                                            , nullHour.toLinePointer()));
+                                });
                             });
                     return null;
                 });
