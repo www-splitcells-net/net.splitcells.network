@@ -233,13 +233,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line demandOfAllocation(Line piešķiršana) {
-        return allocations.demandOfAllocation(piešķiršana);
+    public Line demandOfAllocation(Line allocation) {
+        return allocations.demandOfAllocation(allocation);
     }
 
     @Override
-    public Line supplyOfAllocation(Line piešķiršana) {
-        return allocations.supplyOfAllocation(piešķiršana);
+    public Line supplyOfAllocation(Line allocation) {
+        return allocations.supplyOfAllocation(allocation);
     }
 
     @Override

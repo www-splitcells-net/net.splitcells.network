@@ -31,18 +31,18 @@ public interface AllocationsLiveView extends Table {
 
     Database demandsFree();
 
-    Line demandOfAllocation(Line piešķiršana);
+    Line demandOfAllocation(Line allocation);
 
-    Line supplyOfAllocation(Line piešķiršana);
+    Line supplyOfAllocation(Line allocation);
 
-    Set<Line> allocationsOfSupply(Line peidāvājums);
+    Set<Line> allocationsOfSupply(Line supply);
 
-    Set<Line> allocationsOfDemand(Line prasība);
+    Set<Line> allocationsOfDemand(Line demand);
 
-    default Set<Line> supply_of_demand(Line prasība) {
-        final Set<Line> peidāvājumi_no_prasībam = setOfUniques();
-        allocationsOfDemand(prasība)
-                .forEach(piešķiršana -> peidāvājumi_no_prasībam.add(supplyOfAllocation(piešķiršana)));
-        return peidāvājumi_no_prasībam;
+    default Set<Line> supply_of_demand(Line demand) {
+        final Set<Line> suppliesOfDemands = setOfUniques();
+        allocationsOfDemand(demand)
+                .forEach(allocation -> suppliesOfDemands.add(supplyOfAllocation(allocation)));
+        return suppliesOfDemands;
     }
 }
