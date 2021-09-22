@@ -140,7 +140,8 @@ public class SchoolSchedulingTest {
     }
 
     public static Optimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
-        simpleConstraintGroupBasedRepair(groupSelector(randomness(), minimumConstraintGroupPath
+        final var randomness = randomness();
+        simpleConstraintGroupBasedRepair(groupSelector(randomness, minimumConstraintGroupPath
                         , 1)
                 , (freeSupplyCount, supplyFreedCount) -> solution -> {
                     final var courses = Maps.<Integer, Set<Line>>map();
@@ -171,6 +172,9 @@ public class SchoolSchedulingTest {
                                         .columnView(COURSE_ID)
                                         .lookup(course)
                                         .size();
+                                final var nonEmptySlotCount = randomness.integer(1, freeSlots);
+                                final var emptySlotCount = freeSlots - nonEmptySlotCount;
+                                var plannedHours = allocatedHours;
                             });
                     return null;
                 });
