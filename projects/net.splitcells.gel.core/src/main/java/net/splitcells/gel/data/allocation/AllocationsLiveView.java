@@ -29,7 +29,7 @@ public interface AllocationsLiveView extends Table {
 
     Database demandsUsed();
 
-    Database demandsUnused();
+    Database demandsFree();
 
     Line demandOfAllocation(Line piešķiršana);
 

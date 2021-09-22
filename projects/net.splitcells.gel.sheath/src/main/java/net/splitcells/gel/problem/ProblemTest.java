@@ -58,7 +58,7 @@ class ProblemTest {
         final Line firstAllocation;
         {
             firstAllocation = solution.allocate
-                    (solution.demandsUnused().rawLinesView().get(0)
+                    (solution.demandsFree().rawLinesView().get(0)
                             , solution.suppliesFree().rawLinesView().get(0));
             assertThat(solution.size()).isEqualTo(1);
             assertThat(solution.isComplete()).isFalse();
@@ -68,7 +68,7 @@ class ProblemTest {
         final Line secondAllocation;
         {
             secondAllocation = solution.allocate
-                    (solution.demandsUnused().rawLinesView().get(1)
+                    (solution.demandsFree().rawLinesView().get(1)
                             , solution.suppliesFree().rawLinesView().get(1));
             assertThat(solution.size()).isEqualTo(2);
             assertThat(solution.isComplete()).isTrue();
@@ -81,7 +81,7 @@ class ProblemTest {
                 /** TODO Move these tests to {@link ConstraintTest}.
                  */
                 assertThat(solution.size()).isEqualTo(1);
-                assertThat(solution.demandsUnused().size()).isEqualTo(1);
+                assertThat(solution.demandsFree().size()).isEqualTo(1);
                 assertThat(solution.suppliesFree().size()).isEqualTo(2);
                 assertThat(solution.demandsUsed().size()).isEqualTo(1);
                 assertThat(solution.suppliesUsed().size()).isEqualTo(1);

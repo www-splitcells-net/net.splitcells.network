@@ -228,8 +228,8 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database demandsUnused() {
-        return allocations.demandsUnused();
+    public Database demandsFree() {
+        return allocations.demandsFree();
     }
 
     @Override

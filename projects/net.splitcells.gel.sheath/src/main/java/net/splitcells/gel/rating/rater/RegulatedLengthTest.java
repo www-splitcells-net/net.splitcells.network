@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueSelector;
 import static net.splitcells.gel.rating.rater.RegulatedLength.regulatedLength;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -43,11 +41,11 @@ public class RegulatedLengthTest {
                 .toProblem()
                 .asSolution();
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
-        testSubjectContainer.allocate(testSubjectContainer.demandsUnused().getRawLine(0)
+        testSubjectContainer.allocate(testSubjectContainer.demandsFree().getRawLine(0)
                 , testSubjectContainer.suppliesFree().getRawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
 
-        testSubjectContainer.allocate(testSubjectContainer.demandsUnused().getRawLine(1)
+        testSubjectContainer.allocate(testSubjectContainer.demandsFree().getRawLine(1)
                 , testSubjectContainer.suppliesFree().getRawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(7));
 
@@ -57,11 +55,11 @@ public class RegulatedLengthTest {
         testSubjectContainer.remove(testSubjectContainer.getRawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
 
-        testSubjectContainer.allocate(testSubjectContainer.demandsUnused().getRawLine(1)
+        testSubjectContainer.allocate(testSubjectContainer.demandsFree().getRawLine(1)
                 , testSubjectContainer.suppliesFree().getRawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(4));
 
-        testSubjectContainer.allocate(testSubjectContainer.demandsUnused().getRawLine(0)
+        testSubjectContainer.allocate(testSubjectContainer.demandsFree().getRawLine(0)
                 , testSubjectContainer.suppliesFree().getRawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(7));
     }

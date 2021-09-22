@@ -202,8 +202,8 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Database demandsUnused() {
-        return solution.demandsUnused();
+    public Database demandsFree() {
+        return solution.demandsFree();
     }
 
     @Override

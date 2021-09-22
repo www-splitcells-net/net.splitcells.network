@@ -12,7 +12,6 @@ package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Maps;
@@ -27,8 +26,6 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.Optimization;
-import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
-import net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -162,7 +159,7 @@ public class SchoolSchedulingTest {
                     final var targetedCourseHours = Maps.<Integer, Integer>map();
                     courses.keySet().forEach(course
                             -> targetedCourseHours.put(course, courses.get(course).iterator().next().value(COURSE_LENGTH)));
-                    solution.demandsUnused()
+                    solution.demandsFree()
                             .columnView(COURSE_ID)
                             .values()
                             .stream()
@@ -170,7 +167,7 @@ public class SchoolSchedulingTest {
                             .forEach(course -> {
                                 final var allocatedHours = allocatedCourseHours.get(course);
                                 final var targetedHours = targetedCourseHours.get(course);
-                                final var freeSlots = solution.demandsUnused()
+                                final var freeSlots = solution.demandsFree()
                                         .columnView(COURSE_ID)
                                         .lookup(course)
                                         .size();

@@ -118,8 +118,8 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Database demandsUnused() {
-        return allocations.demandsUnused();
+    public Database demandsFree() {
+        return allocations.demandsFree();
     }
 
     @Override

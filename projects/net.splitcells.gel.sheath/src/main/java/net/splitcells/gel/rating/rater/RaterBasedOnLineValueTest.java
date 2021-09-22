@@ -10,7 +10,6 @@
  */
 package net.splitcells.gel.rating.rater;
 
-import net.splitcells.gel.data.database.Databases;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -24,8 +23,6 @@ import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueSel
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.optimization.primitive.LinearDeinitializer.linearDeinitializer;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RaterBasedOnLineValueTest {
@@ -50,19 +47,19 @@ public class RaterBasedOnLineValueTest {
                 .toProblem()
                 .asSolution();
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
-        testSubjectContainer.allocate(testSubjectContainer.demandsUnused().getRawLine(0)
+        testSubjectContainer.allocate(testSubjectContainer.demandsFree().getRawLine(0)
                 , testSubjectContainer.suppliesFree().getRawLine(0));
-        testSubjectContainer.allocate(testSubjectContainer.demandsUnused().getRawLine(1)
+        testSubjectContainer.allocate(testSubjectContainer.demandsFree().getRawLine(1)
                 , testSubjectContainer.suppliesFree().getRawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(11));
         testSubjectContainer.remove(testSubjectContainer.getRawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(1));
         testSubjectContainer.remove(testSubjectContainer.getRawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
-        testSubjectContainer.allocate(testSubjectContainer.demandsUnused().getRawLine(0)
+        testSubjectContainer.allocate(testSubjectContainer.demandsFree().getRawLine(0)
                 , testSubjectContainer.suppliesFree().getRawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(1));
-        testSubjectContainer.allocate(testSubjectContainer.demandsUnused().getRawLine(1)
+        testSubjectContainer.allocate(testSubjectContainer.demandsFree().getRawLine(1)
                 , testSubjectContainer.suppliesFree().getRawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(11));
     }

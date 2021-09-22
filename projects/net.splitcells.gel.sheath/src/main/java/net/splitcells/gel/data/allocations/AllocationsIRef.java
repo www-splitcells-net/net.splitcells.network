@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
- * {@link #demandsUsed()} ()} and {@link #demandsUnused()} contain all {@link Line} of {@link #demands()}.
+ * {@link #demandsUsed()} ()} and {@link #demandsFree()} contain all {@link Line} of {@link #demands()}.
  * {@link Line} with the same conceptional identity und different {@link Database} contexts have the same {@link Line#index()}.
  * The same applies to {@link #supplies()}.
  * <p/>

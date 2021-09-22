@@ -101,8 +101,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Database demandsUnused() {
-        return this.allocations.demandsUnused();
+    public Database demandsFree() {
+        return this.allocations.demandsFree();
     }
 
     @Override

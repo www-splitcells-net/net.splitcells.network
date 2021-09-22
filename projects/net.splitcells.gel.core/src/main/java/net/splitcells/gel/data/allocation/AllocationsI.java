@@ -144,7 +144,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Database demandsUnused() {
+    public Database demandsFree() {
         return demands_free;
     }
 

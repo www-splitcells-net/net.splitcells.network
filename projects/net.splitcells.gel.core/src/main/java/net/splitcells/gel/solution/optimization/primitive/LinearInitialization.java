@@ -31,11 +31,11 @@ public class LinearInitialization implements Optimization {
 
     @Override
     public List<OptimizationEvent> optimize(SolutionView solution) {
-        if (solution.demandsUnused().hasContent() && solution.suppliesFree().hasContent()) {
+        if (solution.demandsFree().hasContent() && solution.suppliesFree().hasContent()) {
             return list(
                     optimizationEvent
                             (ADDITION
-                                    , solution.demandsUnused().getLines().get(0).toLinePointer()
+                                    , solution.demandsFree().getLines().get(0).toLinePointer()
                                     , solution.suppliesFree().getLines().get(0).toLinePointer()));
 
         }

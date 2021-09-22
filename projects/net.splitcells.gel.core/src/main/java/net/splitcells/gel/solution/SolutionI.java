@@ -48,7 +48,7 @@ public class SolutionI implements Solution {
 
     @Override
     public boolean isComplete() {
-        return demandsUnused().size() == 0
+        return demandsFree().size() == 0
                 || demands().size() < supplies().size()
                 && demandsUsed().size() == supplies().size();
     }
@@ -112,8 +112,8 @@ public class SolutionI implements Solution {
     }
 
     @java.lang.SuppressWarnings("all")
-    public Database demandsUnused() {
-        return this.problem.demandsUnused();
+    public Database demandsFree() {
+        return this.problem.demandsFree();
     }
 
     @java.lang.SuppressWarnings("all")
