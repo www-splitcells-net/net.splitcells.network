@@ -168,9 +168,12 @@ public class SchoolSchedulingTest {
                             .stream()
                             .distinct()
                             .forEach(course -> {
-                                solution.demandsUnused()
+                                final var allocatedHours = allocatedCourseHours.get(course);
+                                final var targetedHours = targetedCourseHours.get(course);
+                                final var freeSlots = solution.demandsUnused()
                                         .columnView(COURSE_ID)
-                                        .lookup(course);
+                                        .lookup(course)
+                                        .size();
                             });
                     return null;
                 });
