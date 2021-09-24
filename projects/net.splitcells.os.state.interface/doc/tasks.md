@@ -8,18 +8,19 @@ The priority of a task is just a guideline.
 1. Add tests.
 1. Improve echo output and make it nice, for a certain setting.
 ### Current Tasks
-1. Implement testing:
+1. Install manpages without admin like rights: https://askubuntu.com/questions/244809/how-do-i-manually-install-a-man-page-file/1110199#1110199
+2. Implement testing:
    1. Fix Gitlab-Runner Test and ensure that test failures are automatically found,
       which is currently not the case.
    1. Use [toolbox](https://github.com/containers/toolbox).
       1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
-2. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
-3. Document reasoning for command line based dependency injection,
+3. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
+4. Document reasoning for command line based dependency injection,
    in light of the fact, that there are stability issues with that.
    Also, document how to avoid stability issues.
-4. Move command documentation into the commands itself.
-5. Generate admin script instead of just executing such,
+5. Move command documentation into the commands itself.
+6. Generate admin script instead of just executing such,
    in order to make the software more stable.
 ### Things needed to be fixed.
 ### Strategies needed to be defined.
