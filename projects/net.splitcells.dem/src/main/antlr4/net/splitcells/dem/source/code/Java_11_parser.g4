@@ -170,7 +170,7 @@ string_content
 	| Dot string_content?
 	;
 type_declaration
-    : name type_argument?
+    : type_path type_argument?
     ;
 type_argument
     : Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
