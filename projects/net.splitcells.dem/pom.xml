@@ -29,6 +29,28 @@
     </dependencies>
     <profiles>
         <profile>
+            <id>javadoc</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <doclet>net.splitcells.dem.source.code.CommonMarkDoclet</doclet>
+                            <docletArtifact>
+                                <groupId>net.splitcells</groupId>
+                                <artifactId>dem</artifactId>
+                                <version>0.0.1-SNAPSHOT</version>
+                            </docletArtifact>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <!-- Used for grammar parsing. -->
             <id>antlr4</id>
             <activation>

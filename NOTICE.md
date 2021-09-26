@@ -48,6 +48,7 @@ all licenses present.
 * BSD-2-Clause
 * BSD-3-Clause
 * GPL-2.0-or-later WITH Classpath-exception-2.0
+* GPL-2.0 WITH Classpath-exception-2.0
 * EPL-2.0
 * ISC
 * LGPL-2.1-or-later
@@ -57,6 +58,9 @@ all licenses present.
 #### Third Party Dependencies List
 
 The licenses of the transitive dependencies are not listed here.
+
+OpenJDK:
+* License: GNU General Public License, version 2, with the Classpath Exception 
 
 com.github.javaparser:javaparser-symbol-solver-core
 
