@@ -82,8 +82,11 @@ import_type_declaration
 interface_definition
     : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_interface?
     	Whitespace? name
-        Whitespace? Brace_curly_open Whitespace? Whitespace? Brace_curly_closed
+        Whitespace? Brace_curly_open interface_definition_member* Whitespace? Brace_curly_closed
     ;
+interface_definition_member
+	: Whitespace?
+	;
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/ Whitespace?
     ;
