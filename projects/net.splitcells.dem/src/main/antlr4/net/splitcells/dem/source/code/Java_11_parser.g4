@@ -82,13 +82,21 @@ import_type_declaration
 interface_definition
     : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_interface?
     	Whitespace? name
+    	interface_extension
         Whitespace? Brace_curly_open interface_definition_member* Whitespace? Brace_curly_closed
     ;
+interface_extension
+	: Whitespace Keyword_extends Whitespace type_declaration
+	;
 interface_definition_member_method
-    : Whitespace? javadoc? Whitespace? annotation? Whitespace? Keyword_default? Whitespace? Keyword_static?
+    : Whitespace? javadoc?
+    	Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static?
     	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
-        name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace?
-        Brace_curly_closed
+        name Whitespace? call_arguments Semicolon
+    | Whitespace? javadoc? Whitespace? annotation? Whitespace? Keyword_extends Whitespace? Keyword_static?
+          	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
+              name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace?
+              Brace_curly_closed
     ;
 interface_definition_member
 	: Whitespace? interface_definition_member_method
