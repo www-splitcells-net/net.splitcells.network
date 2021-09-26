@@ -84,8 +84,14 @@ interface_definition
     	Whitespace? name
         Whitespace? Brace_curly_open interface_definition_member* Whitespace? Brace_curly_closed
     ;
+interface_definition_member_method
+    : Whitespace? javadoc? Whitespace? annotation? Whitespace? Keyword_default? Whitespace? Keyword_static?
+    	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
+        name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace?
+        Brace_curly_closed
+    ;
 interface_definition_member
-	: Whitespace?
+	: Whitespace? interface_definition_member_method
 	;
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/ Whitespace?
