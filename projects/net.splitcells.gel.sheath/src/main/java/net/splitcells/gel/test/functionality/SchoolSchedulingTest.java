@@ -12,13 +12,16 @@ package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.host.interaction.Domsole;
 import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
 import net.splitcells.dem.resource.host.interaction.MessageFilter;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -38,11 +41,11 @@ import java.util.stream.IntStream;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.interaction.UiRouter.uiRouter;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
-import static net.splitcells.dem.utils.MathUtils.distance;
-import static net.splitcells.dem.utils.MathUtils.roundToInt;
+import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.lambdas.DescriptiveLambda.describedPredicate;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -172,6 +175,14 @@ public class SchoolSchedulingTest {
                             .columnView(ALLOCATED_HOURS)
                             .lookup(0)
                             .getLines();
+                    final Map<Integer, List<Line>> freeSupplies = map();
+                    solution.suppliesFree()
+                            .getLines()
+                            .stream()
+                            .filter(l -> l.value(ALLOCATED_HOURS) != 0)
+                            .forEach(line ->
+                                    freeSupplies.addIfAbsent(line.value(ALLOCATED_HOURS), Lists::list).add(line)
+                            );
                     solution.demandsFree()
                             .columnView(COURSE_ID)
                             .values()
@@ -193,9 +204,19 @@ public class SchoolSchedulingTest {
                                             , freeSlot.toLinePointer()
                                             , nullHour.toLinePointer()));
                                 });
-                                var plannedHours = allocatedHours;
+                                randomness.chooseOneOf(sumsForTarget(targetedHours - allocatedHours
+                                                , solution.demandsFree()
+                                                        .columnView(ALLOCATED_HOURS)
+                                                        .values()
+                                                        .stream()
+                                                        .distinct()
+                                                        .collect(toList())))
+                                        .forEach(e
+                                                -> optimization.add(optimizationEvent(StepType.ADDITION
+                                                , freeSlots.remove(0).toLinePointer()
+                                                , freeSupplies.get(e).remove(0).toLinePointer())));
                             });
-                    return null;
+                    return optimization;
                 });
         return simpleConstraintGroupBasedRepair(groupSelector(randomness(), minimumConstraintGroupPath
                         , 1)
