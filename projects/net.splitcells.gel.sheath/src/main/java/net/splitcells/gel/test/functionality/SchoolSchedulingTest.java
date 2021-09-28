@@ -186,7 +186,6 @@ public class SchoolSchedulingTest {
                                         .getLines();
                                 final var nonEmptySlotCount = randomness.integer(1, freeSlots.size());
                                 final var emptySlotCount = freeSlots.size() - nonEmptySlotCount;
-                                var plannedHours = allocatedHours;
                                 rangeClosed(1, emptySlotCount).forEach(i -> {
                                     final var freeSlot = freeSlots.remove(0);
                                     final var nullHour = freeNulls.remove(0);
@@ -194,6 +193,7 @@ public class SchoolSchedulingTest {
                                             , freeSlot.toLinePointer()
                                             , nullHour.toLinePointer()));
                                 });
+                                var plannedHours = allocatedHours;
                             });
                     return null;
                 });

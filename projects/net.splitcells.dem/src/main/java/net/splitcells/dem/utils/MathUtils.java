@@ -10,12 +10,32 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
+
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public final class MathUtils {
 
-    private MathUtils() {
-        throw new ConstructorIllegal();
+    public static List<List<Integer>> sumsForTarget(int target, List<Integer> sumComponents) {
+        return sumsForTarget(target, sumComponents, list());
+    }
+
+    private static List<List<Integer>> sumsForTarget(int target, List<Integer> sumComponents
+            , List<Integer> currentResult) {
+        final List<List<Integer>> nextResults = list();
+        final var sum = currentResult.stream().reduce(Integer::sum).orElse(0);
+        sumComponents.stream()
+                .filter(c -> sum + c <= target)
+                .map(c -> listWithValuesOf(currentResult).withAppended(c))
+                .map(c -> sumsForTarget(target, sumComponents, c))
+                .forEach(nextResults::addAll);
+        if (nextResults.isEmpty()) {
+            return list(currentResult);
+        }
+        return nextResults;
     }
 
     public static int roundToInt(double arg) {
@@ -64,4 +84,7 @@ public final class MathUtils {
         }
     }
 
+    private MathUtils() {
+        throw new ConstructorIllegal();
+    }
 }
