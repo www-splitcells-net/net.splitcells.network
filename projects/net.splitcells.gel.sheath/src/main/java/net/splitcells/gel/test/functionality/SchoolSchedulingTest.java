@@ -147,7 +147,7 @@ public class SchoolSchedulingTest {
 
     public static Optimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
         final var randomness = randomness();
-        simpleConstraintGroupBasedRepair(groupSelector(randomness, minimumConstraintGroupPath
+        return simpleConstraintGroupBasedRepair(groupSelector(randomness, minimumConstraintGroupPath
                         , 1)
                 , (freeSupplyCount, supplyFreedCount) -> solution -> {
                     final var courses = Maps.<Integer, Set<Line>>map();
@@ -218,9 +218,10 @@ public class SchoolSchedulingTest {
                             });
                     return optimization;
                 });
+        /* TODO REMOVE this when the obove works.
         return simpleConstraintGroupBasedRepair(groupSelector(randomness(), minimumConstraintGroupPath
                         , 1)
-                , supplySelector());
+                , supplySelector());*/
     }
 
     @Tag(INTEGRATION_TEST)
