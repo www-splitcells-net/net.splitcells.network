@@ -110,7 +110,7 @@ public class SchoolSchedulingTest {
             final var teacherAllocationForCourses = input.get(1);
             final var studentAllocationsForCourses = input.get(2);
             railsForSchoolScheduling.optimize(linearInitialization());
-            IntStream.rangeClosed(1, 1).forEach(i -> {
+            rangeClosed(1, 1).forEach(i -> {
                 railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
 
@@ -187,7 +187,7 @@ public class SchoolSchedulingTest {
                                 final var nonEmptySlotCount = randomness.integer(1, freeSlots.size());
                                 final var emptySlotCount = freeSlots.size() - nonEmptySlotCount;
                                 var plannedHours = allocatedHours;
-                                IntStream.rangeClosed(1, emptySlotCount).forEach(i -> {
+                                rangeClosed(1, emptySlotCount).forEach(i -> {
                                     final var freeSlot = freeSlots.remove(0);
                                     final var nullHour = freeNulls.remove(0);
                                     optimization.add(optimizationEvent(StepType.ADDITION
