@@ -147,6 +147,7 @@ public class SchoolSchedulingTest {
 
     public static Optimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
         final var randomness = randomness();
+        // TODO Split up into multiple methods for better overview and documentation.
         return simpleConstraintGroupBasedRepair(groupSelector(randomness, minimumConstraintGroupPath
                         , 1)
                 , (freeSupplyCount, supplyFreedCount) -> solution -> {
@@ -163,10 +164,15 @@ public class SchoolSchedulingTest {
                                         .reduce((a, b) -> a + b)
                                         .get());
                     });
+                    final var allCourses = Maps.<Integer, Set<Line>>map();
+                    solution.demands().columnView(COURSE_ID).values().stream().distinct()
+                            .forEach(e -> allCourses.put(e, setOfUniques()));
+                    allCourses.keySet().forEach(course -> allCourses.get(course)
+                            .addAll(solution.demands().columnView(COURSE_ID).lookup(course).getLines()));
                     final var targetedCourseHours = Maps.<Integer, Integer>map();
-                    allocatedCourses.keySet().forEach(course
+                    allCourses.keySet().forEach(course
                             -> targetedCourseHours.put(course
-                            , allocatedCourses.get(course)
+                            , allCourses.get(course)
                                     .iterator()
                                     .next()
                                     .value(COURSE_LENGTH)));
