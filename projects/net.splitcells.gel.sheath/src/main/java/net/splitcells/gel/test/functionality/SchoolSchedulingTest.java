@@ -205,7 +205,7 @@ public class SchoolSchedulingTest {
                                             , nullHour.toLinePointer()));
                                 });
                                 randomness.chooseOneOf(sumsForTarget(targetedHours - allocatedHours
-                                                , solution.demandsFree()
+                                                , solution.suppliesFree()
                                                         .columnView(ALLOCATED_HOURS)
                                                         .values()
                                                         .stream()
