@@ -150,23 +150,23 @@ public class SchoolSchedulingTest {
         return simpleConstraintGroupBasedRepair(groupSelector(randomness, minimumConstraintGroupPath
                         , 1)
                 , (freeSupplyCount, supplyFreedCount) -> solution -> {
-                    final var courses = Maps.<Integer, Set<Line>>map();
+                    final var allocatedCourses = Maps.<Integer, Set<Line>>map();
                     solution.columnView(COURSE_ID).values().stream().distinct()
-                            .forEach(e -> courses.put(e, setOfUniques()));
-                    courses.keySet().forEach(course -> courses.get(course)
+                            .forEach(e -> allocatedCourses.put(e, setOfUniques()));
+                    allocatedCourses.keySet().forEach(course -> allocatedCourses.get(course)
                             .addAll(solution.columnView(COURSE_ID).lookup(course).getLines()));
                     final var allocatedCourseHours = Maps.<Integer, Integer>map();
-                    courses.keySet().forEach(course -> {
+                    allocatedCourses.keySet().forEach(course -> {
                         allocatedCourseHours.put(course
-                                , courses.get(course).stream()
+                                , allocatedCourses.get(course).stream()
                                         .map(c -> c.value(ALLOCATED_HOURS))
                                         .reduce((a, b) -> a + b)
                                         .get());
                     });
                     final var targetedCourseHours = Maps.<Integer, Integer>map();
-                    courses.keySet().forEach(course
+                    allocatedCourses.keySet().forEach(course
                             -> targetedCourseHours.put(course
-                            , courses.get(course)
+                            , allocatedCourses.get(course)
                                     .iterator()
                                     .next()
                                     .value(COURSE_LENGTH)));
