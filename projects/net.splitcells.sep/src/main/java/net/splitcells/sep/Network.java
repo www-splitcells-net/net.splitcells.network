@@ -1,7 +1,6 @@
-package net.splitcells.sep.test.functionality;
+package net.splitcells.sep;
 
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.Optimization;
 
