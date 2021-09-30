@@ -1,9 +1,11 @@
 package net.splitcells.sep;
 
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.Optimization;
 
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -19,6 +21,7 @@ public class Network {
 
     }
 
+    @ReturnsThis
     public Network withNode(String key, Solution solution) {
         if (solutions.containsKey(key)) {
             throw new IllegalArgumentException(key);
@@ -27,6 +30,7 @@ public class Network {
         return this;
     }
 
+    @ReturnsThis
     public Network withNode(String key, Function<Solution, Solution> constructor, String dependencyKey) {
         if (solutions.containsKey(key)) {
             throw new IllegalArgumentException(key);
@@ -35,11 +39,13 @@ public class Network {
         return this;
     }
 
+    @ReturnsThis
     public Network withExecution(String argumentKey, Function<Solution, Solution> execution) {
         solutions.put(argumentKey, execution.apply(solutions.get(argumentKey)));
         return this;
     }
 
+    @ReturnsThis
     public Network withOptimization(String argumentKey, Optimization execution) {
         return withExecution(argumentKey, s -> s.optimize(execution.optimize(s)));
     }
