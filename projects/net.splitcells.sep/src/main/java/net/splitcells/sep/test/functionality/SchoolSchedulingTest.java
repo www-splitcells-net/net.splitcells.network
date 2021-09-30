@@ -399,6 +399,12 @@ public class SchoolSchedulingTest {
                 )
                 .flatMap(e -> e.stream())
                 .collect(toList());
+        rangeClosed(1, numberOfRails).mapToObj(railId ->
+                        rangeClosed(1, numberOfVintages * numberOfSubjects * numberOfCourses)
+                                .mapToObj(i -> Lists.<Object>list(0, railId))
+                                .collect(toList()))
+                .flatMap(e -> e.stream())
+                .forEach(railCapacity::add);
         return defineRailsForSchoolScheduling(courses, railCapacity);
     }
 
