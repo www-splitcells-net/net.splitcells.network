@@ -78,7 +78,7 @@ Releases are done everytime an important ticket is completed.
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
 * **2021-09-30** **\#s6** [Jumpstart State Network Optimization (SEP)](https://todo.sr.ht/~splitcells-net/net.splitcells.network/6):
-  Thereby the SchoolSchedulingTest was migrated to new API in order to simplify
+  Thereby the SchoolSchedulingTest was migrated to new the API in order to simplify
   future code for this test.
 * **2021-09-19** Define chrome installation command via flatpak.
 * **2021-09-17**: **\#10** Introduce the first pure project: [net.splitcells.dem.merger](projects/pure/net.splitcells.dem.merger)
