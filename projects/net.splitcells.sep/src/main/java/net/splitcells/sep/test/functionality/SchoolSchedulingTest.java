@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -198,7 +199,7 @@ public class SchoolSchedulingTest {
                             .stream()
                             .distinct()
                             .forEach(course -> {
-                                final var allocatedHours = allocatedCourseHours.get(course);
+                                final var allocatedHours = allocatedCourseHours.getOrDefault(course, 0);
                                 final var targetedHours = targetedCourseHours.get(course);
                                 final var freeSlots = solution.demandsFree()
                                         .columnView(COURSE_ID)
@@ -219,6 +220,7 @@ public class SchoolSchedulingTest {
                                                         .values()
                                                         .stream()
                                                         .distinct()
+                                                        .filter(e -> e != 0)
                                                         .collect(toList())))
                                         .forEach(e
                                                 -> optimization.add(optimizationEvent(StepType.ADDITION
