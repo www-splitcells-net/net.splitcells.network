@@ -214,21 +214,23 @@ public class SchoolSchedulingTest {
                                             , freeSlot.toLinePointer()
                                             , nullHour.toLinePointer()));
                                 });
-                                randomness.chooseOneOf(sumsForTarget(targetedHours - allocatedHours
-                                                , solution.suppliesFree()
-                                                        .columnView(ALLOCATED_HOURS)
-                                                        .values()
-                                                        .stream()
-                                                        .distinct()
-                                                        .filter(e -> e != 0)
-                                                        .collect(toList()))
+                                final var possibleSplits = sumsForTarget(targetedHours - allocatedHours
+                                        , solution.suppliesFree()
+                                                .columnView(ALLOCATED_HOURS)
+                                                .values()
                                                 .stream()
-                                                .filter(e -> e.size() == nonEmptySlotCount)
+                                                .distinct()
+                                                .filter(e -> e != 0)
                                                 .collect(toList()))
-                                        .forEach(e
-                                                -> optimization.add(optimizationEvent(StepType.ADDITION
-                                                , freeSlots.remove(0).toLinePointer()
-                                                , freeSupplies.get(e).remove(0).toLinePointer())));
+                                        .stream()
+                                        .filter(e -> e.size() == nonEmptySlotCount)
+                                        .collect(toList());
+                                if (!possibleSplits.isEmpty()) {
+                                    randomness.chooseOneOf(possibleSplits).forEach(e
+                                            -> optimization.add(optimizationEvent(StepType.ADDITION
+                                            , freeSlots.remove(0).toLinePointer()
+                                            , freeSupplies.get(e).remove(0).toLinePointer())));
+                                }
                             });
                     return optimization;
                 });
