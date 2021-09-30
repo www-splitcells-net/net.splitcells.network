@@ -106,7 +106,7 @@ public class SchoolSchedulingTest {
     }
 
     /**
-     * maven.execute net.splitcells.gel.test.functionality.SchoolSchedulingTest -Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false -Dnet.splitcells.dem.environment.config.StaticFlags.TELLING_STORY=true
+     * maven.execute net.splitcells.sep.test.functionality.SchoolSchedulingTest -Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false -Dnet.splitcells.dem.environment.config.StaticFlags.TELLING_STORY=true
      *
      * @param args
      */
