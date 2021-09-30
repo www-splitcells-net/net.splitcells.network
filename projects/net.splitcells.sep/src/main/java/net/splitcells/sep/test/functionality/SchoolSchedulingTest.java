@@ -31,6 +31,7 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
+import net.splitcells.sep.Network;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -65,10 +66,15 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.Constrai
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.supplySelector;
+import static net.splitcells.sep.Network.network;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 public class SchoolSchedulingTest {
+
+    private static final String RAILS_FOR_SCHOOL_SCHEDULING = "rails for school scheduling";
+    private static final String TEACHER_ALLOCATION_FOR_COURSES = "teacher allocation for courses";
+    private static final String STUDENT_ALLOCATION_FOR_COURSES = "student allocations for courses";
 
     private static final Attribute<Integer> TEACHER = attribute(Integer.class, "teacher");
     private static final Attribute<Integer> SUBJECT = attribute(Integer.class, "subject");
@@ -108,31 +114,28 @@ public class SchoolSchedulingTest {
     @Test
     public static void main(String... args) {
         GelDev.process(() -> {
-            var input = schoolScheduling(15, 20, 30);
-            final var railsForSchoolScheduling = input.get(0);
-            final var teacherAllocationForCourses = input.get(1);
-            final var studentAllocationsForCourses = input.get(2);
-            railsForSchoolScheduling.optimize(linearInitialization());
+            var network = registerSchoolScheduling(network(), 15, 20, 30);
+            network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, linearInitialization());
             rangeClosed(1, 1).forEach(i -> {
-                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(4)
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
 
-                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(3)
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3)
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
-                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(4)
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
 
-                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(2)
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(2)
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
-                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(4)
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
 
-                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(1)
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(1)
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
-                railsForSchoolScheduling.optimizeWithFunction(railsForSchoolSchedulingOptimization(4)
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
             });
-            railsForSchoolScheduling.createStandardAnalysis();
+            network.process(RAILS_FOR_SCHOOL_SCHEDULING, Solution::createStandardAnalysis);
             //teacherAllocationForCourses.optimize(linearInitialization());
             //studentAllocationsForCourses.optimize(linearInitialization());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
@@ -306,6 +309,39 @@ public class SchoolSchedulingTest {
     public void testSchoolScheduling() {
         schoolScheduling(15, 20, 30);
         fail("Test not implemented");
+    }
+
+    private static Network registerSchoolScheduling(Network network, int minimalNumberOfStudentsPerCourse
+            , int optimalNumberOfStudentsPerCourse
+            , int maximumNumberOfStudentsPerCourse) {
+        final var numberOfSubjects = 27;
+        network.withNode(RAILS_FOR_SCHOOL_SCHEDULING
+                        , defineRailsForSchoolScheduling(2
+                                , numberOfSubjects
+                                , 30
+                                , 410d / 158d
+                                , 4
+                                , 17))
+                .withNode(TEACHER_ALLOCATION_FOR_COURSES
+                        , railsForSchoolScheduling ->
+                                defineTeacherAllocationForCourses
+                                        (railsForSchoolScheduling
+                                                , 56
+                                                , 158d / 56d
+                                                , 158)
+                        , RAILS_FOR_SCHOOL_SCHEDULING)
+                .withNode(STUDENT_ALLOCATION_FOR_COURSES
+                        , teacherAllocationForCourses -> defineStudentAllocationsForCourses
+                                (teacherAllocationForCourses
+                                        , 92
+                                        , 11
+                                        , minimalNumberOfStudentsPerCourse
+                                        , optimalNumberOfStudentsPerCourse
+                                        , maximumNumberOfStudentsPerCourse
+                                        , 115
+                                        , 11)
+                        , TEACHER_ALLOCATION_FOR_COURSES);
+        return network;
     }
 
     private static List<Solution> schoolScheduling(int minimalNumberOfStudentsPerCourse
