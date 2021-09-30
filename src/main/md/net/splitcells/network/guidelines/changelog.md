@@ -21,7 +21,7 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
 <General Release Comments>
 ### Major Changes
 * **<Date Of Completion If Known>
-  * **\#<Ticket Number>**: [<Ticket Title>](Link to Ticket)
+  * **\#<Ticket Number>**: [<Ticket Title>](Link to Ticket):
      <Ticket Description And Comments>
   * **\#<Ticket Number>**: <Ticket Title>
      <Ticket Description And Comments>
