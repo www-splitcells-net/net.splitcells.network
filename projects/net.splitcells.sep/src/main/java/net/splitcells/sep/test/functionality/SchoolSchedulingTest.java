@@ -221,7 +221,10 @@ public class SchoolSchedulingTest {
                                                         .stream()
                                                         .distinct()
                                                         .filter(e -> e != 0)
-                                                        .collect(toList())))
+                                                        .collect(toList()))
+                                                .stream()
+                                                .filter(e -> e.size() == nonEmptySlotCount)
+                                                .collect(toList()))
                                         .forEach(e
                                                 -> optimization.add(optimizationEvent(StepType.ADDITION
                                                 , freeSlots.remove(0).toLinePointer()
