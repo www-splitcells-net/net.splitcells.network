@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.gel.test.functionality;
+package net.splitcells.sep.test.functionality;
 
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
@@ -100,7 +100,7 @@ public class SchoolSchedulingTest {
     }
 
     /**
-     * maven.execute net.splitcells.gel.test.functionality.SchoolSchedulingTest
+     * maven.execute net.splitcells.gel.test.functionality.SchoolSchedulingTest -Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false -Dnet.splitcells.dem.environment.config.StaticFlags.TELLING_STORY=true
      *
      * @param args
      */
