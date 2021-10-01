@@ -264,46 +264,15 @@
                     </xsl:attribute>
                 </link>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <xsl:element name="link">
+                <link rel="apple-touch-icon">
                     <!-- Some Mobile browsers only support pngs as favicons. -->
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'apple-touch-icon'"/>
-                    </xsl:attribute>
                     <xsl:attribute name="href">
                         <xsl:value-of select="s:root-relative-url('/images/icon.png')"/>
                     </xsl:attribute>
-                </xsl:element>
-                <xsl:element name="title">
+                </link>
+                <title>
                     <xsl:value-of select="concat(./s:title, ' / ', $siteName)"/>
-                </xsl:element>
-                <xsl:element name="link">
-                    <xsl:attribute name="href">
-                        <xsl:value-of select="s:root-relative-url('feed.rss.xml')"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'application/rss+xml'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="'alternate'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="title">
-                        <xsl:value-of select="'Latest 10 blog posts (RSS)'"/>
-                    </xsl:attribute>
-                </xsl:element>
-                <xsl:element name="link">
-                    <xsl:attribute name="href">
-                        <xsl:value-of select="s:root-relative-url('feed.atom.xml')"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'application/atom+xml'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="'alternate'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="title">
-                        <xsl:value-of select="'Latest 10 blog posts (Atom)'"/>
-                    </xsl:attribute>
-                </xsl:element>
+                </title>
                 <xsl:element name="link">
                     <xsl:attribute name="rel">
                         <xsl:value-of select="'stylesheet'"/>
@@ -533,21 +502,6 @@
                            href="https://localhost:8444/net/splitcells/martins/avots/support/system/projects.html">
                             Discovery
                         </a>
-                        <div style="display: none; visibility: hidden">
-                            <h3>Additional Functions</h3>
-                            <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                <xsl:attribute name="href">
-                                    <xsl:value-of select="s:root-relative-url('/feed.atom.xml')"/>
-                                </xsl:attribute>
-                                Atom feed
-                            </a>
-                            <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                <xsl:attribute name="href">
-                                    <xsl:value-of select="s:root-relative-url('/feed.rss.xml')"/>
-                                </xsl:attribute>
-                                Rss feed
-                            </a>
-                        </div>
                         <h3>Interesting Third Party Sites</h3>
                         <div class="advertise-one-of">
                             <xsl:for-each
