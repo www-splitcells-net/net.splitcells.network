@@ -120,6 +120,8 @@ main {
 	}
 .text_error {
 	color: var(--error-foreground-color-priority-1);
+	padding-left: 1em;
+	font-weight: bold;
 	}
 .PresentationBox {
 	box-shadow: .15em .15em .1em 0em var(--shadow-color-priority-1);

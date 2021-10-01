@@ -363,8 +363,7 @@
                         </a>
                         <div class="messages">
                             <h3>Messages</h3>
-                            <div class="noScriptMessage TextCell text_error"
-                                 style="padding-left: 1em; font-weight: bold;">- Activate Javascript in
+                            <div class="noScriptMessage TextCell text_error">- Activate Javascript in
                                 order to enable all
                                 functions
                                 of this site.
