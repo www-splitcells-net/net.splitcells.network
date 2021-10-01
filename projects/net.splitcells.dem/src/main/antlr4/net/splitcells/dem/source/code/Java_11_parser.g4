@@ -33,8 +33,8 @@ access
 annotation
 	: Whitespace? Keysymbol_at name;
 call_arguments
-    : Brace_round_open Brace_round_closed
-    | Brace_round_open Whitespace? call_arguments_element Whitespace? call_arguments_next* Whitespace? Brace_round_closed
+    : Whitespace? Brace_round_open Brace_round_closed
+    | Whitespace? Brace_round_open Whitespace? call_arguments_element Whitespace? call_arguments_next* Whitespace? Brace_round_closed
     ;
 call_arguments_element
     : reference
@@ -48,8 +48,12 @@ class_definition
         Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
     ;
 class_member
-    : class_member_method_definition
+    : class_constructor
+    | class_member_method_definition
     | class_member_value_declaration
+    ;
+class_constructor
+    : Whitespace? Keyword_private Whitespace name call_arguments statement_body
     ;
 class_member_method_definition
     : Whitespace? javadoc? Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static?
@@ -144,6 +148,9 @@ statement
     | Whitespace? expression Semicolon
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
     | Whitespace? name Whitespace Equals Whitespace expression Semicolon
+    ;
+statement_body
+    : Whitespace? Brace_curly_open statement* Whitespace? Brace_curly_closed
     ;
 statement_if_else
 	: Whitespace? Keyword_else Whitespace Brace_curly_open statement+ Whitespace? Brace_curly_closed
