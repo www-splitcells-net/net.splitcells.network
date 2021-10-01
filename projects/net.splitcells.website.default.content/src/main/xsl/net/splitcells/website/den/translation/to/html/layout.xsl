@@ -609,7 +609,7 @@
                                             </xsl:attribute>
                                             Privacy Policy
                                         </a>
-                                        <div style="flex: auto;"></div>
+                                        <div class="net-splitcells-space-filler"></div>
                                         <div class="net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
                                              onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-0-full-screen');
@@ -630,7 +630,6 @@
                                     </div>
                                     <div class="net-splitcells-structural-guide"/>
                                     <div class="splitcells-net-line net-splitcells-component-priority-0">
-                                        <!-- TODO This should be just h1 in future. -->
                                         <div class="splitcells-net-line-title">
                                             <xsl:if test="./s:title.detailed">
                                                 <xsl:value-of select="./s:title.detailed"/>

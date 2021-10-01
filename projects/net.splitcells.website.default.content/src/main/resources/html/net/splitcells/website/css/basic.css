@@ -21,6 +21,9 @@ pre {
 * {
 	word-break: normal;
 	}
+.net-splitcells-space-filler {
+	flex: auto;
+	}
 .net-splitcells-hidden {
 	display: none;
 	visibility: hidden;
