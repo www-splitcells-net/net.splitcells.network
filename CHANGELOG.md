@@ -20,6 +20,8 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-10-01**: Install man pages to `~/bin/man/man1` so that the common man
+  command can find and display man pages installed by os state interface.
 * **2021-09-18**: Install pip modules via `pip.module.install` for user
   and therefore without admin rights.
 * **2021-09-18**: Remove command `system.configure.auto` of OS state interface

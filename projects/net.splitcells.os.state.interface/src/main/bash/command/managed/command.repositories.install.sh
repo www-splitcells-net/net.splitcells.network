@@ -58,11 +58,10 @@ do
 			cd ..
 		fi
 		chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
-		if [ -d ../doc/man ]; then
-			cd ../doc/man
-			# TODO Support multiple sections.
-			mkdir -p ~/.local/share/man/man1/
-			find . -type f | sort -n | xargs -i cp {} ~/.local/share/man/man1/
+		if [ -d ../doc/man1 ]; then
+			cd ../doc/man1
+			mkdir -p ~/bin/man/man1
+			find . -type f | sort -n | xargs -i cp {} ~/bin/man/man1
 		fi
 	fi
 done < "$repoList"
