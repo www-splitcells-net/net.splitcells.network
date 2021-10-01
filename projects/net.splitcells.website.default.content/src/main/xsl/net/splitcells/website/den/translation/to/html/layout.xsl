@@ -273,40 +273,22 @@
                 <title>
                     <xsl:value-of select="concat(./s:title, ' / ', $siteName)"/>
                 </title>
-                <xsl:element name="link">
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'stylesheet'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'text/css'"/>
-                    </xsl:attribute>
+                <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:value-of
                                 select="s:default-root-relative-url('/css/theme.white.variables.css')"/>
                     </xsl:attribute>
-                </xsl:element>
-                <xsl:element name="link">
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'stylesheet'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'text/css'"/>
-                    </xsl:attribute>
+                </link>
+                <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:value-of select="s:default-root-relative-url('/css/basic.themed.css')"/>
                     </xsl:attribute>
-                </xsl:element>
-                <xsl:element name="link">
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'stylesheet'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'text/css'"/>
-                    </xsl:attribute>
+                </link>
+                <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:value-of select="s:default-root-relative-url('/css/basic.css')"/>
                     </xsl:attribute>
-                </xsl:element>
+                </link>
                 <link rel="stylesheet" type="text/css" media="none">
                     <xsl:attribute name="href">
                         <xsl:value-of
@@ -318,31 +300,18 @@
                         <xsl:value-of select="s:default-root-relative-url('/css/den.css')"/>
                     </xsl:attribute>
                 </link>
-                <xsl:element name="link">
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'stylesheet'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'text/css'"/>
-                    </xsl:attribute>
+                <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:value-of
                                 select="s:default-root-relative-url('/css/layout.default.css')"/>
                     </xsl:attribute>
-                </xsl:element>
-                <xsl:element name="link">
-                    <!-- TODO Support for different themes. -->
-                    <xsl:attribute name="rel">
-                        <xsl:value-of select="'stylesheet'"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="'text/css'"/>
-                    </xsl:attribute>
+                </link>
+                <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:value-of
                                 select="s:default-root-relative-url('/js/syntaxhighlighter.white/theme.css')"/>
                     </xsl:attribute>
-                </xsl:element>
+                </link>
             </head>
             <body>
                 <main id="topElement">
