@@ -469,8 +469,8 @@
                                     select="document('/net.splitcells.website/current/xml/net/splitcells/martins/avots/website/advertisement-object-social.xml')/rdf:RDF/rdf:Description">
                                 <div>
                                     <xsl:if test="position() != 1">
-                                        <xsl:attribute name="style"
-                                                       select="'display: none; visibility: hidden;'"/>
+                                        <xsl:attribute name="class"
+                                                       select="'net-splitcells-hidden'"/>
                                     </xsl:if>
                                     <a class="net-splitcells-button net-splitcells-component-priority-3">
                                         <xsl:attribute name="href" select="@rdf:resource"/>

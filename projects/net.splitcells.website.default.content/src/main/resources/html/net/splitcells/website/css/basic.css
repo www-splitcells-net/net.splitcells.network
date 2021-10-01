@@ -21,6 +21,10 @@ pre {
 * {
 	word-break: normal;
 	}
+.net-splitcells-hidden {
+	display: none;
+	visibility: hidden;
+}
 .net-splitcells-button-inline {
 	margin-left: .0625em;
     margin-right: .0625em;
