@@ -63,7 +63,9 @@ class_member_method_definition
     ;
 class_member_value_declaration
     : Whitespace? javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
-        type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement?
+        type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement
+    | Whitespace? javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
+              type_declaration? Whitespace? name Whitespace? Semicolon
     ;
 expression
     : string Whitespace? access?
@@ -147,7 +149,8 @@ statement
     | Whitespace? Keyword_return Whitespace expression Semicolon
     | Whitespace? expression Semicolon
     | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
-    | Whitespace? name Whitespace Equals Whitespace expression Semicolon
+    | Whitespace? name Whitespace? access Whitespace Equals Whitespace expression Semicolon
+    | Whitespace? name                    Whitespace Equals Whitespace expression Semicolon
     ;
 statement_body
     : Whitespace? Brace_curly_open statement* Whitespace? Brace_curly_closed

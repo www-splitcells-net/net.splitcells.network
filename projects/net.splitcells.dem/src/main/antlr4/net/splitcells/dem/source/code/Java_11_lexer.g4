@@ -58,7 +58,7 @@ Question_mark: '?';
 Comment_multiline: '/*' .*? '*/';
 Line_comment: '//' .*? Line_ending;
 fragment Line_ending: [\n\r]+;
-Name: [a-zA-Z0-9_] [a-zA-Z0-9_]*;
+Name: [a-zA-Z0-9_][a-zA-Z0-9_]*;
 Semicolon: ';';
 Whitespace: [ \t\n\r]+;
 Quote: '"';
