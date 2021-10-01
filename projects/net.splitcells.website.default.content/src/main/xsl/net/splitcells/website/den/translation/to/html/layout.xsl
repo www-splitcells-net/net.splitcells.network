@@ -378,13 +378,6 @@
                         <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">
                             Content
                         </a>
-                        <a class="net-splitcells-button premature">
-                            <xsl:attribute name="href">
-                                <xsl:value-of
-                                        select="s:root-relative-url('/premature-content.html')"/>
-                            </xsl:attribute>
-                            Tabs
-                        </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
