@@ -10,10 +10,6 @@
  */
 package net.splitcells.dem;
 
-import net.splitcells.dem.data.atom.Bool;
-
-import static net.splitcells.dem.data.atom.Bools.bool;
-
 public class ProcessResult {
     public static ProcessResult processResult() {
         return new ProcessResult();
