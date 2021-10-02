@@ -83,6 +83,7 @@ Releases are done everytime an important ticket is completed.
   1. The network's [blog articles](https://splitcells-net.srht.site/)
   2. CSS files
   3. Javascript files
+  4. HTML files
 * **2021-09-30** **\#s6** [Jumpstart State Network Optimization (SEP)](https://todo.sr.ht/~splitcells-net/net.splitcells.network/6):
   Provide an API in order to manage and work on complex optimizations,
   that consist of multiple sub problems.
