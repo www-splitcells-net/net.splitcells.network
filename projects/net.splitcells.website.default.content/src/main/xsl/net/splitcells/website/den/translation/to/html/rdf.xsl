@@ -12,6 +12,16 @@
                 xmlns:m="http://www.w3.org/1998/Mar:descriptionth/MathML"
                 xmlns:r="http://splitcells.net/raw.xsd"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <!--
+    Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+    which is available at https://spdx.org/licenses/MIT.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR MIT
+    -->
     <!-- Microdata from https://schema.org/docs/gs.html is used for meta data. -->
     <!-- TODO Annotate type of item described by rdf:description via Microdata
         annotation. -->

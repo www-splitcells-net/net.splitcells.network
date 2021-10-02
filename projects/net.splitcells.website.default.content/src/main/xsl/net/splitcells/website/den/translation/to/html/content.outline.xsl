@@ -13,8 +13,17 @@
                 xmlns:r="http://splitcells.net/raw.xsd"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:n="http://splitcells.net/natural.xsd"
-                xmlns:ln="http://splitcells.net/local-namespace.xsd"
->
+                xmlns:ln="http://splitcells.net/local-namespace.xsd">
+    <!--
+    Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+    which is available at https://spdx.org/licenses/MIT.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR MIT
+    -->
     <xsl:template match="node()" mode="content.outline">
         <xsl:apply-templates select="./node()" mode="content.outline"/>
     </xsl:template>

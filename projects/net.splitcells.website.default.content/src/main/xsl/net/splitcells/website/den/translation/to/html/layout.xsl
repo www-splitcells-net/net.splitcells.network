@@ -9,6 +9,16 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xl="http://www.w3.org/1999/xlink"
                 xmlns:ns="http://splitcells.net/namespace.xsd">
+    <!--
+    Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+    which is available at https://spdx.org/licenses/MIT.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR MIT
+    -->
     <!-- Defines the standard html layout. -->
     <!-- TODO s:root-relative-url( -->
     <!-- TODO PERFORMANCE Do not import libraries which are not needed. -->

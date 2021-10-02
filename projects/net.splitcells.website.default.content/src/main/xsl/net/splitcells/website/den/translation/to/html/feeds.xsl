@@ -11,6 +11,16 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:rss="http://www.rssboard.org/rss-specification"
 	xmlns:atom="http://www.w3.org/2005/Atom">
+	<!--
+    Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+    which is available at https://spdx.org/licenses/MIT.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR MIT
+    -->
 	<xsl:template match="s:article.feed.latest.atom">
 		<!-- TODO Remove namespace prefixes and namepsace declarations. -->
 		<xsl:variable name="limit">
