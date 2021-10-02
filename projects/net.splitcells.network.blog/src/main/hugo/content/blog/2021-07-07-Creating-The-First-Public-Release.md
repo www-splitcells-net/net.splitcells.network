@@ -136,3 +136,6 @@ On the other hand, this creates uncertainty, which in turn makes this whole
 journey a lot more exciting.
 
 We'll see, what will happen.
+
+The article is licensed under the [EPL-2.0](http://splitcells.net/net/splitcells/network/legal/licenses/EPL-2.0.txt)
+OR [MIT](http://splitcells.net/net/splitcells/network/legal/licenses/MIT.txt).

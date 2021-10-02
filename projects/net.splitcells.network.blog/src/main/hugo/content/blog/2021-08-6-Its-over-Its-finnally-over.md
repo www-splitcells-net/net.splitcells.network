@@ -49,3 +49,6 @@ In short, the problem space which can be modeled is smaller,
 but the optimizer became problem independent.
 
 We'll see, what surprises the future will give to us.
+
+The article is licensed under the [EPL-2.0](http://splitcells.net/net/splitcells/network/legal/licenses/EPL-2.0.txt)
+OR [MIT](http://splitcells.net/net/splitcells/network/legal/licenses/MIT.txt).

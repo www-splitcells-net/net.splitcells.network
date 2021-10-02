@@ -33,3 +33,6 @@ and focusing on cleaning up the metadata:
 * Fixing the licensing info.
 * Creating a contribution protocol.
 * Defining the API development model.
+
+The article is licensed under the [EPL-2.0](http://splitcells.net/net/splitcells/network/legal/licenses/EPL-2.0.txt)
+OR [MIT](http://splitcells.net/net/splitcells/network/legal/licenses/MIT.txt).

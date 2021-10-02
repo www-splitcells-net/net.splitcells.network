@@ -83,3 +83,6 @@ Metaphorically speaking, the 2 parties point at each other with guns and state,
 that all shared secrets put into the open source project,
 shall stay open and pledge, that these secrets are up-to-date.
 > We both publish our parts, and ensure, that these are up-to-date.
+
+The article is licensed under the [EPL-2.0](http://splitcells.net/net/splitcells/network/legal/licenses/EPL-2.0.txt)
+OR [MIT](http://splitcells.net/net/splitcells/network/legal/licenses/MIT.txt).
