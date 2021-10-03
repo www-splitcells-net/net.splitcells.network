@@ -1,6 +1,10 @@
 # Splitcells Network Blog
 
+TODO: Add nice ASCII art.
+
 > Together we are more than the sum of our cells.
+
+=> gemini://splitcells-net.srht.site/gemini-links.gmi Gemini Links
 
 => https://git.sr.ht/~splitcells-net/net.splitcells.network Sourcehut Repository
 

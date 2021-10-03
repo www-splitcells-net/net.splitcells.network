@@ -1,0 +1,9 @@
+# Gemini Links
+
+## Gemini Related
+
+=> gemini://geminispace.info Gemini Search Engine
+
+=> gemini://drewdevault.com Drew DeVault's blog
+
+=> gemini://gemini.circumlunar.space Gemini Protocol Info
