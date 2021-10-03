@@ -1,7 +1,15 @@
-=> gemini://splitcells-net.srht.site/2021-08-10-Developing-Software-At-Gunpoint-Weak-Copy-Left-Versus-Pseudo-Permissive.gmi 2021-08-10-Developing-Software-At-Gunpoint-Weak-Copy-Left-Versus-Pseudo-Permissive
+# Splitcells Network Blog
 
-=> gemini://splitcells-net.srht.site/2021-08-6-Its-over-Its-finnally-over.gmi 2021-08-6-Its-over-Its-finnally-over
+> Together we are more than the sum of our cells.
 
-=> gemini://splitcells-net.srht.site/2021-07-20-Pulling-The-Rip-Line.gmi 2021-07-20-Pulling-The-Rip-Line
+=> https://git.sr.ht/~splitcells-net/net.splitcells.network Sourcehut Repository
 
-=> gemini://splitcells-net.srht.site/2021-07-07-Creating-The-First-Public-Release.gmi 2021-07-07-Creating-The-First-Public-Release
+## Articles
+
+=> gemini://splitcells-net.srht.site/2021-08-10-Developing-Software-At-Gunpoint-Weak-Copy-Left-Versus-Pseudo-Permissive.gmi 2021-08-10 Developing Software At Gunpoint Weak Copy Left Versus Pseudo Permissive
+
+=> gemini://splitcells-net.srht.site/2021-08-6-Its-over-Its-finnally-over.gmi 2021-08-6 Its over Its finnally over
+
+=> gemini://splitcells-net.srht.site/2021-07-20-Pulling-The-Rip-Line.gmi 2021-07-20 Pulling The Rip Line
+
+=> gemini://splitcells-net.srht.site/2021-07-07-Creating-The-First-Public-Release.gmi 2021-07-07 Creating The First Public Release
