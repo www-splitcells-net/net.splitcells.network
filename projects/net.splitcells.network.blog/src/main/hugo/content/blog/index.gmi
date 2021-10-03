@@ -1,0 +1,7 @@
+=> gemini://splitcells-net.srht.site/2021-08-10-Developing-Software-At-Gunpoint-Weak-Copy-Left-Versus-Pseudo-Permissive.gmi 2021-08-10-Developing-Software-At-Gunpoint-Weak-Copy-Left-Versus-Pseudo-Permissive
+
+=> gemini://splitcells-net.srht.site/2021-08-6-Its-over-Its-finnally-over.gmi 2021-08-6-Its-over-Its-finnally-over
+
+=> gemini://splitcells-net.srht.site/2021-07-20-Pulling-The-Rip-Line.gmi 2021-07-20-Pulling-The-Rip-Line
+
+=> gemini://splitcells-net.srht.site/2021-07-07-Creating-The-First-Public-Release.gmi 2021-07-07-Creating-The-First-Public-Release

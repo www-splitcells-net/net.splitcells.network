@@ -8,4 +8,9 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 set -e
-./bin/build.hugo
+mvn clean
+projectPath=$(pwd)
+cd src/main/hugo/content/blog
+mkdir -p $projectPath/target/site
+cp $projectPath/src/main/hugo/content/blog/index.gmi $projectPath/target/site/index.gmi
+ls | xargs -i md2gemini --dir $projectPath/target/site --frontmatter --write {}

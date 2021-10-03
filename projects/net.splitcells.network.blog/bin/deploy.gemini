@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
 #
 # This program and the accompanying materials are made available under the
@@ -7,5 +7,9 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-set -e
-./bin/build.hugo
+./bin/build.gemini
+tar -C target/site -cvz . > target/site.tar.gz
+curl --oauth2-bearer $net_splitcells_network_blog_srht_site_access_token \
+    -Fcontent=@target/site.tar.gz \
+    -Fprotocol=GEMINI \
+    https://pages.sr.ht/publish/splitcells-net.srht.site
