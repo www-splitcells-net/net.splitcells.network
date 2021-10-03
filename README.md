@@ -30,7 +30,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 🤝 Collaborate large decision-making networks.
 
-🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/)([Gemini](gemini://splitcells-net.srht.site)) and programming progress via our [changelog](./CHANGELOG.md).
+🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) ([also on Gemini](gemini://splitcells-net.srht.site)) and programming progress via our [changelog](./CHANGELOG.md).
 
 🦉 Get an [bird's-eye view](src/main/md/net/splitcells/network/overview.md).
 
