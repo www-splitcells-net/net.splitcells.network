@@ -8,4 +8,5 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 set -e
-./bin/deploy
+./bin/deploy.gemini
+./bin/deploy.hugo
