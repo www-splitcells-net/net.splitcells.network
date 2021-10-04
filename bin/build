@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # This tests every command.
 set -e
+export JAVA_VERSION=11
 cd projects/net.splitcells.system
   ./bin/build
