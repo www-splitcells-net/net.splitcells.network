@@ -8,6 +8,8 @@ TODO: Add nice ASCII art.
 
 => https://git.sr.ht/~splitcells-net/net.splitcells.network Sourcehut Repository
 
+=> http://splitcells.net Personal Website
+
 ## Articles
 
 => gemini://splitcells-net.srht.site/2021-08-10-Developing-Software-At-Gunpoint-Weak-Copy-Left-Versus-Pseudo-Permissive.gmi 2021-08-10: Developing Software At Gunpoint Weak Copy Left Versus Pseudo Permissive
