@@ -79,7 +79,9 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-* **2021-10-05** Create blog article [Development Timing And Discovery Based Networks Of Perspectives](https://splitcells-net.srht.site/blog/2021-10-04-development-timing-and-discovery-based-networks-of-perspectives/).
+* **2021-10-05** Create blog articles:
+  * [Development Timing And Discovery Based Networks Of Perspectives](https://splitcells-net.srht.site/blog/2021-10-04-development-timing-and-discovery-based-networks-of-perspectives/)
+  * [There is the bad, there is the horrible and than there is \<sight\> error handling.](https://splitcells-net.srht.site/blog/2021-10-04-there-is-bad-there-is-horrible-and-than-there-is-error-handling/)
 * **2021-10-03** **\#101** [Support gemini protocol for network blog](https://github.com/www-splitcells-net/net.splitcells.network/issues/101):
   The site was deployed to `splitcells-net.srht.site`([Gemini link](gemini://splitcells-net.srht.site)).
 * **2021-10-02** **\#99** [Add license headers to all webservers default content](https://github.com/www-splitcells-net/net.splitcells.network/issues/99):
