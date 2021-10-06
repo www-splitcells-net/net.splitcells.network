@@ -12,7 +12,7 @@ TODO: Add nice ASCII art.
 
 ## Articles
 
-=> gemini://splitcells-net.srht.site/2021-10-04-There-Is-Bad-There-Is-Horrible-And-Than-There-is-Error-Handling.gmi 2021-10-04 There Is Bad There Is Horrible And Than There is Error Handling
+=> gemini://splitcells-net.srht.site/2021-10-04-There-Is-Bad-There-Is-Horrible-And-Then-There-is-Error-Handling.gmi 2021-10-04 There is the bad, there is the horrible, and then there is <sight> error handling.
 
 => gemini://splitcells-net.srht.site/2021-10-04-Development-Timing-And-Discovery-Based-Networks-Of-Perspectives.gmi 2021-10-04 Development Timing And Discovery Based Networks Of Perspectives
 
