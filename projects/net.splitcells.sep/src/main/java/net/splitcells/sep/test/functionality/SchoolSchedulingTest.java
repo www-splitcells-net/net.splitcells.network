@@ -205,7 +205,18 @@ public class SchoolSchedulingTest {
                                         .columnView(COURSE_ID)
                                         .lookup(course)
                                         .getLines();
-                                final var nonEmptySlotCount = randomness.integer(1, freeSlots.size());
+                                final var possibleNonEmptySlotCount = sumsForTarget(targetedHours - allocatedHours
+                                        , solution.suppliesFree()
+                                                .columnView(ALLOCATED_HOURS)
+                                                .values()
+                                                .stream()
+                                                .distinct()
+                                                .filter(e -> e != 0)
+                                                .collect(toList()))
+                                        .stream()
+                                        .map(e -> e.size())
+                                        .collect(toList());
+                                final var nonEmptySlotCount = randomness.chooseOneOf(possibleNonEmptySlotCount);
                                 final var emptySlotCount = freeSlots.size() - nonEmptySlotCount;
                                 rangeClosed(1, emptySlotCount).forEach(i -> {
                                     final var freeSlot = freeSlots.remove(0);
