@@ -185,13 +185,13 @@ public class SchoolSchedulingTest {
                             .columnView(ALLOCATED_HOURS)
                             .lookup(0)
                             .getLines();
-                    final Map<Integer, List<Line>> freeSupplies = map();
+                    final Map<Integer, List<Line>> freeSuppliesByAllocatedHours = map();
                     solution.suppliesFree()
                             .getLines()
                             .stream()
                             .filter(l -> l.value(ALLOCATED_HOURS) != 0)
                             .forEach(line ->
-                                    freeSupplies.addIfAbsent(line.value(ALLOCATED_HOURS), Lists::list).add(line)
+                                    freeSuppliesByAllocatedHours.addIfAbsent(line.value(ALLOCATED_HOURS), Lists::list).add(line)
                             );
                     solution.demandsFree()
                             .columnView(COURSE_ID)
@@ -249,11 +249,11 @@ public class SchoolSchedulingTest {
                                     chosenSplit.forEach(e
                                             -> {
                                         final var chosenRail = chosenRails.remove(0);
-                                        final var chosenSupply = freeSupplies.get(e).stream()
+                                        final var chosenSupply = freeSuppliesByAllocatedHours.get(e).stream()
                                                 .filter(s -> s.value(RAIL).equals(chosenRail))
                                                 .findFirst()
                                                 .get();
-                                        freeSupplies.get(e).remove(chosenSupply);
+                                        freeSuppliesByAllocatedHours.get(e).remove(chosenSupply);
                                         optimization.add(optimizationEvent(StepType.ADDITION
                                                 , freeSlots.remove(0).toLinePointer()
                                                 , chosenSupply.toLinePointer()));
