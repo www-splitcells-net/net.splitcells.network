@@ -22,9 +22,9 @@ Some of them are not strictly related to optimization and can be used in other c
 
 ## Where to start?
 
-🏗️ Deploy software.
-
 🚀 [Model and optimize problems.](projects/net.splitcells.gel.doc/src/main/md/net/splitcells/gel/index.md)
+
+🏗️ Deploy software.
 
 🔬 Analyze and organize your operations and prepare schedules.
 
