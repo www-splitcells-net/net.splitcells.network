@@ -74,4 +74,9 @@ public final class OptimizationEvent implements Domable {
         }
         throw new IllegalArgumentException();
     }
+
+    @Override
+    public String toString() {
+        return stepType.name() + ": " + demand.index() + ", " + supply.index();
+    }
 }

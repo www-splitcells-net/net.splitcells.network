@@ -16,6 +16,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.table.Line;
@@ -23,11 +24,14 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.Optimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
+import org.assertj.core.api.Condition;
 
 import java.util.function.Predicate;
 
+import static net.splitcells.dem.data.atom.Integers.isEven;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.testing.Assertions.assertComplies;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.*;
 import static net.splitcells.dem.data.set.list.Lists.*;
@@ -128,7 +132,8 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         .map(e -> e.supply().interpret().get())
                         .collect(toList())));
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            assertThat((Predicate<Integer>) Integers::isEven).accepts(optimization.size());
+            // TODO IDEA Maybe this is not always needed.
+            assertComplies(optimization, o -> isEven(o.size()), "For every removal there should be an addition.");
         }
         return optimization;
     }
