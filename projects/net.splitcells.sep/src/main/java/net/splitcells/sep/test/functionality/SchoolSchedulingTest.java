@@ -237,10 +237,27 @@ public class SchoolSchedulingTest {
                                         .filter(e -> e.size() == nonEmptySlotCount)
                                         .collect(toList());
                                 if (!possibleSplits.isEmpty()) {
-                                    randomness.chooseOneOf(possibleSplits).forEach(e
-                                            -> optimization.add(optimizationEvent(StepType.ADDITION
-                                            , freeSlots.remove(0).toLinePointer()
-                                            , freeSupplies.get(e).remove(0).toLinePointer())));
+                                    final var chosenSplit = randomness.chooseOneOf(possibleSplits);
+                                    final var chosenRails = randomness.chooseAtMostMultipleOf(chosenSplit.size()
+                                            , solution.suppliesFree()
+                                                    .getLines()
+                                                    .stream()
+                                                    .filter(l -> l.value(ALLOCATED_HOURS) != 0)
+                                                    .map(l -> l.value(RAIL))
+                                                    .distinct()
+                                                    .collect(toList()));
+                                    chosenSplit.forEach(e
+                                            -> {
+                                        final var chosenRail = chosenRails.remove(0);
+                                        final var chosenSupply = freeSupplies.get(e).stream()
+                                                .filter(s -> s.value(RAIL).equals(chosenRail))
+                                                .findFirst()
+                                                .get();
+                                        freeSupplies.get(e).remove(chosenSupply);
+                                        optimization.add(optimizationEvent(StepType.ADDITION
+                                                , freeSlots.remove(0).toLinePointer()
+                                                , chosenSupply.toLinePointer()));
+                                    });
                                 }
                             });
                     return optimization;

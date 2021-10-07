@@ -51,6 +51,8 @@ import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 
 /**
+ * TODO Use constraint system for database queries regularly.
+ * <p>
  * TODO Create non incremental constraint system as an alternative and double check.
  * <p>
  * TODO Use  parallelization.

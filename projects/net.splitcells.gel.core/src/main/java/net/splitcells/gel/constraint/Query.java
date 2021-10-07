@@ -16,25 +16,29 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 
+/**
+ * TODO Split this up in read only query and builder based on query.
+ * Somehow illegal queries need to be marked via interface.
+ */
 public interface Query {
 
-	Query forAll(Attribute<?> args);
+    Query forAll(Attribute<?> args);
 
-	Query forAll(Rater classifier);
+    Query forAll(Rater classifier);
 
-	Query forAll();
+    Query forAll();
 
-	Query then();
+    Query then();
 
-	Query then(Rater rater);
+    Query then(Rater rater);
 
-	Query then(Rating rating);
+    Query then(Rating rating);
 
-	Query forAllCombinationsOf(Attribute<?>... args);
+    Query forAllCombinationsOf(Attribute<?>... args);
 
-	Rating rating();
+    Rating rating();
 
-	Constraint constraint();
+    Constraint constraint();
 
-	Optional<Constraint> root();
+    Optional<Constraint> root();
 }
