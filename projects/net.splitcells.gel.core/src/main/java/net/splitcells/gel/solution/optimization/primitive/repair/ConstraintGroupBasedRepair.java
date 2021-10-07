@@ -132,7 +132,7 @@ public class ConstraintGroupBasedRepair implements Optimization {
                         .map(e -> e.supply().interpret().get())
                         .collect(toList())));
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            // TODO IDEA Maybe this is not always needed.
+            // TODO This is not always needed. For instance, when the problem is not initialized.
             assertComplies(optimization, o -> isEven(o.size()), "For every removal there should be an addition.");
         }
         return optimization;

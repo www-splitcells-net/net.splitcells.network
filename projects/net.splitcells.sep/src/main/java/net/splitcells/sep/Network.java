@@ -58,7 +58,7 @@ public class Network {
 
     @ReturnsThis
     public Network withOptimization(String argumentKey, Optimization execution) {
-        return withExecution(argumentKey, s -> s.optimize(execution.optimize(s)));
+        return withExecution(argumentKey, s -> s.optimize(execution));
     }
 
     @ReturnsThis
