@@ -435,7 +435,7 @@ public class SchoolSchedulingTest {
                 .withConstraint(r -> {
                     r.forAll(lineValueSelector(describedPredicate(line -> line.value(RAIL) == 0, "void rail")))
                             .then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
-                    r.forAll(SUBJECT)
+                    r.forAll(COURSE_ID)
                             .forAll(lineValueSelector(describedPredicate(line -> line.value(RAIL) != 0, "not void rail")))
                             .then(allDifferent(RAIL));
                     r.forAll(COURSE_ID).then(regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
