@@ -1,6 +1,6 @@
 # Introduction to the Generic Allocator
-If you encounter an unknown
-[t](../../../../../../../net.splitcells.dem/src/main/md/net/splitcells/dem/guidelines/software-project-file-system-standards.md)
+If you encounter an unknown word or phrase you can lookup some of this at this
+[dictionary](../../../../../../../net.splitcells.dem/src/main/md/net/splitcells/dem/guidelines/software-project-file-system-standards.md).
 ## Introduction for Users
 The Generic Allocator (Gel) is a Java framework
 providing modeling, analytic and solving capabilities regarding optimization problems.
