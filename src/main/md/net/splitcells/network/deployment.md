@@ -2,6 +2,7 @@
 There is currently no ready to go deployment pipeline based on public artifact
 repositories or distributors.
 ## Java Project Deployment
+Build instructions for Java projects are located [here](./../../../../../../projects/net.splitcells.pom.java.defaults/README.md).
 ## OS State Interface And Its Library
 OS state interface can be installed via the projects
 [setup instructions](./../../../../../../projects/net.splitcells.os.state.interface/doc/manual/setup.md).
