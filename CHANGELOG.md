@@ -79,9 +79,11 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-* **2021-10-11** **\#119** Document deployment:
-  1. Create Maven profile `deployment` in order to create deployable jars.
-  2. [Document](src/main/md/net/splitcells/network/deployment.md) deployment and link it from README.
+* **2021-10-11**
+  1. **\#119** Document deployment:
+     1. Create Maven profile `deployment` in order to create deployable jars.
+     2. [Document](src/main/md/net/splitcells/network/deployment.md) deployment and link it from README.
+  2. **\#128** [Create word dictionary with links to their definition.](https://github.com/www-splitcells-net/net.splitcells.network/issues/128).
 * **2021-10-05** Create blog articles:
   1. [Development Timing And Discovery Based Networks Of Perspectives](https://splitcells-net.srht.site/blog/2021-10-04-development-timing-and-discovery-based-networks-of-perspectives/)
   2.[There is the bad, there is the horrible and than there is \<sight\> error handling.](https://splitcells-net.srht.site/blog/2021-10-04-there-is-bad-there-is-horrible-and-than-there-is-error-handling/)
