@@ -154,7 +154,7 @@ public class SchoolSchedulingTest {
         // TODO Split up into multiple methods for better overview and documentation.
         return simpleConstraintGroupBasedRepair(groupSelector(randomness, minimumConstraintGroupPath
                         , 1)
-                , (freeSupplyCount, supplyFreedCount) -> solution -> {
+                , (freeDemandGroups, freeSupplies) -> solution -> {
                     final var allocatedCourses = Maps.<Integer, Set<Line>>map();
                     solution.columnView(COURSE_ID).values().stream().distinct()
                             .forEach(e -> allocatedCourses.put(e, setOfUniques()));
