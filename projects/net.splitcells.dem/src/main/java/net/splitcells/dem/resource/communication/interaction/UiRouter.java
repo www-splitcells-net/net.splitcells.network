@@ -58,7 +58,8 @@ public class UiRouter implements Ui {
                             .resolve("main")
                             .resolve("csv");
                     createDirectory(consolePath);
-                    consolePath = consolePath.resolve(arg.path().get(0));
+                    // TODO HACK File Suffix
+                    consolePath = consolePath.resolve(arg.path().get(0) + ".csv");
                 } else {
                     final var filePath = Lists.listWithValuesOf(arg.path());
                     // TODO HACK File Suffix
@@ -77,7 +78,7 @@ public class UiRouter implements Ui {
                     routing.put(arg.path()
                             , pdsui(stringSender(new FileOutputStream(consolePath.toFile())), messageFilter));
                 } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
+                    throw new RuntimeException(arg.path().toString(), e);
                 }
             }
             routing.get(arg.path()).append(arg);
