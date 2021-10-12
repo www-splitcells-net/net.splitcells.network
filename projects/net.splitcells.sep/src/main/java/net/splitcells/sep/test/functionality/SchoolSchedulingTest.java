@@ -258,6 +258,8 @@ public class SchoolSchedulingTest {
                                                 , freeSlots.remove(0).toLinePointer()
                                                 , chosenSupply.toLinePointer()));
                                     });
+                                } else {
+                                    throw new RuntimeException();
                                 }
                             });
                     return optimization;
