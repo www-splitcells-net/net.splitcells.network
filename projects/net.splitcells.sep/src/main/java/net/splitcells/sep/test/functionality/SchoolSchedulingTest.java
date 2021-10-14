@@ -193,18 +193,25 @@ public class SchoolSchedulingTest {
                             .forEach(line ->
                                     freeSuppliesByAllocatedHours.addIfAbsent(line.value(ALLOCATED_HOURS), Lists::list).add(line)
                             );
-                    solution.demandsFree()
-                            .columnView(COURSE_ID)
-                            .values()
+                    freeDemandGroups.values()
                             .stream()
+                            .reduce((a, b) -> a.with(b))
+                            .get()
+                            .stream()
+                            .map(d -> d.value(COURSE_ID))
                             .distinct()
                             .forEach(course -> {
                                 final var allocatedHours = allocatedCourseHours.getOrDefault(course, 0);
                                 final var targetedHours = targetedCourseHours.get(course);
-                                final var freeSlots = solution.demandsFree()
-                                        .columnView(COURSE_ID)
-                                        .lookup(course)
-                                        .getLines();
+                                final var courseGroup = freeDemandGroups.keySet().stream()
+                                        .filter(courseKey -> freeDemandGroups.get(courseKey).iterator().next()
+                                                .value(COURSE_ID)
+                                                .equals(course))
+                                        .findFirst()
+                                        .get();
+                                final var freeSlots = freeDemandGroups.get(courseGroup)
+                                        .stream()
+                                        .collect(toList());
                                 final var possibleNonEmptySlotCount = sumsForTarget(targetedHours - allocatedHours
                                         , solution.suppliesFree()
                                                 .columnView(ALLOCATED_HOURS)
