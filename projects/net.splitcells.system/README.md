@@ -10,4 +10,4 @@ which is an optimization and problem modeling framework.
 
 ## Building The System
 
-Build this project via [build command](./bin/build).
+Build this project via the [build command](./bin/build).
