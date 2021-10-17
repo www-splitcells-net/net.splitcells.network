@@ -45,7 +45,7 @@ call_arguments_next
     ;
 class_definition
     : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? name
-        Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
+        Whitespace? Extension_Exception? Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
     ;
 class_member
     : class_constructor
