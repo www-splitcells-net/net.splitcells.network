@@ -11,3 +11,4 @@ target/
 ### Python
 .pydevproject
 
+.vagrant/

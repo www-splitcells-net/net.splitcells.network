@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+export VAGRANT_VAGRANTFILE=./.config/net.splitcells.os.state.interface/Vagrantfile
+vagrant up
+#vagrant ssh
+  # TODO The project subfolder is not mounted correctly: /vagrant/projects/pure/net.splitcells.dem.merger
+#sudo pkg install -y openjdk11 maven python3
+#vagrant destroy
