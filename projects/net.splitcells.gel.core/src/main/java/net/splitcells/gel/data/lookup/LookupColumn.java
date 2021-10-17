@@ -11,6 +11,7 @@
 package net.splitcells.gel.data.lookup;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -49,12 +50,12 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public boolean isEmpty() {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public boolean contains(Object o) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -64,52 +65,52 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public Object[] toArray() {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public boolean add(T e) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public boolean remove(Object o) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public void clear() {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
@@ -126,37 +127,37 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public void add(int index, T value) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public T remove(int index) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public int indexOf(Object o) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public ListIterator<T> listIterator() {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public ListIterator<T> listIterator(int index) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override
     public List<T> subList(int startIndex, int endIndex) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     private void ensureInitializedLookup() {

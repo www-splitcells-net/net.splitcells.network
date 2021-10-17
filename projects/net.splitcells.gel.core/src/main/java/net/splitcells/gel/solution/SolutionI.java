@@ -58,7 +58,7 @@ public class SolutionI implements Solution {
     }
 
     public boolean tolerable(final long error_threshold) {
-        throw new NotImplementedYet();
+        throw notImplementedYet();
     }
 
     @Override

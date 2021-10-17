@@ -8,21 +8,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.gel.data.table;
-
-import net.splitcells.dem.utils.ConstructorIllegal;
-import net.splitcells.dem.utils.NotImplementedYet;
+package net.splitcells.dem.object;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-public class LineSF {
-
-	private LineSF() {
-		throw new ConstructorIllegal();
-	}
-
-	public static Line emptyLine(Table table) {
-		throw notImplementedYet();
-	}
-
+public interface DeepCloneable {
+    default <R> R deepClone(Class<? extends R> arg) {
+        throw notImplementedYet();
+    }
 }

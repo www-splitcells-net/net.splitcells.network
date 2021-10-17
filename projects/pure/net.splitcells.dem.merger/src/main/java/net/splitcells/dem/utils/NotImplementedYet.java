@@ -21,9 +21,8 @@ public final class NotImplementedYet extends RuntimeException {
     public static NotImplementedYet notImplementedYet(String message) {
         return new NotImplementedYet(message);
     }
-
-    @Deprecated
-    public NotImplementedYet() {
+    
+    private NotImplementedYet() {
 
     }
 
