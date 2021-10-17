@@ -16,6 +16,8 @@ import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.util.Optional;
 
+import static net.splitcells.website.server.renderer.extension.commonmark.LinkTranslator.linkTranslator;
+
 public class CommonMarkRenderer {
     public static CommonMarkRenderer commonMarkRenderer() {
         return new CommonMarkRenderer();
@@ -39,7 +41,7 @@ public class CommonMarkRenderer {
             contentToRender = arg;
         }
         final var parsed = parser.parse(contentToRender);
-        parsed.accept(new LinkTranslator());
+        parsed.accept(linkTranslator());
         return projectRenderer
                 .renderHtmlBodyContent(renderer.render(parsed)
                         , title

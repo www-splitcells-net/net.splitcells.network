@@ -5,6 +5,15 @@ import org.commonmark.node.Image;
 import org.commonmark.node.Link;
 
 public class LinkTranslator extends AbstractVisitor {
+    
+    public static LinkTranslator linkTranslator() {
+        return new LinkTranslator();
+    }
+    
+    private LinkTranslator() {
+        
+    }
+    
     @Override
     public void visit(Image image) {
         image.setDestination(image.getDestination()
