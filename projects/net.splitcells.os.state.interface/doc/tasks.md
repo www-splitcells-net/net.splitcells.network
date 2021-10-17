@@ -5,7 +5,7 @@ The priority of a task is just a guideline.
 ### Services
 1. Update project documentation.
 1. Document commands.
-1. Add tests.
+1. Improve tests.
 1. Improve echo output and make it nice, for a certain setting.
 ### Current Tasks
 1. Implement testing:
@@ -21,9 +21,6 @@ The priority of a task is just a guideline.
 4. Move command documentation into the commands itself.
 5. Generate admin script instead of just executing such,
    in order to make the software more stable.
-### Things needed to be fixed.
-### Strategies needed to be defined.
-1. Define break points of this project.
 ### Todos
 1. Do not use recursion via shell in repo commands.
    Use recursion via Python functions.
