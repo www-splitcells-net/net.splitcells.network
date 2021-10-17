@@ -24,21 +24,29 @@ The priority of a task is just a guideline.
 ### Todos
 1. Do not use recursion via shell in repo commands.
    Use recursion via Python functions.
-1. Clean up python implementations of repo commands.
-1. Create integration into user home portability projects.
-1. Create ssh deployment machanism via other frameworks like ansible.
-1. Create display brightness control commands.
-1. Create sound control command.
-1. Create shell for blind usage.
+2. Clean up python implementations of repo commands.
+3. Create integration into user home portability projects.
+4. Create ssh deployment machanism via other frameworks like ansible.
+5. Create display brightness control commands.
+6. Create sound control command.
+7. Create shell for blind usage.
    1. Things need to be considered:
       1. Way to speak currently entered command without executing it.
-1. Improve testing on local machine.
+8. Improve testing on local machine.
    1. https://spin.atomicobject.com/2016/01/11/command-line-interface-testing-tools/
    1. https://github.com/debarshiray/toolbox
    1. https://github.com/debarshiray/libpod
-1. Filesystem/harddrive checking. See fsck.
-1. Support alternative repo managers.
-1. Support script mode by default, where a script is generated,
-   instead of executing commands directly.
+9. Filesystem/harddrive checking. See fsck.
+10. Support alternative repo managers.
+11. Support script mode by default, where a script is generated,
+    instead of executing commands directly.
+12. Integrate project commands into repo commands:
+   Project repo commands may be relevant to repo commands.
+   At the very least one should inform one about the existence of related repo
+   commands during execution,
+   because it may be important for the user.
+   Note that one cannot execute the corresponding repo command automatically,
+   because this may not always be possible
+   (i.e. `repo.push` without an internet connection may not be possible).
 
 This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
