@@ -12,9 +12,8 @@ package net.splitcells.dem.data.atom;
 
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.object.DeepCloneable;
-import net.splitcells.dem.object.ShallowCopyable;
 
-public interface Bool extends ShallowCopyable, DeepCloneable {
+public interface Bool extends DeepCloneable {
 
     boolean toJavaPrimitive();
 
