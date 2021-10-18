@@ -156,6 +156,12 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-10-18**: **\#100** Fix links from CommonMark files transformed to
+   CommonMark files:
+   Before the patches the webserver could not create links between CommonMark
+   files, because the file suffix `.md` was not replaced with `.html`.
+  `.md` are the file suffix for the source CommonMark files.
+  `.html` are the file suffix for the rendered CommonMark files.
 * **2021-08-28**:
    1. Fix licensing issues found via [FOSSA](https://app.fossa.com).
 * **2021-08-05**:
