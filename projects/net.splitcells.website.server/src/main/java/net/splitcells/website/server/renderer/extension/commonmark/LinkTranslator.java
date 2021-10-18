@@ -26,10 +26,8 @@ public class LinkTranslator extends AbstractVisitor {
         link.setDestination(link.getDestination()
                 .replace("../", "")
                 .replaceAll("src\\/main\\/[a-z]+\\/", "/"));
-        System.out.println(link.getDestination());
         if (link.getDestination().endsWith(".md")) {
             link.setDestination(link.getDestination().substring(0, link.getDestination().length() - 3) + ".html");
-            System.out.println(link.getDestination());
         }
         this.visitChildren(link);
     }
