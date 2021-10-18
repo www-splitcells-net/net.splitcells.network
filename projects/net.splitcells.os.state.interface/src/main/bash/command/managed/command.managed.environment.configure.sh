@@ -24,6 +24,7 @@ mkdir -p $userFolder/.config/net.splitcells.os.state.interface
 
 # TODO Support alternative shells.
 
+touch $userFolder/.bashrc
 grep -q -F '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin' $userFolder/.bashrc
 if [ "$?" -ne "0" ]; then
 	echo '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin' >> $userFolder/.bashrc
