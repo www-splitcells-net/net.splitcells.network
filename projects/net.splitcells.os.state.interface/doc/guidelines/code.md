@@ -1,5 +1,8 @@
 # Code Guidelines
-Prefer aborting an command on first error.
+Prefer aborting a command on first error.
+## Cross Platform Compatibility
+When calling APIs via shell one should rely on the most common denominator
+(i.e. POSIX compliance).
 ## Backward Compatibility
 Starting with version 4.0, major changes,
 that are not backwards compatible,
