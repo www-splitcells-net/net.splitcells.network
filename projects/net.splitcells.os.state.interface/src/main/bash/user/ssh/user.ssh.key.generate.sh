@@ -19,5 +19,5 @@ if [ -f "~/.ssh/id_rsa" ]
 then
 	echo SSH keys already present. Nothing needs to be done.
 else
-	echo -ne '\n' | ssh-keygen -t rsa -b 4096 # Does not override existing keys.
+  ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N '' # Does not override existing keys.
 fi

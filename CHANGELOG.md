@@ -156,6 +156,15 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-10-19** **\#s7**: Fix CI timeout on sourcehut.
+  `user.ssh.key.generate.sh` causes a timeout on the build job for FreeBSD.
+  This was caused by the fact, that the file location and the password were set
+  by sending newline symbols via the echo command and a shell pipe to the
+  `ssy-keygen` command.
+  The echo command was used in a non POSIX way,
+  which fails on the new FreeBSD release.
+  This patch sets the file location and password via flags provided by
+ `ssh-keygen`.
 * **2021-10-18**: **\#100** Fix links from CommonMark files transformed to
    CommonMark files:
    Before the patches the webserver could not create links between CommonMark
