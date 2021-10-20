@@ -60,7 +60,7 @@ TODO: Short And Compact Feature Description
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_small)
 
 * [Changelog](./CHANGELOG.md)
-* [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security)
+* [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security):
   The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
   workflow has to be run manually.
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
