@@ -195,7 +195,7 @@ public class SchoolSchedulingTest {
                             );
                     freeDemandGroups.values()
                             .stream()
-                            .reduce((a, b) -> a.with(b))
+                            .reduce(Sets::merge)
                             .get()
                             .stream()
                             .map(d -> d.value(COURSE_ID))
