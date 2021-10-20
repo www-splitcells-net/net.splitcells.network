@@ -109,7 +109,6 @@ public class ConstraintGroupBasedRepair implements Optimization {
         final var demandGrouping = demandGroupings
                 .stream()
                 .reduce(map(), (a, b) -> a.withMerged(b, Set::with));
-        demandGrouping.put(null, setOfUniques(solution.demandsFree().getLines()));
         final var demandFreeing = groupsOfConstraintGroup
                 .stream()
                 .map(e -> e
@@ -131,10 +130,6 @@ public class ConstraintGroupBasedRepair implements Optimization {
                 demandFreeing.stream()
                         .map(e -> e.supply().interpret().get())
                         .collect(toList())));
-        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            // TODO This is not always needed. For instance, when the problem is not initialized.
-            assertComplies(optimization, o -> isEven(o.size()), "For every removal there should be an addition.");
-        }
         return optimization;
     }
 

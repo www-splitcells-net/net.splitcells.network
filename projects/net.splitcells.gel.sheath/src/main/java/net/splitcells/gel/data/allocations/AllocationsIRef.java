@@ -73,9 +73,9 @@ public class AllocationsIRef extends AllocationsI {
             assertThat(supply).withFailMessage("Cannot allocate without supply.").isNotNull();
             domsole().append
                     (event(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Allocations.class.getSimpleName()
-                            , path().toString()
-                            , Xml.elementWithChildren(DEMAND.value(), demand.toDom())
-                            , Xml.elementWithChildren(SUPPLY.value(), supply.toDom()))
+                                    , path().toString()
+                                    , Xml.elementWithChildren(DEMAND.value(), demand.toDom())
+                                    , Xml.elementWithChildren(SUPPLY.value(), supply.toDom()))
                             , this
                             , DEBUG
                     );
@@ -137,15 +137,15 @@ public class AllocationsIRef extends AllocationsI {
         if (TRACING) {
             domsole().append
                     (Xml.event(REMOVE.value()
-                                    + PATH_ACCESS_SYMBOL.value()
-                                    + Allocations.class.getSimpleName()
-                            , path().toString()
-                            , Xml.elementWithChildren(ALLOCATION.value()
-                                    , allocation.toDom())
-                            , Xml.elementWithChildren(DEMAND.value()
-                                    , demand.toDom())
-                            , Xml.elementWithChildren(SUPPLY.value()
-                                    , supply.toDom()))
+                                            + PATH_ACCESS_SYMBOL.value()
+                                            + Allocations.class.getSimpleName()
+                                    , path().toString()
+                                    , Xml.elementWithChildren(ALLOCATION.value()
+                                            , allocation.toDom())
+                                    , Xml.elementWithChildren(DEMAND.value()
+                                            , demand.toDom())
+                                    , Xml.elementWithChildren(SUPPLY.value()
+                                            , supply.toDom()))
                             , this
                             , DEBUG
                     );
