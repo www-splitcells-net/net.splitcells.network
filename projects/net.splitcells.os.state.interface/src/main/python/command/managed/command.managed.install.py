@@ -42,7 +42,7 @@ class Command:
 		targetFile = self.targetFolder.joinpath(targetFileName) # TODO Create test, where a command is installed and check if suffix processing works correctly.
 		if targetFile.exists():
 			while True:
-				targetFile = self.targetFolder.joinpath(self.name + '.' + str(executionCounter))
+				targetFile = self.targetFolder.joinpath(targetFileName + '.' + str(executionCounter))
 				executionCounter+=1
 				if not targetFile.exists():
 					break

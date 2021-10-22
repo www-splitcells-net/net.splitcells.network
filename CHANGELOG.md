@@ -156,6 +156,23 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-10-22** `command.managed.install` now removes the file suffix
+  of the source file, when installing the command as a dependency.
+  Previously this was only done for the API defining commands.
+  For example: the Ossi project has the command `repo.push.sh`,
+  which uses dependency injection in order to do its job.
+  This command is installed to `~/bin/net.splitcells.os.state.interface.commands.managed/repo.push`.
+  Note the stripped file suffix in order to have a name,
+  that is not specific to the implementation
+  (this behaviour was already present before the implementation).
+  Another file provides the implementation for Git repositories and is named
+  like the original command + its implementation specific file suffix.
+  Let's say `repo.push.sh`.
+  Before the patch the file suffix would not be removed and the file would be
+  installed to `~/bin/net.splitcells.os.state.interface.commands.managed/repo.push.sh.0`.
+  This would lead to an error, during the execution of `repo.push`,
+  because the dependency `repo.push.0` would not be present.
+  After the patch the file is installed to `~/bin/net.splitcells.os.state.interface.commands.managed/repo.push.0`.
 * **2021-10-19** **\#s7**: Fix CI timeout on sourcehut.
   `user.ssh.key.generate.sh` causes a timeout on the build job for FreeBSD.
   This was caused by the fact, that the file location and the password were set
