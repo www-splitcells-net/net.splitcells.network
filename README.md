@@ -145,6 +145,8 @@ Project Cluster
   * [Github](https://github.com/www-splitcells-net/net.splitcells.network)
   * [Gitlab](https://github.com/www-splitcells-net/net.splitcells.network) (Currently only used for CI.)
   * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network)
+     * [Tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)
+     * [Main Project Page](https://sr.ht/~splitcells-net/net.splitcells.network/)
 
 ## Contributing
 
