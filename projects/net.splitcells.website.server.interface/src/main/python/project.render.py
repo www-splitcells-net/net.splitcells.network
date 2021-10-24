@@ -4,6 +4,10 @@ This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0, which is available at
 http://www.eclipse.org/legal/epl-2.0, or the MIT License,
 which is available at https://spdx.org/licenses/MIT.html.
+
+It is preferred,
+that an implementation of this command should be side effect free.
+Meaning, that only `from-project` and `to-project` should be modified.
 """
 
 __author__ = "Mārtiņš Avots"
