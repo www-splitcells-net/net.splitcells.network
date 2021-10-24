@@ -96,10 +96,10 @@ interface_extension
 	;
 interface_definition_member_method
     : Whitespace? javadoc?
-    	Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static?
+    	Whitespace? annotation? Whitespace? Whitespace? modifier_visibility? Whitespace? Keyword_static?
     	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
         name Whitespace? call_arguments Semicolon
-    | Whitespace? javadoc? Whitespace? annotation? Whitespace? Keyword_extends Whitespace? Keyword_static?
+    | Whitespace? javadoc? Whitespace? annotation? Whitespace? Keyword_default Whitespace? Keyword_static?
           	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
               name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace?
               Brace_curly_closed
