@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1140"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   sodipodi:docname="tmp.svg"
+   sodipodi:docname="example.illustration.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,8 +24,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.54488788"
-     inkscape:cx="803.8351"
-     inkscape:cy="504.69099"
+     inkscape:cx="803.83509"
+     inkscape:cy="504.69098"
      inkscape:window-width="1716"
      inkscape:window-height="1141"
      inkscape:window-x="0"
@@ -339,12 +339,6 @@
          style="stroke-width:0.264583"
          x="217.38821"
          y="168.65347">SFTP server</tspan></text>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.705556;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Tail);marker-end:url(#Tail)"
-       d="m 28.972261,57.109262 c -1.859122,-1.087972 -4.00835,-1.67485 -6.162405,-1.682735 -2.154056,-0.0079 -4.307523,0.563242 -6.17456,1.637573 -1.867038,1.074332 -3.442952,2.649166 -4.518562,4.515467 -1.075611,1.866301 -1.648214,4.019376 -1.641805,6.173436 0.0065,2.186024 0.609694,4.367358 1.727209,6.246161 1.117516,1.878804 2.746377,3.450067 4.664178,4.499248 1.917801,1.049181 4.119429,1.573483 6.304271,1.501317 2.184842,-0.07217 4.347073,-0.740608 6.19146,-1.914055"
-       id="path15939"
-       inkscape:path-effect="#path-effect15941"
-       inkscape:original-d="m 28.972261,57.109262 c -6.165514,3.547647 -12.33129,7.095561 -18.497332,10.643741 -6.1660408,3.548178 12.591676,6.888183 18.887118,10.332671" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.705556;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Tail-3);marker-end:url(#Tail-3)"
        d="m 64.766289,94.925093 c -1.859122,-1.087971 -4.008349,-1.674849 -6.162404,-1.682734 -2.154055,-0.0079 -4.307521,0.563242 -6.174558,1.637573 -1.867038,1.074331 -3.442951,2.649164 -4.518562,4.515464 -1.075611,1.866304 -1.648215,4.019374 -1.641807,6.173434 0.0065,2.18602 0.609692,4.36736 1.727207,6.24616 1.117514,1.87881 2.746375,3.45007 4.664177,4.49925 1.917801,1.04919 4.119429,1.57349 6.304271,1.50132 2.184843,-0.0722 4.347074,-0.7406 6.191462,-1.91405"
