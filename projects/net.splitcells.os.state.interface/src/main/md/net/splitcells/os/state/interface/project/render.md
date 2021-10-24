@@ -10,7 +10,7 @@ the to-project:
   provided by `command.managed.execute`.
 
 Let's illustrate this with an example, the deployment of [splitcells.net](http://splitcells.net):
-![Example Illustration](../../../../../../../svg/net/splitcells/os/state/interface/project/render/example.illustration.svg)
+![Example Illustration](../../../../../../../../../src/main/svg/net/splitcells/os/state/interface/project/render/example.illustration.svg)
 1. Copy files from `website.default.content/src/main/resources` to a temporary
    folder.
 2. Build the `network.blog` with the static blog generator hugo and copy its
