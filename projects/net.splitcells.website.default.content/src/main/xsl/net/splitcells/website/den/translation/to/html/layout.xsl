@@ -724,8 +724,7 @@
                             </div>
                         </xsl:if>
                     </div>
-                    <div class="rightDecoration Right_shadow"
-                         style="width: 4.5em; display: flex; flex-direction: row; z-index: 90; order: 5;">
+                    <div class="rightDecoration Right_shadow">
                         <div class="Borderless Standard_p2 Layout decorationBoxRight"
                              style="position: relative; z-index: 2; width: 1.5em;"></div>
                         <div class="Borderless Standard_p3 Layout decorationBoxRight"
