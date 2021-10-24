@@ -62,9 +62,9 @@ class_member_method_definition
         Brace_curly_closed
     ;
 class_member_value_declaration
-    : Whitespace? javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
+    : Whitespace? javadoc? modifier_visibility? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
         type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement
-    | Whitespace? javadoc? Whitespace? Keyword_private? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
+    | Whitespace? javadoc? modifier_visibility? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
               type_declaration? Whitespace? name Whitespace? Semicolon
     ;
 expression
@@ -114,8 +114,8 @@ license_declaration
     : Comment_multiline
     ;
 modifier_visibility
-    : Keyword_public
-    | Keyword_private
+    : Whitespace? Keyword_public
+    | Whitespace? Keyword_private
     ;
 name
     /* This is needed, because token fragments can currently only be used in tokens.
