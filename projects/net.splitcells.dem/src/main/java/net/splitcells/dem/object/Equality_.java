@@ -16,6 +16,8 @@ package net.splitcells.dem.object;
  *
  * Every instance implementing this method should have consistent {@link#equalCOntents}
  * {@Object#equals} and {@Object#hashCode}.
+ *
+ * Here, no fish will be forced to fly and no bird will be forced to swim. - Motto of an Ottoman school?
  */
 public interface Equality_<T> {
     <A extends T> boolean equalContents(A arg);
