@@ -63,4 +63,5 @@ Name: [a-zA-Z0-9_][a-zA-Z0-9_]*;
 Semicolon: ';';
 Whitespace: [ \t\n\r]+;
 Quote: '"';
-fragment String_content: [a-zA-Z0-9_]*;
+fragment String_content: [a-zA-Z0-9_-]*;
+Hyphen_minus: '-';

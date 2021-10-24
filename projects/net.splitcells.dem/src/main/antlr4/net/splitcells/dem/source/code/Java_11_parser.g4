@@ -178,6 +178,7 @@ string_content
 	: String_content string_content?
 	| name string_content?
 	| Dot string_content?
+	| Hyphen_minus string_content?
 	;
 type_declaration
     : type_path type_argument?
