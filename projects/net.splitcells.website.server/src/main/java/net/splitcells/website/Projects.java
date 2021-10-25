@@ -75,6 +75,13 @@ public class Projects {
                                 , validator)
                 , projectRenderer
                         (profile
+                                , projectRepositories.resolve("net.splitcells.gel.sheath/")
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/net/splitcells/gel"
+                                , validator)
+                , projectRenderer
+                        (profile
                                 , projectRepositories.resolve("net.splitcells.system/")
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
