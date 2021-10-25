@@ -156,6 +156,9 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-10-25**  **\#90** Fix deployment of CommonMark files:
+  Before the patch CommonMark were not rendered and uploaded via the website
+  server.
 * **2021-10-22** `command.managed.install` now removes the file suffix
   of the source file, when installing the command as a dependency.
   Previously this was only done for the API defining commands.
