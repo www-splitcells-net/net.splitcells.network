@@ -85,14 +85,6 @@ You can try to decrease the likelihood of breaking a certain feature,
 by contributing an appropriate test case/suite for this feature.
 Regardless of that, keep in mind, that there is no guarantee of backwards
 compatibility.
-### Planning
-* Current Tickets:
-  * Solve new problems.
-     * [#8 Solve school scheduling problem.](https://github.com/www-splitcells-net/net.splitcells.network/issues/8)
-     * [#9 Solve sport lesson assignment.](https://github.com/www-splitcells-net/net.splitcells.network/issues/9)
-     * [#34 Try to get 1 optimization configuration, that solves all 3 new major problems.](https://github.com/www-splitcells-net/net.splitcells.network/issues/34)
-  * [#10 Create minimal Java grammar for this project in order to make code less complex.](https://github.com/www-splitcells-net/net.splitcells.network/issues/10)
-  * [#37 Simplify default web layout.](src/main/md/net/splitcells/network/tickets/open/37.md)
 ### Service
 * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
 ## Network's Structure
