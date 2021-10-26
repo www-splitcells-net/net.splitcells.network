@@ -399,7 +399,10 @@ public class ProjectRendererI implements ProjectRenderer {
             }
         }
         {
-            final var resourcePaths = list(resources, projectSrcFolder.resolve("html"))
+            final var resourcePaths = list
+                    (resources
+                            , projectSrcFolder.resolve("html")
+                            , projectSrcFolder.resolve("svg"))
                     .stream()
                     .filter(folder -> Files.isDirectory(folder))
                     .map(folder -> {
