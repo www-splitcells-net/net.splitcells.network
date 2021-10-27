@@ -65,7 +65,7 @@ website .down.> net.splitcells
 @enduml
 ```
 
-## Infrastructure
+## Public Infrastructure
 
 ```puml
 @startuml
