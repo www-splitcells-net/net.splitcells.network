@@ -9,7 +9,7 @@ Gel provides tools to model problems simply and understandably,
 because without this ability such endeavours become unnecessarily hard and time-consuming.
 
 * [Learn the concept: Scheduling COVID Vaccination Center](../../../../../../src/main/html/net/splitcells/gel/presentation/covid.html)
-* [N Queen Problem](../../../../../../src/main/html/net/splitcells/gel/test/functionality/n-queen-problem.html)
+* [Constraint System Demonstration Via N Queen Problem](../../../../../../src/main/html/net/splitcells/gel/test/functionality/n-queen-problem.html)
 
 ## Introduction for Developers
 The main entry points is located at the class `net.splitcells.gel.Gel`
