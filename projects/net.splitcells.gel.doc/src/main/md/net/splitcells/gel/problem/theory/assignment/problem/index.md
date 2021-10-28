@@ -34,7 +34,7 @@ If there has to be exactly one supply for each demand,
 then it can be called an 1 on 1 problem.
 In this case, the set of demands and the set of supplies has to have the same
 size.
-If one demand are allowed to be assigned to N supplies,
+If one demand is allowed to be assigned to N supplies,
 this can be called an 1 on N Problem.
 # Assignment Rating
 Often it is the case, that there are multiple valid solutions to a problem.
