@@ -26,7 +26,8 @@ Description in alternative languages should be placed under
 `./doc/readme/**`.
 ## Files at `./.*`
 Contains meta data like IDE configuration files or version control data.
-## Files at `./bin/*`
+## Project Commands
+The files are located at `./bin/*`.
 Contains executable programs regarding tasks of the project.
 It is preferred, if the scripts are written in such a way,
 that the current folder is located at the project's root folder.
