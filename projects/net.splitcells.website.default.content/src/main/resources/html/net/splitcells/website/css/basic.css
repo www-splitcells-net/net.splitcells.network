@@ -20,6 +20,7 @@ main {
     background-image:url('/net/splitcells/martins/avots/website//images/license.standard/white.background.blog.discovery.0.jpg');
 }
 article p img {
+	max-width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
