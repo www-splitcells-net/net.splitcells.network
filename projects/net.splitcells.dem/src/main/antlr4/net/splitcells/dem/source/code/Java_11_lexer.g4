@@ -25,6 +25,7 @@ Arrow: '->';
 Javadoc: '/**' .*? '*/';
 Keysymbol_at: '@';
 Keysymbol_equals: '==';
+Keyword_annotation: '@interface';
 Keyword_class: 'class';
 Keyword_catch: 'catch';
 Keyword_default: 'default';

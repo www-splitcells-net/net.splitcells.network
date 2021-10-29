@@ -32,6 +32,11 @@ access
     ;
 annotation
 	: Whitespace? Keysymbol_at name;
+annotation_definition
+    : Whitespace? javadoc? Whitespace? Keyword_public Whitespace? Keyword_annotation?
+    	Whitespace? name
+        Whitespace? Brace_curly_open Whitespace? Brace_curly_closed
+    ;
 call_arguments
     : Whitespace? Brace_round_open Brace_round_closed
     | Whitespace? Brace_round_open Whitespace? call_arguments_element Whitespace? call_arguments_next* Whitespace? Brace_round_closed
@@ -170,6 +175,8 @@ source_unit
     	EOF
     | license_declaration Whitespace? package_declaration import_declaration* Whitespace? interface_definition
     	Whitespace? EOF
+    | license_declaration Whitespace? package_declaration import_declaration* Whitespace? annotation_definition
+        	Whitespace? EOF
     ;
 string
 	: Quote string_content Quote
