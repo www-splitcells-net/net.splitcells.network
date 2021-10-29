@@ -93,6 +93,7 @@ import_type_declaration
 interface_definition
     : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_interface?
     	Whitespace? name
+    	type_argument?
     	interface_extension?
         Whitespace? Brace_curly_open interface_definition_member* Whitespace? Brace_curly_closed
     ;
@@ -191,7 +192,7 @@ type_declaration
     : type_path type_argument?
     ;
 type_argument
-    : Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
+    : Whitespace? Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
     ;
 type_argument_content
     : type_argument Whitespace? type_argument_content_next?
