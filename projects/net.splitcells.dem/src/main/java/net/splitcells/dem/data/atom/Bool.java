@@ -45,13 +45,4 @@ public interface Bool extends DeepCloneable {
         }
         return (R) this;
     }
-
-    @SuppressWarnings("unchecked")
-    @ReturnsThis
-    default <R extends DeepCloneable> R if_(Runnable run) {
-        if (isTrue()) {
-            run.run();
-        }
-        return (R) this;
-    }
 }
