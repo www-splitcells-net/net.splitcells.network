@@ -27,11 +27,17 @@ public interface Bool extends DeepCloneable {
 
     Bool and(Bool arg);
 
-    Bool nand(Bool arg);
+    default Bool nand(Bool arg) {
+        return this.and(arg).not();
+    }
 
-    Bool nor(Bool arg);
-
-    Bool xnor(Bool arg);
+    default Bool nor(Bool arg) {
+        return or(arg).not();
+    }
+    
+    default Bool xnor(Bool arg) {
+        return xor(arg).not();
+    }
 
     boolean isTrue();
 

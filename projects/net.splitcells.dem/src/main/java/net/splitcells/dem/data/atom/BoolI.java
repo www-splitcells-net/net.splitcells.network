@@ -56,21 +56,6 @@ public class BoolI implements Bool {
         return new BoolI(value && arg.isTrue());
     }
 
-    @Override
-    public Bool nand(Bool arg) {
-        return this.and(arg).not();
-    }
-
-    @Override
-    public Bool nor(Bool arg) {
-        return or(arg).not();
-    }
-
-    @Override
-    public Bool xnor(Bool arg) {
-        return xor(arg).not();
-    }
-
     public Bool equals(Bool arg) {
         if (value == arg.isTrue()) {
             return new BoolI(true);
