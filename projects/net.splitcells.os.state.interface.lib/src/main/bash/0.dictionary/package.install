@@ -7,5 +7,5 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-
+. this.active.if.presence.of rpm-ostree
 rpm-ostree install $1
