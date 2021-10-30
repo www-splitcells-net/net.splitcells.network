@@ -328,8 +328,7 @@
                     <div class="splitcells-net-background-window minimal-only net-splitcells-website-column-background-1">
                         <div class="splitcells-net-window-menu splitcells-net-background-window-menu"></div>
                     </div>
-                    <div class="menu Left_shadow TextCell Layout Standard_p4"
-                         style="width: 13em; vertical-align: top; visibility: inherit; display: flex; flex-direction: column; padding-bottom: 1em; order: 2;">
+                    <div class="menu Left_shadow TextCell Layout Standard_p4 net-splitcells-menu">
                         <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">
                             <div class="splitcells-net-window-menu-line-1">
                                 <a class="net-splitcells-button net-splitcells-main-button-project-logo">
@@ -686,13 +685,12 @@
                         <xsl:if test="$column_1 != ''">
                             <div class="column_1 contentCell Right_shadow"
                                  style="order: 4;">
-                                <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"
-                                     style="width:.25em;"></div>
+                                <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
                                 <article class="Standard_p2 net-splitcells-component-priority-2">
                                     <xsl:if test="$column_1 != ''">
                                         <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
                                             <div class="Standard_p3 bottomLightShadow splitcells-net-line">
-                                                <div style="flex: auto;"></div>
+                                                <div class="net-splitcells-space-filler"></div>
                                                 <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional net-splitcells-minimal-not"
                                                      onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-1-full-screen');
@@ -711,11 +709,8 @@
                                                 </div>
                                             </div>
                                             <div class="net-splitcells-structural-guide"/>
-                                            <div class="Standard_highlighted"
-                                                 style="display: flex; flex-direction: row; padding-left: .25em; flex: auto;">
-                                                <div style="font-size: 1.75em; text-align: left; padding: 0.1em;">
-                                                </div>
-                                                <div style="flex: auto;"></div>
+                                            <div class="Standard_highlighted splitcells-net-line">
+                                                <div class="net-splitcells-space-filler"></div>
                                             </div>
                                         </div>
                                     </xsl:if>

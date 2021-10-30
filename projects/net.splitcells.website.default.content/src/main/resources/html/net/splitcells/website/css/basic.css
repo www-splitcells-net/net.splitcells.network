@@ -299,6 +299,15 @@ td.TextCell {
 	font-size: 125%;
 	font-weight: bold;
 	}
+.net-splitcells-menu {
+	width: 13em;
+	vertical-align: top;
+	visibility: inherit;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 1em;
+	order: 2;
+	}
 .splitcells-net-line-title {
 	font-size: 1.75em;
 	text-align: left;

@@ -36,10 +36,11 @@ footer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-}
+    min-height: 2.5em;
+	}
 .menu h3 {
     padding-left: .25em;
-}
+	}
 .net-splitcells-content-main {
     display: flex;
     flex-direction: row;
