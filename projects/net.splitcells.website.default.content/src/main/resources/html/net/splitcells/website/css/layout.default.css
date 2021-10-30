@@ -36,7 +36,7 @@ footer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    min-height: 2.5em;
+    min-height: 2em;
 	}
 .menu h3 {
     padding-left: .25em;

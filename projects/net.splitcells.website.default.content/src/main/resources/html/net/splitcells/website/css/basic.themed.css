@@ -163,6 +163,7 @@ main {
     	background-size: 100%;
         min-width: 2em;
         max-width: 2em;
+        background-repeat: no-repeat;
     	}
 .HeaderButton_p2:hover {
 	background-color: var(--background-color-selected-priority-2);

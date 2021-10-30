@@ -347,10 +347,7 @@
                                 <a class="net-splitcells-button" href="#">nos</a>
                             </div>
                             <div class="net-splitcells-structural-guide"></div>
-                            <div class="splitcells-net-window-menu-line-2">
-                                <input type="text" class="net-splitcells-search-bar"
-                                       placeholder="search (TODO)"></input>
-                            </div>
+                            <div class="splitcells-net-window-menu-line-2"></div>
                         </div>
                         <br></br>
                         <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">

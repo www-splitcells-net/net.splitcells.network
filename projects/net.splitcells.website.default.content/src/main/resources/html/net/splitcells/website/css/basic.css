@@ -75,7 +75,7 @@ pre {
     text-align: center;
     }
 .splitcells-net-window-menu {
-    min-height: 4.75em;
+    min-height: 4.25em;
     display: flex;
     flex-direction: column;
     }
@@ -171,7 +171,7 @@ ul {
     height: 2em;
     }
 .splitcells-net-window-menu-line-2 {
-    height: 2.5em;
+    height: 2em;
     padding-top: .2em;
     }
 .HeaderButton_structure {
@@ -309,7 +309,7 @@ td.TextCell {
 	order: 2;
 	}
 .splitcells-net-line-title {
-	font-size: 1.75em;
+	font-size: 1.25em;
 	text-align: left;
 	padding: 0.1em;
 	font-weight: bold;
