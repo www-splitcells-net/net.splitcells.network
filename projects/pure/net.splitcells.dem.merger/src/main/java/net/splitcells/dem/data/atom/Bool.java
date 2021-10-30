@@ -34,7 +34,7 @@ public interface Bool extends DeepCloneable {
     default Bool nor(Bool arg) {
         return or(arg).not();
     }
-    
+
     default Bool xnor(Bool arg) {
         return xor(arg).not();
     }

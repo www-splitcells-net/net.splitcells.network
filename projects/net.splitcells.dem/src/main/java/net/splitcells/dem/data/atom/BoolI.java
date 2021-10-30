@@ -14,10 +14,14 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.CommonFunctions;
 
 public class BoolI implements Bool {
+    public static Bool bool(boolean truthValue) {
+        return new BoolI(truthValue);
+    }
+
     private final boolean value;
 
     @Deprecated
-    public BoolI(final boolean arg_val) {
+    private BoolI(boolean arg_val) {
         value = arg_val;
     }
 

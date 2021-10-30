@@ -18,6 +18,7 @@ public class Bools {
     private Bools() {
         throw constructorIllegal();
     }
+
     public static void require(boolean arg) {
         if (!arg) {
             throw new AssertionError();
@@ -25,14 +26,14 @@ public class Bools {
     }
 
     public static Bool bool(boolean arg) {
-        return new BoolI(arg);
+        return BoolI.bool(arg);
     }
 
     public static Bool truthful() {
-        return new BoolI(true);
+        return BoolI.bool(true);
     }
 
     public static Bool untrue() {
-        return new BoolI(false);
+        return BoolI.bool(false);
     }
 }
