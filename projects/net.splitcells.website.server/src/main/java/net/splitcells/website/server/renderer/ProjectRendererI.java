@@ -423,13 +423,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 resourcePaths.get().forEach(projectPaths::add);
             }
         }
-        // TODO Get this from extension.
-        if (is_file(projectFolder.resolve("README.md"))) {
-            projectPaths.add(Path.of(resourceRootPath.substring(1)).resolve("README.html"));
-        }
-        if (is_file(projectFolder.resolve("CHANGELOG.md"))) {
-            projectPaths.add(Path.of(resourceRootPath.substring(1)).resolve("CHANGELOG.html"));
-        }
+        projectPaths.addAll(extension.projectPaths(projectFolder));
         return projectPaths;
     }
 
