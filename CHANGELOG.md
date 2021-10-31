@@ -84,6 +84,9 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-10-31** **\#55** [Minimize number of used languages and protocols](https://github.com/www-splitcells-net/net.splitcells.network/issues/55):
+  Create [guidelines](src/main/md/net/splitcells/network/guidelines/source-types.md)
+  for the formats used in the source code.
 * **2021-10-11**
   1. **\#119** Document deployment:
      1. Create Maven profile `deployment` in order to create deployable jars.
