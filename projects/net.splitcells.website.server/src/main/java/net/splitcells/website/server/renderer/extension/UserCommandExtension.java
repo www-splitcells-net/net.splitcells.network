@@ -10,6 +10,8 @@
  */
 package net.splitcells.website.server.renderer.extension;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.renderer.LayoutRenderer;
@@ -21,10 +23,13 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.resource.Files.isDirectory;
+import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**
@@ -43,6 +48,11 @@ public class UserCommandExtension implements ProjectRendererExtension {
 
     }
 
+    /**
+     * @param path
+     * @param projectRenderer
+     * @return
+     */
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         if (RENDERING_PATH.equals(path) && isDirectory(BIN_FOLDER)) {
@@ -73,5 +83,17 @@ public class UserCommandExtension implements ProjectRendererExtension {
                     , Path.of(RENDERING_PATH));
         }
         return layout;
+    }
+
+    /**
+     * TODO This does not work.
+     *
+     * @param projectRoot Path of the project.
+     * @return
+     */
+    @Override
+    public Set<Path> projectPaths(Path projectRoot) {
+        domsole().appendWarning(notImplementedYet());
+        return setOfUniques();
     }
 }

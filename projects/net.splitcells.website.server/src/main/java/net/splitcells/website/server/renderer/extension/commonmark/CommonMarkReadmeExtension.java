@@ -10,6 +10,8 @@
  */
 package net.splitcells.website.server.renderer.extension.commonmark;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.extension.ProjectRendererExtension;
@@ -19,6 +21,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
@@ -56,5 +59,14 @@ public class CommonMarkReadmeExtension implements ProjectRendererExtension {
                     , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("README.html"));
         }
         return layout;
+    }
+
+    @Override
+    public Set<Path> projectPaths(Path projectRoot) {
+        final Set<Path> projectPaths = setOfUniques();
+        if (is_file(projectRoot.resolve("README.md"))) {
+            projectPaths.add(projectRoot.resolve("README.html"));
+        }
+        return projectPaths;
     }
 }
