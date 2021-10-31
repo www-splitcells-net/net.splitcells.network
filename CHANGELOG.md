@@ -20,6 +20,11 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-10-31**: **\#110** [Register extension path via extension instead of duplicate code](https://github.com/www-splitcells-net/net.splitcells.network/issues/110):
+  Remove deprecated `ProjectsRenderer#projectsLayout` method and use
+  `ProjectsRenderer#projectsPath` instead.
+  This new method is a lot easier to implement than the precursor,
+  especially if future extension may be implemented via third party software.
 * **2021-10-18**:
   1. **\#10** Privatize Constructor of NotImplementedYet exception.
      Thereby, the public API is unified.
