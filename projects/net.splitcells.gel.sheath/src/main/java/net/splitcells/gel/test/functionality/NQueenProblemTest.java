@@ -13,6 +13,7 @@ package net.splitcells.gel.test.functionality;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.SimplifiedAnnealingProblem;
@@ -102,7 +103,7 @@ public class NQueenProblemTest extends TestSuiteI {
                 rangeClosed(1, rows).
                         mapToObj(i -> list((Object) i)).
                         collect(toList()));
-        return SolutionBuilder.defineProblem()
+        return Gel.defineProblem()
                 .withDemandAttributes(COLUMN)
                 .withDemands(demands)
                 .withSupplyAttributes(ROW)

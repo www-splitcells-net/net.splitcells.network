@@ -55,6 +55,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * TODO Make XML rendering an extension.
  * <p>
  * TODO Move rendering for any type to dedicated extension.
+ * <p>
+ * IDEA Create an extension in order to render Java, Python 3 and Shell scripts, so it's easy to inspect
+ * and reference it.
  */
 public class ProjectRendererI implements ProjectRenderer {
     private static final String MARKER = "198032jrf013jf09j13f13f4290fj2394fj24";
