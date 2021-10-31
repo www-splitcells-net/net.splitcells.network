@@ -228,7 +228,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 // System.out.println("Rendering: " + path);
                 return Optional.of(renderer()
                         .transform(absolutePath)
-                        .getBytes(Charset.forName("UTF-8")));
+                        .getBytes(UTF_8));
             }
             // System.out.println("Reading artifact: " + path);
             return readArtifact(path);
