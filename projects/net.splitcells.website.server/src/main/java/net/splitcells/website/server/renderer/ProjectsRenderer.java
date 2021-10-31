@@ -141,31 +141,6 @@ public class ProjectsRenderer {
                 .reduce((a, b) -> a.with(b)).get();
     }
 
-    @Deprecated
-    public Perspective projectsLayout() {
-        final var layout = perspective(VAL, NATURAL);
-        renderers.forEach(renderer -> {
-            var current = layout;
-            for (final var element : list(renderer.resourceRootPath().split("/")).stream().filter(e -> !"".contentEquals(e)).collect(toList())) {
-                final var children = s(current, element);
-                final Perspective child;
-                if (children.isEmpty()) {
-                    child = perspective(VAL, NATURAL)
-                            .withProperty(NAME, NATURAL, element);
-                    current.withChild(child);
-                } else {
-                    child = children.get(0);
-                }
-                current = child;
-            }
-            if (!renderer.projectLayout().children().isEmpty()) {
-                layout.withPath(renderer.projectLayout().children().get(0), NAME, NATURAL);
-            }
-        });
-        layout.withProperty(NAME, NATURAL, "Path Context");
-        return layout;
-    }
-
     private List<Perspective> s(Perspective current, String element) {
         final var children = current.children().stream()
                 .filter(child -> child.nameIs(VAL, NATURAL))

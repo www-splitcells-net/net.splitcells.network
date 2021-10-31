@@ -93,8 +93,5 @@ public interface ProjectRenderer {
 
     String resourceRootPath();
 
-    @Deprecated
-    Perspective projectLayout();
-
     Set<Path> projectPaths();
 }

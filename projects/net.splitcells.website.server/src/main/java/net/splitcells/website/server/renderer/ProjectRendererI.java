@@ -337,20 +337,6 @@ public class ProjectRendererI implements ProjectRenderer {
         return resourceRootPath;
     }
 
-    @Deprecated
-    @Override
-    public Perspective projectLayout() {
-        final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
-        // TODO Do this via extensions.
-        extendProjectLayout(layout, projectSrcFolder.resolve("xml"), false);
-        extendProjectLayout(layout, projectSrcFolder.resolve("svg"), false);
-        extendProjectLayout(layout, projectSrcFolder.resolve("md"), true);
-        extendProjectLayout(layout, projectSrcFolder.resolve("txt"), false);
-        extendProjectLayout(layout, projectSrcFolder.resolve("svg"), false);
-        extendProjectLayout(layout, projectSrcFolder.resolve("html"), false);
-        return extension.extendProjectLayout(layout, this);
-    }
-
     private static void extendProjectLayout(Perspective layout, Path folder, boolean replaceFileSuffix) {
         if (isDirectory(folder)) {
             try {
