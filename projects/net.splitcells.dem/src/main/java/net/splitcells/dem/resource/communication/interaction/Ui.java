@@ -57,4 +57,27 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Flushable, Closeable {
         }
         return append(logMessage(perspective(TODO_NOT_IMPLEMENTED_YET), NO_CONTEXT, LogLevel.CRITICAL));
     }
+
+    /**
+     * Warnings are errors, where an action is not required.
+     *
+     * This is typically used in order to find out,
+     * if a certain usage of the code executes code,
+     * which is not fully implemented and where therefore the functionality is not complete.
+     * {@link Throwable}s are used, so that it is obvious,
+     * where the related code is and to identify the caller.
+     *
+     * @param throwable
+     * @return
+     */
+    default Ui appendWarning(Throwable throwable) {
+        final var error = perspective("warning");
+        error.withProperty("message", throwable.getMessage());
+        {
+            final var stackTraceValue = new StringWriter();
+            throwable.printStackTrace(new PrintWriter(stackTraceValue));
+            error.withProperty("stack-trace", stackTraceValue.toString());
+        }
+        return append(logMessage(perspective(TODO_NOT_IMPLEMENTED_YET), NO_CONTEXT, LogLevel.CRITICAL));
+    }
 }
