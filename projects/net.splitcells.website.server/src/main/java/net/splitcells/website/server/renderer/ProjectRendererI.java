@@ -50,7 +50,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 /**
  * TODO Use resource folder for xml, txt and etc.
  * <p>
- * TODO Merge website rendering and support system rendering. Make distinction between online and offline rendering.
+ * TODO Merge website rendering and support system rendering.
+ * <p>
+ * TODO Make XML rendering an extension.
+ * <p>
+ * TODO Move rendering for any type to dedicated extension.
  */
 public class ProjectRendererI implements ProjectRenderer {
     private static final String MARKER = "198032jrf013jf09j13f13f4290fj2394fj24";
