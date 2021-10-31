@@ -10,6 +10,7 @@
  */
 package net.splitcells.website.server.renderer.extension;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
@@ -28,5 +29,11 @@ public interface ProjectRendererExtension {
      * @return
      */
     Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer);
+
+    /**
+     * @param projectRoot Path of the project.
+     * @return Paths relative to project's root path.
+     */
+    Set<Path> projectPaths(Path projectRoot);
 
 }
