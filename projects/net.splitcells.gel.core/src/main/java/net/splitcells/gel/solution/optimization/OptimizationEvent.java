@@ -21,6 +21,11 @@ import java.util.Objects;
 import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 
+/**
+ * To have whatsoever he wishes is in no man’s power;
+ * it is in his power not to wish for what he has not,
+ * but cheerfully to employ what comes to him. - Lucius Annaeus Seneca
+ */
 public final class OptimizationEvent implements Domable {
 
     private final LinePointer demand;
