@@ -96,13 +96,13 @@ public class NQueenProblemTest extends TestSuiteI {
 
     private Problem nQueenProblem(int rows, int columns) {
         final var demands = listWithValuesOf(
-                rangeClosed(1, columns).
-                        mapToObj(i -> list((Object) i)).
-                        collect(toList()));
+                rangeClosed(1, columns)
+                        .mapToObj(i -> list((Object) i))
+                        .collect(toList()));
         final var supplies = listWithValuesOf(
-                rangeClosed(1, rows).
-                        mapToObj(i -> list((Object) i)).
-                        collect(toList()));
+                rangeClosed(1, rows)
+                        .mapToObj(i -> list((Object) i))
+                        .collect(toList()));
         return Gel.defineProblem()
                 .withDemandAttributes(COLUMN)
                 .withDemands(demands)
