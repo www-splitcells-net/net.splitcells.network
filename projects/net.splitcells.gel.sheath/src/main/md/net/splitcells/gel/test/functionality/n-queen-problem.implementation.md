@@ -1,4 +1,15 @@
 # Implementing And Solving A N Queen Problem Instance
+## Preparations
+If you want to use the bleeding edge version of this project, you need
+to [install it locally](../../../../../../../../../../CONTRIBUTING.md).
+After this you can add the corresponding dependency to your project:
+```
+<dependency>
+    <groupId>net.splitcells</groupId>
+    <artifactId>sep</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</dependency>
+```
 ## Specifying The Problem
 In the following we'll go through the implementation and solving of a
 [N queen problem instance](n-queen-problem.md),
