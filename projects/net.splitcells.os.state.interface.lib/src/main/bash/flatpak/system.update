@@ -7,4 +7,16 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-flatpak -y update
+log=$(flatpak -y update | tee /dev/tty)
+status=$?
+if (( $status == 0 )) ; then
+    exit
+fi
+if [[ $log == *"needs a later flatpak version "* ]]; then
+  echo.error Flatpak is outdated.
+  exit
+    # If Flatpak cannot be updated on the system,
+    # there is no need to exit with an error and aborting the update process.
+else
+  exit 1
+fi

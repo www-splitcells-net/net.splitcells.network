@@ -20,6 +20,10 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-11-05**: `system.update` for Flatpak does exit with an error,
+  if Flatpak's version itself is deprecated.
+  This is done because otherwise the whole update process would be aborted.
+  An appropriate echo to stderr is created instead.
 * **2021-10-31**: **\#110** [Register extension path via extension instead of duplicate code](https://github.com/www-splitcells-net/net.splitcells.network/issues/110):
   Remove deprecated `ProjectsRenderer#projectsLayout` method and use
   `ProjectsRenderer#projectsPath` instead.
