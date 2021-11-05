@@ -325,6 +325,147 @@
             </head>
             <body>
                 <main id="topElement">
+                    <div class="net-splitcells-content-column">
+                        <div id="content"
+                             class="net-splitcells-content-main">
+                            <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
+                            <article>
+                                <div class="splitcells-net-window-menu">
+                                    <div class="splitcells-net-line net-splitcells-component-priority-3">
+                                        <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:root-relative-url('/index.html')"/>
+                                            </xsl:attribute>
+                                        </a>
+                                        <a class="net-splitcells-button-inline">
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:root-relative-url('/dedicated-menu-page.html')"/>
+                                            </xsl:attribute>
+                                            Menu
+                                        </a>
+                                        <a class="net-splitcells-button-inline net-splitcells-premature">
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:root-relative-url('/premature-content.html')"/>
+                                            </xsl:attribute>
+                                            Tabs
+                                        </a>
+                                        <a class="net-splitcells-button-inline">
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:root-relative-url('/legal/impressum.html')"/>
+                                            </xsl:attribute>
+                                            Impressum
+                                        </a>
+                                        <a class="net-splitcells-button-inline">
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:root-relative-url('/legal/privacy-policy.html')"/>
+                                            </xsl:attribute>
+                                            Privacy Policy
+                                        </a>
+                                        <div class="net-splitcells-space-filler"></div>
+                                        <div class="net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
+                                             onclick="javascript: fullScreenEnable();
+														unshowByCssClass('page-column-0-full-screen');
+										                unshowByCssClass('column_1');
+										                showByCssClass('page-column-0-windowed');
+													">
+                                            wide screen
+                                        </div>
+                                        <div class="net-splitcells-button-inline page-column-0-windowed optional"
+                                             style="visibility: hidden; display: none;"
+                                             onclick="javascript: fullScreenDisable();
+													hide('page-column-0-windowed');
+														unshowByCssClass('page-column-0-windowed');
+														showByCssClass('page-column-0-full-screen');
+														showByCssClass('column_1');">
+                                            windowed
+                                        </div>
+                                    </div>
+                                    <div class="net-splitcells-structural-guide"/>
+                                    <div class="splitcells-net-line net-splitcells-component-priority-0">
+                                        <div class="splitcells-net-line-title">
+                                            <xsl:if test="./s:title.detailed">
+                                                <xsl:value-of select="./s:title.detailed"/>
+                                            </xsl:if>
+                                            <xsl:if test="not(./s:title_detailed)">
+                                                <xsl:value-of select="./s:title"/>
+                                            </xsl:if>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- TODO IDEA xsl:if test="./s:content/s:meta/s:descriptive_imagery">
+                                    <div class="standardborder Standard_highlighted highlightedShortSummary
+                                        highlightedShortSummary"
+                                         style="padding: 0em; margin-bottom: 1.4em; display: flex; flex-direction: row;">
+                                        <div>
+                                            <xsl:attribute name="style">
+                                                <xsl:text>width: 50%; height: 10em; background-size: 100% auto; background-repeat: no-repeat; background-image: url('</xsl:text>
+                                                <xsl:copy-of
+                                                        select="s:image_thumbnail_medium_location(./s:content/s:meta/s:descriptive_imagery/*[1]/@license , ./s:content/s:meta/s:descriptive_imagery/*[1])"/>
+                                                <xsl:text>');</xsl:text>
+                                            </xsl:attribute>
+                                            <xsl:text> </xsl:text>
+                                        </div>
+                                        <div style="width: 50%; padding-top: .5em;">
+                                            <xsl:if test="./s:content/s:meta/s:description">
+                                                <div class="IndexPostHeader">
+                                                    <div class="highlighted_paragraph"
+                                                         style="font-weight: 400; text-align: justify; margin-top: .5em;">
+                                                        <xsl:text> </xsl:text>
+                                                        <xsl:apply-templates
+                                                                select="./s:content/s:meta/s:description/node()"/>
+                                                    </div>
+                                                </div>
+                                            </xsl:if>
+                                        </div>
+                                    </div>
+                                </xsl:if-->
+                                <xsl:for-each select="./s:content/node()">
+                                    <xsl:apply-templates select="."/>
+                                </xsl:for-each>
+                            </article>
+                        </div>
+
+                        <xsl:if test="$column_1 != ''">
+                            <div class="net-splitcells-meta-column column_1 contentCell Right_shadow">
+                                <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
+                                <article class="Standard_p2 net-splitcells-component-priority-2">
+                                    <xsl:if test="$column_1 != ''">
+                                        <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
+                                            <div class="Standard_p3 bottomLightShadow splitcells-net-line">
+                                                <div class="net-splitcells-space-filler"></div>
+                                                <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional net-splitcells-minimal-not"
+                                                     onclick="javascript: fullScreenEnable();
+														unshowByCssClass('page-column-1-full-screen');
+										                unshowByCssClass('net-splitcells-content-main');
+										                showByCssClass('page-column-1-windowed');">
+                                                    wide screen
+                                                </div>
+                                                <div class="HeaderButton_structure HeaderButton_p2 page-column-1-windowed optional"
+                                                     style="visibility: hidden; display: none;"
+                                                     onclick="javascript: fullScreenDisable();
+													hide('page-column-1-windowed');
+														unshowByCssClass('page-column-1-windowed');
+														showByCssClass('page-column-1-full-screen');
+														showByCssClass('net-splitcells-content-main');">
+                                                    windowed
+                                                </div>
+                                            </div>
+                                            <div class="net-splitcells-structural-guide"/>
+                                            <div class="Standard_highlighted splitcells-net-line">
+                                                <div class="net-splitcells-space-filler"></div>
+                                            </div>
+                                        </div>
+                                    </xsl:if>
+                                    <xsl:apply-templates select="$column_1"/>
+                                </article>
+                            </div>
+                        </xsl:if>
+                    </div>
                     <div class="menu Left_shadow TextCell Layout Standard_p4 net-splitcells-menu">
                         <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">
                             <div class="splitcells-net-window-menu-line-1">
@@ -571,147 +712,7 @@
                             back to top
                         </a>
                     </div>
-                    <div class="net-splitcells-content-column">
-                        <div id="content"
-                             class="net-splitcells-content-main">
-                            <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
-                            <article>
-                                <div class="splitcells-net-window-menu">
-                                    <div class="splitcells-net-line net-splitcells-component-priority-3">
-                                        <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
-                                            <xsl:attribute name="href">
-                                                <xsl:value-of
-                                                        select="s:root-relative-url('/index.html')"/>
-                                            </xsl:attribute>
-                                        </a>
-                                        <a class="net-splitcells-button-inline">
-                                            <xsl:attribute name="href">
-                                                <xsl:value-of
-                                                        select="s:root-relative-url('/dedicated-menu-page.html')"/>
-                                            </xsl:attribute>
-                                            Menu
-                                        </a>
-                                        <a class="net-splitcells-button-inline net-splitcells-premature">
-                                            <xsl:attribute name="href">
-                                                <xsl:value-of
-                                                        select="s:root-relative-url('/premature-content.html')"/>
-                                            </xsl:attribute>
-                                            Tabs
-                                        </a>
-                                        <a class="net-splitcells-button-inline">
-                                            <xsl:attribute name="href">
-                                                <xsl:value-of
-                                                        select="s:root-relative-url('/legal/impressum.html')"/>
-                                            </xsl:attribute>
-                                            Impressum
-                                        </a>
-                                        <a class="net-splitcells-button-inline">
-                                            <xsl:attribute name="href">
-                                                <xsl:value-of
-                                                        select="s:root-relative-url('/legal/privacy-policy.html')"/>
-                                            </xsl:attribute>
-                                            Privacy Policy
-                                        </a>
-                                        <div class="net-splitcells-space-filler"></div>
-                                        <div class="net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
-                                             onclick="javascript: fullScreenEnable();
-														unshowByCssClass('page-column-0-full-screen');
-										                unshowByCssClass('column_1');
-										                showByCssClass('page-column-0-windowed');
-													">
-                                            wide screen
-                                        </div>
-                                        <div class="net-splitcells-button-inline page-column-0-windowed optional"
-                                             style="visibility: hidden; display: none;"
-                                             onclick="javascript: fullScreenDisable();
-													hide('page-column-0-windowed');
-														unshowByCssClass('page-column-0-windowed');
-														showByCssClass('page-column-0-full-screen');
-														showByCssClass('column_1');">
-                                            windowed
-                                        </div>
-                                    </div>
-                                    <div class="net-splitcells-structural-guide"/>
-                                    <div class="splitcells-net-line net-splitcells-component-priority-0">
-                                        <div class="splitcells-net-line-title">
-                                            <xsl:if test="./s:title.detailed">
-                                                <xsl:value-of select="./s:title.detailed"/>
-                                            </xsl:if>
-                                            <xsl:if test="not(./s:title_detailed)">
-                                                <xsl:value-of select="./s:title"/>
-                                            </xsl:if>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- TODO IDEA xsl:if test="./s:content/s:meta/s:descriptive_imagery">
-                                    <div class="standardborder Standard_highlighted highlightedShortSummary
-                                        highlightedShortSummary"
-                                         style="padding: 0em; margin-bottom: 1.4em; display: flex; flex-direction: row;">
-                                        <div>
-                                            <xsl:attribute name="style">
-                                                <xsl:text>width: 50%; height: 10em; background-size: 100% auto; background-repeat: no-repeat; background-image: url('</xsl:text>
-                                                <xsl:copy-of
-                                                        select="s:image_thumbnail_medium_location(./s:content/s:meta/s:descriptive_imagery/*[1]/@license , ./s:content/s:meta/s:descriptive_imagery/*[1])"/>
-                                                <xsl:text>');</xsl:text>
-                                            </xsl:attribute>
-                                            <xsl:text> </xsl:text>
-                                        </div>
-                                        <div style="width: 50%; padding-top: .5em;">
-                                            <xsl:if test="./s:content/s:meta/s:description">
-                                                <div class="IndexPostHeader">
-                                                    <div class="highlighted_paragraph"
-                                                         style="font-weight: 400; text-align: justify; margin-top: .5em;">
-                                                        <xsl:text> </xsl:text>
-                                                        <xsl:apply-templates
-                                                                select="./s:content/s:meta/s:description/node()"/>
-                                                    </div>
-                                                </div>
-                                            </xsl:if>
-                                        </div>
-                                    </div>
-                                </xsl:if-->
-                                <xsl:for-each select="./s:content/node()">
-                                    <xsl:apply-templates select="."/>
-                                </xsl:for-each>
-                            </article>
-                        </div>
 
-                        <xsl:if test="$column_1 != ''">
-                            <div class="net-splitcells-meta-column column_1 contentCell Right_shadow">
-                                <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
-                                <article class="Standard_p2 net-splitcells-component-priority-2">
-                                    <xsl:if test="$column_1 != ''">
-                                        <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
-                                            <div class="Standard_p3 bottomLightShadow splitcells-net-line">
-                                                <div class="net-splitcells-space-filler"></div>
-                                                <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional net-splitcells-minimal-not"
-                                                     onclick="javascript: fullScreenEnable();
-														unshowByCssClass('page-column-1-full-screen');
-										                unshowByCssClass('net-splitcells-content-main');
-										                showByCssClass('page-column-1-windowed');">
-                                                    wide screen
-                                                </div>
-                                                <div class="HeaderButton_structure HeaderButton_p2 page-column-1-windowed optional"
-                                                     style="visibility: hidden; display: none;"
-                                                     onclick="javascript: fullScreenDisable();
-													hide('page-column-1-windowed');
-														unshowByCssClass('page-column-1-windowed');
-														showByCssClass('page-column-1-full-screen');
-														showByCssClass('net-splitcells-content-main');">
-                                                    windowed
-                                                </div>
-                                            </div>
-                                            <div class="net-splitcells-structural-guide"/>
-                                            <div class="Standard_highlighted splitcells-net-line">
-                                                <div class="net-splitcells-space-filler"></div>
-                                            </div>
-                                        </div>
-                                    </xsl:if>
-                                    <xsl:apply-templates select="$column_1"/>
-                                </article>
-                            </div>
-                        </xsl:if>
-                    </div>
                     <div class="rightDecoration Right_shadow">
                         <div class="Borderless Standard_p2 Layout decorationBoxRight"
                              style="position: relative; z-index: 2; width: 1.5em;"></div>
