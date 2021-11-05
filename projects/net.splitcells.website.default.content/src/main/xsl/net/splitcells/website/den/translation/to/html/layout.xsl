@@ -721,7 +721,6 @@
                              style="position: relative; z-index: 4; width: 1.5em;"></div>
                     </div>
                 </main>
-                <footer class="Standard_p5 topLightShadow"/>
                 <script type="text/javascript" charset="utf-8">
                     <xsl:attribute name="src">
                         <xsl:value-of select="s:root-relative-url('/js/basic.js')"/>
