@@ -29,6 +29,9 @@ footer {
 .net-splitcells-content-column {
     order: 3;
     }
+.net-splitcells-meta-column {
+	order: 4;
+	}
 .net-splitcells-website-column-background-1 {
     order: 1;
 }
@@ -117,6 +120,7 @@ footer {
         margin: 0 auto;
         display: flex;
         flex-direction: column;
+        justify-content: center;
         background: transparent linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, var(--background-color-priority-7) 100em) repeat scroll 0% 0%;
         }
     .section_gallery,
@@ -212,6 +216,7 @@ footer {
     main {
         display: flex;
         flex-direction: row;
+        justify-content: center;
         visibility: inherit;
         z-index: 1;
         }
@@ -231,6 +236,7 @@ footer {
     .main {
         display: flex;
         flex-direction: row;
+        justify-content: center;
         }
     .rightDecoration {
         visibility: hidden !important;

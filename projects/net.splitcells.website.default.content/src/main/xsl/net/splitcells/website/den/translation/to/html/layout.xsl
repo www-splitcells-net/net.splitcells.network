@@ -325,9 +325,6 @@
             </head>
             <body>
                 <main id="topElement">
-                    <div class="splitcells-net-background-window minimal-only net-splitcells-website-column-background-1">
-                        <div class="splitcells-net-window-menu splitcells-net-background-window-menu"></div>
-                    </div>
                     <div class="menu Left_shadow TextCell Layout Standard_p4 net-splitcells-menu">
                         <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">
                             <div class="splitcells-net-window-menu-line-1">
@@ -680,8 +677,7 @@
                         </div>
 
                         <xsl:if test="$column_1 != ''">
-                            <div class="column_1 contentCell Right_shadow"
-                                 style="order: 4;">
+                            <div class="net-splitcells-meta-column column_1 contentCell Right_shadow">
                                 <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
                                 <article class="Standard_p2 net-splitcells-component-priority-2">
                                     <xsl:if test="$column_1 != ''">
@@ -723,9 +719,6 @@
                              style="position: relative; z-index: 3; width: 1.5em;"></div>
                         <div class="Borderless Standard_p4 Layout decorationBoxRight"
                              style="position: relative; z-index: 4; width: 1.5em;"></div>
-                    </div>
-                    <div class="splitcells-net-background-window minimal-only" style="order: 6;">
-                        <div class="splitcells-net-window-menu splitcells-net-background-window-menu"></div>
                     </div>
                 </main>
                 <footer class="Standard_p5 topLightShadow"/>
