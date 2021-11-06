@@ -112,7 +112,12 @@ interface_definition_member_method
           	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
               name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace?
               Brace_curly_closed
+    | interface_definition_member_static
     ;
+interface_definition_member_static
+	: Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement
+	| Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace? Semicolon
+	;
 interface_definition_member
 	: Whitespace? interface_definition_member_method
 	;
