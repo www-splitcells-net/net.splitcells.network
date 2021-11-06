@@ -34,7 +34,7 @@ import java.util.function.BiFunction;
 import static java.lang.Math.abs;
 import static java.util.Comparator.naturalOrder;
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.data.order.Comparator.comparator_;
+import static net.splitcells.dem.data.order.Comparator.comparatorLegacy;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.gel.constraint.Constraint.LINE;
@@ -57,12 +57,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     @Deprecated
     public static MinimalDistanceBasedOnDiffs<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
+        return minimalDistance(attribute, minimumDistance, comparatorLegacy(Integer::compare), MathUtils::distance);
     }
 
     @Deprecated
     public static MinimalDistanceBasedOnDiffs<Double> minimalDistance(Attribute<Double> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, comparator_(Double::compare), MathUtils::distance);
+        return minimalDistance(attribute, minimumDistance, comparatorLegacy(Double::compare), MathUtils::distance);
     }
 
     @Deprecated

@@ -14,7 +14,7 @@ import static java.lang.Math.abs;
 import static java.util.Comparator.naturalOrder;
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.data.order.Comparator.comparator_;
+import static net.splitcells.dem.data.order.Comparator.comparatorLegacy;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -52,11 +52,11 @@ import org.w3c.dom.Node;
  */
 public class MinimalDistance<T> implements Rater {
     public static MinimalDistance<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, comparator_(Integer::compare), MathUtils::distance);
+        return minimalDistance(attribute, minimumDistance, comparatorLegacy(Integer::compare), MathUtils::distance);
     }
 
     public static MinimalDistance<Double> minimalDistance(Attribute<Double> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, comparator_(Double::compare), MathUtils::distance);
+        return minimalDistance(attribute, minimumDistance, comparatorLegacy(Double::compare), MathUtils::distance);
     }
 
     public static <R> MinimalDistance<R> minimalDistance(Attribute<R> attribute

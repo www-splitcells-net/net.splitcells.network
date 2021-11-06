@@ -11,7 +11,7 @@
 package net.splitcells.gel.rating.type;
 
 import static java.util.Arrays.asList;
-import static net.splitcells.dem.data.order.Comparator.comparator_;
+import static net.splitcells.dem.data.order.Comparator.comparatorLegacy;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 
 import java.util.Optional;
@@ -24,7 +24,7 @@ import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
 public class Compliance implements Rating {
-    private static final Comparator<Boolean> COMPARATOR = comparator_((a, b) -> Boolean.compare(a, b));
+    private static final Comparator<Boolean> COMPARATOR = comparatorLegacy((a, b) -> Boolean.compare(a, b));
     private boolean value;
 
     public static Compliance compliance(boolean value) {

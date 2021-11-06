@@ -30,13 +30,7 @@ public interface Comparator<T> extends java.util.Comparator<T> {
         };
     }
 
-    /**
-     * RENAME
-     *
-     * @param comparator
-     * @return
-     */
-    static <T> Comparator<T> comparator_(BiFunction<T, T, Integer> comparator) {
+    static <T> Comparator<T> comparatorLegacy(BiFunction<T, T, Integer> comparator) {
         return new Comparators<>(comparator);
 
     }
