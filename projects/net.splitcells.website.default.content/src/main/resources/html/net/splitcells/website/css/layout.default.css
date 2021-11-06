@@ -55,6 +55,12 @@ footer {
 	z-index: 90;
 	order: 5;
 	}
+@media (min-width: 23.25em) {
+	.net-splitcells-content-filler {
+		visibility: hidden;
+		display: none;
+		}
+	}
 @media (max-width: 23.25em) {
     .change_menu_logo {
         visibility: hidden !important;

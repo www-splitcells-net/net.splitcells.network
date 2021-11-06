@@ -328,7 +328,6 @@
                     <div class="net-splitcells-content-column">
                         <div id="content"
                              class="net-splitcells-content-main">
-                            <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
                             <article>
                                 <div class="splitcells-net-window-menu">
                                     <div class="splitcells-net-line net-splitcells-component-priority-3">
@@ -432,7 +431,6 @@
 
                         <xsl:if test="$column_1 != ''">
                             <div class="net-splitcells-meta-column column_1 contentCell Right_shadow">
-                                <div class="net-splitcells-structural-guide-optional net-splitcells-structural-guide"></div>
                                 <article class="Standard_p2 net-splitcells-component-priority-2">
                                     <xsl:if test="$column_1 != ''">
                                         <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
@@ -465,7 +463,7 @@
                                 </article>
                             </div>
                         </xsl:if>
-                        <div class="net-splitcells-component-priority-2 net-splitcells-space-filler"></div>
+                        <div class="net-splitcells-content-filler net-splitcells-component-priority-2 net-splitcells-space-filler"></div>
                     </div>
                     <div class="menu Left_shadow TextCell Layout Standard_p4 net-splitcells-menu">
                         <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">
@@ -713,7 +711,6 @@
                             back to top
                         </a>
                     </div>
-
                     <div class="rightDecoration Right_shadow">
                         <div class="Borderless Standard_p2 Layout decorationBoxRight"
                              style="position: relative; z-index: 2; width: 1.5em;"></div>

@@ -213,6 +213,13 @@ main {
     background-color: var(--background-color-priority-2);
 	color: var(--foreground-color-priority-2);
 }
+.net-splitcells-content-filler,
+.net-splitcells-meta-column,
+.net-splitcells-content-main {
+	border-left: solid;
+	border-left-color: var(--background-color-structural-guide);
+	border-left-width: .25em;
+	}
 .net-splitcells-content-main,
 .net-splitcells-component-priority-1 {
     background-color: var(--background-color-priority-1);
