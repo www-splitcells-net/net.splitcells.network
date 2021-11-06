@@ -52,7 +52,7 @@ call_arguments_next
     : Comma Whitespace call_arguments_element
     ;
 class_definition
-    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class? Whitespace? name
+    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class Whitespace? name
         allowed_Extensions? Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
     ;
 class_member
@@ -61,7 +61,7 @@ class_member
     | class_member_value_declaration
     ;
 class_constructor
-    : Whitespace? Keyword_private Whitespace name call_arguments statement_body
+    : Whitespace? annotation? Whitespace? Keyword_private Whitespace name call_arguments statement_body
     ;
 class_member_method_definition
     : Whitespace? javadoc? Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static?
