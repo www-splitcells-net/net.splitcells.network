@@ -22,6 +22,7 @@ lexer grammar Java_11_lexer;
     package net.splitcells.dem.source.code.antlr;
 }
 Arrow: '->';
+Extension_Exception: 'extends RuntimeException';
 Javadoc: '/**' .*? '*/';
 Keysymbol_at: '@';
 Keysymbol_equals: '==';
@@ -30,7 +31,6 @@ Keyword_class: 'class';
 Keyword_catch: 'catch';
 Keyword_default: 'default';
 Keyword_else: 'else';
-Extension_Exception: 'extends RuntimeException';
 Keyword_extends: 'extends';
 Keyword_finally: 'finally';
 Keyword_final: 'final';

@@ -10,7 +10,7 @@
  */
 package net.splitcells.dem.utils;
 
-public final class ConstructorIllegal extends AssertionError {
+public final class ConstructorIllegal extends RuntimeException {
 
 	public static ConstructorIllegal constructorIllegal() {
 		return new ConstructorIllegal();
