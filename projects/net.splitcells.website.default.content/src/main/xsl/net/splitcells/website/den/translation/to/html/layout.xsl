@@ -465,6 +465,7 @@
                                 </article>
                             </div>
                         </xsl:if>
+                        <div class="net-splitcells-component-priority-2 net-splitcells-space-filler"></div>
                     </div>
                     <div class="menu Left_shadow TextCell Layout Standard_p4 net-splitcells-menu">
                         <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">

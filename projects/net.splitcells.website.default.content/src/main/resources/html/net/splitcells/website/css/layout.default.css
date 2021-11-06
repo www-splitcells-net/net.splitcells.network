@@ -23,15 +23,11 @@ footer {
     min-height: 5em;
     z-index: 100;
 }
-.net-splitcells-content-main {
-    order: 3;
-    }
 .net-splitcells-content-column {
     order: 3;
+	flex-direction: column;
+	display: flex;
     }
-.net-splitcells-meta-column {
-	order: 4;
-	}
 .net-splitcells-website-column-background-1 {
     order: 1;
 }
