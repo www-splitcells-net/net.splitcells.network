@@ -12,20 +12,22 @@ package net.splitcells.dem.utils.random;
 
 import net.splitcells.dem.utils.ConstructorIllegal;
 
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+
 public class RandomnessSource {
 
-	private static final BuilderRandomConfigurable factory = new BuilderRandomConfigurable();
+    private static final BuilderRandomConfigurable factory = new BuilderRandomConfigurable();
 
-	private RandomnessSource() {
-		throw new ConstructorIllegal();
-	}
+    private RandomnessSource() {
+        throw constructorIllegal();
+    }
 
-	public static Randomness randomness() {
-		return factory.rnd();
-	}
+    public static Randomness randomness() {
+        return factory.rnd();
+    }
 
-	public static Randomness randomness(Long seed) {
-		return factory.rnd(seed);
-	}
+    public static Randomness randomness(Long seed) {
+        return factory.rnd(seed);
+    }
 
 }

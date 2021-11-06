@@ -14,9 +14,11 @@ import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.io.*;
 
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+
 public final class SystemUtils {
 	public SystemUtils() {
-		throw new ConstructorIllegal();
+		throw constructorIllegal();
 	}
 
 	public static void executeProgram(String... command) {

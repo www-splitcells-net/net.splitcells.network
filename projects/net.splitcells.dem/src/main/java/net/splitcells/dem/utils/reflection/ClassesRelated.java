@@ -16,12 +16,13 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.reflection.ClassRelatedI.classRelated;
 
 public class ClassesRelated {
 
 	private ClassesRelated() {
-		throw new ConstructorIllegal();
+		throw constructorIllegal();
 	}
 
 	private static final ClassRelated INSTANCE = classRelated();

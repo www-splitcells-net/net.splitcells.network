@@ -16,11 +16,12 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public final class StreamUtils {
 
     private StreamUtils() {
-        throw new ConstructorIllegal();
+        throw constructorIllegal();
     }
 
     public static <T> Stream<T> reverse(Stream<T> stream) {

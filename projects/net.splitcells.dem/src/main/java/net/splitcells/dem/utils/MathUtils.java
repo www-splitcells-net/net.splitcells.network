@@ -15,6 +15,7 @@ import net.splitcells.dem.data.set.list.Lists;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public final class MathUtils {
@@ -85,6 +86,6 @@ public final class MathUtils {
     }
 
     private MathUtils() {
-        throw new ConstructorIllegal();
+        throw constructorIllegal();
     }
 }

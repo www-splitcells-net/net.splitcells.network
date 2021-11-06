@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collector;
 
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+
 public final class Lists {
 
     public static <T> Collector<T, ?, List<T>> toList() {
@@ -31,7 +33,7 @@ public final class Lists {
     }
 
     private Lists() {
-        throw new ConstructorIllegal();
+        throw constructorIllegal();
     }
 
     @SafeVarargs

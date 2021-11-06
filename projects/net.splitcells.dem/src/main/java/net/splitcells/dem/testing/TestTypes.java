@@ -12,6 +12,8 @@ package net.splitcells.dem.testing;
 
 import net.splitcells.dem.utils.ConstructorIllegal;
 
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+
 public final class TestTypes {
 
     public static final String UNIT_TEST = "testing.unit";
@@ -25,7 +27,7 @@ public final class TestTypes {
     public static final String PROFILING_MEMORY_USAGE = "profiling.memoryUsage";
 
     private TestTypes() {
-        throw new ConstructorIllegal();
+        throw constructorIllegal();
     }
 
 }

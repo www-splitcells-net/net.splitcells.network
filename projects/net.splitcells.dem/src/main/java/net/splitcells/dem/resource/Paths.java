@@ -23,6 +23,7 @@ import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.readAllBytes;
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -32,7 +33,7 @@ public final class Paths {
     private static final Pattern PATH_ELEMENT_SYNTAX = Pattern.compile("[a-zA-Z0-9\\-\\.-_]*");
 
     private Paths() {
-        throw new ConstructorIllegal();
+        throw constructorIllegal();
     }
 
     public static Path path(String root, String... elements) {

@@ -17,6 +17,6 @@ public final class ConstructorIllegal extends RuntimeException {
 	}
 
 	@Deprecated
-	public ConstructorIllegal() {
+	private ConstructorIllegal() {
 	}
 }

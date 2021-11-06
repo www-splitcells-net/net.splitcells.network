@@ -36,6 +36,7 @@ import static java.util.stream.Collectors.toList;
 import static javax.xml.transform.OutputKeys.INDENT;
 import static javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static org.w3c.dom.Node.ELEMENT_NODE;
 
 /**
@@ -60,7 +61,7 @@ public final class Xml {
     }
 
     private Xml() {
-        throw new ConstructorIllegal();
+        throw constructorIllegal();
     }
 
     private static Transformer newTransformer() {

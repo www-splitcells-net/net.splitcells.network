@@ -13,16 +13,17 @@ package net.splitcells.gel.data.table;
 import net.splitcells.dem.utils.ConstructorIllegal;
 import net.splitcells.dem.utils.NotImplementedYet;
 
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class LineSF {
 
-	private LineSF() {
-		throw new ConstructorIllegal();
-	}
+    private LineSF() {
+        throw constructorIllegal();
+    }
 
-	public static Line emptyLine(Table table) {
-		throw notImplementedYet();
-	}
+    public static Line emptyLine(Table table) {
+        throw notImplementedYet();
+    }
 
 }
