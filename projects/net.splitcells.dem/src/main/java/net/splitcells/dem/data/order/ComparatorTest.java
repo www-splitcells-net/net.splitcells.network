@@ -15,6 +15,13 @@ public class ComparatorTest {
     }
 
     @Test
+    public void testLegacyAscendingIntegers() {
+        final var object = list(3, 1, 2);
+        object.sort(Comparators.comparator(Integer::compare));
+        assertThat(object).isEqualTo(list(1, 2, 3));
+    }
+
+    @Test
     public void testAscendingDoubles() {
         final var object = list(3d, 1d, 2d);
         object.sort(ASCENDING_DOUBLES);
