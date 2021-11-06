@@ -12,13 +12,15 @@ package net.splitcells.dem.data.order;
 
 import java.util.function.BiFunction;
 
-// RENAME
 public class Comparators<T> implements Comparator<T> {
+	
+	public static <T> Comparators<T> comparator(BiFunction<T, T, Integer> comparator) {
+		return new Comparators<>(comparator);
+	}
 
 	private final BiFunction<T, T, Integer> comparator;
-
-	@Deprecated
-	public Comparators(BiFunction<T, T, Integer> comparator) {
+	
+	private Comparators(BiFunction<T, T, Integer> comparator) {
 		this.comparator = comparator;
 	}
 

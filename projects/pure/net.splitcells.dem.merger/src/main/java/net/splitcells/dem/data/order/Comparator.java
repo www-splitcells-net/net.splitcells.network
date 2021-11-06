@@ -10,16 +10,41 @@
  */
 package net.splitcells.dem.data.order;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
+
 import java.util.function.BiFunction;
 
 public interface Comparator<T> extends java.util.Comparator<T> {
 
-    Comparator<Integer> ASCENDING_INTEGERS = new Comparator<>() {
-        @Override
-        public int compare(Integer a, Integer b) {
-            return a.compareTo(b);
+    Comparator<Integer> ASCENDING_INTEGERS = comparator((a, b) -> {
+        if (a < b) {
+            return Ordering.LESSER_THAN;
+        } else if (b < a) {
+            return Ordering.GREATER_THAN;
+        } else {
+            return Ordering.EQUAL;
         }
-    };
+    });
+
+    Comparator<Double> ASCENDING_DOUBLES = comparator((a, b) -> {
+        if (a < b) {
+            return Ordering.LESSER_THAN;
+        } else if (b < a) {
+            return Ordering.GREATER_THAN;
+        } else {
+            return Ordering.EQUAL;
+        }
+    });
+
+    Comparator<Boolean> ASCENDING_BOOLEANS = comparator((a, b) -> {
+        if (a && !b) {
+            return Ordering.GREATER_THAN;
+        } else if (!a && b) {
+            return Ordering.LESSER_THAN;
+        } else {
+            return Ordering.EQUAL;
+        }
+    });
 
     static <T> Comparator<T> comparator(BiFunction<T, T, Ordering> comparator) {
         return new Comparator<T>() {
@@ -30,8 +55,16 @@ public interface Comparator<T> extends java.util.Comparator<T> {
         };
     }
 
+    /**
+     * Create a compatibility wrapper for {@link java.util.Comparator}.
+     *
+     * @param comparator  Comparator Of Java Standard Library
+     * @param <T> Type of Values being Compared
+     * @return Wrapped Comparator
+     */
+    @JavaLegacy
     static <T> Comparator<T> comparatorLegacy(BiFunction<T, T, Integer> comparator) {
-        return new Comparators<>(comparator);
+        return Comparators.comparator(comparator);
 
     }
 
