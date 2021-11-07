@@ -23,7 +23,6 @@ import net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRen
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -39,7 +38,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.dem.utils.Exception.exception;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
@@ -162,7 +161,7 @@ public class ProjectRendererI implements ProjectRenderer {
                     ++renderingCounter;
                 }
                 if (renderingCounter > 1) {
-                    throw exception("Path has no unambiguous target: "
+                    throw executionException("Path has no unambiguous target: "
                             + path
                             + ", "
                             + renderingCounter

@@ -31,6 +31,7 @@ import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.renderer.ProjectRenderer.extendPerspectiveWithPath;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -72,6 +73,9 @@ public class ProjectsRenderer {
                     try {
                         final var targetPath = path(target, path.substring(1));
                         createDirectory(targetPath.getParent());
+                        if (targetPath.toString().contains("README")) {
+                            throw executionException("");
+                        }
                         writeToFile(targetPath, render(path).get().getContent());
                     } catch (Exception e) {
                         throw new RuntimeException(target.toString() + path, e);
