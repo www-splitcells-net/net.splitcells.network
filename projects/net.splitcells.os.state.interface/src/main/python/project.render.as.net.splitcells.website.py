@@ -5,12 +5,28 @@ terms of the Eclipse Public License 2.0, which is available at
 http://www.eclipse.org/legal/epl-2.0, or the MIT License,
 which is available at https://spdx.org/licenses/MIT.html.
 
-See `project.render.py`.
+See `project.render.py` for origin of this command.
 This command is used in order to render a website based on the format of
 `net.splitcells.website.server`.
 
 One could just './bin/render.as.net.splitcells.website.to' itself,
-but this command explicitly and testable formalizes this standard.
+but this command explicitly formalizes this standard.
+
+This as an API for creating plugins for `splitcells.net`'s website server built
+out of software, which have no explicit integration for said website server.
+Integration is done by reading or writing to the same filesystem.
+
+In order to create a plugin following needs to be done:
+* Add and implement the following executable at a project: `./bin/render.as.net.splitcells.website.to`.
+  It takes one argument containing a path.
+  The command needs to write the plugin's part of the website to that path.
+* Add the following to the website's build script:
+  * `cd <plugin's path>`
+  * `project.render.as.net.splitcells.website`
+
+TODO Make this an implementation of `project.render.py`,
+that basically cd's into <--from-project> and then executes
+`./bin/render.as.net.splitcells.website.to <--to-project>`.
 """
 
 __author__ = "Mārtiņš Avots"
