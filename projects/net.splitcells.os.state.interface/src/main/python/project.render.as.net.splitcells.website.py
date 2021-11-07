@@ -5,16 +5,12 @@ terms of the Eclipse Public License 2.0, which is available at
 http://www.eclipse.org/legal/epl-2.0, or the MIT License,
 which is available at https://spdx.org/licenses/MIT.html.
 
-It is preferred,
-that an implementation of this command should be side effect free.
-Meaning, that only `from-project` and `to-project` should be modified.
+See `project.render.py`.
+This command is used in order to render a website based on the format of
+`net.splitcells.website.server`.
 
-If one wants to create a rendering specific to one target project type,
-its best to copy this command and use a different command name,
-with `project.render.as.` as the prefix.
-
-The implementation of `project.render.as.net.splitcells.website` shows,
-that a full implementation is not always needed.
+One could just './bin/render.as.net.splitcells.website.to' itself,
+but this command explicitly and testable formalizes this standard.
 """
 
 __author__ = "Mārtiņš Avots"
@@ -27,11 +23,6 @@ import subprocess
 
 if __name__ == '__main__':
 	argsParser = argparse.ArgumentParser(description='Renders a project to a different project.')
-	argsParser.add_argument('--from-project'
-		, nargs='?'
-		, type=str
-		, help='This is the path of project, that is used as a source.'
-		, required=True)
 	argsParser.add_argument('--to-project'
 		, nargs='?'
 		, type=str
@@ -39,7 +30,5 @@ if __name__ == '__main__':
 		, required=True)
 	parsedArgs = argsParser.parse_args()
 	argsDic = vars(parsedArgs)
-	subprocess.call('command.managed.execute conjunction project.render'
-		+ ' --from-project=' + argsDic.get('from_project')
-		+ ' --to-project=' + argsDic.get('to_project')
+	subprocess.call('./bin/render.as.net.splitcells.website.to ' + argsDic.get('to_project')
 		, shell='True')

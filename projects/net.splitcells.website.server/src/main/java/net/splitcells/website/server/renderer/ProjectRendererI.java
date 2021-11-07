@@ -39,6 +39,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.utils.Exception.exception;
 import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
@@ -160,7 +161,20 @@ public class ProjectRendererI implements ProjectRenderer {
                 if (html.isPresent()) {
                     ++renderingCounter;
                 }
-                assertThat(renderingCounter).isLessThan(2);
+                if (renderingCounter > 1) {
+                    throw exception("Path has no unambiguous target: "
+                            + path
+                            + ", "
+                            + renderingCounter
+                            + ", "
+                            + renderedFile.isEmpty()
+                            + ", "
+                            + renderedTextFile.isEmpty()
+                            + ", "
+                            + commonMarkSrc.isEmpty()
+                            + ", "
+                            + html.isEmpty());
+                }
                 if (commonMarkSrc.isPresent()) {
                     return commonMarkSrc
                             .map(r -> commonMarkRenderer.render(new String(r), this, normalizedPath))
