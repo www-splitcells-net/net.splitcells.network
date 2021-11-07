@@ -10,6 +10,8 @@
   All artifacts of the flowing text should be integrated via links.
   Inline LaText that is compatible to MathJax is used for mathematics formulas
   and is the only exception to this rule.
+* Presentations based on HTML and `reveal.js`.
+* XML schemas based on XSD.
 ### Programming Languages
 * Java is used as a primary language.
 * Python 3, sh and Bash(deprecated) is used for scripts and programs where
