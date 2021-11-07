@@ -28,15 +28,15 @@ import subprocess
 if __name__ == '__main__':
 	argsParser = argparse.ArgumentParser(description='Renders a project to a different project.')
 	argsParser.add_argument('--from-project'
-		, nargs='?'
-		, type=str
-		, help='This is the path of project, that is used as a source.'
-		, required=True)
+		, nargs = '?'
+		, type = str
+		, help = 'This is the path of project, that is used as a source.'
+		, required = True)
 	argsParser.add_argument('--to-project'
-		, nargs='?'
-		, type=str
-		, help='This is the path of project, where the results are stored.'
-		, required=True)
+		, nargs = '?'
+		, type = str
+		, help = 'This is the path of project, where the results are stored.'
+		, required = True)
 	parsedArgs = argsParser.parse_args()
 	argsDic = vars(parsedArgs)
 	subprocess.call('command.managed.execute conjunction project.render'

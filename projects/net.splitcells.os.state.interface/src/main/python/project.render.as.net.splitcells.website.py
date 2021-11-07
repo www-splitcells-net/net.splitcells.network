@@ -40,10 +40,10 @@ import subprocess
 if __name__ == '__main__':
 	argsParser = argparse.ArgumentParser(description='Renders a project to a different project.')
 	argsParser.add_argument('--to-project'
-		, nargs='?'
-		, type=str
-		, help='This is the path of project, where the results are stored.'
-		, required=True)
+		, nargs = '?'
+		, type = str
+		, help = 'This is the path of project, where the results are stored.'
+		, required = True)
 	parsedArgs = argsParser.parse_args()
 	argsDic = vars(parsedArgs)
 	subprocess.call('./bin/render.as.net.splitcells.website.to ' + argsDic.get('to_project')
