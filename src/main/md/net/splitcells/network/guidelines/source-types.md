@@ -14,7 +14,6 @@
   It is also hard to predict, what features will be needed in the future.
   An own formats has the advantage, that only features are supported,
   that are required, and that the future set can be adjusted easily.
-
   Also, keep in mind, that some features are very specific to Splitcells
   Network (i.e. linking between documents).
   The fact, that XML provides an easy way to translate such code to any target
