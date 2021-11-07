@@ -26,17 +26,6 @@ Releases are done everytime an important ticket is completed.
      where it is not needed.
   2. **\#10** Rename `net.splitcells.dem.data.order.Comparators.comparators`
      to `comparator` in order to unify naming.
-  3. **\#26** Create command `project.render.as.net.splitcells.website` as an
-     API for creating plugins for `splitcells.net`'s website server built out of
-     software, which have no explicit integration for said website server.
-     Integration is done by reading or writing to the same filesystem.
-     In order to create a plugin following needs to be done:
-     * Add and implement the following executable at a project: `./bin/render.as.net.splitcells.website.to`.
-       It takes one argument containing a path.
-       The command needs to write the plugin's part of the website to that path.
-     * Add the following to the website's build script:
-       * `cd <plugin's path>`
-       * `project.render.as.net.splitcells.website`
 * **2021-11-05**: `system.update` for Flatpak does exit with an error,
   if Flatpak's version itself is deprecated.
   This is done because otherwise the whole update process would be aborted.
@@ -110,6 +99,23 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-11-08**:
+  1. **\#26** Create command `project.render.as.net.splitcells.website` as an
+     API for creating plugins for `splitcells.net`'s website server built out of
+     software, which have no explicit integration for said website server.
+     Integration is done by reading or writing to the same filesystem.
+     In order to create a plugin following needs to be done:
+     * Add and implement the following executable at a project: `./bin/render.as.net.splitcells.website.to`.
+       It takes one argument containing a path.
+       The command needs to write the plugin's part of the website to that path.
+     * Add the following to the website's build script:
+       * `cd <plugin's path>`
+       * `project.render.as.net.splitcells.website`
+  2. **\#s24** [Deprecate usage of CommonMark as the main documentation format](https://todo.sr.ht/~splitcells-net/net.splitcells.network/24):
+     CommonMark is now only supported on second level.
+     Sew XML is now the primarily supported format for articles.
+     The [source type guidelines](./src/main/md/net/splitcells/network/guidelines/source-types.md)
+     were updated accordingly.
 * **2021-10-31**:
   1. **\#55** [Minimize number of used languages and protocols](https://github.com/www-splitcells-net/net.splitcells.network/issues/55):
      Create [guidelines](src/main/md/net/splitcells/network/guidelines/source-types.md)
