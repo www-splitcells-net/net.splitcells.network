@@ -20,7 +20,6 @@ public class RenderingResult {
 
     private RenderingResult(byte[] content, String format) {
         this.content = content;
-
         this.format = format;
     }
 
