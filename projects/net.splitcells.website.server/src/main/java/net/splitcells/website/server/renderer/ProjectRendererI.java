@@ -425,7 +425,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 resourcePaths.get().forEach(projectPaths::add);
             }
         }
-        projectPaths.addAll(extension.projectPaths(projectFolder));
+        projectPaths.addAll(extension.projectPaths(this));
         return projectPaths;
     }
 

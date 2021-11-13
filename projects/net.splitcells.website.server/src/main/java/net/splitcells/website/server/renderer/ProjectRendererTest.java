@@ -22,5 +22,6 @@ public class ProjectRendererTest {
                         , "/net/splitcells/dem"
                         , a -> Optional.empty());
         assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/guidelines/technology-stack.md"));
+        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/README.html"));
     }
 }

@@ -25,15 +25,15 @@ public interface ProjectRendererExtension {
      * TODO A list of paths should be returned instead. Also the layout would not be needed anymore in this case.
      *
      * @param layout
-     * @param projectRenderer
+     * @param projectRenderer Project Rendered To Be Extended
      * @return
      */
     Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer);
 
     /**
-     * @param projectRoot Path of the project.
+     * @param projectRenderer Project Rendered To Be Extended
      * @return Paths relative to project's root path.
      */
-    Set<Path> projectPaths(Path projectRoot);
+    Set<Path> projectPaths(ProjectRenderer projectRenderer);
 
 }

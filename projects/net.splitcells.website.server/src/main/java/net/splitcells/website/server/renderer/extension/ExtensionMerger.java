@@ -58,10 +58,10 @@ public class ExtensionMerger implements ProjectRendererExtension {
     }
 
     @Override
-    public Set<Path> projectPaths(Path projectRoot) {
+    public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> projectPaths = setOfUniques();
         extensions.forEach(e -> {
-            projectPaths.addAll(e.projectPaths(projectRoot));
+            projectPaths.addAll(e.projectPaths(projectRenderer));
         });
         return projectPaths;
     }

@@ -49,10 +49,10 @@ public class CommonMarkChangelogExtension  implements ProjectRendererExtension {
     }
 
     @Override
-    public Set<Path> projectPaths(Path projectRoot) {
+    public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> projectPaths = setOfUniques();
-        if (is_file(projectRoot.resolve("CHANGELOG.md"))) {
-            projectPaths.add(projectRoot.resolve("CHANGELOG.html"));
+        if (is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
+            projectPaths.add(projectRenderer.projectFolder().resolve("CHANGELOG.html"));
         }
         return projectPaths;
     }

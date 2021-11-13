@@ -50,7 +50,6 @@ public interface ProjectRenderer extends Renderer {
                 , projectFolder);
     }
 
-    @Deprecated
     Path projectFolder();
 
     @Deprecated

@@ -62,10 +62,10 @@ public class CommonMarkReadmeExtension implements ProjectRendererExtension {
     }
 
     @Override
-    public Set<Path> projectPaths(Path projectRoot) {
+    public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> projectPaths = setOfUniques();
-        if (is_file(projectRoot.resolve("README.md"))) {
-            projectPaths.add(projectRoot.resolve("README.html"));
+        if (is_file(projectRenderer.projectFolder().resolve("README.md"))) {
+            projectPaths.add(Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("README.html"));
         }
         return projectPaths;
     }

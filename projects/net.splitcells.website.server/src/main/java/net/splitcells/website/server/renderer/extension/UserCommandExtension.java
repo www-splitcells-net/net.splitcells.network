@@ -88,11 +88,11 @@ public class UserCommandExtension implements ProjectRendererExtension {
     /**
      * TODO This does not work.
      *
-     * @param projectRoot Path of the project.
+     * @param projectRenderer Project Rendered To Be Extended
      * @return
      */
     @Override
-    public Set<Path> projectPaths(Path projectRoot) {
+    public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         domsole().appendWarning(notImplementedYet());
         return setOfUniques();
     }

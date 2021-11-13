@@ -22,11 +22,16 @@ public interface Renderer {
 
     /**
      * TODO Use {@link Path} object instead of {@link String}.
-     *
+     * <p>
      * This can be considered the address of the renderer,
      * that identifies the renderer.
      *
      * @return Prefix of all paths, supported by the renderer.
      */
+    @Deprecated
     String resourceRootPath();
+
+    default Path resourceRootPath2() {
+        return Path.of(resourceRootPath());
+    }
 }
