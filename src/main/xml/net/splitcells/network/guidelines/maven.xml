@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Maven Guidelines</title>
+    </meta>
+    <chapter>
+        <title>Maven POM Guidelines</title>
+        <paragraph>Use Maven POM only for simple configurations and avoid complex custom builds, if possible.
+            If complex custom builds cannot be avoided, prefer complex custom build steps via a minimal
+            number of additional plugins.
+            For this prefer 2 pipelines: The first pipeline builds the software stack in default format and makes it
+            executable.
+            The second pipeline uses these plugins to execute the complex custom build steps.
+        </paragraph>
+    </chapter>
+</article>
