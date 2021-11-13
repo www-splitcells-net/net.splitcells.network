@@ -17,7 +17,7 @@ import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
-public class CommonMarkChangelogExtension  implements ProjectRendererExtension {
+public class CommonMarkChangelogExtension implements ProjectRendererExtension {
 
     public static CommonMarkChangelogExtension commonMarkChangelogExtension() {
         return new CommonMarkChangelogExtension();
