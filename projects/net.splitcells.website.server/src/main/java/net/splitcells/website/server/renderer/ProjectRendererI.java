@@ -364,9 +364,9 @@ public class ProjectRendererI implements ProjectRenderer {
                                 final var fileName = relativePath.getFileName().toString();
                                 final var newFileName = fileName.substring(0, fileName.lastIndexOf('.')) + ".html";
                                 final var adjustedRelativePath = relativePath.getParent().resolve(newFileName);
-                                ProjectRenderer.extendPerspectiveWithPath(layout, adjustedRelativePath);
+                                LayoutUtils.extendPerspectiveWithPath(layout, adjustedRelativePath);
                             } else {
-                                ProjectRenderer.extendPerspectiveWithPath(layout, relativePath);
+                                LayoutUtils.extendPerspectiveWithPath(layout, relativePath);
                             }
                         });
             } catch (IOException e) {

@@ -11,7 +11,6 @@
 package net.splitcells.website.server.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.perspective.Perspective;
@@ -23,7 +22,6 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.website.server.renderer.ProjectRenderer.extendPerspectiveWithPath;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ExtensionMerger implements ProjectRendererExtension {

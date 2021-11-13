@@ -11,10 +11,10 @@
 package net.splitcells.website.server.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.renderer.LayoutRenderer;
+import net.splitcells.website.server.renderer.LayoutUtils;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
 
@@ -79,7 +79,7 @@ public class UserCommandExtension implements ProjectRendererExtension {
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
         if (isDirectory(BIN_FOLDER)) {
-            ProjectRenderer.extendPerspectiveWithPath(layout
+            LayoutUtils.extendPerspectiveWithPath(layout
                     , Path.of(RENDERING_PATH));
         }
         return layout;

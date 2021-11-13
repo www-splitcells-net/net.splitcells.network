@@ -11,8 +11,8 @@
 package net.splitcells.website.server.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.website.server.renderer.LayoutUtils;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.extension.ProjectRendererExtension;
 import net.splitcells.website.server.renderer.RenderingResult;
@@ -55,7 +55,7 @@ public class CommonMarkReadmeExtension implements ProjectRendererExtension {
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
         if (is_file(projectRenderer.projectFolder().resolve("README.md"))) {
-            ProjectRenderer.extendPerspectiveWithPath(layout
+            LayoutUtils.extendPerspectiveWithPath(layout
                     , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("README.html"));
         }
         return layout;

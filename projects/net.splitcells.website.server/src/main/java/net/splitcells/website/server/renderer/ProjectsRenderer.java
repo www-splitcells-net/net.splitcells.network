@@ -32,7 +32,7 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.website.server.renderer.ProjectRenderer.extendPerspectiveWithPath;
+import static net.splitcells.website.server.renderer.LayoutUtils.extendPerspectiveWithPath;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
