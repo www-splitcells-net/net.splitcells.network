@@ -1,14 +1,17 @@
 package net.splitcells.website.server.renderer;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.renderer.ProjectRenderer.projectRenderer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProjectRendererTest {
+    @Tag(INTEGRATION_TEST)
     @Test
     public void testCommonMarkLayout() {
         final var testSubject = projectRenderer
