@@ -26,7 +26,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public interface ProjectRenderer {
+public interface ProjectRenderer extends Renderer {
 
     static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
             , String resourceRootPath
@@ -53,14 +53,8 @@ public interface ProjectRenderer {
     @Deprecated
     Path projectFolder();
 
-    Optional<RenderingResult> render(String path);
-
     @Deprecated
     Optional<byte[]> renderString(String arg);
 
     Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path);
-
-    String resourceRootPath();
-
-    Set<Path> projectPaths();
 }
