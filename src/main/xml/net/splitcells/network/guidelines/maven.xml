@@ -14,5 +14,25 @@
             executable.
             The second pipeline uses these plugins to execute the complex custom build steps.
         </paragraph>
+        <paragraph>The reason for this is the fact, that in a Maven POM every component is dependent on every other
+            component and that good logs or dependencies between components are hard to understand.
+            This is caused by Maven's design.
+        </paragraph>
+        <paragraph>This problem is a none issue (most of the time), when one applies plugins like surefire for testing,
+            sets the version of the Java compiler or uses the spotbugs plugin in order to find bugs.
+            All of these none issues have in common, that they are either setting something general
+            or writing something general to a folder.
+        </paragraph>
+        <paragraph>When one starts to copy, move, delete, transform etc. files via code (like ANT via the AntRun) in the
+            POM, things start to get complicated and hard to understand.
+            Therefore, avoid writing code in Maven POMs.
+        </paragraph>
+        <paragraph>Create a dedicated plugin, that contains all this code.
+            Then one only needs to define the input paths, the outputs paths and transformation configuration for each
+            such plugin.
+            If the input and output paths are chosen smartly, one can also use the paths in order to understand
+            the dependencies of POM components more easily.
+            This is especially the case, when each input path has at most one corresponding output path.
+        </paragraph>
     </chapter>
 </article>
