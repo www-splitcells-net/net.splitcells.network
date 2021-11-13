@@ -12,6 +12,7 @@ package net.splitcells.website.server.renderer;
 
 import java.nio.file.Path;
 
+@Deprecated
 public class Location {
     public static Location location(Path root, Path relativeChild) {
         return new Location(root, relativeChild);
