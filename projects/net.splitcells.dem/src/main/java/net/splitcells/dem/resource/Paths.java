@@ -28,6 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * TODO RENAME because it conflicts with {@link java.nio.file.Paths}.
+ * <p>
+ * TODO Create an own implementation of path like data structure. Such object should have
+ * an conversion method, that transforms the path to a file like object, in order to make it easy to interact with it.
+ * Note, that the transform method should accept any kind of backend for the filesystem.
  */
 public final class Paths {
     private static final Pattern PATH_ELEMENT_SYNTAX = Pattern.compile("[a-zA-Z0-9\\-\\.-_]*");
@@ -86,7 +90,7 @@ public final class Paths {
             throw new RuntimeException(e);
         }
     }
-    
+
     public static String removeFileSuffix(String fileName) {
         return fileName.substring(0, fileName.lastIndexOf('.'));
     }

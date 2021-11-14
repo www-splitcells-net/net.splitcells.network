@@ -28,9 +28,18 @@ public interface ProjectRendererExtension {
      * @param projectRenderer Project Rendered To Be Extended
      * @return
      */
-    Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer);
+    default Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
+        return layout;
+    }
 
     /**
+     * TODO In future, it would be best to just use {@link #extendProjectLayout}.
+     *
+     * This is only provided, because it was easier to implement this without errors,
+     * compared to {@link #extendProjectLayout}.
+     * This will probably change, when {@link Perspective} code is better tested and reviewed,
+     * also a code to transform such a set to a {@link Perspective} layout, might always be useful.
+     *
      * @param projectRenderer Project Rendered To Be Extended
      * @return Paths relative to project's root path.
      */

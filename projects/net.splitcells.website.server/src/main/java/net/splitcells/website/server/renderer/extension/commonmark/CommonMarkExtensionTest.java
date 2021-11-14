@@ -1,4 +1,4 @@
-package net.splitcells.website.server.renderer;
+package net.splitcells.website.server.renderer.extension.commonmark;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.renderer.ProjectRenderer.projectRenderer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProjectRendererTest {
+public class CommonMarkExtensionTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void testCommonMarkLayout() {
@@ -21,7 +21,6 @@ public class ProjectRendererTest {
                         , Path.of("net.splitcells.website.default.content/src/main/resources/html")
                         , "/net/splitcells/dem"
                         , a -> Optional.empty());
-        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/guidelines/technology-stack.md"));
-        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/README.html"));
+        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/guidelines/technology-stack.html"));
     }
 }

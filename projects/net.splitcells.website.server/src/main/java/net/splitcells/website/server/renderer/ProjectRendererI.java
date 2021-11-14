@@ -43,6 +43,7 @@ import static net.splitcells.website.server.renderer.extension.ExtensionMerger.e
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
+import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkExtension.commonMarkExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -86,6 +87,7 @@ public class ProjectRendererI implements ProjectRenderer {
         extension.registerExtension(commonMarkReadmeExtension());
         extension.registerExtension(commonMarkChangelogExtension());
         extension.registerExtension(userCommandExtension());
+        extension.registerExtension(commonMarkExtension());
     }
 
     private final CommonMarkRenderer commonMarkRenderer = commonMarkRenderer();
@@ -145,13 +147,9 @@ public class ProjectRendererI implements ProjectRenderer {
             } else if (path.endsWith(".html")) {
                 final var renderedFile = renderFile(path);
                 final var renderedTextFile = renderTextFile(path.substring(0, path.lastIndexOf(".html")) + ".txt");
-                final var commonMarkSrc = readSrc("md", path.substring(0, path.lastIndexOf(".html")) + ".md");
                 final var html = readSrc("html", path);
                 int renderingCounter = 0;
                 if (renderedFile.isPresent()) {
-                    ++renderingCounter;
-                }
-                if (commonMarkSrc.isPresent()) {
                     ++renderingCounter;
                 }
                 if (renderedTextFile.isPresent()) {
@@ -170,14 +168,7 @@ public class ProjectRendererI implements ProjectRenderer {
                             + ", "
                             + renderedTextFile.isEmpty()
                             + ", "
-                            + commonMarkSrc.isEmpty()
-                            + ", "
                             + html.isEmpty());
-                }
-                if (commonMarkSrc.isPresent()) {
-                    return commonMarkSrc
-                            .map(r -> commonMarkRenderer.render(new String(r), this, normalizedPath))
-                            .map(r -> renderingResult(r, TEXT_HTML.toString()));
                 }
                 if (renderedFile.isPresent()) {
                     return renderedFile.map(r -> renderingResult(r, TEXT_HTML.toString()));
@@ -211,6 +202,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 return readArtifact(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(resourceRootPath, e);
         }
     }
@@ -381,8 +373,7 @@ public class ProjectRendererI implements ProjectRenderer {
         {
             final var renderedDocumentPaths = list
                     (projectSrcFolder.resolve("xml")
-                            , projectSrcFolder.resolve("txt")
-                            , projectSrcFolder.resolve("md"))
+                            , projectSrcFolder.resolve("txt"))
                     .stream()
                     .filter(folder -> Files.isDirectory(folder))
                     .map(folder -> {
