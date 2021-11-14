@@ -40,6 +40,7 @@ import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
+import static net.splitcells.website.server.renderer.extension.TextExtension.textExtension;
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.extension.XmlExtension.xmlExtension;
@@ -106,6 +107,7 @@ public class ProjectRendererI implements ProjectRenderer {
         this.validator = validator;
         this.projectFolder = projectFolder;
         extension.registerExtension(xmlExtension(renderer()));
+        extension.registerExtension(textExtension(renderer()));
     }
 
     /**
@@ -145,31 +147,9 @@ public class ProjectRendererI implements ProjectRenderer {
             } else if (path.endsWith(".js")) {
                 return readArtifact(path).map(r -> renderingResult(r, "text/javascript"));
             } else if (path.endsWith(".html")) {
-                final var renderedTextFile = renderTextFile(path.substring(0, path.lastIndexOf(".html")) + ".txt");
                 final var html = readSrc("html", path);
-                int renderingCounter = 0;
-                if (renderedTextFile.isPresent()) {
-                    ++renderingCounter;
-                }
                 if (html.isPresent()) {
-                    ++renderingCounter;
-                }
-                if (renderingCounter > 1) {
-                    throw executionException("Path has no unambiguous target: "
-                            + path
-                            + ", "
-                            + renderingCounter
-                            + ", "
-                            + renderedTextFile.isEmpty()
-                            + ", "
-                            + html.isEmpty());
-                }
-                if (renderedTextFile.isPresent()) {
-                    return renderedTextFile.map(r -> renderingResult(r, TEXT_HTML.toString()));
-                }
-                if (html.isPresent()) {
-                    return readSrc("html", path)
-                            .map(r -> renderingResult(r, "text/html"));
+                    return html.map(r -> renderingResult(r, "text/html"));
                 }
                 return Optional.empty();
             } else if (path.endsWith(".svg")) {
