@@ -145,13 +145,9 @@ public class ProjectRendererI implements ProjectRenderer {
             } else if (path.endsWith(".js")) {
                 return readArtifact(path).map(r -> renderingResult(r, "text/javascript"));
             } else if (path.endsWith(".html")) {
-                final var renderedFile = renderFile(path);
                 final var renderedTextFile = renderTextFile(path.substring(0, path.lastIndexOf(".html")) + ".txt");
                 final var html = readSrc("html", path);
                 int renderingCounter = 0;
-                if (renderedFile.isPresent()) {
-                    ++renderingCounter;
-                }
                 if (renderedTextFile.isPresent()) {
                     ++renderingCounter;
                 }
@@ -164,14 +160,9 @@ public class ProjectRendererI implements ProjectRenderer {
                             + ", "
                             + renderingCounter
                             + ", "
-                            + renderedFile.isEmpty()
-                            + ", "
                             + renderedTextFile.isEmpty()
                             + ", "
                             + html.isEmpty());
-                }
-                if (renderedFile.isPresent()) {
-                    return renderedFile.map(r -> renderingResult(r, TEXT_HTML.toString()));
                 }
                 if (renderedTextFile.isPresent()) {
                     return renderedTextFile.map(r -> renderingResult(r, TEXT_HTML.toString()));
@@ -181,8 +172,6 @@ public class ProjectRendererI implements ProjectRenderer {
                             .map(r -> renderingResult(r, "text/html"));
                 }
                 return Optional.empty();
-            } else if (path.endsWith(".xml") || path.endsWith(".rss")) {
-                return renderFile(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             } else if (path.endsWith(".svg")) {
                 final var artifactResult = readArtifact(path)
                         .map(r -> renderingResult(r, "image/svg+xml"));
