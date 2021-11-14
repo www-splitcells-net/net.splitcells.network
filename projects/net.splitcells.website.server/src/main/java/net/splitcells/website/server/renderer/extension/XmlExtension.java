@@ -1,45 +1,44 @@
-package net.splitcells.website.server.renderer.extension.commonmark;
+package net.splitcells.website.server.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
+import net.splitcells.website.server.renderer.FileStructureTransformer;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
-import net.splitcells.website.server.renderer.extension.ProjectRendererExtension;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
-import static java.util.stream.Stream.concat;
-import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.Files.is_file;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
-import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
-public class CommonMarkExtension implements ProjectRendererExtension {
-    public static CommonMarkExtension commonMarkExtension() {
-        return new CommonMarkExtension();
+public class XmlExtension implements ProjectRendererExtension {
+    public static XmlExtension xmlExtension(FileStructureTransformer renderer) {
+        return new XmlExtension(renderer);
     }
 
-    private final CommonMarkRenderer renderer = commonMarkRenderer();
+    private final FileStructureTransformer renderer;
 
-    private CommonMarkExtension() {
-
+    private XmlExtension(FileStructureTransformer renderer) {
+        this.renderer = renderer;
     }
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
-            final var commonMarkFile = projectRenderer.projectFolder().resolve("src/main").resolve("md")
-                    .resolve(path.substring(0, path.lastIndexOf(".html")) + ".md");
-            if (Files.is_file(commonMarkFile)) {
-                final var pathContent = readString(commonMarkFile);
-                return Optional.of(renderingResult(renderer.render(pathContent, projectRenderer, path)
+            final var xmlFile = projectRenderer
+                    .projectFolder()
+                    .resolve("src/main")
+                    .resolve("xml")
+                    .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
+            if (Files.is_file(xmlFile)) {
+                return Optional.of(renderingResult(renderer
+                                .transform(readString(xmlFile)).getBytes(UTF_8)
                         , TEXT_HTML.toString()));
             }
         }
@@ -49,7 +48,8 @@ public class CommonMarkExtension implements ProjectRendererExtension {
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer.projectFolder().resolve("src/main").resolve("md");
+        final var sourceFolder = projectRenderer.projectFolder().resolve("src/main").resolve("xml");
+        // TODO Move this code block into a function, in order to avoid
         if (Files.isDirectory(sourceFolder)) {
             try {
                 java.nio.file.Files.walk(sourceFolder)

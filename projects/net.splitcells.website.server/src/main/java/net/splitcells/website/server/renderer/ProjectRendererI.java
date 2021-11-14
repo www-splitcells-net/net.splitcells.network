@@ -42,6 +42,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
+import static net.splitcells.website.server.renderer.extension.XmlExtension.xmlExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkExtension.commonMarkExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
@@ -90,8 +91,6 @@ public class ProjectRendererI implements ProjectRenderer {
         extension.registerExtension(commonMarkExtension());
     }
 
-    private final CommonMarkRenderer commonMarkRenderer = commonMarkRenderer();
-
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
@@ -106,6 +105,7 @@ public class ProjectRendererI implements ProjectRenderer {
         this.flatRepository = flatRepository;
         this.validator = validator;
         this.projectFolder = projectFolder;
+        extension.registerExtension(xmlExtension(renderer()));
     }
 
     /**

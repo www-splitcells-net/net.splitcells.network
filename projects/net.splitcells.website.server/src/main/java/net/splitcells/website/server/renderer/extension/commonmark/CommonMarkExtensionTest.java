@@ -11,11 +11,14 @@ import static net.splitcells.website.server.renderer.ProjectRenderer.projectRend
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CommonMarkExtensionTest {
+    /**
+     * TODO Test extension explicitly.
+     */
     @Tag(INTEGRATION_TEST)
     @Test
     public void testCommonMarkLayout() {
         final var testSubject = projectRenderer
-                ("test"
+                ("public"
                         , Path.of("../net.splitcells.dem")
                         , Path.of("../net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                         , Path.of("net.splitcells.website.default.content/src/main/resources/html")

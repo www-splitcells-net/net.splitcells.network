@@ -56,7 +56,7 @@ public class FileStructureTransformer {
                     (newInputStream(xslLibs.resolve(transformerXsl)), new PathBasedUriResolver(xslLibs));
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
         this.validator = validator;
     }
