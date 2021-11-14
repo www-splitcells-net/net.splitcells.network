@@ -361,8 +361,7 @@ public class ProjectRendererI implements ProjectRenderer {
         final Set<Path> projectPaths = setOfUniques();
         {
             final var renderedDocumentPaths = list
-                    (projectSrcFolder.resolve("xml")
-                            , projectSrcFolder.resolve("txt"))
+                    (projectSrcFolder.resolve("txt"))
                     .stream()
                     .filter(folder -> Files.isDirectory(folder))
                     .map(folder -> {
