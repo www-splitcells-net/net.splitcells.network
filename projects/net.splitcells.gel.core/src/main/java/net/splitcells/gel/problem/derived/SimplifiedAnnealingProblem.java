@@ -49,15 +49,12 @@ public class SimplifiedAnnealingProblem extends DerivedSolution {
             , Function<Integer, Float> temperatureFunction
             , Randomness randomness) {
         super(() -> list(), allocations);
-        constraint = derivation(originalConstraint,
-                new Function<>() {
-                    @Override
-                    public MetaRating apply(MetaRating rating) {
-                        if (randomness.truthValue(temperatureFunction.apply(SimplifiedAnnealingProblem.this.history().size()))) {
-                            return Optimality.optimality(1).asMetaRating();
-                        }
-                        return rating;
+        constraint = derivation(originalConstraint
+                , rating -> {
+                    if (randomness.truthValue(temperatureFunction.apply(SimplifiedAnnealingProblem.this.history().size()))) {
+                        return Optimality.optimality(1).asMetaRating();
                     }
+                    return rating;
                 });
     }
 }
