@@ -12,7 +12,7 @@ Ticket references without a prefix are probably hosted on
 Prefix to Server:
 * g = Github: https://github.com/www-splitcells-net/net.splitcells.network/issues
 * s = sourcehut: https://todo.sr.ht/~splitcells-net/net.splitcells.network
-
+ 
 Ticket information located on platforms and not in the repository are
 considered throw away information.
 Links to such platforms may or may not be valid.

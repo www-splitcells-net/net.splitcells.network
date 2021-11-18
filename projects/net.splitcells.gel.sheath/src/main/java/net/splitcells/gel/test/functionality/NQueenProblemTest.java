@@ -85,7 +85,7 @@ public class NQueenProblemTest extends TestSuiteI {
                         linearIterator(
                                 list(
                                         UsedSupplySwitcher.usedSupplySwitcher(2))),
-                        100));
+                        120_000));
         // NOTE usedSupplySwitcher(2) finds many non improving steps.
         createDirectory(environment().config().configValue(ProcessPath.class));
         writeToFile(environment().config().configValue(ProcessPath.class).resolve("history.fods"), testSubject.history().toFods());
