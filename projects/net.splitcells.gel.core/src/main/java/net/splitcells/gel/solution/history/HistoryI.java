@@ -98,7 +98,7 @@ public class HistoryI implements History {
         allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
     }
 
-    protected Integer moveLastEventIdBackward() {
+    protected Integer moveLastEventIdBackwards() {
         return lastEventId -= 1;
     }
 
