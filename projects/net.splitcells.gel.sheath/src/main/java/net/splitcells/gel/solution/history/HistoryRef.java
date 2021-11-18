@@ -40,7 +40,11 @@ public class HistoryRef extends HistoryI {
     @Override
     protected void resetToInOrder(List<Integer> indekses) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(indekses).isNotEmpty();
+            if (size() != 0) {
+                assertThat(indekses).isNotEmpty();
+            } else {
+                assertThat(indekses).isEmpty();
+            }
         }
         super.resetToInOrder(indekses);
     }

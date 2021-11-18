@@ -108,6 +108,9 @@ public class HistoryI implements History {
 
     @Override
     public void resetTo(int index) {
+        if (index == 0 && size() == 0) {
+            return;
+        }
         final var indexToReversal = reverse
                 (rangeClosed(index, this.size() - 1)
                         .boxed()
