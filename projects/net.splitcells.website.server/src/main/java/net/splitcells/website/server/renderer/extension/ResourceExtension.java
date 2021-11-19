@@ -19,6 +19,9 @@ import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
+/**
+ * TODO Split resources into actual HTML documents and other binary data.
+ */
 public class ResourceExtension implements ProjectRendererExtension {
     public static ResourceExtension resourceExtension() {
         return new ResourceExtension();
