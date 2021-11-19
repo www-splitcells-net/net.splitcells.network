@@ -8,7 +8,6 @@ import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -17,7 +16,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
-public class XmlExtension implements ProjectRendererExtension {
+public class XmlExtension implements Renderer {
     public static XmlExtension xmlExtension(FileStructureTransformer renderer) {
         return new XmlExtension(renderer);
     }

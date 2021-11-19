@@ -36,7 +36,7 @@ import static net.splitcells.website.server.renderer.RenderingResult.renderingRe
  * Renders all commands, that are installed via 'net.splitcells.os.state.interface' for the current user
  * at '/net/splitcells/os/state/interface/installed/index.html'.
  */
-public class UserCommandExtension implements ProjectRendererExtension {
+public class UserCommandExtension implements Renderer {
     public static UserCommandExtension userCommandExtension() {
         return new UserCommandExtension();
     }

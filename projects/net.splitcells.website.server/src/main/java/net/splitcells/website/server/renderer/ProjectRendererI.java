@@ -17,8 +17,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.Validator;
-import net.splitcells.website.server.renderer.extension.ExtensionMerger;
-import net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer;
+import net.splitcells.website.server.renderer.extension.RendererMerger;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -38,8 +37,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
+import static net.splitcells.website.server.renderer.extension.RendererMerger.rendererMerger;
 import static net.splitcells.website.server.renderer.extension.ResourceExtension.resourceExtension;
 import static net.splitcells.website.server.renderer.extension.TextExtension.textExtension;
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
@@ -48,7 +46,6 @@ import static net.splitcells.website.server.renderer.extension.XmlExtension.xmlE
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkExtension.commonMarkExtension;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
-import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
@@ -84,13 +81,13 @@ public class ProjectRendererI implements ProjectRenderer {
     @Deprecated
     private final boolean typedFolder;
     private final Validator validator;
-    private final ExtensionMerger extension = extensionMerger();
+    private final RendererMerger renderer = rendererMerger();
 
     {
-        extension.registerExtension(commonMarkReadmeExtension());
-        extension.registerExtension(commonMarkChangelogExtension());
-        extension.registerExtension(userCommandExtension());
-        extension.registerExtension(commonMarkExtension());
+        renderer.registerExtension(commonMarkReadmeExtension());
+        renderer.registerExtension(commonMarkChangelogExtension());
+        renderer.registerExtension(userCommandExtension());
+        renderer.registerExtension(commonMarkExtension());
     }
 
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
@@ -107,9 +104,9 @@ public class ProjectRendererI implements ProjectRenderer {
         this.flatRepository = flatRepository;
         this.validator = validator;
         this.projectFolder = projectFolder;
-        extension.registerExtension(xmlExtension(renderer()));
-        extension.registerExtension(textExtension(renderer()));
-        extension.registerExtension(resourceExtension());
+        this.renderer.registerExtension(xmlExtension(renderer()));
+        this.renderer.registerExtension(textExtension(renderer()));
+        this.renderer.registerExtension(resourceExtension());
     }
 
     /**
@@ -133,7 +130,7 @@ public class ProjectRendererI implements ProjectRenderer {
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
             }
-            final var extensionRendering = extension.renderFile(path, this);
+            final var extensionRendering = renderer.renderFile(path, this);
             if (extensionRendering.isPresent()) {
                 return extensionRendering;
             }
@@ -386,7 +383,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 resourcePaths.get().forEach(projectPaths::add);
             }
         }
-        projectPaths.addAll(extension.projectPaths(this));
+        projectPaths.addAll(renderer.projectPaths(this));
         return projectPaths;
     }
 

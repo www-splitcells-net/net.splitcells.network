@@ -24,25 +24,25 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExtensionMerger implements ProjectRendererExtension {
-    public static ExtensionMerger extensionMerger() {
-        return new ExtensionMerger();
+public class RendererMerger implements Renderer {
+    public static RendererMerger rendererMerger() {
+        return new RendererMerger();
     }
 
-    private final List<ProjectRendererExtension> extensions = list();
+    private final List<Renderer> renderers = list();
 
-    private ExtensionMerger() {
+    private RendererMerger() {
 
     }
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
-        final var rendering = extensions.stream()
+        final var rendering = renderers.stream()
                 .map(e -> e.renderFile(path, projectRenderer))
                 .filter(e -> e.isPresent())
                 .collect(Lists.toList());
         if (rendering.size() > 1) {
-            final var matchedExtensions = extensions.stream()
+            final var matchedExtensions = renderers.stream()
                     .filter(r -> r.renderFile(path, projectRenderer).isPresent())
                     .map(Object::toString)
                     .reduce((a, b) -> a + ", " + b)
@@ -61,20 +61,20 @@ public class ExtensionMerger implements ProjectRendererExtension {
 
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        extensions.forEach(e -> e.extendProjectLayout(layout, projectRenderer));
+        renderers.forEach(e -> e.extendProjectLayout(layout, projectRenderer));
         return layout;
     }
 
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> projectPaths = setOfUniques();
-        extensions.forEach(e -> {
+        renderers.forEach(e -> {
             projectPaths.addAll(e.projectPaths(projectRenderer));
         });
         return projectPaths;
     }
 
-    public void registerExtension(ProjectRendererExtension extension) {
-        extensions.add(extension);
+    public void registerExtension(Renderer extension) {
+        renderers.add(extension);
     }
 }

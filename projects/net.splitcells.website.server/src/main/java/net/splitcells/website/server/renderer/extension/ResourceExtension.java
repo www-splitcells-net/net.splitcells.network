@@ -2,7 +2,6 @@ package net.splitcells.website.server.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
 
@@ -11,18 +10,16 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**
  * TODO Split resources into actual HTML documents and other binary data.
  */
-public class ResourceExtension implements ProjectRendererExtension {
+public class ResourceExtension implements Renderer {
     public static ResourceExtension resourceExtension() {
         return new ResourceExtension();
     }

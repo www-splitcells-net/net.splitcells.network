@@ -2,26 +2,22 @@ package net.splitcells.website.server.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
-import net.splitcells.website.server.renderer.extension.ProjectRendererExtension;
+import net.splitcells.website.server.renderer.extension.Renderer;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
-import static java.util.stream.Stream.concat;
-import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
-public class CommonMarkExtension implements ProjectRendererExtension {
+public class CommonMarkExtension implements Renderer {
     public static CommonMarkExtension commonMarkExtension() {
         return new CommonMarkExtension();
     }

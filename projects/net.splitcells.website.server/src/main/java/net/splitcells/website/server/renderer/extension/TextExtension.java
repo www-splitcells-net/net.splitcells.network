@@ -16,11 +16,9 @@ import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.readAllBytes;
-import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
-public class TextExtension implements ProjectRendererExtension {
+public class TextExtension implements Renderer {
     public static TextExtension textExtension(FileStructureTransformer renderer) {
         return new TextExtension(renderer);
     }

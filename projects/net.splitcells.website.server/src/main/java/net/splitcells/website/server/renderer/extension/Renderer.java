@@ -18,7 +18,7 @@ import net.splitcells.website.server.renderer.RenderingResult;
 import java.nio.file.Path;
 import java.util.Optional;
 
-public interface ProjectRendererExtension {
+public interface Renderer {
     Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer);
 
     /**

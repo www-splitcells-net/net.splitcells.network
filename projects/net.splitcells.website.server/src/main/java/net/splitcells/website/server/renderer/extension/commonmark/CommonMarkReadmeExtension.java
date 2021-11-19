@@ -14,7 +14,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.renderer.LayoutUtils;
 import net.splitcells.website.server.renderer.ProjectRenderer;
-import net.splitcells.website.server.renderer.extension.ProjectRendererExtension;
+import net.splitcells.website.server.renderer.extension.Renderer;
 import net.splitcells.website.server.renderer.RenderingResult;
 
 import java.nio.file.Path;
@@ -30,7 +30,7 @@ import static net.splitcells.website.server.renderer.extension.commonmark.Common
 /**
  * TODO Add support for header outline.
  */
-public class CommonMarkReadmeExtension implements ProjectRendererExtension {
+public class CommonMarkReadmeExtension implements Renderer {
 
     public static CommonMarkReadmeExtension commonMarkReadmeExtension() {
         return new CommonMarkReadmeExtension();
