@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.renderer.extension;
+package net.splitcells.website.server.renderer.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
@@ -36,15 +36,15 @@ import static net.splitcells.website.server.renderer.RenderingResult.renderingRe
  * Renders all commands, that are installed via 'net.splitcells.os.state.interface' for the current user
  * at '/net/splitcells/os/state/interface/installed/index.html'.
  */
-public class UserCommandExtension implements Renderer {
-    public static UserCommandExtension userCommandExtension() {
-        return new UserCommandExtension();
+public class UserCommandRenderer implements Renderer {
+    public static UserCommandRenderer userCommandRenderer() {
+        return new UserCommandRenderer();
     }
 
     private static final String RENDERING_PATH = "/net/splitcells/os/state/interface/installed/index.html";
     private static final Path BIN_FOLDER = userHome().resolve("bin/net.splitcells.os.state.interface.commands.managed/");
 
-    private UserCommandExtension() {
+    private UserCommandRenderer() {
 
     }
 

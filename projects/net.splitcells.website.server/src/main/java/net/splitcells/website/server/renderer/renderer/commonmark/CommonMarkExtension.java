@@ -1,47 +1,41 @@
-package net.splitcells.website.server.renderer.extension;
+package net.splitcells.website.server.renderer.renderer.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.Paths;
-import net.splitcells.website.server.renderer.FileStructureTransformer;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
+import net.splitcells.website.server.renderer.renderer.Renderer;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
-import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
+import static net.splitcells.website.server.renderer.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
-public class TextExtension implements Renderer {
-    public static TextExtension textExtension(FileStructureTransformer renderer) {
-        return new TextExtension(renderer);
+public class CommonMarkExtension implements Renderer {
+    public static CommonMarkExtension commonMarkExtension() {
+        return new CommonMarkExtension();
     }
 
-    private final FileStructureTransformer renderer;
+    private final CommonMarkRenderer renderer = commonMarkRenderer();
 
-    private TextExtension(FileStructureTransformer renderer) {
-        this.renderer = renderer;
+    private CommonMarkExtension() {
+
     }
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
-            final var textFile = projectRenderer
-                    .projectFolder()
-                    .resolve("src/main/txt")
-                    .resolve(path.substring(0, path.lastIndexOf(".html")) + ".txt");
-            if (Files.is_file(textFile)) {
-                final var content = Xml.rElement(NameSpaces.NATURAL, "text");
-                content.appendChild(Xml.textNode(new String(Paths.readString(textFile))));
-                return Optional.of(renderingResult(renderer
-                                .transform(Xml.toPrettyString(content))
-                                .getBytes(UTF_8)
+            final var commonMarkFile = projectRenderer.projectFolder().resolve("src/main").resolve("md")
+                    .resolve(path.substring(0, path.lastIndexOf(".html")) + ".md");
+            if (Files.is_file(commonMarkFile)) {
+                final var pathContent = readString(commonMarkFile);
+                return Optional.of(renderingResult(renderer.render(pathContent, projectRenderer, path)
                         , TEXT_HTML.toString()));
             }
         }
@@ -51,7 +45,7 @@ public class TextExtension implements Renderer {
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer.projectFolder().resolve("src/main").resolve("txt");
+        final var sourceFolder = projectRenderer.projectFolder().resolve("src/main").resolve("md");
         if (Files.isDirectory(sourceFolder)) {
             try {
                 java.nio.file.Files.walk(sourceFolder)

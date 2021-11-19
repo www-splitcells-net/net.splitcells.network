@@ -1,4 +1,4 @@
-package net.splitcells.website.server.renderer.extension;
+package net.splitcells.website.server.renderer.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
@@ -17,14 +17,16 @@ import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
 /**
+ * Projects the file tree located "src/main/resources/html/" of the project's folder.
+ *
  * TODO Split resources into actual HTML documents and other binary data.
  */
-public class ResourceExtension implements Renderer {
-    public static ResourceExtension resourceExtension() {
-        return new ResourceExtension();
+public class ResourceRenderer implements Renderer {
+    public static ResourceRenderer resourceRenderer() {
+        return new ResourceRenderer();
     }
 
-    public ResourceExtension() {
+    public ResourceRenderer() {
 
     }
 

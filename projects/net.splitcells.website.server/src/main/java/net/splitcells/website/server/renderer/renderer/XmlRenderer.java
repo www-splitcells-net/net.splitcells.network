@@ -1,4 +1,4 @@
-package net.splitcells.website.server.renderer.extension;
+package net.splitcells.website.server.renderer.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
@@ -16,14 +16,19 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
-public class XmlExtension implements Renderer {
-    public static XmlExtension xmlExtension(FileStructureTransformer renderer) {
-        return new XmlExtension(renderer);
+/**
+ * Projects the file tree located "src/main/xml/" of the project's folder.
+ * The projected path's replaces the "xml" file suffix with "html".
+ * All files need to end with ".xml".
+ */
+public class XmlRenderer implements Renderer {
+    public static XmlRenderer xmlRenderer(FileStructureTransformer renderer) {
+        return new XmlRenderer(renderer);
     }
 
     private final FileStructureTransformer renderer;
 
-    private XmlExtension(FileStructureTransformer renderer) {
+    private XmlRenderer(FileStructureTransformer renderer) {
         this.renderer = renderer;
     }
 

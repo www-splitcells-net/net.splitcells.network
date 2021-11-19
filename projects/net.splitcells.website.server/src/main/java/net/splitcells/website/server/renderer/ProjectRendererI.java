@@ -17,7 +17,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.Validator;
-import net.splitcells.website.server.renderer.extension.RendererMerger;
+import net.splitcells.website.server.renderer.renderer.RendererMerger;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -37,15 +37,15 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.website.server.renderer.extension.RendererMerger.rendererMerger;
-import static net.splitcells.website.server.renderer.extension.ResourceExtension.resourceExtension;
-import static net.splitcells.website.server.renderer.extension.TextExtension.textExtension;
-import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
+import static net.splitcells.website.server.renderer.renderer.RendererMerger.rendererMerger;
+import static net.splitcells.website.server.renderer.renderer.ResourceRenderer.resourceRenderer;
+import static net.splitcells.website.server.renderer.renderer.TextRenderer.textExtension;
+import static net.splitcells.website.server.renderer.renderer.UserCommandRenderer.userCommandRenderer;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
-import static net.splitcells.website.server.renderer.extension.XmlExtension.xmlExtension;
-import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
-import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkExtension.commonMarkExtension;
-import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
+import static net.splitcells.website.server.renderer.renderer.XmlRenderer.xmlRenderer;
+import static net.splitcells.website.server.renderer.renderer.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
+import static net.splitcells.website.server.renderer.renderer.commonmark.CommonMarkExtension.commonMarkExtension;
+import static net.splitcells.website.server.renderer.renderer.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
@@ -82,7 +82,7 @@ public class ProjectRendererI implements ProjectRenderer {
     {
         renderer.registerExtension(commonMarkReadmeExtension());
         renderer.registerExtension(commonMarkChangelogExtension());
-        renderer.registerExtension(userCommandExtension());
+        renderer.registerExtension(userCommandRenderer());
         renderer.registerExtension(commonMarkExtension());
     }
 
@@ -100,9 +100,9 @@ public class ProjectRendererI implements ProjectRenderer {
         this.flatRepository = flatRepository;
         this.validator = validator;
         this.projectFolder = projectFolder;
-        this.renderer.registerExtension(xmlExtension(renderer()));
+        this.renderer.registerExtension(xmlRenderer(renderer()));
         this.renderer.registerExtension(textExtension(renderer()));
-        this.renderer.registerExtension(resourceExtension());
+        this.renderer.registerExtension(resourceRenderer());
     }
 
     /**

@@ -1,11 +1,11 @@
-package net.splitcells.website.server.renderer.extension.commonmark;
+package net.splitcells.website.server.renderer.renderer.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.renderer.LayoutUtils;
 import net.splitcells.website.server.renderer.ProjectRenderer;
 import net.splitcells.website.server.renderer.RenderingResult;
-import net.splitcells.website.server.renderer.extension.Renderer;
+import net.splitcells.website.server.renderer.renderer.Renderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -15,7 +15,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
-import static net.splitcells.website.server.renderer.extension.commonmark.CommonMarkRenderer.commonMarkRenderer;
+import static net.splitcells.website.server.renderer.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
 public class CommonMarkChangelogExtension implements Renderer {
 

@@ -1,4 +1,4 @@
-package net.splitcells.website.server.renderer.extension.commonmark;
+package net.splitcells.website.server.renderer.renderer.commonmark;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
