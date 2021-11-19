@@ -24,6 +24,15 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * <p>
+ * Provides one interface to multiple {@link Renderer}.
+ * When a query is requested a matching {@link Renderer} is queried.
+ * </p>
+ * <p>
+ * Only one {@link Renderer} is allowed to matched at a time.
+ * </p>
+ */
 public class RendererMerger implements Renderer {
     public static RendererMerger rendererMerger() {
         return new RendererMerger();
