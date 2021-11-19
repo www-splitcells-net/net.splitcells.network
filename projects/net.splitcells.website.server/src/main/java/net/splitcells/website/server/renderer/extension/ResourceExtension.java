@@ -12,7 +12,10 @@ import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.readAllBytes;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.resource.Files.isDirectory;
+import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
 
@@ -31,8 +34,12 @@ public class ResourceExtension implements ProjectRendererExtension {
                 .projectFolder()
                 .resolve("src/main/resources/html/")
                 .resolve(path);
-        if (Files.is_file(requestedFile)) {
-            return Optional.of(renderingResult(readString(requestedFile).getBytes(UTF_8), TEXT_HTML.toString()));
+        if (is_file(requestedFile)) {
+            try {
+                return Optional.of(renderingResult(readAllBytes(requestedFile), TEXT_HTML.toString()));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
         return Optional.empty();
     }
@@ -43,7 +50,7 @@ public class ResourceExtension implements ProjectRendererExtension {
         final var sourceFolder = projectRenderer
                 .projectFolder()
                 .resolve("src/main/resources/html/");
-        if (Files.isDirectory(sourceFolder)) {
+        if (isDirectory(sourceFolder)) {
             try {
                 java.nio.file.Files.walk(sourceFolder)
                         .filter(java.nio.file.Files::isRegularFile)

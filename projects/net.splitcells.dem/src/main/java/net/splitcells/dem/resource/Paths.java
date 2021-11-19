@@ -87,7 +87,7 @@ public final class Paths {
         try {
             return java.nio.file.Files.readString(path);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Could not read file: " + path, e);
         }
     }
 
