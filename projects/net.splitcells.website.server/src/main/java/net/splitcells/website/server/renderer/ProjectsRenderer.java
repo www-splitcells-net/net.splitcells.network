@@ -64,7 +64,7 @@ public class ProjectsRenderer {
         projectsPaths().stream()
                 .map(path -> "/" + path.toString())
                 .map(path -> {
-                    if (path.endsWith(".xml") || path.endsWith(".txt") || path.endsWith(".md")) {
+                    if (path.endsWith(".xml") || path.endsWith(".md")) {
                         return net.splitcells.dem.resource.Paths.removeFileSuffix(path) + ".html";
                     }
                     return path;
