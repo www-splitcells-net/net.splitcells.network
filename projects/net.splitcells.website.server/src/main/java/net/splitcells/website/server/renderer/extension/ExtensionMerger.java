@@ -42,7 +42,15 @@ public class ExtensionMerger implements ProjectRendererExtension {
                 .filter(e -> e.isPresent())
                 .collect(Lists.toList());
         if (rendering.size() > 1) {
-            throw new RuntimeException(rendering.toString());
+            final var matchedExtensions = extensions.stream()
+                    .filter(r -> r.renderFile(path, projectRenderer).isPresent())
+                    .map(Object::toString)
+                    .reduce((a, b) -> a + ", " + b)
+                    .get();
+            throw new RuntimeException("Multiple matches are present: "
+                    + projectRenderer.resourceRootPath2().toString()
+                    + ": "
+                    + matchedExtensions);
         }
         if (rendering.isEmpty()) {
             return Optional.empty();

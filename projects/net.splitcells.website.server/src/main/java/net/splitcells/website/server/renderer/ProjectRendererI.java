@@ -40,6 +40,7 @@ import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.renderer.extension.ExtensionMerger.extensionMerger;
+import static net.splitcells.website.server.renderer.extension.ResourceExtension.resourceExtension;
 import static net.splitcells.website.server.renderer.extension.TextExtension.textExtension;
 import static net.splitcells.website.server.renderer.extension.UserCommandExtension.userCommandExtension;
 import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
@@ -108,6 +109,7 @@ public class ProjectRendererI implements ProjectRenderer {
         this.projectFolder = projectFolder;
         extension.registerExtension(xmlExtension(renderer()));
         extension.registerExtension(textExtension(renderer()));
+        extension.registerExtension(resourceExtension());
     }
 
     /**
