@@ -51,10 +51,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 /**
  * TODO Use resource folder for xml, txt and etc.
  * <p>
- * TODO Merge website rendering and support system rendering.
- * <p>
- * TODO Make XML rendering an extension.
- * <p>
  * TODO Move rendering for any type to dedicated extension.
  * <p>
  * IDEA Create an extension in order to render Java, Python 3 and Shell scripts, so it's easy to inspect
