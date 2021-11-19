@@ -11,8 +11,8 @@
 package net.splitcells.website;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.website.server.renderer.ProjectRenderer;
-import net.splitcells.website.server.renderer.ProjectsRenderer;
+import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.project.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.ValidatorViaSchema.validatorViaSchema;
-import static net.splitcells.website.server.renderer.ProjectRenderer.projectRenderer;
+import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 
 public class Projects {
     public static ProjectsRenderer projectsRenderer() {

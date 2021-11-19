@@ -8,15 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.renderer.renderer.commonmark;
+package net.splitcells.website.server.project.renderer.commonmark;
 
-import net.splitcells.website.server.renderer.ProjectRenderer;
+import net.splitcells.website.server.project.ProjectRenderer;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.util.Optional;
 
-import static net.splitcells.website.server.renderer.renderer.commonmark.LinkTranslator.linkTranslator;
+import static net.splitcells.website.server.project.renderer.commonmark.LinkTranslator.linkTranslator;
 
 public class CommonMarkRenderer {
     public static CommonMarkRenderer commonMarkRenderer() {

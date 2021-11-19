@@ -19,7 +19,7 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.website.server.renderer.RenderingResult;
+import net.splitcells.website.server.project.RenderingResult;
 
 import java.util.Optional;
 import java.util.function.Function;

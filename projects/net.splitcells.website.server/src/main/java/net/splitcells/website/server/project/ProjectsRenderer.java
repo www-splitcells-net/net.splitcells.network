@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.renderer;
+package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -32,7 +32,7 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.website.server.renderer.LayoutUtils.extendPerspectiveWithPath;
+import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

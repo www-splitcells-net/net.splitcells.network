@@ -1,9 +1,9 @@
-package net.splitcells.website.server.renderer.renderer;
+package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.website.server.renderer.ProjectRenderer;
-import net.splitcells.website.server.renderer.RenderingResult;
+import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.project.RenderingResult;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -14,7 +14,7 @@ import static java.nio.file.Files.readAllBytes;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
+import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 /**
  * Projects the file tree located "src/main/resources/html/" of the project's folder.

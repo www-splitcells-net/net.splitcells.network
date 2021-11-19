@@ -1,4 +1,4 @@
-package net.splitcells.website.server.renderer;
+package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.namespace.NameSpaces;

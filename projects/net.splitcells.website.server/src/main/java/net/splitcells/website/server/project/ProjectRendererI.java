@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.renderer;
+package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.Xml;
@@ -17,7 +17,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.Validator;
-import net.splitcells.website.server.renderer.renderer.RendererMerger;
+import net.splitcells.website.server.project.renderer.RendererMerger;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -37,15 +37,15 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.website.server.renderer.renderer.RendererMerger.rendererMerger;
-import static net.splitcells.website.server.renderer.renderer.ResourceRenderer.resourceRenderer;
-import static net.splitcells.website.server.renderer.renderer.TextRenderer.textExtension;
-import static net.splitcells.website.server.renderer.renderer.UserCommandRenderer.userCommandRenderer;
-import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
-import static net.splitcells.website.server.renderer.renderer.XmlRenderer.xmlRenderer;
-import static net.splitcells.website.server.renderer.renderer.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
-import static net.splitcells.website.server.renderer.renderer.commonmark.CommonMarkExtension.commonMarkExtension;
-import static net.splitcells.website.server.renderer.renderer.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
+import static net.splitcells.website.server.project.renderer.RendererMerger.rendererMerger;
+import static net.splitcells.website.server.project.renderer.ResourceRenderer.resourceRenderer;
+import static net.splitcells.website.server.project.renderer.TextRenderer.textExtension;
+import static net.splitcells.website.server.project.renderer.UserCommandRenderer.userCommandRenderer;
+import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.project.renderer.XmlRenderer.xmlRenderer;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkExtension.commonMarkExtension;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**

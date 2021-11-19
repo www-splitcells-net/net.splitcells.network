@@ -1,4 +1,4 @@
-package net.splitcells.website.server.renderer.renderer.commonmark;
+package net.splitcells.website.server.project.renderer.commonmark;
 
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.Image;

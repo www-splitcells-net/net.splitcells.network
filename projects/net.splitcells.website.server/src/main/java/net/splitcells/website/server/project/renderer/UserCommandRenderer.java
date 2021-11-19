@@ -8,15 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.renderer.renderer;
+package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.website.server.renderer.LayoutRenderer;
-import net.splitcells.website.server.renderer.LayoutUtils;
-import net.splitcells.website.server.renderer.ProjectRenderer;
-import net.splitcells.website.server.renderer.RenderingResult;
+import net.splitcells.website.server.project.LayoutRenderer;
+import net.splitcells.website.server.project.LayoutUtils;
+import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.project.RenderingResult;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -30,7 +30,7 @@ import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
+import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 /**
  * Renders all commands, that are installed via 'net.splitcells.os.state.interface' for the current user

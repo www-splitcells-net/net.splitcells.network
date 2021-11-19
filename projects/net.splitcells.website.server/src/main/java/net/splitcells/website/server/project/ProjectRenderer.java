@@ -8,21 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.renderer;
+package net.splitcells.website.server.project;
 
-import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.Validator;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

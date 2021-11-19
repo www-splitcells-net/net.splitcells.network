@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.renderer;
+package net.splitcells.website.server.project;
 
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;

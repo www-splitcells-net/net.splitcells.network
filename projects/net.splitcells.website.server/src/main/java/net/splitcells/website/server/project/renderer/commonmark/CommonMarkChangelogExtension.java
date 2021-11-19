@@ -1,11 +1,11 @@
-package net.splitcells.website.server.renderer.renderer.commonmark;
+package net.splitcells.website.server.project.renderer.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.website.server.renderer.LayoutUtils;
-import net.splitcells.website.server.renderer.ProjectRenderer;
-import net.splitcells.website.server.renderer.RenderingResult;
-import net.splitcells.website.server.renderer.renderer.Renderer;
+import net.splitcells.website.server.project.LayoutUtils;
+import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.project.renderer.Renderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -14,8 +14,8 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.website.server.renderer.RenderingResult.renderingResult;
-import static net.splitcells.website.server.renderer.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
+import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
 
 public class CommonMarkChangelogExtension implements Renderer {
 
