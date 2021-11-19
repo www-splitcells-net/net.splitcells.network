@@ -5,6 +5,12 @@ import net.splitcells.dem.data.set.Set;
 import java.nio.file.Path;
 import java.util.Optional;
 
+/**
+ * Provides a path system, where every object is mapped to a path and the content of the object can be queried
+ * by the path.
+ * Note that there is no guarantee,
+ * that accessing an object does not change it.
+ */
 public interface Renderer {
 
     /**
