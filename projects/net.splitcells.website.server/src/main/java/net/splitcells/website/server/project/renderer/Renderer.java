@@ -18,6 +18,9 @@ import net.splitcells.website.server.project.RenderingResult;
 import java.nio.file.Path;
 import java.util.Optional;
 
+/**
+ * TODO Do not only test {@link #projectPaths(ProjectRenderer)}, but also {@link #renderFile(String, ProjectRenderer)}.
+ */
 public interface Renderer {
     Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer);
 

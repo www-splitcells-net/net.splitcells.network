@@ -43,7 +43,20 @@ public class TextRenderer implements Renderer {
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".txt");
             if (Files.is_file(textFile)) {
                 final var content = Xml.rElement(NameSpaces.NATURAL, "text");
-                content.appendChild(Xml.textNode(new String(Paths.readString(textFile))));
+                content.appendChild(Xml.textNode(Paths.readString(textFile)));
+                return Optional.of(renderingResult(renderer
+                                .transform(Xml.toPrettyString(content))
+                                .getBytes(UTF_8)
+                        , TEXT_HTML.toString()));
+            }
+        } else {
+            final var textFile = projectRenderer
+                    .projectFolder()
+                    .resolve("src/main/txt")
+                    .resolve(path);
+            if (Files.is_file(textFile)) {
+                final var content = Xml.rElement(NameSpaces.NATURAL, "text");
+                content.appendChild(Xml.textNode(Paths.readString(textFile)));
                 return Optional.of(renderingResult(renderer
                                 .transform(Xml.toPrettyString(content))
                                 .getBytes(UTF_8)
@@ -65,6 +78,10 @@ public class TextRenderer implements Renderer {
                                 file.getParent()
                                         .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
                                                 (file.getFileName().toString()) + ".html")))
+                        .forEach(projectPaths::addAll);
+                java.nio.file.Files.walk(sourceFolder)
+                        .filter(java.nio.file.Files::isRegularFile)
+                        .map(file -> sourceFolder.relativize(file.getParent().resolve(file.getFileName().toString())))
                         .forEach(projectPaths::addAll);
             } catch (IOException e) {
                 throw new RuntimeException(e);
