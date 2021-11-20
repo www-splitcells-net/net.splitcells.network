@@ -99,6 +99,7 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-11-20**: **\#37** [Simplify default web layout.](https://github.com/www-splitcells-net/net.splitcells.network/issues/37)
 * **2021-11-08**:
   1. **\#26** Create command `project.render.as.net.splitcells.website` as an
      API for creating plugins for `splitcells.net`'s website server built out of
