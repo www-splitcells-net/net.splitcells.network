@@ -44,6 +44,7 @@ In best case scenario only the relative paths of the sub repos and its possible 
 TODO Use only python for recursion and not shell, in order simplify command.
 TODO Improve documentation.
 TODO Remove duplicate code.
+TODO Support moving child repositories semi-automatically.
 """
 
 __author__ = "Mārtiņš Avots"
