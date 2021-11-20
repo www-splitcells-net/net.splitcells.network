@@ -99,7 +99,6 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-* **2021-11-20**: Fix text file rendering in web server via `txt` file suffix.
 * **2021-11-08**:
   1. **\#26** Create command `project.render.as.net.splitcells.website` as an
      API for creating plugins for `splitcells.net`'s website server built out of
@@ -195,6 +194,7 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-11-20**: Fix text file rendering in web server via `txt` file suffix.
 * **2021-10-25**  **\#90** Fix deployment of CommonMark files:
   Before the patch CommonMark were not rendered and uploaded via the website
   server.
