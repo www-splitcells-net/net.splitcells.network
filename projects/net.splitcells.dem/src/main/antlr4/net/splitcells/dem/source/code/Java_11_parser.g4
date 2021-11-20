@@ -175,6 +175,8 @@ statement_body
     ;
 statement_if_else
 	: Whitespace? Keyword_else Whitespace Brace_curly_open statement+ Whitespace? Brace_curly_closed
+	| Whitespace? Keyword_else_if Whitespace Brace_round_open expression Whitespace? Brace_round_closed Whitespace?
+		Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_if_else?
 	;
 statement_catch
     : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? name Whitespace? name Whitespace?

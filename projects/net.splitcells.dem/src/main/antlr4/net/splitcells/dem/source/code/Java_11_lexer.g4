@@ -32,6 +32,7 @@ Keyword_class: 'class';
 Keyword_catch: 'catch';
 Keyword_default: 'default';
 Keyword_else: 'else';
+Keyword_else_if: 'else if';
 Keyword_extends: 'extends';
 Keyword_finally: 'finally';
 Keyword_final: 'final';
