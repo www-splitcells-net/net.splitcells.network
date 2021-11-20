@@ -16,7 +16,7 @@ public class TextRendererTest {
      */
     @Tag(INTEGRATION_TEST)
     @Test
-    public void testXmlLayout() {
+    public void testLayout() {
         final var testSubject = projectRenderer
                 ("public"
                         , Path.of(".")
