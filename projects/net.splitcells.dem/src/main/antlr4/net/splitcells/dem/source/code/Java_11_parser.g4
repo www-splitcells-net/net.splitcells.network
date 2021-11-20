@@ -77,11 +77,11 @@ class_member_value_declaration
     ;
 expression
     : string Whitespace? access?
-    | Whitespace expression Whitespace Operator Whitespace expression
-    | expression Whitespace Keysymbol_equals Whitespace expression
+    | expression Whitespace operator Whitespace expression
     | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
     | Whitespace? name Whitespace? call_arguments Whitespace? access?
     | Whitespace? name Whitespace? access?
+    | Whitespace expression
     ;
 import_declaration
     : import_static_declaration
@@ -116,7 +116,7 @@ interface_definition_member_method
     ;
 interface_definition_member_static
 	: Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement
-	| Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace? Semicolon
+	| Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace? Semicolon /* TODO Remove, because this is not possible. */
 	;
 interface_definition_member
 	: Whitespace? interface_definition_member_method
