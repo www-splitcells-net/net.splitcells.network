@@ -108,14 +108,16 @@ interface_definition_member_method
     	Whitespace? annotation? Whitespace? Whitespace? modifier_visibility? Whitespace? Keyword_static?
     	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
         name Whitespace? call_arguments Semicolon
-    | Whitespace? javadoc? Whitespace? annotation? Whitespace? Keyword_default Whitespace? Keyword_static?
-          	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
-              name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace?
-              Brace_curly_closed
+    | Whitespace? javadoc? Whitespace? annotation? Whitespace? Keyword_static?
+		Whitespace? type_argument? Whitespace? type_declaration Whitespace?
+		name Whitespace? call_arguments Whitespace?
+		Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     | interface_definition_member_static
     ;
 interface_definition_member_static
 	: Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement
+	| Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace?
+		Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
 	;
 interface_definition_member
 	: Whitespace? interface_definition_member_method
