@@ -79,7 +79,7 @@ expression
     : string Whitespace? access?
     | expression Whitespace operator Whitespace expression
     | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
-        	Whitespace? Brace_curly_open Whitespace? class_member* Brace_curly_closed
+        	Whitespace? Brace_curly_open class_member* Whitespace? Brace_curly_closed
     | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
     | Whitespace? name Whitespace? call_arguments Whitespace? access?
     | Whitespace? name Whitespace? access?
