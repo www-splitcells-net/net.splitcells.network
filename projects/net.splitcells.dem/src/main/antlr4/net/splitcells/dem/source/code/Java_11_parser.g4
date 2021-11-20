@@ -116,7 +116,6 @@ interface_definition_member_method
     ;
 interface_definition_member_static
 	: Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement
-	| Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace? Semicolon /* TODO Remove, because this is not possible. */
 	;
 interface_definition_member
 	: Whitespace? interface_definition_member_method
