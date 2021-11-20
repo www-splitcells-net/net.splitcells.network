@@ -74,7 +74,7 @@ public interface Comparator<T> extends java.util.Comparator<T> {
 
     default Ordering compareTo(T a, T b) {
         final int rBase = compare(a, b);
-        if (rBase == 0) {
+        if (rBase == 0 ) {
             return Ordering.EQUAL;
         } else if (rBase < 0) {
             return Ordering.LESSER_THAN;

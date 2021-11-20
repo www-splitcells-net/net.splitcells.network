@@ -9,6 +9,12 @@ parser grammar Java_11_parser;
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
+ /* Consider using BND grammar like JavaCC, because ANTLR4 is too complicated:
+  * * https://javacc.github.io/javacc/documentation/bnf.html
+  * * https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
+  *
+  * New Grammars should be written in BNF.
+  */
 /* source_unit is the root rule. */
 /* Grammar guide lines:
  * A grammar files with implicit tokens, would be easier to write, understand and maintain.
@@ -76,7 +82,9 @@ class_member_value_declaration
               type_declaration? Whitespace? name Whitespace? Semicolon
     ;
 expression
-    : string Whitespace? access?
+    : Whitespace? integer
+    | Keysymbol_not expression
+    | string Whitespace? access?
     | expression Whitespace operator Whitespace expression
     | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
         	Whitespace? Brace_curly_open class_member* Whitespace? Brace_curly_closed
@@ -95,6 +103,10 @@ import_static_declaration
 import_type_declaration
     : Keyword_import Whitespace type_path Semicolon Whitespace*
     ;
+integer
+	: Integer
+	| Hyphen_minus Digits
+	;
 interface_definition
     : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_interface?
     	Whitespace? name
