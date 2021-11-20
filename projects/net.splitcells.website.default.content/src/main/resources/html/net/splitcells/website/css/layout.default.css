@@ -55,7 +55,7 @@ footer {
 	z-index: 90;
 	order: 5;
 	}
-@media (min-width: 23.25em) {
+@media (max-width: 23.25em) {
 	.net-splitcells-content-filler {
 		visibility: hidden;
 		display: none;
