@@ -26,7 +26,7 @@ Extension_Exception: 'extends RuntimeException';
 Javadoc: '/**' .*? '*/';
 Keysymbol_at: '@';
 Keysymbol_equals: '==';
-Keyword_and: '&&';
+Keysymbol_and: '&&';
 Keyword_annotation: '@interface';
 Keyword_class: 'class';
 Keyword_catch: 'catch';
