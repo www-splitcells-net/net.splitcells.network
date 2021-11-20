@@ -154,7 +154,7 @@ reference
 	: expression
     /* This is an Lambda definition. */
     | name Whitespace? Arrow Whitespace? reference
-    | name Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
+    | name Whitespace? Arrow Whitespace Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     | call_arguments Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
     ;
 statement
