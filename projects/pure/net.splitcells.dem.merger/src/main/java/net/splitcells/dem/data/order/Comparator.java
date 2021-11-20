@@ -10,9 +10,13 @@
  */
 package net.splitcells.dem.data.order;
 
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.function.BiFunction;
+
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public interface Comparator<T> extends java.util.Comparator<T> {
 
@@ -58,8 +62,8 @@ public interface Comparator<T> extends java.util.Comparator<T> {
     /**
      * Create a compatibility wrapper for {@link java.util.Comparator}.
      *
-     * @param comparator  Comparator Of Java Standard Library
-     * @param <T> Type of Values being Compared
+     * @param comparator Comparator Of Java Standard Library
+     * @param <T>        Type of Values being Compared
      * @return Wrapped Comparator
      */
     @JavaLegacy
@@ -75,7 +79,9 @@ public interface Comparator<T> extends java.util.Comparator<T> {
         } else if (rBase < 0) {
             return Ordering.LESSER_THAN;
         } else {
-            assert rBase > 0;
+            if (ENFORCING_UNIT_CONSISTENCY) {
+                assertThat(rBase).isGreaterThan(0);
+            }
             return Ordering.GREATER_THAN;
         }
     }
@@ -88,7 +94,9 @@ public interface Comparator<T> extends java.util.Comparator<T> {
         } else if (rBase == Ordering.LESSER_THAN) {
             return -1;
         } else {
-            assert rBase == Ordering.GREATER_THAN;
+            if (ENFORCING_UNIT_CONSISTENCY) {
+                assertThat(rBase).isEqualTo(Ordering.GREATER_THAN);
+            }
             return 1;
         }
     }
