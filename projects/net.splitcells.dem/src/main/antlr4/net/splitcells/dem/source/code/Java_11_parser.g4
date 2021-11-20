@@ -141,6 +141,7 @@ name
 operator
 	: Keysymbol_equals
 	| Keysymbol_and
+	| Less_than
 	;
 package_declaration
     : 'package' Whitespace package_name Semicolon Whitespace*
