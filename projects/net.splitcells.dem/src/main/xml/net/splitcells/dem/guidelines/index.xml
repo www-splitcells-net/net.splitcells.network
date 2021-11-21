@@ -246,6 +246,7 @@
                 Ensure that the project is build, tested and executed in different environments,
                 in order to ensure, that the projects works.
             </paragraph>
+            <paragraph>Every part of the development process should have a task</paragraph>
         </chapter>
     </chapter>
     <chapter>
@@ -253,30 +254,22 @@
         <chapter>
             <title>Task Organization</title>
             <paragraph>
-                Tickets should be stored at the location where these are
-                used or matter. It should be
-                easy to figure
-                out
-                which tickets apply to
-                a certain portion of a project. If a person is working
-                on a part of
-                the
-                project in question,
-                relevant tickets should be available with
-                little work.
+                Tickets should be stored at the location where these are used or matter.
+                It should be easy to figure out which tickets apply to a certain portion of a project.
+                If a person is working on a part of the project in question,
+                relevant tickets should be available with little work.
             </paragraph>
-            <paragraph>Tickets with a low amount of content should
-                be stored as a comment at the
-                relevant source code
-                location. Every task should start with <quote>TODO</quote>, which is recognized by many tools.
+            <paragraph>Tickets can be stored as a comment at the relevant source code location.
+                Every task should start with <quote>TODO</quote>, which is recognized by many tools.
+                Additional tags can be used in order to signal, which tasks may be ignored under special conditions
+                or may require special care:
             </paragraph>
-            <paragraph>Use Eclipse like task tags followed by optional flowing text.
-                Each paragraph stands for a ticket
-                and may be divided by additional task
-                tags into sub tickets. A description of the
-                ticket is not required if the location of the tag makes
-                the task obvious (i.e. RENAME tag above a variable declaration).
-            </paragraph>
+            <list>
+                <item>ACTIVE: Someone is already working on the marked tag.</item>
+                <item>FIXME: This task points to an error.</item>
+                <item>IDEA: This task may not be a good idea.</item>
+                <item>HACK: This task marks a code quality issue.</item>
+            </list>
         </chapter>
     </chapter>
     <chapter>
