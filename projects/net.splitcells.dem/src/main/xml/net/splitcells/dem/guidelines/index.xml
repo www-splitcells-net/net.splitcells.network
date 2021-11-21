@@ -237,25 +237,14 @@
         </chapter>
         <chapter>
             <title>Development Process</title>
-            <paragraph>The development process greatly influence the code and its format.
-                Therefore some points regarding the development process that influence the code
-                are included here as well.
-            </paragraph>
-            <paragraph>Keep in mind that development is not just coding and it is affected by many different things.
-                For example doing things always fast or slowly is propably not the best thing.
-                Resources like documentation or the GUI may need to consider this.
-                Do not assume that better skills, more intelligence, working harder, etc. automatically lead to a better
-                result.
-            </paragraph>
-            <paragraph>Minimize the size of the main backlog.
-                Prefer smaller tasks over bigger tasks.
-            </paragraph>
-            <paragraph>Priorize a working project state at every point in the development.
+            <paragraph>Do not assume that better skills, more intelligence, working harder, etc. automatically lead to a
+                better result.
+                Prioritize a working project state at every point in the development.
                 Prefer test driven development.
+                Do not just break features, but also migrate its usage to other appropriate features before breaking
+                said features.
                 Ensure that the project is build, tested and executed in different environments,
                 in order to ensure, that the projects works.
-                This is called migration based development.
-
             </paragraph>
         </chapter>
     </chapter>
