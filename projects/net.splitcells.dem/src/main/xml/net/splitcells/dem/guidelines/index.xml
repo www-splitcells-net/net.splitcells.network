@@ -265,10 +265,10 @@
                 or may require special care:
             </paragraph>
             <list>
-                <item>ACTIVE: Someone is already working on the marked tag.</item>
-                <item>FIXME: This task points to an error.</item>
-                <item>IDEA: This task may not be a good idea.</item>
-                <item>HACK: This task marks a code quality issue.</item>
+                <item><quote>ACTIVE</quote>: Someone is already working on the marked tag.</item>
+                <item><quote>FIXME</quote>: This task points to an error.</item>
+                <item><quote>IDEA</quote>: This task may not be a good idea.</item>
+                <item><quote>HACK</quote>: This task marks a code quality issue.</item>
             </list>
         </chapter>
     </chapter>
