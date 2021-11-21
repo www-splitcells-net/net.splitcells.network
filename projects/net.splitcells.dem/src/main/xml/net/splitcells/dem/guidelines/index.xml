@@ -428,26 +428,6 @@
                     minimize the time in order to understand an error.
                 </paragraph>
             </chapter>
-            <chapter>
-                <title>Unit Testing</title>
-                <d:todo></d:todo>
-            </chapter>
-            <chapter>
-                <title>Integration Testing</title>
-                <d:todo></d:todo>
-            </chapter>
-            <chapter>
-                <title>Property Testing</title>
-                <d:todo>dynamic tests of JUnit 5 and vavr-test</d:todo>
-            </chapter>
-            <chapter>
-                <title>Mutation Testing</title>
-                <d:todo></d:todo>
-            </chapter>
-            <chapter>
-                <title>Test Injection</title>
-                <d:todo></d:todo>
-            </chapter>
         </chapter>
         <chapter>
             <title>Formatting</title>
