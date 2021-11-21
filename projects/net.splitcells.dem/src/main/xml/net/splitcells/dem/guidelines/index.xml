@@ -453,7 +453,7 @@
         <chapter>
             <title>Dependencies</title>
             <paragraph>
-                Maximize the exchangeability of external dependencies.
+                Maximize the replaceability of external dependencies.
                 Minimize dependency on concrete versions of the dependencies.
                 Prefer own interfaces and avoid accessing external things. Use dependency injection via static methods
                 as this supports
