@@ -363,6 +363,7 @@
             Inheritance does not support swapping out the parent implementation,
             which makes it often not portable in practice.
         </paragraph>
+        <paragraph>State intent and not actions. Therefore, pointer or index arithmetic should be avoided.</paragraph>
         <chapter>
             <title>Identifiers</title>
             <paragraph>Readability is preferred over compactness,
@@ -471,11 +472,6 @@
             </paragraph>
             <paragraph>Minimize direct dependencies between different things inside the project
                 in order to easier analyse the effect of one piece of code to the rest of the project.
-            </paragraph>
-        </chapter>
-        <chapter>
-            <title>State Intent and Not Actions</title>
-            <paragraph>Therefore, pointer or index arithmetic should be avoided.
             </paragraph>
         </chapter>
         <chapter>
