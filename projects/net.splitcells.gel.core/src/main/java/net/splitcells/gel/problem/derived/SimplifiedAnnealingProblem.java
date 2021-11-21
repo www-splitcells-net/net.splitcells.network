@@ -23,6 +23,9 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.type.Derivation.derivation;
 
+/**
+ * TODO Create a test demonstrating its usefulness.
+ */
 public class SimplifiedAnnealingProblem extends DerivedSolution {
 
     public static Solution simplifiedAnnealingProblem(Solution solution) {
