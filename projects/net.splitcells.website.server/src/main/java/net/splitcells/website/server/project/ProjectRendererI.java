@@ -49,12 +49,11 @@ import static net.splitcells.website.server.project.renderer.commonmark.CommonMa
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
- * TODO Use resource folder for xml, txt and etc.
- * <p>
- * TODO Move rendering for any type to dedicated extension.
- * <p>
- * IDEA Create an extension in order to render Java, Python 3 and Shell scripts, so it's easy to inspect
- * and reference it.
+ * <p>TODO Use resource folder for xml, txt and etc.</p>
+ * <p>TODO Move rendering for any type to dedicated extension.</p>
+ * <p>TODO Support layout with meta information like title, in order to have a better "Local Path Context".</p>
+ * <p>IDEA Create an extension in order to render Java, Python 3 and Shell scripts, so it's easy to inspect
+ * and reference it.</p>
  */
 public class ProjectRendererI implements ProjectRenderer {
     private static final String MARKER = "198032jrf013jf09j13f13f4290fj2394fj24";
