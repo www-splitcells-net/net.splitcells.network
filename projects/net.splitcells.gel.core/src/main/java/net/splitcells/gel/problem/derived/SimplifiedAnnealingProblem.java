@@ -24,7 +24,8 @@ import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.type.Derivation.derivation;
 
 /**
- * TODO Create a test demonstrating its usefulness.
+ * TODO Create a test demonstrating its usefulness by applied simulated annealing to a fitting problem,
+ * that cannot be solved by the random hill climber based on single value changes.
  */
 public class SimplifiedAnnealingProblem extends DerivedSolution {
 
