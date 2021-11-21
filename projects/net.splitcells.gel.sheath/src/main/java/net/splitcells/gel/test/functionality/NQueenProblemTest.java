@@ -10,10 +10,17 @@
  */
 package net.splitcells.gel.test.functionality;
 
+import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.host.interaction.Domsole;
+import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
+import net.splitcells.dem.resource.host.interaction.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.Gel;
+import net.splitcells.gel.GelDev;
+import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.SimplifiedAnnealingProblem;
@@ -25,6 +32,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static java.lang.Math.*;
 import static java.util.Optional.empty;
 import static java.util.stream.Collectors.toList;
@@ -34,6 +43,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
+import static net.splitcells.dem.resource.communication.interaction.UiRouter.uiRouter;
 import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -63,8 +73,10 @@ public class NQueenProblemTest extends TestSuiteI {
         testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(6), 50));
         testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(8), 100));
         createDirectory(environment().config().configValue(ProcessPath.class));
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve("history.fods"), testSubject.history().toFods());
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods"), testSubject.toFodsTableAnalysis());
+        writeToFile(environment().config().configValue(ProcessPath.class).resolve("history.fods")
+                , testSubject.history().toFods());
+        writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods")
+                , testSubject.toFodsTableAnalysis());
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
     }
 
@@ -75,23 +87,35 @@ public class NQueenProblemTest extends TestSuiteI {
     @Tag(CAPABILITY_TEST)
     @Test
     public void test_8_queen_problem_with_annealing_hill_climber() {
-        final var testSubject = nQueenProblem(8, 8).asSolution();
-        // The temperature functions was determined by trial and error with universal allocation program's temperature functions.
-        testSubject.optimize(linearInitialization());
-        SimplifiedAnnealingProblem.simplifiedAnnealingProblem(testSubject,
-                        i -> max((float) (log(4.0) / pow(log(i + 3), 15))
-                                , 0))
-                .optimizeOnce(functionalHillClimber(
-                        linearIterator(
-                                list(
-                                        UsedSupplySwitcher.usedSupplySwitcher(2))),
-                        120_000));
-        // NOTE usedSupplySwitcher(2) finds many non improving steps.
-        createDirectory(environment().config().configValue(ProcessPath.class));
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve("history.fods"), testSubject.history().toFods());
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods"), testSubject.toFodsTableAnalysis());
-        domsole().append(testSubject.constraint().rating(), empty(), LogLevel.UNKNOWN_ERROR);
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
+        GelDev.process(() -> {
+            final var testSubject = nQueenProblem(8, 8).asSolution();
+            // The temperature functions was determined by trial and error with universal allocation program's temperature functions.
+            testSubject.optimize(linearInitialization());
+            SimplifiedAnnealingProblem.simplifiedAnnealingProblem(testSubject,
+                            i -> max((float) (log(4.0) / pow(log(i + 3), 15))
+                                    , 0))
+                    .optimizeOnce(functionalHillClimber(
+                            linearIterator(
+                                    list(
+                                            UsedSupplySwitcher.usedSupplySwitcher(8))),
+                            120_000));
+            // NOTE usedSupplySwitcher(2) finds many non improving steps.
+            createDirectory(environment().config().configValue(ProcessPath.class));
+            writeToFile(environment().config().configValue(ProcessPath.class).resolve("history.fods")
+                    , testSubject.history().toFods());
+            writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods")
+                    , testSubject.toFodsTableAnalysis());
+            domsole().append(testSubject.constraint().rating(), empty(), LogLevel.UNKNOWN_ERROR);
+            assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
+        }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
+            env.config()
+                    .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                    .withConfigValue(IsEchoToFile.class, false)
+                    .withConfigValue(MessageFilter.class, logMessage -> logMessage.path()
+                            .equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
+            //.withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)))
+            ;
+        }));
     }
 
     private Problem nQueenProblem(int rows, int columns) {
