@@ -621,9 +621,4 @@
             system.
         </paragraph>
     </chapter>
-    <chapter>
-        <title>Code Convention</title>
-        <d:toDo>AI=abstract implementation,I=Impl=Implementation, D=Doc=Documentation, L=Log=Logging, R=Ref=Reflection
-        </d:toDo>
-    </chapter>
 </article>
