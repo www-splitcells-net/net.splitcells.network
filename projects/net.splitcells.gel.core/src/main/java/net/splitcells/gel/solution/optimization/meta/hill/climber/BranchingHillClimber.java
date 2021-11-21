@@ -18,13 +18,13 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 @Deprecated
-public class BranchingHillClimber implements Optimization {
+public class BranchingHillClimber implements OfflineOptimization {
 
     public static BranchingHillClimber branchingHillClimber() {
         return new BranchingHillClimber();

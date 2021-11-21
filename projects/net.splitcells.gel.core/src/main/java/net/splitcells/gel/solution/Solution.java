@@ -23,7 +23,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.Problem;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.function.BiPredicate;
@@ -41,17 +41,17 @@ import java.util.function.Function;
 public interface Solution extends Problem, SolutionView {
 
     @ReturnsThis
-    default Solution optimize(Optimization optimization) {
+    default Solution optimize(OfflineOptimization optimization) {
         return optimizeWithFunction(s -> optimization.optimize(s));
     }
 
     @ReturnsThis
-    default Solution optimizeWithFunction(Optimization optimizationFunction) {
+    default Solution optimizeWithFunction(OfflineOptimization optimizationFunction) {
         return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal());
     }
 
     @ReturnsThis
-    default Solution optimizeWithFunction(Optimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
+    default Solution optimizeWithFunction(OfflineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
         int i = 0;
         while (continuationCondition.test(this, i)) {
             final var recommendations = optimizationFunction.optimize(this);
@@ -65,7 +65,7 @@ public interface Solution extends Problem, SolutionView {
     }
 
     @ReturnsThis
-    default Solution optimizeOnce(Optimization optimization) {
+    default Solution optimizeOnce(OfflineOptimization optimization) {
         return optimizeWithFunctionOnce(s -> optimization.optimize(s));
     }
 

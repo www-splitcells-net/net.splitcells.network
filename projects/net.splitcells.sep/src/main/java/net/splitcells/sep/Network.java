@@ -3,7 +3,7 @@ package net.splitcells.sep;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -57,12 +57,12 @@ public class Network {
     }
 
     @ReturnsThis
-    public Network withOptimization(String argumentKey, Optimization execution) {
+    public Network withOptimization(String argumentKey, OfflineOptimization execution) {
         return withExecution(argumentKey, s -> s.optimize(execution));
     }
 
     @ReturnsThis
-    public Network withOptimization(String argumentKey, Optimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
+    public Network withOptimization(String argumentKey, OfflineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
         final var solution = solutions.get(argumentKey);
         int i = 0;
         while (continuationCondition.test(solution, i)) {

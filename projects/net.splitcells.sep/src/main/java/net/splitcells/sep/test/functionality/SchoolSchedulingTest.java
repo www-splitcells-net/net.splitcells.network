@@ -28,7 +28,7 @@ import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
 import net.splitcells.sep.Network;
@@ -149,7 +149,7 @@ public class SchoolSchedulingTest {
         }));
     }
 
-    public static Optimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
+    public static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
         final var randomness = randomness();
         // TODO Split up into multiple methods for better overview and documentation.
         return simpleConstraintGroupBasedRepair(groupSelector(randomness, minimumConstraintGroupPath

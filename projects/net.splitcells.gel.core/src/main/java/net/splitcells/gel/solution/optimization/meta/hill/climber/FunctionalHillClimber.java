@@ -14,7 +14,7 @@ import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.rating.framework.Rating;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.Optional;
@@ -27,7 +27,7 @@ import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linea
 import static net.splitcells.gel.solution.optimization.primitive.FreeSupplySwitcher.freeSupplySwitcher;
 import static net.splitcells.gel.solution.optimization.primitive.UsedSupplySwitcher.usedSupplySwitcher;
 
-public class FunctionalHillClimber implements Optimization {
+public class FunctionalHillClimber implements OfflineOptimization {
 
     public static FunctionalHillClimber functionalHillClimber(int i) {
         return new FunctionalHillClimber
@@ -46,7 +46,7 @@ public class FunctionalHillClimber implements Optimization {
                 });
     }
 
-    public static FunctionalHillClimber functionalHillClimber(Optimization optimization, int i) {
+    public static FunctionalHillClimber functionalHillClimber(OfflineOptimization optimization, int i) {
         return new FunctionalHillClimber(optimization, new Supplier<Boolean>() {
             int counter = 0;
 
@@ -60,9 +60,9 @@ public class FunctionalHillClimber implements Optimization {
     }
 
     private final Supplier<Boolean> planner;
-    private final Optimization optimizationNeighbour;
+    private final OfflineOptimization optimizationNeighbour;
 
-    private FunctionalHillClimber(Optimization optimization, Supplier<Boolean> planner) {
+    private FunctionalHillClimber(OfflineOptimization optimization, Supplier<Boolean> planner) {
         this.planner = planner;
         this.optimizationNeighbour = optimization;
     }
@@ -83,7 +83,7 @@ public class FunctionalHillClimber implements Optimization {
                         (suggestion -> domsole().append
                                 (suggestion.toPerspective()
                                         , () -> solution.path().withAppended
-                                                (Optimization.class.getSimpleName()
+                                                (OfflineOptimization.class.getSimpleName()
                                                         , getClass().getSimpleName())
                                         , LogLevel.TRACE)
                         );

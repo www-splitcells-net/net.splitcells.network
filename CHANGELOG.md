@@ -20,6 +20,8 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-11-21**: **\#s22**: Rename `net.splitcells.gel.solution.optimization.Optimization`
+  to `OfflineOptimization` in order to clarify its meaning.
 * **2021-11-06**:
   1. **\#10** Rename `net.splitcells.dem.data.order.Comparator.comparator_`.
      to `comparatorLegacy` in order to have a clear name and remove its usage,

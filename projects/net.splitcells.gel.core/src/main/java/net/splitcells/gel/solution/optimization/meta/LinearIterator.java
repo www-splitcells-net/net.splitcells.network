@@ -13,7 +13,7 @@ package net.splitcells.gel.solution.optimization.meta;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.Arrays;
@@ -21,20 +21,20 @@ import java.util.Arrays;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LinearIterator implements Optimization {
+public class LinearIterator implements OfflineOptimization {
 
-    private final List<Optimization> optimizations;
+    private final List<OfflineOptimization> optimizations;
     private int counter = -1;
 
-    public static LinearIterator linearIterator(Optimization... optimization) {
+    public static LinearIterator linearIterator(OfflineOptimization... optimization) {
         return new LinearIterator(list(optimization));
     }
 
-    public static LinearIterator linearIterator(List<Optimization> optimization) {
+    public static LinearIterator linearIterator(List<OfflineOptimization> optimization) {
         return new LinearIterator(optimization);
     }
 
-    private LinearIterator(List<Optimization> optimizations) {
+    private LinearIterator(List<OfflineOptimization> optimizations) {
         this.optimizations = optimizations;
     }
 
@@ -49,7 +49,7 @@ public class LinearIterator implements Optimization {
         return optimization;
     }
 
-    private Optimization selectNextOptimization() {
+    private OfflineOptimization selectNextOptimization() {
         counter += 1;
         if (counter >= optimizations.size()) {
             counter = 0;

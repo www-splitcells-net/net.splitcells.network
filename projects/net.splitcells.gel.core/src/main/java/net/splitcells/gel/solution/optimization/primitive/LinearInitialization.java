@@ -16,10 +16,10 @@ import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
-public class LinearInitialization implements Optimization {
+public class LinearInitialization implements OfflineOptimization {
 
     public static LinearInitialization linearInitialization() {
         return new LinearInitialization();

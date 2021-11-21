@@ -12,22 +12,22 @@ package net.splitcells.gel.solution.optimization.meta;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
-public class Repeater implements Optimization {
-    public static Repeater repeater(Optimization optimization, int maximalRepetitionCount) {
+public class Repeater implements OfflineOptimization {
+    public static Repeater repeater(OfflineOptimization optimization, int maximalRepetitionCount) {
         return new Repeater(optimization, maximalRepetitionCount);
     }
 
-    private final Optimization optimization;
+    private final OfflineOptimization optimization;
     private final int maximalRepetitionCount;
     private int repetitionCount = 0;
 
-    private Repeater(Optimization optimization, int maximalRepetitionCount) {
+    private Repeater(OfflineOptimization optimization, int maximalRepetitionCount) {
         this.optimization = optimization;
         this.maximalRepetitionCount = maximalRepetitionCount;
     }

@@ -17,7 +17,7 @@ import net.splitcells.gel.solution.SolutionView;
  * Perfect is the enemy of good - Voltaire
  */
 @FunctionalInterface
-public interface Optimization {
+public interface OfflineOptimization {
 
 	List<OptimizationEvent> optimize(SolutionView solution);
 

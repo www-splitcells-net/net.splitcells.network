@@ -13,7 +13,7 @@ package net.splitcells.gel.solution.optimization.primitive;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -21,7 +21,7 @@ import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 
-public class RandomInitialization implements Optimization {
+public class RandomInitialization implements OfflineOptimization {
     public static RandomInitialization randomInitialization() {
         return new RandomInitialization(randomness());
     }

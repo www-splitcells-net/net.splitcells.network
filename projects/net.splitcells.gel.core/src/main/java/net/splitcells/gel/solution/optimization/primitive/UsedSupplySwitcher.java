@@ -16,7 +16,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.table.LinePointer;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static java.util.Objects.requireNonNull;
@@ -28,7 +28,7 @@ import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimiz
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
-public class UsedSupplySwitcher implements Optimization {
+public class UsedSupplySwitcher implements OfflineOptimization {
     public static UsedSupplySwitcher usedSupplySwitcher() {
         return new UsedSupplySwitcher(randomness(), 1);
     }

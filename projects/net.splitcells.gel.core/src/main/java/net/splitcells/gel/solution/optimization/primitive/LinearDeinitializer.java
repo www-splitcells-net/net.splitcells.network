@@ -12,14 +12,14 @@ package net.splitcells.gel.solution.optimization.primitive;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
-public class LinearDeinitializer implements Optimization {
+public class LinearDeinitializer implements OfflineOptimization {
 
     public static LinearDeinitializer linearDeinitializer() {
         return new LinearDeinitializer();

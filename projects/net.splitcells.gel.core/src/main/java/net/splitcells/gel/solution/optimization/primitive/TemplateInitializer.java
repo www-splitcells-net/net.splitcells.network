@@ -13,7 +13,7 @@ package net.splitcells.gel.solution.optimization.primitive;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
 import net.splitcells.gel.data.table.Line;
@@ -23,7 +23,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 
-public class TemplateInitializer implements Optimization {
+public class TemplateInitializer implements OfflineOptimization {
     public static TemplateInitializer templateInitializer(Table template) {
         return new TemplateInitializer(template);
     }

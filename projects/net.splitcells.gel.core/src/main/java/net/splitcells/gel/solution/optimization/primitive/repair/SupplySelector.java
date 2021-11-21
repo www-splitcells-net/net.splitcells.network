@@ -5,7 +5,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -16,7 +16,7 @@ import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.primitive.SupplySelection.supplySelection;
 
 @FunctionalInterface
-public interface SupplySelector extends BiFunction<Map<GroupId, Set<Line>>, List<Line>, Optimization> {
+public interface SupplySelector extends BiFunction<Map<GroupId, Set<Line>>, List<Line>, OfflineOptimization> {
 
-    Optimization apply(Map<GroupId, Set<Line>> freeDemandGroups, List<Line> freeSupplies);
+    OfflineOptimization apply(Map<GroupId, Set<Line>> freeDemandGroups, List<Line> freeSupplies);
 }

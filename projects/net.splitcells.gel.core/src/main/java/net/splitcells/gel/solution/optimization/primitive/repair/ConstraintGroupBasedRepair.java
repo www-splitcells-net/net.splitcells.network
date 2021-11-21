@@ -22,7 +22,7 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.solution.optimization.Optimization;
+import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import org.assertj.core.api.Condition;
 
@@ -53,7 +53,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * ― Barbara Bloom
  * </p>
  * <p>
- * This {@link Optimization} consists of three phases.
+ * This {@link OfflineOptimization} consists of three phases.
  * <ol>
  *     <li>Select a set of {@link Constraint} in the {@link net.splitcells.gel.solution.Solution#constraint} tree
  *     and therefore decide, which constraints of the problems are repaired during the optimization.
@@ -64,7 +64,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *     <li>Set the values to all free demands and thereby perform actual repair process.</li>
  * </ol>
  */
-public class ConstraintGroupBasedRepair implements Optimization {
+public class ConstraintGroupBasedRepair implements OfflineOptimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
             (GroupSelector groupSelector, SupplySelector repairer) {
