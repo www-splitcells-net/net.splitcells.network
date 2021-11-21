@@ -233,6 +233,8 @@
                 Make as much undefined as possible for not essential things in order to minimize the set of guarantees.
                 Breaking other software, because it relied on implementation specifics is better,
                 than breaking other software via incompatible API changes.
+                Do not just break features, but also migrate its usage to other appropriate features before breaking
+                said features.
             </paragraph>
         </chapter>
         <chapter>
@@ -241,8 +243,6 @@
                 better result.
                 Prioritize a working project state at every point in the development.
                 Prefer test driven development.
-                Do not just break features, but also migrate its usage to other appropriate features before breaking
-                said features.
                 Ensure that the project is build, tested and executed in different environments,
                 in order to ensure, that the projects works.
             </paragraph>
