@@ -1,4 +1,4 @@
-package net.splitcells.gel.solution.space;
+package net.splitcells.gel.solution.optimization.space;
 
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.solution.Solution;
