@@ -158,6 +158,7 @@
             <d:toDo>Migration based Development</d:toDo>
             <d:toDo>Configuration automation guidelines.</d:toDo>
             <d:toDo>Make it possible to tolerate out of date documentation.</d:toDo>
+            <d:toDo>Create containment protocol for side effects in Java code.</d:toDo>
         </d:toDo>
     </meta>
     <chapter>
@@ -266,10 +267,14 @@
                 or may require special care:
             </paragraph>
             <list>
-                <item><quote>ACTIVE</quote>: Someone is already working on the marked tag.</item>
-                <item><quote>FIXME</quote>: This task points to an error.</item>
-                <item><quote>IDEA</quote>: This task may not be a good idea.</item>
-                <item><quote>HACK</quote>: This task marks a code quality issue.</item>
+                <item><quote>ACTIVE</quote>: Someone is already working on the marked tag.
+                </item>
+                <item><quote>FIXME</quote>: This task points to an error.
+                </item>
+                <item><quote>IDEA</quote>: This task may not be a good idea.
+                </item>
+                <item><quote>HACK</quote>: This task marks a code quality issue.
+                </item>
             </list>
         </chapter>
     </chapter>

@@ -4,6 +4,8 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.SolutionView;
 
+import java.util.Optional;
+
 /**
  * <p>This is a wrapper for a {@link Solution}.</p>
  * <p>It is used in order to organize changes to the wrapped {@link Solution}.
@@ -19,11 +21,13 @@ import net.splitcells.gel.solution.SolutionView;
  * <p>This space is considered enumerable,
  * because all children have an unique index,
  * that identifies the child in question</p>
+ * <p>TODO This is currently based on side effects. This should not be the case in the future.</p>
+ * <p>TODO Invalidate object after certain method calls.</p>
  */
 public interface EnumerableOptimizationSpace {
     /**
      * Applies a possible change to the wrapped {@link Solution}.
-     * 
+     *
      * @param index The index of the change. These are numbered from 0 to {@link #childrenCount} - 1.
      * @return Returns a wrapper with the applied changes.
      */
@@ -33,17 +37,19 @@ public interface EnumerableOptimizationSpace {
      * Returns the number of possible changes,
      * that can be applied to the wrapped {@link Solution}.
      * These changes are numbered from 0 to {@link #childrenCount} - 1.
-     * 
+     *
      * @return Number of possible changes.
      */
     int childrenCount();
 
     /**
      * Reverts the last change.
+     * If this is the root element,
+     * then nothing is returned.
      *
      * @return Returns a wrapper with the last change reverted.
      */
-    EnumerableOptimizationSpace parent();
+    Optional<EnumerableOptimizationSpace> parent();
 
     /**
      * @return Read only view on the wrapped {@link Solution}.
@@ -57,4 +63,6 @@ public interface EnumerableOptimizationSpace {
      * @return The Wrapped {@link Solution}
      */
     Solution endDiscovery();
+    
+    int historyIndex();
 }
