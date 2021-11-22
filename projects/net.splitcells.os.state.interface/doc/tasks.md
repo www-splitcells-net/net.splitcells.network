@@ -22,25 +22,27 @@ The priority of a task is just a guideline.
 5. Generate admin script instead of just executing such,
    in order to make the software more stable.
 ### Todos
-1. Do not use recursion via shell in repo commands.
+1. Implement interface to shell via speech to text and the other way around
+   for output.
+3. Do not use recursion via shell in repo commands.
    Use recursion via Python functions.
-2. Clean up python implementations of repo commands.
-3. Create integration into user home portability projects.
-4. Create ssh deployment machanism via other frameworks like ansible.
-5. Create display brightness control commands.
-6. Create sound control command.
-7. Create shell for blind usage.
+4. Clean up python implementations of repo commands.
+5. Create integration into user home portability projects.
+6. Create ssh deployment machanism via other frameworks like ansible.
+7. Create display brightness control commands.
+8. Create sound control command.
+9. Create shell for blind usage.
    1. Things need to be considered:
       1. Way to speak currently entered command without executing it.
-8. Improve testing on local machine.
-   1. https://spin.atomicobject.com/2016/01/11/command-line-interface-testing-tools/
-   1. https://github.com/debarshiray/toolbox
-   1. https://github.com/debarshiray/libpod
-9. Filesystem/harddrive checking. See fsck.
-10. Support alternative repo managers.
-11. Support script mode by default, where a script is generated,
+10. Improve testing on local machine.
+    1. https://spin.atomicobject.com/2016/01/11/command-line-interface-testing-tools/
+    1. https://github.com/debarshiray/toolbox
+    1. https://github.com/debarshiray/libpod
+11. Filesystem/harddrive checking. See fsck.
+12. Support alternative repo managers.
+13. Support script mode by default, where a script is generated,
     instead of executing commands directly.
-12. Integrate project commands into repo commands:
+14. Integrate project commands into repo commands:
    Project repo commands may be relevant to repo commands.
    At the very least one should inform one about the existence of related repo
    commands during execution,

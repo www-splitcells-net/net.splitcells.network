@@ -20,8 +20,10 @@
     SPDX-License-Identifier: EPL-2.0 OR MIT
     -->
     <!-- Defines the standard html layout. -->
-    <!-- TODO s:root-relative-url( -->
-    <!-- TODO PERFORMANCE Do not import libraries which are not needed. -->
+    <!-- TODO s:root-relative-url(
+    TODO PERFORMANCE Do not import libraries which are not needed.
+    TODO Minimize number of elements with css classes,
+         in order to improve compatibility with external css stylesheet.-->
     <xsl:template match="/ns:*">
         <!-- TODO Make complete. -->
         <xsl:variable name="layout.config">

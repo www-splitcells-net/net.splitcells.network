@@ -42,14 +42,13 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * DSUI ^= Dom Stream and Stack based User Interface
- * <p>
- * TODO Create new implementation with custom rendering and without Java's XML code.
- * <p>
- * IDEA Support recursive stacking.
- * <p>
- * TOFIX Remove duplicate name space declaration.
- * <p>
- * TODO Split log file into multiple, in order to avoid files that are too large for easy processing.
+ * <p>TODO Create new implementation with custom rendering and without Java's
+ * XML code.</p>
+ * <p>TODO  IDEA Support recursive stacking.</p>
+ * <p>TODO TOFIX Remove duplicate name space declaration.</p>
+ * <p>TODO Split log file into multiple, in order to avoid files that are too
+ * large for easy processing.</p>
+ * <p>TODO Implement a GUI framework based on event and message passing.</p>
  */
 @Deprecated
 public class Dsui implements Sui<LogMessage<Node>>, Flushable {
