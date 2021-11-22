@@ -9,16 +9,25 @@ import net.splitcells.gel.solution.SolutionView;
  * <p>It is used in order to organize changes to the wrapped {@link Solution}.
  * If all changes were applied {@link #endDiscovery} is used in order to
  * retrieve the wrapped value.</p>
+ * <p>Note that this interface does represent the same as the feasible region
+ * or the feasible set.
+ * The reason for this, is the fact, that this space does not necessarily
+ * consider things like hard constraints.
+ * This interface is called optimization space, because the possible
+ * values are generally defined via {@link net.splitcells.gel.solution.optimization.OnlineOptimization}.
+ * </p>
+ * <p>This space is considered enumerable,
+ * because all children have an unique index,
+ * that identifies the child in question</p>
  */
-public interface EnumerableSolutionSpace {
+public interface EnumerableOptimizationSpace {
     /**
      * Applies a possible change to the wrapped {@link Solution}.
      * 
      * @param index The index of the change. These are numbered from 0 to {@link #childrenCount} - 1.
-     * @return Returns this wrapper with the applied changes.
+     * @return Returns a wrapper with the applied changes.
      */
-    @ReturnsThis
-    EnumerableSolutionSpace child(int index);
+    EnumerableOptimizationSpace child(int index);
 
     /**
      * Returns the number of possible changes,
@@ -32,10 +41,9 @@ public interface EnumerableSolutionSpace {
     /**
      * Reverts the last change.
      *
-     * @return Returns this wrapper with the last change reverted.
+     * @return Returns a wrapper with the last change reverted.
      */
-    @ReturnsThis
-    EnumerableSolutionSpace parent();
+    EnumerableOptimizationSpace parent();
 
     /**
      * @return Read only view on the wrapped {@link Solution}.
