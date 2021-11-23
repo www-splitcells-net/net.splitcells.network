@@ -80,6 +80,15 @@ public class NQueenProblemTest extends TestSuiteI {
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
     }
 
+    @Disabled
+    @Tag(CAPABILITY_TEST)
+    @Test
+    public void test_8_queen_problem_with_backtracking() {
+        final var testSubject = nQueenProblem(8, 8).asSolution();
+        // TODO testSubject.optimize(linearInitialization());
+        assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
+    }
+
     /**
      * TODO
      */
