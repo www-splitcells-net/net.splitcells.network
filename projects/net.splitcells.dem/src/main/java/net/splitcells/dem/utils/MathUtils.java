@@ -38,9 +38,13 @@ public final class MathUtils {
         }
         return nextResults;
     }
-    
+
     public static int modulus(int dividend, int divisor) {
         return Math.floorMod(dividend, divisor);
+    }
+
+    public static int floorToInt(double arg) {
+        return (int) Math.floor(arg);
     }
 
     public static int roundToInt(double arg) {

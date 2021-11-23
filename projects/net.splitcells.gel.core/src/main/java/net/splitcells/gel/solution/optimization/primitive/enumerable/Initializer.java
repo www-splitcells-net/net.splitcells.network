@@ -1,6 +1,7 @@
 package net.splitcells.gel.solution.optimization.primitive.enumerable;
 
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.EnumerableOnlineOptimization;
 
@@ -42,9 +43,9 @@ public class Initializer implements EnumerableOnlineOptimization {
                         + parameter);
             }
         }
-        final var demandIndex = modulus(solution.suppliesFree().size(), solution.demandsFree().size());
+        final var demandIndex = MathUtils.floorToInt((double) parameter / solution.suppliesFree().size());
         final var demand = solution.demandsFree().getLines(demandIndex);
-        final var supplyIndex = parameter - (demandIndex * solution.demandsFree().size());
+        final var supplyIndex = parameter - (demandIndex * solution.suppliesFree().size());
         final var supply = solution.suppliesFree().getLines(supplyIndex);
         solution.allocate(demand, supply);
     }
