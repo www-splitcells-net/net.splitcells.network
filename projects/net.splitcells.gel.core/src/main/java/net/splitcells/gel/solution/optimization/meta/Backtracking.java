@@ -1,7 +1,15 @@
 package net.splitcells.gel.solution.optimization.meta;
 
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
+import net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpace;
+
+import java.util.Optional;
+import java.util.stream.IntStream;
+
+import static net.splitcells.gel.solution.optimization.primitive.enumerable.Initializer.initializer;
+import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpaceI.enumerableOptimizationSpace;
 
 public class Backtracking implements OnlineOptimization {
     public static Backtracking backtracking() {
@@ -14,6 +22,27 @@ public class Backtracking implements OnlineOptimization {
 
     @Override
     public void optimize(Solution solution) {
+        final var searchSpace = enumerableOptimizationSpace(solution, initializer());
+        final var startRating = searchSpace.currentState().constraint().rating();
+        optimize(searchSpace, startRating);
+    }
 
+    private void optimize(EnumerableOptimizationSpace searchSpace, Rating startRating) {
+        final var nextChild = IntStream.range(0, searchSpace.childrenCount())
+                .mapToObj(i -> {
+                    final var child = searchSpace.child(i);
+                    if (child.currentState().constraint().rating().betterThanOrEquals(startRating)) {
+                        return Optional.of(child);
+                    } else {
+                        child.parent();
+                        return Optional.<EnumerableOptimizationSpace>empty();
+                    }
+                })
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .findFirst();
+        if (nextChild.isPresent()) {
+            optimize(nextChild.get(), startRating);
+        }
     }
 }

@@ -29,4 +29,8 @@ public interface Rating extends PartiallyOrdered<Rating>, Domable {
     <R extends Rating> R _clone();
 
     boolean betterThan(Rating rating);
+
+    default boolean betterThanOrEquals(Rating rating) {
+        return this.betterThan(rating) || this.equalz(rating);
+    }
 }
