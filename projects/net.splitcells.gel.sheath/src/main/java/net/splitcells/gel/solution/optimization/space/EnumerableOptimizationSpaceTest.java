@@ -2,6 +2,8 @@ package net.splitcells.gel.solution.optimization.space;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
@@ -11,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class EnumerableOptimizationSpaceTest {
     @Test
-    public void testHistory() {
+    public void testSimpleHistory() {
         final var testData = defineProblem()
                 .withDemandAttributes()
                 .withDemands(list
@@ -26,7 +28,16 @@ public class EnumerableOptimizationSpaceTest {
                 .withConstraint(forAll())
                 .toProblem()
                 .asSolution();
-        final var testSubject = enumerableOptimizationSpace(testData, initializer());
+        var testSubject = enumerableOptimizationSpace(testData, initializer());
         assertThat(testSubject.currentState().size()).isEqualTo(0);
+        testSubject = testSubject.child(0);
+        assertThat(testSubject.currentState().size()).isEqualTo(1);
+        testSubject = testSubject.child(0);
+        assertThat(testSubject.currentState().size()).isEqualTo(2);
+        testSubject = testSubject.parent().get();
+        assertThat(testSubject.currentState().size()).isEqualTo(1);
+        testSubject = testSubject.parent().get();
+        assertThat(testSubject.currentState().size()).isEqualTo(0);
+        // TODO TOFIX assertThat(testSubject).isEqualTo(Optional.empty());
     }
 }
