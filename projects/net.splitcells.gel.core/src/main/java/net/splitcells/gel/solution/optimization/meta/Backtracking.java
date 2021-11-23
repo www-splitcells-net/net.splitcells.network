@@ -28,21 +28,19 @@ public class Backtracking implements OnlineOptimization {
     }
 
     private void optimize(EnumerableOptimizationSpace searchSpace, Rating startRating) {
-        final var nextChild = IntStream.range(0, searchSpace.childrenCount())
+        IntStream.range(0, searchSpace.childrenCount())
                 .mapToObj(i -> {
-                    final var child = searchSpace.child(i);
-                    if (child.currentState().constraint().rating().betterThanOrEquals(startRating)) {
-                        return Optional.of(child);
+                    final var nextChild = searchSpace.child(i);
+                    if (nextChild.currentState().constraint().rating().betterThanOrEquals(startRating)) {
+                        optimize(nextChild, startRating);
+                        return Optional.of(nextChild);
                     } else {
-                        child.parent();
+                        nextChild.parent();
                         return Optional.<EnumerableOptimizationSpace>empty();
                     }
                 })
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .findFirst();
-        if (nextChild.isPresent()) {
-            optimize(nextChild.get(), startRating);
-        }
     }
 }
