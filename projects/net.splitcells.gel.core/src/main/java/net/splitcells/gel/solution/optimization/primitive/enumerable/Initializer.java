@@ -36,7 +36,7 @@ public class Initializer implements EnumerableOnlineOptimization {
                 throw executionException("Parameter must not be negative: " + parameter);
             }
             final var upperLimit = upperLimit(solution);
-            if (upperLimit <= parameter) {
+            if (upperLimit < parameter) {
                 throw executionException("Invalid parameter: upper limit = "
                         + upperLimit
                         + ", parameter = "
