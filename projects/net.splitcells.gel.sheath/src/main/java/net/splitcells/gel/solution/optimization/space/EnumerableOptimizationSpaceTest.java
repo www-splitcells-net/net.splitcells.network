@@ -38,6 +38,6 @@ public class EnumerableOptimizationSpaceTest {
         assertThat(testSubject.currentState().size()).isEqualTo(1);
         testSubject = testSubject.parent().get();
         assertThat(testSubject.currentState().size()).isEqualTo(0);
-        // TODO TOFIX assertThat(testSubject).isEqualTo(Optional.empty());
+        assertThat(testSubject.parent()).isEqualTo(Optional.empty());
     }
 }
