@@ -4,7 +4,7 @@ import net.splitcells.gel.data.database.Databases;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.constraint.type.ForAlls.for_all;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.TemplateInitializer.templateInitializer;
@@ -33,7 +33,7 @@ public class TemplateInitializerTest {
                         , list(2)
                         , list(1)
                         , list(1)))
-                .withConstraint(for_all())
+                .withConstraint(forAll())
                 .toProblem()
                 .asSolution();
         testProduct.optimize(templateInitializer(

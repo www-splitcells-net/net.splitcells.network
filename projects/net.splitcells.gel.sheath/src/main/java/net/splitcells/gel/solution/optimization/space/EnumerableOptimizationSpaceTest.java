@@ -1,14 +1,9 @@
 package net.splitcells.gel.solution.optimization.space;
 
-import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.constraint.type.ForAll;
-import net.splitcells.gel.constraint.type.Then;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.constraint.type.ForAlls.for_all;
-import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
-import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.enumerable.Initializer.initializer;
 import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpaceI.enumerableOptimizationSpace;
@@ -28,7 +23,7 @@ public class EnumerableOptimizationSpaceTest {
                         (list()
                                 , list()
                                 , list()))
-                .withConstraint(for_all())
+                .withConstraint(forAll())
                 .toProblem()
                 .asSolution();
         final var testSubject = enumerableOptimizationSpace(testData, initializer());

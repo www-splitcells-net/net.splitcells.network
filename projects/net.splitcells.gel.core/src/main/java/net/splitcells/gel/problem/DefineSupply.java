@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.constraint.type.ForAlls.for_all;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 
 public interface DefineSupply {
 
@@ -39,13 +39,13 @@ public interface DefineSupply {
     ProblemGenerator withConstraint(Constraint constraint);
 
     default ProblemGenerator withConstraints(List<Function<Query, Query>> builders) {
-        final var root = for_all();
+        final var root = forAll();
         builders.forEach(b -> b.apply(QueryI.query(root)));
         return withConstraint(root);
     }
 
     default ProblemGenerator withConstraint(Function<Query, Query> builder) {
-        return withConstraint(builder.apply(QueryI.query(for_all())).constraint());
+        return withConstraint(builder.apply(QueryI.query(forAll())).constraint());
     }
 
 }
