@@ -63,6 +63,12 @@ public interface Table extends Discoverable, Domable {
         return rawLinesView().get(index);
     }
 
+    /**
+     * TODO RENAME
+     *
+     * @param index Index Of The Requested Line
+     * @return Requested Line
+     */
     default Line getLines(int index) {
         return getLines().get(index);
     }

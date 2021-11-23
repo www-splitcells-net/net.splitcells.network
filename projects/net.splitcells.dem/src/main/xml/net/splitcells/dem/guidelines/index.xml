@@ -269,7 +269,7 @@
             <list>
                 <item><quote>ACTIVE</quote>: Someone is already working on the marked tag.
                 </item>
-                <item><quote>FIXME</quote>: This task points to an error.
+                <item><quote>TOFIX</quote>: This task points to an error.
                 </item>
                 <item><quote>IDEA</quote>: This task may not be a good idea.
                 </item>

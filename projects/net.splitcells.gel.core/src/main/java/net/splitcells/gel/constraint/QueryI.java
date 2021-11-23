@@ -124,6 +124,11 @@ public class QueryI implements Query {
         }
     }
 
+    /**
+     * TODO TOFIX This does not work if {@link #root} is empty.
+     * 
+     * @return The Successive State
+     */
     @Override
     public Query forAll() {
         final var resultBase

@@ -38,6 +38,10 @@ public final class MathUtils {
         }
         return nextResults;
     }
+    
+    public static int modulus(int dividend, int divisor) {
+        return Math.floorMod(dividend, divisor);
+    }
 
     public static int roundToInt(double arg) {
         return Math.toIntExact(Math.round(arg));
