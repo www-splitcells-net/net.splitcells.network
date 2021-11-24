@@ -5,7 +5,6 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpace;
 
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static net.splitcells.gel.solution.optimization.primitive.enumerable.Initializer.initializer;
