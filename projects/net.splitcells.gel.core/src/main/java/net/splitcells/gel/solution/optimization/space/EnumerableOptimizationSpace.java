@@ -18,6 +18,9 @@ import java.util.Optional;
  * This interface is called optimization space, because the possible
  * values are generally defined via {@link net.splitcells.gel.solution.optimization.OnlineOptimization}.
  * </p>
+ * <p>This interface can also be used as an interface to a search tree
+ * and can be used as a base for tree search algorithms.
+ * In such a use case, it is recommended to make this space deterministic.</p>
  * <p>This space is considered enumerable,
  * because all children have an unique index,
  * that identifies the child in question</p>
