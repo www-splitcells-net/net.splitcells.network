@@ -11,6 +11,10 @@ import java.util.stream.IntStream;
 import static net.splitcells.gel.solution.optimization.primitive.enumerable.Initializer.initializer;
 import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpaceI.enumerableOptimizationSpace;
 
+/**
+ * This is an implementation of the backtracking algorithm.
+ * It backtracks, if the current state is worse than it's parent state.
+ */
 public class Backtracking implements OnlineOptimization {
     public static Backtracking backtracking() {
         return new Backtracking();
