@@ -13,6 +13,7 @@ import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizat
 /**
  * This is an implementation of the backtracking algorithm.
  * It backtracks, if the current state is worse than it's parent state.
+ * The backtracking exits, when the {@link Solution} is complete.
  */
 public class Backtracking implements OnlineOptimization {
     public static Backtracking backtracking() {
@@ -31,6 +32,9 @@ public class Backtracking implements OnlineOptimization {
     }
 
     private void optimize(EnumerableOptimizationSpace searchSpace, Rating startRating) {
+        if (searchSpace.currentState().isComplete()) {
+            return;
+        }
         IntStream.range(0, searchSpace.childrenCount())
                 .map(i -> {
                     final var nextChild = searchSpace.child(i);
