@@ -2,6 +2,10 @@ package net.splitcells.gel.solution.optimization;
 
 import net.splitcells.gel.solution.Solution;
 
+/**
+ * Provides a parameterized optimization interface,
+ * where all possible options are numbered.
+ */
 public interface EnumerableOnlineOptimization extends ParameterizedOnlineOptimization<Integer> {
     /**
      * Returns the number of possible parameters for {@link #optimize(Solution, Object)}

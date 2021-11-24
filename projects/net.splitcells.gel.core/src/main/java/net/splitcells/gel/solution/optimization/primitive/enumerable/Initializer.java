@@ -8,6 +8,9 @@ import net.splitcells.gel.solution.optimization.EnumerableOnlineOptimization;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 
+/**
+ * This
+ */
 public class Initializer implements EnumerableOnlineOptimization {
 
     public static Initializer initializer() {
