@@ -29,8 +29,8 @@ import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
 
 public class MetaRatingMergerI implements MetaRatingMerger {
-    protected final Map<Class<? extends Rating>, Rating> ratings;
-    protected final Map<BiPredicate
+    private final Map<Class<? extends Rating>, Rating> ratings;
+    private final Map<BiPredicate
             <Map
                     <Class<? extends Rating>, Rating>
                     , Map<Class<? extends Rating>, Rating>>
@@ -44,7 +44,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
         return new MetaRatingMergerI(ratings);
     }
 
-    protected MetaRatingMergerI(Map<Class<? extends Rating>, Rating> ratings) {
+    private MetaRatingMergerI(Map<Class<? extends Rating>, Rating> ratings) {
         this.ratings = requireNonNull(ratings);
     }
 

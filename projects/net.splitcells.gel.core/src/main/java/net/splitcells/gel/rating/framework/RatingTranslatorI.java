@@ -27,11 +27,11 @@ public class RatingTranslatorI implements RatingTranslator {
         return new RatingTranslatorI(ratings);
     }
 
-    protected RatingTranslatorI(Map<Class<? extends Rating>, Rating> ratings) {
+    private RatingTranslatorI(Map<Class<? extends Rating>, Rating> ratings) {
         this.ratings = ratings;
     }
 
-    protected final Map<Class<? extends Rating>
+    private final Map<Class<? extends Rating>
             , Map<Predicate<Map<Class<? extends Rating>, Rating>>
             , Function<Map<Class<? extends Rating>, Rating>, Rating>>> translators = map();
 
