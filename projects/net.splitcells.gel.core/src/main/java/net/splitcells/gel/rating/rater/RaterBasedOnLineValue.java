@@ -60,7 +60,13 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     public static Rater lineValueRater(Predicate<Line> classifier) {
-        return lineValueRater(classifier, line -> cost(1));
+        return lineValueRater(classifier, line -> {
+            if (classifier.test(line)) {
+                return noCost();
+            } else {
+                return cost(1);
+            }
+        });
     }
 
     public static Rater lineValueRater(Predicate<Line> classifier, String description) {
