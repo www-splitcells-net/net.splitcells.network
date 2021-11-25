@@ -188,9 +188,10 @@ public class MetaRatingI implements MetaRating {
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof MetaRating) {
             final MetaRating other = (MetaRating) arg;
-            if (!translator.equals(other.translator()) || !merger.equals(other.merger())) {
-                return Optional.empty();
-            }
+            /* TODO This block is a hack patch.
+             * if (!translator.equals(other.translator()) || !merger.equals(other.merger())) {
+             *    return Optional.empty();
+             * }*/
             if (other.content().isEmpty() && ratingMap.isEmpty()) {
                 return Optional.of(EQUAL);
             }

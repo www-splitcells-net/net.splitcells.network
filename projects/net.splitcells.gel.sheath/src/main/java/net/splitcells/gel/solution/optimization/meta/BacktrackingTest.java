@@ -31,6 +31,7 @@ public class BacktrackingTest {
                 .toProblem()
                 .asSolution();
         backtracking().optimize(testData);
+        assertThat(testData.size()).isEqualTo(3);
         assertThat(testData.columnView(demandAttribute).get(0)).isEqualTo(1);
         assertThat(testData.columnView(supplyAttribute).get(0)).isEqualTo(4);
         assertThat(testData.columnView(demandAttribute).get(1)).isEqualTo(2);
