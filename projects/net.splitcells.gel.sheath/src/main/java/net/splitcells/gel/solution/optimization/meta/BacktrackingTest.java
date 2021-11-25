@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
+import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueRater;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
 import static net.splitcells.gel.solution.optimization.primitive.enumerable.Initializer.initializer;
@@ -55,9 +56,11 @@ public class BacktrackingTest {
                         (list(4)
                                 , list(5)
                                 , list(6)))
-                .withConstraint(
-                        forAll()
-                )
+                .withConstraint(c -> {
+                    c.forAll(lineValueRater(l -> l.value(demandAttribute).equals(2)))
+                            .then(lineValueRater(l -> l.value(supplyAttribute).equals(6)));
+                    return c;
+                })
                 .toProblem()
                 .asSolution();
         backtracking().optimize(testData);
@@ -65,8 +68,9 @@ public class BacktrackingTest {
         assertThat(testData.columnView(demandAttribute).get(0)).isEqualTo(1);
         assertThat(testData.columnView(supplyAttribute).get(0)).isEqualTo(4);
         assertThat(testData.columnView(demandAttribute).get(1)).isEqualTo(2);
-        assertThat(testData.columnView(supplyAttribute).get(1)).isEqualTo(5);
+        assertThat(testData.columnView(supplyAttribute).get(1)).isEqualTo(6);
         assertThat(testData.columnView(demandAttribute).get(2)).isEqualTo(3);
-        assertThat(testData.columnView(supplyAttribute).get(2)).isEqualTo(6);
+        assertThat(testData.columnView(supplyAttribute).get(2)).isEqualTo(5);
+        assertThat(testData.isOptimal()).isTrue();
     }
 }
