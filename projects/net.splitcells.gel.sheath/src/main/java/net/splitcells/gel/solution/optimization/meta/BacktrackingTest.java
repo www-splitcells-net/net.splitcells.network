@@ -39,4 +39,34 @@ public class BacktrackingTest {
         assertThat(testData.columnView(demandAttribute).get(2)).isEqualTo(3);
         assertThat(testData.columnView(supplyAttribute).get(2)).isEqualTo(6);
     }
+
+    @Test
+    public void testBranching() {
+        final var demandAttribute = integerAttribute("d");
+        final var supplyAttribute = integerAttribute("s");
+        final var testData = defineProblem()
+                .withDemandAttributes(demandAttribute)
+                .withDemands(list
+                        (list(1)
+                                , list(2)
+                                , list(3)))
+                .withSupplyAttributes(supplyAttribute)
+                .withSupplies(list
+                        (list(4)
+                                , list(5)
+                                , list(6)))
+                .withConstraint(
+                        forAll()
+                )
+                .toProblem()
+                .asSolution();
+        backtracking().optimize(testData);
+        assertThat(testData.size()).isEqualTo(3);
+        assertThat(testData.columnView(demandAttribute).get(0)).isEqualTo(1);
+        assertThat(testData.columnView(supplyAttribute).get(0)).isEqualTo(4);
+        assertThat(testData.columnView(demandAttribute).get(1)).isEqualTo(2);
+        assertThat(testData.columnView(supplyAttribute).get(1)).isEqualTo(5);
+        assertThat(testData.columnView(demandAttribute).get(2)).isEqualTo(3);
+        assertThat(testData.columnView(supplyAttribute).get(2)).isEqualTo(6);
+    }
 }

@@ -251,13 +251,13 @@ public class OralExamsTest extends TestSuiteI {
                 .withConstraint
                         (forAll()
                                 .withChildren(forEach(OBSERVER)
-                                                .withChildren(for_all_combinations_of(DATE, SHIFT)
+                                                .withChildren(forAllCombinationsOf(DATE, SHIFT)
                                                         .withChildren(then(hasSize(1))))
                                         , forEach(EXAMINER)
-                                                .withChildren(for_all_combinations_of(DATE, SHIFT)
+                                                .withChildren(forAllCombinationsOf(DATE, SHIFT)
                                                         .withChildren(then(hasSize(1))))
                                         , forEach(STUDENTS)
-                                                .withChildren(for_all_combinations_of(DATE, SHIFT)
+                                                .withChildren(forAllCombinationsOf(DATE, SHIFT)
                                                                 .withChildren(then(hasSize(1)))
                                                         , then(has_minimal_distance_of(DATE, 3.0))
                                                         , then(has_minimal_distance_of(DATE, 5.0))
@@ -268,7 +268,7 @@ public class OralExamsTest extends TestSuiteI {
                                          * <p/>
                                          * TODO Every examiner and observer wants to minimize the number of room switches per day.
                                          */
-                                        , for_all_combinations_of(DATE, SHIFT, ROOM_NUMBER)
+                                        , forAllCombinationsOf(DATE, SHIFT, ROOM_NUMBER)
                                                 .withChildren(then(hasSize(1)))
                                         , studentSpecificConstraints()
                                         , checkerSpecificConstraints()

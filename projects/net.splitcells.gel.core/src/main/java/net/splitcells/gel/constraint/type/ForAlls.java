@@ -49,7 +49,7 @@ public class ForAlls {
      * @param arguments
      * @return
      */
-    public static ForAll for_all_combinations_of(final Attribute<?>... arguments) {
+    public static ForAll forAllCombinationsOf(final Attribute<?>... arguments) {
         return ForAllFactory.instance().forAllCombinations(arguments);
     }
 }
