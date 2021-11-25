@@ -34,9 +34,9 @@ import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
 
 public class MetaRatingI implements MetaRating {
-    protected final Map<Class<? extends Rating>, Rating> ratingMap;
-    protected final RatingTranslator translator;
-    protected final MetaRatingMerger merger;
+    private final Map<Class<? extends Rating>, Rating> ratingMap;
+    private final RatingTranslator translator;
+    private final MetaRatingMerger merger;
 
     public static MetaRating metaRating(Map<Class<? extends Rating>, Rating> rating) {
         return new MetaRatingI(rating);
@@ -58,7 +58,7 @@ public class MetaRatingI implements MetaRating {
     }
 
     @SuppressWarnings("unlikely-arg-type")
-    protected MetaRatingI(Map<Class<? extends Rating>, Rating> ratingMap) {
+    private MetaRatingI(Map<Class<? extends Rating>, Rating> ratingMap) {
         this.ratingMap = ratingMap;
         translator = ratingTranslator(ratingMap);
         merger = metaRatingMerger(ratingMap);
