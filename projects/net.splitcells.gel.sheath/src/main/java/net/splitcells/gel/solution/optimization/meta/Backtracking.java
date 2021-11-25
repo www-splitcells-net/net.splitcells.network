@@ -1,10 +1,12 @@
 package net.splitcells.gel.solution.optimization.meta;
 
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpace;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static net.splitcells.gel.solution.optimization.primitive.enumerable.Initializer.initializer;
@@ -31,22 +33,20 @@ public class Backtracking implements OnlineOptimization {
         optimize(searchSpace, startRating);
     }
 
-    private void optimize(EnumerableOptimizationSpace searchSpace, Rating startRating) {
+    private EnumerableOptimizationSpace optimize(EnumerableOptimizationSpace searchSpace, Rating startRating) {
         if (searchSpace.currentState().isComplete()) {
-            return;
+            return searchSpace;
         }
-        IntStream.range(0, searchSpace.childrenCount())
-                .map(i -> {
-                    final var nextChild = searchSpace.child(i);
-                    if (nextChild.currentState().constraint().rating().betterThanOrEquals(startRating)) {
-                        optimize(nextChild, startRating);
-                        return 1;
-                    } else {
-                        nextChild.parent();
-                        return 0;
-                    }
-                })
-                .filter(e -> e == 1)
-                .findFirst();
+        for (int i = 0; i < searchSpace.childrenCount(); ++i) {
+            final var nextChild = searchSpace.child(i);
+            if (nextChild.currentState().constraint().rating().betterThanOrEquals(startRating)) {
+                final var resultingChild = optimize(nextChild, startRating);
+                if (resultingChild.currentState().isOptimal()) {
+                    return resultingChild;
+                }
+            }
+            searchSpace = nextChild.parent().get();
+        }
+        return searchSpace;
     }
 }
