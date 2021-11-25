@@ -170,7 +170,7 @@ public class MetaRatingI implements MetaRating {
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof Rating) {
-            final var equality =  compare_partially_to((Rating) arg);
+            final var equality = compare_partially_to((Rating) arg);
             if (equality.isEmpty()) {
                 return false;
             }
@@ -196,8 +196,8 @@ public class MetaRatingI implements MetaRating {
                 return Optional.of(EQUAL);
             }
             if (other.content().size() == 1 && ratingMap.size() == 1) {
-                return other.content().values().iterator().next()
-                        .compare_partially_to(ratingMap.values().iterator().next());
+                return ratingMap.values().iterator().next()
+                        .compare_partially_to(other.content().values().iterator().next());
             }
         }
         if (arg instanceof Profit) {
