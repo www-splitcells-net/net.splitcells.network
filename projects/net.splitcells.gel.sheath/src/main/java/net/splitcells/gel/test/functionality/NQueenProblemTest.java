@@ -51,6 +51,7 @@ import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
 import static net.splitcells.gel.rating.rater.classification.GroupMultiplier.groupMultiplier;
 import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
 import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
@@ -85,8 +86,8 @@ public class NQueenProblemTest extends TestSuiteI {
     @Test
     public void test_8_queen_problem_with_backtracking() {
         final var testSubject = nQueenProblem(8, 8).asSolution();
-        // TODO testSubject.optimize(linearInitialization());
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
+        backtracking().optimize(testSubject);
+        assertThat(testSubject.isOptimal()).isTrue();
     }
 
     /**
