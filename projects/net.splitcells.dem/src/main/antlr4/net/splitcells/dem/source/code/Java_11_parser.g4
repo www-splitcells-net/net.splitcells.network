@@ -92,9 +92,9 @@ class_member_value_declaration
     ;
 expression
     : Whitespace? integer
-    | Keysymbol_not expression
     | string Whitespace? access?
     | expression Whitespace operator Whitespace expression
+    | prefix_operator expression
     | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
         	Whitespace? Brace_curly_open class_member* Whitespace? Brace_curly_closed
     | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
@@ -167,7 +167,8 @@ name
     | Keyword_class
     ;
 operator
-	: Keysymbol_equals
+	: Keysymbol_not_equals
+	| Keysymbol_equals
 	| Keysymbol_and
 	| Less_than
 	;
@@ -178,6 +179,9 @@ package_name
     : name
     | package_name Dot name
     ;
+prefix_operator
+	: Keysymbol_not
+	;
 reference
 	: expression
     /* This is an Lambda definition. */

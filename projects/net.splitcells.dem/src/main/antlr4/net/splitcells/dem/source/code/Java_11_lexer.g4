@@ -27,6 +27,7 @@ Javadoc: '/**' .*? '*/';
 Keysymbol_and: '&&';
 Keysymbol_at: '@';
 Keysymbol_equals: '==';
+Keysymbol_not_equals: '!=';
 Keysymbol_not: '!';
 Keyword_annotation: '@interface';
 Keyword_class: 'class';
