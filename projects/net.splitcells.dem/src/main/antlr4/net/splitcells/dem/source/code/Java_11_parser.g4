@@ -171,6 +171,7 @@ operator
 	| Keysymbol_equals
 	| Keysymbol_and
 	| Less_than
+	| Keyword_instanceof
 	;
 package_declaration
     : 'package' Whitespace package_name Semicolon Whitespace*
