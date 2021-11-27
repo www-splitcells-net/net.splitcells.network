@@ -43,6 +43,15 @@ public class Projects {
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
                 , additionalProjects.withAppended(projectRenderers(profile, projectRepository, validator, xslLib)));
     }
+    
+    public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
+            , ProjectRenderer fallbackProjectRenderer
+            , List<ProjectRenderer> additionalProjects
+            , Validator validator
+            , Path xslLib) {
+        return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
+                , additionalProjects.withAppended(projectRenderers(profile, projectRepository, validator, xslLib)));
+    }
 
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories, Validator validator) {
         return projectRenderer(profile
