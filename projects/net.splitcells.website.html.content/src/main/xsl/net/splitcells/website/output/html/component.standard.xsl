@@ -247,16 +247,10 @@
     <xsl:template match="s:chapter">
         <section>
             <xsl:attribute name="id" select="generate-id(.)"/>
-            <div class="heading">
-                <div style="width: 100%;">
-                    <a>
-                        <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
-                        <xsl:apply-templates select="./s:title/node()"/>
-                    </a>
-                    <a href="#topElement" style="float: right;">↑
-                    </a>
-                </div>
-            </div>
+            <h2>
+                <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
+                <xsl:apply-templates select="./s:title/node()"/>
+            </h2>
             <xsl:apply-templates select="node()[not(self::s:title)]"/>
         </section>
     </xsl:template>
