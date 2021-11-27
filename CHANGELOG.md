@@ -20,6 +20,8 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-11-27**: **\#s22**: Rename Optimization interface to OfflineOptimization
+  in order to clarify the difference to the new OnlineOptimization interface.
 * **2021-11-21**: **\#s22**: Rename `net.splitcells.gel.solution.optimization.Optimization`
   to `OfflineOptimization` in order to clarify its meaning.
 * **2021-11-06**:
@@ -101,6 +103,10 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-11-27**: **\#s22** [Implement backtracking optimization](https://todo.sr.ht/~splitcells-net/net.splitcells.network/22):
+  1. Implements backtracking as an OnlineOptimization.
+  2. In this context EnumerableOptimizationSpace was created in order to provide
+     a search space for backtracking.
 * **2021-11-20**: **\#37** [Simplify default web layout.](https://github.com/www-splitcells-net/net.splitcells.network/issues/37)
 * **2021-11-08**:
   1. **\#26** Create command `project.render.as.net.splitcells.website` as an
@@ -197,6 +203,9 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-11-27**: **\#s22** Fix the ordering of MetaRatingI.
+  Previously, the order was inverse: a meta rating with cost of 0 was
+  worse than a meta rating with cost of 1.
 * **2021-11-20**: Fix text file rendering in web server via `txt` file suffix.
 * **2021-10-25**  **\#90** Fix deployment of CommonMark files:
   Before the patch CommonMark were not rendered and uploaded via the website
