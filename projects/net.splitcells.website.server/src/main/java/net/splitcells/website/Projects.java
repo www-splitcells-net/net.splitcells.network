@@ -38,8 +38,10 @@ public class Projects {
             , ProjectRenderer fallbackProjectRenderer
             , List<ProjectRenderer> additionalProjects
             , Validator validator) {
+        final var xslLib = projectRepository
+                .resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/");
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
-                , additionalProjects.withAppended(projectRenderers(profile, projectRepository, validator)));
+                , additionalProjects.withAppended(projectRenderers(profile, projectRepository, validator, xslLib)));
     }
 
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories, Validator validator) {
@@ -51,8 +53,8 @@ public class Projects {
                 , validator);
     }
 
-    public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories, Validator validator) {
-        final var xslLib = projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/");
+    public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories, Validator validator
+            , Path xslLib) {
         return list(projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.dem/")
