@@ -245,7 +245,7 @@
         <xsl:apply-templates/>
     </xsl:template>
     <xsl:template match="s:chapter">
-        <div class="chapter">
+        <section>
             <xsl:attribute name="id" select="generate-id(.)"/>
             <div class="heading">
                 <div style="width: 100%;">
@@ -258,7 +258,7 @@
                 </div>
             </div>
             <xsl:apply-templates select="node()[not(self::s:title)]"/>
-        </div>
+        </section>
     </xsl:template>
     <xsl:template match="s:premature_announcement">
         <!-- TODO make onclick target link generic -->
