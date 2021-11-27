@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
 #
 # This program and the accompanying materials are made available under the
