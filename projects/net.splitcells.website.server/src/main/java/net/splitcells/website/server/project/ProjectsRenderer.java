@@ -73,9 +73,6 @@ public class ProjectsRenderer {
                     try {
                         final var targetPath = path(target, path.substring(1));
                         createDirectory(targetPath.getParent());
-                        if (targetPath.toString().contains("README")) {
-                            throw executionException("");
-                        }
                         writeToFile(targetPath, render(path).get().getContent());
                     } catch (Exception e) {
                         throw new RuntimeException(target.toString() + path, e);
