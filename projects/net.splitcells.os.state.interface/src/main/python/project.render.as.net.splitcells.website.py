@@ -24,6 +24,16 @@ In order to create a plugin following needs to be done:
   * `cd <plugin's path>`
   * `project.render.as.net.splitcells.website`
 
+The target project layout is that of the "splitcells.net" website:
+* The folders represent a namespace similar to package naming present in Java:
+  The first folders represent the domains and sub domains.
+  The following folders identify the project,
+  that contains the files and folders of the project.
+  The last folders represent the projects content structure.
+  Any type of file type is allowed,
+  but the focus lies on files for HTML websites,
+  because the target project is deployment artifact for "spitcells.net".
+
 TODO Make this an implementation of `project.render.py`,
 that basically cd's into <--from-project> and then executes
 `./bin/render.as.net.splitcells.website.to <--to-project>`.
@@ -38,7 +48,9 @@ import argparse
 import subprocess
 
 if __name__ == '__main__':
-	argsParser = argparse.ArgumentParser(description='Renders a project to a different project.')
+	argsParser = argparse.ArgumentParser(
+		description='Renders a project to a project, '
+		+ 'that is compatible to the layout of "splitcells.net".')
 	argsParser.add_argument('--to-project'
 		, nargs = '?'
 		, type = str
