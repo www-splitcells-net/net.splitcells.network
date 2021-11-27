@@ -203,9 +203,11 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
-* **2021-11-27**: **\#s22** Fix the ordering of MetaRatingI.
-  Previously, the order was inverse: a meta rating with cost of 0 was
-  worse than a meta rating with cost of 1.
+* **2021-11-27**:
+  1. **\#s22** Fix the ordering of MetaRatingI.
+     Previously, the order was inverse: a meta rating with cost of 0 was
+     worse than a meta rating with cost of 1.
+  2. `shell.width.sh` now works in Bourne shell as well.
 * **2021-11-20**: Fix text file rendering in web server via `txt` file suffix.
 * **2021-10-25**  **\#90** Fix deployment of CommonMark files:
   Before the patch CommonMark were not rendered and uploaded via the website
