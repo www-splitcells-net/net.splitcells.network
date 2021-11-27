@@ -52,45 +52,46 @@ public class Projects {
     }
 
     public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories, Validator validator) {
+        final var xslLib = projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/");
         return list(projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.dem/")
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , xslLib
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/dem"
                                 , validator)
-                ,projectRenderer
+                , projectRenderer
                         (profile
                                 , projectRepositories.resolve("../")
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , xslLib
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/network"
                                 , validator)
                 , projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.gel.doc/")
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , xslLib
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
                                 , validator)
                 , projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.gel.sheath/")
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , xslLib
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
                                 , validator)
                 , projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.system/")
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , xslLib
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/system"
                                 , validator)
                 , projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.website.default.content/")
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , xslLib
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/website"
                                 , validator)
