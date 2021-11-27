@@ -103,10 +103,13 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-* **2021-11-27**: **\#s22** [Implement backtracking optimization](https://todo.sr.ht/~splitcells-net/net.splitcells.network/22):
-  1. Implements backtracking as an OnlineOptimization.
-  2. In this context EnumerableOptimizationSpace was created in order to provide
-     a search space for backtracking.
+* **2021-11-27**:
+   1. **\#s22** [Implement backtracking optimization](https://todo.sr.ht/~splitcells-net/net.splitcells.network/22):
+      1. Implements backtracking as an OnlineOptimization.
+      2. In this context EnumerableOptimizationSpace was created in order to provide
+         a search space for backtracking.
+   2. **\#142** Create `net.splitcells.website.html.content` project in order to
+      provide an alternative HTML styling.
 * **2021-11-20**: **\#37** [Simplify default web layout.](https://github.com/www-splitcells-net/net.splitcells.network/issues/37)
 * **2021-11-08**:
   1. **\#26** Create command `project.render.as.net.splitcells.website` as an
