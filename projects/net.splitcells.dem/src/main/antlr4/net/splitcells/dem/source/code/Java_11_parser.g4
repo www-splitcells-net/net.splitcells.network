@@ -62,9 +62,14 @@ class_definition
     : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final?
     	Whitespace? Keyword_class
     	type_declaration
-        allowed_Extensions?
+    	class_extension
         Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
     ;
+class_extension
+	: Whitespace? Keyword_extends Whitespace? type_declaration
+	| Whitespace? Keyword_implements Whitespace? type_declaration
+	| Whitespace? allowed_Extensions?
+	;
 class_member
     : class_constructor
     | class_member_method_definition

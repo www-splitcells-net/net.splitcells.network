@@ -38,6 +38,7 @@ Keyword_extends: 'extends';
 Keyword_finally: 'finally';
 Keyword_final: 'final';
 Keyword_if: 'if';
+Keyword_implements: 'implements';
 Keyword_import: 'import';
 Keyword_interface: 'interface';
 Keyword_new: 'new';
