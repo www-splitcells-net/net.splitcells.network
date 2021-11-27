@@ -16,6 +16,8 @@ import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizat
  * This is an implementation of the backtracking algorithm.
  * It backtracks, if the current state is worse than it's parent state.
  * The backtracking exits, when the {@link Solution} is complete.
+ * This implementation backtracks,
+ * if a given {@link Solution} is worse than the previous {@link Solution}.
  */
 public class Backtracking implements OnlineOptimization {
     public static Backtracking backtracking() {
