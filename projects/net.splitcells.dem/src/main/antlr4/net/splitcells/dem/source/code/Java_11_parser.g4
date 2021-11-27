@@ -59,8 +59,11 @@ call_arguments_next
     : Comma Whitespace call_arguments_element
     ;
 class_definition
-    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_class Whitespace? name
-        allowed_Extensions? Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
+    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final?
+    	Whitespace? Keyword_class
+    	type_declaration
+        allowed_Extensions?
+        Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
     ;
 class_member
     : class_constructor
@@ -224,7 +227,7 @@ string_content
 	| Hyphen_minus string_content?
 	;
 type_declaration
-    : type_path type_argument?
+    : Whitespace? type_path type_argument?
     ;
 type_argument
     : Whitespace? Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
