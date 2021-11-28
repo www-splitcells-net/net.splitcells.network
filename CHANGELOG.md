@@ -103,6 +103,9 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-11-29**:
+   1. **\#138** Create `test.capabilities` and `test.integration` in order to
+      execute tests, that require relatively long time for execution.
 * **2021-11-27**:
    1. **\#s22** [Implement backtracking optimization](https://todo.sr.ht/~splitcells-net/net.splitcells.network/22):
       1. Implements backtracking as an OnlineOptimization.

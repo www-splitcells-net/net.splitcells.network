@@ -25,13 +25,14 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 import static org.junit.platform.launcher.TagFilter.includeTags;
 
 /**
- * Executes any test by default.
+ * <p>Executes any test by default.
  * This does not filter tests by names like Maven by default.
  * If a developer wrote a test, than it most likely wants to also execute the test, if it is not stated otherwise.
  * Tests are also not filtered, because the developer might not know, that such a thing happens.
- * He needs at least a warning for such things during test execution.
- * <p>
- * TODO Simplify code by removing duplicate code.
+ * He needs at least a warning for such things during test execution.</p>
+ * <p>TODO Find tests with incorrect tags.</p>
+ * <p>TODO Simplify code by removing duplicate code.</p>
+ * <p>TODO Testing without Maven seems to be faster.</p>
  */
 public class Test {
     public static void main(String... arg) {
