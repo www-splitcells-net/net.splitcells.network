@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Program Code Guidelines</title>
+    </meta>
+    <paragraph>The programming code should prioritize adaptability and readability.
+        This can be made by making it easy to refactor the code or to translate it to a completely other language.
+        The use of standard/common code conventions also makes it easier to integrate other code easier
+        and in a more consistent way.
+    </paragraph>
+    <paragraph>Avoid side effects, as it makes it harder to understand a program.
+        Avoid inheritance, because it makes it harder to write easily portable
+        side effect free code under certain conditions.
+        Inheritance works great as adhoc wrappers and type and implementation extenders.
+        Inheritance does not support swapping out the parent implementation,
+        which makes it often not portable in practice.
+    </paragraph>
+    <paragraph>State intent and not actions. Therefore, pointer or index arithmetic should be avoided.</paragraph>
+    <chapter>
+        <title>Identifiers</title>
+        <paragraph>Readability is preferred over compactness,
+            but compactness is still important.
+            Every name should have an unambiguous meaning.
+        </paragraph>
+        <paragraph>This means a renaming
+            would be valid, if every instance of the name can be renamed,
+            while still maintaining the correct meaning.
+            Symbols, whose meaning are already contained in other symbols,
+            should be omitted.
+            Names are preferred to abbreviation and abbreviation are preferred to symbols as a shorthand.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Testing</title>
+        <paragraph>It should be possible to execute the tests programmatically inside the program.
+            An appropriate main method should be provided, so the tests can be executed as a program.
+            This ensures that tests are nothing special and therefore independent of the build system.
+        </paragraph>
+        <paragraph>Every implemented feature should be tested.
+            Also every project command should be tested as well.
+        </paragraph>
+        <chapter>
+            <title>Naming Convention</title>
+            <paragraph>
+                Every test name starts with a verb like every other method that's primary function is an action.
+                Every test name should refer to the primarily tested thing (Object/Method/Function/Class),
+                the tested feature, the tested situation and the tested result in that order
+                (This is based on
+                <link>
+                    <text>Naming standards for unit tests by Roy Osherove</text>
+                    <url>https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html</url>
+                </link>
+                ).
+                All referred things in the method name, should be referred to, by its original name.
+            </paragraph>
+            <paragraph>Inside tests following naming scheme can be used: a test subject is creating a test product
+                that is verified or validated in order to create a test result. A test is successful, if the test
+                result is positive.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Optionality of Tests</title>
+            <paragraph>
+                Tests are generally speaking optional and not part of the
+                main
+                interface contract.
+                In other words no
+                code is allowed to rely on the fact, that it will be informed about
+                errors explicitly or implicitly.
+            </paragraph>
+            <paragraph>It has to be explicitly stated, if argument checking is
+                part of the interface. These types of checks are
+                not considered to
+                be
+                tests in this context.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Self Testing</title>
+            <paragraph>Each test should have an error message, in order to
+                minimize the time in order to understand an error.
+            </paragraph>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Formatting</title>
+        <paragraph>The code should be formatted in such a way that the
+            required space is minimized and
+            the readability and navigability of the text is maximized.
+            Empty lines are omitted, if indentation is enough to easily separate code
+            blocks.
+        </paragraph>
+        <paragraph>Automatic code styling/formatting should never remove already present new line
+            characters, as otherwise it is hard to structure large code statements.
+        </paragraph>
+        <paragraph>It is preferred that symbols that structure the code are located
+            at the most left side instead at the most right side when whitespace is ignored.
+            This allows the navigate the code structure easily while minimizing
+            the need to look into the meaning of the code.
+        </paragraph>
+        <paragraph>Prefer tabbing, if automatic source code formatting is preferred and details of the format are
+            not important, in order to prefer writing speed.
+            Prefer whitespace, if formatting details are important.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Dependencies</title>
+        <paragraph>
+            Maximize the replaceability of external dependencies.
+            Minimize dependency on concrete versions of the dependencies.
+            Prefer own interfaces and avoid accessing external things. Use dependency injection via static methods
+            as this supports
+            most paradigms and implementations. This also supports
+            dependency injection of general objects like lists nicely.
+        </paragraph>
+        <paragraph>Minimize the number of extern dependencies that are explicitly supported as these can cause
+            a maintenance burden. Minimize side effects between dependencies.
+            For example, in an ideal case transitive dependencies are not shared between dependencies.
+        </paragraph>
+        <paragraph>If there are not enough resources or if it is not optimal to develop
+            and maintain a piece of required functionality, then use a dependency in order to get this functionality
+            and declare the functionality of the dependency as something that is out of scope of the project.
+            The support, usage and extension of the dependency might still be part of the project.
+        </paragraph>
+        <paragraph>Minimize direct dependencies between different things inside the project
+            in order to easier analyse the effect of one piece of code to the rest of the project.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Namespace</title>
+        <paragraph>Try to create a common dictionary of words. Each word
+            should be used for one meaning if possible.
+            This makes
+            it easier to
+            create names for new things, to find new things by its name and to
+            understand described things.
+        </paragraph>
+        <paragraph>Use prefixes if multiple dictionaries have to be used in a
+            document.
+            This helps to associate each text with
+            its correct meaning.
+        </paragraph>
+        <paragraph>Avoid importing the same things over and over again in
+            each file.
+            If possible create dictionary documents
+            that contain all
+            imports and link
+            to these dictionaries in each document. Minimize the
+            number of dictionary documents
+            which
+            are linked to from a given
+            document.
+            Minimize the number of individual imports in non dictionary
+            documents.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Logging</title>
+        <paragraph>By default settings only events that require action or signal execution progress for the
+            log inspector should be shown.
+        </paragraph>
+        <chapter>
+            <title>Logging as Event Log</title>
+            <paragraph>Model the (interactive) console and log files as event
+                logs/queues.
+                The
+                subject/publisher of the event
+                should
+                always be
+                directly
+                or indirectly identifiable.
+                This way it is
+                ensured that the
+                history of
+                the execution is shown, which
+                allows one understand the
+                execution
+                and
+                interact with it. In the ideal case one can reproduce the
+                history of
+                each object.
+            </paragraph>
+        </chapter>
+    </chapter>
+</article>

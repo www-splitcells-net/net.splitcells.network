@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Documentation Guidelines</title>
+    </meta>
+    <paragraph>Documentation links syntax to semantics or represents meta data.
+        A single point of entry should be provided from where every part of the documentation is reachable.
+        Multiple points of additional entries may be provided.
+        It should be possible to render all documentation as one site, were everything can be easily accessed
+        and searched.
+    </paragraph>
+    <chapter>
+        <title>Documentation Types</title>
+        <paragraph>Manuals describe the implemented concept and how to use the described things.
+            Thereby, all relevant words with special meaning have to be explained.
+            This includes all words, that are used in implementation.
+            The manual should not describe the API.
+            For simplicity this should only consist of flowing structured text and inlines objects (i.e. images).
+            In Java this is done via CommonMark files.
+        </paragraph>
+        <paragraph>API documentation describes all things that can be accessed legally.
+            Implementation internals should not be noted here.
+            In Java this is done via Javadoc.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Documentation Content</title>
+        <paragraph>The documentation needs to at least define the goal or the result of the thing in question.
+            Everything needs documentation.
+            Classic documentation can sometimes be replaced by programs (i.e. build script named <quote>
+                build.service
+            </quote> instead of
+            describing how to
+            build software), but everything needs documentation.
+        </paragraph>
+        <paragraph>Documentation may also contain inspiration emotional content in the form of quotes
+            and haiku and should always relate to the described thing.
+            The additional emotional context provides a different perspective
+            on the semantics of the documented thing.
+            This helps the reader to better understand the project and its usage.
+            The amount of such should be minimal.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Documentation Complexity Management</title>
+        <paragraph>Updating the documentation is always a problem.
+            Minimize the amount of documentation.
+            In the best case, the name of a thing is its documentation.
+            Documenting justifications may also be required in order to omit regressions
+            or development things in a circle.
+        </paragraph>
+        <paragraph>If large documentation like a user manual is required, make it a project of its own.
+            Otherwise, documentation and the software development will hinder each other,
+            because of the combined complexity.
+        </paragraph>
+        <paragraph>Every public API component should not only have a name/id but also have at least an naturally
+            described
+            summary of its functionality in order to merge syntax and semantics.
+            This can be omitted if the name/id is also a natural description.
+        </paragraph>
+    </chapter>
+</article>

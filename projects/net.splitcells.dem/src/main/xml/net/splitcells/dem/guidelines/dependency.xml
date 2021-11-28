@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Dependency Guidelines</title>
+    </meta>
+    <chapter>
+        <title>Dependency Management</title>
+        <paragraph>Every folder containing source files should be regarded as its own project.</paragraph>
+        <d:toDo>Define core, merger, core.merger, sheath and environment concept.</d:toDo>
+        <paragraph>
+            Prefer deterministic builds strongly.
+            Update dependencies explicitly and not implicitly.
+            Thereby one has control over the update time,
+            quality
+            and repeatability.
+            If possible create a command in order to automatically
+            update dependencies.
+        </paragraph>
+        <chapter>
+            <title>External Dependency</title>
+            <paragraph>
+                Dependencies on external implementations has to be indirect/abstract.
+                Dependencies on external interfaces are allowed but discouraged.
+            </paragraph>
+        </chapter>
+    </chapter>
+</article>

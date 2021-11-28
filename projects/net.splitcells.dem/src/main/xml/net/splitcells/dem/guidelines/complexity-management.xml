@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Complexity Management Guidelines</title>
+    </meta>
+    <chapter>
+        <title>Complexity Management</title>
+        <d:toDo>Remove coding details.</d:toDo>
+        <paragraph>Prefer using existing standards instead of a new one.
+            If a standard does not fulfill ones need, one can use a restricted version of the standard:
+            only a part of the standard is used, which in turn allows one to add new functionality to the standard.
+        </paragraph>
+        <paragraph>
+            The complexity of project should be planned.
+            If the
+            project's complexity becomes greater than planned, it
+            may be a
+            indicator that the project needs to be
+            simplified.
+            This can be done by
+            splitting the project into multiple
+            ones.
+        </paragraph>
+        <paragraph>Minimize the amount of complexity.
+            Minimize the set of required programming language features.
+            The set of actually used programming features is not important.
+        </paragraph>
+        <paragraph>General code is easier to manage than domain specific functions
+            as domain specific functions tend to grow in complexity over time.
+            It is easier to limit the maximum complexity of general code, because its easier
+            to exactly define the content of such a function.
+            , that it relies on predefined interfaces, which may
+            The downside of general code is, that it may provide more functionality
+            than currently needed, which may require more code than strictly needed.
+            This can be omitted by not implementing not used parts of the general code.
+            There are 2 ways to do this: one can call a function with some arguments set to null,
+            which are not valid, but are not used by the function because
+            the other arguments are have certain values.
+            Another way is to explicitly throw an exception, if a not implemented part is
+            used. In this case it is best to create a dedicated exception class for this in order
+            unambiguous mark unfinished code parts.
+            Both methods create an exception, if an unfinished part of a code is executed.
+        </paragraph>
+        <chapter>
+            <title>Complex Projects</title>
+            <paragraph>Complex projects consist of multiple projects called sub.
+                A complex project is represented by a project called root.
+                A sub project should be classifiable as on of 4 types: core, merger, sheath and environment.
+                An merger project contains interfaces and abstract factories,
+                An core project provides interface implementations and provide factories, that are used by the abstract
+                factories of the merger project via dependency injection.
+                Sheath code are explicit external dependencies of the project.
+                Environment code are implicit dependencies of the root project
+            </paragraph>
+        </chapter>
+    </chapter>
+</article>

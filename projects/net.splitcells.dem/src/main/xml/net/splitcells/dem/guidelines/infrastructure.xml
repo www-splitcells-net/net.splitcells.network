@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Infrastructure Guidelines</title>
+    </meta>
+    <chapter>
+        <title>Build Infrastructure</title>
+        <paragraph>If there are multiple projects, create a builder project.
+            Its objective is to build all other projects.
+            Its purpose is to enforce a set of standard project formats, which all projects need to adhere.
+            Thereby, the size build scripts in other projects is reduced.
+            This leads to a situation, where for simple project formats
+            the project format only needs to be declared.
+        </paragraph>
+        <paragraph>All possible build and related tasks should be documented.
+            One way is it to provide a command with no arguments for each task.
+        </paragraph>
+        <paragraph>Builds should be regularly be done via all build systems
+            used, in order to ensure that the code complies
+            with each build
+            system.
+        </paragraph>
+    </chapter>
+</article>

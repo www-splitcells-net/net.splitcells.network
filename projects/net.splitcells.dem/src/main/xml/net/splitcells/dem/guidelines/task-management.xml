@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Documentation Guidelines</title>
+    </meta>
+    <chapter>
+        <title>Management</title>
+        <chapter>
+            <title>Task Organization</title>
+            <paragraph>
+                Tickets should be stored at the location where these are used or matter.
+                It should be easy to figure out which tickets apply to a certain portion of a project.
+                If a person is working on a part of the project in question,
+                relevant tickets should be available with little work.
+            </paragraph>
+            <paragraph>Tickets can be stored as a comment at the relevant source code location.
+                Every task should start with <quote>TODO</quote>, which is recognized by many tools.
+                Additional tags can be used in order to signal, which tasks may be ignored under special conditions
+                or may require special care:
+            </paragraph>
+            <list>
+                <item><quote>ACTIVE</quote>: Someone is already working on the marked tag.
+                </item>
+                <item><quote>TOFIX</quote>: This task points to an error.
+                </item>
+                <item><quote>IDEA</quote>: This task may not be a good idea.
+                </item>
+                <item><quote>HACK</quote>: This task marks a code quality issue.
+                </item>
+            </list>
+        </chapter>
+    </chapter>
+</article>
