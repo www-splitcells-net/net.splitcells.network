@@ -6,8 +6,7 @@
          xmlns:m="http://www.w3.org/1998/Math/MathML" xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
     <meta>
         <title>
-            <siteName/>
-            's Experimental Code Guidelines
+            <siteName/>'s Guidelines
         </title>
         <description>
             I created these code guidelines in order to do some thought
@@ -162,39 +161,20 @@
         </d:toDo>
     </meta>
     <chapter>
-        <title>Goals
-        </title>
-        <paragraph>These are my experimental code guidelines.
-            These may
-            not comply to common best
-            practices and might be
-            even harmful.
-            They
-            only
-            represent the current state of some personal thought
-            experiments.
+        <title>Goals</title>
+        <paragraph>Guidelines are just that.
+            They are nothing more and nothing less.
+            If these guidelines are overridden a reason should be present,
+            and be documented or commented, if it is feasible.
         </paragraph>
-        <paragraph>
-            Do not consider these code guidelines for your own code.
-            <link>
-                <text>If you do, people will hate you, and you’ll be scorned by
-                    friends and family.
-                </text>
-                <url>https://git-scm.com/book/en/v1/Git-Branching-Rebasing#The-Perils-of-Rebasing
-                </url>
-            </link>
-        </paragraph>
-        <paragraph>Guide lines are just that. They are nothing more and nothing less, but if these guidelines are
-            not applied a reason should be present.
-            These guide lines main goal is to set priorities and paradigms.
-            The details should be handled by project or language specific guide lines.
-        </paragraph>
-    </chapter>
-    <chapter>
-        <title>Alternative Guidelines</title>
-        <paragraph>For (programming) languages or parts of it without explicit guidelines, please use
-            other public guidelines, as long it does not conflict with already
-            implemented guides. Most accepted public guidelines are preferred.
+        <paragraph>For (programming) languages and document formats prefer
+            using the most official or at least common guidelines,
+            if there are no guidelines of this project applying to the
+            aspect in question.
+            In other words, language and documentation specific guidelines
+            of this project try to only override public guidelines instead of
+            writing complete custom guidelines from scratch.
+            Guidelines of this project override public guidelines.
         </paragraph>
     </chapter>
     <chapter>
