@@ -179,8 +179,8 @@
     </chapter>
     <chapter>
         <title>Base Rule</title>
-        <paragraph>The project structure, its contents and products has to represent a
-            discovery based network of perspectives and changes.
+        <paragraph>The project structure, its contents and products has to
+            represent a discovery based network of perspectives and changes.
             The project and its parts should be portable, extendable, adaptable,
             <link>
                 <text>deletable</text>
@@ -193,6 +193,16 @@
                 <post>/net/splitcells/dem/lang/perspective/index</post>
             </link>
             .
+        </paragraph>
+        <paragraph>This specifically means, that the file and
+            content path of a particular information
+            (for an XML element,
+            this would be the file path + the XPath pointing to the XML element)
+            should identify and describe or at least summarize the content's
+            meaning.
+            This also means, that in an ideal case, one should be able to guess,
+            where to look, for a particular content without knowing where
+            the files are located
         </paragraph>
     </chapter>
 </article>
