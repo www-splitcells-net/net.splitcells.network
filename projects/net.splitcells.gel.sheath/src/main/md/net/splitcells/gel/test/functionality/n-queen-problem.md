@@ -1,9 +1,10 @@
 # Constraint System Demonstration Via The N Queen Problem
-![N Queen Problem](../../../../../../../../src/main/svg/net/splitcells/gel/test/functionality/n-queen-problem/illustration.svg)
-
 The \\(N\\) queens puzzle requires \\(N\\) queens to be placed on a
 \\(N \\times N\\) chessboard so that there is no row,
 column or diagonal with more than one queen.
+
+![N Queen Problem](../../../../../../../../src/main/svg/net/splitcells/gel/test/functionality/n-queen-problem/illustration.svg)
+> Example Of The N Queen Problem
 ## Rating Function
 The rating function of the N Queen Problem returns the number of queen pairs,
 that are in same row, column or diagonal.
@@ -71,3 +72,40 @@ In a constraint graph every node has a dependency to any other node,
 so beginning with a tree reduces the number of node dependencies during the
 initial modeling phase,
 which can ease the creation phase.
+
+## Rating Calculation
+Let's look at our problem at hand and spot the errors.
+By doing so we can calculate the rating of this instance,
+because this optimization problem tries to minimize the number of errors,
+which is called cost in this context:
+
+![N Queen Problem](../../../../../../../../src/main/svg/net/splitcells/gel/test/functionality/n-queen-problem/illustration.errors.svg)
+
+We see, that there are 4 lines of fields with errors.
+3 of these have 2 queens each.
+One line has 4 queens and therefore adds obviously a higher cost to the rating,
+than one of the 3 other lines.
+One could define the cost of a line, as the number of queens minus one and
+going with that,
+the illustrated solution has a cost of 6.
+Hence, this is not an optimal solution.
+
+Also, the calculation of the rating is obvious in this example,
+there is still the lingering question left,
+how the rating of a constraint tree can be calculated.
+We used a simple visualization to do this quickly,
+but with more complex constraints this trick might not work.
+
+Let's compare the board imagery with the constraint tree and search for things
+in common:
+
+![Constraint Tree](../../../../../../../../src/main/svg/net/splitcells/gel/test/functionality/n-queen-problem/constraint.tree.svg)
+
+Basically, all field lines with errors relate to the `At Most One Queen`
+constraint.
+Additionally, the upper nodes of the tree are not contributing any costs to the
+overhaul rating and show, that there are basically 2 kinds of constraint nodes
+with different tasks:
+* Nodes that groups variables of the solution and propagate the grouping to
+  child nodes.
+* Nodes that retrieve given groups and rate these accordingly.
