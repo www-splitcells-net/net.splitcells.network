@@ -11,6 +11,7 @@
 package net.splitcells.dem.execution;
 
 /**
+ * TODO Should be compatible to other actor based systems.
  * TODO This should provide the basis for parallelization.
  * <br />
  * TODO Make it as simple as possible from API side.

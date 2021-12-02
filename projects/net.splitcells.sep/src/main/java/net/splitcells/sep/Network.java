@@ -11,6 +11,11 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
+/**
+ * TODO Make this based on {@link net.splitcells.dem.execution.EffectSystem}.
+ * Note that {@link net.splitcells.dem.execution.EffectSystem} is not in a good
+ * state and needs to be fixed first.
+ */
 public class Network {
     public static Network network() {
         return new Network();
