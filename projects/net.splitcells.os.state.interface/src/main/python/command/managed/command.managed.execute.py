@@ -19,6 +19,7 @@ import argparse
 import logging
 from os import environ
 from pathlib import Path
+from shutil import which
 # TODO FIXME If file not present in path this script should continue.
 # TODO listener scripts
 def executeCommand(command):
@@ -71,8 +72,7 @@ def commandAt(command, number):
 	return rVal
 def commandExists(commandName):
 	"""Check whether `name` is on PATH."""
-	from distutils.spawn import find_executable
-	return find_executable(commandName) is not None
+	return which(commandName) is not None
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(format='%(message)s', level=logging.DEBUG)
