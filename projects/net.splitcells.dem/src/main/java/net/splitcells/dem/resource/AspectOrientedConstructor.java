@@ -17,6 +17,13 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+/**
+ * The name of classes, that provide an aspect, should end with `Aspect`,
+ * in order to hint at their main functionality,
+ * if the class name does not get too long.
+ *
+ * @param <T>
+ */
 public abstract class AspectOrientedConstructor<T> {
     private List<Function<T, T>> aspects = list();
 
