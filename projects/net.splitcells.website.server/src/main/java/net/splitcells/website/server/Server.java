@@ -26,7 +26,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
 /**
  * TODO Create and use server interface, instead of implementation.

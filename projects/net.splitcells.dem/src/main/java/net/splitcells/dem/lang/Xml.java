@@ -12,7 +12,6 @@ package net.splitcells.dem.lang;
 
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.namespace.NameSpace;
-import net.splitcells.dem.utils.ConstructorIllegal;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -35,7 +34,7 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static javax.xml.transform.OutputKeys.INDENT;
 import static javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static org.w3c.dom.Node.ELEMENT_NODE;
 

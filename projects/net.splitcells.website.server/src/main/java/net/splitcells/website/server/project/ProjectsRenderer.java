@@ -30,8 +30,7 @@ import static net.splitcells.dem.resource.Paths.generateFolderPath;
 import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static org.assertj.core.api.Assertions.assertThat;
 

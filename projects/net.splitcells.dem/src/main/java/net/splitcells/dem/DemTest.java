@@ -10,7 +10,7 @@
  */
 package net.splitcells.dem;
 
-import net.splitcells.dem.resource.host.interaction.MessageFilter;
+import net.splitcells.dem.resource.communication.log.MessageFilter;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;

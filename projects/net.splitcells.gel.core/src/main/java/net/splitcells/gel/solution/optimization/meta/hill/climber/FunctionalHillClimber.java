@@ -20,7 +20,7 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;

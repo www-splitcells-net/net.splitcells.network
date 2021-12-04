@@ -15,8 +15,8 @@ import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
 import net.splitcells.dem.environment.config.EndTime;
 import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.dem.resource.host.interaction.Domsole;
-import net.splitcells.dem.resource.host.interaction.MessageFilter;
+import net.splitcells.dem.resource.communication.log.Domsole;
+import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.source.code.SourceCodeCheck;
 
 import java.time.ZonedDateTime;

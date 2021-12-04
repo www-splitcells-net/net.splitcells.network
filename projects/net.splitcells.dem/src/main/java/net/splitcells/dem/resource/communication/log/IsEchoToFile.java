@@ -8,10 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.dem.resource.host.interaction;
+package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.environment.config.framework.OptionI;
 
+/**
+ * TODO RENAME This {@link net.splitcells.dem.environment.config.framework.Option}
+ * main function is to enable shell persistence.
+ * The kind of persistence is not important here.
+ */
 public class IsEchoToFile extends OptionI<Boolean> {
 
 	public IsEchoToFile() {

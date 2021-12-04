@@ -20,15 +20,20 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
-* **2021-12-04**: **\#138**: Replace `net.splitcells.dem.environment.config.StaticFlags.PROFILING_RUNTIME`
-  with `PROFILING_METHOD_STATISTICS`.
-  The former one was deprecated,
-  because it was not used and its intent was not clear.
-  The latter one was introduced, because its usage is quite clear.
-  Note that generic static flags are not that useful,
-  because by enabling a generic one,
-  many additional runtime tasks may be activated,
-  which may destroy the software's performance.
+* **2021-12-04**:
+  1. **\#138**: Replace `net.splitcells.dem.environment.config.StaticFlags.PROFILING_RUNTIME`
+     with `PROFILING_METHOD_STATISTICS`.
+     The former one was deprecated,
+     because it was not used and its intent was not clear.
+     The latter one was introduced, because its usage is quite clear.
+     Note that generic static flags are not that useful,
+     because by enabling a generic one,
+     many additional runtime tasks may be activated,
+     which may destroy the software's performance.
+  2. **\#138**: Rename package `net.splitcells.dem.resource.host.integration`
+     to `net.splitcells.dem.resource.communication.log`.
+     The reason for this, is the fact, that the shell may not be on the host
+     computer.
 * **2021-11-27**: **\#s22**: Rename Optimization interface to OfflineOptimization
   in order to clarify the difference to the new OnlineOptimization interface.
 * **2021-11-21**: **\#s22**: Rename `net.splitcells.gel.solution.optimization.Optimization`

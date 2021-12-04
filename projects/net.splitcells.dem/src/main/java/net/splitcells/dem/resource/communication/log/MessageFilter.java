@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.dem.resource.host.interaction;
+package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.dem.lang.perspective.Perspective;

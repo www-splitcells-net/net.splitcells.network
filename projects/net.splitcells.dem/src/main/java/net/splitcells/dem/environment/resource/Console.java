@@ -13,7 +13,7 @@ package net.splitcells.dem.environment.resource;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
+import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

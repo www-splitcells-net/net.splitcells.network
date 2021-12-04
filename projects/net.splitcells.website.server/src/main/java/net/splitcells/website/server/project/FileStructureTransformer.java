@@ -24,7 +24,7 @@ import static java.nio.file.Files.newInputStream;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.generateFolderPath;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.CommonFunctions.appendToFile;
 
 public class FileStructureTransformer {

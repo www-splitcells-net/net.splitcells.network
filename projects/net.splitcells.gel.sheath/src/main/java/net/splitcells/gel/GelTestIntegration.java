@@ -12,7 +12,7 @@ package net.splitcells.gel;
 
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.resource.host.interaction.MessageFilter;
+import net.splitcells.dem.resource.communication.log.MessageFilter;
 
 import java.util.Optional;
 

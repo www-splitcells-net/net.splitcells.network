@@ -37,7 +37,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.gel.common.Language.RATING;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static org.assertj.core.api.Assertions.assertThat;

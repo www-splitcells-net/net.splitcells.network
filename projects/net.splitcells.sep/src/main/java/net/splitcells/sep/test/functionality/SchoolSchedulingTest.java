@@ -18,10 +18,9 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.resource.host.interaction.Domsole;
-import net.splitcells.dem.resource.host.interaction.IsEchoToFile;
-import net.splitcells.dem.resource.host.interaction.MessageFilter;
-import net.splitcells.dem.utils.MathUtils;
+import net.splitcells.dem.resource.communication.log.Domsole;
+import net.splitcells.dem.resource.communication.log.IsEchoToFile;
+import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -36,9 +35,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -66,7 +63,6 @@ import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimiz
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
-import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.supplySelector;
 import static net.splitcells.sep.Network.network;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

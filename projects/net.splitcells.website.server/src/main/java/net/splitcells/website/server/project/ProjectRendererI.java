@@ -36,7 +36,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.host.interaction.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.project.renderer.RendererMerger.rendererMerger;
 import static net.splitcells.website.server.project.renderer.ResourceRenderer.resourceRenderer;
 import static net.splitcells.website.server.project.renderer.TextRenderer.textExtension;
