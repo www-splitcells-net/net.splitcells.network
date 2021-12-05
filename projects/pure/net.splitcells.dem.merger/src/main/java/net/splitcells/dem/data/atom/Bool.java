@@ -10,11 +10,13 @@
  */
 package net.splitcells.dem.data.atom;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.object.DeepCloneable;
 
 public interface Bool extends DeepCloneable {
 
+    @JavaLegacyArtifact
     boolean toJavaPrimitive();
 
     Bool set(boolean arg);

@@ -10,8 +10,7 @@
  */
 package net.splitcells.dem.data.order;
 
-import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.annotations.JavaLegacy;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.function.BiFunction;
 
@@ -66,7 +65,7 @@ public interface Comparator<T> extends java.util.Comparator<T> {
      * @param <T>        Type of Values being Compared
      * @return Wrapped Comparator
      */
-    @JavaLegacy
+    @JavaLegacyArtifact
     static <T> Comparator<T> comparatorLegacy(BiFunction<T, T, Integer> comparator) {
         return Comparators.comparator(comparator);
 

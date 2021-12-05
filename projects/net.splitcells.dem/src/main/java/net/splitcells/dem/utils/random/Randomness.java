@@ -11,7 +11,7 @@
 package net.splitcells.dem.utils.random;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacy;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.utils.MathUtils;
 
 import java.util.Random;
@@ -91,7 +91,7 @@ public interface Randomness {
         return rBase.toString();
     }
 
-    @JavaLegacy
+    @JavaLegacyArtifact
     Random asRandom();
 
     default <T> List<T> chooseAtMostMultipleOf(int numberOfThingsToChoose, List<T> args) {
