@@ -93,10 +93,10 @@ class_member_value_declaration
 expression
     : Whitespace? integer
     | Whitespace? Brace_round_open Whitespace? type_declaration Whitespace?
-    	Brace_round_closed Whitespace? expression?
+    	Brace_round_closed Whitespace? expression_child?
     	/* Only upcasting should be done. */
     | Brace_round_open Whitespace? expression Whitespace?
-    	Brace_round_closed expression?
+    	Brace_round_closed expression_child?
     | string Whitespace? access?
     | expression Whitespace operator Whitespace expression
     | prefix_operator expression
@@ -108,7 +108,8 @@ expression
     | Whitespace expression
     ;
 expression_child
-	: Whitespace? access?
+	: Whitespace? access
+	| expression
 	;
 import_declaration
     : import_static_declaration
