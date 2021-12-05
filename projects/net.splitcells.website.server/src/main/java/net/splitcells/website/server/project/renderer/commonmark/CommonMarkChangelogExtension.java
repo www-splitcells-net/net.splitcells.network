@@ -15,7 +15,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
 public class CommonMarkChangelogExtension implements Renderer {
 
@@ -23,7 +23,7 @@ public class CommonMarkChangelogExtension implements Renderer {
         return new CommonMarkChangelogExtension();
     }
 
-    private final CommonMarkRenderer renderer = commonMarkRenderer();
+    private final CommonMarkIntegration renderer = commonMarkIntegration();
 
     private CommonMarkChangelogExtension() {
     }

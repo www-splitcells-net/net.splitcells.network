@@ -10,7 +10,7 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CommonMarkExtensionTest {
+public class CommonMarkRendererTest {
     /**
      * TODO Test extension explicitly.
      */

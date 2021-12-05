@@ -25,7 +25,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkRenderer.commonMarkRenderer;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
 /**
  * TODO Add support for header outline.
@@ -36,7 +36,7 @@ public class CommonMarkReadmeExtension implements Renderer {
         return new CommonMarkReadmeExtension();
     }
 
-    private final CommonMarkRenderer renderer = commonMarkRenderer();
+    private final CommonMarkIntegration renderer = commonMarkIntegration();
 
     private CommonMarkReadmeExtension() {
     }

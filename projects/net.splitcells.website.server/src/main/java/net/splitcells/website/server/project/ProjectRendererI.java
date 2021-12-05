@@ -44,7 +44,7 @@ import static net.splitcells.website.server.project.renderer.UserCommandRenderer
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.XmlRenderer.xmlRenderer;
 import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkExtension.commonMarkExtension;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkRenderer.commonMarkExtension;
 import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
