@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:s="http://splitcells.net/sew.xsd"
-                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"
-                xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:svg="http://www.w3.org/2000/svg"
-                xmlns="http://www.w3.org/1999/xhtml" xmlns:x="http://www.w3.org/1999/xhtml"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                xmlns:dc="http://purl.org/dc/elements/1.1/"
+                xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                xmlns:svg="http://www.w3.org/2000/svg"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:x="http://www.w3.org/1999/xhtml"
                 xmlns:d="http://splitcells.net/den.xsd"
-                xmlns:p="http://splitcells.net/private.xsd" xmlns:m="http://www.w3.org/1998/Math/MathML"
-                xmlns:r="http://splitcells.net/raw.xsd" xmlns:n="http://splitcells.net/natural.xsd"
+                xmlns:p="http://splitcells.net/private.xsd"
+                xmlns:m="http://www.w3.org/1998/Math/MathML"
+                xmlns:r="http://splitcells.net/raw.xsd"
+                xmlns:n="http://splitcells.net/natural.xsd"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xl="http://www.w3.org/1999/xlink"
                 xmlns:ns="http://splitcells.net/namespace.xsd">
@@ -32,7 +37,8 @@
                     <xsl:with-param name="document" select="."/>
                 </xsl:call-template>
                 <s:name>
-                    <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
+                    <xsl:value-of
+                            select="(tokenize(document-uri(/),'/'))[last()]"/>
                 </s:name>
                 <s:title>
                     <xsl:value-of select="./@full-name"/>
@@ -53,7 +59,8 @@
                     <xsl:with-param name="document" select="."/>
                 </xsl:call-template>
                 <s:name>
-                    <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
+                    <xsl:value-of
+                            select="(tokenize(document-uri(/),'/'))[last()]"/>
                 </s:name>
                 <s:title>
                     <xsl:value-of select="./@full-name"/>
@@ -74,7 +81,8 @@
                     <xsl:with-param name="document" select="."/>
                 </xsl:call-template>
                 <s:name>
-                    <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
+                    <xsl:value-of
+                            select="(tokenize(document-uri(/),'/'))[last()]"/>
                 </s:name>
                 <s:title>
                     <xsl:value-of select="./@full-name"/>
@@ -98,7 +106,8 @@
                     <xsl:with-param name="document" select="."/>
                 </xsl:call-template>
                 <s:name>
-                    <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
+                    <xsl:value-of
+                            select="(tokenize(document-uri(/),'/'))[last()]"/>
                 </s:name>
                 <s:title>
                     <xsl:value-of select="./@full-name"/>
@@ -119,7 +128,8 @@
                     <xsl:with-param name="document" select="."/>
                 </xsl:call-template>
                 <s:name>
-                    <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
+                    <xsl:value-of
+                            select="(tokenize(document-uri(/),'/'))[last()]"/>
                 </s:name>
                 <s:title>
                     <xsl:apply-templates select="./s:meta/s:title/node()"/>
@@ -154,7 +164,8 @@
                     <xsl:with-param name="document" select="."/>
                 </xsl:call-template>
                 <s:name>
-                    <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
+                    <xsl:value-of
+                            select="(tokenize(document-uri(/),'/'))[last()]"/>
                 </s:name>
                 <s:title>
                     <xsl:apply-templates select="./s:meta/s:title/node()"/>
@@ -185,7 +196,8 @@
     </xsl:template>
     <xsl:template match="s:layout.config">
         <!-- TODO HTML preemble is missing. -->
-        <xsl:variable name="last-element-length" select="string-length(tokenize(./s:path/text(), '/')[last()])"/>
+        <xsl:variable name="last-element-length"
+                      select="string-length(tokenize(./s:path/text(), '/')[last()])"/>
         <xsl:variable name="folder"
                       select="substring(./s:path/text(), 1, (string-length(./s:path/text()) - $last-element-length))"/>
         <xsl:variable name="column_1">
@@ -208,7 +220,8 @@
                 <s:chapter>
                     <s:title>Description</s:title>
                     <s:paragraph>
-                        <xsl:apply-templates select="./s:content/s:meta/s:description/node()"/>
+                        <xsl:apply-templates
+                                select="./s:content/s:meta/s:description/node()"/>
                     </s:paragraph>
                 </s:chapter>
             </xsl:if>
@@ -219,7 +232,8 @@
                 </s:chapter>
             </xsl:if>
             <xsl:if test="./s:content/s:meta/s:related_to">
-                <xsl:message select="concat('Deprecated tag: ./s:content/s:meta/s:related_to:', document-uri(/))"/>
+                <xsl:message
+                        select="concat('Deprecated tag: ./s:content/s:meta/s:related_to:', document-uri(/))"/>
             </xsl:if>
             <s:chapter>
                 <s:title>Local Path Context</s:title>
@@ -243,15 +257,18 @@
             <xsl:if test="./s:content/s:meta/rdf:RDF">
                 <s:chapter>
                     <s:title>Resources</s:title>
-                    <xsl:apply-templates select="./s:content/s:meta/rdf:RDF/node()"/>
+                    <xsl:apply-templates
+                            select="./s:content/s:meta/rdf:RDF/node()"/>
                 </s:chapter>
             </xsl:if>
         </xsl:variable>
         <html>
             <head>
-                <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8"/>
+                <meta http-equiv="Content-Type"
+                      content="application/xhtml+xml;charset=UTF-8"/>
                 <!-- Disable caching, so that CSS styling is reloading in webbrowsers on CSS updates automatically. -->
-                <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+                <meta http-equiv="Cache-Control"
+                      content="no-cache, no-store, must-revalidate"/>
                 <meta http-equiv="Pragma" content="no-cache"/>
                 <meta http-equiv="Expires" content="0"/>
                 <link rel="stylesheet" type="text/css"
@@ -260,15 +277,18 @@
             <body>
                 <main>
                     <article>
-                        <xsl:for-each select="./s:content/node()">
-                            <xsl:apply-templates select="."/>
-                        </xsl:for-each>
+                        <section>
+                            <xsl:for-each select="./s:content/node()">
+                                <xsl:apply-templates select="."/>
+                            </xsl:for-each>
+                        </section>
                     </article>
                 </main>
                 <xsl:if test="./s:redirect">
                     <xsl:variable name="redirect.target">
                         <xsl:call-template name="link.target">
-                            <xsl:with-param name="linkNode" select="./s:redirect"/>
+                            <xsl:with-param name="linkNode"
+                                            select="./s:redirect"/>
                         </xsl:call-template>
                     </xsl:variable>
                     <xsl:element name="script">
@@ -282,7 +302,8 @@
                 <xsl:if test="./s:republication">
                     <xsl:variable name="redirect.target">
                         <xsl:call-template name="link.target">
-                            <xsl:with-param name="linkNode" select="./s:republication"/>
+                            <xsl:with-param name="linkNode"
+                                            select="./s:republication"/>
                         </xsl:call-template>
                     </xsl:variable>
                     <xsl:element name="script">
@@ -293,7 +314,8 @@
                                 select="concat('window.location.href=', $apostroph, $redirect.target, $apostroph)"/>
                     </xsl:element>
                 </xsl:if>
-                <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+                <script id="MathJax-script"
+                        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
                 <script type="text/x-mathjax-config">
                     MathJax = {
                     tex: {
