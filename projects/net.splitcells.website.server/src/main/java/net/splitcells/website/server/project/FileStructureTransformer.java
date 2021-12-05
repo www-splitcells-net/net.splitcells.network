@@ -74,9 +74,11 @@ public class FileStructureTransformer {
     }
 
     /**
+     * TODO Create an option, to enable or disable this, for better performance.
+     *
      * Creates a new XslTransformer, so that the XSL-files are reloaded
      * during each rendering.
-     * 
+     *
      * @return
      */
     private XslTransformer transformer() {
