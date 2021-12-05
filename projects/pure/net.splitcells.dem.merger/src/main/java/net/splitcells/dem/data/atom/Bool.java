@@ -14,6 +14,9 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.object.DeepCloneable;
 
+/**
+ * This is a boolean interface.
+ */
 public interface Bool extends DeepCloneable {
 
     @JavaLegacyArtifact

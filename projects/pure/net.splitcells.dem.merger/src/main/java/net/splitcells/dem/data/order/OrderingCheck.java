@@ -11,9 +11,9 @@
 package net.splitcells.dem.data.order;
 
 /**
+ * Provides functions in order to check the ordering of {@link this} and an
+ * other values.
  * `{@link Object#equals}` is part of the interface implicitly.
- * 
- * RENAME
  * 
  * @author splitcells
  *

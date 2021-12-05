@@ -11,7 +11,7 @@
 package net.splitcells.dem.lang.annotations;
 
 /**
- * Marks methods that are only present for Java compatibility.
+ * Marks things that are only present for Java compatibility.
  */
 public @interface JavaLegacyArtifact {
 

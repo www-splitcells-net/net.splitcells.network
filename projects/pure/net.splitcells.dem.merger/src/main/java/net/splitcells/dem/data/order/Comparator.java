@@ -17,6 +17,12 @@ import java.util.function.BiFunction;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+/**
+ * Provides an easy to understand for comparing 2 values,
+ * that is also type safe.
+ *
+ * @param <T>
+ */
 public interface Comparator<T> extends java.util.Comparator<T> {
 
     Comparator<Integer> ASCENDING_INTEGERS = comparator((a, b) -> {
@@ -85,6 +91,7 @@ public interface Comparator<T> extends java.util.Comparator<T> {
         }
     }
 
+    @JavaLegacyArtifact
     @Override
     default int compare(T a, T b) {
         final Ordering rBase = compareTo(a, b);

@@ -13,9 +13,9 @@ package net.splitcells.dem.data.order;
 import java.util.Optional;
 
 /**
- * TODO Is equal to https://en.wikipedia.org/wiki/Partially_ordered_set
+ * This interface represents a partially ordered set.
  *
- * @param <T>
+ * @param <T> Type Of Ordered Types
  * @author splitcells
  */
 @FunctionalInterface
@@ -38,7 +38,8 @@ public interface PartiallyOrdered<T> extends OrderingCheck<T> {
         if (!rBase.isPresent()) {
             return false;
         }
-        return rBase.get().equals(Ordering.LESSER_THAN) || rBase.get().equals(Ordering.EQUAL);
+        return rBase.get().equals(Ordering.LESSER_THAN)
+                || rBase.get().equals(Ordering.EQUAL);
     }
 
     @Override
@@ -49,21 +50,17 @@ public interface PartiallyOrdered<T> extends OrderingCheck<T> {
         }
         return rBase.get().equals(Ordering.GREATER_THAN);
     }
-	
+
     @Override
     default boolean greaterThanOrEqual(T other) {
         var rBase = compare_partially_to(other);
         if (!rBase.isPresent()) {
             return false;
         }
-        return rBase.get().equals(Ordering.GREATER_THAN) || rBase.get().equals(Ordering.EQUAL);
+        return rBase.get().equals(Ordering.GREATER_THAN)
+                || rBase.get().equals(Ordering.EQUAL);
     }
 
-    /**
-     * RENAME
-     *
-     * @return
-     */
     default boolean equalz(T other) {
         var rBase = compare_partially_to(other);
         if (!rBase.isPresent()) {

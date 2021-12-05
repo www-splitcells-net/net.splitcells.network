@@ -10,13 +10,16 @@
  */
 package net.splitcells.dem.data.order;
 
+import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import static net.splitcells.dem.data.atom.Bools.bool;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
- * natural order is ascending (from lower to higher)
- * <p>
- * TODO Helper Method in order to generate instances of this interface via
- * lambdas.
+ * The natural (default) order is ascending (from lower to higher).
+ * One of the default methods have to be implemented. If this is not done,
+ * this will cause an Exception because of an infinite recursion.
  *
  * @param <T>
  */
@@ -26,12 +29,10 @@ public interface Ordered<T> extends Comparable<T>, OrderingCheck<T> {
 	}
 
 	/**
-	 * TODO check if compare_to is implemented for subclass (i.e. interfaces) of T.
+	 * TODO Test if {@link #compare_to} is implemented for subclass of T.
 	 * 
-	 * One of the default methods have to be implemented. If this is not done this
-	 * will cause an Exception because of an infinite recursion.
-	 * 
-	 * The relation of arg to this: this is <EQUAL|LESSER_THAN|GREATER_THANT> arg.
+	 * The relation of {@param arg} to {@link this}:
+	 * this is <EQUAL|LESSER_THAN|GREATER_THANT> to arg.
 	 * Default order is ascending.
 	 */
 	default Ordering compare_to(T arg) {
@@ -42,11 +43,14 @@ public interface Ordered<T> extends Comparable<T>, OrderingCheck<T> {
 		} else if (rBase < 0) {
 			return Ordering.LESSER_THAN;
 		} else {
-			assert rBase > 0;
+			if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+				assertThat(rBase).isGreaterThan(0);
+			}
 			return Ordering.GREATER_THAN;
 		}
 	}
 
+	@JavaLegacyArtifact
 	@Override
 	default int compareTo(T arg) {
 		final Ordering rBase = compare_to(arg);

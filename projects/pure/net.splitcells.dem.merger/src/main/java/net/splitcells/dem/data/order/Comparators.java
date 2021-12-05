@@ -10,8 +10,16 @@
  */
 package net.splitcells.dem.data.order;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.util.function.BiFunction;
 
+/**
+ * Provides a wrapper for {@link java.util.Comparator} instances.
+ *
+ * @param <T>
+ */
+@JavaLegacyArtifact
 public class Comparators<T> implements Comparator<T> {
 	
 	public static <T> Comparators<T> comparator(BiFunction<T, T, Integer> comparator) {
