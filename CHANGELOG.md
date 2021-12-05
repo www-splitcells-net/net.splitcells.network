@@ -20,6 +20,11 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-12-05**: **#\148** [Fix local path context for XML files](https://github.com/www-splitcells-net/net.splitcells.network/issues/148):
+  Remove choice Documents from custom XML format.
+  A choice elements can be wrapped with an article element in order to get
+  the same result,
+  but with metadata support.
 * **2021-12-04**:
   1. **\#138**: Replace `net.splitcells.dem.environment.config.StaticFlags.PROFILING_RUNTIME`
      with `PROFILING_METHOD_STATISTICS`.
@@ -117,6 +122,8 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-12-05**: **#\148** [Fix local path context for XML files](https://github.com/www-splitcells-net/net.splitcells.network/issues/148):
+  Add path information to XML documents during website rendering.
 * **2021-11-29**:
    1. **\#138** Create `test.capabilities` and `test.integration` in order to
       execute tests, that require relatively long time for execution.
