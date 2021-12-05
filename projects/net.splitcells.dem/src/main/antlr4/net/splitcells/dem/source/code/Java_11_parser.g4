@@ -92,8 +92,10 @@ class_member_value_declaration
     ;
 expression
     : Whitespace? integer
-    | Brace_round_open type_declaration Brace_round_closed expression
+    | Whitespace? Brace_round_open Whitespace? type_declaration Whitespace?
+    	Brace_round_closed Whitespace? expression
     	/* Only upcasting should be done. */
+    | Brace_round_open Whitespace? expression Whitespace? Brace_round_closed
     | string Whitespace? access?
     | expression Whitespace operator Whitespace expression
     | prefix_operator expression
