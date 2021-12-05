@@ -112,41 +112,6 @@
         </xsl:variable>
         <xsl:apply-templates select="$layout.config"/>
     </xsl:template>
-    <xsl:template match="/s:choice">
-        <xsl:variable name="layout.config">
-            <s:layout.config>
-                <xsl:call-template name="s:path-of">
-                    <xsl:with-param name="document" select="."/>
-                </xsl:call-template>
-                <s:name>
-                    <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
-                </s:name>
-                <s:title>
-                    <xsl:apply-templates select="./s:meta/s:title/node()"/>
-                </s:title>
-                <s:license>
-                    <xsl:copy-of select="./s:meta/s:license/node()"/>
-                </s:license>
-                <s:publication_date>
-                    <xsl:value-of select="./s:meta/s:publication_date"/>
-                </s:publication_date>
-                <xsl:if test="./s:meta/s:redirect">
-                    <s:redirect>
-                        <xsl:copy-of select="./s:meta/s:redirect/node()"/>
-                    </s:redirect>
-                </xsl:if>
-                <xsl:if test="./s:meta/s:republication">
-                    <s:republication>
-                        <xsl:copy-of select="./s:meta/s:republication/node()"/>
-                    </s:republication>
-                </xsl:if>
-                <s:content>
-                    <xsl:copy-of select="./s:option"/>
-                </s:content>
-            </s:layout.config>
-        </xsl:variable>
-        <xsl:apply-templates select="$layout.config"/>
-    </xsl:template>
     <xsl:template match="/s:article">
         <xsl:variable name="layout.config">
             <s:layout.config>
