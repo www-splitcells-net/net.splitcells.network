@@ -278,9 +278,17 @@
                 <main>
                     <article>
                         <section>
+                            <h1>TODO Article Title</h1>
                             <xsl:for-each select="./s:content/node()">
                                 <xsl:apply-templates select="."/>
                             </xsl:for-each>
+                        </section>
+                        <section>
+                            <h1>Local Path Context</h1>
+                            <xsl:call-template name="file-path-environment">
+                                <xsl:with-param name="path"
+                                                select="./s:path/node()"/>
+                            </xsl:call-template>
                         </section>
                     </article>
                 </main>
