@@ -30,10 +30,11 @@ import static net.splitcells.dem.utils.CommonFunctions.appendToFile;
 public class FileStructureTransformer {
 
     private final Path fileStructureRoot;
-    private final XslTransformer transformer;
     private final Path loggingProject = Paths.path(System.getProperty("user.home")
             + "/connections/tmp.storage/net.splitcells.dem");
     private final Validator validator;
+    private final Path xslLibs;
+    private final String transformerXsl;
 
     /* TODO REMOVE by 2022
     @Deprecated
@@ -51,14 +52,9 @@ public class FileStructureTransformer {
 
     public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, Validator validator) {
         this.fileStructureRoot = fileStructureRoot;
-        try {
-            transformer = new XslTransformer
-                    (newInputStream(xslLibs.resolve(transformerXsl)), new PathBasedUriResolver(xslLibs));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
         this.validator = validator;
+        this.xslLibs = xslLibs;
+        this.transformerXsl = transformerXsl;
     }
 
     public String transform(List<String> path) {
@@ -66,6 +62,7 @@ public class FileStructureTransformer {
     }
 
     public String transform(Path file) {
+
         validator.validate(file).ifPresent(error -> {
             final var loggingFolder = loggingProject.resolve("src/main/txt")
                     .resolve(fileStructureRoot.relativize(file).getParent());
@@ -73,10 +70,26 @@ public class FileStructureTransformer {
             appendToFile(loggingFolder.resolve(file.getFileName() + ".errors.txt"), error);
             domsole().append(perspective(error, STRING), LogLevel.ERROR);
         });
-        return new String(transformer.transform(file));
+        return new String(transformer().transform(file));
+    }
+
+    /**
+     * Creates a new XslTransformer, so that the XSL-files are reloaded
+     * during each rendering.
+     * 
+     * @return
+     */
+    private XslTransformer transformer() {
+        try {
+            return new XslTransformer
+                    (newInputStream(xslLibs.resolve(transformerXsl)), new PathBasedUriResolver(xslLibs));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     public String transform(String content) {
-        return transformer.transform(content);
+        return transformer().transform(content);
     }
 }
