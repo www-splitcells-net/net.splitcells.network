@@ -38,7 +38,9 @@ public interface Ordered<T> extends Comparable<T>, OrderingCheck<T> {
 	default Ordering compare_to(T arg) {
 		final int rBase = compareTo(arg);
 		if (rBase == 0) {
-			bool(equals(arg)).required();
+			if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+				assertThat(equals(arg)).isTrue();
+			}
 			return Ordering.EQUAL;
 		} else if (rBase < 0) {
 			return Ordering.LESSER_THAN;
