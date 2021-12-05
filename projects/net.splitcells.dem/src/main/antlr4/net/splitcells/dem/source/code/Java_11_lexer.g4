@@ -35,6 +35,7 @@ Keyword_catch: 'catch';
 Keyword_default: 'default';
 Keyword_else: 'else';
 Keyword_else_if: 'else if';
+Keyword_enum: 'enum';
 Keyword_extends: 'extends';
 Keyword_instanceof: 'instanceof';
 Keyword_finally: 'finally';

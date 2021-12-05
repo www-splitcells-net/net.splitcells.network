@@ -90,6 +90,19 @@ class_member_value_declaration
     | Whitespace? javadoc? modifier_visibility? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
               type_declaration? Whitespace? name Whitespace? Semicolon
     ;
+enum_definition
+	/* TODO Create own enum grammar destinct from class. */
+    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_enum
+    	Whitespace? name
+        Whitespace? Brace_curly_open enum_values Whitespace? class_member*
+        Whitespace? Brace_curly_closed
+    ;
+enum_values
+	: Whitespace? name enum_values_next Semicolon
+	;
+enum_values_next
+    : Whitespace? Comma Whitespace? name enum_values_next?
+    ;
 expression
     : Whitespace? integer
     | Whitespace? Brace_round_open Whitespace? type_declaration Whitespace?
@@ -232,9 +245,13 @@ source_unit
     : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition Whitespace?
     	EOF
     | license_declaration Whitespace? package_declaration import_declaration* Whitespace? interface_definition
+        Whitespace? EOF
+    | license_declaration Whitespace? package_declaration import_declaration* Whitespace? interface_definition
     	Whitespace? EOF
     | license_declaration Whitespace? package_declaration import_declaration* Whitespace? annotation_definition
-        	Whitespace? EOF
+        Whitespace? EOF
+    | license_declaration Whitespace? package_declaration import_declaration* Whitespace? enum_definition Whitespace?
+            	EOF
     ;
 string
 	: Quote string_content Quote
