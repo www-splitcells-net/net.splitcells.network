@@ -15,6 +15,8 @@ import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
@@ -52,20 +54,21 @@ public class HistoryTest {
     public void test_reset_to_middle() {
         final var solution = defineProblem()
                 .withDemandAttributes()
-                .withDemands
-                        (list(list(), list()))
+                .withDemands(list(list()
+                        , list()
+                        , list()
+                        , list()))
                 .withSupplyAttributes()
-                .withSupplies
-                        (list(list(), list()))
+                .withSupplies(list(list()
+                        , list()
+                        , list()
+                        , list()))
                 .withConstraint(Then.then(constantRater(cost(7))))
                 .toProblem().asSolution();
-        solution.allocate
-                (solution.demands().getRawLine(0)
-                        , solution.supplies().getRawLine(0));
-        solution.allocate
-                (solution.demands().getRawLine(1)
-                        , solution.supplies().getRawLine(1));
-        assertThat(solution.history().size()).isEqualTo(2);
+        IntStream.rangeClosed(1, 4).forEach(i -> solution.allocate
+                (solution.demands().getLines(0)
+                        , solution.supplies().getLines(0)));
+        assertThat(solution.history().size()).isEqualTo(4);
         solution.history().resetTo(0);
         assertThat(solution.history().size()).isEqualTo(1);
     }

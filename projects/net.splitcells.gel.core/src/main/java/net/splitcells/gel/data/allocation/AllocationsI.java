@@ -98,19 +98,19 @@ public class AllocationsI implements Allocations {
             supply.subscribeToAfterAdditions(i -> {
                 supplies_free.add(i);
             });
-            supply.subscriberToBeforeRemoval(noņemšanaNo -> {
-                if (usedSupplyIndexes_to_allocationIndexes.containsKey(noņemšanaNo.index())) {
+            supply.subscriberToBeforeRemoval(removalOf -> {
+                if (usedSupplyIndexes_to_allocationIndexes.containsKey(removalOf.index())) {
                     listWithValuesOf
-                            (usedSupplyIndexes_to_allocationIndexes.get(noņemšanaNo.index()))
-                            .forEach(piešķiršanas_no_piedāvāijumu
-                                    -> remove(allocations.rawLinesView().get(piešķiršanas_no_piedāvāijumu)));
+                            (usedSupplyIndexes_to_allocationIndexes.get(removalOf.index()))
+                            .forEach(allocationsOfSupply
+                                    -> remove(allocations.rawLinesView().get(allocationsOfSupply)));
                 }
-                if (supplies_free.contains(noņemšanaNo)) {
-                    supplies_free.remove(noņemšanaNo);
+                if (supplies_free.contains(removalOf)) {
+                    supplies_free.remove(removalOf);
                 }
                 // TODO FIX Does something needs to be done if the condition is false.
-                if (supplies_used.contains(noņemšanaNo)) {
-                    supplies_used.remove(noņemšanaNo);
+                if (supplies_used.contains(removalOf)) {
+                    supplies_used.remove(removalOf);
                 }
             });
         }
