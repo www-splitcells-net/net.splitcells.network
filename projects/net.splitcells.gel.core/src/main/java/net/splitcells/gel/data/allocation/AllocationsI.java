@@ -79,7 +79,7 @@ public class AllocationsI implements Allocations {
                 if (usedDemandIndexes_to_allocationIndexes.containsKey(removalOf.index())) {
                     listWithValuesOf(
                             usedDemandIndexes_to_allocationIndexes.get(removalOf.index()))
-                            .forEach(allocation_of_demand -> remove(allocations.rawLinesView().get(allocation_of_demand)));
+                            .forEach(allocationOfDemand -> remove(allocations.rawLinesView().get(allocationOfDemand)));
                 }
                 if (demands_free.contains(removalOf)) {
                     demands_free.remove(removalOf);
