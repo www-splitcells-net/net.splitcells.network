@@ -133,13 +133,9 @@ public class HistoryI implements History {
                 .value(ALLOCATION_EVENT);
         final var eventType = eventToRemove.type();
         if (eventType.equals(ADDITION)) {
-            final var allocation = solution.allocationsOf
-                    (eventToRemove.demand().toLinePointer().interpret(solution.demands()).get()
-                            , eventToRemove.supply().toLinePointer().interpret(solution.supplies()).get());
-            if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-                assertThat(allocation).hasSize(1);
-            }
-            allocation.forEach(e -> solution.remove(e));
+            solution.remove(solution.allocationOf
+                    (eventToRemove.demand().toLinePointer()
+                            , eventToRemove.supply().toLinePointer()));
         } else if (eventType.equals(REMOVAL)) {
             solution.allocate
                     (eventToRemove.demand().toLinePointer().interpret(solution.demands()).get()

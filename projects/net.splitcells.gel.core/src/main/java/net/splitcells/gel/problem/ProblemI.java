@@ -10,6 +10,7 @@
  */
 package net.splitcells.gel.problem;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -126,7 +127,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public java.util.Set<Line> allocationsOf(final Line demand, final Line supply) {
+    public Set<Line> allocationsOf(final Line demand, final Line supply) {
         return this.allocations.allocationsOf(demand, supply);
     }
 

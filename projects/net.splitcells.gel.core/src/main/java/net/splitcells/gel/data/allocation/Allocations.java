@@ -10,13 +10,15 @@
  */
 package net.splitcells.gel.data.allocation;
 
-import static java.util.stream.Collectors.toSet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 
-import java.util.Set;
-
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.table.LinePointer;
 
 /**
  * TODO Create usage table and use this instead of loosely coupled tables.
@@ -31,6 +33,16 @@ public interface Allocations extends Database, AllocationsLiveView {
         return allocationsOfDemand(demand)
                 .stream()
                 .filter(allocationsOf::contains)
-                .collect(toSet());
+                .collect(toSetOfUniques());
+    }
+
+    default Line allocationOf(LinePointer demand, LinePointer supply) {
+        final var candidates = allocationsOf
+                (demand.interpret(demands()).get()
+                        , supply.interpret(supplies()).get());
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            candidates.assertSizeIs(1);
+        }
+        return candidates.iterator().next();
     }
 }

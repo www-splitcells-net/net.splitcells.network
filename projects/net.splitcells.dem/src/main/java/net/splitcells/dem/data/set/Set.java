@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public interface Set<T> extends java.util.Set<T> {
 
@@ -77,5 +78,9 @@ public interface Set<T> extends java.util.Set<T> {
                 .filter(e -> e.equals(arg))
                 .count();
         return Bools.bool(argCount <= 1);
+    }
+
+    default void assertSizeIs(int expectedSize) {
+        assertThat(this).hasSize(expectedSize);
     }
 }
