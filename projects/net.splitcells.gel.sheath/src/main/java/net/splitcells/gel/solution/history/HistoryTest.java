@@ -69,8 +69,8 @@ public class HistoryTest {
                 (solution.demands().getRawLine(i)
                         , solution.supplies().getRawLine(i)));
         assertThat(solution.history().size()).isEqualTo(4);
-        solution.history().resetTo(0);
-        assertThat(solution.history().size()).isEqualTo(1);
+        solution.history().resetTo(2);
+        assertThat(solution.history().size()).isEqualTo(3);
     }
 
     @Tag(INTEGRATION_TEST)
