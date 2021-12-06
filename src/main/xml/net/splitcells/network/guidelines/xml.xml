@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>XML Guidelines</title>
+    </meta>
+    <chapter>
+        <title>XML Formatting</title>
+        <paragraph>If a line of an XML document does not represent flowing
+            text, there is no limit on the line length.
+            Otherwise, a maximum length of 80 characters is preferred.
+        </paragraph>
+    </chapter>
+</article>
