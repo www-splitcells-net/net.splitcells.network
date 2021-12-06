@@ -27,6 +27,7 @@ import static org.assertj.core.api.Assertions.not;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.table.column.Column;
@@ -135,7 +136,9 @@ public class HistoryI implements History {
             final var allocation = solution.allocationsOf
                     (eventToRemove.demand().toLinePointer().interpret(solution.demands()).get()
                             , eventToRemove.supply().toLinePointer().interpret(solution.supplies()).get());
-            assertThat(allocation).hasSize(1);
+            if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+                assertThat(allocation).hasSize(1);
+            }
             allocation.forEach(e -> solution.remove(e));
         } else if (eventType.equals(REMOVAL)) {
             solution.allocate
