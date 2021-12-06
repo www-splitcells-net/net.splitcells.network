@@ -37,7 +37,6 @@ import net.splitcells.gel.data.table.column.ColumnView;
 import org.w3c.dom.Element;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.database.DatabaseI;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 
 public class AllocationsI implements Allocations {
@@ -63,7 +62,7 @@ public class AllocationsI implements Allocations {
     protected final Map<Integer, Set<Integer>> usedSupplyIndexes_to_allocationIndexes = map();
 
     protected final Map<Integer, Set<Integer>> usedDemandsIndex_to_usedSuppliesIndex = map();
-    protected final Map<Integer, Set<Integer>> usedSupplyIndex_to_usedDeamndsIndex = map();
+    protected final Map<Integer, Set<Integer>> usedSupplyIndex_to_usedDemandsIndex = map();
 
     @Deprecated
     protected AllocationsI(String name, Database demand, Database supply) {
@@ -182,10 +181,10 @@ public class AllocationsI implements Allocations {
                 usedDemandsIndex_to_usedSuppliesIndex.get(demand.index()).add(supply.index());
             }
             {
-                if (!usedSupplyIndex_to_usedDeamndsIndex.containsKey(supply.index())) {
-                    usedSupplyIndex_to_usedDeamndsIndex.put(supply.index(), setOfUniques());
+                if (!usedSupplyIndex_to_usedDemandsIndex.containsKey(supply.index())) {
+                    usedSupplyIndex_to_usedDemandsIndex.put(supply.index(), setOfUniques());
                 }
-                usedSupplyIndex_to_usedDeamndsIndex.get(supply.index()).add(demand.index());
+                usedSupplyIndex_to_usedDemandsIndex.get(supply.index()).add(demand.index());
             }
         }
         additionSubscriptions.forEach(listener -> listener.register_addition(allocation));
@@ -231,9 +230,9 @@ public class AllocationsI implements Allocations {
                 if (usedDemandsIndex_to_usedSuppliesIndex.get(demand.index()).isEmpty()) {
                     usedDemandsIndex_to_usedSuppliesIndex.remove(demand.index());
                 }
-                usedSupplyIndex_to_usedDeamndsIndex.get(supply.index()).remove(demand.index());
-                if (usedSupplyIndex_to_usedDeamndsIndex.get(supply.index()).isEmpty()) {
-                    usedSupplyIndex_to_usedDeamndsIndex.remove(supply.index());
+                usedSupplyIndex_to_usedDemandsIndex.get(supply.index()).remove(demand.index());
+                if (usedSupplyIndex_to_usedDemandsIndex.get(supply.index()).isEmpty()) {
+                    usedSupplyIndex_to_usedDemandsIndex.remove(supply.index());
                 }
             }
             {
@@ -253,7 +252,7 @@ public class AllocationsI implements Allocations {
             demands_used.remove(demand);
             demands_free.add(demand);
         }
-        if (!usedSupplyIndex_to_usedDeamndsIndex.containsKey(supply.index())) {
+        if (!usedSupplyIndex_to_usedDemandsIndex.containsKey(supply.index())) {
             supplies_used.remove(supply);
             supplies_free.add(supply);
         }
