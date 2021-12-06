@@ -155,13 +155,13 @@ public class HistoryI implements History {
         removal_(columnView(ALLOCATION_ID).lookup(index).getLines(0));
     }
 
-    protected void removal_(Line rinda) {
-        allocations.remove(rinda);
+    protected void removal_(Line line) {
+        allocations.remove(line);
         --lastEventId;
     }
 
     @Override
-    public void remove(Line rinda) {
+    public void remove(Line line) {
         throw notImplementedYet();
     }
 
@@ -176,26 +176,26 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void subscriberToAfterRemoval(BeforeRemovalSubscriber pirmsNoņemšanasKlausītājs) {
-        allocations.subscriberToAfterRemoval(pirmsNoņemšanasKlausītājs);
+    public void subscriberToAfterRemoval(BeforeRemovalSubscriber beforeRemovalSubscriber) {
+        allocations.subscriberToAfterRemoval(beforeRemovalSubscriber);
     }
 
     @Override
-    public Line addTranslated(List<?> vertības) {
+    public Line addTranslated(List<?> values) {
         throw notImplementedYet();
     }
 
     @Override
-    public Line add(Line rinda) {
+    public Line add(Line line) {
         throw notImplementedYet();
     }
 
     @Override
-    public void remove(int indekss) {
-        if (size() != indekss + 1) {
+    public void remove(int indexes) {
+        if (size() != indexes + 1) {
             throw notImplementedYet();
         }
-        allocations.remove(rawLinesView().get(indekss));
+        allocations.remove(rawLinesView().get(indexes));
     }
 
     @Override
@@ -204,7 +204,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line allocate(Line prasība, Line piedāvājums) {
+    public Line allocate(Line demand, Line supply) {
         throw notImplementedYet();
     }
 
@@ -249,13 +249,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Set<Line> allocationsOfSupply(Line piedāvājums) {
-        return allocations.allocationsOfSupply(piedāvājums);
+    public Set<Line> allocationsOfSupply(Line supply) {
+        return allocations.allocationsOfSupply(supply);
     }
 
     @Override
-    public Set<Line> allocationsOfDemand(Line prasība) {
-        return allocations.allocationsOfDemand(prasība);
+    public Set<Line> allocationsOfDemand(Line demand) {
+        return allocations.allocationsOfDemand(demand);
     }
 
     @Override
@@ -264,8 +264,8 @@ public class HistoryI implements History {
     }
 
     @Override
-    public <T> ColumnView<T> columnView(Attribute<T> atribūts) {
-        return allocations.columnView(atribūts);
+    public <T> ColumnView<T> columnView(Attribute<T> attribute) {
+        return allocations.columnView(attribute);
     }
 
     @Override
@@ -289,8 +289,8 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line lookupEquals(Attribute<Line> atribūts, Line cits) {
-        return allocations.lookupEquals(atribūts, cits);
+    public Line lookupEquals(Attribute<Line> attribute, Line other) {
+        return allocations.lookupEquals(attribute, other);
     }
 
     @Override
