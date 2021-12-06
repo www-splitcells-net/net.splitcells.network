@@ -321,12 +321,12 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Set<Line> allocationsOfDemand(Line demand) {
-        final Set<Line> allocations_of_demand = setOfUniques();
+        final Set<Line> allocationsOfDemand = setOfUniques();
         usedDemandIndexes_to_allocationIndexes
                 .get(demand.index())
                 .forEach(allocationIndex ->
-                        allocations_of_demand.add(allocations.rawLinesView().get(allocationIndex)));
-        return allocations_of_demand;
+                        allocationsOfDemand.add(allocations.rawLinesView().get(allocationIndex)));
+        return allocationsOfDemand;
     }
 
     @Override
