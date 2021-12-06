@@ -10,9 +10,11 @@
  */
 package net.splitcells.gel.problem.derived;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
@@ -28,7 +30,6 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.rating.framework.MetaRating;
 import org.w3c.dom.Node;
 
-import java.util.Set;
 import java.util.function.Function;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -125,6 +126,11 @@ public class DerivedSolution implements Solution {
     @Override
     public Line allocate(Line demand, Line supply) {
         return allocations.allocate(demand, supply);
+    }
+
+    @Override
+    public Line allocationOf(LinePointer demand, LinePointer supply) {
+        return allocations.allocationOf(demand, supply);
     }
 
     @Override

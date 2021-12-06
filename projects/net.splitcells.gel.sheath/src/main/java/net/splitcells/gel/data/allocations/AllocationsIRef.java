@@ -10,6 +10,7 @@
  */
 package net.splitcells.gel.data.allocations;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -18,8 +19,6 @@ import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.ColumnView;
-
-import java.util.Set;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;

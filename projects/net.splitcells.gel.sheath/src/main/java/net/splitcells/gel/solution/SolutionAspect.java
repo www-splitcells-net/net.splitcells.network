@@ -10,6 +10,7 @@
  */
 package net.splitcells.gel.solution;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.StaticFlags;
@@ -21,6 +22,7 @@ import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -32,7 +34,6 @@ import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import org.w3c.dom.Node;
 
-import java.util.Set;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -124,6 +125,11 @@ public class SolutionAspect implements Solution {
     @Override
     public Line allocate(Line demand, Line supply) {
         return solution.allocate(demand, supply);
+    }
+
+    @Override
+    public Line allocationOf(LinePointer demand, LinePointer supply) {
+        return solution.allocationOf(demand, supply);
     }
 
     @Override

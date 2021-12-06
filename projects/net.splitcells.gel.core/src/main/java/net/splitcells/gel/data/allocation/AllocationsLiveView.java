@@ -10,11 +10,11 @@
  */
 package net.splitcells.gel.data.allocation;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.database.Database;
 
-import java.util.Set;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 

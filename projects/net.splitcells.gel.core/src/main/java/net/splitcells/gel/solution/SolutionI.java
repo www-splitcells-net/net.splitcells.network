@@ -15,6 +15,7 @@ import net.splitcells.dem.utils.NotImplementedYet;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
+import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.table.Line;
@@ -133,7 +134,7 @@ public class SolutionI implements Solution {
     }
 
     @java.lang.SuppressWarnings("all")
-    public java.util.Set<Line> allocationsOfSupply(final Line supply) {
+    public Set<Line> allocationsOfSupply(final Line supply) {
         return this.problem.allocationsOfSupply(supply);
     }
 
@@ -142,13 +143,18 @@ public class SolutionI implements Solution {
         return this.problem.allocationsOf(demand, supply);
     }
 
+    @Override
+    public Line allocationOf(LinePointer demand, LinePointer supply) {
+        return this.problem.allocationOf(demand, supply);
+    }
+
     @java.lang.SuppressWarnings("all")
-    public java.util.Set<Line> allocationsOfDemand(final Line demand) {
+    public Set<Line> allocationsOfDemand(final Line demand) {
         return this.problem.allocationsOfDemand(demand);
     }
 
     @java.lang.SuppressWarnings("all")
-    public java.util.Set<Line> supply_of_demand(final Line demand) {
+    public Set<Line> supply_of_demand(final Line demand) {
         return this.problem.supply_of_demand(demand);
     }
 

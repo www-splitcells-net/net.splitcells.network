@@ -24,13 +24,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Map;
-import java.util.Set;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -325,6 +327,32 @@ public class AllocationsI implements Allocations {
                 .forEach(piešķiršanasIndekss ->
                         allocations_of_demand.add(allocations.rawLinesView().get(piešķiršanasIndekss)));
         return allocations_of_demand;
+    }
+
+    @Override
+    public Line allocationOf(LinePointer demand, LinePointer supply) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            usedDemandIndexes_to_allocationIndexes
+                    .get(demand.index())
+                    .assertSizeIs(1);
+            usedSupplyIndexes_to_allocationIndexes
+                    .get(supply.index())
+                    .assertSizeIs(1);
+            final var demandLine = usedDemandIndexes_to_allocationIndexes
+                    .get(demand.index())
+                    .iterator()
+                    .next();
+            final var supplyLine = usedSupplyIndexes_to_allocationIndexes
+                    .get(supply.index())
+                    .iterator()
+                    .next();
+            assertThat(demandLine).isEqualTo(supplyLine);
+        }
+        return allocations.getRawLine(
+                usedDemandIndexes_to_allocationIndexes
+                        .get(demand.index())
+                        .iterator()
+                        .next());
     }
 
     @Override

@@ -36,13 +36,5 @@ public interface Allocations extends Database, AllocationsLiveView {
                 .collect(toSetOfUniques());
     }
 
-    default Line allocationOf(LinePointer demand, LinePointer supply) {
-        final var candidates = allocationsOf
-                (demand.interpret(demands()).get()
-                        , supply.interpret(supplies()).get());
-        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            candidates.assertSizeIs(1);
-        }
-        return candidates.iterator().next();
-    }
+    Line allocationOf(LinePointer demand, LinePointer supply);
 }

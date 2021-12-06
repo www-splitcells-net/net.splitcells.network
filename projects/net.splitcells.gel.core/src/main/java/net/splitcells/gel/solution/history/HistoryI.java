@@ -24,11 +24,13 @@ import static net.splitcells.gel.solution.history.meta.type.CompleteRating.compl
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.not;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -42,8 +44,6 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import org.w3c.dom.Node;
-
-import java.util.Set;
 
 public class HistoryI implements History {
 
@@ -202,6 +202,11 @@ public class HistoryI implements History {
     @Override
     public Line allocate(Line demand, Line supply) {
         throw notImplementedYet();
+    }
+
+    @Override
+    public Line allocationOf(LinePointer demand, LinePointer supply) {
+        return this.allocations.allocationOf(demand, supply);
     }
 
     @Override

@@ -15,6 +15,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
@@ -122,7 +123,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public java.util.Set<Line> allocationsOfSupply(final Line supply) {
+    public Set<Line> allocationsOfSupply(final Line supply) {
         return this.allocations.allocationsOfSupply(supply);
     }
 
@@ -132,12 +133,17 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public java.util.Set<Line> allocationsOfDemand(final Line demand) {
+    public Line allocationOf(LinePointer demand, LinePointer supply) {
+        return allocations.allocationOf(demand, supply);
+    }
+
+    @Override
+    public Set<Line> allocationsOfDemand(final Line demand) {
         return this.allocations.allocationsOfDemand(demand);
     }
 
     @Override
-    public java.util.Set<Line> supply_of_demand(final Line demand) {
+    public Set<Line> supply_of_demand(final Line demand) {
         return this.allocations.supply_of_demand(demand);
     }
 
