@@ -36,11 +36,6 @@ public class Databases extends ResourceI<DatabaseFactory> {
         return environment().config().configValue(Databases.class).database(attributes, linesValues);
     }
 
-    @Deprecated
-    public static Database database(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
-        return environment().config().configValue(Databases.class).database(name, parent, attributes);
-    }
-
     public static Database database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
         return environment().config().configValue(Databases.class).database(name, parent, attributes);
     }

@@ -19,7 +19,6 @@ import static net.splitcells.dem.data.set.list.Lists.concat;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.database.Databases.database2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

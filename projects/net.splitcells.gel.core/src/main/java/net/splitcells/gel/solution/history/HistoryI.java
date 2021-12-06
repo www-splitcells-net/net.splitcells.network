@@ -57,11 +57,11 @@ public class HistoryI implements History {
                         , Databases.database
                                 (EVENT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
-                                        , ALLOCATION_ID, ALLOCATION_EVENT)
+                                        , list(ALLOCATION_ID, ALLOCATION_EVENT))
                         , Databases.database
                                 (RESULT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
-                                        , META_DATA));
+                                        , list(META_DATA)));
         this.solution = solution;
         solution.subscribeToAfterAdditions(this);
         solution.subscriberToBeforeRemoval(this);

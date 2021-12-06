@@ -69,7 +69,7 @@ public abstract class ConstraintAI implements Constraint {
     protected Optional<Discoverable> mainContext = Optional.empty();
     private final List<Discoverable> contexts = list();
     protected final Database lines;
-    protected final Database results = Databases.database("results", this, RESULTING_CONSTRAINT_GROUP, RATING, PROPAGATION_TO);
+    protected final Database results = Databases.database("results", this, list(RESULTING_CONSTRAINT_GROUP, RATING, PROPAGATION_TO));
     protected final Allocations lineProcessing;
     protected final Map<GroupId, Rating> groupProcessing = map();
 
@@ -79,7 +79,7 @@ public abstract class ConstraintAI implements Constraint {
 
     protected ConstraintAI(GroupId injectionGroup, String name) {
         this.injectionGroup = injectionGroup;
-        lines = Databases.database(name + ".lines", this, LINE, INCOMING_CONSTRAINT_GROUP);
+        lines = Databases.database(name + ".lines", this, list(LINE, INCOMING_CONSTRAINT_GROUP));
         lineProcessing = allocations("linesProcessing", lines, results);
         lineProcessing.subscribeToAfterAdditions(ConstraintAI::propagateAddition);
         lineProcessing.subscriberToBeforeRemoval(ConstraintAI::propagateRemoval);
