@@ -65,9 +65,9 @@ public class HistoryTest {
                         , list()))
                 .withConstraint(Then.then(constantRater(cost(7))))
                 .toProblem().asSolution();
-        IntStream.rangeClosed(1, 4).forEach(i -> solution.allocate
-                (solution.demands().getLines(0)
-                        , solution.supplies().getLines(0)));
+        IntStream.rangeClosed(0, 3).forEach(i -> solution.allocate
+                (solution.demands().getRawLine(i)
+                        , solution.supplies().getRawLine(i)));
         assertThat(solution.history().size()).isEqualTo(4);
         solution.history().resetTo(0);
         assertThat(solution.history().size()).isEqualTo(1);
