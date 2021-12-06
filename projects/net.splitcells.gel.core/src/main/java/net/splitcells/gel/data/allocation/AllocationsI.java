@@ -307,16 +307,16 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Set<Line> allocationsOfSupply(Line supply) {
-        final Set<Line> piešķiršanas_no_piedāvājuma = setOfUniques();
+        final Set<Line> allocationsOfSupply = setOfUniques();
         try {
             usedSupplyIndexes_to_allocationIndexes
                     .get(supply.index())
-                    .forEach(piešķiršanasIndekss ->
-                            piešķiršanas_no_piedāvājuma.add(allocations.rawLinesView().get(piešķiršanasIndekss)));
+                    .forEach(allocationIndex ->
+                            allocationsOfSupply.add(allocations.rawLinesView().get(allocationIndex)));
         } catch (RuntimeException e) {
             throw e;
         }
-        return piešķiršanas_no_piedāvājuma;
+        return allocationsOfSupply;
     }
 
     @Override
@@ -324,8 +324,8 @@ public class AllocationsI implements Allocations {
         final Set<Line> allocations_of_demand = setOfUniques();
         usedDemandIndexes_to_allocationIndexes
                 .get(demand.index())
-                .forEach(piešķiršanasIndekss ->
-                        allocations_of_demand.add(allocations.rawLinesView().get(piešķiršanasIndekss)));
+                .forEach(allocationIndex ->
+                        allocations_of_demand.add(allocations.rawLinesView().get(allocationIndex)));
         return allocations_of_demand;
     }
 
