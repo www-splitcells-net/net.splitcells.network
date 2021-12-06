@@ -15,7 +15,15 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 
 /**
- * TODO Line index randomizer in order to test index calculations.
+ * <p>TODO Line index randomizer in order to test index calculations.</p>
+ * <p>TODO IDEA PERFORMANCE A database should be implementable with a byte matrix as backend.
+ * Such a backend should support complex and dynamic types by using some
+ * columns as index storages.
+ * These indexes would point to a complex or dynamic object
+ * in an appropriate additional storage.
+ * In order to make this possible with a good performance the interface
+ * needs to support primitive types without casting.
+ * </p>>
  */
 public interface Database extends Table {
 
