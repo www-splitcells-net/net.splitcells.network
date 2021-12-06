@@ -88,7 +88,7 @@ public class HistoryTest {
             assertThat(solution.history().size()).isEqualTo(1);
             final var additionEvent = solution.history().getRawLine(0);
             final var additionOperation = additionEvent.value(ALLOCATION_EVENT);
-            assertThat(additionOperation.tips()).isEqualTo(ADDITION);
+            assertThat(additionOperation.type()).isEqualTo(ADDITION);
             assertThat(additionOperation.demand()).isEqualTo(solution.demands().getRawLine(0));
             assertThat(additionOperation.supply()).isEqualTo(solution.supplies().getRawLine(0));
         }
@@ -98,7 +98,7 @@ public class HistoryTest {
             assertThat(solution.history().size()).isEqualTo(2);
             final var removalEvent = solution.history().getRawLine(1);
             final var removalOperation = removalEvent.value(ALLOCATION_EVENT);
-            assertThat(removalOperation.tips()).isEqualTo(REMOVAL);
+            assertThat(removalOperation.type()).isEqualTo(REMOVAL);
             assertThat(removalOperation.demand()).isEqualTo(solution.demands().getRawLine(0));
             assertThat(removalOperation.supply()).isEqualTo(solution.supplies().getRawLine(0));
         }

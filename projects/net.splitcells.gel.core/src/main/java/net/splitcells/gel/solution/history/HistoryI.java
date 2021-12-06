@@ -130,7 +130,7 @@ public class HistoryI implements History {
                 .lookup(index)
                 .getLines(0)
                 .value(ALLOCATION_EVENT);
-        final var eventType = eventToRemove.tips();
+        final var eventType = eventToRemove.type();
         if (eventType.equals(ADDITION)) {
             final var allocation = solution.allocationsOf
                     (eventToRemove.demand().toLinePointer().interpret(solution.demands()).get()

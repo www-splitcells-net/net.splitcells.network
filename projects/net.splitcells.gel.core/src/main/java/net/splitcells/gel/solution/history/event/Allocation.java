@@ -33,7 +33,7 @@ public class Allocation implements Domable {
 
     }
 
-    public AllocationChangeType tips() {
+    public AllocationChangeType type() {
         return tips;
     }
 
