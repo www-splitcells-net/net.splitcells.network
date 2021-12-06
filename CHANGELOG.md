@@ -241,6 +241,7 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-12-05**: Fix implementation and runtime check of `HistoryI#resetTo`.
 * **2021-12-05**: `Ordered#compare_to` now does not always double-check
   equality.
 * **2021-12-03**: `command.managed.execute` now uses `shutil.which` instead of
