@@ -44,7 +44,7 @@ public interface Database extends Table {
     }
 
     /**
-     * This methods signifies, that the removal and addition subscribers belong together.
+     * These methods signify, that the removal and addition subscribers belong together.
      *
      * @param subscriber This is the synchronize.
      */
