@@ -65,15 +65,22 @@
                 </toDo>
             </toDo>
             <toDo>Ensure that the code is easily translatable to other languages with minimal effort and manual work.
-                <idea>Support different paradigms.
-                    <toDo>Object-Orientation mainly provides polymorphic tree transformations.
-                        Dlang seems to be a good choice.
-                    </toDo>
-                    <todo>Support a very simple and basic version of functional programming
-                        with an simple statically typed object system.
-                        The object system, which is kind of an OOP-System only provides state interfaces.
-                        The functions define the state transitions of the objects.
-                    </todo>
+                <idea>
+                    <idea>Support different paradigms.
+                        <toDo>Object-Orientation mainly provides polymorphic tree transformations.
+                            Dlang seems to be a good choice.
+                        </toDo>
+                        <todo>Support a very simple and basic version of functional programming
+                            with an simple statically typed object system.
+                            The object system, which is kind of an OOP-System only provides state interfaces.
+                            The functions define the state transitions of the objects.
+                        </todo>
+                    </idea>
+                    <idea>Support different type of data processing (i.e. typed
+                        versus not typed, boxed versus primitive or objects
+                        versus values.
+                        See <quote>net.splitcells.gel.data.database.Database</quote>
+                    for inspiration.</idea>
                 </idea>
                 <objective>Always translate code to other language automatically and test it, in order to be sure
                     that the code is portable.

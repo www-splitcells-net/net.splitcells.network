@@ -150,6 +150,7 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Line allocate(Line demand, Line supply) {
+        System.out.println(this.path());
         final var allocation = allocations.addTranslated(Line.concat(demand, supply));
         if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
             supplies_used.add(supply);

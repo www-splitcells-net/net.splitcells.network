@@ -17,6 +17,12 @@ import net.splitcells.gel.data.table.Table;
 /**
  * <p>TODO Line index randomizer in order to test index calculations.</p>
  * <p>TODO IDEA PERFORMANCE A database should be implementable with a byte matrix as backend.
+ * Such an performance optimization would make also sense,
+ * if one needs to work on an instance of data (i.e. CSV files),
+ * without creating copies or using caches.
+ * Such an additional implementation could also be used,
+ * in order to measure the performance impact of cache based system
+ * and also the correctness of such a system.
  * Such a backend should support complex and dynamic types by using some
  * columns as index storages.
  * These indexes would point to a complex or dynamic object
