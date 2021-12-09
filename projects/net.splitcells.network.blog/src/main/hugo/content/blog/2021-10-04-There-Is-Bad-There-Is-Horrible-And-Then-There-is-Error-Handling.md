@@ -29,7 +29,7 @@ It reminded me of the internet pieces warning of this,
 but I did not think much of it.
 I knew the possibilities,
 but I also noticed, that control flows via exceptions seemed to be rare
-and most of the time so simple, that it posed no problem.
+and most of the time its usage was so simple, that it posed no problem.
 It was even OKish.
 
 Java started to introduce checked exceptions, and I just ignored it.
@@ -64,6 +64,8 @@ This is the good aspect.
 No, it is even applaudable.
 The horrible aspect for me is the fact,
 that developers are forced to write error handling code 😱
+
+> Please, don't ... just don't!
 
 Dear reader, you might think, that error handling code is not so bad,
 but let me convince you of the opposite.
@@ -223,8 +225,21 @@ fn main() {
 }
 ```
 
-Ehh, ok, ok, but there is a third example!
-The third is the real one11!!!
+Ehh, ok, ok, we have to be fair here right?
+There is some error handling now,
+and it does seem to make sense.
+Just because there are some panics,
+it does not mean,
+that this is bad error handling.
+
+You know what?
+It is a good example and a really nice start for error handling.
+
+
+So let's look at the third example,
+and we'll see some additional error handling features!
+
+> Oh god damn it really?!!?
 
 ```
 use std::fs::File;
@@ -295,8 +310,8 @@ If the caller is interested in the exception it is also returned.
 
 This works generally very similar to the error handling in the shown
 previous examples.
-It also demonstrates, that I'm not of the opinion, that exceptions are the real
-and only answer to error handling.
+It also demonstrates, that I'm not of the opinion,
+that unchecked exceptions are the real and only answer to error handling.
 Unlike the other examples,
 I'm doing exception handling currently with this paradigma only at
 a conceptional process level.
