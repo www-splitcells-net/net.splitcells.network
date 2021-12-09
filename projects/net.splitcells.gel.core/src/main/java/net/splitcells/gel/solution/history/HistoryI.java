@@ -11,6 +11,7 @@
 package net.splitcells.gel.solution.history;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
@@ -120,11 +121,21 @@ public class HistoryI implements History {
         resetToInOrder(indexToReversal);
     }
 
-    protected void resetToInOrder(List<Integer> index) {
-        index.forEach(i -> resetLast());
+    private void resetToInOrder(List<Integer> indexes) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            if (size() != 0) {
+                assertThat(indexes).isNotEmpty();
+            } else {
+                assertThat(indexes).isEmpty();
+            }
+        }
+        indexes.forEach(i -> resetLast());
     }
 
     protected void resetLast() {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            assertThat(columnView(ALLOCATION_ID).lookup(size() - 1).size()).isEqualTo(1);
+        }
         final var index = size() - 1;
         final var eventToRemove = columnView(ALLOCATION_ID)
                 .lookup(index)
@@ -146,10 +157,26 @@ public class HistoryI implements History {
     }
 
     protected void resetLastRemoval(int index) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            assertThat(size() - 1).isEqualTo(index + 1);
+            try {
+                assertThat(columnView(ALLOCATION_ID).lookup(index + 1).size()).isEqualTo(1);
+                assertThat(columnView(ALLOCATION_ID).lookup(index).size()).isEqualTo(1);
+            } catch (Throwable t) {
+                throw new RuntimeException(t);
+            }
+        }
         removal_(columnView(ALLOCATION_ID).lookup(index + 1).getLines(0));
         removal_(columnView(ALLOCATION_ID).lookup(index).getLines(0));
     }
 
+    /**
+     * TODO FIX Remove unused demands and supply.
+     * <p/>
+     * TODO Automatically remove allocations from solution, via subscription.
+     *
+     * @param line
+     */
     protected void removal_(Line line) {
         allocations.remove(line);
         --lastEventId;
