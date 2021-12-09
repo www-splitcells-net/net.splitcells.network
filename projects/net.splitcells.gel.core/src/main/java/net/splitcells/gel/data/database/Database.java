@@ -56,12 +56,12 @@ public interface Database extends Table {
      */
     default void synchronize(DatabaseSynchronization subscriber) {
         subscribeToAfterAdditions(subscriber);
-        subscriberToBeforeRemoval(subscriber);
+        subscribeToBeforeRemoval(subscriber);
     }
 
     void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber);
 
-    void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber);
+    void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber);
 
-    void subscriberToAfterRemoval(BeforeRemovalSubscriber subscriber);
+    void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber);
 }

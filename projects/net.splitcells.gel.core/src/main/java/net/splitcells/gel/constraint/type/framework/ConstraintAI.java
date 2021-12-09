@@ -82,7 +82,7 @@ public abstract class ConstraintAI implements Constraint {
         lines = Databases.database(name + ".lines", this, list(LINE, INCOMING_CONSTRAINT_GROUP));
         lineProcessing = allocations("linesProcessing", lines, results);
         lineProcessing.subscribeToAfterAdditions(ConstraintAI::propagateAddition);
-        lineProcessing.subscriberToBeforeRemoval(ConstraintAI::propagateRemoval);
+        lineProcessing.subscribeToBeforeRemoval(ConstraintAI::propagateRemoval);
         lines.subscribeToAfterAdditions(this::processLineAddition);
     }
 

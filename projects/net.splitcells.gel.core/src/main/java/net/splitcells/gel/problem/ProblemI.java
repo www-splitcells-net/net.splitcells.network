@@ -184,13 +184,13 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public void subscriberToBeforeRemoval(final BeforeRemovalSubscriber subscriber) {
-        this.allocations.subscriberToBeforeRemoval(subscriber);
+    public void subscribeToBeforeRemoval(final BeforeRemovalSubscriber subscriber) {
+        this.allocations.subscribeToBeforeRemoval(subscriber);
     }
 
     @Override
-    public void subscriberToAfterRemoval(final BeforeRemovalSubscriber subscriber) {
-        this.allocations.subscriberToAfterRemoval(subscriber);
+    public void subscribeToAfterRemoval(final BeforeRemovalSubscriber subscriber) {
+        this.allocations.subscribeToAfterRemoval(subscriber);
     }
 
     @Override

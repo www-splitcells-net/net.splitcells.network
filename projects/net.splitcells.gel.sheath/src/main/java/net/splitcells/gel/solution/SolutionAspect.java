@@ -158,13 +158,13 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
-        solution.subscriberToBeforeRemoval(subscriber);
+    public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
+        solution.subscribeToBeforeRemoval(subscriber);
     }
 
     @Override
-    public void subscriberToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        solution.subscriberToAfterRemoval(subscriber);
+    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
+        solution.subscribeToAfterRemoval(subscriber);
     }
 
     @Override

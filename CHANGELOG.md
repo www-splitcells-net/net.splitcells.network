@@ -20,9 +20,13 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
-* **2021-12-09**: **#\148** Unify method naming by renaming 2 methods:
-  1. Rename `Contraint#register_addition` to `Contraint#registerAddition`.
-  2. Rename `Contraint#register_before_removal` to `Contraint#registerBeforeRemoval`.
+* **2021-12-09**:
+  1. **#\148** Unify method naming by renaming 2 methods:
+     1. Rename `Contraint#register_addition` to `Contraint#registerAddition`.
+     2. Rename `Contraint#register_before_removal` to `Contraint#registerBeforeRemoval`.
+  2. **#\148** Fix typos:
+     1. Rename `Database#subscriberToBeforeRemoval` to `Database#subscribeToBeforeRemoval`.
+     2. Rename `Database#subscriberToAfterRemoval` to `Database#subscribeToAfterRemoval`.
 * **2021-12-05**: **#\148** [Fix local path context for XML files](https://github.com/www-splitcells-net/net.splitcells.network/issues/148):
   Remove choice Documents from custom XML format.
   A choice elements can be wrapped with an article element in order to get

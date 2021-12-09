@@ -11,7 +11,6 @@
 package net.splitcells.gel.solution;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.utils.NotImplementedYet;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -194,13 +193,13 @@ public class SolutionI implements Solution {
     }
 
     @java.lang.SuppressWarnings("all")
-    public void subscriberToBeforeRemoval(final BeforeRemovalSubscriber subscriber) {
-        this.problem.subscriberToBeforeRemoval(subscriber);
+    public void subscribeToBeforeRemoval(final BeforeRemovalSubscriber subscriber) {
+        this.problem.subscribeToBeforeRemoval(subscriber);
     }
 
     @java.lang.SuppressWarnings("all")
-    public void subscriberToAfterRemoval(final BeforeRemovalSubscriber listener) {
-        this.problem.subscriberToAfterRemoval(listener);
+    public void subscribeToAfterRemoval(final BeforeRemovalSubscriber listener) {
+        this.problem.subscribeToAfterRemoval(listener);
     }
 
     @java.lang.SuppressWarnings("all")

@@ -179,13 +179,13 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
-        allocations.subscriberToBeforeRemoval(subscriber);
+    public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
+        allocations.subscribeToBeforeRemoval(subscriber);
     }
 
     @Override
-    public void subscriberToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        allocations.subscriberToAfterRemoval(subscriber);
+    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
+        allocations.subscribeToAfterRemoval(subscriber);
     }
 
     @Override

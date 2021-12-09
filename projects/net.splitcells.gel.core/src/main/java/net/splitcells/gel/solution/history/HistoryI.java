@@ -64,7 +64,7 @@ public class HistoryI implements History {
                                         , list(META_DATA)));
         this.solution = solution;
         solution.subscribeToAfterAdditions(this);
-        solution.subscriberToBeforeRemoval(this);
+        solution.subscribeToBeforeRemoval(this);
     }
 
     @Override
@@ -193,13 +193,13 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
-        allocations.subscriberToBeforeRemoval(subscriber);
+    public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
+        allocations.subscribeToBeforeRemoval(subscriber);
     }
 
     @Override
-    public void subscriberToAfterRemoval(BeforeRemovalSubscriber beforeRemovalSubscriber) {
-        allocations.subscriberToAfterRemoval(beforeRemovalSubscriber);
+    public void subscribeToAfterRemoval(BeforeRemovalSubscriber beforeRemovalSubscriber) {
+        allocations.subscribeToAfterRemoval(beforeRemovalSubscriber);
     }
 
     @Override

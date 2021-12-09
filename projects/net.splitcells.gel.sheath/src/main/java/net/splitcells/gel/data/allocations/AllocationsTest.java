@@ -43,7 +43,7 @@ public class AllocationsTest extends TestSuiteI {
         final var demands = Databases.database();
         final var supplies = Databases.database();
         final var allocations = allocations("test", demands, supplies);
-        allocations.subscriberToBeforeRemoval
+        allocations.subscribeToBeforeRemoval
                 (pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)).isNotNull());
         allocations.remove(
                 allocations.allocate
@@ -59,7 +59,7 @@ public class AllocationsTest extends TestSuiteI {
             final var demands = Databases.database();
             final var supplies = Databases.database();
             final var allocations = allocations("test", demands, supplies);
-            allocations.subscriberToAfterRemoval
+            allocations.subscribeToAfterRemoval
                     (pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)));
             allocations.remove(
                     allocations.allocate

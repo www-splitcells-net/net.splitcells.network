@@ -77,7 +77,7 @@ public class AllocationsI implements Allocations {
             demands_used = database2("demands-used", this, demand.headerView());
             demand.rawLinesView().forEach(demands_free::add);
             demand.subscribeToAfterAdditions(demands_free::add);
-            demand.subscriberToBeforeRemoval(removalOf -> {
+            demand.subscribeToBeforeRemoval(removalOf -> {
                 if (usedDemandIndexes_to_allocationIndexes.containsKey(removalOf.index())) {
                     listWithValuesOf(
                             usedDemandIndexes_to_allocationIndexes.get(removalOf.index()))
@@ -100,7 +100,7 @@ public class AllocationsI implements Allocations {
             supply.subscribeToAfterAdditions(i -> {
                 supplies_free.add(i);
             });
-            supply.subscriberToBeforeRemoval(removalOf -> {
+            supply.subscribeToBeforeRemoval(removalOf -> {
                 if (usedSupplyIndexes_to_allocationIndexes.containsKey(removalOf.index())) {
                     listWithValuesOf
                             (usedSupplyIndexes_to_allocationIndexes.get(removalOf.index()))
@@ -150,7 +150,6 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Line allocate(Line demand, Line supply) {
-        System.out.println(this.path());
         final var allocation = allocations.addTranslated(Line.concat(demand, supply));
         if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
             supplies_used.add(supply);
@@ -283,7 +282,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void subscriberToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
+    public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
         beforeRemovalSubscriptions.add(subscriber);
     }
 
@@ -302,7 +301,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void subscriberToAfterRemoval(BeforeRemovalSubscriber subscriber) {
+    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
         afterRemovalSubscriptions.add(subscriber);
     }
 
