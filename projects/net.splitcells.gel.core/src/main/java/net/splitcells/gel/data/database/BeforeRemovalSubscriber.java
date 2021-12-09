@@ -16,10 +16,10 @@ import net.splitcells.gel.data.table.Line;
 
 @FunctionalInterface
 public interface BeforeRemovalSubscriber {
-	void register_before_removal(Line line);
+	void registerBeforeRemoval(Line line);
 
-	default void register_before_removal(Collection<Line> lines) {
-		lines.forEach(line -> register_before_removal(line));
+	default void registerBeforeRemoval(Collection<Line> lines) {
+		lines.forEach(line -> registerBeforeRemoval(line));
 	}
 
 }

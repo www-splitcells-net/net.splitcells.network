@@ -68,7 +68,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void register_addition(Line allocationValues) {
+    public void registerAddition(Line allocationValues) {
         final var metaData = metaData();
         metaData.with(CompleteRating.class
                 , completeRating(solution.constraint().rating()));
@@ -84,7 +84,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void register_before_removal(Line removal) {
+    public void registerBeforeRemoval(Line removal) {
         final var metaData = metaData();
         metaData.with(CompleteRating.class
                 , completeRating(solution.constraint().rating()));

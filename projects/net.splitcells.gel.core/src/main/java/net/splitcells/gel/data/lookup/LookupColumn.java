@@ -179,12 +179,12 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public void register_addition(Line addition) {
+    public void registerAddition(Line addition) {
         lookup.ifPresent(l -> l.register_addition(addition.value(attribute), addition.index()));
     }
 
     @Override
-    public void register_before_removal(Line removal) {
+    public void registerBeforeRemoval(Line removal) {
         lookup.ifPresent(l -> l.register_removal(removal.value(attribute), removal.index()));
     }
 

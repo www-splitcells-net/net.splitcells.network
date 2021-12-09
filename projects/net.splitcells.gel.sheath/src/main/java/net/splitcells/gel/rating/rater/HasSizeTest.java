@@ -55,19 +55,19 @@ public class HasSizeTest extends TestSuiteI {
             assertThat(testSubject.rating()).isEqualTo(cost(1.0));
         }
         {
-            testSubject.register_before_removal(thirdTestValue);
+            testSubject.registerBeforeRemoval(thirdTestValue);
             assertThat(testSubject.defying()).isEmpty();
             assertThat(testSubject.complying()).hasSize(2);
             assertThat(testSubject.rating()).isEqualTo(noCost());
         }
         {
-            testSubject.register_before_removal(secondTestValue);
+            testSubject.registerBeforeRemoval(secondTestValue);
             assertThat(testSubject.defying()).hasSize(1);
             assertThat(testSubject.complying()).isEmpty();
             assertThat(testSubject.rating()).isEqualTo(cost(1.0));
         }
         {
-            testSubject.register_before_removal(firstTestValue);
+            testSubject.registerBeforeRemoval(firstTestValue);
             assertThat(testSubject.defying()).isEmpty();
             assertThat(testSubject.complying()).isEmpty();
             assertThat(testSubject.rating()).isEqualTo(noCost());
@@ -107,19 +107,19 @@ public class HasSizeTest extends TestSuiteI {
             assertThat(testValue.rating()).isEqualTo(cost(2.0));
         }
         {
-            testValue.register_before_removal(thirdTestVaLUE);
+            testValue.registerBeforeRemoval(thirdTestVaLUE);
             assertThat(testValue.defying()).hasSize(2);
             assertThat(testValue.complying()).isEmpty();
             assertThat(testValue.rating()).isEqualTo(cost(1.0));
         }
         {
-            testValue.register_before_removal(secondTestValue);
+            testValue.registerBeforeRemoval(secondTestValue);
             assertThat(testValue.defying()).isEmpty();
             assertThat(testValue.complying()).hasSize(1);
             assertThat(testValue.rating()).isEqualTo(noCost());
         }
         {
-            testValue.register_before_removal(firstTestValue);
+            testValue.registerBeforeRemoval(firstTestValue);
             assertThat(testValue.defying()).isEmpty();
             assertThat(testValue.complying()).isEmpty();
             assertThat(testValue.rating()).isEqualTo(noCost());

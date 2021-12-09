@@ -19,10 +19,10 @@ import net.splitcells.gel.data.table.Line;
 @FunctionalInterface
 public interface AfterAdditionSubscriber {
 
-    void register_addition(Line line);
+    void registerAddition(Line line);
 
     default void register_papildinājumi(Collection<Line> lines) {
-        lines.forEach(line -> register_addition(line));
+        lines.forEach(line -> registerAddition(line));
     }
 
     default void register_papildinājumi(Line... lines) {

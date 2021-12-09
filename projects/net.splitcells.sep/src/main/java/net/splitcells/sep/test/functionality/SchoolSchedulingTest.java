@@ -544,12 +544,12 @@ public class SchoolSchedulingTest {
         final var supplies = database2(solution.headerView());
         solution.synchronize(new DatabaseSynchronization() {
             @Override
-            public void register_addition(Line line) {
+            public void registerAddition(Line line) {
                 rangeClosed(1, maximumNumberOfStudentsPerCourse).forEach(i -> supplies.addTranslated(line.values()));
             }
 
             @Override
-            public void register_before_removal(Line line) {
+            public void registerBeforeRemoval(Line line) {
                 supplies.columnView(COURSE_ID)
                         .lookup(line.value(COURSE_ID))
                         .getLines()

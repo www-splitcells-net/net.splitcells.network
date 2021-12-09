@@ -101,11 +101,11 @@ public class LookupTable implements Table {
             final var column = (LookupColumn<Object>) columns.get(i);
             column.set(line.index(), line.value(tableView.headerView().get(i)));
         });
-        columns.forEach(column -> column.register_addition(line));
+        columns.forEach(column -> column.registerAddition(line));
     }
 
     public void removeRegistration(Line line) {
-        columns.forEach(column -> column.register_before_removal(line));
+        columns.forEach(column -> column.registerBeforeRemoval(line));
         content.remove(line.index());
         range(0, columns.size()).forEach(i -> {
             // HACK

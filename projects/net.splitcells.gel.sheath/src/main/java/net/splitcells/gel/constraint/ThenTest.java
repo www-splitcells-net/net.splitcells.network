@@ -58,7 +58,7 @@ public class ThenTest {
                     .isEqualTo(cost(2 * (firstDefianceCost + secondDefianceCost)));
         }
         {
-            testSubject.register_before_removal(testValue);
+            testSubject.registerBeforeRemoval(testValue);
             assertThat(testSubject.defying()).hasSize(1);
             assertThat(propagationValidator.defying()).hasSize(1);
             assertThat(testSubject.complying()).isEmpty();
@@ -67,7 +67,7 @@ public class ThenTest {
                     .isEqualTo(cost(firstDefianceCost + secondDefianceCost));
         }
         {
-            testSubject.register_before_removal(otherTestValue);
+            testSubject.registerBeforeRemoval(otherTestValue);
             assertThat(testSubject.defying()).isEmpty();
             assertThat(propagationValidator.defying()).isEmpty();
             assertThat(testSubject.complying()).isEmpty();
@@ -102,7 +102,7 @@ public class ThenTest {
             assertThat(testSubject.rating()).isEqualTo(cost(0));
         }
         {
-            testSubject.register_before_removal(testValue);
+            testSubject.registerBeforeRemoval(testValue);
             assertThat(testSubject.complying()).hasSize(1);
             assertThat(propagationValidator.complying()).hasSize(1);
             assertThat(testSubject.defying()).isEmpty();
@@ -110,7 +110,7 @@ public class ThenTest {
             assertThat(testSubject.rating()).isEqualTo(cost(0));
         }
         {
-            testSubject.register_before_removal(otherTestvalue);
+            testSubject.registerBeforeRemoval(otherTestvalue);
             assertThat(testSubject.complying()).isEmpty();
             assertThat(propagationValidator.complying()).isEmpty();
             assertThat(testSubject.defying()).isEmpty();
@@ -137,12 +137,12 @@ public class ThenTest {
         assertThat(testSubject.complying()).isEmpty();
         assertThat(testSubject.defying())
                 .containsExactlyInAnyOrder(testValue, additionalLine);
-        testSubject.register_before_removal(testValue);
+        testSubject.registerBeforeRemoval(testValue);
         assertThat(testSubject.rating(additionalGroup))
                 .isEqualTo(cost(defianceCost));
         assertThat(testSubject.complying()).isEmpty();
         assertThat(testSubject.defying()).containsExactly(additionalLine);
-        testSubject.register_before_removal(additionalLine);
+        testSubject.registerBeforeRemoval(additionalLine);
         assertThat(testSubject.rating()).isEqualTo(cost(0));
         testEmptyThen(testSubject, testGroup, additionalGroup);
     }

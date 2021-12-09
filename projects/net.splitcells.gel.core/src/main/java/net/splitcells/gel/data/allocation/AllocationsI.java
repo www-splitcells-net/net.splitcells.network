@@ -190,7 +190,7 @@ public class AllocationsI implements Allocations {
                 usedSupplyIndex_to_usedDemandsIndex.get(supply.index()).add(demand.index());
             }
         }
-        additionSubscriptions.forEach(listener -> listener.register_addition(allocation));
+        additionSubscriptions.forEach(listener -> listener.registerAddition(allocation));
         return allocation;
     }
 
@@ -220,7 +220,7 @@ public class AllocationsI implements Allocations {
     public void remove(Line allocation) {
         final var demand = demandOfAllocation(allocation);
         final var supply = supplyOfAllocation(allocation);
-        beforeRemovalSubscriptions.forEach(subscriber -> subscriber.register_before_removal(allocation));
+        beforeRemovalSubscriptions.forEach(subscriber -> subscriber.registerBeforeRemoval(allocation));
         allocations.remove(allocation);
         // TODO Make following code a remove subscription to allocations.
         {
@@ -259,7 +259,7 @@ public class AllocationsI implements Allocations {
             supplies_used.remove(supply);
             supplies_free.add(supply);
         }
-        afterRemovalSubscriptions.forEach(listener -> listener.register_before_removal(allocation));
+        afterRemovalSubscriptions.forEach(listener -> listener.registerBeforeRemoval(allocation));
     }
 
     @Override

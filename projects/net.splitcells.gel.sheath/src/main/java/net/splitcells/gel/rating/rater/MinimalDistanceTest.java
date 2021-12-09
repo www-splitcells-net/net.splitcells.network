@@ -116,25 +116,25 @@ public class MinimalDistanceTest {
             assertThat(testSubject.rating()).isEqualTo(cost(3));
         }
         {
-            testSubject.register_before_removal(testValues.get(0));
+            testSubject.registerBeforeRemoval(testValues.get(0));
             assertThat(testSubject.defying()).hasSize(2);
             assertThat(testSubject.complying()).hasSize(1);
             assertThat(testSubject.rating()).isEqualTo(cost(1));
         }
         {
-            testSubject.register_before_removal(testValues.get(1));
+            testSubject.registerBeforeRemoval(testValues.get(1));
             assertThat(testSubject.defying()).isEmpty();
             assertThat(testSubject.complying()).hasSize(2);
             assertThat(testSubject.rating()).isEqualTo(noCost());
         }
         {
-            testSubject.register_before_removal(testValues.get(2));
+            testSubject.registerBeforeRemoval(testValues.get(2));
             assertThat(testSubject.defying()).isEmpty();
             assertThat(testSubject.complying()).hasSize(1);
             assertThat(testSubject.rating()).isEqualTo(noCost());
         }
         {
-            testSubject.register_before_removal(testValues.get(3));
+            testSubject.registerBeforeRemoval(testValues.get(3));
             assertThat(testSubject.defying()).isEmpty();
             assertThat(testSubject.complying()).isEmpty();
             assertThat(testSubject.rating()).isEqualTo(noCost());
@@ -175,19 +175,19 @@ public class MinimalDistanceTest {
             assertThat(testSubject.rating()).isEqualTo(cost(6));
         }
         {
-            testSubject.register_before_removal(testValues.get(0));
+            testSubject.registerBeforeRemoval(testValues.get(0));
             assertThat(testSubject.defying()).hasSize(2);
             assertThat(testSubject.complying()).isEmpty();
             assertThat(testSubject.rating()).isEqualTo(cost(2));
         }
         {
-            testSubject.register_before_removal(testValues.get(1));
+            testSubject.registerBeforeRemoval(testValues.get(1));
             assertThat(testSubject.defying()).isEmpty();
             assertThat(testSubject.complying()).hasSize(1);
             assertThat(testSubject.rating()).isEqualTo(noCost());
         }
         {
-            testSubject.register_before_removal(testValues.get(2));
+            testSubject.registerBeforeRemoval(testValues.get(2));
             assertThat(testSubject.defying()).isEmpty();
             assertThat(testSubject.complying()).isEmpty();
             assertThat(testSubject.rating()).isEqualTo(noCost());

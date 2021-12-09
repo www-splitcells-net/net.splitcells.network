@@ -149,7 +149,7 @@ public class DatabaseI implements Database {
         final var line = line(this, index);
         rawLines.set(line.index(), line);
         lines.add(line);
-        additionSubscriber.forEach(subscriber -> subscriber.register_addition(line));
+        additionSubscriber.forEach(subscriber -> subscriber.registerAddition(line));
         return line;
     }
 
@@ -179,14 +179,14 @@ public class DatabaseI implements Database {
         }
         ++size;
         lines.add(line);
-        additionSubscriber.forEach(subscriber -> subscriber.register_addition(line));
+        additionSubscriber.forEach(subscriber -> subscriber.registerAddition(line));
         return line;
     }
 
     @Override
     public void remove(int lineIndex) {
         final var removalFrom = rawLines.get(lineIndex);
-        beforeRemovalSubscriber.forEach(subscriber -> subscriber.register_before_removal(removalFrom));
+        beforeRemovalSubscriber.forEach(subscriber -> subscriber.registerBeforeRemoval(removalFrom));
         columns.forEach(kolonna -> {
             kolonna.set(lineIndex, null);
         });
@@ -194,7 +194,7 @@ public class DatabaseI implements Database {
         rawLines.set(lineIndex, null);
         indexesOfFree.add(lineIndex);
         --size;
-        afterRemovalSubscriber.forEach(subscriber -> subscriber.register_before_removal(removalFrom));
+        afterRemovalSubscriber.forEach(subscriber -> subscriber.registerBeforeRemoval(removalFrom));
     }
 
     @Override

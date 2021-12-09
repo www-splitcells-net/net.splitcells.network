@@ -143,13 +143,13 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     void registerAdditions(GroupId group, Line line);
 
-    default void register_addition(Line line) {
+    default void registerAddition(Line line) {
         registerAdditions(injectionGroup(), line);
     }
 
     void registerBeforeRemoval(GroupId group, Line line);
 
-    default void register_before_removal(Line line) {
+    default void registerBeforeRemoval(Line line) {
         registerBeforeRemoval(injectionGroup(), line);
     }
 

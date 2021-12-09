@@ -54,19 +54,19 @@ public class HasMinimalSizeTest {
             assertThat(testValue.rating()).isEqualTo(noCost());
         }
         {
-            testValue.register_before_removal(thirdTestVaLUE);
+            testValue.registerBeforeRemoval(thirdTestVaLUE);
             assertThat(testValue.defying()).isEmpty();
             assertThat(testValue.complying()).hasSize(2);
             assertThat(testValue.rating()).isEqualTo(noCost());
         }
         {
-            testValue.register_before_removal(secondTestValue);
+            testValue.registerBeforeRemoval(secondTestValue);
             assertThat(testValue.defying()).hasSize(1);
             assertThat(testValue.complying()).isEmpty();
             assertThat(testValue.rating()).isEqualTo(cost(1));
         }
         {
-            testValue.register_before_removal(firstTestValue);
+            testValue.registerBeforeRemoval(firstTestValue);
             assertThat(testValue.defying()).isEmpty();
             assertThat(testValue.complying()).isEmpty();
             assertThat(testValue.rating()).isEqualTo(noCost());
