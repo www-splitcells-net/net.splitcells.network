@@ -38,15 +38,15 @@ public class HistoryRef extends HistoryI {
     }
 
     @Override
-    protected void resetToInOrder(List<Integer> indekses) {
+    protected void resetToInOrder(List<Integer> indexes) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (size() != 0) {
-                assertThat(indekses).isNotEmpty();
+                assertThat(indexes).isNotEmpty();
             } else {
-                assertThat(indekses).isEmpty();
+                assertThat(indexes).isEmpty();
             }
         }
-        super.resetToInOrder(indekses);
+        super.resetToInOrder(indexes);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class HistoryRef extends HistoryI {
     }
 
     @Override
-    protected void resetLast_removal(int indexes) {
+    protected void resetLastRemoval(int indexes) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(size() - 1).isEqualTo(indexes + 1);
             try {
@@ -68,7 +68,7 @@ public class HistoryRef extends HistoryI {
                 throw new RuntimeException(t);
             }
         }
-        super.resetLast_removal(indexes);
+        super.resetLastRemoval(indexes);
     }
 
     /**

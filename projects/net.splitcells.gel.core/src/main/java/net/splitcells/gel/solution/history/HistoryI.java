@@ -28,7 +28,6 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.Solution;
@@ -143,10 +142,10 @@ public class HistoryI implements History {
         } else {
             throw new UnsupportedOperationException();
         }
-        resetLast_removal(index);
+        resetLastRemoval(index);
     }
 
-    protected void resetLast_removal(int index) {
+    protected void resetLastRemoval(int index) {
         removal_(columnView(ALLOCATION_ID).lookup(index + 1).getLines(0));
         removal_(columnView(ALLOCATION_ID).lookup(index).getLines(0));
     }
