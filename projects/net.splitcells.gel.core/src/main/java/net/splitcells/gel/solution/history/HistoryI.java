@@ -99,11 +99,11 @@ public class HistoryI implements History {
         allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
     }
 
-    protected Integer moveLastEventIdBackwards() {
+    private Integer moveLastEventIdBackwards() {
         return lastEventId -= 1;
     }
 
-    protected Integer moveLastEventIdForward() {
+    private Integer moveLastEventIdForward() {
         return lastEventId += 1;
     }
 
@@ -132,7 +132,7 @@ public class HistoryI implements History {
         indexes.forEach(i -> resetLast());
     }
 
-    protected void resetLast() {
+    private void resetLast() {
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(columnView(ALLOCATION_ID).lookup(size() - 1).size()).isEqualTo(1);
         }
@@ -156,7 +156,7 @@ public class HistoryI implements History {
         resetLastRemoval(index);
     }
 
-    protected void resetLastRemoval(int index) {
+    private void resetLastRemoval(int index) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(size() - 1).isEqualTo(index + 1);
             try {
@@ -177,7 +177,7 @@ public class HistoryI implements History {
      *
      * @param line
      */
-    protected void removal_(Line line) {
+    private void removal_(Line line) {
         allocations.remove(line);
         --lastEventId;
     }
