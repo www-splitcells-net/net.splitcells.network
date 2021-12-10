@@ -109,7 +109,7 @@ public class HistoryTest {
 
     @Tag(INTEGRATION_TEST)
     @Test
-    public void pārbaudiIeraksītuPieškiršanasNovērtejumu() {
+    public void test_history_allocation_rating() {
         final var solution = defineProblem()
                 .withDemandAttributes()
                 .withDemands(list(list()))
