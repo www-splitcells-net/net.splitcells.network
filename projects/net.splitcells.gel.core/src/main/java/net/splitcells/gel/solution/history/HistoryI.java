@@ -116,6 +116,10 @@ public class HistoryI implements History {
             return;
         }
         registerRemovalIsEnabled = false;
+        /**
+         * Omit unnecessary allocations to {@link #allocations},
+         * when allocations are removed from {@link #solution} during reset.
+          */
         final var indexToReversal = reverse
                 (rangeClosed(index, this.size() - 1)
                         .boxed()
