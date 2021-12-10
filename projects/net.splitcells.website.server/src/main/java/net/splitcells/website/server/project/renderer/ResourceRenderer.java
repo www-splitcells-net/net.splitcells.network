@@ -26,7 +26,7 @@ public class ResourceRenderer implements Renderer {
         return new ResourceRenderer();
     }
 
-    public ResourceRenderer() {
+    private ResourceRenderer() {
 
     }
 
