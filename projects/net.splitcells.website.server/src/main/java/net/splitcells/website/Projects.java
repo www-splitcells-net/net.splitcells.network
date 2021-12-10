@@ -113,7 +113,7 @@ public class Projects {
                                 , projectRepositories.resolve("../../net.splitcells.network.log/")
                                 , xslLib
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
-                                , "/net/splitcells/network/log"
+                                , "/"
                                 , validator)
         );
     }
