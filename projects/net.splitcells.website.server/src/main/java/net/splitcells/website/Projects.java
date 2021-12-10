@@ -106,6 +106,15 @@ public class Projects {
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/website"
                                 , validator)
+                // TODO Create and use project cluster repo variable.
+                // TODO Make cluster repo optional.
+                , projectRenderer
+                        (profile
+                                , projectRepositories.resolve("../../net.splitcells.network.log/")
+                                , xslLib
+                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , "/net/splitcells/network/log"
+                                , validator)
         );
     }
 }
