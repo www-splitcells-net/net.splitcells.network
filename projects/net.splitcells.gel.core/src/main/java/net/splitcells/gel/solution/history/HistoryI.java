@@ -50,6 +50,7 @@ public class HistoryI implements History {
     private final Solution solution;
     private int lastEventId = -1;
     private Allocations allocations;
+    private boolean registerRemovalIsEnabled = true;
 
     protected HistoryI(Solution solution) {
         allocations = Allocationss.allocations
@@ -85,18 +86,20 @@ public class HistoryI implements History {
 
     @Override
     public void registerBeforeRemoval(Line removal) {
-        final var metaData = metaData();
-        metaData.with(CompleteRating.class
-                , completeRating(solution.constraint().rating()));
-        metaData.with(AllocationRating.class
-                , allocationRating(solution.constraint().rating(removal)));
-        final Line allocation
-                = demands().addTranslated(list(
-                moveLastEventIdForward()
-                , allocations(REMOVAL
-                        , solution.demandOfAllocation(removal)
-                        , solution.supplyOfAllocation(removal))));
-        allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
+        if (registerRemovalIsEnabled) {
+            final var metaData = metaData();
+            metaData.with(CompleteRating.class
+                    , completeRating(solution.constraint().rating()));
+            metaData.with(AllocationRating.class
+                    , allocationRating(solution.constraint().rating(removal)));
+            final Line allocation
+                    = demands().addTranslated(list(
+                    moveLastEventIdForward()
+                    , allocations(REMOVAL
+                            , solution.demandOfAllocation(removal)
+                            , solution.supplyOfAllocation(removal))));
+            allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
+        }
     }
 
     private Integer moveLastEventIdBackwards() {
@@ -112,6 +115,7 @@ public class HistoryI implements History {
         if (index == 0 && size() == 0) {
             return;
         }
+        registerRemovalIsEnabled = false;
         final var indexToReversal = reverse
                 (rangeClosed(index, this.size() - 1)
                         .boxed()
@@ -119,6 +123,7 @@ public class HistoryI implements History {
                         .filter(i -> i != index)
                 ).collect(Lists.toList());
         resetToInOrder(indexToReversal);
+        registerRemovalIsEnabled = true;
     }
 
     private void resetToInOrder(List<Integer> indexes) {
@@ -158,15 +163,14 @@ public class HistoryI implements History {
 
     private void resetLastRemoval(int index) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(size() - 1).isEqualTo(index + 1);
+            assertThat(size() - 1).isEqualTo(index);
             try {
-                assertThat(columnView(ALLOCATION_ID).lookup(index + 1).size()).isEqualTo(1);
+                assertThat(columnView(ALLOCATION_ID).lookup(index + 1).size()).isEqualTo(0);
                 assertThat(columnView(ALLOCATION_ID).lookup(index).size()).isEqualTo(1);
             } catch (Throwable t) {
                 throw new RuntimeException(t);
             }
         }
-        removal_(columnView(ALLOCATION_ID).lookup(index + 1).getLines(0));
         removal_(columnView(ALLOCATION_ID).lookup(index).getLines(0));
     }
 

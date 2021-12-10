@@ -248,6 +248,8 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-12-10**: **\#138** Remove temporary duplicate allocations during
+  HistoryI reset, in order to improve performance.
 * **2021-12-05**: Fix implementation and runtime check of `HistoryI#resetTo`.
 * **2021-12-05**: `Ordered#compare_to` now does not always double-check
   equality.
