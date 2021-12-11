@@ -112,6 +112,73 @@
         </xsl:variable>
         <xsl:apply-templates select="$layout.config"/>
     </xsl:template>
+    <xsl:template match="/s:csv-chart">
+        <xsl:variable name="layout.config">
+            <s:layout.config>
+                <xsl:call-template name="s:path-of">
+                    <xsl:with-param name="document" select="."/>
+                </xsl:call-template>
+                <s:name>
+                    <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
+                </s:name>
+                <s:title>
+                    <xsl:value-of select="./@full-name"/>
+                </s:title>
+                <s:license>standard</s:license>
+                <s:publication_date/>
+                <s:content>
+                    <x:script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></x:script>
+                    <x:script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></x:script>
+                    <x:canvas id="myChart"></x:canvas>
+                    <x:script type="text/javascript">
+                        <![CDATA[
+var chartColors = {
+    red: 'rgb(255, 99, 132)',
+    blue: 'rgb(54, 162, 235)'
+};
+
+var color = Chart.helpers.color;
+var config = {
+    type: 'bar',
+    data: {
+        datasets: [{
+            type: 'line',
+            yAxisID: 'yAxes',
+            backgroundColor: 'transparent',
+            borderColor: chartColors.red,
+            pointBackgroundColor: chartColors.red,
+        }]
+    },
+    plugins: [ChartDataSource],
+    options: {
+        scales: {
+            xAxes: [{id: 'xAxes'}],
+            yAxes: [{id: 'yAxes'}]
+        },
+        plugins: {
+            datasource: {
+                type: 'csv',
+                url: '/net/splitcells/gel/test/functionality/NQueenProblemTest/test_8_queen_problem_with_backtracking/splitcells-XPS-15-9570.csv',
+                delimiter: ',',
+                rowMapping: 'index',
+                datasetLabels: true,
+                indexLabels: true
+            }
+        }
+    }
+};
+
+window.onload = function() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    window.myChart = new Chart(ctx, config);
+};
+]]>
+                    </x:script>
+                </s:content>
+            </s:layout.config>
+        </xsl:variable>
+        <xsl:apply-templates select="$layout.config"/>
+    </xsl:template>
     <xsl:template match="/s:article">
         <xsl:variable name="layout.config">
             <s:layout.config>

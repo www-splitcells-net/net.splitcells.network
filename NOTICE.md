@@ -59,6 +59,11 @@ all licenses present.
 
 The licenses of the transitive dependencies are not listed here.
 
+Chart.js:
+* License: MIT
+* [Source Code](https://github.com/chartjs/Chart.js)
+
+
 OpenJDK:
 * License: GNU General Public License, version 2, with the Classpath Exception 
 
