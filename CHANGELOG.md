@@ -129,6 +129,16 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-12-11**: **#\138**
+  1. Add `net.splitcells.network.log` to website's
+     default projects.
+     This is a new git repository containing log files.
+     These files are primarily performance data and are used in order to show
+     performance regressions.
+  2. Create CSV serving and rendering of CSV files as charts to website server
+     (CsvRenderer and CsvChartRenderer).
+     This is used in order to create a simple visualization of the new
+     repository.
 * **2021-12-05**: **#\148** [Fix local path context for XML files](https://github.com/www-splitcells-net/net.splitcells.network/issues/148):
   Add path information to XML documents during website rendering.
 * **2021-11-29**:
