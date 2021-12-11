@@ -2,6 +2,10 @@ package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.resource.Paths;
+import net.splitcells.website.server.project.FileStructureTransformer;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -10,32 +14,38 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
+import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class CsvChartRenderer implements Renderer {
-    public static CsvChartRenderer csvChartRenderer() {
-        return new CsvChartRenderer();
+    public static CsvChartRenderer csvChartRenderer(FileStructureTransformer renderer) {
+        return new CsvChartRenderer(renderer);
     }
 
-    private CsvChartRenderer() {
+    private final FileStructureTransformer renderer;
 
+    private CsvChartRenderer(FileStructureTransformer renderer) {
+        this.renderer = renderer;
     }
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
-        final var requestedFile = projectRenderer
-                .projectFolder()
-                .resolve("src/main/csv/")
-                .resolve(path)
-                .resolve(path.substring(0, path.lastIndexOf("csv.html")) + ".csv");
-        if (is_file(requestedFile)) {
-            try {
-                return Optional.of(renderingResult(readAllBytes(requestedFile), TEXT_HTML.toString()));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+        if (path.endsWith("csv.html")) {
+            final var requestedFile = projectRenderer
+                    .projectFolder()
+                    .resolve("src/main/csv/")
+                    .resolve(path.substring(0, path.lastIndexOf(".csv.html")) + ".csv");
+            if (is_file(requestedFile)) {
+                final var content = Xml.rElement(NameSpaces.SEW, "csv-chart");
+                content.appendChild(Xml.textNode(Paths.readString(requestedFile)));
+                return Optional.of(renderingResult(renderer
+                                .transform(Xml.toPrettyString(content))
+                                .getBytes(UTF_8)
+                        , TEXT_HTML.toString()));
             }
         }
         return Optional.empty();

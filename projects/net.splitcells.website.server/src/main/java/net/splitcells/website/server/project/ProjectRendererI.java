@@ -86,7 +86,6 @@ public class ProjectRendererI implements ProjectRenderer {
         renderer.registerExtension(userCommandRenderer());
         renderer.registerExtension(commonMarkExtension());
         renderer.registerExtension(csvRenderer());
-        renderer.registerExtension(csvChartRenderer());
     }
 
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
@@ -106,6 +105,7 @@ public class ProjectRendererI implements ProjectRenderer {
         this.renderer.registerExtension(xmlRenderer(renderer()));
         this.renderer.registerExtension(textExtension(renderer()));
         this.renderer.registerExtension(resourceRenderer());
+        this.renderer.registerExtension(csvChartRenderer(renderer()));
     }
 
     /**

@@ -42,7 +42,7 @@ public class TextRenderer implements Renderer {
                     .resolve("src/main/txt")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".txt");
             if (Files.is_file(textFile)) {
-                final var content = Xml.rElement(NameSpaces.NATURAL, "csv");
+                final var content = Xml.rElement(NameSpaces.NATURAL, "text");
                 content.appendChild(Xml.textNode(Paths.readString(textFile)));
                 return Optional.of(renderingResult(renderer
                                 .transform(Xml.toPrettyString(content))
