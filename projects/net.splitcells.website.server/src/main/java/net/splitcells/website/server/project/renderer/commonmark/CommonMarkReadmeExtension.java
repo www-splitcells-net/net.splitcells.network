@@ -12,6 +12,7 @@ package net.splitcells.website.server.project.renderer.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.renderer.Renderer;
@@ -43,11 +44,14 @@ public class CommonMarkReadmeExtension implements Renderer {
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
-        if (path.endsWith("README.html") && is_file(projectRenderer.projectFolder().resolve("README.md"))) {
-            final var pathContent = readString(projectRenderer.projectFolder().resolve("README.md"));
-            return Optional.of(
-                    renderingResult(renderer.render(pathContent, projectRenderer, path)
-                            , TEXT_HTML.toString()));
+        final var readmePath = projectRenderer.projectFolder().resolve("README.md");
+        if (path.endsWith("README.html")) {
+            if (Files.is_file(readmePath)) {
+                final var pathContent = readString(readmePath);
+                return Optional.of(
+                        renderingResult(renderer.render(pathContent, projectRenderer, path)
+                                , TEXT_HTML.toString()));
+            }
         }
         return Optional.empty();
     }

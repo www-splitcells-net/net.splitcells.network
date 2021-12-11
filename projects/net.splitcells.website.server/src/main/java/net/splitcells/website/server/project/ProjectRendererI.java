@@ -169,8 +169,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 return readArtifact(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(resourceRootPath, e);
+            throw new RuntimeException("resourceRootPath: " + resourceRootPath, e);
         }
     }
 
@@ -234,33 +233,34 @@ public class ProjectRendererI implements ProjectRenderer {
 
     @Override
     public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path) {
-        try {
-            final var content = Xml.rElement(NameSpaces.SEW, "article");
-            final var htmlBodyContent = Xml.rElement(NameSpaces.SEW, "html-body-content");
-            htmlBodyContent.appendChild
-                    (Xml.textNode(MARKER));
-            content.appendChild(htmlBodyContent);
-            if (title.isPresent()) {
-                final var metaElement = Xml.elementWithChildren(NameSpaces.SEW, "meta");
-                final var titleElement = Xml.elementWithChildren(NameSpaces.SEW, "title");
-                metaElement.appendChild(titleElement);
-                titleElement.appendChild(Xml.textNode(title.get()));
-                content.appendChild(metaElement);
-                if (path.isPresent()) {
-                    final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
-                    pathElement.appendChild(Xml.textNode(Paths.get(path.get()).getParent().toString()));
-                    metaElement.appendChild(pathElement);
+        final var content = Xml.rElement(NameSpaces.SEW, "article");
+        final var htmlBodyContent = Xml.rElement(NameSpaces.SEW, "html-body-content");
+        htmlBodyContent.appendChild
+                (Xml.textNode(MARKER));
+        content.appendChild(htmlBodyContent);
+        if (title.isPresent()) {
+            final var metaElement = Xml.elementWithChildren(NameSpaces.SEW, "meta");
+            final var titleElement = Xml.elementWithChildren(NameSpaces.SEW, "title");
+            metaElement.appendChild(titleElement);
+            titleElement.appendChild(Xml.textNode(title.get()));
+            content.appendChild(metaElement);
+            if (path.isPresent()) {
+                final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
+                final var pathParent = Paths.get(path.get()).getParent();
+                if (pathParent == null) {
+                    pathElement.appendChild(Xml.textNode(""));
+                } else {
+                    pathElement.appendChild(Xml.textNode(pathParent.toString()));
                 }
+                metaElement.appendChild(pathElement);
             }
-            final var contentAsString = Xml.toPrettyString(content);
-            domsole().append(perspective(contentAsString), LogLevel.INFO);
-            return Optional.of(renderer()
-                    .transform(contentAsString)
-                    .replace(MARKER, bodyContent)
-                    .getBytes(UTF_8));
-        } catch (Exception e) {
-            return Optional.empty();
         }
+        final var contentAsString = Xml.toPrettyString(content);
+        domsole().append(perspective(contentAsString), LogLevel.INFO);
+        return Optional.of(renderer()
+                .transform(contentAsString)
+                .replace(MARKER, bodyContent)
+                .getBytes(UTF_8));
     }
 
     private Optional<byte[]> renderTextFile(String path) {
