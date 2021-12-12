@@ -3,3 +3,4 @@ set -e
 echo net.splitcells.network
 echo net.splitcells.os.state.interface.lib.gpl.2
 echo net.splitcells.os.state.interface.lib.gpl.3
+echo net.splitcells.network.log
