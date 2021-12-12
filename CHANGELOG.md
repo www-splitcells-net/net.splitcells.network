@@ -20,6 +20,13 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-12-12**: The command `repo.repair` was rewritten in Python in order to
+  support better argument parsing,
+  which has a relatively complex syntax in Bash.
+  The implicit argument (no flag required for setting) was converted to an
+  explicit argument (`--remote-repo=[...]`.
+  The command now also accepts one value for this argument,
+  because multiple ones do not make sense.
 * **2021-12-09**:
   1. **#\148** Unify method naming by renaming 2 methods:
      1. Rename `Contraint#register_addition` to `Contraint#registerAddition`.
