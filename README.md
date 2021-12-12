@@ -134,7 +134,7 @@ Project Cluster
 * Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) and [Sourcehut](https://todo.sr.ht/~splitcells-net/net.splitcells.network).
 * Repository Hosts:
   * [Github](https://github.com/www-splitcells-net/net.splitcells.network)
-  * [Gitlab](https://github.com/www-splitcells-net/net.splitcells.network) (Currently only used for CI.)
+  * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) (Currently only used for CI.)
   * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network)
 ## Contributing
 
