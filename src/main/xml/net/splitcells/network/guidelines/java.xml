@@ -4,6 +4,8 @@
          xmlns:d="http://splitcells.net/den.xsd">
     <meta>
         <title>Java Guidelines</title>
+        <d:toDo>Prefer whitespace over spaces,
+            because it is most portable and one has most control.</d:toDo>
     </meta>
     <paragraph>Use only private or public visibility modifier.
     Method arguments are implicitly final.</paragraph>
