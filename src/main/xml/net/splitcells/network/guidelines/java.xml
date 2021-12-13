@@ -5,5 +5,6 @@
     <meta>
         <title>Java Guidelines</title>
     </meta>
-    <paragraph>Use only private or public visibility modifier.</paragraph>
+    <paragraph>Use only private or public visibility modifier.
+    Method arguments are implicitly final.</paragraph>
 </article>
