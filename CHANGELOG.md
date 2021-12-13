@@ -136,6 +136,7 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-12-13**: **#\132** [Justify current bias toward online optimization.](https://github.com/www-splitcells-net/net.splitcells.network/issues/132)  
 * **2021-12-11**: **#\138**
   1. Add `net.splitcells.network.log` to website's
      default projects.
