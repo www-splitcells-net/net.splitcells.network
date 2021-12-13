@@ -16,6 +16,8 @@ import net.splitcells.gel.data.table.Table;
 
 /**
  * <p>TODO Line index randomizer in order to test index calculations.</p>
+ * <p>TODO IDEA Make Database easily and comfortable compatible to POJOs and
+ * thereby make a type safe interface of {@link Database}</p>
  * <p>TODO IDEA PERFORMANCE A database should be implementable with a byte matrix as backend.
  * Such an performance optimization would make also sense,
  * if one needs to work on an instance of data (i.e. CSV files),
