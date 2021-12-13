@@ -18,9 +18,10 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.resource.communication.interaction.Pdsui.pdsui;
 
 /**
- * TODO In the future, this should be a counter part of the web server.
- * <p>
- * TODO Message filtering and routing should be done by dedicated classes,
+ * <p>TODO Create compact and standardize log format.
+ * Each message should only take up one line, so that filtering messages is easy.</p>
+ * <p>TODO In the future, this should be a counter part of the web server.</p>
+ * <p>TODO Message filtering and routing should be done by dedicated classes,
  * so that rendering can be separated from the rest.
  * </p>
  */
