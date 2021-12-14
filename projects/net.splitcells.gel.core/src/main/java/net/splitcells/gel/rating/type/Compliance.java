@@ -23,6 +23,11 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
+/**
+ * Signals with {@link #value} equals true,
+ * that the rating subject complies with all constraints.
+ * Otherwise, the {@link #value} is equals false.
+ */
 public class Compliance implements Rating {
     private static final Comparator<Boolean> COMPARATOR = ASCENDING_BOOLEANS;
     private boolean value;

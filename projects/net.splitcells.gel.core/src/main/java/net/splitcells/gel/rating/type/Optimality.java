@@ -23,6 +23,15 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
+/**
+ * Signals with a {@link #value} of zero,
+ * that a solution has the worst possible {@link Rating}.
+ * Signals with a {@link #value} of one,
+ * that the rated subject has the best possible {@link Rating}.
+ * {@link #value}s between zero and one signal,
+ * how close the object's {@link Rating} is to the optimal
+ * or worst solution.
+ */
 public class Optimality implements Rating {
     private static final Comparator<Double> OPTIMALITY_VALUE_COMPARATOR = new Comparator<Double>() {
         @Override
