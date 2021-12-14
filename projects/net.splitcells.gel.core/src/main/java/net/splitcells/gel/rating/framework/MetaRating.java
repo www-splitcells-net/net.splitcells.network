@@ -15,6 +15,23 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 import net.splitcells.dem.data.set.map.Map;
 
+/**
+ * <p>This {@link Rating} instance consists of multiple rating instances.
+ * The complete rating is represented by the combination of all
+ * {@link #content()} {@link Rating}s.
+ * Every element of {@link #content()} can represent the rating
+ * of the subject,
+ * but each element has its own informational content.
+ * </p>
+ * <p>No element of {@link #content()} is allowed to conflict with an other
+ * element.
+ * For instance, a {@link MetaRating} is not allowed to contain the sub rating
+ * {@link net.splitcells.gel.rating.type.Compliance} of true
+ * and {@link net.splitcells.gel.rating.type.Optimality} of 0,
+ * because an {@link net.splitcells.gel.rating.type.Compliance} of true
+ * implies an {@link net.splitcells.gel.rating.type.Optimality} of 1.
+ * </p>
+ */
 public interface MetaRating extends Rating, RatingTranslator, MetaRatingMerger {
     static MetaRating neutral() {
         final MetaRating neutral = metaRating();
