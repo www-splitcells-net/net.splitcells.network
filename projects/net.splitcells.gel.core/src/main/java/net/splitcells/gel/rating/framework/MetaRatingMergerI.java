@@ -71,7 +71,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
         combiners.put(condition, combiner);
     }
 
-    private java.util.List<Rating> simplify(Rating... ratings) {
+    private static java.util.List<Rating> simplify(Rating... ratings) {
         return asList(ratings).stream().flatMap(rating -> {
             if (rating instanceof MetaRating) {
                 return ((MetaRating) rating).content().values().stream();
