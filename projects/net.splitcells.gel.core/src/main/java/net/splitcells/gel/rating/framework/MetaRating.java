@@ -16,6 +16,10 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import net.splitcells.dem.data.set.map.Map;
 
 /**
+ * <p>Use {@link MetaRating} as sparingly as possible,
+ * because it adds significant overhead.
+ * Prefer using simple {@link Rating}s such as {@link net.splitcells.gel.rating.type.Cost},
+ * if there is no concrete need for {@link MetaRating}s.</p>
  * <p>This {@link Rating} instance consists of multiple rating instances.
  * The complete rating is represented by the combination of all
  * {@link #content()} {@link Rating}s.
