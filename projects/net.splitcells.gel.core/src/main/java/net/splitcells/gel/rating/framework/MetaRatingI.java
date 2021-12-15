@@ -34,6 +34,10 @@ import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
 
 public class MetaRatingI implements MetaRating {
+    /**
+     * TODO Use dedicated typed mapping interface, in order to move type unsafe
+     * operations to a dedicated place.
+     */
     private final Map<Class<? extends Rating>, Rating> ratingMap;
     private final RatingTranslator translator;
     private final MetaRatingMerger merger;

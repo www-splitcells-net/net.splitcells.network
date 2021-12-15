@@ -58,7 +58,9 @@ public class Maps extends ResourceI<MapF> {
     }
 
     /**
-     * TODO Remove this, because it is not used anywhere.
+     * TODO Create dedicated typed mapping interface and implementations.
+     * Create one implementation based on a {@link Map} and one implementation
+     * based on a {@link net.splitcells.dem.data.set.list.List}.
      *
      * @param values values
      * @param <T>    type
