@@ -15,7 +15,22 @@ import java.util.function.BiPredicate;
 
 import net.splitcells.dem.data.set.map.Map;
 
+/**
+ * TODO This interface was created in order to split up the implementation of
+ * {@link MetaRating}.
+ * It was done in a bad way, because the split between {@link MetaRating} and
+ * {@link MetaRatingMerger} is based on side effects.
+ * This whole interface needs to be overdone.
+ * Especially the fact, that this interface extends {@link Rating} seems to be
+ * a bad idea.
+ * Instead this interface probably should be a conversion function API.
+ * Also keep in mind, that this interface should not support any mutability,
+ * because the meaning of such a mutability seems to be hard to understand.
+ *
+ */
+@Deprecated
 public interface MetaRatingMerger extends Rating {
+    @Deprecated
     <T extends Rating> void registerMerger(
             BiPredicate
                     <Map<Class<? extends Rating>, Rating>
