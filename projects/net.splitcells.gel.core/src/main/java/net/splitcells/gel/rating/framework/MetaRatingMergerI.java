@@ -85,6 +85,10 @@ public class MetaRatingMergerI implements MetaRatingMerger {
         return asList(ratings);
     }
 
+    /*
+     * TODO REMOVE
+     */
+    @Deprecated
     private static java.util.List<Rating> simplify(Rating... ratings) {
         return asList(ratings).stream().flatMap(rating -> {
             if (rating instanceof MetaRating) {
