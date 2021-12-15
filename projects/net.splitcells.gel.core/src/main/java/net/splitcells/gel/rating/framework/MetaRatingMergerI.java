@@ -52,7 +52,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     @Override
     public <R extends Rating> R combine(Rating... additionalRatings) {
         // TODO Make it immutble.
-        final var additionalRatingMap = typeMapping(simplify(additionalRatings));
+        final var additionalRatingMap = typeMapping(simplifyMoreEfficiently(additionalRatings));
         return (R) MetaRatingI.metaRating(combiners.entrySet().stream()
                 .filter(combiner -> combiner.getKey().test(ratings, additionalRatingMap))
                 .findFirst()
@@ -69,6 +69,20 @@ public class MetaRatingMergerI implements MetaRatingMerger {
             throw new IllegalArgumentException();
         }
         combiners.put(condition, combiner);
+    }
+
+    /**
+     * {@link #simplify(Rating...)} has bad performance and
+     * the act in itself might not yield better performance because of
+     * {@link #combiners}.
+     * For the N Queen problem {@link #simplifyMoreEfficiently} yielded better
+     * performance.
+     * 
+     * @param ratings Ratings To Simplify
+     * @return Simplified Ratings
+     */
+    private static java.util.List<Rating> simplifyMoreEfficiently(Rating... ratings) {
+        return asList(ratings);
     }
 
     private static java.util.List<Rating> simplify(Rating... ratings) {
