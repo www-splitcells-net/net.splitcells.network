@@ -105,10 +105,10 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     }
 
     default MetaRating rating(Line line) {
-        return event(injectionGroup(), line);
+        return rating(injectionGroup(), line);
     }
 
-    MetaRating event(GroupId group, Line line);
+    MetaRating rating(GroupId group, Line line);
 
     MetaRating rating(GroupId group);
 

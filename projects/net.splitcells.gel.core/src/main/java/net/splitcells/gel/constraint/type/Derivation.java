@@ -53,8 +53,8 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public MetaRating event(GroupId group, Line line) {
-        return derivationFunction.apply(derivationTarget.event(group, line));
+    public MetaRating rating(GroupId group, Line line) {
+        return derivationFunction.apply(derivationTarget.rating(group, line));
     }
 
     @Override

@@ -176,7 +176,7 @@ public abstract class ConstraintAI implements Constraint {
     public Set<Line> complying(GroupId group, Set<Line> allocations) {
         final Set<Line> complying = setOfUniques();
         allocations.forEach(allocation -> {
-            if (event(group, allocation.value(LINE)).equalz(noCost())) {
+            if (rating(group, allocation.value(LINE)).equalz(noCost())) {
                 complying.add(lineProcessing.demandOfAllocation(allocation).value(LINE));
             }
         });
@@ -186,7 +186,7 @@ public abstract class ConstraintAI implements Constraint {
     public Set<Line> defying(GroupId group, Set<Line> allocations) {
         final Set<Line> defying = setOfUniques();
         allocations.forEach(allocation -> {
-            if (!event(group, allocation.value(LINE)).equalz(noCost())) {
+            if (!rating(group, allocation.value(LINE)).equalz(noCost())) {
                 defying.add(lineProcessing.demandOfAllocation(allocation).value(LINE));
             }
         });
@@ -194,11 +194,11 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public MetaRating event(GroupId group, Line line) {
+    public MetaRating rating(GroupId group, Line line) {
         final var routingRating
                 = routingRating(group, processedLine -> processedLine.value(LINE).equalsTo(line));
         routingRating.children_to_groups().forEach((child, groups) ->
-                groups.forEach(group2 -> routingRating.events().add(child.event(group2, line)))
+                groups.forEach(group2 -> routingRating.events().add(child.rating(group2, line)))
         );
         if (routingRating.events().isEmpty()) {
             return metaRating(noCost());
@@ -389,7 +389,7 @@ public abstract class ConstraintAI implements Constraint {
                 .filter(allocation -> allocationSelector
                         .test(lineRating
                                 (allocation
-                                        , event(allocation.value(INCOMING_CONSTRAINT_GROUP), line))))
+                                        , rating(allocation.value(INCOMING_CONSTRAINT_GROUP), line))))
                 .map(allocation -> report
                         (allocation.value(LINE)
                                 , allocation.value(INCOMING_CONSTRAINT_GROUP)
@@ -451,7 +451,7 @@ public abstract class ConstraintAI implements Constraint {
                         -> allocationSelector
                         .test(lineRating
                                 (allocation
-                                        , event(allocation.value(INCOMING_CONSTRAINT_GROUP), line))))
+                                        , rating(allocation.value(INCOMING_CONSTRAINT_GROUP), line))))
                 .map(allocation -> allocation.value(PROPAGATION_TO)
                         .stream()
                         .map(propagatedTo ->

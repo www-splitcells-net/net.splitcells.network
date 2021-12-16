@@ -78,6 +78,7 @@ public class NQueenProblemTest extends TestSuiteI {
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
     }
 
+    @Disabled
     @Tag(CAPABILITY_TEST)
     @Test
     public void test_8_queen_problem_with_backtracking() {

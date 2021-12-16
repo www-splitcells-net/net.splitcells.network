@@ -189,9 +189,9 @@ public class ThenTest {
         assertThat(testSubject.complying()).containsExactly(complyingLine);
         assertThat(testSubject.defying()).isEmpty();
         final var defyingGroup = testSubject.register(defyingLine);
-        assertThat(testSubject.event(testSubject.injectionGroup(), complyingLine))
+        assertThat(testSubject.rating(testSubject.injectionGroup(), complyingLine))
                 .isEqualTo(noCost());
-        assertThat(testSubject.event(testSubject.injectionGroup(), defyingLine))
+        assertThat(testSubject.rating(testSubject.injectionGroup(), defyingLine))
                 .isEqualTo(cost(defianceCost));
         assertThat(complyingGroup).isEqualTo(defyingGroup);
         assertThat(testSubject.rating(complyingGroup))
