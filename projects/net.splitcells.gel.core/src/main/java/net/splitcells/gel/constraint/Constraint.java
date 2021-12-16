@@ -96,7 +96,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     
     GroupId injectionGroup();
 
-    default MetaRating rating() {
+    default Rating rating() {
         return rating(injectionGroup());
     }
 
@@ -104,13 +104,13 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         return GroupId.group("for-all");
     }
 
-    default MetaRating rating(Line line) {
+    default Rating rating(Line line) {
         return rating(injectionGroup(), line);
     }
 
-    MetaRating rating(GroupId group, Line line);
+    Rating rating(GroupId group, Line line);
 
-    MetaRating rating(GroupId group);
+    Rating rating(GroupId group);
 
     default Perspective naturalArgumentation() {
         return naturalArgumentation(injectionGroup());
@@ -126,7 +126,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     Optional<Perspective> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector);
 
-    default MetaRating rating(Set<GroupId> groups) {
+    default Rating rating(Set<GroupId> groups) {
         return groups.stream().
                 map(group -> rating(group)).
                 reduce((a, b) -> a.combine(b)).

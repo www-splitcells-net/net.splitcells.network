@@ -19,6 +19,7 @@ import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solutions;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
@@ -73,7 +74,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public DerivedSolution derived(Function<MetaRating, MetaRating> derivation) {
+    public DerivedSolution derived(Function<Rating, Rating> derivation) {
         return derivedSolution(() -> list(), allocations, constraint, derivation);
     }
 

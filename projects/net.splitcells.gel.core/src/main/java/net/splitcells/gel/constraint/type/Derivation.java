@@ -22,6 +22,7 @@ import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.MetaRating;
+import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
 
 import java.util.Collection;
@@ -35,14 +36,14 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 public final class Derivation implements Constraint {
 
     public static Derivation derivation
-            (Constraint derivationTarget, Function<MetaRating, MetaRating> derivationFunction) {
+            (Constraint derivationTarget, Function<Rating, Rating> derivationFunction) {
         return new Derivation(derivationTarget, derivationFunction);
     }
 
     private final Constraint derivationTarget;
-    private final Function<MetaRating, MetaRating> derivationFunction;
+    private final Function<Rating, Rating> derivationFunction;
 
-    private Derivation(Constraint derivationTarget, Function<MetaRating, MetaRating> derivationFunction) {
+    private Derivation(Constraint derivationTarget, Function<Rating, Rating> derivationFunction) {
         this.derivationTarget = derivationTarget;
         this.derivationFunction = derivationFunction;
     }
@@ -53,12 +54,12 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public MetaRating rating(GroupId group, Line line) {
+    public Rating rating(GroupId group, Line line) {
         return derivationFunction.apply(derivationTarget.rating(group, line));
     }
 
     @Override
-    public MetaRating rating(GroupId group) {
+    public Rating rating(GroupId group) {
         return derivationFunction.apply(derivationTarget.rating(group));
     }
 

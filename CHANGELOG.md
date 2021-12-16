@@ -20,6 +20,16 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-12-16** The rating methods of the constraint interface now only return
+  ratings instead of meta ratings,
+  in order to increase runtime performance.
+  Meta ratings have a higher overhead than primitive ratings,
+  because these are wrappers around primitive ratings based on a lookup
+  map.
+  In most common optimization problems and also for simple problems in general,
+  meta ratings are not required.
+  Supporting this common case explicitly, yields performance gains.
+  Meta ratings can be still obtained via the `asMetaRating` method of ratings.
 * **2021-12-12**: The command `repo.repair` was rewritten in Python in order to
   support better argument parsing,
   which has a relatively complex syntax in Bash.

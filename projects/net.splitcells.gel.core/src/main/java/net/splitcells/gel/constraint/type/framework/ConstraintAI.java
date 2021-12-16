@@ -27,7 +27,6 @@ import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.lineRating;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
-import static net.splitcells.gel.rating.framework.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -194,19 +193,18 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public MetaRating rating(GroupId group, Line line) {
+    public Rating rating(GroupId group, Line line) {
         final var routingRating
                 = routingRating(group, processedLine -> processedLine.value(LINE).equalsTo(line));
         routingRating.children_to_groups().forEach((child, groups) ->
                 groups.forEach(group2 -> routingRating.events().add(child.rating(group2, line)))
         );
         if (routingRating.events().isEmpty()) {
-            return metaRating(noCost());
+            return noCost();
         }
         return routingRating.events().stream()
                 .reduce((a, b) -> a.combine(b))
-                .get()
-                .asMetaRating();
+                .get();
     }
 
     protected RoutingRating routingRating
@@ -233,18 +231,17 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public MetaRating rating(GroupId group) {
+    public Rating rating(GroupId group) {
         final var routingRating
                 = routingRating(group, lineSelector -> true);
         routingRating.children_to_groups().forEach((children, groups) ->
                 groups.forEach(group2 -> routingRating.events().add(children.rating(group2))));
         if (routingRating.events().isEmpty()) {
-            return metaRating(noCost());
+            return noCost();
         }
         return routingRating.events().stream()
                 .reduce((a, b) -> a.combine(b))
-                .get()
-                .asMetaRating();
+                .get();
     }
 
     /**

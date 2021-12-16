@@ -171,7 +171,7 @@ public class OralExamsTest extends TestSuiteI {
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3), (currentSolution, step) -> {
                 domsole().append(
                         perspective(ZonedDateTime.now().toString()
-                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                        + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
                                         + currentSolution.demandsFree().size()
                                 , STRING)
@@ -182,7 +182,7 @@ public class OralExamsTest extends TestSuiteI {
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2), (currentSolution, step) -> {
                 domsole().append(
                         perspective(ZonedDateTime.now().toString()
-                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                        + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
                                         + currentSolution.demandsFree().size()
                                 , STRING)
@@ -193,7 +193,7 @@ public class OralExamsTest extends TestSuiteI {
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3), (currentSolution, step) -> {
                 domsole().append(
                         perspective(ZonedDateTime.now().toString()
-                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                        + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
                                         + currentSolution.demandsFree().size()
                                 , STRING)
@@ -204,7 +204,7 @@ public class OralExamsTest extends TestSuiteI {
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) -> {
                 domsole().append(
                         perspective(ZonedDateTime.now().toString()
-                                        + testSubject.constraint().rating().getContentValue(Cost.class).value()
+                                        + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
                                         + currentSolution.demandsFree().size()
                                 , STRING)

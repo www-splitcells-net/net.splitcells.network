@@ -15,6 +15,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.LinePointer;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.table.Line;
@@ -83,7 +84,7 @@ public class SolutionI implements Solution {
     }
 
     @Override
-    public DerivedSolution derived(Function<MetaRating, MetaRating> derivation) {
+    public DerivedSolution derived(Function<Rating, Rating> derivation) {
         return problem.derived(derivation);
     }
 

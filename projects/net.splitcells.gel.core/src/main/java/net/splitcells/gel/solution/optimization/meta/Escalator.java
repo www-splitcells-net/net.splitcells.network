@@ -53,7 +53,7 @@ public class Escalator implements OfflineOptimization {
         if (TRACING) {
             domsole().append(perspective("escalation-step")
                             .withProperty("escalation-level", "" + escalationLevel)
-                            .withProperty("root-cost", "" + rootRating.getContentValue(Cost.class).value())
+                            .withProperty("root-cost", "" + rootRating.asMetaRating().getContentValue(Cost.class).value())
                     , () -> solution.path().withAppended(OPTIMIZATION.value(), getClass().getSimpleName())
                     , LogLevel.TRACE);
         }

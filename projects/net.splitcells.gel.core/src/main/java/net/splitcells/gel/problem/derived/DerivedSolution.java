@@ -15,6 +15,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.LinePointer;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
@@ -44,7 +45,7 @@ public class DerivedSolution implements Solution {
     private final Discoverable contexts;
 
     public static DerivedSolution derivedSolution(Discoverable context, Allocations allocations
-            , Constraint originalConstraint, Function<MetaRating, MetaRating> derivation) {
+            , Constraint originalConstraint, Function<Rating, Rating> derivation) {
         return new DerivedSolution(context, allocations, originalConstraint
                 , derivation(originalConstraint, derivation));
     }
@@ -55,7 +56,7 @@ public class DerivedSolution implements Solution {
     }
 
     protected DerivedSolution(Discoverable context, Allocations allocations, Constraint originalConstraints
-            , Function<MetaRating, MetaRating> derivation) {
+            , Function<Rating, Rating> derivation) {
         this(context, allocations, originalConstraints, derivation(originalConstraints, derivation));
     }
 
@@ -89,7 +90,7 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public DerivedSolution derived(Function<MetaRating, MetaRating> derivation) {
+    public DerivedSolution derived(Function<Rating, Rating> derivation) {
         throw notImplementedYet();
     }
 

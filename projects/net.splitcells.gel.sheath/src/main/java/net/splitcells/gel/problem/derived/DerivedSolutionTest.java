@@ -61,7 +61,7 @@ public class DerivedSolutionTest {
         final var testSubject
                 = rootSolution
                 .derived(novērtējums ->
-                        cost(novērtējums.getContentValue(Cost.class).value()
+                        cost(novērtējums.asMetaRating().getContentValue(Cost.class).value()
                                 * derivedCostManipulationFactor).asMetaRating());
         assertThat(rootSolution.constraint().rating()).isEqualTo(cost(0));
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
@@ -106,7 +106,7 @@ public class DerivedSolutionTest {
         final var testSubject
                 = rootSolution
                 .derived(novērtējums ->
-                        cost(novērtējums.getContentValue(Cost.class).value()
+                        cost(novērtējums.asMetaRating().getContentValue(Cost.class).value()
                                 * derivedCostManipulationFactor).asMetaRating());
         assertThat(rootSolution.constraint().rating()).isEqualTo(cost(2 * defianceCost));
         assertThat(testSubject.constraint().rating()).isEqualTo(

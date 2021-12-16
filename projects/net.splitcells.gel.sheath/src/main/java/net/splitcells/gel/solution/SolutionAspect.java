@@ -100,11 +100,11 @@ public class SolutionAspect implements Solution {
         }
         final var result = solution.optimize(event, parameters);
         if (StaticFlags.TELLING_STORY) {
-            domsole().append(perspective("" + constraint().rating().getContentValue(Cost.class).value())
+            domsole().append(perspective("" + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
                     , () -> path().withAppended("optimize", "after", "cost")
                     , LogLevel.DEBUG);
             if (isComplete()) {
-                domsole().append(perspective(this.history().size() + ", " + constraint().rating().getContentValue(Cost.class).value())
+                domsole().append(perspective(this.history().size() + ", " + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
                         , () -> path().withAppended("isComplete", "optimize", "after", "cost")
                         , LogLevel.DEBUG);
             }
@@ -178,7 +178,7 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public DerivedSolution derived(Function<MetaRating, MetaRating> derivation) {
+    public DerivedSolution derived(Function<Rating, Rating> derivation) {
         return solution.derived(derivation);
     }
 

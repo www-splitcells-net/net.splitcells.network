@@ -15,6 +15,7 @@ import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.allocation.AllocationsLiveView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.rating.framework.MetaRating;
+import net.splitcells.gel.rating.framework.Rating;
 
 import java.util.function.Function;
 
@@ -24,5 +25,5 @@ public interface ProblemView extends AllocationsLiveView {
 
     Allocations allocations();
 
-    DerivedSolution derived(Function<MetaRating, MetaRating> derivation);
+    DerivedSolution derived(Function<Rating, Rating> derivation);
 }

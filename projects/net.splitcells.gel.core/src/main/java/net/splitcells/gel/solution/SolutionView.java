@@ -236,6 +236,7 @@ public interface SolutionView extends ProblemView {
                     textNode(""
                             + constraint()
                             .rating(allocation)
+                            .asMetaRating()
                             .getContentValue(Cost.class)
                             .value()));
         }

@@ -12,16 +12,17 @@ package net.splitcells.gel.constraint.intermediate.data;
 
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.framework.MetaRating;
+import net.splitcells.gel.rating.framework.Rating;
 
 public class AllocationRating {
-	public static AllocationRating lineRating(Line line, MetaRating rating) {
+	public static AllocationRating lineRating(Line line, Rating rating) {
 		return new AllocationRating(line, rating);
 	}
 
 	private final Line line;
-	private final MetaRating rating;
+	private final Rating rating;
 
-	private AllocationRating(Line line, MetaRating rating) {
+	private AllocationRating(Line line, Rating rating) {
 		this.line = line;
 		this.rating = rating;
 	}
@@ -30,7 +31,7 @@ public class AllocationRating {
 		return line;
 	}
 
-	public MetaRating rating() {
+	public Rating rating() {
 		return rating;
 	}
 }
