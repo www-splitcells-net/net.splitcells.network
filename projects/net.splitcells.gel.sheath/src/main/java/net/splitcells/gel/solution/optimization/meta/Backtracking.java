@@ -13,11 +13,13 @@ import static net.splitcells.gel.solution.optimization.primitive.enumerable.Init
 import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpaceI.enumerableOptimizationSpace;
 
 /**
- * This is an implementation of the backtracking algorithm.
+ * <p>This is an implementation of the backtracking algorithm.
  * The backtracking exits, when the {@link Solution#isComplete()} is {@link true}.
  * This implementation backtracks,
  * if a given {@link Solution} is worse than the previous {@link Solution}
- * found via {@link EnumerableOptimizationSpace#parent()}.
+ * found via {@link EnumerableOptimizationSpace#parent()}.</p>
+ * <p>TODO Record best found {@link Solution},
+ * that is not specific to an optimizer.</p>
  */
 public class Backtracking implements OnlineOptimization {
     public static Backtracking backtracking() {

@@ -83,8 +83,23 @@ public interface SolutionView extends ProblemView {
         return forAllAttributesOfGroups;
     }
 
+    /**
+     * <p>TODO Create read only {@link History} and move mutable
+     * {@link History} to {@link Solution}, because this interface is read only.</p>
+     * 
+     * <p>TODO Make this method optionally,
+     * so that {@link History} recording can be disabled,
+     * in order to improve runtime performance.</p>
+     * 
+     * @return
+     */
     History history();
 
+    /**
+     * TODO IDA This is currently only an idea.
+     * 
+     * @return Returns a {@link Solution}, that based on this.
+     */
     default Solution branch() {
         throw notImplementedYet();
     }
