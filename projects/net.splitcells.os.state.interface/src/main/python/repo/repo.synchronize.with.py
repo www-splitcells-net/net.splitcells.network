@@ -27,7 +27,7 @@ if __name__ == '__main__':
 	synchronizationScript = """system.network.peer.ssh.reachable {0} \\
 	&& repo.is.clean \\
 	&& repo.remote.set {1} \\
-	&& repo.repair {1} \\
+	&& repo.repair --remote-repo={1} \\
 	&& repo.pull \\
 	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo, "\n")
 	logging.debug('Executing: ' + synchronizationScript)
