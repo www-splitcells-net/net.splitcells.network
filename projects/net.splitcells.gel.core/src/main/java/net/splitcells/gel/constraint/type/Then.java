@@ -11,8 +11,10 @@
 package net.splitcells.gel.constraint.type;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.constraint.type.framework.ConstraintAspect.constraintAspect;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 
+import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
 import net.splitcells.gel.constraint.type.framework.ConstraintBasedOnLocalGroupsAI;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Report;
@@ -21,12 +23,12 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public class Then extends ConstraintBasedOnLocalGroupsAI {
 
-    public static Then then(Rater rater) {
-        return new Then(rater);
+    public static Constraint then(Rater rater) {
+        return constraintAspect(new Then(rater));
     }
 
-    public static Then then(Rating rating) {
-        return new Then(constantRater(rating));
+    public static Constraint then(Rating rating) {
+        return constraintAspect(new Then(constantRater(rating)));
     }
 
     protected Then(Rater rater) {

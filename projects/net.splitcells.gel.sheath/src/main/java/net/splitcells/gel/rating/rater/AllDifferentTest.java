@@ -36,7 +36,7 @@ public class AllDifferentTest extends TestSuiteI {
     public void test_rating_with_all_values_different() {
         final Attribute<Integer> attribute = attribute(Integer.class);
         final Database lineSupplier = database(attribute);
-        final Then testSubject = then(allDifferent(attribute));
+        final var testSubject = then(allDifferent(attribute));
         assertThat(testSubject.rating().equalz(noCost())).isTrue();
         assertThat(testSubject.defying()).isEmpty();
         testSubject.register_papildinājumi(lineSupplier.addTranslated(list(1)));
@@ -51,7 +51,7 @@ public class AllDifferentTest extends TestSuiteI {
     public void test_rating_with_all_values_same() {
         final Attribute<Integer> attribute = attribute(Integer.class);
         final Database lineSupplier = database(attribute);
-        final Then testSubject = then(allDifferent(attribute));
+        final var testSubject = then(allDifferent(attribute));
         assertThat(testSubject.rating().equalz(noCost())).isTrue();
         testSubject.register_papildinājumi(lineSupplier.addTranslated(list(1)));
         testSubject.register_papildinājumi(lineSupplier.addTranslated(list(1)));

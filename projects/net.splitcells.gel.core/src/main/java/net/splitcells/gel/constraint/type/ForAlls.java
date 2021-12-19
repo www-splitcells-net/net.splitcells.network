@@ -10,12 +10,13 @@
  */
 package net.splitcells.gel.constraint.type;
 
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 
 public class ForAlls {
 
-    public static <T> ForAll forAllWithValue(Attribute<T> attribute, T value) {
+    public static <T> Constraint forAllWithValue(Attribute<T> attribute, T value) {
         return ForAllFactory.instance().forAllWithValue(attribute, value);
     }
 
@@ -24,7 +25,7 @@ public class ForAlls {
      * <p>
      * TODO TEST
      */
-    public static ForAll forAll() {
+    public static Constraint forAll() {
         return ForAllFactory.instance().forAll();
     }
 
@@ -35,11 +36,11 @@ public class ForAlls {
      * @param attribute
      * @return
      */
-    public static ForAll forEach(final Attribute<?> attribute) {
+    public static Constraint forEach(final Attribute<?> attribute) {
         return ForAllFactory.instance().forAll(attribute);
     }
 
-    public static ForAll forEach(Rater classifier) {
+    public static Constraint forEach(Rater classifier) {
         return ForAllFactory.instance().forAll(classifier);
     }
 
@@ -49,7 +50,7 @@ public class ForAlls {
      * @param arguments
      * @return
      */
-    public static ForAll forAllCombinationsOf(final Attribute<?>... arguments) {
+    public static Constraint forAllCombinationsOf(final Attribute<?>... arguments) {
         return ForAllFactory.instance().forAllCombinations(arguments);
     }
 }

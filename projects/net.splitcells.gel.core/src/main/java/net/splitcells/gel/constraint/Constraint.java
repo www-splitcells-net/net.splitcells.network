@@ -153,6 +153,11 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         registerBeforeRemoval(injectionGroup(), line);
     }
 
+    /**
+     * TODO Should this not return `List<ConstraintView>`?
+     *
+     * @return List Of Child Constraints
+     */
     List<Constraint> childrenView();
 
     Set<Line> complying(GroupId group);
@@ -251,4 +256,6 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         builder.forEach(this::withChildren);
         return this;
     }
+
+    Table lines();
 }

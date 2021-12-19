@@ -11,6 +11,7 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.util.Optional;
 import java.util.function.BiFunction;

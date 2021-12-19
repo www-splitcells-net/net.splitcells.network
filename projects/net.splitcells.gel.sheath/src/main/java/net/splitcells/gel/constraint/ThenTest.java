@@ -207,7 +207,7 @@ public class ThenTest {
         testEmptyThen(testSubject, complyingGroup, defyingGroup);
     }
 
-    void testEmptyThen(Then testSubject, GroupId... groups) {
+    void testEmptyThen(Constraint testSubject, GroupId... groups) {
         asList(groups).forEach(grupa -> {
             assertThat(testSubject.rating(grupa)).isEqualTo(cost(0));
             assertThat(testSubject.complying(grupa)).isEmpty();

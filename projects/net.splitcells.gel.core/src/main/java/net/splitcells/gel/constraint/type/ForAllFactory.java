@@ -10,6 +10,7 @@
  */
 package net.splitcells.gel.constraint.type;
 
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 
@@ -29,24 +30,24 @@ public class ForAllFactory {
 
     }
 
-    public <T> ForAll forAllWithValue(Attribute<T> attribute, T value) {
+    public <T> Constraint forAllWithValue(Attribute<T> attribute, T value) {
         return ForAll.forAll(
                 forAllWithCondition(line -> value.equals(line.value(attribute))));
     }
 
-    public ForAll forAll() {
+    public Constraint forAll() {
         return ForAll.forAll(propagation());
     }
 
-    public ForAll forAll(final Attribute<?> attribute) {
+    public Constraint forAll(final Attribute<?> attribute) {
         return ForAll.forAll(forAllAttributeValues(attribute));
     }
 
-    public ForAll forAll(Rater classifier) {
+    public Constraint forAll(Rater classifier) {
         return ForAll.forAll(classifier);
     }
 
-    public ForAll forAllCombinations(final Attribute<?>... attributes) {
+    public Constraint forAllCombinations(final Attribute<?>... attributes) {
         return ForAll.forAll(forAllValueCombinations(attributes));
     }
 

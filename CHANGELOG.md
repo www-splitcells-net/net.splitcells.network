@@ -146,8 +146,13 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-* **2021-12-13**: **#\132** [Justify current bias toward online optimization.](https://github.com/www-splitcells-net/net.splitcells.network/issues/132)  
-* **2021-12-11**: **#\138**
+* **2021-12-19**: **\#138** Create rating cache for constraints via
+  ConstraintAspect.
+  In the future, it may be implemented in such a way,
+  that it may be disabled.
+  This is easy to implement, because this feature is implemented as an aspect.
+* **2021-12-13**: **\#132** [Justify current bias toward online optimization.](https://github.com/www-splitcells-net/net.splitcells.network/issues/132)  
+* **2021-12-11**: **\#138**
   1. Add `net.splitcells.network.log` to website's
      default projects.
      This is a new git repository containing log files.

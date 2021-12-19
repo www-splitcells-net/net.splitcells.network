@@ -11,6 +11,7 @@
 package net.splitcells.gel.constraint.type;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.constraint.type.framework.ConstraintAspect.constraintAspect;
 import static net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping.raterBasedGrouping;
 
 import net.splitcells.gel.constraint.type.framework.ConstraintBasedOnLocalGroupsAI;
@@ -23,13 +24,13 @@ import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
 
 public class ForAll extends ConstraintBasedOnLocalGroupsAI {
 
-    public static ForAll forAll(Rater classifier) {
+    public static Constraint forAll(Rater classifier) {
         return create(classifier);
     }
 
     @Deprecated
-    public static ForAll create(Rater classifier) {
-        return new ForAll(classifier);
+    public static Constraint create(Rater classifier) {
+        return constraintAspect(new ForAll(classifier));
     }
 
     protected ForAll(Rater classifier) {

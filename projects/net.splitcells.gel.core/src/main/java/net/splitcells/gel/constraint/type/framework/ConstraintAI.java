@@ -72,10 +72,12 @@ public abstract class ConstraintAI implements Constraint {
     protected final Allocations lineProcessing;
     protected final Map<GroupId, Rating> groupProcessing = map();
 
+    @Deprecated
     protected ConstraintAI(GroupId injectionGroup) {
         this(injectionGroup, "");
     }
 
+    @Deprecated
     protected ConstraintAI(GroupId injectionGroup, String name) {
         this.injectionGroup = injectionGroup;
         lines = Databases.database(name + ".lines", this, list(LINE, INCOMING_CONSTRAINT_GROUP));
@@ -85,6 +87,7 @@ public abstract class ConstraintAI implements Constraint {
         lines.subscribeToAfterAdditions(this::processLineAddition);
     }
 
+    @Deprecated
     protected ConstraintAI() {
         this(Constraint.standardGroup());
     }
@@ -275,6 +278,7 @@ public abstract class ConstraintAI implements Constraint {
         return lineProcessing;
     }
 
+    @Override
     public Table lines() {
         return lines;
     }

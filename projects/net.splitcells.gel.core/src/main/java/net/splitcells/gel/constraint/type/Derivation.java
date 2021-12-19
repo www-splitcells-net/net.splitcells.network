@@ -20,6 +20,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
@@ -126,6 +127,11 @@ public final class Derivation implements Constraint {
 
     @Override
     public Element toDom(Set<GroupId> groups) {
+        throw notImplementedYet();
+    }
+
+    @Override
+    public Table lines() {
         throw notImplementedYet();
     }
 

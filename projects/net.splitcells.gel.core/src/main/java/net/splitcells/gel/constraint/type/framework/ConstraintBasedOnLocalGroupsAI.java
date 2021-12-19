@@ -26,19 +26,23 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     protected final Rater rater;
 
+    @Deprecated
     protected ConstraintBasedOnLocalGroupsAI(Function<Constraint, Rater> raterFactory) {
         super(Constraint.standardGroup());
         rater = raterFactory.apply(this);
     }
 
+    @Deprecated
     protected ConstraintBasedOnLocalGroupsAI(Rater rater, String name) {
         this(Constraint.standardGroup(), rater, name);
     }
 
+    @Deprecated
     protected ConstraintBasedOnLocalGroupsAI(Rater rater) {
         this(Constraint.standardGroup(), rater, "");
     }
 
+    @Deprecated
     protected ConstraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name) {
         super(standardGroup, name);
         this.rater = rater;
