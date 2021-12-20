@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Technology Stack Guidelines</title>
+    </meta>
+    <paragraph>These guidelines describe, which technologies should be used.
+        There are 2 different technology stacks in general:
+        the classical stack is the actual source code and
+        the additional stack integrates the source code with the environment.
+        The first stack is more restricted as the second one,
+        because the second stack needs to be compatible with first one.
+        This requirement does not exist the other way around by default.
+    </paragraph>
+</article>
