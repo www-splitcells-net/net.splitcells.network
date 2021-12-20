@@ -558,6 +558,11 @@
             <xsl:apply-templates select="."/>
         </xsl:for-each>
     </xsl:template>
+    <xsl:template match="s:blockquote">
+        <x:blockquote>
+            <xsl:apply-templates/>
+        </x:blockquote>
+    </xsl:template>
     <xsl:template match="s:code_block">
         <!-- "overflow: auto;"is used because some syntax highlighter do not use scrollbars by default. -->
         <xsl:if test="@asset!=''">
