@@ -71,7 +71,7 @@ public class OralExamsTest extends TestSuiteI {
     public static final Attribute<Integer> DATE = integerAttribute("date");
     public static final Attribute<Integer> ROOM_NUMBER = integerAttribute("room-number");
 
-    @Tag(FUNCTIONAL_TEST)
+    @Tag(CAPABILITY_TEST)
     @Test
     public void testRandomInstanceSolving() {
         analyseProcess(() -> {
@@ -110,7 +110,7 @@ public class OralExamsTest extends TestSuiteI {
      * This is done by trying as many allocations via the {@link FunctionalHillClimber} as is done
      * in {@link #testRandomInstanceSolving} via the {@link ConstraintGroupBasedRepair}.
      */
-    @Tag(FUNCTIONAL_TEST)
+    @Tag(CAPABILITY_TEST)
     @Test
     public void testComplexity() {
         analyseProcess(() -> {

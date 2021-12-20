@@ -19,7 +19,9 @@ public final class TestTypes {
     public static final String UNIT_TEST = "testing.unit";
     public static final String INTEGRATION_TEST = "testing.integration";
     public static final String FUNCTIONAL_TEST = "testing.functional";
-    @Deprecated
+    /**
+     * Such tests may take a lot of time, compared to other test types.
+     */
     public static final String CAPABILITY_TEST = "testing.capabilities";
     public static final String BENCHMARK_RUNTIME = "benchmarking.runtime";
     public static final String BENCHMARK_MEMORY_USAGE = "benchmarking.memoryUsage";
