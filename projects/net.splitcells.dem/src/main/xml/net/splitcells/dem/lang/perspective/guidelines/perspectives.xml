@@ -65,9 +65,9 @@
             decreased,
             provided a fast evaluation of network traversal's direction.
         </paragraph>
-        <paragraph>Therefore, perspectives that do not represent lists, should a have a minimal number of children of
-            the same
-            type. Perspectives representing a list, should only have elements of the same type,
+        <paragraph>Therefore, perspectives that do not represent lists, should prefer a minimal number of children of
+            the same type.
+            Perspectives representing a list, should prefer having only elements of the same type,
             in order to make it clear, that these are lists.
             Thereby, perspectives, where it is hard to determine the searched path, are more separated from
             the rest of the network. This in turn makes the management of complexity more easy.
