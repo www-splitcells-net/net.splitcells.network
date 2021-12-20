@@ -10,6 +10,8 @@
         <description></description>
         <publication_date year="2021" month="02" day_of_month="05"/>
         <license>standard</license>
+        <d:toDo>Support for rendering network as one long paths like a book
+            can be very advantages.</d:toDo>
     </meta>
     <chapter>
         <title>Gate to Heaven</title>
