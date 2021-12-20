@@ -122,6 +122,10 @@ Project Cluster
   These projects are not inside this repository and are managed more independently.
   They may be managed by users with [OS state interface](./projects/net.splitcells.os.state.interface/README.md).
   It is recommended to not nest repositories.
+  * `net.splitcells.network.log` contains data like benchmark results.
+  * `net.splitcells.os.state.interface.lib.*` are command repositories,
+    that can be used independently or can be registered to an installation
+    of `net.splitcells.os.state.interface`.
 
 ## Social Contacts
 
