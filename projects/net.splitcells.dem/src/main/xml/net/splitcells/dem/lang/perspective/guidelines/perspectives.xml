@@ -11,9 +11,6 @@
         <publication_date year="2020" month="01" day_of_month="06"/>
         <license>standard</license>
         <d:toDo>
-            <d:toDo>Create Definitions at index page of project.
-                <d:toDo>discovery based Networks of Perspectives and Changes</d:toDo>
-            </d:toDo>
             <d:toDo>Implementation guide lines for concepts.
                 <d:toDo>Implement tree set representation.
                     <d:toDo>Implement via construction tree.</d:toDo>

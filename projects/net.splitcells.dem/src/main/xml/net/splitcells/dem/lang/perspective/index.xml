@@ -21,6 +21,10 @@
             any information and changes done on these.
         </paragraph>
         <chapter>
+            <title>Informal Introduction</title>
+            <d:toDo/>
+        </chapter>
+        <chapter>
             <title>Formal Introduction</title>
             <paragraph>A perspective is a node in a directed graph.
                 A <quote>network of perspectives</quote> is a directed graph.
@@ -40,5 +44,9 @@
                 It may or may not constraint the possible changes of such a system.
             </paragraph>
         </chapter>
+    </chapter>
+    <chapter>
+        <title>Formal Definition</title>
+        <d:toDo/>
     </chapter>
 </article>
