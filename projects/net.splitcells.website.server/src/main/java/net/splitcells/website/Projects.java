@@ -11,6 +11,8 @@
 package net.splitcells.website;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.ProjectsRenderer;
 
@@ -18,6 +20,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.Files.isDirectory;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.ValidatorViaSchema.validatorViaSchema;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
@@ -43,7 +47,7 @@ public class Projects {
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
                 , additionalProjects.withAppended(projectRenderers(profile, projectRepository, validator, xslLib)));
     }
-    
+
     public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
             , ProjectRenderer fallbackProjectRenderer
             , List<ProjectRenderer> additionalProjects
@@ -64,7 +68,7 @@ public class Projects {
 
     public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories, Validator validator
             , Path xslLib) {
-        return list(projectRenderer
+        final var projectRenderers = list(projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.dem/")
                                 , xslLib
@@ -106,15 +110,18 @@ public class Projects {
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/website"
                                 , validator)
-                // TODO Create and use project cluster repo variable.
-                // TODO Make cluster repo optional.
-                , projectRenderer
-                        (profile
-                                , projectRepositories.resolve("../../net.splitcells.network.log/")
-                                , xslLib
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
-                                , "/"
-                                , validator)
         );
+        if (isDirectory(projectRepositories.resolve("../../net.splitcells.network.log/"))) {
+            projectRenderers.add(projectRenderer
+                    (profile
+                            , projectRepositories.resolve("../../net.splitcells.network.log/")
+                            , xslLib
+                            , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                            , "/"
+                            , validator));
+        } else {
+            domsole().append("Project 'net.splitcells.network.log' does not exist.", LogLevel.WARNING);
+        }
+        return projectRenderers;
     }
 }

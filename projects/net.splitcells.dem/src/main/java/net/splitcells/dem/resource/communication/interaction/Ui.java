@@ -2,6 +2,7 @@ package net.splitcells.dem.resource.communication.interaction;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.PerspectiveI;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
@@ -27,6 +28,10 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Flushable, Closeable {
 
     default Ui append(String name) {
         return append(logMessage(perspective(name), NO_CONTEXT, LogLevel.DEBUG));
+    }
+
+    default Ui append(String message, LogLevel logLevel) {
+        return append(logMessage(perspective(message), NO_CONTEXT, logLevel));
     }
 
     default Ui append(Domable domable, LogLevel logLevel) {
@@ -67,7 +72,7 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Flushable, Closeable {
 
     /**
      * Warnings are errors, where an action is not required.
-     *
+     * <p>
      * This is typically used in order to find out,
      * if a certain usage of the code executes code,
      * which is not fully implemented and where therefore the functionality is not complete.
