@@ -16,6 +16,13 @@ import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.interaction.LogMessageI.logMessage;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 
+/**
+ * TODO Render stack traces as one line optionally.
+ * Maybe this should be somehow be optionally supported for
+ * messages consisting of multiple lines.
+ * In other words, this may be should be implemented as a general
+ * functionality in order to provide one message one line logs.
+ */
 public interface Ui extends Sui<LogMessage<Perspective>>, Flushable, Closeable {
 
     default Ui append(String name) {
