@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-mvn clean verify -Dgroups=testing.capabilities
+mvn clean test -DincludedGroups=testing_capabilities -DexcludedGroups=""
