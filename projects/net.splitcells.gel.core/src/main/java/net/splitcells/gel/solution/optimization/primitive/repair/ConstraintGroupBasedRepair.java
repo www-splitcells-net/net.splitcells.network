@@ -52,8 +52,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * They believe that when something's suffered damage and has a history it becomes more beautiful.”
  * ― Barbara Bloom
  * </p>
- * <p>
- * This {@link OfflineOptimization} consists of three phases.
+ * <p>This {@link OfflineOptimization} consists of three phases.</p>
  * <ol>
  *     <li>Select a set of {@link Constraint} in the {@link net.splitcells.gel.solution.Solution#constraint} tree
  *     and therefore decide, which constraints of the problems are repaired during the optimization.
