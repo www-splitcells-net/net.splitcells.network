@@ -38,13 +38,13 @@ Releases are done everytime an important ticket is completed.
   The command now also accepts one value for this argument,
   because multiple ones do not make sense.
 * **2021-12-09**:
-  1. **#\148** Unify method naming by renaming 2 methods:
+  1. **\#148** Unify method naming by renaming 2 methods:
      1. Rename `Contraint#register_addition` to `Contraint#registerAddition`.
      2. Rename `Contraint#register_before_removal` to `Contraint#registerBeforeRemoval`.
-  2. **#\148** Fix typos:
+  2. **\#148** Fix typos:
      1. Rename `Database#subscriberToBeforeRemoval` to `Database#subscribeToBeforeRemoval`.
      2. Rename `Database#subscriberToAfterRemoval` to `Database#subscribeToAfterRemoval`.
-* **2021-12-05**: **#\148** [Fix local path context for XML files](https://github.com/www-splitcells-net/net.splitcells.network/issues/148):
+* **2021-12-05**: **\#148** [Fix local path context for XML files](https://github.com/www-splitcells-net/net.splitcells.network/issues/148):
   Remove choice Documents from custom XML format.
   A choice elements can be wrapped with an article element in order to get
   the same result,
@@ -172,7 +172,7 @@ Releases are done everytime an important ticket is completed.
      (CsvRenderer and CsvChartRenderer).
      This is used in order to create a simple visualization of the new
      repository.
-* **2021-12-05**: **#\148** [Fix local path context for XML files](https://github.com/www-splitcells-net/net.splitcells.network/issues/148):
+* **2021-12-05**: **\#148** [Fix local path context for XML files](https://github.com/www-splitcells-net/net.splitcells.network/issues/148):
   Add path information to XML documents during website rendering.
 * **2021-11-29**:
    1. **\#138** Create `test.capabilities` and `test.integration` in order to
