@@ -14,19 +14,25 @@ import net.splitcells.dem.utils.ConstructorIllegal;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
+/**
+ * <p>Avoid tag names with dots, because they cause problems regarding
+ * command line.</p>
+ * <p>TODO IDEA Use verification or validation instead of testing for tag names
+ * in order to clear their meaning.</p>
+ */
 public final class TestTypes {
 
-    public static final String UNIT_TEST = "testing.unit";
-    public static final String INTEGRATION_TEST = "testing.integration";
-    public static final String FUNCTIONAL_TEST = "testing.functional";
+    public static final String UNIT_TEST = "testing_unit";
+    public static final String INTEGRATION_TEST = "testing_integration";
+    public static final String FUNCTIONAL_TEST = "testing_functional";
     /**
      * Such tests may take a lot of time, compared to other test types.
      */
-    public static final String CAPABILITY_TEST = "testing.capabilities";
-    public static final String BENCHMARK_RUNTIME = "benchmarking.runtime";
-    public static final String BENCHMARK_MEMORY_USAGE = "benchmarking.memoryUsage";
-    public static final String PROFILING_RUNTIME = "profiling.runtime";
-    public static final String PROFILING_MEMORY_USAGE = "profiling.memoryUsage";
+    public static final String CAPABILITY_TEST = "testing_capabilities";
+    public static final String BENCHMARK_RUNTIME = "benchmarking_runtime";
+    public static final String BENCHMARK_MEMORY_USAGE = "benchmarking_memoryUsage";
+    public static final String PROFILING_RUNTIME = "profiling_runtime";
+    public static final String PROFILING_MEMORY_USAGE = "profiling_memoryUsage";
 
     private TestTypes() {
         throw constructorIllegal();
