@@ -52,6 +52,7 @@ import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtra
 import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -76,6 +77,26 @@ public class NQueenProblemTest extends TestSuiteI {
         writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods")
                 , testSubject.toFodsTableAnalysis());
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
+    }
+
+    @Tag(CAPABILITY_TEST)
+    @Test
+    public void test_8_queen_problem_with_repair() {
+        GelDev.process(() -> {
+            final var testSubject = nQueenProblem(8, 8).asSolution();
+            testSubject.optimize(linearInitialization());
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
+                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(2)
+                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1)
+                    , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+            testSubject.optimize(simpleConstraintGroupBasedRepair(0));
+            assertThat(testSubject.isOptimal()).isTrue();
+        }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
+            env.config()
+                    .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
+        }));
     }
 
     @Tag(CAPABILITY_TEST)
