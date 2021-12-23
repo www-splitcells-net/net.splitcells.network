@@ -158,7 +158,7 @@ var config = {
         plugins: {
             datasource: {
                 type: 'csv',
-                url: '/net/splitcells/gel/test/functionality/NQueenProblemTest/test_8_queen_problem_with_backtracking/splitcells-XPS-15-9570.csv',
+                url: ']]><xsl:value-of select="./s:path"/><![CDATA[',
                 delimiter: ',',
                 rowMapping: 'index',
                 datasetLabels: true,

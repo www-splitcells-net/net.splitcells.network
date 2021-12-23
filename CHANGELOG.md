@@ -146,6 +146,10 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-12-23**: **\#138** CSV rendering via `chart.js` now renders the
+  requested csv file.
+  Previously, this renderer always rendered the same file,
+  regardless of the request
 * **2021-12-20**:
   1. Create command `ssh.execute.in.background` in order to start
      background tasks on remote servers with systemd and ssh.

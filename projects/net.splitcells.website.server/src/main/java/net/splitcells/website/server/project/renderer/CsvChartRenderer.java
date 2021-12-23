@@ -35,12 +35,16 @@ public class CsvChartRenderer implements Renderer {
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         if (path.endsWith("csv.html")) {
+            final var csvPath = path.substring(0, path.lastIndexOf(".csv.html")) + ".csv";
             final var requestedFile = projectRenderer
                     .projectFolder()
                     .resolve("src/main/csv/")
-                    .resolve(path.substring(0, path.lastIndexOf(".csv.html")) + ".csv");
+                    .resolve(csvPath);
             if (is_file(requestedFile)) {
                 final var content = Xml.rElement(NameSpaces.SEW, "csv-chart");
+                final var contentsPath = Xml.elementWithChildren(NameSpaces.SEW, "path");
+                contentsPath.appendChild(Xml.textNode("/" + csvPath));
+                content.appendChild(contentsPath);
                 content.appendChild(Xml.textNode(Paths.readString(requestedFile)));
                 return Optional.of(renderingResult(renderer
                                 .transform(Xml.toPrettyString(content))
