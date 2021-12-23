@@ -287,6 +287,12 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-12-23**: The supply selector had a probability to throw an exception,
+  if there are freed supplies given an optimization event list,
+  but no free supplies are present before applying the optimization event list
+  to a given solution.
+  If there are no free supplies present,
+  freed supplies are used by the supply selector instead.
 * **2021-12-19**: `repo.synchronize.with` now uses the new interface of
   `repo.repair`,
   which got a breaking change previously in order to improve

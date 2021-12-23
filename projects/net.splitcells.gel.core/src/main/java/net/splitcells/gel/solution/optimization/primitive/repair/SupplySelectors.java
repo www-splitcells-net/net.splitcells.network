@@ -2,6 +2,7 @@ package net.splitcells.gel.solution.optimization.primitive.repair;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.primitive.SupplySelection;
@@ -16,6 +17,7 @@ import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.primitive.SupplySelection.supplySelection;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SupplySelectors {
     private SupplySelectors() {
@@ -66,7 +68,8 @@ public class SupplySelectors {
             }
             if (randomness.truthValue(freeSupplyCount.floatValue()
                     / (freeSupplyCount.floatValue()
-                    + supplyFreedCount.floatValue()))) {
+                    + supplyFreedCount.floatValue()))
+                    && freeSupplyCount > 0) {
                 return Optional.of(supplySelection(randomness.integer(0, freeSupplyCount - 1), true));
             } else {
                 return Optional.of(supplySelection(randomness.integer(0, supplyFreedCount - 1), false));
