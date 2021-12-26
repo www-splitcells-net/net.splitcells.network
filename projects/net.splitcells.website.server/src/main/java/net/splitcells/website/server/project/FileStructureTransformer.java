@@ -12,7 +12,7 @@ package net.splitcells.website.server.project;
 
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.website.Validator;
+import net.splitcells.website.SourceValidator;
 import net.splitcells.website.server.translation.to.html.PathBasedUriResolver;
 import net.splitcells.website.server.translation.to.html.XslTransformer;
 
@@ -32,7 +32,7 @@ public class FileStructureTransformer {
     private final Path fileStructureRoot;
     private final Path loggingProject = Paths.path(System.getProperty("user.home")
             + "/connections/tmp.storage/net.splitcells.dem");
-    private final Validator validator;
+    private final SourceValidator sourceValidator;
     private final Path xslLibs;
     private final String transformerXsl;
 
@@ -50,9 +50,9 @@ public class FileStructureTransformer {
         });
     }*/
 
-    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, Validator validator) {
+    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, SourceValidator sourceValidator) {
         this.fileStructureRoot = fileStructureRoot;
-        this.validator = validator;
+        this.sourceValidator = sourceValidator;
         this.xslLibs = xslLibs;
         this.transformerXsl = transformerXsl;
     }
@@ -63,7 +63,7 @@ public class FileStructureTransformer {
 
     public String transform(Path file) {
 
-        validator.validate(file).ifPresent(error -> {
+        sourceValidator.validate(file).ifPresent(error -> {
             final var loggingFolder = loggingProject.resolve("src/main/txt")
                     .resolve(fileStructureRoot.relativize(file).getParent());
             generateFolderPath(loggingFolder);

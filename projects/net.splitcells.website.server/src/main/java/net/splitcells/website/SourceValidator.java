@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 @FunctionalInterface
-public interface Validator {
+public interface SourceValidator {
 
     Optional<String> validate(Path validationSubject);
 }

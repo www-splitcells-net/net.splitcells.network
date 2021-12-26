@@ -24,14 +24,14 @@ import java.util.Optional;
 
 import static java.util.Arrays.asList;
 
-public class ValidatorViaSchema implements Validator {
-    public static ValidatorViaSchema validatorViaSchema(Path schemaPath) {
-        return new ValidatorViaSchema(schemaPath);
+public class SourceValidatorViaSchema implements SourceValidator {
+    public static SourceValidatorViaSchema validatorViaSchema(Path schemaPath) {
+        return new SourceValidatorViaSchema(schemaPath);
     }
 
     private final javax.xml.validation.Validator xmlValidator;
 
-    private ValidatorViaSchema(Path schemaPath) {
+    private SourceValidatorViaSchema(Path schemaPath) {
         try {
             xmlValidator = SchemaFactory
                     .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)

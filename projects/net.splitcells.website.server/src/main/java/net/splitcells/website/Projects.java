@@ -11,7 +11,6 @@
 package net.splitcells.website;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.ProjectsRenderer;
@@ -23,7 +22,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.website.ValidatorViaSchema.validatorViaSchema;
+import static net.splitcells.website.SourceValidatorViaSchema.validatorViaSchema;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 
 public class Projects {
@@ -41,32 +40,32 @@ public class Projects {
     public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
             , ProjectRenderer fallbackProjectRenderer
             , List<ProjectRenderer> additionalProjects
-            , Validator validator) {
+            , SourceValidator sourceValidator) {
         final var xslLib = projectRepository
                 .resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/");
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
-                , additionalProjects.withAppended(projectRenderers(profile, projectRepository, validator, xslLib)));
+                , additionalProjects.withAppended(projectRenderers(profile, projectRepository, sourceValidator, xslLib)));
     }
 
     public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
             , ProjectRenderer fallbackProjectRenderer
             , List<ProjectRenderer> additionalProjects
-            , Validator validator
+            , SourceValidator sourceValidator
             , Path xslLib) {
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
-                , additionalProjects.withAppended(projectRenderers(profile, projectRepository, validator, xslLib)));
+                , additionalProjects.withAppended(projectRenderers(profile, projectRepository, sourceValidator, xslLib)));
     }
 
-    public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories, Validator validator) {
+    public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories, SourceValidator sourceValidator) {
         return projectRenderer(profile
                 , projectRepositories.resolve("net.splitcells.website.default.content/")
                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/content")
                 , "/"
-                , validator);
+                , sourceValidator);
     }
 
-    public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories, Validator validator
+    public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories, SourceValidator sourceValidator
             , Path xslLib) {
         final var projectRenderers = list(projectRenderer
                         (profile
@@ -74,42 +73,42 @@ public class Projects {
                                 , xslLib
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/dem"
-                                , validator)
+                                , sourceValidator)
                 , projectRenderer
                         (profile
                                 , projectRepositories.resolve("../")
                                 , xslLib
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/network"
-                                , validator)
+                                , sourceValidator)
                 , projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.gel.doc/")
                                 , xslLib
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
-                                , validator)
+                                , sourceValidator)
                 , projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.gel.sheath/")
                                 , xslLib
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
-                                , validator)
+                                , sourceValidator)
                 , projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.system/")
                                 , xslLib
                                 , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/system"
-                                , validator)
+                                , sourceValidator)
                 , projectRenderer
                         (profile
                                 , projectRepositories.resolve("net.splitcells.website.default.content/")
                                 , xslLib
                                 , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/website"
-                                , validator)
+                                , sourceValidator)
         );
         if (isDirectory(projectRepositories.resolve("../../net.splitcells.network.log/"))) {
             projectRenderers.add(projectRenderer
@@ -118,7 +117,7 @@ public class Projects {
                             , xslLib
                             , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                             , "/"
-                            , validator));
+                            , sourceValidator));
         } else {
             domsole().append("Project 'net.splitcells.network.log' does not exist.", LogLevel.WARNING);
         }

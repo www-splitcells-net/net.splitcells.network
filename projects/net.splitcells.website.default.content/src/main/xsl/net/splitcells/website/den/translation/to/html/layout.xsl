@@ -704,42 +704,42 @@ window.onload = function() {
                         <h4>Validation</h4>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
-                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, '/', ./s:path/text(), '/', substring(./s:name, 1, string-length(./s:name) - 4), '.html')"/>
+                                           select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, '/', ./s:path/text(), '/', substring(./s:name, 1, string-length(./s:name) - 4), '.html')"/>
                             HTML Validation
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
-                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/basic.themed.css'))"/>
+                                           select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/basic.themed.css'))"/>
                             basic.themed.css
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
-                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/basic.css'))"/>
+                                           select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/basic.css'))"/>
                             basic.css
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
-                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/theme.white.variables.css'))"/>
+                                           select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/theme.white.variables.css'))"/>
                             theme.white.variables .css
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
-                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/layout.column.main.fullscreen.css'))"/>
+                                           select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/layout.column.main.fullscreen.css'))"/>
                             layout.column.main. fullscreen.css
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
-                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/den.css'))"/>
+                                           select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/den.css'))"/>
                             den.css
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
-                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/layout.default.css'))"/>
+                                           select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/layout.default.css'))"/>
                             layout.default.css
                         </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href"
-                                           select="concat('http://jigsaw.w3.org/css-validator/validator?uri=', $site.url, s:default-root-relative-url('/css/theme.css'))"/>
+                                           select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/theme.css'))"/>
                             theme.css
                         </a>
                         <div class="net-splitcells-space-filler"></div>

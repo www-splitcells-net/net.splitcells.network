@@ -16,7 +16,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.website.Validator;
+import net.splitcells.website.SourceValidator;
 import net.splitcells.website.server.project.renderer.RendererMerger;
 
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class ProjectRendererI implements ProjectRenderer {
      */
     @Deprecated
     private final boolean typedFolder;
-    private final Validator validator;
+    private final SourceValidator sourceValidator;
     private final RendererMerger renderer = rendererMerger();
 
     {
@@ -91,7 +91,7 @@ public class ProjectRendererI implements ProjectRenderer {
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
-            , Validator validator
+            , SourceValidator sourceValidator
             , Path projectFolder) {
         this.typedFolder = typedFolder;
         this.profile = renderer;
@@ -100,7 +100,7 @@ public class ProjectRendererI implements ProjectRenderer {
         this.resources = resources;
         this.resourceRootPath = resourceRootPath;
         this.flatRepository = flatRepository;
-        this.validator = validator;
+        this.sourceValidator = sourceValidator;
         this.projectFolder = projectFolder;
         this.renderer.registerExtension(xmlRenderer(renderer()));
         this.renderer.registerExtension(textExtension(renderer()));
@@ -117,7 +117,7 @@ public class ProjectRendererI implements ProjectRenderer {
         return new FileStructureTransformer(projectSrcFolder.resolve("xml")
                 , xslLibs
                 , "main." + profile + ".xsl"
-                , validator);
+                , sourceValidator);
     }
 
     /**

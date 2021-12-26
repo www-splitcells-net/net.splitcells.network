@@ -20,6 +20,9 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-12-26** **\#s44** Rename `Validator` to `SourceValidator` in order to
+  clarify purpose,
+  because a validator for rendered files via the web server is needed.
 * **2021-12-16** The rating methods of the constraint interface now only return
   ratings instead of meta ratings,
   in order to increase runtime performance.

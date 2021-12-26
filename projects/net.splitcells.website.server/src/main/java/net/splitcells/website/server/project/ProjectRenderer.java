@@ -10,7 +10,7 @@
  */
 package net.splitcells.website.server.project;
 
-import net.splitcells.website.Validator;
+import net.splitcells.website.SourceValidator;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -34,21 +34,21 @@ public interface ProjectRenderer extends Renderer {
             , String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
-            , Validator validator) {
+            , SourceValidator sourceValidator) {
         return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
                 , true
                 , false
-                , validator
+                , sourceValidator
                 , projectFolder);
     }
 
     static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
             , String resourceRootPath
-            , Validator validator) {
+            , SourceValidator sourceValidator) {
         return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
                 , true
                 , false
-                , validator
+                , sourceValidator
                 , projectFolder);
     }
 
