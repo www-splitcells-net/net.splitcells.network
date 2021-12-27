@@ -25,7 +25,12 @@ public interface Domable {
     @Deprecated
     Node toDom();
 
+    /**
+     * This method exists in order to avoid breaking backward compatibility.
+     *
+     * @return Perspective Representing The Object
+     */
     default Perspective toPerspective() {
-        return perspective(TODO_NOT_IMPLEMENTED_YET);
+        return perspective(TODO_NOT_IMPLEMENTED_YET + toString());
     }
 }
