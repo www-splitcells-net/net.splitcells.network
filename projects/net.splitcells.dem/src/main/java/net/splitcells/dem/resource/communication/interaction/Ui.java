@@ -67,7 +67,7 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Flushable, Closeable {
             throwable.printStackTrace(new PrintWriter(stackTraceValue));
             error.withProperty("stack-trace", stackTraceValue.toString());
         }
-        return append(logMessage(perspective(TODO_NOT_IMPLEMENTED_YET), NO_CONTEXT, LogLevel.CRITICAL));
+        return append(logMessage(error, NO_CONTEXT, LogLevel.CRITICAL));
     }
 
     /**
@@ -83,13 +83,13 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Flushable, Closeable {
      * @return
      */
     default Ui appendWarning(Throwable throwable) {
-        final var error = perspective("warning");
-        error.withProperty("message", throwable.getMessage());
+        final var warning = perspective("warning");
+        warning.withProperty("message", throwable.getMessage());
         {
             final var stackTraceValue = new StringWriter();
             throwable.printStackTrace(new PrintWriter(stackTraceValue));
-            error.withProperty("stack-trace", stackTraceValue.toString());
+            warning.withProperty("stack-trace", stackTraceValue.toString());
         }
-        return append(logMessage(perspective(TODO_NOT_IMPLEMENTED_YET), NO_CONTEXT, LogLevel.CRITICAL));
+        return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
     }
 }

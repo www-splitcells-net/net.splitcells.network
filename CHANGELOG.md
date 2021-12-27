@@ -297,6 +297,8 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2021-12-27**: **\#s44** Restore rendering of stack traces for logging in
+  Domsole (see `Ui#append`).
 * **2021-12-23**: The supply selector had a probability to throw an exception,
   if there are freed supplies given an optimization event list,
   but no free supplies are present before applying the optimization event list
