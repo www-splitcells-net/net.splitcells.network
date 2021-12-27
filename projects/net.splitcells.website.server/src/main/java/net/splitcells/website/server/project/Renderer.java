@@ -14,6 +14,9 @@ import java.util.Optional;
 public interface Renderer {
 
     /**
+     * All project paths are returned as relative paths.
+     * The context of the paths is {@link #resourceRootPath2()}
+     * 
      * @return List Of All Path That Can Be Rendered
      */
     Set<Path> projectPaths();

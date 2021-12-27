@@ -41,7 +41,7 @@ public class UserCommandRenderer implements Renderer {
         return new UserCommandRenderer();
     }
 
-    private static final String RENDERING_PATH = "/net/splitcells/os/state/interface/installed/index.html";
+    private static final String RENDERING_PATH = "net/splitcells/os/state/interface/installed/index.html";
     private static final Path BIN_FOLDER = userHome().resolve("bin/net.splitcells.os.state.interface.commands.managed/");
 
     private UserCommandRenderer() {
@@ -87,6 +87,6 @@ public class UserCommandRenderer implements Renderer {
 
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
-        return setOfUniques(Path.of(RENDERING_PATH.substring(1)));
+        return setOfUniques(Path.of(RENDERING_PATH));
     }
 }
