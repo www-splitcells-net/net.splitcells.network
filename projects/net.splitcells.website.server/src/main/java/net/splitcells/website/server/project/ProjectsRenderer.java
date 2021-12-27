@@ -15,6 +15,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.website.RenderingValidator;
 import net.splitcells.website.server.Server;
 
 import java.nio.file.Path;
@@ -31,6 +32,7 @@ import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.website.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -93,6 +95,7 @@ public class ProjectsRenderer {
     private final String profile;
     private final List<ProjectRenderer> renderers;
     private final ProjectRenderer fallbackRenderer;
+    private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
 
     private ProjectsRenderer(String name, ProjectRenderer fallbackRenderer, List<ProjectRenderer> renderers) {
         this.profile = name;
@@ -100,12 +103,18 @@ public class ProjectsRenderer {
         this.renderers = renderers;
     }
 
+    /**
+     * TODO Only use one return statement.
+     *
+     * @param path path
+     * @return Rendering Result
+     */
     public Optional<RenderingResult> render(String path) {
         try {
             if (path.equals(LAYOUT_PATH)) {
                 domsole().append(perspective("Refreshing layout."), LogLevel.INFO);
                 this.build();
-                return Optional.empty();
+                return validateRenderingResult(Optional.empty(), Path.of(path));
             }
             final var matchingRoots = renderers
                     .stream()
@@ -114,7 +123,7 @@ public class ProjectsRenderer {
             if (matchingRoots.isEmpty()) {
                 // System.out.println("No match for: " + path);
                 //System.out.println("Patterns: " + renderers.keySet());
-                return fallbackRenderer.render(path);
+                return validateRenderingResult(fallbackRenderer.render(path), Path.of(path));
             }
             // System.out.println("Match for: " + path);
             // System.out.println("Match on: " + matchingRoots.get(0));
@@ -127,12 +136,17 @@ public class ProjectsRenderer {
                     .findFirst();
             if (renderingResult.isEmpty()) {
                 domsole().append(perspective("Path could not be found: " + path), LogLevel.ERROR);
-                return Optional.empty();
+                return validateRenderingResult(Optional.empty(), Path.of(path));
             }
-            return renderingResult.get();
+            return validateRenderingResult(renderingResult.get(), Path.of(path));
         } catch (Exception e) {
             throw new RuntimeException(path, e);
         }
+    }
+
+    private Optional<RenderingResult> validateRenderingResult(Optional<RenderingResult> renderingResult, Path requestedPath) {
+        renderingValidator.validate(renderingResult, this, requestedPath);
+        return renderingResult;
     }
 
     public Set<Path> projectsPaths() {

@@ -149,6 +149,9 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2021-12-27**: **\#s44** Create first draft of HTML link Validator based on
+  heuristics regarding HTML parsing,
+  so that a framework does not need to be included. 
 * **2021-12-23**: **\#138** CSV rendering via `chart.js` now renders the
   requested csv file.
   Previously, this renderer always rendered the same file,
