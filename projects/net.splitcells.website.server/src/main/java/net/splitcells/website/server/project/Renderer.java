@@ -17,6 +17,12 @@ public interface Renderer {
      * All project paths are returned as relative paths.
      * The context of the paths is {@link #resourceRootPath2()}
      * 
+     * Note that from the project's perspective all {@link #projectPaths}
+     * can be viewed as absolute,
+     * because the project itself does not contain paths,
+     * that are not a child of {@link #resourceRootPath2()}.
+     *
+     * 
      * @return List Of All Path That Can Be Rendered
      */
     Set<Path> projectPaths();
