@@ -85,15 +85,8 @@ public class UserCommandRenderer implements Renderer {
         return layout;
     }
 
-    /**
-     * TODO This does not work.
-     *
-     * @param projectRenderer Project Rendered To Be Extended
-     * @return
-     */
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
-        domsole().appendWarning(notImplementedYet());
-        return setOfUniques();
+        return setOfUniques(Path.of(RENDERING_PATH.substring(1)));
     }
 }
