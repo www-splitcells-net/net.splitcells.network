@@ -85,7 +85,9 @@ You can try to decrease the likelihood of breaking a certain feature,
 by contributing an appropriate test case/suite for this feature.
 Regardless of that, keep in mind, that there is no guarantee of backwards
 compatibility.
-### Service
+### Service Tasks
+Tasks that are being worked cyclically,
+and probably will never be finished.
 * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
 * Migrate inactive tickets into source code repository,
   so that they each one acts as trigger at one fitting position.
