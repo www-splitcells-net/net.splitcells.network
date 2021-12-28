@@ -1,7 +1,7 @@
 # Implementing And Solving A N Queen Problem Instance
 ## Preparations
 If you want to use the bleeding edge version of this project, you need
-to [install it locally](../../../../../../../../../../CONTRIBUTING.md).
+to [build it locally](../../../../../../../../../../CONTRIBUTING.md).
 After this you can add the corresponding dependency to your project:
 ```
 <dependency>
@@ -20,7 +20,7 @@ The preferred starting point for the framework is the class
 It contains references to all entry points to all standardized workflows.
 In this case we use the `defineProblem` function,
 in order to implement our problem.
-After that, we'll apply some optimization functions,
+After that, we'll later apply some optimization functions,
 in order to create a solution:
 ```
 import static net.splitcells.gel.Gel.defineProblem;
@@ -30,13 +30,13 @@ final var problemBuilder = Gel.defineProblem();
 ### Creating A Data Model
 First, the data of the problem needs to be defined,
 otherwise there is nothing that can be optimized.
-Every problem is modeled as allocations of demands to supplies.
+Every problem is modeled as a set of allocations between demands and supplies.
 Every allocation pairs one demand and one supply.
 The set of all allocations is the actual solution.
 
 The demands and supplies are the data of the problem.
 Both sets are modeled as tables with explicitly typed columns,
-which later allows one to access the values of the table without downcasting
+which later allows one to access the values of the table without a downcast
 by the API caller.
 Basically, one has to state the columns of each table first and then
 assign the values to the respective table.
@@ -53,7 +53,7 @@ represents the assigned values of the demand and supply set.
 In other words, the allocations table works like a join of 2 tables in SQL.
 The following code defines the data format,
 but uses the not yet defined variables `demands` and `suipplies` for the
-actual values for a better focus:
+actual values for an overview with less clutter:
 ```
 final var column = attribute(Integer.class, "column");
 final var row = attribute(Integer.class, "row");
@@ -89,13 +89,19 @@ by specifying a demand and supply table.
 Now we define the constraints of the problem.
 
 The preferred way of doing this is by using the query interface.
-In this case a function is used, that takes a builder object,
-that represents the constraints of the problem.
-By calling methods on the builder one adds constraints to the problem.
+In this case a function is used as an argument, that takes a builder object.
+The builder represents the constraints of the problem.
+By calling methods on the builder one adds constraints to the problem
+definition.
+
+This is called the query interface,
+because function call chains can be used in order to define complex constraints.
+Such complex constraints have a tendency to look like database queries.
+
 The constraint definition ends, when the modified builder is returned.
 
 Keep in mind, that the constraint defines rules,
-that apply to allocations table:
+that apply to the allocations table:
 ```
 final var solution = Gel.defineProblem()
     .withDemandAttributes(COLUMN)
@@ -134,9 +140,10 @@ just do the 'dot'-'choose'-'type' loop.
 ## Find A Solution
 ## Using A Simple Hill Climber As A Stepping Stone
 Applying solvers to the solutions is done by calling the `optimize` method.
-The `functionalHillClimber` needs a solution,
-where all variables are set,
-so `linearInitialization` is used set all variables in the following example:
+The `functionalHillClimber` is an optimizer,
+that needs an initialized solution,
+where all demands or all supplies are allocated.
+So we use `linearInitialization` to set all variables in the following example:
 ```
 solution.optimize(linearInitialization());
 solution.optimize(functionalHillClimber(1000));
@@ -144,7 +151,8 @@ solution.createStandardAnalysis();
 ```
 These optimizers do not solve the problem in question,
 so we can use `createStandardAnalysis` to create an analysis.
-This creates reports explaining and visualizing the issues of the solutions. 
+This creates reports explaining and visualizing the issues of the calculated
+solution. 
 These files are stored at `src/main/xml/net/splitcells/gel/GelEnv`.
 It is a mix of XML, text and LibreOffice spreadsheets.
 Try it out!
