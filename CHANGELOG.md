@@ -20,6 +20,9 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2021-12-28** **\#s44** The Domsole now filters log messages with a lesser
+  priority than INFO by default.
+  This behaviour can be overwritten with the Option MessageFilter.
 * **2021-12-26** **\#s44** Rename `Validator` to `SourceValidator` in order to
   clarify purpose,
   because a validator for rendered files via the web server is needed.

@@ -256,7 +256,7 @@ public class ProjectRendererI implements ProjectRenderer {
             }
         }
         final var contentAsString = Xml.toPrettyString(content);
-        domsole().append(perspective(contentAsString), LogLevel.INFO);
+        domsole().append(perspective(contentAsString), LogLevel.DEBUG);
         return Optional.of(renderer()
                 .transform(contentAsString)
                 .replace(MARKER, bodyContent)

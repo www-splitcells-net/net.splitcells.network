@@ -16,14 +16,16 @@ import net.splitcells.dem.resource.communication.interaction.LogMessage;
 
 import java.util.function.Predicate;
 
+import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+
 /**
  * TODO RENAME This is not a filter but a selector.
- * 
+ * <p>
  * If a {@link LogMessage} is true according to this predicate,
  * it should be printed according to this predicate.
  */
 public class MessageFilter extends OptionI<Predicate<LogMessage<Perspective>>> {
     public MessageFilter() {
-        super(() -> logMessage -> true);
+        super(() -> logMessage -> logMessage.priority().smallerThan(DEBUG));
     }
 }
