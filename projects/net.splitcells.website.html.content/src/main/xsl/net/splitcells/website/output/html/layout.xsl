@@ -202,13 +202,13 @@
                       select="substring(./s:path/text(), 1, (string-length(./s:path/text()) - $last-element-length))"/>
         <xsl:variable name="column_1">
             <div class="net-splitcells-website-log-error net-splitcells-website-hidden-by-default">
-                <s:option>
+                <!--s:option>
                     <s:name>Page's Errors</s:name>
                     <s:url>
                         <xsl:value-of
-                                select="concat(./s:name, '.errors.txt')"/>
+                                select="concat('TODO', '.errors.txt')"/>
                     </s:url>
-                </s:option>
+                </s:option-->
             </div>
             <xsl:variable name="column_1_tmp">
                 <xsl:call-template name="content.outline">
