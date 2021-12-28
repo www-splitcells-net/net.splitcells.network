@@ -56,6 +56,11 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
                     } else {
                         resolvedLink = Path.of(resolvedLinkString);
                     }
+                    /**
+                     * If this is not done, links containing Javascript or
+                     * consisting only of id,
+                     * would be checked as well.
+                     */
                     if (PATH.matcher(resolvedLink.toString()).matches()) {
                         final var isValid = paths.contains(resolvedLink);
                         // TODO HACK
