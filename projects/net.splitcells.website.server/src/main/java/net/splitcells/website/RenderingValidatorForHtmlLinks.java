@@ -20,7 +20,8 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  * in order to avoid additional external dependencies.
  */
 public class RenderingValidatorForHtmlLinks implements RenderingValidator {
-    private static Pattern HTML_HREF = Pattern.compile("(href=\\\")(.*)(\\\")");
+    private static Pattern HTML_HREF = Pattern.compile("(href=\\\")([^\\\"]*)(\\\")");
+    private static Pattern PATH = Pattern.compile("(\\.)?(\\/)?([a-zA-Z0-9\\.\\-]+\\/)*[a-zA-Z0-9\\.\\-]+");
 
     public static RenderingValidatorForHtmlLinks renderingValidatorForHtmlLinks() {
         return new RenderingValidatorForHtmlLinks();
@@ -55,12 +56,15 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
                     } else {
                         resolvedLink = Path.of(resolvedLinkString);
                     }
-                    final var isValid = paths.contains(resolvedLink);
-                    // TODO HACK
-                    if (!isValid) {
-                        System.out.println("Invalid Link: " + link + ", " + resolvedLink);
+                    if (PATH.matcher(resolvedLink.toString()).matches()) {
+                        final var isValid = paths.contains(resolvedLink);
+                        // TODO HACK
+                        if (!isValid) {
+                            System.out.println("Invalid Link: " + link + ", " + resolvedLink);
+                        }
+                        return !isValid;
                     }
-                    return !isValid;
+                    return true;
                 }).collect(toList());
         return invalid.isEmpty();
     }
