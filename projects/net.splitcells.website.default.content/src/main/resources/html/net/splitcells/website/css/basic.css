@@ -18,7 +18,17 @@ main {
     background-size: 100%;
     background-repeat: no-repeat;
     background-image:url('/net/splitcells/martins/avots/website//images/license.standard/white.background.blog.discovery.0.jpg');
-}
+	}
+code {
+	/* Code blocks are created by default CommonMark rendering. */
+	font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+	}
+code::after {
+	content: "“";
+	}
+code::before {
+	content: "”";
+	}
 article p img {
 	max-width: 100%;
 	margin-left: auto;
