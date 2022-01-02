@@ -91,6 +91,8 @@ and probably will never be finished.
 * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
 * Migrate inactive tickets into source code repository,
   so that they each one acts as trigger at one fitting position.
+* Add inspirational quotes to code documentation in order to provide an
+  alternative perspective via metaphors.
 ## Network's Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
