@@ -28,7 +28,8 @@
     <chapter>
         <title>Amount of Documentation</title>
         <paragraph>The documentation needs to at least define the goal or the result of the thing in question.
-            Everything needs documentation.
+            Everything needs documentation,
+            but sometimes the name of a thing can be its documentation.
             Classic documentation can sometimes be replaced by programs (i.e. build script named <quote>
                 build.service
             </quote> instead of
