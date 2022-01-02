@@ -13,6 +13,7 @@ package net.splitcells.website.server.project;
 import com.google.common.collect.Streams;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 
@@ -50,17 +51,21 @@ public class LayoutRenderer {
     }
 
     public static void extend(Perspective perspective, List<String> path) {
+        extend(perspective, path, NATURAL);
+    }
+
+    public static void extend(Perspective perspective, List<String> path, NameSpace nameSpaces) {
         if (path.isEmpty()) {
             return;
         }
         final Perspective nextChild = perspective
-                .childNamed(path.get(0), NATURAL)
+                .childNamed(path.get(0), nameSpaces)
                 .orElseGet(() -> {
-                    final var nextChild2 = perspective(path.get(0), NATURAL);
+                    final var nextChild2 = perspective(path.get(0), nameSpaces);
                     perspective.withChild(nextChild2);
                     return nextChild2;
                 });
         path.remove(0);
-        extend(nextChild, path);
+        extend(nextChild, path, nameSpaces);
     }
 }

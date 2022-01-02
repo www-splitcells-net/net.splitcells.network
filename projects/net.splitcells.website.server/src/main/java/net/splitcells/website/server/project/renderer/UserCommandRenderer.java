@@ -18,6 +18,7 @@ import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
+import javax.naming.Name;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
@@ -56,14 +57,14 @@ public class UserCommandRenderer implements Renderer {
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         if (RENDERING_PATH.equals(path) && isDirectory(BIN_FOLDER)) {
-            final var layout = perspective(NameSpaces.VAL, NameSpaces.NATURAL);
+            final var layout = perspective(NameSpaces.VAL, NameSpaces.DEN);
             try {
                 java.nio.file.Files.walk(BIN_FOLDER).forEach(command -> {
                             final var commandName = listWithValuesOf(command.getFileName().toString().split("\\."));
                             // Filters commands installed via 'command.managed.install'.
                             if (!commandName.lastValue().get().matches("[0-9]+")) {
                                 LayoutRenderer.extend(layout
-                                        , commandName);
+                                        , commandName, NameSpaces.DEN);
                             }
                         }
                 );
