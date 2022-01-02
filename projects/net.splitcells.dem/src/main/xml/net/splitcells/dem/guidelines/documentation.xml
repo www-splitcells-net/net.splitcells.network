@@ -26,7 +26,7 @@
         </paragraph>
     </chapter>
     <chapter>
-        <title>Documentation Content</title>
+        <title>Amount of Documentation</title>
         <paragraph>The documentation needs to at least define the goal or the result of the thing in question.
             Everything needs documentation.
             Classic documentation can sometimes be replaced by programs (i.e. build script named <quote>
@@ -35,6 +35,9 @@
             describing how to
             build software), but everything needs documentation.
         </paragraph>
+    </chapter>
+    <chapter>
+        <title>Documentation Content</title>
         <paragraph>Documentation may also contain inspiration emotional content in the form of quotes
             and haiku and should always relate to the described thing.
             The additional emotional context provides a different perspective
