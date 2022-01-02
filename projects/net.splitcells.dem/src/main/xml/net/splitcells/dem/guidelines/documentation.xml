@@ -51,9 +51,12 @@
         <title>Documentation Complexity Management</title>
         <paragraph>Updating the documentation is always a problem.
             Minimize the amount of documentation.
-            In the best case, the name of a thing is its documentation.
+            In the best case, the name of a thing is its documentation,
+            but keep in mind that people have vastly different contexts,
+            when they access something,
+            which makes it hard to minimize the document's size.
             Documenting justifications may also be required in order to omit regressions
-            or development things in a circle.
+            or developing things in a circle.
         </paragraph>
         <paragraph>If large documentation like a user manual is required, make it a project of its own.
             Otherwise, documentation and the software development will hinder each other,
