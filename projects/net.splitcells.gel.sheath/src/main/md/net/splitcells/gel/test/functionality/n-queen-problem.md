@@ -24,13 +24,16 @@ whose results are added together.
 Before making the model, it's best to transform the puzzle's natural
 description,
 which makes it easier to recreate the rating function based on Gel's model:
-> For all columns, diagonals and rows, there should be only one queen.
-
+```
+For all columns, diagonals and rows, there should be only one queen.
+```
 The first sub clause can be simplified,
 by splitting the description into multiple sentences:
-> For all columns, there should be only one queen.
-> For all diagonals, there should be only one queen.
-> For all rows, there should be only one queen.
+```
+For all columns, there should be only one queen.
+For all diagonals, there should be only one queen.
+For all rows, there should be only one queen.
+```
 
 Now it's easy to see, that the rater can be described with a series of simple
 queries.
