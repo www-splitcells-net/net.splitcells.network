@@ -10,5 +10,6 @@
         <module>../net.splitcells.gel.core</module>
         <module>../net.splitcells.gel.sheath</module>
         <module>../net.splitcells.gel.doc</module>
+        <module>../net.splitcells.gel.quickstart</module>
     </modules>
 </project>
