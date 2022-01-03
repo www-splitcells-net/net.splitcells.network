@@ -23,10 +23,10 @@ code {
 	/* Code blocks are created by default CommonMark rendering. */
 	font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
 	}
-code::after {
+p code::after {
 	content: "“";
 	}
-code::before {
+p code::before {
 	content: "”";
 	}
 article p img {
