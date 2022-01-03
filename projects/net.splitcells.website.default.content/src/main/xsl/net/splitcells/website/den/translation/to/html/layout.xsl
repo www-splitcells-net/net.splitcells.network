@@ -253,6 +253,16 @@ window.onload = function() {
             <xsl:if test="./s:content/s:meta/s:related_to">
                 <xsl:message select="concat('Deprecated tag: ./s:content/s:meta/s:related_to:', document-uri(/))"/>
             </xsl:if>
+            <xsl:if test="./s:content/s:meta/d:toDo or ./s:content/s:meta/d:todo">
+                <s:list>
+                    <s:item>
+                        <s:link>
+                            <s:text>Open Tasks</s:text>
+                            <s:url>#net-splitcells-content-todo</s:url>
+                        </s:link>
+                    </s:item>
+                </s:list>
+            </xsl:if>
             <s:chapter>
                 <s:title>Local Path Context</s:title>
                 <xsl:variable name="file-path-environment">
@@ -266,16 +276,16 @@ window.onload = function() {
                                     select="./s:path/node()"/>
                 </xsl:call-template>
             </s:chapter>
-            <xsl:if test="./s:content/s:meta/d:toDo or ./s:content/s:meta/d:todo">
-                <s:chapter>
-                    <s:title>Open Tasks</s:title>
-                    <xsl:copy-of select="./s:content/s:meta/d:toDo"/>
-                </s:chapter>
-            </xsl:if>
             <xsl:if test="./s:content/s:meta/rdf:RDF">
                 <s:chapter>
                     <s:title>Resources</s:title>
                     <xsl:apply-templates select="./s:content/s:meta/rdf:RDF/node()"/>
+                </s:chapter>
+            </xsl:if>
+            <xsl:if test="./s:content/s:meta/d:toDo or ./s:content/s:meta/d:todo">
+                <s:chapter>
+                    <s:title id="net-splitcells-content-todo">Open Tasks</s:title>
+                    <xsl:copy-of select="./s:content/s:meta/d:toDo"/>
                 </s:chapter>
             </xsl:if>
         </xsl:variable>

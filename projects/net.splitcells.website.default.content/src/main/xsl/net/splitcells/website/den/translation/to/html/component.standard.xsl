@@ -248,6 +248,7 @@
         <div class="chapter">
             <xsl:attribute name="id" select="generate-id(.)"/>
             <div class="heading">
+                <xsl:attribute name="id" select="./s:title/@id"/>
                 <div style="width: 100%;">
                     <a>
                         <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
