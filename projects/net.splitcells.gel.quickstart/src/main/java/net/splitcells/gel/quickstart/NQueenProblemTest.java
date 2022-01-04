@@ -32,6 +32,16 @@ import static net.splitcells.gel.solution.optimization.primitive.LinearInitializ
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * <p>This class solves the widely known 8 queen problem with the commonly known
+ * backtracking algorithm.
+ * It provides for newcomers an intro to the API of the framework,
+ * where they can focus on the API instead of the problem.
+ * By implementing something familiar,
+ * it should be easier for the beginner to understand the API.</p>
+ * <p>This class also show the bare minimum,
+ * that should be done, in order to use this project.</p>
+ */
 public class NQueenProblemTest {
     public static final Attribute<Integer> COLUMN = attribute(Integer.class, "column");
     public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
