@@ -5,6 +5,11 @@ column or diagonal with more than one queen.
 
 ![N Queen Problem](../../../../../../../../src/main/svg/net/splitcells/gel/test/functionality/n-queen-problem/illustration.svg)
 > Example Of The N Queen Problem
+
+Here the concept of the constraint system is explained by using the N queen
+problem as an example.
+A step-by-step guide for implementing the N queen problem can be found
+[here](n-queen-problem.implementation.md).
 ## Rating Function
 The rating function of the N Queen Problem returns the number of queen pairs,
 that are in same row, column or diagonal.
