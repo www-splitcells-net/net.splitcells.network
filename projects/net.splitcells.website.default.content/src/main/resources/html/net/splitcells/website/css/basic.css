@@ -346,7 +346,10 @@ h3 {
 h4 {
     padding-left: .4em;
     }
-.heading {
+.heading,
+h2,
+h3,
+h4 {
 	font-size: 125%;
 	font-weight: bold;
 	margin-top: 3em;
