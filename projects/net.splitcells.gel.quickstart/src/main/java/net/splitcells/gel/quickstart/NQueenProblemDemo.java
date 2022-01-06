@@ -10,10 +10,14 @@
  */
 package net.splitcells.gel.quickstart;
 
+import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.Gel;
+import net.splitcells.gel.GelDev;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.Rater;
+
+import java.nio.file.Path;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
@@ -23,6 +27,9 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
+import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
+import static net.splitcells.gel.solution.optimization.primitive.LinearDeinitializer.linearDeinitializer;
+import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -38,13 +45,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class NQueenProblemDemo {
     public static final Attribute<Integer> COLUMN = attribute(Integer.class, "column");
     public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
-    
+
     public static void main(String... args) {
         final var testSubject = nQueenProblem(8, 8).asSolution();
+        testSubject.optimize(linearInitialization());
+        testSubject.optimizeOnce(functionalHillClimber(100));
+        testSubject.createAnalysis(Path.of("./target/analysis-hill-climber/"));
+        testSubject.optimize(linearDeinitializer());
         backtracking().optimize(testSubject);
         assertThat(testSubject.isOptimal()).isTrue();
-        // TODO Output path needs to be fixed. It is currently: net/splitcells/dem/Dem/src/main/xml/net/splitcells/gel/GelEnv/demands.Solution
-        testSubject.createStandardAnalysis();
+        testSubject.createAnalysis(Path.of("./target/analysis-backtracking/"));
+
     }
 
     private static Problem nQueenProblem(int rows, int columns) {
