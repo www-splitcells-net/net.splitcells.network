@@ -112,6 +112,10 @@ public class HistoryI implements History {
 
     @Override
     public void resetTo(int index) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            assertThat(index).isGreaterThanOrEqualTo(0);
+            assertThat(index).isLessThanOrEqualTo(size() - 2);
+        }
         if (index == 0 && size() == 0) {
             return;
         }
@@ -119,7 +123,7 @@ public class HistoryI implements History {
         /**
          * Omit unnecessary allocations to {@link #allocations},
          * when allocations are removed from {@link #solution} during reset.
-          */
+         */
         final var indexToReversal = reverse
                 (rangeClosed(index, this.size() - 1)
                         .boxed()
