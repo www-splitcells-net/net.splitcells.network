@@ -144,9 +144,9 @@ Project Cluster
 * Rendered Documentation via [a personal website](http://splitcells.net/net/splitcells/system/index.html)
 * Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) and [Sourcehut](https://todo.sr.ht/~splitcells-net/net.splitcells.network).
 * Repository Hosts:
-  * [Github](https://github.com/www-splitcells-net/net.splitcells.network)
-  * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) (Currently only used for CI.)
-  * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network)
+  * [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
+  * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) is currently used only for continuous integration (CI).
+  * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network) is used mainly for writing articles and web rendering.
 ## Contributing
 
 * [Licensing](./LICENSE.md) and [Notices](./NOTICE.md) of This Project
