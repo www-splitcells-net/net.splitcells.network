@@ -43,6 +43,8 @@ public class NQueenProblemDemo {
         final var testSubject = nQueenProblem(8, 8).asSolution();
         backtracking().optimize(testSubject);
         assertThat(testSubject.isOptimal()).isTrue();
+        // TODO Output path needs to be fixed. It is currently: net/splitcells/dem/Dem/src/main/xml/net/splitcells/gel/GelEnv/demands.Solution
+        testSubject.createStandardAnalysis();
     }
 
     private static Problem nQueenProblem(int rows, int columns) {
