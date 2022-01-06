@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  */
 public class LinkTranslator extends AbstractVisitor {
 
-    private static Pattern PROTOCOL = Pattern.compile("([a-z]://)(.*)");
+    private static Pattern PROTOCOL = Pattern.compile("([a-z]+://)(.*)");
 
     public static LinkTranslator linkTranslator() {
         return new LinkTranslator();
