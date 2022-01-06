@@ -113,8 +113,10 @@ public class HistoryI implements History {
     @Override
     public void resetTo(int index) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(index).isGreaterThanOrEqualTo(0);
-            assertThat(index).isLessThanOrEqualTo(size() - 2);
+            assertThat(index).isGreaterThanOrEqualTo(-1);
+            if (size() > 0) {
+                assertThat(index).isLessThanOrEqualTo(size() - 2);
+            }
         }
         if (index == 0 && size() == 0) {
             return;
