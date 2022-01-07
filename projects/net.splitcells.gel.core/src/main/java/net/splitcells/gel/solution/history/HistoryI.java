@@ -50,7 +50,7 @@ public class HistoryI implements History {
     private final Solution solution;
     private int lastEventId = -1;
     private Allocations allocations;
-    private boolean registerRemovalIsEnabled = true;
+    private boolean registerEventIsEnabled = true;
 
     protected HistoryI(Solution solution) {
         allocations = Allocationss.allocations
@@ -70,23 +70,25 @@ public class HistoryI implements History {
 
     @Override
     public void registerAddition(Line allocationValues) {
-        final var metaData = metaData();
-        metaData.with(CompleteRating.class
-                , completeRating(solution.constraint().rating()));
-        metaData.with(AllocationRating.class
-                , allocationRating(solution.constraint().rating(allocationValues)));
-        final Line allocation
-                = demands().addTranslated(list(
-                moveLastEventIdForward()
-                , allocations(ADDITION
-                        , solution.demandOfAllocation(allocationValues)
-                        , solution.supplyOfAllocation(allocationValues))));
-        allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
+        if (registerEventIsEnabled) {
+            final var metaData = metaData();
+            metaData.with(CompleteRating.class
+                    , completeRating(solution.constraint().rating()));
+            metaData.with(AllocationRating.class
+                    , allocationRating(solution.constraint().rating(allocationValues)));
+            final Line allocation
+                    = demands().addTranslated(list(
+                    moveLastEventIdForward()
+                    , allocations(ADDITION
+                            , solution.demandOfAllocation(allocationValues)
+                            , solution.supplyOfAllocation(allocationValues))));
+            allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
+        }
     }
 
     @Override
     public void registerBeforeRemoval(Line removal) {
-        if (registerRemovalIsEnabled) {
+        if (registerEventIsEnabled) {
             final var metaData = metaData();
             metaData.with(CompleteRating.class
                     , completeRating(solution.constraint().rating()));
@@ -121,7 +123,7 @@ public class HistoryI implements History {
         if (index == 0 && size() == 0) {
             return;
         }
-        registerRemovalIsEnabled = false;
+        registerEventIsEnabled = false;
         /**
          * Omit unnecessary allocations to {@link #allocations},
          * when allocations are removed from {@link #solution} during reset.
@@ -133,7 +135,7 @@ public class HistoryI implements History {
                         .filter(i -> i != index)
                 ).collect(Lists.toList());
         resetToInOrder(indexToReversal);
-        registerRemovalIsEnabled = true;
+        registerEventIsEnabled = true;
     }
 
     private void resetToInOrder(List<Integer> indexes) {
