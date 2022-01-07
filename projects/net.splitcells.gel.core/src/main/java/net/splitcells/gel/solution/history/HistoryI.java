@@ -120,7 +120,16 @@ public class HistoryI implements History {
                 assertThat(index).isLessThanOrEqualTo(size() - 1);
             }
         }
-        if (index == 0 && size() == 0) {
+        if (size() == 0 && index == - 1) {
+            return;
+        }
+        if (size() - 1 == index) {
+            return;
+        }
+        if (size() == 0) {
+            if (ENFORCING_UNIT_CONSISTENCY) {
+                assertThat(index).isEqualTo(-1);
+            }
             return;
         }
         registerEventIsEnabled = false;
