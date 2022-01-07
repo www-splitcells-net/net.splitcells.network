@@ -25,7 +25,7 @@ import net.splitcells.gel.solution.history.meta.MetaDataView;
  * Each state has an index, which identifies a point in the history's timeline.
  * The first state of an {@link net.splitcells.gel.solution.Solution}
  * has the index -1 (where usually no allocations are present).
- * The following states have successive ascending indexes (-1,0,1,2...n).
+ * The following states have successive ascending indexes (-1,0,1,2...,n-1).
  *
  * The reason why the first state has the index -1 is caused by the fact,
  * that the history's timeline concept is a list of events.

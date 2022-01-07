@@ -117,7 +117,7 @@ public class HistoryI implements History {
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(index).isGreaterThanOrEqualTo(-1);
             if (size() > 0) {
-                assertThat(index).isLessThanOrEqualTo(size() - 2);
+                assertThat(index).isLessThanOrEqualTo(size() - 1);
             }
         }
         if (index == 0 && size() == 0) {
