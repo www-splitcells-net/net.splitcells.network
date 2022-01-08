@@ -20,6 +20,9 @@ Links to such platforms may or may not be valid.
 Releases are done everytime an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2022-01-09** Remove `run.and.print.only.errors.sh`,
+  because there are too many `run.and.*` commands,
+  that are not used and are to similar.
 * **2021-12-28** **\#s44** The Domsole now filters log messages with a lesser
   priority than INFO by default.
   This behaviour can be overwritten with the Option MessageFilter.
