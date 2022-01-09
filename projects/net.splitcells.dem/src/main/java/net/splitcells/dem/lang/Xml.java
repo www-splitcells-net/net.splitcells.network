@@ -11,6 +11,7 @@
 package net.splitcells.dem.lang;
 
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -23,10 +24,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -42,6 +45,7 @@ import static org.w3c.dom.Node.ELEMENT_NODE;
  * Currently XML is used as the base of all documents.
  * If it is not suitable anymore, it will be replaced by {@link net.splitcells.dem.lang.perspective.PerspectiveDocument}.
  */
+@JavaLegacyArtifact
 public final class Xml {
     private static final Transformer TRANSFORMER = Xml.newTransformer();
     private static final Transformer UNDECLARED_TRANSFORMER = Xml.newTransformer();
@@ -232,6 +236,10 @@ public final class Xml {
         }
     }
 
+    public static Document parse(String content) {
+        return parse(new ByteArrayInputStream(content.getBytes()));
+    }
+
     public static String toFlatString(Node arg) {
         return toPrettyString(arg).replaceAll("\\R", "");
     }
@@ -261,6 +269,13 @@ public final class Xml {
         return directChildElements(element)
                 .filter(node -> nameSpace.uri().equals(node.getNamespaceURI()))
                 .filter(node -> node.getLocalName().equals(name));
+    }
+
+    public static Optional<Element> optionalDirectChildElementsByName(Element element, String name, NameSpace nameSpace) {
+        return directChildElements(element)
+                .filter(node -> nameSpace.uri().equals(node.getNamespaceURI()))
+                .filter(node -> node.getLocalName().equals(name))
+                .findFirst();
     }
 
     public static Stream<Node> directChildNodes(Element element) {
