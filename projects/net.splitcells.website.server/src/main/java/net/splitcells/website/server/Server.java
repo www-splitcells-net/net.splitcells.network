@@ -11,7 +11,9 @@
 package net.splitcells.website.server;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.ClientAuth;
 import io.vertx.core.http.HttpServerOptions;
@@ -22,8 +24,10 @@ import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.RenderingResult;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
@@ -41,8 +45,15 @@ public class Server {
     public void serveToHttpAt(int port, Function<String, Optional<RenderingResult>> renderer) {
         {
             System.setProperty("vertx.disableFileCaching", "true");
+            System.setProperty("vertx.maxEventLoopExecuteTime", "1000000");
             System.setProperty("log4j.rootLogger", "DEBUG, stdout");
-            Vertx vertx = Vertx.vertx();
+            Vertx vertx = Vertx.vertx(new VertxOptions()
+                    .setMaxEventLoopExecuteTimeUnit(SECONDS)
+                    .setMaxEventLoopExecuteTime(60L)
+                    .setBlockedThreadCheckInterval(60_000L));
+            final var deploymentOptions = new DeploymentOptions()
+                    .setMaxWorkerExecuteTimeUnit(SECONDS)
+                    .setMaxWorkerExecuteTime(60L);
             vertx.deployVerticle(new AbstractVerticle() {
                 @Override
                 public void start() {
@@ -56,7 +67,7 @@ public class Server {
                             .setTrustOptions(new PfxOptions()
                                     .setPath(configValue(SslKeystore.class).toString())
                                     .setPassword(configValue(SslKeystorePassword.class)))
-                            .setPort(port);//
+                            .setPort(port);
                     final var router = Router.router(vertx);
                     router.route("/favicon.ico").handler(a -> {
                     });
@@ -78,6 +89,7 @@ public class Server {
                             }
                         }, (result) -> {
                             if (result.failed()) {
+                                System.out.println(result.cause().toString());
                                 domsole().append(perspective(result.cause().toString()), LogLevel.ERROR);
                                 domsole().appendError(result.cause());
                                 response.setStatusCode(500);
@@ -94,7 +106,7 @@ public class Server {
                     server.requestHandler(router);//
                     server.listen();
                 }
-            });
+            }, deploymentOptions);
         }
     }
 
