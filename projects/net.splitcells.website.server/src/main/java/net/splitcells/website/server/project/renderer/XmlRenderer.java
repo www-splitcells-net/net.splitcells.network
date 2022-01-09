@@ -44,22 +44,21 @@ public class XmlRenderer implements Renderer {
                     .projectFolder()
                     .resolve("src/main/xml")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
-            final var document = Xml.parse(readString(xmlFile));
-            if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
-                final var metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.DEN)
-                        .orElseGet(() -> {
-                            final var newMeta = document.createElementNS(NameSpaces.SEW.uri(), "meta");
-                            document.getDocumentElement().appendChild(newMeta);
-                            return newMeta;
-                        });
-                if (optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.DEN).isEmpty()) {
-                    final var pathElement = document.createElementNS(NameSpaces.SEW.uri(), "path");
-                    pathElement.appendChild(document.createTextNode(path));
-                    document.getDocumentElement()
-                            .appendChild(pathElement);
-                }
-            }
             if (Files.is_file(xmlFile)) {
+                final var document = Xml.parse(readString(xmlFile));
+                if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
+                    final var metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.SEW)
+                            .orElseGet(() -> {
+                                final var newMeta = document.createElementNS(NameSpaces.SEW.uri(), "meta");
+                                document.getDocumentElement().appendChild(newMeta);
+                                return newMeta;
+                            });
+                    if (optionalDirectChildElementsByName(document.getDocumentElement(), "path", NameSpaces.SEW).isEmpty()) {
+                        final var pathElement = document.createElementNS(NameSpaces.SEW.uri(), "path");
+                        pathElement.appendChild(document.createTextNode(path));
+                        metaElement.appendChild(pathElement);
+                    }
+                }
                 return Optional.of(renderingResult(renderer
                                 .transform(Xml.toDocumentString(document)).getBytes(UTF_8)
                         , TEXT_HTML.toString()));
