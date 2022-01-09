@@ -54,6 +54,8 @@ Keyword_static: 'static';
 Keyword_throw: 'throw';
 Keyword_try: 'try';
 
+Operator_plus: '+';
+
 Bigger_than: '>';
 Brace_curly_open: '{';
 Brace_curly_closed: '}';

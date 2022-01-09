@@ -118,6 +118,7 @@ expression
     | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments access?
     | Whitespace? name Whitespace? call_arguments Whitespace? access?
     | Whitespace? name Whitespace? access?
+    | expression Whitespace? Operator_plus Whitespace? expression
     | Whitespace expression
     ;
 expression_child
