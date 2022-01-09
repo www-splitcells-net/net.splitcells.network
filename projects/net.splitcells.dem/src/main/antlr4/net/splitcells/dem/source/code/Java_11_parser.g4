@@ -34,8 +34,8 @@ options {
     tokenVocab=Java_11_lexer;
 }
 access
-    : Dot Whitespace? name Whitespace? call_arguments Whitespace? access?
-    | Dot Whitespace? name Whitespace? Whitespace? access?
+    : Whitespace? Dot Whitespace? name Whitespace? call_arguments Whitespace? access?
+    | Whitespace? Dot Whitespace? name Whitespace? Whitespace? access?
     ;
 allowed_Extensions
 	: Whitespace? Extension_Exception
@@ -114,8 +114,8 @@ expression
     | expression Whitespace operator Whitespace expression
     | prefix_operator expression
     | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
-        	Whitespace? Brace_curly_open class_member* Whitespace? Brace_curly_closed
-    | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
+        	Whitespace? Brace_curly_open class_member* Whitespace? Brace_curly_closed access?
+    | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments access?
     | Whitespace? name Whitespace? call_arguments Whitespace? access?
     | Whitespace? name Whitespace? access?
     | Whitespace expression
