@@ -57,11 +57,11 @@ public enum LogLevel implements Ordered<LogLevel> {
 	public Ordering compare_to(LogLevel arg) {
 		if (priority == arg.priority) {
 			return EQUAL;
-		} else if (priority < arg.priority) {
+		} else if (priority > arg.priority) {
 			return GREATER_THAN;
 		} else {
 			if (ENFORCING_UNIT_CONSISTENCY) {
-				assertThat(arg.priority).isLessThan(priority);
+				assertThat(arg.priority).isGreaterThan(priority);
 			}
 			return LESSER_THAN;
 		}
