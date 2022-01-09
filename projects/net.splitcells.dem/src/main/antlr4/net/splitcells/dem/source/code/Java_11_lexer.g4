@@ -29,6 +29,7 @@ Keysymbol_at: '@';
 Keysymbol_equals: '==';
 Keysymbol_not_equals: '!=';
 Keysymbol_not: '!';
+Keysymbol_vararg: '...';
 Keyword_annotation: '@interface';
 Keyword_class: 'class';
 Keyword_catch: 'catch';

@@ -263,7 +263,7 @@ string_content
 	| Hyphen_minus string_content?
 	;
 type_declaration
-    : Whitespace? type_path type_argument?
+    : Whitespace? type_path type_argument? Keysymbol_vararg?
     ;
 type_argument
     : Whitespace? Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
