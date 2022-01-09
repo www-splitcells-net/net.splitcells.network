@@ -2,17 +2,22 @@ package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.project.FileStructureTransformer;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import org.w3c.dom.Element;
 
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
@@ -39,9 +44,24 @@ public class XmlRenderer implements Renderer {
                     .projectFolder()
                     .resolve("src/main/xml")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
+            final var document = Xml.parse(readString(xmlFile));
+            if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
+                final var metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.DEN)
+                        .orElseGet(() -> {
+                            final var newMeta = document.createElementNS(NameSpaces.SEW.uri(), "meta");
+                            document.getDocumentElement().appendChild(newMeta);
+                            return newMeta;
+                        });
+                if (optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.DEN).isEmpty()) {
+                    final var pathElement = document.createElementNS(NameSpaces.SEW.uri(), "path");
+                    pathElement.appendChild(document.createTextNode(path));
+                    document.getDocumentElement()
+                            .appendChild(pathElement);
+                }
+            }
             if (Files.is_file(xmlFile)) {
                 return Optional.of(renderingResult(renderer
-                                .transform(readString(xmlFile)).getBytes(UTF_8)
+                                .transform(Xml.toDocumentString(document)).getBytes(UTF_8)
                         , TEXT_HTML.toString()));
             }
         }

@@ -37,6 +37,7 @@ public interface Renderer {
 
     /**
      * TODO Use {@link Path} object instead of {@link String}.
+     * TODO We assume that resource root paths are absolute and therefore start with a slash.
      * <p>
      * This can be considered the address of the renderer,
      * that identifies the renderer.
