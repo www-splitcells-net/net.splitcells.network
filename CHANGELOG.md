@@ -307,6 +307,7 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2022-01-09**: **\#148**: [Fix local path context for rendered XML files in website server.](https://github.com/www-splitcells-net/net.splitcells.network/issues/148)
 * **2022-01-02**: **\#138** Fix user command rendering via `UserCommandRenderer`
   by rendering command tree with `http://splitcells.net/den.xsd` namespace.
 * **2021-12-31**: **\#138** The website server now supports via the LinkTranslator links
