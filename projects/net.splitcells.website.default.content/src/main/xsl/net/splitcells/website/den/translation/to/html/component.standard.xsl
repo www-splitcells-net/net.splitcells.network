@@ -560,6 +560,7 @@
         </xsl:for-each>
     </xsl:template>
     <xsl:template match="s:blockquote">
+        <xsl:message select="'The blockquote element is deprecated, because its functionality can be done via quote.'" terminate="true"/>
         <x:blockquote>
             <xsl:apply-templates/>
         </x:blockquote>
