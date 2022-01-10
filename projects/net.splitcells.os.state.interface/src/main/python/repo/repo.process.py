@@ -41,6 +41,12 @@ Objective
 The necessary meta info should be stored as simple and portable as possible.
 In best case scenario only the relative paths of the sub repos and its possible remote servers has to be stored.
 
+TODO Instead of "./.net.splitcells.os.state.interface.repo/subs.json" use the
+     more simple "./.net.splitcells.os.state.interface.repo/subs.txt",
+     which needs to be defined yet.
+     The reason for this migration is the fact,
+     that the JSON format is too complex yet
+     and unnecessary hard to process.
 TODO Use only python for recursion and not shell, in order simplify command.
 TODO Improve documentation.
 TODO Remove duplicate code.
