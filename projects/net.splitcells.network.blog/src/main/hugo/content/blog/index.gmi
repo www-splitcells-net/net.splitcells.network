@@ -19,6 +19,8 @@
 
 ## Articles
 
+=> gemini://splitcells-net.srht.site/2022-01-10-A-Case-For-Repo-Process.gmi 2022-01-10 2022-01-10 A Case For Repo Process
+
 => gemini://splitcells-net.srht.site/2021-10-04-There-Is-Bad-There-Is-Horrible-And-Then-There-is-Error-Handling.gmi 2021-10-04 There is the bad, there is the horrible, and then there is <sight> error handling.
 
 => gemini://splitcells-net.srht.site/2021-10-04-Development-Timing-And-Discovery-Based-Networks-Of-Perspectives.gmi 2021-10-04 Development Timing And Discovery Based Networks Of Perspectives

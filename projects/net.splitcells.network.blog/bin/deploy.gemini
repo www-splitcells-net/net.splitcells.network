@@ -7,9 +7,8 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-./bin/build.gemini
-tar -C target/site -cvz . > target/site.tar.gz
+tar -C target/site.gemini -cvz . > target/site.gemini.tar.gz
 curl --oauth2-bearer $net_splitcells_network_blog_srht_site_access_token \
-    -Fcontent=@target/site.tar.gz \
+    -Fcontent=@target/site.gemini.tar.gz \
     -Fprotocol=GEMINI \
     https://pages.sr.ht/publish/splitcells-net.srht.site

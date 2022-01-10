@@ -7,8 +7,7 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-./bin/build.hugo
-tar -C target/site -cvz . > target/site.tar.gz
+tar -C target/site.hugo -cvz . > target/site.hugo.tar.gz
 curl --oauth2-bearer $net_splitcells_network_blog_srht_site_access_token \
-    -Fcontent=@target/site.tar.gz \
+    -Fcontent=@target/site.hugo.tar.gz \
     https://pages.sr.ht/publish/splitcells-net.srht.site

@@ -8,4 +8,7 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 set -e
+mvn clean
+./bin/build.source.dependencies
 ./bin/build.hugo
+./bin/build.gemini

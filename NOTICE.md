@@ -52,6 +52,7 @@ all licenses present.
 * EPL-2.0
 * ISC
 * LGPL-2.1-or-later
+* LGPL-3.0
 * MIT
 * MPL 2.0
 
@@ -59,10 +60,13 @@ all licenses present.
 
 The licenses of the transitive dependencies are not listed here.
 
+md2gemini:
+* License: LGPL-2.1-or-later
+* [Source Code](https://github.com/makeworld-the-better-one/md2gemini)
+
 Chart.js:
 * License: MIT
 * [Source Code](https://github.com/chartjs/Chart.js)
-
 
 OpenJDK:
 * License: GNU General Public License, version 2, with the Classpath Exception 

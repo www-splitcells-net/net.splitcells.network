@@ -156,7 +156,9 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-* **2022-01-05**: **\#s138** Create project `net.splitcells.gel.quickstart`.
+* **2022-01-11**: **\#s58** Implement first draft for injecting blogs of
+  different projects into the network blog.
+* **2022-01-05**: **\#138** Create project `net.splitcells.gel.quickstart`.
   It is a minimal project, that demonstrates how use the Gel framework.
   It can also be used as a template for new projects.
 * **2021-12-27**: **\#s44** Create first draft of HTML link Validator based on
