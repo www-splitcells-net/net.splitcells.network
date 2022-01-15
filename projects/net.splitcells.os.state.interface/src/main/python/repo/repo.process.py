@@ -51,6 +51,8 @@ TODO Use only python for recursion and not shell, in order simplify command.
 TODO Improve documentation.
 TODO Remove duplicate code.
 TODO Support moving child repositories semi-automatically.
+TODO Create compatibility tooling for alternative like meta: https://github.com/mateodelnorte/meta
+     This would create metadata files for the meta tool,
 """
 
 __author__ = "Mārtiņš Avots"
@@ -143,7 +145,7 @@ if __name__ == '__main__':
 	parser.add_argument('--command', dest='command', required=True)
 	parser.add_argument('--command-for-missing', dest='commandForMissing', default="exit 1")
 	parser.add_argument('--command-for-unknown', dest='commandForUnknown', default="exit 1")
-	parser.add_argument('--command-for-current', dest='commandForCurrent', required=False)
+	parser.add_argument('--command-for-current', dest='commandForCurrent', required=False) # TODO What is the purpose of this?
 	parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
 	parsedArgs = parser.parse_args()
 	if not process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command, parsedArgs.commandForMissing, parsedArgs.commandForUnknown, parsedArgs.commandForCurrent, parsedArgs.commandForChildren):
