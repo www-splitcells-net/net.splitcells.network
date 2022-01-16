@@ -161,6 +161,7 @@ public class CommonFunctions {
     /**
      * TODO variadic argument support
      */
+    @JavaLegacyBody
     public static <T extends Object> T[] concat(T[] a, T[] b) {
         final T[] rVal = (T[]) new Object[a.length + b.length];
         int current_index = 0;
