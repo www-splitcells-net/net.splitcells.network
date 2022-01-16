@@ -160,10 +160,10 @@ javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/
     ;
 license_declaration
-    : '/*' .*? '*/'
+    : '/*' .* '*/'
     ;
-Line_comment
-	: '//' .*? [\n\r]+
+fragment Line_comment
+	: '//' .* [\n\r]+
 	;
 modifier_visibility
     : 'public'
@@ -186,7 +186,7 @@ package_name
 prefix_operator
 	: '!'
 	;
-Name: [a-zA-Z_][a-zA-Z0-9_]*;
+fragment Name: [a-zA-Z_][a-zA-Z0-9_]*;
 reference
 	: expression
     /* This is an Lambda definition. */
@@ -235,7 +235,7 @@ source_unit
 string
 	: '"' String_content '"'
 	;
-String_content
+fragment String_content
 	: [a-zA-Z0-9_-]*
 	;
 type_declaration
