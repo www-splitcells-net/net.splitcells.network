@@ -58,6 +58,7 @@
                         <configuration>
                             <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/code</sourceDirectory>
                             <includes>
+                                <include>Java11Grammar.g4</include>
                                 <include>Java_11_lexer.g4</include>
                                 <include>Java_11_parser.g4</include>
                             </includes>
