@@ -122,7 +122,7 @@ import_static_declaration
 import_type_declaration
     : 'import' type_path ';'
     ;
-Integer
+fragment Integer
 	: [-+]?[0-9]+
 	;
 interface_definition
@@ -159,11 +159,14 @@ interface_extension
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/
     ;
+fragment Test
+	: [.(*]*
+	;
 license_declaration
-    : '/*' .* '*/'
+    : '/*' Test '*/'
     ;
 fragment Line_comment
-	: '//' .* [\n\r]+
+	: '//' .*? [\n\r]+
 	;
 modifier_visibility
     : 'public'
@@ -221,15 +224,16 @@ statement_finally
     : 'finally' '{' statement+ '}'
     ;
 source_unit
-    : license_declaration package_declaration import_declaration*
+	/* TODO license_declaration does not work and therefore MULTILINE_COMMENT is used to skip  */
+    : license_declaration? package_declaration import_declaration*
     	class_definition EOF
-    | license_declaration package_declaration import_declaration*
+    | license_declaration? package_declaration import_declaration*
     	interface_definition EOF
-    | license_declaration package_declaration import_declaration*
+    | license_declaration? package_declaration import_declaration*
     	interface_definition EOF
-    | license_declaration package_declaration import_declaration*
+    | license_declaration? package_declaration import_declaration*
     	annotation_definition EOF
-    | license_declaration package_declaration import_declaration*
+    | license_declaration? package_declaration import_declaration*
     	enum_definition EOF
     ;
 string
@@ -270,3 +274,6 @@ variable_declaration
 WS
 	: [ \t\r\n]+ -> skip
 	;
+MULTILINE_COMMENT
+    :   '/*' .*? '*/' -> skip
+    ;
