@@ -41,41 +41,40 @@ options {
     tokenVocab=Java_11_lexer;
 }
 access
-    : Dot Whitespace? name Whitespace? call_arguments Whitespace? access?
-    | Whitespace? Dot Whitespace? name Whitespace? Whitespace? access?
+    : Dot name call_arguments  access?
+    | Dot name access?
     ;
 allowed_Extensions
-	: Whitespace? Extension_Exception
+	: Extension_Exception
 	;
 annotation
-	: Whitespace? Keysymbol_at name;
+	: Keysymbol_at name;
 annotation_definition
-    : Whitespace? javadoc? Whitespace? Keyword_public Whitespace? Keyword_annotation?
-    	Whitespace? name
-        Whitespace? Brace_curly_open Whitespace? Brace_curly_closed
+    : javadoc? Keyword_public Keyword_annotation? name
+        Brace_curly_open Brace_curly_closed
     ;
 call_arguments
-    : Whitespace? Brace_round_open Brace_round_closed
-    | Whitespace? Brace_round_open Whitespace? call_arguments_element Whitespace? call_arguments_next* Whitespace? Brace_round_closed
+    : Brace_round_open Brace_round_closed
+    | Brace_round_open call_arguments_element call_arguments_next* Brace_round_closed
     ;
 call_arguments_element
     : reference
     | variable_declaration
     ;
 call_arguments_next
-    : Comma Whitespace call_arguments_element
+    : Comma call_arguments_element
     ;
 class_definition
-    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final?
-    	Whitespace? Keyword_class
+    : javadoc? Keyword_public? Keyword_final?
+    	Keyword_class
     	type_declaration
     	class_extension
-        Whitespace? Brace_curly_open Whitespace? class_member* Whitespace? Brace_curly_closed
+        Brace_curly_open class_member* Brace_curly_closed
     ;
 class_extension
-	: Whitespace? Keyword_extends Whitespace? type_declaration
-	| Whitespace? Keyword_implements Whitespace? type_declaration
-	| Whitespace? allowed_Extensions?
+	: Keyword_extends type_declaration
+	| Keyword_implements type_declaration
+	| allowed_Extensions?
 	;
 class_member
     : class_constructor
@@ -83,53 +82,52 @@ class_member
     | class_member_value_declaration
     ;
 class_constructor
-    : Whitespace? annotation? Whitespace? Keyword_private Whitespace name call_arguments statement_body
+    : annotation? Keyword_private name call_arguments statement_body
     ;
 class_member_method_definition
-    : Whitespace? javadoc? Whitespace? annotation? Whitespace? modifier_visibility? Whitespace? Keyword_static?
-    	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
-        name Whitespace? call_arguments Whitespace? Brace_curly_open Whitespace? statement* Whitespace?
+    : javadoc? annotation? modifier_visibility? Keyword_static?
+    	type_argument? type_declaration
+        name call_arguments Brace_curly_open statement*
         Brace_curly_closed
     ;
 class_member_value_declaration
-    : Whitespace? javadoc? modifier_visibility? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
-        type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement
-    | Whitespace? javadoc? modifier_visibility? Whitespace? Keyword_static? Whitespace? Keyword_final? Whitespace?
-              type_declaration? Whitespace? name Whitespace? Semicolon
+    : javadoc? modifier_visibility? Keyword_static? Keyword_final?
+        type_declaration? name Equals statement
+    | javadoc? modifier_visibility? Keyword_static? Keyword_final?
+              type_declaration? name Semicolon
     ;
 enum_definition
 	/* TODO Create own enum grammar destinct from class. */
-    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_enum
-    	Whitespace? name
-        Whitespace? Brace_curly_open enum_values Whitespace? class_member*
-        Whitespace? Brace_curly_closed
+    : javadoc? Keyword_public? Keyword_enum
+    	name
+        Brace_curly_open enum_values class_member*
+        Brace_curly_closed
     ;
 enum_values
-	: Whitespace? name enum_values_next Semicolon
+	: name enum_values_next Semicolon
 	;
 enum_values_next
-    : Whitespace? Comma Whitespace? name enum_values_next?
+    : Comma name enum_values_next?
     ;
 expression
-    : Whitespace? integer
-    | Whitespace? Brace_round_open Whitespace? type_declaration Whitespace?
-    	Brace_round_closed Whitespace? expression_child?
-    	/* Only upcasting should be done. */
-    | Brace_round_open Whitespace? expression Whitespace?
+    : integer
+    | Brace_round_open type_declaration
     	Brace_round_closed expression_child?
-    | String Whitespace? access?
-    | expression Whitespace operator Whitespace expression
+    	/* Only upcasting should be done. */
+    | Brace_round_open expression
+    	Brace_round_closed expression_child?
+    | String access?
+    | expression operator expression
     | prefix_operator expression
-    | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
-        	Whitespace? Brace_curly_open class_member* Whitespace? Brace_curly_closed access?
-    | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments access?
-    | Whitespace? name Whitespace? call_arguments Whitespace? access?
-    | Whitespace? name Whitespace? access?
-    | expression Whitespace? Operator_plus Whitespace? expression
-    | Whitespace expression
+    | Keyword_new type_declaration call_arguments
+        	Brace_curly_open class_member* Brace_curly_closed access?
+    | Keyword_new type_declaration call_arguments access?
+    | name call_arguments access?
+    | name access?
+    | expression Operator_plus expression
     ;
 expression_child
-	: Whitespace? access
+	: access
 	| expression
 	;
 import_declaration
@@ -137,57 +135,57 @@ import_declaration
     | import_type_declaration
     ;
 import_static_declaration
-    : Keyword_import Whitespace Keyword_static Whitespace type_path Semicolon Whitespace*
+    : Keyword_import Keyword_static type_path Semicolon
     ;
 import_type_declaration
-    : Keyword_import Whitespace type_path Semicolon Whitespace*
+    : Keyword_import type_path Semicolon
     ;
 integer
 	: Integer
 	| Hyphen_minus Digits
 	;
 interface_definition
-    : Whitespace? javadoc? Whitespace? Keyword_public? Whitespace? Keyword_final? Whitespace? Keyword_interface?
-    	Whitespace? name
+    : javadoc? Keyword_public? Keyword_final? Keyword_interface?
+    	name
     	type_argument?
     	interface_extension?
-        Whitespace? Brace_curly_open interface_definition_member* Whitespace? Brace_curly_closed
+        Brace_curly_open interface_definition_member* Brace_curly_closed
     ;
 interface_extension
-	: Whitespace Keyword_extends Whitespace type_declaration
+	: Keyword_extends type_declaration
 	;
 interface_definition_member_method
-    : Whitespace? javadoc?
-    	Whitespace? annotation? Whitespace? Whitespace? modifier_visibility? Whitespace? Keyword_static?
-    	Whitespace? type_argument? Whitespace? type_declaration Whitespace?
-        name Whitespace? call_arguments Semicolon
-    | Whitespace? javadoc? Whitespace? annotation? Whitespace? Keyword_static
-		Whitespace? type_argument? Whitespace? type_declaration Whitespace?
-		name Whitespace? call_arguments Whitespace?
-		Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
-	| Whitespace? javadoc? Whitespace? annotation? Whitespace? Keyword_default
-		Whitespace? type_argument? Whitespace? type_declaration Whitespace?
-		name Whitespace? call_arguments Whitespace?
-		Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
+    : javadoc?
+    	annotation? modifier_visibility? Keyword_static?
+    	type_argument? type_declaration
+        name call_arguments Semicolon
+    | javadoc? annotation? Keyword_static
+		type_argument? type_declaration
+		name call_arguments
+		Brace_curly_open statement* Brace_curly_closed
+	| javadoc? annotation? Keyword_default
+		type_argument? type_declaration
+		name call_arguments
+		Brace_curly_open statement* Brace_curly_closed
     | interface_definition_member_static
     ;
 interface_definition_member_static
-	: Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace? Equals Whitespace? statement
-	| Whitespace? javadoc? Whitespace? type_declaration? Whitespace? name Whitespace?
-		Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
+	: javadoc? type_declaration? name Equals statement
+	| javadoc? type_declaration? name
+		Brace_curly_open statement* Brace_curly_closed
 	;
 interface_definition_member
-	: Whitespace? interface_definition_member_method
+	: interface_definition_member_method
 	;
 javadoc
-    : Javadoc /*Javadoc_start Javadoc_end*/ Whitespace?
+    : Javadoc /*Javadoc_start Javadoc_end*/
     ;
 license_declaration
     : Comment_multiline
     ;
 modifier_visibility
-    : Whitespace? Keyword_public
-    | Whitespace? Keyword_private
+    : Keyword_public
+    | Keyword_private
     ;
 name
     /* This is needed, because token fragments can currently only be used in tokens.
@@ -204,7 +202,7 @@ operator
 	| Keyword_instanceof
 	;
 package_declaration
-    : 'package' Whitespace package_name Semicolon Whitespace*
+    : 'package' package_name Semicolon
     ;
 package_name
     : name
@@ -216,68 +214,68 @@ prefix_operator
 reference
 	: expression
     /* This is an Lambda definition. */
-    | name Whitespace? Arrow Whitespace? reference
-    | name Whitespace? Arrow Whitespace Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
-    | call_arguments Whitespace? Arrow Whitespace? Brace_curly_open Whitespace? statement* Whitespace? Brace_curly_closed
+    | name Arrow reference
+    | name Arrow Brace_curly_open statement* Brace_curly_closed
+    | call_arguments Arrow Brace_curly_open statement* Brace_curly_closed
     ;
 statement
-    : Whitespace? Line_comment
-    | Whitespace? Keyword_try Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_catch?
+    : Line_comment
+    | Keyword_try Brace_curly_open statement+ Brace_curly_closed statement_catch?
         statement_finally?
-    | Whitespace? Keyword_if Whitespace? Brace_round_open expression Whitespace? Brace_round_closed Whitespace?
-    	Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_if_else?
-    | Whitespace? javadoc
-    | Whitespace? Keyword_throw expression Whitespace? Semicolon
-    | Whitespace? Keyword_return Whitespace expression Semicolon
-    | Whitespace? expression Semicolon
-    | Whitespace? variable_declaration (Whitespace Equals Whitespace expression)? Semicolon
-    | Whitespace? name Whitespace? access Whitespace Equals Whitespace expression Semicolon
-    | Whitespace? name                    Whitespace Equals Whitespace expression Semicolon
+    | Keyword_if Brace_round_open expression Brace_round_closed
+    	Brace_curly_open statement+ Brace_curly_closed statement_if_else?
+    | javadoc
+    | Keyword_throw expression Semicolon
+    | Keyword_return expression Semicolon
+    | expression Semicolon
+    | variable_declaration (Equals expression)? Semicolon
+    | name access Equals expression Semicolon
+    | name Equals expression Semicolon
     ;
 statement_body
-    : Whitespace? Brace_curly_open statement* Whitespace? Brace_curly_closed
+    : Brace_curly_open statement* Brace_curly_closed
     ;
 statement_if_else
-	: Whitespace? Keyword_else Whitespace Brace_curly_open statement+ Whitespace? Brace_curly_closed
-	| Whitespace? Keyword_else_if Whitespace Brace_round_open expression Whitespace? Brace_round_closed Whitespace?
-		Brace_curly_open statement+ Whitespace? Brace_curly_closed statement_if_else?
+	: Keyword_else Brace_curly_open statement+ Brace_curly_closed
+	| Keyword_else_if Brace_round_open expression Brace_round_closed
+		Brace_curly_open statement+ Brace_curly_closed statement_if_else?
 	;
 statement_catch
-    : Whitespace? Keyword_catch Whitespace? Brace_round_open Whitespace? name Whitespace? name Whitespace?
-        Brace_round_closed Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
+    : Keyword_catch Brace_round_open name name
+        Brace_round_closed Brace_curly_open statement+ Brace_curly_closed
     ;
 statement_finally
-    : Whitespace? Keyword_finally Whitespace? Brace_curly_open statement+ Whitespace? Brace_curly_closed
+    : Keyword_finally Brace_curly_open statement+ Brace_curly_closed
     ;
 source_unit
-    : license_declaration Whitespace? package_declaration import_declaration* Whitespace? class_definition Whitespace?
+    : license_declaration package_declaration import_declaration* class_definition
     	EOF
-    | license_declaration Whitespace? package_declaration import_declaration* Whitespace? interface_definition
-        Whitespace? EOF
-    | license_declaration Whitespace? package_declaration import_declaration* Whitespace? interface_definition
-    	Whitespace? EOF
-    | license_declaration Whitespace? package_declaration import_declaration* Whitespace? annotation_definition
-        Whitespace? EOF
-    | license_declaration Whitespace? package_declaration import_declaration* Whitespace? enum_definition Whitespace?
+    | license_declaration package_declaration import_declaration* interface_definition
+        EOF
+    | license_declaration package_declaration import_declaration* interface_definition
+    	EOF
+    | license_declaration package_declaration import_declaration* annotation_definition
+        EOF
+    | license_declaration package_declaration import_declaration* enum_definition
             	EOF
     ;
 type_declaration
-    : Whitespace? type_path type_argument? Keysymbol_vararg?
+    : type_path type_argument? Keysymbol_vararg?
     ;
 type_argument
-    : Whitespace? Less_than Whitespace? type_argument_content? Whitespace? Bigger_than
+    : Less_than type_argument_content? Bigger_than
     ;
 type_argument_content
-    : type_argument Whitespace? type_argument_content_next?
-    | type_argument_element Whitespace? type_argument_content_next?
+    : type_argument type_argument_content_next?
+    | type_argument_element type_argument_content_next?
     ;
 type_argument_content_next
-    : Comma Whitespace? type_argument Whitespace? type_argument_content_next?
-    | Comma Whitespace? name Whitespace? type_argument_content_next?
+    : Comma type_argument type_argument_content_next?
+    | Comma name type_argument_content_next?
     ;
 type_argument_element
 	: type_name
-	| type_name Whitespace Keyword_extends Whitespace type_argument_element type_argument?
+	| type_name Keyword_extends type_argument_element type_argument?
 	;
 type_name
 	: name
@@ -288,6 +286,6 @@ type_path
     | type_path Dot Name
     ;
 variable_declaration
-    : Keyword_final? Whitespace? type_declaration Whitespace name
+    : Keyword_final? type_declaration name
     ;
 

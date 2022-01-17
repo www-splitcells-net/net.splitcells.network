@@ -87,9 +87,12 @@ lexer grammar Java_11_lexer;
 	Quote: '"';
 	Operator_plus: '+';
 	Semicolon: ';';
+/* Multiple Line Token */
+	Comment_multiline: '/*' .*? '*/';
+	Line_comment: '//' .*? Line_ending;
+	Javadoc: '/**' .*? '*/';
 /* Generic Content */
 	Name: [a-zA-Z_][a-zA-Z0-9_]*;
-	Whitespace: [ \t\n\r]+;
 	String
 		/* TODO This is too simplistic. */
 		:'"' String_character* '"';
@@ -97,10 +100,6 @@ lexer grammar Java_11_lexer;
 		: [a-zA-Z0-9_-]
 		| '\\n'
 		;
-/* Multiple Line Token */
-	Comment_multiline: '/*' .*? '*/';
-	Line_comment: '//' .*? Line_ending;
-	Javadoc: '/**' .*? '*/';
 /* Tokens Of Last Resort */
 	WS:
 		/* Ignore whitespace. */
