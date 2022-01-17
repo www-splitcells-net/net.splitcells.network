@@ -1,4 +1,4 @@
-lexer grammar Java_11_lexer;
+lexer grammar Java11Lexer;
 /*
  * Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
  *

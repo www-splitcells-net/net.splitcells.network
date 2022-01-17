@@ -32,43 +32,12 @@ public class SourceCodeCheck {
                 .forEach(SourceCodeCheck::check_Java_source_code);*/
     }
 
-    private static void check_Java_source_code2(Path file) {
-        try {
-            System.out.println("Checking file: " + file);
-            final var lexer = new net.splitcells.dem.source.code.antlr.Java11GrammarLexer
-                    (CharStreams.fromFileName(file.toString()));
-            final var parser = new net.splitcells.dem.source.code.antlr.Java11GrammarParser
-                    (new CommonTokenStream(lexer));
-            // TODO REMOVE this, when this feature is implemented.
-            //parser.addErrorListener(new DiagnosticErrorListener());
-            //parser.setErrorHandler(new BailErrorStrategy());
-            //parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
-            parser.addErrorListener(new BaseErrorListener() {
-                // Creates more easily understandable error message.
-                @Override
-                public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e)
-                        throws ParseCancellationException {
-                    if (offendingSymbol instanceof CommonToken) {
-                        final var token = (CommonToken) offendingSymbol;
-                        System.out.println("line " + line + ":" + charPositionInLine + " " + msg + ", " + token.toString(recognizer));
-                    } else {
-                        System.out.println("line " + line + ":" + charPositionInLine + " " + msg + ", " + offendingSymbol);
-                    }
-                    throw new ParseCancellationException("line " + line + ":" + charPositionInLine + " " + msg);
-                }
-            });
-            parser.source_unit();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private static void check_Java_source_code(Path file) {
         try {
             System.out.println("Checking file: " + file);
-            final var lexer = new net.splitcells.dem.source.code.antlr.Java_11_lexer
+            final var lexer = new net.splitcells.dem.source.code.antlr.Java11Lexer
                     (CharStreams.fromFileName(file.toString()));
-            final var parser = new net.splitcells.dem.source.code.antlr.Java_11_parser
+            final var parser = new net.splitcells.dem.source.code.antlr.Java11Parser
                     (new CommonTokenStream(lexer));
             // TODO REMOVE this, when this feature is implemented.
             //parser.addErrorListener(new DiagnosticErrorListener());

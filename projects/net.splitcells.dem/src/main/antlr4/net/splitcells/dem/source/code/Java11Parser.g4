@@ -1,4 +1,4 @@
-parser grammar Java_11_parser;
+parser grammar Java11Parser;
 /*
  * Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
  *
@@ -38,7 +38,7 @@ parser grammar Java_11_parser;
     package net.splitcells.dem.source.code.antlr;
 }
 options {
-    tokenVocab=Java_11_lexer;
+    tokenVocab=Java11Lexer;
 }
 access
     : Dot name call_arguments  access?
