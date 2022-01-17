@@ -9,7 +9,8 @@ parser grammar Java_11_parser;
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
- /* TODO Look up how to do grammar with inline strings, via a minimal grammar.
+ /* TODO Use camel case for naming.
+  * TODO Look up how to do grammar with inline strings, via a minimal grammar.
   * TODO Consider using BND grammar like JavaCC, because ANTLR4 is too complicated:
   * * https://javacc.github.io/javacc/documentation/bnf.html
   * * https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
