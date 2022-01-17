@@ -21,6 +21,8 @@ lexer grammar Java_11_lexer;
 @header {
     package net.splitcells.dem.source.code.antlr;
 }
+Annotation_JavaLegacyBody: 'JavaLegacyBody';
+
 Arrow: '->';
 Extension_Exception: 'extends RuntimeException';
 Javadoc: '/**' .*? '*/';
@@ -70,7 +72,8 @@ Question_mark: '?';
 Comment_multiline: '/*' .*? '*/';
 Line_comment: '//' .*? Line_ending;
 fragment Line_ending: [\n\r]+;
-Name: [a-zA-Z_][a-zA-Z0-9_]*;
+
+fragment Name: [a-zA-Z_][a-zA-Z0-9_]*;
 Semicolon: ';';
 Whitespace: [ \t\n\r]+;
 Quote: '"';

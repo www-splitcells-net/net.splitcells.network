@@ -286,8 +286,8 @@ type_name
 	| Question_mark
 	;
 type_path
-    : name
-    | type_path Dot name
+    : Name
+    | type_path Dot Name
     ;
 variable_declaration
     : Keyword_final? Whitespace? type_declaration Whitespace name
