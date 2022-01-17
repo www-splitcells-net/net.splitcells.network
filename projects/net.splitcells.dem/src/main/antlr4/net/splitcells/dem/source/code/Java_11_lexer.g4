@@ -37,68 +37,73 @@ lexer grammar Java_11_lexer;
 @header {
     package net.splitcells.dem.source.code.antlr;
 }
-Annotation_JavaLegacyBody: 'JavaLegacyBody';
 /* Keywords and Keysymbols */
-Arrow: '->';
-Bigger_than: '>';
-Brace_curly_open: '{';
-Brace_curly_closed: '}';
-Brace_round_open: '(';
-Brace_round_closed: ')';
-Brackets_open: '[';
-Brackets_closed: ']';
-Comma: ',';
-Dot: '.';
-Equals: '=';
-Extension_Exception: 'extends RuntimeException';
-Hyphen_minus: '-';
-Integer: [-+]?[0-9]+;
-Keysymbol_and: '&&';
-Keysymbol_at: '@';
-Keysymbol_equals: '==';
-Keysymbol_not_equals: '!=';
-Keysymbol_not: '!';
-Keysymbol_vararg: '...';
-Keyword_annotation: '@interface';
-Keyword_class: 'class';
-Keyword_catch: 'catch';
-Keyword_default: 'default';
-Keyword_else: 'else';
-Keyword_else_if: 'else if';
-Keyword_enum: 'enum';
-Keyword_extends: 'extends';
-Keyword_instanceof: 'instanceof';
-Keyword_finally: 'finally';
-Keyword_final: 'final';
-Keyword_if: 'if';
-Keyword_implements: 'implements';
-Keyword_import: 'import';
-Keyword_interface: 'interface';
-Keyword_new: 'new';
-Keyword_package: 'package';
-Keyword_private: 'private';
-Keyword_public: 'public';
-Keyword_return: 'return';
-Keyword_static: 'static';
-Keyword_throw: 'throw';
-Keyword_try: 'try';
-Less_than: '<';
-Question_mark: '?';
-Quote: '"';
-Operator_plus: '+';
-Semicolon: ';';
+	Annotation_JavaLegacyBody: 'JavaLegacyBody';
+	Arrow: '->';
+	Bigger_than: '>';
+	Brace_curly_open: '{';
+	Brace_curly_closed: '}';
+	Brace_round_open: '(';
+	Brace_round_closed: ')';
+	Brackets_open: '[';
+	Brackets_closed: ']';
+	Comma: ',';
+	Dot: '.';
+	Equals: '=';
+	Extension_Exception: 'extends RuntimeException';
+	Hyphen_minus: '-';
+	Integer: [-+]?[0-9]+;
+	Keysymbol_and: '&&';
+	Keysymbol_at: '@';
+	Keysymbol_equals: '==';
+	Keysymbol_not_equals: '!=';
+	Keysymbol_not: '!';
+	Keysymbol_vararg: '...';
+	Keyword_annotation: '@interface';
+	Keyword_class: 'class';
+	Keyword_catch: 'catch';
+	Keyword_default: 'default';
+	Keyword_else: 'else';
+	Keyword_else_if: 'else if';
+	Keyword_enum: 'enum';
+	Keyword_extends: 'extends';
+	Keyword_instanceof: 'instanceof';
+	Keyword_finally: 'finally';
+	Keyword_final: 'final';
+	Keyword_if: 'if';
+	Keyword_implements: 'implements';
+	Keyword_import: 'import';
+	Keyword_interface: 'interface';
+	Keyword_new: 'new';
+	Keyword_package: 'package';
+	Keyword_private: 'private';
+	Keyword_public: 'public';
+	Keyword_return: 'return';
+	Keyword_static: 'static';
+	Keyword_throw: 'throw';
+	Keyword_try: 'try';
+	Less_than: '<';
+	Question_mark: '?';
+	Quote: '"';
+	Operator_plus: '+';
+	Semicolon: ';';
 /* Generic Content */
-Name: [a-zA-Z_][a-zA-Z0-9_]*;
-Whitespace: [ \t\n\r]+;
-/* TODO This is too simplistic. */
-String: '"' String_character* '"';
-fragment String_character
-	: [a-zA-Z0-9_-]
-	| '\\n'
-	;
+	Name: [a-zA-Z_][a-zA-Z0-9_]*;
+	Whitespace: [ \t\n\r]+;
+	String
+		/* TODO This is too simplistic. */
+		:'"' String_character* '"';
+	fragment String_character
+		: [a-zA-Z0-9_-]
+		| '\\n'
+		;
 /* Multiple Line Token */
-Comment_multiline: '/*' .*? '*/';
-Line_comment: '//' .*? Line_ending;
-Javadoc: '/**' .*? '*/';
+	Comment_multiline: '/*' .*? '*/';
+	Line_comment: '//' .*? Line_ending;
+	Javadoc: '/**' .*? '*/';
+/* Tokens Of Last Resort */
+	WS:
+		/* Ignore whitespace. */
+    	[ \t\r\n\u000C]+ -> skip;
 /* Token Fragments */
-fragment Line_ending: [\n\r]+;
+	fragment Line_ending: [\n\r]+;
