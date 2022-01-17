@@ -110,7 +110,7 @@ expression
     	/* Only upcasting should be done. */
     | Brace_round_open Whitespace? expression Whitespace?
     	Brace_round_closed expression_child?
-    | string Whitespace? access?
+    | String Whitespace? access?
     | expression Whitespace operator Whitespace expression
     | prefix_operator expression
     | Whitespace? Keyword_new Whitespace? type_declaration Whitespace? call_arguments
@@ -254,15 +254,6 @@ source_unit
     | license_declaration Whitespace? package_declaration import_declaration* Whitespace? enum_definition Whitespace?
             	EOF
     ;
-string
-	: Quote string_content Quote
-	;
-string_content
-	: String_content string_content?
-	| name string_content?
-	| Dot string_content?
-	| Hyphen_minus string_content?
-	;
 type_declaration
     : Whitespace? type_path type_argument? Keysymbol_vararg?
     ;

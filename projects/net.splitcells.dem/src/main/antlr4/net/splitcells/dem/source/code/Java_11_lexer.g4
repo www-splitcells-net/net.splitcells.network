@@ -78,7 +78,7 @@ Semicolon: ';';
 /* Generic Content */
 Name: [a-zA-Z_][a-zA-Z0-9_]*;
 Whitespace: [ \t\n\r]+;
-fragment String_content: [a-zA-Z0-9_-]*;
+String: '"' [a-zA-Z0-9_-]* '"'; /* TODO This is too simplistic. */
 /* Multiple Line Token */
 Comment_multiline: '/*' .*? '*/';
 Line_comment: '//' .*? Line_ending;
