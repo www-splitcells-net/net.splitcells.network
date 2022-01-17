@@ -23,6 +23,9 @@ lexer grammar Java_11_lexer;
  * Place fragment to end of file, because these are never used as tokens.
  *
  * Needs to start with upper case.
+ *
+ * Backslash characters always mark the start of an escape sequence in ANTLR.
+ * This is also the case for strings like '\n', which is a new line character.
  */
 @header {
     package net.splitcells.dem.source.code.antlr;
@@ -80,9 +83,9 @@ Name: [a-zA-Z_][a-zA-Z0-9_]*;
 Whitespace: [ \t\n\r]+;
 /* TODO This is too simplistic. */
 String: '"' String_character* '"';
-String_character
+fragment String_character
 	: [a-zA-Z0-9_-]
-	| '\n'
+	| '\\n'
 	;
 /* Multiple Line Token */
 Comment_multiline: '/*' .*? '*/';
