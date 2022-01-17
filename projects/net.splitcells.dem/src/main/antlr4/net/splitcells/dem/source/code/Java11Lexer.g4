@@ -87,9 +87,9 @@ lexer grammar Java11Lexer;
 	Operator_plus: '+';
 	Semicolon: ';';
 /* Multiple Line Token */
+	Javadoc: '/**' .*? '*/';
 	Comment_multiline: '/*' .*? '*/';
 	Line_comment: '//' .*? Line_ending;
-	Javadoc: '/**' .*? '*/';
 /* Generic Content */
 	Name: [a-zA-Z_][a-zA-Z0-9_]*;
 	String
