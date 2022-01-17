@@ -104,6 +104,6 @@ lexer grammar Java_11_lexer;
 /* Tokens Of Last Resort */
 	WS:
 		/* Ignore whitespace. */
-    	[ \t\r\n\u000C]+ -> skip;
+    	[ \t\r\n]+ -> skip;
 /* Token Fragments */
 	fragment Line_ending: [\n\r]+;
