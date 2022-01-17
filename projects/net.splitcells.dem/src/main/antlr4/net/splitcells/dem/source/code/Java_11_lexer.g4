@@ -38,7 +38,6 @@ lexer grammar Java_11_lexer;
     package net.splitcells.dem.source.code.antlr;
 }
 /* Keywords and Keysymbols */
-	Annotation_JavaLegacyBody: 'JavaLegacyBody';
 	Arrow: '->';
 	Bigger_than: '>';
 	Brace_curly_open: '{';
@@ -106,3 +105,5 @@ lexer grammar Java_11_lexer;
     	[ \t\r\n]+ -> skip;
 /* Token Fragments */
 	fragment Line_ending: [\n\r]+;
+	/* These are special cases of String patterns, that do not require a special token. */
+	fragment Annotation_JavaLegacyBody: 'JavaLegacyBody';
