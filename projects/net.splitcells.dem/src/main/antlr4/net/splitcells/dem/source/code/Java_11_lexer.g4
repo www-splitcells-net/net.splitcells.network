@@ -38,6 +38,8 @@ Brace_curly_open: '{';
 Brace_curly_closed: '}';
 Brace_round_open: '(';
 Brace_round_closed: ')';
+Brackets_open: '[';
+Brackets_closed: ']';
 Comma: ',';
 Dot: '.';
 Equals: '=';
