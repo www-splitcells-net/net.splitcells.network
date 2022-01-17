@@ -10,11 +10,16 @@ lexer grammar Java_11_lexer;
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
 /* Help:
- * Keep in mind, that error messages can be quite cryptic: 2 Tokens with same content are not equals.
+ * Keep in mind, that error messages can be quite cryptic:
+ * 2 Tokens with same content are not equals.
  *
- * This file has to to tokenize/match every character in a parsed files. Otherwise there will be problems.
+ * This file has to to tokenize/match every character in a parsed files.
+ * Otherwise there will be problems.
  *
- * Token matching appears in order of this file and only one token is matched at a time for a given string.
+ * Token matching appears in order of this file and only one token is matched
+ * at a time for a given string.
+ * Therefore, the more generic a token is, the more the token needs to be
+ * moved back in general.
  *
  * Needs to start with upper case.
  */
