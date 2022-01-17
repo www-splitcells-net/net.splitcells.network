@@ -20,6 +20,7 @@ lexer grammar Java_11_lexer;
  * at a time for a given string.
  * Therefore, the more generic a token is, the more the token needs to be
  * moved back in general.
+ * Place fragment to end of file, because these are never used as tokens.
  *
  * Needs to start with upper case.
  */
@@ -27,10 +28,19 @@ lexer grammar Java_11_lexer;
     package net.splitcells.dem.source.code.antlr;
 }
 Annotation_JavaLegacyBody: 'JavaLegacyBody';
-
+/* Keywords and Keysymbols */
 Arrow: '->';
+Bigger_than: '>';
+Brace_curly_open: '{';
+Brace_curly_closed: '}';
+Brace_round_open: '(';
+Brace_round_closed: ')';
+Comma: ',';
+Dot: '.';
+Equals: '=';
 Extension_Exception: 'extends RuntimeException';
-Javadoc: '/**' .*? '*/';
+Hyphen_minus: '-';
+Integer: [-+]?[0-9]+;
 Keysymbol_and: '&&';
 Keysymbol_at: '@';
 Keysymbol_equals: '==';
@@ -60,28 +70,18 @@ Keyword_return: 'return';
 Keyword_static: 'static';
 Keyword_throw: 'throw';
 Keyword_try: 'try';
-
-Operator_plus: '+';
-
-Bigger_than: '>';
-Brace_curly_open: '{';
-Brace_curly_closed: '}';
-Brace_round_open: '(';
-Brace_round_closed: ')';
-Comma: ',';
-Dot: '.';
-Equals: '=';
-
 Less_than: '<';
 Question_mark: '?';
+Quote: '"';
+Operator_plus: '+';
+Semicolon: ';';
+/* Generic Content */
+Whitespace: [ \t\n\r]+;
+fragment String_content: [a-zA-Z0-9_-]*;
+/* Multiple Line Token */
 Comment_multiline: '/*' .*? '*/';
 Line_comment: '//' .*? Line_ending;
+Javadoc: '/**' .*? '*/';
+/* Token Fragments */
 fragment Line_ending: [\n\r]+;
-
 fragment Name: [a-zA-Z_][a-zA-Z0-9_]*;
-Semicolon: ';';
-Whitespace: [ \t\n\r]+;
-Quote: '"';
-fragment String_content: [a-zA-Z0-9_-]*;
-Integer: [-+]?[0-9]+;
-Hyphen_minus: '-';
