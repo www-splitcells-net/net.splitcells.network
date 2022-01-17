@@ -76,6 +76,7 @@ Quote: '"';
 Operator_plus: '+';
 Semicolon: ';';
 /* Generic Content */
+Name: [a-zA-Z_][a-zA-Z0-9_]*;
 Whitespace: [ \t\n\r]+;
 fragment String_content: [a-zA-Z0-9_-]*;
 /* Multiple Line Token */
@@ -84,4 +85,3 @@ Line_comment: '//' .*? Line_ending;
 Javadoc: '/**' .*? '*/';
 /* Token Fragments */
 fragment Line_ending: [\n\r]+;
-fragment Name: [a-zA-Z_][a-zA-Z0-9_]*;
