@@ -10,6 +10,13 @@ lexer grammar Java_11_lexer;
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
 /* Help:
+ * The Tokenizers 4 main functions are:
+ * * Ensure, that the parser only uses valid constants.
+ * * Define valid string patterns used by the parser.
+ * * Define which content to skip entirely.
+ * * Ensure that every character of the input
+ *   is matched to the 3 previous points and therefore all input is processed.
+ *
  * Keep in mind, that error messages can be quite cryptic:
  * 2 Tokens with same content are not equals.
  *
