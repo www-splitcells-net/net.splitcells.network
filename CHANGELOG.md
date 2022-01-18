@@ -156,6 +156,8 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2022-01-18**: Create command `ssh.execute` in order to execute commands
+  on remote server in foreground.
 * **2022-01-16**: Create and publish blog article [A Case For Repo Process](https://splitcells-net.srht.site/blog/2022-01-10-a-case-for-repo-process/).
 * **2022-01-11**: **\#s58** Implement first draft for injecting blogs of
   different projects into the network blog.
