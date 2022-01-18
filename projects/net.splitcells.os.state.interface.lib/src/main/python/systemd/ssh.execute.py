@@ -5,8 +5,9 @@ terms of the Eclipse Public License 2.0, which is available at
 http://www.eclipse.org/legal/epl-2.0, or the MIT License,
 which is available at https://spdx.org/licenses/MIT.html.
 
-TODO Add flags in order to execute task in background and remove `ssh.execute.in.background`
-command in order to avoid duplicate code.
+* TODO Return exit code of shell command execution.
+* TODO Add flags in order to execute task in background and remove `ssh.execute.in.background`
+  command in order to avoid duplicate code.
 """
 
 __author__ = "Mārtiņš Avots"
