@@ -48,6 +48,8 @@ Some of them are not strictly related to optimization and can be used in other c
 
 TODO: Short And Compact Feature Description
 
+* x64 and ARM are supported and tested. (Support for RISC-V is on the way. See [#92](https://github.com/www-splitcells-net/net.splitcells.network/issues/92))
+
 ## Project Status
 [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
