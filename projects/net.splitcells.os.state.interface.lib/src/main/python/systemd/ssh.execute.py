@@ -27,11 +27,11 @@ if __name__ == '__main__':
 		logging.basicConfig(level = logging.DEBUG)
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--host', required = True, help = 'user@host')
-	parser.add_argument('--command', required = True)
+	parser.add_argument('--command', required = True, type = str)
 	parsedArgs = parser.parse_args()
 	# '-t' prevents error, when a command like sudo is executed.
 	commandToExecute = "ssh -t"\
 	 	+ " " + parsedArgs.host\
-	 	+ " " + parsedArgs.command
+	 	+ " '" + parsedArgs.command + "'"
 	logging.debug("Executing: " + commandToExecute)
 	subprocess.call(commandToExecute, shell='True')
