@@ -156,6 +156,12 @@ Releases are done everytime an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2022-01-21**: Create command `sh.scroll.enable`.
+  * Sometimes scrolling is not enabled in a shell.
+    This can be the case, if one is opened over ssh.
+    This command enables scrolling for the current session.
+    This command is not used for scripting,
+    but makes it easy to look this command up for manual usage.
 * **2022-01-18**: Create command `ssh.execute` in order to execute commands
   on remote server in foreground.
 * **2022-01-16**: Create and publish blog article [A Case For Repo Process](https://splitcells-net.srht.site/blog/2022-01-10-a-case-for-repo-process/).
