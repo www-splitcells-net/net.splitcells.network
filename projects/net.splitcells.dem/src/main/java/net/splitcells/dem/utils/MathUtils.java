@@ -71,10 +71,18 @@ public final class MathUtils {
     /**
      * TODO RENAME
      *
-     * @return
+     * <p>
+     * This function calculates whether the error in a calculated {@code value},
+     * is bigger than a given {@code maxDeviation} in percent.
+     * </p>
+     *
+     * @param value        This is the value, that is computed.
+     * @param target       This is the value, that is tried to be computed.
+     * @param maxDeviation Allowed deviation from {@code target} in percent of the {@code target}.
+     * @return Returns {@code true}, if the deviation of the {@code value} from the {@code target} is acceptable.
      */
-    public static boolean acceptable(double value, double target, double deviation) {
-        return value < target + (1 + deviation) && value > target * (1 - deviation);
+    public static boolean acceptable(double value, double target, double maxDeviation) {
+        return value < target + (1 + maxDeviation) && value > target * (1 - maxDeviation);
     }
 
     public static double distance(double a, double b) {
