@@ -95,6 +95,8 @@ and probably will never be finished.
   so that they each one acts as trigger at one fitting position.
 * Add inspirational quotes to code documentation in order to provide an
   alternative perspective via metaphors.
+  This is deprecated.
+  See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
 ## Network's Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
