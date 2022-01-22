@@ -97,6 +97,7 @@ and probably will never be finished.
   alternative perspective via metaphors.
   This is deprecated.
   See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
+* Update dependencies.
 ## Network's Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
