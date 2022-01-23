@@ -94,9 +94,9 @@ class_member_method_definition
         Brace_curly_closed
     ;
 class_member_value_declaration
-    : javadoc? modifier_visibility? Keyword_static? Keyword_final?
+    : javadoc? annotation? modifier_visibility? Keyword_static? Keyword_final?
         type_declaration? name Equals statement
-    | javadoc? modifier_visibility? Keyword_static? Keyword_final?
+    | javadoc? annotation? modifier_visibility? Keyword_static? Keyword_final?
               type_declaration? name Semicolon
     ;
 enum_definition
