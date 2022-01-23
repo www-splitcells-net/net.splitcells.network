@@ -62,7 +62,9 @@ public interface Ordered<T> extends Comparable<T>, OrderingCheck<T> {
 		} else if (rBase == Ordering.LESSER_THAN) {
 			return -1;
 		} else {
-			assert rBase == Ordering.GREATER_THAN;
+			if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+				assertThat(rBase).isEqualTo(Ordering.GREATER_THAN);
+			}
 			return 1;
 		}
 	}
