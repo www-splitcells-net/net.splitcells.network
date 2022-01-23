@@ -154,8 +154,11 @@ interface_definition
         Brace_curly_open interface_definition_member* Brace_curly_closed
     ;
 interface_extension
-	: Keyword_extends type_declaration
+	: Keyword_extends type_declaration interface_extension_additional*
 	;
+interface_extension_additional
+    : Comma type_declaration
+    ;
 interface_definition_member_method
     : javadoc?
     	annotation* modifier_visibility? Keyword_static?
