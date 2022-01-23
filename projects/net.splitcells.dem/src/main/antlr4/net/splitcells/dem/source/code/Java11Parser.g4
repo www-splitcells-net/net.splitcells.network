@@ -48,7 +48,8 @@ allowed_Extensions
 	: Extension_Exception
 	;
 annotation
-	: Keysymbol_at name;
+    /* TODO call_arguments is a hack. */
+	: Keysymbol_at name call_arguments?;
 annotation_definition
     : javadoc? Keyword_public Keyword_annotation* name
         Brace_curly_open Brace_curly_closed
