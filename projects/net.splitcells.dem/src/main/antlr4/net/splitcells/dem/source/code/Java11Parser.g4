@@ -260,7 +260,10 @@ source_unit
             	EOF
     ;
 type_declaration
-    : type_path type_argument? Keysymbol_vararg?
+    : type_path type_argument? Keysymbol_vararg? type_declaration_array?
+    ;
+type_declaration_array
+    : Brackets_open Brackets_closed
     ;
 type_argument
     : Less_than type_argument_content? Bigger_than
