@@ -147,7 +147,7 @@ integer
 	| Hyphen_minus Digits
 	;
 interface_definition
-    : javadoc? Keyword_public? Keyword_final? Keyword_interface?
+    : javadoc? annotation* Keyword_public? Keyword_final? Keyword_interface?
     	name
     	type_argument?
     	interface_extension?
