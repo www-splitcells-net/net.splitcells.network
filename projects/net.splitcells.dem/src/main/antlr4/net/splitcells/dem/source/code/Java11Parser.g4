@@ -77,7 +77,8 @@ class_extension
 	| allowed_Extensions?
 	;
 class_member
-    : class_constructor
+    : javadoc? Keysymbol_at Keyword_JavaLegacyBody .* Brace_curly_open .* Brace_curly_closed
+    | class_constructor
     | class_member_method_definition
     | class_member_value_declaration
     ;
@@ -193,6 +194,7 @@ name
      */
     : Name
     | Keyword_class
+    | Keyword_JavaLegacyBody
     ;
 operator
 	: Keysymbol_not_equals
@@ -285,8 +287,8 @@ type_name
 	| Question_mark
 	;
 type_path
-    : Name
-    | type_path Dot Name
+    : name
+    | type_path Dot name
     ;
 variable_declaration
     : Keyword_final? type_declaration name

@@ -58,6 +58,7 @@ lexer grammar Java11Lexer;
 	Keysymbol_not_equals: '!=';
 	Keysymbol_not: '!';
 	Keysymbol_vararg: '...';
+	Keyword_JavaLegacyBody: 'JavaLegacyBody';
 	Keyword_annotation: '@interface';
 	Keyword_class: 'class';
 	Keyword_catch: 'catch';
@@ -106,4 +107,3 @@ lexer grammar Java11Lexer;
 /* Token Fragments */
 	fragment Line_ending: [\n\r]+;
 	/* These are special cases of String patterns, that do not require a special token. */
-	fragment Annotation_JavaLegacyBody: 'JavaLegacyBody';
