@@ -8,6 +8,8 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 
+# TODO Try out Nix in order to get the right dependency versions.
+
 # Tested on Ubuntu 20.04.1.
 set -e
 cd ~/Documents
