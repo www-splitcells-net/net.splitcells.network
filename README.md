@@ -1,15 +1,10 @@
 # net.splitcells.network
-
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" width="50%" alt="Logo"/>
 
 > Together we are more than the sum of our cells.
-
 #### **[Introduction](#introduction)** | **[Where to start?](#where-to-start)** | **[Project Status](#project-status)** | **[Network's Structure](#networks-structure)** | **[Contacts](#contacts)** | **[Website](http://splitcells.net/net/splitcells/network/README.html)**
-
 TODO: Simple Image Describing The Core Features
-
 ## Introduction
-
 We provide an open source ecosystem centered around optimization and operations research.
 
 The main project is the [Generic Allocator](http://splitcells.net/net/splitcells/gel/index.html).
@@ -19,9 +14,7 @@ A detailed introduction and documentation can be found [here](http://splitcells.
 An overview of the projects can be found [here](#networks-structure).
 Some of them are not strictly related to optimization and can be used in other contexts as well.
 [OS State Interface](projects/net.splitcells.os.state.interface/README.md) is the main example of such.
-
 ## Where to start?
-
 🚀 [Model and optimize problems.](http://splitcells.net/net/splitcells/gel/index.html)
 
 🏗️ [Deploy](http://splitcells.net/net/splitcells/network/deployment.html) the software.
@@ -43,9 +36,7 @@ Some of them are not strictly related to optimization and can be used in other c
 💰 Support [contributors](https://www.patreon.com/splitcells_net).
 
 📣 Spread the word!
-
 ## Features
-
 TODO: Short And Compact Feature Description
 
 * x64 and ARM are supported and tested.
@@ -53,7 +44,6 @@ TODO: Short And Compact Feature Description
   See [#92](https://github.com/www-splitcells-net/net.splitcells.network/issues/92)
   for the initial ticket, [RISC-V status page](https://wiki.riscv.org/display/TECH/Language+Runtimes#LanguageRuntimes-RISC-Vstatus.2)
   and the [current JDK development versions](https://builds.shipilev.net/openjdk-jdk-riscv/).)
-
 ## Project Status
 [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
@@ -105,7 +95,6 @@ and probably will never be finished.
 ## Network's Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
-
 ```
 Project Cluster
 ├── net.splitcells.network
@@ -141,14 +130,11 @@ Project Cluster
   * `net.splitcells.os.state.interface.lib.*` are command repositories,
     that can be used independently or can be registered to an installation
     of `net.splitcells.os.state.interface`.
-
 ## Social Contacts
-
 * [Main Blog](https://splitcells-net.srht.site/)
 * Livestreaming via [Twitch](https://www.twitch.tv/splitcellsnet) 
 * Messaging via [Mastadon/Fosstodon](https://fosstodon.org/@splitcells)
 * Blogging with Images on [Medium](https://martins-avots.medium.com/)
-
 ## Infrastructure
 * Rendered Documentation via [a personal website](http://splitcells.net/net/splitcells/system/index.html)
 * Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) and [Sourcehut](https://todo.sr.ht/~splitcells-net/net.splitcells.network).
@@ -157,10 +143,7 @@ Project Cluster
   * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) is currently used only for continuous integration (CI).
   * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network) is used mainly for writing articles and web rendering ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22)).
 ## Contributing
-
 * [Licensing](./LICENSE.md) and [Notices](./NOTICE.md) of This Project
 * [Source Code <Guide>lines](projects/net.splitcells.dem/src/main/xml/net/splitcells/dem/guidelines/index.xml)
-
 ## Credits
-
 * [Main Author's Public Key](https://keys.openpgp.org/search?q=F844A8297DEB16D9B9486323A6A6108FC3486F37)
