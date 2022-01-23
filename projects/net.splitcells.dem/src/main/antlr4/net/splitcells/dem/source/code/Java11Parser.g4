@@ -50,7 +50,7 @@ allowed_Extensions
 annotation
 	: Keysymbol_at name;
 annotation_definition
-    : javadoc? Keyword_public Keyword_annotation? name
+    : javadoc? Keyword_public Keyword_annotation* name
         Brace_curly_open Brace_curly_closed
     ;
 call_arguments
@@ -78,15 +78,16 @@ class_extension
 	;
 class_member
     : javadoc? Keysymbol_at Keyword_JavaLegacyBody .* Brace_curly_open .* Brace_curly_closed
+    | javadoc? Keysymbol_at Keyword_JavaLegacyArtifact .* Brace_curly_open .* Brace_curly_closed
     | class_constructor
     | class_member_method_definition
     | class_member_value_declaration
     ;
 class_constructor
-    : annotation? Keyword_private name call_arguments statement_body
+    : annotation* Keyword_private name call_arguments statement_body
     ;
 class_member_method_definition
-    : javadoc? annotation? modifier_visibility? Keyword_static?
+    : javadoc? annotation* modifier_visibility? Keyword_static?
     	type_argument? type_declaration
         name call_arguments Brace_curly_open statement*
         Brace_curly_closed
@@ -157,14 +158,14 @@ interface_extension
 	;
 interface_definition_member_method
     : javadoc?
-    	annotation? modifier_visibility? Keyword_static?
+    	annotation* modifier_visibility? Keyword_static?
     	type_argument? type_declaration
         name call_arguments Semicolon
-    | javadoc? annotation? Keyword_static
+    | javadoc? annotation* Keyword_static
 		type_argument? type_declaration
 		name call_arguments
 		Brace_curly_open statement* Brace_curly_closed
-	| javadoc? annotation? Keyword_default
+	| javadoc? annotation* Keyword_default
 		type_argument? type_declaration
 		name call_arguments
 		Brace_curly_open statement* Brace_curly_closed
@@ -195,6 +196,7 @@ name
     : Name
     | Keyword_class
     | Keyword_JavaLegacyBody
+    | Keyword_JavaLegacyArtifact
     ;
 operator
 	: Keysymbol_not_equals
