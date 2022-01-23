@@ -83,7 +83,6 @@ lexer grammar Java11Lexer;
 	Keyword_try: 'try';
 	Less_than: '<';
 	Question_mark: '?';
-	Quote: '"';
 	Operator_plus: '+';
 	Semicolon: ';';
 /* Multiple Line Token */
