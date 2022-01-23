@@ -19,6 +19,7 @@ import java.util.function.BiFunction;
  *
  * @param <T>
  */
+@JavaLegacyArtifact
 public class Comparators<T> implements Comparator<T> {
 	
 	public static <T> Comparators<T> comparator(BiFunction<T, T, Integer> comparator) {

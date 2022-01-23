@@ -65,7 +65,7 @@ call_arguments_next
     : Comma call_arguments_element
     ;
 class_definition
-    : javadoc? Keyword_public? Keyword_final?
+    : javadoc? annotation* Keyword_public? Keyword_final?
     	Keyword_class
     	type_declaration
     	class_extension
