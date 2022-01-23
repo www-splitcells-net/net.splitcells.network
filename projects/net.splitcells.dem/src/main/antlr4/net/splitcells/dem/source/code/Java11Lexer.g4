@@ -58,6 +58,7 @@ lexer grammar Java11Lexer;
 	Keysymbol_not_equals: '!=';
 	Keysymbol_not: '!';
 	Keysymbol_vararg: '...';
+	Keysymbol_vertical_bar: '||';
 	Keyword_JavaLegacyArtifact: 'JavaLegacyArtifact';
 	Keyword_JavaLegacyBody: 'JavaLegacyBody';
 	Keyword_annotation: '@interface';

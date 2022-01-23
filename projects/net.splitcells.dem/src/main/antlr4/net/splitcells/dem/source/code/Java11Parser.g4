@@ -205,6 +205,7 @@ operator
 	: Keysymbol_not_equals
 	| Keysymbol_equals
 	| Keysymbol_and
+	| Keysymbol_vertical_bar
 	| Less_than
 	| Keyword_instanceof
 	;
