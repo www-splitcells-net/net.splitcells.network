@@ -94,14 +94,14 @@
     <xsl:template match="/n:text">
         <xsl:variable name="layout.config">
             <s:layout.config>
-                <xsl:call-template name="s:path-of">
-                    <xsl:with-param name="document" select="."/>
-                </xsl:call-template>
+                <s:path>
+                    <xsl:value-of select="s:path.without.element.last(./s:meta/s:path/node())"/>
+                </s:path>
                 <s:name>
                     <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
                 </s:name>
                 <s:title>
-                    <xsl:value-of select="./@full-name"/>
+                    <xsl:value-of select="./s:meta/s:path/node()"/>
                 </s:title>
                 <s:license>standard</s:license>
                 <s:publication_date/>

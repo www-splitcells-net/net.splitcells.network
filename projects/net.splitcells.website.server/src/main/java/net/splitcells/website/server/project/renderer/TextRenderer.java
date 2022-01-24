@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 /**
@@ -56,6 +57,11 @@ public class TextRenderer implements Renderer {
                     .resolve(path);
             if (Files.is_file(textFile)) {
                 final var content = Xml.rElement(NameSpaces.NATURAL, "text");
+                final var metaElement = Xml.rElement(NameSpaces.SEW, "meta");
+                final var pathElement = Xml.rElement(NameSpaces.SEW, "path");
+                pathElement.appendChild(Xml.textNode(path));
+                metaElement.appendChild(pathElement);
+                content.appendChild(metaElement);
                 content.appendChild(Xml.textNode(Paths.readString(textFile)));
                 return Optional.of(renderingResult(renderer
                                 .transform(Xml.toPrettyString(content))
