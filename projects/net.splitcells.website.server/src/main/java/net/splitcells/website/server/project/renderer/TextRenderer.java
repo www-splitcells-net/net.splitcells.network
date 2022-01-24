@@ -39,6 +39,7 @@ public class TextRenderer implements Renderer {
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
         Optional<Path> fileToRender = Optional.empty();
         if (path.endsWith(".html")) {
+            // TODO This should return the raw text file.
             final var textFile = projectRenderer
                     .projectFolder()
                     .resolve("src/main/txt")
