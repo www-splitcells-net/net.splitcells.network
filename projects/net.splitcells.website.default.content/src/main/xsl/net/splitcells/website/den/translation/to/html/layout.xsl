@@ -100,9 +100,7 @@
                 <s:name>
                     <xsl:value-of select="(tokenize(document-uri(/),'/'))[last()]"/>
                 </s:name>
-                <s:title>
-                    <xsl:value-of select="./s:meta/s:path/node()"/>
-                </s:title>
+                <s:title/>
                 <s:license>standard</s:license>
                 <s:publication_date/>
                 <s:content>

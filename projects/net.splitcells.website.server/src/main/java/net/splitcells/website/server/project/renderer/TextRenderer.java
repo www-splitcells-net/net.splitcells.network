@@ -37,18 +37,14 @@ public class TextRenderer implements Renderer {
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
+        Optional<Path> fileToRender = Optional.empty();
         if (path.endsWith(".html")) {
             final var textFile = projectRenderer
                     .projectFolder()
                     .resolve("src/main/txt")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".txt");
             if (Files.is_file(textFile)) {
-                final var content = Xml.rElement(NameSpaces.NATURAL, "text");
-                content.appendChild(Xml.textNode(Paths.readString(textFile)));
-                return Optional.of(renderingResult(renderer
-                                .transform(Xml.toPrettyString(content))
-                                .getBytes(UTF_8)
-                        , TEXT_HTML.toString()));
+                fileToRender = Optional.of(textFile);
             }
         } else {
             final var textFile = projectRenderer
@@ -56,18 +52,21 @@ public class TextRenderer implements Renderer {
                     .resolve("src/main/txt")
                     .resolve(path);
             if (Files.is_file(textFile)) {
-                final var content = Xml.rElement(NameSpaces.NATURAL, "text");
-                final var metaElement = Xml.rElement(NameSpaces.SEW, "meta");
-                final var pathElement = Xml.rElement(NameSpaces.SEW, "path");
-                pathElement.appendChild(Xml.textNode(path));
-                metaElement.appendChild(pathElement);
-                content.appendChild(metaElement);
-                content.appendChild(Xml.textNode(Paths.readString(textFile)));
-                return Optional.of(renderingResult(renderer
-                                .transform(Xml.toPrettyString(content))
-                                .getBytes(UTF_8)
-                        , TEXT_HTML.toString()));
+                fileToRender = Optional.of(textFile);
             }
+        }
+        if (fileToRender.isPresent()) {
+            final var content = Xml.rElement(NameSpaces.NATURAL, "text");
+            final var metaElement = Xml.rElement(NameSpaces.SEW, "meta");
+            final var pathElement = Xml.rElement(NameSpaces.SEW, "path");
+            pathElement.appendChild(Xml.textNode(path));
+            metaElement.appendChild(pathElement);
+            content.appendChild(metaElement);
+            content.appendChild(Xml.textNode(Paths.readString(fileToRender.get())));
+            return Optional.of(renderingResult(renderer
+                            .transform(Xml.toPrettyString(content))
+                            .getBytes(UTF_8)
+                    , TEXT_HTML.toString()));
         }
         return Optional.empty();
     }
