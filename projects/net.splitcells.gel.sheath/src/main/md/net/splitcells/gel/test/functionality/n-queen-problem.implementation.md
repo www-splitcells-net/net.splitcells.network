@@ -172,3 +172,35 @@ backtracking().optimize(solution);
 assertThat(solution.isOptimal()).isTrue();
 ```
 Run it and check the results with the standard analysis!
+# Complete Source Code
+> So, what are the commands required in order to model and solve the problem. 
+
+So in essence the complete source code of solving the source code looks like
+this:
+```
+final var demands = listWithValuesOf(
+    rangeClosed(1, columns)
+        .mapToObj(i -> list((Object) i))
+        .collect(toList()));
+final var supplies = listWithValuesOf(
+    rangeClosed(1, rows)
+        .mapToObj(i -> list((Object) i))
+        .collect(toList()));
+final var solution = defineProblem()
+    .withDemandAttributes(COLUMN)
+    .withDemands(demands)
+    .withSupplyAttributes(ROW)
+        .withSupplies(supplies)
+        .withConstraint(
+            r -> {
+                r.forAll(ROW).forAll(COLUMN).then(hasSize(1));
+                r.forAll(ROW).then(hasSize(1));
+                r.forAll(COLUMN).then(hasSize(1));
+                r.forAll(ascDiagonals(rows, columns)).then(hasSize(1));
+                r.forAll(descDiagonals(rows, columns)).then(hasSize(1));
+                return r;
+            })
+    .toProblem();
+backtracking().optimize(solution);
+assertThat(solution.isOptimal()).isTrue();
+```
