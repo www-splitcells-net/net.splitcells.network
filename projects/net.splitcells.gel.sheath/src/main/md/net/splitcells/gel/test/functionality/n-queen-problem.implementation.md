@@ -162,3 +162,13 @@ solution.
 These files are stored at `src/main/xml/net/splitcells/gel/GelEnv`.
 It is a mix of XML, text and LibreOffice spreadsheets.
 Try it out!
+## Use backtracking in order to solve the Problem.
+It is known, that the backtracking can solve the problem,
+so let's try it out!
+```
+import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
+[...]
+backtracking().optimize(solution);
+assertThat(solution.isOptimal()).isTrue();
+```
+Run it and check the results with the standard analysis!
