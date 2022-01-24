@@ -10,9 +10,7 @@
  */
 package net.splitcells.gel.quickstart;
 
-import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.Gel;
-import net.splitcells.gel.GelDev;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.Rater;
@@ -43,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <p>This class also show the bare minimum,
  * that should be done, in order to use this project.</p>
  */
-public class NQueenProblemDemo {
+public class NQueenProblemTest {
     public static final Attribute<Integer> COLUMN = attribute(Integer.class, "column");
     public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
 
