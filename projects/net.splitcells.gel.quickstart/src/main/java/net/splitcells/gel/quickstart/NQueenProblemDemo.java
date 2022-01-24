@@ -16,6 +16,7 @@ import net.splitcells.gel.GelDev;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.Rater;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 
@@ -46,7 +47,8 @@ public class NQueenProblemDemo {
     public static final Attribute<Integer> COLUMN = attribute(Integer.class, "column");
     public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
 
-    public static void main(String... args) {
+    @Test
+    public void test() {
         final var testSubject = nQueenProblem(8, 8).asSolution();
         testSubject.optimize(linearInitialization());
         testSubject.optimizeOnce(functionalHillClimber(100));
