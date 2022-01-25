@@ -14,6 +14,7 @@ import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.Rater;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -22,6 +23,7 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
@@ -45,6 +47,7 @@ public class NQueenProblemTest {
     public static final Attribute<Integer> COLUMN = attribute(Integer.class, "column");
     public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
 
+    @Tag(CAPABILITY_TEST)
     @Test
     public void test() {
         final var testSubject = nQueenProblem(8, 8).asSolution();
