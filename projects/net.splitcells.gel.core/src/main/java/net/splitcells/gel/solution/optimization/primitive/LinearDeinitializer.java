@@ -31,13 +31,14 @@ public class LinearDeinitializer implements OfflineOptimization {
 
     @Override
     public List<OptimizationEvent> optimize(SolutionView solution) {
-        if (solution.demandsUsed().hasContent() && solution.suppliesUsed().hasContent()) {
+        if (!solution.allocations().getLines().isEmpty()) {
+            final var allocation = solution.allocations().getLines().get(0);
             return
                     list(
                             optimizationEvent
                                     (REMOVAL
-                                            , solution.demandsUsed().getLines().get(0).toLinePointer()
-                                            , solution.suppliesUsed().getLines().get(0).toLinePointer()));
+                                            , solution.demandOfAllocation(allocation).toLinePointer()
+                                            , solution.supplyOfAllocation(allocation).toLinePointer()));
         }
         return list();
     }
