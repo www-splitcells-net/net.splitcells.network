@@ -9,7 +9,7 @@ sourcehut issue.
 Ticket references without a prefix are probably hosted on
 [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues).
 
-Prefix to Server:
+Prefix To Server Dictionary:
 * g = Github: https://github.com/www-splitcells-net/net.splitcells.network/issues
 * s = sourcehut: https://todo.sr.ht/~splitcells-net/net.splitcells.network
  
