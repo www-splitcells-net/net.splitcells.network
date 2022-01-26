@@ -84,7 +84,7 @@ Releases are done everytime an important ticket is completed.
      where it is not needed.
   2. **\#10** Rename `net.splitcells.dem.data.order.Comparators.comparators`
      to `comparator` in order to unify naming.
-* **2021-11-05**: `system.update` for Flatpak does exit with an error,
+* **2021-11-05**: `system.update` for Flatpak now does not exit with an error,
   if Flatpak's version itself is deprecated.
   This is done because otherwise the whole update process would be aborted.
   An appropriate echo to stderr is created instead.
