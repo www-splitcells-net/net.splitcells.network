@@ -320,8 +320,10 @@ Releases are done everytime an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
-* **2022-01-23**: **\#138** LinearDeinitializer now correctly selects the allocation
-  of a supply.
+* **2022-01-23**:
+  1. **\#138**: LinearDeinitializer now correctly selects the allocation of a
+     supply.
+  2. **\#138**: Make default values of StaticFlags more reasonable performant.
 * **2022-01-23**: **\#s27**: [Fix local path content for rendering of text files.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/27)
 * **2022-01-09**: **\#148**: [Fix local path context for rendered XML files in website server.](https://github.com/www-splitcells-net/net.splitcells.network/issues/148)
 * **2022-01-02**: **\#138** Fix user command rendering via `UserCommandRenderer`
