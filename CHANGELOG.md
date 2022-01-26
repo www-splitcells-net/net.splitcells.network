@@ -474,7 +474,7 @@ Starting from this point a deprecated changelog format is used.
 1. Some undocumented work.
 1. **2019-05-05**: Create private git repositories.
 1. Some undocumented work.
-#### Patches
+### Patches
 1. **2021-06-27** Log error stack traces in web server.
 2. **2021-06-26** Add optimization to `den.xsd`.
 3. **2021-06-25** Determine project's source folder correctly in ProjectRenderer.
