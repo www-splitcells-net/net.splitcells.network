@@ -168,13 +168,12 @@
             and be documented or commented, if it is feasible.
         </paragraph>
         <paragraph>For (programming) languages and document formats prefer
-            using the most official or at least common guidelines,
+            using the most official or the most common guidelines,
             if there are no guidelines of this project applying to the
             aspect in question.
             In other words, language and documentation specific guidelines
             of this project try to only override public guidelines instead of
             writing complete custom guidelines from scratch.
-            Guidelines of this project override public guidelines.
         </paragraph>
     </chapter>
     <chapter>
