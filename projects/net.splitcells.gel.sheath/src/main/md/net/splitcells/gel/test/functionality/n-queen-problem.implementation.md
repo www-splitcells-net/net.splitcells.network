@@ -19,7 +19,7 @@ After this you can add the corresponding dependency to your project:
 </dependency>
 ```
 ## Specifying The Problem
-> At the start we define the problem, that we want to optimize.
+> At the start, we define the problem, that we want to optimize.
 
 In the following we'll go through the implementation and solving of a
 [N queen problem instance](n-queen-problem.md),
@@ -38,7 +38,7 @@ import static net.splitcells.gel.Gel.defineProblem;
 final var problemBuilder = Gel.defineProblem();
 ```
 ### Creating A Data Model
-> First, we define the values we are working with.
+> First, we define the values, we are working with.
 
 First, the data of the problem needs to be defined,
 otherwise there is nothing that can be optimized.
@@ -152,7 +152,7 @@ that are needed for the next step.
 In the best case scenario, if you are using an IDE with autocompletion you can
 just do the 'dot'-'choose'-'type' loop.
 ## Find A Solution
-> Now we do the actual optimization.
+> Now, we do the actual optimization.
 ## Using A Simple Hill Climber As A Stepping Stone
 > Let's try the most commonly known solver.
 
@@ -186,7 +186,7 @@ assertThat(solution.isOptimal()).isTrue();
 ```
 Run it and check the results with the standard analysis!
 # Complete Source Code
-> So, what are the commands required in order to model and solve the problem. 
+> So, what are the commands required in order to model and solve the problem?
 
 So in essence the complete source code of solving the source code looks like
 this:

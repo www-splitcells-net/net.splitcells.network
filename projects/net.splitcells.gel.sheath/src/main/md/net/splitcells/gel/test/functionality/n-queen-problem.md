@@ -55,7 +55,7 @@ which also represents the grammar of the cost function's natural description:
 
 ![Constraint Tree](../../../../../../../../src/main/svg/net/splitcells/gel/test/functionality/n-queen-problem/constraint.tree.svg)
 ## Constraint Graph
-> There are multiple ways, how to model the constraints.
+> There are multiple ways, how to model constraints.
 
 In principle constraint trees can get so complicated,
 that it makes sense to simplify them.
