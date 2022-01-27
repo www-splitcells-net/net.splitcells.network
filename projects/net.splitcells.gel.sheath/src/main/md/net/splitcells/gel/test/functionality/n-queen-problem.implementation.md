@@ -6,6 +6,8 @@ repository contains a complete project implementing of such a problem.
 It can be used as a starting point for new projects,
 because of its minimal content.
 ## Preparations
+> Add dependency to your project in order to use the Generic Allocator. 
+
 If you want to use the bleeding edge version of this project, you need
 to [build it locally](../../../../../../../../../../CONTRIBUTING.md).
 After this you can add the corresponding dependency to your project:
@@ -17,6 +19,8 @@ After this you can add the corresponding dependency to your project:
 </dependency>
 ```
 ## Specifying The Problem
+> At the start we define the problem, that we want to optimize.
+
 In the following we'll go through the implementation and solving of a
 [N queen problem instance](n-queen-problem.md),
 in order to get familiar with Gel's API.
@@ -34,6 +38,8 @@ import static net.splitcells.gel.Gel.defineProblem;
 final var problemBuilder = Gel.defineProblem();
 ```
 ### Creating A Data Model
+> First, we define the values we are working with.
+
 First, the data of the problem needs to be defined,
 otherwise there is nothing that can be optimized.
 Every problem is modeled as a set of allocations between demands and supplies.
@@ -90,6 +96,8 @@ final var supplies = listWithValuesOf(
         .collect(toList()));
 ```
 ### Defining A Constraint Model
+> Second, we state, what an optimal solution looks like.
+
 Previously, we defined the data,
 by specifying a demand and supply table.
 Now we define the constraints of the problem.
@@ -144,7 +152,10 @@ that are needed for the next step.
 In the best case scenario, if you are using an IDE with autocompletion you can
 just do the 'dot'-'choose'-'type' loop.
 ## Find A Solution
+> Now we do the actual optimization.
 ## Using A Simple Hill Climber As A Stepping Stone
+> Let's try the most commonly known solver.
+
 Applying solvers to the solutions is done by calling the `optimize` method.
 The `functionalHillClimber` is an optimizer,
 that needs an initialized solution,
@@ -163,6 +174,8 @@ These files are stored at `src/main/xml/net/splitcells/gel/GelEnv`.
 It is a mix of XML, text and LibreOffice spreadsheets.
 Try it out!
 ## Use backtracking in order to solve the Problem.
+> Now we try a solver, that actually solves the problem.
+
 It is known, that the backtracking can solve the problem,
 so let's try it out!
 ```

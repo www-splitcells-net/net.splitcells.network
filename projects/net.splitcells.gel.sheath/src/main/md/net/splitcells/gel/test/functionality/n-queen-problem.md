@@ -11,6 +11,8 @@ problem as an example.
 A step-by-step guide for implementing the N queen problem can be found
 [here](n-queen-problem.implementation.md).
 ## Rating Function
+> What is an optimal solution of the N queen problem?
+
 The rating function of the N Queen Problem returns the number of queen pairs,
 that are in same row, column or diagonal.
 If there are no such pairs, the solution in question is optimal,
@@ -18,6 +20,8 @@ because no rules are violated.
 The smaller the number of such pairs, the better one can consider a given
 solution of the puzzle.
 ## Constraint Tree
+> How are constraints modeled in Gel?
+
 Many pieces of optimization software have a system for modeling the rating
 function of the problem in question and
 this is also the case with the Generic Allocator (Gel).
@@ -51,6 +55,8 @@ which also represents the grammar of the cost function's natural description:
 
 ![Constraint Tree](../../../../../../../../src/main/svg/net/splitcells/gel/test/functionality/n-queen-problem/constraint.tree.svg)
 ## Constraint Graph
+> There are multiple ways, how to model the constraints.
+
 In principle constraint trees can get so complicated,
 that it makes sense to simplify them.
 
@@ -71,6 +77,8 @@ constraint tree.
 ![Constraint Graph](../../../../../../../../src/main/svg/net/splitcells/gel/test/functionality/n-queen-problem/constraint.graph.svg)
 
 ## Note On Creating Constraint Models
+> What can I consider during the constraint modelling?
+
 It's possible to start the modeling process with a constraint graph instead of a
 tree, but this can make the process harder.
 Starting with a tree has the advantage, that one can just formulate a set of
@@ -82,6 +90,8 @@ initial modeling phase,
 which can ease the creation phase.
 
 ## Rating Calculation
+> How does the constraint tree calculate the rating of a solution?
+
 Let's look at our problem at hand and spot the errors.
 By doing so we can calculate the rating of this instance,
 because this optimization problem tries to minimize the number of errors,
