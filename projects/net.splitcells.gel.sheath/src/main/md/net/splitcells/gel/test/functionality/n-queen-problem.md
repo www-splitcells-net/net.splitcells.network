@@ -75,7 +75,6 @@ In other words, the following graph has the same meaning as the previous
 constraint tree.
 
 ![Constraint Graph](../../../../../../../../src/main/svg/net/splitcells/gel/test/functionality/n-queen-problem/constraint.graph.svg)
-
 ## Note On Creating Constraint Models
 > What can I consider during the constraint modelling?
 
@@ -88,7 +87,6 @@ In a constraint graph every node has a dependency to any other node,
 so beginning with a tree reduces the number of node dependencies during the
 initial modeling phase,
 which can ease the creation phase.
-
 ## Rating Calculation
 > How does the constraint tree calculate the rating of a solution?
 
