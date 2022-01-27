@@ -127,3 +127,6 @@ with different tasks:
 * Nodes that groups variables of the solution and propagate the grouping to
   child nodes.
 * Nodes that retrieve given groups and rate these accordingly.
+# Epilogue
+Now that we understand the concept,
+[it is time to implement the puzzle at hand](n-queen-problem.implementation.md).
