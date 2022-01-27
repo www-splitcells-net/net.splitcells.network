@@ -176,7 +176,15 @@ Try it out!
 ## Use backtracking in order to solve the Problem.
 > Now we try a solver, that actually solves the problem.
 
-It is known, that the backtracking can solve the problem,
+One of the reasons, why the hill climber is not enough to create an optimal
+solution,
+is the fact,
+that the hill climber is not able to get out of a local optima.
+So, we need an optimizer that can reject its current solution,
+even it is a local optima.
+
+The widely known backtracking algorithm is such an optimizer,
+that can get out of any local optima,
 so let's try it out!
 ```
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
