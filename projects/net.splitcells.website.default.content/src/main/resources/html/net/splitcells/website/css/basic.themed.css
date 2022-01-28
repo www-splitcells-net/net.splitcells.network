@@ -64,6 +64,7 @@ ol > ol {
     background-color: var(--background-color-priority-1);
     }
 .net-splitcells-content-column .heading,
+.net-splitcells-content-column h1,
 .net-splitcells-content-column h2,
 .net-splitcells-content-column h3,
 .net-splitcells-content-column h4 {
