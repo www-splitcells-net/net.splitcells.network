@@ -72,15 +72,6 @@ public class ConfigurationI implements Configuration {
     }
 
     @Override
-    public <T> void subscribe(Class<? extends Option<T>> option, OptionSubscriber<Object> consumer) {
-        if (!this.subscribers.containsKey(option)) {
-            this.subscribers.put(option, setOfUniques());
-        }
-        assert !this.subscribers.get(option).contains(consumer);
-        this.subscribers.get(option).add(consumer);
-    }
-
-    @Override
     public <T> void process(Class<? extends T> type, Function<T, T> processor) {
         config_store.entrySet().forEach(entry -> {
             if (type.isAssignableFrom(entry.getValue().getClass())) {

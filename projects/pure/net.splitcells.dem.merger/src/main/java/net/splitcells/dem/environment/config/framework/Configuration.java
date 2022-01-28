@@ -32,8 +32,6 @@ public interface Configuration extends ConfigurationV {
     @ReturnsThis
     <T> Configuration withConfigValue(Class<? extends Option<T>> key, T value);
 
-    <T> void subscribe(Class<? extends Option<T>> option, @Secret OptionSubscriber<Object> consumer);
-
     /**
      * Process a certain type of resource values.
      *
