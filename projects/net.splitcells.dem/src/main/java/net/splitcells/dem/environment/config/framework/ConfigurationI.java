@@ -28,6 +28,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
  */
 public class ConfigurationI implements Configuration {
     private final Map<Object, Object> config_store;
+    @Deprecated
     private final Map<Class<?>, Set<OptionSubscriber<Object>>> subscribers;
 
     public static Configuration configuration() {
