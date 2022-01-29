@@ -46,7 +46,7 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     }
 
     default List<T> shallowCopy() {
-        final List<T> shallowCopy = list();
+        final List<T> shallowCopy = Lists.list();
         shallowCopy.addAll(this);
         return shallowCopy;
     }
