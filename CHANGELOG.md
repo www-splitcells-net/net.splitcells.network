@@ -17,9 +17,13 @@ Ticket information located on platforms and not in the repository are
 considered throw away information.
 Links to such platforms may or may not be valid.
 
-Releases are done everytime an important ticket is completed.
+Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2022-01-30** Remove all additional commands in `user.start` like
+  `user.configure`,
+  because this makes the command too complicated and it also makes it too hard
+  to maintain backwards compatibility.
 * **2022-01-09** **\#138**: Make default values of StaticFlags more reasonable performant.
 * **2022-01-09** Remove `run.and.print.only.errors.sh` and `run.and.print.sh`,
   because there are too many `run.and.*` commands,
