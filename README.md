@@ -86,6 +86,7 @@ compatibility.
 Tasks that are being worked cyclically,
 and probably will never be finished.
 * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
+* Improve Test Coverage. See the [Project Status chapter](#project-status).
 * Migrate inactive tickets into source code repository,
   so that they each one acts as trigger at one fitting position.
 * Add inspirational quotes to code documentation in order to provide an
