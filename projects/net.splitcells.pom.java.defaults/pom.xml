@@ -132,7 +132,9 @@
         <profile>
             <id>test-via-junit</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>!test-via-junit-disabled</name>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -155,6 +157,7 @@
                             <!-- TODO Execute tests in parallel. parallel>all</parallel>
                             <useUnlimitedThreads>true</useUnlimitedThreads-->
                             <excludedGroups>testing_capabilities</excludedGroups>
+                            <argLine>${surefireArgLine}</argLine>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -335,7 +338,9 @@
             <id>report</id>
             <!-- Generate all reports via "mvn site". -->
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>!report-disabled</name>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -403,6 +408,46 @@
                     </plugin>
                 </plugins>
             </reporting>
+        </profile>
+        <profile>
+            <id>test-codecov</id>
+            <activation>
+                <property>
+                    <name>!test-codecov-disabled</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.7</version>
+                        <executions>
+                            <execution>
+                                <id>test-codecov-default-prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <destFile>${project.build.directory}/jacoco.exec</destFile>
+                                    <propertyName>surefireArgLine</propertyName>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>test-codecov-report</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <dataFile>${project.build.directory}/jacoco.exec</dataFile>
+                                    <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
     <repositories>

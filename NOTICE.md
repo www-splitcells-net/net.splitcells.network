@@ -250,3 +250,8 @@ Compton
 
 * License: The MIT License
 * Source: https://github.com/chjj/compton
+
+JaCoCo :: Maven Plugin
+
+* License: EPL 2.0
+* Binary: https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin
