@@ -133,7 +133,7 @@
             <id>test-via-junit</id>
             <activation>
                 <property>
-                    <name>!test-via-junit-disabled</name>
+                    <name>!test_via_junit_disabled</name>
                 </property>
             </activation>
             <build>
@@ -339,7 +339,7 @@
             <!-- Generate all reports via "mvn site". -->
             <activation>
                 <property>
-                    <name>!report-disabled</name>
+                    <name>!report_disabled</name>
                 </property>
             </activation>
             <build>
@@ -413,7 +413,7 @@
             <id>test-codecov</id>
             <activation>
                 <property>
-                    <name>!test-codecov-disabled</name>
+                    <name>test_codecov</name>
                 </property>
             </activation>
             <build>

@@ -23,5 +23,6 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/projects/net.splitcells.system
           echo $GITHUB_WORKSPACE
+          export test_codecov=1
           ./bin/build
           bash <(curl -s https://codecov.io/bash) # Upload tests to codecov.io.
