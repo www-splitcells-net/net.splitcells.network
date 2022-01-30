@@ -48,6 +48,7 @@ TODO: Short And Compact Feature Description
 [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
 [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
+[![codecov](https://codecov.io/gh/www-splitcells-net/net.splitcells.network/branch/master/graph/badge.svg?token=Q1X4816ZAN)](https://codecov.io/gh/www-splitcells-net/net.splitcells.network)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/alerts/)
 [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:java)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:python)
