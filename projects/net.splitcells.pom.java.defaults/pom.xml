@@ -413,7 +413,7 @@
             <id>test-codecov</id>
             <activation>
                 <property>
-                    <name>test_codecov</name>
+                    <name>env.test_codecov</name>
                 </property>
             </activation>
             <build>
