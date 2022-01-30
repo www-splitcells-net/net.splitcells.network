@@ -9,7 +9,7 @@
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 
 command.managed.execute conjunction user.start
-	# "user.start" commands should take little time for execution.
-	# Make sure that no command blocks indefinitely.
-	# i.e. do not just execute "gnome-control-center" as it blocks until the program is closed.
+	# Make sure that no command implementation blocks indefinitely,
+	# because otherwise not all `user.start` implementations are executed.
+	# For example, do not just execute "gnome-control-center" as it blocks until the program is closed.
 	# Use at least "gnome-control-center & disown". 
