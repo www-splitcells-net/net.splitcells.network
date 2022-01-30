@@ -161,6 +161,13 @@ Releases are done every time an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2022-01-30**: Create command `world.configure`, that calls all
+  configuration commands provided by OS state interface.
+  Thereby, the user can check, if all configurations are applied.
+  This also acts as a central documentation for configuration commands
+  of the OS state interface project.
+  This command adds the new concept of a world in the context of the user, system
+  and network concepts.
 * **2022-01-23**: Create command `flatpak.gui`, in order to easily find
   Flatpak's default GUI based application manager.
 * **2022-01-21**: Create command `sh.scroll.enable`.
