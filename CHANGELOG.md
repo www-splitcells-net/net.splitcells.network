@@ -162,6 +162,7 @@ Releases are done every time an important ticket is completed.
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
 * **2022-01-31**: Make test coverage via codecov.io public.
+  It can be seen on the README.
 * **2022-01-30**: Create command `world.manage`, that calls all
   configuration and update commands provided by OS state interface.
   Thereby, the user can check, if all possible configurations and updates are
