@@ -79,3 +79,6 @@ repo <.up.> sourcehut
 
 @enduml
 ```
+
+## TODOs
+* Consider git-bug for distributed communication/ticket system.
