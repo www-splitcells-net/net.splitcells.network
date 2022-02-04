@@ -161,6 +161,11 @@ Releases are done every time an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2022-02-05**: **\#163**: Deprecate `repo.push.to`,
+  because it uses positional arguments and therefore understanding argument
+  meaning gets hard.
+  The command also only supports remote IDs and not URLs.
+  The positional argument parsing makes it hard to add simple features.
 * **2022-02-04**: **\#s68**: Add peer repository `net.splitcells.network.media`
   to website.
 * **2022-01-31**: Make test coverage via codecov.io public.

@@ -8,4 +8,5 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 
-repo.process --command 'command.managed.execute disjunction repo.push.to '$@'/$subRepo'
+log.error THis command is deprecated, because it uses positional arguments.
+repo.process --command-for-current 'command.managed.execute disjunction repo.push.to '$@'/$subRepo'
