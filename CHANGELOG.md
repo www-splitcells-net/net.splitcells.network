@@ -161,6 +161,8 @@ Releases are done every time an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2022-02-04**: **\#s68**: Add peer repository `net.splitcells.network.media`
+  to website.
 * **2022-01-31**: Make test coverage via codecov.io public.
   It can be seen on the README.
 * **2022-01-30**: Create command `world.manage`, that calls all

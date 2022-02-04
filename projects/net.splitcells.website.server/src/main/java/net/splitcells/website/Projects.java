@@ -65,57 +65,67 @@ public class Projects {
                 , sourceValidator);
     }
 
-    public static List<ProjectRenderer> projectRenderers(String profile, Path projectRepositories, SourceValidator sourceValidator
+    public static List<ProjectRenderer> projectRenderers(String profile, Path integratedProjectRepositories, SourceValidator sourceValidator
             , Path xslLib) {
+        final var projectClusterRepository = integratedProjectRepositories.resolve("../../");
         final var projectRenderers = list(projectRenderer
                         (profile
-                                , projectRepositories.resolve("net.splitcells.dem/")
+                                , integratedProjectRepositories.resolve("net.splitcells.dem/")
                                 , xslLib
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/dem"
                                 , sourceValidator)
                 , projectRenderer
                         (profile
-                                , projectRepositories.resolve("../")
+                                , integratedProjectRepositories.resolve("../")
                                 , xslLib
-                                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/network"
                                 , sourceValidator)
                 , projectRenderer
                         (profile
-                                , projectRepositories.resolve("net.splitcells.gel.doc/")
+                                , integratedProjectRepositories.resolve("net.splitcells.gel.doc/")
                                 , xslLib
-                                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
                                 , sourceValidator)
                 , projectRenderer
                         (profile
-                                , projectRepositories.resolve("net.splitcells.gel.sheath/")
+                                , integratedProjectRepositories.resolve("net.splitcells.gel.sheath/")
                                 , xslLib
-                                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
                                 , sourceValidator)
                 , projectRenderer
                         (profile
-                                , projectRepositories.resolve("net.splitcells.system/")
+                                , integratedProjectRepositories.resolve("net.splitcells.system/")
                                 , xslLib
-                                , projectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/system"
                                 , sourceValidator)
                 , projectRenderer
                         (profile
-                                , projectRepositories.resolve("net.splitcells.website.default.content/")
+                                , integratedProjectRepositories.resolve("net.splitcells.website.default.content/")
                                 , xslLib
-                                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                                 , "/net/splitcells/website"
                                 , sourceValidator)
         );
-        if (isDirectory(projectRepositories.resolve("../../net.splitcells.network.log/"))) {
+        if (isDirectory(integratedProjectRepositories)) {
             projectRenderers.add(projectRenderer
                     (profile
-                            , projectRepositories.resolve("../../net.splitcells.network.log/")
+                            , projectClusterRepository.resolve("net.splitcells.network.media")
                             , xslLib
-                            , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                            , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                            , "/net/splitcells"
+                            , sourceValidator));
+        }
+        if (isDirectory(integratedProjectRepositories.resolve("../../net.splitcells.network.log/"))) {
+            projectRenderers.add(projectRenderer
+                    (profile
+                            , integratedProjectRepositories.resolve("../../net.splitcells.network.log/")
+                            , xslLib
+                            , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
                             , "/"
                             , sourceValidator));
         } else {
