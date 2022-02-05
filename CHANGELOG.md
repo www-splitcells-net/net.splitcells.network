@@ -161,17 +161,20 @@ Releases are done every time an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
-* **2022-02-05**: [**\#163**: Create `repo.push.at` as the new version of `repo.push.to`](https://github.com/www-splitcells-net/net.splitcells.network/issues/163):
-  * Deprecate `repo.push.to`,
-    because it uses positional arguments and therefore understanding argument
-    meaning gets hard.
-    The command also only supports remote IDs and not URLs.
-    The positional argument parsing makes it hard to add simple features.
-    The deprecated commands signals this with an error message,
-    but works otherwise.
-  * Create command `repo.push.at`, that uses only classical Unix style argument
-    handling.
-    Support for pushing to URLs was added as well.
+* **2022-02-05**:
+   1. [**\#163**: Create `repo.push.at` as the new version of `repo.push.to`](https://github.com/www-splitcells-net/net.splitcells.network/issues/163):
+      1. Deprecate `repo.push.to`,
+         because it uses positional arguments and therefore understanding argument
+         meaning gets hard.
+         The command also only supports remote IDs and not URLs.
+         The positional argument parsing makes it hard to add simple features.
+         The deprecated commands signals this with an error message,
+         but works otherwise.
+      2. Create command `repo.push.at`, that uses only classical Unix style argument
+         handling.
+         Support for pushing to URLs was added as well.
+   2. **\#10**: Create `generation.style` variable for default XSL style
+      for multiple output style configuration.
 * **2022-02-04**: **\#s68**: Add peer repository `net.splitcells.network.media`
   to website.
 * **2022-01-31**: Make test coverage via codecov.io public.
