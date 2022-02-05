@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+set -e
+repoCluster=$(pwd)/..
+cd $repoCluster/net.splitcells.network.media
+    repo.push.at\
+        --remote-repo-name=SourceHut\
+        --remote-repo-URL='git@git.sr.ht:~splitcells-net/net.splitcells.network.media'
+    repo.push.at\
+        --remote-repo-name=GitHub\
+        --remote-repo-URL='git@github.com:www-splitcells-net/net.splitcells.network.media'
+    repo.push.at\
+        --remote-repo-name=GitLab\
+        --remote-repo-URL='git@gitlab.com:splitcells-net/net.splitcells.network.media'
