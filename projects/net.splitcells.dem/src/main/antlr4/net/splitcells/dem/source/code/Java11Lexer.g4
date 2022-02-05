@@ -69,6 +69,7 @@ lexer grammar Java11Lexer;
 	Keyword_else_if: 'else if';
 	Keyword_enum: 'enum';
 	Keyword_extends: 'extends';
+	Keyword_for: 'for';
 	Keyword_instanceof: 'instanceof';
 	Keyword_finally: 'finally';
 	Keyword_final: 'final';

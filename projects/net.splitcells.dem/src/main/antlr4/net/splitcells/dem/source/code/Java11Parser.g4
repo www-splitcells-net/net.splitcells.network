@@ -127,7 +127,11 @@ expression
     | Keyword_new type_declaration call_arguments access?
     | name call_arguments access?
     | name access?
-    | expression Operator_plus expression
+    | expression operator expression
+    | expression_with_prefix
+    ;
+expression_with_prefix
+    : Operator_plus Operator_plus expression
     ;
 expression_child
 	: access
@@ -209,6 +213,7 @@ operator
 	| Keysymbol_vertical_bar
 	| Less_than
 	| Keyword_instanceof
+	| Operator_plus
 	;
 package_declaration
     : 'package' package_name Semicolon
@@ -240,6 +245,10 @@ statement
     | variable_declaration (Equals expression)? Semicolon
     | name access Equals expression Semicolon
     | name Equals expression Semicolon
+    | statement_for
+    ;
+statement_for
+    : Keyword_for Brace_round_open variable_declaration (Equals expression)? Semicolon expression Semicolon expression Brace_round_closed statement_body
     ;
 statement_body
     : Brace_curly_open statement* Brace_curly_closed
