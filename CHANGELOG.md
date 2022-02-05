@@ -175,6 +175,7 @@ Releases are done every time an important ticket is completed.
          Support for pushing to URLs was added as well.
    2. **\#10**: Create `generation.style` variable for default XSL style
       for multiple output style configuration.
+   3. **\#10**: Integrate JaCoCo report into website via an additional renderer.
 * **2022-02-04**: **\#s68**: Add peer repository `net.splitcells.network.media`
   to website.
 * **2022-01-31**: Make test coverage via codecov.io public.
