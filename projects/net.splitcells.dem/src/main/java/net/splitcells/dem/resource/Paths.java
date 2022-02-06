@@ -34,7 +34,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Note, that the transform method should accept any kind of backend for the filesystem.
  */
 public final class Paths {
-    private static final Pattern PATH_ELEMENT_SYNTAX = Pattern.compile("[a-zA-Z0-9\\-\\.-_]*");
+    /**
+     * TODO Only allow special symbols like $ via a flag.
+     */
+    private static final Pattern PATH_ELEMENT_SYNTAX = Pattern.compile("[a-zA-Z0-9\\-\\.-_$]*");
 
     private Paths() {
         throw constructorIllegal();
