@@ -31,7 +31,7 @@ public interface Files {
         try {
             createDirectories(directory);
         } catch (IOException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
