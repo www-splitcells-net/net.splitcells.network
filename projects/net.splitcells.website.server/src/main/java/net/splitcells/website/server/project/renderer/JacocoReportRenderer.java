@@ -54,6 +54,7 @@ public class JacocoReportRenderer implements Renderer {
                         .filter(java.nio.file.Files::isRegularFile)
                         .map(file -> sourceFolder.relativize(file.getParent().resolve(file.getFileName().toString())))
                         .map(path -> projectRenderer.resourceRootPath2().resolve("jacoco-report").resolve(path))
+                        .map(path -> Path.of(path.toString().substring(1))) // Convert absolute path to relative one.
                         .forEach(projectPaths::addAll);
             } catch (IOException e) {
                 throw new RuntimeException(e);

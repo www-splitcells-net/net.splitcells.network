@@ -13,6 +13,7 @@ package net.splitcells.website.server.project.renderer;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -78,7 +79,13 @@ public class RendererMerger implements Renderer {
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> projectPaths = setOfUniques();
         renderers.forEach(e -> {
-            projectPaths.addAll(e.projectPaths(projectRenderer));
+            final var path = e.projectPaths(projectRenderer);
+            if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+                if (path.toString().startsWith("/")) {
+                    throw new IllegalStateException("Absolute project paths are not allowed: " + path.toString());
+                }
+            }
+            projectPaths.addAll(path);
         });
         return projectPaths;
     }

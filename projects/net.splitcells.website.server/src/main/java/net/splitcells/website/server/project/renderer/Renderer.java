@@ -44,7 +44,7 @@ public interface Renderer {
      * also a code to transform such a set to a {@link Perspective} layout, might always be useful.
      *
      * @param projectRenderer Project Rendered To Be Extended
-     * @return Paths relative to project's root path.
+     * @return Paths relative to project's root path. Absolute paths are not supported.
      */
     Set<Path> projectPaths(ProjectRenderer projectRenderer);
 
