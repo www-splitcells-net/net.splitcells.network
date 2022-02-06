@@ -92,7 +92,7 @@
                             <xsl:when test="$layout/d:link/d:url">
                                 <a>
                                     <xsl:attribute name="href"
-                                                   select="s:convert-internal-project-relative-path-to-public-project-relative-path($layout/d:link/d:url/node())"/>
+                                                   select="$layout/d:link/d:url/node()"/>
                                     <xsl:variable name="file-path"
                                                   select="concat($source.folder, $layout/d:link/d:url/node())"/>
                                     <xsl:choose>

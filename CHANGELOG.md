@@ -354,6 +354,13 @@ Releases are done every time an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2022-01-23**: **\#43** The default XSL style sheet for the website does not
+  convert the layout links for the local path context anymore.
+  The conversion was introduced as a hack in order to compensate for other bad
+  code.
+  It converted paths for XML files by replacing the XML suffix via an HTML
+  suffix,
+  which made the links invalid.
 * **2022-01-23**: **\#138**: LinearDeinitializer now correctly selects the
   allocation of a supply.
 * **2022-01-23**: **\#s27**: [Fix local path content for rendering of text files.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/27)

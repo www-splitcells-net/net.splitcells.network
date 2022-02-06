@@ -131,15 +131,4 @@
 		<!--xsl:value-of select="substring($path, string-length($source.folder) - 1, string-length($path))"/-->
 		<xsl:value-of select="concat('net/splitcells/', tokenize($path, '/net/splitcells/')[2])"/>
 	</xsl:function>
-	<xsl:function name="s:convert-internal-project-relative-path-to-public-project-relative-path">
-		<xsl:param name="path"/>
-		<xsl:choose>
-			<xsl:when test="ends-with($path, '.xml')">
-				<xsl:value-of select="concat(substring($path, 1, string-length($path) - 4), '.html')"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:value-of select="$path"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:function>
 </xsl:stylesheet>
