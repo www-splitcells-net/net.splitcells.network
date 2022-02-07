@@ -18,7 +18,7 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
 
 /**
  * Projects the file tree located "src/main/resources/html/" of the project's folder.
- *
+ * <p>
  * TODO Split resources into actual HTML documents and other binary data.
  */
 public class ResourceRenderer implements Renderer {
@@ -38,7 +38,13 @@ public class ResourceRenderer implements Renderer {
                 .resolve(path);
         if (is_file(requestedFile)) {
             try {
-                return Optional.of(renderingResult(readAllBytes(requestedFile), TEXT_HTML.toString()));
+                final String format;
+                if (path.endsWith(".svg")) {
+                    format = "image/svg+xml";
+                } else {
+                    format = TEXT_HTML.toString();
+                }
+                return Optional.of(renderingResult(readAllBytes(requestedFile), format));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
