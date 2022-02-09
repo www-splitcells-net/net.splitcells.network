@@ -122,9 +122,99 @@ constraint.
 Additionally, the upper nodes of the tree are not contributing any costs to the
 overhaul rating and show, that there are basically 2 kinds of constraint nodes
 with different tasks:
-* Nodes that groups variables of the solution and propagate the grouping to
-  child nodes.
+* Nodes that group variables of the solution and propagate the grouping to
+  child nodes and the ratings to the parent nodes.
 * Nodes that retrieve given groups and rate these accordingly.
+## Rating Calculation By Example
+> Calculate the errors given in the previous solution,
+> so one get an impression of the concrete calculations.
+
+We ignore groupings without errors for this calculation,
+so we can focus on the things that matter.
+### Rating Calculation In Small Scale
+> First, we look at 2 errors,
+> before we calculate the rating of the complete solution.
+
+The starting point for determining the rating,
+is the creation of the assignment grouping.
+We start with 3 queen assignments for demonstrative purposes:
+* Queen 1 to (2,E)
+* Queen 2 to (2,G)
+* Queen 3 to (7,E)
+
+![Grouping Visualization](/net/splitcells/gel/test/functionality/n-queen-problem/constraint.tree.defiance.grouping.example.svg)
+
+We take this group of assignments and pass it to the first constraint node
+`For All`.
+This node just propagates all of its groups to the child nodes without any
+modifications.
+Its only purpose is to represent all constraints of the problem as one entity.
+
+On the next level of the tree there are 2 nodes,
+that group the assignments according to 2 different schemas:
+* The Row node creates for each `For All` group and Row present in that group
+  a subgroup.
+  In this case, the 3 Queens are located at the rows 2 and 7.
+* The Row node creates for each `For All` group and Column present in that group
+  a subgroup.
+  In this case, the 3 Queens are located at the columns E and G.
+
+On the last level all constraint nodes have the same type.
+It does not do any grouping itself and only determines,
+if there is more than one Queen in a given group.
+In order to simplify this we focus only on the groups,
+that are part of an error.
+
+![Grouping Visualization](/net/splitcells/gel/test/functionality/n-queen-problem/constraint.tree.defiance.example.svg)
+
+The grouping is done, and now we can calculate the actual rating.
+First, we calculate the cost of the leaf nodes,
+as the rating of these nodes are not depending on other nodes.
+
+![Cost Of Leafs](/net/splitcells/gel/test/functionality/n-queen-problem/constraint.tree.defiance.cost.leafs.svg)
+
+The rating is represented with an abstract cost unit:
+* A cost of 0 means, that there are no errors in the solution.
+* A cost greater than 0, signals an error.
+In this case we want the number of falsely allocated queens to be as big as the
+cost, so it is easy to semantically understand a given rating.
+
+In each case the rating of each focused group is 1,
+because there is 1 too many Queen located in each of the groups.
+Note that groups without errors have a cost of 0
+(i.e. the rating of the row 7 is 0, as there is only 1 Queen in the row 7).
+
+Now the cost of each group in the leafs of the constraint tree can be
+propagated to the parent constraint nodes,
+which are the row and column constraints.
+At each constraint node of the second level,
+the rating for each grouping is added together.
+This sum is the rating the respective node at the second level.
+
+![Cost Of Second Level](/net/splitcells/gel/test/functionality/n-queen-problem/constraint.tree.defiance.cost.intermediate.svg)
+
+At last, the ratings of the second level are propagated to the first level
+and then summed up together,
+like it was done on the second level.
+
+There is only one node on the first level and
+this node does not have any parent nodes,
+so the calculation is done.
+The result is the rating calculated for the last node without any parents,
+because it represents all constraint of the problem.
+
+![Constraint Tree](/net/splitcells/gel/test/functionality/n-queen-problem/constraint.tree.defiance.cost.svg)
+
+### Complete Rating Calculation
+> Now we target the moon.
+
+With the knowledge of the previous chapter,
+we can calculate the complete rating for our exemplary solution.
+In order to simplify this,
+we avoid all groups,
+that have no cost.
+
+![Constraint Tree](/net/splitcells/gel/test/functionality/n-queen-problem/constraint.tree.defiance.calculation.svg)
 # Epilogue
 Now that we understand the concept,
 [it is time to implement the puzzle at hand](n-queen-problem.implementation.md).
