@@ -2,7 +2,7 @@
 The following goes step-by-step through a minimal optimization implementation of
 the N queen problem.
 The project `net.splitcells.gel.quickstart` located in the main source code
-repository contains a complete project implementing of such a problem.
+repository contains a complete project implementing such a problem.
 It can be used as a starting point for new projects,
 because of its minimal content.
 ## Preparations
