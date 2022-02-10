@@ -112,7 +112,6 @@ mjx-container {
 }
 ul {
     font-family: var(--text-flowing-font);
-    list-style-type: none;
     padding-left: 0;
     margin-top: 0;
     margin-left: 1em;

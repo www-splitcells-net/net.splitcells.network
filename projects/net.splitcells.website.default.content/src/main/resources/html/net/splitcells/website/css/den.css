@@ -31,10 +31,15 @@ ul.net-splitcells-den-perspective li:last-child {
       height: 1em;
       display:inline-block;
    }*/
-li.net-splitcells-den-perspective,
-li {
+li.net-splitcells-den-perspective {
    border-left: 1px solid rgb(100,100,100);
    padding-left: .5em;
+   list-style-type: none;
+   }
+li {
+    border-left: 1px solid rgb(100,100,100);
+   padding-left: .5em;
+   margin-left: .5em;
    }
 .void {
     display: none;
