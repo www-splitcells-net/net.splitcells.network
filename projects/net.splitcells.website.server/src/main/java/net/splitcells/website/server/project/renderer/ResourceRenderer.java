@@ -41,6 +41,8 @@ public class ResourceRenderer implements Renderer {
                 final String format;
                 if (path.endsWith(".svg")) {
                     format = "image/svg+xml";
+                } else if (path.endsWith(".jpg")) {
+                    format = "image/jpeg";
                 } else {
                     format = TEXT_HTML.toString();
                 }
