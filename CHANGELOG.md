@@ -355,6 +355,8 @@ Releases are done every time an important ticket is completed.
    This way `os.state.interface` repos can now state their file endings and
    thereby have better IDE support in such repos.
 ### Patches
+* **2022-02-11**: Fix source code error in `user.ssh.key.authorize`,
+  which prohibited its execution.
 * **2022-02-10**: JPG images served by website server's resource extension now
   get the correct content type.
 * **2022-02-07**: SVG images served by website server's resource extension now

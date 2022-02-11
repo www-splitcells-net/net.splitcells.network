@@ -29,4 +29,4 @@ if __name__ == '__main__':
 				logging.debug('Importing public ssh key for user: ' + line)
 				keysToImport += line + "\n"
 	with open(Path.home().joinpath(".ssh", "authorized_keys"), "a") as authorizedKeysFile:
-		file_object.write(keysToImport)
+		authorizedKeysFile.write(keysToImport)
