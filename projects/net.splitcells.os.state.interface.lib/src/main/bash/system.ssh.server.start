@@ -9,7 +9,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 system.ssh.server.require 2>&1 >/dev/null && exit
 # TODO Create script to disable passwordless authentication:
-	# Replace string "PasswordAuthentication yes" by "PasswordAuthentication no" in /etc/ssh/sshd_config.
 if [ "1" -eq "$(system.is.Ubuntu)" ]; then
 	sudo apt install -y openssh-server
 	sudo systemctl start ssh
@@ -19,10 +18,10 @@ if [ "1" -eq "$(system.is.Ubuntu)" ]; then
 		exit 1
 	fi
 	# TODO Check PasswordAuthentication configuration.
-elif [ "1" -eq "$(system.is.Fedora)" ]; then
+elif [ command -v dnf ]; then
 	sudo dnf install -y openssh-server
 	sudo systemctl start sshd.service
 else
-	echo.error This operation system is not supported.
+	echo.error This operation system is not explicitly supported and therefore the required packages for SSH are not checked. It could be the case, that this still works.
 fi
 system.ssh.server.require
