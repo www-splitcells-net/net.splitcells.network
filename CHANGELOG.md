@@ -20,22 +20,23 @@ Links to such platforms may or may not be valid.
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
-* **2022-01-30** Remove all additional commands in `user.start` like
+* **2022-02-12**: [**\#s66** Move suitable Dem guidelines to the network project.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/66)
+* **2022-01-30**: Remove all additional commands in `user.start` like
   `user.configure`,
   because this makes the command too complicated and it also makes it too hard
   to maintain backwards compatibility.
-* **2022-01-09** **\#138**: Make default values of StaticFlags more reasonable performant.
-* **2022-01-09** Remove `run.and.print.only.errors.sh` and `run.and.print.sh`,
+* **2022-01-09**: **\#138**: Make default values of StaticFlags more reasonable performant.
+* **2022-01-09**: Remove `run.and.print.only.errors.sh` and `run.and.print.sh`,
   because there are too many `run.and.*` commands,
   that are not used and are too similar.
   This makes it unjustifiable hard to choice a fitting `run.and.*` command.
-* **2021-12-28** **\#s44** The Domsole now filters log messages with a lesser
+* **2021-12-28**: **\#s44** The Domsole now filters log messages with a lesser
   priority than INFO by default.
   This behaviour can be overwritten with the Option MessageFilter.
-* **2021-12-26** **\#s44** Rename `Validator` to `SourceValidator` in order to
+* **2021-12-26**: **\#s44** Rename `Validator` to `SourceValidator` in order to
   clarify purpose,
   because a validator for rendered files via the web server is needed.
-* **2021-12-16** The rating methods of the constraint interface now only return
+* **2021-12-16**: The rating methods of the constraint interface now only return
   ratings instead of meta ratings,
   in order to increase runtime performance.
   Meta ratings have a higher overhead than primitive ratings,
