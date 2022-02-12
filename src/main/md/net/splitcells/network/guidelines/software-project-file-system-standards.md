@@ -1,6 +1,12 @@
 # Software Project File System Standards
 This is the aggregation of common file and folder structures in software
 projects.
+## `net.splitcells.network` Specific Standard
+Every project should have a POM at its root folder,
+even if such a project does not use Maven.
+By defining a Maven multi project module,
+this can be used to import many of such projects into an IDE
+(i.e. Eclipse and Intellij) with one import command.
 ## Files and Folders at `./*`
 Files and folders at the top level should represent an entry point to the
 project.
@@ -12,6 +18,10 @@ Files specifying the project type are another type of these files (i.e.
 `Makefile`, `pom.xml` etc.).
 These are used to import the project and to do tasks related to the project like
 compiling the software.
+
+Try to minimize the number of non-hidden files and folders,
+in order to provide a good starting point and overview of the project
+without overwhelming the visitor.
 ## Files `./CHANGELOG.*`
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 is a site describing a standard how changes to the project based on versioning
