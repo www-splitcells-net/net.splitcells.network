@@ -162,6 +162,7 @@ Releases are done every time an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2022-02-12**: **\#s68** Recommend stating the license in CommonMark files.
 * **2022-02-07**: [**\#43**: Ensure at least 30% test coverage.](https://github.com/www-splitcells-net/net.splitcells.network/issues/43)
 * **2022-02-05**:
    1. [**\#163**: Create `repo.push.at` as the new version of `repo.push.to`](https://github.com/www-splitcells-net/net.splitcells.network/issues/163):

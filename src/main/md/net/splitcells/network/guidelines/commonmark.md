@@ -12,3 +12,9 @@ in order to describe a single backslash.
 
 Use inline math in order to quote math formulas and do not use normal
 CommonMark quoting.
+## License Information
+Every CommonMark file should state its license:
+```
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).
+```
