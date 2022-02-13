@@ -47,6 +47,8 @@
 	--foreground-color-selected-priority-5:#303030;
 	--foreground-color-selected-priority-6:#303030;
 
+    --background-color-start: rgba(255, 255, 255, 0);
+    --background-color-end: var(--background-color-priority-7);
 
 	--background-color-selected-priority-0:#FFFFFF;
 	--background-color-selected-priority-1:#FFFFFF;

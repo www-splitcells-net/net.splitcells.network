@@ -18,8 +18,7 @@
 */
 main {
     background-size: 100%;
-    background-repeat: no-repeat;
-    background-image:url('/net/splitcells/martins/avots/website//images/license.standard/white.background.blog.discovery.0.jpg');
+    background-image: linear-gradient(to bottom, var(--background-color-start), var(--background-color-end) 300em), url('/net/splitcells/martins/avots/website/images/license.standard/white.background.blog.discovery.0.jpg');
 	}
 code {
 	/* Code blocks are created by default CommonMark rendering. */
