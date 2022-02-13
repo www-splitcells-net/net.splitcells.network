@@ -34,6 +34,7 @@ ul.net-splitcells-den-perspective li:last-child {
 li.net-splitcells-den-perspective {
    border-left: 1px solid rgb(100,100,100);
    padding-left: .5em;
+   margin-left: 0em;
    list-style-type: none;
    }
 li {

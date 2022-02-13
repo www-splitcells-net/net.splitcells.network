@@ -40,7 +40,8 @@ article p img {
 	display: block;
 	}
 ol {
-    padding-left: 1em;
+    margin-left: .5em;
+    padding-left: .5em;
     }
 ol > ol {
     padding-left: 2em;
