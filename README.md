@@ -94,6 +94,8 @@ and probably will never be finished.
   This is deprecated.
   See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
 * Update dependencies.
+* Review introductions and info linked by README,
+  because that is the primary material for newcomers.
 ## Network's Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
