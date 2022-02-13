@@ -34,7 +34,7 @@ After that, we'll later apply some optimization functions,
 in order to create a solution:
 ```
 import static net.splitcells.gel.Gel.defineProblem;
-
+[...]
 final var problemBuilder = Gel.defineProblem();
 ```
 ### Creating A Data Model
@@ -67,6 +67,8 @@ The following code defines the data format,
 but uses the not yet defined variables `demands` and `suipplies` for the
 actual values for an overview with less clutter:
 ```
+import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+[...]
 final var column = attribute(Integer.class, "column");
 final var row = attribute(Integer.class, "row");
 
@@ -83,6 +85,9 @@ It is constructed via nesting of Lists (`net.splitcells.dem.data.set.Lists`).
 In this case columns (demands) are allocated to rows (supplies).
 Every allocation corresponds to the placing of one queen:
 ```
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static java.util.stream.IntStream.rangeClosed;
+[...]
 final int columns = 8;
 final int rows = 8; 
 final var demands = listWithValuesOf(
@@ -117,16 +122,30 @@ The constraint definition ends, when the modified builder is returned.
 Keep in mind, that the constraint defines rules,
 that apply to the allocations table:
 ```
+import static net.splitcells.gel.rating.rater.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
+[...]
+private static Rater ascDiagonals(int rows, int columns) {
+    return raterBasedOnLineValue("ascDiagonals", line -> line.value(ROW) - line.value(COLUMN));
+}
+
+/**
+* The descending diagonal with the number 0 represents the diagonal in the middle.
+*/
+private static Rater descDiagonals(int rows, int columns) {
+    return raterBasedOnLineValue("descDiagonals", line -> line.value(ROW) - Math.abs(line.value(COLUMN) - columns - 1));
+}
+[...]
 final var solution = Gel.defineProblem()
-    .withDemandAttributes(COLUMN)
+    .withDemandAttributes(column)
     .withDemands(demands)
-    .withSupplyAttributes(ROW)
+    .withSupplyAttributes(row)
     .withSupplies(supplies)
     .withConstraint(
         r -> {
-            r.forAll(ROW).forAll(COLUMN).then(hasSize(1));
-            r.forAll(ROW).then(hasSize(1));
-            r.forAll(COLUMN).then(hasSize(1));
+            r.forAll(row).forAll(column).then(hasSize(1));
+            r.forAll(row).then(hasSize(1));
+            r.forAll(column).then(hasSize(1));
             r.forAll(ascDiagonals(rows, columns)).then(hasSize(1));
             r.forAll(descDiagonals(rows, columns)).then(hasSize(1));
             return r;
@@ -162,6 +181,9 @@ that needs an initialized solution,
 where all demands or all supplies are allocated.
 So we use `linearInitialization` to set all variables in the following example:
 ```
+import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
+[...]
 solution.optimize(linearInitialization());
 solution.optimize(functionalHillClimber(1000));
 solution.createStandardAnalysis();
@@ -188,6 +210,7 @@ that can get out of any local optima,
 so let's try it out!
 ```
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
+import static org.assertj.core.api.Assertions.assertThat;
 [...]
 backtracking().optimize(solution);
 assertThat(solution.isOptimal()).isTrue();
@@ -199,29 +222,106 @@ Run it and check the results with the standard analysis!
 So in essence the complete source code of solving the source code looks like
 this:
 ```
-final var demands = listWithValuesOf(
-    rangeClosed(1, columns)
-        .mapToObj(i -> list((Object) i))
-        .collect(toList()));
-final var supplies = listWithValuesOf(
-    rangeClosed(1, rows)
-        .mapToObj(i -> list((Object) i))
-        .collect(toList()));
-final var solution = defineProblem()
-    .withDemandAttributes(COLUMN)
-    .withDemands(demands)
-    .withSupplyAttributes(ROW)
-        .withSupplies(supplies)
-        .withConstraint(
-            r -> {
-                r.forAll(ROW).forAll(COLUMN).then(hasSize(1));
-                r.forAll(ROW).then(hasSize(1));
-                r.forAll(COLUMN).then(hasSize(1));
-                r.forAll(ascDiagonals(rows, columns)).then(hasSize(1));
-                r.forAll(descDiagonals(rows, columns)).then(hasSize(1));
-                return r;
-            })
-    .toProblem();
-backtracking().optimize(solution);
-assertThat(solution.isOptimal()).isTrue();
+/*
+ * Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0, which is available at
+ * http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+ * which is available at https://spdx.org/licenses/MIT.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ */
+package net.splitcells.gel.quickstart;
+
+import net.splitcells.gel.Gel;
+import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.problem.Problem;
+import net.splitcells.gel.rating.rater.Rater;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
+import java.nio.file.Path;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.rating.rater.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
+import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
+import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
+import static net.splitcells.gel.solution.optimization.primitive.LinearDeinitializer.linearDeinitializer;
+import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * <p>This class solves the widely known 8 queen problem with the commonly known
+ * backtracking algorithm.
+ * It provides for newcomers an intro to the API of the framework,
+ * where they can focus on the API instead of the problem.
+ * By implementing something familiar,
+ * it should be easier for the beginner to understand the API.</p>
+ * <p>This class also show the bare minimum,
+ * that should be done, in order to use this project.</p>
+ */
+public class NQueenProblemTest {
+    public static final Attribute<Integer> COLUMN = attribute(Integer.class, "column");
+    public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
+
+    @Test
+    public void test() {
+        final var testSubject = nQueenProblem(8, 8).asSolution();
+        testSubject.optimize(linearInitialization());
+        testSubject.optimizeOnce(functionalHillClimber(100));
+        testSubject.createAnalysis(Path.of("./target/analysis-hill-climber/"));
+        testSubject.optimize(linearDeinitializer());
+        backtracking().optimize(testSubject);
+        assertThat(testSubject.isOptimal()).isTrue();
+        testSubject.createAnalysis(Path.of("./target/analysis-backtracking/"));
+
+    }
+
+    private static Problem nQueenProblem(int rows, int columns) {
+        final var demands = listWithValuesOf(
+                rangeClosed(1, columns)
+                        .mapToObj(i -> list((Object) i))
+                        .collect(toList()));
+        final var supplies = listWithValuesOf(
+                rangeClosed(1, rows)
+                        .mapToObj(i -> list((Object) i))
+                        .collect(toList()));
+        return Gel.defineProblem()
+                .withDemandAttributes(COLUMN)
+                .withDemands(demands)
+                .withSupplyAttributes(ROW)
+                .withSupplies(supplies)
+                .withConstraint(
+                        r -> {
+                            r.forAll(ROW).forAll(COLUMN).then(hasSize(1));
+                            r.forAll(ROW).then(hasSize(1));
+                            r.forAll(COLUMN).then(hasSize(1));
+                            r.forAll(ascDiagonals(rows, columns)).then(hasSize(1));
+                            r.forAll(descDiagonals(rows, columns)).then(hasSize(1));
+                            return r;
+                        })
+                .toProblem();
+    }
+
+    /**
+     * The ascending diagonal with the number 0 represents the diagonal in the middle.
+     */
+    private static Rater ascDiagonals(int rows, int columns) {
+        return raterBasedOnLineValue("ascDiagonals", line -> line.value(ROW) - line.value(COLUMN));
+    }
+
+    /**
+     * The descending diagonal with the number 0 represents the diagonal in the middle.
+     */
+    private static Rater descDiagonals(int rows, int columns) {
+        return raterBasedOnLineValue("descDiagonals", line -> line.value(ROW) - Math.abs(line.value(COLUMN) - columns - 1));
+    }
+}
+
 ```
