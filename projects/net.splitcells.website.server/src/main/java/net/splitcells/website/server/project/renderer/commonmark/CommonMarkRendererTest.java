@@ -19,11 +19,11 @@ public class CommonMarkRendererTest {
     public void testCommonMarkLayout() {
         final var testSubject = projectRenderer
                 ("public"
-                        , Path.of("../net.splitcells.dem")
+                        , Path.of("../..")
                         , Path.of("../net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                         , Path.of("net.splitcells.website.default.content/src/main/resources/html")
-                        , "/net/splitcells/dem"
+                        , "/net/splitcells/"
                         , a -> Optional.empty());
-        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/guidelines/technology-stack.html"));
+        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/network/guidelines/technology-stack.html"));
     }
 }
