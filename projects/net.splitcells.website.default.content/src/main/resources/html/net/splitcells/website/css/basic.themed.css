@@ -17,8 +17,7 @@ html {
 }
 pre {
     background-color: var(--background-color-priority-2);
-    padding-left: 1em;
-    padding-right: 1em;
+    padding: 1em;
     }
 ol {
     list-style-type: none;
