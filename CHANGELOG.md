@@ -20,6 +20,7 @@ Links to such platforms may or may not be valid.
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ## [4.0.0] - 2022-02-14
+### Summary
 **2022-02-14**: [**\#138** Create developer introduction.](https://github.com/www-splitcells-net/net.splitcells.network/issues/138)
 1. An [introduction to the constraint system](https://splitcells.net/net/splitcells/gel/test/functionality/n-queen-problem.html)
    was created.

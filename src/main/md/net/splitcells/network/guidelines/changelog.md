@@ -13,6 +13,7 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
 <Links to Ticketing Systems>
 <Further Comments>
 ## [Unreleased]
+### Summary
 <Really Important General Release Comments>
 <Main Tasks Description
 [**\#<Ticket Number>**: <Ticket Title>](Link to Ticket)
