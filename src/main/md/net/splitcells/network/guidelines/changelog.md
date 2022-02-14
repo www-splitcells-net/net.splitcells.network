@@ -17,6 +17,7 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
 <Really Important General Release Comments>
 <Main Tasks Description
 [**\#<Ticket Number>**: <Ticket Title>](Link to Ticket)
+[**\#<Ticket Number>**: <Ticket Title>](Link to Ticket):
 <Ticket Description And Comments>
 >
 <General Release Comments>
