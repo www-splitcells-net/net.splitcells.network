@@ -113,9 +113,7 @@ mjx-container {
 ul {
     font-family: var(--text-flowing-font);
     padding-left: 0;
-    margin-top: 0;
     margin-left: 1em;
-    padding-top: 0;
     }
 .NonStandard {}
 .HeaderLinkButton {
