@@ -19,6 +19,24 @@ Links to such platforms may or may not be valid.
 
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
+## [4.0.0] - 2022-02-14
+**2022-02-14**: [**\#138** Create developer introduction.](https://github.com/www-splitcells-net/net.splitcells.network/issues/138)
+1. An [introduction to the constraint system](https://splitcells.net/net/splitcells/gel/test/functionality/n-queen-problem.html)
+   was created.
+   It shows how to model and solve the N queen problem on a conceptional and source code
+   level.
+2. The performance of Gel was improved as well by 5 times,
+   because the runtime for solving the N queen problem was completely unacceptable.
+   The original runtime for the Backtracking algorithm was 65 seconds and was
+   improved to about 25 seconds.
+   This is still a lot, but somewhat bearable as one (hopefully) would not make
+   a new coffee in that time.
+3. There are also now 2 new repositories in order to avoid data bloat in the main repo:
+   1. [net.splitcells.network.log](https://github.com/www-splitcells-net/net.splitcells.network.log):
+      This is used as a public repo for logs like performance data or the
+      execution time of project tasks.
+   3. [net.splitcells.network.media](https://github.com/www-splitcells-net/net.splitcells.network.media):
+      Contains media files like SVGs.
 ### Major Changes
 * **2022-02-12**: [**\#s66** Move suitable Dem guidelines to the network project.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/66)
 * **2022-01-30**: Remove all additional commands in `user.start` like
@@ -162,6 +180,7 @@ Releases are done every time an important ticket is completed.
 * **2021-08-05**:
    1. Rename `net.splitcells.dem.utils.CommonFunctions#hash_code` to `hashCode`.
 ### Minor Changes
+* **2022-02-14**: [**\#138** Create developer introduction.](https://github.com/www-splitcells-net/net.splitcells.network/issues/138)
 * **2022-02-12**:
   1. **\#s68**: Recommend stating the license in CommonMark files.
   2. [**\#s68**: Create repo for media files:](https://todo.sr.ht/~splitcells-net/net.splitcells.network/68)
