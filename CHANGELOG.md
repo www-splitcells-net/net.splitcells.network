@@ -10,8 +10,8 @@ Ticket references without a prefix are probably hosted on
 [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues).
 
 Prefix To Server Dictionary:
-* g = Github: https://github.com/www-splitcells-net/net.splitcells.network/issues
-* s = sourcehut: https://todo.sr.ht/~splitcells-net/net.splitcells.network
+* g = Github: [https://github.com/www-splitcells-net/net.splitcells.network/issues](https://github.com/www-splitcells-net/net.splitcells.network/issues)
+* s = sourcehut: [https://todo.sr.ht/~splitcells-net/net.splitcells.network](https://todo.sr.ht/~splitcells-net/net.splitcells.network)
  
 Ticket information located on platforms and not in the repository are
 considered throw away information.
