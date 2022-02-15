@@ -125,6 +125,9 @@ that apply to the allocations table:
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
 [...]
+/**
+ * The ascending diagonal with the number 0 represents the diagonal in the middle.
+ */
 private static Rater ascDiagonals(int rows, int columns) {
     return raterBasedOnLineValue("ascDiagonals", line -> line.value(ROW) - line.value(COLUMN));
 }
@@ -219,7 +222,7 @@ Run it and check the results with the standard analysis!
 # Complete Source Code
 > So, what are the commands required in order to model and solve the problem?
 
-So in essence the complete source code of solving the source code looks like
+So in essence the complete source code for solving the problem looks like
 this:
 ```
 /*
