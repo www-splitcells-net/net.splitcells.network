@@ -81,7 +81,7 @@ class_member
     | class_member_value_declaration
     ;
 class_constructor
-    : annotation* Keyword_private name call_arguments statement_body
+    : javadoc? annotation* Keyword_private name call_arguments statement_body
     ;
 class_member_method_definition
     : javadoc? annotation* modifier_visibility? Keyword_static?
