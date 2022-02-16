@@ -46,7 +46,7 @@ public final class Lists {
     }
 
     public static <T> List<T> list() {
-        return new ListI<>();
+        return ListI.list();
     }
 
     public static <T> List<T> listWithValuesOf(Collection<T> values) {
@@ -62,7 +62,7 @@ public final class Lists {
 
     @SafeVarargs
     public static <T> List<T> list(T... args) {
-        final var list = new ListI<T>();
+        final var list = ListI.<T>list();
         list.addAll(Arrays.asList(args));
         return list;
     }

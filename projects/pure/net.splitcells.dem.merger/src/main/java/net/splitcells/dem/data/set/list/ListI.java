@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class ListI<T> extends ArrayList<T> implements List<T> {
-
+	public static <T> List<T> list() {
+		return new ListI<>();
+	}
 	/**
      * TODO Make private.
 	 */
-	protected ListI() {
+	private ListI() {
 	}
 }
