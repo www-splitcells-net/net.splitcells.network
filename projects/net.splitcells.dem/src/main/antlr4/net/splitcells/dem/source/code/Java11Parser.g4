@@ -45,9 +45,6 @@ access
     | Dot name access?
     | Brackets_open expression Brackets_closed
     ;
-allowed_Extensions
-	: Extension_Exception
-	;
 annotation
     /* TODO call_arguments is a hack. */
 	: Keysymbol_at name call_arguments?;
@@ -76,7 +73,7 @@ class_definition
 class_extension
 	: Keyword_extends type_declaration
 	| Keyword_implements type_declaration
-	| allowed_Extensions?
+	| Extension_Exception
 	;
 class_member
     : javadoc? Keysymbol_at Keyword_JavaLegacyBody .* Brace_curly_open .* Brace_curly_closed
