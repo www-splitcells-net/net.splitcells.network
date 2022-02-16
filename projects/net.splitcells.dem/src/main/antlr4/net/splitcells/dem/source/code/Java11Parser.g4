@@ -215,6 +215,7 @@ operator
 	| Less_than
 	| Keyword_instanceof
 	| Operator_plus
+	| Hyphen_minus
 	;
 package_declaration
     : 'package' package_name Semicolon
