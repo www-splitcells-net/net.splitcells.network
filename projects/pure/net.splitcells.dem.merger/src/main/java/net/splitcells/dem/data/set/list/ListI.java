@@ -20,8 +20,4 @@ public class ListI<T> extends ArrayList<T> implements List<T> {
 	 */
 	protected ListI() {
 	}
-
-	public ListI(Collection<T> elements) {
-		super(elements);
-	}
 }
