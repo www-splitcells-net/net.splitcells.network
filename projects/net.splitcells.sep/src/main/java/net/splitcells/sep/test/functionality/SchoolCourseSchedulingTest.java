@@ -67,7 +67,7 @@ import static net.splitcells.sep.Network.network;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-public class SchoolSchedulingTest {
+public class SchoolCourseSchedulingTest {
 
     private static final String RAILS_FOR_SCHOOL_SCHEDULING = "rails for school scheduling";
     private static final String TEACHER_ALLOCATION_FOR_COURSES = "teacher allocation for courses";
@@ -103,7 +103,7 @@ public class SchoolSchedulingTest {
     }
 
     /**
-     * maven.execute net.splitcells.sep.test.functionality.SchoolSchedulingTest -Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false -Dnet.splitcells.dem.environment.config.StaticFlags.TELLING_STORY=true
+     * maven.execute net.splitcells.sep.test.functionality.SchoolCourseSchedulingTest -Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false -Dnet.splitcells.dem.environment.config.StaticFlags.TELLING_STORY=true
      *
      * @param args
      */

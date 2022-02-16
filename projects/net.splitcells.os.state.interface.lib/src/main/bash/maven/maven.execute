@@ -7,5 +7,5 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-mvn compile exec:java -Dexec.mainClass="$1" "${*:2}"
+mvn compile exec:java -Dexec.mainClass="$1" ${*:2}
 	# If compile goal is not used, there is an error when the program is not already compiled.
