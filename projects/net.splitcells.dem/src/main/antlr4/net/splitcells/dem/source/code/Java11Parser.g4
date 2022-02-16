@@ -71,9 +71,7 @@ class_definition
         Brace_curly_open class_member* Brace_curly_closed
     ;
 class_extension
-	: Keyword_extends type_declaration
-	| Keyword_implements type_declaration
-	| Extension_Exception
+	: (Keyword_extends type_declaration)? (Keyword_implements type_declaration)? Extension_Exception?
 	;
 class_member
     : javadoc? Keysymbol_at Keyword_JavaLegacyBody .* Brace_curly_open .* Brace_curly_closed
