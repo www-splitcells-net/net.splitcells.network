@@ -20,6 +20,7 @@ public enum Language {
     @Deprecated
     DEMAND2("demand"),
     DEMANDS("demands"),
+    EMPTY_STRING(""),
     EVENT("event"),
     GROUP("group"),
     HISTORY("history"),

@@ -86,18 +86,18 @@ public interface SolutionView extends ProblemView {
     /**
      * <p>TODO Create read only {@link History} and move mutable
      * {@link History} to {@link Solution}, because this interface is read only.</p>
-     * 
+     *
      * <p>TODO Make this method optionally,
      * so that {@link History} recording can be disabled,
      * in order to improve runtime performance.</p>
-     * 
+     *
      * @return
      */
     History history();
 
     /**
      * TODO IDA This is currently only an idea.
-     * 
+     *
      * @return Returns a {@link Solution}, that based on this.
      */
     default Solution branch() {
@@ -136,7 +136,11 @@ public interface SolutionView extends ProblemView {
         writeToFile(targetFolder.resolve("constraint.rating.xml"), constraint().rating().toDom());
         writeToFile(targetFolder.resolve("constraint.state.xml"), constraint().toDom());
         writeToFile(targetFolder.resolve("history.fods"), history().toFods());
-        writeToFile(targetFolder.resolve("constraint.natural-argumentation.txt"), constraint().naturalArgumentation().toStringPathsDescription());
+        writeToFile(targetFolder.resolve("constraint.natural-argumentation.txt")
+                , constraint()
+                        .naturalArgumentation()
+                        .map(Perspective::toStringPathsDescription)
+                        .orElse(""));
         writeToFile(targetFolder.resolve("results.fods"), toFods());
     }
 

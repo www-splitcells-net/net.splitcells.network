@@ -19,6 +19,21 @@ Links to such platforms may or may not be valid.
 
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
+### Major Changes
+* **2022-02-17**: **\#8**: Make argumentation rendering in Gel less verbose for
+  optimization solutions.
+  This makes it easier to understand errors in solutions by omitting the
+  excessive usage of the word `argumentation`.
+  1. Every `Constraint#naturalArgumentation` method now returns an optional
+     perspective.
+     Thereby, the number of nodes in the AST of the argumentation is reduced.
+  2. The usage of the word `argumentation` itself was greatly reduced.
+     Before the change an argumentation would look like the following:
+     ```text
+     Argumentation For all rail
+     Argumentation Argumentation Then values of allocated hours should have the same value
+     ```
+     Now it looks like this `For all rail Then values of allocated hours should have the same value`.
 ## [4.0.0] - 2022-02-14
 ### Summary
 * **2022-02-14**: [**\#138** Create developer introduction](https://github.com/www-splitcells-net/net.splitcells.network/issues/138):

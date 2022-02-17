@@ -23,6 +23,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
+import static net.splitcells.gel.common.Language.EMPTY_STRING;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.lineRating;
 import static net.splitcells.gel.constraint.Report.report;
@@ -401,7 +402,7 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public Perspective naturalArgumentation(GroupId group) {
+    public Optional<Perspective> naturalArgumentation(GroupId group) {
         final var naturalArgumentation = lineProcessing
                 .columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(group)
@@ -409,18 +410,15 @@ public abstract class ConstraintAI implements Constraint {
                 .stream()
                 .map(allocation -> allocation.value(LINE))
                 .map(line -> naturalArgumentation(line, group, AllocationSelector::selectLinesWithCost))
+                .filter(Optional::isPresent)
                 .collect(toList());
-        if (naturalArgumentation.size() == 1) {
-            if (naturalArgumentation.get(0).isPresent()) {
-                return naturalArgumentation.get(0).get();
-            } else {
-                return perspective(ARGUMENTATION.value(), GEL);
-            }
+        if (naturalArgumentation.isEmpty()) {
+            return Optional.empty();
         }
-        final var localArgumentation = perspective(ARGUMENTATION.value(), GEL);
+        final var localArgumentation = perspective(EMPTY_STRING.value(), GEL);
         naturalArgumentation
                 .forEach(naturalReasoning -> naturalReasoning.ifPresent(localArgumentation::withChild));
-        return localArgumentation;
+        return Optional.of(localArgumentation);
     }
 
     @Override
@@ -430,11 +428,11 @@ public abstract class ConstraintAI implements Constraint {
         if (localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
             return Optional.empty();
         } else if (!localArgumentation.isEmpty()) {
-            return Optional.of(perspective(ARGUMENTATION.value(), GEL)
+            return Optional.of(perspective(EMPTY_STRING.value(), GEL)
                     .withChild(perspective(localArgumentation.get(), NameSpaces.STRING))
                     .withChildren(childrenArgumentation));
         } else {
-            return Optional.of(perspective(ARGUMENTATION.value(), GEL)
+            return Optional.of(perspective(EMPTY_STRING.value(), GEL)
                     .withChildren(childrenArgumentation));
         }
     }

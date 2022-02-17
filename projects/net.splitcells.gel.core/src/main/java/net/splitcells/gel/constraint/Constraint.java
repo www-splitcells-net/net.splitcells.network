@@ -112,11 +112,16 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     Rating rating(GroupId group);
 
-    default Perspective naturalArgumentation() {
+    /**
+     * TODO Make the resulting text more natural.
+     *
+     * @return
+     */
+    default Optional<Perspective> naturalArgumentation() {
         return naturalArgumentation(injectionGroup());
     }
 
-    Perspective naturalArgumentation(GroupId group);
+    Optional<Perspective> naturalArgumentation(GroupId group);
 
     Optional<Discoverable> mainContext();
 

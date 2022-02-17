@@ -65,7 +65,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Perspective naturalArgumentation(GroupId group) {
+    public Optional<Perspective> naturalArgumentation(GroupId group) {
         throw notImplementedYet();
     }
 

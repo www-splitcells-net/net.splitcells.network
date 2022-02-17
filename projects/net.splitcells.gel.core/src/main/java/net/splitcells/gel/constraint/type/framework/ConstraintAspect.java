@@ -28,7 +28,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
  * TODO Make this aspect optional for {@link Constraint}s.
  */
 public class ConstraintAspect implements Constraint {
-    
+
     public static ConstraintAspect constraintAspect(Constraint constraint) {
         return new ConstraintAspect(constraint);
     }
@@ -81,7 +81,7 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
-    public Perspective naturalArgumentation(GroupId group) {
+    public Optional<Perspective> naturalArgumentation(GroupId group) {
         return constraint.naturalArgumentation(group);
     }
 
