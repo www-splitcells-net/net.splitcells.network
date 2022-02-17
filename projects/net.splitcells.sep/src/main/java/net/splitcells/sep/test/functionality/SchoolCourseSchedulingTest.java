@@ -448,6 +448,14 @@ public class SchoolCourseSchedulingTest {
         return defineRailsForSchoolScheduling(courses, railCapacity);
     }
 
+    private static Rater voidRail() {
+        return lineValueSelector(describedPredicate(line -> line.value(ALLOCATED_HOURS) == 0, "void rail"));
+    }
+
+    private static Rater noneVoidRail() {
+        return lineValueSelector(describedPredicate(line -> line.value(ALLOCATED_HOURS) != 0, "none void rail"));
+    }
+
     private static Solution defineRailsForSchoolScheduling(List<List<Object>> courses, List<List<Object>> railCapacity) {
         return defineProblem()
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
@@ -455,13 +463,10 @@ public class SchoolCourseSchedulingTest {
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
                 .withSupplies(railCapacity)
                 .withConstraint(r -> {
-                    r.forAll(lineValueSelector(describedPredicate(line -> line.value(RAIL) == 0, "void rail")))
-                            .then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
-                    r.forAll(COURSE_ID)
-                            .forAll(lineValueSelector(describedPredicate(line -> line.value(RAIL) != 0, "not void rail")))
-                            .then(allDifferent(RAIL));
-                    r.forAll(COURSE_ID).then(regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
-                    r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
+                    r.forAll(voidRail()).then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
+                    r.forAll(COURSE_ID).forAll(noneVoidRail()).then(allDifferent(RAIL));
+                    r.forAll(COURSE_ID).forAll(noneVoidRail()).then(regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
+                    r.forAll(RAIL).forAll(noneVoidRail()).then(allSame(ALLOCATED_HOURS));
                     return r;
                 }).toProblem()
                 .asSolution();
