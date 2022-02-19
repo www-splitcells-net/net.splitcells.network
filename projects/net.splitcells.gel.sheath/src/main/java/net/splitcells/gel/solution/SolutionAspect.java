@@ -89,8 +89,8 @@ public class SolutionAspect implements Solution {
         if (event.stepType().equals(REMOVAL)) {
             event.demand()
                     .interpret()
-                    .ifPresent(demandsForRemoval
-                            -> assertThat(list(demandsForRemoval.context()))
+                    .ifPresent(demandForRemoval
+                            -> assertThat(list(demandForRemoval.context()))
                             .containsAnyOf(solution.demands(), solution.demandsUsed()));
             event.supply()
                     .interpret()
