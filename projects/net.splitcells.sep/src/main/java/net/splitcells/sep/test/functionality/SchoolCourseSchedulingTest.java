@@ -26,6 +26,7 @@ import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
@@ -117,7 +118,7 @@ public class SchoolCourseSchedulingTest {
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
 
-                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3)
+                /*network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3)
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
@@ -130,7 +131,7 @@ public class SchoolCourseSchedulingTest {
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(1)
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
-                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());*/
             });
             network.process(RAILS_FOR_SCHOOL_SCHEDULING, Solution::createStandardAnalysis);
             //teacherAllocationForCourses.optimize(linearInitialization());
@@ -199,12 +200,16 @@ public class SchoolCourseSchedulingTest {
                             .forEach(course -> {
                                 final var allocatedHours = allocatedCourseHours.getOrDefault(course, 0);
                                 final var targetedHours = targetedCourseHours.get(course);
-                                final var courseGroup = freeDemandGroups.keySet().stream()
+                                final var potentialCourseGroup = freeDemandGroups.keySet().stream()
                                         .filter(courseKey -> freeDemandGroups.get(courseKey).iterator().next()
                                                 .value(COURSE_ID)
                                                 .equals(course))
-                                        .findFirst()
-                                        .get();
+                                        .findFirst();
+                                // TODO This seems to be a hack or does not make sense.
+                                if (potentialCourseGroup.isEmpty()) {
+                                    return;
+                                }
+                                final var courseGroup = potentialCourseGroup.get();
                                 final var freeSlots = freeDemandGroups.get(courseGroup)
                                         .stream()
                                         .collect(toList());
