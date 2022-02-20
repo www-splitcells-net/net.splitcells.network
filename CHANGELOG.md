@@ -20,7 +20,17 @@ Links to such platforms may or may not be valid.
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
-* **2022-02-22**: Move `package.install` implementation for rpm-ostree from OS
+* **2022-02-21** **\#142** Remove `net.splitcells.website.html.content`
+  project.
+  It was an alternative minimal style for the website.
+  It is now integrated into the default style and can be enabled via the
+  `generated.style` option and the value `minimal`.
+  For this the `RenderingConfig` class was created and is used by `ProjectsRenderer`.
+  The standard styling is too complex.
+  Using one unified style with switches makes it easy to recognize the complex
+  parts and to migrate these to simpler forms.
+  Furthermore, maintaining 2 styles that are mostly identical is costly.
+* **2022-02-20**: Move `package.install` implementation for rpm-ostree from OS
   state interface lib,
   to the OS state interface lib GPL 2.0,
   because rpm-ostree contains GPL 2.0 code.
