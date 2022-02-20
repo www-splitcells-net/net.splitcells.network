@@ -15,6 +15,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.website.RenderingConfig;
 import net.splitcells.website.RenderingValidator;
 import net.splitcells.website.server.Server;
 
@@ -32,6 +33,7 @@ import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.website.RenderingConfig.renderingConfig;
 import static net.splitcells.website.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,13 +45,20 @@ public class ProjectsRenderer {
 
     private static final String LAYOUT_PATH = "/net/splitcells/website/layout/build";
 
-    public static ProjectsRenderer projectsRenderer(String name, ProjectRenderer fallbackRenderer, List<ProjectRenderer> renderers) {
-        return new ProjectsRenderer(name, fallbackRenderer, renderers);
+    public static ProjectsRenderer projectsRenderer(String name
+            , ProjectRenderer fallbackRenderer
+            , List<ProjectRenderer> renderers
+            , RenderingConfig renderingConfig) {
+        return new ProjectsRenderer(name, fallbackRenderer, renderers, renderingConfig);
     }
 
     public void build() {
         final var generatedFiles = Paths.get("target", "generated");
         Files.createDirectory(generatedFiles);
+        writeToFile(generatedFiles.resolve("generation.style.xml")
+                , "<val xmlns=\"http://splitcells.net/den.xsd\">"
+                        + renderingConfig.generationStyle()
+                        + "</val>");
         writeToFile(generatedFiles.resolve("layout." + profile + ".xml"), createLayout().toDom());
         generateFolderPath(Paths.get("target", "generated"));
     }
@@ -94,14 +103,19 @@ public class ProjectsRenderer {
 
     @Deprecated
     private final String profile;
+    private final RenderingConfig renderingConfig;
     private final List<ProjectRenderer> renderers;
     private final ProjectRenderer fallbackRenderer;
     private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
 
-    private ProjectsRenderer(String name, ProjectRenderer fallbackRenderer, List<ProjectRenderer> renderers) {
+    private ProjectsRenderer(String name
+            , ProjectRenderer fallbackRenderer
+            , List<ProjectRenderer> renderers
+            , RenderingConfig renderingConfig) {
         this.profile = name;
         this.fallbackRenderer = fallbackRenderer;
         this.renderers = renderers;
+        this.renderingConfig = renderingConfig;
     }
 
     /**
