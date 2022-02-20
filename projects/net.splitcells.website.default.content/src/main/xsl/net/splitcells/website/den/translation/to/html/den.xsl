@@ -250,26 +250,26 @@
                     <xsl:copy-of select="$perspective-value"/>
                 </div>
             </div>
-            <ul class="net-splitcells-den-perspective">
+            <ol>
                 <xsl:for-each select="$den-document/node()">
                     <xsl:choose>
                         <xsl:when test="self::text()">
                             <xsl:if test="normalize-space(.) != ''">
                                 <xsl:choose>
                                     <xsl:when test="true() = s:can-show-text-as-line(.)">
-                                        <li class="net-splitcells-den-perspective">
-                                            <div class="net-splitcells-den-paragraph">
+                                        <li>
+                                            <p>
                                                 <xsl:for-each select="tokenize(., '\n\n')">
                                                     <xsl:value-of select="normalize-space(.)"/>
                                                 </xsl:for-each>
-                                            </div>
+                                            </p>
                                         </li>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <li class="net-splitcells-den-perspective">
-                                            <div class="net-splitcells-den-paragraph">
+                                        <li>
+                                            <p>
                                                 <xsl:value-of select="."/>
-                                            </div>
+                                            </p>
                                         </li>
                                     </xsl:otherwise>
                                 </xsl:choose>
@@ -285,16 +285,16 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:for-each>
-            </ul>
+            </ol>
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="$is-root = 'true'">
-                <ul class="net-splitcells-den-perspective">
+                <ol>
                     <xsl:copy-of select="$content"/>
-                </ul>
+                </ol>
             </xsl:when>
             <xsl:otherwise>
-                <li class="net-splitcells-den-perspective">
+                <li>
                     <xsl:copy-of select="$content"/>
                 </li>
             </xsl:otherwise>
@@ -379,9 +379,9 @@
                                         <xsl:choose>
                                             <xsl:when test="true() = s:can-show-text-as-line(.)">
                                                 <xsl:for-each select="tokenize(., '\n\n')">
-                                                    <div class="paragraph">
+                                                    <p>
                                                         <xsl:value-of select="normalize-space(.)"/>
-                                                    </div>
+                                                    </p>
                                                 </xsl:for-each>
                                             </xsl:when>
                                             <xsl:otherwise>
