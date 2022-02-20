@@ -8,16 +8,12 @@ The priority of a task is just a guideline.
 1. Improve tests.
 1. Improve echo output and make it nice, for a certain setting.
 ### Current Tasks
-1. Implement testing:
-   1. Use [toolbox](https://github.com/containers/toolbox).
-      1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
-      1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
-2. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
-3. Document reasoning for command line based dependency injection,
+1. Use sh instead of bash via the shebang "#!/usr/bin/env sh" in order to avoid GPL dependencies.
+2. Document reasoning for command line based dependency injection,
    in light of the fact, that there are stability issues with that.
    Also, document how to avoid stability issues.
-4. Move command documentation into the commands itself.
-5. Generate admin script instead of just executing such,
+3. Move command documentation into the commands itself.
+4. Generate admin script instead of just executing such,
    in order to make the software more stable.
 ### Todos
 1. Implement interface to shell via speech to text and the other way around
