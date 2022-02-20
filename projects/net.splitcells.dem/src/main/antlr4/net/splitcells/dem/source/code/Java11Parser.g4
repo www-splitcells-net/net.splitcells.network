@@ -231,6 +231,8 @@ reference
     | call_arguments Arrow Brace_curly_open statement* Brace_curly_closed
     | call_arguments Arrow expression
     | call_arguments Arrow reference
+    | String
+    | String Operator_plus reference
     ;
 statement
     : Line_comment
