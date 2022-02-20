@@ -257,7 +257,7 @@
                 </section>
             </xsl:when>
             <xsl:otherwise>
-                <div class="chapter">
+                <section>
                     <xsl:attribute name="id" select="generate-id(.)"/>
                     <div class="heading">
                         <xsl:attribute name="id" select="./s:title/@id"/>
@@ -271,7 +271,7 @@
                         </div>
                     </div>
                     <xsl:apply-templates select="node()[not(self::s:title)]"/>
-                </div>
+                </section>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
