@@ -18,7 +18,7 @@ if [ "1" -eq "$(system.is.Ubuntu)" ]; then
 		exit 1
 	fi
 	# TODO Check PasswordAuthentication configuration.
-elif [ command -v dnf ]; then
+elif command -v dnf ; then
 	sudo dnf install -y openssh-server
 	sudo systemctl start sshd.service
 else

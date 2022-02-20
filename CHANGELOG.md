@@ -34,6 +34,9 @@ Releases are done every time an important ticket is completed.
      Argumentation Argumentation Then values of allocated hours should have the same value
      ```
      Now it looks like this `For all rail Then values of allocated hours should have the same value`.
+### Patches
+* **2022-02-20**: Fix syntax errors in `system.ssh.server.require` and
+  `system.ssh.server.require`.
 ## [4.0.0] - 2022-02-14
 ### Summary
 * **2022-02-14**: [**\#138** Create developer introduction](https://github.com/www-splitcells-net/net.splitcells.network/issues/138):
