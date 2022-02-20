@@ -249,6 +249,7 @@ statement
     ;
 statement_for
     : Keyword_for Brace_round_open variable_declaration (Equals expression)? Semicolon expression Semicolon expression Brace_round_closed statement_body
+    | Keyword_for Brace_round_open variable_declaration Keysymbol_colon reference Brace_round_closed statement_body
     ;
 statement_body
     : Brace_curly_open statement* Brace_curly_closed
