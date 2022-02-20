@@ -9,8 +9,6 @@ The priority of a task is just a guideline.
 1. Improve echo output and make it nice, for a certain setting.
 ### Current Tasks
 1. Implement testing:
-   1. Fix Gitlab-Runner Test and ensure that test failures are automatically found,
-      which is currently not the case.
    1. Use [toolbox](https://github.com/containers/toolbox).
       1. https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/
       1. https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/
