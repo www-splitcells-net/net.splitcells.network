@@ -20,6 +20,10 @@ Links to such platforms may or may not be valid.
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2022-02-22**: Move `package.install` implementation for rpm-ostree from OS
+  state interface lib,
+  to the OS state interface lib GPL 2.0,
+  because rpm-ostree contains GPL 2.0 code.
 * **2022-02-17**: **\#8**: Make argumentation rendering in Gel less verbose for
   optimization solutions.
   This makes it easier to understand errors in solutions by omitting the
