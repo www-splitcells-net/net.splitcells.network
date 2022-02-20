@@ -225,9 +225,12 @@ prefix_operator
 reference
 	: expression
     /* This is an Lambda definition. */
+    | name Arrow expression
     | name Arrow reference
     | name Arrow Brace_curly_open statement* Brace_curly_closed
     | call_arguments Arrow Brace_curly_open statement* Brace_curly_closed
+    | call_arguments Arrow expression
+    | call_arguments Arrow reference
     ;
 statement
     : Line_comment
