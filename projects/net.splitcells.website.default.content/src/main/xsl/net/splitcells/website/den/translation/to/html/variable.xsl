@@ -27,7 +27,7 @@
     <xsl:variable name="generation.style">
         <!-- Currently, only standard and minimal are supported. -->
         <xsl:choose>
-            <xsl:when test="document('/generation.style.xml')">
+            <xsl:when test="document(concat($generated-files, '/generation.style.xml'))">
                 <xsl:value-of select="document(concat($generated-files, '/generation.style.xml'))"/>
             </xsl:when>
             <xsl:otherwise>

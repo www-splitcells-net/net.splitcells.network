@@ -325,45 +325,53 @@ window.onload = function() {
                 <title>
                     <xsl:value-of select="concat(./s:title, ' / ', $siteName)"/>
                 </title>
-                <link rel="stylesheet" type="text/css">
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:default-root-relative-url('/css/theme.white.variables.css')"/>
-                    </xsl:attribute>
-                </link>
-                <link rel="stylesheet" type="text/css">
-                    <xsl:attribute name="href">
-                        <xsl:value-of select="s:default-root-relative-url('/css/basic.themed.css')"/>
-                    </xsl:attribute>
-                </link>
-                <link rel="stylesheet" type="text/css">
-                    <xsl:attribute name="href">
-                        <xsl:value-of select="s:default-root-relative-url('/css/basic.css')"/>
-                    </xsl:attribute>
-                </link>
-                <link rel="stylesheet" type="text/css" media="none">
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:default-root-relative-url('/css/layout.column.main.fullscreen.css')"/>
-                    </xsl:attribute>
-                </link>
-                <link rel="stylesheet" type="text/css">
-                    <xsl:attribute name="href">
-                        <xsl:value-of select="s:default-root-relative-url('/css/den.css')"/>
-                    </xsl:attribute>
-                </link>
-                <link rel="stylesheet" type="text/css">
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:default-root-relative-url('/css/layout.default.css')"/>
-                    </xsl:attribute>
-                </link>
-                <link rel="stylesheet" type="text/css">
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:default-root-relative-url('/js/syntaxhighlighter.white/theme.css')"/>
-                    </xsl:attribute>
-                </link>
+                <xsl:choose>
+                    <xsl:when test="$generation.style='minimal'">
+                        <link rel="stylesheet" type="text/css"
+                              href="https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <link rel="stylesheet" type="text/css">
+                            <xsl:attribute name="href">
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('/css/theme.white.variables.css')"/>
+                            </xsl:attribute>
+                        </link>
+                        <link rel="stylesheet" type="text/css">
+                            <xsl:attribute name="href">
+                                <xsl:value-of select="s:default-root-relative-url('/css/basic.themed.css')"/>
+                            </xsl:attribute>
+                        </link>
+                        <link rel="stylesheet" type="text/css">
+                            <xsl:attribute name="href">
+                                <xsl:value-of select="s:default-root-relative-url('/css/basic.css')"/>
+                            </xsl:attribute>
+                        </link>
+                        <link rel="stylesheet" type="text/css" media="none">
+                            <xsl:attribute name="href">
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('/css/layout.column.main.fullscreen.css')"/>
+                            </xsl:attribute>
+                        </link>
+                        <link rel="stylesheet" type="text/css">
+                            <xsl:attribute name="href">
+                                <xsl:value-of select="s:default-root-relative-url('/css/den.css')"/>
+                            </xsl:attribute>
+                        </link>
+                        <link rel="stylesheet" type="text/css">
+                            <xsl:attribute name="href">
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('/css/layout.default.css')"/>
+                            </xsl:attribute>
+                        </link>
+                        <link rel="stylesheet" type="text/css">
+                            <xsl:attribute name="href">
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('/js/syntaxhighlighter.white/theme.css')"/>
+                            </xsl:attribute>
+                        </link>
+                    </xsl:otherwise>
+                </xsl:choose>
             </head>
             <body>
                 <header class="Standard_p5 topLightShadow">

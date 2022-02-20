@@ -245,21 +245,35 @@
         <xsl:apply-templates/>
     </xsl:template>
     <xsl:template match="s:chapter">
-        <div class="chapter">
-            <xsl:attribute name="id" select="generate-id(.)"/>
-            <div class="heading">
-                <xsl:attribute name="id" select="./s:title/@id"/>
-                <div style="width: 100%;">
-                    <a>
+        <xsl:choose>
+            <xsl:when test="$generation.style='minimal'">
+                <section>
+                    <h2>
                         <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
+                        <xsl:attribute name="id" select="generate-id(.)"/>
                         <xsl:apply-templates select="./s:title/node()"/>
-                    </a>
-                    <a href="#topElement" style="float: right;">↑
-                    </a>
+                    </h2>
+                    <xsl:apply-templates select="node()[not(self::s:title)]"/>
+                </section>
+            </xsl:when>
+            <xsl:otherwise>
+                <div class="chapter">
+                    <xsl:attribute name="id" select="generate-id(.)"/>
+                    <div class="heading">
+                        <xsl:attribute name="id" select="./s:title/@id"/>
+                        <div style="width: 100%;">
+                            <a>
+                                <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
+                                <xsl:apply-templates select="./s:title/node()"/>
+                            </a>
+                            <a href="#topElement" style="float: right;">↑
+                            </a>
+                        </div>
+                    </div>
+                    <xsl:apply-templates select="node()[not(self::s:title)]"/>
                 </div>
-            </div>
-            <xsl:apply-templates select="node()[not(self::s:title)]"/>
-        </div>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <xsl:template match="s:premature_announcement">
         <!-- TODO make onclick target link generic -->
@@ -560,7 +574,8 @@
         </xsl:for-each>
     </xsl:template>
     <xsl:template match="s:blockquote">
-        <xsl:message select="'The blockquote element is deprecated, because its functionality can be done via quote.'" terminate="true"/>
+        <xsl:message select="'The blockquote element is deprecated, because its functionality can be done via quote.'"
+                     terminate="true"/>
         <x:blockquote>
             <xsl:apply-templates/>
         </x:blockquote>
