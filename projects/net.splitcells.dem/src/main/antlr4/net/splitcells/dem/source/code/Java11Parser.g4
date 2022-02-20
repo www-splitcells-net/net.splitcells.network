@@ -41,7 +41,7 @@ options {
     tokenVocab=Java11Lexer;
 }
 access
-    : Dot name call_arguments  access?
+    : Dot type_argument? name call_arguments access?
     | Dot name access?
     | Brackets_open expression Brackets_closed
     ;

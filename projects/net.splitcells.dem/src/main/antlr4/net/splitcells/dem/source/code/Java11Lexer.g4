@@ -54,6 +54,7 @@ lexer grammar Java11Lexer;
 	Integer: [-+]?[0-9]+;
 	Keysymbol_and: '&&';
 	Keysymbol_at: '@';
+	Keysymbol_colon: ':';
 	Keysymbol_equals: '==';
 	Keysymbol_not_equals: '!=';
 	Keysymbol_not: '!';
@@ -102,6 +103,7 @@ lexer grammar Java11Lexer;
 		: [a-zA-Z0-9_-]
 		| '\\n'
 		| '.'
+		| ' '
 		;
 /* Tokens Of Last Resort */
 	WS:
