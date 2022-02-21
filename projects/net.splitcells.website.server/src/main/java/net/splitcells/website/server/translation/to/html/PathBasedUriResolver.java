@@ -36,8 +36,18 @@ public class PathBasedUriResolver implements URIResolver {
         try {
             final Path path;
             if (href.startsWith("/net.splitcells.website/current/xml")) {
+                /*
+                 * It is expected, that the website server is executed in a project.
+                 * This project may contain configs at `/src/main/xml//net.splitcells.website/current/xml/**`.
+                 * TODO The current implementation for this is a hack.
+                 */
                 path = Paths.get("./src/main/xml/" + href.substring("/net.splitcells.website/current/xml".length()));
             } else if (Paths.get(href).isAbsolute()) {
+                /*
+                 * Absolute path are resolved to the host's filesystem.
+                 * TODO Remove this, because this will only cause problems in future.
+                 * Keep in mind, that this functionality is currently used in `variable.location.xsl`.
+                 */
                 path = Paths.get(href);
             } else {
                 path = folder.resolve(href);
