@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static java.nio.file.Files.newInputStream;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
@@ -32,10 +33,11 @@ import static net.splitcells.website.server.translation.to.html.PathBasedUriReso
 public class FileStructureTransformer {
 
     public static FileStructureTransformer fileStructureTransformer(Path fileStructureRoot
-                    , Path xslLibs
-                    , String transformerXsl
-                    , SourceValidator sourceValidator) {
-        return new FileStructureTransformer(fileStructureRoot, xslLibs, transformerXsl, sourceValidator);
+            , Path xslLibs
+            , String transformerXsl
+            , SourceValidator sourceValidator
+            , Function<String, Optional<String>> config) {
+        return new FileStructureTransformer(fileStructureRoot, xslLibs, transformerXsl, sourceValidator, config);
     }
 
     private final Path fileStructureRoot;
@@ -44,6 +46,7 @@ public class FileStructureTransformer {
     private final SourceValidator sourceValidator;
     private final Path xslLibs;
     private final String transformerXsl;
+    private final Function<String, Optional<String>> config;
 
     /* TODO REMOVE by 2022
     @Deprecated
@@ -59,11 +62,16 @@ public class FileStructureTransformer {
         });
     }*/
 
-    private FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, SourceValidator sourceValidator) {
+    private FileStructureTransformer(Path fileStructureRoot
+            , Path xslLibs
+            , String transformerXsl
+            , SourceValidator sourceValidator
+            , Function<String, Optional<String>> config) {
         this.fileStructureRoot = fileStructureRoot;
         this.sourceValidator = sourceValidator;
         this.xslLibs = xslLibs;
         this.transformerXsl = transformerXsl;
+        this.config = config;
     }
 
     public String transform(List<String> path) {

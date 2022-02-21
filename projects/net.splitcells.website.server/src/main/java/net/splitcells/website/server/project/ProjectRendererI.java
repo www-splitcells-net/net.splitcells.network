@@ -120,7 +120,8 @@ public class ProjectRendererI implements ProjectRenderer {
         return fileStructureTransformer(projectSrcFolder.resolve("xml")
                 , xslLibs
                 , "main." + profile + ".xsl"
-                , sourceValidator);
+                , sourceValidator
+                , p -> Optional.empty());
     }
 
     /**
