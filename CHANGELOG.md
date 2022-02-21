@@ -20,6 +20,7 @@ Links to such platforms may or may not be valid.
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2022-02-22** **\#s72** Remove unused class `net.splitcells.website.server.project.Location`.
 * **2022-02-21** **\#142** Remove `net.splitcells.website.html.content`
   project.
   It was an alternative minimal style for the website.
