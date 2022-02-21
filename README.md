@@ -65,7 +65,7 @@ TODO: Short And Compact Feature Description
   The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
   workflow has to be run manually.
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
-### API Compatibility
+## API Compatibility
 There is no guarantee of backwards compatibility.
 
 All API changes are located and categorized in the [Changelog](./CHANGELOG.md).
@@ -86,20 +86,25 @@ You can try to decrease the likelihood of breaking a certain feature,
 by contributing an appropriate test case/suite for this feature.
 Regardless of that, keep in mind, that there is no guarantee of backwards
 compatibility.
-### Service Tasks
+## Service Tasks And Projects
 Tasks that are being worked cyclically,
 and probably will never be finished.
-* [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
-* Improve Test Coverage. See the [Project Status chapter](#project-status).
-* Migrate inactive tickets into source code repository,
-  so that they each one acts as trigger at one fitting position.
-* Add inspirational quotes to code documentation in order to provide an
-  alternative perspective via metaphors.
-  This is deprecated.
-  See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
-* Update dependencies.
-* Review introductions and info linked by README,
-  because that is the primary material for newcomers.
+* Features
+* Cooperation And Symbiosis
+  * Migrate inactive tickets into source code repository,
+    so that they each one acts as trigger at one fitting position.
+* Maintenance
+  * Update dependencies.
+  * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
+  * Improve Test Coverage. See the [Project Status chapter](#project-status).
+* Documentation
+  * Add inspirational quotes to code documentation in order to provide an
+    alternative perspective via metaphors.
+    This is deprecated.
+    See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
+  * Review introductions and info linked by README,
+    because that is the primary material for newcomers.
+* Compatibility, Portability And Adaptibility
 ## Network's Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
