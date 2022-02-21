@@ -24,10 +24,14 @@ import javax.xml.transform.stream.StreamSource;
 
 
 public class PathBasedUriResolver implements URIResolver {
+    
+    public static PathBasedUriResolver pathBasedUriResolver(Path folder) {
+        return new PathBasedUriResolver(folder);
+    }
 
     private final Path folder;
 
-    public PathBasedUriResolver(Path folder) {
+    private PathBasedUriResolver(Path folder) {
         this.folder = folder;
     }
 

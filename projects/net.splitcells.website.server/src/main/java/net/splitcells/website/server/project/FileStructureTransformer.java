@@ -26,6 +26,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.generateFolderPath;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.CommonFunctions.appendToFile;
+import static net.splitcells.website.server.translation.to.html.PathBasedUriResolver.pathBasedUriResolver;
 
 public class FileStructureTransformer {
 
@@ -84,7 +85,7 @@ public class FileStructureTransformer {
     private XslTransformer transformer() {
         try {
             return new XslTransformer
-                    (newInputStream(xslLibs.resolve(transformerXsl)), new PathBasedUriResolver(xslLibs));
+                    (newInputStream(xslLibs.resolve(transformerXsl)), pathBasedUriResolver(xslLibs));
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
