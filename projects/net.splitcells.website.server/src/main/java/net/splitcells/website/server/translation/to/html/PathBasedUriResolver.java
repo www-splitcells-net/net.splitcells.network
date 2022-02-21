@@ -12,10 +12,13 @@ package net.splitcells.website.server.translation.to.html;
 
 import static java.nio.file.Files.newInputStream;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
+import java.util.function.Function;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
@@ -24,20 +27,33 @@ import javax.xml.transform.stream.StreamSource;
 
 
 public class PathBasedUriResolver implements URIResolver {
-    
-    public static PathBasedUriResolver pathBasedUriResolver(Path folder) {
-        return new PathBasedUriResolver(folder);
+
+    public static PathBasedUriResolver pathBasedUriResolver(Path folder, Function<String, Optional<String>> extension) {
+        return new PathBasedUriResolver(folder, extension);
     }
 
     private final Path folder;
+    private final Function<String, Optional<String>> extension;
 
-    private PathBasedUriResolver(Path folder) {
+    private PathBasedUriResolver(Path folder, Function<String, Optional<String>> extension) {
         this.folder = folder;
+        this.extension = extension;
     }
 
     @Override
     public Source resolve(String href, String base) throws TransformerException {
         try {
+            final var extensionResult = extension.apply(href);
+            if (extensionResult.isPresent()) {
+                final var extensionResolution = new StreamSource
+                        (new ByteArrayInputStream(extensionResult.get().getBytes(StandardCharsets.UTF_8)));
+                /*
+                 * Setting systemId to the underlying file in order to resolve relative paths
+                 * used in the return value.
+                 */
+                extensionResolution.setSystemId(Paths.get(href).toString());
+                return extensionResolution;
+            }
             final Path path;
             if (href.startsWith("/net.splitcells.website/current/xml")) {
                 /*

@@ -19,6 +19,7 @@ import net.splitcells.website.server.translation.to.html.XslTransformer;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 import static java.nio.file.Files.newInputStream;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
@@ -76,7 +77,7 @@ public class FileStructureTransformer {
 
     /**
      * TODO Create an option, to enable or disable this, for better performance.
-     *
+     * <p>
      * Creates a new XslTransformer, so that the XSL-files are reloaded
      * during each rendering.
      *
@@ -85,7 +86,8 @@ public class FileStructureTransformer {
     private XslTransformer transformer() {
         try {
             return new XslTransformer
-                    (newInputStream(xslLibs.resolve(transformerXsl)), pathBasedUriResolver(xslLibs));
+                    (newInputStream(xslLibs.resolve(transformerXsl))
+                            , pathBasedUriResolver(xslLibs, p -> Optional.empty()));
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
