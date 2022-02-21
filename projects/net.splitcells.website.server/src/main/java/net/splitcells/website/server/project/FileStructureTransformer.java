@@ -31,6 +31,13 @@ import static net.splitcells.website.server.translation.to.html.PathBasedUriReso
 
 public class FileStructureTransformer {
 
+    public static FileStructureTransformer fileStructureTransformer(Path fileStructureRoot
+                    , Path xslLibs
+                    , String transformerXsl
+                    , SourceValidator sourceValidator) {
+        return new FileStructureTransformer(fileStructureRoot, xslLibs, transformerXsl, sourceValidator);
+    }
+
     private final Path fileStructureRoot;
     private final Path loggingProject = Paths.path(System.getProperty("user.home")
             + "/connections/tmp.storage/net.splitcells.dem");
@@ -52,7 +59,7 @@ public class FileStructureTransformer {
         });
     }*/
 
-    public FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, SourceValidator sourceValidator) {
+    private FileStructureTransformer(Path fileStructureRoot, Path xslLibs, String transformerXsl, SourceValidator sourceValidator) {
         this.fileStructureRoot = fileStructureRoot;
         this.sourceValidator = sourceValidator;
         this.xslLibs = xslLibs;

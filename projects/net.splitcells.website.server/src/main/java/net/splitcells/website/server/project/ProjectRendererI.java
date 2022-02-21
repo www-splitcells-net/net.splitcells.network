@@ -37,6 +37,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.website.server.project.FileStructureTransformer.fileStructureTransformer;
 import static net.splitcells.website.server.project.renderer.CsvChartRenderer.csvChartRenderer;
 import static net.splitcells.website.server.project.renderer.CsvRenderer.csvRenderer;
 import static net.splitcells.website.server.project.renderer.JacocoReportRenderer.jacocoReportRenderer;
@@ -116,7 +117,7 @@ public class ProjectRendererI implements ProjectRenderer {
      * IDEA Create mode where the renderer ist cached.
      */
     private FileStructureTransformer renderer() {
-        return new FileStructureTransformer(projectSrcFolder.resolve("xml")
+        return fileStructureTransformer(projectSrcFolder.resolve("xml")
                 , xslLibs
                 , "main." + profile + ".xsl"
                 , sourceValidator);
