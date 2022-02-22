@@ -17,6 +17,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.SourceValidator;
+import net.splitcells.website.server.config.Context;
 import net.splitcells.website.server.project.renderer.RendererMerger;
 
 import java.io.IOException;
@@ -81,6 +82,7 @@ public class ProjectRendererI implements ProjectRenderer {
     private final boolean typedFolder;
     private final SourceValidator sourceValidator;
     private final RendererMerger renderer = rendererMerger();
+    private final Context context = Context.context();
 
     {
         renderer.registerExtension(commonMarkReadmeExtension());
@@ -133,7 +135,7 @@ public class ProjectRendererI implements ProjectRenderer {
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
             }
-            final var extensionRendering = renderer.renderFile(path, this);
+            final var extensionRendering = renderer.renderFile(path, this, context);
             if (extensionRendering.isPresent()) {
                 return extensionRendering;
             }
@@ -236,7 +238,10 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path) {
+    public Optional<byte[]> renderHtmlBodyContent(String bodyContent
+            , Optional<String> title
+            , Optional<String> path
+            , Context context) {
         final var content = Xml.rElement(NameSpaces.SEW, "article");
         final var htmlBodyContent = Xml.rElement(NameSpaces.SEW, "html-body-content");
         htmlBodyContent.appendChild

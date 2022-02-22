@@ -13,6 +13,7 @@ package net.splitcells.website.server.project.renderer;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.website.server.config.Context;
 import net.splitcells.website.server.project.LayoutRenderer;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -55,7 +56,7 @@ public class UserCommandRenderer implements Renderer {
      * @return
      */
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
         if (RENDERING_PATH.equals(path) && isDirectory(BIN_FOLDER)) {
             final var layout = perspective(NameSpaces.VAL, NameSpaces.DEN);
             try {

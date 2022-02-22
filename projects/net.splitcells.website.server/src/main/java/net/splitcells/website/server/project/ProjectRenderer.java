@@ -11,6 +11,7 @@
 package net.splitcells.website.server.project;
 
 import net.splitcells.website.SourceValidator;
+import net.splitcells.website.server.config.Context;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -57,5 +58,8 @@ public interface ProjectRenderer extends Renderer {
     @Deprecated
     Optional<byte[]> renderString(String arg);
 
-    Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path);
+    Optional<byte[]> renderHtmlBodyContent(String bodyContent
+            , Optional<String> title
+            , Optional<String> path
+            , Context context);
 }

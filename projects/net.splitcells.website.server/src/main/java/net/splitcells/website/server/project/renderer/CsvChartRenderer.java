@@ -5,6 +5,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Paths;
+import net.splitcells.website.server.config.Context;
 import net.splitcells.website.server.project.FileStructureTransformer;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -33,7 +34,7 @@ public class CsvChartRenderer implements Renderer {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
         if (path.endsWith("csv.html")) {
             final var csvPath = path.substring(0, path.lastIndexOf(".csv.html")) + ".csv";
             final var requestedFile = projectRenderer

@@ -3,6 +3,7 @@ package net.splitcells.website.server.project.renderer.commonmark;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.resource.Files;
+import net.splitcells.website.server.config.Context;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.renderer.Renderer;
@@ -29,13 +30,13 @@ public class CommonMarkRenderer implements Renderer {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
         if (path.endsWith(".html")) {
             final var commonMarkFile = projectRenderer.projectFolder().resolve("src/main").resolve("md")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".md");
             if (Files.is_file(commonMarkFile)) {
                 final var pathContent = readString(commonMarkFile);
-                return Optional.of(renderingResult(renderer.render(pathContent, projectRenderer, path)
+                return Optional.of(renderingResult(renderer.render(pathContent, projectRenderer, path, context)
                         , TEXT_HTML.toString()));
             }
         }

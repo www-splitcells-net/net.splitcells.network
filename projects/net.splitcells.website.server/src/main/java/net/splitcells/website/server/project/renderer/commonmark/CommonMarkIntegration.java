@@ -10,6 +10,7 @@
  */
 package net.splitcells.website.server.project.renderer.commonmark;
 
+import net.splitcells.website.server.config.Context;
 import net.splitcells.website.server.project.ProjectRenderer;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -29,7 +30,7 @@ public class CommonMarkIntegration {
     private CommonMarkIntegration() {
     }
 
-    public byte[] render(String arg, ProjectRenderer projectRenderer, String path) {
+    public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Context context) {
         final Optional<String> title;
         final String contentToRender;
         if (arg.startsWith("#")) {
@@ -45,7 +46,8 @@ public class CommonMarkIntegration {
         return projectRenderer
                 .renderHtmlBodyContent(renderer.render(parsed)
                         , title
-                        , Optional.of(path))
+                        , Optional.of(path)
+                        , context)
                 .get();
     }
 }

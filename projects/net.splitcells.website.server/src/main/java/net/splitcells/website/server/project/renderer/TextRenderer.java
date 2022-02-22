@@ -6,6 +6,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.Paths;
+import net.splitcells.website.server.config.Context;
 import net.splitcells.website.server.project.FileStructureTransformer;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -36,7 +37,7 @@ public class TextRenderer implements Renderer {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
         Optional<Path> fileToRender = Optional.empty();
         if (path.endsWith(".html")) {
             // TODO This should return the raw text file.

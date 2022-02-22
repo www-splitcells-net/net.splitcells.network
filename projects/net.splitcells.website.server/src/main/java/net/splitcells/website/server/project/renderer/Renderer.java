@@ -12,6 +12,7 @@ package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.website.server.config.Context;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -19,10 +20,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 /**
- * TODO Do not only test {@link #projectPaths(ProjectRenderer)}, but also {@link #renderFile(String, ProjectRenderer)}.
+ * TODO Do not only test {@link #projectPaths(ProjectRenderer)},
+ * but also {@link #renderFile(String, ProjectRenderer, Context)}.
  */
 public interface Renderer {
-    Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer);
+    Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context);
 
     /**
      * TODO A list of paths should be returned instead. Also the layout would not be needed anymore in this case.

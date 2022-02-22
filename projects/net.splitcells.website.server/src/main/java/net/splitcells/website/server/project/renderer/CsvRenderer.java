@@ -2,6 +2,7 @@ package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.website.server.config.Context;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -25,7 +26,7 @@ public class CsvRenderer implements Renderer {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
         final var requestedFile = projectRenderer
                 .projectFolder()
                 .resolve("src/main/csv/")
