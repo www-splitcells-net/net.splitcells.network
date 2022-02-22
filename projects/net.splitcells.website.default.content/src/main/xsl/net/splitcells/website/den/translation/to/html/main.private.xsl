@@ -21,6 +21,9 @@
     which is available at https://spdx.org/licenses/MIT.html.
 
     SPDX-License-Identifier: EPL-2.0 OR MIT
+
+    TODO Use only one main XSL file,
+    because the configuration should be done via the XSL executor.
     -->
     <xsl:output method="html" indent="yes" omit-xml-declaration="yes"/>
     <xsl:include href="main.lib.xsl"/>
@@ -28,7 +31,7 @@
         <xsl:param name="path"/>
         <xsl:call-template name="file-path-environment-of-layout">
             <xsl:with-param name="path" select="$path"/>
-            <xsl:with-param name="layout" select="document(concat($generated-files, '/layout.private.xml'))/node()"/>
+            <xsl:with-param name="layout" select="document('/net/splitcells/website/server/config/layout.xml')/node()"/>
         </xsl:call-template>
     </xsl:template>
 </xsl:stylesheet>

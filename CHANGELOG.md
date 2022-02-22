@@ -29,6 +29,13 @@ Releases are done every time an important ticket is completed.
   4. Move validators of `net.splitcells.website.server.*`
      to `net.splitcells.website.server.project.validator`,
      in order to improve code structure overview.
+  5. Use `/net/splitcells/website/server/config/layout.xml` inside XSL scripts
+     for the file layout file.
+     This way, multiple XSL scripts for different webserver configurations
+     are not needed.
+     The layout file is also not stored in the file system anymore
+     and is queried from the new Config class.
+     Thereby the number of different locations for the webserver is reduced.
 * **2022-02-21** **\#142** Remove `net.splitcells.website.html.content`
   project.
   It was an alternative minimal style for the website.

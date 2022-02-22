@@ -28,7 +28,7 @@
         <xsl:param name="path"/>
         <xsl:call-template name="file-path-environment-of-layout">
             <xsl:with-param name="path" select="$path"/>
-            <xsl:with-param name="layout" select="document(concat($generated-files, '/layout.public.xml'))/node()"/>
+            <xsl:with-param name="layout" select="document('/net/splitcells/website/server/config/layout.xml')/node()"/>
         </xsl:call-template>
     </xsl:template>
 </xsl:stylesheet>
