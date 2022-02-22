@@ -10,7 +10,7 @@
  */
 package net.splitcells.website.server.project;
 
-import net.splitcells.website.SourceValidator;
+import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
 
 import java.nio.file.Path;

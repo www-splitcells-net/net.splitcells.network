@@ -1,6 +1,6 @@
 package net.splitcells.website.server.project.renderer.commonmark;
 
-import net.splitcells.dem.utils.CommonFunctions;
+import net.splitcells.website.server.project.validator.RenderingValidator;
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.Image;
 import org.commonmark.node.Link;
@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * to this project's source code repository.</p>
  * <p>TODO The implementation is based on heuristics in order to make the
  * implementation easy.
- * Link validation via {@link net.splitcells.website.RenderingValidator} is
+ * Link validation via {@link RenderingValidator} is
  * used in order to ensure,
  * that the heuristics are good enough for now.</p>
  */

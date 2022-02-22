@@ -12,8 +12,7 @@ package net.splitcells.website.server.project;
 
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.website.SourceValidator;
-import net.splitcells.website.server.translation.to.html.PathBasedUriResolver;
+import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.translation.to.html.XslTransformer;
 
 import java.io.IOException;

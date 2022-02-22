@@ -15,6 +15,7 @@ import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.ProjectsRenderer;
+import net.splitcells.website.server.project.validator.SourceValidator;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,7 +24,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.website.SourceValidatorViaSchema.validatorViaSchema;
+import static net.splitcells.website.server.project.validator.SourceValidatorViaSchema.validatorViaSchema;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 
 public class Projects {

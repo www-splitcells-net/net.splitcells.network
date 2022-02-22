@@ -15,7 +15,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.website.RenderingValidator;
+import net.splitcells.website.server.project.validator.RenderingValidator;
 import net.splitcells.website.server.Server;
 import net.splitcells.website.server.Config;
 
@@ -33,7 +33,7 @@ import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
-import static net.splitcells.website.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
+import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static org.assertj.core.api.Assertions.assertThat;
 

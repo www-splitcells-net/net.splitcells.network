@@ -16,7 +16,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.website.SourceValidator;
+import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.renderer.RendererMerger;
 

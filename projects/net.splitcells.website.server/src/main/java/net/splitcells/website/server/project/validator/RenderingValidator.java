@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website;
+package net.splitcells.website.server.project.validator;
 
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.ProjectsRenderer;

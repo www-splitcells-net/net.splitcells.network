@@ -1,7 +1,7 @@
-package net.splitcells.website;
+package net.splitcells.website.server.project.validator;
 
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.utils.CommonFunctions;
+import net.splitcells.website.Formats;
 import net.splitcells.website.server.project.ProjectsRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
  * Checks whether rendered HTML documents relative links can be rendered

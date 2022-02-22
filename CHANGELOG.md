@@ -26,6 +26,9 @@ Releases are done every time an important ticket is completed.
      configuration info to renderers and server.
   3. Add config parameter to `ProjectRenderer#renderHtmlBodyContent`,
      `Renderer#renderFile` and `Server`.
+  4. Move validators of `net.splitcells.website.server.*`
+     to `net.splitcells.website.server.project.validator`,
+     in order to improve code structure overview.
 * **2022-02-21** **\#142** Remove `net.splitcells.website.html.content`
   project.
   It was an alternative minimal style for the website.
