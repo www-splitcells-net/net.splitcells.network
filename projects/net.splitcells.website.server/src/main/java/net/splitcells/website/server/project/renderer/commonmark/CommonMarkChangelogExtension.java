@@ -2,7 +2,7 @@ package net.splitcells.website.server.project.renderer.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.website.server.config.Context;
+import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -30,11 +30,11 @@ public class CommonMarkChangelogExtension implements Renderer {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (path.endsWith("CHANGELOG.html") && is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
             final var pathContent = readString(projectRenderer.projectFolder().resolve("CHANGELOG.md"));
             return Optional.of(
-                    renderingResult(renderer.render(pathContent, projectRenderer, path, context)
+                    renderingResult(renderer.render(pathContent, projectRenderer, path, config)
                             , TEXT_HTML.toString()));
         }
         return Optional.empty();

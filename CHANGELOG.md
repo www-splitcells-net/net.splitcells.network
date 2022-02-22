@@ -22,10 +22,10 @@ Releases are done every time an important ticket is completed.
 ### Major Changes
 * **2022-02-22** **\#s72**:
   1. Remove unused class `net.splitcells.website.server.project.Location`.
-  2. Define rendering context class, in order to pass additional or
-     configuration info to renderers.
-  3. Add context parameter to `ProjectRenderer#renderHtmlBodyContent`
-     and `Renderer#renderFile`.
+  2. Define config class, in order to pass additional or
+     configuration info to renderers and server.
+  3. Add config parameter to `ProjectRenderer#renderHtmlBodyContent`,
+     `Renderer#renderFile` and `Server`.
 * **2022-02-21** **\#142** Remove `net.splitcells.website.html.content`
   project.
   It was an alternative minimal style for the website.

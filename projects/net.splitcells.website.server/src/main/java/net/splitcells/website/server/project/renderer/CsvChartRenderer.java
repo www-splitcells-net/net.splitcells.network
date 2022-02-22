@@ -5,7 +5,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Paths;
-import net.splitcells.website.server.config.Context;
+import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.FileStructureTransformer;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -16,10 +16,8 @@ import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.readAllBytes;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class CsvChartRenderer implements Renderer {
@@ -34,7 +32,7 @@ public class CsvChartRenderer implements Renderer {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (path.endsWith("csv.html")) {
             final var csvPath = path.substring(0, path.lastIndexOf(".csv.html")) + ".csv";
             final var requestedFile = projectRenderer

@@ -12,6 +12,7 @@ package net.splitcells.website;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.ProjectsRenderer;
 
@@ -22,12 +23,12 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.website.RenderingConfig.renderingConfig;
 import static net.splitcells.website.SourceValidatorViaSchema.validatorViaSchema;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 
 public class Projects {
-    public static ProjectsRenderer projectsRenderer() {
+    @Deprecated
+    public static ProjectsRenderer projectsRenderer(Config config) {
         final var profile = "public";
         final var projectsRepository = Paths.get("../");
         final var validator = validatorViaSchema(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
@@ -36,19 +37,19 @@ public class Projects {
                 , fallbackProjectRenderer(profile, projectsRepository, validator)
                 , list()
                 , validator
-                , renderingConfig());
+                , config);
     }
 
     public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
             , ProjectRenderer fallbackProjectRenderer
             , List<ProjectRenderer> additionalProjects
             , SourceValidator sourceValidator
-            , RenderingConfig renderingConfig) {
+            , Config config) {
         final var xslLib = projectRepository
                 .resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/");
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
                 , additionalProjects.withAppended(projectRenderers(profile, projectRepository, sourceValidator, xslLib))
-                , renderingConfig);
+                , config);
     }
 
     public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
@@ -56,10 +57,10 @@ public class Projects {
             , List<ProjectRenderer> additionalProjects
             , SourceValidator sourceValidator
             , Path xslLib
-            , RenderingConfig renderingConfig) {
+            , Config config) {
         return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
                 , additionalProjects.withAppended(projectRenderers(profile, projectRepository, sourceValidator, xslLib))
-                , renderingConfig);
+                , config);
     }
 
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories, SourceValidator sourceValidator) {

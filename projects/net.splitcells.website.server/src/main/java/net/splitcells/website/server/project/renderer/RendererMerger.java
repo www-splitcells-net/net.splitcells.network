@@ -15,7 +15,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.website.server.config.Context;
+import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -47,14 +47,14 @@ public class RendererMerger implements Renderer {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         final var rendering = renderers.stream()
-                .map(e -> e.renderFile(path, projectRenderer, context))
+                .map(e -> e.renderFile(path, projectRenderer, config))
                 .filter(e -> e.isPresent())
                 .collect(Lists.toList());
         if (rendering.size() > 1) {
             final var matchedExtensions = renderers.stream()
-                    .filter(r -> r.renderFile(path, projectRenderer, context).isPresent())
+                    .filter(r -> r.renderFile(path, projectRenderer, config).isPresent())
                     .map(Object::toString)
                     .reduce((a, b) -> a + ", " + b)
                     .get();

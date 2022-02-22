@@ -12,7 +12,7 @@ package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.website.server.config.Context;
+import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -21,10 +21,10 @@ import java.util.Optional;
 
 /**
  * TODO Do not only test {@link #projectPaths(ProjectRenderer)},
- * but also {@link #renderFile(String, ProjectRenderer, Context)}.
+ * but also {@link #renderFile(String, ProjectRenderer, Config)}.
  */
 public interface Renderer {
-    Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context);
+    Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config);
 
     /**
      * TODO A list of paths should be returned instead. Also the layout would not be needed anymore in this case.
@@ -39,7 +39,7 @@ public interface Renderer {
 
     /**
      * TODO In future, it would be best to just use {@link #extendProjectLayout}.
-     *
+     * <p>
      * This is only provided, because it was easier to implement this without errors,
      * compared to {@link #extendProjectLayout}.
      * This will probably change, when {@link Perspective} code is better tested and reviewed,

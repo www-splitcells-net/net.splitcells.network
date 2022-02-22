@@ -15,9 +15,9 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.website.RenderingConfig;
 import net.splitcells.website.RenderingValidator;
 import net.splitcells.website.server.Server;
+import net.splitcells.website.server.Config;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,7 +33,6 @@ import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
-import static net.splitcells.website.RenderingConfig.renderingConfig;
 import static net.splitcells.website.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,8 +47,8 @@ public class ProjectsRenderer {
     public static ProjectsRenderer projectsRenderer(String name
             , ProjectRenderer fallbackRenderer
             , List<ProjectRenderer> renderers
-            , RenderingConfig renderingConfig) {
-        return new ProjectsRenderer(name, fallbackRenderer, renderers, renderingConfig);
+            , Config config) {
+        return new ProjectsRenderer(name, fallbackRenderer, renderers, config);
     }
 
     public void build() {
@@ -57,7 +56,7 @@ public class ProjectsRenderer {
         Files.createDirectory(generatedFiles);
         writeToFile(generatedFiles.resolve("generation.style.xml")
                 , "<val xmlns=\"http://splitcells.net/den.xsd\">"
-                        + renderingConfig.generationStyle()
+                        + config.generationStyle()
                         + "</val>");
         writeToFile(generatedFiles.resolve("layout." + profile + ".xml"), createLayout().toDom());
         generateFolderPath(Paths.get("target", "generated"));
@@ -91,19 +90,19 @@ public class ProjectsRenderer {
                 });
     }
 
-    public void serveToHttpAt(int port) {
+    public void serveToHttpAt() {
         build();
-        new Server().serveToHttpAt(port, requestPath -> render(requestPath));
+        new Server().serveToHttpAt(requestPath -> render(requestPath), config);
     }
 
-    public void serveAsAuthenticatedHttpsAt(int port) {
+    public void serveAsAuthenticatedHttpsAt() {
         build();
-        new Server().serveAsAuthenticatedHttpsAt(port, requestPath -> render(requestPath));
+        new Server().serveAsAuthenticatedHttpsAt(requestPath -> render(requestPath), config);
     }
 
     @Deprecated
     private final String profile;
-    private final RenderingConfig renderingConfig;
+    private final Config config;
     private final List<ProjectRenderer> renderers;
     private final ProjectRenderer fallbackRenderer;
     private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
@@ -111,11 +110,11 @@ public class ProjectsRenderer {
     private ProjectsRenderer(String name
             , ProjectRenderer fallbackRenderer
             , List<ProjectRenderer> renderers
-            , RenderingConfig renderingConfig) {
+            , Config config) {
         this.profile = name;
         this.fallbackRenderer = fallbackRenderer;
         this.renderers = renderers;
-        this.renderingConfig = renderingConfig;
+        this.config = config;
     }
 
     /**

@@ -13,13 +13,12 @@ package net.splitcells.website.server.project.renderer;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.website.server.config.Context;
+import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutRenderer;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
-import javax.naming.Name;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
@@ -30,7 +29,6 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.resource.Files.isDirectory;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
@@ -56,7 +54,7 @@ public class UserCommandRenderer implements Renderer {
      * @return
      */
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (RENDERING_PATH.equals(path) && isDirectory(BIN_FOLDER)) {
             final var layout = perspective(NameSpaces.VAL, NameSpaces.DEN);
             try {

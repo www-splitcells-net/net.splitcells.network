@@ -24,11 +24,9 @@ import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.RenderingResult;
 
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
@@ -39,10 +37,9 @@ public class Server {
     /**
      * TODO This is code duplication.
      *
-     * @param port     port
      * @param renderer renderer
      */
-    public void serveToHttpAt(int port, Function<String, Optional<RenderingResult>> renderer) {
+    public void serveToHttpAt(Function<String, Optional<RenderingResult>> renderer, Config config) {
         {
             System.setProperty("vertx.disableFileCaching", "true");
             System.setProperty("vertx.maxEventLoopExecuteTime", "1000000");
@@ -62,12 +59,12 @@ public class Server {
                             .setLogActivity(true)//
                             .setSsl(true)//
                             .setKeyCertOptions(new PfxOptions()
-                                    .setPath(configValue(SslKeystore.class).toString())
-                                    .setPassword(configValue(SslKeystorePassword.class)))
+                                    .setPath(config.sslKeystoreFile().get().toString())
+                                    .setPassword(config.sslKeystorePassword().get()))
                             .setTrustOptions(new PfxOptions()
-                                    .setPath(configValue(SslKeystore.class).toString())
-                                    .setPassword(configValue(SslKeystorePassword.class)))
-                            .setPort(port);
+                                    .setPath(config.sslKeystoreFile().get().toString())
+                                    .setPassword(config.sslKeystorePassword().get()))
+                            .setPort(config.openPort());
                     final var router = Router.router(vertx);
                     router.route("/favicon.ico").handler(a -> {
                     });
@@ -110,7 +107,7 @@ public class Server {
         }
     }
 
-    public void serveAsAuthenticatedHttpsAt(int port, Function<String, Optional<RenderingResult>> renderer) {
+    public void serveAsAuthenticatedHttpsAt(Function<String, Optional<RenderingResult>> renderer, Config config) {
         System.setProperty("vertx.disableFileCaching", "true");
         System.setProperty("log4j.rootLogger", "DEBUG, stdout");
         Vertx vertx = Vertx.vertx();
@@ -121,14 +118,14 @@ public class Server {
                 final var webServerOptions = new HttpServerOptions()
                         .setSsl(true)
                         .setKeyCertOptions(new PfxOptions()
-                                .setPath(configValue(SslKeystore.class).toString())
-                                .setPassword(configValue(SslKeystorePassword.class)))
+                                .setPath(config.sslKeystoreFile().get().toString())
+                                .setPassword(config.sslKeystorePassword().get()))
                         .setTrustOptions(new PfxOptions()
-                                .setPath(configValue(SslKeystore.class).toString())
-                                .setPassword(configValue(SslKeystorePassword.class)))
+                                .setPath(config.sslKeystoreFile().get().toString())
+                                .setPassword(config.sslKeystorePassword().get()))
                         .setClientAuth(ClientAuth.REQUIRED)
                         .setLogActivity(true)
-                        .setPort(port);
+                        .setPort(config.openPort());
                 final var router = Router.router(vertx);
                 router.route("/favicon.ico").handler(a -> {
                 });

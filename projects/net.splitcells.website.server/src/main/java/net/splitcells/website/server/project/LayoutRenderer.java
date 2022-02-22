@@ -16,6 +16,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.website.server.Config;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,10 +26,11 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.website.Projects.projectsRenderer;
 
+@Deprecated
 public class LayoutRenderer {
     public static void main(String... args) throws Exception {
         // TODO privateProjectsRenderer().build();
-        projectsRenderer().build();
+        projectsRenderer(Config.create()).build();
         final var layout = perspective("layout", NATURAL);
         Streams.concat(
                 Files.walk(Paths.get("../net.splitcells.os.state.interface/src/main/bash"))

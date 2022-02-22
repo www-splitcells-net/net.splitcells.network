@@ -5,14 +5,12 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.website.server.config.Context;
+import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.FileStructureTransformer;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
-import org.w3c.dom.Element;
 
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -39,7 +37,7 @@ public class XmlRenderer implements Renderer {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Context context) {
+    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (path.endsWith(".html")) {
             final var xmlFile = projectRenderer
                     .projectFolder()
