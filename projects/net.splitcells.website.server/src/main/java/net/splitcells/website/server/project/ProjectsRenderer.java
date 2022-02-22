@@ -12,6 +12,7 @@ package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
@@ -65,6 +66,7 @@ public class ProjectsRenderer {
     private Perspective createLayout() {
         final var layout = perspective(VAL, NATURAL);
         this.projectsPaths().forEach(p -> extendPerspectiveWithPath(layout, p));
+        config.withLayout(Xml.toPrettyString(layout.toDom()));
         return layout;
     }
 

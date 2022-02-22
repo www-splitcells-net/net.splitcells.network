@@ -82,7 +82,7 @@ public class ProjectRendererI implements ProjectRenderer {
     private final boolean typedFolder;
     private final SourceValidator sourceValidator;
     private final RendererMerger renderer = rendererMerger();
-    private final Config context = Config.create();
+    private final Config config;
 
     {
         renderer.registerExtension(commonMarkReadmeExtension());
@@ -97,7 +97,8 @@ public class ProjectRendererI implements ProjectRenderer {
             , boolean typedFolder
             , boolean flatRepository
             , SourceValidator sourceValidator
-            , Path projectFolder) {
+            , Path projectFolder
+            , Config config) {
         this.typedFolder = typedFolder;
         this.profile = renderer;
         this.projectSrcFolder = projectSrcFolder;
@@ -111,6 +112,7 @@ public class ProjectRendererI implements ProjectRenderer {
         this.renderer.registerExtension(textExtension(renderer()));
         this.renderer.registerExtension(resourceRenderer());
         this.renderer.registerExtension(csvChartRenderer(renderer()));
+        this.config = config;
     }
 
     /**
@@ -123,7 +125,12 @@ public class ProjectRendererI implements ProjectRenderer {
                 , xslLibs
                 , "main." + profile + ".xsl"
                 , sourceValidator
-                , p -> Optional.empty());
+                , p -> {
+                    if ("/net/splitcells/website/server/config/layout.xml".equals(p)) {
+                        return config.layout();
+                    }
+                    return Optional.empty();
+                });
     }
 
     /**
@@ -135,7 +142,7 @@ public class ProjectRendererI implements ProjectRenderer {
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
             }
-            final var extensionRendering = renderer.renderFile(path, this, context);
+            final var extensionRendering = renderer.renderFile(path, this, config);
             if (extensionRendering.isPresent()) {
                 return extensionRendering;
             }

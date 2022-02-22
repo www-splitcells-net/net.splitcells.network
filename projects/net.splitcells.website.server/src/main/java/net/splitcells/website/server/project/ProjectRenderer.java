@@ -35,22 +35,26 @@ public interface ProjectRenderer extends Renderer {
             , String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
-            , SourceValidator sourceValidator) {
+            , SourceValidator sourceValidator
+            , Config config) {
         return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
                 , true
                 , false
                 , sourceValidator
-                , projectFolder);
+                , projectFolder
+                , config);
     }
 
     static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
             , String resourceRootPath
-            , SourceValidator sourceValidator) {
+            , SourceValidator sourceValidator
+            , Config config) {
         return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
                 , true
                 , false
                 , sourceValidator
-                , projectFolder);
+                , projectFolder
+                , config);
     }
 
     Path projectFolder();

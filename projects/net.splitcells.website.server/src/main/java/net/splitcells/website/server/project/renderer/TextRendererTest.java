@@ -1,5 +1,6 @@
 package net.splitcells.website.server.project.renderer;
 
+import net.splitcells.website.server.Config;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,8 @@ public class TextRendererTest {
                         , Path.of("../net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                         , Path.of("net.splitcells.website.default.content/src/main/resources/html")
                         , "/net/splitcells/dem"
-                        , a -> Optional.empty());
+                        , a -> Optional.empty()
+                        , Config.create());
         assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/website/server/test-text-document.html"));
     }
 
@@ -36,7 +38,8 @@ public class TextRendererTest {
                         , Path.of("../net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                         , Path.of("net.splitcells.website.default.content/src/main/resources/html")
                         , "/"
-                        , a -> Optional.empty());
+                        , a -> Optional.empty()
+                        , Config.create());
         assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/network/legal/licenses/MIT.txt"));
     }
 }
