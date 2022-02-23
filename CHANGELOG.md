@@ -20,6 +20,10 @@ Links to such platforms may or may not be valid.
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2022-02-23** **\#s69**: Rename Renderer class names in order to unify
+  naming:
+  1. `CommonMarkChangelogExtension` -> `CommonMarkChangelogRenderer`
+  2. `CommonMarkReadmeExtension` -> `CommonMarkReadmeRenderer`
 * **2022-02-22** **\#s72**:
   1. Remove unused class `net.splitcells.website.server.project.Location`.
   2. Define config class, in order to pass additional or

@@ -48,9 +48,9 @@ import static net.splitcells.website.server.project.renderer.TextRenderer.textEx
 import static net.splitcells.website.server.project.renderer.UserCommandRenderer.userCommandRenderer;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.XmlRenderer.xmlRenderer;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogExtension.commonMarkChangelogExtension;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogRenderer.commonMarkChangelogRenderer;
 import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkRenderer.commonMarkExtension;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkReadmeExtension.commonMarkReadmeExtension;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkReadmeRenderer.commonMarkReadmeRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
@@ -85,8 +85,8 @@ public class ProjectRendererI implements ProjectRenderer {
     private final Config config;
 
     {
-        renderer.registerExtension(commonMarkReadmeExtension());
-        renderer.registerExtension(commonMarkChangelogExtension());
+        renderer.registerExtension(commonMarkReadmeRenderer());
+        renderer.registerExtension(commonMarkChangelogRenderer());
         renderer.registerExtension(userCommandRenderer());
         renderer.registerExtension(commonMarkExtension());
         renderer.registerExtension(csvRenderer());

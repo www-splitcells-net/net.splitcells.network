@@ -18,15 +18,15 @@ import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
-public class CommonMarkChangelogExtension implements Renderer {
+public class CommonMarkChangelogRenderer implements Renderer {
 
-    public static CommonMarkChangelogExtension commonMarkChangelogExtension() {
-        return new CommonMarkChangelogExtension();
+    public static CommonMarkChangelogRenderer commonMarkChangelogRenderer() {
+        return new CommonMarkChangelogRenderer();
     }
 
     private final CommonMarkIntegration renderer = commonMarkIntegration();
 
-    private CommonMarkChangelogExtension() {
+    private CommonMarkChangelogRenderer() {
     }
 
     @Override

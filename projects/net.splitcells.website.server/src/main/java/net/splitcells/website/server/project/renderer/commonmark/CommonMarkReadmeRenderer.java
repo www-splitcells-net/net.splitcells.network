@@ -32,15 +32,15 @@ import static net.splitcells.website.server.project.renderer.commonmark.CommonMa
 /**
  * TODO Add support for header outline.
  */
-public class CommonMarkReadmeExtension implements Renderer {
+public class CommonMarkReadmeRenderer implements Renderer {
 
-    public static CommonMarkReadmeExtension commonMarkReadmeExtension() {
-        return new CommonMarkReadmeExtension();
+    public static CommonMarkReadmeRenderer commonMarkReadmeRenderer() {
+        return new CommonMarkReadmeRenderer();
     }
 
     private final CommonMarkIntegration renderer = commonMarkIntegration();
 
-    private CommonMarkReadmeExtension() {
+    private CommonMarkReadmeRenderer() {
     }
 
     @Override
