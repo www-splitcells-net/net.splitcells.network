@@ -11,6 +11,7 @@
 package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -18,6 +19,8 @@ import net.splitcells.website.server.project.RenderingResult;
 
 import java.nio.file.Path;
 import java.util.Optional;
+
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
 /**
  * TODO Do not only test {@link #projectPaths(ProjectRenderer)},
@@ -50,4 +53,16 @@ public interface Renderer {
      */
     Set<Path> projectPaths(ProjectRenderer projectRenderer);
 
+    /**
+     * Returns the paths,
+     * that can be passed to {@link #renderFile(String, ProjectRenderer, Config)}
+     * and are relevant for users to view.
+     *
+     * @param projectRenderer The project rendered Tt be extended.
+     * @return Paths relative to project's root path.
+     * Absolute paths are not supported.
+     */
+    default Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
+        return setOfUniques();
+    }
 }

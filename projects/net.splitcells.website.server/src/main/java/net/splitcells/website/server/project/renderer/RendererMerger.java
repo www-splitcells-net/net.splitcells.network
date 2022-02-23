@@ -94,4 +94,19 @@ public class RendererMerger implements Renderer {
     public void registerExtension(Renderer extension) {
         renderers.add(extension);
     }
+
+    @Override
+    public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
+        final Set<Path> relevantProjectPaths = setOfUniques();
+        renderers.forEach(e -> {
+            final var path = e.relevantProjectPaths(projectRenderer);
+            if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+                if (path.toString().startsWith("/")) {
+                    throw new IllegalStateException("Absolute project paths are not allowed: " + path.toString());
+                }
+            }
+            relevantProjectPaths.addAll(path);
+        });
+        return relevantProjectPaths;
+    }
 }

@@ -64,6 +64,11 @@ public class ProjectsRenderer {
     }
 
     private Perspective createLayout() {
+        {
+            final var relevantLayout = perspective(VAL, NATURAL);
+            this.relevantProjectsPaths().forEach(p -> extendPerspectiveWithPath(relevantLayout, p));
+            config.withLayoutRelevant(Xml.toPrettyString(relevantLayout.toDom()));
+        }
         final var layout = perspective(VAL, NATURAL);
         this.projectsPaths().forEach(p -> extendPerspectiveWithPath(layout, p));
         config.withLayout(Xml.toPrettyString(layout.toDom()));
@@ -167,7 +172,13 @@ public class ProjectsRenderer {
 
     public Set<Path> projectsPaths() {
         return renderers.stream()
-                .map(renderer -> renderer.projectPaths())
+                .map(Renderer::projectPaths)
+                .reduce((a, b) -> a.with(b)).get();
+    }
+
+    public Set<Path> relevantProjectsPaths() {
+        return renderers.stream()
+                .map(Renderer::relevantProjectPaths)
                 .reduce((a, b) -> a.with(b)).get();
     }
 

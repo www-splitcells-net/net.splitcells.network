@@ -23,9 +23,18 @@ public interface Renderer {
      * that are not a child of {@link #resourceRootPath2()}.
      *
      * 
-     * @return List Of All Path That Can Be Rendered
+     * @return This is list of all path, that can be rendered.
      */
     Set<Path> projectPaths();
+
+    /**
+     * All project paths are returned as relative paths.
+     * The context of the paths is {@link #resourceRootPath2()}
+     *
+     * @return This is list of all path,
+     * that can be rendered and are relevant for normal users.
+     */
+    Set<Path> relevantProjectPaths();
 
     /**
      * TODO Use {@link Path} objects instead of {@link String}s.

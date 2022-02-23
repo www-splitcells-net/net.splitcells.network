@@ -414,4 +414,9 @@ public class ProjectRendererI implements ProjectRenderer {
         return projectPaths;
     }
 
+    @Override
+    public Set<Path> relevantProjectPaths() {
+        return this.renderer.relevantProjectPaths(this);
+    }
+
 }

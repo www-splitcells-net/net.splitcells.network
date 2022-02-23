@@ -75,12 +75,12 @@ public class Config {
         return this;
     }
 
-    public Config withLayoutRelevant(String layout) {
-        this.layout = Optional.of(layout);
+    public Config withLayoutRelevant(String layoutRelevant) {
+        this.layoutRelevant = Optional.of(layoutRelevant);
         return this;
     }
 
     public Optional<String> layoutRelevant() {
-        return layout;
+        return layoutRelevant;
     }
 }

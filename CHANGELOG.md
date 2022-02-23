@@ -64,6 +64,13 @@ Releases are done every time an important ticket is completed.
      Argumentation Argumentation Then values of allocated hours should have the same value
      ```
      Now it looks like this `For all rail Then values of allocated hours should have the same value`.
+### Minor Changes
+* **2022-02-23** **\#s69**:
+  The web server's renderers now have a concept of a relevant path layout.
+  Other than the regular path layout, it contains not all supported path of the web server.
+  The relevant layout contains a subset of the regular layout
+  and focuses on the paths,
+  that are relevant for the normal users.
 ### Patches
 * **2022-02-20**: Fix syntax errors in `system.ssh.server.require` and
   `system.ssh.server.require`.
