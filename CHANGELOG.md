@@ -69,8 +69,16 @@ Releases are done every time an important ticket is completed.
      ```
      Now it looks like this `For all rail Then values of allocated hours should have the same value`.
 ### Minor Changes
-* **2022-02-23** **\#s69**:
-  The web server's renderers now have a concept of a relevant path layout.
+* **2022-02-23**
+  1. [**\#69** Create easier to navigate alternative to local path context in website](https://todo.sr.ht/~splitcells-net/net.splitcells.network/69):
+     The default layout for the website contains now a `Relevant Local Path Context` section
+     in the secondary content column.
+     It is located right before the `Local Path Context` and only lists paths,
+     that are relevant for ordinary users.
+     The new section makes it easier to navigate between the different pages of
+     the site.
+  3. **\#s69**:
+     The web server's renderers now have a concept of a relevant path layout.
   Other than the regular path layout, it contains not all supported path of the web server.
   The relevant layout contains a subset of the regular layout
   and focuses on the paths,
