@@ -27,7 +27,6 @@
     <xsl:include href="component.todo.xsl"/>
     <xsl:include href="content.outline.xsl"/>
     <xsl:include href="feeds.xsl"/>
-    <xsl:include href="fods.xsl"/>
     <xsl:include href="den.xsl"/>
     <xsl:include href="rdf.as.javascript.json.xsl"/>
     <xsl:include href="rdf.xsl"/>

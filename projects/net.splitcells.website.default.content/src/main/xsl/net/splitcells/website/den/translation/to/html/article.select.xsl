@@ -15,6 +15,7 @@
 
     SPDX-License-Identifier: EPL-2.0 OR MIT
     -->
+    <!-- TODO Remove by 2025 latest. -->
     <xsl:template match="s:for-each-article">
         <!-- TODO Should article tags be supported? -->
         <xsl:variable name="detailed_tags">
