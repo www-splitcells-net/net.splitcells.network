@@ -20,6 +20,7 @@ public class Config {
     private Optional<String> layout = Optional.empty();
     private int openPort = 443;
     private String generationStyle = "standard";
+    private Optional<String> siteFolder;
 
     private Config() {
     }
@@ -61,6 +62,15 @@ public class Config {
 
     public Config witSslKeystoreFile(Optional<Path> sslKeystoreFile) {
         this.sslKeystoreFile = sslKeystoreFile;
+        return this;
+    }
+    
+    public Optional<String> siteFolder() {
+        return siteFolder;
+    }
+    
+    public Config withSiteFolder(Optional<String> siteFolder) {
+        this.siteFolder = siteFolder;
         return this;
     }
 }

@@ -128,11 +128,15 @@ public class ProjectRendererI implements ProjectRenderer {
                 , p -> {
                     if ("/net/splitcells/website/server/config/layout.xml".equals(p)) {
                         return config.layout();
-                    }
-                    if ("/net/splitcells/website/server/config/generation.style.xml".equals(p)) {
+                    } else if ("/net/splitcells/website/server/config/generation.style.xml".equals(p)) {
                         return Optional
                                 .of("<val xmlns=\"http://splitcells.net/den.xsd\">"
                                         + config.generationStyle()
+                                        + "</val>");
+                    } else if ("/net/splitcells/website/server/config/site.folder.xml".equals(p)) {
+                        return Optional
+                                .of("<val xmlns=\"http://splitcells.net/den.xsd\">"
+                                        + config.siteFolder()
                                         + "</val>");
                     }
                     return Optional.empty();

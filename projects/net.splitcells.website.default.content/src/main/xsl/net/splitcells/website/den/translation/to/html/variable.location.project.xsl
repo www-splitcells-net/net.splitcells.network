@@ -12,10 +12,9 @@
 
     SPDX-License-Identifier: EPL-2.0 OR MIT
     -->
-    <xsl:param name="siteFolder"
-               select="'/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network/projects/'"/>
-    <xsl:variable name="privateFolder"
-                  select="'/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/'"/>
+    <xsl:variable name="siteFolder">
+        <xsl:value-of select="document('/net/splitcells/website/server/config/site.folder.xml')"/>
+    </xsl:variable>
     <xsl:variable name="layoutFolder"
                   select="concat($siteFolder, '/net.splitcells.website.default.content/src/main/resources/html/')"/>
     <xsl:variable name="source_asset_folder"
@@ -25,6 +24,4 @@
     <xsl:variable name="apostroph">'</xsl:variable>
     <xsl:variable name="source.folder"
                   select="concat($siteFolder, './src/main/xml/')"/>
-    <xsl:variable name="articles.folder"
-                  select="concat($privateFolder, 'src/main/xml/net/splitcells/martins/avots/website/')"/>
 </xsl:stylesheet>
