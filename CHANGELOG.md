@@ -77,12 +77,12 @@ Releases are done every time an important ticket is completed.
      that are relevant for ordinary users.
      The new section makes it easier to navigate between the different pages of
      the site.
-  3. **\#s69**:
+  2. **\#s69**:
      The web server's renderers now have a concept of a relevant path layout.
-  Other than the regular path layout, it contains not all supported path of the web server.
-  The relevant layout contains a subset of the regular layout
-  and focuses on the paths,
-  that are relevant for the normal users.
+     Other than the regular path layout, it contains not all supported path of the web server.
+     The relevant layout contains a subset of the regular layout
+     and focuses on the paths,
+     that are relevant for the normal users.
 ### Patches
 * **2022-02-20**: Fix syntax errors in `system.ssh.server.require` and
   `system.ssh.server.require`.
