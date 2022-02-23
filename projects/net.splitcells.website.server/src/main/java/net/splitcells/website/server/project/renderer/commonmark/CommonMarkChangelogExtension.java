@@ -57,4 +57,9 @@ public class CommonMarkChangelogExtension implements Renderer {
         }
         return projectPaths;
     }
+
+    @Override
+    public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
+        return projectPaths(projectRenderer);
+    }
 }

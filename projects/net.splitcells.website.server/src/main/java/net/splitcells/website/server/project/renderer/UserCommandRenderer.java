@@ -89,4 +89,9 @@ public class UserCommandRenderer implements Renderer {
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         return setOfUniques(Path.of(RENDERING_PATH));
     }
+
+    @Override
+    public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
+        return projectPaths(projectRenderer);
+    }
 }

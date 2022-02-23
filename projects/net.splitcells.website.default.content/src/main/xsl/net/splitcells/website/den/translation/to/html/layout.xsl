@@ -263,7 +263,6 @@ window.onload = function() {
             </xsl:if>
             <s:chapter>
                 <s:title>Relevant Local Path Context</s:title>
-                <xsl:value-of select="document('/net/splitcells/website/server/config/layout.relevant.xml')/node()"/>
                 <xsl:variable name="file-path-environment-relevant">
                     <xsl:call-template name="file-path-environment-relevant">
                         <xsl:with-param name="path"

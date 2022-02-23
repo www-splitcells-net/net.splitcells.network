@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
@@ -61,5 +62,10 @@ public class CommonMarkRenderer implements Renderer {
             }
         }
         return projectPaths;
+    }
+
+    @Override
+    public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
+        return projectPaths(projectRenderer);
     }
 }
