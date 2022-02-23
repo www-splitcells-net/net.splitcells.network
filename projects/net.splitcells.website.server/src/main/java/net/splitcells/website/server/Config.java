@@ -18,6 +18,7 @@ public class Config {
     private Optional<String> sslKeystorePassword = Optional.of("password");
     private Optional<Path> sslKeystoreFile = Optional.of(Paths.get("target/keystore.p12"));
     private Optional<String> layout = Optional.empty();
+    private Optional<String> layoutRelevant = Optional.empty();
     private int openPort = 443;
     private String generationStyle = "standard";
     private Optional<String> siteFolder;
@@ -64,13 +65,22 @@ public class Config {
         this.sslKeystoreFile = sslKeystoreFile;
         return this;
     }
-    
+
     public Optional<String> siteFolder() {
         return siteFolder;
     }
-    
+
     public Config withSiteFolder(Optional<String> siteFolder) {
         this.siteFolder = siteFolder;
         return this;
+    }
+
+    public Config withLayoutRelevant(String layout) {
+        this.layout = Optional.of(layout);
+        return this;
+    }
+
+    public Optional<String> layoutRelevant() {
+        return layout;
     }
 }

@@ -138,6 +138,8 @@ public class ProjectRendererI implements ProjectRenderer {
                                 .of("<val xmlns=\"http://splitcells.net/den.xsd\">"
                                         + config.siteFolder()
                                         + "</val>");
+                    } else if ("/net/splitcells/website/server/config/layout.relevant.xml".equals(p)) {
+                        return config.layoutRelevant();
                     }
                     return Optional.empty();
                 });
