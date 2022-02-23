@@ -27,6 +27,4 @@
                   select="concat($siteFolder, './src/main/xml/')"/>
     <xsl:variable name="articles.folder"
                   select="concat($privateFolder, 'src/main/xml/net/splitcells/martins/avots/website/')"/>
-    <xsl:variable name="generated-files"
-                  select="concat($siteFolder, 'target/generated')"/>
 </xsl:stylesheet>

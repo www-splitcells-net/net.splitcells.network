@@ -124,13 +124,6 @@
     <xsl:template match="s:private_info">
         <!-- Private information is not published. -->
     </xsl:template>
-    <xsl:template match="s:posts_blurbs_of_project_art">
-        <!-- TODO Is this needed or can it be replaced by more general. -->
-        <!-- uri of folder of input document -->
-        <!-- all schema documents in the base URI -->
-        <xsl:variable name="schemas" select="collection(concat($articles.folder,'?select=*.xml;recurse=yes'))"/>
-        <xsl:copy-of select="$schemas"/>
-    </xsl:template>
     <xsl:template match="s:republication">
         <!-- Republications redirections are used in order to keep up link compatiblity. -->
         <xsl:variable name="tmp">

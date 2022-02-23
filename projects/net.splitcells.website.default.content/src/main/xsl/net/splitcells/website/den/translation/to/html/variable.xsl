@@ -27,8 +27,8 @@
     <xsl:variable name="generation.style">
         <!-- Currently, only standard and minimal are supported. -->
         <xsl:choose>
-            <xsl:when test="document(concat($generated-files, '/generation.style.xml'))">
-                <xsl:value-of select="document(concat($generated-files, '/generation.style.xml'))"/>
+            <xsl:when test="document('/net/splitcells/website/server/config/generation.style.xml')">
+                <xsl:value-of select="document('/net/splitcells/website/server/config/generation.style.xml')"/>
             </xsl:when>
             <xsl:otherwise>
                 <!-- TODO Standard should match minimal as good as possible.

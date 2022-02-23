@@ -48,7 +48,7 @@
 				<xsl:attribute name="rel" select="'alternate'" />
 			</xsl:element>
 			<xsl:for-each
-				select="collection(concat($articles.folder ,'/?select=*.xml'))">
+				select="collection(concat('TODO deprecated' ,'/?select=*.xml'))">
 				<xsl:sort
 					select="concat(./s:article/s:meta/s:publication_date/@year, ./s:article/s:meta/s:publication_date/@month, 
 					./s:article/s:meta/s:publication_date/@day_of_month )"
@@ -79,7 +79,7 @@
 					<xsl:value-of select="$site.url" />
 				</atom:uri>
 			</atom:author>
-			<xsl:for-each select="collection(concat($articles.folder, '?select=*.xml;recurse=yes'))">
+			<xsl:for-each select="collection(concat('TODO deprecated', '?select=*.xml;recurse=yes'))">
 				<xsl:sort
 					select="concat(./s:article/s:meta/s:publication_date/@year, ./s:article/s:meta/s:publication_date/@month, 
 					./s:article/s:meta/s:publication_date/@day_of_month )"
@@ -129,7 +129,7 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="rss.items">
-			<xsl:for-each select="collection(concat($articles.folder, '?select=*.xml;recurse=yes'))">
+			<xsl:for-each select="collection(concat('TODO deprecated', '?select=*.xml;recurse=yes'))">
 				<xsl:sort
 					select="concat(./s:article/s:meta/s:publication_date/@year, ./s:article/s:meta/s:publication_date/@month, 
 					./s:article/s:meta/s:publication_date/@day_of_month )"

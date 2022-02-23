@@ -129,6 +129,12 @@ public class ProjectRendererI implements ProjectRenderer {
                     if ("/net/splitcells/website/server/config/layout.xml".equals(p)) {
                         return config.layout();
                     }
+                    if ("/net/splitcells/website/server/config/generation.style.xml".equals(p)) {
+                        return Optional
+                                .of("<val xmlns=\"http://splitcells.net/den.xsd\">"
+                                        + config.generationStyle()
+                                        + "</val>");
+                    }
                     return Optional.empty();
                 });
     }

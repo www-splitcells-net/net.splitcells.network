@@ -54,7 +54,7 @@
                 </xsl:choose>
             </xsl:variable>
             <!-- TODO path -->
-            <xsl:for-each select="collection(concat($articles.folder, '?select=*.xml;recurse=yes'))">
+            <xsl:for-each select="collection(concat('TODO deprecated', '?select=*.xml;recurse=yes'))">
                 <!-- REMOVE <xsl:sort select="tokenize(document-uri(.), '/')[last()]" /> -->
                 <xsl:sort
                         select="concat(./s:article/s:meta/s:publication_date/@year, ./s:article/s:meta/s:publication_date/@month, ./s:article/s:meta/s:publication_date/@day_of_month )"
@@ -80,7 +80,7 @@
                                           select="./s:article/s:meta/s:publication_date/@day_of_month"/>
                             <xsl:variable name="document-uri" select="document-uri(.)"/>
                             <xsl:variable name="document-path"
-                                          select="substring($document-uri, string-length($articles.folder) + 5, string-length($document-uri))"/>
+                                          select="substring($document-uri, string-length('TODO deprecated') + 5, string-length($document-uri))"/>
                             <xsl:variable name="document-path-without-file-suffix"
                                           select="substring($document-path, 1, string-length($document-path) - 4)"/>
                             <s:location>
