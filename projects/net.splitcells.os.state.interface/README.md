@@ -2,12 +2,8 @@
 	<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/bird_s.banner.jpg" width="200">
 	</div>
 
-**TODO** Cleanup this.
-
 # Operation System State Interface
-
 ## Status
-
 * GitHub: [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
 * GitLab: [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
 * SourceHut: [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
@@ -19,10 +15,6 @@
 1. [Alternatives](src/main/md/net/splitcells/os/state/interface/alternatives.md)
 1. [Interesting Shell Software](src/main/md/net/splitcells/os/state/interface/shell.software.md)
 1. [Contributing](src/main/md/net/splitcells/os/state/interface/process/contribute.md)
-
-## Communication Channels
-1. [Twitter](https://twitter.com/splitcells)
-1. [mastodon](https://mastodon.host/@splitcells)
 
 ## Project Structure
 1. [Objectives of this Project](src/main/md/net/splitcells/os/state/interface/objectives.md)
@@ -38,10 +30,3 @@
 1. [Dictionary](src/main/md/net/splitcells/os/state/interface/guide.lines/dictionary.md)
 1. [File Extension](src/main/md/net/splitcells/os/state/interface/guide.lines/file.extensions.md)
 1. __TODO__ Define publication methods.
-
-This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
-
-## Credits
-
-Big thanks to the following projects:
-* [Release It!](https://github.com/release-it/release-it) 🚀 for simplifying releases.
