@@ -4,6 +4,7 @@ This does not mean, that tasks are processed according to the priority order.
 The priority of a task is just a guideline.
 ### Services
 1. Update project documentation.
+   As much as possible, the project documentation should be moved into the commands documentation.
 1. Document commands.
 1. Improve tests.
 1. Improve echo output and make it nice, for a certain setting.
