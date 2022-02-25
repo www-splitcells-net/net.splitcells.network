@@ -10,23 +10,17 @@
  */
 package net.splitcells.dem.data.atom;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
-
-public class BoolsTest {
-    /**
-     * If condition is met nothing happens.
-     */
-    @Test
-    public void testRequiredTruth() {
-        Bools.require(true);
+public class Integers {
+    private Integers() {
+        throw constructorIllegal();
     }
 
-    @Test
-    public void testRequiredUntruth() {
-        assertThrows(AssertionError.class, () -> Bools.require(false));
+    @JavaLegacyBody
+    public static boolean isEven(Integer arg) {
+        return arg % 2 == 0;
     }
 }

@@ -10,14 +10,22 @@
  */
 package net.splitcells.dem.data.atom;
 
-import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import org.junit.jupiter.api.Test;
 
-public class Integers {
-    private Integers() {
-        throw constructorIllegal();
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
+public class BoolsTest {
+    /**
+     * If condition is met nothing happens.
+     */
+    @Test
+    public void testRequiredTruth() {
+        Bools.require(true);
     }
 
-    public static boolean isEven(Integer arg) {
-        return arg % 2 == 0;
+    @Test
+    public void testRequiredUntruth() {
+        assertThrows(AssertionError.class, () -> Bools.require(false));
     }
 }

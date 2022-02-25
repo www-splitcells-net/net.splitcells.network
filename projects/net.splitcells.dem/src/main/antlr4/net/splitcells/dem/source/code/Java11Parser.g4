@@ -233,6 +233,7 @@ reference
     | call_arguments Arrow reference
     | String
     | String Operator_plus reference
+    | name Keysymbol_function_reference name
     ;
 statement
     : Line_comment
