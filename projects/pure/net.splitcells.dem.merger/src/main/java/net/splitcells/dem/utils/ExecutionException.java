@@ -10,11 +10,14 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+
 public class ExecutionException extends RuntimeException {
     public static ExecutionException executionException(String message) {
         return new ExecutionException(message);
     }
 
+    @JavaLegacyBody
     private ExecutionException(String message) {
         super(message);
     }

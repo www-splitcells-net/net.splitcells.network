@@ -302,6 +302,7 @@ type_argument_content_next
 type_argument_element
 	: type_name
 	| type_name Keyword_extends type_argument_element type_argument?
+	| type_name Keyword_super type_argument_element type_argument?
 	;
 type_name
 	: name

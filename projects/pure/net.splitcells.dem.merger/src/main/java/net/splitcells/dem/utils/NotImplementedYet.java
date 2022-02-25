@@ -10,6 +10,8 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+
 public final class NotImplementedYet extends RuntimeException {
     
     public static final String TODO_NOT_IMPLEMENTED_YET = "TODO-Not-implemented-yet";
@@ -26,6 +28,7 @@ public final class NotImplementedYet extends RuntimeException {
 
     }
 
+    @JavaLegacyBody
     private NotImplementedYet(String message) {
         super(message);
     }

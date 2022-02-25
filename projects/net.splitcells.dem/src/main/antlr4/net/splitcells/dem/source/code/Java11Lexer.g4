@@ -84,6 +84,7 @@ lexer grammar Java11Lexer;
 	Keyword_public: 'public';
 	Keyword_return: 'return';
 	Keyword_static: 'static';
+	Keyword_super: 'super';
 	Keyword_throw: 'throw';
 	Keyword_try: 'try';
 	Less_than: '<';
