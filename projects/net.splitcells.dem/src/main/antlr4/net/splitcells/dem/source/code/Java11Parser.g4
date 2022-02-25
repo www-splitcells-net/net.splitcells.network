@@ -298,6 +298,7 @@ type_argument_content_next
     | Comma name type_argument_content_next?
     | Comma Question_mark type_argument_content_next?
     | Comma type_declaration type_argument_content_next?
+    | Comma type_argument_element type_argument_content_next?
     ;
 type_argument_element
 	: type_name
