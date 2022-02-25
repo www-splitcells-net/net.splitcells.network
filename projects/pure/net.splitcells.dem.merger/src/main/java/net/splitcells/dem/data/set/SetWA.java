@@ -24,7 +24,7 @@ public interface SetWA<T> {
 
 	@SuppressWarnings("unchecked")
 	@ReturnsThis
-	public default <R extends SetWA<T>> R addAll(T... values) {
+	default <R extends SetWA<T>> R addAll(T... values) {
 		for (int i = 0; i < values.length; ++i) {
 			add(values[i]);
 		}
