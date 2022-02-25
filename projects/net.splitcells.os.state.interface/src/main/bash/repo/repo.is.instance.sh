@@ -8,6 +8,6 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 
-# Checks if this folder is an instance of an version control repository.
+# Checks if the current folder is the root folder of an version control repository.
 
 command.managed.execute disjunction repo.is.instance
