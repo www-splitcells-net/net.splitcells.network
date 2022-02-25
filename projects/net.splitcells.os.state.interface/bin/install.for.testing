@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+#
+# This program and the accompanying materials are made available under the
+# terms of the Eclipse Public License 2.0, which is available at
+# http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+# which is available at https://spdx.org/licenses/MIT.html.
+#
+# SPDX-License-Identifier: EPL-2.0 OR MIT
+
+commandRepoRegister=./src/main/bash/command/managed/command.repository.register.sh
+chmod +x $commandRepoRegister
+$commandRepoRegister $(pwd)
+
+installer=./src/main/bash/command/managed/command.repositories.setup.sh
+chmod +x $installer
+$installer
+
+echo
+	# We create a empty line in order to visually separate the execution output from the result output.
+echo OS state interface installed.
+echo
+echo Execute "'". ~/.bashrc"'" in order to access
+echo the installed programs on this terminal.
+echo
+echo You may need to restart the computer in order to access
+echo the installed programs without this command on new terminals.
+echo At the very least you need to open a new terminal
+echo in order to access these programs.

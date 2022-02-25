@@ -9,7 +9,7 @@
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 
 # TODO Document supported repository file structure.
-# Installs user commands.
+# Installs user commands and registers the installed commands to the PATH variable for new shells.
 
 mkdir -p ~/bin/net.splitcells.os.state.interface.commands.managed
 find ~/bin/net.splitcells.os.state.interface.commands.managed -maxdepth 1 -type f -delete
@@ -20,6 +20,9 @@ bootstrapRepoProperty=$(head -n 1 $repoList)
 if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	bootstrapRepo=$(echo $bootstrapRepoProperty | cut -c6-)
 		cd $bootstrapRepo
+	setupEnvironment=$bootstrapRepo/src/main/bash/command/managed/command.managed.environment.configure.sh
+		chmod +x $setupEnvironment
+		$setupEnvironment
 	chmod +x $bootstrapRepo/src/main/bash/echo/*
 		PATH=$bootstrapRepo/src/main/bash/echo:$PATH
 	chmod +x $bootstrapRepo/src/main/python/*
@@ -66,8 +69,3 @@ if test -d "$HOME/.config/net.splitcells.os.state.interface/src"; then
 	cd "$HOME/.config/net.splitcells.os.state.interface/src"
 	find . -mindepth 1 -type f -exec command.managed.install {} \;
 fi
-echo The commands were installed at `~/bin/net.splitcells.os.state.interface.commands.managed`.
-echo In order to use these, the folder needs to be added to the PATH variable.
-echo One can edit the `~/.bashrc` automatically via the command
-echo `~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.environment.configure.sh`,
-echo in order to add the new folder to the PATH variable in new shells by default.
