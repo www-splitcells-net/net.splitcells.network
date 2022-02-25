@@ -12,3 +12,6 @@
 
 # General Licensing Notes
 1. [The installer of GPL software seems to not have to be licensed under GPL.](https://www.gnu.org/licenses/gpl-faq.html#GPLCompatInstaller)
+
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

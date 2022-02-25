@@ -45,4 +45,5 @@ The priority of a task is just a guideline.
    because this may not always be possible
    (i.e. `repo.push` without an internet connection may not be possible).
 
-This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

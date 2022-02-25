@@ -12,4 +12,5 @@ The idea for this workflow is to improve the framework while having a benefit of
    1. Implement the currently required functionality.
    1. Share your new idea to the world.
 
-This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

@@ -65,4 +65,5 @@ So you decided that enough is enough?
 You want to get rid of the program?
 [Go on.](./uninstall.md)
 
-This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

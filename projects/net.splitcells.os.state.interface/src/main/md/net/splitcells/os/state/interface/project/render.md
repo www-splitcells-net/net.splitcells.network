@@ -25,3 +25,6 @@ The calls in this picture are:
 3. Render XML and CommonMark files and place these at the temporal folder.
 4. Upload content of temporal folder to the SFTP-Server, which host
    the website.
+
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

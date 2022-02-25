@@ -39,4 +39,5 @@ but is copied into an existing installation of this framework.
 In other words the detailed technical know-how of managing operation systems is mostly not provided by this framework.
 There are other projects that provide the technical know-how.
 
-This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

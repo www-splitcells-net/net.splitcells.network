@@ -55,3 +55,7 @@ This does only apply to documented or tested parts of the API.
 # External Code Guidelines
 1. [Advanced Bash-Scripting Guide](http://www.ing.iac.es/~docs/external/bash/abs-guide/)
    TODO Check if this guide is suitable.
+
+   As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).
+   

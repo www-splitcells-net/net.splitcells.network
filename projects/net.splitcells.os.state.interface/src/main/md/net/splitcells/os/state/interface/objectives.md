@@ -40,4 +40,5 @@ This project provides a framework in order to also support the following seconda
    Anyone can provide such a command, but the management of such a command is
    currently out of scope.
 
-This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

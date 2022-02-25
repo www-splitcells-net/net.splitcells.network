@@ -16,4 +16,5 @@ If there is no real need to interfere with the defaults, we do not do it.
 
 [So lets get started.](./manual/setup.md)
 
-This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

@@ -7,4 +7,5 @@ There is currently only 2 rules for contributing code to this project:
    under the same license as the original file.
    New files need explicit license information. 
 
-This file is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License.
+As long as not otherwise noted,
+this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).
