@@ -138,7 +138,6 @@ public class ProjectsRenderer {
         } else {
             translatedPath = "/" + translatedPathTmp;
         }
-        System.out.println("##" + translatedPath);
         try {
             if (translatedPath.equals(LAYOUT_PATH)) {
                 domsole().append(perspective("Refreshing layout."), LogLevel.INFO);
