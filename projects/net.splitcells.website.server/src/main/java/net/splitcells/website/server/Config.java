@@ -22,6 +22,7 @@ public class Config {
     private int openPort = 443;
     private String generationStyle = "standard";
     private Optional<String> siteFolder;
+    private String rootPath = "/";
 
     private Config() {
     }
@@ -82,5 +83,14 @@ public class Config {
 
     public Optional<String> layoutRelevant() {
         return layoutRelevant;
+    }
+    
+    public Config withRootPath(String rootPath) {
+        this.rootPath = rootPath;
+        return this;
+    }
+
+    public String rootPath() {
+        return rootPath;
     }
 }

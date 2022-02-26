@@ -24,9 +24,17 @@
     <xsl:variable name="site_generic_asset_burl"
                   select="concat($site_domain, $site_generic_asset_purl)"/>
     <!-- TODO These are the new and correct locations. -->
-    <xsl:variable name="site-instance-host-root-path" select="'/'">
+    <xsl:variable name="site-instance-host-root-path">
         <!-- This is used, if the site is not hosted a the root path of a domain (i.e. rendering to file system).
         If this would not be supported, it would be harder to link between projects.-->
+        <xsl:choose>
+            <xsl:when test="document('/net/splitcells/website/server/config/root.path.xml')">
+                <xsl:value-of select="document('/net/splitcells/website/server/config/root.path.xml')/node()"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="'/'"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:variable>
     <xsl:variable name="site-instance-root-path-default"
                   select="concat($site-instance-host-root-path, 'net/splitcells/website')"/>

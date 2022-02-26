@@ -77,18 +77,20 @@ Releases are done every time an important ticket is completed.
      ```
      Now it looks like this `For all rail Then values of allocated hours should have the same value`.
 ### Minor Changes
-* **2022-02-25** Create command `repo.copy`.
-  It makes the `repo.clone*` commands more usable, by providing useful options and
-  making it easy to combine said flags.
-  For instance, in order to ensure that a folder contains a repo one can use the following call:
-  `repo.copy --target-folder=. --omit-if-exists=true --remote-repo='<URL of remote repo>'`.
-  I do not know, if this is better than
-  `repo.exists || repo.clone.into.current '<URL of remote repo>'`.
-  It may be the case, because additional checks can be added more easily this way,
-  without changing existing code,
-  but I am not quite sure.
-  On the other hand, this is also a way to document the expected use cases of a tool
-  and can be used as a guide, informing the user how to use the software.
+* **2022-02-25**
+  1. Create command `repo.copy`.
+     It makes the `repo.clone*` commands more usable, by providing useful options and
+     making it easy to combine said flags.
+     For instance, in order to ensure that a folder contains a repo one can use the following call:
+     `repo.copy --target-folder=. --omit-if-exists=true --remote-repo='<URL of remote repo>'`.
+     I do not know, if this is better than
+     `repo.exists || repo.clone.into.current '<URL of remote repo>'`.
+     It may be the case, because additional checks can be added more easily this way,
+     without changing existing code,
+     but I am not quite sure.
+     On the other hand, this is also a way to document the expected use cases of a tool
+     and can be used as a guide, informing the user how to use the software.
+  2. **\#142**: Define `rootPath` option to web server config.
 * **2022-02-23**
   1. [**\#69** Create easier to navigate alternative to local path context in website](https://todo.sr.ht/~splitcells-net/net.splitcells.network/69):
      The default layout for the website contains now a `Relevant Local Path Context` section
