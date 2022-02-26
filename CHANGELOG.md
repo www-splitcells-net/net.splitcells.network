@@ -90,7 +90,15 @@ Releases are done every time an important ticket is completed.
      but I am not quite sure.
      On the other hand, this is also a way to document the expected use cases of a tool
      and can be used as a guide, informing the user how to use the software.
-  2. **\#142**: Define `rootPath` option to web server config.
+  2. **\#142**:
+     1. Define `rootPath` option to web server config.
+     2. Translate links according to the `rootPath` config,
+        which is `/` by default.
+        If `/` is used as `rootPath`,
+        then the path translation does not change the path.
+        For instance, `/net/splitcells/gel/index.html` is translated to `/net/splitcells/gel/index.html` in this case.
+        If `rootPath` is set to `/net/splitcells/martins/avots/website/`,
+        then it is translated to `/net/splitcells/martins/avots/website/net/splitcells/gel/index.html`.
 * **2022-02-23**
   1. [**\#s69** Create easier to navigate alternative to local path context in website](https://todo.sr.ht/~splitcells-net/net.splitcells.network/69):
      The default layout for the website contains now a `Relevant Local Path Context` section

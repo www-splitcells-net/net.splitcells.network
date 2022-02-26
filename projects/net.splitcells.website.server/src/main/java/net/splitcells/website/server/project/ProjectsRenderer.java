@@ -131,20 +131,22 @@ public class ProjectsRenderer {
      * @return Rendering Result
      */
     public Optional<RenderingResult> render(String path) {
+        final var translatedPath = path.substring(config.rootPath().length());
+        System.out.println("##" + translatedPath);
         try {
-            if (path.equals(LAYOUT_PATH)) {
+            if (translatedPath.equals(LAYOUT_PATH)) {
                 domsole().append(perspective("Refreshing layout."), LogLevel.INFO);
                 this.build();
-                return validateRenderingResult(Optional.empty(), Path.of(path));
+                return validateRenderingResult(Optional.empty(), Path.of(translatedPath));
             }
             final var matchingRoots = renderers
                     .stream()
-                    .filter(root -> path.startsWith(root.resourceRootPath()))
+                    .filter(root -> translatedPath.startsWith(root.resourceRootPath()))
                     .collect(toList());
             if (matchingRoots.isEmpty()) {
                 // System.out.println("No match for: " + path);
                 //System.out.println("Patterns: " + renderers.keySet());
-                return validateRenderingResult(fallbackRenderer.render(path), Path.of(path));
+                return validateRenderingResult(fallbackRenderer.render(translatedPath), Path.of(translatedPath));
             }
             // System.out.println("Match for: " + path);
             // System.out.println("Match on: " + matchingRoots.get(0));
@@ -152,16 +154,16 @@ public class ProjectsRenderer {
             matchingRoots.sort((a, b) -> Integer.valueOf(a.resourceRootPath().length()).compareTo(b.resourceRootPath().length()));
             matchingRoots.reverse();
             final var renderingResult = matchingRoots.stream()
-                    .map(renderer -> renderer.render(path))
+                    .map(renderer -> renderer.render(translatedPath))
                     .filter(Optional::isPresent)
                     .findFirst();
             if (renderingResult.isEmpty()) {
-                domsole().append(perspective("Path could not be found: " + path), LogLevel.ERROR);
-                return validateRenderingResult(Optional.empty(), Path.of(path));
+                domsole().append(perspective("Path could not be found: " + translatedPath), LogLevel.ERROR);
+                return validateRenderingResult(Optional.empty(), Path.of(translatedPath));
             }
-            return validateRenderingResult(renderingResult.get(), Path.of(path));
+            return validateRenderingResult(renderingResult.get(), Path.of(translatedPath));
         } catch (Exception e) {
-            throw new RuntimeException(path, e);
+            throw new RuntimeException(translatedPath, e);
         }
     }
 
