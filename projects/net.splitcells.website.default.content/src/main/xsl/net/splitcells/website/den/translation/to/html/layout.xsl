@@ -347,40 +347,40 @@ window.onload = function() {
                         <link rel="stylesheet" type="text/css">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:default-root-relative-url('/css/theme.white.variables.css')"/>
+                                        select="s:default-root-relative-url('net/splitcells/website/css/theme.white.variables.css')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('/css/basic.themed.css')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/css/basic.themed.css')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('/css/basic.css')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/css/basic.css')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css" media="none">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:default-root-relative-url('/css/layout.column.main.fullscreen.css')"/>
+                                        select="s:default-root-relative-url('net/splitcells/website/css/layout.column.main.fullscreen.css')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('/css/den.css')"/>
-                            </xsl:attribute>
-                        </link>
-                        <link rel="stylesheet" type="text/css">
-                            <xsl:attribute name="href">
-                                <xsl:value-of
-                                        select="s:default-root-relative-url('/css/layout.default.css')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/css/den.css')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:default-root-relative-url('/js/syntaxhighlighter.white/theme.css')"/>
+                                        select="s:default-root-relative-url('net/splitcells/website/css/layout.default.css')"/>
+                            </xsl:attribute>
+                        </link>
+                        <link rel="stylesheet" type="text/css">
+                            <xsl:attribute name="href">
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/js/syntaxhighlighter.white/theme.css')"/>
                             </xsl:attribute>
                         </link>
                     </xsl:otherwise>

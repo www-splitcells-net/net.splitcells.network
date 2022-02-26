@@ -131,7 +131,13 @@ public class ProjectsRenderer {
      * @return Rendering Result
      */
     public Optional<RenderingResult> render(String path) {
-        final var translatedPath = path.substring(config.rootPath().length());
+        final var translatedPathTmp = path.substring(config.rootPath().length());
+        final String translatedPath;
+        if (translatedPathTmp.startsWith("/")) {
+            translatedPath = translatedPathTmp;
+        } else {
+            translatedPath = "/" + translatedPathTmp;
+        }
         System.out.println("##" + translatedPath);
         try {
             if (translatedPath.equals(LAYOUT_PATH)) {
