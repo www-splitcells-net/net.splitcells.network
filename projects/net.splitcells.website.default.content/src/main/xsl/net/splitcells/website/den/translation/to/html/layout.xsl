@@ -352,12 +352,14 @@ window.onload = function() {
                         </link>
                         <link rel="stylesheet" type="text/css">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/css/basic.themed.css')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/css/basic.themed.css')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/css/basic.css')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/css/basic.css')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css" media="none">
@@ -368,7 +370,8 @@ window.onload = function() {
                         </link>
                         <link rel="stylesheet" type="text/css">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/css/den.css')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/css/den.css')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css">
@@ -662,6 +665,10 @@ window.onload = function() {
                         <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
                            href="http://localhost:1313/">
                             Local Hugo Site
+                        </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
+                           href="https://localhost:8445/net/splitcells/website/minimal/net/splitcells/martins/avots/website/index.html">
+                            Minimal Version
                         </a>
                         <h3>Mārtiņš Avots's Support System</h3>
                         <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
