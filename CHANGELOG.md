@@ -92,7 +92,7 @@ Releases are done every time an important ticket is completed.
      and can be used as a guide, informing the user how to use the software.
   2. **\#142**: Define `rootPath` option to web server config.
 * **2022-02-23**
-  1. [**\#69** Create easier to navigate alternative to local path context in website](https://todo.sr.ht/~splitcells-net/net.splitcells.network/69):
+  1. [**\#s69** Create easier to navigate alternative to local path context in website](https://todo.sr.ht/~splitcells-net/net.splitcells.network/69):
      The default layout for the website contains now a `Relevant Local Path Context` section
      in the secondary content column.
      It is located right before the `Local Path Context` and only lists paths,
