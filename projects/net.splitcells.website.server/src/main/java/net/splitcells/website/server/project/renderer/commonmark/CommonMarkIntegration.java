@@ -10,13 +10,17 @@
  */
 package net.splitcells.website.server.project.renderer.commonmark;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
+import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.util.Optional;
 
+import static net.splitcells.website.server.project.renderer.commonmark.EventExtractor.eventExtractor;
 import static net.splitcells.website.server.project.renderer.commonmark.LinkTranslator.linkTranslator;
 
 public class CommonMarkIntegration {
@@ -28,6 +32,13 @@ public class CommonMarkIntegration {
     final HtmlRenderer renderer = HtmlRenderer.builder().build();
 
     private CommonMarkIntegration() {
+    }
+
+    public static void main(String... args) {
+        final var t = commonMarkIntegration();
+        final var tmp = "<p>Paragraph that should be ignored</p>\n" +
+                "<h2>[Unreleased]</h2>";
+        Xml.parse("<html>" + tmp + "</html>");
     }
 
     public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config) {
@@ -49,5 +60,26 @@ public class CommonMarkIntegration {
                         , Optional.of(path)
                         , config)
                 .get();
+    }
+
+    public String render(Node node) {
+        return renderer.render(node);
+    }
+
+    public List<Event> events(String arg, ProjectRenderer projectRenderer, String path, Config config) {
+        final Optional<String> title;
+        final String contentToRender;
+        if (arg.startsWith("#")) {
+            final var titleLine = arg.split("[\r\n]+")[0];
+            title = Optional.of(titleLine.replaceAll("#", "").trim());
+            contentToRender = arg.substring(titleLine.length());
+        } else {
+            title = Optional.empty();
+            contentToRender = arg;
+        }
+        final var parsed = parser.parse(contentToRender);
+        final var eventExtractor = eventExtractor();
+        parsed.accept(eventExtractor);
+        return eventExtractor.extractedEvents();
     }
 }

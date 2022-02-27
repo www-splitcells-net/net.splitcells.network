@@ -48,6 +48,7 @@ import static net.splitcells.website.server.project.renderer.TextRenderer.textEx
 import static net.splitcells.website.server.project.renderer.UserCommandRenderer.userCommandRenderer;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.XmlRenderer.xmlRenderer;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogEventRenderer.commonMarkChangelogEventRenderer;
 import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogRenderer.commonMarkChangelogRenderer;
 import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkRenderer.commonMarkExtension;
 import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkReadmeRenderer.commonMarkReadmeRenderer;
@@ -91,6 +92,7 @@ public class ProjectRendererI implements ProjectRenderer {
         renderer.registerExtension(commonMarkExtension());
         renderer.registerExtension(csvRenderer());
         renderer.registerExtension(jacocoReportRenderer());
+        renderer.registerExtension(commonMarkChangelogEventRenderer());
     }
 
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath

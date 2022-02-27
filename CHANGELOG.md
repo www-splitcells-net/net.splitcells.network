@@ -77,6 +77,10 @@ Releases are done every time an important ticket is completed.
      ```
      Now it looks like this `For all rail Then values of allocated hours should have the same value`.
 ### Minor Changes
+* **2022-02-28**: **\#125**: Create and add `CommonMarkChangelogEventRenderer`
+  to the web server in order to extract events from one changelog file.
+  For every supported path `[...}/CHANGELOG.html` there is now an appropriate
+  supported path `[...}/CHANGELOG.events.html`.
 * **2022-02-25**
   1. Create command `repo.copy`.
      It makes the `repo.clone*` commands more usable, by providing useful options and
