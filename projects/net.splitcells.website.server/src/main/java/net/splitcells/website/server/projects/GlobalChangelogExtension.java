@@ -53,6 +53,7 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
 
     @Override
     public Set<Path> projectPaths(ProjectsRenderer projectsRenderer) {
-        return setOfUniques(Path.of(PATH));
+        // Avoid first slash.
+        return setOfUniques(Path.of(PATH.substring(1)));
     }
 }
