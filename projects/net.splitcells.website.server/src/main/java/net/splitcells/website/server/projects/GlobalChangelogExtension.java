@@ -23,6 +23,11 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
         return new GlobalChangelogExtension();
     }
 
+    /**
+     * TODO HACK This should depend on {@link Config#rootPath()}.
+     */
+    private static final String PATH = "/net/splitcells/CHANGELOG.global.html";
+
     private GlobalChangelogExtension() {
 
     }
@@ -31,7 +36,7 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, Config config) {
-        if ("/net/splitcells/CHANGELOG.global.html".equals(path)) {
+        if (PATH.equals(path)) {
             final var events = projectsRenderer.projectRenderers().stream()
                     .map(pr -> eventUtils.extractEvent(pr.resourceRootPath2().resolve("CHANGELOG.events.html").toString(), pr, config))
                     .reduce(List::withAppended)
@@ -48,6 +53,6 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
 
     @Override
     public Set<Path> projectPaths(ProjectsRenderer projectsRenderer) {
-        return setOfUniques(Path.of(projectsRenderer.config().rootPath() + "/CHANGELOG.global.html"));
+        return setOfUniques(Path.of(PATH));
     }
 }

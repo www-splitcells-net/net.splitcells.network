@@ -187,13 +187,17 @@ public class ProjectsRenderer {
     public Set<Path> projectsPaths() {
         return renderers.stream()
                 .map(Renderer::projectPaths)
-                .reduce((a, b) -> a.with(b)).get();
+                .reduce((a, b) -> a.with(b))
+                .get()
+                .with(extension.projectPaths(this));
     }
 
     public Set<Path> relevantProjectsPaths() {
         return renderers.stream()
                 .map(Renderer::relevantProjectPaths)
-                .reduce((a, b) -> a.with(b)).get();
+                .reduce((a, b) -> a.with(b))
+                .get()
+                .with(extension.projectPaths(this));
     }
 
     @Deprecated
