@@ -189,6 +189,7 @@ public class ProjectsRenderer {
                 .reduce((a, b) -> a.with(b)).get();
     }
 
+    @Deprecated
     private List<Perspective> s(Perspective current, String element) {
         final var children = current.children().stream()
                 .filter(child -> child.nameIs(VAL, NATURAL))
