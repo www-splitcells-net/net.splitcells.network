@@ -22,12 +22,12 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
  * <p>
  * TODO Split resources into actual HTML documents and other binary data.
  */
-public class ResourceRenderer implements Renderer {
-    public static ResourceRenderer resourceRenderer() {
-        return new ResourceRenderer();
+public class ResourceProjectRendererExtension implements ProjectRendererExtension {
+    public static ResourceProjectRendererExtension resourceRenderer() {
+        return new ResourceProjectRendererExtension();
     }
 
-    private ResourceRenderer() {
+    private ResourceProjectRendererExtension() {
 
     }
 

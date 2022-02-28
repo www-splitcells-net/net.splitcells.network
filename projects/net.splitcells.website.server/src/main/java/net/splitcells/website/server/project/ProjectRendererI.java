@@ -18,7 +18,7 @@ import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.renderer.RendererMerger;
+import net.splitcells.website.server.project.renderer.ProjectRendererExtensionMerger;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -39,19 +39,19 @@ import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.project.FileStructureTransformer.fileStructureTransformer;
-import static net.splitcells.website.server.project.renderer.CsvChartRenderer.csvChartRenderer;
-import static net.splitcells.website.server.project.renderer.CsvRenderer.csvRenderer;
-import static net.splitcells.website.server.project.renderer.JacocoReportRenderer.jacocoReportRenderer;
-import static net.splitcells.website.server.project.renderer.RendererMerger.rendererMerger;
-import static net.splitcells.website.server.project.renderer.ResourceRenderer.resourceRenderer;
-import static net.splitcells.website.server.project.renderer.TextRenderer.textExtension;
-import static net.splitcells.website.server.project.renderer.UserCommandRenderer.userCommandRenderer;
+import static net.splitcells.website.server.project.renderer.CsvChartProjectRendererExtension.csvChartRenderer;
+import static net.splitcells.website.server.project.renderer.CsvProjectRendererExtension.csvRenderer;
+import static net.splitcells.website.server.project.renderer.JacocoReportProjectRendererExtension.jacocoReportRenderer;
+import static net.splitcells.website.server.project.renderer.ProjectRendererExtensionMerger.rendererMerger;
+import static net.splitcells.website.server.project.renderer.ResourceProjectRendererExtension.resourceRenderer;
+import static net.splitcells.website.server.project.renderer.TextProjectRendererExtension.textExtension;
+import static net.splitcells.website.server.project.renderer.UserCommandProjectRendererExtension.userCommandRenderer;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
-import static net.splitcells.website.server.project.renderer.XmlRenderer.xmlRenderer;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogEventRenderer.commonMarkChangelogEventRenderer;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogRenderer.commonMarkChangelogRenderer;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkRenderer.commonMarkExtension;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkReadmeRenderer.commonMarkReadmeRenderer;
+import static net.splitcells.website.server.project.renderer.XmlProjectRendererExtension.xmlRenderer;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkChangelogProjectRendererExtension.commonMarkChangelogRenderer;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkProjectRendererExtension.commonMarkExtension;
+import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkReadmeProjectRendererExtension.commonMarkReadmeRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
@@ -82,7 +82,7 @@ public class ProjectRendererI implements ProjectRenderer {
     @Deprecated
     private final boolean typedFolder;
     private final SourceValidator sourceValidator;
-    private final RendererMerger renderer = rendererMerger();
+    private final ProjectRendererExtensionMerger renderer = rendererMerger();
     private final Config config;
 
     {

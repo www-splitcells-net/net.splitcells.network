@@ -6,7 +6,7 @@ import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
-import net.splitcells.website.server.project.renderer.Renderer;
+import net.splitcells.website.server.project.renderer.ProjectRendererExtension;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -19,14 +19,14 @@ import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
-public class CommonMarkRenderer implements Renderer {
-    public static CommonMarkRenderer commonMarkExtension() {
-        return new CommonMarkRenderer();
+public class CommonMarkProjectRendererExtension implements ProjectRendererExtension {
+    public static CommonMarkProjectRendererExtension commonMarkExtension() {
+        return new CommonMarkProjectRendererExtension();
     }
 
     private final CommonMarkIntegration renderer = commonMarkIntegration();
 
-    private CommonMarkRenderer() {
+    private CommonMarkProjectRendererExtension() {
 
     }
 

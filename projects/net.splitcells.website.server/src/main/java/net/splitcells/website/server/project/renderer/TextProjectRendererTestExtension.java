@@ -1,4 +1,4 @@
-package net.splitcells.website.server.project.renderer.commonmark;
+package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.website.server.Config;
 import org.junit.jupiter.api.Tag;
@@ -11,7 +11,7 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CommonMarkChangelogRendererTest {
+public class TextProjectRendererTestExtension {
     /**
      * TODO Test extension explicitly.
      */
@@ -20,12 +20,26 @@ public class CommonMarkChangelogRendererTest {
     public void testLayout() {
         final var testSubject = projectRenderer
                 ("public"
+                        , Path.of(".")
+                        , Path.of("../net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                        , Path.of("net.splitcells.website.default.content/src/main/resources/html")
+                        , "/net/splitcells/dem"
+                        , a -> Optional.empty()
+                        , Config.create());
+        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/website/server/test-text-document.html"));
+    }
+
+    @Tag(INTEGRATION_TEST)
+    @Test
+    public void testRawLayout() {
+        final var testSubject = projectRenderer
+                ("public"
                         , Path.of("../..")
                         , Path.of("../net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
                         , Path.of("net.splitcells.website.default.content/src/main/resources/html")
-                        , "/net/splitcells/network"
+                        , "/"
                         , a -> Optional.empty()
                         , Config.create());
-        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/network/CHANGELOG.html"));
+        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/network/legal/licenses/MIT.txt"));
     }
 }

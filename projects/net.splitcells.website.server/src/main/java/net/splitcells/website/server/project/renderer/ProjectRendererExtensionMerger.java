@@ -28,32 +28,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>
- * Provides one interface to multiple {@link Renderer}.
- * When a query is requested a matching {@link Renderer} is queried.
+ * Provides one interface to multiple {@link ProjectRendererExtension}.
+ * When a query is requested a matching {@link ProjectRendererExtension} is queried.
  * </p>
  * <p>
- * Only one {@link Renderer} is allowed to matched at a time.
+ * Only one {@link ProjectRendererExtension} is allowed to matched at a time.
  * </p>
  */
-public class RendererMerger implements Renderer {
-    public static RendererMerger rendererMerger() {
-        return new RendererMerger();
+public class ProjectRendererExtensionMerger implements ProjectRendererExtension {
+    public static ProjectRendererExtensionMerger rendererMerger() {
+        return new ProjectRendererExtensionMerger();
     }
 
-    private final List<Renderer> renderers = list();
+    private final List<ProjectRendererExtension> projectRendererExtensions = list();
 
-    private RendererMerger() {
+    private ProjectRendererExtensionMerger() {
 
     }
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
-        final var rendering = renderers.stream()
+        final var rendering = projectRendererExtensions.stream()
                 .map(e -> e.renderFile(path, projectRenderer, config))
                 .filter(e -> e.isPresent())
                 .collect(Lists.toList());
         if (rendering.size() > 1) {
-            final var matchedExtensions = renderers.stream()
+            final var matchedExtensions = projectRendererExtensions.stream()
                     .filter(r -> r.renderFile(path, projectRenderer, config).isPresent())
                     .map(Object::toString)
                     .reduce((a, b) -> a + ", " + b)
@@ -72,14 +72,14 @@ public class RendererMerger implements Renderer {
 
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        renderers.forEach(e -> e.extendProjectLayout(layout, projectRenderer));
+        projectRendererExtensions.forEach(e -> e.extendProjectLayout(layout, projectRenderer));
         return layout;
     }
 
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> projectPaths = setOfUniques();
-        renderers.forEach(e -> {
+        projectRendererExtensions.forEach(e -> {
             final var path = e.projectPaths(projectRenderer);
             if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
                 if (path.toString().startsWith("/")) {
@@ -91,14 +91,14 @@ public class RendererMerger implements Renderer {
         return projectPaths;
     }
 
-    public void registerExtension(Renderer extension) {
-        renderers.add(extension);
+    public void registerExtension(ProjectRendererExtension extension) {
+        projectRendererExtensions.add(extension);
     }
 
     @Override
     public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> relevantProjectPaths = setOfUniques();
-        renderers.forEach(e -> {
+        projectRendererExtensions.forEach(e -> {
             final var path = e.relevantProjectPaths(projectRenderer);
             if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
                 if (path.toString().startsWith("/")) {

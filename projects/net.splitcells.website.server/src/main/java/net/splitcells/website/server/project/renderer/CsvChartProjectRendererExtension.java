@@ -20,14 +20,14 @@ import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
-public class CsvChartRenderer implements Renderer {
-    public static CsvChartRenderer csvChartRenderer(FileStructureTransformer renderer) {
-        return new CsvChartRenderer(renderer);
+public class CsvChartProjectRendererExtension implements ProjectRendererExtension {
+    public static CsvChartProjectRendererExtension csvChartRenderer(FileStructureTransformer renderer) {
+        return new CsvChartProjectRendererExtension(renderer);
     }
 
     private final FileStructureTransformer renderer;
 
-    private CsvChartRenderer(FileStructureTransformer renderer) {
+    private CsvChartProjectRendererExtension(FileStructureTransformer renderer) {
         this.renderer = renderer;
     }
 

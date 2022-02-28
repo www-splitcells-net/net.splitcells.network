@@ -11,7 +11,6 @@
 package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -26,7 +25,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
  * TODO Do not only test {@link #projectPaths(ProjectRenderer)},
  * but also {@link #renderFile(String, ProjectRenderer, Config)}.
  */
-public interface Renderer {
+public interface ProjectRendererExtension {
     Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config);
 
     /**

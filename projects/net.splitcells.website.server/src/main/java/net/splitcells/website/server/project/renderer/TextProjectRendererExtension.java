@@ -24,14 +24,14 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
  * The projected path's replaces the "txt" file suffix with "html".
  * All files need to end with ".txt".
  */
-public class TextRenderer implements Renderer {
-    public static TextRenderer textExtension(FileStructureTransformer renderer) {
-        return new TextRenderer(renderer);
+public class TextProjectRendererExtension implements ProjectRendererExtension {
+    public static TextProjectRendererExtension textExtension(FileStructureTransformer renderer) {
+        return new TextProjectRendererExtension(renderer);
     }
 
     private final FileStructureTransformer renderer;
 
-    private TextRenderer(FileStructureTransformer renderer) {
+    private TextProjectRendererExtension(FileStructureTransformer renderer) {
         this.renderer = renderer;
     }
 

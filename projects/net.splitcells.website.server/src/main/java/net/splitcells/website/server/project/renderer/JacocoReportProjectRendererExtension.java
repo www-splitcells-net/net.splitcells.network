@@ -16,12 +16,12 @@ import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
-public class JacocoReportRenderer implements Renderer {
-    public static JacocoReportRenderer jacocoReportRenderer() {
-        return new JacocoReportRenderer();
+public class JacocoReportProjectRendererExtension implements ProjectRendererExtension {
+    public static JacocoReportProjectRendererExtension jacocoReportRenderer() {
+        return new JacocoReportProjectRendererExtension();
     }
 
-    private JacocoReportRenderer() {
+    private JacocoReportProjectRendererExtension() {
 
     }
 

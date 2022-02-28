@@ -16,7 +16,7 @@ import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.renderer.Renderer;
+import net.splitcells.website.server.project.renderer.ProjectRendererExtension;
 import net.splitcells.website.server.project.RenderingResult;
 
 import java.nio.file.Path;
@@ -32,15 +32,15 @@ import static net.splitcells.website.server.project.renderer.commonmark.CommonMa
 /**
  * TODO Add support for header outline.
  */
-public class CommonMarkReadmeRenderer implements Renderer {
+public class CommonMarkReadmeProjectRendererExtension implements ProjectRendererExtension {
 
-    public static CommonMarkReadmeRenderer commonMarkReadmeRenderer() {
-        return new CommonMarkReadmeRenderer();
+    public static CommonMarkReadmeProjectRendererExtension commonMarkReadmeRenderer() {
+        return new CommonMarkReadmeProjectRendererExtension();
     }
 
     private final CommonMarkIntegration renderer = commonMarkIntegration();
 
-    private CommonMarkReadmeRenderer() {
+    private CommonMarkReadmeProjectRendererExtension() {
     }
 
     @Override

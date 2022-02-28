@@ -16,12 +16,12 @@ import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
-public class CsvRenderer implements Renderer {
-    public static CsvRenderer csvRenderer() {
-        return new CsvRenderer();
+public class CsvProjectRendererExtension implements ProjectRendererExtension {
+    public static CsvProjectRendererExtension csvRenderer() {
+        return new CsvProjectRendererExtension();
     }
 
-    private CsvRenderer() {
+    private CsvProjectRendererExtension() {
 
     }
 

@@ -25,14 +25,14 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
  * The projected path's replaces the "xml" file suffix with "html".
  * All files need to end with ".xml".
  */
-public class XmlRenderer implements Renderer {
-    public static XmlRenderer xmlRenderer(FileStructureTransformer renderer) {
-        return new XmlRenderer(renderer);
+public class XmlProjectRendererExtension implements ProjectRendererExtension {
+    public static XmlProjectRendererExtension xmlRenderer(FileStructureTransformer renderer) {
+        return new XmlProjectRendererExtension(renderer);
     }
 
     private final FileStructureTransformer renderer;
 
-    private XmlRenderer(FileStructureTransformer renderer) {
+    private XmlProjectRendererExtension(FileStructureTransformer renderer) {
         this.renderer = renderer;
     }
 

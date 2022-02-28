@@ -36,15 +36,15 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
  * Renders all commands, that are installed via 'net.splitcells.os.state.interface' for the current user
  * at '/net/splitcells/os/state/interface/installed/index.html'.
  */
-public class UserCommandRenderer implements Renderer {
-    public static UserCommandRenderer userCommandRenderer() {
-        return new UserCommandRenderer();
+public class UserCommandProjectRendererExtension implements ProjectRendererExtension {
+    public static UserCommandProjectRendererExtension userCommandRenderer() {
+        return new UserCommandProjectRendererExtension();
     }
 
     private static final String RENDERING_PATH = "net/splitcells/os/state/interface/installed/index.html";
     private static final Path BIN_FOLDER = userHome().resolve("bin/net.splitcells.os.state.interface.commands.managed/");
 
-    private UserCommandRenderer() {
+    private UserCommandProjectRendererExtension() {
 
     }
 
