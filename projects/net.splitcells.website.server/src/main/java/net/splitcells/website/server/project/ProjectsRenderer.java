@@ -19,6 +19,7 @@ import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.validator.RenderingValidator;
 import net.splitcells.website.server.Server;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.projects.ProjectsRendererExtension;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,6 +37,7 @@ import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
+import static net.splitcells.website.server.projects.GlobalChangelogExtension.globalChangelogExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -113,6 +115,7 @@ public class ProjectsRenderer {
     private final List<ProjectRenderer> renderers;
     private final ProjectRenderer fallbackRenderer;
     private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
+    private final ProjectsRendererExtension extension = globalChangelogExtension();
 
     private ProjectsRenderer(String name
             , ProjectRenderer fallbackRenderer
@@ -139,6 +142,10 @@ public class ProjectsRenderer {
             translatedPath = "/" + translatedPathTmp;
         }
         try {
+            final var extensionRendering = extension.renderFile(path, this, config);
+            if (extensionRendering.isPresent()) {
+                return extensionRendering;
+            }
             if (translatedPath.equals(LAYOUT_PATH)) {
                 domsole().append(perspective("Refreshing layout."), LogLevel.INFO);
                 this.build();
