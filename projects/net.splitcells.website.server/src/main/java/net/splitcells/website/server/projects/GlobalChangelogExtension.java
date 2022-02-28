@@ -31,13 +31,16 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, Config config) {
-        final var events = projectsRenderer.projectRenderers().stream()
-                .map(pr -> eventUtils.extractEvent(pr.resourceRootPath2().resolve("CHANGELOG.events.html").toString(), pr, config))
-                .reduce(List::withAppended)
-                .orElseGet(Lists::list);
-        return Optional.of(
-                renderingResult(eventUtils.renderEvents(events).getBytes(StandardCharsets.UTF_8)
-                        , TEXT_HTML.toString()));
+        if ("/net/splitcells/CHANGELOG.global.html".equals(path)) {
+            final var events = projectsRenderer.projectRenderers().stream()
+                    .map(pr -> eventUtils.extractEvent(pr.resourceRootPath2().resolve("CHANGELOG.events.html").toString(), pr, config))
+                    .reduce(List::withAppended)
+                    .orElseGet(Lists::list);
+            return Optional.of(
+                    renderingResult(eventUtils.renderEvents(events).getBytes(StandardCharsets.UTF_8)
+                            , TEXT_HTML.toString()));
+        }
+        return Optional.empty();
     }
 
     @Override
