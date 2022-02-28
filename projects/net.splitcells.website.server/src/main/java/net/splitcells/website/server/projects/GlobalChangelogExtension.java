@@ -43,8 +43,8 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
                     .orElseGet(Lists::list);
             return Optional.of(
                     renderingResult(projectsRenderer.renderHtmlBodyContent("<ol>" + eventUtils.renderEvents(events) + "</ol>"
-                                    , Optional.empty()
-                                    , Optional.empty()
+                                    , Optional.of("Global Changelog")
+                                    , Optional.of(path)
                                     , config).get()
                             , TEXT_HTML.toString()));
         }
