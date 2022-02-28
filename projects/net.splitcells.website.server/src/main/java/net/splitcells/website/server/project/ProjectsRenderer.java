@@ -199,4 +199,8 @@ public class ProjectsRenderer {
         assertThat(children).hasSizeLessThan(2);
         return children;
     }
+    
+    public Config config() {
+        return config;
+    }
 }
