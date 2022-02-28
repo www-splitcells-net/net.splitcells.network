@@ -55,7 +55,7 @@ public class CommonMarkChangelogEventProjectRendererExtension implements Project
     }
 
     public String renderEvents(List<Event> events) {
-        events.sort(Comparators.comparator((a, b) -> a.dateTime().compareTo(b.dateTime())));
+        events.sort(Comparators.comparator((a, b) -> b.dateTime().compareTo(a.dateTime())));
         final var renderedEvents = events.stream().map(Event::node)
                 .map(e -> renderer.render(e))
                 .reduce((a, b) -> a + "\n" + b);
