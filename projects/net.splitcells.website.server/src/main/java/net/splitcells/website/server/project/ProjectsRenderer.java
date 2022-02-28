@@ -214,4 +214,11 @@ public class ProjectsRenderer {
     public List<ProjectRenderer> projectRenderers() {
         return renderers;
     }
+
+    public Optional<byte[]> renderHtmlBodyContent(String bodyContent
+            , Optional<String> title
+            , Optional<String> path
+            , Config config) {
+        return renderers.get(0).renderHtmlBodyContent(bodyContent, title, path, config);
+    }
 }

@@ -37,7 +37,10 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
                     .reduce(List::withAppended)
                     .orElseGet(Lists::list);
             return Optional.of(
-                    renderingResult(eventUtils.renderEvents(events).getBytes(StandardCharsets.UTF_8)
+                    renderingResult(projectsRenderer.renderHtmlBodyContent(eventUtils.renderEvents(events)
+                                    , Optional.empty()
+                                    , Optional.empty()
+                                    , config).get()
                             , TEXT_HTML.toString()));
         }
         return Optional.empty();
