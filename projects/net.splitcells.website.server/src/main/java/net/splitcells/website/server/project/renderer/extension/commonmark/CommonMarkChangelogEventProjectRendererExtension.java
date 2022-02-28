@@ -2,6 +2,7 @@ package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutUtils;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.order.Comparators.comparator;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
@@ -37,17 +39,30 @@ public class CommonMarkChangelogEventProjectRendererExtension implements Project
         if (path.endsWith("CHANGELOG.events.html") && is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
             final var pathContent = readString(projectRenderer.projectFolder().resolve("CHANGELOG.md"));
             final var events = renderer.events(pathContent, projectRenderer, path, config);
-            events.sort(Comparators.comparator((a, b) -> a.dateTime().compareTo(b.dateTime())));
-            final var renderedEvents = events.stream().map(Event::node)
-                    .map(e -> renderer.render(e))
-                    .reduce((a, b) -> a + "\n" + b);
-            if (renderedEvents.isPresent()) {
-                return Optional.of(
-                        renderingResult(renderedEvents.get().getBytes(StandardCharsets.UTF_8)
-                                , TEXT_HTML.toString()));
-            }
+            return Optional.of(
+                    renderingResult(renderEvents(events).getBytes(StandardCharsets.UTF_8)
+                            , TEXT_HTML.toString()));
         }
         return Optional.empty();
+    }
+
+    public List<Event> extractEvent(String path, ProjectRenderer projectRenderer, Config config) {
+        if (path.endsWith("CHANGELOG.events.html") && is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
+            final var pathContent = readString(projectRenderer.projectFolder().resolve("CHANGELOG.md"));
+            return renderer.events(pathContent, projectRenderer, path, config);
+        }
+        return list();
+    }
+
+    public String renderEvents(List<Event> events) {
+        events.sort(Comparators.comparator((a, b) -> a.dateTime().compareTo(b.dateTime())));
+        final var renderedEvents = events.stream().map(Event::node)
+                .map(e -> renderer.render(e))
+                .reduce((a, b) -> a + "\n" + b);
+        if (renderedEvents.isEmpty()) {
+            return "";
+        }
+        return renderedEvents.get();
     }
 
     @Override
