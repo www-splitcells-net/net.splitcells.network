@@ -37,7 +37,6 @@ public class EventExtractor extends AbstractVisitor {
             return;
         }
         final var possibleDate = itemContent.getFirstChild();
-        System.out.println(possibleDate.toString());
         if (possibleDate instanceof StrongEmphasis) {
             final var possibleDateEmphasis = (StrongEmphasis) possibleDate;
             final var possibleDateText = ((Text) possibleDateEmphasis.getFirstChild()).getLiteral();
