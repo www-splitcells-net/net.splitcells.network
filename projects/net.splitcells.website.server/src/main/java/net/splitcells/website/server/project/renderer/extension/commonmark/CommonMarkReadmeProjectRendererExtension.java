@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.project.renderer.commonmark;
+package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
@@ -16,7 +16,7 @@ import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.renderer.ProjectRendererExtension;
+import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtension;
 import net.splitcells.website.server.project.RenderingResult;
 
 import java.nio.file.Path;
@@ -27,7 +27,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkIntegration.commonMarkIntegration;
+import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
 /**
  * TODO Add support for header outline.

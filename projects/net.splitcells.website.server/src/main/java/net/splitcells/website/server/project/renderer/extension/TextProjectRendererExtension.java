@@ -1,4 +1,4 @@
-package net.splitcells.website.server.project.renderer;
+package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;

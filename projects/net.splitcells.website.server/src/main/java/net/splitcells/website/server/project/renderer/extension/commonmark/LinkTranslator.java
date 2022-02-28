@@ -1,4 +1,4 @@
-package net.splitcells.website.server.project.renderer.commonmark;
+package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.website.server.project.validator.RenderingValidator;
 import org.commonmark.node.AbstractVisitor;

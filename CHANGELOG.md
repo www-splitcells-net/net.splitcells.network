@@ -20,9 +20,12 @@ Links to such platforms may or may not be valid.
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
-* **2022-02-28** **\#125** Rename `*Renderer*` of `net.splitcells.website.server.project.renderer.**`
-  to `*ProjectRendererExtension*` in order to ensure unique class names in the
-  future.
+* **2022-02-28** **\#125**:
+  1. Rename `*Renderer*` of `net.splitcells.website.server.project.renderer.**`
+     to `*ProjectRendererExtension*` in order to ensure unique class names in the
+     future.
+  2. Improve package structure by moving `net.splitcells.website.server.project.renderer.*`
+     to `net.splitcells.website.server.project.renderer.extension.*`.
 * **2022-02-25** [**\#158** Do not change the PATH during the installation of OS state interface](https://github.com/www-splitcells-net/net.splitcells.network/issues/158):
   `command.repositories.install.sh` now does not call `command.managed.environment.configure.sh`
   and therefore does not edit `~/.bashrc`.

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.project.renderer.commonmark;
+package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
@@ -19,9 +19,6 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.util.Optional;
-
-import static net.splitcells.website.server.project.renderer.commonmark.EventExtractor.eventExtractor;
-import static net.splitcells.website.server.project.renderer.commonmark.LinkTranslator.linkTranslator;
 
 public class CommonMarkIntegration {
     public static CommonMarkIntegration commonMarkIntegration() {
@@ -53,7 +50,7 @@ public class CommonMarkIntegration {
             contentToRender = arg;
         }
         final var parsed = parser.parse(contentToRender);
-        parsed.accept(linkTranslator());
+        parsed.accept(LinkTranslator.linkTranslator());
         return projectRenderer
                 .renderHtmlBodyContent(renderer.render(parsed)
                         , title
@@ -78,7 +75,7 @@ public class CommonMarkIntegration {
             contentToRender = arg;
         }
         final var parsed = parser.parse(contentToRender);
-        final var eventExtractor = eventExtractor();
+        final var eventExtractor = EventExtractor.eventExtractor();
         parsed.accept(eventExtractor);
         return eventExtractor.extractedEvents();
     }

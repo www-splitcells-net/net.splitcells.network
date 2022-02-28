@@ -1,4 +1,4 @@
-package net.splitcells.website.server.project.renderer;
+package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.website.server.Config;
 import org.junit.jupiter.api.Tag;

@@ -1,4 +1,4 @@
-package net.splitcells.website.server.project.renderer.commonmark;
+package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
@@ -6,7 +6,7 @@ import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
-import net.splitcells.website.server.project.renderer.ProjectRendererExtension;
+import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtension;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -17,14 +17,13 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
-import static net.splitcells.website.server.project.renderer.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
 public class CommonMarkProjectRendererExtension implements ProjectRendererExtension {
     public static CommonMarkProjectRendererExtension commonMarkExtension() {
         return new CommonMarkProjectRendererExtension();
     }
 
-    private final CommonMarkIntegration renderer = commonMarkIntegration();
+    private final CommonMarkIntegration renderer = CommonMarkIntegration.commonMarkIntegration();
 
     private CommonMarkProjectRendererExtension() {
 

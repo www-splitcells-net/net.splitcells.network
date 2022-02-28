@@ -1,10 +1,8 @@
-package net.splitcells.website.server.project.renderer.commonmark;
+package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.list.List;
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.ListItem;
-import org.commonmark.node.Node;
-import org.commonmark.node.Paragraph;
 import org.commonmark.node.StrongEmphasis;
 import org.commonmark.node.Text;
 

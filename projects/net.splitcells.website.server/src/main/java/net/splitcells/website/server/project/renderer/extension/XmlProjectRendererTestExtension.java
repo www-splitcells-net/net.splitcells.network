@@ -1,4 +1,4 @@
-package net.splitcells.website.server.project.renderer.commonmark;
+package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.website.server.Config;
 import org.junit.jupiter.api.Tag;
@@ -11,13 +11,13 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CommonMarkReadmeProjectRendererTestExtension {
+public class XmlProjectRendererTestExtension {
     /**
      * TODO Test extension explicitly.
      */
     @Tag(INTEGRATION_TEST)
     @Test
-    public void testReadMeLayout() {
+    public void testXmlLayout() {
         final var testSubject = projectRenderer
                 ("public"
                         , Path.of("../net.splitcells.dem")
@@ -26,6 +26,6 @@ public class CommonMarkReadmeProjectRendererTestExtension {
                         , "/net/splitcells/dem"
                         , a -> Optional.empty()
                         , Config.create());
-        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/README.html"));
+        assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/history.html"));
     }
 }
