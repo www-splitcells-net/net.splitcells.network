@@ -27,7 +27,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 🤝 Collaborate large decision-making networks.
 
-🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) ([also on Gemini](gemini://splitcells-net.srht.site)) and programming progress via our [changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
+ßß🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) ([also on Gemini](gemini://splitcells-net.srht.site)) and programming progress via our [changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
 
 🦉 Get an [bird's-eye view](src/main/md/net/splitcells/network/overview.md).
 
@@ -60,7 +60,7 @@ TODO: Short And Compact Feature Description
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_shield)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_small)
 
-* [Changelog](./CHANGELOG.md)
+* [Changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html)
 * [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security):
   The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
   workflow has to be run manually.
