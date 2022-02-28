@@ -596,6 +596,12 @@ window.onload = function() {
                             </xsl:attribute>
                             Contact
                         </a>
+                        <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
+                            <xsl:attribute name="href">
+                                <xsl:value-of select="concat($site-instance-host-root-path, 'net/splitcells/CHANGELOG.global.html')"/>
+                            </xsl:attribute>
+                            Global Changelog
+                        </a>
                         <a class="net-splitcells-button net-splitcells-component-priority-3">
                             <xsl:attribute name="href">
                                 <xsl:value-of
