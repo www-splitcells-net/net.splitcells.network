@@ -26,14 +26,6 @@ Releases are done every time an important ticket is completed.
      future.
   2. Improve package structure by moving `net.splitcells.website.server.project.renderer.*`
      to `net.splitcells.website.server.project.renderer.extension.*`.
-* **2022-02-25** [**\#158** Do not change the PATH during the installation of OS state interface](https://github.com/www-splitcells-net/net.splitcells.network/issues/158):
-  `command.repositories.install.sh` now does not call `command.managed.environment.configure.sh`
-  and therefore does not edit `~/.bashrc`.
-  This avoids unexpected changes to the user configs.
-  The command `command.repositories.setup.sh` was created,
-  which is the original version of `command.repositories.install.sh`.
-  This way there is still a command,
-  that installs the OSSI project with full functionality.
 * **2022-02-23** **\#s69**: Rename Renderer class names in order to unify
   naming:
   1. `CommonMarkChangelogExtension` -> `CommonMarkChangelogRenderer`

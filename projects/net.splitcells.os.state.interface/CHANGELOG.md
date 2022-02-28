@@ -18,6 +18,16 @@ Changes are now written to the root changelog instead.
 
 ## Unreleased
 ### Major Changes
+* **2022-02-25** [**\#158** Do not change the PATH during the installation of OS state interface](https://github.com/www-splitcells-net/net.splitcells.network/issues/158):
+  `command.repositories.install.sh` now does not call `command.managed.environment.configure.sh`
+  and therefore does not edit `~/.bashrc`.
+  This avoids unexpected changes to the user configs.
+  The command `command.repositories.setup.sh` was created,
+  which is the original version of `command.repositories.install.sh`.
+  This way there is still a command,
+  that installs the OSSI project with full functionality.
+## [5.0.0] - 2022-02-28
+### Major Changes
 1. Remove deprecated command `command.managed.define`.
 1. Disable debug logging by default.
    Add environment variable 'log_level'.

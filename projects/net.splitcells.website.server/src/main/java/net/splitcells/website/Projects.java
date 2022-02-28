@@ -126,6 +126,14 @@ public class Projects {
                                 , "/net/splitcells/website"
                                 , sourceValidator
                                 , config)
+                , projectRenderer
+                        (profile
+                                , integratedProjectRepositories.resolve("net.splitcells.os.state.interface/")
+                                , xslLib
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/net/splitcells/os/state/interface"
+                                , sourceValidator
+                                , config)
         );
         if (isDirectory(integratedProjectRepositories)) {
             projectRenderers.add(projectRenderer
