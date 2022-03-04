@@ -28,6 +28,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
+import net.splitcells.gel.solution.Solution;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.w3c.dom.Element;
@@ -167,5 +168,9 @@ public interface Table extends Discoverable, Domable {
             }
         }
         return fods;
+    }
+    
+    static boolean referToSameData(Table a, Table b) {
+        return a.path().equals(b.path());
     }
 }
