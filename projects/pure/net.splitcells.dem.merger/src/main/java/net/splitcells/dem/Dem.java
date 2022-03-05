@@ -17,7 +17,6 @@ import net.splitcells.dem.environment.config.EndTime;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
-import net.splitcells.dem.source.code.SourceCodeCheck;
 
 import java.time.ZonedDateTime;
 import java.util.Optional;
@@ -158,9 +157,5 @@ public final class Dem {
 
     public static <T> T configValue(Class<? extends Option<T>> key) {
         return environment().config().configValue(key);
-    }
-
-    public static void checkSourceCode() {
-        SourceCodeCheck.main();
     }
 }
