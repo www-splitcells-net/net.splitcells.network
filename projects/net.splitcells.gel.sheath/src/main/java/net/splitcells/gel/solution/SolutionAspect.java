@@ -276,4 +276,9 @@ public class SolutionAspect implements Solution {
     public List<String> path() {
         return solution.path();
     }
+
+    @Override
+    public String toString() {
+        return path().toString();
+    }
 }
