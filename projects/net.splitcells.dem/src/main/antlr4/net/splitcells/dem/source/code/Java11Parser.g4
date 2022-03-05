@@ -64,7 +64,8 @@ call_arguments_next
     : Comma call_arguments_element
     ;
 class_definition
-    : javadoc? annotation* Keyword_public? Keyword_final?
+    : javadoc? Keysymbol_at Keyword_JavaLegacyArtifact .*
+    | javadoc? annotation* Keyword_public? Keyword_final?
     	Keyword_class
     	type_declaration
     	class_extension
@@ -75,7 +76,6 @@ class_extension
 	;
 class_member
     : javadoc? Keysymbol_at Keyword_JavaLegacyBody .* Brace_curly_open .* Brace_curly_closed
-    | javadoc? Keysymbol_at Keyword_JavaLegacyArtifact .* Brace_curly_open .* Brace_curly_closed
     | class_constructor
     | class_member_method_definition
     | class_member_value_declaration

@@ -11,12 +11,15 @@
 package net.splitcells.dem.utils.reflection;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.io.File;
 import java.net.URL;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+@JavaLegacyArtifact
 public class ClassRelatedI extends SecurityManager implements ClassRelated {
 
     public static ClassRelated classRelated() {
