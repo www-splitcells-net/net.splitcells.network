@@ -134,6 +134,22 @@ public class Projects {
                                 , "/net/splitcells/os/state/interface"
                                 , sourceValidator
                                 , config)
+                , projectRenderer
+                        (profile
+                                , integratedProjectRepositories.resolve("pure/net.splitcells.dem.merger/")
+                                , xslLib
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/net/splitcells/dem"
+                                , sourceValidator
+                                , config)
+                , projectRenderer
+                        (profile
+                                , integratedProjectRepositories.resolve("pure/net.splitcells.dem.core/")
+                                , xslLib
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/net/splitcells/dem"
+                                , sourceValidator
+                                , config)
         );
         if (isDirectory(integratedProjectRepositories)) {
             projectRenderers.add(projectRenderer
