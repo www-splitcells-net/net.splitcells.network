@@ -16,6 +16,9 @@ import net.splitcells.dem.environment.config.IsDeterministic;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.map.MapFI_deterministic.mapFI_deterministic;
+import static net.splitcells.dem.data.set.map.MapFI_random.mapFI_random;
+
 public class MapFI_configured implements MapF {
 
     public static MapFI_configured mapFI_configured() {
@@ -27,9 +30,9 @@ public class MapFI_configured implements MapF {
     private MapFI_configured() {
         final var isDeterministic = Dem.configValue(IsDeterministic.class);
         if (isDeterministic.isPresent() && isDeterministic.get().isTrue()) {
-            mapF = new MapFI_deterministic();
+            mapF = mapFI_deterministic();
         } else {
-            mapF = new MapFI_random();
+            mapF = mapFI_random();
         }
     }
 
@@ -46,11 +49,11 @@ public class MapFI_configured implements MapF {
     @Deprecated
     private void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
         if (newValue.isEmpty()) {
-            mapF = new MapFI_random();
+            mapF = mapFI_random();
         } else if (newValue.get().isTrue()) {
-            mapF = new MapFI_deterministic();
+            mapF = mapFI_deterministic();
         } else {
-            mapF = new MapFI_random();
+            mapF = mapFI_random();
         }
     }
 

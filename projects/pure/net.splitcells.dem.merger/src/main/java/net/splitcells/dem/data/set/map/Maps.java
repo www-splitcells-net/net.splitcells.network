@@ -19,13 +19,13 @@ import java.util.stream.Collector;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.data.set.map.MapFI_configured.mapFI_configured;
+import static net.splitcells.dem.data.set.map.MapFI_deterministic.mapFI_deterministic;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public class Maps extends ResourceI<MapF> {
 
     public Maps() {
-        super(() -> mapFI_configured());
+        super(() -> mapFI_deterministic());
     }
 
     public static <Key, Value> Map<Key, Value> map() {

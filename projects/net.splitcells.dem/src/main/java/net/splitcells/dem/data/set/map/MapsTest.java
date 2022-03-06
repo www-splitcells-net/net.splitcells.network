@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.process;
+import static net.splitcells.dem.data.set.map.MapFI_configured.mapFI_configured;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,10 +26,14 @@ public class MapsTest {
     @Test
     public void testForDefaultFactory() {
         assertThat
-                (process(() -> assertThat(configValue(Maps.class).map()._isDeterministic()).contains(false)).hasError())
+                (process(() -> assertThat(mapFI_configured().map()._isDeterministic()).contains(false)
+                        , env -> env.config()
+                                .withConfigValue(IsDeterministic.class, Optional.of(Bools.untrue()))).hasError())
                 .isFalse();
         assertThat
-                (process(() -> assertThat(configValue(Maps.class).map(map())._isDeterministic()).contains(false))
+                (process(() -> assertThat(mapFI_configured().map(map())._isDeterministic()).contains(false)
+                        , env -> env.config()
+                                .withConfigValue(IsDeterministic.class, Optional.of(Bools.untrue())))
                         .hasError())
                 .isFalse();
     }
@@ -36,13 +41,17 @@ public class MapsTest {
     @Test
     public void testForDeterministicFactory() {
         assertThat
-                (process(() -> assertThat(configValue(Maps.class).map()._isDeterministic()).contains(true)
-                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                (process(() -> assertThat(mapFI_configured().map()._isDeterministic()).contains(true)
+                        , env -> env.config()
+                                .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                                .withConfigValue(Maps.class, mapFI_configured())
                 ).hasError())
                 .isFalse();
         assertThat
-                (process(() -> assertThat(configValue(Maps.class).map(map())._isDeterministic()).contains(true)
-                        , env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                (process(() -> assertThat(mapFI_configured().map(map())._isDeterministic()).contains(true)
+                        , env -> env.config()
+                                .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                                .withConfigValue(Maps.class, mapFI_configured())
                 ).hasError())
                 .isFalse();
     }

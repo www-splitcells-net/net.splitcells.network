@@ -15,6 +15,14 @@ import java.util.LinkedHashMap;
 import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
 
 public final class MapFI_deterministic implements MapF {
+    
+    public static MapF mapFI_deterministic() {
+        return new MapFI_deterministic();
+    }
+    
+    private MapFI_deterministic() {
+
+    }
 
     @Override
     public <K, V> Map<K, V> map() {
