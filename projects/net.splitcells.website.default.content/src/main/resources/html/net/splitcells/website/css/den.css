@@ -42,6 +42,12 @@ li {
    padding-left: .5em;
    margin-left: 1.5em;
    }
+li:nth-child(even) {
+    background: var(--paragraph-background-color-priority-1-b);
+    }
+li:nth-child(odd) {
+    background: var(--paragraph-background-color-priority-1-a);
+    }
 .void {
     display: none;
     }
