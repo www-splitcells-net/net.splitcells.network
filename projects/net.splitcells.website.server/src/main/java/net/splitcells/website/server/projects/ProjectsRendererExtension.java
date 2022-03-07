@@ -3,8 +3,6 @@ package net.splitcells.website.server.projects;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.ProjectsRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
 import java.nio.file.Path;

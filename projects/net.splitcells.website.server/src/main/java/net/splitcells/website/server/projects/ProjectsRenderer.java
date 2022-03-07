@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.project;
+package net.splitcells.website.server.projects;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -16,10 +16,12 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.project.Renderer;
+import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.validator.RenderingValidator;
 import net.splitcells.website.server.Server;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.projects.ProjectsRendererExtension;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -92,7 +94,7 @@ public class ProjectsRenderer {
                     try {
                         final var targetPath = path(target, path.substring(1));
                         createDirectory(targetPath.getParent());
-                        writeToFile(targetPath, render(path).get().getContent());
+                        Files.writeToFile(targetPath, render(path).get().getContent());
                     } catch (Exception e) {
                         throw new RuntimeException(target.toString() + path, e);
                     }

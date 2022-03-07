@@ -14,7 +14,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
 
 import java.nio.file.Path;

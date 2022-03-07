@@ -2,7 +2,7 @@ package net.splitcells.website.server.project.validator;
 
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.website.Formats;
-import net.splitcells.website.server.project.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
 
