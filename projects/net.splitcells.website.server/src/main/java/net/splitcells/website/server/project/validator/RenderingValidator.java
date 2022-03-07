@@ -10,7 +10,7 @@
  */
 package net.splitcells.website.server.project.validator;
 
-import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.RenderingResult;
 
 import java.nio.file.Path;
@@ -21,5 +21,5 @@ import java.util.Optional;
  */
 @FunctionalInterface
 public interface RenderingValidator {
-    boolean validate(Optional<RenderingResult> content, ProjectsRenderer projectsRenderer, Path requestedPath);
+    boolean validate(Optional<RenderingResult> content, ProjectsRendererI projectsRendererI, Path requestedPath);
 }

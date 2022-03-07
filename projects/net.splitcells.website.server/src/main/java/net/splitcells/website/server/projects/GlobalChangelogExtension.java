@@ -33,14 +33,14 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
     private final CommonMarkChangelogEventProjectRendererExtension eventUtils = commonMarkChangelogEventRenderer();
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, Config config) {
+    public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
-            final var events = projectsRenderer.projectRenderers().stream()
+            final var events = projectsRendererI.projectRenderers().stream()
                     .map(pr -> eventUtils.extractEvent(pr.resourceRootPath2().resolve("CHANGELOG.events.html").toString(), pr, config))
                     .reduce(List::withAppended)
                     .orElseGet(Lists::list);
             return Optional.of(
-                    renderingResult(projectsRenderer.renderHtmlBodyContent("<ol>" + eventUtils.renderEvents(events) + "</ol>"
+                    renderingResult(projectsRendererI.renderHtmlBodyContent("<ol>" + eventUtils.renderEvents(events) + "</ol>"
                                     , Optional.of("Global Changelog")
                                     , Optional.of(path)
                                     , config).get()
@@ -50,7 +50,7 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
     }
 
     @Override
-    public Set<Path> projectPaths(ProjectsRenderer projectsRenderer) {
+    public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         // Avoid first slash.
         return setOfUniques(Path.of(PATH.substring(1)));
     }

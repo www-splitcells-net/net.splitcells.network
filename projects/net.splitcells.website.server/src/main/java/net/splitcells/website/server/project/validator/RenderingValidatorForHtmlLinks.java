@@ -2,7 +2,7 @@ package net.splitcells.website.server.project.validator;
 
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.website.Formats;
-import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.RenderingResult;
 
 
@@ -14,7 +14,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 
 /**
  * Checks whether rendered HTML documents relative links can be rendered
- * by the given {@link ProjectsRenderer}.
+ * by the given {@link ProjectsRendererI}.
  * Validation is done via Regex heuristics,
  * in order to avoid additional external dependencies.
  */
@@ -30,14 +30,14 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
     }
 
     @Override
-    public boolean validate(Optional<RenderingResult> content, ProjectsRenderer projectsRenderer, Path requestedPath) {
+    public boolean validate(Optional<RenderingResult> content, ProjectsRendererI projectsRendererI, Path requestedPath) {
         if (content.isEmpty()) {
             return true;
         }
         if (!Formats.HTML.mimeTypes().equals(content.get().getFormat())) {
             return true;
         }
-        final var paths = projectsRenderer.projectsPaths();
+        final var paths = projectsRendererI.projectsPaths();
         final var invalid = CommonFunctions.selectMatchesByRegex(
                         CommonFunctions.bytesToString(content.get().getContent())
                         , HTML_HREF
@@ -45,7 +45,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
                 .filter(link -> !link.startsWith("http://") && !link.startsWith("https://"))
                 .filter(link -> {
                     /**
-                     * TODO Move path checking to dedicated method at {@link ProjectsRenderer}.
+                     * TODO Move path checking to dedicated method at {@link ProjectsRendererI}.
                      */
                     final var resolvedLinkString = requestedPath.resolve(Path.of(link.replace("//", "/")))
                             .toString();

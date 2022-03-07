@@ -14,7 +14,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.validator.SourceValidator;
 
 import java.nio.file.Path;
@@ -29,7 +29,7 @@ import static net.splitcells.website.server.project.ProjectRenderer.projectRende
 
 public class Projects {
     @Deprecated
-    public static ProjectsRenderer projectsRenderer(Config config) {
+    public static ProjectsRendererI projectsRenderer(Config config) {
         final var profile = "public";
         final var projectsRepository = Paths.get("../");
         final var validator = validatorViaSchema(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
@@ -41,25 +41,25 @@ public class Projects {
                 , config);
     }
 
-    public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
+    public static ProjectsRendererI projectsRenderer(Path projectRepository, String profile
             , ProjectRenderer fallbackProjectRenderer
             , List<ProjectRenderer> additionalProjects
             , SourceValidator sourceValidator
             , Config config) {
         final var xslLib = projectRepository
                 .resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/");
-        return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
+        return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer
                 , additionalProjects.withAppended(projectRenderers(profile, projectRepository, sourceValidator, xslLib, config))
                 , config);
     }
 
-    public static ProjectsRenderer projectsRenderer(Path projectRepository, String profile
+    public static ProjectsRendererI projectsRenderer(Path projectRepository, String profile
             , ProjectRenderer fallbackProjectRenderer
             , List<ProjectRenderer> additionalProjects
             , SourceValidator sourceValidator
             , Path xslLib
             , Config config) {
-        return ProjectsRenderer.projectsRenderer(profile, fallbackProjectRenderer
+        return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer
                 , additionalProjects.withAppended(projectRenderers(profile, projectRepository, sourceValidator, xslLib, config))
                 , config);
     }
