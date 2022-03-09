@@ -38,12 +38,23 @@ article p img {
 	margin-right: auto;
 	display: block;
 	}
+article ol {
+    /* We assume, that the a root list, can have more than 99 children,
+     * and therefore there can be 3 digest for root list numbering.
+     */
+    margin-left: 2em;
+    }
 ol {
     margin-left: .5em;
     padding-left: .5em;
+    padding-bottom: .2em;
     }
-ol > ol {
-    padding-left: 2em;
+ol ol {
+    /* We assume, that the a sub list, can have more than 9 children,
+     * and therefore there can be 2 digest for sub list numbering.
+     */
+    margin-left: 0em !important;
+    padding-left: 1.75em !important;
     }
 pre {
     overflow-x: auto;
@@ -114,6 +125,7 @@ ul {
     font-family: var(--text-flowing-font);
     padding-left: 0;
     margin-left: 1em;
+    padding-bottom: .2em;
     }
 .NonStandard {}
 .HeaderLinkButton {
