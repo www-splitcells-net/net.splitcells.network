@@ -89,11 +89,11 @@ compatibility.
 ## Service Tasks And Projects
 Tasks that are being worked cyclically,
 and probably will never be finished.
-* Features
-* Cooperation And Symbiosis
+* Add or improve features.
+* Foster cooperation and symbiosis.
   * Migrate inactive tickets into source code repository,
     so that they each one acts as trigger at one fitting position.
-* Maintenance
+* Maintain project.
   * Update dependencies.
   * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
   * Improve Test Coverage. See the [Project Status chapter](#project-status).
@@ -102,9 +102,9 @@ and probably will never be finished.
     alternative perspective via metaphors.
     This is deprecated.
     See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
-  * Review introductions and info linked by README,
+  * Review advertisement, introductions and info linked by README,
     because that is the primary material for newcomers.
-* Compatibility, Portability And Adaptibility
+* Improve compatibility, portability and adaptability.
 ## Network's Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
