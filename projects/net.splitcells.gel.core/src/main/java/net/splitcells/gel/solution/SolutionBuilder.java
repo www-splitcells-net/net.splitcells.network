@@ -39,6 +39,14 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     private List<Attribute<? extends Object>> supplyAttributes = list();
     private List<List<Object>> supplies = list();
     private Optional<Database> suppliesDatabase = Optional.empty();
+    /**
+     * Without a good name, it can get very hard to distinguish {@link Solution}
+     * instances from one another at one glance.
+     * It does not take much time to define a name for a {@link Solution},
+     * but it can take much time to manage multiple such instances at once
+     * without having names,
+     * especially when a {@link Solution} is the demand or supply of an other {@link Solution}
+     */
     private Optional<String> name = Optional.empty();
 
     private Constraint constraint;
