@@ -12,9 +12,12 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
- * TODO Make this based on {@link net.splitcells.dem.execution.EffectSystem}.
+ * <p>TODO Ensure that all solutions have a name,
+ * because otherwise it can get hard pretty easily to distinguish one {@link net.splitcells.gel.problem.Problem}
+ * from another.</p>
+ * <p>TODO Make this based on {@link net.splitcells.dem.execution.EffectSystem}.
  * Note that {@link net.splitcells.dem.execution.EffectSystem} is not in a good
- * state and needs to be fixed first.
+ * state and needs to be fixed first.</p>
  */
 public class Network {
     public static Network network() {

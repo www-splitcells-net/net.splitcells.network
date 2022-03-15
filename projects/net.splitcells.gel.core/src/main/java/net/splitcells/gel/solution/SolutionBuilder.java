@@ -39,8 +39,13 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     private List<Attribute<? extends Object>> supplyAttributes = list();
     private List<List<Object>> supplies = list();
     private Optional<Database> suppliesDatabase = Optional.empty();
+    private Optional<String> name = Optional.empty();
 
     private Constraint constraint;
+
+    protected SolutionBuilder(String name) {
+        this.name = Optional.of(name);
+    }
 
     protected SolutionBuilder() {
     }
@@ -63,7 +68,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
         });
         return problem(
                 allocations(
-                        Solution.class.getSimpleName()
+                        name.orElse(Solution.class.getSimpleName())
                         , problemsDemands
                         , problemsSupplies)
                 , constraint);
