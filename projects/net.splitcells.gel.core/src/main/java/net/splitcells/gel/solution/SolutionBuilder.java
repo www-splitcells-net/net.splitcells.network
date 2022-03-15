@@ -50,6 +50,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     protected SolutionBuilder() {
     }
 
+    @Deprecated
     public static DefineDemandAttributes defineProblem() {
         return new SolutionBuilder();
     }

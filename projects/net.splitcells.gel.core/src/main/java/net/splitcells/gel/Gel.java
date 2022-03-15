@@ -29,6 +29,7 @@ public final class Gel {
         throw constructorIllegal();
     }
 
+    @Deprecated
     public static DefineDemandAttributes defineProblem() {
         return SolutionBuilder.defineProblem();
     }
