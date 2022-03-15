@@ -32,4 +32,8 @@ public final class Gel {
     public static DefineDemandAttributes defineProblem() {
         return SolutionBuilder.defineProblem();
     }
+
+    public static DefineDemandAttributes defineProblem(String name) {
+        return SolutionBuilder.defineProblem(name);
+    }
 }

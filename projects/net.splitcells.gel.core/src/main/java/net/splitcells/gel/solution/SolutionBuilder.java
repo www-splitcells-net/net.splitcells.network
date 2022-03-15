@@ -54,6 +54,10 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
         return new SolutionBuilder();
     }
 
+    public static DefineDemandAttributes defineProblem(String name) {
+        return new SolutionBuilder(name);
+    }
+
     @Override
     public Problem toProblem() {
         final var problemsDemands = demandsDatabase.orElseGet(() -> {
