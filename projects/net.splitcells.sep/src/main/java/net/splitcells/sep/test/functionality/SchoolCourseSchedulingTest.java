@@ -462,7 +462,7 @@ public class SchoolCourseSchedulingTest {
     }
 
     private static Solution defineRailsForSchoolScheduling(List<List<Object>> courses, List<List<Object>> railCapacity) {
-        return defineProblem()
+        return defineProblem("Rails For School Scheduling")
                 .withDemandAttributes(COURSE_ID, SUBJECT, COURSE_S_VINTAGE, COURSE_LENGTH)
                 .withDemands(courses)
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
@@ -502,7 +502,7 @@ public class SchoolCourseSchedulingTest {
     }
 
     private static Solution defineTeacherAllocationForCourses(Solution solution, List<List<Object>> teacherCapacity) {
-        return defineProblem()
+        return defineProblem("Teacher Allocation For Courses")
                 .withDemands(solution)
                 .withSupplyAttributes(TEACHER, TEACH_SUBJECT_SUITABILITY)
                 .withSupplies(teacherCapacity)
@@ -566,7 +566,7 @@ public class SchoolCourseSchedulingTest {
                         .forEach(supplies::remove);
             }
         });
-        return defineProblem()
+        return defineProblem("Student To Courses Allocation")
                 .withDemandAttributes(STUDENT, REQUIRED_SUBJECT, STUDENT_S_VINTAGE)
                 .withDemands(studentDemands)
                 .withSupplies(supplies)
