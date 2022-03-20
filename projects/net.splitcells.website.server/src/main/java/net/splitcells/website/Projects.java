@@ -128,6 +128,14 @@ public class Projects {
                                 , config)
                 , projectRenderer
                         (profile
+                                , integratedProjectRepositories.resolve("net.splitcells.website.server/")
+                                , xslLib
+                                , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , "/"
+                                , sourceValidator
+                                , config)
+                , projectRenderer
+                        (profile
                                 , integratedProjectRepositories.resolve("net.splitcells.os.state.interface/")
                                 , xslLib
                                 , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
