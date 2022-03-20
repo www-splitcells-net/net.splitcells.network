@@ -54,7 +54,8 @@ public class Test {
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
-                .selectors(selectPackage(""))
+                // TODO The selector is an hack, because an empty string leads to no test execution.
+                .selectors(selectPackage("net"))
                 .filters(includeTags(FUNCTIONAL_TEST, UNIT_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
@@ -72,7 +73,8 @@ public class Test {
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
-                .selectors(selectPackage(""))
+                // TODO The selector is an hack, because an empty string leads to no test execution.
+                .selectors(selectPackage("net"))
                 .filters(includeTags(INTEGRATION_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
@@ -87,7 +89,8 @@ public class Test {
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
-                .selectors(selectPackage(""))
+                // TODO The selector is an hack, because an empty string leads to no test execution.
+                .selectors(selectPackage("net"))
                 .filters(includeTags("none() | " + UNIT_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
@@ -102,7 +105,8 @@ public class Test {
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
-                .selectors(selectPackage(""))
+                // TODO The selector is an hack, because an empty string leads to no test execution.
+                .selectors(selectPackage("net"))
                 .build();
         final var testExecutor = LauncherFactory.create();
         final var failureDetector = failureDetector();
