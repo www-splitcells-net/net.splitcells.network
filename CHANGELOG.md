@@ -74,6 +74,13 @@ Releases are done every time an important ticket is completed.
      Argumentation Argumentation Then values of allocated hours should have the same value
      ```
      Now it looks like this `For all rail Then values of allocated hours should have the same value`.
+* **2022-03-20**:
+  * The webserver now maps some paths to the root index file.
+    This allows the user to interact with the live server more easily,
+    as it does not have to write the root index file into the URL in order to open it.
+    Thereby, the user does not have to handle an error,
+    because it tried to open a website with the most common URL.
+    In other words `https://localhost:8443/index.html` becomes `https://localhost:8443`.
 ### Minor Changes
 * **2022-03-06**: **\#10**: Create project `net.splitcells.dem.core`,
     which contains interface implementations of the Dem project.

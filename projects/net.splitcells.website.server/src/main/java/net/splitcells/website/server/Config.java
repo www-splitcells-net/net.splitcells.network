@@ -1,5 +1,8 @@
 package net.splitcells.website.server;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -23,6 +26,12 @@ public class Config {
     private String generationStyle = "standard";
     private Optional<String> siteFolder;
     private String rootPath = "/";
+    private String rootIndex = "/index.html";
+    private List<String> possibleRootIndex = Lists.list//
+            (rootIndex//
+                    , "index.html" // Browser (Firefox) like to call this path, if no path is provided by the user.
+                    , ""//
+                    , "/");
 
     private Config() {
     }
@@ -84,7 +93,7 @@ public class Config {
     public Optional<String> layoutRelevant() {
         return layoutRelevant;
     }
-    
+
     public Config withRootPath(String rootPath) {
         this.rootPath = rootPath;
         return this;
@@ -92,5 +101,13 @@ public class Config {
 
     public String rootPath() {
         return rootPath;
+    }
+
+    public String rootIndex() {
+        return rootIndex;
+    }
+
+    public List<String> possibleRootIndex() {
+        return possibleRootIndex;
     }
 }
