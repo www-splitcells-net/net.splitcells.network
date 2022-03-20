@@ -11,15 +11,19 @@
 package net.splitcells.dem.testing;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.set.list.List;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.launcher.TagFilter;
+import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.FailureDetector.failureDetector;
 import static net.splitcells.dem.testing.LiveReporter.liveReporter;
 import static net.splitcells.dem.testing.TestTypes.FUNCTIONAL_TEST;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
+import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 import static org.junit.platform.launcher.TagFilter.includeTags;
@@ -42,17 +46,24 @@ public class Test {
     }
 
     public static boolean testFunctionality() {
+        return testFunctionality(list());
+    }
+
+    public static boolean testFunctionality(List<TestExecutionListener> executionListeners) {
         // TODO REMOVE
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectPackage(""))
-                .filters(includeTags(FUNCTIONAL_TEST))
+                .filters(includeTags(FUNCTIONAL_TEST, UNIT_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
         final var failureDetector = failureDetector();
         testExecutor.discover(testDiscovery);
-        testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        testExecutor.execute(testDiscovery
+                , executionListeners
+                        .withAppended(liveReporter(), failureDetector)
+                        .toArray(new TestExecutionListener[0]));
         return !failureDetector.hasWatchedErrors();
     }
 
@@ -77,7 +88,7 @@ public class Test {
         Dem.ensuredInitialized();
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectPackage(""))
-                .filters(includeTags("none() | " + TestTypes.UNIT_TEST))
+                .filters(includeTags("none() | " + UNIT_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
         final var failureDetector = failureDetector();
