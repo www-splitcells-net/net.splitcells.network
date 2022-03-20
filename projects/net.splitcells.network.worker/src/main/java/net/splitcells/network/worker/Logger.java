@@ -1,6 +1,8 @@
 package net.splitcells.network.worker;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.resource.host.SystemUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -33,5 +35,6 @@ public class Logger {
             writeToFile(projectPath, ("Date," + resultType).getBytes(StandardCharsets.UTF_8));
         }
         appendToFile(projectPath, (localDate + "," + result + Files.newLine()).getBytes(StandardCharsets.UTF_8));
+        SystemUtils.executeProgram(Lists.list("repo.commit.all"), logProject);
     }
 }
