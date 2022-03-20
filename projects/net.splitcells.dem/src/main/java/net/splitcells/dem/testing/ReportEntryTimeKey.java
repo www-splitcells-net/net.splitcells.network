@@ -10,14 +10,19 @@
  */
 package net.splitcells.dem.testing;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class ReportEntryTimeKey extends ReportEntryKey<Long> {
 
-	protected ReportEntryTimeKey() {
-		super(Long.class);
-	}
+    public static DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_ZONED_DATE_TIME;
 
-	public String currentValue() {
-		return "" + System.nanoTime();
-	}
+    protected ReportEntryTimeKey() {
+        super(Long.class);
+    }
+
+    public String currentValue() {
+        return "" + ZonedDateTime.now().format(DATE_TIME_FORMAT);
+    }
 
 }
