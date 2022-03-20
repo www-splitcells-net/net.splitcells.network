@@ -88,8 +88,25 @@ public interface Files {
         }
     }
 
+    static void appendToFile(Path path, byte[] content) {
+        try (final var writer = new FileOutputStream(path.toFile(), true)) {
+            writer.write(content);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Deprecated
     static void writeToFile(Path path, String string) {
         writeToFile(path, string.getBytes());
+    }
+
+    /**
+     * TODO How do we handle new line symbols on all platforms?
+     *
+     * @return New Line Symbol
+     */
+    static String newLine() {
+        return "\n";
     }
 }
