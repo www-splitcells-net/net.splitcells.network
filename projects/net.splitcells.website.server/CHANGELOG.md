@@ -1,5 +1,5 @@
 # Changelog
-The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
+The changelog format can be found [here](../../src/main/md/net/splitcells/network/guidelines/changelog.md).
 
 ## [Unreleased]
 ### Major Changes
