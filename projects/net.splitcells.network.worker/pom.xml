@@ -12,7 +12,7 @@
     <dependencies>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>dem</artifactId>
+            <artifactId>sep</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
