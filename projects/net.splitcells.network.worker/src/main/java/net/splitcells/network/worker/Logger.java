@@ -24,7 +24,10 @@ public class Logger {
     }
 
     public void logExecutionResults(String subject, String executor, LocalDate localDate, String resultType, double result) {
-        final var projectPath = logProject.resolve(subject).resolve(executor + "." + CSV.codeName());
+        final var projectPath = logProject
+                .resolve("src/main/" + CSV.codeName())
+                .resolve(subject)
+                .resolve(executor + "." + CSV.codeName());
         createDirectory(logProject.resolve(projectPath).getParent());
         if (!is_file(projectPath)) {
             writeToFile(projectPath, ("Date," + resultType).getBytes(StandardCharsets.UTF_8));
