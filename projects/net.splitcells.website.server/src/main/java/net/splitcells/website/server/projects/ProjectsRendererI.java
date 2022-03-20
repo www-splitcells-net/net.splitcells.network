@@ -141,7 +141,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         } else {
             rootMatched = normalizedSlash;
         }
-        final var translatedPathTmp = normalizedPath(rootMatched).substring(config.rootPath().length());
+        final var translatedPathTmp = rootMatched.substring(config.rootPath().length());
         final String startingWithSlash;
         if (translatedPathTmp.startsWith("/")) {
             startingWithSlash = translatedPathTmp;
