@@ -10,5 +10,6 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
-* **2022-03-20**: [**\#125** Create global news feeds:](https://github.com/www-splitcells-net/net.splitcells.network/issues/125)
+* **2022-03-20**:
+  [**\#125** Create global news feeds](https://github.com/www-splitcells-net/net.splitcells.network/issues/125):
   It is located at `/net/splitcells/CHANGELOG.global.html`.
