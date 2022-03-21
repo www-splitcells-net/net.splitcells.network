@@ -1,6 +1,7 @@
 package net.splitcells.network.worker;
 
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.host.SystemUtils;
 import net.splitcells.dem.testing.ReportEntryKey;
@@ -15,6 +16,7 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.regex.Pattern;
 
+import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.resource.ContentType.CSV;
 import static net.splitcells.dem.resource.Files.appendToFile;
 import static net.splitcells.dem.resource.Files.createDirectory;
@@ -60,7 +62,7 @@ public class Logger implements TestExecutionListener {
             throw new RuntimeException(testIdentifier.getUniqueId());
         }
         logExecutionResults(uniqueIdMatch.group(4).replace(".", "/") + "/" + uniqueIdMatch.group(8)
-                , "test"
+                , config().configValue(ProgramName.class)
                 , LocalDate.now()
                 , "Execution Time"
                 , runTime);
