@@ -18,8 +18,8 @@ import static net.splitcells.network.worker.Logger.logger;
  */
 public class Builder {
     public static void main(String... args) {
-        if (args.length != 0) {
-            throw new IllegalArgumentException("Exactly one argument is required. The argument is the id of the test executor.");
+        if (args.length != 1) {
+            throw new IllegalArgumentException("Exactly one argument is required, but " + args.length + " were given. The argument is the id of the test executor.");
         }
         Dem.process(() -> testFunctionality(list(logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"))))
                 , env -> env.config().withConfigValue(ProgramName.class, args[0]));
