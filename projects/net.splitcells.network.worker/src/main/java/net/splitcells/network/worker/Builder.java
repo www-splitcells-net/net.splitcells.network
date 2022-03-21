@@ -13,9 +13,6 @@ import static net.splitcells.dem.testing.Test.testFunctionality;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.network.worker.Logger.logger;
 
-/**
- * maven.execute net.splitcells.network.worker.Builder
- */
 public class Builder {
     public static void main(String... args) {
         if (args.length != 1) {
