@@ -1,6 +1,8 @@
 package net.splitcells.network.worker;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.resource.Paths;
 
 import java.nio.file.Path;
@@ -16,7 +18,11 @@ import static net.splitcells.network.worker.Logger.logger;
  */
 public class Builder {
     public static void main(String... args) {
-        testFunctionality(list(logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"))));
+        if (args.length != 0) {
+            throw new IllegalArgumentException("Exactly one argument is required. The argument is the id of the test executor.");
+        }
+        Dem.process(() -> testFunctionality(list(logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"))))
+                , env -> env.config().withConfigValue(ProgramName.class, args[0]));
     }
 
     private Builder() {
