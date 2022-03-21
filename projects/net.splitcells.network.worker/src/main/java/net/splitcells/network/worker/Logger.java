@@ -8,6 +8,7 @@ import net.splitcells.dem.testing.ReportEntryKey;
 import org.junit.platform.engine.reporting.ReportEntry;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
+import org.junit.platform.launcher.TestPlan;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -49,7 +50,6 @@ public class Logger implements TestExecutionListener {
             writeToFile(projectPath, ("Date," + resultType + Files.newLine()).getBytes(StandardCharsets.UTF_8));
         }
         appendToFile(projectPath, (localDate + "," + result + Files.newLine()).getBytes(StandardCharsets.UTF_8));
-        SystemUtils.executeShellScript("command.managed.execute.command repo.commit.all", logProject);
     }
 
     @Override
@@ -66,5 +66,14 @@ public class Logger implements TestExecutionListener {
                 , LocalDate.now()
                 , "Execution Time"
                 , runTime);
+    }
+
+    public void commit() {
+        SystemUtils.executeShellScript("command.managed.execute.command repo.commit.all", logProject);
+    }
+
+    @Override
+    public void testPlanExecutionFinished(TestPlan testPlan) {
+        commit();
     }
 }
