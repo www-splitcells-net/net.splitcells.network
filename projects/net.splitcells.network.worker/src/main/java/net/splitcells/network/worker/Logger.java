@@ -44,7 +44,7 @@ public class Logger implements TestExecutionListener {
                 .resolve(executor + "." + CSV.codeName());
         createDirectory(logProject.resolve(projectPath).getParent());
         if (!is_file(projectPath)) {
-            writeToFile(projectPath, ("Date," + resultType).getBytes(StandardCharsets.UTF_8));
+            writeToFile(projectPath, ("Date," + resultType + Files.newLine()).getBytes(StandardCharsets.UTF_8));
         }
         appendToFile(projectPath, (localDate + "," + result + Files.newLine()).getBytes(StandardCharsets.UTF_8));
         SystemUtils.executeProgram(Lists.list("repo.commit.all"), logProject);
