@@ -7,4 +7,5 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-mc && maven.execute net.splitcells.network.worker.Builder "-Dexec.args=$hostname"
+mc && maven.execute net.splitcells.network.worker.Builder "-Dexec.args=$(hostname)"
+    # The command hostname instead of the environmental variable hostname is used, because it is more portable.
