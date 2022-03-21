@@ -55,7 +55,6 @@ public class Logger implements TestExecutionListener {
         final var endDateTime = ZonedDateTime.parse(entry.getKeyValuePairs().get(END_TIME.keyString()), DATE_TIME_FORMAT);
         final var startDateTime = ZonedDateTime.parse(entry.getKeyValuePairs().get(START_TIME.keyString()), DATE_TIME_FORMAT);
         final var runTime = ChronoUnit.NANOS.between(startDateTime, endDateTime) / 1_000_000d;
-        System.out.println(testIdentifier.getLegacyReportingName());
         final var uniqueIdMatch = UNIQUE_ID.matcher(testIdentifier.getUniqueId());
         if (!uniqueIdMatch.matches()) {
             throw new RuntimeException(testIdentifier.getUniqueId());
