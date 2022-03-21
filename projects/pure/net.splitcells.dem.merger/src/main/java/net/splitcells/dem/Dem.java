@@ -156,6 +156,13 @@ public final class Dem {
         return CURRENT.get();
     }
 
+    /**
+     * This function makes the explicit usage of {@link Dem} easier,
+     * by providing a name for the most regularly used functionality,
+     * that can be guessed.
+     *
+     * @return The Configuration Of The Current Environment
+     */
     public static ConfigurationV config() {
         return environment().config();
     }
