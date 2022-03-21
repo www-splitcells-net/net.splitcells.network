@@ -23,6 +23,45 @@ public final class SystemUtils {
         throw constructorIllegal();
     }
 
+    public static void executeShellScript(String command, Path workingDirectory) {
+        // REMOVE or write output to log.
+        System.out.println(command);
+        final Process process;
+        try {
+            process = Runtime.getRuntime().exec
+                    (command
+                            , new String[0]
+                            , workingDirectory.toFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            // FIXME Print Process output while waiting for process's completion.
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            String inputLine = null;
+            String errorLine = null;
+            try {
+                // Some commands wait for input although they do not needed to.
+                process.getOutputStream().close();
+                while ((inputLine = inputReader.readLine()) != null || (errorLine = errorReader.readLine()) != null) {
+
+                    if (errorLine != null) {
+                        System.out.println(errorLine);
+                    }
+                    if (inputLine != null) {
+                        System.out.println(inputLine);
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            process.waitFor();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void executeProgram(List<String> command, Path workingDirectory) {
         // REMOVE or write output to log.
         System.out.println(command);

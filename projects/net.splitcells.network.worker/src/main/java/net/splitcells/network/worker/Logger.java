@@ -49,7 +49,7 @@ public class Logger implements TestExecutionListener {
             writeToFile(projectPath, ("Date," + resultType + Files.newLine()).getBytes(StandardCharsets.UTF_8));
         }
         appendToFile(projectPath, (localDate + "," + result + Files.newLine()).getBytes(StandardCharsets.UTF_8));
-        SystemUtils.executeProgram(Lists.list("repo.commit.all"), logProject);
+        SystemUtils.executeShellScript("command.managed.execute.command repo.commit.all", logProject);
     }
 
     @Override
