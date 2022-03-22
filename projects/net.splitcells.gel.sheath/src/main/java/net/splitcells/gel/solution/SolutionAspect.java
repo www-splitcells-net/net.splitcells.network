@@ -10,6 +10,7 @@
  */
 package net.splitcells.gel.solution;
 
+import net.bytebuddy.implementation.bytecode.Throw;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -23,6 +24,7 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -90,8 +92,10 @@ public class SolutionAspect implements Solution {
             event.demand()
                     .interpret()
                     .ifPresent(demandForRemoval
-                            -> assertThat(list(demandForRemoval.context()))
-                            .containsAnyOf(solution.demands(), solution.demandsUsed()));
+                            -> assertThat(demandForRemoval.context())
+                            .describedAs("Context of demand for removal should be part demands or used demands, but is not: Removal context is " + demandForRemoval.context() + ", demands context is " + solution.demands() + " and used demands context is " + solution.demandsUsed() + ".")
+                            .matches(e -> Table.referToSameData(e, solution.demands())
+                                    || Table.referToSameData(e, solution.demandsUsed())));
             event.supply()
                     .interpret()
                     .ifPresent(supplyForRemoval
