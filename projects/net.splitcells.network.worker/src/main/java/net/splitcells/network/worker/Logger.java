@@ -68,7 +68,7 @@ public class Logger implements TestExecutionListener {
         final var runTime = (endDateTime - startDateTime) / 1_000_000_000d;
         final var uniqueIdMatch = UNIQUE_ID.matcher(testIdentifier.getUniqueId());
         if (!uniqueIdMatch.matches()) {
-            throw new RuntimeException(testIdentifier.getUniqueId());
+            return;
         }
         logExecutionResults(uniqueIdMatch.group(4).replace(".", "/") + "/" + uniqueIdMatch.group(8)
                 , config().configValue(ProgramName.class)
