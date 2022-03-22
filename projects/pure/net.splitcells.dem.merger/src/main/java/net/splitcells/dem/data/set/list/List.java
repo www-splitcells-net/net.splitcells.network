@@ -38,6 +38,11 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         return this;
     }
 
+    default List<T> withRemovedByIndex(int index) {
+        remove(index);
+        return this;
+    }
+
     default Optional<T> lastValue() {
         if (isEmpty()) {
             return Optional.empty();
@@ -50,7 +55,7 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         shallowCopy.addAll(this);
         return shallowCopy;
     }
-    
+
     @ReturnsThis
     default List<T> reverse() {
         Collections.reverse(this);

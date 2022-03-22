@@ -20,6 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.regex.Pattern;
 
 import static net.splitcells.dem.Dem.config;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
 import static net.splitcells.dem.resource.Files.appendToFile;
@@ -63,18 +64,27 @@ public class Logger implements TestExecutionListener {
 
     @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
-        final var endDateTime = System.nanoTime();
-        final var startDateTime = testToStartTime.get(testIdentifier);
-        final var runTime = (endDateTime - startDateTime) / 1_000_000_000d;
-        final var uniqueIdMatch = UNIQUE_ID.matcher(testIdentifier.getUniqueId());
-        if (!uniqueIdMatch.matches()) {
-            return;
+        final var testPath = list(testIdentifier.getUniqueId().split("/"))
+                .withRemovedByIndex(0)
+                .stream()
+                .map(e -> e.replace("[", ""))
+                .map(e -> e.replace("]", ""))
+                .map(e -> e.split(":")[1])
+                .map(e -> e.replace(".", "/"))
+                .map(e -> e.replaceAll("[^a-zA-Z-_/]", "_"))
+                .reduce((a, b) -> a + "/" + b)
+                .map(e -> e.replaceAll("/+", "/"));
+        if (testPath.isPresent()) {
+            final var endDateTime = System.nanoTime();
+            final var startDateTime = testToStartTime.get(testIdentifier);
+            final var runTime = (endDateTime - startDateTime) / 1_000_000_000d;
+            logExecutionResults(testPath.get()
+                    , config().configValue(ProgramName.class)
+                    , LocalDate.now()
+                    , "Execution Time"
+                    , runTime);
         }
-        logExecutionResults(uniqueIdMatch.group(4).replace(".", "/") + "/" + uniqueIdMatch.group(8)
-                , config().configValue(ProgramName.class)
-                , LocalDate.now()
-                , "Execution Time"
-                , runTime);
+
     }
 
     public void commit() {
