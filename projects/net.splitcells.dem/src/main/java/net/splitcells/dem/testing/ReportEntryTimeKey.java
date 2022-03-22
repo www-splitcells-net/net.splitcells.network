@@ -22,7 +22,7 @@ public class ReportEntryTimeKey extends ReportEntryKey<Long> {
     }
 
     public String currentValue() {
-        return "" + ZonedDateTime.now().format(DATE_TIME_FORMAT);
+        return "" + java.lang.System.nanoTime();
     }
 
 }
