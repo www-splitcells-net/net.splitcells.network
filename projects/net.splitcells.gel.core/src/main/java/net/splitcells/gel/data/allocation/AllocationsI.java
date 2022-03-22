@@ -378,8 +378,8 @@ public class AllocationsI implements Allocations {
         final var dom = Xml.elementWithChildren(Allocations.class.getSimpleName());
         dom.appendChild(textNode(path().toString()));
         rawLinesView().stream()
-                .filter(rinda -> rinda != null)
-                .forEach(rinda -> dom.appendChild(rinda.toDom()));
+                .filter(line -> line != null)
+                .forEach(line -> dom.appendChild(line.toDom()));
         return dom;
     }
 
