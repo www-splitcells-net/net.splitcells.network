@@ -132,9 +132,11 @@ public class SchoolCourseSchedulingTest {
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());*/
+                network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, linearInitialization());
+                network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, simpleConstraintGroupBasedRepair(2)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
             });
-            network.process(RAILS_FOR_SCHOOL_SCHEDULING, Solution::createStandardAnalysis);
-            network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, linearInitialization());
+            network.process(TEACHER_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
             network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, linearInitialization());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
