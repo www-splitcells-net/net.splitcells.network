@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static net.splitcells.dem.Dem.config;
@@ -64,16 +65,22 @@ public class Logger implements TestExecutionListener {
 
     @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
-        final var testPath = list(testIdentifier.getUniqueId().split("/"))
-                .withRemovedByIndex(0)
-                .stream()
-                .map(e -> e.replace("[", ""))
-                .map(e -> e.replace("]", ""))
-                .map(e -> e.split(":")[1])
-                .map(e -> e.replace(".", "/"))
-                .map(e -> e.replaceAll("[^a-zA-Z-_/]", "_"))
-                .reduce((a, b) -> a + "/" + b)
-                .map(e -> e.replaceAll("/+", "/"));
+        final var splitTestIdentifier = list(testIdentifier.getUniqueId().split("/"));
+        final Optional<String> testPath;
+        if (splitTestIdentifier.size() == 1) {
+            testPath = Optional.of("net/splitcells/network/logger/builder/runtime");
+        } else {
+            testPath = splitTestIdentifier
+                    .withRemovedByIndex(0)
+                    .stream()
+                    .map(e -> e.replace("[", ""))
+                    .map(e -> e.replace("]", ""))
+                    .map(e -> e.split(":")[1])
+                    .map(e -> e.replace(".", "/"))
+                    .map(e -> e.replaceAll("[^a-zA-Z-_/]", "_"))
+                    .reduce((a, b) -> a + "/" + b)
+                    .map(e -> e.replaceAll("/+", "/"));
+        }
         if (testPath.isPresent()) {
             final var endDateTime = System.nanoTime();
             final var startDateTime = testToStartTime.get(testIdentifier);
