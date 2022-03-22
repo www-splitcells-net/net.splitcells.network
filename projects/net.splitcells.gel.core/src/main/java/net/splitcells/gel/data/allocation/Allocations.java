@@ -16,14 +16,21 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.LinePointer;
 
 /**
+ * <p>
+ * {@link Discoverable#path()} of {@link Allocations} start with the {@link Discoverable#path()} of the demand
+ * and end with {@link net.splitcells.gel.common.Language#ALLOCATIONS}.
+ * </p>
+ * <p>
  * TODO Create usage table and use this instead of loosely coupled tables.
  * A usage table has a source table, a used table and unused table like demands, used demands and unused demands.
  * This also does reduce code duplication.
+ * </p>
  */
 public interface Allocations extends Database, AllocationsLiveView {
     Line allocate(Line demand, Line supply);
