@@ -1,10 +1,12 @@
 package net.splitcells.network.worker;
 
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.host.SystemUtils;
 import net.splitcells.dem.testing.ReportEntryKey;
+import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.reporting.ReportEntry;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -18,6 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.regex.Pattern;
 
 import static net.splitcells.dem.Dem.config;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
 import static net.splitcells.dem.resource.Files.appendToFile;
 import static net.splitcells.dem.resource.Files.createDirectory;
@@ -35,6 +38,7 @@ public class Logger implements TestExecutionListener {
     }
 
     private final Path logProject;
+    private final Map<TestIdentifier, Long> testToStartTime = map();
 
     private Logger(Path logProject) {
         this.logProject = logProject;
@@ -53,10 +57,15 @@ public class Logger implements TestExecutionListener {
     }
 
     @Override
-    public void reportingEntryPublished(TestIdentifier testIdentifier, ReportEntry entry) {
-        final var endDateTime = ZonedDateTime.parse(entry.getKeyValuePairs().get(END_TIME.keyString()), DATE_TIME_FORMAT);
-        final var startDateTime = ZonedDateTime.parse(entry.getKeyValuePairs().get(START_TIME.keyString()), DATE_TIME_FORMAT);
-        final var runTime = ChronoUnit.NANOS.between(startDateTime, endDateTime) / 1_000_000d;
+    public void executionStarted(TestIdentifier testIdentifier) {
+        testToStartTime.put(testIdentifier, System.nanoTime());
+    }
+
+    @Override
+    public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
+        final var endDateTime = System.nanoTime();
+        final var startDateTime = testToStartTime.get(testIdentifier);
+        final var runTime = (endDateTime - startDateTime) / 1_000_000_000d;
         final var uniqueIdMatch = UNIQUE_ID.matcher(testIdentifier.getUniqueId());
         if (!uniqueIdMatch.matches()) {
             throw new RuntimeException(testIdentifier.getUniqueId());
@@ -76,4 +85,5 @@ public class Logger implements TestExecutionListener {
     public void testPlanExecutionFinished(TestPlan testPlan) {
         commit();
     }
+
 }
