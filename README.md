@@ -68,7 +68,7 @@ TODO: Short And Compact Feature Description
 ## API Compatibility
 There is no guarantee of backwards compatibility.
 
-All API changes are located and categorized in the [Changelog](./CHANGELOG.md).
+All API changes are located and categorized in the [Changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
 Breaking changes are tried to be omitted, but there is no guarantee for that.
 The author of the software use this project as a dependency for their own
 private code.
