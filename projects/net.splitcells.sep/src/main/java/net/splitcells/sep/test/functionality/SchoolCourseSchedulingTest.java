@@ -148,8 +148,11 @@ public class SchoolCourseSchedulingTest {
         }));
     }
 
+    /**
+     * Select grouping according to {@link net.splitcells.gel.constraint.type.ForAll}{@link #COURSE_ID}.
+     */
     public static OfflineOptimization teacherAllocationForCoursesOptimization() {
-        return simpleConstraintGroupBasedRepair(groupSelector(randomness(), 1, 1)
+        return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
                 , (freeDemandGroups, freeSupplies) -> solution -> {
                     return null;
                 }
