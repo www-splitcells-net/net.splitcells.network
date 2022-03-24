@@ -133,7 +133,7 @@ public class SchoolCourseSchedulingTest {
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());*/
                 network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, linearInitialization());
-                network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, simpleConstraintGroupBasedRepair(2)
+                network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, teacherAllocationForCoursesOptimization()
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
             });
             network.process(TEACHER_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
@@ -146,6 +146,14 @@ public class SchoolCourseSchedulingTest {
                             .equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
                     .withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)));
         }));
+    }
+
+    public static OfflineOptimization teacherAllocationForCoursesOptimization() {
+        return simpleConstraintGroupBasedRepair(groupSelector(randomness(), 1, 1)
+                , (freeDemandGroups, freeSupplies) -> solution -> {
+                    return null;
+                }
+        );
     }
 
     public static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
