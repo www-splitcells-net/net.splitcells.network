@@ -51,7 +51,7 @@ Some of them are not strictly related to optimization and can be used in other c
   for the initial ticket, [RISC-V status page](https://wiki.riscv.org/display/TECH/Language+Runtimes#LanguageRuntimes-RISC-Vstatus.2)
   and the [current JDK development versions](https://builds.shipilev.net/openjdk-jdk-riscv/).)
 ## Project Status
-[![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
+* Cloud Status: [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
 [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
 [![codecov](https://codecov.io/gh/www-splitcells-net/net.splitcells.network/branch/master/graph/badge.svg?token=Q1X4816ZAN)](https://codecov.io/gh/www-splitcells-net/net.splitcells.network)
