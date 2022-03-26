@@ -203,6 +203,7 @@ name
     | Keyword_class
     | Keyword_JavaLegacyBody
     | Keyword_JavaLegacyArtifact
+    | Keyword_super
     ;
 operator
 	: Keysymbol_not_equals
