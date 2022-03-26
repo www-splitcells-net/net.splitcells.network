@@ -41,8 +41,10 @@ Some of them are not strictly related to optimization and can be used in other c
 
 📣 Spread the word!
 ## Features
-TODO: Short And Compact Feature Description
-
+* Model assignment problems with a fluent API.
+* Execute complex queries on solutions in order to focus on sub problems.
+* Get reports reasoning the solution's rating.
+* Model inter dependent problems.
 * x64 and ARM are supported and tested.
   (Support for RISC-V is on the way.
   See [#92](https://github.com/www-splitcells-net/net.splitcells.network/issues/92)
