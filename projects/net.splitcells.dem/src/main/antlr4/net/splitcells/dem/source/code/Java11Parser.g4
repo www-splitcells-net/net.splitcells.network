@@ -82,6 +82,8 @@ class_member
     ;
 class_constructor
     : javadoc? annotation* Keyword_private name call_arguments statement_body
+    /* This is needed for resource classes, so that instance of these can be created via reflection. */
+    | javadoc? annotation* Keyword_public name call_arguments statement_body
     ;
 class_member_method_definition
     : javadoc? annotation* modifier_visibility? Keyword_static?
