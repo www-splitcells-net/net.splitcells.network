@@ -293,6 +293,7 @@ type_argument
 type_argument_content
     : type_argument type_argument_content_next?
     | type_argument_element type_argument_content_next?
+    | type_path type_argument?
     ;
 type_argument_content_next
     : Comma type_argument type_argument_content_next?
