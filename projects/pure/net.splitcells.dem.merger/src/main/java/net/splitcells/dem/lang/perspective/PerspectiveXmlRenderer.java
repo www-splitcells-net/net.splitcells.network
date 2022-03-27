@@ -68,9 +68,9 @@ public class PerspectiveXmlRenderer implements Sui<Perspective> {
 
 	public String newNameSpaceDeclerationsInElement() {
 		final var rVal = new_nameSpace_to_prefix
-				.entrySet().stream()//
-				.map(entry -> "xmlns:" + entry.getValue() + "=\"" + entry.getKey().uri() + "\"")//
-				.reduce((a, b) -> a + " " + b);//
+				.entrySet().stream()
+				.map(entry -> "xmlns:" + entry.getValue() + "=\"" + entry.getKey().uri() + "\"")
+				.reduce((a, b) -> a + " " + b);
 		new_nameSpace_to_prefix.clear();
 		if (rVal.isPresent()) {
 			return " " + rVal.get();
