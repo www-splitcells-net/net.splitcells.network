@@ -32,6 +32,19 @@ import static net.splitcells.dem.testing.ReportEntryKey.END_TIME;
 import static net.splitcells.dem.testing.ReportEntryKey.START_TIME;
 import static net.splitcells.dem.testing.ReportEntryTimeKey.DATE_TIME_FORMAT;
 
+/**
+ * <p>Logs the runtime of tests into a project folder
+ * and commits these logs.
+ * It is assumed, that the folder of the project is under version control.</p>
+ * <p>The entries are stored at "./src/main/csv/**".
+ * The relative path of each entry represents the package, the test case and the executor of the test:
+ * "./src/main/csv/<package>/<test case>/<id of the executor>.csv".
+ * The executors hardware and software should not change between each run,
+ * in order to make it easily possible to find regressions.</p>
+ * <p>Each CSV file contains the 2 columns "Date" and "Execution Time".
+ * The first one has the executions date of the test case.
+ * The second one contains the execution time for the corresponding test case.</p>
+ */
 public class Logger implements TestExecutionListener {
     private static Pattern UNIQUE_ID = Pattern.compile("(\\[.*\\])(/)(\\[[a-zA-Z]*:)(.*)(\\])(/)(\\[[a-zA-Z-]*:)([a-zA-Z-_]*)(.*\\])");
 
