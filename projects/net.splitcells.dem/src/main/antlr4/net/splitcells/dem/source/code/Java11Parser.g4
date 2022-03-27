@@ -241,8 +241,10 @@ reference
     ;
 statement
     : Line_comment
-    | Keyword_try (Brace_round_open variable_declaration Brace_round_closed)? Brace_curly_open statement+ Brace_curly_closed statement_catch?
+    | Keyword_try (Brace_round_open variable_declaration Equals expression Brace_round_closed)? Brace_curly_open statement+ Brace_curly_closed statement_catch?
         statement_finally?
+    | Keyword_try Brace_round_open variable_declaration Brace_round_closed Brace_curly_open statement+ Brace_curly_closed statement_catch?
+            statement_finally?
     | Keyword_if Brace_round_open expression Brace_round_closed
     	Brace_curly_open statement+ Brace_curly_closed statement_if_else?
     | javadoc
