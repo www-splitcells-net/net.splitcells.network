@@ -167,7 +167,7 @@ interface_definition_member_method
     	annotation* modifier_visibility? Keyword_static?
     	type_argument? type_declaration
         name call_arguments Semicolon
-    | javadoc? annotation* Keyword_static
+    | javadoc? annotation* modifier_visibility? Keyword_static
 		type_argument? type_declaration
 		name call_arguments
 		Brace_curly_open statement* Brace_curly_closed
