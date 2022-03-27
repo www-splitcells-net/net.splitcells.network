@@ -11,12 +11,17 @@
 package net.splitcells.dem.lang.perspective;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.Den.*;
+import static net.splitcells.dem.lang.perspective.Den.priority;
+import static net.splitcells.dem.lang.perspective.Den.project;
+import static net.splitcells.dem.lang.perspective.Den.queue;
+import static net.splitcells.dem.lang.perspective.Den.scheduling;
+import static net.splitcells.dem.lang.perspective.Den.solution;
+import static net.splitcells.dem.lang.perspective.Den.todo;
+import static net.splitcells.dem.lang.perspective.Den.val;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 public class DocumentTest {

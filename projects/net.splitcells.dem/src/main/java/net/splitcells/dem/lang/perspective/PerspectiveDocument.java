@@ -11,7 +11,6 @@
 package net.splitcells.dem.lang.perspective;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.object.Discoverable;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
