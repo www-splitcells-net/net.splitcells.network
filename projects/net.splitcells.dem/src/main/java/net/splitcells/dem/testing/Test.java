@@ -85,6 +85,10 @@ public class Test {
     }
 
     public static boolean testUnits() {
+        return testUnits(list());
+    }
+
+    public static boolean testUnits(List<TestExecutionListener> executionListeners) {
         // TODO REMOVE
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
@@ -96,7 +100,10 @@ public class Test {
         final var testExecutor = LauncherFactory.create();
         final var failureDetector = failureDetector();
         testExecutor.discover(testDiscovery);
-        testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        testExecutor.execute(testDiscovery
+                , executionListeners
+                        .withAppended(liveReporter(), failureDetector)
+                        .toArray(new TestExecutionListener[0]));
         return !failureDetector.hasWatchedErrors();
     }
 
