@@ -12,6 +12,13 @@ import java.util.Optional;
 public interface ProjectsRenderer {
     void build();
 
+    /**
+     * TODO Create flag in order to trigger incremental,
+     * where only changed files are build.
+     * Find out changed files via modification time or git history.
+     *
+     * @param target Folder where the rendered files are written to.
+     */
     void serveTo(Path target);
 
     void serveToHttpAt();
