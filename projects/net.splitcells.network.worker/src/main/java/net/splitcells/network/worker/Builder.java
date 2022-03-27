@@ -9,7 +9,7 @@ import java.nio.file.Path;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Paths.userHome;
-import static net.splitcells.dem.testing.Test.testFunctionality;
+import static net.splitcells.dem.testing.Test.testUnits;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.network.worker.Logger.logger;
 
@@ -18,7 +18,7 @@ public class Builder {
         if (args.length != 1) {
             throw new IllegalArgumentException("Exactly one argument is required, but " + args.length + " were given. The argument is the id of the test executor.");
         }
-        Dem.process(() -> testFunctionality(list(logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"))))
+        Dem.process(() -> testUnits(list(logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"))))
                 , env -> env.config().withConfigValue(ProgramName.class, args[0]));
     }
 
