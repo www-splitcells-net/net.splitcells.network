@@ -105,8 +105,15 @@ lexer grammar Java11Lexer;
 	fragment String_character
 		: [a-zA-Z0-9_-]
 		| '\\n'
+		| '\\"'
 		| '.'
 		| ' '
+		| '<'
+		| '>'
+		| '?'
+		| '='
+		| ':'
+		| '/'
 		;
 /* Tokens Of Last Resort */
 	WS:
