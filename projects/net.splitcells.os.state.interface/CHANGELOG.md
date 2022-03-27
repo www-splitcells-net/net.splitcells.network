@@ -26,6 +26,9 @@ Changes are now written to the root changelog instead.
   which is the original version of `command.repositories.install.sh`.
   This way there is still a command,
   that installs the OSSI project with full functionality.
+### Minor Changes
+* **2022-03-27** Create `ssh.upload.file.py` in order to more easily upload
+  files to new remote servers.
 ## [5.0.0] - 2022-02-28
 ### Major Changes
 1. Remove deprecated command `command.managed.define`.
