@@ -89,6 +89,7 @@ lexer grammar Java11Lexer;
 	Keyword_super: 'super';
 	Keyword_throw: 'throw';
 	Keyword_try: 'try';
+	Keyword_var: 'var';
 	Less_than: '<';
 	Question_mark: '?';
 	Operator_plus: '+';

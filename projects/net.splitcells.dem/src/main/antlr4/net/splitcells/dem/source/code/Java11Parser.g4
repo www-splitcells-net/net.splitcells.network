@@ -204,6 +204,7 @@ name
     | Keyword_JavaLegacyBody
     | Keyword_JavaLegacyArtifact
     | Keyword_super
+    | Keyword_var
     ;
 operator
 	: Keysymbol_not_equals
@@ -322,5 +323,6 @@ type_path
     ;
 variable_declaration
     : Keyword_final? type_declaration name
+    | Keyword_final? Keyword_var name
     ;
 
