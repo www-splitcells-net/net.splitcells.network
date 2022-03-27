@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+mvn clean install -DskipTests
+cd projects/net.splitcells.network.worker
+bin/execute
