@@ -296,7 +296,6 @@ type_argument
 type_argument_content
     : type_argument type_argument_content_next?
     | type_argument_element type_argument_content_next?
-    | type_path type_argument?
     ;
 type_argument_content_next
     : Comma type_argument type_argument_content_next?
@@ -311,6 +310,7 @@ type_argument_element
 	| type_name Keyword_extends type_argument_element type_argument?
 	| type_name Keyword_super type_argument_element type_argument?
 	| Question_mark
+	| type_path type_argument?
 	;
 type_name
 	: name
