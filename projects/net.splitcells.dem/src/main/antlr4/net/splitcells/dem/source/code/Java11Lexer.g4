@@ -51,7 +51,7 @@ lexer grammar Java11Lexer;
 	Equals: '=';
 	Extension_Exception: 'extends RuntimeException';
 	Hyphen_minus: '-';
-	Integer: [-+]?[0-9]+[d]?;
+	Integer: [-+]?[0-9]+[dlL]?;
 	Keysymbol_and: '&&';
 	Keysymbol_at: '@';
 	Keysymbol_function_reference: '::';
