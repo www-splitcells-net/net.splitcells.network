@@ -13,6 +13,9 @@ import static net.splitcells.dem.testing.Test.testUnits;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.network.worker.Logger.logger;
 
+/**
+ * Executes tests and logs their result.
+ */
 public class Builder {
     public static void main(String... args) {
         if (args.length != 1) {
