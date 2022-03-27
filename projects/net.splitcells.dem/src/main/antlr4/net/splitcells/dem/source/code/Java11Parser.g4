@@ -57,8 +57,8 @@ call_arguments
     | Brace_round_open call_arguments_element call_arguments_next* Brace_round_closed
     ;
 call_arguments_element
-    : reference
-    | variable_declaration
+    : annotation? reference
+    | annotation? variable_declaration
     ;
 call_arguments_next
     : Comma call_arguments_element
