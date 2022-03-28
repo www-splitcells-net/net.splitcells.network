@@ -259,3 +259,8 @@ JaCoCo :: Maven Plugin
 SCP
 
 * License: Multiple BSD and BSD styled licenses
+
+Three.js
+
+* License: MIT
+* Source: https://github.com/mrdoob/three.js/

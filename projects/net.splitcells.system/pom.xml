@@ -18,5 +18,6 @@
         <module>../net.splitcells.sep</module>
         <module>../net.splitcells.network.blog</module>
         <module>../net.splitcells.network.worker</module>
+        <module>../net.splitcells.cin</module>
     </modules>
 </project>

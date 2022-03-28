@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+           xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+           xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+           xmlns:s="http://splitcells.net/sew.xsd"
+           xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:n="http://splitcells.net/natural.xsd" xmlns:e="http://splitcells.net/sen.xsd">
+    <s:content>
+        <div id="net-splitcells-canvas-main"/>
+        <script async="" src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+
+        <script type="importmap"><![CDATA[
+            {
+            "imports": {
+            "three": "https://unpkg.com/three@0.139.0/build/three.module.js",
+            "OrbitControls": "https://unpkg.com/three@0.139.0/examples/jsm/controls/OrbitControls.js"
+                }
+            }
+            ]]></script>
+        <script type="module"><![CDATA[
+            import * as THREE from 'three';
+			import { OrbitControls } from 'OrbitControls';
+
+            const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			renderer.domElement.style.height = "50%";
+			renderer.domElement.style.width = "100%";
+			document.getElementById("net-splitcells-canvas-main").appendChild(renderer.domElement);
+
+			const geometry = new THREE.BoxGeometry();
+			const material = new THREE.MeshBasicMaterial({color: 0xffffff});
+			material.wireframe = true;
+			material.wireframeLinecap  = 'square';
+			const cube = new THREE.Mesh(geometry, material);
+			scene.add(cube);
+
+			camera.position.z = 5;
+
+            new OrbitControls(camera, renderer.domElement);
+
+			function animate() {
+				requestAnimationFrame(animate);
+				renderer.render(scene, camera);
+			};
+
+			animate();]]>
+        </script>
+    </s:content>
+</s:article>
