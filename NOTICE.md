@@ -264,3 +264,8 @@ Three.js
 
 * License: MIT
 * Source: https://github.com/mrdoob/three.js/
+
+PapaParse
+
+* License: MIT
+* Source: https://github.com/mholt/PapaParse

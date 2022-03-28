@@ -32,13 +32,6 @@
 			renderer.domElement.style.width = "100%";
 			document.getElementById("net-splitcells-canvas-main").appendChild(renderer.domElement);
 
-			const geometry = new THREE.BoxGeometry();
-			const material = new THREE.MeshBasicMaterial({color: 0xffffff});
-			material.wireframe = true;
-			material.wireframeLinecap  = 'square';
-			const cube = new THREE.Mesh(geometry, material);
-			scene.add(cube);
-
 			camera.position.z = 5;
 
             new OrbitControls(camera, renderer.domElement);
@@ -47,6 +40,27 @@
 				requestAnimationFrame(animate);
 				renderer.render(scene, camera);
 			};
+
+			function updateWorldData(updatedData) {
+                var rowIndex = 1
+                for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
+                        var row = updatedData[rowIndex];
+                        console.log(row);
+                        const geometry = new THREE.BoxGeometry();
+			            const material = new THREE.MeshBasicMaterial({color: 0xffffff});
+			            material.wireframe = true;
+			            material.wireframeLinecap  = 'square';
+			            const cube = new THREE.Mesh(geometry, material);
+			            cube.position.set(1 * row[0], 1 * row[1], 0);
+			            scene.add(cube);
+                    }
+                }
+            Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
+                    , {download: true
+                        ,dynamicTyping: true
+                        ,complete: function(results) {
+                            updateWorldData(results.data);
+                            }});
 
 			animate();
 </script>
