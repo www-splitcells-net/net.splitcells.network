@@ -166,6 +166,14 @@ public class Projects {
                                 , "/net/splitcells/network/worker"
                                 , sourceValidator
                                 , config)
+                , projectRenderer
+                        (profile
+                                , integratedProjectRepositories.resolve("net.splitcells.cin/")
+                                , xslLib
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/net/splitcells/cin"
+                                , sourceValidator
+                                , config)
         );
         if (isDirectory(integratedProjectRepositories)) {
             projectRenderers.add(projectRenderer
