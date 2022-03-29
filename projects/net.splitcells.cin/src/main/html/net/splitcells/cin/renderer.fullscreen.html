@@ -25,6 +25,7 @@
 
             const scene = new THREE.Scene();
 			const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+			const movement = 1;
 
 			const renderer = new THREE.WebGLRenderer();
 			renderer.setSize(window.innerWidth, window.innerHeight);
@@ -34,7 +35,7 @@
 
 			camera.position.z = 5;
 
-            new OrbitControls(camera, renderer.domElement);
+            const controls = new OrbitControls(camera, renderer.domElement);
 
 			function animate() {
 				requestAnimationFrame(animate);
@@ -61,6 +62,21 @@
                         ,complete: function(results) {
                             updateWorldData(results.data);
                             }});
+
+            function onDocumentKeyDown(event) {
+                var keyCode = event.which;
+                if (keyCode == 87) { // W
+                    controls.target.y += movement;
+                } else if (keyCode == 83) { // S
+                    controls.target.y -= movement;
+                } else if (keyCode == 65) { // A
+                    controls.target.x -= movement;
+                } else if (keyCode == 68) { // D
+                    controls.target.x += movement;
+                }
+                controls.update();
+            };
+            document.addEventListener("keydown", onDocumentKeyDown, false);
 
 			animate();
 </script>
