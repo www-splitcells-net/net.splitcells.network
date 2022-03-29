@@ -10,6 +10,10 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2022-03-29**: Create renderer extension for JavaScript files.
+  Thereby, `*.js` files can be requested and the `text/javascript` MIME type
+  will be used.
+  These JavaScript can be stored under `src/main/js/**` for each project.
 * **2022-03-20**:
   [**\#125** Create global news feeds](https://github.com/www-splitcells-net/net.splitcells.network/issues/125):
   It is located at `/net/splitcells/CHANGELOG.global.html`.

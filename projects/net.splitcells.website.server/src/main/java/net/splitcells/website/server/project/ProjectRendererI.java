@@ -42,6 +42,7 @@ import static net.splitcells.website.server.project.FileStructureTransformer.fil
 import static net.splitcells.website.server.project.renderer.extension.CsvChartProjectRendererExtension.csvChartRenderer;
 import static net.splitcells.website.server.project.renderer.extension.CsvProjectRendererExtension.csvRenderer;
 import static net.splitcells.website.server.project.renderer.extension.JacocoReportProjectRendererExtension.jacocoReportRenderer;
+import static net.splitcells.website.server.project.renderer.extension.JavascriptProjectRendererExtension.javascriptRenderer;
 import static net.splitcells.website.server.project.renderer.extension.ProjectRendererExtensionMerger.rendererMerger;
 import static net.splitcells.website.server.project.renderer.extension.ResourceProjectRendererExtension.resourceRenderer;
 import static net.splitcells.website.server.project.renderer.extension.TextProjectRendererExtension.textExtension;
@@ -93,6 +94,7 @@ public class ProjectRendererI implements ProjectRenderer {
         renderer.registerExtension(csvRenderer());
         renderer.registerExtension(jacocoReportRenderer());
         renderer.registerExtension(commonMarkChangelogEventRenderer());
+        renderer.registerExtension(javascriptRenderer());
     }
 
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
