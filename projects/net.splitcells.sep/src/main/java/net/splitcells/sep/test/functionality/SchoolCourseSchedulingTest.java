@@ -164,6 +164,11 @@ public class SchoolCourseSchedulingTest {
                                                 .value(TEACH_SUBJECT_SUITABILITY)))
                                 .findFirst()
                                 .map(freeSupply -> freeSupply.value(COURSE_ID));
+                        if (fittingCourseId.isPresent()) {
+                            final var freeCourseSlots = freeSupplies.stream()
+                                    .filter(freeSupply -> freeSupply.value(SUBJECT).equals(fittingCourseId.get()))
+                                    .collect(toList());
+                        }
                     });
                     return allocations;
                 }
