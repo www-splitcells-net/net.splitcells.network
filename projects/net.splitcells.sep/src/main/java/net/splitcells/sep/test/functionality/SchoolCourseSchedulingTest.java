@@ -157,17 +157,23 @@ public class SchoolCourseSchedulingTest {
                     final List<OptimizationEvent> allocations = list();
                     freeSuitability.keySet().forEach(suitability -> {
                         // TODO Use constraint system for complex queries.
-                        final var fittingCourseId = freeSupplies.stream()
-                                .filter(freeSupply -> freeSupply.value(SUBJECT)
-                                        .equals(freeSuitability
-                                                .get(suitability).iterator().next()
-                                                .value(TEACH_SUBJECT_SUITABILITY)))
-                                .findFirst()
-                                .map(freeSupply -> freeSupply.value(COURSE_ID));
-                        if (fittingCourseId.isPresent()) {
-                            final var freeCourseSlots = freeSupplies.stream()
-                                    .filter(freeSupply -> freeSupply.value(SUBJECT).equals(fittingCourseId.get()))
-                                    .collect(toList());
+                        final var suitableCourse = freeSuitability
+                                .get(suitability)
+                                .stream()
+                                .filter(e -> e.value(ALLOCATED_HOURS) != 0)
+                                .findFirst();
+                        if (suitableCourse.isPresent()) {
+                            final var fittingCourseId = freeSupplies.stream()
+                                    .filter(freeSupply -> freeSupply.value(SUBJECT)
+                                            .equals(suitableCourse.get()
+                                                    .value(TEACH_SUBJECT_SUITABILITY)))
+                                    .findFirst()
+                                    .map(freeSupply -> freeSupply.value(COURSE_ID));
+                            if (fittingCourseId.isPresent()) {
+                                final var freeCourseSlots = freeSupplies.stream()
+                                        .filter(freeSupply -> freeSupply.value(SUBJECT).equals(fittingCourseId.get()))
+                                        .collect(toList());
+                            }
                         }
                     });
                     return allocations;
@@ -497,6 +503,7 @@ public class SchoolCourseSchedulingTest {
                 .withSupplyAttributes(ALLOCATED_HOURS, RAIL)
                 .withSupplies(railCapacity)
                 .withConstraint(r -> {
+                    // TODO Does this make sense?
                     r.forAll(voidRail()).then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
                     r.forAll(COURSE_ID).forAll(noneVoidRail()).then(allDifferent(RAIL));
                     r.forAll(COURSE_ID).forAll(noneVoidRail()).then(regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
