@@ -153,24 +153,24 @@ public class SchoolCourseSchedulingTest {
      */
     public static OfflineOptimization teacherAllocationForCoursesOptimization() {
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
-                , (freeSuitability, freeSupplies) -> solution -> {
+                , (freeCoursesByTopic, freeTeachers) -> solution -> {
                     final List<OptimizationEvent> allocations = list();
-                    freeSuitability.keySet().forEach(suitability -> {
+                    freeCoursesByTopic.keySet().forEach(topic -> {
                         // TODO Use constraint system for complex queries.
-                        final var suitableCourse = freeSuitability
-                                .get(suitability)
+                        final var suitableCourse = freeCoursesByTopic
+                                .get(topic)
                                 .stream()
                                 .filter(e -> e.value(ALLOCATED_HOURS) != 0)
                                 .findFirst();
                         if (suitableCourse.isPresent()) {
-                            final var fittingCourseId = freeSupplies.stream()
+                            final var fittingCourseId = freeTeachers.stream()
                                     .filter(freeSupply -> freeSupply.value(SUBJECT)
                                             .equals(suitableCourse.get()
                                                     .value(TEACH_SUBJECT_SUITABILITY)))
                                     .findFirst()
                                     .map(freeSupply -> freeSupply.value(COURSE_ID));
                             if (fittingCourseId.isPresent()) {
-                                final var freeCourseSlots = freeSupplies.stream()
+                                final var freeCourseSlots = freeTeachers.stream()
                                         .filter(freeSupply -> freeSupply.value(SUBJECT).equals(fittingCourseId.get()))
                                         .collect(toList());
                             }
