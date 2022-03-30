@@ -153,7 +153,7 @@ public class SchoolCourseSchedulingTest {
      */
     public static OfflineOptimization teacherAllocationForCoursesOptimization() {
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
-                , (freeDemandGroups, freeSupplies) -> solution -> {
+                , (freeSuitability, freeSupplies) -> solution -> {
                     return null;
                 }
         );
