@@ -160,20 +160,18 @@ public class SchoolCourseSchedulingTest {
                         final var suitableCourse = freeCoursesByTopic
                                 .get(topic)
                                 .stream()
-                                .filter(e -> e.value(ALLOCATED_HOURS) != 0)
-                                .findFirst();
-                        if (suitableCourse.isPresent()) {
-                            final var fittingCourseId = freeTeachers.stream()
-                                    .filter(freeSupply -> freeSupply.value(SUBJECT)
-                                            .equals(suitableCourse.get()
-                                                    .value(TEACH_SUBJECT_SUITABILITY)))
-                                    .findFirst()
-                                    .map(freeSupply -> freeSupply.value(COURSE_ID));
-                            if (fittingCourseId.isPresent()) {
-                                final var freeCourseSlots = freeTeachers.stream()
-                                        .filter(freeSupply -> freeSupply.value(SUBJECT).equals(fittingCourseId.get()))
-                                        .collect(toList());
-                            }
+                                .findFirst()
+                                .get()
+                                .value(SUBJECT);
+                        final var fittingCourseId = freeTeachers.stream()
+                                .filter(freeSupply -> freeSupply.value(SUBJECT)
+                                        .equals(suitableCourse))
+                                .findFirst()
+                                .map(freeSupply -> freeSupply.value(COURSE_ID));
+                        if (fittingCourseId.isPresent()) {
+                            final var freeCourseSlots = freeTeachers.stream()
+                                    .filter(freeSupply -> freeSupply.value(SUBJECT).equals(fittingCourseId.get()))
+                                    .collect(toList());
                         }
                     });
                     return allocations;
