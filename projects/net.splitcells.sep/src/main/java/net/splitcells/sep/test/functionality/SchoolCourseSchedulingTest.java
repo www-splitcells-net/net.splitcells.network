@@ -18,9 +18,11 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -152,6 +154,7 @@ public class SchoolCourseSchedulingTest {
      * Select grouping according to {@link net.splitcells.gel.constraint.type.ForAll}{@link #COURSE_ID}.
      */
     public static OfflineOptimization teacherAllocationForCoursesOptimization() {
+        final var randomness = randomness();
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
                 , (freeCoursesByTopic, freeTeachers) -> solution -> {
                     final List<OptimizationEvent> allocations = list();
@@ -163,6 +166,12 @@ public class SchoolCourseSchedulingTest {
                                 .findFirst()
                                 .get()
                                 .value(SUBJECT);
+                        final var suitableTeacher = randomValue(solution.suppliesFree()
+                                        .columnView(TEACH_SUBJECT_SUITABILITY)
+                                        .lookup(suitableCourse)
+                                        .getLines()
+                                , randomness)
+                                .value(TEACHER);
                         final var fittingCourseId = freeTeachers.stream()
                                 .filter(freeSupply -> freeSupply.value(SUBJECT)
                                         .equals(suitableCourse))
@@ -177,6 +186,13 @@ public class SchoolCourseSchedulingTest {
                     return allocations;
                 }
         );
+    }
+
+    private static <T> T randomValue(List<T> list, Randomness rnd) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            assertThat(list).isNotEmpty();
+        }
+        return list.get(rnd.integer(0, list.size() - 1));
     }
 
     public static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
