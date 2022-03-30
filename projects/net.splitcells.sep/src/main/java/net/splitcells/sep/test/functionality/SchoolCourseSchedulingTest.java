@@ -154,7 +154,18 @@ public class SchoolCourseSchedulingTest {
     public static OfflineOptimization teacherAllocationForCoursesOptimization() {
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
                 , (freeSuitability, freeSupplies) -> solution -> {
-                    return null;
+                    final List<OptimizationEvent> allocations = list();
+                    freeSuitability.keySet().forEach(suitability -> {
+                        // TODO Use constraint system for complex queries.
+                        final var fittingCourseId = freeSupplies.stream()
+                                .filter(freeSupply -> freeSupply.value(SUBJECT)
+                                        .equals(freeSuitability
+                                                .get(suitability).iterator().next()
+                                                .value(TEACH_SUBJECT_SUITABILITY)))
+                                .findFirst()
+                                .map(freeSupply -> freeSupply.value(COURSE_ID));
+                    });
+                    return allocations;
                 }
         );
     }
