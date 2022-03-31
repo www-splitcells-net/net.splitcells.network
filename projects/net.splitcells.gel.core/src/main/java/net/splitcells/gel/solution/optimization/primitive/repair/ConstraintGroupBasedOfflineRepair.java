@@ -58,13 +58,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
 
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
-            (GroupSelector groupSelector, SupplySelector repairer) {
+            (GroupSelector groupSelector, SupplyOfflineSelector repairer) {
         return new ConstraintGroupBasedOfflineRepair(groupSelector, repairer);
     }
 
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
             (GroupSelector groupSelector) {
-        return new ConstraintGroupBasedOfflineRepair(groupSelector, SupplySelectors.supplySelector());
+        return new ConstraintGroupBasedOfflineRepair(groupSelector, SupplyOfflineSelectors.supplySelector());
     }
 
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair(int minimumConstraintGroupPath) {
@@ -76,15 +76,15 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
         final var randomness = randomness();
         return new ConstraintGroupBasedOfflineRepair(groupSelector(randomness, minimum_constraint_group_path
                 , numberOfGroupsSelectedPerDefiance)
-                , SupplySelectors.supplySelector());
+                , SupplyOfflineSelectors.supplySelector());
     }
 
     private final GroupSelector groupSelector;
-    private final SupplySelector supplySelector;
+    private final SupplyOfflineSelector supplyOfflineSelector;
 
-    protected ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplySelector repairer) {
+    protected ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer) {
         this.groupSelector = groupSelector;
-        this.supplySelector = repairer;
+        this.supplyOfflineSelector = repairer;
     }
 
     @Override
@@ -127,7 +127,7 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
     public List<OptimizationEvent> repair(SolutionView solution
             , Map<GroupId, Set<Line>> freeDemandGroups
             , List<Line> freedSupplies) {
-        return supplySelector.apply(freeDemandGroups, freedSupplies).optimize(solution);
+        return supplyOfflineSelector.apply(freeDemandGroups, freedSupplies).optimize(solution);
     }
 
     public Map<GroupId, Set<Line>> demandGrouping(Constraint constraintGrouping, SolutionView solution) {

@@ -59,13 +59,13 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
 public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (GroupSelector groupSelector, SupplySelector repairer) {
+            (GroupSelector groupSelector, SupplyOfflineSelector repairer) {
         return new ConstraintGroupBasedRepair(groupSelector, repairer);
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
             (GroupSelector groupSelector) {
-        return new ConstraintGroupBasedRepair(groupSelector, SupplySelectors.supplySelector());
+        return new ConstraintGroupBasedRepair(groupSelector, SupplyOfflineSelectors.supplySelector());
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair(int minimumConstraintGroupPath) {
@@ -77,15 +77,15 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
         final var randomness = randomness();
         return new ConstraintGroupBasedRepair(groupSelector(randomness, minimum_constraint_group_path
                 , numberOfGroupsSelectedPerDefiance)
-                , SupplySelectors.supplySelector());
+                , SupplyOfflineSelectors.supplySelector());
     }
 
     private final GroupSelector groupSelector;
-    private final SupplySelector supplySelector;
+    private final SupplyOfflineSelector supplyOfflineSelector;
 
-    protected ConstraintGroupBasedRepair(GroupSelector groupSelector, SupplySelector repairer) {
+    protected ConstraintGroupBasedRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer) {
         this.groupSelector = groupSelector;
-        this.supplySelector = repairer;
+        this.supplyOfflineSelector = repairer;
     }
 
     private List<OptimizationEvent> optimize(SolutionView solution) {
@@ -127,7 +127,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     public List<OptimizationEvent> repair(SolutionView solution
             , Map<GroupId, Set<Line>> freeDemandGroups
             , List<Line> freedSupplies) {
-        return supplySelector.apply(freeDemandGroups, freedSupplies).optimize(solution);
+        return supplyOfflineSelector.apply(freeDemandGroups, freedSupplies).optimize(solution);
     }
 
     public Map<GroupId, Set<Line>> demandGrouping(Constraint constraintGrouping, SolutionView solution) {
