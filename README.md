@@ -120,7 +120,7 @@ Project Cluster
 ## Contributing
 * [Licensing](./LICENSE.md) and [Notices](./NOTICE.md) of This Project
 * [Source Code <Guide>lines](projects/net.splitcells.dem/src/main/xml/net/splitcells/dem/guidelines/index.xml)
-* ## API Compatibility
+## API Compatibility
 There is no guarantee of backwards compatibility.
 
 All API changes are located and categorized in the [Changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
