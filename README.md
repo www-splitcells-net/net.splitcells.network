@@ -67,46 +67,6 @@ Some of them are not strictly related to optimization and can be used in other c
   The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
   workflow has to be run manually.
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
-## API Compatibility
-There is no guarantee of backwards compatibility.
-
-All API changes are located and categorized in the [Changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
-Breaking changes are tried to be omitted, but there is no guarantee for that.
-The author of the software use this project as a dependency for their own
-private code.
-So there is at least an interest, to keep breaking changes to a minimum.
-On the other hand, the API is not polished,
-so there will be breaking changes to the API.
-
-Absolute backward compatibility creates a maintenance burden and if any kind
-of backward compatibility is required it may be best to just contact this
-project.
-We do not break backward compatibility just for fun and would like to support
-efforts to minimize breaking changes.
-
-You can try to decrease the likelihood of breaking a certain feature,
-by contributing an appropriate test case/suite for this feature.
-Regardless of that, keep in mind, that there is no guarantee of backwards
-compatibility.
-## Service Tasks And Projects
-Tasks that are being worked cyclically,
-and probably will never be finished.
-* Add or improve features.
-* Foster cooperation and symbiosis.
-  * Migrate inactive tickets into source code repository,
-    so that they each one acts as trigger at one fitting position.
-* Maintain project.
-  * Update dependencies.
-  * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
-  * Improve Test Coverage. See the [Project Status chapter](#project-status).
-* Documentation
-  * Add inspirational quotes to code documentation in order to provide an
-    alternative perspective via metaphors.
-    This is deprecated.
-    See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
-  * Review advertisement, introductions and info linked by README,
-    because that is the primary material for newcomers.
-* Improve compatibility, portability and adaptability.
 ## Network's Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
@@ -160,5 +120,45 @@ Project Cluster
 ## Contributing
 * [Licensing](./LICENSE.md) and [Notices](./NOTICE.md) of This Project
 * [Source Code <Guide>lines](projects/net.splitcells.dem/src/main/xml/net/splitcells/dem/guidelines/index.xml)
+* ## API Compatibility
+There is no guarantee of backwards compatibility.
+
+All API changes are located and categorized in the [Changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
+Breaking changes are tried to be omitted, but there is no guarantee for that.
+The author of the software use this project as a dependency for their own
+private code.
+So there is at least an interest, to keep breaking changes to a minimum.
+On the other hand, the API is not polished,
+so there will be breaking changes to the API.
+
+Absolute backward compatibility creates a maintenance burden and if any kind
+of backward compatibility is required it may be best to just contact this
+project.
+We do not break backward compatibility just for fun and would like to support
+efforts to minimize breaking changes.
+
+You can try to decrease the likelihood of breaking a certain feature,
+by contributing an appropriate test case/suite for this feature.
+Regardless of that, keep in mind, that there is no guarantee of backwards
+compatibility.
+## Service Tasks And Projects
+Tasks that are being worked cyclically,
+and probably will never be finished.
+* Add or improve features.
+* Foster cooperation and symbiosis.
+  * Migrate inactive tickets into source code repository,
+    so that they each one acts as trigger at one fitting position.
+* Maintain project.
+  * Update dependencies.
+  * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
+  * Improve Test Coverage. See the [Project Status chapter](#project-status).
+* Documentation
+  * Add inspirational quotes to code documentation in order to provide an
+    alternative perspective via metaphors.
+    This is deprecated.
+    See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
+  * Review advertisement, introductions and info linked by README,
+    because that is the primary material for newcomers.
+* Improve compatibility, portability and adaptability.
 ## Credits
 * [Main Author's Public Key](https://keys.openpgp.org/search?q=F844A8297DEB16D9B9486323A6A6108FC3486F37)
