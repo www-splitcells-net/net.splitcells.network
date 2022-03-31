@@ -32,7 +32,7 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.Constrai
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ConstraintGroupbasedrepairTest {
+public class ConstraintGroupBasedOfflineRepairTest {
 
     @Test
     public void test_repair_of_defying_group() {
