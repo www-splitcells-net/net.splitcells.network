@@ -37,7 +37,7 @@ public class SupplyOfflineSelectors {
                     final var supplySelection = indexSelector
                             .apply(suppliesFree.size()
                                     , freedSupplies.size());
-                    if (!supplySelection.isEmpty()) {
+                    if (supplySelection.isPresent()) {
                         demandsUsed.add(demand);
                         final Line selectedSupply;
                         if (supplySelection.get().isCurrentlyFree()) {
