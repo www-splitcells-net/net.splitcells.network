@@ -26,6 +26,7 @@ import net.splitcells.gel.problem.derived.SimplifiedAnnealingProblem;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.primitive.UsedSupplySwitcher;
+import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -52,7 +53,7 @@ import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtra
 import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
-import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -85,13 +86,13 @@ public class NQueenProblemTest extends TestSuiteI {
         GelDev.process(() -> {
             final var testSubject = nQueenProblem(8, 8).asSolution();
             testSubject.optimize(linearInitialization());
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
+            testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(3)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(2)
+            testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(2)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1)
+            testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(1)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            testSubject.optimize(simpleConstraintGroupBasedRepair(0));
+            testSubject.optimize(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0));
             assertThat(testSubject.isOptimal()).isTrue();
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()

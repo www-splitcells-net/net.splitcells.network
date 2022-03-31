@@ -13,7 +13,7 @@ package net.splitcells.gel.solution.optimization.primitive;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
-import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
+import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -28,7 +28,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
-import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -82,7 +82,7 @@ public class ConstraintGroupbasedrepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(
+        final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(
                 constraintGroup -> list(constraintGroup.get(6)) // Select the first defying group.
                 , (freeDemandGroups, freedSupplies) -> currentSolution -> {
                     final List<OptimizationEvent> repairs = list();
@@ -162,7 +162,7 @@ public class ConstraintGroupbasedrepairTest {
         solution.optimize(linearInitialization());
         assertThat(solution.getLines()).hasSize(7);
 
-        final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
+        final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA));
         assertThat(solution.getLines()).hasSize(3);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB));
@@ -211,7 +211,7 @@ public class ConstraintGroupbasedrepairTest {
         solution.optimize(linearInitialization());
         assertThat(solution.getLines()).hasSize(7);
 
-        final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
+        final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);
         final var testProduct = testSubject.demandGrouping
                 (solution.constraint().childrenView().get(3).childrenView().get(0)
                         , solution);

@@ -24,7 +24,7 @@ import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber;
-import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
+import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
 import org.junit.jupiter.api.*;
 
 import java.time.ZonedDateTime;
@@ -49,7 +49,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.meta.Escalator.escalator;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
-import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -87,13 +87,13 @@ public class OralExamsTest extends TestSuiteI {
                             , randomness(0L))
                     .asSolution();
             testSubject.optimize(linearInitialization());
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3)
+            testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(3)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2)
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedOfflineRepair(4, 2)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3)
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedOfflineRepair(4, 3)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) ->
+            testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(1), (currentSolution, step) ->
                     step <= 100 && !currentSolution.isOptimal());
             assertThat(testSubject.isOptimal()).isTrue();
         }, standardDeveloperConfigurator().andThen(env -> {
@@ -106,9 +106,9 @@ public class OralExamsTest extends TestSuiteI {
 
     /**
      * This test shows, that the {@link FunctionalHillClimber} is not able to solve this problem
-     * as efficiently as the {@link ConstraintGroupBasedRepair}.
+     * as efficiently as the {@link ConstraintGroupBasedOfflineRepair}.
      * This is done by trying as many allocations via the {@link FunctionalHillClimber} as is done
-     * in {@link #testRandomInstanceSolving} via the {@link ConstraintGroupBasedRepair}.
+     * in {@link #testRandomInstanceSolving} via the {@link ConstraintGroupBasedOfflineRepair}.
      */
     @Tag(CAPABILITY_TEST)
     @Test
@@ -168,7 +168,7 @@ public class OralExamsTest extends TestSuiteI {
                             , STRING)
                     , () -> list("debugging")
                     , LogLevel.DEBUG);
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(3), (currentSolution, step) -> {
+            testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(3), (currentSolution, step) -> {
                 domsole().append(
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
@@ -179,7 +179,7 @@ public class OralExamsTest extends TestSuiteI {
                         , LogLevel.DEBUG);
                 return step <= 100 && !currentSolution.isOptimal();
             });
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 2), (currentSolution, step) -> {
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedOfflineRepair(4, 2), (currentSolution, step) -> {
                 domsole().append(
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
@@ -190,7 +190,7 @@ public class OralExamsTest extends TestSuiteI {
                         , LogLevel.DEBUG);
                 return step <= 100 && !currentSolution.isOptimal();
             });
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(4, 3), (currentSolution, step) -> {
+            testSubject.optimizeWithFunction(simpleConstraintGroupBasedOfflineRepair(4, 3), (currentSolution, step) -> {
                 domsole().append(
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
@@ -201,7 +201,7 @@ public class OralExamsTest extends TestSuiteI {
                         , LogLevel.DEBUG);
                 return step <= 100 && !currentSolution.isOptimal();
             });
-            testSubject.optimizeWithFunction(simpleConstraintGroupBasedRepair(1), (currentSolution, step) -> {
+            testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(1), (currentSolution, step) -> {
                 domsole().append(
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()

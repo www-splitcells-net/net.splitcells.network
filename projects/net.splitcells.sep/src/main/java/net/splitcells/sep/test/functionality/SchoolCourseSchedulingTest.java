@@ -33,6 +33,7 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
+import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
 import net.splitcells.sep.Network;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
@@ -63,7 +64,7 @@ import static net.splitcells.gel.rating.rater.RegulatedLength.regulatedLength;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
-import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 import static net.splitcells.sep.Network.network;
@@ -155,7 +156,7 @@ public class SchoolCourseSchedulingTest {
      */
     public static OfflineOptimization teacherAllocationForCoursesOptimization() {
         final var randomness = randomness();
-        return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
+        return ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(c -> list(c.get(1))
                 , (freeCoursesByTopic, freeTeachers) -> solution -> {
                     final List<OptimizationEvent> allocations = list();
                     freeCoursesByTopic.keySet().forEach(topic -> {
@@ -198,7 +199,7 @@ public class SchoolCourseSchedulingTest {
     public static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
         final var randomness = randomness();
         // TODO Split up into multiple methods for better overview and documentation.
-        return simpleConstraintGroupBasedRepair(groupSelector(randomness, minimumConstraintGroupPath
+        return ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(groupSelector(randomness, minimumConstraintGroupPath
                         , 1)
                 , (freeDemandGroups, freeSupplies) -> solution -> {
                     final var allocatedCourses = Maps.<Integer, Set<Line>>map();
