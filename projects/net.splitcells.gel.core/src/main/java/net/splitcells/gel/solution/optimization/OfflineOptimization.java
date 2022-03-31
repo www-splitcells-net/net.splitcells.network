@@ -14,7 +14,11 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
 
 /**
- * Perfect is the enemy of good - Voltaire
+ * <p>Perfect is the enemy of good - Voltaire</p>
+ * <p>Prefer {@link OnlineOptimization} over this,
+ * when complex queries are needed to be done on the {@link SolutionView}.
+ * Also, most of the time it is easier to implement an {@link OnlineOptimization}
+ * than an {@link OfflineOptimization}.</p>
  */
 @FunctionalInterface
 public interface OfflineOptimization {
