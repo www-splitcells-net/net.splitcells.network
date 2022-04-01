@@ -16,4 +16,12 @@ import java.util.Collection;
  * TODO Extend interface with functional write methods: https://www.vavr.io/vavr-docs/#_list
  */
 public interface ListView<T> extends Collection<T>, java.util.List<T> {
+    /**
+     * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.
+     *
+     * @return Whether this list has a size bigger than zero.
+     */
+    default boolean hasElements() {
+        return !isEmpty();
+    }
 }
