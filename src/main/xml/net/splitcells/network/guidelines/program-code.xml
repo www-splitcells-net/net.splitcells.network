@@ -31,6 +31,14 @@
             should be omitted.
             Names are preferred to abbreviation and abbreviation are preferred to symbols as a shorthand.
         </paragraph>
+        <paragraph>If there is an inverse usage for a given method like<quote>isEmpty</quote>,
+            consider creating a dedicated method,
+            if the inverse usage takes much more or less space.
+            This minimizes the likelihood of misreading such an inverse usage.
+            For example, it helps to create an <quote>isEmpty</quote> and an <quote>hasElements</quote> method,
+            because it is relatively hard to distinguish <quote>isEmpty</quote> and <quote>!isEmpty</quote> from one another,
+            if one just skim through the code.
+        </paragraph>
     </chapter>
     <chapter>
         <title>Testing</title>
