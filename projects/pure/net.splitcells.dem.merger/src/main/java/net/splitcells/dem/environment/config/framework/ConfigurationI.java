@@ -10,6 +10,7 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
@@ -22,6 +23,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
@@ -45,7 +47,9 @@ public class ConfigurationI implements Configuration {
         try {
             final Set<OptionSubscriber<Object>> key_subscribers;
             if (!config_store.containsKey(key)) {
-                assert !subscribers.containsKey(key);
+                if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+                    assertThat(subscribers.containsKey(key)).isFalse();
+                }
                 final Option<T> option = key.getDeclaredConstructor().newInstance();
                 key_subscribers = new HashSet<>();
                 subscribers.put(key, key_subscribers);
