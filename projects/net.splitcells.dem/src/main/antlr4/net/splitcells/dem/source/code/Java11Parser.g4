@@ -66,7 +66,7 @@ call_arguments_next
 class_definition
     : javadoc? Keysymbol_at Keyword_JavaLegacyArtifact .*
     | javadoc? annotation* Keyword_public? Keyword_final?
-        Keyword_abstract?
+        /* Keyword_abstract? TODO Is this really needed? */
     	Keyword_class
     	type_declaration
     	class_extension
