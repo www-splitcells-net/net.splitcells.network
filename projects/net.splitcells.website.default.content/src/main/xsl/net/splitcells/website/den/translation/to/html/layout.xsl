@@ -291,9 +291,14 @@ window.onload = function() {
                             </nav>
                         </header>
                         <main>
-                            <xsl:for-each select="./s:content/node()">
-                                <xsl:apply-templates select="."/>
-                            </xsl:for-each>
+                            <article>
+                                <h1>
+                                    <xsl:value-of select="concat(./s:title, ' / ', $siteName)"/>
+                                </h1>
+                                <xsl:for-each select="./s:content/node()">
+                                    <xsl:apply-templates select="."/>
+                                </xsl:for-each>
+                            </article>
                         </main>
                         <footer></footer>
                     </body>
