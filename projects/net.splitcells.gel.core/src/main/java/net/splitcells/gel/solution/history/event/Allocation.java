@@ -30,7 +30,6 @@ public class Allocation implements Domable {
         this.type = type;
         this.demand = demand;
         this.supply = supply;
-
     }
 
     public AllocationChangeType type() {
