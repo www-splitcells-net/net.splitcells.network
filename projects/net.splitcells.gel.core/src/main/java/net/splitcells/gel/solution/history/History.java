@@ -42,7 +42,7 @@ import net.splitcells.gel.solution.history.meta.MetaDataView;
  */
 public interface History extends Allocations, AfterAdditionSubscriber, BeforeRemovalSubscriber {
     Attribute<Integer> ALLOCATION_ID = attribute(Integer.class, "allocation-id");
-    Attribute<Allocation> ALLOCATION_EVENT = attribute(Allocation.class, "allocation-notikums");
+    Attribute<Allocation> ALLOCATION_EVENT = attribute(Allocation.class, "allocation-event");
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");
 
     /**
