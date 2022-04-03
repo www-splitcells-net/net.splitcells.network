@@ -18,43 +18,43 @@ import org.w3c.dom.Node;
 import static net.splitcells.gel.common.Language.*;
 
 public class Allocation implements Domable {
-    private final AllocationChangeType tips;
-    private final Line prasība;
-    private final Line piedāvājums;
+    private final AllocationChangeType type;
+    private final Line demand;
+    private final Line supply;
 
-    public static Allocation allocations(AllocationChangeType tips, Line prasība, Line piedāvājums) {
-        return new Allocation(tips, prasība, piedāvājums);
+    public static Allocation allocations(AllocationChangeType type, Line demand, Line supply) {
+        return new Allocation(type, demand, supply);
     }
 
-    private Allocation(AllocationChangeType tips, Line prasība, Line piedāvājums) {
-        this.tips = tips;
-        this.prasība = prasība;
-        this.piedāvājums = piedāvājums;
+    private Allocation(AllocationChangeType type, Line demand, Line supply) {
+        this.type = type;
+        this.demand = demand;
+        this.supply = supply;
 
     }
 
     public AllocationChangeType type() {
-        return tips;
+        return type;
     }
 
     public Line demand() {
-        return prasība;
+        return demand;
     }
 
     public Line supply() {
-        return piedāvājums;
+        return supply;
     }
 
     @Override
     public Node toDom() {
-        final var piešķiršana = Xml.elementWithChildren(ALLOCATION.value());
-        piešķiršana.appendChild
-                (Xml.elementWithChildren(TYPE.value()).appendChild(Xml.textNode(tips.name())));
-        piešķiršana.appendChild
-                (Xml.elementWithChildren(DEMAND2.value()).appendChild(prasība.toDom()));
-        piešķiršana.appendChild
-                (Xml.elementWithChildren(SUPPLY.value()).appendChild(piedāvājums.toDom()));
-        return piešķiršana;
+        final var allocation = Xml.elementWithChildren(ALLOCATION.value());
+        allocation.appendChild
+                (Xml.elementWithChildren(TYPE.value()).appendChild(Xml.textNode(type.name())));
+        allocation.appendChild
+                (Xml.elementWithChildren(DEMAND2.value()).appendChild(demand.toDom()));
+        allocation.appendChild
+                (Xml.elementWithChildren(SUPPLY.value()).appendChild(supply.toDom()));
+        return allocation;
     }
 
     @Override
