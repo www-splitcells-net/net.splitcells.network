@@ -10,11 +10,11 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.dem.environment.resource.ResourceI;
+import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
-public class Lookups extends ResourceI<LookupFactory> {
+public class Lookups extends ResourceOptionI<LookupFactory> {
     public Lookups() {
         super(() -> new LookupIFactory());
     }

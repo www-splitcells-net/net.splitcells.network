@@ -10,12 +10,12 @@
  */
 package net.splitcells.gel.data.allocation;
 
-import net.splitcells.dem.environment.resource.ResourceI;
+import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.gel.data.database.Database;
 
 import static net.splitcells.dem.Dem.environment;
 
-public class Allocationss extends ResourceI<AllocationsFactory> {
+public class Allocationss extends ResourceOptionI<AllocationsFactory> {
     public Allocationss() {
         super(() -> new AllocationsIFactory());
     }

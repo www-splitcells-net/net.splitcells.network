@@ -11,14 +11,8 @@
 package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.environment.resource.Resource;
-import net.splitcells.dem.resource.communication.Closeable;
-import net.splitcells.dem.resource.communication.Flushable;
 
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;

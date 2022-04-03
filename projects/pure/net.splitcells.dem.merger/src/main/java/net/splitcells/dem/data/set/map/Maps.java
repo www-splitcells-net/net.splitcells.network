@@ -10,19 +10,16 @@
  */
 package net.splitcells.dem.data.set.map;
 
-import net.splitcells.dem.data.set.SetF;
-import net.splitcells.dem.environment.resource.ResourceI;
+import net.splitcells.dem.environment.resource.ResourceOptionI;
 
 import java.util.Collection;
-import java.util.function.Supplier;
 import java.util.stream.Collector;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.map.MapFI_deterministic.mapFI_deterministic;
-import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
-public class Maps extends ResourceI<MapF> {
+public class Maps extends ResourceOptionI<MapF> {
 
     public Maps() {
         super(() -> mapFI_deterministic());

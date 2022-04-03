@@ -11,7 +11,7 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.environment.resource.Console;
-import net.splitcells.dem.environment.resource.ResourceI;
+import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.dem.resource.communication.interaction.Ui;
 
 import static net.splitcells.dem.Dem.environment;
@@ -25,7 +25,7 @@ import static net.splitcells.dem.resource.communication.interaction.Pdsui.pdsui;
  * so that rendering can be separated from the rest.
  * </p>
  */
-public class Domsole extends ResourceI<Ui> {
+public class Domsole extends ResourceOptionI<Ui> {
     public Domsole() {
         super(() -> pdsui(environment().config().configValue(Console.class)
                 , environment().config().configValue(MessageFilter.class)));

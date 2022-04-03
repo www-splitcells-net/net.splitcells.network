@@ -10,8 +10,7 @@
  */
 package net.splitcells.dem.data.set;
 
-import net.splitcells.dem.Dem;
-import net.splitcells.dem.environment.resource.ResourceI;
+import net.splitcells.dem.environment.resource.ResourceOptionI;
 
 import java.util.Collection;
 import java.util.stream.Collector;
@@ -20,7 +19,7 @@ import static java.util.Arrays.asList;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.SetFI_configured.setFiConfigured;
 
-public class Sets extends ResourceI<SetF> {
+public class Sets extends ResourceOptionI<SetF> {
     public Sets() {
         super(() -> setFiConfigured());
     }

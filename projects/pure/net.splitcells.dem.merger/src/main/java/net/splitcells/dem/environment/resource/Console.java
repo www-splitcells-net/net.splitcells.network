@@ -27,7 +27,7 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 /**
  * TODO Use alternative async backend.
  */
-public final class Console extends ResourceI<Sender<String>> {
+public final class Console extends ResourceOptionI<Sender<String>> {
 
     public Console() {
         super(() -> {

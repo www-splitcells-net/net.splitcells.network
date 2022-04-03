@@ -10,10 +10,7 @@
  */
 package net.splitcells.dem.execution;
 
-import net.splitcells.dem.environment.resource.ResourceI;
-import net.splitcells.dem.resource.communication.interaction.Dsui;
-
-import java.util.function.Supplier;
+import net.splitcells.dem.environment.resource.ResourceOptionI;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.execution.EventProcessorExecutor.eventProcessorExecutor;
@@ -22,7 +19,7 @@ import static net.splitcells.dem.execution.EventProcessorExecutor.eventProcessor
  * Provides an event based effect system, that can be used by programs without side effects.
  */
 @Deprecated
-public class EventProcessorExecution extends ResourceI<EventProcessorExecutor> {
+public class EventProcessorExecution extends ResourceOptionI<EventProcessorExecutor> {
     public EventProcessorExecution() {
         super(() -> {
             final var executor = eventProcessorExecutor();
