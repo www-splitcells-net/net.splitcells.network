@@ -26,6 +26,7 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
+import static net.splitcells.gel.solution.history.History.ALLOCATION_EVENT;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
@@ -42,6 +43,7 @@ public class ConstraintGroupBasedRepairTest {
         final var validValue = 5;
         final var defyingGroupA = then(cost(1));
         final var defyingGroupB = then(cost(1));
+        final var initHistorySize = 7;
         @SuppressWarnings("unchecked") final var solution
                 = defineProblem()
                 .withDemandAttributes(a, b)
@@ -83,20 +85,12 @@ public class ConstraintGroupBasedRepairTest {
         solution.optimize(linearInitialization());
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(
                 constraintGroup -> list(constraintGroup.get(6)) // Select the first defying group.
-                , (freeDemandGroups, freedSupplies) -> currentSolution -> {
-                    final List<OptimizationEvent> repairs = list();
-                    final int i[] = {0};
+                , freeDemandGroups -> currentSolution -> {
                     freeDemandGroups.entrySet().forEach(freeGroup -> {
                         freeGroup.getValue().forEach(freeDemand -> {
-                            repairs.add(
-                                    optimizationEvent(
-                                            ADDITION
-                                            , freeDemand.toLinePointer()
-                                            , currentSolution.suppliesFree().getLines().get(i[0]++).toLinePointer()
-                                    ));
+                            currentSolution.allocate(freeDemand, currentSolution.suppliesFree().getLines().get(0));
                         });
                     });
-                    return repairs;
                 }
         );
         final var groupsOfConstraintGroup = testSubject.groupOfConstraintGroup(solution);
@@ -107,14 +101,14 @@ public class ConstraintGroupBasedRepairTest {
                         .map(f -> testSubject.demandGrouping(f, solution))
                         .orElseGet(() -> map()))
                 .collect(toList());
-        final var testProduct = testSubject.repair(solution, demandClassifications.get(0), list());
-        assertThat(testProduct).hasSize(4);
-        final var freeSupplyIndexes = testProduct.stream()
-                .map(optimizationEvent -> optimizationEvent.supply().index())
+        testSubject.repair(solution, demandClassifications.get(0));
+        assertThat(solution.history().size()).isEqualTo(initHistorySize + 4);
+        final var freeSupplyIndexes = solution.history().getLines().stream()
+                .map(l -> l.value(ALLOCATION_EVENT).supply().index())
                 .collect(toList());
         assertThat(freeSupplyIndexes).contains(7, 8, 9, 10);
-        final var demandIndexes = testProduct.stream()
-                .map(optimizationEvent -> optimizationEvent.demand().index())
+        final var demandIndexes = solution.history().getLines().stream()
+                .map(l -> l.value(ALLOCATION_EVENT).demand().index())
                 .collect(toList());
         assertThat(demandIndexes).contains(0, 1, 2, 3);
     }
@@ -162,9 +156,9 @@ public class ConstraintGroupBasedRepairTest {
         assertThat(solution.getLines()).hasSize(7);
 
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
-        solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA));
+        testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA);
         assertThat(solution.getLines()).hasSize(3);
-        solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB));
+        testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB);
         assertThat(solution.getLines()).hasSize(1);
     }
 
