@@ -12,12 +12,13 @@ package net.splitcells.dem.resource.communication;
 
 import net.splitcells.dem.data.set.SetWA;
 import net.splitcells.dem.data.set.list.ListWA;
+import net.splitcells.dem.environment.resource.Resource;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-public interface Sender<T> extends ListWA<T>, Flushable, Closeable {
+public interface Sender<T> extends ListWA<T>, Resource {
 
     static Sender<String> stringSender(OutputStream output) {
         return new Sender<String>() {
@@ -100,7 +101,7 @@ public interface Sender<T> extends ListWA<T>, Flushable, Closeable {
             }
 
             @SuppressWarnings("unchecked")
-			@Override
+            @Override
             public <R extends ListWA<String>> R append(String value) {
                 sender.append(prefix + value + suffix);
                 return (R) this;
@@ -131,7 +132,7 @@ public interface Sender<T> extends ListWA<T>, Flushable, Closeable {
             }
 
             @SuppressWarnings("unchecked")
-			@Override
+            @Override
             public <R extends ListWA<String>> R append(String value) {
                 if (is_first) {
                     sender.append(first_prefix + value + first_suffix);

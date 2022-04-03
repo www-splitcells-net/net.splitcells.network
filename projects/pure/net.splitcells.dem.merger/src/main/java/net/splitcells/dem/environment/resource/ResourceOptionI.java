@@ -24,7 +24,7 @@ import java.util.function.Supplier;
  * 
  * @param <T> Type Of Resource
  */
-public class ResourceOptionI<T extends Closeable & Flushable> extends OptionI<T> implements ResourceOption<T> {
+public class ResourceOptionI<T extends Resource> extends OptionI<T> implements ResourceOption<T> {
     public ResourceOptionI(Supplier<T> arg_default_value) {
         super(arg_default_value);
     }

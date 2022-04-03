@@ -1,5 +1,6 @@
 package net.splitcells.dem.resource.communication.interaction;
 
+import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.PerspectiveI;
@@ -24,7 +25,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YE
  * In other words, this may be should be implemented as a general
  * functionality in order to provide one message one line logs.
  */
-public interface Ui extends Sui<LogMessage<Perspective>>, Flushable, Closeable {
+public interface Ui extends Sui<LogMessage<Perspective>>, Resource {
 
     default Ui append(String name) {
         return append(logMessage(perspective(name), NO_CONTEXT, LogLevel.DEBUG));

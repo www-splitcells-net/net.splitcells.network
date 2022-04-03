@@ -10,6 +10,7 @@
  */
 package net.splitcells.dem.execution;
 
+import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
@@ -18,7 +19,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @Deprecated
-public class EventProcessorExecutor implements Closeable, Flushable {
+public class EventProcessorExecutor implements Resource {
     public static EventProcessorExecutor eventProcessorExecutor() {
         return new EventProcessorExecutor();
     }

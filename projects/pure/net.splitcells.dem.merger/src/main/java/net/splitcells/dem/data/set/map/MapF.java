@@ -10,10 +10,11 @@
  */
 package net.splitcells.dem.data.set.map;
 
+import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
-public interface MapF extends Closeable, Flushable {
+public interface MapF extends Resource {
 
     <K, V> Map<K, V> map();
 

@@ -10,6 +10,7 @@
  */
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
@@ -20,7 +21,7 @@ import java.util.Collection;
  * <p>
  * TODO Specify required performance signature.
  */
-public interface SetF extends Closeable, Flushable {
+public interface SetF extends Resource {
 
     <T> Set<T> set();
 

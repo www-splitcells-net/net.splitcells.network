@@ -13,5 +13,5 @@ package net.splitcells.dem.environment.resource;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.resource.communication.Closeable;
 
-public interface ResourceOption<T extends Closeable> extends Option<T> {
+public interface ResourceOption<T extends Resource> extends Option<T> {
 }

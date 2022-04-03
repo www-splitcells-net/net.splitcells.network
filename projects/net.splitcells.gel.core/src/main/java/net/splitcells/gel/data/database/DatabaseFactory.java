@@ -11,6 +11,7 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.Closeable;
@@ -25,7 +26,7 @@ import static net.splitcells.dem.lang.Xml.directChildElementByName;
 import static net.splitcells.dem.lang.Xml.directChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 
-public interface DatabaseFactory extends Closeable, Flushable {
+public interface DatabaseFactory extends Resource {
     Database database(String name, Attribute<? extends Object>... attributes);
 
     Database database(Attribute<? extends Object>... attributes);
