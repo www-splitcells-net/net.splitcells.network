@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  *
  * @param <Value> Type of the options value.
  */
-public abstract class OptionI<Value> implements Option<Value> {
+public class OptionI<Value> implements Option<Value> {
 
 	private final Supplier<Value> defaultValue;
 
