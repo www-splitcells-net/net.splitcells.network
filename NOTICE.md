@@ -269,3 +269,18 @@ PapaParse
 
 * License: MIT
 * Source: https://github.com/mholt/PapaParse
+
+grep
+
+* License: BSD
+* Manual: https://www.freebsd.org/cgi/man.cgi?query=grep&sektion=&n=1
+
+wc
+
+* License: BSD
+* Manual: https://www.freebsd.org/cgi/man.cgi?wc
+
+date
+
+* License: BSD
+* Manual: https://www.freebsd.org/cgi/man.cgi?query=date&sektion=&n=1

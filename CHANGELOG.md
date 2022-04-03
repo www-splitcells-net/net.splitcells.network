@@ -82,6 +82,8 @@ Releases are done every time an important ticket is completed.
     because it tried to open a website with the most common URL.
     In other words `https://localhost:8443/index.html` becomes `https://localhost:8443`.
 ### Minor Changes
+* **2022-04-04**: [**\#171**: Log number of warnings:](https://github.com/www-splitcells-net/net.splitcells.network/issues/171)
+  This are logged via `./bin/test.via.network.worker` and logged at `net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/$(hostname).csv`.
 * **2022-03-06**: **\#10**: Create project `net.splitcells.dem.core`,
     which contains interface implementations of the Dem project.
     The goal is to split the Dem project into an interface project (merger)
