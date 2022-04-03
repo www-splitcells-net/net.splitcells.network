@@ -4,6 +4,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
+import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -70,6 +71,14 @@ public class Network {
     }
 
     @ReturnsThis
+    public Network withOptimization(String argumentKey, OnlineOptimization optimization) {
+        return withExecution(argumentKey, s -> {
+            optimization.optimize(s);
+            return s;
+        });
+    }
+
+    @ReturnsThis
     public Network withOptimization(String argumentKey, OfflineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
         final var solution = solutions.get(argumentKey);
         int i = 0;
@@ -80,6 +89,20 @@ public class Network {
             }
             ++i;
             solution.optimize(recommendations);
+        }
+        return this;
+    }
+
+    @ReturnsThis
+    public Network withOptimization(String argumentKey, OnlineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
+        final var solution = solutions.get(argumentKey);
+        int i = 0;
+        while (continuationCondition.test(solution, i)) {
+            if (solution.isOptimal()) {
+                break;
+            }
+            ++i;
+            optimizationFunction.optimize(solution);
         }
         return this;
     }
