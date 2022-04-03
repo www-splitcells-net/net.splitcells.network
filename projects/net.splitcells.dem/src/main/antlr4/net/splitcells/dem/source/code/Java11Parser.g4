@@ -143,7 +143,7 @@ import_static_declaration
     : Keyword_import Keyword_static type_path (Dot Keysymbol_star)? Semicolon
     ;
 import_type_declaration
-    : Keyword_import type_path Semicolon
+    : Keyword_import type_path (Dot Keysymbol_star)? Semicolon
     ;
 integer
 	: Integer
