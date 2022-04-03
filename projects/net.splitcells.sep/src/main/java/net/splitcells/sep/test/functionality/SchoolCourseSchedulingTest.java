@@ -31,6 +31,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
+import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
@@ -64,6 +65,7 @@ import static net.splitcells.gel.rating.rater.RegulatedLength.regulatedLength;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
@@ -154,11 +156,10 @@ public class SchoolCourseSchedulingTest {
     /**
      * Select grouping according to {@link net.splitcells.gel.constraint.type.ForAll}{@link #COURSE_ID}.
      */
-    public static OfflineOptimization teacherAllocationForCoursesOptimization() {
+    public static OnlineOptimization teacherAllocationForCoursesOptimization() {
         final var randomness = randomness();
-        return ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(c -> list(c.get(1))
-                , (freeCoursesByTopic, freeTeachers) -> solution -> {
-                    final List<OptimizationEvent> allocations = list();
+        return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
+                , freeCoursesByTopic -> solution -> {
                     freeCoursesByTopic.keySet().forEach(topic -> {
                         // TODO Use constraint system for complex queries.
                         final var suitableCourse = freeCoursesByTopic
@@ -167,33 +168,25 @@ public class SchoolCourseSchedulingTest {
                                 .findFirst()
                                 .get()
                                 .value(SUBJECT);
-                        final var suitableTeacher = randomValue(solution.suppliesFree()
-                                        .columnView(TEACH_SUBJECT_SUITABILITY)
-                                        .lookup(suitableCourse)
-                                        .getLines()
-                                , randomness)
+                        final var suitableTeacher = randomness.chooseOneOf(solution.suppliesFree()
+                                        .lookup(TEACH_SUBJECT_SUITABILITY, suitableCourse)
+                                        .getLines())
                                 .value(TEACHER);
-                        final var fittingCourseId = freeTeachers.stream()
-                                .filter(freeSupply -> freeSupply.value(SUBJECT)
-                                        .equals(suitableCourse))
-                                .findFirst()
-                                .map(freeSupply -> freeSupply.value(COURSE_ID));
-                        if (fittingCourseId.isPresent()) {
-                            final var freeCourseSlots = freeTeachers.stream()
-                                    .filter(freeSupply -> freeSupply.value(SUBJECT).equals(fittingCourseId.get()))
-                                    .collect(toList());
-                        }
+                        final var fittingCourseId = solution.suppliesFree()
+                                .lookup(SUBJECT, suitableCourse)
+                                .getLines()
+                                .get(0)
+                                .value(COURSE_ID);
+                        solution.suppliesFree()
+                                .lookup(SUBJECT, fittingCourseId)
+                                .getLines()
+                                .forEach(freeCourseSlot -> {
+                                    solution.allocate(solution.demandsFree().getLines(0)
+                                            , freeCourseSlot);
+                                });
                     });
-                    return allocations;
                 }
         );
-    }
-
-    private static <T> T randomValue(List<T> list, Randomness rnd) {
-        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(list).isNotEmpty();
-        }
-        return list.get(rnd.integer(0, list.size() - 1));
     }
 
     public static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
