@@ -257,7 +257,46 @@ window.onload = function() {
                             <xsl:value-of select="concat(./s:title, ' / ', $siteName)"/>
                         </title>
                     </head>
-                    <body></body>
+                    <body>
+                        <header>
+                            <nav>
+                                <a>
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:root-relative-url('/dedicated-menu-page.html')"/>
+                                    </xsl:attribute>
+                                    Menu
+                                </a>
+                                <a>
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:root-relative-url('/premature-content.html')"/>
+                                    </xsl:attribute>
+                                    Tabs
+                                </a>
+                                <a>
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:root-relative-url('/legal/impressum.html')"/>
+                                    </xsl:attribute>
+                                    Impressum
+                                </a>
+                                <a>
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:root-relative-url('/legal/privacy-policy.html')"/>
+                                    </xsl:attribute>
+                                    Privacy Policy
+                                </a>
+                            </nav>
+                        </header>
+                        <main>
+                            <xsl:for-each select="./s:content/node()">
+                                <xsl:apply-templates select="."/>
+                            </xsl:for-each>
+                        </main>
+                        <footer></footer>
+                    </body>
                 </html>
             </xsl:when>
             <xsl:otherwise>
