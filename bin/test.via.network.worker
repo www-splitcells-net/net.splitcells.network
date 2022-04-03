@@ -5,7 +5,7 @@ numberOfWarnings=$(mvn clean install -DskipTests | grep --ignore-case warning | 
 if [ ! -d logFolder ]
 then
     mkdir -p ../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/
-    echo 'Date,Execution Time' >> $logFile
+    echo 'Date,Number Of Warnings' >> $logFile
 fi
 echo $(date +'%Y-%m-%d')','$numberOfWarnings >> ../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/$(hostname).csv
 cd ../net.splitcells.network.log
