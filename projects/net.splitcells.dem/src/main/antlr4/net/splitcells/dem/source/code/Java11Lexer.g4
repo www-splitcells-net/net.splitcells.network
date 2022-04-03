@@ -64,6 +64,7 @@ lexer grammar Java11Lexer;
 	Keysymbol_vertical_bar: '||';
 	Keyword_JavaLegacyArtifact: 'JavaLegacyArtifact';
 	Keyword_JavaLegacyBody: 'JavaLegacyBody';
+	Keyword_abstract: 'abstract';
 	Keyword_annotation: '@interface';
 	Keyword_class: 'class';
 	Keyword_catch: 'catch';
