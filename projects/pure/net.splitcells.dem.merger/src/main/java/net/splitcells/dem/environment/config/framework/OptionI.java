@@ -19,7 +19,7 @@ import java.util.function.Supplier;
  */
 public abstract class OptionI<Value> implements Option<Value> {
 
-	protected final Supplier<Value> defaultValue;
+	private final Supplier<Value> defaultValue;
 
 	public OptionI(Supplier<Value> arg_default_value) {
 		defaultValue = arg_default_value;
