@@ -35,6 +35,7 @@ public class World {
     private static Solution worldHistory() {
         return defineProblem("Conway's Game of Life")
                 .withDemandAttributes(WORLD_TIME)
+                .withDemands(worldsTimeSpace(0))
                 .withSupplyAttributes(POSITION_X, POSITION_Y, STATE)
                 .withSupplies(worldWithGlider())
                 .withConstraint(r -> {
@@ -46,6 +47,16 @@ public class World {
                     return r;
                 }).toProblem()
                 .asSolution();
+    }
+
+    private static List<List<Object>> worldsTimeSpace(Integer worldTime) {
+        final List<List<Object>> worldsTimeSpace = list();
+        IntStream.rangeClosed(-10, 0).forEach(i -> {
+            IntStream.rangeClosed(-10, 0).forEach(j -> {
+                worldsTimeSpace.add(list(worldTime));
+            });
+        });
+        return worldsTimeSpace;
     }
 
     @SuppressWarnings("unchecked")
