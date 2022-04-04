@@ -28,8 +28,6 @@ public interface Query {
 
     Query forAll();
 
-    Query then();
-
     Query then(Rater rater);
 
     Query then(Rating rating);

@@ -149,11 +149,6 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query then() {
-        throw notImplementedYet();
-    }
-
-    @Override
     public Query then(Rater rater) {
         var resultBase
                 = constraint.childrenView().stream()
