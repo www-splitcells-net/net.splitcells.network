@@ -31,7 +31,7 @@ public class World {
     }
 
     private static Solution worldHistory() {
-        return defineProblem("Rails For School Scheduling")
+        return defineProblem("Conway's Game of Life")
                 .withDemandAttributes(WORLD_TIME, OBJECT_ID)
                 .withSupplyAttributes(POSITION_X, POSITION_Y)
                 .withConstraint(r -> {
