@@ -1,6 +1,7 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -8,7 +9,9 @@ import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
+import java.util.stream.IntStream;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueRater;
@@ -18,9 +21,9 @@ import static net.splitcells.sep.Network.network;
 public class World {
     private static final String WORLD_HISTORY = "world-history";
     private static final Attribute<Integer> WORLD_TIME = attribute(Integer.class, "world-time");
-    private static final Attribute<Integer> OBJECT_ID = attribute(Integer.class, "object-id");
     private static final Attribute<Integer> POSITION_X = attribute(Integer.class, "position-x");
     private static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-y");
+    private static final Attribute<Boolean> STATE = attribute(Boolean.class, "state");
 
     public static void main(String... args) {
         GelDev.process(() -> {
@@ -31,8 +34,9 @@ public class World {
 
     private static Solution worldHistory() {
         return defineProblem("Conway's Game of Life")
-                .withDemandAttributes(WORLD_TIME, OBJECT_ID)
-                .withSupplyAttributes(POSITION_X, POSITION_Y)
+                .withDemandAttributes(WORLD_TIME)
+                .withSupplyAttributes(POSITION_X, POSITION_Y, STATE)
+                .withSupplies(worldWithGlider())
                 .withConstraint(r -> {
                     r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
                     r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
@@ -42,6 +46,25 @@ public class World {
                     return r;
                 }).toProblem()
                 .asSolution();
+    }
+
+    @SuppressWarnings("unchecked")
+    private static List<List<Object>> worldWithGlider() {
+        final List<List<Object>> worldWithGlider = list();
+        worldWithGlider.withAppended(
+                list(1, 0, 1)
+                , list(2, -1, 1)
+                , list(3, -1, 1)
+                , list(1, -2, 1)
+                , list(2, -2, 1));
+        IntStream.rangeClosed(-10, 0).forEach(i -> {
+            IntStream.rangeClosed(-10, 0).forEach(j -> {
+                if (!worldWithGlider.contains(list(i, j, 1))) {
+                    worldWithGlider.add(list(i, j, 0));
+                }
+            });
+        });
+        return worldWithGlider;
     }
 
     private static Rater positionClusters() {
