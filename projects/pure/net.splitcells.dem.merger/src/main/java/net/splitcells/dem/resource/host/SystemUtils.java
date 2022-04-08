@@ -11,6 +11,7 @@
 package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.io.*;
@@ -23,6 +24,7 @@ public final class SystemUtils {
         throw constructorIllegal();
     }
 
+    @JavaLegacyBody
     public static void executeShellScript(String command, Path workingDirectory) {
         // REMOVE or write output to log.
         System.out.println(command);
