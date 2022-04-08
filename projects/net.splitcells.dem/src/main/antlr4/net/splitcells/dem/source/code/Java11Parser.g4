@@ -110,7 +110,7 @@ enum_values
 	: name enum_values_next Semicolon
 	;
 enum_values_next
-    : Comma name enum_values_next?
+    : Comma Javadoc? function_call enum_values_next?
     ;
 expression
     : integer
@@ -125,7 +125,7 @@ expression
     | Keyword_new type_declaration call_arguments
         	Brace_curly_open class_member* Brace_curly_closed access?
     | Keyword_new type_declaration call_arguments access?
-    | name call_arguments access?
+    | function_call access?
     | name access?
     | expression operator expression
     | expression_with_prefix
@@ -137,6 +137,7 @@ expression_child
 	: access
 	| expression
 	;
+function_call: name call_arguments;
 import_declaration
     : import_static_declaration
     | import_type_declaration
