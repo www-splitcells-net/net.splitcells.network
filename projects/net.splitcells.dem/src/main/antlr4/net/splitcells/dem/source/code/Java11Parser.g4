@@ -256,6 +256,7 @@ statement
     | name access Equals expression Semicolon
     | name Equals expression Semicolon
     | statement_for
+    | Brace_curly_open statement+ Brace_curly_closed
     ;
 statement_for
     : Keyword_for Brace_round_open variable_declaration (Equals expression)? Semicolon expression Semicolon expression Brace_round_closed statement_body
