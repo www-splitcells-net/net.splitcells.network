@@ -190,7 +190,7 @@ interface_definition_member_method
     | interface_definition_member_static
     ;
 interface_definition_member_static
-	: javadoc? type_declaration? name Equals statement
+	: javadoc? type_declaration? name Equals reference Semicolon
 	| javadoc? type_declaration? name
 		Brace_curly_open statement* Brace_curly_closed
 	;
