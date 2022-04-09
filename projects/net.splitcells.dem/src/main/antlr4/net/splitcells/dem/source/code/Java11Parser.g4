@@ -262,7 +262,7 @@ statement
     	Brace_curly_open statement+ Brace_curly_closed statement_if_else?
     | javadoc
     | Keyword_throw expression Semicolon
-    | Keyword_return expression? Semicolon
+    | Keyword_return (expression | reference)? Semicolon
     | expression Semicolon
     | variable_declaration (Equals expression)? Semicolon
     | name access Equals expression Semicolon
