@@ -224,6 +224,7 @@ operator
 	| Keysymbol_and
 	| Keysymbol_vertical_bar
 	| Less_than Equals?
+	| Bigger_than Equals?
 	| Keyword_instanceof
 	| Operator_plus
 	| Hyphen_minus
