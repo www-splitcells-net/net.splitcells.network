@@ -17,3 +17,10 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 * **2022-03-20**:
   [**\#125** Create global news feeds](https://github.com/www-splitcells-net/net.splitcells.network/issues/125):
   It is located at `/net/splitcells/CHANGELOG.global.html`.
+### Patches
+* **2022-04-10**: Support rendering website to filesystem with a custom root path.
+  This way multiple versions of a website can be deployed to a single filesystem.
+  Compare `https://splitcells.net/net/splitcells/martins/avots/website/index.html`
+  and `https://splitcells.net/net/splitcells/website/minimal/net/splitcells/martins/avots/website/index.html`.
+  Previously, this was supported in theory,
+  but there was a bug making it impossible.

@@ -84,7 +84,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
     public void serveTo(Path target) {
         build();
         projectsPaths().stream()
-                .map(path -> "/" + path.toString())
+                .map(path -> config.rootPath() + path.toString())
                 .map(path -> {
                     // TODO This is an hack.
                     if (path.endsWith(".md")) {
