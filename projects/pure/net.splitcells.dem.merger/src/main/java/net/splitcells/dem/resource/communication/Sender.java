@@ -86,8 +86,7 @@ public interface Sender<T> extends ListWA<T>, Resource {
     /**
      * RENAME
      */
-    static Sender<String> extend(Sender<String> sender, String prefix, //
-                                 String suffix) {
+    static Sender<String> extend(Sender<String> sender, String prefix, String suffix) {
         return new Sender<>() {
 
             @Override
@@ -115,8 +114,7 @@ public interface Sender<T> extends ListWA<T>, Resource {
         };
     }
 
-    static Sender<String> extend(Sender<String> sender, String prefix, //
-                                 String suffix, String first_prefix, String first_suffix) {
+    static Sender<String> extend(Sender<String> sender, String prefix, String suffix, String first_prefix, String first_suffix) {
         return new Sender<>() {
 
             boolean is_first = true;
