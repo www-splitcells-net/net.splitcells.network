@@ -98,13 +98,22 @@ class_member_value_declaration
     | javadoc? annotation? modifier_visibility? Keyword_static? Keyword_final?
               type_declaration? name Semicolon
     ;
+enum_constructor
+    : javadoc? annotation* name call_arguments statement_body
+    /* This is needed for resource classes, so that instance of these can be created via reflection. */
+    | javadoc? annotation* Keyword_public name call_arguments statement_body
+    ;
 enum_definition
 	/* TODO Create own enum grammar destinct from class. */
     : javadoc? Keyword_public? Keyword_enum
     	name
     	(Keyword_implements type_declaration)?
-        Brace_curly_open enum_values class_member*
+        Brace_curly_open enum_values enum_members*
         Brace_curly_closed
+    ;
+enum_members
+    : enum_constructor
+    | class_member
     ;
 enum_values
 	: Javadoc? name call_arguments? enum_values_next Semicolon
