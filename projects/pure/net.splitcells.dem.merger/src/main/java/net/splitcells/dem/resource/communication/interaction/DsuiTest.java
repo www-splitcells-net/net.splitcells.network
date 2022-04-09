@@ -16,24 +16,23 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static net.splitcells.dem.resource.communication.interaction.Dsui.dsui;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 public class DsuiTest {
-    private interface StringSender extends Sender<String> {
-
-    }
     @Test
     public void testSenderOnlyClosedOnce() {
-        final var verifier = Mockito.mock(StringSender.class);
+        final var verifier = SenderStub.<String>create();
         dsui(verifier, message -> true).close();
-        verify(verifier).close();
+        assertThat(verifier.closed()).isTrue();
     }
+
     @Test
     public void testEndMessage() {
-        final var verifier = Mockito.mock(StringSender.class);
+        final var verifier = SenderStub.<String>create();
         dsui(verifier, message -> true).close();
-        verify(verifier).append(eq("</d:execution>"));
-        verify(verifier).flush();
+        assertThat(verifier.storage().lastValue()).contains("</d:execution>");
+        assertThat(verifier.flushCount()).isEqualTo(1);
     }
 }
