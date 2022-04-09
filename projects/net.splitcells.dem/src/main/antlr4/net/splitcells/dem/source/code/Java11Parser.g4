@@ -107,10 +107,10 @@ enum_definition
         Brace_curly_closed
     ;
 enum_values
-	: name enum_values_next Semicolon
+	: Javadoc? name call_arguments? enum_values_next Semicolon
 	;
 enum_values_next
-    : Comma Javadoc? function_call enum_values_next?
+    : Comma Javadoc? name call_arguments? enum_values_next?
     ;
 expression
     : integer
