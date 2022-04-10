@@ -20,7 +20,8 @@ import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
 
 /**
- * IDEA Implement GroupId#name as constraint path like in reasoning system.
+ * <p>IDEA Implement GroupId#name as constraint path like in reasoning system.</p>
+ * <p>IDEA Create value based grouping.</p>
  */
 public class GroupId implements Domable {
     @Deprecated
