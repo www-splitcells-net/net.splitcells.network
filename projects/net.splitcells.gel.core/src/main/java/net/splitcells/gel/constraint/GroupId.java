@@ -26,16 +26,16 @@ import net.splitcells.dem.lang.dom.Domable;
 public class GroupId implements Domable {
     @Deprecated
     public GroupId() {
-        vārds = Optional.empty();
+        name = Optional.empty();
     }
 
-    private GroupId(String vārds) {
-        this.vārds = Optional.ofNullable(vārds);
+    private GroupId(String name) {
+        this.name = Optional.ofNullable(name);
     }
 
-    private final Optional<String> vārds;
+    private final Optional<String> name;
 
-    public static GroupId grupa() {
+    public static GroupId group() {
         return new GroupId();
     }
 
@@ -44,12 +44,12 @@ public class GroupId implements Domable {
     }
 
     @Deprecated
-    public String gūtVārds() {
-        return vārds.get();
+    public String getName() {
+        return name.get();
     }
 
-    public Optional<String> vārds() {
-        return vārds;
+    public Optional<String> name() {
+        return name;
     }
 
     public static GroupId multiply(GroupId a, GroupId b) {
@@ -58,14 +58,14 @@ public class GroupId implements Domable {
 
     @Override
     public String toString() {
-        return vārds.orElse(super.toString());
+        return name.orElse(super.toString());
     }
 
     @Override
     public Element toDom() {
         final var dom = Xml.elementWithChildren("group");
-        if (vārds.isPresent()) {
-            dom.appendChild(Xml.elementWithChildren("name", textNode(vārds.get())));
+        if (name.isPresent()) {
+            dom.appendChild(Xml.elementWithChildren("name", textNode(name.get())));
         }
         dom.appendChild(Xml.elementWithChildren("id", textNode(this.hashCode() + "")));
         return dom;

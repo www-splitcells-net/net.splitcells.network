@@ -26,7 +26,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.Lambdas;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -168,7 +167,7 @@ public class RaterBasedOnLineValue implements Rater {
     public Node argumentation(GroupId group, Table allocations) {
         final var argumentation = Xml.elementWithChildren(Language.GROUP.value());
         argumentation.appendChild
-                (Xml.textNode(group.vārds().orElse("missing-group-name")));
+                (Xml.textNode(group.name().orElse("missing-group-name")));
         return argumentation;
     }
 
