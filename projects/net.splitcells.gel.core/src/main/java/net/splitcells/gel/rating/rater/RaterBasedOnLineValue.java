@@ -39,6 +39,9 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.rating.framework.Rating;
 
+/**
+ * This {@link Rater} makes it easy to rate every {@link Line} of a group independent of each other.
+ */
 public class RaterBasedOnLineValue implements Rater {
     public static Rater raterBasedOnLineValue(String description, Function<Line, Integer> classifier) {
         return raterBasedOnLineValue(new Function<>() {
