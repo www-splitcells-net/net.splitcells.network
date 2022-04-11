@@ -22,12 +22,18 @@ import org.w3c.dom.Node;
 
 import java.util.Collection;
 import java.util.Optional;
+import net.splitcells.gel.rating.framework.Rating;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
+/**
+ * This {@link Rater} makes it easy to rate groups with interdependent {@link Line}s.
+ * Every {@link Line} has the same {@link Rating} in the group.
+ * Keep in mind, that during a change in the group, every {@link Line}s' {@link Rating} in the group is updated.
+ */
 public class RaterBasedOnLineGroup implements Rater {
 
     public static RaterBasedOnLineGroup groupRater(GroupRater rater) {
