@@ -39,8 +39,8 @@ public class GroupId implements Domable {
         return new GroupId();
     }
 
-    public static GroupId group(String vārds) {
-        return new GroupId(vārds);
+    public static GroupId group(String name) {
+        return new GroupId(name);
     }
 
     @Deprecated
@@ -53,7 +53,7 @@ public class GroupId implements Domable {
     }
 
     public static GroupId multiply(GroupId a, GroupId b) {
-        return new GroupId(a.toString() + " un " + b.toString());
+        return new GroupId(a.toString() + " and " + b.toString());
     }
 
     @Override
