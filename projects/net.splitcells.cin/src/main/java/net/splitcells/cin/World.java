@@ -1,20 +1,39 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.data.set.map.Pair;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.GelDev;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.data.set.map.Pair.pair;
+import static net.splitcells.dem.utils.MathUtils.floorToInt;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueRater;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.sep.Network.network;
 
@@ -79,7 +98,69 @@ public class World {
     }
 
     private static Rater positionClusters() {
-        throw notImplementedYet();
+        return new Rater() {
+
+            private final Map<Pair<Integer, Integer>, GroupId> neighbourhoods = map();
+
+            @Override
+            public List<Domable> arguments() {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public void addContext(Discoverable context) {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Collection<List<String>> paths() {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+                final var ratingEvent = ratingEvent();
+                final var positionX = addition.value(POSITION_X);
+                final var positionY = addition.value(POSITION_Y);
+                final var xNeighbourhood = floorToInt(positionX / 3d);
+                final var yNeighbourhood = floorToInt(positionY / 3d);
+                final var neighbourhoodId = pair(xNeighbourhood, yNeighbourhood);
+                final var neighbourhoodGroup = neighbourhoods.computeIfAbsent(neighbourhoodId, key -> GroupId.group(key.getKey() + ", " + key.getValue()));
+                final var localRating = localRating()
+                        .withRating(noCost())
+                        .withPropagationTo(children)
+                        .withResultingGroupId(neighbourhoodGroup);
+                ratingEvent.additions().put(addition, localRating);
+                addPosition(lines, addition, positionX + 1, positionY, ratingEvent, localRating);
+                addPosition(lines, addition, positionX + 1, positionY - 1, ratingEvent, localRating);
+                addPosition(lines, addition, positionX, positionY - 1, ratingEvent, localRating);
+                addPosition(lines, addition, positionX - 1, positionY - 1, ratingEvent, localRating);
+                addPosition(lines, addition, positionX - 1, positionY, ratingEvent, localRating);
+                addPosition(lines, addition, positionX - 1, positionY + 1, ratingEvent, localRating);
+                addPosition(lines, addition, positionX, positionY + 1, ratingEvent, localRating);
+                addPosition(lines, addition, positionX + 1, positionY + 1, ratingEvent, localRating);
+                return ratingEvent;
+            }
+
+            @Override
+            public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+                return ratingEvent();
+            }
+        };
+    }
+
+    private static void addPosition(Table lines, Line addition, int positionX, int positionY, RatingEvent ratingEvent, LocalRating localRating) {
+        retrievePosition(lines, positionX + 1, positionY)
+                .ifPresent(neighbour -> ratingEvent.additions().put(addition, localRating));
+    }
+
+    private static Optional<Line> retrievePosition(Table lines, int positionX, int positionY) {
+        return lines.columnView(POSITION_X)
+                .lookup(positionX)
+                .columnView(POSITION_Y)
+                .lookup(positionY)
+                .getLines()
+                .lastValue();
     }
 
     private static Rater timeSteps() {
