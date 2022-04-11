@@ -11,12 +11,14 @@
 package net.splitcells.gel.rating.rater;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -48,12 +50,14 @@ public interface Rater extends PubliclyTyped<Rater>
     RatingEvent ratingAfterAddition(Table  lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition);
 
     /**
+     * Nothing needs to be done here, if the {@link Rating} of one {@link Line} is not dependent on the rating of another line.
+     * {@link RaterBasedOnLineValue} can be used for constructing such {@link Rater}s.
      *
-     * @param lines TODO Why is this needed. Is this not contained in other variables?
-     * @param removal
-     * @param children
-     * @param ratingsBeforeRemoval
-     * @return
+     * @param lines These are all lines present before the removal.
+     * @param removal This is the line that will be removed.
+     * @param children These are the children {@link Constraint}s of the current {@link Constraint} node.
+     * @param ratingsBeforeRemoval This table contains the {@link Rating} of all {@link Constraint}s.
+     * @return The events needed to update the {@link Rating} of all lines.
      */
     RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval);
 
