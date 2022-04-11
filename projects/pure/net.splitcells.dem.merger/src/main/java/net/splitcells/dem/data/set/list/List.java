@@ -50,6 +50,13 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         return Optional.of(get(size() - 1));
     }
 
+    default Optional<T> firstValue() {
+        if (isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(get(0));
+    }
+
     default List<T> shallowCopy() {
         final List<T> shallowCopy = Lists.list();
         shallowCopy.addAll(this);
