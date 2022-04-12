@@ -141,6 +141,7 @@ public class SchoolCourseSchedulingTest {
                 network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, teacherAllocationForCoursesOptimization()
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
             });
+            network.process(RAILS_FOR_SCHOOL_SCHEDULING, Solution::createStandardAnalysis);
             network.process(TEACHER_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
             network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, linearInitialization());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
@@ -160,7 +161,7 @@ public class SchoolCourseSchedulingTest {
         final var randomness = randomness();
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
                 , freeCoursesByTopic -> solution -> {
-                    freeCoursesByTopic.keySet().forEach(topic -> {
+                    for (final var topic : freeCoursesByTopic.keySet()) {
                         // TODO Use constraint system for complex queries.
                         final var suitableCourse = freeCoursesByTopic
                                 .get(topic)
@@ -168,10 +169,13 @@ public class SchoolCourseSchedulingTest {
                                 .findFirst()
                                 .get()
                                 .value(SUBJECT);
-                        final var suitableTeacher = randomness.chooseOneOf(solution.suppliesFree()
-                                        .lookup(TEACH_SUBJECT_SUITABILITY, suitableCourse)
-                                        .getLines())
-                                .value(TEACHER);
+                        final var suitableTeachers = solution.suppliesFree()
+                                .lookup(TEACH_SUBJECT_SUITABILITY, suitableCourse)
+                                .getLines();
+                        if (suitableTeachers.isEmpty()) {
+                            continue;
+                        }
+                        final var suitableTeacher = randomness.chooseOneOf(suitableTeachers).value(TEACHER);
                         final var fittingCourseId = solution.demandsFree()
                                 .lookup(SUBJECT, suitableCourse)
                                 .getLines()
@@ -189,7 +193,7 @@ public class SchoolCourseSchedulingTest {
                                 solution.allocate(freeCourseSlot, teacherCapacity.get(0));
                             }
                         }
-                    });
+                    }
                 }
         );
     }
