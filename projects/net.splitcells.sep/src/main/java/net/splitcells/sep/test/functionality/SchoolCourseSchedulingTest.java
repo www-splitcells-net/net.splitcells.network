@@ -177,11 +177,14 @@ public class SchoolCourseSchedulingTest {
                                 .getLines()
                                 .get(0)
                                 .value(COURSE_ID);
-                        solution.suppliesFree()
-                                .lookup(SUBJECT, fittingCourseId)
+                        solution.demandsFree()
+                                .lookup(TEACHER, suitableTeacher)
                                 .getLines()
                                 .forEach(freeCourseSlot -> {
-                                    solution.allocate(solution.demandsFree().getLines(0)
+                                    solution.allocate(solution.suppliesFree()
+                                                    .lookup(SUBJECT, fittingCourseId)
+                                                    .getLines()
+                                                    .get(0)
                                             , freeCourseSlot);
                                 });
                     });
