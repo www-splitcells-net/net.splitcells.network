@@ -172,21 +172,23 @@ public class SchoolCourseSchedulingTest {
                                         .lookup(TEACH_SUBJECT_SUITABILITY, suitableCourse)
                                         .getLines())
                                 .value(TEACHER);
-                        final var fittingCourseId = solution.suppliesFree()
+                        final var fittingCourseId = solution.demandsFree()
                                 .lookup(SUBJECT, suitableCourse)
                                 .getLines()
                                 .get(0)
                                 .value(COURSE_ID);
-                        solution.demandsFree()
-                                .lookup(TEACHER, suitableTeacher)
-                                .getLines()
-                                .forEach(freeCourseSlot -> {
-                                    solution.allocate(solution.suppliesFree()
-                                                    .lookup(SUBJECT, fittingCourseId)
-                                                    .getLines()
-                                                    .get(0)
-                                            , freeCourseSlot);
-                                });
+                        final var freeCourseSlots = solution.demandsFree()
+                                .lookup(SUBJECT, fittingCourseId)
+                                .getLines();
+                        for (final var freeCourseSlot : freeCourseSlots) {
+                            final var teacherCapacity = solution
+                                    .suppliesFree()
+                                    .lookup(TEACHER, suitableTeacher)
+                                    .getLines();
+                            if (!teacherCapacity.isEmpty()) {
+                                solution.allocate(freeCourseSlot, teacherCapacity.get(0));
+                            }
+                        }
                     });
                 }
         );
