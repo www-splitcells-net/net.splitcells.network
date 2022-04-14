@@ -12,6 +12,7 @@ package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
+import net.splitcells.dem.utils.random.Randomness;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -66,6 +67,12 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     @ReturnsThis
     default List<T> reverse() {
         Collections.reverse(this);
+        return this;
+    }
+
+    @ReturnsThis
+    default List<T> shuffle(Randomness rnd) {
+        Collections.shuffle(this, rnd.asRandom());
         return this;
     }
 }
