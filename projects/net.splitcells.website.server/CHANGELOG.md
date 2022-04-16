@@ -10,7 +10,10 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
-* **2022-04-17**: \#142 Deploy first draft of minimal styled version to `splitcells.net`.
+* **2022-04-17**:
+  * \#142 Deploy first draft of minimal styled version to `splitcells.net`.
+  * \#57 Render Javadoc of projects at `<projectFolder>/javadoc/*`,
+    if a Javadoc build is located at `target/site/apidocs`.
 * **2022-03-29**: Create renderer extension for JavaScript files.
   Thereby, `*.js` files can be requested and the `text/javascript` MIME type
   will be used.

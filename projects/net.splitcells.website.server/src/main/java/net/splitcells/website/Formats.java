@@ -1,7 +1,8 @@
 package net.splitcells.website;
 
 public enum Formats {
-    HTML("text/html");
+    HTML("text/html")
+    , CSS("text/css");
 
     private final String mimeTypes;
 
