@@ -44,6 +44,8 @@ import static net.splitcells.dem.testing.ReportEntryTimeKey.DATE_TIME_FORMAT;
  * <p>Each CSV file contains the 2 columns "Date" and "Execution Time".
  * The first one has the executions date of the test case.
  * The second one contains the execution time for the corresponding test case.</p>
+ * <p>{@link #BUILDER_RUNTIME_LOG}"/<host>.csv" contains the start times of all runs for a given host.
+ * </p>
  */
 public class Logger implements TestExecutionListener {
     private static Pattern UNIQUE_ID = Pattern.compile("(\\[.*\\])(/)(\\[[a-zA-Z]*:)(.*)(\\])(/)(\\[[a-zA-Z-]*:)([a-zA-Z-_]*)(.*\\])");
@@ -51,6 +53,8 @@ public class Logger implements TestExecutionListener {
     public static Logger logger(Path logProject) {
         return new Logger(logProject);
     }
+    
+    private static final String BUILDER_RUNTIME_LOG = "net/splitcells/network/logger/builder/runtime";
 
     private final Path logProject;
     private final Map<TestIdentifier, Long> testToStartTime = map();
@@ -81,7 +85,7 @@ public class Logger implements TestExecutionListener {
         final var splitTestIdentifier = list(testIdentifier.getUniqueId().split("/"));
         final Optional<String> testPath;
         if (splitTestIdentifier.size() == 1) {
-            testPath = Optional.of("net/splitcells/network/logger/builder/runtime");
+            testPath = Optional.of(BUILDER_RUNTIME_LOG);
         } else {
             testPath = splitTestIdentifier
                     .withRemovedByIndex(0)
