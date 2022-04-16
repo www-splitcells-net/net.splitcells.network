@@ -18,6 +18,10 @@ import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.Formats.CSS;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
+/**
+ * Renders the Javadoc of projects at `{@link ProjectRenderer#projectFolder()}/javadoc/*`,
+ * if a Javadoc build is located at `{@link ProjectRenderer#resourceRootPath2()}/target/site/apidocs`.
+ */
 public class JavadocProjectRendererExtension implements ProjectRendererExtension {
     private static final String RENDERED_JAVADOC_FOLDER = "javadoc";
     private static final String SOURCE_JAVADOC_FOLDER = "target/site/apidocs";
