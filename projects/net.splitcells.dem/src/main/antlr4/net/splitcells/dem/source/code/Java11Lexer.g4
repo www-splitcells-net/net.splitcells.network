@@ -60,6 +60,7 @@ lexer grammar Java11Lexer;
 	Keysymbol_equals: '==';
 	Keysymbol_not_equals: '!=';
 	Keysymbol_not: '!';
+	Keysymbol_slash: '/';
 	Keysymbol_star: '*';
 	Keysymbol_vararg: '...';
 	Keysymbol_vertical_bar: '||';

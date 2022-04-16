@@ -229,6 +229,8 @@ operator
 	| Keyword_instanceof
 	| Operator_plus
 	| Hyphen_minus
+	| Keysymbol_star
+	| Keysymbol_slash
 	;
 package_declaration
     : 'package' package_name Semicolon
