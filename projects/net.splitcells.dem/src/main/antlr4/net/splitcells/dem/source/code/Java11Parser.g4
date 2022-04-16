@@ -159,6 +159,7 @@ import_type_declaration
     ;
 integer
 	: Integer
+	| Floating_point
 	| Hyphen_minus Digits
 	;
 interface_definition
