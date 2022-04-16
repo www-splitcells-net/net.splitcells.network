@@ -47,7 +47,10 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
                     /**
                      * TODO Move path checking to dedicated method at {@link ProjectsRendererI}.
                      */
-                    final var resolvedLinkString = requestedPath.resolve(Path.of(link.replace("//", "/")))
+                    final var resolvedLinkString = requestedPath
+                            .getParent()
+                            .resolve(Path.of(link.replace("//", "/")))
+                            .normalize()
                             .toString();
                     final Path resolvedLink;
                     if (resolvedLinkString.startsWith("/")) {
