@@ -17,6 +17,11 @@
                     leaked.
                 </toDo>
             </unscheduled>
+            <service>
+                <task name="Improve styling.">
+                    <toDo>Use minimal element structure for minimal style.</toDo>
+                </task>
+            </service>
         </scheduling>
         <solution>
             <unscheduled>
