@@ -28,7 +28,7 @@ if __name__ == '__main__':
 		, help = 'This is the URL of the remote repository, from which missing repos are cloned.')
 	commandToExecute = "repo.process"\
 		+ " --command 'exit'"\
-		+ " --command-for-missing 'command.managed.execute disjunction repo.clone.into.current"\
+		+ " --command-for-missing 'command.managed.execute disjunction repo.clone.into.current "\
 		+ parser.parse_args().remoteRepo + "/$subRepo'"
 	logging.debug("Executing: " + commandToExecute)
 	subprocess.call(commandToExecute, shell='True')
