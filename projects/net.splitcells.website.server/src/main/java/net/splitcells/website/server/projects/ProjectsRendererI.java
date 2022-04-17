@@ -40,6 +40,8 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static net.splitcells.website.server.projects.GlobalChangelogExtension.globalChangelogExtension;
+import static net.splitcells.website.server.projects.NetworkStatusRenderExtension.networkStatusRenderExtension;
+import static net.splitcells.website.server.projects.ProjectsRendererExtensionMerger.projectsRendererExtensionMerger;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -121,7 +123,9 @@ public class ProjectsRendererI implements ProjectsRenderer {
     private final List<ProjectRenderer> renderers;
     private final ProjectRenderer fallbackRenderer;
     private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
-    private final ProjectsRendererExtension extension = globalChangelogExtension();
+    private final ProjectsRendererExtensionMerger extension = projectsRendererExtensionMerger()
+            .withRegisteredExtension(globalChangelogExtension())
+            .withRegisteredExtension(networkStatusRenderExtension());
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer
