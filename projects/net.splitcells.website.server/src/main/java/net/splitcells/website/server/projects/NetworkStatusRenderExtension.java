@@ -1,6 +1,11 @@
 package net.splitcells.website.server.projects;
 
+import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.website.Formats;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -11,7 +16,9 @@ import java.util.stream.Stream;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.splitcells.dem.data.order.Comparators.naturalComparator;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
@@ -56,13 +63,35 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                             .get()
                     , TEXT_HTML.toString()));
         }
+        if (path.equals("/" + STATUS_PATH)) {
+            final List<LogLevel> logLevels = list();
+            projectsRendererI.projectsPaths().stream()
+                    .filter(p -> p.startsWith(RUNTIME_FOLDER))
+                    .filter(p -> p.toString().endsWith(".csv"))
+                    .forEach(p -> {
+                        final var csvContent = new String(projectsRendererI.render("/" + p.toString()).get().getContent(), UTF_8);
+                        final var lastMeasurement = Stream.of(csvContent.split("\\R"))
+                                .filter(l -> !l.trim().isEmpty())
+                                .collect(toList())
+                                .lastValue();
+                        if (lastMeasurement.isPresent()) {
+                            final var localDate = LocalDate.parse(lastMeasurement.get().split(",")[0]);
+                            if (LocalDate.now().minusDays(-7).isAfter(localDate)) {
+                                logLevels.withAppended(LogLevel.WARNING);
+                            } else {
+                                logLevels.withAppended(LogLevel.INFO);
+                            }
+                        }
+                    });
+            logLevels.sort(naturalComparator());
+            final var statusLevel = logLevels.get(0);
+            return Optional.of(renderingResult(statusLevel.name().getBytes(UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
+        }
         return Optional.empty();
     }
 
     @Override
     public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
-        final Set<Path> projectPaths = setOfUniques();
-        projectPaths.add(Path.of(STATUS_DOCUMENT_PATH));
-        return projectPaths;
+        return setOfUniques(Path.of(STATUS_DOCUMENT_PATH), Path.of(STATUS_PATH));
     }
 }

@@ -21,32 +21,36 @@ import java.util.function.BiFunction;
  */
 @JavaLegacyArtifact
 public class Comparators<T> implements Comparator<T> {
-	
-	public static <T> Comparators<T> comparator(BiFunction<T, T, Integer> comparator) {
-		return new Comparators<>(comparator);
-	}
 
-	private final BiFunction<T, T, Integer> comparator;
-	
-	private Comparators(BiFunction<T, T, Integer> comparator) {
-		this.comparator = comparator;
-	}
+    public static <T> Comparators<T> comparator(BiFunction<T, T, Integer> comparator) {
+        return new Comparators<>(comparator);
+    }
 
-	@Override
-	public int compare(T a, T b) {
-		return comparator.apply(a, b);
-	}
+    public static <T extends Comparable<T>> Comparators<T> naturalComparator() {
+        return comparator((a, b) -> a.compareTo(b));
+    }
 
-	@Override
-	public boolean equals(Object arg) {
-		if (arg != null && arg instanceof Comparators) {
-			return this.comparator.equals(((Comparators) arg).comparator);
-		}
-		return false;
-	}
+    private final BiFunction<T, T, Integer> comparator;
 
-	@Override
-	public int hashCode() {
-		return comparator.hashCode();
-	}
+    private Comparators(BiFunction<T, T, Integer> comparator) {
+        this.comparator = comparator;
+    }
+
+    @Override
+    public int compare(T a, T b) {
+        return comparator.apply(a, b);
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg != null && arg instanceof Comparators) {
+            return this.comparator.equals(((Comparators) arg).comparator);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return comparator.hashCode();
+    }
 }
