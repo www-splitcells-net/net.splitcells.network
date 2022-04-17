@@ -47,7 +47,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                                 .lastValue();
                         if (lastMeasurement.isPresent()) {
                             final var localDate = LocalDate.parse(lastMeasurement.get().split(",")[0]);
-                            if (LocalDate.now().minusDays(-7).isAfter(localDate)) {
+                            if (LocalDate.now().minusDays(7).isAfter(localDate)) {
                                 status.append("<li>"
                                         + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
                                         + "</li>");
@@ -76,7 +76,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                                 .lastValue();
                         if (lastMeasurement.isPresent()) {
                             final var localDate = LocalDate.parse(lastMeasurement.get().split(",")[0]);
-                            if (LocalDate.now().minusDays(-7).isAfter(localDate)) {
+                            if (LocalDate.now().minusDays(7).isAfter(localDate)) {
                                 logLevels.withAppended(LogLevel.WARNING);
                             } else {
                                 logLevels.withAppended(LogLevel.INFO);
