@@ -5,6 +5,12 @@
     <artifactId>pom-java-defaults</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <parent>
+        <groupId>net.splitcells</groupId>
+        <artifactId>pom-java-minimal</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
+    </parent>
     <!-- TODO .gitignore of this project is also a template. -->
     <!-- TODO Update to Java 12. -->
     <!-- TODO Use automatic code formatting with own rules. -->
