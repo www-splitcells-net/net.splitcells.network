@@ -6,6 +6,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>../net.splitcells.pom.java.minimal</module>
         <module>../net.splitcells.pom.java.defaults</module>
         <module>../pure/net.splitcells.dem.merger</module>
         <module>../pure/net.splitcells.dem.core</module>
