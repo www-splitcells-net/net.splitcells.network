@@ -667,6 +667,12 @@ window.onload = function() {
                                     </div>
                                     <br/>
                                 </div>
+                                <a class="net-splitcells-button net-splitcells-component-priority-3 net-splitcells-network-status">
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:default-root-relative-url('net/splitcells/network/status.html')"/>
+                                    </xsl:attribute>
+                                </a>
                                 <h3>Sections</h3>
                                 <a class="net-splitcells-button net-splitcells-component-priority-3">
                                     <xsl:attribute name="href">
@@ -986,6 +992,18 @@ window.onload = function() {
                         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
                         <script id="MathJax-script" async=""
                                 src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+                        <script type="text/javascript"><![CDATA[
+                            var httpRequest = new XMLHttpRequest();
+                            httpRequest.open("GET", "/net/splitcells/network/status.csv", false);
+                            httpRequest.send(null);
+                            var status = httpRequest.responseText;
+                            function setContent(node) {
+                                node.innerHTML = status
+                                }
+                            document
+                                .querySelectorAll("a[class$='net-splitcells-network-status']")
+                                .forEach(setContent);
+                            ]]></script>
                     </body>
                 </html>
             </xsl:otherwise>
