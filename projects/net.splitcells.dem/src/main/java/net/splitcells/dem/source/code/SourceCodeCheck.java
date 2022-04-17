@@ -23,7 +23,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class SourceCodeCheck {
     public static void main(String... arg) {
-        Files.walk_recursively(Paths.get("../pure/net.splitcells.dem.merger/src/main/java/"))
+        Files.walk_recursively(Paths.get("../net.splitcells.dem.merger/src/main/java/"))
                 .filter(Files::is_file)
                 .forEach(SourceCodeCheck::check_Java_source_code);
     }
