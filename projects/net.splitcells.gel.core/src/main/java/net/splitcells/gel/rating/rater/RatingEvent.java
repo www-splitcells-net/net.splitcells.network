@@ -10,6 +10,7 @@
  */
 package net.splitcells.gel.rating.rater;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -20,20 +21,41 @@ import java.util.Optional;
 import java.util.Set;
 
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
 import org.assertj.core.api.Assertions;
 
+/**
+ * This event describes how {@link Line}s should be updated in a {@link Constraint} node.
+ */
 public interface RatingEvent {
 
     Map<Line, LocalRating> additions();
 
+    Map<Line, List<LocalRating>> complexAdditions();
+
+    @ReturnsThis
+    default RatingEvent addLocalRating(Line line, LocalRating rating) {
+        final List<LocalRating> localRatings;
+        if (complexAdditions().containsKey(line)) {
+            localRatings = complexAdditions().get(line);
+        } else {
+            localRatings = list();
+            complexAdditions().put(line, localRatings);
+        }
+        localRatings.add(rating);
+        return this;
+    }
+
     Set<Line> removal();
 
-    default void addRating_viaAddition(Line subject, Rating additionalRating, List<Constraint> children,
-                                       Optional<Rating> ratingBeforeAddition) {
+    default void addRating_viaAddition(Line subject
+            , Rating additionalRating
+            , List<Constraint> children
+            , Optional<Rating> ratingBeforeAddition) {
         final Rating currentRating;
         if (additions().containsKey(subject)) {
             currentRating = additions().get(subject).rating();
