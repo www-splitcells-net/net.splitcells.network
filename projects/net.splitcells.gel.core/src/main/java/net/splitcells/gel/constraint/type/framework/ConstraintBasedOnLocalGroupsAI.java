@@ -70,6 +70,13 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
             int i = r.index();
             lineProcessing.allocate(line, r);
         });
+        ratingEvent.complexAdditions().forEach((line, updates) -> {
+            updates.stream().forEach(update -> {
+                final var r = addResult(update);
+                int i = r.index();
+                lineProcessing.allocate(line, r);
+            });
+        });
     }
 
     @Override
