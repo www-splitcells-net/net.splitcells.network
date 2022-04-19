@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.framework.LocalRating;
 

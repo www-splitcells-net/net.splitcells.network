@@ -19,6 +19,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.Xml;
@@ -65,12 +66,12 @@ public class GroupMultiplier implements Rater {
     public RatingEvent ratingAfterAddition
             (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final var ratingEvent = ratingEvent();
+
         List<GroupId> groupingOfAddition = listWithValuesOf(
                 classifiers.stream()
                         .map(classifier -> classifier
                                 .ratingAfterAddition(lines, addition, children, ratingsBeforeAddition))
-                        .map(nn -> nn.additions())
-                        .flatMap(additions -> additions.values().stream())
+                        .flatMap(classification -> classification.allAdditions().stream())
                         .map(additionRating -> additionRating.resultingConstraintGroupId())
                         .collect(toList())
         );

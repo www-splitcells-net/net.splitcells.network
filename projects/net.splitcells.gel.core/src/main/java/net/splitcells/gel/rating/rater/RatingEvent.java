@@ -11,6 +11,7 @@
 package net.splitcells.gel.rating.rater;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -19,7 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.data.table.Line;
@@ -37,8 +40,14 @@ public interface RatingEvent {
 
     Map<Line, List<LocalRating>> complexAdditions();
 
+    default List<LocalRating> allAdditions() {
+        final List<LocalRating> allAdditions = listWithValuesOf(additions().values());
+        complexAdditions().values().forEach(ca -> ca.forEach(allAdditions::add));
+        return allAdditions;
+    }
+
     @ReturnsThis
-    default RatingEvent addLocalRating(Line line, LocalRating rating) {
+    default RatingEvent extendComplexRating(Line line, LocalRating rating) {
         final List<LocalRating> localRatings;
         if (complexAdditions().containsKey(line)) {
             localRatings = complexAdditions().get(line);

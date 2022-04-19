@@ -56,6 +56,13 @@ public class RaterBasedOnGrouping implements Rater {
                                         .withRating(noCost())
                                         .withResultingGroupId
                                                 (localRating.resultingConstraintGroupId())));
+        rBase.complexAdditions().forEach((line, ratings) ->
+                ratings.forEach(rating -> ratingEvent.extendComplexRating(line
+                        , localRating()
+                                .withPropagationTo(rating.propagateTo())
+                                .withRating(noCost())
+                                .withResultingGroupId
+                                        (rating.resultingConstraintGroupId()))));
         return ratingEvent;
     }
 
