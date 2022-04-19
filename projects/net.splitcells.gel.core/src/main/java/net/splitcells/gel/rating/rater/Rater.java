@@ -59,7 +59,9 @@ public interface Rater extends PubliclyTyped<Rater>
      * @param ratingsBeforeRemoval This table contains the {@link Rating} of all {@link Constraint}s.
      * @return The events needed to update the {@link Rating} of all lines.
      */
-    RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval);
+    default RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+        return ratingEvent();
+    }
 
     @Override
     default Class<? extends Rater> type() {
