@@ -14,6 +14,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -91,8 +92,10 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
         return projectPaths;
     }
 
-    public void registerExtension(ProjectRendererExtension extension) {
+    @ReturnsThis
+    public ProjectRendererExtensionMerger registerExtension(ProjectRendererExtension extension) {
         projectRendererExtensions.add(extension);
+        return this;
     }
 
     @Override

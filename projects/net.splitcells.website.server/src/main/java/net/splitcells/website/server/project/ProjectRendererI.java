@@ -88,6 +88,7 @@ public class ProjectRendererI implements ProjectRenderer {
     private final Config config;
 
     {
+        // TODO REMOVE
         renderer.registerExtension(commonMarkReadmeRenderer());
         renderer.registerExtension(commonMarkChangelogRenderer());
         renderer.registerExtension(userCommandRenderer());
@@ -97,6 +98,10 @@ public class ProjectRendererI implements ProjectRenderer {
         renderer.registerExtension(commonMarkChangelogEventRenderer());
         renderer.registerExtension(javascriptRenderer());
         renderer.registerExtension(javadocReportRenderer());
+        renderer.registerExtension(xmlRenderer(renderer()));
+        renderer.registerExtension(textExtension(renderer()));
+        renderer.registerExtension(resourceRenderer());
+        renderer.registerExtension(csvChartRenderer(renderer()));
     }
 
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
@@ -114,10 +119,6 @@ public class ProjectRendererI implements ProjectRenderer {
         this.flatRepository = flatRepository;
         this.sourceValidator = sourceValidator;
         this.projectFolder = projectFolder;
-        this.renderer.registerExtension(xmlRenderer(renderer()));
-        this.renderer.registerExtension(textExtension(renderer()));
-        this.renderer.registerExtension(resourceRenderer());
-        this.renderer.registerExtension(csvChartRenderer(renderer()));
         this.config = config;
     }
 
