@@ -62,8 +62,21 @@ public interface ProjectRenderer extends Renderer {
     @Deprecated
     Optional<byte[]> renderString(String arg);
 
+    /**
+     * TODO  This method should be based on {@link #renderXml(String, LayoutConfig, Config)}.
+     */
     Optional<byte[]> renderHtmlBodyContent(String bodyContent
             , Optional<String> title
             , Optional<String> path
             , Config config);
+
+    /**
+     * This is the main rendering method for documents of a project.
+     *
+     * @param xml          This is the document's content being rendered.
+     * @param layoutConfig This is the document's metadata.
+     * @param config       This is the general webserver config.
+     * @return The rendered document. Currently, the output format is HTML.
+     */
+    Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config);
 }

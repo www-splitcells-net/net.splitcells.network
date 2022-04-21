@@ -302,6 +302,29 @@ public class ProjectRendererI implements ProjectRenderer {
                 .getBytes(UTF_8));
     }
 
+    @Override
+    public Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config) {
+        final var layoutConfigElement = Xml.rElement(NameSpaces.SEW, "layout.config");
+        {
+            final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
+            pathElement.appendChild(Xml.textNode(layoutConfig.path()));
+            layoutConfigElement.appendChild(pathElement);
+        }
+        if (layoutConfig.title().isPresent()) {
+            final var titleElement = Xml.elementWithChildren(NameSpaces.SEW, "title");
+            titleElement.appendChild(Xml.textNode(layoutConfig.title().get()));
+            layoutConfigElement.appendChild(titleElement);
+        }
+        {
+            final var contentElement = Xml.elementWithChildren(NameSpaces.SEW, "content");
+            contentElement.appendChild(Xml.textNode(xml));
+            layoutConfigElement.appendChild(contentElement);
+        }
+        return Optional.of(renderer()
+                .transform(Xml.toPrettyString(layoutConfigElement))
+                .getBytes(UTF_8));
+    }
+
     private Optional<byte[]> renderTextFile(String path) {
         try {
             final var absolutePath = resolveSourceFolder(path, "txt");
