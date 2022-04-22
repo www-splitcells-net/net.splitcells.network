@@ -87,23 +87,6 @@ public class ProjectRendererI implements ProjectRenderer {
     private final ProjectRendererExtensionMerger renderer = rendererMerger();
     private final Config config;
 
-    {
-        // TODO REMOVE
-        renderer.registerExtension(commonMarkReadmeRenderer());
-        renderer.registerExtension(commonMarkChangelogRenderer());
-        renderer.registerExtension(userCommandRenderer());
-        renderer.registerExtension(commonMarkExtension());
-        renderer.registerExtension(csvRenderer());
-        renderer.registerExtension(jacocoReportRenderer());
-        renderer.registerExtension(commonMarkChangelogEventRenderer());
-        renderer.registerExtension(javascriptRenderer());
-        renderer.registerExtension(javadocReportRenderer());
-        renderer.registerExtension(xmlRenderer(renderer()));
-        renderer.registerExtension(textExtension(renderer()));
-        renderer.registerExtension(resourceRenderer());
-        renderer.registerExtension(csvChartRenderer(renderer()));
-    }
-
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
@@ -120,6 +103,20 @@ public class ProjectRendererI implements ProjectRenderer {
         this.sourceValidator = sourceValidator;
         this.projectFolder = projectFolder;
         this.config = config;
+        // TODO MOVE
+        this.renderer.registerExtension(commonMarkReadmeRenderer())
+                .registerExtension(commonMarkChangelogRenderer())
+                .registerExtension(userCommandRenderer())
+                .registerExtension(commonMarkExtension())
+                .registerExtension(csvRenderer())
+                .registerExtension(jacocoReportRenderer())
+                .registerExtension(commonMarkChangelogEventRenderer())
+                .registerExtension(javascriptRenderer())
+                .registerExtension(javadocReportRenderer())
+                .registerExtension(xmlRenderer(renderer()))
+                .registerExtension(textExtension(renderer()))
+                .registerExtension(resourceRenderer())
+                .registerExtension(csvChartRenderer(renderer()));
     }
 
     /**
