@@ -22,14 +22,11 @@ import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class CsvChartProjectRendererExtension implements ProjectRendererExtension {
-    public static CsvChartProjectRendererExtension csvChartRenderer(FileStructureTransformer renderer) {
-        return new CsvChartProjectRendererExtension(renderer);
+    public static CsvChartProjectRendererExtension csvChartRenderer() {
+        return new CsvChartProjectRendererExtension();
     }
 
-    private final FileStructureTransformer renderer;
-
-    private CsvChartProjectRendererExtension(FileStructureTransformer renderer) {
-        this.renderer = renderer;
+    private CsvChartProjectRendererExtension() {
     }
 
     @Override

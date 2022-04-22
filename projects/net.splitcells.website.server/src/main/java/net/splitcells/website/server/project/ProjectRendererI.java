@@ -116,7 +116,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 .registerExtension(xmlRenderer(renderer()))
                 .registerExtension(textExtension(renderer()))
                 .registerExtension(resourceRenderer())
-                .registerExtension(csvChartRenderer(renderer()));
+                .registerExtension(csvChartRenderer());
     }
 
     /**
