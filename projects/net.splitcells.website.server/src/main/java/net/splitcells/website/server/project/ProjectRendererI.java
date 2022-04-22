@@ -283,12 +283,7 @@ public class ProjectRendererI implements ProjectRenderer {
             content.appendChild(metaElement);
             if (path.isPresent()) {
                 final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
-                final var pathParent = Paths.get(path.get()).getParent();
-                if (pathParent == null) {
-                    pathElement.appendChild(Xml.textNode(""));
-                } else {
-                    pathElement.appendChild(Xml.textNode(pathParent.toString()));
-                }
+                pathElement.appendChild(Xml.textNode(path.get().toString()));
                 metaElement.appendChild(pathElement);
             }
         }
