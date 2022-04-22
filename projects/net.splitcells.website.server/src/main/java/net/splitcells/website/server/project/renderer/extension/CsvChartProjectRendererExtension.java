@@ -18,6 +18,7 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
+import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class CsvChartProjectRendererExtension implements ProjectRendererExtension {
@@ -40,14 +41,16 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
                     .resolve("src/main/csv/")
                     .resolve(csvPath);
             if (is_file(requestedFile)) {
-                final var content = Xml.rElement(NameSpaces.SEW, "csv-chart");
+                final var content = Xml.rElement(NameSpaces.SEW, "csv-chart-lines");
                 final var contentsPath = Xml.elementWithChildren(NameSpaces.SEW, "path");
                 contentsPath.appendChild(Xml.textNode("/" + csvPath));
                 content.appendChild(contentsPath);
                 content.appendChild(Xml.textNode(Paths.readString(requestedFile)));
-                return Optional.of(renderingResult(renderer
-                                .transform(Xml.toPrettyString(content))
-                                .getBytes(UTF_8)
+                return Optional.of(renderingResult(projectRenderer.renderXml(
+                                Xml.toPrettyWithoutHeaderString(content)
+                                , layoutConfig(path)
+                                , config
+                        ).get()
                         , TEXT_HTML.toString()));
             }
         }

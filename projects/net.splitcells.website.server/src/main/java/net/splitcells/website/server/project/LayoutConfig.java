@@ -9,7 +9,7 @@ import java.util.Optional;
  * which is used in order to improve its rendering.
  */
 public class LayoutConfig {
-    private static LayoutConfig layoutConfig(String path) {
+    public static LayoutConfig layoutConfig(String path) {
         return new LayoutConfig(path);
     }
 

@@ -310,11 +310,12 @@ public class ProjectRendererI implements ProjectRenderer {
         }
         {
             final var contentElement = Xml.elementWithChildren(NameSpaces.SEW, "content");
-            contentElement.appendChild(Xml.textNode(xml));
+            contentElement.appendChild(Xml.textNode(MARKER));
             layoutConfigElement.appendChild(contentElement);
         }
         return Optional.of(renderer()
-                .transform(Xml.toPrettyString(layoutConfigElement))
+                .transform(Xml.toPrettyString(layoutConfigElement)
+                        .replace(MARKER, xml))
                 .getBytes(UTF_8));
     }
 
