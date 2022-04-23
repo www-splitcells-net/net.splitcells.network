@@ -23,6 +23,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 public class SourceCodeCheck {
     public static void main(String... arg) {
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.merger"));
+        checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.core"));
+        checkJavaSourceCodeProject(Path.of("../net.splitcells.dem"));
     }
 
     private static void checkJavaSourceCodeProject(Path projectFolder) {
