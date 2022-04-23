@@ -18,17 +18,16 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class SourceCodeCheck {
     public static void main(String... arg) {
         Files.walk_recursively(Paths.get("../net.splitcells.dem.merger/src/main/java/"))
                 .filter(Files::is_file)
-                .forEach(SourceCodeCheck::check_Java_source_code);
+                .forEach(SourceCodeCheck::checkJavaSourceCodeFile);
     }
 
-    private static void check_Java_source_code(Path file) {
+    private static void checkJavaSourceCodeFile(Path file) {
         try {
             System.out.println("Checking file: " + file);
             final var lexer = new net.splitcells.dem.source.code.antlr.Java11Lexer
