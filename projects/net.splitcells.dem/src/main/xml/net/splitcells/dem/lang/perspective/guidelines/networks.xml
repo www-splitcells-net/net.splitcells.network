@@ -64,7 +64,7 @@
             </paragraph>
         <paragraph>Consider <quote>splitcells.net</quote> for instance:
             <quote>https://splitcells.net/net/</quote> is the root namespace of the site,
-            whereas <qutoe>https://localhost:8445/net/splitcells/website/minimal/</qutoe> contains a copy of the site,
+            whereas <quote>https://localhost:8445/net/splitcells/website/minimal/</quote> contains a copy of the site,
             but with a different theme.
         </paragraph>
     </chapter>
