@@ -45,7 +45,11 @@ import static net.splitcells.website.server.projects.ProjectsRendererExtensionMe
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * TODO Create extension system meta project rendering.
+ * <p>TODO Create extension system meta project rendering.</p>
+ * <p>TODO Support rendering project to alternative formats like gemtext for Gemini sites or CommonMark.
+ * TODOC Maximum chapter depth does not have to be limited in order to have compatibility with alternative formats.
+ * One can instead generate informal pseudo chapters in generated outputs,
+ * in order to adhere to maximum chapter depth requirements in the output format.</p>
  */
 public class ProjectsRendererI implements ProjectsRenderer {
 
