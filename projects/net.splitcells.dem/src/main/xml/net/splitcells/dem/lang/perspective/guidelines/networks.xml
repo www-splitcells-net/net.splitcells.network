@@ -34,10 +34,10 @@
         </paragraph>
         <paragraph>It is often not possible, to make a single global unified network,
             that is valid for everyone.
-            This is often not needed. Instead one can use shared global networks,
+            This is often not needed. Instead, one can use shared global networks,
             where each network has its own root perspective and therefore path space.
         </paragraph>
-        <paragraph>Every non global network can just link to these globally shared networks.
+        <paragraph>Every non-global network can just link to these globally shared networks.
             The root perspectives of each network needs to isolated in such a way,
             that these are not mixed.
             This ensures that paths are unambiguous and can be shared across networks.
