@@ -35,7 +35,8 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (path.equals("/" + STATUS_DOCUMENT_PATH)) {
-            final var status = new StringBuffer();
+            final var disruptedStatuses = new StringBuffer();
+            final var successfulStatuses = new StringBuffer();
             projectsRendererI.projectsPaths().stream()
                     .filter(p -> p.startsWith(RUNTIME_FOLDER))
                     .filter(p -> p.toString().endsWith(".csv"))
@@ -48,15 +49,23 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                         if (lastMeasurement.isPresent()) {
                             final var localDate = LocalDate.parse(lastMeasurement.get().split(",")[0]);
                             if (LocalDate.now().minusDays(7).isAfter(localDate)) {
-                                status.append("<li>"
+                                disruptedStatuses.append("<li>"
+                                        + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
+                                        + "</li>");
+                            } else {
+                                successfulStatuses.append("<li>"
                                         + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
                                         + "</li>");
                             }
                         }
                     });
-            return Optional.of(renderingResult(projectsRendererI.renderHtmlBodyContent("<h2>Disrupted Tasks</h2><p>The following executors did not execute the network worker in the last 7 days.</p><ol>"
-                                            + status
-                                            + "</ol>"
+            final var disruptedTasks = "<h2>Disrupted Tasks</h2><p>The following executors did not execute the network worker in the last 7 days:</p><ol>"
+                    + disruptedStatuses
+                    + "</ol>";
+            final var successfulTasks = "<h2>Successful Tasks</h2><p>The following executors did execute the network worker in the last 7 days:</p><ol>"
+                    + successfulStatuses
+                    + "</ol>";
+            return Optional.of(renderingResult(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks
                                     , Optional.of("Network Status")
                                     , Optional.of(path)
                                     , config)

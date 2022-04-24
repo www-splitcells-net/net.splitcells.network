@@ -10,6 +10,15 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2022-04-25**: **\#162**: On the default layout,
+  there is now status button on the website in the top left corner.
+  It currently shows, if all available computers executed the build system in last 7 days.
+  If this is the case it states `INFO`, which is based on the log levels.
+  If this is not the case it states `WARNING`.
+  The button leads to `https://splitcells.net/net/splitcells/network/status.html` which lists all successful
+  and failed executions.
+  Keep in mind, that on the version hosted at `https://splitcells.net/`,
+  the status only refers to the status during the build time of the website, as it is static.
 * **2022-04-17**:
   * \#142 Deploy first draft of minimal styled version to `splitcells.net`.
   * \#57 Render Javadoc of projects at `<projectFolder>/javadoc/*`,
