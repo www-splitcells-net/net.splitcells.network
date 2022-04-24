@@ -34,5 +34,18 @@
             the dependencies of POM components more easily.
             This is especially the case, when each input path has at most one corresponding output path.
         </paragraph>
+        <chapter><title>Required Data</title>
+            <paragraph>The following elements are required, in order to be releasable:</paragraph>
+            <list>
+                <item><quote>parent</quote> is required, in order to standardize POMs.</item>
+                <item>name</item>
+                <item>description</item>
+                <item>url</item>
+                <item>licenses/license</item>
+                <item>scm/url</item>
+                <item><quote>developers/developer</quote>, but only the main developers are required.
+                    It's best to list those people, who take responsibility for the project.</item>
+            </list>
+        </chapter>
     </chapter>
 </article>
