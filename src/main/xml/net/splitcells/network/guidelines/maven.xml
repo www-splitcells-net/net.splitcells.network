@@ -35,7 +35,12 @@
             This is especially the case, when each input path has at most one corresponding output path.
         </paragraph>
         <chapter><title>Required Data</title>
-            <paragraph>The following elements are required, in order to be releasable:</paragraph>
+            <paragraph>This is mainly based on
+                <link>
+                    <url>https://central.sonatype.org/publish/requirements/</url>
+                    <text>Sonatype's release requirements</text>
+                </link>.
+                The following elements are required, in order to be releasable:</paragraph>
             <list>
                 <item><quote>parent</quote> is required, in order to standardize POMs.</item>
                 <item>name</item>
