@@ -29,7 +29,7 @@ public class ConstraintTest {
         final var attribute = attribute(Integer.class, "a");
         final int valueA = 1;
         final int valueB = 3;
-        final var solution = defineProblem()
+        final var solution = defineProblem("test_incomingGroupsOfConstraintPath")
                 .withDemandAttributes(attribute)
                 .withDemands
                         (list
@@ -69,7 +69,7 @@ public class ConstraintTest {
         final var constraint_4 = forAll();
         final var constraint_5 = forAll();
         @SuppressWarnings("unchecked") final var solution
-                = defineProblem()
+                = defineProblem("testAllocationGroups")
                 .withDemandAttributes()
                 .withSupplyAttributes()
                 .withConstraint(constraint_1
@@ -94,7 +94,7 @@ public class ConstraintTest {
         final var B = attribute(Integer.class, "b");
         final var C = attribute(Integer.class, "c");
         final var D = attribute(Integer.class, "d");
-        final var solution = defineProblem()
+        final var solution = defineProblem("test_allocation_groups_with_different_attributes")
                 .withDemandAttributes(A, B)
                 .withSupplyAttributes(C, D)
                 .withConstraint(
