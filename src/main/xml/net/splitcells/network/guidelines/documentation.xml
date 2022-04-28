@@ -46,6 +46,9 @@
             This helps the reader to better understand the project and its usage.
             The amount of such should be minimal.
         </paragraph>
+        <paragraph>The history of reasoning, why something was done can be useful as well,
+            in order to understand and avoid problematic alternatives.
+            It can be also used in order to avoid circular development.</paragraph>
     </chapter>
     <chapter>
         <title>Documentation Complexity Management</title>
