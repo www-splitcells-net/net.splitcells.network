@@ -10,10 +10,13 @@
  */
 package net.splitcells.dem.utils.random;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.util.Random;
 
+@JavaLegacyBody
 public class BuilderRandomDeterministic implements RndSrcF {
 
     private final Random seedGenerator;

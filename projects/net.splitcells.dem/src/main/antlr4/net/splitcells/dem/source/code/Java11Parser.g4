@@ -65,6 +65,7 @@ call_arguments_next
     ;
 class_definition
     : javadoc? Keysymbol_at Keyword_JavaLegacyArtifact .*
+    | javadoc? Keysymbol_at Keyword_JavaLegacyBody .*
     | javadoc? annotation* Keyword_public? Keyword_final?
         /* Keyword_abstract? TODO Is this really needed? */
     	Keyword_class
@@ -116,7 +117,7 @@ enum_members
     | class_member
     ;
 enum_values
-	: Javadoc? name call_arguments? enum_values_next Semicolon
+	: Javadoc? name call_arguments? enum_values_next? Semicolon
 	;
 enum_values_next
     : Comma Javadoc? name call_arguments? enum_values_next?
@@ -129,6 +130,7 @@ expression
     | Brace_round_open expression
     	Brace_round_closed expression_child?
     | String access?
+    | Char access?
     | expression operator expression
     | prefix_operator expression
     | Keyword_new type_declaration call_arguments
@@ -160,6 +162,7 @@ import_type_declaration
 integer
 	: Integer
 	| Floating_point
+	| Floating_point_short
 	| Hyphen_minus Digits
 	;
 interface_definition
@@ -272,6 +275,7 @@ statement
     | name Equals expression Semicolon
     | statement_for
     | Brace_curly_open statement+ Brace_curly_closed
+    | Keyword_while Brace_round_open expression Brace_round_closed statement_body
     ;
 statement_for
     : Keyword_for Brace_round_open variable_declaration (Equals expression)? Semicolon expression Semicolon expression Brace_round_closed statement_body

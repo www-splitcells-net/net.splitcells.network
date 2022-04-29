@@ -52,6 +52,7 @@ lexer grammar Java11Lexer;
 	Extension_Exception: 'extends RuntimeException';
 	Hyphen_minus: '-';
 	Floating_point: [-+]?[0-9]+([_][0-9]+)*([\\.][0-9]+)?[dflL]?;
+	Floating_point_short: [\\.][0-9]+[dflL]?;
 	Integer: [-+]?[0-9]+([_][0-9]+)*[dflL]?;
 	Keysymbol_and: '&&';
 	Keysymbol_at: '@';
@@ -93,6 +94,7 @@ lexer grammar Java11Lexer;
 	Keyword_throw: 'throw';
 	Keyword_try: 'try';
 	Keyword_var: 'var';
+	Keyword_while: 'while';
 	Less_than: '<';
 	Question_mark: '?';
 	Operator_plus: '+';
@@ -106,6 +108,7 @@ lexer grammar Java11Lexer;
 	String
 		/* TODO This is too simplistic. */
 		:'"' String_character* '"';
+	Char: '\'' String_character '\'';
 	fragment String_character
 		: [a-zA-Z0-9_-]
 		| '\\n'
@@ -119,6 +122,12 @@ lexer grammar Java11Lexer;
 		| ':'
 		| '/'
 		| '\\'
+		| ','
+		| '['
+		| ']'
+		| '-'
+		| '$'
+		| '*'
 		;
 /* Tokens Of Last Resort */
 	WS:

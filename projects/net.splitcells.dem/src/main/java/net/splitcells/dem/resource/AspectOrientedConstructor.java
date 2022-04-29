@@ -24,7 +24,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  *
  * @param <T>
  */
-public abstract class AspectOrientedConstructor<T> {
+public class AspectOrientedConstructor<T> {
     private List<Function<T, T>> aspects = list();
 
     @ReturnsThis
@@ -33,7 +33,7 @@ public abstract class AspectOrientedConstructor<T> {
         return this;
     }
 
-    protected T joinAspects(T arg) {
+    public T joinAspects(T arg) {
         T joinedAspects = arg;
         for (final var aspect : aspects) {
             joinedAspects = aspect.apply(joinedAspects);

@@ -14,6 +14,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Discoverable;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * <p>
@@ -47,21 +48,23 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  * because this is just data and not something like a template.
  * </p>
  */
-public abstract class PerspectiveDocument implements Discoverable {
+public class PerspectiveDocument implements Discoverable {
 
     private final List<String> path;
     private final Perspective perspective;
 
-    protected PerspectiveDocument(Class<?> clazz) {
+    private PerspectiveDocument(Class<?> clazz) {
         this(list(clazz.getPackage().getName().split("\\.")));
     }
 
-    protected PerspectiveDocument(List<String> path) {
+    public PerspectiveDocument(List<String> path) {
         this.path = path;
         perspective = createPerspective();
     }
 
-    protected abstract Perspective createPerspective();
+    public Perspective createPerspective() {
+        throw notImplementedYet();
+    }
 
     @Override
     public List<String> path() {

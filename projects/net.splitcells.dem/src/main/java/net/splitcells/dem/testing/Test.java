@@ -12,6 +12,7 @@ package net.splitcells.dem.testing;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.launcher.TagFilter;
 import org.junit.platform.launcher.TestExecutionListener;
@@ -38,6 +39,7 @@ import static org.junit.platform.launcher.TagFilter.includeTags;
  * <p>TODO Simplify code by removing duplicate code.</p>
  * <p>TODO Testing without Maven seems to be faster.</p>
  */
+@JavaLegacyBody
 public class Test {
     public static void main(String... arg) {
         if (!test()) {
@@ -53,8 +55,8 @@ public class Test {
         // TODO REMOVE
         System.setProperty("net.splitcells.mode.build", "true");
         Dem.ensuredInitialized();
+        // TODO The selector is an hack, because an empty string leads to no test execution.
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
-                // TODO The selector is an hack, because an empty string leads to no test execution.
                 .selectors(selectPackage("net"))
                 .filters(includeTags(FUNCTIONAL_TEST, UNIT_TEST))
                 .build();

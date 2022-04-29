@@ -53,7 +53,7 @@ public class TestSuiteI implements TestSuite {
         reporter.publishEntry(END_TIME.keyString(), END_TIME.currentValue());
     }
 
-    protected void test(Stream<DynamicTest> tests) {
+    public void test(Stream<DynamicTest> tests) {
         tests.forEach(test -> {
             try {
                 test.getExecutable().execute();
@@ -68,14 +68,14 @@ public class TestSuiteI implements TestSuite {
      *
      * IDEA Make this method static.
      */
-    protected <T> Stream<DynamicTest> dynamicTests2(ThrowingConsumer<T> test, List<T> inputs) {
+    public <T> Stream<DynamicTest> dynamicTests2(ThrowingConsumer<T> test, List<T> inputs) {
         return dynamicTests(test, inputs.stream().map(input -> ImmutablePair.of(input.getClass().getName(), input)));
     }
 
     /**
      * IDEA Make this method static.
      */
-    protected <T> Stream<DynamicTest> dynamicTests(ThrowingConsumer<T> test,
+    public <T> Stream<DynamicTest> dynamicTests(ThrowingConsumer<T> test,
                                                    @SuppressWarnings("unchecked") T... inputs) {
         return dynamicTests2(test, list(inputs));
     }
@@ -83,7 +83,7 @@ public class TestSuiteI implements TestSuite {
     /**
      * IDEA Make this method static.
      */
-    protected <T> Stream<DynamicTest> dynamicTests(ThrowingConsumer<T> test,
+    public <T> Stream<DynamicTest> dynamicTests(ThrowingConsumer<T> test,
                                                    @SuppressWarnings("unchecked") Pair<String, T>... inputs) {
         return dynamicTests(test, asList(inputs));
     }
@@ -91,14 +91,14 @@ public class TestSuiteI implements TestSuite {
     /**
      * IDEA Make this method static.
      */
-    protected <T> Stream<DynamicTest> dynamicTests(ThrowingConsumer<T> test, Collection<Pair<String, T>> inputs) {
+    public <T> Stream<DynamicTest> dynamicTests(ThrowingConsumer<T> test, Collection<Pair<String, T>> inputs) {
         return dynamicTests(test, inputs.stream());
     }
 
     /**
      * IDEA Make this method static.
      */
-    protected <T> Stream<DynamicTest> dynamicTests(ThrowingConsumer<T> test, Stream<Pair<String, T>> inputs) {
+    public <T> Stream<DynamicTest> dynamicTests(ThrowingConsumer<T> test, Stream<Pair<String, T>> inputs) {
         return inputs.map(input -> DynamicTest.dynamicTest(input.getKey(), () -> {
             test.accept(input.getValue());
         }));

@@ -32,7 +32,7 @@ public class EventProcessorExecutor implements Resource {
     private EventProcessorExecutor() {
     }
 
-    public synchronized void start() {
+    public void start() {
         enabled = true;
         executor = Optional.of(
                 new Thread(() -> {
@@ -43,7 +43,7 @@ public class EventProcessorExecutor implements Resource {
         executor.get().start();
     }
 
-    public synchronized void stopAndWaitForExit() {
+    public void stopAndWaitForExit() {
         enabled = false;
         try {
             if (executor.isPresent()) {
@@ -69,7 +69,7 @@ public class EventProcessorExecutor implements Resource {
     }
 
     @Override
-    public synchronized void close() {
+    public void close() {
         flush();
         stopAndWaitForExit();
     }
@@ -78,7 +78,7 @@ public class EventProcessorExecutor implements Resource {
      * HACK This blocks all incoming events.
      */
     @Override
-    public synchronized void flush() {
+    public void flush() {
         try {
             while (!tasks.isEmpty()) {
                 Thread.sleep(500L);
