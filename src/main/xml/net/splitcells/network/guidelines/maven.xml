@@ -42,12 +42,12 @@
                 </link>.
                 The following elements are required, in order to be releasable:</paragraph>
             <list>
-                <item><quote>parent</quote> is required, in order to standardize POMs.</item>
+                <item><quote>parent</quote> is required, in order to standardize POMs for non root POMs.</item>
                 <item>name</item>
                 <item>description</item>
                 <item>url</item>
                 <item>licenses/license</item>
-                <item>scm/url</item>
+                <item>scm/[url,connection,developerConnection]</item>
                 <item><quote>developers/developer</quote>, but only the main developers are required.
                     It's best to list those people, who take responsibility for the project.</item>
             </list>

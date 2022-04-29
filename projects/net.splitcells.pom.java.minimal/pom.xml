@@ -5,4 +5,33 @@
     <artifactId>pom-java-minimal</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <name>splitcells.net ecosystem</name>
+    <description>We provide an open source ecosystem centered around optimization and operations research.</description>
+    <url>https://splitcells.net</url>
+    <licenses>
+        <license>
+            <name>Eclipse Public License - v 2.0</name>
+            <url>https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>MIT License</name>
+            <url>https://en.wikipedia.org/wiki/MIT_License</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <connection>git@github.com:www-splitcells-net/net.splitcells.network.git</connection>
+        <developerConnection>git@github.com:www-splitcells-net/net.splitcells.network.git</developerConnection>
+        <url>https://github.com/www-splitcells-net/net.splitcells.network</url>
+    </scm>
+    <developers>
+        <developer>
+            <id>martins-avots</id>
+            <name>Mārtiņš Avots</name>
+            <email>martins.avots@splitcells.net</email>
+            <url>https://splitcells.net</url>
+            <timezone>Europe/Berlin</timezone>
+        </developer>
+    </developers>
 </project>
