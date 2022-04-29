@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 public class LinkTranslator extends AbstractVisitor {
 
     private static Pattern PROTOCOL = Pattern.compile("([a-z]+://)(.*)");
+    private static Pattern SUB_PROJECT_README = Pattern.compile("(\\./)?projects/[a-zA-Z\\.]+/README.md");
 
     public static LinkTranslator linkTranslator() {
         return new LinkTranslator();
@@ -41,21 +42,33 @@ public class LinkTranslator extends AbstractVisitor {
 
     public void visit(Link link) {
         final var destination = link.getDestination();
-        final var protocolMatch= PROTOCOL.matcher(destination);
+        final var protocolMatch = PROTOCOL.matcher(destination);
         final String protocol;
         if (protocolMatch.matches()) {
             protocol = protocolMatch.group(1);
         } else {
             protocol = "";
         }
+        final String normalizedDestination;
         final var destinationWithoutProtocol = destination
-                .substring(protocol.length())
-                .replace("../", "")
-                .replaceAll("src\\/main\\/[a-z]+\\/", "/")
-                .replaceAll("projects\\/[a-z\\.]+\\/", "/")
-                .replace("//", "/");
-
-        link.setDestination(protocol + destinationWithoutProtocol);
+                .substring(protocol.length());
+        // TODO This is an hack.
+        System.out.println("##");
+        System.out.println(destinationWithoutProtocol);
+        System.out.println(SUB_PROJECT_README.matcher(destinationWithoutProtocol).matches());
+        if (SUB_PROJECT_README.matcher(destinationWithoutProtocol).matches()) {
+            normalizedDestination = destinationWithoutProtocol
+                    .replace("./", "")
+                    .substring(8)
+                    .replace(".", "/")
+                    .replaceAll("/md", ".md");
+        } else {
+            normalizedDestination = destinationWithoutProtocol.replace("../", "")
+                    .replaceAll("src\\/main\\/[a-z]+\\/", "/")
+                    .replaceAll("projects\\/[a-z\\.]+\\/", "/")
+                    .replace("//", "/");
+        }
+        link.setDestination(protocol + normalizedDestination);
         if (link.getDestination().endsWith(".md") && protocol.isEmpty()) {
             link.setDestination(link.getDestination().substring(0, link.getDestination().length() - 3) + ".html");
         }
