@@ -6,7 +6,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.FileStructureTransformer;
+import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -18,6 +18,7 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.resource.Paths.readString;
+import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 /**
@@ -26,14 +27,12 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
  * All files need to end with ".xml".
  */
 public class XmlProjectRendererExtension implements ProjectRendererExtension {
-    public static XmlProjectRendererExtension xmlRenderer(FileStructureTransformer renderer) {
-        return new XmlProjectRendererExtension(renderer);
+    public static XmlProjectRendererExtension xmlRenderer() {
+        return new XmlProjectRendererExtension();
     }
 
-    private final FileStructureTransformer renderer;
+    private XmlProjectRendererExtension() {
 
-    private XmlProjectRendererExtension(FileStructureTransformer renderer) {
-        this.renderer = renderer;
     }
 
     @Override
@@ -58,8 +57,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                         metaElement.appendChild(pathElement);
                     }
                 }
-                return Optional.of(renderingResult(renderer
-                                .transform(Xml.toDocumentString(document)).getBytes(UTF_8)
+                return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toDocumentString(document), config).get()
                         , TEXT_HTML.toString()));
             }
         }

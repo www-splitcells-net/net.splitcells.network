@@ -113,8 +113,8 @@ public class ProjectRendererI implements ProjectRenderer {
                 .registerExtension(commonMarkChangelogEventRenderer())
                 .registerExtension(javascriptRenderer())
                 .registerExtension(javadocReportRenderer())
-                .registerExtension(xmlRenderer(renderer()))
-                .registerExtension(textExtension(renderer()))
+                .registerExtension(xmlRenderer())
+                .registerExtension(textExtension())
                 .registerExtension(resourceRenderer())
                 .registerExtension(csvChartRenderer());
     }
@@ -316,6 +316,13 @@ public class ProjectRendererI implements ProjectRenderer {
         return Optional.of(renderer()
                 .transform(Xml.toPrettyString(layoutConfigElement)
                         .replace(MARKER, xml))
+                .getBytes(UTF_8));
+    }
+
+    @Override
+    public Optional<byte[]> renderRawXml(String xml, Config config) {
+        return Optional.of(renderer()
+                .transform(xml)
                 .getBytes(UTF_8));
     }
 

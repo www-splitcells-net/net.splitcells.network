@@ -7,7 +7,6 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.FileStructureTransformer;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -25,14 +24,11 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
  * All files need to end with ".txt".
  */
 public class TextProjectRendererExtension implements ProjectRendererExtension {
-    public static TextProjectRendererExtension textExtension(FileStructureTransformer renderer) {
-        return new TextProjectRendererExtension(renderer);
+    public static TextProjectRendererExtension textExtension() {
+        return new TextProjectRendererExtension();
     }
 
-    private final FileStructureTransformer renderer;
-
-    private TextProjectRendererExtension(FileStructureTransformer renderer) {
-        this.renderer = renderer;
+    private TextProjectRendererExtension() {
     }
 
     @Override
@@ -64,9 +60,7 @@ public class TextProjectRendererExtension implements ProjectRendererExtension {
             metaElement.appendChild(pathElement);
             content.appendChild(metaElement);
             content.appendChild(Xml.textNode(Paths.readString(fileToRender.get())));
-            return Optional.of(renderingResult(renderer
-                            .transform(Xml.toPrettyString(content))
-                            .getBytes(UTF_8)
+            return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(content), config).get()
                     , TEXT_HTML.toString()));
         }
         return Optional.empty();

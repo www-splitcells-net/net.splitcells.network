@@ -53,9 +53,6 @@ public class LinkTranslator extends AbstractVisitor {
         final var destinationWithoutProtocol = destination
                 .substring(protocol.length());
         // TODO This is an hack.
-        System.out.println("##");
-        System.out.println(destinationWithoutProtocol);
-        System.out.println(SUB_PROJECT_README.matcher(destinationWithoutProtocol).matches());
         if (SUB_PROJECT_README.matcher(destinationWithoutProtocol).matches()) {
             normalizedDestination = destinationWithoutProtocol
                     .replace("./", "")

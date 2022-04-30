@@ -79,4 +79,18 @@ public interface ProjectRenderer extends Renderer {
      * @return The rendered document. Currently, the output format is HTML.
      */
     Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config);
+
+    /**
+     * TODO This method was created in order to remove direct usage of {@link FileStructureTransformer}.
+     * This method will be later removed as well, as this is basically the same,
+     * but without direct access.
+     * Is this method maybe a good future idea, or should it be really deleted?
+     * It should be deleted, because this makes it possible to render data without a path.
+     *
+     * @param xml          This is the document's content being rendered.
+     * @param config       This is the general webserver config.
+     * @return The rendered document. Currently, the output format is HTML.
+     */
+    @Deprecated
+    Optional<byte[]> renderRawXml(String xml, Config config);
 }

@@ -6,7 +6,6 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.FileStructureTransformer;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
