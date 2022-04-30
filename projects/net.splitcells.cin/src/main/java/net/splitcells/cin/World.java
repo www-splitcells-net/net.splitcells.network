@@ -139,12 +139,32 @@ public class World {
                 addPosition(lines, addition, positionX - 1, positionY + 1, ratingEvent, localRating);
                 addPosition(lines, addition, positionX, positionY + 1, ratingEvent, localRating);
                 addPosition(lines, addition, positionX + 1, positionY + 1, ratingEvent, localRating);
+
+                addNeighbourhoodPosition(lines, addition, xNeighbourhood, yNeighbourhood + 1, ratingEvent, children);
+                addNeighbourhoodPosition(lines, addition, xNeighbourhood + 1, yNeighbourhood + 1, ratingEvent, children);
+                addNeighbourhoodPosition(lines, addition, xNeighbourhood + 1, yNeighbourhood, ratingEvent, children);
+                addNeighbourhoodPosition(lines, addition, xNeighbourhood + 1, yNeighbourhood - 1, ratingEvent, children);
+                addNeighbourhoodPosition(lines, addition, xNeighbourhood, yNeighbourhood - 1, ratingEvent, children);
+                addNeighbourhoodPosition(lines, addition, xNeighbourhood - 1, yNeighbourhood - 1, ratingEvent, children);
+                addNeighbourhoodPosition(lines, addition, xNeighbourhood - 1, yNeighbourhood, ratingEvent, children);
+                addNeighbourhoodPosition(lines, addition, xNeighbourhood - 1, yNeighbourhood + 1, ratingEvent, children);
                 return ratingEvent;
             }
 
             @Override
             public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
                 return ratingEvent();
+            }
+
+            private void addNeighbourhoodPosition(Table lines, Line addition, int neighbourhoodPositionX, int neighbourhoodPositionY, RatingEvent ratingEvent, List<Constraint> children) {
+                final var neighbourhood = neighbourhoods.get(pair(neighbourhoodPositionX, neighbourhoodPositionY));
+                if (neighbourhood != null) {
+                    final var localRating = localRating()
+                            .withRating(noCost())
+                            .withPropagationTo(children)
+                            .withResultingGroupId(neighbourhood);
+                    ratingEvent.additions().put(addition, localRating);
+                }
             }
         };
     }

@@ -15,6 +15,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface Map<Key, Value> extends java.util.Map<Key, Value> {
@@ -30,6 +31,8 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     }
 
     /**
+     * TODO Is this a duplicate of {@link #computeIfAbsent(Object, Function)}?
+     * 
      * RENAME
      */
     default Value addIfAbsent(Key key, Supplier<Value> valueSupplier) {
