@@ -70,5 +70,9 @@ public class ConstraintTest {
             assertThat(testSubject.defying()).isEmpty();
             assertThat(testSubject.complying()).hasSize(lines.size());
         }
+        assertThat(validator.defying(group1)).isEmpty();
+        assertThat(validator.defying(group2)).isEmpty();
+        assertThat(validator.complying(group1)).hasSize(lines.size());
+        assertThat(validator.complying(group2)).hasSize(lines.size());
     }
 }
