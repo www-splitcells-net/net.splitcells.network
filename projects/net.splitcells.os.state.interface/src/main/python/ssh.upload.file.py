@@ -20,7 +20,7 @@ if __name__ == '__main__':
 	parser.add_argument('--source-file', dest='sourceFile', required=True)
 	parser.add_argument('--target-address', dest='targetAddress', required=True)
 	parsedArgs = parser.parse_args()
-	commandToExecute = 'scp ' + sourceFile + ' ' targetAddress
+	commandToExecute = 'scp ' + sourceFile + ' ' + targetAddress
 	logging.debug("Executing: " + commandToExecute)
 	subprocess.call(commandToExecute, shell='True')
 	returnCode = subprocess.call(subRepoScript, shell='True')
