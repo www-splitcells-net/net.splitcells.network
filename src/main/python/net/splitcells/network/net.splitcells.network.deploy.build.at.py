@@ -28,7 +28,7 @@ if __name__ == '__main__':
         ssh -t {0} systemd-run --uid={1} --unit=build --working-directory='/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network' 'sh -c "git merge net-splitcells-martins-avots-connection && ./bin/test.via.network.worker"'\\
         cd ../net.splitcells.network.log/\\
         git pull {0}:/home/ubuntu/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log master\\
-    	""".format(parsedArgs.targetServer, parsedArgs.user, "\n")
+    	""".format(parsedArgs.targetServer, parsedArgs.user)
     logging.debug('Executing: ' + buildScript)
     returnCode = subprocess.call(buildScript, shell='True')
     if returnCode != 0:
