@@ -21,7 +21,7 @@
 			};
 
 			function updateWorldData(updatedData) {
-                var rowIndex = 1
+                var rowIndex;
                 for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
                         var row = updatedData[rowIndex];
                         console.log(row);
