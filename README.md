@@ -28,11 +28,11 @@ Some of them are not strictly related to optimization and can be used in other c
 
 🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) ([also on Gemini](gemini://splitcells-net.srht.site)) and programming progress via our [changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
 
-🦉 Get an [bird's-eye view](src/main/md/net/splitcells/network/overview.md).
+🦉 Get a [bird's-eye view](src/main/md/net/splitcells/network/overview.md).
 
 🔭 Research optimization.
 
-📚 Get [structured documentation](projects/net.splitcells.gel.doc/README.md).
+📚 Get structured documentation.
 
 ✍ [Contribute](./CONTRIBUTING.md) to projects.
 
