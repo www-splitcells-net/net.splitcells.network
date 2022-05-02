@@ -17,6 +17,8 @@
 
 ## Articles
 
+=> gemini://splitcells-net.srht.site/2022-05-01-Note-On-Creating-Your-Own-Web-Layout-And-Style.gmi 2022-05-01 Note On Creating Your Own Web Layout And Style
+
 => gemini://splitcells-net.srht.site/2022-02-15-Generic-Allocators-Fourth-Version.gmi 2022-02-15 Generic Allocators Fourth Version
 
 => gemini://splitcells-net.srht.site/2022-01-10-A-Case-For-Repo-Process.gmi 2022-01-10 A Case For Repo Process
