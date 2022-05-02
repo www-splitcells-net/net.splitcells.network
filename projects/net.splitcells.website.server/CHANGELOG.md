@@ -10,6 +10,7 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2022-05-02**: **\#142** Make it easy to support arbitrary input formats and output styling.
 * **2022-04-25**: **\#162**: On the default layout,
   there is now status button on the website in the top left corner.
   It currently shows, if all available computers executed the build system in last 7 days.
