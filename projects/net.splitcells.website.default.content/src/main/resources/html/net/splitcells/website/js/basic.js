@@ -119,20 +119,3 @@ function invert_colors() {
 			}
 		}
 	}
-function switchToStyle(argStyle) {
-	var url = document.URL.split('/');
-	for (var i = 0; i < url.length; i++) {
-		if (url[i] == window.location.host) {
-			url[i + 1] = argStyle;
-			}
-		}
-	var rVal = url[0];
-	for (var i = 1; i < url.length; i++) {
-		if (url[i] == '' || url[i] == null) {
-			rVal = rVal.concat('/').concat(url[i]);
-		} else {
-			rVal = rVal.concat('/').concat(url[i]);
-			}
-		}
-	window.open(rVal, '_self');
-	}
