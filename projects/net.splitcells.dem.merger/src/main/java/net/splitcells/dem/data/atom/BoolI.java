@@ -70,7 +70,10 @@ public class BoolI implements Bool {
 
     @Override
     public boolean equals(Object arg) {
-        return equals((Bool) arg).isTrue();
+        if (arg instanceof Bool) {
+            return equals((Bool) arg).isTrue();
+        }
+        return false;
     }
 
     @Override
