@@ -3,7 +3,8 @@
 
 > Together we are more than the sum of our cells.
 
-TODO: Simple Image Describing The Core Features
+<img src="http://splitcells.net/net/splitcells/network/overview.svg" style="margin-left: auto; margin-right: auto; display: block; width: 100%;" alt="Project Overview"/>
+
 ## Introduction
 We provide an open source ecosystem centered around optimization and operations research.
 

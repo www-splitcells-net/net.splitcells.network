@@ -284,3 +284,11 @@ date
 
 * License: BSD
 * Manual: https://www.freebsd.org/cgi/man.cgi?query=date&sektion=&n=1
+
+mermaid
+* License: MIT
+* Source Code: https://github.com/mermaid-js/mermaid
+
+mermaid-cli
+* License: MIT
+* Source Code: https://github.com/mermaid-js/mermaid-cli

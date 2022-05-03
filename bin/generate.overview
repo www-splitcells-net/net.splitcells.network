@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+docker pull minlag/mermaid-cli
+mkdir -p ../net.splitcells.network.media/src/main/mmd/net/splitcells/network/
+docker run -u $(id -u) -it \
+  -v $(pwd)/..:/data minlag/mermaid-cli \
+  -i /data/net.splitcells.network/src/main/mmd/net/splitcells/network/overview.mmd \
+  -o /data/net.splitcells.network.media/src/main/mmd/net/splitcells/network/overview.svg
