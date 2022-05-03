@@ -3,6 +3,8 @@
 
 > Together we are more than the sum of our cells.
 
+# Subproject Overview
+
 <img src="http://splitcells.net/net/splitcells/network/overview.svg" style="margin-left: auto; margin-right: auto; display: block; width: 100%;" alt="Project Overview"/>
 
 ## Introduction
