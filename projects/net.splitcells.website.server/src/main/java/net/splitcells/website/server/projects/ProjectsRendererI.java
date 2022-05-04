@@ -202,7 +202,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             }
             return validateRenderingResult(renderingResult.get(), Path.of(normalizedPath));
         } catch (Exception e) {
-            throw new RuntimeException(normalizedPath, e);
+            throw new RuntimeException("path: " + path + ", normalizedPath: " + normalizedPath, e);
         }
     }
 

@@ -34,6 +34,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
+        // TODO Avoid code duplication in if else structure.
         if (path.equals("/" + STATUS_DOCUMENT_PATH)) {
             final var disruptedStatuses = new StringBuffer();
             final var successfulStatuses = new StringBuffer();
@@ -41,7 +42,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     .filter(p -> p.startsWith(RUNTIME_FOLDER))
                     .filter(p -> p.toString().endsWith(".csv"))
                     .forEach(p -> {
-                        final var csvContent = new String(projectsRendererI.render("/" + p.toString()).get().getContent(), UTF_8);
+                        final var csvContent = new String(projectsRendererI.render(config.rootPath() + "/" + p.toString()).get().getContent(), UTF_8);
                         final var lastMeasurement = Stream.of(csvContent.split("\\R"))
                                 .filter(l -> !l.trim().isEmpty())
                                 .collect(toList())
