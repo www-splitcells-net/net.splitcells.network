@@ -1,5 +1,5 @@
 # net.splitcells.network
-<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" style="margin-left: auto; margin-right: auto; display: block; width: 100%; margin-top: 2em; margin-bottom: 2em;" alt="Logo"/>
+<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" style="margin-left: auto; margin-right: auto; display: block; width: 100%; margin-bottom: 2em;" alt="Logo"/>
 
 > Together we are more than the sum of our cells.
 
