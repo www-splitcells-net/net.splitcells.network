@@ -79,7 +79,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     .filter(p -> p.startsWith(RUNTIME_FOLDER))
                     .filter(p -> p.toString().endsWith(".csv"))
                     .forEach(p -> {
-                        final var csvContent = new String(projectsRendererI.render("/" + p.toString()).get().getContent(), UTF_8);
+                        final var csvContent = new String(projectsRendererI.render(config.rootPath() + "/" + p.toString()).get().getContent(), UTF_8);
                         final var lastMeasurement = Stream.of(csvContent.split("\\R"))
                                 .filter(l -> !l.trim().isEmpty())
                                 .collect(toList())
