@@ -39,12 +39,14 @@
     </chapter>
     <chapter>
         <title>Documentation Content</title>
-        <paragraph>Documentation may also contain inspiration emotional content in the form of quotes
-            and haiku and should always relate to the described thing.
+        <paragraph>Documentation may also contain inspiration emotional content in the form of quotes,
+            metaphors, names, acronyms and haiku and should always relate to the described thing.
             The additional emotional context provides a different perspective
             on the semantics of the documented thing.
             This helps the reader to better understand the project and its usage.
             The amount of such should be minimal.
+            Currently, the following chapter format is preferred for that:
+            <quote>&lt;title&gt;&lt;inspirational quote or haiku&gt;&lt;content&gt;</quote>
         </paragraph>
         <paragraph>The history of reasoning, why something was done can be useful as well,
             in order to understand and avoid problematic alternatives.
