@@ -45,7 +45,9 @@ Changes are now written to the root changelog instead.
    Exits with 0, if this repo can be synchronized and else exits 1.
    This can be used as a safeguard for automated synchronization commands.
 ### Patch
-* **2022-05-06** `repo.process` now shows the repo path, where the error occur.
+* **2022-05-06**
+  1. `repo.process` now shows the repo path, where the error occur.
+  1. Fixed quoting issues of echo's arguments in `command.repositories.install`.
 * Command "echo.error" previously did only echo the message "error" and ignored the argument.
    This was fixed.
 ## Version 4.0.1
