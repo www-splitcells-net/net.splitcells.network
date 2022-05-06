@@ -65,7 +65,7 @@ import sys
 import argparse
 import json
 import logging
-from os import environ
+from os import (environ, getcwd)
 from pathlib import Path
 
 
@@ -109,7 +109,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 					logging.debug('missingSubRepoScript: ' + missingSubRepoScript)
 					returnCode = subprocess.call(missingSubRepoScript, shell='True')
 					if returnCode != 0:
-						logging.error('Error processing missing sub repository with return code ' + str(returnCode) + '.')
+						logging.error('Error processing missing sub repository with return code ' + str(returnCode) + " at '" + str(getcwd()) + '/' + subName + "'.")
 						return False
 					continue
 				r='repo.process'
@@ -133,7 +133,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 				logging.debug('subRepoScript: ' + subRepoScript)
 				returnCode = subprocess.call(subRepoScript, shell='True')
 				if returnCode != 0:
-					logging.error('Error processing sub repository with return code ' + str(returnCode) + '.')
+					logging.error('Error processing sub repository with return code ' + str(returnCode) + " at '" + str(getcwd()) + '/' + subName + "'.")
 					return False
 	return True
 if __name__ == '__main__':
