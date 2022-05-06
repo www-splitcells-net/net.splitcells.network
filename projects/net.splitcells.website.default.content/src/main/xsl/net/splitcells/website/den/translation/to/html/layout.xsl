@@ -585,6 +585,7 @@ window.onload = function() {
 
                                 <xsl:if test="$column_1 != ''">
                                     <div class="net-splitcells-meta-column column_1 contentCell Right_shadow">
+                                        <!-- TODO Create complete table of content for this column. -->
                                         <article class="Standard_p2 net-splitcells-component-priority-2">
                                             <xsl:if test="$column_1 != ''">
                                                 <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
