@@ -81,6 +81,11 @@ def execute(relativePath, host, command):
 def process(relativePath, host, command, commandForMissing, commandForUnknown, commandForCurrent, commandForChildren):
 	if not execute(relativePath, host, command):
 		return False
+	peerListPath=Path('./bin/net.splitcells.osi.repos.peers')
+	if peerListPath.is_file():
+		result = subprocess.run([peerListPath], stdout=subprocess.PIPE)
+		logging.warning('Peer repositories found, but not supported in this version yet: ')
+		logging.warning(result.stdout.decode('utf-8'))
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 	if subListPath.is_file():
 		# TODO Check if "!/.net.splitcells.os.state.interface.repo/" is present in gitignore. If not pr
