@@ -21,6 +21,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
+ * Automatic {@link Option} update based on other {@link Option} updates should not be done via these {@link #subscribers}.
  */
 public class ConfigurationI implements Configuration {
     private final Map<Object, Object> config_store;
