@@ -344,7 +344,7 @@ type_name
 	;
 type_path
     : name
-    | type_path Dot name
+    | name Dot type_path
     ;
 variable_declaration
     : Keyword_final? type_declaration name

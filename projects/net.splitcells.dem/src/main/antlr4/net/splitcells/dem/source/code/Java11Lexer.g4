@@ -54,6 +54,7 @@ lexer grammar Java11Lexer;
 	Floating_point: [-+]?[0-9]+([_][0-9]+)*([\\.][0-9]+)?[dflL]?;
 	Floating_point_short: [\\.][0-9]+[dflL]?;
 	Integer: [-+]?[0-9]+([_][0-9]+)*[dflL]?;
+	JavaImportPrefix: 'java.';
 	Keysymbol_and: '&&';
 	Keysymbol_at: '@';
 	Keysymbol_function_reference: '::';
