@@ -1,2 +1,4 @@
 #!/usr/bin/env sh
 mvn clean test -DincludedGroups=testing_capabilities -DexcludedGroups=""
+cd projects/net.splitcells.dem
+  ./bin/java.code.verify
