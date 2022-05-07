@@ -343,6 +343,7 @@ type_name
 	| Question_mark
 	;
 type_path
+    /* References to foreign code like the standard Java library are only allowed in legacy code. */
     : name
     | name Dot type_path
     ;
