@@ -14,6 +14,7 @@ parser grammar Java11Parser;
   * TODO Consider using BND grammar like JavaCC, because ANTLR4 is too complicated:
   * * https://javacc.github.io/javacc/documentation/bnf.html
   * * https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
+  * TODO Create JavaDoc grammar.
   *
   * New Grammars should be written in BNF.
   */
@@ -64,8 +65,7 @@ call_arguments_next
     : Comma call_arguments_element
     ;
 class_definition
-    : javadoc? Keysymbol_at Keyword_JavaLegacyArtifact .*
-    | javadoc? Keysymbol_at Keyword_JavaLegacyBody .*
+    : javadoc? Keysymbol_at Keyword_JavaLegacyBody .*
     | javadoc? annotation* Keyword_public? Keyword_final?
         /* Keyword_abstract? TODO Is this really needed? */
     	Keyword_class
@@ -297,7 +297,8 @@ statement_finally
     : Keyword_finally Brace_curly_open statement+ Brace_curly_closed
     ;
 source_unit
-    : license_declaration package_declaration import_declaration* class_definition
+    : .* Keysymbol_at Keyword_JavaLegacyArtifact .*
+    | license_declaration package_declaration import_declaration* class_definition
     	EOF
     | license_declaration package_declaration import_declaration* interface_definition
         EOF
