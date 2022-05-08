@@ -30,6 +30,11 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>network.worker</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <!-- social media -->
             <!-- https://facebook4j.github.io/en/code-examples.html -->
             <groupId>org.facebook4j</groupId>

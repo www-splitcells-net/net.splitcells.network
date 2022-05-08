@@ -1,16 +1,25 @@
 package net.splitcells.website.server.project.validator;
 
+import net.splitcells.dem.environment.config.ProgramName;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.host.HostName;
 import net.splitcells.dem.utils.CommonFunctions;
+import net.splitcells.network.worker.Logger;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.RenderingResult;
 
 
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.resource.Paths.userHome;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.network.worker.Logger.logger;
 
 /**
  * Checks whether rendered HTML documents relative links can be rendered
@@ -25,6 +34,9 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
     public static RenderingValidatorForHtmlLinks renderingValidatorForHtmlLinks() {
         return new RenderingValidatorForHtmlLinks();
     }
+
+    private int invalidLinkCount = 0;
+    private String reportName = "default";
 
     private RenderingValidatorForHtmlLinks() {
     }
@@ -67,12 +79,33 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
                         final var isValid = paths.contains(resolvedLink);
                         // TODO HACK
                         if (!isValid) {
-                            System.out.println("Invalid Link: " + link + ", " + resolvedLink);
+                            ++invalidLinkCount;
+                            domsole().append("Invalid Link: " + link + ", " + resolvedLink, LogLevel.ERROR);
                         }
                         return !isValid;
                     }
                     return true;
                 }).collect(toList());
         return invalid.isEmpty();
+    }
+
+    public void startReport(String name) {
+        reportName = name;
+        invalidLinkCount = 0;
+    }
+
+    @Override
+    public void endReport() {
+        final var logger = logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"));
+        logger.logExecutionResults("net/splitcells/website/server/invalidLinkCount/" + reportName
+                , config().configValue(HostName.class)
+                , LocalDate.now()
+                , "Invalid Link Count"
+                , invalidLinkCount);
+        logger.commit();
+    }
+
+    public int invalidLinkCount() {
+        return invalidLinkCount;
     }
 }

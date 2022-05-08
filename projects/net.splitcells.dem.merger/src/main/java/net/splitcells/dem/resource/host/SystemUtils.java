@@ -17,11 +17,52 @@ import net.splitcells.dem.utils.ConstructorIllegal;
 import java.io.*;
 import java.nio.file.Path;
 
+import static net.splitcells.dem.resource.host.ShellResult.shellResult;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public final class SystemUtils {
     public SystemUtils() {
         throw constructorIllegal();
+    }
+
+    @JavaLegacyBody
+    public static ShellResult runShellScript(String command, Path workingDirectory) {
+        final var rVal = new StringBuffer();
+        final Process process;
+        try {
+            process = Runtime.getRuntime().exec
+                    (command
+                            , new String[0]
+                            , workingDirectory.toFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            // FIXME Print Process output while waiting for process's completion.
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            String inputLine = null;
+            String errorLine = null;
+            try {
+                // Some commands wait for input although they do not needed to.
+                process.getOutputStream().close();
+                while ((inputLine = inputReader.readLine()) != null || (errorLine = errorReader.readLine()) != null) {
+                    if (errorLine != null) {
+                        rVal.append(errorLine);
+                    }
+                    if (inputLine != null) {
+                        rVal.append(inputLine);
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            process.waitFor();
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return shellResult(process.exitValue(), rVal.toString());
     }
 
     @JavaLegacyBody

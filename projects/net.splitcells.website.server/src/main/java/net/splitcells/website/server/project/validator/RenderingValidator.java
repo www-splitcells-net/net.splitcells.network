@@ -22,4 +22,12 @@ import java.util.Optional;
 @FunctionalInterface
 public interface RenderingValidator {
     boolean validate(Optional<RenderingResult> content, ProjectsRendererI projectsRendererI, Path requestedPath);
+
+    default void startReport(String context) {
+
+    }
+    
+    default void endReport() {
+
+    }
 }

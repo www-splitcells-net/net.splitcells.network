@@ -88,6 +88,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
 
     @Override
     public void serveTo(Path target) {
+        renderingValidator.startReport("build");
         build();
         projectsPaths().stream()
                 .map(path -> config.rootPath() + path.toString())
@@ -107,6 +108,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                         throw new RuntimeException(target.toString() + path, e);
                     }
                 });
+        renderingValidator.endReport();
     }
 
     @Override
