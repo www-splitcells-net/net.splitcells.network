@@ -97,7 +97,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
     @Override
     public void endReport() {
         final var logger = logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"));
-        logger.logExecutionResults("net/splitcells/website/server/invalidLinkCount/" + reportName
+        logger.logExecutionResults(this.getClass().getName().replace('.', '/') + "/" + reportName
                 , config().configValue(HostName.class)
                 , LocalDate.now()
                 , "Invalid Link Count"
