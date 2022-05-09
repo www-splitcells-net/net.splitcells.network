@@ -183,20 +183,24 @@ public class SchoolCourseSchedulingTest {
                             if (suitableCourses.isEmpty()) {
                                 continue;
                             }
-                            final var fittingCourseId = suitableCourses
-                                    .get(0)
-                                    .value(COURSE_ID);
-                            final var freeCourseSlots = solution.demandsFree()
-                                    .lookup(COURSE_ID, fittingCourseId)
-                                    .getLines()
+                            final var fittingCourseIds = suitableCourses.shuffle(randomness)
+                                    .stream()
+                                    .map(e -> e.value(COURSE_ID))
+                                    .collect(toList())
                                     .shuffle(randomness);
-                            for (final var freeCourseSlot : freeCourseSlots) {
-                                final var teacherCapacity = solution
-                                        .suppliesFree()
-                                        .lookup(TEACHER, suitableTeacher)
-                                        .getLines();
-                                if (!teacherCapacity.isEmpty()) {
-                                    solution.allocate(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
+                            for (var fittingCourseId : fittingCourseIds) {
+                                final var freeCourseSlots = solution.demandsFree()
+                                        .lookup(COURSE_ID, fittingCourseId)
+                                        .getLines()
+                                        .shuffle(randomness);
+                                for (final var freeCourseSlot : freeCourseSlots) {
+                                    final var teacherCapacity = solution
+                                            .suppliesFree()
+                                            .lookup(TEACHER, suitableTeacher)
+                                            .getLines();
+                                    if (!teacherCapacity.isEmpty()) {
+                                        solution.allocate(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
+                                    }
                                 }
                             }
                         }
