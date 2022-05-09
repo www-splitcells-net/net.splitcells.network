@@ -163,35 +163,41 @@ public class SchoolCourseSchedulingTest {
                 , freeCoursesByTopic -> solution -> {
                     for (final var topic : listWithValuesOf(freeCoursesByTopic.keySet()).shuffle(randomness)) {
                         // TODO Use constraint system for complex queries.
-                        final var suitableCourse = freeCoursesByTopic
+                        final var suitableCourseSubjects = freeCoursesByTopic
                                 .get(topic)
                                 .stream()
-                                .findFirst()
-                                .get()
-                                .value(SUBJECT);
-                        final var suitableTeachers = solution.suppliesFree()
-                                .lookup(TEACH_SUBJECT_SUITABILITY, suitableCourse)
-                                .getLines();
-                        if (suitableTeachers.isEmpty()) {
-                            continue;
-                        }
-                        final var suitableTeacher = randomness.chooseOneOf(suitableTeachers).value(TEACHER);
-                        final var fittingCourseId = solution.demandsFree()
-                                .lookup(SUBJECT, suitableCourse)
-                                .getLines()
-                                .get(0)
-                                .value(COURSE_ID);
-                        final var freeCourseSlots = solution.demandsFree()
-                                .lookup(COURSE_ID, fittingCourseId)
-                                .getLines()
+                                .map(e -> e.value(SUBJECT))
+                                .collect(Lists.toList())
                                 .shuffle(randomness);
-                        for (final var freeCourseSlot : freeCourseSlots) {
-                            final var teacherCapacity = solution
-                                    .suppliesFree()
-                                    .lookup(TEACHER, suitableTeacher)
+                        for (var suitableCourseSubject : suitableCourseSubjects) {
+                            final var suitableTeachers = solution.suppliesFree()
+                                    .lookup(TEACH_SUBJECT_SUITABILITY, suitableCourseSubject)
                                     .getLines();
-                            if (!teacherCapacity.isEmpty()) {
-                                solution.allocate(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
+                            if (suitableTeachers.isEmpty()) {
+                                continue;
+                            }
+                            final var suitableTeacher = randomness.chooseOneOf(suitableTeachers).value(TEACHER);
+                            final var suitableCourses = solution.demandsFree()
+                                    .lookup(SUBJECT, suitableCourseSubject)
+                                    .getLines();
+                            if (suitableCourses.isEmpty()) {
+                                continue;
+                            }
+                            final var fittingCourseId = suitableCourses
+                                    .get(0)
+                                    .value(COURSE_ID);
+                            final var freeCourseSlots = solution.demandsFree()
+                                    .lookup(COURSE_ID, fittingCourseId)
+                                    .getLines()
+                                    .shuffle(randomness);
+                            for (final var freeCourseSlot : freeCourseSlots) {
+                                final var teacherCapacity = solution
+                                        .suppliesFree()
+                                        .lookup(TEACHER, suitableTeacher)
+                                        .getLines();
+                                if (!teacherCapacity.isEmpty()) {
+                                    solution.allocate(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
+                                }
                             }
                         }
                     }
