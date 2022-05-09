@@ -36,6 +36,7 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * <p>This class is not actively developed anymore. See {@link ConstraintGroupBasedRepair}</p>
  * <p>
  * Optimize a problem by find faulty groups and reallocating them.
  * </p>
@@ -55,6 +56,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *     <li>Set the values to all free demands and thereby perform actual repair process.</li>
  * </ol>
  */
+@Deprecated
 public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
 
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
