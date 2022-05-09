@@ -161,7 +161,7 @@ public class SchoolCourseSchedulingTest {
         final var randomness = randomness();
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
                 , freeCoursesByTopic -> solution -> {
-                    for (final var topic : freeCoursesByTopic.keySet()) {
+                    for (final var topic : listWithValuesOf(freeCoursesByTopic.keySet()).shuffle(randomness)) {
                         // TODO Use constraint system for complex queries.
                         final var suitableCourse = freeCoursesByTopic
                                 .get(topic)
@@ -183,14 +183,15 @@ public class SchoolCourseSchedulingTest {
                                 .value(COURSE_ID);
                         final var freeCourseSlots = solution.demandsFree()
                                 .lookup(SUBJECT, fittingCourseId)
-                                .getLines();
+                                .getLines()
+                                .shuffle(randomness);
                         for (final var freeCourseSlot : freeCourseSlots) {
                             final var teacherCapacity = solution
                                     .suppliesFree()
                                     .lookup(TEACHER, suitableTeacher)
                                     .getLines();
                             if (!teacherCapacity.isEmpty()) {
-                                solution.allocate(freeCourseSlot, teacherCapacity.get(0));
+                                solution.allocate(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
                             }
                         }
                     }
