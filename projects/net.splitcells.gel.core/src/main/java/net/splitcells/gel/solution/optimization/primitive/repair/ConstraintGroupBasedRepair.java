@@ -44,12 +44,13 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
  * They believe that when something's suffered damage and has a history it becomes more beautiful.”
  * ― Barbara Bloom
  * </p>
- * <p>This {@link OfflineOptimization} consists of three phases.</p>
+ * <p>This {@link OnlineOptimization} consists of three phases.</p>
  * <ol>
- *     <li>Select a set of {@link Constraint} in the {@link net.splitcells.gel.solution.Solution#constraint} tree
+ *     <li>Select a set of {@link Constraint} paths in the {@link net.splitcells.gel.solution.Solution#constraint} tree
+ *     via a {@link #groupSelector}
  *     and therefore decide, which constraints of the problems are repaired during the optimization.
  *     </li>
- *     <li>Determine all {@link GroupId}s in the selected {@link Constraint}s, that
+ *     <li>Determine all {@link GroupId}s in the selected {@link Constraint}s via a {@link #supplySelector}, that
  *     have a {@link Cost} bigger than zero. Free all demands of these groups.
  *     This deletes the values of all variables, which are part of some constraint defying group.</li>
  *     <li>Set the values to all free demands and thereby perform actual repair process.</li>
