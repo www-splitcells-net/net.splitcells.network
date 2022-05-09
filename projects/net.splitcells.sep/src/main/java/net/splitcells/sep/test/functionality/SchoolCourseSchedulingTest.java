@@ -182,7 +182,7 @@ public class SchoolCourseSchedulingTest {
                                 .get(0)
                                 .value(COURSE_ID);
                         final var freeCourseSlots = solution.demandsFree()
-                                .lookup(SUBJECT, fittingCourseId)
+                                .lookup(COURSE_ID, fittingCourseId)
                                 .getLines()
                                 .shuffle(randomness);
                         for (final var freeCourseSlot : freeCourseSlots) {
