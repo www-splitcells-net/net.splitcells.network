@@ -101,7 +101,7 @@ Project Cluster
     of `net.splitcells.os.state.interface`.
 ## Social Contacts
 * [Main Blog](https://splitcells-net.srht.site/)
-* Livestreaming via [Twitch](https://www.twitch.tv/splitcellsnet) 
+* Livestreaming via [Youtube](https://www.youtube.com/channel/UCyHsL0W1QKPOc7iUkJe3mAA) 
 * Messaging via [Mastadon/Fosstodon](https://fosstodon.org/@splitcells)
 * Blogging with Images on [Medium](https://martins-avots.medium.com/)
 ## Infrastructure
