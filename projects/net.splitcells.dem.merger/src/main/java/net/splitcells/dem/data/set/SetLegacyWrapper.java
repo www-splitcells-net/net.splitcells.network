@@ -112,4 +112,9 @@ public class SetLegacyWrapper<T> implements Set<T> {
     public Optional<Boolean> _isDeterministic() {
         return isDeterministic;
     }
+
+    @Override
+    public String toString() {
+        return content.toString();
+    }
 }
