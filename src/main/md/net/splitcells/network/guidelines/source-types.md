@@ -31,6 +31,9 @@ if there is not a good reason for using them.
 The reason for this is the fact,
 that primary supported formats are better supported than secondary supported
 formats.
+
+Secondary formats in general often require a lot of additional code in order to handle their Syntax,
+which makes it hard to support these, convert these or port these.
 * [CommonMark](https://spec.commonmark.org/0.29) is used for flowing text.
   All artifacts of the flowing text should be integrated via links.
   Inline LaText that is compatible to MathJax is used for mathematics formulas
