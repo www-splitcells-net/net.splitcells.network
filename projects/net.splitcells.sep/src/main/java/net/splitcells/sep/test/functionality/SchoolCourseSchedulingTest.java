@@ -160,48 +160,30 @@ public class SchoolCourseSchedulingTest {
     public static OnlineOptimization teacherAllocationForCoursesOptimization() {
         final var randomness = randomness();
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
-                , freeCoursesByTopic -> solution -> {
-                    for (final var topic : listWithValuesOf(freeCoursesByTopic.keySet()).shuffle(randomness)) {
+                , freeCoursesByIdGroup -> solution -> {
+                    for (final var freeCourseGroup : listWithValuesOf(freeCoursesByIdGroup.keySet()).shuffle(randomness)) {
                         // TODO Use constraint system for complex queries.
-                        final var suitableCourseSubjects = freeCoursesByTopic
-                                .get(topic)
-                                .stream()
-                                .map(e -> e.value(SUBJECT))
-                                .collect(Lists.toList())
+                        final var freeCourseRepresentant = freeCoursesByIdGroup.get(freeCourseGroup).iterator().next();
+                        final var freeCourseSubject = freeCourseRepresentant.value(SUBJECT);
+                        final var freeCourseId = freeCourseRepresentant.value(COURSE_ID);
+                        final var suitableTeachers = solution.suppliesFree()
+                                .lookup(TEACH_SUBJECT_SUITABILITY, freeCourseSubject)
+                                .getLines();
+                        if (suitableTeachers.isEmpty()) {
+                            continue;
+                        }
+                        final var suitableTeacher = randomness.chooseOneOf(suitableTeachers).value(TEACHER);
+                        final var freeCourseSlots = solution.demandsFree()
+                                .lookup(COURSE_ID, freeCourseId)
+                                .getLines()
                                 .shuffle(randomness);
-                        for (var suitableCourseSubject : suitableCourseSubjects) {
-                            final var suitableTeachers = solution.suppliesFree()
-                                    .lookup(TEACH_SUBJECT_SUITABILITY, suitableCourseSubject)
+                        for (final var freeCourseSlot : freeCourseSlots) {
+                            final var teacherCapacity = solution
+                                    .suppliesFree()
+                                    .lookup(TEACHER, suitableTeacher)
                                     .getLines();
-                            if (suitableTeachers.isEmpty()) {
-                                continue;
-                            }
-                            final var suitableTeacher = randomness.chooseOneOf(suitableTeachers).value(TEACHER);
-                            final var suitableCourses = solution.demandsFree()
-                                    .lookup(SUBJECT, suitableCourseSubject)
-                                    .getLines();
-                            if (suitableCourses.isEmpty()) {
-                                continue;
-                            }
-                            final var fittingCourseIds = suitableCourses.shuffle(randomness)
-                                    .stream()
-                                    .map(e -> e.value(COURSE_ID))
-                                    .collect(toList())
-                                    .shuffle(randomness);
-                            for (var fittingCourseId : fittingCourseIds) {
-                                final var freeCourseSlots = solution.demandsFree()
-                                        .lookup(COURSE_ID, fittingCourseId)
-                                        .getLines()
-                                        .shuffle(randomness);
-                                for (final var freeCourseSlot : freeCourseSlots) {
-                                    final var teacherCapacity = solution
-                                            .suppliesFree()
-                                            .lookup(TEACHER, suitableTeacher)
-                                            .getLines();
-                                    if (!teacherCapacity.isEmpty()) {
-                                        solution.allocate(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
-                                    }
-                                }
+                            if (!teacherCapacity.isEmpty()) {
+                                solution.allocate(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
                             }
                         }
                     }
