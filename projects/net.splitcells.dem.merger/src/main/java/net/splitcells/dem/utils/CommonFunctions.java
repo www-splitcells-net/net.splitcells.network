@@ -10,6 +10,7 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.io.File;
@@ -39,6 +40,7 @@ import java.util.stream.Stream;
  * From the perspective of the routine that receives the call, i.e. the callee,
  * the thing which is passed is a parameter.
  */
+@JavaLegacyArtifact
 public class CommonFunctions {
 
     public static <T> T removeAny(Set<T> arg) {

@@ -10,6 +10,8 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.util.Collections;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
@@ -18,6 +20,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
+@JavaLegacyArtifact
 public final class StreamUtils {
 
     private StreamUtils() {
