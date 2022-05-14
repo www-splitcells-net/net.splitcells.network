@@ -158,6 +158,7 @@ import_static_declaration
     ;
 import_type_declaration
     : Keyword_import type_path (Dot Keysymbol_star)? Semicolon
+    | Legacy_Imports
     ;
 integer
 	: Integer

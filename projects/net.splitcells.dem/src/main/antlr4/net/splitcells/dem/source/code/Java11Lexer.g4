@@ -38,6 +38,9 @@ lexer grammar Java11Lexer;
     package net.splitcells.dem.source.code.antlr;
 }
 /* Keywords and Keysymbols */
+    Legacy_Imports: Legacy_Import_Instances;
+    fragment Legacy_Import_Instances
+    		: 'import java.util.Optional;';
 	Arrow: '->';
 	Bigger_than: '>';
 	Brace_curly_open: '{';
