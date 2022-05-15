@@ -88,7 +88,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
 
     @Override
     public void serveTo(Path target) {
-        renderingValidator.startReport("build");
+        renderingValidator.startReport("build" + config.rootPath());
         build();
         projectsPaths().stream()
                 .map(path -> config.rootPath() + path.toString())
