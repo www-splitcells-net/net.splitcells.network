@@ -27,3 +27,6 @@ where it is used.
 * [Implementing And Solving A N Queen Problem Instance](../../../../../../../../projects/net.splitcells.gel.sheath/src/main/md/net/splitcells/gel/test/functionality/n-queen-problem.implementation.md)
 ## Introduction to the Underlying Theories
 * [One-Dimensional Assignment Problems](../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/index.md)
+
+## Additional Resources
+* [Project's History](../../../../../../src/main/xml/net/splitcells/gel/history/index.html)
