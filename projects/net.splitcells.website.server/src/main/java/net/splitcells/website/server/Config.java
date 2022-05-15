@@ -24,9 +24,23 @@ public class Config {
     private Optional<String> layoutRelevant = Optional.empty();
     private int openPort = 443;
     private String generationStyle = "standard";
+    /**
+     * TODO This does not seem to be used actively anymore.
+     * It was used for some specific resources,
+     * but this way of resource loading should probably not be used anymore,
+     * as it is unnecessarily hard to maintain.
+     */
+    @Deprecated
     private Optional<String> siteFolder;
+    /**
+     * All calls of {@link net.splitcells.website.server.projects.ProjectsRenderer#render(String)}
+     * with a path not starting with {@link #rootPath} will not return anything.
+     */
     private String rootPath = "/";
     private String rootIndex = "/index.html";
+    /**
+     * List of paths, that are equivalent to {@link #rootIndex}.
+     */
     private List<String> possibleRootIndex = Lists.list//
             (rootIndex//
                     , "index.html" // Browser (Firefox) like to call this path, if no path is provided by the user.
@@ -76,10 +90,12 @@ public class Config {
         return this;
     }
 
+    @Deprecated
     public Optional<String> siteFolder() {
         return siteFolder;
     }
 
+    @Deprecated
     public Config withSiteFolder(Optional<String> siteFolder) {
         this.siteFolder = siteFolder;
         return this;
