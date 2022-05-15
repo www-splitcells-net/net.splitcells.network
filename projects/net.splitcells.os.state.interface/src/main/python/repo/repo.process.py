@@ -85,7 +85,9 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 	if peerListPath.is_file():
 		result = subprocess.run([peerListPath], stdout=subprocess.PIPE)
 		logging.warning('Peer repositories found, but not supported in this version yet: ')
-		logging.warning(result.stdout.decode('utf-8'))
+		for peerRepo in result.stdout.decode('utf-8').split("\n"):
+			if peerRepo.strip() != "":
+				logging.warning(peerRepo)
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 	if subListPath.is_file():
 		# TODO Check if "!/.net.splitcells.os.state.interface.repo/" is present in gitignore. If not pr
