@@ -69,5 +69,5 @@ public interface ProjectsRenderer {
      * @param metaContent Additional information about {@param content}.
      * @return This is the rendered String.
      */
-    Optional<byte[]> renderContent(String content, LayoutConfig metaContent);
+    Optional<RenderingResult> renderContent(String content, LayoutConfig metaContent);
 }

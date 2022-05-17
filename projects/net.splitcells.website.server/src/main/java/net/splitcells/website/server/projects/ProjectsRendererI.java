@@ -14,6 +14,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.LayoutConfig;
@@ -28,6 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -38,9 +40,11 @@ import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static net.splitcells.website.server.projects.GlobalChangelogExtension.globalChangelogExtension;
+import static net.splitcells.website.server.projects.LayoutExtension.layoutExtension;
 import static net.splitcells.website.server.projects.NetworkStatusRenderExtension.networkStatusRenderExtension;
 import static net.splitcells.website.server.projects.ProjectsRendererExtensionMerger.projectsRendererExtensionMerger;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -132,7 +136,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
     private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
     private final ProjectsRendererExtensionMerger extension = projectsRendererExtensionMerger()
             .withRegisteredExtension(globalChangelogExtension())
-            .withRegisteredExtension(networkStatusRenderExtension());
+            .withRegisteredExtension(networkStatusRenderExtension())
+            .withRegisteredExtension(layoutExtension());
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer
@@ -262,7 +267,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
     }
 
     @Override
-    public Optional<byte[]> renderContent(String content, LayoutConfig metaContent) {
-        return fallbackRenderer.renderXml(content, metaContent, config);
+    public Optional<RenderingResult> renderContent(String content, LayoutConfig metaContent) {
+        return Optional.of(renderingResult(fallbackRenderer.renderXml(content, metaContent, config).get(), TEXT_HTML.toString()));
     }
 }
