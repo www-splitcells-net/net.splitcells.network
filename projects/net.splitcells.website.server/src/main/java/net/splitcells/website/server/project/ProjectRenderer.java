@@ -68,7 +68,7 @@ public interface ProjectRenderer extends Renderer {
     Optional<byte[]> renderHtmlBodyContent(String bodyContent
             , Optional<String> title
             , Optional<String> path
-            , Config config);
+            , @Deprecated Config config);
 
     /**
      * This is the main rendering method for documents of a project.
@@ -78,7 +78,7 @@ public interface ProjectRenderer extends Renderer {
      * @param config       This is the general webserver config.
      * @return The rendered document. Currently, the output format is HTML.
      */
-    Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config);
+    Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, @Deprecated Config config);
 
     /**
      * TODO This method was created in order to remove direct usage of {@link FileStructureTransformer}.
@@ -92,5 +92,5 @@ public interface ProjectRenderer extends Renderer {
      * @return The rendered document. Currently, the output format is HTML.
      */
     @Deprecated
-    Optional<byte[]> renderRawXml(String xml, Config config);
+    Optional<byte[]> renderRawXml(String xml, @Deprecated Config config);
 }
