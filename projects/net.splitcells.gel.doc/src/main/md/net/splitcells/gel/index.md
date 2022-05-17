@@ -1,6 +1,8 @@
 # Introduction to the Generic Allocator
-If you encounter an unknown word or phrase you can lookup some of this at this
+If you encounter an unknown word or phrase you can look up some of this at this
 [dictionary](../../../../../../../../src/main/md/net/splitcells/network/dictionary.md).
+The [project's history](../../../../../../src/main/xml/net/splitcells/gel/history/index.html)
+is also documented.
 ## Introduction for Users
 The Generic Allocator (Gel) is a Java framework
 providing modeling, analytic and solving capabilities regarding optimization problems.
@@ -27,6 +29,3 @@ where it is used.
 * [Implementing And Solving A N Queen Problem Instance](../../../../../../../../projects/net.splitcells.gel.sheath/src/main/md/net/splitcells/gel/test/functionality/n-queen-problem.implementation.md)
 ## Introduction to the Underlying Theories
 * [One-Dimensional Assignment Problems](../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/index.md)
-
-## Additional Resources
-* [Project's History](../../../../../../src/main/xml/net/splitcells/gel/history/index.html)
