@@ -27,6 +27,7 @@ public class SourceCodeCheck {
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.merger"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.core"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem"));
+        checkJavaSourceCodeProject(Path.of("../net.splitcells.cin"));
     }
 
     private static void checkJavaSourceCodeProject(Path projectFolder) {
