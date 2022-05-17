@@ -16,6 +16,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.Renderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -258,5 +259,10 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , Optional<String> path
             , Config config) {
         return renderers.get(0).renderHtmlBodyContent(bodyContent, title, path, config);
+    }
+
+    @Override
+    public Optional<byte[]> renderContent(String content, LayoutConfig metaContent) {
+        return fallbackRenderer.renderXml(content, metaContent, config);
     }
 }

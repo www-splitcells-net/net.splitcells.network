@@ -11,15 +11,15 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
 public interface ProjectsRendererExtension {
-    Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config);
+    Optional<RenderingResult> renderFile(String path, @Deprecated ProjectsRendererI projectsRendererI, Config config);
 
-    default Perspective extendProjectLayout(Perspective layout, ProjectsRendererI projectsRendererI) {
+    default Perspective extendProjectLayout(Perspective layout, @Deprecated ProjectsRendererI projectsRendererI) {
         return layout;
     }
 
-    Set<Path> projectPaths(ProjectsRendererI projectsRendererI);
+    Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRendererI);
 
-    default Set<Path> relevantProjectPaths(ProjectsRendererI projectsRendererI) {
+    default Set<Path> relevantProjectPaths(@Deprecated ProjectsRendererI projectsRendererI) {
         return projectPaths(projectsRendererI);
     }
 }

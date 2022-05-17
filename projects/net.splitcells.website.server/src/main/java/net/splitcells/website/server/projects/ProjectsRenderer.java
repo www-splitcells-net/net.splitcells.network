@@ -69,7 +69,5 @@ public interface ProjectsRenderer {
      * @param metaContent Additional information about {@param content}.
      * @return This is the rendered String.
      */
-    default Optional<byte[]> renderContent(String content, LayoutConfig metaContent) {
-        throw notImplementedYet();
-    }
+    Optional<byte[]> renderContent(String content, LayoutConfig metaContent);
 }
