@@ -55,6 +55,7 @@ Some of them are not strictly related to optimization and can be used in other c
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:javascript)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_shield)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_small)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
 
 * [Changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html)
 * [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security):
