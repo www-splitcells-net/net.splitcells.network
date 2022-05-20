@@ -121,7 +121,10 @@ public class Cost implements Rating {
 
     @Override
     public boolean equals(Object ob) {
-        return compare_partially_to((Rating) ob).get().equals(EQUAL);
+        if (ob instanceof Rating) {
+            return compare_partially_to((Rating) ob).get().equals(EQUAL);
+        }
+        return false;
     }
 
     @Override
