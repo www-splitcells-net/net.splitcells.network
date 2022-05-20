@@ -10,10 +10,9 @@
  */
 package net.splitcells.dem.utils.reflection;
 
-import net.splitcells.dem.utils.ConstructorIllegal;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
-import java.io.InputStream;
-import java.util.List;
 import java.util.Optional;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -68,7 +67,12 @@ public class ClassesRelated {
 	 * @param resourceName
 	 * @return
 	 */
-	public static InputStream resourceOfClass(Class<?> clazz, String resourceName) {
-		return clazz.getClassLoader().getResourceAsStream(resourceName);
+    @JavaLegacyBody
+	public static String resourceOfClass(Class<?> clazz, String resourceName) {
+		try {
+			return new String(clazz.getClassLoader().getResourceAsStream(resourceName).readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+		} catch (java.io.IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
