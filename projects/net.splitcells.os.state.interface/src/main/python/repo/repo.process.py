@@ -81,11 +81,11 @@ def execute(relativePath, host, command):
 def process(relativePath, host, command, commandForMissing, commandForUnknown, commandForCurrent, commandForChildren):
 	if not execute(relativePath, host, command):
 		return False
-	peerListPath=Path('./bin/net.splitcells.osi.repos.peers')
+	peerListPath = Path('./bin/net.splitcells.osi.repos.peers')
 	if peerListPath.is_file():
-		result = subprocess.run([peerListPath], stdout=subprocess.PIPE)
+		peers = subprocess.run([peerListPath], stdout=subprocess.PIPE)
 		logging.warning('Peer repositories found, but not supported in this version yet: ')
-		for peerRepo in result.stdout.decode('utf-8').split("\n"):
+		for peerRepo in peers.stdout.decode('utf-8').split("\n"):
 			if peerRepo.strip() != "":
 				logging.warning(peerRepo)
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
