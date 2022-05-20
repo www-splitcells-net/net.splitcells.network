@@ -11,6 +11,7 @@
 package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.set.SetT;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.utils.random.Randomness;
 
@@ -21,6 +22,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+@JavaLegacyArtifact
 public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
 
     @Deprecated
