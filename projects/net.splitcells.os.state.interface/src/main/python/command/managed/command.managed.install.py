@@ -13,11 +13,9 @@ __license__ = "EPL-2.0 OR MIT"
 # TODO Create tests.
 # TODO PERFORMANCE compile to C via https://cython.org/.
 import argparse
-import os
 from pathlib import Path
 from pathlib import PosixPath
 import shutil
-import re
 from os import environ
 import logging
 def currentFolder():

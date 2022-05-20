@@ -13,11 +13,9 @@ __license__ = "EPL-2.0 OR MIT"
 
 # Repo verify throws an error, if the current folder is not the root folder of a repository.
 
-import configparser
 import subprocess
 from pathlib import Path
 import json
-import os
 import sys
 print(Path('.').resolve())
 returnCode = subprocess.call('command.managed.execute conjunction repo.verify', shell='True')

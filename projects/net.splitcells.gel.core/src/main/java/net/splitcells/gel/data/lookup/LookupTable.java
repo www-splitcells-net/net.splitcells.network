@@ -98,7 +98,7 @@ public class LookupTable implements Table {
         // TODO FIX
         range(0, columns.size()).forEach(i -> {
             // HACK
-            final var column = (LookupColumn<Object>) columns.get(i);
+            final var column = columns.get(i);
             column.set(line.index(), line.value(tableView.headerView().get(i)));
         });
         columns.forEach(column -> column.registerAddition(line));
@@ -109,7 +109,7 @@ public class LookupTable implements Table {
         content.remove(line.index());
         range(0, columns.size()).forEach(i -> {
             // HACK
-            final var column = (LookupColumn<Object>) columns.get(i);
+            final var column = columns.get(i);
             column.set(line.index(), null);
         });
     }

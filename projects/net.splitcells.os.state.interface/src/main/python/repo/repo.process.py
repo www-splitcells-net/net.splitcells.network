@@ -61,7 +61,6 @@ __copyright__ = "Copyright 2021"
 __license__ = "EPL-2.0 OR MIT"
 
 import subprocess
-import sys
 import argparse
 import json
 import logging

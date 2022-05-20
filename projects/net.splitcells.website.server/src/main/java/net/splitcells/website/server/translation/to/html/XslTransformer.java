@@ -74,7 +74,9 @@ public class XslTransformer {
          * />
          */
         try (final var outputStream = new BufferedOutputStream(new FileOutputStream(output.toFile()))) {
-            transform(new FileInputStream(input.toFile()), outputStream);
+            try (final var inputStream = new FileInputStream(input.toFile())) {
+                transform(inputStream, outputStream);
+            }
         } catch (IOException e) {
             throw new RuntimeException("Cannot transform file: " + input, e);
         }

@@ -14,7 +14,6 @@ __license__ = "EPL-2.0 OR MIT"
 import argparse
 import logging
 import subprocess
-import sys
 
 from os import environ
 

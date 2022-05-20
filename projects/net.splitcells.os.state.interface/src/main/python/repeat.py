@@ -11,7 +11,6 @@ __authors__ = ["and other"]
 __copyright__ = "Copyright 2021"
 __license__ = "EPL-2.0 OR MIT"
 
-import subprocess
 import sys
 
 if __name__ == '__main__':

@@ -12,11 +12,14 @@ package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.io.*;
 import java.nio.file.Path;
 
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.host.ShellResult.shellResult;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
@@ -37,10 +40,10 @@ public final class SystemUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
+
+        try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+             BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
             // FIXME Print Process output while waiting for process's completion.
-            BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String inputLine = null;
             String errorLine = null;
             try {
@@ -59,7 +62,7 @@ public final class SystemUtils {
             }
             process.waitFor();
 
-        } catch (InterruptedException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
         return shellResult(process.exitValue(), rVal.toString());
@@ -78,10 +81,9 @@ public final class SystemUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
+        try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+             BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
             // FIXME Print Process output while waiting for process's completion.
-            BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String inputLine = null;
             String errorLine = null;
             try {
@@ -100,7 +102,7 @@ public final class SystemUtils {
                 throw new RuntimeException(e);
             }
             process.waitFor();
-        } catch (InterruptedException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
@@ -117,10 +119,9 @@ public final class SystemUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
+        try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+             BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
             // FIXME Print Process output while waiting for process's completion.
-            BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String inputLine = null;
             String errorLine = null;
             try {
@@ -139,24 +140,22 @@ public final class SystemUtils {
                 throw new RuntimeException(e);
             }
             process.waitFor();
-        } catch (InterruptedException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
 
     public static void executeProgram(String... command) {
-        // REMOVE or write output to log.
-        System.out.println(command);
+        domsole().append(perspective("Executing program.").withChild(perspective(command.toString())), LogLevel.DEBUG);
         final Process process;
         try {
             process = Runtime.getRuntime().exec(command);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
+        try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+             BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
             // FIXME Print Process output while waiting for process's completion.
-            BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String inputLine = null;
             String errorLine = null;
             try {
@@ -175,7 +174,7 @@ public final class SystemUtils {
                 throw new RuntimeException(e);
             }
             process.waitFor();
-        } catch (InterruptedException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
@@ -197,14 +196,15 @@ public final class SystemUtils {
         File tempScript;
         try {
             tempScript = File.createTempFile("script", null);
-            Writer streamWriter = new OutputStreamWriter(new FileOutputStream(tempScript));
-            PrintWriter printWriter = new PrintWriter(streamWriter);
+            try (Writer streamWriter = new OutputStreamWriter(new FileOutputStream(tempScript))) {
+                PrintWriter printWriter = new PrintWriter(streamWriter);
 
-            printWriter.println("#!/bin/bash");
-            printWriter.println(script);
+                printWriter.println("#!/bin/bash");
+                printWriter.println(script);
 
-            printWriter.close();
-        } catch (Exception e) {
+                printWriter.close();
+            }
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
 

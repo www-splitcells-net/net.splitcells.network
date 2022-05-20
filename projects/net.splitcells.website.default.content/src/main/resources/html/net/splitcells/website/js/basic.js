@@ -35,7 +35,7 @@
    return Math.floor(Math.random() * Math.floor(max));
     }
  function showOneOfChildren(node) {
- 	child=node.childNodes[getRandomInt(node.childNodes.length)];
+ 	let child=node.childNodes[getRandomInt(node.childNodes.length)];
  	child.style.display = 'inherit';
  	child.style.visibility = 'inherit';
  	}

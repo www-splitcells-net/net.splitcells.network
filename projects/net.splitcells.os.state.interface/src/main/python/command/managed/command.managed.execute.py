@@ -15,10 +15,8 @@ __license__ = "EPL-2.0 OR MIT"
 # TODO calculate return code
 import subprocess
 import sys
-import argparse
 import logging
 from os import environ
-from pathlib import Path
 from shutil import which
 # TODO FIXME If file not present in path this script should continue.
 # TODO listener scripts

@@ -12,11 +12,8 @@ __copyright__ = "Copyright 2021"
 __license__ = "EPL-2.0 OR MIT"
 
 import argparse
-import os
 from pathlib import Path
 from pathlib import PosixPath
-import shutil
-import re
 from os import environ
 import logging
 def currentFolder():

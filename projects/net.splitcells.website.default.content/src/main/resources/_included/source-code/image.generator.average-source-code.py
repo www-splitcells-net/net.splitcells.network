@@ -4,17 +4,16 @@ License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/."""
 __author__ = 'Mārtiņš Avots'
 import argparse
-from os import walk, sep
-import os
+from os import walk
 from PIL import \
 	Image \
 	,ImageDraw \
-	,ImageFont \
 	,ImageFilter
 from random import \
 	randint \
-	,shuffle
-import random
+	,shuffle \
+	, sample \
+	, choice
 def color(arg):
 	try:
 		(r, g, b) = map(int, arg.split(','))
@@ -90,7 +89,7 @@ def draw_averageSourceCode(config, image_layered):
 	used_files_on_top_layer = 0
 	shuffle(config.input_files)
 	if len(config.input_files) >= config.max_files_used_for_result:
-		considered_input_files = random.sample(config.input_files,
+		considered_input_files = sample(config.input_files,
 											   config.max_files_used_for_result)
 	else:
 		considered_input_files = config.input_files
@@ -110,7 +109,7 @@ def draw_averageSourceCode(config, image_layered):
 					image_layered.image_stack[-1][1].text(
 						text_position,
 						(config.indent_width * randint(0, config.max_indent_level)) * " " + line,
-						fill=random.choice(config.colors) + (config.standard_alpha_val,)
+						fill=choice(config.colors) + (config.standard_alpha_val,)
 					)
 				if used_files_on_top_layer >= config.max_files_on_top_layer:
 					used_files_on_top_layer = 0

@@ -46,7 +46,4 @@ class CompleteCorrelationMatrixMemory():
 				value[iRow] += self.matrix[iRow][iColumn] * key[iColumn]
 		return floatTuple(value)
 if __name__ == "__main__":
-	from orthogonalKeyTests import OrthogonalKeyTests
-	from randomKeyTests import RandomKeyTests
-	from classificationTests import ClassificationTests
 	unittest.main()

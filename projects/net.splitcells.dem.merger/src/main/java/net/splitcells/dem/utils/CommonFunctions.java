@@ -151,9 +151,15 @@ public class CommonFunctions {
             throw new RuntimeException(e);
         } finally {
             try {
-                outputFileLock.release();
-                basicOutput.close();
-                managedOutput.close();
+                if (outputFileLock != null) {
+                    outputFileLock.release();
+                }
+                if (basicOutput != null) {
+                    basicOutput.close();
+                }
+                if (managedOutput != null) {
+                    managedOutput.close();
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
