@@ -10,32 +10,32 @@
  */
 package net.splitcells.dem.data.set;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public final class SetFI implements SetF {
+    @JavaLegacyBody
+    @Override
+    public <T> java.util.Set<T> lagacySet() {
+        return new java.util.HashSet<>();
+    }
 
-	@Override
-	public <T> Set<T> lagacySet() {
-		return new HashSet<>();
-	}
+    @JavaLegacyBody
+    @Override
+    public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
+        return new java.util.HashSet<>(arg);
+    }
 
-	@Override
-	public <T> Set<T> legacySet(Collection<T> arg) {
-		return new HashSet<>(arg);
-	}
+    @Override
+    public <T> Set<T> set() {
+        return null;
+    }
 
-	@Override
-	public <T> net.splitcells.dem.data.set.Set<T> set() {
-		return null;
-	}
-
-	@Override
-	public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
-		throw notImplementedYet();
-	}
+    @JavaLegacyBody
+    @Override
+    public <T> Set<T> set(java.util.Collection<T> arg) {
+        throw notImplementedYet();
+    }
 
 }

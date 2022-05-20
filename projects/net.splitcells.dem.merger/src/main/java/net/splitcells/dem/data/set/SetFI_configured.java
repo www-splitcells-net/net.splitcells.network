@@ -13,10 +13,9 @@ package net.splitcells.dem.data.set;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 import static net.splitcells.dem.data.set.SetFI_deterministic.setFI_deterministic;
 import static net.splitcells.dem.data.set.SetFI_random.setFI_random;
@@ -38,13 +37,15 @@ public class SetFI_configured implements SetF {
         }
     }
 
+    @JavaLegacyBody
     @Override
-    public <T> Set<T> lagacySet() {
+    public <T> java.util.Set<T> lagacySet() {
         return setF.lagacySet();
     }
 
+    @JavaLegacyBody
     @Override
-    public <T> Set<T> legacySet(Collection<T> arg) {
+    public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
         return setF.legacySet(arg);
     }
 
@@ -63,12 +64,13 @@ public class SetFI_configured implements SetF {
     }
 
     @Override
-    public <T> net.splitcells.dem.data.set.Set<T> set() {
+    public <T> Set<T> set() {
         return setF.set();
     }
 
+    @JavaLegacyBody
     @Override
-    public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
+    public <T> Set<T> set(java.util.Collection<T> arg) {
         return setF.set(arg);
     }
 }

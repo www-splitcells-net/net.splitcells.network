@@ -11,10 +11,9 @@
 package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.environment.resource.Resource;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
-
-import java.util.Collection;
 
 /**
  * TODO Specify expected min/average/max size
@@ -25,13 +24,16 @@ public interface SetF extends Resource {
 
     <T> Set<T> set();
 
-    <T> Set<T> set(Collection<T> arg);
+    @JavaLegacyBody
+    <T> Set<T> set(java.util.Collection<T> arg);
 
     @Deprecated
+    @JavaLegacyBody
     <T> java.util.Set<T> lagacySet();
 
     @Deprecated
-    <T> java.util.Set<T> legacySet(Collection<T> arg);
+    @JavaLegacyBody
+    <T> java.util.Set<T> legacySet(java.util.Collection<T> arg);
 
     /**
      * Most implementations won't have to do anything.
