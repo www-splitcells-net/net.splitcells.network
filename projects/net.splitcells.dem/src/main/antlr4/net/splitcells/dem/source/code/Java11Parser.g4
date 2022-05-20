@@ -201,6 +201,7 @@ interface_definition_member_static
 	;
 interface_definition_member
 	: interface_definition_member_method
+	| javadoc? Keysymbol_at Keyword_JavaLegacyBody .*
 	;
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/

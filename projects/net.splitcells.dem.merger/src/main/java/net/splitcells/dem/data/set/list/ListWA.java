@@ -11,9 +11,8 @@
 package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.set.SetWA;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-
-import java.util.Collection;
 
 /**
  * TODOC What is the difference between append and add? -> add set specific and
@@ -38,15 +37,17 @@ public interface ListWA<T> extends SetWA<T> {
 		return (R) this;
 	}
 
+	@JavaLegacyBody
 	@SuppressWarnings("unchecked")
 	@ReturnsThis
-	default <R extends ListWA<T>> R appendAll(Collection<T> arg) {
+	default <R extends ListWA<T>> R appendAll(java.util.Collection<T> arg) {
 		arg.forEach(e -> this.append(e));
 		return (R) this;
 	}
 
+	@JavaLegacyBody
 	@Override
-	default <R extends SetWA<T>> R addAll(Collection<T> value) {
+	default <R extends SetWA<T>> R addAll(java.util.Collection<T> value) {
 		return appendAll(value);
 	}
 }
