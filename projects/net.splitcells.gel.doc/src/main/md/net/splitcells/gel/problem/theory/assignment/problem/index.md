@@ -8,6 +8,9 @@ if the assignment set is an valid solution, and \\(0\\) otherwise.
 valid(X) \\rightarrow \\{0,1\\}
 \\]
 ## One-Dimensional Assignment Problems
+
+> This is the basic theoretical foundation for the Generic Allocator.
+
 ![One-Dimensional Assignment Problems](../../../../../../../../../../src/main/svg/net/splitcells/gel/problem/theory/assignment/problem/index.illustration.svg)
 > Solution For An One-Dimensional Assignment Problem
 
@@ -27,7 +30,7 @@ x_{na} \in X: x_{na} =
     \\end{cases}
 \\]
 
-A complete solution is an assignment set \\(X\\),
+A complete solution is an assignment set \\(X\\) ,
 where each demand has assigned at least one supply.
 Often it is also required that each demand has at most one supply.
 If there has to be exactly one supply for each demand,
@@ -37,6 +40,9 @@ size.
 If one demand is allowed to be assigned to N supplies,
 this can be called an 1 on N Problem.
 ## Assignment Rating
+
+> Making multiple solutions comparable via ratings.
+
 Often it is the case, that there are multiple valid solutions to a problem.
 Simultaneously, often these valid solutions have not the same worth,
 so a way is needed to differentiate between these.
@@ -47,6 +53,9 @@ which in turn are can be sorted by worth.
 X \\rightarrow R
 \\]
 ## A Semantic Extension of the Assignment Problem
+
+> Making sense of values.
+
 The assignment problem itself does not model the semantic meaning of the problem
 at hand.
 It just states that a set of demands and a set of supplies are assigned to each
@@ -58,18 +67,18 @@ When the N-Queen puzzle is modeled as an assignment problem,
 each demand and supply is just an identity.
 The problem also restricts the set of valid assignments via the \\(valid\\)
 function.
-The function itself does describe, if a given solution is incorrect.
+The function itself describes, if a given solution is incorrect.
 The model does not state which row corresponds to which elements of the
 supplies.
 
 The semantic extension is implemented via a set of attribute functions
-\\(A\\).
+\\(A\\) .
 Each attribute function \\(a \\in A\\) returns a value,
-for all supplies \\(S\\),
-demands \\(D\\) and assignments \\(X\\).
-The value returned by the attribute, describes or relates to some meaning and
-can be of any type \\(N\\).
-An easy to handle type \\(N\\) is \\(\mathbb{N}\\),
+for all supplies \\(S\\) ,
+demands \\(D\\) and assignments \\(X\\) .
+The value returned by the attribute function, describes or relates to some meaning and
+can be of any type \\(N\\) .
+An easy to handle type \\(N\\) is \\(\mathbb{N}\\) ,
 that itself can for instance represent the set of all strings and is therefore
 compatible with a lot of other types.
 
