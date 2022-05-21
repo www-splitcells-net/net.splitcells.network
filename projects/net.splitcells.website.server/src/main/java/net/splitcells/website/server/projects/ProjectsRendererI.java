@@ -14,7 +14,6 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.LayoutConfig;
@@ -24,6 +23,7 @@ import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.validator.RenderingValidator;
 import net.splitcells.website.server.Server;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,10 +43,10 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
-import static net.splitcells.website.server.projects.GlobalChangelogExtension.globalChangelogExtension;
-import static net.splitcells.website.server.projects.LayoutExtension.layoutExtension;
-import static net.splitcells.website.server.projects.NetworkStatusRenderExtension.networkStatusRenderExtension;
-import static net.splitcells.website.server.projects.ProjectsRendererExtensionMerger.projectsRendererExtensionMerger;
+import static net.splitcells.website.server.projects.extension.GlobalChangelogExtension.globalChangelogExtension;
+import static net.splitcells.website.server.projects.extension.LayoutExtension.layoutExtension;
+import static net.splitcells.website.server.projects.extension.NetworkStatusRenderExtension.networkStatusRenderExtension;
+import static net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger.projectsRendererExtensionMerger;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

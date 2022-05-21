@@ -1,9 +1,10 @@
-package net.splitcells.website.server.projects;
+package net.splitcells.website.server.projects.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
 import java.util.Optional;

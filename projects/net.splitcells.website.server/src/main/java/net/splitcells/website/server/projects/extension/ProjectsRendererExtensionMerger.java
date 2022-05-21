@@ -8,18 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.website.server.projects;
+package net.splitcells.website.server.projects.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
-import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtension;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
 import java.util.Optional;

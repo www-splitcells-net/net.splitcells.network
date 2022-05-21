@@ -1,6 +1,5 @@
-package net.splitcells.website.server.projects;
+package net.splitcells.website.server.projects.extension;
 
-import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
@@ -10,6 +9,7 @@ import net.splitcells.website.Formats;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -20,7 +20,6 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.order.Comparator.ASCENDING_DOUBLES;
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.order.Comparators.naturalComparator;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
