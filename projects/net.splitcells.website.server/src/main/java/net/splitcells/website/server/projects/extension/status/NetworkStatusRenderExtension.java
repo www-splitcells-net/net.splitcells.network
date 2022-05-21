@@ -139,17 +139,17 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                 .orElse(0d);
         if (currentInvalidLinkCount.equals(historyMinimum)) {
             return statusReport(LogLevel.INFO
-                    , "<a href=\""
+                    , "<li><a href=\""
                             + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
                             + config().configValue(HostName.class)
                             + ".csv.html"
-                            + "\">Invalid link history is good.</a>");
+                            + "\">Invalid link history is good.</a></li>");
         }
         return statusReport(LogLevel.WARNING
-                , "<a href=\""
+                , "<li><a href=\""
                         + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
                         + config().configValue(HostName.class)
                         + ".csv.html"
-                        + "\">Invalid link history is bad.</a>");
+                        + "\">Invalid link history is bad.</a></li>");
     }
 }
