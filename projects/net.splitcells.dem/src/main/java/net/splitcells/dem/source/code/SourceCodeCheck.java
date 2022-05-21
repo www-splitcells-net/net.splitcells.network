@@ -17,7 +17,6 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
