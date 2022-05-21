@@ -1,4 +1,4 @@
-package net.splitcells.website.server.projects.extension;
+package net.splitcells.website.server.projects.extension.status;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -10,6 +10,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks;
 import net.splitcells.website.server.projects.ProjectsRendererI;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
