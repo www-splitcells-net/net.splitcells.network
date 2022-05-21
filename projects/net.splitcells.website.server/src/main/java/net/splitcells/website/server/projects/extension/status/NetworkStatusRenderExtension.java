@@ -27,8 +27,10 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.Paths.userHome;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.network.worker.Logger.logger;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.projects.extension.status.StatusReport.statusReport;
 
 public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     private static final String STATUS_DOCUMENT_PATH = "net/splitcells/network/status.html";
@@ -67,35 +69,13 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                             }
                         }
                     });
-            final String status;
-            {
-                // TODO HACK This should be create via an Dem Option (aka dependency injection).
-                final var logRepo = logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"));
-                final var invalidLinkHistory = logRepo.readExecutionResults(RenderingValidatorForHtmlLinks.reportPath("build"), config().configValue(HostName.class));
-                final var invalidLinkTable = Lists.list(invalidLinkHistory.split("\n"));
-                invalidLinkTable.remove(0);
-                final var historyMinimum = invalidLinkTable.stream()
-                        .map(l -> l.split(",")[1])
-                        .map(Double::parseDouble)
-                        .min(ASCENDING_DOUBLES)
-                        .orElse(0d);
-                final var currentInvalidLinkCount = invalidLinkTable.lastValue()
-                        .map(l -> l.split(",")[1])
-                        .map(Double::parseDouble)
-                        .orElse(0d);
-                if (currentInvalidLinkCount.equals(historyMinimum)) {
-                    status = "<a href=\""
-                            + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
-                            + config().configValue(HostName.class)
-                            + ".csv.html"
-                            + "\">Invalid link history is good.</a>";
-                } else {
-                    status = "<a href=\""
-                            + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
-                            + config().configValue(HostName.class)
-                            + ".csv.html"
-                            + "\">Invalid link history is bad.</a>";
-                }
+            final var linkValidityStatusReport = linkValidityStatus();
+            if (linkValidityStatusReport.logLevel().equals(LogLevel.INFO)) {
+                successfulStatuses.append(linkValidityStatusReport.report());
+            } else if (linkValidityStatusReport.logLevel().equals(LogLevel.WARNING)) {
+                disruptedStatuses.append(linkValidityStatusReport.report());
+            } else {
+                throw notImplementedYet();
             }
             final var disruptedTasks = "<h2>Disrupted Tasks</h2><p>The following executors did not execute the network worker in the last 7 days:</p><ol>"
                     + disruptedStatuses
@@ -103,7 +83,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
             final var successfulTasks = "<h2>Successful Tasks</h2><p>The following executors did execute the network worker in the last 7 days:</p><ol>"
                     + successfulStatuses
                     + "</ol>";
-            return Optional.of(renderingResult(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks + status
+            return Optional.of(renderingResult(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks
                                     , Optional.of("Network Status")
                                     , Optional.of(path)
                                     , config)
@@ -140,5 +120,36 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     @Override
     public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         return setOfUniques(Path.of(STATUS_DOCUMENT_PATH), Path.of(STATUS_PATH));
+    }
+
+    private StatusReport linkValidityStatus() {
+        // TODO HACK This should be create via an Dem Option (aka dependency injection).
+        final var logRepo = logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"));
+        final var invalidLinkHistory = logRepo.readExecutionResults(RenderingValidatorForHtmlLinks.reportPath("build"), config().configValue(HostName.class));
+        final var invalidLinkTable = Lists.list(invalidLinkHistory.split("\n"));
+        invalidLinkTable.remove(0);
+        final var historyMinimum = invalidLinkTable.stream()
+                .map(l -> l.split(",")[1])
+                .map(Double::parseDouble)
+                .min(ASCENDING_DOUBLES)
+                .orElse(0d);
+        final var currentInvalidLinkCount = invalidLinkTable.lastValue()
+                .map(l -> l.split(",")[1])
+                .map(Double::parseDouble)
+                .orElse(0d);
+        if (currentInvalidLinkCount.equals(historyMinimum)) {
+            return statusReport(LogLevel.INFO
+                    , "<a href=\""
+                            + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
+                            + config().configValue(HostName.class)
+                            + ".csv.html"
+                            + "\">Invalid link history is good.</a>");
+        }
+        return statusReport(LogLevel.WARNING
+                , "<a href=\""
+                        + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
+                        + config().configValue(HostName.class)
+                        + ".csv.html"
+                        + "\">Invalid link history is bad.</a>");
     }
 }
