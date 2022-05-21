@@ -276,10 +276,6 @@ public class NQueenProblemTest {
     @Test
     public void test() {
         final var testSubject = nQueenProblem(8, 8).asSolution();
-        testSubject.optimize(linearInitialization());
-        testSubject.optimizeOnce(functionalHillClimber(100));
-        testSubject.createAnalysis(Path.of("./target/analysis-hill-climber/"));
-        testSubject.optimize(linearDeinitializer());
         backtracking().optimize(testSubject);
         assertThat(testSubject.isOptimal()).isTrue();
         testSubject.createAnalysis(Path.of("./target/analysis-backtracking/"));
