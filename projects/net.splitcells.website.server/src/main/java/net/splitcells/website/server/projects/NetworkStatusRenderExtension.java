@@ -5,9 +5,11 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.host.HostName;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -16,11 +18,16 @@ import java.util.stream.Stream;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.splitcells.dem.Dem.config;
+import static net.splitcells.dem.data.order.Comparator.ASCENDING_DOUBLES;
+import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.order.Comparators.naturalComparator;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.resource.Paths.userHome;
+import static net.splitcells.network.worker.Logger.logger;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
@@ -60,13 +67,43 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                             }
                         }
                     });
+            final String status;
+            {
+                // TODO HACK This should be create via an Dem Option (aka dependency injection).
+                final var logRepo = logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"));
+                final var invalidLinkHistory = logRepo.readExecutionResults(RenderingValidatorForHtmlLinks.reportPath("build"), config().configValue(HostName.class));
+                final var invalidLinkTable = Lists.list(invalidLinkHistory.split("\n"));
+                invalidLinkTable.remove(0);
+                final var historyMinimum = invalidLinkTable.stream()
+                        .map(l -> l.split(",")[1])
+                        .map(Double::parseDouble)
+                        .min(ASCENDING_DOUBLES)
+                        .orElse(0d);
+                final var currentInvalidLinkCount = invalidLinkTable.lastValue()
+                        .map(l -> l.split(",")[1])
+                        .map(Double::parseDouble)
+                        .orElse(0d);
+                if (currentInvalidLinkCount.equals(historyMinimum)) {
+                    status = "<a href=\""
+                            + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
+                            + config().configValue(HostName.class)
+                            + ".csv.html"
+                            + "\">Invalid link history is good.</a>";
+                } else {
+                    status = "<a href=\""
+                            + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
+                            + config().configValue(HostName.class)
+                            + ".csv.html"
+                            + "\">Invalid link history is bad.</a>";
+                }
+            }
             final var disruptedTasks = "<h2>Disrupted Tasks</h2><p>The following executors did not execute the network worker in the last 7 days:</p><ol>"
                     + disruptedStatuses
                     + "</ol>";
             final var successfulTasks = "<h2>Successful Tasks</h2><p>The following executors did execute the network worker in the last 7 days:</p><ol>"
                     + successfulStatuses
                     + "</ol>";
-            return Optional.of(renderingResult(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks
+            return Optional.of(renderingResult(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks + status
                                     , Optional.of("Network Status")
                                     , Optional.of(path)
                                     , config)

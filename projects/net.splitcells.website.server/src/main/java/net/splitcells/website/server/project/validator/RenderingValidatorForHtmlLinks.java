@@ -97,12 +97,16 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
     @Override
     public void endReport() {
         final var logger = logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"));
-        logger.logExecutionResults(this.getClass().getName().replace('.', '/') + "/" + reportName
+        logger.logExecutionResults(reportPath(reportName)
                 , config().configValue(HostName.class)
                 , LocalDate.now()
                 , "Invalid Link Count"
                 , invalidLinkCount);
         logger.commit();
+    }
+    
+    public static String reportPath(String reportName) {
+        return RenderingValidatorForHtmlLinks.class.getName().replace('.', '/') + "/" + reportName;
     }
 
     public int invalidLinkCount() {
