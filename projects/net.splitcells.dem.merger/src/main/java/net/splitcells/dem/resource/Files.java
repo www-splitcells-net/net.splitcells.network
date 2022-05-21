@@ -109,4 +109,12 @@ public interface Files {
             throw new RuntimeException(e);
         }
     }
+
+    static String readFileAsString(Path path) {
+        try {
+            return java.nio.file.Files.readString(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -75,6 +75,15 @@ public class Logger implements TestExecutionListener {
         appendToFile(projectPath, (localDate + "," + result + Files.newLine()).getBytes(StandardCharsets.UTF_8));
     }
 
+    public String readExecutionResults(String subject, String executor) {
+        final var projectPath = logProject
+                .resolve("src/main/" + CSV.codeName())
+                .resolve(subject)
+                .resolve(executor + "." + CSV.codeName());
+        createDirectory(logProject.resolve(projectPath).getParent());
+        return Files.readFileAsString(projectPath);
+    }
+
     @Override
     public void executionStarted(TestIdentifier testIdentifier) {
         testToStartTime.put(testIdentifier, System.nanoTime());
