@@ -58,6 +58,18 @@
 			a more advanced solving algorithm than present was
 			needed.
 		</paragraph>
+		<paragraph>One could say, that using an established open source assignment problem framework as a foundation would be best,
+			but during this time no such framework was known for me on Java.
+			Generally speaking, it was for me personally really hard to find such software online with an active community or at least good enough foundational code,
+			because there were many CSP frameworks,
+			but assignment problem frameworks were lacking.
+			I also knew of some implementations in real life,
+			but these were highly experimental, without documentation and licensing, or I did not have a chance of source code access.
+			One could argue, that my naivety leaded me to creating unnecessary code.
+			The topic of migrating this project to a different more actively maintained base framework
+			is always some thought in the back of my head.
+			What would or should happen if a better open source foundational framework would be found?
+		</paragraph>
 	</chapter>
 	<chapter>
 		<title>A Fresh Start via the Generic Allocator</title>
