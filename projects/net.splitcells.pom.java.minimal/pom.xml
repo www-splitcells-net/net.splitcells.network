@@ -34,4 +34,22 @@
             <timezone>Europe/Berlin</timezone>
         </developer>
     </developers>
+    <profiles>
+        <profile>
+            <activation>
+                <property>
+                    <name>repo-github-enable</name>
+                </property>
+            </activation>
+            <!-- This repo is mainly used for general testing or testing the next release. -->
+            <id>repo-github</id>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub</name>
+                    <url>https://maven.pkg.github.com/www-splitcells-net/net.splitcells.network</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 </project>
