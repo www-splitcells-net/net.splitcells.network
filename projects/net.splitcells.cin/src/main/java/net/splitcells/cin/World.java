@@ -58,11 +58,12 @@ public class World {
                 .withSupplyAttributes(POSITION_X, POSITION_Y, VALUE)
                 .withSupplies(worldWithGlider())
                 .withConstraint(r -> {
-                    r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
-                    r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
-                    r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(crowded()).then(dies());
-                    r.forAll(timeSteps()).forAll(positionClusters()).forAll(isDead()).forAll(revivalCondition()).then(becomesAlive());
-                    r.forAll(timeSteps()).forAll(positionClusters()).then(unchanged());
+                    r.forAll(timeSteps());
+                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
+                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
+                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(crowded()).then(dies());
+                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isDead()).forAll(revivalCondition()).then(becomesAlive());
+                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).then(unchanged());
                     return r;
                 }).toProblem()
                 .asSolution();
