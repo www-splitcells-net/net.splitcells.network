@@ -65,6 +65,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  */
 public class ProjectRendererI implements ProjectRenderer {
     private static final String MARKER = "198032jrf013jf09j13f13f4290fj2394fj24";
+    private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
     @Override
     public Path projectFolder() {
@@ -297,6 +298,10 @@ public class ProjectRendererI implements ProjectRenderer {
 
     @Override
     public Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config) {
+        // TODO HACK
+        if (xml.startsWith(XML_HEADER)) {
+            xml = xml.substring(XML_HEADER.length());
+        }
         final var layoutConfigElement = Xml.rElement(NameSpaces.SEW, "layout.config");
         {
             final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");

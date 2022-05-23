@@ -32,6 +32,8 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   [**\#125** Create global news feeds](https://github.com/www-splitcells-net/net.splitcells.network/issues/125):
   It is located at `/net/splitcells/CHANGELOG.global.html`.
 ### Patches
+* **2022-05-23**: **\#82**: XML-Rendering can now handle the header `<?xml version="1.0" encoding="UTF-8"?>` of the input document without triggering an error.
+  This is patch is implemented hackily.
 * **2022-04-29**: **\#91**: Links to sub projects READMEs in CommonMark files are now translated correctly.
 * **2022-04-10**: Support rendering website to filesystem with a custom root path.
   This way multiple versions of a website can be deployed to a single filesystem.
