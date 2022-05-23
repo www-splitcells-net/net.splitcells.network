@@ -42,7 +42,7 @@ public class World {
     private static final Attribute<Integer> WORLD_TIME = attribute(Integer.class, "world-time");
     private static final Attribute<Integer> POSITION_X = attribute(Integer.class, "position-x");
     private static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-y");
-    private static final Attribute<Boolean> VALUE = attribute(Boolean.class, "value");
+    private static final Attribute<Integer> VALUE = attribute(Integer.class, "value");
 
     public static void main(String... args) {
         GelDev.process(() -> {
@@ -196,7 +196,7 @@ public class World {
     }
 
     private static Rater isAlive() {
-        throw notImplementedYet();
+        return lineValueRater(line -> line.value(VALUE) > 0);
     }
 
     private static Rater isDead() {
