@@ -1,14 +1,12 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.data.atom.Bools;
-import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Pair;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
@@ -24,6 +22,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import static net.splitcells.cin.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Pair.pair;
@@ -182,10 +181,6 @@ public class World {
                 .lookup(positionY)
                 .getLines()
                 .lastValue();
-    }
-
-    private static Rater timeSteps() {
-        throw notImplementedYet();
     }
 
     private static Rater crowded() {
