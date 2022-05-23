@@ -21,5 +21,5 @@ public interface DefineSupplyAttributes {
 
     DefineSupply withSupplyAttributes2(List<Attribute<Object>> supplyAttributes);
 
-    DefineSupply withSupplies(Database supplies);
+    DefineConstraints withSupplies(Database supplies);
 }

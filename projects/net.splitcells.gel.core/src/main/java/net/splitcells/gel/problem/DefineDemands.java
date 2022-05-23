@@ -19,15 +19,19 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 public interface DefineDemands extends DefineSupplyAttributes {
 
     @ReturnsThis
-    default DefineDemands withEmptyDemands(int demandCount) {
+    default DefineSupplyAttributes withEmptyDemands(int demandCount) {
         final List<List<Object>> demands = list();
         rangeClosed(1, demandCount).forEach(i -> demands.add(list()));
         return withDemands(demands);
     }
 
-    @ReturnsThis
-    DefineDemands withDemands(List<Object> demand, @SuppressWarnings("unchecked") List<Object>... demands);
+    default DefineSupplyAttributes withNoDemands() {
+        return withDemands(list());
+    }
 
     @ReturnsThis
-    DefineDemands withDemands(List<List<Object>> demands);
+    DefineSupplyAttributes withDemands(List<Object> demand, @SuppressWarnings("unchecked") List<Object>... demands);
+
+    @ReturnsThis
+    DefineSupplyAttributes withDemands(List<List<Object>> demands);
 }

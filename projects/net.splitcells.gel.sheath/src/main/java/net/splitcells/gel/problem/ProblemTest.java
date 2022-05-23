@@ -31,7 +31,9 @@ class ProblemTest {
     void testEmptyProblem() {
         Solution solution = defineProblem()
                 .withDemandAttributes()
+                .withNoDemands()
                 .withSupplyAttributes()
+                .withNoSupplies()
                 .withConstraint(Then.then(constantRater(cost(7))))
                 .toProblem().asSolution();
         assertTrue(solution.isComplete());

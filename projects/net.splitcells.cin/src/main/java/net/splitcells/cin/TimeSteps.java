@@ -10,7 +10,7 @@ public class TimeSteps {
         throw constructorIllegal();
     }
 
-    static Rater timeSteps() {
+    public static Rater timeSteps() {
         throw notImplementedYet();
     }
 }

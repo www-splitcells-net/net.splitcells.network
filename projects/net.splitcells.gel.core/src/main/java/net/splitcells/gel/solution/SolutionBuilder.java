@@ -30,7 +30,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.*;
 
 
-public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, DefineSupply, ProblemGenerator, DefineSupplyAttributes {
+public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, DefineSupply, ProblemGenerator, DefineSupplyAttributes, DefineConstraints {
 
     private List<Attribute<? extends Object>> demandAttributes = list();
     private List<List<Object>> demands = list();
@@ -112,7 +112,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     }
 
     @Override
-    public DefineSupply withSupplies(List<Object>... supplies) {
+    public DefineConstraints withSupplies(List<Object>... supplies) {
         this.supplies = listWithValuesOf(supplies);
         return this;
     }
@@ -156,13 +156,13 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     }
 
     @Override
-    public DefineSupply withSupplies(List<List<Object>> supplies) {
+    public DefineConstraints withSupplies(List<List<Object>> supplies) {
         this.supplies = supplies;
         return this;
     }
 
     @Override
-    public DefineSupply withSupplies(Database supplies) {
+    public DefineConstraints withSupplies(Database supplies) {
         suppliesDatabase = Optional.of(supplies);
         return this;
     }

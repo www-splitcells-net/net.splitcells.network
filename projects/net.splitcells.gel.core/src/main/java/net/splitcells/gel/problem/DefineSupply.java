@@ -25,27 +25,18 @@ import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 
 public interface DefineSupply {
 
-    @ReturnsThis
-    default DefineSupply withEmptySupplies(int supplyCount) {
+    default DefineConstraints withEmptySupplies(int supplyCount) {
         final List<List<Object>> supplies = list();
         rangeClosed(1, supplyCount).forEach(i -> supplies.add(list()));
         return withSupplies(supplies);
     }
 
-    DefineSupply withSupplies(List<Object>... supplies);
-
-    DefineSupply withSupplies(List<List<Object>> supplies);
-
-    ProblemGenerator withConstraint(Constraint constraint);
-
-    default ProblemGenerator withConstraints(List<Function<Query, Query>> builders) {
-        final var root = forAll();
-        builders.forEach(b -> b.apply(QueryI.query(root)));
-        return withConstraint(root);
+    default DefineConstraints withNoSupplies() {
+        return withSupplies(list());
     }
 
-    default ProblemGenerator withConstraint(Function<Query, Query> builder) {
-        return withConstraint(builder.apply(QueryI.query(forAll())).constraint());
-    }
+    DefineConstraints withSupplies(List<Object>... supplies);
+
+    DefineConstraints withSupplies(List<List<Object>> supplies);
 
 }

@@ -71,7 +71,9 @@ public class ConstraintTest {
         @SuppressWarnings("unchecked") final var solution
                 = defineProblem("testAllocationGroups")
                 .withDemandAttributes()
+                .withNoDemands()
                 .withSupplyAttributes()
+                .withNoSupplies()
                 .withConstraint(constraint_1
                         .withChildren(constraint_2)
                         .withChildren(constraint_3
@@ -96,7 +98,9 @@ public class ConstraintTest {
         final var D = attribute(Integer.class, "d");
         final var solution = defineProblem("test_allocation_groups_with_different_attributes")
                 .withDemandAttributes(A, B)
+                .withNoDemands()
                 .withSupplyAttributes(C, D)
+                .withNoSupplies()
                 .withConstraint(
                         ForAlls.forEach(A)
                                 .withChildren(ForAlls.forEach(B)
