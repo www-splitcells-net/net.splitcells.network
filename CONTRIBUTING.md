@@ -1,5 +1,5 @@
 # Contributing to Splitcells Network
-* [Licensing](./LICENSE.md) and [Notices](./NOTICE.md) of This Project
+* [Licensing](./LICENSE.md) and [License Notices](./NOTICE.md) of This Project
 * [Source Code Guidelines](https://splitcells.net/net/splitcells/network/guidelines/index.html)
 ## Building the Project
 Java 11 (AdoptOpenJDK is preferred), Maven, Python 3 and Bash is required in
