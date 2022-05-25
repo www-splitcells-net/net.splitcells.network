@@ -112,9 +112,6 @@ Project Cluster
   * [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
   * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) is currently used only for continuous integration (CI).
   * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network) is used mainly for writing articles and web rendering ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)).
-## Contributing
-* [Licensing](./LICENSE.md) and [Notices](./NOTICE.md) of This Project
-* [Source Code Guidelines](https://splitcells.net/net/splitcells/network/guidelines/index.html)
 ## API Compatibility
 There is no guarantee of backwards compatibility.
 
