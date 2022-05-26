@@ -179,10 +179,9 @@ public class SchoolCourseSchedulingTest {
                         }
 
                     }
-                    for (final var freeCourseGroup : listWithValuesOf(freeCoursesByIdGroup.keySet()).shuffle(randomness)) {
-                        final var freeCourseRepresentant = freeCoursesByIdGroup.get(freeCourseGroup).iterator().next();
+                    for (final var freeCourseId : listWithValuesOf(allFreeCoursesById.keySet()).shuffle(randomness)) {
+                        final var freeCourseRepresentant = allFreeCoursesById.get(freeCourseId).iterator().next();
                         final var freeCourseSubject = freeCourseRepresentant.value(SUBJECT);
-                        final var freeCourseId = freeCourseRepresentant.value(COURSE_ID);
                         final var suitableTeachers = solution.suppliesFree()
                                 .lookup(TEACH_SUBJECT_SUITABILITY, freeCourseSubject)
                                 .getLines();
