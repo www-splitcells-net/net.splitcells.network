@@ -163,14 +163,29 @@ public class SchoolCourseSchedulingTest {
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
                 , freeCoursesByIdGroup -> solution -> {
                     final Map<Integer, Set<Line>> allFreeCoursesById = Maps.map();
+                    {
+                        final var freeCourseIds = solution.demandsFree().getLines().stream()
+                                .map(demand -> demand.value(COURSE_ID))
+                                .distinct()
+                                .collect(toList());
+                        for (final var freeCourseId : freeCourseIds) {
+                            final var freeCourseInstances = solution.demandsFree().lookup(COURSE_ID, freeCourseId).getLines();
+                            allFreeCoursesById.put(freeCourseId, setOfUniques(freeCourseInstances));
+                        }
+                    }
                     for (final var freeCourseGroup : freeCoursesByIdGroup.keySet()) {
                         final var freeCourseRepresentant = freeCoursesByIdGroup.get(freeCourseGroup).iterator().next();
                         final var freeCourseId = freeCourseRepresentant.value(COURSE_ID);
                         final var sameCourseInstances = solution.allocations()
                                 .lookup(COURSE_ID, freeCourseId)
                                 .getLines();
-                        final Set<Line> newFreeCoursesOfId = setOfUniques();
-                        allFreeCoursesById.put(freeCourseId, newFreeCoursesOfId);
+                        final Set<Line> newFreeCoursesOfId;
+                        if (allFreeCoursesById.containsKey(freeCourseId)) {
+                            newFreeCoursesOfId = allFreeCoursesById.get(freeCourseId);
+                        } else {
+                            newFreeCoursesOfId = setOfUniques();
+                            allFreeCoursesById.put(freeCourseId, newFreeCoursesOfId);
+                        }
                         newFreeCoursesOfId.addAll(freeCoursesByIdGroup.get(freeCourseId));
                         for (final var sameCourseInstance : sameCourseInstances) {
                             final var sameSubjectCourseDemand = solution.demandOfAllocation(sameCourseInstance);
