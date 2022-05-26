@@ -44,6 +44,7 @@ import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -137,7 +138,7 @@ public class SchoolCourseSchedulingTest {
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());*/
-                network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, linearInitialization());
+                // TODO REMOVE network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, linearInitialization());
                 network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, teacherAllocationForCoursesOptimization()
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
             });
@@ -161,8 +162,24 @@ public class SchoolCourseSchedulingTest {
         final var randomness = randomness();
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
                 , freeCoursesByIdGroup -> solution -> {
+                    final Map<Integer, Set<Line>> allFreeCoursesById = Maps.map();
+                    for (final var freeCourseGroup : freeCoursesByIdGroup.keySet()) {
+                        final var freeCourseRepresentant = freeCoursesByIdGroup.get(freeCourseGroup).iterator().next();
+                        final var freeCourseId = freeCourseRepresentant.value(COURSE_ID);
+                        final var sameCourseInstances = solution.allocations()
+                                .lookup(COURSE_ID, freeCourseId)
+                                .getLines();
+                        final Set<Line> newFreeCoursesOfId = setOfUniques();
+                        allFreeCoursesById.put(freeCourseId, newFreeCoursesOfId);
+                        newFreeCoursesOfId.addAll(freeCoursesByIdGroup.get(freeCourseId));
+                        for (final var sameCourseInstance : sameCourseInstances) {
+                            final var sameSubjectCourseDemand = solution.demandOfAllocation(sameCourseInstance);
+                            newFreeCoursesOfId.add(sameSubjectCourseDemand);
+                            solution.remove(sameCourseInstance);
+                        }
+
+                    }
                     for (final var freeCourseGroup : listWithValuesOf(freeCoursesByIdGroup.keySet()).shuffle(randomness)) {
-                        // TODO Use constraint system for complex queries.
                         final var freeCourseRepresentant = freeCoursesByIdGroup.get(freeCourseGroup).iterator().next();
                         final var freeCourseSubject = freeCourseRepresentant.value(SUBJECT);
                         final var freeCourseId = freeCourseRepresentant.value(COURSE_ID);
