@@ -31,8 +31,20 @@ public interface AllocationsLiveView extends Table {
 
     Database demandsFree();
 
+    /**
+     * Determines the demand of the given allocation.
+     * 
+     * @param allocation Element of {@link #demands()}.
+     * @return
+     */
     Line demandOfAllocation(Line allocation);
 
+    /**
+     * Determines the supply of a given allocation.
+     * 
+     * @param allocation Element of {@link #supplies()}.
+     * @return
+     */
     Line supplyOfAllocation(Line allocation);
 
     Set<Line> allocationsOfSupply(Line supply);
