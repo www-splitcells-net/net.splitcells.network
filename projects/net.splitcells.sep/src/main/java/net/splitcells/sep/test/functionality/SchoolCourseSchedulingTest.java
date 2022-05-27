@@ -212,6 +212,7 @@ public class SchoolCourseSchedulingTest {
                             final var teacherCapacity = solution
                                     .suppliesFree()
                                     .lookup(TEACHER, suitableTeacher)
+                                    .lookup(TEACH_SUBJECT_SUITABILITY, freeCourseSubject)
                                     .getLines();
                             if (!teacherCapacity.isEmpty()) {
                                 solution.allocate(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
