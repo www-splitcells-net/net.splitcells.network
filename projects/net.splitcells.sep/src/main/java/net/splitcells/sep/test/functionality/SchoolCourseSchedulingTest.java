@@ -161,7 +161,7 @@ public class SchoolCourseSchedulingTest {
     public static OnlineOptimization teacherAllocationForCoursesOptimization() {
         final var randomness = randomness();
         return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
-                , freeCoursesByIdGroup -> solution -> {
+                , freeCoursesByGroupId -> solution -> {
                     final Map<Integer, Set<Line>> allFreeCoursesById = Maps.map();
                     {
                         final var freeCourseIds = solution.demandsFree().getLines().stream()
@@ -173,8 +173,8 @@ public class SchoolCourseSchedulingTest {
                             allFreeCoursesById.put(freeCourseId, setOfUniques(freeCourseInstances));
                         }
                     }
-                    for (final var freeCourseGroup : freeCoursesByIdGroup.keySet()) {
-                        final var freeCourseRepresentant = freeCoursesByIdGroup.get(freeCourseGroup).iterator().next();
+                    for (final var freeCourseGroupId : freeCoursesByGroupId.keySet()) {
+                        final var freeCourseRepresentant = freeCoursesByGroupId.get(freeCourseGroupId).iterator().next();
                         final var freeCourseId = freeCourseRepresentant.value(COURSE_ID);
                         final var sameCourseInstances = solution.allocations()
                                 .lookup(COURSE_ID, freeCourseId)
@@ -186,7 +186,7 @@ public class SchoolCourseSchedulingTest {
                             newFreeCoursesOfId = setOfUniques();
                             allFreeCoursesById.put(freeCourseId, newFreeCoursesOfId);
                         }
-                        newFreeCoursesOfId.addAll(freeCoursesByIdGroup.get(freeCourseGroup));
+                        newFreeCoursesOfId.addAll(freeCoursesByGroupId.get(freeCourseGroupId));
                         for (final var sameCourseInstance : sameCourseInstances) {
                             final var sameSubjectCourseDemand = solution.demandOfAllocation(sameCourseInstance);
                             newFreeCoursesOfId.add(sameSubjectCourseDemand);
