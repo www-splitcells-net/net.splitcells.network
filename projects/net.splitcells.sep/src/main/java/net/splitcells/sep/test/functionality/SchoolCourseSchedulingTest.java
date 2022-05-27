@@ -149,8 +149,7 @@ public class SchoolCourseSchedulingTest {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(IsEchoToFile.class, true)
-                    .withConfigValue(MessageFilter.class, logMessage -> logMessage.path()
-                            .equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
+                    .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
                     .withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)));
         }));
     }
