@@ -186,7 +186,7 @@ public class SchoolCourseSchedulingTest {
                             newFreeCoursesOfId = setOfUniques();
                             allFreeCoursesById.put(freeCourseId, newFreeCoursesOfId);
                         }
-                        newFreeCoursesOfId.addAll(freeCoursesByIdGroup.get(freeCourseId));
+                        newFreeCoursesOfId.addAll(freeCoursesByIdGroup.get(freeCourseGroup));
                         for (final var sameCourseInstance : sameCourseInstances) {
                             final var sameSubjectCourseDemand = solution.demandOfAllocation(sameCourseInstance);
                             newFreeCoursesOfId.add(sameSubjectCourseDemand);
