@@ -120,10 +120,9 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 def processSub(relativePath, host, command, commandForMissing, commandForUnknown, commandForCurrent, commandForChildren, subName, subRepoPath):
 	if not subRepoPath.is_dir():
 		logging.error('Folder of sub repository "' + str(subRepoPath) + '" is missing.')
-		missingSubRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; repo.process' + " --command='" + commandForMissing + "' --host=" + host + ' --relative-path=' + relativePath
+		missingSubRepoScript = 'set -e; mkdir -p ' + str(subRepoPath) + '; ' + 'cd ' + str(subRepoPath) + ' ; repo.process' + " --command='" + commandForMissing + "' --host=" + host + ' --relative-path=' + relativePath
 		missingSubRepoScript += " --command-for-missing='" + commandForMissing + "'"
 		missingSubRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
-		missingSubRepoScript = missingSubRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 		logging.debug('missingSubRepoScript: ' + missingSubRepoScript)
 		returnCode = subprocess.call(missingSubRepoScript, shell='True')
 		if returnCode != 0:
@@ -140,14 +139,13 @@ def processSub(relativePath, host, command, commandForMissing, commandForUnknown
 	else:
 		logging.error("No commands present. Please specify argument '--command=[...]' or '--command-for-current=[...]'.")
 		return False
-	subRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; ' + r + " --command='" + currentCommand + "' --host=" + host + ' --relative-path=' + relativePath
+	subRepoScript = 'set -e; mkdir -p ' + str(subRepoPath) + '; ' + 'cd ' + str(subRepoPath) + ' ; ' + r + " --command='" + currentCommand + "' --host=" + host + ' --relative-path=' + relativePath
 	subRepoScript += " --command-for-missing='" + commandForMissing + "'"
 	subRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
 	if commandForCurrent is not None:
 		subRepoScript += " --command-for-current='" + commandForCurrent + "'"
 	if commandForChildren is not None:
 		subRepoScript += " --command-for-children='" + commandForChildren + "'"
-	subRepoScript = subRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 	logging.debug('subRepoScript: ' + subRepoScript)
 	returnCode = subprocess.call(subRepoScript, shell='True')
 	if returnCode != 0:
