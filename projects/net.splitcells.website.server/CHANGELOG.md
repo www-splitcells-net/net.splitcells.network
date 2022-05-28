@@ -10,6 +10,11 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2022-05-28** [**\#87** Fix links inside documents](https://github.com/www-splitcells-net/net.splitcells.network/issues/87):
+  `/net/splitcells/network/status.html` now shows, if from a historic perspective the number of invalid links is zero or at least improves.
+  It checks the repo `net.splitcells.network.log`,
+  if according to the file `src/main/csv/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/<build name>/<builder server>.csv`,
+  the number of invalid links of the last build is as small as the lowest number of invalid links in the complete build history.
 * **2022-05-02**: **\#142** Make it easy to support arbitrary input formats and output styling.
 * **2022-04-25**: **\#162**: On the default layout,
   there is now status button on the website in the top left corner.
