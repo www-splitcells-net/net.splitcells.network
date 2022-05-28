@@ -26,7 +26,7 @@ if __name__ == '__main__':
 	parsedArgs = argsParser.parse_args()
 	buildScript = """
 		git push {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network master:net-splitcells-martins-avots-connection
-		ssh -t {0} systemd-run --uid={1} --unit=build --working-directory='/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network' 'sh -c "git merge net-splitcells-martins-avots-connection && ./bin/test.via.network.worker"'
+		ssh -t pi@raspberrypi-v2.local systemctl is-active build || ssh -t {0} systemd-run --uid={1} --unit=build --working-directory='/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network' 'sh -c "git merge net-splitcells-martins-avots-connection && ./bin/test.via.network.worker"'
 		cd ../net.splitcells.network.log/
 		git pull {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log master
 		""".format(parsedArgs.targetServer, parsedArgs.user)
