@@ -11,6 +11,7 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.util.Optional;
@@ -18,6 +19,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+@JavaLegacyArtifact
 public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
     default Map<Key, Value> with(Key key, Value value) {
