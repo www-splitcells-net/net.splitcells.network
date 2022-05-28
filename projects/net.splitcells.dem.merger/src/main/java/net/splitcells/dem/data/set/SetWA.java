@@ -10,9 +10,8 @@
  */
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-
-import java.util.Collection;
 
 public interface SetWA<T> {
 
@@ -31,9 +30,10 @@ public interface SetWA<T> {
 		return (R) this;
 	}
 
+	@JavaLegacyBody
 	@SuppressWarnings("unchecked")
 	@ReturnsThis
-	default <R extends SetWA<T>> R addAll(Collection<T> values) {
+	default <R extends SetWA<T>> R addAll(java.util.Collection<T> values) {
 		values.forEach((value) -> add(value));
 		return (R) this;
 	}
