@@ -120,8 +120,13 @@ public class Logger implements TestExecutionListener {
 
     }
 
+    /**
+     * Some systems may not have added an OS state interface installation to the PATH environmental variable of non-interactive shells.
+     * Therefore, the standard `~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin` command is used,
+     * in order to extend the PATH variable accordingly only inside the current shell session.
+     */
     public void commit() {
-        SystemUtils.executeShellScript("command.managed.execute.command repo.commit.all", logProject);
+        SystemUtils.executeShellScript(". ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin; command.managed.execute.command repo.commit.all", logProject);
     }
 
     @Override
