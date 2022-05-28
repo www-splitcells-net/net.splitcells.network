@@ -87,6 +87,18 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 		for peerRepo in peers.stdout.decode('utf-8').split("\n"):
 			if peerRepo.strip() != "":
 				logging.warning(peerRepo)
+				subRepoPath = Path('../' + peerRepo)
+				returnCode = processSub(relativePath + '/../' + peerRepo
+						, host
+						, command
+						, commandForMissing
+						, commandForUnknown
+						, commandForCurrent
+						, commandForChildren
+						, peerRepo
+						, subRepoPath)
+				if not returnCode:
+					return returnCode
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 	if subListPath.is_file():
 		# TODO Check if "!/.net.splitcells.os.state.interface.repo/" is present in gitignore. If not pr
