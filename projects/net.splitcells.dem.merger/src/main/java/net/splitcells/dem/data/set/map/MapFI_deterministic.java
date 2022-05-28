@@ -10,7 +10,7 @@
  */
 package net.splitcells.dem.data.set.map;
 
-import java.util.LinkedHashMap;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
 
@@ -24,14 +24,16 @@ public final class MapFI_deterministic implements MapF {
 
     }
 
+    @JavaLegacyBody
     @Override
     public <K, V> Map<K, V> map() {
-        return mapLegacyWrapper(new LinkedHashMap<K, V>(), true);
+        return mapLegacyWrapper(new java.util.LinkedHashMap<K, V>(), true);
     }
 
+    @JavaLegacyBody
     @Override
     public <K, V> Map<K, V> map(java.util.Map<K, V> arg) {
-        return mapLegacyWrapper(new LinkedHashMap<K, V>(arg), true);
+        return mapLegacyWrapper(new java.util.LinkedHashMap<K, V>(arg), true);
     }
 
     @Override
