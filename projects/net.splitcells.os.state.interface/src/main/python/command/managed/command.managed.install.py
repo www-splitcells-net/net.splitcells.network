@@ -45,8 +45,8 @@ class Command:
 				if not targetFile.exists():
 					break
 		shutil.copy(self.sourceFolder.joinpath(self.name), targetFile)
-		if 'current_echo_level' in os.environ:
-			if int(os.environ['current_echo_level']) >= 5:
+		if 'current_echo_level' in environ:
+			if int(environ['current_echo_level']) >= 5:
 				print(self.name + ' installed.')
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
