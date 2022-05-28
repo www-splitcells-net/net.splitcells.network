@@ -11,11 +11,8 @@
 package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
-import java.util.Collection;
-import java.util.stream.Collector;
-
-import static java.util.Arrays.asList;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.SetFI_configured.setFiConfigured;
 
@@ -24,8 +21,9 @@ public class Sets extends ResourceOptionI<SetF> {
         super(() -> setFiConfigured());
     }
 
-    public static <T> Collector<T, ?, Set<T>> toSetOfUniques() {
-        return Collector.of(
+    @JavaLegacyBody
+    public static <T> java.util.stream.Collector<T, ?, Set<T>> toSetOfUniques() {
+        return java.util.stream.Collector.of(
                 Sets::<T>setOfUniques,
                 Set::addAll,
                 (a, b) -> {
@@ -35,10 +33,11 @@ public class Sets extends ResourceOptionI<SetF> {
         );
     }
 
+    @JavaLegacyBody
     @SafeVarargs
-    public static <T> Set<T> merge(Collection<T>... collections) {
+    public static <T> Set<T> merge(java.util.Collection<T>... collections) {
         final var rVal = configValue(Sets.class).<T>set();
-        for (Collection<T> collection : collections) {
+        for (java.util.Collection<T> collection : collections) {
             rVal.addAll(collection);
         }
         return rVal;
@@ -48,12 +47,13 @@ public class Sets extends ResourceOptionI<SetF> {
         return configValue(Sets.class).<T>set();
     }
 
+    @JavaLegacyBody
     @SafeVarargs
     public static <T> Set<T> setOfUniques(T... args) {
-        return setOfUniques(asList(args));
+        return setOfUniques(java.util.Arrays.asList(args));
     }
 
-    public static <T> Set<T> setOfUniques(Collection<T> arg) {
+    public static <T> Set<T> setOfUniques(java.util.Collection<T> arg) {
         final var rVal = configValue(Sets.class).<T>set();
         rVal.addAll(arg);
         return rVal;
