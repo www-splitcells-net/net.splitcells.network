@@ -59,13 +59,13 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                         if (lastMeasurement.isPresent()) {
                             final var localDate = LocalDate.parse(lastMeasurement.get().split(",")[0]);
                             if (LocalDate.now().minusDays(7).isAfter(localDate)) {
-                                disruptedStatuses.append("<li>"
+                                disruptedStatuses.append("<li>Build not executed successfully on "
                                         + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
-                                        + "</li>");
+                                        + ".</li>");
                             } else {
-                                successfulStatuses.append("<li>"
+                                successfulStatuses.append("<li>Build executed successfully on "
                                         + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
-                                        + "</li>");
+                                        + ".</li>");
                             }
                         }
                     });
