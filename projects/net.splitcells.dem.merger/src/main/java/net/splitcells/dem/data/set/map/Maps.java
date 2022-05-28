@@ -11,11 +11,8 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
-import java.util.Collection;
-import java.util.stream.Collector;
-
-import static java.util.Arrays.asList;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.map.MapFI_deterministic.mapFI_deterministic;
 
@@ -35,8 +32,9 @@ public class Maps extends ResourceOptionI<MapF> {
         return rVal;
     }
 
-    public static <K, V> Collector<Pair<K, V>, ?, Map<K, V>> toMap() {
-        return Collector.of(
+    @JavaLegacyBody
+    public static <K, V> java.util.stream.Collector<Pair<K, V>, ?, Map<K, V>> toMap() {
+        return java.util.stream.Collector.of(
                 () -> configValue(Maps.class).map(),
                 (a, b) -> a.put(b.getKey(), b.getValue()),
                 (a, b) -> {
@@ -49,9 +47,10 @@ public class Maps extends ResourceOptionI<MapF> {
     /**
      * TODO Remove this, because it is not used anywhere.
      */
+    @JavaLegacyBody
     @Deprecated
     public static <T> Map<Class<? extends T>, T> variadicTypeMapping(@SuppressWarnings("unchecked") T... values) {
-        return typeMapping(asList(values));
+        return typeMapping(java.util.Arrays.asList(values));
     }
 
     /**
@@ -63,9 +62,10 @@ public class Maps extends ResourceOptionI<MapF> {
      * @param <T>    type
      * @return return
      */
+    @JavaLegacyBody
     @SuppressWarnings("unchecked")
     @Deprecated
-    public static <T> Map<Class<? extends T>, T> typeMapping(Collection<T> values) {
+    public static <T> Map<Class<? extends T>, T> typeMapping(java.util.Collection<T> values) {
         final Map<Class<? extends T>, T> rVal = configValue(Maps.class).map();
         values.forEach(value -> {
             if (rVal.containsKey(value.getClass())) {
