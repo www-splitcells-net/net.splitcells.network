@@ -123,6 +123,7 @@ def processSub(relativePath, host, command, commandForMissing, commandForUnknown
 		missingSubRepoScript = 'set -e; mkdir -p ' + str(subRepoPath) + '; ' + 'cd ' + str(subRepoPath) + ' ; repo.process' + " --command='" + commandForMissing + "' --host=" + host + ' --relative-path=' + relativePath
 		missingSubRepoScript += " --command-for-missing='" + commandForMissing + "'"
 		missingSubRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
+		missingSubRepoScript = missingSubRepoScript.replace('$subRepo', str(subRepoPath) + '/$subRepo')
 		logging.debug('missingSubRepoScript: ' + missingSubRepoScript)
 		returnCode = subprocess.call(missingSubRepoScript, shell='True')
 		if returnCode != 0:
@@ -146,6 +147,7 @@ def processSub(relativePath, host, command, commandForMissing, commandForUnknown
 		subRepoScript += " --command-for-current='" + commandForCurrent + "'"
 	if commandForChildren is not None:
 		subRepoScript += " --command-for-children='" + commandForChildren + "'"
+	subRepoScript = subRepoScript.replace('$subRepo', str(subRepoPath) + '/$subRepo')
 	logging.debug('subRepoScript: ' + subRepoScript)
 	returnCode = subprocess.call(subRepoScript, shell='True')
 	if returnCode != 0:
