@@ -10,9 +10,7 @@
  */
 package net.splitcells.dem.data.set.list;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.ListIterator;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -27,8 +25,9 @@ public class ListViewI<T> implements ListView<T> {
         this.content = content;
     }
 
+    @JavaLegacyBody
     @Override
-    public boolean addAll(int i, Collection<? extends T> collection) {
+    public boolean addAll(int i, java.util.Collection<? extends T> collection) {
         throw new UnsupportedOperationException();
     }
 
@@ -62,13 +61,15 @@ public class ListViewI<T> implements ListView<T> {
         return content.lastIndexOf(o);
     }
 
+    @JavaLegacyBody
     @Override
-    public ListIterator<T> listIterator() {
+    public java.util.ListIterator<T> listIterator() {
         return content.listIterator();
     }
 
+    @JavaLegacyBody
     @Override
-    public ListIterator<T> listIterator(int i) {
+    public java.util.ListIterator<T> listIterator(int i) {
         return content.listIterator(i);
     }
 
@@ -92,8 +93,9 @@ public class ListViewI<T> implements ListView<T> {
         return content.contains(o);
     }
 
+    @JavaLegacyBody
     @Override
-    public Iterator<T> iterator() {
+    public java.util.Iterator<T> iterator() {
         return content.iterator();
     }
 
@@ -117,23 +119,27 @@ public class ListViewI<T> implements ListView<T> {
         throw new UnsupportedOperationException();
     }
 
+    @JavaLegacyBody
     @Override
-    public boolean containsAll(Collection<?> collection) {
+    public boolean containsAll(java.util.Collection<?> collection) {
         return content.containsAll(collection);
     }
 
+    @JavaLegacyBody
     @Override
-    public boolean addAll(Collection<? extends T> collection) {
+    public boolean addAll(java.util.Collection<? extends T> collection) {
         throw new UnsupportedOperationException();
     }
 
+    @JavaLegacyBody
     @Override
-    public boolean removeAll(Collection<?> collection) {
+    public boolean removeAll(java.util.Collection<?> collection) {
         throw new UnsupportedOperationException();
     }
 
+    @JavaLegacyBody
     @Override
-    public boolean retainAll(Collection<?> collection) {
+    public boolean retainAll(java.util.Collection<?> collection) {
         throw new UnsupportedOperationException();
     }
 
