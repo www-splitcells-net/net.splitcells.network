@@ -10,8 +10,11 @@
  */
 package net.splitcells.dem.data.set.map;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.util.HashMap;
 
+@JavaLegacyArtifact
 public class MapI<Key, Value> extends HashMap<Key, Value> implements Map<Key, Value> {
 
 }
