@@ -126,7 +126,7 @@ public class Logger implements TestExecutionListener {
      * in order to extend the PATH variable accordingly only inside the current shell session.
      */
     public void commit() {
-        SystemUtils.executeShellScript(". ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin; command.managed.execute.command repo.commit.all", logProject);
+        SystemUtils.executeShellScript("sh -c \". ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin; command.managed.execute.command repo.commit.all\"", logProject);
     }
 
     @Override
