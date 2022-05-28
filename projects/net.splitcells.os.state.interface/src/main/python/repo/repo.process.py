@@ -107,7 +107,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 				subRepoPath=Path('./' + subName)
 				if not subRepoPath.is_dir():
 					# TODO Echo to stderr.
-					print('Folder of subrepository "' + str(subRepoPath) + '" is missing.')
+					print('Folder of sub repository "' + str(subRepoPath) + '" is missing.')
 					missingSubRepoScript = 'set -e; mkdir -p ' + subName + '; ' + 'cd ' + subName + ' ; repo.process' + " --command='" + commandForMissing + "' --host=" + host + ' --relative-path=' + relativePath
 					missingSubRepoScript += " --command-for-missing='" + commandForMissing + "'"
 					missingSubRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
