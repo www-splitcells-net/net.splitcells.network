@@ -10,8 +10,6 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
-* **2022-05-28**: **\#168**: `repo.status` now executes `./bin/net.splitcells.osi.repos.peers` in order to find additional sub repos, that are located in the same repo as the current is.
-  This is a way to support repo nesting with a flat folder structure.
 * **2022-05-02**: **\#142** Make it easy to support arbitrary input formats and output styling.
 * **2022-04-25**: **\#162**: On the default layout,
   there is now status button on the website in the top left corner.

@@ -29,6 +29,8 @@ Changes are now written to the root changelog instead.
   This way there is still a command,
   that installs the OSSI project with full functionality.
 ### Minor Changes
+* **2022-05-28**: **\#168**: `repo.status` now executes `./bin/net.splitcells.osi.repos.peers` in order to find additional sub repos, that are located in the same repo as the current is.
+  This is a way to support repo nesting with a flat folder structure.
 * **2022-03-27** Create `ssh.upload.file.py` in order to more easily upload
   files to new remote servers.
 ## [5.0.0] - 2022-02-28
