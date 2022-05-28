@@ -10,9 +10,7 @@
  */
 package net.splitcells.dem.data.set;
 
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 
@@ -26,24 +24,28 @@ public class SetFI_deterministic implements SetF {
 
     }
 
+    @JavaLegacyBody
     @Override
-    public <T> Set<T> lagacySet() {
-        return new LinkedHashSet<>();
+    public <T> java.util.Set<T> lagacySet() {
+        return new java.util.LinkedHashSet<>();
     }
 
+    @JavaLegacyBody
     @Override
-    public <T> Set<T> legacySet(Collection<T> arg) {
-        return new LinkedHashSet<>();
+    public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
+        return new java.util.LinkedHashSet<>();
     }
 
+    @JavaLegacyBody
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set() {
-        return setLegacyWrapper(new LinkedHashSet<>(), true);
+        return setLegacyWrapper(new java.util.LinkedHashSet<>(), true);
     }
 
+    @JavaLegacyBody
     @Override
-    public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
-        return setLegacyWrapper(new LinkedHashSet<>(arg), true);
+    public <T> net.splitcells.dem.data.set.Set<T> set(java.util.Collection<T> arg) {
+        return setLegacyWrapper(new java.util.LinkedHashSet<>(arg), true);
     }
 
 }
