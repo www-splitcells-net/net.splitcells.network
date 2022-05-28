@@ -143,13 +143,13 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                             + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
                             + config().configValue(HostName.class)
                             + ".csv.html"
-                            + "\">Invalid link history is good.</a></li>");
+                            + "\">The number of invalid links is historically improving.</a></li>");
         }
         return statusReport(LogLevel.WARNING
                 , "<li><a href=\""
                         + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
                         + config().configValue(HostName.class)
                         + ".csv.html"
-                        + "\">Invalid link history is bad.</a></li>");
+                        + "\">There are increases in the history of the invalid link count.</a></li>");
     }
 }
