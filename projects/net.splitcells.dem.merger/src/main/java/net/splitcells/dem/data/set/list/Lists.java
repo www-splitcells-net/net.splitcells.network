@@ -10,19 +10,16 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.ConstructorIllegal;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.stream.Collector;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public final class Lists {
 
-    public static <T> Collector<T, ?, List<T>> toList() {
-        return Collector.of(
+    @JavaLegacyBody
+    public static <T> java.util.stream.Collector<T, ?, List<T>> toList() {
+        return java.util.stream.Collector.of(
                 () -> list(),
                 (a, b) -> a.addAll(b),
                 (a, b) -> {
@@ -37,9 +34,10 @@ public final class Lists {
     }
 
     @SafeVarargs
-    public static <T> List<T> concat(Collection<T>... collections) {
+    @JavaLegacyBody
+    public static <T> List<T> concat(java.util.Collection<T>... collections) {
         final var rVal = Lists.<T>list();
-        for (Collection<T> collection : collections) {
+        for (java.util.Collection<T> collection : collections) {
             rVal.addAll(collection);
         }
         return rVal;
@@ -49,21 +47,24 @@ public final class Lists {
         return ListI.list();
     }
 
-    public static <T> List<T> listWithValuesOf(Collection<T> values) {
+    @JavaLegacyBody
+    public static <T> List<T> listWithValuesOf(java.util.Collection<T> values) {
         final var list = Lists.<T>list();
         list.addAll(values);
         return list;
     }
 
     @SafeVarargs
+    @JavaLegacyBody
     public static <T> List<T> listWithValuesOf(T... values) {
-        return listWithValuesOf(Arrays.asList(values));
+        return listWithValuesOf(java.util.Arrays.asList(values));
     }
 
     @SafeVarargs
+    @JavaLegacyBody
     public static <T> List<T> list(T... args) {
         final var list = ListI.<T>list();
-        list.addAll(Arrays.asList(args));
+        list.addAll(java.util.Arrays.asList(args));
         return list;
     }
 

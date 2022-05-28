@@ -10,11 +10,14 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.util.Collection;
 
 /**
  * TODO Extend interface with functional write methods: https://www.vavr.io/vavr-docs/#_list
  */
+@JavaLegacyArtifact
 public interface ListView<T> extends Collection<T>, java.util.List<T> {
     /**
      * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.
