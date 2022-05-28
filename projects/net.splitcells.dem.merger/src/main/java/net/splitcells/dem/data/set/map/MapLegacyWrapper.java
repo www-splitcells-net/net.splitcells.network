@@ -10,10 +10,13 @@
  */
 package net.splitcells.dem.data.set.map;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
+@JavaLegacyArtifact
 public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
 
     public static <Key, Value> Map<Key, Value> mapLegacyWrapper(java.util.Map<Key, Value> content) {
