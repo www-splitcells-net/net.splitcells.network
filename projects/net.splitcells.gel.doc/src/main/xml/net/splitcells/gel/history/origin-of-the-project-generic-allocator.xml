@@ -31,6 +31,20 @@
 		<license>standard</license>
 	</meta>
 	<chapter>
+		<title>Initial Ideas</title>
+		<paragraph>Before creating this project there was the idea, to create or use a system,
+			in order to reason about complex or interactive system like an economic system.
+			Unfortunately, there were only theoretic considerations, about properties such a system would have.
+			Therefore, these considerations had no big utility in practice,
+			because an understanding for basic stuff was not present.
+			These theoretic considerations were the way to get first tentative understandings about modelling complex systems.
+		</paragraph>
+		<paragraph>It was expected that for such a system sometimes the only way to reason about such a system,
+			would be to execute that system, while studying the effect of given parameters on the execution result.
+			This though later lead to the crisis network project.
+		</paragraph>
+	</chapter>
+	<chapter>
 		<title>Universal Allocation Program</title>
 		<paragraph>
 			The idea of this project originated from an internship
