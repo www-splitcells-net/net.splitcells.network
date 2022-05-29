@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xl="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:m="http://www.w3.org/1998/Math/MathML" xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>
+            <siteName/>'s Deployment
+        </title>
+    </meta>
+    <chapter>
+        <title>Deployment By Build</title>
+        <paragraph>There is currently no ready to go deployment pipeline based on public artifact repositories or distributors.
+            Therefore, the software needs to be build manually, which is described in the
+            <link>
+                <text>contributing guidelines</text>
+                <post>/net/splitcells/network/CONTRIBUTING</post>
+            </link>.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>OS State Interface And Its Library</title>
+        <paragraph>OS state interface can be installed via the project's
+            <link>
+                <text>setup instructions</text>
+                <post>/net/splitcells/os/state/interface/manual/setup</post>
+            </link>.
+    </chapter>
+</article>
