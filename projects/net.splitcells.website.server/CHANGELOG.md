@@ -37,6 +37,12 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   [**\#125** Create global news feeds](https://github.com/www-splitcells-net/net.splitcells.network/issues/125):
   It is located at `/net/splitcells/CHANGELOG.global.html`.
 ### Patches
+* **2022-05-29**: [**\#s78** Wrong Context Path](https://todo.sr.ht/~splitcells-net/net.splitcells.network/78):
+  1. This is primarily caused by not passing the path of a rendered file to the rendering process.
+  2. Prevent usage of FileStructureTransformer inside extensions, as this class does not manage the handling of path information of a rendered document directly/explicitly.
+     Instead, provide rendering methods in ProjectRenderer and ProjectsRenderer, which require and handle path information for a given document and pass it to the FileStructureTransformer.
+  3. Extensions should pass relative and not absolute paths to the Project(s)Renderers.
+* This is caused mainly by the usage of the FileStructureTransformer outside the ProjectRenderer. Most such usage is locateded in ProjectRendererExtensions.
 * **2022-05-23**: **\#82**: XML-Rendering can now handle the header `<?xml version="1.0" encoding="UTF-8"?>` of the input document without triggering an error.
   This is patch is implemented hackily.
 * **2022-04-29**: **\#91**: Links to sub projects READMEs in CommonMark files are now translated correctly.
