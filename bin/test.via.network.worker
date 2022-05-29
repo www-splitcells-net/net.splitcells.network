@@ -2,12 +2,9 @@
 logFolder=../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/
 logFile=$logFolder/$(hostname).csv
 numberOfWarnings=$(mvn clean install -DskipTests | grep --ignore-case warning | wc -l)
-if [ ! -d logFolder ]
-then
-    mkdir -p ../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/
-    echo 'Date,Number Of Warnings' >> $logFile
-fi
-echo $(date +'%Y-%m-%d')','$numberOfWarnings >> ../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/$(hostname).csv
+mkdir -p $logFolder
+test -f $logFile || echo 'Date,Number Of Warnings' >> $logFile
+echo $(date +'%Y-%m-%d')','$numberOfWarnings >> $logFile
 cd ../net.splitcells.network.log
     repo.commit.all
     cd ../net.splitcells.network

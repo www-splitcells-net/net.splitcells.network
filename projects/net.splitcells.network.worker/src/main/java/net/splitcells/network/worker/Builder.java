@@ -1,11 +1,8 @@
 package net.splitcells.network.worker;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.ProgramName;
-import net.splitcells.dem.resource.Paths;
-
-import java.nio.file.Path;
+import net.splitcells.dem.resource.host.SystemUtils;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Paths.userHome;
@@ -21,7 +18,7 @@ public class Builder {
         if (args.length != 1) {
             throw new IllegalArgumentException("Exactly one argument is required, but " + args.length + " were given. The argument is the id of the test executor.");
         }
-        Dem.process(() -> testUnits(list(logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"))))
+        Dem.process(() -> testUnits(list(logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network"))))
                 , env -> env.config().withConfigValue(ProgramName.class, args[0]));
     }
 

@@ -53,7 +53,7 @@ public class Logger implements TestExecutionListener {
     public static Logger logger(Path logProject) {
         return new Logger(logProject);
     }
-    
+
     private static final String BUILDER_RUNTIME_LOG = "net/splitcells/network/logger/builder/runtime";
 
     private final Path logProject;
@@ -126,7 +126,7 @@ public class Logger implements TestExecutionListener {
      * in order to extend the PATH variable accordingly only inside the current shell session.
      */
     public void commit() {
-        SystemUtils.executeShellScript("sh -c \". ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin; command.managed.execute.command repo.commit.all\"", logProject);
+        SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", logProject);
     }
 
     @Override
