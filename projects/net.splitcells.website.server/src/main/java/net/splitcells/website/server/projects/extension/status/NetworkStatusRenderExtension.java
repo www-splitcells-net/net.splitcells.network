@@ -85,7 +85,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     + "</ol>";
             return Optional.of(renderingResult(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks
                                     , Optional.of("Network Status")
-                                    , Optional.of(path)
+                                    , Optional.of(STATUS_DOCUMENT_PATH)
                                     , config)
                             .get()
                     , TEXT_HTML.toString()));

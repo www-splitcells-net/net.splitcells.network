@@ -18,8 +18,18 @@ public interface ProjectsRendererExtension {
         return layout;
     }
 
+    /**
+     * 
+     * @param projectsRendererI
+     * @return Set of paths relative to {@link Config#rootPath()}.
+     */
     Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRendererI);
 
+    /**
+     *
+     * @param projectsRendererI
+     * @return Set of paths relative to {@link Config#rootPath()}.
+     */
     default Set<Path> relevantProjectPaths(@Deprecated ProjectsRendererI projectsRendererI) {
         return projectPaths(projectsRendererI);
     }
