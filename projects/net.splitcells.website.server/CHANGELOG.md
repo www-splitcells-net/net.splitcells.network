@@ -10,7 +10,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
-* **2022-05-29**: **\#s84**: Render `CONTRIBUTING.md` for each project.
+* **2022-05-29**: [**\#s84** Centralise build instruction documentaton.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/84):
+  1. Render `CONTRIBUTING.md` for each project.
+  2. Instead of duplicate build instructions links to the `CONTRIBUTING.md` document is provided.
 * **2022-05-28** [**\#87** Fix links inside documents](https://github.com/www-splitcells-net/net.splitcells.network/issues/87):
   `/net/splitcells/network/status.html` now shows, if from a historic perspective the number of invalid links is zero or at least improves.
   It checks the repo `net.splitcells.network.log`,
