@@ -499,11 +499,14 @@
                         <xsl:apply-templates select="s:url"/>
                     </xsl:when>
                     <xsl:when test="s:post">
-                        <xsl:copy-of select="$site_instance_burl"/>
-                        <xsl:text></xsl:text>
-                        <xsl:apply-templates
-                                select="s:post/node()"/>
-                        <xsl:text>.html</xsl:text>
+                        <xsl:variable name="postLink">
+                            <xsl:copy-of select="$site-instance-root-path-default"/>
+                            <xsl:text></xsl:text>
+                            <xsl:apply-templates
+                                    select="s:post/node()"/>
+                            <xsl:text>.html</xsl:text>
+                        </xsl:variable>
+                        <xsl:value-of select="replace($postLink, '//', '/')"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:message terminate="yes"/>
