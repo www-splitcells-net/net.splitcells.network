@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+cd ../net.splitcells.network.log
+# TODO HACK $HOME is not always supported. The command whoami is more likely to be present.
+. /home/$(whoami)/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin
+export PATH="/home/$(whoami)/bin:$PATH"
+export PATH="/home/$(whoami)/bin/net.splitcells.os.state.interface.commands.managed:$PATH"
+export PATH="/home/$(whoami)/bin/net.splitcells.os.state.interface.commands.disabled:$PATH"
+repo.commit.all
