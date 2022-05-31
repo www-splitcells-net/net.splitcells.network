@@ -43,7 +43,8 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                     .resolve("src/main/xml")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
             if (Files.is_file(xmlFile)) {
-                final var document = Xml.parse(readString(xmlFile));
+                final var xmlContent = readString(xmlFile);
+                final var document = Xml.parse(xmlContent);
                 if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
                     final var metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.SEW)
                             .orElseGet(() -> {
@@ -56,9 +57,11 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                         pathElement.appendChild(document.createTextNode(path));
                         metaElement.appendChild(pathElement);
                     }
+                    return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toDocumentString(document), config).get()
+                            , TEXT_HTML.toString()));
+                } else {
+                    return Optional.of(renderingResult(projectRenderer.renderXml(xmlContent, layoutConfig(path), config).get(), TEXT_HTML.toString()));
                 }
-                return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toDocumentString(document), config).get()
-                        , TEXT_HTML.toString()));
             }
         }
         return Optional.empty();
