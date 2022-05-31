@@ -436,20 +436,24 @@ public class SchoolCourseSchedulingTest {
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
         final var numberOfSubjects = 27;
+        final var numberOfRails = 17;
         network.withNode(RAILS_FOR_SCHOOL_SCHEDULING
                         , defineRailsForSchoolScheduling(2
                                 , numberOfSubjects
                                 , 30
                                 , 410d / 158d
                                 , 4
-                                , 17))
+                                , numberOfRails))
                 .withNode(TEACHER_ALLOCATION_FOR_COURSES
                         , railsForSchoolScheduling ->
                                 defineTeacherAllocationForCourses
                                         (railsForSchoolScheduling
                                                 , 56
                                                 , 158d / 56d
-                                                , 158)
+                                                , 158
+                                                , numberOfSubjects
+                                                , numberOfRails
+                                                , 3)
                         , RAILS_FOR_SCHOOL_SCHEDULING)
                 .withNode(STUDENT_ALLOCATION_FOR_COURSES
                         , teacherAllocationForCourses -> defineStudentAllocationsForCourses
@@ -469,17 +473,21 @@ public class SchoolCourseSchedulingTest {
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
         final var numberOfSubjects = 27;
+        final var numberOfRails = 17;
         final var railsForSchoolScheduling = defineRailsForSchoolScheduling(2
                 , numberOfSubjects
                 , 30
                 , 410d / 158d
                 , 4
-                , 17);
+                , numberOfRails);
         final var teacherAllocationForCourses = defineTeacherAllocationForCourses
                 (railsForSchoolScheduling
                         , 56
                         , 158d / 56d
-                        , 158);
+                        , 158
+                        , numberOfSubjects
+                        , numberOfRails
+                        , 3);
         final var studentAllocationsForCourses = defineStudentAllocationsForCourses
                 (teacherAllocationForCourses
                         , 92
@@ -561,20 +569,28 @@ public class SchoolCourseSchedulingTest {
      * @param solution The demands of this problem.
      * @return A problem modelling allocations of teachers to courses.
      */
-    private static Solution defineTeacherAllocationForCourses(Solution solution, int numberOfTeachers
+    private static Solution defineTeacherAllocationForCourses(Solution solution
+            , int numberOfTeachers
             , double averageNumberOfCoursesPerTeacher
-            , int numberOfCourses) {
+            , @Deprecated int numberOfCourses
+            , int numberOfSubjects
+            , int numberOfRails
+            , int teacherChoiceFactor) {
         final var randomness = randomness();
-        final var teacherCapacity = rangeClosed(1, numberOfTeachers)
-                .mapToObj(teacher ->
-                        rangeClosed(1, randomness.integer
-                                (1
-                                        , averageNumberOfCoursesPerTeacher
-                                        , roundToInt(2 * averageNumberOfCoursesPerTeacher)))
-                                .mapToObj(iSubject -> Lists.<Object>list(teacher, randomness.integer(1, numberOfCourses)))
-                                .collect(toList()))
-                .flatMap(e -> e.stream())
-                .collect(toList());
+        final List<List<Object>> teacherCapacity = list();
+        for (int teacher = 1; teacher <= numberOfTeachers; ++teacher) {
+            final var teachersCourseCount = randomness.integer(1
+                    , averageNumberOfCoursesPerTeacher
+                    , roundToInt(2 * averageNumberOfCoursesPerTeacher));
+            for (int courseIndex = 1; courseIndex <= teachersCourseCount; ++courseIndex) {
+                for (int choiceCount = 1; choiceCount <= teacherChoiceFactor; ++choiceCount) {
+                    final var teachersSubject = randomness().integer(1, numberOfSubjects);
+                    for (int railsCount = 1; railsCount <= numberOfRails; ++railsCount) {
+                        teacherCapacity.add(list(teacher, teachersSubject));
+                    }
+                }
+            }
+        }
         return defineTeacherAllocationForCourses(solution, teacherCapacity);
     }
 
