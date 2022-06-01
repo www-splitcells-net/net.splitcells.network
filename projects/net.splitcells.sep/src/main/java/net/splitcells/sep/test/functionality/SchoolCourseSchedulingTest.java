@@ -555,8 +555,8 @@ public class SchoolCourseSchedulingTest {
                     // TODO Does this make sense?
                     r.forAll(voidRail()).then(lineValueRater(line -> line.value(ALLOCATED_HOURS) == 0));
                     r.forAll(COURSE_ID).forAll(noneVoidRail()).then(allDifferent(RAIL));
-                    r.forAll(COURSE_ID).forAll(noneVoidRail()).then(regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
-                    r.forAll(RAIL).forAll(noneVoidRail()).then(allSame(ALLOCATED_HOURS));
+                    r.forAll(COURSE_ID).then(regulatedLength(COURSE_LENGTH, ALLOCATED_HOURS));
+                    r.forAll(RAIL).then(allSame(ALLOCATED_HOURS));
                     return r;
                 }).toProblem()
                 .asSolution();
