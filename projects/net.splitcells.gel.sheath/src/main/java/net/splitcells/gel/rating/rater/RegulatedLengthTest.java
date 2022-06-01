@@ -25,7 +25,7 @@ public class RegulatedLengthTest {
     public void testRegulatedLength() {
         final var a = attribute(Integer.class);
         final var b = attribute(Integer.class);
-        final var testSubjectContainer = defineProblem()
+        final var testSubjectContainer = defineProblem("regulated length test")
                 .withDemandAttributes(a, b)
                 .withDemands(list
                         (list(3, 3)
