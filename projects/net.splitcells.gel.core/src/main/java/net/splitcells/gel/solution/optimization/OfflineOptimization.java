@@ -16,7 +16,7 @@ import net.splitcells.gel.solution.SolutionView;
 /**
  * <p>Perfect is the enemy of good - Voltaire</p>
  * <p>Prefer {@link OnlineOptimization} over this,
- * when complex queries are needed to be done on the {@link SolutionView}.
+ * when complex queries are needed to be done on the {@link SolutionView} in order to determine the current state after applying all interim {@link OptimizationEvent}s.
  * Also, most of the time it is easier to implement an {@link OnlineOptimization}
  * than an {@link OfflineOptimization}.</p>
  */
