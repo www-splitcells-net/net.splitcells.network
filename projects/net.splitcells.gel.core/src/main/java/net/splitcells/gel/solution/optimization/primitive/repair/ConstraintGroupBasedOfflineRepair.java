@@ -16,6 +16,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.rating.type.Cost;
+import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.GroupId;
@@ -36,7 +37,10 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * <p>This class is not actively developed anymore. See {@link ConstraintGroupBasedRepair}</p>
+ * <p>This class is not actively developed anymore.
+ * See {@link ConstraintGroupBasedRepair}.
+ * The main reason for deprecation is the fact, that the {@link #supplyOfflineSelector} requires complex calculations in order to determine the current state of {@link Solution} after applying the demand freeing via the {@link #groupSelector} in this complex {@link OfflineOptimization}.
+ * </p>
  * <p>
  * Optimize a problem by find faulty groups and reallocating them.
  * </p>
