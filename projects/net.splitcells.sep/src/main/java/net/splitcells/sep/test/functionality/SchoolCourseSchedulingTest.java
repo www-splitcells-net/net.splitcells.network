@@ -516,7 +516,7 @@ public class SchoolCourseSchedulingTest {
                     final var length = randomness.integer(1, averageCourseLength, maximumCourseLength);
                     final var vintage = randomness.integer(1, numberOfVintages);
                     return rangeClosed(1, length)
-                            .mapToObj(i -> Lists.<Object>list(courseId, subject, length, vintage))
+                            .mapToObj(i -> Lists.<Object>list(courseId, subject, vintage, length))
                             .collect(toList());
                 })
                 .flatMap(e -> e.stream())
