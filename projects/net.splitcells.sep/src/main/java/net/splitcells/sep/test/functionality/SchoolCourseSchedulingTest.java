@@ -41,6 +41,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -268,108 +269,103 @@ public class SchoolCourseSchedulingTest {
                             );
                     final var mergedFreeDemandGroups = freeDemandGroups.values()
                             .stream()
-                            .reduce(Sets::merge);
-                    if (mergedFreeDemandGroups.isPresent()) {
-                        mergedFreeDemandGroups.get()
-                                .stream()
-                                .map(d -> d.value(COURSE_ID))
-                                .distinct()
-                                .forEach(course -> {
-                                    final var allocatedHours = allocatedCourseHours.getOrDefault(course, 0);
-                                    final var targetedHours = targetedCourseHours.get(course);
-                                    final var potentialCourseGroup = freeDemandGroups.keySet().stream()
-                                            .filter(courseKey -> freeDemandGroups.get(courseKey).iterator().next()
-                                                    .value(COURSE_ID)
-                                                    .equals(course))
-                                            .findFirst();
-                                    // TODO This seems to be a hack or does not make sense.
-                                    if (potentialCourseGroup.isEmpty()) {
-                                        return;
+                            .reduce(Sets::merge) // ?
+                            .orElseGet(() -> setOfUniques());
+                    mergedFreeDemandGroups.addAll(solution.demandsFree().getLines());
+                    mergedFreeDemandGroups
+                            .stream()
+                            .map(d -> d.value(COURSE_ID))
+                            .distinct()
+                            .forEach(course -> {
+                                final var allocatedHours = allocatedCourseHours.getOrDefault(course, 0);
+                                final var targetedHours = targetedCourseHours.get(course);
+                                final List<Line> freeSlots = mergedFreeDemandGroups.stream()
+                                        .filter(demand -> demand.value(COURSE_ID).equals(course))
+                                        .collect(toList());
+                                solution.demandsFree().lookup(COURSE_ID, course).getLines().forEach(l -> {
+                                    if (!freeSlots.contains(l)) {
+                                        freeSlots.add(l);
                                     }
-                                    final var courseGroup = potentialCourseGroup.get();
-                                    final var freeSlots = freeDemandGroups.get(courseGroup)
-                                            .stream()
-                                            .collect(toList());
-                                    freeSlots.addAll(solution.demandsFree().lookup(COURSE_ID, course).getLines());
-                                    final var retainedAllocatedHours = solution.lookup(COURSE_ID, course).getLines().stream()
-                                            .filter(l -> !freeSlots.contains(l))
-                                            .map(l -> l.value(ALLOCATED_HOURS))
-                                            .reduce((a, b) -> a + b)
-                                            .orElse(0);
-                                    final int hoursLeft;
-                                    if (targetedHours < retainedAllocatedHours) {
-                                        // More hours are allocated and not repaired to a course, than needed.
-                                        hoursLeft = 0;
-                                    } else {
-                                        hoursLeft = targetedHours - retainedAllocatedHours;
-                                    }
-                                    final var possibleNonEmptySlotCount = sumsForTarget(hoursLeft
-                                            , solution.suppliesFree()
-                                                    .columnView(ALLOCATED_HOURS)
-                                                    .values()
-                                                    .stream()
-                                                    .distinct()
-                                                    .filter(e -> e != 0)
-                                                    .collect(toList()))
-                                            .stream()
-                                            .map(e -> e.size())
-                                            .filter(e -> e <= freeSlots.size())
-                                            .collect(toList());
-                                    final var nonEmptySlotCount = randomness.chooseOneOf(possibleNonEmptySlotCount);
-                                    final var emptySlotCount = freeSlots.size() - nonEmptySlotCount;
-                                    rangeClosed(1, emptySlotCount).forEach(i -> {
-                                        final var freeSlot = freeSlots.remove(0);
-                                        final var nullHour = freeNulls.remove(0);
-                                        optimization.add(optimizationEvent(StepType.ADDITION
-                                                , freeSlot.toLinePointer()
-                                                , nullHour.toLinePointer()));
-                                    });
-                                    final List<List<Integer>> possibleSplits;
-                                    if (hoursLeft == 0) {
-                                        possibleSplits = list();
-                                        final List<Integer> emptySplit = list();
-                                        rangeClosed(1, freeSlots.size()).forEach(i -> emptySplit.add(0));
-                                        possibleSplits.add(emptySplit);
-                                    } else {
-                                        final var splitComponents = solution.suppliesFree()
+                                });
+                                final var retainedAllocatedHours = solution.lookup(COURSE_ID, course).getLines().stream()
+                                        .filter(l -> !freeSlots.contains(l))
+                                        .map(l -> l.value(ALLOCATED_HOURS))
+                                        .reduce((a, b) -> a + b)
+                                        .orElse(0);
+                                final int hoursLeft;
+                                if (targetedHours < retainedAllocatedHours) {
+                                    // More hours are allocated and not repaired to a course, than needed.
+                                    hoursLeft = 0;
+                                } else {
+                                    hoursLeft = targetedHours - retainedAllocatedHours;
+                                }
+                                final var possibleNonEmptySlotCount = sumsForTarget(hoursLeft
+                                        , solution.suppliesFree()
                                                 .columnView(ALLOCATED_HOURS)
                                                 .values()
                                                 .stream()
-                                                .filter(e -> e != 0)
                                                 .distinct()
-                                                .collect(toList());
-                                        possibleSplits = sumsForTarget(hoursLeft, splitComponents, freeSlots.size())
-                                                .stream()
-                                                .filter(e -> e.size() == nonEmptySlotCount)
-                                                .collect(toList());
-                                    }
-                                    if (!possibleSplits.isEmpty()) {
-                                        final var chosenSplit = randomness.chooseOneOf(possibleSplits);
-                                        final var chosenRails = randomness.chooseAtMostMultipleOf(chosenSplit.size()
-                                                , solution.suppliesFree()
-                                                        .getLines()
-                                                        .stream()
-                                                        .filter(l -> l.value(ALLOCATED_HOURS) != 0)
-                                                        .map(l -> l.value(RAIL))
-                                                        .distinct()
-                                                        .collect(toList()));
-                                        chosenSplit.forEach(e
-                                                -> {
-                                            final var chosenRail = chosenRails.remove(0);
-                                            final var chosenSupply = freeSuppliesByAllocatedHours.get(e).stream()
-                                                    .filter(s -> s.value(RAIL).equals(chosenRail))
-                                                    .findFirst()
-                                                    .get();
-                                            freeSuppliesByAllocatedHours.get(e).remove(chosenSupply);
-                                            optimization.add(optimizationEvent(StepType.ADDITION
-                                                    , freeSlots.remove(0).toLinePointer()
-                                                    , chosenSupply.toLinePointer()));
-                                        });
-                                    } else {
-                                        throw executionException("No course split found: targetedHours=" + targetedHours + ", retainedAllocatedHours=" + retainedAllocatedHours + ", allocatedHours=" + allocatedHours);
-                                    }
+                                                .filter(e -> e != 0)
+                                                .collect(toList()))
+                                        .stream()
+                                        .map(e -> e.size())
+                                        .filter(e -> e <= freeSlots.size())
+                                        .distinct()
+                                        .collect(toList());
+                                final var nonEmptySlotCount = randomness.chooseOneOf(possibleNonEmptySlotCount);
+                                final var emptySlotCount = freeSlots.size() - nonEmptySlotCount;
+                                rangeClosed(1, emptySlotCount).forEach(i -> {
+                                    final var freeSlot = freeSlots.remove(0);
+                                    final var nullHour = freeNulls.remove(0);
+                                    optimization.add(optimizationEvent(StepType.ADDITION
+                                            , freeSlot.toLinePointer()
+                                            , nullHour.toLinePointer()));
                                 });
-                    }
+                                final List<List<Integer>> possibleSplits;
+                                if (hoursLeft == 0) {
+                                    possibleSplits = list();
+                                    final List<Integer> emptySplit = list();
+                                    rangeClosed(1, freeSlots.size()).forEach(i -> emptySplit.add(0));
+                                    possibleSplits.add(emptySplit);
+                                } else {
+                                    final var splitComponents = solution.suppliesFree()
+                                            .columnView(ALLOCATED_HOURS)
+                                            .values()
+                                            .stream()
+                                            .filter(e -> e != 0)
+                                            .distinct()
+                                            .collect(toList());
+                                    possibleSplits = sumsForTarget(hoursLeft, splitComponents, freeSlots.size())
+                                            .stream()
+                                            .filter(e -> e.size() == nonEmptySlotCount)
+                                            .collect(toList());
+                                }
+                                if (!possibleSplits.isEmpty()) {
+                                    final var chosenSplit = randomness.chooseOneOf(possibleSplits);
+                                    final var chosenRails = randomness.chooseAtMostMultipleOf(chosenSplit.size()
+                                            , solution.suppliesFree()
+                                                    .getLines()
+                                                    .stream()
+                                                    .filter(l -> l.value(ALLOCATED_HOURS) != 0)
+                                                    .map(l -> l.value(RAIL))
+                                                    .distinct()
+                                                    .collect(toList()));
+                                    chosenSplit.forEach(e
+                                            -> {
+                                        final var chosenRail = chosenRails.remove(0);
+                                        final var chosenSupply = freeSuppliesByAllocatedHours.get(e).stream()
+                                                .filter(s -> s.value(RAIL).equals(chosenRail))
+                                                .findFirst()
+                                                .get();
+                                        freeSuppliesByAllocatedHours.get(e).remove(chosenSupply);
+                                        optimization.add(optimizationEvent(StepType.ADDITION
+                                                , freeSlots.remove(0).toLinePointer()
+                                                , chosenSupply.toLinePointer()));
+                                    });
+                                } else {
+                                    throw executionException("No course split found: targetedHours=" + targetedHours + ", retainedAllocatedHours=" + retainedAllocatedHours + ", allocatedHours=" + allocatedHours);
+                                }
+                            });
                     return optimization;
                 });
         /* TODO REMOVE this when the obove works.
