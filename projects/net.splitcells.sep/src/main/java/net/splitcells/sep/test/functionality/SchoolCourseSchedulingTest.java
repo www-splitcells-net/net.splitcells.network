@@ -120,7 +120,6 @@ public class SchoolCourseSchedulingTest {
     public static void main(String... args) {
         GelDev.process(() -> {
             var network = registerSchoolScheduling(network(), 15, 20, 30);
-            network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, linearInitialization());
             rangeClosed(1, 1).forEach(i -> {
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
