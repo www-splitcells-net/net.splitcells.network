@@ -13,6 +13,12 @@ package net.splitcells.dem.utils;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 public class ExecutionException extends RuntimeException {
+    /**
+     * TODO Support {@link net.splitcells.dem.lang.perspective.Perspective} as message.
+     *
+     * @param message This message describes reason for the exception.
+     * @return This is an exception, that can be thrown in order to abort the execution.
+     */
     public static ExecutionException executionException(String message) {
         return new ExecutionException(message);
     }
