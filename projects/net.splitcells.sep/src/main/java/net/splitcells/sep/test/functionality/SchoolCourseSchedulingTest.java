@@ -328,17 +328,25 @@ public class SchoolCourseSchedulingTest {
                                                 , freeSlot.toLinePointer()
                                                 , nullHour.toLinePointer()));
                                     });
-                                    final var possibleSplits = sumsForTarget(targetedHours - allocatedHours
-                                            , solution.suppliesFree()
-                                                    .columnView(ALLOCATED_HOURS)
-                                                    .values()
-                                                    .stream()
-                                                    .distinct()
-                                                    .filter(e -> e != 0)
-                                                    .collect(toList()))
-                                            .stream()
-                                            .filter(e -> e.size() == nonEmptySlotCount)
-                                            .collect(toList());
+                                    final List<List<Integer>> possibleSplits;
+                                    if (hoursLeft == 0) {
+                                        possibleSplits = list();
+                                        final List<Integer> emptySplit = list();
+                                        rangeClosed(1, freeSlots.size()).forEach(i -> emptySplit.add(0));
+                                        possibleSplits.add(emptySplit);
+                                    } else {
+                                        final var splitComponents = solution.suppliesFree()
+                                                .columnView(ALLOCATED_HOURS)
+                                                .values()
+                                                .stream()
+                                                .filter(e -> e != 0)
+                                                .distinct()
+                                                .collect(toList());
+                                        possibleSplits = sumsForTarget(hoursLeft, splitComponents, freeSlots.size())
+                                                .stream()
+                                                .filter(e -> e.size() == nonEmptySlotCount)
+                                                .collect(toList());
+                                    }
                                     if (!possibleSplits.isEmpty()) {
                                         final var chosenSplit = randomness.chooseOneOf(possibleSplits);
                                         final var chosenRails = randomness.chooseAtMostMultipleOf(chosenSplit.size()
