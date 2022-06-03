@@ -536,7 +536,7 @@ public class SchoolCourseSchedulingTest {
                 })
                 .flatMap(e -> e.stream())
                 .collect(toList());
-        final var railCapacity = rangeClosed(1, numberOfRails)
+        final var railCapacity = rangeClosed(2, numberOfRails + 1)
                 .mapToObj(railId ->
                         rangeClosed(1, courses.size())
                                 .mapToObj(i -> rangeClosed(1, maximumCourseLength)
@@ -548,11 +548,8 @@ public class SchoolCourseSchedulingTest {
                 )
                 .flatMap(e -> e.stream())
                 .collect(toList());
-        rangeClosed(1, numberOfRails).mapToObj(railId ->
-                        rangeClosed(1, numberOfVintages * numberOfSubjects * numberOfCourses)
-                                .mapToObj(i -> Lists.<Object>list(0, railId))
-                                .collect(toList()))
-                .flatMap(e -> e.stream())
+        rangeClosed(1, numberOfVintages * numberOfSubjects * numberOfCourses)
+                .mapToObj(i -> Lists.<Object>list(0, 1))
                 .forEach(railCapacity::add);
         return defineRailsForSchoolScheduling(courses, railCapacity);
     }
