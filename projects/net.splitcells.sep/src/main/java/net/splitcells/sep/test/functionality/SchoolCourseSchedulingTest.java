@@ -317,6 +317,7 @@ public class SchoolCourseSchedulingTest {
                                                     .collect(toList()))
                                             .stream()
                                             .map(e -> e.size())
+                                            .filter(e -> e <= freeSlots.size())
                                             .collect(toList());
                                     final var nonEmptySlotCount = randomness.chooseOneOf(possibleNonEmptySlotCount);
                                     final var emptySlotCount = freeSlots.size() - nonEmptySlotCount;
