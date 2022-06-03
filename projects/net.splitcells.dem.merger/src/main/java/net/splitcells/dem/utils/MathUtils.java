@@ -19,11 +19,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public final class MathUtils {
 
+    /**
+     *
+     *
+     * @param target Each returned sum should amount to this parameter.
+     * @param sumComponents These are all components, which are allowed to be used in order to reach the {@param target} value.
+     * @param exactComponentCount Number of components that each valid sum is allowed to have.
+     * @return A list of sums, that amount to the given {@param target}.
+     * Each element has exactly {@param exactComponentCount} components.
+     * If no such sum is possible, an empty list is returned.
+     */
     public static List<List<Integer>> sumsForTarget(int target, List<Integer> sumComponents, int exactComponentCount) {
         final var sumsForTarget = sumsForTarget(target, sumComponents, list(), exactComponentCount);
         return sumsForTarget.stream().filter(e -> e.size() == exactComponentCount).collect(toList());
     }
 
+    /**
+     * TODO This method should not be used on its own, because it returns all sums, whose component size is equal or smaller than {@param exactComponentCount}.
+     *
+     * @param target
+     * @param sumComponents
+     * @param currentResult
+     * @param exactComponentCount
+     * @return
+     */
     private static List<List<Integer>> sumsForTarget(int target, List<Integer> sumComponents, List<Integer> currentResult, int exactComponentCount) {
         if (currentResult.size() >= exactComponentCount) {
             final var currentSum = currentResult.stream().reduce((a, b) -> a + b).orElse(0);
