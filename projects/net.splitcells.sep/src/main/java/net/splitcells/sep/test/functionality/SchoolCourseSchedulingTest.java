@@ -294,6 +294,7 @@ public class SchoolCourseSchedulingTest {
                                     final var freeSlots = freeDemandGroups.get(courseGroup)
                                             .stream()
                                             .collect(toList());
+                                    freeSlots.addAll(solution.demandsFree().lookup(COURSE_ID, course).getLines());
                                     final var retainedAllocatedHours = solution.lookup(COURSE_ID, course).getLines().stream()
                                             .filter(l -> !freeSlots.contains(l))
                                             .map(l -> l.value(ALLOCATED_HOURS))
