@@ -119,7 +119,7 @@ public interface Randomness {
 
     default <T> T chooseOneOf(List<T> arg) {
         if (arg.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Argument should not be empty.");
         }
         return arg.get(asRandom().nextInt(arg.size()));
     }
