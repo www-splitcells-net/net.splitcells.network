@@ -24,7 +24,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JavaLegacyArtifact
-public interface Set<T> extends java.util.Set<T> {
+public interface Set<T> extends java.util.Set<T>, SetT<T> {
 
     default boolean add(T e) {
         if (contains(e)) {
