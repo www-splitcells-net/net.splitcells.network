@@ -13,19 +13,45 @@ package net.splitcells.dem.utils;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public final class MathUtils {
 
+    public static List<List<Integer>> sumsForTarget(int target, List<Integer> sumComponents, int exactComponentCount) {
+        final var sumsForTarget = sumsForTarget(target, sumComponents, list(), exactComponentCount);
+        return sumsForTarget.stream().filter(e -> e.size() == exactComponentCount).collect(toList());
+    }
+
+    private static List<List<Integer>> sumsForTarget(int target, List<Integer> sumComponents, List<Integer> currentResult, int exactComponentCount) {
+        if (currentResult.size() >= exactComponentCount) {
+            final var currentSum = currentResult.stream().reduce((a, b) -> a + b).orElse(0);
+            if (currentSum == target) {
+                return list(currentResult);
+            } else {
+                return list();
+            }
+        }
+        // TODO This is an hack.
+        final List<List<Integer>> nextResults = list();
+        final var sum = currentResult.stream().reduce(Integer::sum).orElse(0);
+        sumComponents.stream()
+                .filter(c -> sum + c <= target)
+                .map(c -> listWithValuesOf(currentResult).withAppended(c))
+                .map(c -> sumsForTarget(target, sumComponents, c, exactComponentCount))
+                .forEach(nextResults::addAll);
+        if (nextResults.isEmpty()) {
+            return list(currentResult);
+        }
+        return nextResults;
+    }
+
     public static List<List<Integer>> sumsForTarget(int target, List<Integer> sumComponents) {
         return sumsForTarget(target, sumComponents, list());
     }
 
-    private static List<List<Integer>> sumsForTarget(int target, List<Integer> sumComponents
-            , List<Integer> currentResult) {
+    private static List<List<Integer>> sumsForTarget(int target, List<Integer> sumComponents, List<Integer> currentResult) {
         final List<List<Integer>> nextResults = list();
         final var sum = currentResult.stream().reduce(Integer::sum).orElse(0);
         sumComponents.stream()
