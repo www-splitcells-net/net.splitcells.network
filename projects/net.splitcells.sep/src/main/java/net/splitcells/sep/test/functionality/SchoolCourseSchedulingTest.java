@@ -50,6 +50,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.interaction.UiRouter.uiRouter;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.lambdas.DescriptiveLambda.describedPredicate;
@@ -347,7 +348,7 @@ public class SchoolCourseSchedulingTest {
                                                     , chosenSupply.toLinePointer()));
                                         });
                                     } else {
-                                        throw new RuntimeException();
+                                        throw executionException("No course split found: targetedHours=" + targetedHours + ", retainedAllocatedHours=" + retainedAllocatedHours + ", allocatedHours=" + allocatedHours);
                                     }
                                 });
                     }
