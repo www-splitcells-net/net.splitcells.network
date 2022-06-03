@@ -229,9 +229,6 @@ public class SchoolCourseSchedulingTest {
                         , 1)
                 , (freeDemandGroups, freeSupplies) -> solution -> {
                     final List<OptimizationEvent> optimization = list();
-                    if (freeDemandGroups.isEmpty()) {
-                        return optimization;
-                    }
                     final var allocatedCourses = Maps.<Integer, Set<Line>>map();
                     solution.columnView(COURSE_ID).values().stream().distinct()
                             .forEach(e -> allocatedCourses.put(e, setOfUniques()));
