@@ -294,7 +294,19 @@ public class SchoolCourseSchedulingTest {
                                     final var freeSlots = freeDemandGroups.get(courseGroup)
                                             .stream()
                                             .collect(toList());
-                                    final var possibleNonEmptySlotCount = sumsForTarget(targetedHours - allocatedHours
+                                    final var retainedAllocatedHours = solution.lookup(COURSE_ID, course).getLines().stream()
+                                            .filter(l -> !freeSlots.contains(l))
+                                            .map(l -> l.value(ALLOCATED_HOURS))
+                                            .reduce((a, b) -> a + b)
+                                            .orElse(0);
+                                    final int hoursLeft;
+                                    if (targetedHours < retainedAllocatedHours) {
+                                        // More hours are allocated and not repaired to a course, than needed.
+                                        hoursLeft = 0;
+                                    } else {
+                                        hoursLeft = targetedHours - retainedAllocatedHours;
+                                    }
+                                    final var possibleNonEmptySlotCount = sumsForTarget(hoursLeft
                                             , solution.suppliesFree()
                                                     .columnView(ALLOCATED_HOURS)
                                                     .values()
