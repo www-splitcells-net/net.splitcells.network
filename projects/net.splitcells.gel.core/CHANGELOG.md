@@ -13,4 +13,8 @@
   1. Rename `ConstraintGroupBasedRepair` to `ConstraintGroupBasedOfflineRepair`.
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
-  
+### Minor Changes
+* **2022-06-03** **\#8**: The history interface for allocations defines now a `toAnalysisFods` method,
+  that creates an alternative more searchable version of `Table#toFods`.
+  The new version has dedicated columns for fields of complex attributes.
+  This makes it easier to search for events in the optimization history by i.e. demand or supply attributes.
