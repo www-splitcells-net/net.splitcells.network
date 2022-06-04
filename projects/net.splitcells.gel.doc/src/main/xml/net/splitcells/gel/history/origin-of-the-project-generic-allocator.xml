@@ -10,6 +10,7 @@
     <meta>
         <title>Origin of The Project Generic Allocator</title>
         <description>This post explains how the Gel project came to light.</description>
+        <d:toDo>Link to version history/changelog.</d:toDo>
     </meta>
     <chapter>
         <title>Initial Ideas</title>
