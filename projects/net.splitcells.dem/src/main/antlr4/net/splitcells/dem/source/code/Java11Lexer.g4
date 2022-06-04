@@ -40,7 +40,10 @@ lexer grammar Java11Lexer;
 /* Keywords and Keysymbols */
     Legacy_Imports: Legacy_Import_Instances;
     fragment Legacy_Import_Instances
-    		: 'import java.util.Optional;';
+    		: 'import java.time.ZonedDateTime;'
+    		| 'import java.util.Optional;'
+    		| 'import java.util.function.Consumer;'
+    		;
 	Arrow: '->';
 	Bigger_than: '>';
 	Brace_curly_open: '{';
