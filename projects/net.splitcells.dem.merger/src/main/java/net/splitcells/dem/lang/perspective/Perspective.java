@@ -13,12 +13,11 @@ package net.splitcells.dem.lang.perspective;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import org.w3c.dom.Node;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -95,7 +94,7 @@ public interface Perspective extends PerspectiveView {
                 .map(child -> child.toStringPaths().stream()
                         .map(childS -> name() + " " + childS)
                         .collect(toList()))
-                .flatMap(Collection::stream)
+                .flatMap(e -> e.stream())
                 .collect(toList());
     }
 
@@ -143,9 +142,10 @@ public interface Perspective extends PerspectiveView {
         return this;
     }
 
+    @JavaLegacyBody
     @Override
-    default Node toDom() {
-        final Node dom;
+    default org.w3c.dom.Node toDom() {
+        final org.w3c.dom.Node dom;
         // HACK Use generic rendering specifics based on argument.
         if (STRING.equals(nameSpace()) && children().isEmpty()) {
             dom = Xml.textNode(name());

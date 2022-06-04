@@ -11,6 +11,7 @@
 package net.splitcells.dem.environment.resource;
 
 import net.splitcells.dem.environment.config.StartTime;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
@@ -27,6 +28,7 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 /**
  * TODO Use alternative async backend.
  */
+@JavaLegacyArtifact
 public final class Console extends ResourceOptionI<Sender<String>> {
 
     public Console() {
