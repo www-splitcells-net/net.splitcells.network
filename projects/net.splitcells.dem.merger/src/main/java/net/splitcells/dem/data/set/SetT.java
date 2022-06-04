@@ -10,31 +10,29 @@
  */
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
-import org.assertj.core.api.Assertions;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
-
+@JavaLegacyArtifact
 public interface SetT<T> extends Collection<T> {
     default <R> List<R> mapped(Function<T, R> mapper) {
         return Lists.<R>list().withAppended(
-                stream().map(mapper).collect(toList())
+                stream().map(mapper).collect(Lists.toList())
         );
     }
 
     default <R> List<R> flatMapped(Function<? super T, ? extends Stream<? extends R>> mapper) {
         return Lists.<R>list().withAppended(
-                stream().flatMap(mapper).collect(toList())
+                stream().flatMap(mapper).collect(Lists.toList())
         );
     }
 
@@ -54,6 +52,6 @@ public interface SetT<T> extends Collection<T> {
     }
     
     default void requireUniqueness() {
-        assertThat(!this.hasDuplicates());
+        Bools.require(!this.hasDuplicates());
     }
 }
