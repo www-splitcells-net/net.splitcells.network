@@ -43,6 +43,7 @@ lexer grammar Java11Lexer;
     		: 'import java.time.ZonedDateTime;'
     		| 'import java.util.Optional;'
     		| 'import java.util.function.Consumer;'
+    		| 'import java.time.format.DateTimeFormatter;'
     		;
 	Arrow: '->';
 	Bigger_than: '>';
