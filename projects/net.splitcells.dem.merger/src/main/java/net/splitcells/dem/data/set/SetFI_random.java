@@ -10,11 +10,8 @@
  */
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.NotImplementedYet;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 
@@ -28,23 +25,27 @@ public class SetFI_random implements SetF {
 
     }
 
+    @JavaLegacyBody
     @Override
-    public <T> Set<T> lagacySet() {
-        return new HashSet<>();
+    public <T> java.util.Set<T> lagacySet() {
+        return new java.util.HashSet<>();
     }
 
+    @JavaLegacyBody
     @Override
-    public <T> Set<T> legacySet(Collection<T> arg) {
-        return new HashSet<>(arg);
+    public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
+        return new java.util.HashSet<>(arg);
     }
 
+    @JavaLegacyBody
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set() {
-        return setLegacyWrapper(new HashSet<>(), false);
+        return setLegacyWrapper(new java.util.HashSet<>(), false);
     }
 
+    @JavaLegacyBody
     @Override
-    public <T> net.splitcells.dem.data.set.Set<T> set(Collection<T> arg) {
-        return setLegacyWrapper(new HashSet<T>(), false).with(arg);
+    public <T> net.splitcells.dem.data.set.Set<T> set(java.util.Collection<T> arg) {
+        return setLegacyWrapper(new java.util.HashSet<T>(), false).with(arg);
     }
 }
