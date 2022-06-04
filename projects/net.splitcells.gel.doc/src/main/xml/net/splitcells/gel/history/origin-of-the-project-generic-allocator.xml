@@ -9,13 +9,13 @@
          xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
     <meta>
         <title>Origin of The Project Generic Allocator</title>
-        <description>This post explains how the Gel project came to light.</description>
+        <description>This post explains how the Generic Allocator (Gel) project came to light.</description>
         <d:toDo>Link to version history/changelog.</d:toDo>
     </meta>
     <chapter>
         <title>Initial Ideas</title>
         <paragraph>Before creating this project there was the idea, to create or use a system,
-            in order to reason about complex or interactive system like an economic system.
+            in order to reason about complex or interactive systems like an economic system.
             Unfortunately, there were only theoretic considerations, about properties such a system would have.
             Therefore, these considerations had no big utility in practice,
             because an understanding for basic stuff was not present.
@@ -24,7 +24,7 @@
         </paragraph>
         <paragraph>It was expected that for such a system sometimes the only way to reason about such a system,
             would be to execute that system, while studying the effect of given parameters on the execution result.
-            This though later lead to the crisis network project.
+            This though later lead to the crisis network project, which is not discussed here.
         </paragraph>
     </chapter>
     <chapter>
@@ -107,9 +107,11 @@
             intelligence(AI) and programming. Therefore, I have created this
             hobby project in order to organize my learning process in this field.
             The framework of my master thesis (which is used as the project's
-            name) is recycled for this undertaking. Unfortunately, the foundation
-            of the framework needs some improvement which in practice leads to a
-            rewrite of the framework.
+            name) is recycled for this undertaking.
+        </paragraph>
+        <paragraph>Unfortunately, the foundation of the framework needs some improvement, which in practice leads to a rewrite of the framework.
+            The improvements itself concerned mostly around making it easy to analyse problems and the process of running optimizers on problem instances.
+            This was seen as essential, in order to be able to model and solve complex problems.
         </paragraph>
         <paragraph>Sadly, this rewrite was a catastrophe, as it took too much time.
             This was basically caused by the method of writing the code from scratch.
