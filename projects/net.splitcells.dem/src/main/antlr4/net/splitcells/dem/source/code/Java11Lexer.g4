@@ -44,6 +44,7 @@ lexer grammar Java11Lexer;
     		| 'import java.util.Optional;'
     		| 'import java.util.function.Consumer;'
     		| 'import java.time.format.DateTimeFormatter;'
+    		| 'import java.util.function.Function;'
     		;
 	Arrow: '->';
 	Bigger_than: '>';
