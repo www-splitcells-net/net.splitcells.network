@@ -9,26 +9,7 @@
 	xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
 	<meta>
 		<title>Origin of The Project Generic Allocator</title>
-		<description>This post explains how the Gel project came to light.
-		</description>
-		<publication_date year="2017" month="04"
-			day_of_month="22" />
-		<related_to>
-			<url>
-				<site_instance_purl />
-				/2016/10/11/projects
-			</url>
-			<url>
-				<site_instance_purl />
-				/2015/03/04/about-this-site
-			</url>
-			<url>
-				<site_instance_purl />
-				/2016/10/12/project-generic-allocator
-			</url>
-		</related_to>
-		<arbitrary_publication_date />
-		<license>standard</license>
+		<description>This post explains how the Gel project came to light.</description>
 	</meta>
 	<chapter>
 		<title>Initial Ideas</title>
