@@ -636,7 +636,6 @@ window.onload = function() {
                                             </xsl:attribute>
                                             <xsl:value-of select="$siteName"/>
                                         </a>
-                                        <a class="net-splitcells-button" href="#">nos</a>
                                     </div>
                                     <div class="net-splitcells-structural-guide"></div>
                                     <div class="splitcells-net-window-menu-line-2"></div>
