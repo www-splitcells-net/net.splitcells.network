@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 set -e
+echo GitHub
 echo git@github.com:www-splitcells-net/'$1'.git
+echo GitLab
 echo git@gitlab.com:splitcells-net/'$1'.git
+echo SourceHut
 echo git@git.sr.ht:~splitcells-net/'$1'
