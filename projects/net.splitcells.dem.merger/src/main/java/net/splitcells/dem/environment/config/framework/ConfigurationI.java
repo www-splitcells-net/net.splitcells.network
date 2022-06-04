@@ -10,19 +10,21 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.*;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
  * Automatic {@link Option} update based on other {@link Option} updates should not be done via these {@link #subscribers}.
  */
+@JavaLegacyArtifact
 public class ConfigurationI implements Configuration {
     private final Map<Object, Object> config_store;
     @Deprecated
@@ -43,7 +45,7 @@ public class ConfigurationI implements Configuration {
             final Set<OptionSubscriber<Object>> key_subscribers;
             if (!config_store.containsKey(key)) {
                 if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-                    assertThat(subscribers.containsKey(key)).isFalse();
+                    Bools.require(!subscribers.containsKey(key));
                 }
                 final Option<T> option = key.getDeclaredConstructor().newInstance();
                 key_subscribers = new HashSet<>();
