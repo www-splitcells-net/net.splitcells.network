@@ -1,106 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:xi="http://www.w3.org/2001/XInclude"
-	xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:x="http://www.w3.org/1999/xhtml"
-	xmlns="http://splitcells.net/sew.xsd"
-	xmlns:d="http://splitcells.net/den.xsd"
-	xmlns:p="http://splitcells.net/private.xsd"
-	xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
-	<meta>
-		<title>Origin of The Project Generic Allocator</title>
-		<description>This post explains how the Gel project came to light.</description>
-	</meta>
-	<chapter>
-		<title>Initial Ideas</title>
-		<paragraph>Before creating this project there was the idea, to create or use a system,
-			in order to reason about complex or interactive system like an economic system.
-			Unfortunately, there were only theoretic considerations, about properties such a system would have.
-			Therefore, these considerations had no big utility in practice,
-			because an understanding for basic stuff was not present.
-			These theoretic considerations were the way to get first tentative understandings about modelling complex systems.
-		</paragraph>
-		<paragraph>It was expected that for such a system sometimes the only way to reason about such a system,
-			would be to execute that system, while studying the effect of given parameters on the execution result.
-			This though later lead to the crisis network project.
-		</paragraph>
-	</chapter>
-	<chapter>
-		<title>Universal Allocation Program</title>
-		<paragraph>
-			The idea of this project originated from an internship
-			during my
-			studies of computer science. During the internship the
-			assignment
-			problem solver
-			<link>
-				<text>Universal Allocation Program</text>
-				<post>/2015/04/20/universal-allocation-program-manual</post>
-			</link>
-			was
-			developed. This program had two purposes.
-		</paragraph>
-		<paragraph>First of all it had to assign pupils to a set of courses
-			where each pupil had one or more preferred courses. Additionally, the
-			number of pupil in each course was limited. Each course which took
-			place also had to have more pupil than specified by a certain
-			threshold.
-		</paragraph>
-		<paragraph>The second goal of the program was to provide an expressive
-			problem model. This was tested with a second problem. The task was to
-			schedule exams of pupils. The problem could be modeled by the
-			program. Unfortunately, the program was not able to solve it because
-			a more advanced solving algorithm than present was
-			needed.
-		</paragraph>
-		<paragraph>The assignment problem model was used as a base,
-			because the school problem at hand and other problem candidates during that time dealt with the problem of assigning some kind of resource to some kind of entities.
-			In other words, the assignment problem model fits very well for topics in operation research.</paragraph>
-		<paragraph>One could say, that using an established open source assignment problem framework as a foundation would be best,
-			but during this time no such framework was known for me on Java.
-			Generally speaking, it was for me personally really hard to find such software online with an active community or at least good enough foundational code,
-			because there were many CSP frameworks,
-			but assignment problem frameworks were lacking.
-			I also knew of some implementations in real life,
-			but these were highly experimental, without documentation and licensing, or I did not have a chance of source code access.
-			One could argue, that my naivety leaded me to creating unnecessary code.
-			The topic of migrating this project to a different more actively maintained base framework
-			is always some thought in the back of my head.
-			What would or should happen if a better open source foundational framework would be found?
-		</paragraph>
-	</chapter>
-	<chapter>
-		<title>A Fresh Start via the Generic Allocator</title>
-		<paragraph>The goal of my master thesis was to create a new framework
-			for
-			assignment problems that had an improved problem model and
-			superior
-			solving routines compared to the Universal Allocation
-			Program.
-			Three
-			scheduling problems of schools were used in order to
-			validate the
-			framework. Two of the problems were optimally solved for
-			the given
-			test cases. The third problem was nearly solved but in the
-			end correct
-			solutions were not produced (for a given problem instance
-			about 5 out
-			of 508 assignments were done incorrectly). In addition,
-			each problem
-			required its own solving routine.
-		</paragraph>
-	</chapter>
-	<chapter>
-		<title>The Rewrite of the Generic Allocator</title>
-		<paragraph>After getting my master's degree in computer science I
-			wanted to learn more about solution problems, artificial
-			intelligence(AI) and programming. Therefore, I have created this
-			hobby project in order to organize my learning process in this field.
-			The framework of my master thesis (which is used as the project's
-			name) is recycled for this undertaking. Unfortunately the foundation
-			of the framework needs some improvement which in practice leads to a
-			rewrite of the framework.
-		</paragraph>
-	</chapter>
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd"
+         xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Origin of The Project Generic Allocator</title>
+        <description>This post explains how the Gel project came to light.</description>
+    </meta>
+    <chapter>
+        <title>Initial Ideas</title>
+        <paragraph>Before creating this project there was the idea, to create or use a system,
+            in order to reason about complex or interactive system like an economic system.
+            Unfortunately, there were only theoretic considerations, about properties such a system would have.
+            Therefore, these considerations had no big utility in practice,
+            because an understanding for basic stuff was not present.
+            These theoretic considerations were the way to get first tentative understandings about modelling complex
+            systems.
+        </paragraph>
+        <paragraph>It was expected that for such a system sometimes the only way to reason about such a system,
+            would be to execute that system, while studying the effect of given parameters on the execution result.
+            This though later lead to the crisis network project.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Universal Allocation Program (2015?)</title>
+        <paragraph>
+            The idea of this project originated from an internship
+            during my
+            studies of computer science. During the internship the
+            assignment
+            problem solver
+            <link>
+                <text>Universal Allocation Program</text>
+                <post>/2015/04/20/universal-allocation-program-manual</post>
+            </link>
+            was
+            developed. This program had two purposes.
+        </paragraph>
+        <paragraph>First of all it had to assign pupils to a set of courses
+            where each pupil had one or more preferred courses. Additionally, the
+            number of pupil in each course was limited. Each course which took
+            place also had to have more pupil than specified by a certain
+            threshold.
+        </paragraph>
+        <paragraph>The second goal of the program was to provide an expressive
+            problem model. This was tested with a second problem. The task was to
+            schedule exams of pupils. The problem could be modeled by the
+            program. Unfortunately, the program was not able to solve it because
+            a more advanced solving algorithm than present was
+            needed.
+        </paragraph>
+        <paragraph>The assignment problem model was used as a base,
+            because the school problem at hand and other problem candidates during that time dealt with the problem of
+            assigning some kind of resource to some kind of entities.
+            In other words, the assignment problem model fits very well for topics in operation research.
+        </paragraph>
+        <paragraph>One could say, that using an established open source assignment problem framework as a foundation
+            would be best,
+            but during this time no such framework was known for me on Java.
+            Generally speaking, it was for me personally really hard to find such software online with an active
+            community or at least good enough foundational code,
+            because there were many CSP frameworks,
+            but assignment problem frameworks were lacking.
+            I also knew of some implementations in real life,
+            but these were highly experimental, without documentation and licensing, or I did not have a chance of
+            source code access.
+            One could argue, that my naivety leaded me to creating unnecessary code.
+            The topic of migrating this project to a different more actively maintained base framework
+            is always some thought in the back of my head.
+            What would or should happen if a better open source foundational framework would be found?
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>A Fresh Start via the Generic Allocator (2016)</title>
+        <paragraph>The goal of my master thesis was to create a new framework
+            for
+            assignment problems that had an improved problem model and
+            superior
+            solving routines compared to the Universal Allocation
+            Program.
+            Three
+            scheduling problems of schools were used in order to
+            validate the
+            framework.
+        </paragraph>
+        <paragraph>Two of the problems were optimally solved for
+            the given
+            test cases. The third problem was nearly solved but in the
+            end correct
+            solutions were not produced (for a given problem instance
+            about 5 out
+            of 508 assignments were done incorrectly). In addition,
+            each problem
+            required its own solving routine.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>The Rewrite of the Generic Allocator (2016-2022)</title>
+        <paragraph>After getting my master's degree in computer science I
+            wanted to learn more about solution problems, artificial
+            intelligence(AI) and programming. Therefore, I have created this
+            hobby project in order to organize my learning process in this field.
+            The framework of my master thesis (which is used as the project's
+            name) is recycled for this undertaking. Unfortunately, the foundation
+            of the framework needs some improvement which in practice leads to a
+            rewrite of the framework.
+        </paragraph>
+        <paragraph>Sadly, this rewrite was a catastrophe, as it took too much time.
+            This was basically caused by the method of writing the code from scratch.
+            I basically looked at the code from the previous version and migrated it file by file to the next version,
+            which is not that bad on its own.
+            Regrettably, I thereby wrote the optimization interface and constraint system from scratch,
+            so that too much of other code needed to be adjusted as well, which caused a lot of issues.
+            A more detailed article about this can be found
+            <link>
+                <text>here</text>
+                <url>https://splitcells-net.srht.site/blog/2021-07-07-creating-the-first-public-release/</url>
+            </link>.
+        </paragraph>
+    </chapter>
 </article>
