@@ -2,6 +2,8 @@
 set -e
 echo ../$1
 cd ../$1
-git remote show gitlab || git remote add gitlab git@gitlab.com:splitcells-net/"$1".git
+# TODO Maybe do a ipv 4/6 switch in the future.
+# The following does not always work on GitLab ipv6: git remote show gitlab || git remote add gitlab git@gitlab.com:splitcells-net/"$1".git
+git fetch --ipv4 gitlab || git remote add gitlab git@gitlab.com:splitcells-net/"$1".git
 git remote set-url gitlab git@gitlab.com:splitcells-net/"$1".git
-git push gitlab
+git push -4 gitlab
