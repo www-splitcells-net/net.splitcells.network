@@ -53,6 +53,9 @@
 			a more advanced solving algorithm than present was
 			needed.
 		</paragraph>
+		<paragraph>The assignment problem model was used as a base,
+			because the school problem at hand and other problem candidates during that time dealt with the problem of assigning some kind of resource to some kind of entities.
+			In other words, the assignment problem model fits very well for topics in operation research.</paragraph>
 		<paragraph>One could say, that using an established open source assignment problem framework as a foundation would be best,
 			but during this time no such framework was known for me on Java.
 			Generally speaking, it was for me personally really hard to find such software online with an active community or at least good enough foundational code,
