@@ -10,3 +10,7 @@ cd ../net.splitcells.network.log
     cd ../net.splitcells.network
 cd projects/net.splitcells.network.worker
 bin/execute
+cd ../../../net.splitcells.network.log
+    # Normally this is done via the Java code in 'bin/execute'.
+    # Under some conditions this does not work, because git cannot find the 'user.name' or 'user.email' config.
+    repo.commit.all
