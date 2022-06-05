@@ -124,7 +124,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
 
     private StatusReport linkValidityStatus() {
         // TODO HACK This should be create via an Dem Option (aka dependency injection).
-        final var logRepo = logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"));
+        final var logRepo = logger();
         final var invalidLinkHistory = logRepo.readExecutionResults(RenderingValidatorForHtmlLinks.reportPath("build"), config().configValue(HostName.class));
         final var invalidLinkTable = Lists.list(invalidLinkHistory.split("\n"));
         invalidLinkTable.remove(0);

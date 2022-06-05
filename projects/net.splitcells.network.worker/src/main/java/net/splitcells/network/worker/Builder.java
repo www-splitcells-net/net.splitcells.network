@@ -18,7 +18,7 @@ public class Builder {
         if (args.length != 1) {
             throw new IllegalArgumentException("Exactly one argument is required, but " + args.length + " were given. The argument is the id of the test executor.");
         }
-        Dem.process(() -> testUnits(list(logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network"))))
+        Dem.process(() -> testUnits(list(logger()))
                 , env -> env.config().withConfigValue(ProgramName.class, args[0]));
     }
 

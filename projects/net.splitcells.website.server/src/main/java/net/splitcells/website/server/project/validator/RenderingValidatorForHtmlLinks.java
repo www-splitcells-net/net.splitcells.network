@@ -96,7 +96,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
 
     @Override
     public void endReport() {
-        final var logger = logger(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log"));
+        final var logger = logger();
         logger.logExecutionResults(reportPath(reportName)
                 , config().configValue(HostName.class)
                 , LocalDate.now()

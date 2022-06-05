@@ -28,6 +28,7 @@ import static net.splitcells.dem.resource.Files.appendToFile;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Files.writeToFile;
+import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.testing.ReportEntryKey.END_TIME;
 import static net.splitcells.dem.testing.ReportEntryKey.START_TIME;
 import static net.splitcells.dem.testing.ReportEntryTimeKey.DATE_TIME_FORMAT;
@@ -50,17 +51,24 @@ import static net.splitcells.dem.testing.ReportEntryTimeKey.DATE_TIME_FORMAT;
 public class Logger implements TestExecutionListener {
     private static Pattern UNIQUE_ID = Pattern.compile("(\\[.*\\])(/)(\\[[a-zA-Z]*:)(.*)(\\])(/)(\\[[a-zA-Z-]*:)([a-zA-Z-_]*)(.*\\])");
 
-    public static Logger logger(Path logProject) {
-        return new Logger(logProject);
+    public static Logger logger() {
+        return logger(config().configValue(ProjectsFolder.class).resolve("net.splitcells.network")
+                , config().configValue(ProjectsFolder.class).resolve("net.splitcells.network.log"));
+    }
+
+    private static Logger logger(Path logProject, Path networkProject) {
+        return new Logger(logProject, networkProject);
     }
 
     private static final String BUILDER_RUNTIME_LOG = "net/splitcells/network/logger/builder/runtime";
 
     private final Path logProject;
+    private final Path networkProject;
     private final Map<TestIdentifier, Long> testToStartTime = map();
 
-    private Logger(Path logProject) {
+    private Logger(Path networkProject, Path logProject) {
         this.logProject = logProject;
+        this.networkProject = networkProject;
     }
 
     public void logExecutionResults(String subject, String executor, LocalDate localDate, String resultType, double result) {
@@ -126,7 +134,7 @@ public class Logger implements TestExecutionListener {
      * in order to extend the PATH variable accordingly only inside the current shell session.
      */
     public void commit() {
-        SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", logProject);
+        SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", networkProject);
     }
 
     @Override
