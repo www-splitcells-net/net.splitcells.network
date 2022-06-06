@@ -288,7 +288,7 @@ public class SchoolCourseSchedulingTest {
                                     }
                                 });
                                 final var retainedAllocatedHours = solution.lookup(COURSE_ID, course).getLines().stream()
-                                        .filter(l -> !freeSlots.contains(l))
+                                        .filter(l -> !freeSlots.contains(solution.demandOfAllocation(l)))
                                         .map(l -> l.value(ALLOCATED_HOURS))
                                         .reduce((a, b) -> a + b)
                                         .orElse(0);
