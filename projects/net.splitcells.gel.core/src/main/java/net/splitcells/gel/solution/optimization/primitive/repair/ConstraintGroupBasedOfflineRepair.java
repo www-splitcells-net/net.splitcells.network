@@ -31,6 +31,7 @@ import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.Constraint.*;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
@@ -69,6 +70,11 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
     }
 
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
+            (GroupSelector groupSelector, SupplyOfflineSelector repairer, boolean repairCompliants) {
+        return new ConstraintGroupBasedOfflineRepair(groupSelector, repairer, repairCompliants);
+    }
+
+    public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
             (GroupSelector groupSelector) {
         return new ConstraintGroupBasedOfflineRepair(groupSelector, SupplyOfflineSelectors.supplySelector());
     }
@@ -87,10 +93,16 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
 
     private final GroupSelector groupSelector;
     private final SupplyOfflineSelector supplyOfflineSelector;
+    private final boolean repairCompliants;
 
     protected ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer) {
+        this(groupSelector, repairer, true);
+    }
+
+    protected ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer, boolean repairCompliants) {
         this.groupSelector = groupSelector;
         this.supplyOfflineSelector = repairer;
+        this.repairCompliants = repairCompliants;
     }
 
     @Override
@@ -149,6 +161,16 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
                 .filter(processing -> !constraintGrouping
                         .defying(processing.value(INCOMING_CONSTRAINT_GROUP))
                         .isEmpty())
+                /**
+                 * TODO HACK This is code duplication.
+                 * It reimplements part of {@link ConstraintGroupBasedOfflineRepair#freeDefyingGroupOfConstraintGroup}.
+                 */
+                .filter(processing -> {
+                    if (!repairCompliants) {
+                        return !processing.value(RATING).equalz(noCost());
+                    }
+                    return true;
+                })
                 .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP)
                         , processing.value(LINE)))
                 .forEach(processing -> {
@@ -189,6 +211,19 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
                         .values())
                 .flatMap(streamOfLineList -> streamOfLineList.stream())
                 .distinct()
+                .filter(allocation -> {
+                    if (!repairCompliants) {
+                        return !constraint
+                                .lineProcessing()
+                                .columnView(LINE)
+                                .lookup(allocation)
+                                .getLines()
+                                .get(0)
+                                .value(RATING)
+                                .equalz(noCost());
+                    }
+                    return true;
+                })
                 .map(allocation -> optimizationEvent
                         (REMOVAL
                                 , solution.demandOfAllocation(allocation).toLinePointer()

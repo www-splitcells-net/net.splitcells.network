@@ -31,6 +31,8 @@ import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.constraint.Constraint.RATING;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
@@ -82,10 +84,16 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     private final GroupSelector groupSelector;
     private final SupplySelector supplySelector;
-
+    private final boolean repairCompliants;
+    
     protected ConstraintGroupBasedRepair(GroupSelector groupSelector, SupplySelector repairer) {
+        this(groupSelector, repairer, true);
+    }
+
+    protected ConstraintGroupBasedRepair(GroupSelector groupSelector, SupplySelector repairer, boolean repairCompliants) {
         this.groupSelector = groupSelector;
         this.supplySelector = repairer;
+        this.repairCompliants = repairCompliants;
     }
 
     @Override
@@ -126,6 +134,16 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                 .filter(processing -> !constraintGrouping
                         .defying(processing.value(INCOMING_CONSTRAINT_GROUP))
                         .isEmpty())
+                /**
+                 * TODO HACK This is code duplication.
+                 * It reimplements part of {@link ConstraintGroupBasedOfflineRepair#freeDefyingGroupOfConstraintGroup}.
+                 */
+                .filter(processing -> {
+                    if (!repairCompliants) {
+                        return !processing.value(RATING).equalz(noCost());
+                    }
+                    return true;
+                })
                 .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP)
                         , processing.value(LINE)))
                 .forEach(processing -> {
@@ -162,6 +180,19 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                         .values())
                 .flatMap(streamOfLineList -> streamOfLineList.stream())
                 .distinct()
+                .filter(allocation -> {
+                    if (!repairCompliants) {
+                        return !constraint
+                                .lineProcessing()
+                                .columnView(LINE)
+                                .lookup(allocation)
+                                .getLines()
+                                .get(0)
+                                .value(RATING)
+                                .equalz(noCost());
+                    }
+                    return true;
+                })
                 .forEach(solution::remove);
     }
 }
