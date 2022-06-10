@@ -10,9 +10,11 @@
  */
 package net.splitcells.dem.lang;
 
+import net.bytebuddy.implementation.bytecode.Throw;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.namespace.NameSpace;
+import net.splitcells.dem.utils.ExecutionException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -94,9 +96,13 @@ public final class Xml {
     }
 
     public static Element rElement(NameSpace nameSpace, String name) {
-        final var rVal = ROOT_DOCUMENT.createElement(nameSpace.prefixedName(name));
-        elementWithChildren(rVal, nameSpaceDecleration(nameSpace));
-        return rVal;
+        try {
+            final var rVal = ROOT_DOCUMENT.createElement(nameSpace.prefixedName(name));
+            elementWithChildren(rVal, nameSpaceDecleration(nameSpace));
+            return rVal;
+        } catch (Throwable e) {
+            throw ExecutionException.executionException("Could not transform String to XML element: " + name);
+        }
     }
 
     public static Element elementWithChildren(NameSpace nameSpace, String name, String value) {
