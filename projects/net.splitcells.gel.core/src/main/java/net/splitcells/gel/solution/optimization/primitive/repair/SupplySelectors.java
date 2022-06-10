@@ -50,6 +50,7 @@ public class SupplySelectors {
             for (final var demandGroup : freeDemandGroups.values()) {
                 for (final var freeDemand : demandGroup) {
                     if (solution.demandsUsed().getRawLine(freeDemand.index()) != null) {
+                        final var startHistoryIndex = solution.history().currentIndex();
                         Optional<Line> bestSupply = Optional.empty();
                         var bestRating = solution.constraint().rating();
                         for (final var freeSupply : solution.suppliesFree().getLines().shuffle(randomness)) {
@@ -61,6 +62,7 @@ public class SupplySelectors {
                                 bestRating = nextRating;
                             }
                         }
+                        solution.history().resetTo(startHistoryIndex);
                         if (bestSupply.isPresent()) {
                             solution.allocate(freeDemand, bestSupply.get());
                         }
