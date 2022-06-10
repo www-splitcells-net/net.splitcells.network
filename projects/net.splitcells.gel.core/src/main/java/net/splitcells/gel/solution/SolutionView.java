@@ -122,6 +122,20 @@ public interface SolutionView extends ProblemView {
                                 .orElse(getClass().getSimpleName()));
     }
 
+    default Path dataContainer(int i) {
+        final var standardDocumentFolder = environment().config().configValue(ProcessPath.class)
+                .resolve("src/main/xml/net/splitcells/gel/GelEnv/" + i);
+        return standardDocumentFolder
+                .resolve(
+                        path()
+                                .reduced((a, b) -> a + "." + b)
+                                .orElse(getClass().getSimpleName()));
+    }
+
+    default void createStandardAnalysis(int i) {
+        createAnalysis(dataContainer(i));
+    }
+
     default void createStandardAnalysis() {
         createAnalysis(dataContainer());
     }
