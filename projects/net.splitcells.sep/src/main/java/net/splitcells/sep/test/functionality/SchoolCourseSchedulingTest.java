@@ -223,7 +223,7 @@ public class SchoolCourseSchedulingTest {
         );
     }
 
-    public static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath) {
+    public static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath, boolean repairCompliants) {
         final var randomness = randomness();
         // TODO Split up into multiple methods for better overview and documentation.
         return ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(groupSelector(randomness, minimumConstraintGroupPath
@@ -368,6 +368,7 @@ public class SchoolCourseSchedulingTest {
                             });
                     return optimization;
                 });
+                }, repairCompliants);
         /* TODO REMOVE this when the obove works.
         return simpleConstraintGroupBasedRepair(groupSelector(randomness(), minimumConstraintGroupPath
                         , 1)

@@ -61,6 +61,11 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
 public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
+            (GroupSelector groupSelector, SupplySelector repairer, boolean repairCompliants) {
+        return new ConstraintGroupBasedRepair(groupSelector, repairer, repairCompliants);
+    }
+
+    public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
             (GroupSelector groupSelector, SupplySelector repairer) {
         return new ConstraintGroupBasedRepair(groupSelector, repairer);
     }
