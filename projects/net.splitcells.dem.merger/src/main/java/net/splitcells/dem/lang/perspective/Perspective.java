@@ -150,7 +150,13 @@ public interface Perspective extends PerspectiveView {
         if (STRING.equals(nameSpace()) && children().isEmpty()) {
             dom = Xml.textNode(name());
         } else {
-            dom = Xml.rElement(nameSpace(), name());
+            if (name().contains(" ")) {
+                final var element = Xml.rElement(nameSpace(), "val");
+                element.setAttributeNode(Xml.attribute("name", name()));
+                dom = element;
+            } else {
+                dom = Xml.rElement(nameSpace(), name());
+            }
         }
         children().forEach(child -> dom.appendChild(child.toDom()));
         return dom;
