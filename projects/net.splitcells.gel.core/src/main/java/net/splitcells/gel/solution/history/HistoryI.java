@@ -12,6 +12,8 @@ package net.splitcells.gel.solution.history;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.lang.perspective.Perspective.toStringPathsDescription;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
@@ -20,6 +22,7 @@ import static net.splitcells.gel.solution.history.event.Allocation.allocations;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.ADDITION;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
 import static net.splitcells.gel.solution.history.meta.MetaDataI.metaData;
+import static net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation.allocationNaturalArgumentation;
 import static net.splitcells.gel.solution.history.meta.type.AllocationRating.allocationRating;
 import static net.splitcells.gel.solution.history.meta.type.CompleteRating.completeRating;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,6 +32,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.lang.perspective.PerspectiveI;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.Solution;
@@ -41,6 +45,7 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.allocation.Allocationss;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import org.w3c.dom.Node;
@@ -76,6 +81,15 @@ public class HistoryI implements History {
                     , completeRating(solution.constraint().rating()));
             metaData.with(AllocationRating.class
                     , allocationRating(solution.constraint().rating(allocationValues)));
+            {
+                final var naturalArgumentation = solution.constraint()
+                        .naturalArgumentation(allocationValues, solution.constraint().injectionGroup());
+                if (naturalArgumentation.isPresent()) {
+                    metaData.with(AllocationNaturalArgumentation.class
+                            , allocationNaturalArgumentation(
+                                    toStringPathsDescription(naturalArgumentation.get().toStringPaths())));
+                }
+            }
             final Line allocation
                     = demands().addTranslated(list(
                     moveLastEventIdForward()
@@ -120,7 +134,7 @@ public class HistoryI implements History {
                 assertThat(index).isLessThanOrEqualTo(size() - 1);
             }
         }
-        if (size() == 0 && index == - 1) {
+        if (size() == 0 && index == -1) {
             return;
         }
         if (size() - 1 == index) {
