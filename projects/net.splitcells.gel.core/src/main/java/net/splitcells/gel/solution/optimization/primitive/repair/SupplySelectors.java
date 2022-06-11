@@ -2,6 +2,8 @@ package net.splitcells.gel.solution.optimization.primitive.repair;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
@@ -11,6 +13,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -49,22 +52,26 @@ public class SupplySelectors {
         return freeDemandGroups -> solution -> {
             for (final var demandGroup : freeDemandGroups.values()) {
                 for (final var freeDemand : demandGroup) {
-                    if (solution.demandsUsed().getRawLine(freeDemand.index()) != null) {
-                        final var startHistoryIndex = solution.history().currentIndex();
-                        Optional<Line> bestSupply = Optional.empty();
-                        var bestRating = solution.constraint().rating();
-                        for (final var freeSupply : solution.suppliesFree().getLines().shuffle(randomness)) {
-                            final var allocation = solution.allocate(freeDemand, freeSupply);
-                            final var nextRating = solution.constraint().rating();
-                            solution.remove(allocation);
-                            if (nextRating.betterThan(bestRating)) {
-                                bestSupply = Optional.of(freeSupply);
-                                bestRating = nextRating;
+                    if (null == solution.demandsUsed().getRawLine(freeDemand.index())) {
+                        // TODO HACK
+                        final List<Line> bestSupply = list();
+                        final var bestRating = list(solution.constraint().rating());
+                        solution.history().processWithoutHistory(() -> {
+                            for (final var freeSupply : solution.suppliesFree().getLines().shuffle(randomness)) {
+                                final var allocation = solution.allocate(freeDemand, freeSupply);
+                                final var nextRating = solution.constraint().rating();
+                                solution.remove(allocation);
+                                if (bestSupply.isEmpty()) {
+                                    bestSupply.add(freeSupply);
+                                    bestRating.set(0, nextRating);
+                                } else if (nextRating.betterThan(bestRating.get(0))) {
+                                    bestSupply.set(0, freeSupply);
+                                    bestRating.set(0, nextRating);
+                                }
                             }
-                        }
-                        solution.history().resetTo(startHistoryIndex);
-                        if (bestSupply.isPresent()) {
-                            solution.allocate(freeDemand, bestSupply.get());
+                        });
+                        if (bestSupply.get(0) != null) {
+                            solution.allocate(freeDemand, bestSupply.get(0));
                         }
                     }
                 }

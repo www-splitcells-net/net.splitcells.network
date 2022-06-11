@@ -14,6 +14,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.perspective.Perspective.toStringPathsDescription;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
@@ -159,6 +160,19 @@ public class HistoryI implements History {
                 ).collect(Lists.toList());
         resetToInOrder(indexToReversal);
         registerEventIsEnabled = true;
+    }
+
+    @Override
+    public void processWithoutHistory(Runnable runnable) {
+        if (!registerEventIsEnabled) {
+            throw executionException("The history is already disabled. In theory there may be no error. In practice, this state is very suspicious.");
+        }
+        try {
+            registerEventIsEnabled = false;
+            runnable.run();
+        } finally {
+            registerEventIsEnabled = true;
+        }
     }
 
     private void resetToInOrder(List<Integer> indexes) {

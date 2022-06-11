@@ -68,6 +68,14 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
     void resetTo(int index);
 
     /**
+     * <p>During {@link Runnable#run()} this object does not log the history of the tracked {@link net.splitcells.gel.solution.Solution}.</p>
+     * <p>TODO IDEA Create an event marking, that this method was called.</p>
+     *
+     * @param runnable This is the code to be run during which the {@link History} is disabled.
+     */
+    void processWithoutHistory(Runnable runnable);
+
+    /**
      * @return Number Of Events Since History Start
      */
     int currentIndex();
