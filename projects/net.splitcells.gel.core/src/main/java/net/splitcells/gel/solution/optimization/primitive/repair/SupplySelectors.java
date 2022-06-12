@@ -11,6 +11,7 @@ import net.splitcells.gel.solution.optimization.primitive.SupplySelection;
 
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -50,33 +51,46 @@ public class SupplySelectors {
     public static SupplySelector hillClimber() {
         final var randomness = randomness();
         return freeDemandGroups -> solution -> {
+            final var distinctFreeSupplies = solution.suppliesFree().getDistinctLines();
             for (final var demandGroup : freeDemandGroups.values()) {
                 for (final var freeDemand : demandGroup) {
+                    if (distinctFreeSupplies.isEmpty()) {
+                        return;
+                    }
                     if (null == solution.demandsUsed().getRawLine(freeDemand.index())) {
                         // TODO HACK
                         final List<Line> bestSupply = list();
                         final var bestRating = list(solution.constraint().rating());
+                        final List<Integer> distinctIndex = list(-1);
                         solution.history().processWithoutHistory(() -> {
-                            for (final var freeSupply : solution.suppliesFree().getLines().shuffle(randomness)) {
+                            IntStream.range(0, distinctFreeSupplies.size()).forEach(i -> {
+                                final var freeSupply = distinctFreeSupplies.get(i);
                                 final var allocation = solution.allocate(freeDemand, freeSupply);
                                 final var nextRating = solution.constraint().rating();
                                 solution.remove(allocation);
                                 if (bestSupply.isEmpty()) {
                                     bestSupply.add(freeSupply);
                                     bestRating.set(0, nextRating);
+                                    distinctIndex.set(0, i);
                                 } else if (nextRating.betterThan(bestRating.get(0))) {
                                     bestSupply.set(0, freeSupply);
                                     bestRating.set(0, nextRating);
+                                    distinctIndex.set(0, i);
                                 }
-                            }
+                            });
                         });
-                        if (bestSupply.get(0) != null) {
+                        if (!bestSupply.isEmpty() && bestSupply.get(0) != null) {
+                            final var freeSupplyValues = bestSupply.get(0).values();
                             solution.allocate(freeDemand, bestSupply.get(0));
+                            distinctFreeSupplies.removeAt(distinctIndex.get(0));
+                            solution.suppliesFree()
+                                    .lookupEquals(freeSupplyValues)
+                                    .findFirst()
+                                    .ifPresent(distinctFreeSupplies::add);
                         }
                     }
                 }
             }
-            return;
         };
     }
 
