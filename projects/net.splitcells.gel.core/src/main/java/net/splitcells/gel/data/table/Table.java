@@ -11,6 +11,7 @@
 package net.splitcells.gel.data.table;
 
 import static java.util.stream.Collectors.toList;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_OFFICE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TEXT;
@@ -20,12 +21,16 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -59,6 +64,21 @@ public interface Table extends Discoverable, Domable {
                 (rawLinesView().stream()
                         .filter(e -> e != null)
                         .collect(Collectors.toList()));
+    }
+
+    default List<Line> getDistinctLines() {
+        return getDistinctLineValues().stream()
+                .map(values -> lookupEquals(values).findFirst())
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Lists.toList());
+    }
+
+    default Set<List<Object>> getDistinctLineValues() {
+        return rawLinesView().stream()
+                .filter(e -> e != null)
+                .map(line -> headerView().stream().map(line::value).collect(Lists.toList()))
+                .collect(toSetOfUniques());
     }
 
     default Line getRawLine(int index) {
