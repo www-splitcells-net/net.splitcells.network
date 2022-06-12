@@ -12,6 +12,7 @@ package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.utils.random.Randomness;
 
@@ -24,6 +25,16 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 
 @JavaLegacyArtifact
 public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
+
+    @JavaLegacyBody
+    /**
+     * This method avoids problems caused by {@link java.util.List#remove(Object)}.
+     * 
+     * @param index
+     */
+    default void removeAt(int index) {
+        this.remove(index);
+    }
 
     @Deprecated
     default void addAll(T requiredArg, T... args) {
