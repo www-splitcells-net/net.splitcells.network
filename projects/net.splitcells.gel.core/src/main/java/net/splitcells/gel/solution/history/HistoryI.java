@@ -51,6 +51,9 @@ import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import org.w3c.dom.Node;
 
+/**
+ * TODO Limit or disable meta data in order to improve runtime performance.
+ */
 public class HistoryI implements History {
 
     private final Solution solution;
