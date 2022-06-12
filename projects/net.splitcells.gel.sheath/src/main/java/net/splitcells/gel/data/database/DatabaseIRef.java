@@ -161,7 +161,7 @@ public class DatabaseIRef extends DatabaseI {
              * TODO Check for {@link Attribute} compatibility and not Class compatibility.
              */
             lineValues.stream().forEach(e ->
-                    assertThat(e).as("<%s> should not contain nulls.", lineValues)
+                    assertThat(e).as("A line <%s> should not contain nulls.", lineValues)
                             .isNotNull());
             range(0, lineValues.size()).forEach(i -> attributes.get(i).isInstanceOf(lineValues.get(i)).required());
         }
