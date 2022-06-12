@@ -102,4 +102,9 @@ public class ForAllWithCondition<T> implements Rater {
                 }
         );
     }
+
+    @Override
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+        return "For all with condition " + condition;
+    }
 }

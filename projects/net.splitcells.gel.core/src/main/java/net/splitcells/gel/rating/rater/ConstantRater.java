@@ -98,4 +98,9 @@ public class ConstantRater implements Rater {
     public String toString() {
         return getClass().getSimpleName();
     }
+
+    @Override
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+        return "Constant rater with " + rating;
+    }
 }

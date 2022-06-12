@@ -32,6 +32,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public final class Derivation implements Constraint {
@@ -66,7 +68,9 @@ public final class Derivation implements Constraint {
 
     @Override
     public Optional<Perspective> naturalArgumentation(GroupId group) {
-        throw notImplementedYet();
+        return derivationTarget.naturalArgumentation(group)
+                .map(argumentation -> perspective("Derived via " + derivationFunction + ".", GEL)
+                        .withChild(argumentation));
     }
 
     @Override
@@ -77,7 +81,9 @@ public final class Derivation implements Constraint {
     @Override
     public Optional<Perspective> naturalArgumentation
             (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
-        throw notImplementedYet();
+        return derivationTarget.naturalArgumentation(line, group, allocationSelector)
+                .map(argumentation -> perspective("Derived via " + derivationFunction + ".", GEL)
+                        .withChild(argumentation));
     }
 
     @Override
