@@ -14,6 +14,8 @@ import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.utils.MathUtils;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -34,11 +36,8 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
  * Checks whether the {@linke Line}s of a group have the same value for a given {@link Attribute}.
  */
 public class AllSame {
-    public static <T> Rater allSame(Attribute<T> attribute) {
-        return allSame(attribute, "values of " + attribute.name() + " should have the same value");
-    }
 
-    private static <T> Rater allSame(Attribute<T> attribute, String description) {
+    public static <T> Rater allSame(Attribute<T> attribute) {
         return groupRater(new GroupRater() {
 
             @Override
@@ -77,8 +76,14 @@ public class AllSame {
 
             @Override
             public String toString() {
-                return description;
+                return "values of " + attribute.name() + " should have the same value";
             }
+        }, (line, groupLineProcessing, incomingGroup) -> {
+            final var distinctValues = groupLineProcessing.getLines().stream()
+                    .map(l -> l.value(LINE).value(attribute).toString())
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElse("undefined");
+            return "values of " + attribute.name() + " should have the same value, but has the values '" + distinctValues + "'.";
         });
     }
 
