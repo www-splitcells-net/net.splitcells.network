@@ -22,6 +22,7 @@ import org.w3c.dom.Node;
 
 import java.util.Collection;
 import java.util.Optional;
+
 import net.splitcells.gel.rating.framework.Rating;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -37,6 +38,10 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 public class RaterBasedOnLineGroup implements Rater {
 
     public static RaterBasedOnLineGroup groupRater(GroupRater rater) {
+        return groupRater(rater, (a, b, c) -> rater.toString());
+    }
+
+    public static RaterBasedOnLineGroup groupRater(GroupRater rater, SimpleDescriptor simpleDescriptor) {
         return raterBasedOnLineGroup(new RaterBasedOnLineGroupLambda() {
 
             @Override
@@ -66,17 +71,23 @@ public class RaterBasedOnLineGroup implements Rater {
             public String toString() {
                 return rater.toString();
             }
-        });
+        }, simpleDescriptor);
+    }
+
+    public static RaterBasedOnLineGroup raterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater, SimpleDescriptor simpleDescriptor) {
+        return new RaterBasedOnLineGroup(rater, simpleDescriptor);
     }
 
     public static RaterBasedOnLineGroup raterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater) {
-        return new RaterBasedOnLineGroup(rater);
+        return new RaterBasedOnLineGroup(rater, (a, b, c) -> rater.toString());
     }
 
     private final RaterBasedOnLineGroupLambda rater;
+    private final SimpleDescriptor simpleDescriptor;
 
-    private RaterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater) {
+    private RaterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater, SimpleDescriptor simpleDescriptor) {
         this.rater = rater;
+        this.simpleDescriptor = simpleDescriptor;
     }
 
     @Override
@@ -112,6 +123,6 @@ public class RaterBasedOnLineGroup implements Rater {
 
     @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
-        return rater.toString();
+        return simpleDescriptor.toSimpleDescription(line, groupsLineProcessing, incomingGroup);
     }
 }
