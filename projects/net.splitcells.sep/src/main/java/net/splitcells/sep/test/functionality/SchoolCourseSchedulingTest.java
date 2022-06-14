@@ -35,6 +35,8 @@ import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
+import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
+import net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors;
 import net.splitcells.sep.Network;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
@@ -72,6 +74,7 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.Constrai
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.hillClimber;
 import static net.splitcells.sep.Network.network;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -122,8 +125,14 @@ public class SchoolCourseSchedulingTest {
         GelDev.process(() -> {
             var network = registerSchoolScheduling(network(), 15, 20, 30);
             rangeClosed(1, 1).forEach(i -> {
-                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3)
+                /* TODO This can be used to demonstrate the problems of implementing own custom supply selector.
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3, false)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+                network.process(RAILS_FOR_SCHOOL_SCHEDULING, s -> s.createStandardAnalysis(1));*/
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, linearInitialization());
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, simpleConstraintGroupBasedRepair(groupSelector(randomness(), 3
+                                , 1), hillClimber(), false)
+                        , (currentSolution, step) -> step <= 10 && !currentSolution.isOptimal());
 
                 /*network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3)
                         , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
@@ -367,7 +376,6 @@ public class SchoolCourseSchedulingTest {
                                 }
                             });
                     return optimization;
-                });
                 }, repairCompliants);
         /* TODO REMOVE this when the obove works.
         return simpleConstraintGroupBasedRepair(groupSelector(randomness(), minimumConstraintGroupPath
