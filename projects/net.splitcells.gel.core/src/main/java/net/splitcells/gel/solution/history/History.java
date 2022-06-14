@@ -105,8 +105,11 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
                 table.appendChild(header);
                 header.appendChild(tableCell(ALLOCATION_ID.name()));
                 header.appendChild(tableCell("allocation-type"));
-                getLines().get(0).value(ALLOCATION_EVENT).demand().context().headerView().forEach(a -> header.appendChild(tableCell("demand-" + a.name())));
-                getLines().get(0).value(ALLOCATION_EVENT).supply().context().headerView().forEach(a -> header.appendChild(tableCell("supply-" + a.name())));
+                if (getLines().isEmpty()) {
+                    // TODO HACK Prevents errors if the history is empty.
+                    getLines().get(0).value(ALLOCATION_EVENT).demand().context().headerView().forEach(a -> header.appendChild(tableCell("demand-" + a.name())));
+                    getLines().get(0).value(ALLOCATION_EVENT).supply().context().headerView().forEach(a -> header.appendChild(tableCell("supply-" + a.name())));
+                }
                 header.appendChild(tableCell("allocation-cost"));
                 header.appendChild(tableCell("complete-cost"));
                 header.appendChild(tableCell(META_DATA.name()));
