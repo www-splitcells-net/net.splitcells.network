@@ -28,7 +28,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) ([also on Gemini](gemini://splitcells-net.srht.site)) and programming progress via our [changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
 
-🦉 Get a [bird's-eye view](src/main/md/net/splitcells/network/overview.md).
+🦉 Get a [bird's-eye project view](src/main/md/net/splitcells/network/overview.md).
 
 🔭 Research optimization.
 
@@ -63,9 +63,6 @@ Some of them are not strictly related to optimization and can be used in other c
   The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
   workflow has to be run manually.
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
-## Subproject Overview
-<img src="http://splitcells.net/net/splitcells/network/overview.svg" style="margin-left: auto; margin-right: auto; display: block; width: 100%;" alt="Project Overview"/>
-
 ## Project Cluster Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
