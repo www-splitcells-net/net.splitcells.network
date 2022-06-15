@@ -1,13 +1,13 @@
 # net.splitcells.network
-<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" style="margin-left: auto; margin-right: auto; display: block; width: 100%; margin-bottom: 2em;" alt="Logo"/>
 
-> Together we are more than the sum of our cells.
-
-## Subproject Overview
-
-<img src="http://splitcells.net/net/splitcells/network/overview.svg" style="margin-left: auto; margin-right: auto; display: block; width: 100%;" alt="Project Overview"/>
+<div align="center">
+  <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" style="width: 50%; display: block; margin: 1em;"/>
+  <p>Together we are more than the sum of our cells.</p>
+</div>
 
 ## Introduction
+
+Together we are more than the sum of our cells.
 We provide an open source ecosystem centered around optimization and operations research.
 
 The main project is the [Generic Allocator](http://splitcells.net/net/splitcells/gel/index.html).
@@ -16,6 +16,7 @@ A detailed introduction and documentation can be found [here](http://splitcells.
 An overview of the projects can be found [here](#networks-structure).
 Some of them are not strictly related to optimization and can be used in other contexts as well.
 [OS State Interface](projects/net.splitcells.os.state.interface/README.md) is the main example of such.
+
 ## Where to start?
 🚀 [Model and optimize problems.](http://splitcells.net/net/splitcells/gel/index.html)
 
@@ -62,7 +63,10 @@ Some of them are not strictly related to optimization and can be used in other c
   The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
   workflow has to be run manually.
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
-## Network's Structure
+## Subproject Overview
+<img src="http://splitcells.net/net/splitcells/network/overview.svg" style="margin-left: auto; margin-right: auto; display: block; width: 100%;" alt="Project Overview"/>
+
+## Project Cluster Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories:
 ```
