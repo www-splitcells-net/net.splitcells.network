@@ -65,7 +65,7 @@ Some of them are not strictly related to optimization and can be used in other c
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
 ## Project Cluster Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
-The cluster's filesystem consists of a folder containing repositories:
+The cluster's filesystem consists of a folder containing repositories without nesting:
 ```
 Project Cluster
 ├── net.splitcells.network
