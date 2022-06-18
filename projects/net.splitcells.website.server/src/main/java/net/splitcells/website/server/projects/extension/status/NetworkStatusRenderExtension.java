@@ -59,13 +59,13 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                         if (lastMeasurement.isPresent()) {
                             final var localDate = LocalDate.parse(lastMeasurement.get().split(",")[0]);
                             if (LocalDate.now().minusDays(7).isAfter(localDate)) {
-                                disruptedStatuses.append("<li>Build not executed successfully on "
+                                disruptedStatuses.append("<li>Build not executed successfully on <q>"
                                         + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
-                                        + ".</li>");
+                                        + "</q> in the last 7 days.</li>");
                             } else {
-                                successfulStatuses.append("<li>Build executed successfully on "
+                                successfulStatuses.append("<li>Build executed successfully on <q>"
                                         + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
-                                        + ".</li>");
+                                        + "</q>.</li>");
                             }
                         }
                     });
@@ -77,10 +77,10 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
             } else {
                 throw notImplementedYet();
             }
-            final var disruptedTasks = "<h2>Disrupted Tasks</h2><p>The following executors did not execute the network worker in the last 7 days:</p><ol>"
+            final var disruptedTasks = "<h2>Disrupted Tasks</h2><ol>"
                     + disruptedStatuses
                     + "</ol>";
-            final var successfulTasks = "<h2>Successful Tasks</h2><p>The following executors did execute the network worker in the last 7 days:</p><ol>"
+            final var successfulTasks = "<h2>Successful Tasks</h2><ol>"
                     + successfulStatuses
                     + "</ol>";
             return Optional.of(renderingResult(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks

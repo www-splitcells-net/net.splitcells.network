@@ -113,7 +113,7 @@
             <paragraph>Therefore, the algorithm constraint based repair was created (it is unknown if something like this already exists),
                 which primary goal is to construct complex optimization steps,
                 without the guidance of the solution's rating.
-                It does this, by grouping variables according to the problem's constraints and the errors of the given solution.
+                It does this, by grouping variables according to the problem's description and the errors of the given solution.
                 Afterward, complex optimizations events are created based on the variables' group.
             </paragraph>
         </chapter>
