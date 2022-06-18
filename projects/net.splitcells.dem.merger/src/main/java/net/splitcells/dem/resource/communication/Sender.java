@@ -13,26 +13,24 @@ package net.splitcells.dem.resource.communication;
 import net.splitcells.dem.data.set.SetWA;
 import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.environment.resource.Resource;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 public interface Sender<T> extends ListWA<T>, Resource {
 
-    static Sender<String> stringSender(OutputStream output) {
+    @JavaLegacyBody
+    static Sender<String> stringSender(java.io.OutputStream output) {
         return new Sender<String>() {
 
             @Override
             public void close() {
                 try {
                     output.close();
-                } catch (IOException e) {
+                } catch (java.io.IOException e) {
                     throw new RuntimeException(e);
                 }
             }
 
-            private PrintWriter printer = new PrintWriter(output);
+            private java.io.PrintWriter printer = new java.io.PrintWriter(output);
 
             @Override
             public <R extends ListWA<String>> R append(String arg) {
@@ -54,14 +52,15 @@ public interface Sender<T> extends ListWA<T>, Resource {
         };
     }
 
-    static Sender<String> stringSenderWithoutClosing(OutputStream output) {
+    @JavaLegacyBody
+    static Sender<String> stringSenderWithoutClosing(java.io.OutputStream output) {
         return new Sender<String>() {
 
             @Override
             public void close() {
             }
 
-            private PrintWriter printer = new PrintWriter(output);
+            private java.io.PrintWriter printer = new java.io.PrintWriter(output);
 
             @Override
             public <R extends ListWA<String>> R append(String arg) {

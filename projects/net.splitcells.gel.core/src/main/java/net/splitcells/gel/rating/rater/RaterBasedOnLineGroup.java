@@ -10,6 +10,7 @@
  */
 package net.splitcells.gel.rating.rater;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -91,7 +92,7 @@ public class RaterBasedOnLineGroup implements Rater {
     }
 
     @Override
-    public Collection<List<String>> paths() {
+    public Set<List<String>> paths() {
         throw notImplementedYet();
     }
 

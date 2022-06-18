@@ -174,7 +174,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Collection<net.splitcells.dem.data.set.list.List<String>> paths() {
+    public net.splitcells.dem.data.set.Set<net.splitcells.dem.data.set.list.List<String>> paths() {
         throw notImplementedYet();
     }
 }

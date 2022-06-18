@@ -15,6 +15,7 @@ import static java.util.Comparator.naturalOrder;
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.order.Comparator.*;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -30,6 +31,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.utils.CommonFunctions;
@@ -285,8 +287,8 @@ public class MinimalDistance<T> implements Rater {
     }
 
     @Override
-    public Collection<List<String>> paths() {
-        return contextes.stream().map(Discoverable::path).collect(toList());
+    public Set<List<String>> paths() {
+        return contextes.stream().map(Discoverable::path).collect(toSetOfUniques());
     }
 
     private Stream<Line> sortedStream(Table lines) {

@@ -1,5 +1,6 @@
 package net.splitcells.gel.constraint;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
@@ -55,8 +57,8 @@ public class ConstraintTest {
             }
 
             @Override
-            public Collection<List<String>> paths() {
-                return list();
+            public Set<List<String>> paths() {
+                return setOfUniques();
             }
         });
         final var validator = forAll();

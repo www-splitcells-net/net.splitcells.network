@@ -46,7 +46,7 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
-    public Collection<List<String>> paths() {
+    public net.splitcells.dem.data.set.Set<List<String>> paths() {
         return constraint.paths();
     }
 

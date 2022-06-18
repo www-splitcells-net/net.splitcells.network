@@ -11,6 +11,7 @@
 package net.splitcells.gel.rating.rater;
 
 import static java.util.stream.Collectors.toList;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Lambdas.describedFunction;
@@ -25,6 +26,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
@@ -180,8 +182,8 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public Collection<List<String>> paths() {
-        return contexts.stream().map(Discoverable::path).collect(toList());
+    public Set<List<String>> paths() {
+        return contexts.stream().map(Discoverable::path).collect(toSetOfUniques());
     }
 
     @Override

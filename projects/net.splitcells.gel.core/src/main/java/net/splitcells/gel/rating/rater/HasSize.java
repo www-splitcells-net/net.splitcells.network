@@ -12,6 +12,7 @@ package net.splitcells.gel.rating.rater;
 
 import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
@@ -21,6 +22,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 import java.util.Collection;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.data.table.Line;
@@ -151,8 +153,8 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public Collection<List<String>> paths() {
-        return contexts.stream().map(Discoverable::path).collect(toList());
+    public Set<List<String>> paths() {
+        return contexts.stream().map(Discoverable::path).collect(toSetOfUniques());
     }
 
     @Override

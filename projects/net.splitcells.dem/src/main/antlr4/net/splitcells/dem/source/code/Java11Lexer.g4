@@ -47,6 +47,7 @@ lexer grammar Java11Lexer;
     		| 'import java.util.function.Consumer;'
     		| 'import java.util.function.Function;'
     		| 'import java.util.function.Supplier;'
+    		| 'import java.util.function.Predicate;'
     		| 'import java.util.Optional;'
     		;
 	Arrow: '->';

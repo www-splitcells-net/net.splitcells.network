@@ -1,6 +1,7 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Pair;
@@ -113,7 +114,7 @@ public class World {
             }
 
             @Override
-            public Collection<List<String>> paths() {
+            public Set<List<String>> paths() {
                 throw notImplementedYet();
             }
 

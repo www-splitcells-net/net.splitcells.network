@@ -16,6 +16,7 @@ import net.splitcells.dem.data.set.SetWA;
 import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.Flushable;
@@ -50,6 +51,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * large for easy processing.</p>
  * <p>TODO Implement a GUI framework based on event and message passing.</p>
  */
+@JavaLegacyArtifact
 @Deprecated
 public class Dsui implements Sui<LogMessage<Node>>, Flushable {
     private static final String ENTRY_POINT = "ENTRY.POINT.237048021";

@@ -12,6 +12,7 @@ package net.splitcells.gel.constraint.type.framework;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toSet;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
@@ -309,8 +310,8 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public Collection<net.splitcells.dem.data.set.list.List<String>> paths() {
-        return contexts.stream().map(Discoverable::path).collect(toList());
+    public net.splitcells.dem.data.set.Set<net.splitcells.dem.data.set.list.List<String>> paths() {
+        return contexts.stream().map(Discoverable::path).collect(toSetOfUniques());
     }
 
     @Override

@@ -11,6 +11,7 @@
 package net.splitcells.gel.rating.rater.classification;
 
 import static java.util.stream.Collectors.toList;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -21,6 +22,7 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import java.util.Collection;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.set.list.List;
@@ -58,8 +60,8 @@ public class GroupMultiplier implements Rater {
     }
 
     @Override
-    public Collection<List<String>> paths() {
-        return contexts.stream().map(Discoverable::path).collect(toList());
+    public Set<List<String>> paths() {
+        return contexts.stream().map(Discoverable::path).collect(toSetOfUniques());
     }
 
     @Override

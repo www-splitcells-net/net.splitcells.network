@@ -15,6 +15,7 @@ import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StartTime;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.ProcessPath;
 
@@ -33,6 +34,7 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 /**
  * TODO Log all used {@link LogMessage#path()} to dedicated file.
  */
+@JavaLegacyArtifact
 public class UiRouter implements Ui {
 
     public static UiRouter uiRouter(Predicate<LogMessage<Perspective>> messageFilter) {

@@ -11,6 +11,8 @@
 package net.splitcells.gel.rating.rater;
 
 import net.splitcells.dem.data.order.Comparator;
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
@@ -392,8 +394,8 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     }
 
     @Override
-    public Collection<List<String>> paths() {
-        return contextes.stream().map(Discoverable::path).collect(toList());
+    public Set<List<String>> paths() {
+        return contextes.stream().map(Discoverable::path).collect(Sets.toSetOfUniques());
     }
 
     private List<Line> sorted(Table lines) {
