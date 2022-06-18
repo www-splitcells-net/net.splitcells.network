@@ -10,6 +10,7 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;
 
@@ -25,6 +26,7 @@ import static net.splitcells.dem.lang.Xml.toPrettyString;
 /**
  * Some additional methods for the java.nio.file.Files class.
  */
+@JavaLegacyArtifact
 public interface Files {
 
     static void createDirectory(Path directory) {
