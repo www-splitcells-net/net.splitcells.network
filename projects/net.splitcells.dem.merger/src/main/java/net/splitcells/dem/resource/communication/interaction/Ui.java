@@ -11,6 +11,7 @@
 package net.splitcells.dem.resource.communication.interaction;
 
 import net.splitcells.dem.environment.resource.Resource;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.PerspectiveI;
@@ -19,8 +20,6 @@ import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import org.w3c.dom.Node;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -70,17 +69,19 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Resource {
         return append(logMessage(content, context, logLevel));
     }
 
+    @JavaLegacyBody
     default Ui appendError(Throwable throwable) {
         final var error = perspective("error");
         error.withProperty("message", throwable.getMessage());
         {
-            final var stackTraceValue = new StringWriter();
-            throwable.printStackTrace(new PrintWriter(stackTraceValue));
+            final var stackTraceValue = new java.io.StringWriter();
+            throwable.printStackTrace(new java.io.PrintWriter(stackTraceValue));
             error.withProperty("stack-trace", stackTraceValue.toString());
         }
         return append(logMessage(error, NO_CONTEXT, LogLevel.CRITICAL));
     }
 
+    @JavaLegacyBody
     /**
      * Warnings are errors, where an action is not required.
      * <p>
@@ -97,8 +98,8 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Resource {
         final var warning = perspective("warning");
         warning.withProperty("message", throwable.getMessage());
         {
-            final var stackTraceValue = new StringWriter();
-            throwable.printStackTrace(new PrintWriter(stackTraceValue));
+            final var stackTraceValue = new java.io.StringWriter();
+            throwable.printStackTrace(new java.io.PrintWriter(stackTraceValue));
             warning.withProperty("stack-trace", stackTraceValue.toString());
         }
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
