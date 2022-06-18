@@ -78,27 +78,45 @@
     </chapter>
     <chapter>
         <title>A Fresh Start via the Generic Allocator (2016)</title>
-        <paragraph>The goal of my master thesis was to create a new framework
-            for
-            assignment problems that had an improved problem model and
-            superior
-            solving routines compared to the Universal Allocation
-            Program.
-            Three
-            scheduling problems of schools were used in order to
-            validate the
-            framework.
-        </paragraph>
-        <paragraph>Two of the problems were optimally solved for
-            the given
-            test cases. The third problem was nearly solved but in the
-            end correct
-            solutions were not produced (for a given problem instance
-            about 5 out
-            of 508 assignments were done incorrectly). In addition,
-            each problem
-            required its own solving routine.
-        </paragraph>
+        <chapter>
+            <title>Goal Posts</title>
+            <paragraph>The goal of my master thesis was to create a new framework
+                for
+                assignment problems that had an improved problem model and
+                superior
+                solving routines compared to the Universal Allocation
+                Program.
+                Three
+                scheduling problems of schools were used in order to
+                validate the
+                framework.
+            </paragraph>
+            <paragraph>Two of the problems were optimally solved for
+                the given
+                test cases. The third problem was nearly solved but in the
+                end correct
+                solutions were not produced (for a given problem instance
+                about 5 out
+                of 508 assignments were done incorrectly). In addition,
+                each problem
+                required its own solving routine.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Jumpstarting The Constraint Based Repair</title>
+            <paragraph>During the analysis of the school scheduling problems it became clear,
+                that the hill climber and its simple adaptions would not be able to solve the problem.
+                The main reason for that,
+                is the inability of strait forward hill climbers to organize complex optimization steps,
+                without improving the rating of the given solution during the organization phase.
+            </paragraph>
+            <paragraph>Therefore, the algorithm constraint based repair was created (it is unknown if something like this already exists),
+                which primary goal is to construct complex optimization steps,
+                without the guidance of the solution's rating.
+                It does this, by grouping variables according to the problem's constraints and the errors of the given solution.
+                Afterward, complex optimizations events are created based on the variables' group.
+            </paragraph>
+        </chapter>
     </chapter>
     <chapter>
         <title>The Rewrite of the Generic Allocator (2016-2022)</title>
