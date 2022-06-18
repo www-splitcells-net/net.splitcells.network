@@ -11,6 +11,7 @@
 package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.utils.ConstructorIllegal;
@@ -23,6 +24,7 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.host.ShellResult.shellResult;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
+@JavaLegacyArtifact
 public final class SystemUtils {
     public SystemUtils() {
         throw constructorIllegal();
