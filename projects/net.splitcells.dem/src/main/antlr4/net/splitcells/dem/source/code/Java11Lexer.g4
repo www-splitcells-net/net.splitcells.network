@@ -41,6 +41,7 @@ lexer grammar Java11Lexer;
     Legacy_Imports: Legacy_Import_Instances;
     fragment Legacy_Import_Instances
     		: 'import java.nio.file.Path;'
+    		| 'import java.nio.file.Paths;'
     		| 'import java.time.format.DateTimeFormatter;'
     		| 'import java.time.ZonedDateTime;'
     		| 'import java.util.function.Consumer;'
