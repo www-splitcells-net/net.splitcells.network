@@ -26,61 +26,19 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Paths.readString;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
+import static net.splitcells.website.server.project.renderer.extension.commonmark.RootFileProjectRendererExtension.rootFileProjectRendererExtension;
 
-/**
- * TODO Add support for header outline.
- */
-public class CommonMarkContributingProjectRendererExtension implements ProjectRendererExtension {
+public class CommonMarkContributingProjectRendererExtension {
 
-    public static CommonMarkContributingProjectRendererExtension commonMarkContributingRenderer() {
-        return new CommonMarkContributingProjectRendererExtension();
+    public static ProjectRendererExtension commonMarkContributingRenderer() {
+        return rootFileProjectRendererExtension("CONTRIBUTING");
     }
-
-    private final CommonMarkIntegration renderer = commonMarkIntegration();
 
     private CommonMarkContributingProjectRendererExtension() {
+        throw constructorIllegal();
     }
 
-    @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
-        final var readmePath = projectRenderer.projectFolder().resolve("CONTRIBUTING.md");
-        if (path.endsWith("CONTRIBUTING.html")) {
-            if (Files.is_file(readmePath)) {
-                final var pathContent = readString(readmePath);
-                return Optional.of(
-                        renderingResult(renderer.render(pathContent, projectRenderer, path, config)
-                                , TEXT_HTML.toString()));
-            }
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        if (is_file(projectRenderer.projectFolder().resolve("CONTRIBUTING.md"))) {
-            LayoutUtils.extendPerspectiveWithPath(layout
-                    , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("CONTRIBUTING.html"));
-        }
-        return layout;
-    }
-
-    @Override
-    public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
-        final Set<Path> projectPaths = setOfUniques();
-        if (is_file(projectRenderer.projectFolder().resolve("CONTRIBUTING.md"))) {
-            if (projectRenderer.resourceRootPath().length() == 0) {
-                projectPaths.add(Path.of("CONTRIBUTING.html"));
-            } else {
-                projectPaths.add(Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("CONTRIBUTING.html"));
-            }
-        }
-        return projectPaths;
-    }
-
-    @Override
-    public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
-        return projectPaths(projectRenderer);
-    }
 }
