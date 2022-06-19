@@ -21,8 +21,8 @@
         </license>
     </licenses>
     <scm>
-        <connection>git@github.com:www-splitcells-net/net.splitcells.network.git</connection>
-        <developerConnection>git@github.com:www-splitcells-net/net.splitcells.network.git</developerConnection>
+        <connection>scm:git:git@github.com:www-splitcells-net/net.splitcells.network.git</connection>
+        <developerConnection>scm:git:git@github.com:www-splitcells-net/net.splitcells.network.git</developerConnection>
         <url>https://github.com/www-splitcells-net/net.splitcells.network</url>
     </scm>
     <developers>

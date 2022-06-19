@@ -5,6 +5,12 @@
     <artifactId>network</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <parent>
+        <groupId>net.splitcells</groupId>
+        <artifactId>pom-java-defaults</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>projects/net.splitcells.pom.java.defaults/pom.xml</relativePath>
+    </parent>
     <modules>
         <module>projects/net.splitcells.system</module>
         <!--TODO Do not just uncomment the following. Otherwise, the maven project cannot be build. module>../net.splitcells.os.state.interface.lib.gpl.2</module-->
