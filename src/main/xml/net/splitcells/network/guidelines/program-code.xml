@@ -69,27 +69,19 @@
             </paragraph>
         </chapter>
         <chapter>
-            <title>Optionality of Tests</title>
+            <title>Optionality of Runtime Error Checking</title>
             <paragraph>
-                Tests are generally speaking optional and not part of the
-                main
-                interface contract.
-                In other words no
-                code is allowed to rely on the fact, that it will be informed about
-                errors explicitly or implicitly.
+                Implicit runtime tests are generally speaking optional and not part of the main interface contract.
+                In other words no code is allowed to rely on the fact,
+                that it will be informed about errors implicitly.
             </paragraph>
-            <paragraph>It has to be explicitly stated, if argument checking is
-                part of the interface. These types of checks are
-                not considered to
-                be
-                tests in this context.
+            <paragraph>It has to be explicitly stated, if, for instance, argument checking is part of the interface.
+                These types of checks are not considered to be tests in this context.
             </paragraph>
         </chapter>
         <chapter>
-            <title>Self Testing</title>
-            <paragraph>Each test should have an error message, in order to
-                minimize the time in order to understand an error.
-            </paragraph>
+            <title>Self Reporting</title>
+            <paragraph>Each test should have an error message, in order to minimize the time in order to understand an error.</paragraph>
         </chapter>
     </chapter>
     <chapter>
