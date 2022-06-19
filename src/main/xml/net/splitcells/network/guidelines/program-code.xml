@@ -3,7 +3,7 @@
          xmlns="http://splitcells.net/sew.xsd"
          xmlns:d="http://splitcells.net/den.xsd">
     <meta>
-        <title>Program Code Guidelines</title>
+        <title>Code Guidelines</title>
     </meta>
     <paragraph>The programming code should prioritize adaptability and readability.
         This can be made by making it easy to refactor the code or to translate it to a completely other language.
@@ -93,15 +93,18 @@
         </chapter>
     </chapter>
     <chapter>
-        <title>Formatting</title>
+        <title>Code Formatting</title>
         <paragraph>The code should be formatted in such a way that the
             required space is minimized and
             the readability and navigability of the text is maximized.
             Empty lines are omitted, if indentation is enough to easily separate code
             blocks.
         </paragraph>
-        <paragraph>Automatic code styling/formatting should never remove already present new line
-            characters, as otherwise it is hard to structure large code statements.
+        <paragraph>Automatic code styling/formatting should never remove already present new line characters,
+            as otherwise it is hard to structure large code statements.
+            The automatic formatting should also not add new line symbols,
+            as this makes it harder to structure flowing text,
+            where long lines are more acceptable.
         </paragraph>
         <paragraph>It is preferred that symbols that structure the code are located
             at the most left side instead at the most right side when whitespace is ignored.

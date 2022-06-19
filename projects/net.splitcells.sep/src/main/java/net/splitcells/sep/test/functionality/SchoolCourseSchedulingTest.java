@@ -151,9 +151,14 @@ public class SchoolCourseSchedulingTest {
                 // TODO REMOVE network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, linearInitialization());
                 network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, teacherAllocationForCoursesOptimization()
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+                network.process(TEACHER_ALLOCATION_FOR_COURSES, s -> s.createStandardAnalysis(1));
+                /*network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, simpleConstraintGroupBasedRepair(groupSelector(randomness(), 3
+                                , 1), hillClimber(), false)
+                        , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());*/
             });
             network.process(RAILS_FOR_SCHOOL_SCHEDULING, Solution::createStandardAnalysis);
             network.process(TEACHER_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
+            network.process(STUDENT_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
             network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, linearInitialization());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
