@@ -35,6 +35,9 @@
             </quote> instead of
             describing how to
             build software), but everything needs documentation.
+            Try to minimize program code documentation of micro low level implementation specifics,
+            by encoding the facts in the program code in an understandable way
+            (i.e. try to not document, that a value does not change and instead make the value obviously unchangeable).
         </paragraph>
     </chapter>
     <chapter>
