@@ -169,7 +169,7 @@ public class SchoolCourseSchedulingTest {
      */
     public static OnlineOptimization teacherAllocationForCoursesOptimization() {
         final var randomness = randomness();
-        return simpleConstraintGroupBasedRepair(c -> list(c.get(1))
+        return simpleConstraintGroupBasedRepair(groupSelector(randomness, 2, 1)
                 , freeCoursesByGroupId -> solution -> {
                     final Map<Integer, Set<Line>> allFreeCoursesById = Maps.map();
                     {
