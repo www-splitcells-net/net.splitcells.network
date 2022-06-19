@@ -22,21 +22,18 @@
         <title>Identifiers</title>
         <paragraph>Readability is preferred over compactness,
             but compactness is still important.
-            Every name should have an unambiguous meaning.
         </paragraph>
-        <paragraph>This means a renaming
-            would be valid, if every instance of the name can be renamed,
+        <paragraph>Every full name should have an unambiguous meaning.
+            This means a renaming would be valid in general,
+            if every instance of the name can be renamed,
             while still maintaining the correct meaning.
-            Symbols, whose meaning are already contained in other symbols,
-            should be omitted.
             Names are preferred to abbreviation and abbreviation are preferred to symbols as a shorthand.
         </paragraph>
         <paragraph>If there is an inverse usage for a given method like<quote>isEmpty</quote>,
-            consider creating a dedicated method,
-            if the inverse usage takes much more or less space.
+            consider creating a dedicated method.
             This minimizes the likelihood of misreading such an inverse usage.
             For example, it helps to create an <quote>isEmpty</quote> and an <quote>hasElements</quote> method,
-            because it is relatively hard to distinguish <quote>isEmpty</quote> and <quote>!isEmpty</quote> from one another,
+            because it is relatively hard to distinguish <quote>someObject.doSomething().doSomtingeElse().isEmpty()</quote> and <quote>!someObject.doSomething().doSomtingeElse().isEmpty()</quote> from one another,
             if one just skim through the code.
         </paragraph>
     </chapter>
