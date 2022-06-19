@@ -204,11 +204,23 @@ public class SchoolCourseSchedulingTest {
 
                     }
                     for (final var freeCourseId : listWithValuesOf(allFreeCoursesById.keySet()).shuffle(randomness)) {
+                        final var freeCourseRails = solution.lookup(COURSE_ID, freeCourseId)
+                                .getLines().stream()
+                                .map(l -> l.value(RAIL))
+                                .collect(toSetOfUniques());
                         final var freeCourseRepresentant = allFreeCoursesById.get(freeCourseId).iterator().next();
                         final var freeCourseSubject = freeCourseRepresentant.value(SUBJECT);
                         final var suitableTeachers = solution.suppliesFree()
                                 .lookup(TEACH_SUBJECT_SUITABILITY, freeCourseSubject)
-                                .getLines();
+                                .getLines()
+                                .stream()
+                                .filter(teacher -> {
+                                    final var teachersRails = solution.lookup(TEACHER, teacher.value(TEACHER)).getLines().stream()
+                                            .map(teacherAllocation -> teacherAllocation.value(RAIL))
+                                            .collect(toSetOfUniques());
+                                    return !freeCourseRails.containsAny(teachersRails);
+                                })
+                                .collect(toList());
                         if (suitableTeachers.isEmpty()) {
                             continue;
                         }
