@@ -88,6 +88,7 @@ public class ProjectRendererI implements ProjectRenderer {
     private final SourceValidator sourceValidator;
     private final ProjectRendererExtensionMerger renderer = rendererMerger();
     private final Config config;
+    private Optional<FileStructureTransformer> transformer = Optional.empty();
 
     protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
@@ -120,6 +121,9 @@ public class ProjectRendererI implements ProjectRenderer {
                 .registerExtension(resourceRenderer())
                 .registerExtension(csvChartRenderer())
                 .registerExtension(commonMarkContributingRenderer());
+        if (config.cacheRenderers()) {
+            transformer = Optional.of(createRenderer());
+        }
     }
 
     /**
@@ -128,6 +132,13 @@ public class ProjectRendererI implements ProjectRenderer {
      * IDEA Create mode where the renderer ist cached.
      */
     private FileStructureTransformer renderer() {
+        if (transformer.isEmpty()) {
+            return createRenderer();
+        }
+        return createRenderer();
+    }
+
+    private FileStructureTransformer createRenderer() {
         return fileStructureTransformer(projectSrcFolder.resolve("xml")
                 , xslLibs
                 , "main." + profile + ".xsl"

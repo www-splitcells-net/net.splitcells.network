@@ -47,6 +47,12 @@ public class Config {
                     , ""//
                     , "/");
 
+    /**
+     * States whether {@link net.splitcells.website.server.project.Renderer}s may cache certain parts,
+     * like the output and styling information, or not.
+     */
+    private boolean cacheRenderers = false;
+
     private Config() {
     }
 
@@ -125,5 +131,14 @@ public class Config {
 
     public List<String> possibleRootIndex() {
         return possibleRootIndex;
+    }
+    
+    public Config withCacheRenderers(boolean cacheRenderers) {
+        this.cacheRenderers =  cacheRenderers;
+        return this;
+    }
+    
+    public boolean cacheRenderers() {
+        return cacheRenderers;
     }
 }
