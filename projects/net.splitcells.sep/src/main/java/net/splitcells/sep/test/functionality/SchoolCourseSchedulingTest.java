@@ -209,7 +209,8 @@ public class SchoolCourseSchedulingTest {
 
                     }
                     for (final var freeCourseId : listWithValuesOf(allFreeCoursesById.keySet()).shuffle(randomness)) {
-                        final var freeCourseRails = solution.lookup(COURSE_ID, freeCourseId)
+                        final var freeCourseRails = solution.demandsFree()
+                                .lookup(COURSE_ID, freeCourseId)
                                 .getLines().stream()
                                 .map(l -> l.value(RAIL))
                                 .collect(toSetOfUniques());
