@@ -649,7 +649,7 @@ public class SchoolCourseSchedulingTest {
                             .then(lineValueRater(line -> line.value(SUBJECT).equals
                                             (line.value(TEACH_SUBJECT_SUITABILITY))
                                     , "Teacher holds only suitable subjects."));
-                    r.forAll(RAIL).forAll(TEACHER).then(hasSize(1));
+                    r.forAll(RAIL).forAll(noneVoidRail()).forAll(TEACHER).then(hasSize(1));
                     return r;
                 })
                 .toProblem()
