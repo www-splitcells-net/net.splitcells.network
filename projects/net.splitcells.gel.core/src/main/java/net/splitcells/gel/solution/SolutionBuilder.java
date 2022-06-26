@@ -70,7 +70,8 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     @Override
     public Problem toProblem() {
         final var problemsDemands = demandsDatabase.orElseGet(() -> {
-            final var d = Databases.database(DEMANDS.value(), null, demandAttributes);
+            // TODO The demands name is a hack.
+            final var d = Databases.database(name.orElse(DEMANDS.value()), null, demandAttributes);
             demands.forEach(demand -> d.addTranslated(demand));
             return d;
         });
