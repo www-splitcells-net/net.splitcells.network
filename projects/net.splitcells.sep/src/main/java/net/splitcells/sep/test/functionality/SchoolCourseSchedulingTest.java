@@ -172,7 +172,7 @@ public class SchoolCourseSchedulingTest {
     /**
      * Select grouping according to {@link net.splitcells.gel.constraint.type.ForAll}{@link #COURSE_ID}.
      */
-    public static OnlineOptimization teacherAllocationForCoursesOptimization() {
+    private static OnlineOptimization teacherAllocationForCoursesOptimization() {
         final var randomness = randomness();
         return simpleConstraintGroupBasedRepair(groupSelector(randomness, 2, 1)
                 , freeCoursesByGroupId -> solution -> {
@@ -250,7 +250,7 @@ public class SchoolCourseSchedulingTest {
         );
     }
 
-    public static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath, boolean repairCompliants) {
+    private static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath, boolean repairCompliants) {
         final var randomness = randomness();
         // TODO Split up into multiple methods for better overview and documentation.
         return ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(groupSelector(randomness, minimumConstraintGroupPath
