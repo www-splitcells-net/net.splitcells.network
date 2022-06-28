@@ -712,7 +712,8 @@ public class SchoolCourseSchedulingTest {
                             , "Student gets course in required subject."));
                     r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))
                             , "Student gets courses of the same vintage."));
-                    r.forAll(RAIL).forAll(STUDENT).then(allSame(COURSE_ID));
+                    r.forAll(STUDENT).forAll(REQUIRED_SUBJECT).then(allSame(COURSE_ID));
+                    r.forAll(STUDENT).forAll(RAIL).then(hasSize(1));
                     r.forAll(COURSE_ID).then(hasMinimalSize(minimalNumberOfStudentsPerCourse));
                     r.forAll(COURSE_ID).then(hasSize(optimalNumberOfStudentsPerCourse));
                     return r;
