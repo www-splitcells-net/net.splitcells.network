@@ -189,16 +189,6 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     Element toDom(Set<GroupId> groups);
 
-    default Set<Constraint> parentOf(Constraint constraint) {
-        if (equals(constraint)) {
-            return setOfUniques(this);
-        }
-        return childrenView().stream()
-                .map(child -> child.parentOf(constraint))
-                .reduce((a, b) -> Sets.merge(a, b))
-                .orElseGet(() -> setOfUniques());
-    }
-
     @Deprecated
     default Set<GroupId> childGroups(Line lines, Constraint subject) {
         final Set<GroupId> childGroups = setOfUniques();
