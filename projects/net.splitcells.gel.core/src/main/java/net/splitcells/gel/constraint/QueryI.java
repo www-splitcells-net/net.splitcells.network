@@ -45,18 +45,18 @@ public class QueryI implements Query {
     }
 
     private final Optional<Constraint> root;
-    private final Constraint constraint;
+    private final Constraint currentConstraint;
     private final Collection<GroupId> groups;
 
-    public QueryI(Constraint constraint, Collection<GroupId> groups, Optional<Constraint> root) {
-        this.constraint = constraint;
+    public QueryI(Constraint currentConstraint, Collection<GroupId> groups, Optional<Constraint> root) {
+        this.currentConstraint = currentConstraint;
         this.groups = groups;
         this.root = root;
     }
 
     @Override
     public Query forAll(Rater classifier) {
-        var resultBase = constraint
+        var resultBase = currentConstraint
                 .childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> child.arguments().size() == 1)
@@ -69,7 +69,7 @@ public class QueryI implements Query {
         if (resultBase.isPresent()) {
             for (GroupId group : groups) {
                 resultingGroups.addAll
-                        (constraint
+                        (currentConstraint
                                 .lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(group)
@@ -78,7 +78,7 @@ public class QueryI implements Query {
             }
         } else {
             resultBase = Optional.of(ForAlls.forEach(classifier));
-            constraint.withChildren(resultBase.get());
+            currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
         if (root.isEmpty()) {
@@ -91,7 +91,7 @@ public class QueryI implements Query {
     @Override
     public Query forAll(Attribute<?> attribute) {
         var resultBase
-                = constraint.childrenView().stream()
+                = currentConstraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
@@ -106,7 +106,7 @@ public class QueryI implements Query {
         if (resultBase.isPresent()) {
             for (GroupId group : groups) {
                 resultingGroup.addAll(
-                        constraint.lineProcessing()
+                        currentConstraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
@@ -114,7 +114,7 @@ public class QueryI implements Query {
             }
         } else {
             resultBase = Optional.of(ForAlls.forEach(attribute));
-            constraint.withChildren(resultBase.get());
+            currentConstraint.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
         }
         if (root.isEmpty()) {
@@ -132,7 +132,7 @@ public class QueryI implements Query {
     @Override
     public Query forAll() {
         final var resultBase
-                = constraint.childrenView().stream()
+                = currentConstraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
@@ -151,7 +151,7 @@ public class QueryI implements Query {
     @Override
     public Query then(Rater rater) {
         var resultBase
-                = constraint.childrenView().stream()
+                = currentConstraint.childrenView().stream()
                 .filter(child -> Then.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> child.arguments().get(0).equals(rater))
@@ -160,7 +160,7 @@ public class QueryI implements Query {
         if (resultBase.isPresent()) {
             for (GroupId group : groups) {
                 resultingGroups.addAll(
-                        constraint.lineProcessing()
+                        currentConstraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
@@ -168,7 +168,7 @@ public class QueryI implements Query {
             }
         } else {
             resultBase = Optional.of(Then.then(rater));
-            constraint.withChildren(resultBase.get());
+            currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
         if (root.isEmpty()) {
@@ -186,7 +186,7 @@ public class QueryI implements Query {
     @Override
     public Query forAllCombinationsOf(Attribute<?>... attributes) {
         final Constraint resultBase
-                = constraint.childrenView().stream()
+                = currentConstraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
@@ -206,7 +206,7 @@ public class QueryI implements Query {
         final var resultingGroups = Sets.<GroupId>setOfUniques();
         for (GroupId groups : groups) {
             resultingGroups.addAll(
-                    constraint.lineProcessing()
+                    currentConstraint.lineProcessing()
                             .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                             .lookup(groups)
                             .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
@@ -222,7 +222,7 @@ public class QueryI implements Query {
     @Override
     public Rating rating() {
         final var groupRating
-                = groups.stream().map(group -> constraint.rating(group)).reduce((a, b) -> a.combine(b));
+                = groups.stream().map(group -> currentConstraint.rating(group)).reduce((a, b) -> a.combine(b));
         if (groupRating.isPresent()) {
             return groupRating.get();
         }
@@ -231,7 +231,7 @@ public class QueryI implements Query {
 
     @Override
     public Constraint constraint() {
-        return constraint;
+        return currentConstraint;
     }
 
     @Override

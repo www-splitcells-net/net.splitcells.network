@@ -1,7 +1,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
-* **2022-05-23** **\#8**: Remove `Constraint#parentOf`, because its definition does not seem to be useful and this method is not used.
+* **2022-06-30** **\#8**: Remove `Constraint#parentOf`, because its definition does not seem to be useful and this method is not used.
 * **2022-05-23** **\#170**: `SolutionBuilder` now requires to always define the demand and solution set explicitly.
   The helper methods `withNoDemands` and `withNoSupplies` are created for that, in order to state intent.
   Also, setting the supply or demand set multiple times during solution building is not allowed anymore, in order to simplify the building workflow.
