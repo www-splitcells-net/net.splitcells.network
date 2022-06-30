@@ -48,7 +48,7 @@ public class QueryI implements Query {
     private final Constraint currentConstraint;
     private final Collection<GroupId> groups;
 
-    public QueryI(Constraint currentConstraint, Collection<GroupId> groups, Optional<Constraint> root) {
+    private QueryI(Constraint currentConstraint, Collection<GroupId> groups, Optional<Constraint> root) {
         this.currentConstraint = currentConstraint;
         this.groups = groups;
         this.root = root;
