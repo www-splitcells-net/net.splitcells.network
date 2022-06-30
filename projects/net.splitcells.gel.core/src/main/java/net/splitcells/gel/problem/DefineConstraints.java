@@ -19,6 +19,6 @@ public interface DefineConstraints {
     }
 
     default ProblemGenerator withConstraint(Function<Query, Query> builder) {
-        return withConstraint(builder.apply(QueryI.query(forAll())).constraint());
+        return withConstraint(builder.apply(QueryI.query(forAll())).currentConstraint());
     }
 }

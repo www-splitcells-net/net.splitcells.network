@@ -17,8 +17,13 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 
 /**
- * TODO Split this up in read only query and builder based on query.
- * Somehow illegal queries need to be marked via interface.
+ * <p>This interface allows one to construct {@link Constraint} trees via paths of {@link Constraint}s.
+ * It also allows one to select a specific {@link Constraint} in the tree.
+ * The path is created by calling methods, that are returning a new {@link Query} object.
+ * {@link #currentConstraint} can be used in order to retrieve the currently selected {@link Constraint}.
+ * </p>
+ * <p>TODO Split this up in read only query and builder based on query.
+ * Somehow illegal queries need to be marked via interface.</p>
  */
 public interface Query {
 
@@ -34,9 +39,20 @@ public interface Query {
 
     Query forAllCombinationsOf(Attribute<?>... args);
 
+    /**
+     * @return This {@link Rating} states the value of all {@link GroupId}s of the {@link #currentConstraint()},
+     * that where indirectly created via {@link Constraint#injectionGroup()} of the {@link #root()}.
+     */
     Rating rating();
 
-    Constraint constraint();
+    /**
+     * 
+     * @return The currently selected {@link Constraint}.
+     */
+    Constraint currentConstraint();
 
+    /**
+     * @return The {@link Constraint} instance, where the first {@link Query} of the path was created.
+     */
     Optional<Constraint> root();
 }

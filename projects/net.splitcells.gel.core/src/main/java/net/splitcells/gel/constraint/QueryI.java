@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.ForAlls;
@@ -44,14 +45,34 @@ public class QueryI implements Query {
         return new QueryI(constraint, groups, Optional.of(root));
     }
 
+    /**
+     * <p>The starting point of the {@link Query}.</p>
+     * <p>TODO Why is this optional?</p>
+     */
     private final Optional<Constraint> root;
+    /**
+     * This is the {@link Constraint}, that is reached by the current {@link Query} state.
+     */
     private final Constraint currentConstraint;
+
+    /**
+     * These are the {@link Constraint}s traversed, in order to reach {@link #currentConstraint}.
+     */
+    private final List<Constraint> constraintPath;
     private final Collection<GroupId> groups;
 
     private QueryI(Constraint currentConstraint, Collection<GroupId> groups, Optional<Constraint> root) {
         this.currentConstraint = currentConstraint;
         this.groups = groups;
         this.root = root;
+        constraintPath = list();
+    }
+
+    private QueryI(Constraint currentConstraint, Collection<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath) {
+        this.currentConstraint = currentConstraint;
+        this.groups = groups;
+        this.root = root;
+        this.constraintPath = constraintPath;
     }
 
     @Override
@@ -230,12 +251,16 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Constraint constraint() {
+    public Constraint currentConstraint() {
         return currentConstraint;
     }
 
     @Override
     public Optional<Constraint> root() {
         return root;
+    }
+    
+    public List<Constraint> constraintPath() {
+        return constraintPath;
     }
 }
