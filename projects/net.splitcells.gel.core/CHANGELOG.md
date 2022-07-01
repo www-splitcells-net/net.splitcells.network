@@ -1,6 +1,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2022-07-01 \#8**: Create `Query#constraintPath` in order to select a constraint path of a solution via the query interface,
+  which is a lot easier to understand,
+  than selecting paths by recursive calls of `Constraint#childrenView`.
 * **2022-06-30** **\#8**:
   1. Remove `Constraint#parentOf`, because its definition does not seem to be useful and this method is not used.
   2. Rename `Query#constraint` to `Query#currentConstraint` in order to clarify its meaning.

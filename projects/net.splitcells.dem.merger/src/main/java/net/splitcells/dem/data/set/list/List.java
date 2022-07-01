@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @JavaLegacyArtifact
 public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
@@ -87,5 +88,9 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     default List<T> shuffle(Randomness rnd) {
         Collections.shuffle(this, rnd.asRandom());
         return this;
+    }
+
+    default void assertEquals(List<T> arg) {
+        assertThat(this).isEqualTo(arg);
     }
 }

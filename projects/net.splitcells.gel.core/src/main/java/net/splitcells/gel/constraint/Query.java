@@ -12,6 +12,8 @@ package net.splitcells.gel.constraint;
 
 import java.util.Optional;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
@@ -40,8 +42,7 @@ public interface Query {
     Query forAllCombinationsOf(Attribute<?>... args);
 
     /**
-     * @return This {@link Rating} states the value of all {@link GroupId}s of the {@link #currentConstraint()},
-     * that where indirectly created via {@link Constraint#injectionGroup()} of the {@link #root()}.
+     * @return This {@link Rating} states the value of all {@link #currentInjectionGroups}.
      */
     Rating rating();
 
@@ -55,4 +56,13 @@ public interface Query {
      * @return The {@link Constraint} instance, where the first {@link Query} of the path was created.
      */
     Optional<Constraint> root();
+
+    List<Constraint> constraintPath();
+
+    /**
+     *
+     * @return Set of all {@link #currentConstraint()}'s {@link GroupId}s,
+     * that where indirectly created via {@link Constraint#injectionGroup()} of the {@link #root()}.
+     */
+    Set<GroupId> currentInjectionGroups();
 }

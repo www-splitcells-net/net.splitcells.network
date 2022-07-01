@@ -11,6 +11,7 @@
 package net.splitcells.gel.constraint;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -18,9 +19,9 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.gel.rating.framework.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 
-import java.util.Collection;
 import java.util.Optional;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -34,15 +35,22 @@ import net.splitcells.gel.rating.rater.Rater;
 
 public class QueryI implements Query {
     public static Query query(Constraint constraint, Optional<Constraint> root) {
-        return new QueryI(constraint, list(constraint.injectionGroup()), root);
+        return new QueryI(constraint, setOfUniques(constraint.injectionGroup()), root);
     }
 
     public static Query query(Constraint constraint) {
-        return new QueryI(constraint, list(constraint.injectionGroup()), Optional.of(constraint));
+        return new QueryI(constraint, setOfUniques(constraint.injectionGroup()), Optional.of(constraint));
     }
 
-    public static Query query(Constraint constraint, Collection<GroupId> groups, Constraint root) {
+    public static Query query(Constraint constraint, Set<GroupId> groups, Constraint root) {
         return new QueryI(constraint, groups, Optional.of(root));
+    }
+
+    public static Query nextQueryPathElement(Query query, Set<GroupId> nextGroups, Constraint nextConstraint) {
+        return new QueryI(nextConstraint
+                , nextGroups
+                , query.root()
+                , query.constraintPath().shallowCopy().withAppended(nextConstraint));
     }
 
     /**
@@ -53,23 +61,26 @@ public class QueryI implements Query {
     /**
      * This is the {@link Constraint}, that is reached by the current {@link Query} state.
      */
-    private final Constraint currentConstraint;
+    private final Constraint currentInjectionGroups;
 
     /**
-     * These are the {@link Constraint}s traversed, in order to reach {@link #currentConstraint}.
+     * These are the {@link Constraint}s traversed, in order to reach {@link #currentInjectionGroups}.
      */
     private final List<Constraint> constraintPath;
-    private final Collection<GroupId> groups;
+    private final Set<GroupId> groups;
 
-    private QueryI(Constraint currentConstraint, Collection<GroupId> groups, Optional<Constraint> root) {
-        this.currentConstraint = currentConstraint;
+    private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root) {
+        this.currentInjectionGroups = currentInjectionGroups;
         this.groups = groups;
         this.root = root;
         constraintPath = list();
+        if (root.isPresent()) {
+            constraintPath.add(root.get());
+        }
     }
 
-    private QueryI(Constraint currentConstraint, Collection<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath) {
-        this.currentConstraint = currentConstraint;
+    private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath) {
+        this.currentInjectionGroups = currentInjectionGroups;
         this.groups = groups;
         this.root = root;
         this.constraintPath = constraintPath;
@@ -77,7 +88,7 @@ public class QueryI implements Query {
 
     @Override
     public Query forAll(Rater classifier) {
-        var resultBase = currentConstraint
+        var resultBase = currentInjectionGroups
                 .childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> child.arguments().size() == 1)
@@ -90,7 +101,7 @@ public class QueryI implements Query {
         if (resultBase.isPresent()) {
             for (GroupId group : groups) {
                 resultingGroups.addAll
-                        (currentConstraint
+                        (currentInjectionGroups
                                 .lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(group)
@@ -99,20 +110,16 @@ public class QueryI implements Query {
             }
         } else {
             resultBase = Optional.of(ForAlls.forEach(classifier));
-            currentConstraint.withChildren(resultBase.get());
+            currentInjectionGroups.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
-        if (root.isEmpty()) {
-            return query(resultBase.get(), resultingGroups, resultBase.get());
-        } else {
-            return query(resultBase.get(), resultingGroups, root.get());
-        }
+        return nextQueryPathElement(this, resultingGroups, resultBase.get());
     }
 
     @Override
     public Query forAll(Attribute<?> attribute) {
         var resultBase
-                = currentConstraint.childrenView().stream()
+                = currentInjectionGroups.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
@@ -127,7 +134,7 @@ public class QueryI implements Query {
         if (resultBase.isPresent()) {
             for (GroupId group : groups) {
                 resultingGroup.addAll(
-                        currentConstraint.lineProcessing()
+                        currentInjectionGroups.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
@@ -135,25 +142,21 @@ public class QueryI implements Query {
             }
         } else {
             resultBase = Optional.of(ForAlls.forEach(attribute));
-            currentConstraint.withChildren(resultBase.get());
+            currentInjectionGroups.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
         }
-        if (root.isEmpty()) {
-            return query(resultBase.get(), resultingGroup, resultBase.get());
-        } else {
-            return query(resultBase.get(), resultingGroup, root.get());
-        }
+        return nextQueryPathElement(this, resultingGroup, resultBase.get());
     }
 
     /**
      * TODO TOFIX This does not work if {@link #root} is empty.
-     * 
+     *
      * @return The Successive State
      */
     @Override
     public Query forAll() {
         final var resultBase
-                = currentConstraint.childrenView().stream()
+                = currentInjectionGroups.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
@@ -162,17 +165,13 @@ public class QueryI implements Query {
                     return attributeClassification.arguments().isEmpty();
                 }).reduce(ensureSingle())
                 .get();
-        if (root.isEmpty()) {
-            return query(resultBase, listWithValuesOf(groups), resultBase);
-        } else {
-            return query(resultBase, listWithValuesOf(groups), root.get());
-        }
+        return nextQueryPathElement(this, setOfUniques(groups), resultBase);
     }
 
     @Override
     public Query then(Rater rater) {
         var resultBase
-                = currentConstraint.childrenView().stream()
+                = currentInjectionGroups.childrenView().stream()
                 .filter(child -> Then.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> child.arguments().get(0).equals(rater))
@@ -181,7 +180,7 @@ public class QueryI implements Query {
         if (resultBase.isPresent()) {
             for (GroupId group : groups) {
                 resultingGroups.addAll(
-                        currentConstraint.lineProcessing()
+                        currentInjectionGroups.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
@@ -189,14 +188,10 @@ public class QueryI implements Query {
             }
         } else {
             resultBase = Optional.of(Then.then(rater));
-            currentConstraint.withChildren(resultBase.get());
+            currentInjectionGroups.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
-        if (root.isEmpty()) {
-            return query(resultBase.get(), resultingGroups, resultBase.get());
-        } else {
-            return query(resultBase.get(), resultingGroups, root.get());
-        }
+        return nextQueryPathElement(this, resultingGroups, resultBase.get());
     }
 
     @Override
@@ -207,7 +202,7 @@ public class QueryI implements Query {
     @Override
     public Query forAllCombinationsOf(Attribute<?>... attributes) {
         final Constraint resultBase
-                = currentConstraint.childrenView().stream()
+                = currentInjectionGroups.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
                 .filter(child -> {
@@ -227,23 +222,19 @@ public class QueryI implements Query {
         final var resultingGroups = Sets.<GroupId>setOfUniques();
         for (GroupId groups : groups) {
             resultingGroups.addAll(
-                    currentConstraint.lineProcessing()
+                    currentInjectionGroups.lineProcessing()
                             .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                             .lookup(groups)
                             .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                             .values());
         }
-        if (root.isEmpty()) {
-            return query(resultBase, resultingGroups, resultBase);
-        } else {
-            return query(resultBase, resultingGroups, root.get());
-        }
+        return nextQueryPathElement(this, resultingGroups, resultBase);
     }
 
     @Override
     public Rating rating() {
         final var groupRating
-                = groups.stream().map(group -> currentConstraint.rating(group)).reduce((a, b) -> a.combine(b));
+                = groups.stream().map(group -> currentInjectionGroups.rating(group)).reduce((a, b) -> a.combine(b));
         if (groupRating.isPresent()) {
             return groupRating.get();
         }
@@ -252,15 +243,21 @@ public class QueryI implements Query {
 
     @Override
     public Constraint currentConstraint() {
-        return currentConstraint;
+        return currentInjectionGroups;
     }
 
     @Override
     public Optional<Constraint> root() {
         return root;
     }
-    
+
+    @Override
     public List<Constraint> constraintPath() {
         return constraintPath;
+    }
+
+    @Override
+    public Set<GroupId> currentInjectionGroups() {
+        return groups;
     }
 }
