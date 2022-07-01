@@ -33,10 +33,19 @@ p code::before {
 	content: "”";
 	}
 article p img {
+    /* Styling for pictures linked by the CommonMark backend.
+       These are always wrapped in p elements. */
 	max-width: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	display: block;
+	/* display: block;
+	   This does not seem to be required,
+	   because pictures with the full width of the enclosing paragraph should usually be placed in a paragraph without any other pictures in the same paragraphs.
+	   By not using block display, one can place multiple images on the same line,
+	   by placing all images in CommonMark into the same paragraph,
+	   if explicitly wanted.
+	   See status badges on READMEs.
+	   This is achieved, by having no empty lines between images in CommonMark source code. */
 	}
 article ol {
     /* We assume, that the a root list, can have more than 99 children,
