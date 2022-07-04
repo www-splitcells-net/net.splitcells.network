@@ -106,11 +106,12 @@ Project Cluster
 * Blogging with Images on [Medium](https://martins-avots.medium.com/)
 ## Infrastructure
 * Rendered Documentation via [a personal website](http://splitcells.net/net/splitcells/system/index.html)
-* Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) and [Sourcehut](https://todo.sr.ht/~splitcells-net/net.splitcells.network).
+* Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) and
+[Sourcehut](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)).
 * Repository Hosts:
   * [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
   * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) is currently used only for continuous integration (CI).
-  * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network) is used mainly for writing articles and web rendering ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)).
+  * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network) is used mainly for writing articles and web rendering.
 ## Service Tasks And Projects
 Tasks that are being worked cyclically,
 and probably will never be finished.
