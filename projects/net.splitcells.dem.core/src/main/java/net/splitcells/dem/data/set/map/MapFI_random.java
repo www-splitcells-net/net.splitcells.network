@@ -10,7 +10,7 @@
  */
 package net.splitcells.dem.data.set.map;
 
-import java.util.HashMap;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
 
@@ -27,14 +27,16 @@ public class MapFI_random implements MapF {
 
     }
 
+    @JavaLegacyBody
     @Override
     public <K, V> Map<K, V> map() {
-        return mapLegacyWrapper(new HashMap<K, V>(), false);
+        return mapLegacyWrapper(new java.util.HashMap<K, V>(), false);
     }
 
+    @JavaLegacyBody
     @Override
     public <K, V> Map<K, V> map(java.util.Map<K, V> arg) {
-        return mapLegacyWrapper(new HashMap<K, V>(arg), false);
+        return mapLegacyWrapper(new java.util.HashMap<K, V>(arg), false);
     }
 
     @Override

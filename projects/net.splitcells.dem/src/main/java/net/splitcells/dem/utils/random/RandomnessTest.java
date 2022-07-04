@@ -14,8 +14,6 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.utils.MathUtils;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -40,16 +38,17 @@ public class RandomnessTest {
     public void testTruthValueOf() {
         final var chance = 0.75f;
         final var randomness = randomness(0L);
-        final var truthCounter = new AtomicInteger(0);
         final var runs = 1_000;
         final var deviation = 0.1f;
-        rangeClosed(1, runs).forEach(i -> {
+        final var truthCount = rangeClosed(1, runs).map(i -> {
             if (randomness.truthValue(chance)) {
-                truthCounter.incrementAndGet();
+                return 1;
+            } else {
+                return 0;
             }
-        });
-        assertThat(truthCounter.get()).isLessThan((int) ((chance + deviation) * runs));
-        assertThat(truthCounter.get()).isGreaterThan((int) ((chance - deviation) * runs));
+        }).reduce(0, (a,b) -> a +b);
+        assertThat(truthCount).isLessThan((int) ((chance + deviation) * runs));
+        assertThat(truthCount).isGreaterThan((int) ((chance - deviation) * runs));
     }
 
     @Test

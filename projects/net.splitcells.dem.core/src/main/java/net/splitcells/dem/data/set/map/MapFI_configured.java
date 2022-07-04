@@ -13,6 +13,7 @@ package net.splitcells.dem.data.set.map;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.util.Optional;
 
@@ -41,6 +42,7 @@ public class MapFI_configured implements MapF {
         return mapF.map();
     }
 
+    @JavaLegacyBody
     @Override
     public <K, V> Map<K, V> map(java.util.Map<K, V> arg) {
         return mapF.map(arg);

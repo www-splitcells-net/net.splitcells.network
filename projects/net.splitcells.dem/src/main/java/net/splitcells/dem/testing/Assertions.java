@@ -27,4 +27,17 @@ public class Assertions {
     public static <T> void assertComplies(T subject, Predicate<T> constraint, String description) {
         assertThat(subject).is(new Condition<T>(constraint, description));
     }
+    
+    public static void assertThrows(Class<? extends Throwable> expectedExceptionType, Runnable run) {
+        try {
+            run.run();
+        } catch (Throwable th) {
+            if (expectedExceptionType.isInstance(th)) {
+                
+            } else {
+                throw new RuntimeException("Runnable should throw `" + expectedExceptionType + "` but did throw  ");
+            }
+        }
+        throw new RuntimeException("Runnable should throw `" + expectedExceptionType + "` but did not.");
+    }
 }

@@ -10,9 +10,12 @@
  */
 package net.splitcells.dem.utils.random;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.security.SecureRandom;
 import java.util.Random;
 
+@JavaLegacyArtifact
 public class RndSrcStandardF implements RndSrcF {
 
     public final Random seedSrc = new Random();
