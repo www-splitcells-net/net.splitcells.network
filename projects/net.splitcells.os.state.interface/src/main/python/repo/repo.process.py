@@ -64,6 +64,7 @@ import subprocess
 import argparse
 import json
 import logging
+import re
 from os import (environ, getcwd)
 from pathlib import Path
 
@@ -78,7 +79,7 @@ def execute(relativePath, host, command):
 		return False
 	return True
 def process(relativePath, host, command, commandForMissing, commandForUnknown, commandForCurrent, commandForChildren):
-	if not execute(relativePath, host, command):
+	if not execute(relativePath, host.replace('$peerRepo', ''), command):
 		return False
 	peerListPath = Path('./bin/net.splitcells.osi.repos.peers')
 	if peerListPath.is_file():
@@ -89,16 +90,17 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 				logging.warning(peerRepo)
 				subRepoPath = Path('../' + peerRepo)
 				returnCode = processSub(relativePath + '/../' + peerRepo
-						, host
-						, command
-						, commandForMissing
-						, commandForUnknown
-						, commandForCurrent
-						, commandForChildren
-						, peerRepo
-						, subRepoPath)
+										, host
+										, re.sub('/[a-z\.]*/../', '/', command.replace('$peerRepo', '/../' + peerRepo))
+										, commandForMissing
+										, commandForUnknown
+										, commandForCurrent
+										, commandForChildren
+										, peerRepo
+										, subRepoPath)
 				if not returnCode:
 					return returnCode
+	command = command.replace('$peerRepo', '')
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 	if subListPath.is_file():
 		# TODO Check if "!/.net.splitcells.os.state.interface.repo/" is present in gitignore. If not pr
@@ -118,14 +120,14 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 			for subName in repoList['subs'].keys():
 				subRepoPath=Path('./' + subName)
 				returnCode = processSub(relativePath
-						, host
-						, command
-						, commandForMissing
-						, commandForUnknown
-						, commandForCurrent
-						, commandForChildren
-						, subName
-						, subRepoPath)
+										, host
+										, command
+										, commandForMissing
+										, commandForUnknown
+										, commandForCurrent
+										, commandForChildren
+										, subName
+										, subRepoPath)
 				if not returnCode:
 					return returnCode
 	return True
