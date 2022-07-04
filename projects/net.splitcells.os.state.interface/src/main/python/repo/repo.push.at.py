@@ -22,16 +22,16 @@ if __name__ == '__main__':
 		logging.basicConfig(level = logging.DEBUG)
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--remote-repo-name'
-        		, dest = 'remoteRepoName'
-        		, required = True
-        		, help = 'This is the local name of the remote repository,to which data is pushed.')
+						, dest = 'remoteRepoName'
+						, required = True
+						, help = 'This is the local name of the remote repository,to which data is pushed.')
 	parser.add_argument('--remote-repo-URL'
-		, dest = 'remoteRepoUrl'
-		, required = True
-		, help = 'This is the URL of the remote repository,to which data is pushed.')
+						, dest = 'remoteRepoUrl'
+						, required = True
+						, help = 'This is the URL of the remote repository,to which data is pushed.')
 	parsedArgs = parser.parse_args()
-	commandToExecute = "command.managed.execute disjunction repo.push.at"\
-		+ " --remote-repo-name='" + parsedArgs.remoteRepoName + "'"\
-		+ " --remote-repo-URL='" + parsedArgs.remoteRepoUrl + "'"
+	commandToExecute = "repo.process --command 'command.managed.execute disjunction repo.push.at" \
+					   + " --remote-repo-name=''" + parsedArgs.remoteRepoName + "''" \
+					   + " --remote-repo-URL=''" + parsedArgs.remoteRepoUrl + "'"
 	logging.debug("Executing: " + commandToExecute)
 	subprocess.call(commandToExecute, shell='True')
