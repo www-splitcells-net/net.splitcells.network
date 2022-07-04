@@ -105,7 +105,7 @@ Project Cluster
 * Messaging via [Mastadon/Fosstodon](https://fosstodon.org/@splitcells)
 * Blogging with Images on [Medium](https://martins-avots.medium.com/)
 ## Infrastructure
-* Rendered Documentation via [a personal website](http://splitcells.net/net/splitcells/system/index.html)
+* Rendered Documentation via [a personal website](https://splitcells.net/net/splitcells/network/README.html)
 * Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) and
 [Sourcehut](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)).
 * Repository Hosts:
