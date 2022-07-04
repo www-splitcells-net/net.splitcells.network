@@ -7,7 +7,6 @@
 
 ## Introduction
 
-Together we are more than the sum of our cells.
 We provide an open source ecosystem centered around optimization and operations research.
 
 The main project is the [Generic Allocator](http://splitcells.net/net/splitcells/gel/index.html).
