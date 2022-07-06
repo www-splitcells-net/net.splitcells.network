@@ -36,7 +36,7 @@ class Command:
 				raise Exception('Cannot install ' + projectCommand.name + ' of project ' + self.projectName + ' to ' + str(targetCommandFile) + '.')
 			targetCommandFile.write_text("#!/usr/bin/env sh\n"
 			    + 'cd ' + str(projectCommand.resolve().parent.parent) + " \n"
-			    + './bin/' + projectCommand.name + " \n")
+			    + './bin/' + projectCommand.name + " $@\n")
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(format='%(message)s', level=logging.DEBUG)

@@ -18,6 +18,8 @@ Changes are now written to the root changelog instead.
 
 ## Unreleased
 ### Major Changes
+* **2022-07-06** Installed project commands now pass their arguments to the original real command, instead of suppressing these.
+  If one installs the `net.splitcells.network` as a project repository, arguments to the call of `net.splitcells.network.deploy.build.at` are now passed to `net.splitcells.network/bin/deploy.build.at`.
 * **2022-04-17** `repo.synchronize.with` executes `repo.is.clean` after `repo.repair`,
   in order to avoid errors caused by missing sub repos.
 * **2022-02-25** [**\#158** Do not change the PATH during the installation of OS state interface](https://github.com/www-splitcells-net/net.splitcells.network/issues/158):
