@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://splitcells.net/sew.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Generic Allocator's Main Objectives</title>
+    </meta>
+    <paragraph>Enable the user to understand the results given a solver and a problem.
+        The user should be able to understand the state of a solution, especially it's errors and costs in relation to a given problem.
+        If the produced solution is not acceptable,
+        the user should be informed,
+        why the given solver was not able to solve the given problem.
+        Thereby, the user should know, what capabilities the solver is missing in order to solve the given problem.
+    </paragraph>
+</article>

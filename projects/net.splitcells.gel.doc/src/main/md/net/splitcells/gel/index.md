@@ -30,3 +30,6 @@ where it is used.
 ## Introduction to the Underlying Theories
 * [One-Dimensional Assignment Problems](../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/index.md)
 * [Multi-Dimensional Assignment Problems](../../../../../../src/main/md/net/splitcells/gel/problem/theory/assignment/problem/multidimensional.md)
+
+## Advertisment
+* [Gel's Main Objectives](../../../../../../src/main/xml/net/splitcells/gel/objectives.xml)
