@@ -3,6 +3,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2022-07-06**: **\#114**: Links to XML documents in CommonMark documents are translated to links to corresponding HTML documents
+  (i.e. `/net/splitcells/gel/index.xml` -> `/net/splitcells/gel/index.html`)
+  in order to link between different document types.
 * **2022-03-07**:
   1. Move `net.splitcells.website.server.project.ProjectsRenderer`
      to `net.splitcells.website.server.projects.ProjectsRendererI` in order to

@@ -66,8 +66,13 @@ public class LinkTranslator extends AbstractVisitor {
                     .replace("//", "/");
         }
         link.setDestination(protocol + normalizedDestination);
+        // TODO This should only be done if, the link is relative and contains "src/main/md".
         if (link.getDestination().endsWith(".md") && protocol.isEmpty()) {
             link.setDestination(link.getDestination().substring(0, link.getDestination().length() - 3) + ".html");
+        }
+        // TODO This should only be done if, the link is relative and contains "src/main/xml".
+        if (link.getDestination().endsWith(".xml") && protocol.isEmpty()) {
+            link.setDestination(link.getDestination().substring(0, link.getDestination().length() - 4) + ".html");
         }
         this.visitChildren(link);
     }
