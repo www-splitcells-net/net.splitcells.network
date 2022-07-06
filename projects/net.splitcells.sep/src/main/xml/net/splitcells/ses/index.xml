@@ -14,5 +14,6 @@
                 <idea>Use biological cell visualization.</idea>
             </idea>
         </scheduling>
+        <objective>Execute and analyse networks of optimizations consisting of optimizations based on Gel.</objective>
     </optimization>
 </project>
