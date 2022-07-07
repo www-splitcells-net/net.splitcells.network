@@ -83,6 +83,13 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         return allocationGroups;
     }
 
+    /**
+     * TODO Make this a normal method, so its easier to find.
+     *
+     * @param constraint
+     * @return
+     */
+    @Deprecated
     static List<List<Constraint>> allocationGroups(Constraint constraint) {
         return allocationGroups(list(constraint));
     }
