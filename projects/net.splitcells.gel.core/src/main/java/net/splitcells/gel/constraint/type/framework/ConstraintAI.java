@@ -37,6 +37,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
@@ -199,8 +200,10 @@ public abstract class ConstraintAI implements Constraint {
 
     @Override
     public Rating rating(GroupId group, Line line) {
-        final var routingRating
-                = routingRating(group, processedLine -> processedLine.value(LINE).equalsTo(line));
+        final var routingRating = routingRating(group, lineProcessing
+                .lookup(LINE, line)
+                .lookup(INCOMING_CONSTRAINT_GROUP, group)
+                .rawLinesView().stream());
         routingRating.children_to_groups().forEach((child, groups) ->
                 groups.forEach(group2 -> routingRating.events().add(child.rating(group2, line)))
         );
@@ -217,8 +220,28 @@ public abstract class ConstraintAI implements Constraint {
         final var routingRating = RoutingRating.create();
         lineProcessing.rawLinesView().forEach(line -> {
             if (line != null
-                    && lineSelector.test(line)
-                    && group.equals(line.value(INCOMING_CONSTRAINT_GROUP))) {
+                    && group.equals(line.value(INCOMING_CONSTRAINT_GROUP))
+                    && lineSelector.test(line)) {
+                routingRating.events().add(line.value(RATING));
+                line.value(Constraint.PROPAGATION_TO).forEach(child -> {
+                    final Set<GroupId> groupsOfChild;
+                    if (!routingRating.children_to_groups().containsKey(child)) {
+                        groupsOfChild = setOfUniques();
+                        routingRating.children_to_groups().put(child, groupsOfChild);
+                    } else {
+                        groupsOfChild = routingRating.children_to_groups().get(child);
+                    }
+                    groupsOfChild.add(line.value(RESULTING_CONSTRAINT_GROUP));
+                });
+            }
+        });
+        return routingRating;
+    }
+
+    protected RoutingRating routingRating(GroupId group, Stream<Line> lines) {
+        final var routingRating = RoutingRating.create();
+        lines.forEach(line -> {
+            if (line != null) {
                 routingRating.events().add(line.value(RATING));
                 line.value(Constraint.PROPAGATION_TO).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
