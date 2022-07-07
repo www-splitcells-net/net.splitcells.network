@@ -12,6 +12,17 @@ public class GroupSelectors {
         throw constructorIllegal();
     }
 
+    /**
+     * This helper method, makes it easier to create a {@link GroupSelector} instead of a {@link FluentGroupSelector}
+     * with a lambda and without casting.
+     * 
+     * @param groupSelector This is the {@link GroupSelector}, which is typically defined in a lambda.
+     * @return This is the given argument.
+     */
+    public static GroupSelector groupSelector(GroupSelector groupSelector) {
+        return groupSelector;
+    }
+
     public static GroupSelector groupSelector(Randomness randomness, int minimum_constraint_group_path
             , int numberOfGroupsSelectedPerDefiance) {
         return allocationsGroups -> {

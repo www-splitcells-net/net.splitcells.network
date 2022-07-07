@@ -61,17 +61,17 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
 public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (GroupSelector groupSelector, SupplySelector repairer, boolean repairCompliants) {
+            (FluentGroupSelector groupSelector, SupplySelector repairer, boolean repairCompliants) {
         return new ConstraintGroupBasedRepair(groupSelector, repairer, repairCompliants);
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (GroupSelector groupSelector, SupplySelector repairer) {
+            (FluentGroupSelector groupSelector, SupplySelector repairer) {
         return new ConstraintGroupBasedRepair(groupSelector, repairer);
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (GroupSelector groupSelector) {
+            (FluentGroupSelector groupSelector) {
         return new ConstraintGroupBasedRepair(groupSelector, SupplySelectors.supplySelector());
     }
 
@@ -87,15 +87,15 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                 , SupplySelectors.supplySelector());
     }
 
-    private final GroupSelector groupSelector;
+    private final FluentGroupSelector groupSelector;
     private final SupplySelector supplySelector;
     private final boolean repairCompliants;
-    
-    protected ConstraintGroupBasedRepair(GroupSelector groupSelector, SupplySelector repairer) {
+
+    protected ConstraintGroupBasedRepair(FluentGroupSelector groupSelector, SupplySelector repairer) {
         this(groupSelector, repairer, true);
     }
 
-    protected ConstraintGroupBasedRepair(GroupSelector groupSelector, SupplySelector repairer, boolean repairCompliants) {
+    protected ConstraintGroupBasedRepair(FluentGroupSelector groupSelector, SupplySelector repairer, boolean repairCompliants) {
         this.groupSelector = groupSelector;
         this.supplySelector = repairer;
         this.repairCompliants = repairCompliants;
@@ -165,7 +165,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     }
 
     public List<List<Constraint>> groupOfConstraintGroup(Solution solution) {
-        return groupSelector.apply(Constraint.allocationGroups(solution.constraint()));
+        return groupSelector.apply(solution.constraint());
     }
 
     public void freeDefyingGroupOfConstraintGroup(Solution solution, Constraint constraint) {
