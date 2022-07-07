@@ -73,6 +73,17 @@ public class LookupTable implements Table {
     }
 
     @Override
+    public Line getRawLine(int index) {
+        if (content.contains(index)) {
+            return tableView.getRawLine(index);
+        }
+        return null;
+    }
+
+    @Override
+    public Stream<Line> linesStream() {
+        return content.stream().map(tableView::getRawLine);
+    }
     public List<Line> rawLinesView() {
         final var rawLines = Lists.<Line>list();
         range(0, tableView.rawLinesView().size()).forEach(i -> {
