@@ -66,6 +66,10 @@ public interface Table extends Discoverable, Domable {
                         .collect(Collectors.toList()));
     }
 
+    default Stream<Line> linesStream() {
+        return getLines().stream();
+    }
+
     default List<Line> getDistinctLines() {
         return getDistinctLineValues().stream()
                 .map(values -> lookupEquals(values).findFirst())
@@ -81,6 +85,13 @@ public interface Table extends Discoverable, Domable {
                 .collect(toSetOfUniques());
     }
 
+    /**
+     * This is a helper method in order to retrieve a {@link Line} quickly.
+     * 
+     * @param index This is the raw index of the {@link Line} to be retrieved.
+     * @return This is the {@link Line} according to the {@param index} or null,
+     * if the {@param index} is smaller than {@link #size()} and no {@link Line} is located there.
+     */
     default Line getRawLine(int index) {
         return rawLinesView().get(index);
     }
