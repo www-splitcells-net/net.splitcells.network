@@ -30,6 +30,7 @@ import static net.splitcells.gel.solution.history.History.ALLOCATION_EVENT;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConstraintGroupBasedRepairTest {
@@ -84,7 +85,7 @@ public class ConstraintGroupBasedRepairTest {
                 .asSolution();
         solution.optimize(linearInitialization());
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(
-                constraintGroup -> list(constraintGroup.get(6)) // Select the first defying group.
+                groupSelector(constraintGroup -> list(constraintGroup.get(6))) // Select the first defying group.
                 , freeDemandGroups -> currentSolution -> {
                     freeDemandGroups.entrySet().forEach(freeGroup -> {
                         freeGroup.getValue().forEach(freeDemand -> {
