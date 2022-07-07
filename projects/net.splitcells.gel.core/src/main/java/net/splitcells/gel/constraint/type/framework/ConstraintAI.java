@@ -200,10 +200,10 @@ public abstract class ConstraintAI implements Constraint {
 
     @Override
     public Rating rating(GroupId group, Line line) {
-        final var routingRating = routingRating(group, lineProcessing
+        final var routingRating = routingRating(lineProcessing
                 .lookup(LINE, line)
                 .lookup(INCOMING_CONSTRAINT_GROUP, group)
-                .rawLinesView().stream());
+                .linesStream());
         routingRating.children_to_groups().forEach((child, groups) ->
                 groups.forEach(group2 -> routingRating.events().add(child.rating(group2, line)))
         );
@@ -238,7 +238,7 @@ public abstract class ConstraintAI implements Constraint {
         return routingRating;
     }
 
-    protected RoutingRating routingRating(GroupId group, Stream<Line> lines) {
+    protected RoutingRating routingRating(Stream<Line> lines) {
         final var routingRating = RoutingRating.create();
         lines.forEach(line -> {
             if (line != null) {
