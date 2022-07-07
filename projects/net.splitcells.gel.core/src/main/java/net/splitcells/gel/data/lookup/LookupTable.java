@@ -19,6 +19,8 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
@@ -84,12 +86,15 @@ public class LookupTable implements Table {
     public Stream<Line> linesStream() {
         return content.stream().map(tableView::getRawLine);
     }
+
+    @Override
     public List<Line> rawLinesView() {
         final var rawLines = Lists.<Line>list();
-        range(0, tableView.rawLinesView().size()).forEach(i -> {
+        final var parentRawLines = tableView.rawLinesView();
+        range(0, parentRawLines.size()).forEach(i -> {
             final Line rElement;
             if (content.contains(i)) {
-                rElement = tableView.rawLinesView().get(i);
+                rElement = parentRawLines.get(i);
             } else {
                 rElement = null;
             }
