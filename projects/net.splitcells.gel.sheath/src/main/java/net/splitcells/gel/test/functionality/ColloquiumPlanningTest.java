@@ -63,7 +63,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <p>
  * TODO Prefered days and shifts for pupil and teachers.
  */
-public class OralExamsTest extends TestSuiteI {
+public class ColloquiumPlanningTest extends TestSuiteI {
     public static final Attribute<Integer> STUDENTS = integerAttribute("students");
     public static final Attribute<Integer> EXAMINER = integerAttribute("examiner");
     public static final Attribute<Integer> OBSERVER = integerAttribute("observer");
@@ -75,7 +75,7 @@ public class OralExamsTest extends TestSuiteI {
     @Test
     public void testRandomInstanceSolving() {
         analyseProcess(() -> {
-            final var testSubject = randomOralExams
+            final var testSubject = randomColloquiumPlanning
                     (88
                             , 177
                             , 40
@@ -114,7 +114,7 @@ public class OralExamsTest extends TestSuiteI {
     @Test
     public void testComplexity() {
         analyseProcess(() -> {
-            final var testSubject = randomOralExams
+            final var testSubject = randomColloquiumPlanning
                     (88
                             , 177
                             , 40
@@ -139,7 +139,7 @@ public class OralExamsTest extends TestSuiteI {
     @Test
     @Deprecated
     public void testCurrentDevelopment() {
-        final var testSubject = randomOralExams
+        final var testSubject = randomColloquiumPlanning
                 (88
                         , 177
                         , 40
@@ -215,8 +215,8 @@ public class OralExamsTest extends TestSuiteI {
         });
     }
 
-    public Problem randomOralExams(int studentCount, int examCount, int examinerCount, int checkerCount,
-                                   int weekCount
+    public Problem randomColloquiumPlanning(int studentCount, int examCount, int examinerCount, int checkerCount,
+                                            int weekCount
             , int examDayCountPerWeek, int shiftsPerDayCount, int roomCount, Randomness randomness) {
         final List<List<Object>> supplies = list();
         for (int room = 1; room <= roomCount; ++room) {
@@ -239,11 +239,11 @@ public class OralExamsTest extends TestSuiteI {
                 demands.add(list(student, randomness.integer(1, examinerCount), randomness.integer(1, checkerCount)));
             }
         }
-        return oralExams(demands, supplies);
+        return colloquiumPlanning(demands, supplies);
     }
 
-    public Problem oralExams(List<List<Object>> demands, List<List<Object>> supplies) {
-        return defineProblem()
+    public Problem colloquiumPlanning(List<List<Object>> demands, List<List<Object>> supplies) {
+        return defineProblem("colloquium-planning")
                 .withDemandAttributes(STUDENTS, EXAMINER, OBSERVER)
                 .withDemands(demands)
                 .withSupplyAttributes(DATE, SHIFT, ROOM_NUMBER)
@@ -279,8 +279,8 @@ public class OralExamsTest extends TestSuiteI {
 
     @Tag(INTEGRATION_TEST)
     @Test
-    public void testRatingsOfSingleOralExam() {
-        Solution testSubject = oralExams(list(list(1, 1, 1)), list(list(1, 1, 1))).asSolution();
+    public void testRatingsOfSingleExam() {
+        Solution testSubject = colloquiumPlanning(list(list(1, 1, 1)), list(list(1, 1, 1))).asSolution();
         testSubject.optimize(linearInitialization());
         assertThat(testSubject.constraint().rating()).isEqualTo(noCost());
     }
@@ -288,7 +288,7 @@ public class OralExamsTest extends TestSuiteI {
     @Tag(INTEGRATION_TEST)
     @Test
     public void testRatingsOfPeopleWithMultipleExamClones() {
-        Solution testSubject = oralExams
+        Solution testSubject = colloquiumPlanning
                 (list
                                 (list(1, 1, 1)
                                         , list(1, 1, 1))
@@ -360,7 +360,7 @@ public class OralExamsTest extends TestSuiteI {
     @Tag(INTEGRATION_TEST)
     @Test
     public void testRatingsOfExamsInSameTimeslot() {
-        Solution testSubject = oralExams
+        Solution testSubject = colloquiumPlanning
                 (list
                                 (list(1, 1, 1)
                                         , list(1, 1, 1)
@@ -422,7 +422,7 @@ public class OralExamsTest extends TestSuiteI {
     @Tag(INTEGRATION_TEST)
     @Test
     public void testRatingsOfStudentWithMultipleExamsInSameDay() {
-        Solution testSubject = oralExams
+        Solution testSubject = colloquiumPlanning
                 (list
                                 (list(1, 1, 1)
                                         , list(1, 1, 1)

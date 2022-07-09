@@ -19,7 +19,7 @@ import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
-import net.splitcells.gel.test.functionality.OralExamsTest;
+import net.splitcells.gel.test.functionality.ColloquiumPlanningTest;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -34,7 +34,7 @@ public final class GelDev {
     }
 
     public static void main(String... arg) {
-        new OralExamsTest().testRandomInstanceSolving();
+        new ColloquiumPlanningTest().testRandomInstanceSolving();
         /*process(() -> {
             //new MinimalDistanceTest().test_multiple_line_addition_and_removal();
             //new ConstraintTest().test_incomingGroupsOfConstraintPath();
