@@ -10,6 +10,7 @@
  */
 package net.splitcells.dem.source.code;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.resource.Files;
 import org.antlr.v4.runtime.*;
@@ -20,7 +21,7 @@ import java.nio.file.Path;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-@JavaLegacyBody
+@JavaLegacyArtifact
 public class SourceCodeCheck {
     public static void main(String... arg) {
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.merger"));

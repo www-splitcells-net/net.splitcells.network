@@ -24,6 +24,7 @@ import com.github.javaparser.symbolsolver.JavaSymbolSolver;
 import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ import java.nio.file.Paths;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.downCast;
 
-@JavaLegacyBody
+@JavaLegacyArtifact
 public class SourceCodeCheckExperiment {
     public static void main(String... args) throws IOException {
         final var typeSolver = new CombinedTypeSolver();

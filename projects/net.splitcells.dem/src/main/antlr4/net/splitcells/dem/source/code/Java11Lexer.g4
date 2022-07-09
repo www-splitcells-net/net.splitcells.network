@@ -51,6 +51,8 @@ lexer grammar Java11Lexer;
     		| 'import java.util.Optional;'
     		| 'import org.junit.jupiter.api.Test;'
     		| 'import static org.assertj.core.api.Assertions.assertThat;'
+    		| 'import static org.junit.jupiter.api.Assertions.assertThrows;'
+    		| 'import static java.util.stream.IntStream.rangeClosed;'
     		;
 	Arrow: '->';
 	Bigger_than: '>';
@@ -143,6 +145,7 @@ lexer grammar Java11Lexer;
 		| '-'
 		| '$'
 		| '*'
+		| '`'
 		;
 /* Tokens Of Last Resort */
 	WS:

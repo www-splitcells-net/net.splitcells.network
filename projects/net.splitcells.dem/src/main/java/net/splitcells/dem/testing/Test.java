@@ -12,6 +12,7 @@ package net.splitcells.dem.testing;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.launcher.TagFilter;
@@ -39,7 +40,7 @@ import static org.junit.platform.launcher.TagFilter.includeTags;
  * <p>TODO Simplify code by removing duplicate code.</p>
  * <p>TODO Testing without Maven seems to be faster.</p>
  */
-@JavaLegacyBody
+@JavaLegacyArtifact
 public class Test {
     public static void main(String... arg) {
         if (!test()) {

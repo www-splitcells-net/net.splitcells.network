@@ -10,14 +10,10 @@
  */
 package net.splitcells.dem.testing;
 
-import net.splitcells.dem.data.atom.Integers;
-import net.splitcells.dem.data.set.list.List;
-import org.assertj.core.api.Condition;
-
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static org.assertj.core.api.Assertions.assertThat;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class Assertions {
     private Assertions() {
@@ -25,19 +21,19 @@ public class Assertions {
     }
 
     public static <T> void assertComplies(T subject, Predicate<T> constraint, String description) {
-        assertThat(subject).is(new Condition<T>(constraint, description));
+        if (constraint.test(subject)) {
+            throw executionException(description);
+        }
     }
-    
+
     public static void assertThrows(Class<? extends Throwable> expectedExceptionType, Runnable run) {
         try {
             run.run();
         } catch (Throwable th) {
-            if (expectedExceptionType.isInstance(th)) {
-                
-            } else {
-                throw new RuntimeException("Runnable should throw `" + expectedExceptionType + "` but did throw  ");
+            if (!expectedExceptionType.isInstance(th)) {
+                throw executionException("Runnable should throw `" + expectedExceptionType + "` but did throw  ");
             }
         }
-        throw new RuntimeException("Runnable should throw `" + expectedExceptionType + "` but did not.");
+        throw executionException("Runnable should throw `" + expectedExceptionType + "` but did not.");
     }
 }

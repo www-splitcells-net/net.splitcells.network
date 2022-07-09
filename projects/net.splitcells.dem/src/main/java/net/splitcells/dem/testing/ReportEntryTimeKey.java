@@ -10,9 +10,12 @@
  */
 package net.splitcells.dem.testing;
 
-import java.time.ZonedDateTime;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.time.format.DateTimeFormatter;
 
+@Deprecated
+@JavaLegacyArtifact
 public class ReportEntryTimeKey extends ReportEntryKey<Long> {
 
     public static DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_ZONED_DATE_TIME;

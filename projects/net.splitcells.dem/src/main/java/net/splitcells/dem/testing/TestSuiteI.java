@@ -12,6 +12,7 @@ package net.splitcells.dem.testing;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.*;
@@ -30,6 +31,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 /**
  * TODO Support multi threaded test execution.
  */
+@Deprecated
+@JavaLegacyArtifact
 public class TestSuiteI implements TestSuite {
 
     @BeforeAll

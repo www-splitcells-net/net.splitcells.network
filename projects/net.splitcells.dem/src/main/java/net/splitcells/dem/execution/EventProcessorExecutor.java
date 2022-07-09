@@ -11,6 +11,7 @@
 package net.splitcells.dem.execution;
 
 import net.splitcells.dem.environment.resource.Resource;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
@@ -19,6 +20,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @Deprecated
+@JavaLegacyArtifact
 public class EventProcessorExecutor implements Resource {
     public static EventProcessorExecutor eventProcessorExecutor() {
         return new EventProcessorExecutor();

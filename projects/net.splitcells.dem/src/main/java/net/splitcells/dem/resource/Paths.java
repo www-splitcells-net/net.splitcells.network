@@ -11,6 +11,7 @@
 package net.splitcells.dem.resource;
 
 import com.google.common.io.Files;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * an conversion method, that transforms the path to a file like object, in order to make it easy to interact with it.
  * Note, that the transform method should accept any kind of backend for the filesystem.
  */
+@JavaLegacyArtifact
 public final class Paths {
     /**
      * TODO Only allow special symbols like $ via a flag.

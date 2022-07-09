@@ -10,6 +10,7 @@
  */
 package net.splitcells.dem.execution;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Semaphore;
@@ -20,6 +21,7 @@ import static net.splitcells.dem.execution.EventProcessorExecutor.eventProcessor
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Deprecated
+@JavaLegacyArtifact
 public class EventProcessorExecutorTest {
     @Test
     public void test() {

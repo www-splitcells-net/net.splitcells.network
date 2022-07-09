@@ -10,11 +10,14 @@
  */
 package net.splitcells.dem.utils.random;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.util.Random;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@JavaLegacyArtifact
 public class JavaRandomWrapper implements Randomness, RndSrcCrypt {
 	private final Random rnd;
 
