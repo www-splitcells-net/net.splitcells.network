@@ -34,4 +34,6 @@ if __name__ == '__main__':
 					   + " --remote-repo-name=''" + parsedArgs.remoteRepoName + "''" \
 					   + " --remote-repo-URL=''" + parsedArgs.remoteRepoUrl + "'"
 	logging.debug("Executing: " + commandToExecute)
-	subprocess.call(commandToExecute, shell='True')
+	returnCode = subprocess.call(commandToExecute, shell='True')
+	if returnCode != 0:
+		exit(1)

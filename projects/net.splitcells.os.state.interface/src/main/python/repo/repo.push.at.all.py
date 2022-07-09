@@ -33,4 +33,7 @@ if __name__ == '__main__':
 			hostUrl = hostFile[i*2 + 1]
 			commandToExecute = 'repo.push.at --remote-repo-name=' + hostName + " --remote-repo-URL='" + hostUrl.replace('$1', currentDirectoryName + "$peerRepo'")
 			logging.debug('Executing: ' + commandToExecute)
-			subprocess.call(commandToExecute, shell='True')
+			returnCode = subprocess.call(commandToExecute, shell='True')
+			if returnCode != 0:
+				logging.error('Error pushing the repository `' + currentDirectory + '` to `' + hostName + '` with return code ' + str(returnCode) + '.')
+				exit(1)
