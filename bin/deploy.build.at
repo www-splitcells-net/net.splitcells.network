@@ -34,7 +34,7 @@ if __name__ == '__main__':
 		else
 			git pull {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log main
 		fi
-		""".format(parsedArgs.targetServer, parsedArgs.user, argsParser.buildCommand)
+		""".format(parsedArgs.targetServer, parsedArgs.user, parsedArgs.buildCommand)
 	logging.debug('Executing: ' + buildScript)
 	returnCode = subprocess.call(buildScript, shell='True')
 	if returnCode != 0:
