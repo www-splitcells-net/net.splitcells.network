@@ -37,7 +37,7 @@ This set of commands define an interface, but does not contain the concrete impl
 
 For this additional repositories/projects has to be installed.
 These provide the implementations for the different operation systems.
-A list of such repositories can be found [here](http://splitcells.net/net/splitcells/martins/avots/website/2018/08/06/operation-system-state-interface.html).
+A list of such repositories can be found [here](known-repositories.html).
 
 This can be done in the following ways in the terminal:
 ```sh
