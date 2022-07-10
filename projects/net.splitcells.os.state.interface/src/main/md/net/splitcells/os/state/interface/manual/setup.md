@@ -11,16 +11,16 @@ Currently a bash compatible terminal and Python >= 3.7 is required.
 
 ## Most Compatible Setup Instructions
 ```sh
-git clone https://gitlab.com/splitcells/net.splitcells.os.state.interface.git
-cd net.splitcells.os.state.interface
+git clone https://gitlab.com/splitcells/net.splitcells.network.git
+cd net.splitcells.network/projects/net.splitcells.os.state.interface
 chmod +x ./bin/install
 ./bin/install
 ```
 
 ## Make based Installation
 ```sh
-git clone https://gitlab.com/splitcells/net.splitcells.os.state.interface.git
-cd net.splitcells.os.state.interface
+git clone https://gitlab.com/splitcells/net.splitcells.network.git
+cd net.splitcells.network/projects/net.splitcells.os.state.interface
 chmod +x ./configure
 ./configure
 make
