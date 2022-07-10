@@ -1,18 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.splitcells</groupId>
-	<artifactId>os.state.interface.lib</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<build>
-		<resources>
-			<resource>
-				<directory>src</directory>
-			</resource>
-			<resource>
-				<directory>lib/</directory>
-			</resource>
-		</resources>
-	</build>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.splitcells</groupId>
+    <artifactId>os.state.interface.lib</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <parent>
+        <groupId>net.splitcells</groupId>
+        <artifactId>pom-java-minimal</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
+    </parent>
+    <build>
+        <resources>
+            <resource>
+                <directory>src</directory>
+            </resource>
+        </resources>
+    </build>
 </project>

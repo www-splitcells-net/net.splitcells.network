@@ -5,6 +5,12 @@
     <artifactId>gel</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Generic Allocator</name>
+    <parent>
+        <groupId>net.splitcells</groupId>
+        <artifactId>pom-java-defaults</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
+    </parent>
     <packaging>pom</packaging>
     <modules>
         <module>../net.splitcells.gel.core</module>

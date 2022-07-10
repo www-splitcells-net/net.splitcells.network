@@ -6,6 +6,12 @@
 	<artifactId>os.state.interface</artifactId>
 	<description>This POM allows to easily import this project.</description>
 	<version>0.0.1-SNAPSHOT</version>
+	<parent>
+		<groupId>net.splitcells</groupId>
+		<artifactId>pom-java-minimal</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
+	</parent>
 	<build>
 		<resources>
 			<resource>

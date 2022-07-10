@@ -5,6 +5,12 @@
     <artifactId>system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <parent>
+        <groupId>net.splitcells</groupId>
+        <artifactId>pom-java-minimal</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
+    </parent>
     <modules>
         <module>../net.splitcells.pom.java.minimal</module>
         <module>../net.splitcells.pom.java.defaults</module>

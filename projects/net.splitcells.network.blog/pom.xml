@@ -5,4 +5,11 @@
 	<artifactId>network.blog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Splitcells Network Blog</name>
+	<packaging>pom</packaging>
+	<parent>
+		<groupId>net.splitcells</groupId>
+		<artifactId>pom-java-minimal</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
+	</parent>
 </project>
