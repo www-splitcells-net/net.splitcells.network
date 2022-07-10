@@ -35,7 +35,7 @@ On a more serious ;)
 This framework primarily provides a set of commands in order to do things independent from technical details.
 This set of commands define an interface, but does not contain the concrete implementation for these commands.
 
-For this additional repositories has to be installed.
+For this additional repositories/projects has to be installed.
 These provide the implementations for the different operation systems.
 A list of such repositories can be found [here](http://splitcells.net/net/splitcells/martins/avots/website/2018/08/06/operation-system-state-interface.html).
 
@@ -48,6 +48,15 @@ cd <New clone of repository>
 # Register the new repository.
 command.repository.register $(pwd)
 # Install the new repository.
+user.bin.configure.sh
+```
+
+The repo of OS state interface also contains such a project and is named `net.splitcells.os.state.interface.lib`.
+It contains implementations, which depend on software, that can be linked without license issues (permissive licenses and weak copy left licenses).
+The project can be installed with the following commands:
+```sh
+cd <main repo folder>/projects/net.splitcells.os.state.interface.lib
+command.repository.register $(pwd)
 user.bin.configure.sh
 ```
 
