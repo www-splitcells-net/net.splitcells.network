@@ -23,7 +23,7 @@ if __name__ == '__main__':
 		description='Deploys the build process to a different server.')
 	argsParser.add_argument('--target-server', dest='targetServer', type = str, required = True)
 	argsParser.add_argument('--user', type = str, required = True)
-	argsParser.add_argument('--build-command', dest='buildCommand', type = str, required = True, default = './bin/test.via.network.worker')
+	argsParser.add_argument('--build-command', dest='buildCommand', type = str, required = False, default = './bin/test.via.network.worker')
 	parsedArgs = argsParser.parse_args()
 	buildScript = """
 		git push {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network master:net-splitcells-martins-avots-connection
