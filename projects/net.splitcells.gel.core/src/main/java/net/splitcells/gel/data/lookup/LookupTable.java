@@ -12,14 +12,16 @@ package net.splitcells.gel.data.lookup;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
+import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.list.List;
@@ -32,11 +34,14 @@ import org.w3c.dom.Element;
 import net.splitcells.dem.data.set.list.Lists;
 
 public class LookupTable implements Table {
+
+    private static final boolean USE_EXPERIMENTAL_RAW_LINE_CACHE = true;
     protected final Table tableView;
     protected final String name;
     protected final Set<Integer> content = setOfUniques();
     protected final List<Column<Object>> columns;
     protected final List<Column<Object>> columnsView;
+    private final List<Line> rawLinesCache = list();
 
     public static LookupTable lookupTable(Table table, String name) {
         return new LookupTable(table, name);
@@ -76,6 +81,9 @@ public class LookupTable implements Table {
 
     @Override
     public Line getRawLine(int index) {
+        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+            return rawLinesCache.get(index);
+        }
         if (content.contains(index)) {
             return tableView.getRawLine(index);
         }
@@ -84,11 +92,17 @@ public class LookupTable implements Table {
 
     @Override
     public Stream<Line> linesStream() {
-        return content.stream().map(tableView::getRawLine);
+        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+            return rawLinesCache.stream().filter(e -> e != null);
+        }
+        return content.stream().map(tableView::getRawLine).filter(e -> e != null);
     }
 
     @Override
     public List<Line> rawLinesView() {
+        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+            return listWithValuesOf(rawLinesCache);
+        }
         final var rawLines = Lists.<Line>list();
         final var parentRawLines = tableView.rawLinesView();
         range(0, parentRawLines.size()).forEach(i -> {
@@ -109,6 +123,18 @@ public class LookupTable implements Table {
     }
 
     public void register(Line line) {
+        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+            if (rawLinesCache.size() < line.index()) {
+                rangeClosed(1, line.index() - rawLinesCache.size()).forEach(i -> rawLinesCache.add(null));
+                rawLinesCache.add(line);
+            } else if (rawLinesCache.size() == line.index()) {
+                rawLinesCache.add(line);
+            } else if (rawLinesCache.size() > line.index()) {
+                rawLinesCache.set(line.index(), line);
+            } else {
+                throw executionException("Unaccounted indexes: rawLinesCache-size=" + rawLinesCache.size() + ", line-index=" + line.index());
+            }
+        }
         content.add(line.index());
         // TODO PERFORMANCE
         // TODO FIX
@@ -128,6 +154,18 @@ public class LookupTable implements Table {
             final var column = columns.get(i);
             column.set(line.index(), null);
         });
+        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+            try {
+                if (rawLinesCache.size() == line.index() + 1) {
+                    // TODO HACK rawLinesCache.remove(line.index());
+                    rawLinesCache.set(line.index(), null);
+                } else {
+                    rawLinesCache.set(line.index(), null);
+                }
+            } catch (RuntimeException e) {
+                throw e;
+            }
+        }
     }
 
     @Override
@@ -164,7 +202,9 @@ public class LookupTable implements Table {
 
     @Override
     public List<Line> rawLines() {
-        // TODO PERFORMANCE
+        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+            return listWithValuesOf(rawLinesCache);
+        }
         final var rawLines = Lists.<Line>list();
         content.forEach(index -> rawLines.add(tableView.getRawLine(index)));
         return rawLines;
