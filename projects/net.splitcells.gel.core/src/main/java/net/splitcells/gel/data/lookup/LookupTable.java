@@ -138,10 +138,11 @@ public class LookupTable implements Table {
         content.add(line.index());
         // TODO PERFORMANCE
         // TODO FIX
+        final var header = tableView.headerView();
         range(0, columns.size()).forEach(i -> {
             // HACK
             final var column = columns.get(i);
-            column.set(line.index(), line.value(tableView.headerView().get(i)));
+            column.set(line.index(), line.value(header.get(i)));
         });
         columns.forEach(column -> column.registerAddition(line));
     }
