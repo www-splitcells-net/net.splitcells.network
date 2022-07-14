@@ -65,15 +65,15 @@ public class LookupI<T> implements Lookup<T> {
     public void register_removal(T removal, int index) {
         final var line = table.rawLinesView().get(index);
         content.get(removal).removeRegistration(line);
-        // garbage collection
-        if (content.get(removal).isEmpty()) {
-            content.remove(removal);
-        }
         complexContent.forEach((predicate, lookupTable) -> {
             if (predicate.test(removal)) {
                 lookupTable.removeRegistration(table.rawLinesView().get(index));
             }
         });
+        // garbage collection
+        if (content.get(removal).isEmpty()) {
+            content.remove(removal);
+        }
     }
 
     @Override
