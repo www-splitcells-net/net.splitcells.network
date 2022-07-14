@@ -190,11 +190,9 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public net.splitcells.dem.data.set.list.List<T> values() {
-        return Lists.<T>list().withAppended(
-                table.rawLines().stream()//
-                        .map(e -> e.value(attribute))//
-                        .collect(Collectors.toList())
-        );
+        return table.linesStream()
+                .map(e -> e.value(attribute))//
+                .collect(Lists.toList());
     }
 
 }
