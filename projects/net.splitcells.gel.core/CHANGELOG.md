@@ -1,6 +1,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2022-07-15 \#8**: Rename `RoutingRating#events` to `RoutingRating#ratingComponents`, in order to communicate meaning a bit better.
 * **2022-07-01 \#8**: Create `Query#constraintPath` in order to select a constraint path of a solution via the query interface,
   which is a lot easier to understand,
   than selecting paths by recursive calls of `Constraint#childrenView`.

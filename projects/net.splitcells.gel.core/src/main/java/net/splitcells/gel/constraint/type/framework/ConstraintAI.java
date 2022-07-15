@@ -32,7 +32,6 @@ import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.rout
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -61,7 +60,6 @@ import net.splitcells.gel.constraint.QueryI;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.rating.framework.LocalRating;
-import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 
 @Deprecated
@@ -205,12 +203,12 @@ public abstract class ConstraintAI implements Constraint {
                 .lookup(INCOMING_CONSTRAINT_GROUP, group)
                 .linesStream());
         routingRating.children_to_groups().forEach((child, groups) ->
-                groups.forEach(group2 -> routingRating.events().add(child.rating(group2, line)))
+                groups.forEach(group2 -> routingRating.ratingComponents().add(child.rating(group2, line)))
         );
-        if (routingRating.events().isEmpty()) {
+        if (routingRating.ratingComponents().isEmpty()) {
             return noCost();
         }
-        return routingRating.events().stream()
+        return routingRating.ratingComponents().stream()
                 .reduce((a, b) -> a.combine(b))
                 .get();
     }
@@ -222,7 +220,7 @@ public abstract class ConstraintAI implements Constraint {
             if (line != null
                     && group.equals(line.value(INCOMING_CONSTRAINT_GROUP))
                     && lineSelector.test(line)) {
-                routingRating.events().add(line.value(RATING));
+                routingRating.ratingComponents().add(line.value(RATING));
                 line.value(Constraint.PROPAGATION_TO).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
                     if (!routingRating.children_to_groups().containsKey(child)) {
@@ -242,7 +240,7 @@ public abstract class ConstraintAI implements Constraint {
         final var routingRating = RoutingRating.create();
         lines.forEach(line -> {
             if (line != null) {
-                routingRating.events().add(line.value(RATING));
+                routingRating.ratingComponents().add(line.value(RATING));
                 line.value(Constraint.PROPAGATION_TO).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
                     if (!routingRating.children_to_groups().containsKey(child)) {
@@ -263,11 +261,11 @@ public abstract class ConstraintAI implements Constraint {
         final var routingRating
                 = routingRating(group, lineSelector -> true);
         routingRating.children_to_groups().forEach((children, groups) ->
-                groups.forEach(group2 -> routingRating.events().add(children.rating(group2))));
-        if (routingRating.events().isEmpty()) {
+                groups.forEach(group2 -> routingRating.ratingComponents().add(children.rating(group2))));
+        if (routingRating.ratingComponents().isEmpty()) {
             return noCost();
         }
-        return routingRating.events().stream()
+        return routingRating.ratingComponents().stream()
                 .reduce((a, b) -> a.combine(b))
                 .get();
     }

@@ -36,7 +36,7 @@ public class RoutingRating {
     private final List<Rating> ratings = list();
     private final Map<Constraint, Set<GroupId>> children_to_groups = map();
 
-    public List<Rating> events() {
+    public List<Rating> ratingComponents() {
         return ratings;
     }
 
