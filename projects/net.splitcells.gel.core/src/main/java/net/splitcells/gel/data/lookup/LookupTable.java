@@ -158,8 +158,7 @@ public class LookupTable implements Table {
         if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
             try {
                 if (rawLinesCache.size() == line.index() + 1) {
-                    // TODO HACK rawLinesCache.remove(line.index());
-                    rawLinesCache.set(line.index(), null);
+                    rawLinesCache.remove(line.index());
                 } else {
                     rawLinesCache.set(line.index(), null);
                 }
