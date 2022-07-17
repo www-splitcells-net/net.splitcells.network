@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# This command requires an `~/.m2/settings.xml`, that contains a valid config for GitHub
+mci && mvn deploy -Drepo-github-enable=1
