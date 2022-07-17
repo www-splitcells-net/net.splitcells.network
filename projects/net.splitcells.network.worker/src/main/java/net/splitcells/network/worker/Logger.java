@@ -49,7 +49,6 @@ import static net.splitcells.dem.testing.ReportEntryTimeKey.DATE_TIME_FORMAT;
  * </p>
  */
 public class Logger implements TestExecutionListener {
-    private static Pattern UNIQUE_ID = Pattern.compile("(\\[.*\\])(/)(\\[[a-zA-Z]*:)(.*)(\\])(/)(\\[[a-zA-Z-]*:)([a-zA-Z-_]*)(.*\\])");
 
     public static Logger logger() {
         return logger(config().configValue(ProjectsFolder.class).resolve("net.splitcells.network")
