@@ -47,6 +47,14 @@ public interface Files {
         return java.nio.file.Files.isRegularFile(path);
     }
 
+    static Stream<Path> walkDirectChildren(Path path) {
+        try {
+            return java.nio.file.Files.walk(path, 1).filter(e -> !path.equals(e));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     static Stream<Path> walk_recursively(Path path) {
         try {
             return java.nio.file.Files.walk(path);

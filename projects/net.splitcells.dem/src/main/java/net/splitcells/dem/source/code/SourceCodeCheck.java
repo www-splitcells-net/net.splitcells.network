@@ -28,12 +28,16 @@ public class SourceCodeCheck {
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.core"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.cin"));
+        Files.walkDirectChildren(Path.of("..")).forEach(SourceCodeCheck::checkJavaSourceCodeProject);
+        checkJavaSourceCodeProject(Path.of("../.."));
     }
 
     private static void checkJavaSourceCodeProject(Path projectFolder) {
-        Files.walk_recursively(projectFolder.resolve("src/main/java/"))
-                .filter(Files::is_file)
-                .forEach(SourceCodeCheck::checkJavaSourceCodeFile);
+        if (Files.isDirectory(projectFolder.resolve("src/main/java/"))) {
+            Files.walk_recursively(projectFolder.resolve("src/main/java/"))
+                    .filter(Files::is_file)
+                    .forEach(SourceCodeCheck::checkJavaSourceCodeFile);
+        }
     }
 
     private static void checkJavaSourceCodeFile(Path file) {
