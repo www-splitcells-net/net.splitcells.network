@@ -80,7 +80,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
                         // TODO HACK
                         if (!isValid) {
                             ++invalidLinkCount;
-                            domsole().append("Invalid Link: " + link + ", " + resolvedLink, LogLevel.ERROR);
+                            domsole().append("Invalid link `" + link + "` from `" + requestedPath + "` resolved to `" + resolvedLink + "`.", LogLevel.ERROR);
                         }
                         return !isValid;
                     }
