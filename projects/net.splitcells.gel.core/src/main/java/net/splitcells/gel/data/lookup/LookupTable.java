@@ -156,14 +156,10 @@ public class LookupTable implements Table {
             column.set(line.index(), null);
         });
         if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
-            try {
-                if (rawLinesCache.size() == line.index() + 1) {
-                    rawLinesCache.remove(line.index());
-                } else {
-                    rawLinesCache.set(line.index(), null);
-                }
-            } catch (RuntimeException e) {
-                throw e;
+            if (rawLinesCache.size() == line.index() + 1) {
+                rawLinesCache.remove(line.index());
+            } else {
+                rawLinesCache.set(line.index(), null);
             }
         }
     }
