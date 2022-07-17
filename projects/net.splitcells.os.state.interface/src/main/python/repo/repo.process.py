@@ -84,7 +84,6 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 	peerListPath = Path('./bin/net.splitcells.osi.repos.peers')
 	if peerListPath.is_file():
 		peers = subprocess.run([peerListPath], stdout=subprocess.PIPE)
-		logging.warning('Peer repositories found, but not supported in this version yet: ')
 		for peerRepo in peers.stdout.decode('utf-8').split("\n"):
 			if peerRepo.strip() != "":
 				logging.warning(peerRepo)
