@@ -48,7 +48,7 @@ TODO Instead of "./.net.splitcells.os.state.interface.repo/subs.json" use the
      that the JSON format is too complex yet
      and unnecessary hard to process.
 TODO Use only python for recursion and not shell, in order simplify command.
-TODO Improve documentation.
+TODO Improve documentation and make it friendly to new users.
 TODO Remove duplicate code.
 TODO Support moving child repositories semi-automatically.
 TODO Create compatibility tooling for alternative like meta: https://github.com/mateodelnorte/meta
@@ -171,7 +171,17 @@ def processSub(relativePath, host, command, commandForMissing, commandForUnknown
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level=logging.DEBUG)
-	parser = argparse.ArgumentParser(description="Setting the environment variable 'log_level' to 'debug', enables debug level logging.")
+	parser = argparse.ArgumentParser(description="""Setting the environment variable 'log_level' to 'debug', enables debug level logging.
+
+All command arguments support the variables $subRepo and $peerRepo.
+`$subRepo` is replaced with the relative path from the root --relative-path to the next child repo folder, that will be processed next.
+`$peerRepo` is replaced with the relative path from the root --relative-path to the next peer repo folder, that will be processed next.
+These variables make it easy to create commands, that pull or push a tree of repos to a remote server by constructing the appropriate URLs via these variables.
+The variable `$subRepo` is used mainly to push a tree of git repos to another server.
+This is often useful, when the target SSH server is hosted by oneself and supports complex repo structures.
+The variable `$peerRepo` is used mainly to push a single folder of a git repo.
+This is often useful, when the target server is a public server, where a user often can only manage a single folder of git repos. 
+""")
 	parser.add_argument('--relative-path', dest='relativePath', default='./')
 	parser.add_argument('--host', dest='host', default="''")
 	parser.add_argument('--command', dest='command', required=True)
