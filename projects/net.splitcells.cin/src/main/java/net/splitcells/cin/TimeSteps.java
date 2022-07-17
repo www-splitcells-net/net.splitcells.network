@@ -10,17 +10,48 @@
  */
 package net.splitcells.cin;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.object.Discoverable;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.RatingEvent;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 
-public class TimeSteps {
+public class TimeSteps implements Rater {
     private TimeSteps() {
-        throw constructorIllegal();
+
     }
 
     public static Rater timeSteps() {
-        throw notImplementedYet();
+        return new TimeSteps();
+    }
+
+    @Override
+    public Set<List<String>> paths() {
+        return setOfUniques();
+    }
+
+    @Override
+    public void addContext(Discoverable context) {
+
+    }
+
+    @Override
+    public List<Domable> arguments() {
+        return list();
+    }
+
+    @Override
+    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+        return ratingEvent();
     }
 }

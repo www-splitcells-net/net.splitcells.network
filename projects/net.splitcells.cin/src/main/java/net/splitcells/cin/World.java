@@ -28,6 +28,7 @@ import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 import net.splitcells.gel.solution.Solution;
+import net.splitcells.gel.solution.SolutionView;
 
 import java.util.Optional;
 
@@ -44,6 +45,7 @@ import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueRat
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
+import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.sep.Network.network;
 
 public class World {
@@ -57,6 +59,8 @@ public class World {
         GelDev.process(() -> {
             final var network = network();
             network.withNode(WORLD_HISTORY, worldHistory());
+            network.withOptimization(WORLD_HISTORY, linearInitialization());
+            network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
         }, env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful())));
     }
 
