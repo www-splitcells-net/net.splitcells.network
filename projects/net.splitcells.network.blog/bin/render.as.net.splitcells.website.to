@@ -9,4 +9,4 @@
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 ./bin/build.hugo
 mkdir -p $1/net/splitcells/network/blog
-cp -r target/site $1/net/splitcells/network/blog
+cp -r target/site.hugo $1/net/splitcells/network/blog
