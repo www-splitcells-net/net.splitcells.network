@@ -14,6 +14,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
@@ -128,6 +129,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     public Map<GroupId, Set<Line>> demandGrouping(Constraint constraintGrouping, Solution solution) {
         final Map<GroupId, Set<Line>> demandGrouping = map();
+        final Map<GroupId, Set<Line>> defianceCache = Maps.map();
         constraintGrouping
                 .lineProcessing()
                 .getLines()
@@ -136,9 +138,10 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                  * TODO HACK This is code duplication.
                  * It reimplements part of {@link ConstraintGroupBasedRepair#freeDefyingGroupOfConstraintGroup}.
                  */
-                .filter(processing -> !constraintGrouping
-                        .defying(processing.value(INCOMING_CONSTRAINT_GROUP))
-                        .isEmpty())
+                .filter(processing -> {
+                    final var group = processing.value(INCOMING_CONSTRAINT_GROUP);
+                    return !defianceCache.computeIfAbsent(group, g -> constraintGrouping.defying(g)).isEmpty();
+                })
                 /**
                  * TODO HACK This is code duplication.
                  * It reimplements part of {@link ConstraintGroupBasedOfflineRepair#freeDefyingGroupOfConstraintGroup}.
