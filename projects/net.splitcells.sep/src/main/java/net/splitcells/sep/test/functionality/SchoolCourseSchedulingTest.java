@@ -173,18 +173,18 @@ public class SchoolCourseSchedulingTest {
 
     private static OnlineOptimization studentAllocationOptimization() {
         final var randomness = randomness();
-        return simpleConstraintGroupBasedRepair(rootConstraint -> list(rootConstraint.query().constraintPath())
-                , freeCourseDemands2 -> solution -> {
-                    for (final var freeCourseDemands : freeCourseDemands2.values()) {
-                        for (final var demand : freeCourseDemands) {
-                            final var requiredSubject = demand.value(REQUIRED_SUBJECT);
-                            final var studentsVintage = demand.value(STUDENT_S_VINTAGE);
+        return simpleConstraintGroupBasedRepair(rootConstraint -> list(rootConstraint.query().forAll(STUDENT).forAll(REQUIRED_SUBJECT).constraintPath())
+                , freeDemandsByStudentSubjects -> solution -> {
+                    for (final var demandByStudentSubject : freeDemandsByStudentSubjects.values()) {
+                        for (final var demandOfStudentSubject : demandByStudentSubject) {
+                            final var requiredSubject = demandOfStudentSubject.value(REQUIRED_SUBJECT);
+                            final var studentsVintage = demandOfStudentSubject.value(STUDENT_S_VINTAGE);
                             solution.suppliesFree()
                                     .lookup(SUBJECT, requiredSubject)
                                     .lookup(COURSE_S_VINTAGE, studentsVintage)
                                     .linesStream()
                                     .findFirst().
-                                    ifPresent(fittingSupply -> solution.allocate(demand, fittingSupply));
+                                    ifPresent(fittingSupply -> solution.allocate(demandOfStudentSubject, fittingSupply));
                         }
                     }
                 }
@@ -730,9 +730,9 @@ public class SchoolCourseSchedulingTest {
                 .withDemands(studentDemands)
                 .withSupplies(supplies)
                 .withConstraint(r -> {
-                    r.then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))
+                    r.forAll(STUDENT).forAll(REQUIRED_SUBJECT).then(lineValueRater(line -> line.value(SUBJECT).equals(line.value(REQUIRED_SUBJECT))
                             , "Student gets course in required subject."));
-                    r.then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))
+                    r.forAll(STUDENT).forAll(REQUIRED_SUBJECT).then(lineValueRater(line -> line.value(STUDENT_S_VINTAGE).equals(line.value(COURSE_S_VINTAGE))
                             , "Student gets courses of the same vintage."));
                     r.forAll(STUDENT).forAll(REQUIRED_SUBJECT).then(allSame(COURSE_ID));
                     r.forAll(STUDENT).forAll(RAIL).then(hasSize(1));
