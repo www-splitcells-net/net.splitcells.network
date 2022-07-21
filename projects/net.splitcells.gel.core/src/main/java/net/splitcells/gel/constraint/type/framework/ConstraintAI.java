@@ -186,8 +186,8 @@ public abstract class ConstraintAI implements Constraint {
         return complying;
     }
 
-    public Set<Line> defying(GroupId group, Set<Line> allocations) {
-        final Set<Line> defying = setOfUniques();
+    public net.splitcells.dem.data.set.Set<Line> defying(GroupId group, Set<Line> allocations) {
+        final net.splitcells.dem.data.set.Set<Line> defying = setOfUniques();
         allocations.forEach(allocation -> {
             if (!rating(group, allocation.value(LINE)).equalz(noCost())) {
                 defying.add(lineProcessing.demandOfAllocation(allocation).value(LINE));
@@ -292,7 +292,7 @@ public abstract class ConstraintAI implements Constraint {
         return complying(group, allocationsOf(group));
     }
 
-    public Set<Line> defying(GroupId group) {
+    public net.splitcells.dem.data.set.Set<Line> defying(GroupId group) {
         return defying(group, allocationsOf(group));
     }
 

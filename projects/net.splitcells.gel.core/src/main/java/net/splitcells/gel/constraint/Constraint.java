@@ -178,7 +178,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         return complying(injectionGroup());
     }
 
-    Set<Line> defying(GroupId group);
+    net.splitcells.dem.data.set.Set<Line> defying(GroupId group);
 
     default Set<Line> defying() {
         return defying(injectionGroup());

@@ -124,7 +124,7 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
-    public Set<Line> defying(GroupId group) {
+    public net.splitcells.dem.data.set.Set<Line> defying(GroupId group) {
         return constraint.defying(group);
     }
 
