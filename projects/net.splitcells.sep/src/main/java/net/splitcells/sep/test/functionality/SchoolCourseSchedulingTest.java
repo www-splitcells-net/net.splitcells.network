@@ -160,6 +160,8 @@ public class SchoolCourseSchedulingTest {
             network.process(TEACHER_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
             network.process(STUDENT_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
             network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, linearInitialization());
+            network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, studentAllocationOptimization()
+                    , (currentSolution, step) -> step <= 3 && !currentSolution.isOptimal());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
@@ -167,6 +169,26 @@ public class SchoolCourseSchedulingTest {
                     .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
                     .withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)));
         }));
+    }
+
+    private static OnlineOptimization studentAllocationOptimization() {
+        final var randomness = randomness();
+        return simpleConstraintGroupBasedRepair(rootConstraint -> list(rootConstraint.query().constraintPath())
+                , freeCourseDemands2 -> solution -> {
+                    for (final var freeCourseDemands : freeCourseDemands2.values()) {
+                        for (final var demand : freeCourseDemands) {
+                            final var requiredSubject = demand.value(REQUIRED_SUBJECT);
+                            final var studentsVintage = demand.value(STUDENT_S_VINTAGE);
+                            solution.suppliesFree()
+                                    .lookup(SUBJECT, requiredSubject)
+                                    .lookup(COURSE_S_VINTAGE, studentsVintage)
+                                    .linesStream()
+                                    .findFirst().
+                                    ifPresent(fittingSupply -> solution.allocate(demand, fittingSupply));
+                        }
+                    }
+                }
+        );
     }
 
     /**
