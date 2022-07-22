@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.splitcells</groupId>
+    <artifactId>system.root</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>net.splitcells</groupId>
+        <artifactId>pom-java-minimal</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
+    </parent>
+    <modules>
+        <module>../net.splitcells.pom.java.minimal</module>
+        <module>../net.splitcells.pom.java.defaults</module>
+        <module>../net.splitcells.dem.merger</module>
+        <module>../net.splitcells.dem.core</module>
+        <module>../net.splitcells.dem</module>
+        <module>../net.splitcells.gel</module>
+        <module>../net.splitcells.os.state.interface</module>
+        <module>../net.splitcells.os.state.interface.lib</module>
+        <module>../net.splitcells.website.server</module>
+        <module>../net.splitcells.website.default.content</module>
+        <module>../net.splitcells.sep</module>
+        <module>../net.splitcells.network.blog</module>
+        <module>../net.splitcells.network.worker</module>
+        <module>../net.splitcells.cin</module>
+        <module>../net.splitcells.system</module>
+    </modules>
+</project>
