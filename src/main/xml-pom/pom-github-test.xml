@@ -1,0 +1,37 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <!-- These Maven settings are used, in order to test, if packages can be downloaded from GitHub. -->
+    <activeProfiles>
+        <activeProfile>github</activeProfile>
+    </activeProfiles>
+    <profiles>
+        <profile>
+            <id>github</id>
+            <repositories>
+                <!-- Prioritize GitHub repo via repository order, in order to avoid error caused by not finding dependency in Maven Central. -->
+                <repository>
+                    <id>github</id>
+                    <url>https://maven.pkg.github.com/www-splitcells-net/net.splitcells.network</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+    <!-- Use freshly created .m2 repo in order to test, if everything can be downloaded, by avoiding cache on local computer. -->
+    <localRepository>./target/m2</localRepository>
+    <servers>
+        <server>
+            <id>github</id>
+            <username>${env.net_splitcells_network_pom_github_username}</username>
+            <password>${env.net_splitcells_network_pom_github_password}</password>
+        </server>
+    </servers>
+</settings>
