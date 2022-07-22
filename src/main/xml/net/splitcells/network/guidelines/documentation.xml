@@ -51,6 +51,11 @@
             Currently, the following chapter format is preferred for that:
             <quote>&lt;title&gt;&lt;inspirational quote or haiku&gt;&lt;content&gt;</quote>
         </paragraph>
+        <paragraph>Avoid third party inspirational quotes in order to avoid licensing issues.
+            This does not necessarily apply to cases,
+            where the inspirational quotes are injected by an external source dynamically,
+            but licensing needs to be considered in these situations as well.
+        </paragraph>
         <paragraph>The history of reasoning, why something was done can be useful as well,
             in order to understand and avoid problematic alternatives.
             It can be also used in order to avoid circular development.</paragraph>
