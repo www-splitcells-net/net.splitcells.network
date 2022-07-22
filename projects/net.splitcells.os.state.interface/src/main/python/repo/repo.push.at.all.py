@@ -20,6 +20,9 @@ from os import (environ, getcwd)
 from pathlib import Path
 
 if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description="""Pushes repo to all hosts.
+The command `./bin/net.splitcells.osi.repos.hosts` contains the list of all repo's hosts.""")
+	parsedArgs = parser.parse_args()
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level = logging.DEBUG)
 	hostListPath = Path('./bin/net.splitcells.osi.repos.hosts')
