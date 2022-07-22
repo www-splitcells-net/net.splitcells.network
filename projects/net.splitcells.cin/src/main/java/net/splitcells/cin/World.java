@@ -71,7 +71,7 @@ public class World {
                 .withSupplyAttributes(POSITION_X, POSITION_Y, VALUE)
                 .withSupplies(worldWithGlider())
                 .withConstraint(r -> {
-                    r.forAll(timeSteps());
+                    r.forAll(timeSteps(WORLD_TIME));
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(crowded()).then(dies());

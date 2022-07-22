@@ -17,6 +17,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
@@ -31,7 +32,7 @@ public class TimeSteps implements Rater {
 
     }
 
-    public static Rater timeSteps() {
+    public static Rater timeSteps(Attribute<?> attribute)  {
         return new TimeSteps();
     }
 

@@ -22,6 +22,8 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+
 @JavaLegacyArtifact
 public interface SetT<T> extends Collection<T> {
     default <R> List<R> mapped(Function<T, R> mapper) {
@@ -53,5 +55,11 @@ public interface SetT<T> extends Collection<T> {
     
     default void requireUniqueness() {
         Bools.require(!this.hasDuplicates());
+    }
+    
+    default void requireSizeOf(int requiredSize) {
+        if (size() != requiredSize) {
+            throw executionException("Set needs to have " + requiredSize + " elements, but has " + size() + " elements instead.");
+        }
     }
 }
