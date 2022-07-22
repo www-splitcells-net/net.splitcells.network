@@ -12,6 +12,7 @@ package net.splitcells.website.server.translation.to.html;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -33,6 +34,7 @@ import javax.xml.transform.stream.StreamSource;
  * The <a href="http://saxon.sourceforge.net/">SAXON The XSLT and XQuery
  * Processor</a> is used by default.
  */
+@JavaLegacyArtifact
 public class XslTransformer {
 
     static {

@@ -53,6 +53,7 @@ lexer grammar Java11Lexer;
     		| 'import static org.assertj.core.api.Assertions.assertThat;'
     		| 'import static org.junit.jupiter.api.Assertions.assertThrows;'
     		| 'import static java.util.stream.IntStream.rangeClosed;'
+    		| 'import java.util.stream.Stream;'
     		;
 	Arrow: '->';
 	Bigger_than: '>';

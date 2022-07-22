@@ -10,16 +10,16 @@
  */
 package net.splitcells.website.server.project;
 
-import com.google.common.collect.Streams;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
+import net.splitcells.dem.resource.Files;
 
-import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
@@ -28,22 +28,22 @@ import static net.splitcells.website.Projects.projectsRenderer;
 
 @Deprecated
 public class LayoutRenderer {
-    public static void main(String... args) throws Exception {
+    public static void main(String... args) {
         // TODO privateProjectsRenderer().build();
         projectsRenderer(Config.create()).build();
         final var layout = perspective("layout", NATURAL);
-        Streams.concat(
-                Files.walk(Paths.get("../net.splitcells.os.state.interface/src/main/bash"))
-                        .filter(Files::isRegularFile)
-                , Files.walk(Paths.get("../net.splitcells.os.state.interface/src/main/python"))
-                        .filter(Files::isRegularFile))
+        Stream.concat(
+                Files.walk_recursively(Paths.get("../net.splitcells.os.state.interface/src/main/bash"))
+                        .filter(Files::is_file)
+                , Files.walk_recursively(Paths.get("../net.splitcells.os.state.interface/src/main/python"))
+                        .filter(Files::is_file))
                 .sorted()
                 .forEach(file -> extend(layout, list(file.toFile().getName().split("\\."))));
         System.out.println(Paths.get(System.getProperty("user.home"))
                 .resolve("Documents/projects/net.splitcells.martins.avots.support.system/private")
                 .resolve("net.splitcells.martins.avots.support.system/src/main/")
                 .resolve("xml/net/splitcells/martins/avots/support/system/layout.xml"));
-        net.splitcells.dem.resource.Files.writeToFile(
+        Files.writeToFile(
                 Paths.get(System.getProperty("user.home"))
                         .resolve("Documents/projects/net.splitcells.martins.avots.support.system/private")
                         .resolve("net.splitcells.martins.avots.support.system/src/main/")

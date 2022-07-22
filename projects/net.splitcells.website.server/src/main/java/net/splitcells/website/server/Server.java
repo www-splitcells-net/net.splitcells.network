@@ -20,6 +20,7 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.RenderingResult;
 
@@ -33,6 +34,7 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 /**
  * TODO Create and use server interface, instead of implementation.
  */
+@JavaLegacyArtifact
 public class Server {
     /**
      * TODO This is code duplication.

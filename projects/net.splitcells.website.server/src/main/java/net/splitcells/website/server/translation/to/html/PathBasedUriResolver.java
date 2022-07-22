@@ -10,6 +10,8 @@
  */
 package net.splitcells.website.server.translation.to.html;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import static java.nio.file.Files.newInputStream;
 
 import java.io.ByteArrayInputStream;
@@ -25,7 +27,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
 import javax.xml.transform.stream.StreamSource;
 
-
+@JavaLegacyArtifact
 public class PathBasedUriResolver implements URIResolver {
 
     public static PathBasedUriResolver pathBasedUriResolver(Path folder, Function<String, Optional<String>> extension) {
