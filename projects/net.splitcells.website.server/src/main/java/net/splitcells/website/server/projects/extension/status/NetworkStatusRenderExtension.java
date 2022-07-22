@@ -36,6 +36,8 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     private static final String STATUS_DOCUMENT_PATH = "net/splitcells/network/status.html";
     private static final String STATUS_PATH = "net/splitcells/network/status.csv";
     private static final Path RUNTIME_FOLDER = Path.of("net/splitcells/network/logger/builder/runtime");
+    
+    private static final int DAY_WARNING_THRESHOLD = 30;
 
     public static NetworkStatusRenderExtension networkStatusRenderExtension() {
         return new NetworkStatusRenderExtension();
@@ -58,14 +60,14 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                                 .lastValue();
                         if (lastMeasurement.isPresent()) {
                             final var localDate = LocalDate.parse(lastMeasurement.get().split(",")[0]);
-                            if (LocalDate.now().minusDays(7).isAfter(localDate)) {
+                            if (LocalDate.now().minusDays(DAY_WARNING_THRESHOLD).isAfter(localDate)) {
                                 disruptedStatuses.append("<li>The build was not executed successfully on <q>"
                                         + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
-                                        + "</q> in the last 7 days.</li>");
+                                        + "</q> in the last " + DAY_WARNING_THRESHOLD + " days.</li>");
                             } else {
                                 successfulStatuses.append("<li>The build was executed successfully on <q>"
                                         + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
-                                        + "</q> in the last 7 days.</li>");
+                                        + "</q> in the last " + DAY_WARNING_THRESHOLD + " days.</li>");
                             }
                         }
                     });
