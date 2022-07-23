@@ -23,4 +23,4 @@ if __name__ == '__main__':
 	returnCode = subprocess.call(subRepoScript, shell='True')
 	if returnCode != 0:
 		logging.error('Error uploading file with return code ' + str(returnCode) + ' from scp.')
-		return False
+		exit(1)
