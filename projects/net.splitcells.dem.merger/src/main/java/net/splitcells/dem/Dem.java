@@ -76,17 +76,17 @@ public final class Dem {
                 processEnvironment.config().withConfigValue(EndTime.class, Optional.of(ZonedDateTime.now()));
                 environment().close();
                 CURRENT.remove();
-                try {
-                    /**
-                     * In some cases the last print operation of {@link Domsole} is not executed, when java exits after this process.
-                     * This happened on Ubuntu 20.04.1 LTS, but may not be exclusive to this OS.
-                     * This hack is used in order to get the last print.
-                     */
-                    Thread.sleep(1000L);
-                } catch (InterruptedException e) {
-                    processResult.hasError(true);
-                    throw new RuntimeException(e);
-                }
+            }
+            try {
+                /**
+                 * In some cases the last print operation of {@link Domsole} is not executed, when java exits after this process.
+                 * This happened on Ubuntu 20.04.1 LTS, but may not be exclusive to this OS.
+                 * This hack is used in order to get the last print.
+                 */
+                Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+                processResult.hasError(true);
+                throw new RuntimeException(e);
             }
         });
         // A thread is used in order to not contaminate the current context/process.
