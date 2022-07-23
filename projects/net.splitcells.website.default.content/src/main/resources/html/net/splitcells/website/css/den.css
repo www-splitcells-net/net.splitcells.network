@@ -42,7 +42,9 @@ li {
    padding-left: .5em;
    margin-left: 1.5em;
    box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-3);
-   margin: .1em;
+   margin-top: .1em;
+   margin-right: .1em;
+   margin-bottom: .1em;
    }
 li:hover {
     background-color: var(--background-color-selected-priority-0) !important;
