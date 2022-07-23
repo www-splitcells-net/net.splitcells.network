@@ -4,5 +4,5 @@
 # as it can be hard to understand in such tools,
 # how to chain commands calls.
 set -e
-cd projects/net.splitcells.system
+cd projects/net.splitcells.system.root
 ./bin/build.part.with.java
