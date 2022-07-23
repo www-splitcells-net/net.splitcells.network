@@ -138,31 +138,33 @@ public class CommonFunctions {
         OutputStreamWriter managedOutput = null;
         FileLock outputFileLock = null;
         try {
-            File file = filePath.toFile();
-            if (!file.exists()) {
-                file.createNewFile();
+            try {
+                File file = filePath.toFile();
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+                basicOutput = new FileOutputStream(file);
+                managedOutput = new OutputStreamWriter(basicOutput, "UTF8");
+                outputFileLock = basicOutput.getChannel().lock();
+                managedOutput.append(content);
+                managedOutput.flush();
+            } finally {
+                try {
+                    if (outputFileLock != null) {
+                        outputFileLock.release();
+                    }
+                    if (basicOutput != null) {
+                        basicOutput.close();
+                    }
+                    if (managedOutput != null) {
+                        managedOutput.close();
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
-            basicOutput = new FileOutputStream(file);
-            managedOutput = new OutputStreamWriter(basicOutput, "UTF8");
-            outputFileLock = basicOutput.getChannel().lock();
-            managedOutput.append(content);
-            managedOutput.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                if (outputFileLock != null) {
-                    outputFileLock.release();
-                }
-                if (basicOutput != null) {
-                    basicOutput.close();
-                }
-                if (managedOutput != null) {
-                    managedOutput.close();
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
