@@ -1,10 +1,10 @@
 net-splitcells-os-state-interface-test:
   image: python:3.7
   script:
-    - cd projects/net.splitcells.system
+    - cd projects/net.splitcells.system.root
     - ./bin/build.part.with.python
 test:
   image: maven:3.6.3-openjdk-11
   script:
-    - cd projects/net.splitcells.system
+    - cd projects/net.splitcells.system.root
     - ./bin/build.part.with.java

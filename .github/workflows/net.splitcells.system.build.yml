@@ -21,7 +21,7 @@ jobs:
           java-package: 'jdk'
       - name: Build
         run: |
-          cd $GITHUB_WORKSPACE/projects/net.splitcells.system
+          cd $GITHUB_WORKSPACE/projects/net.splitcells.system.root
           echo $GITHUB_WORKSPACE
           export test_codecov=1
           ./bin/build

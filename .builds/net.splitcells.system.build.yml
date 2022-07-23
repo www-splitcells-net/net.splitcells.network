@@ -7,5 +7,5 @@ sources:
   - https://git.sr.ht/~splitcells-net/net.splitcells.network
 tasks:
   - build: |
-      cd net.splitcells.network/projects/net.splitcells.system
+      cd net.splitcells.network/projects/net.splitcells.system.root
       ./bin/build
