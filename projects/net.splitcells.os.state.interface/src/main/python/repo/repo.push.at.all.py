@@ -13,10 +13,8 @@ __license__ = "EPL-2.0 OR MIT"
 
 import subprocess
 import argparse
-import json
 import logging
-import os
-from os import (environ, getcwd)
+from os import (environ, getcwd, path)
 from pathlib import Path
 
 if __name__ == '__main__':
@@ -30,7 +28,7 @@ The command `./bin/net.splitcells.osi.repos.hosts` contains the list of all repo
 		hosts = subprocess.run([hostListPath], stdout=subprocess.PIPE)
 		hostFile = hosts.stdout.decode('utf-8').split("\n")
 		currentDirectory = getcwd()
-		currentDirectoryName = os.path.basename(currentDirectory)
+		currentDirectoryName = path.basename(currentDirectory)
 		for i in range(0, int(len(hostFile)/2)):
 			hostName = hostFile[i*2]
 			hostUrl = hostFile[i*2 + 1]
