@@ -21,6 +21,7 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 public class LinearInitialization implements OfflineOptimization {
 
+    @Deprecated
     public static LinearInitialization linearInitialization() {
         return new LinearInitialization();
     }
