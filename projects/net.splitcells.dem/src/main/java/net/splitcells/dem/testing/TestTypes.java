@@ -33,6 +33,7 @@ public final class TestTypes {
     public static final String BENCHMARK_MEMORY_USAGE = "benchmarking_memoryUsage";
     public static final String PROFILING_RUNTIME = "profiling_runtime";
     public static final String PROFILING_MEMORY_USAGE = "profiling_memoryUsage";
+    public static final String EXPERIMENTAL_TEST = "experimental_test";
 
     private TestTypes() {
         throw constructorIllegal();
