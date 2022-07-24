@@ -17,6 +17,8 @@ Some of them are not strictly related to optimization and can be used in other c
 [OS State Interface](projects/net.splitcells.os.state.interface/README.md) is the main example of such.
 
 ## Where to start?
+🪧 Get to know the main [features](https://splitcells.net/net/splitcells/network/features.html).
+
 🚀 [Model and optimize problems.](http://splitcells.net/net/splitcells/gel/index.html)
 
 🏗️ [Deploy](http://splitcells.net/net/splitcells/network/deployment.html) the software.
@@ -38,12 +40,6 @@ Some of them are not strictly related to optimization and can be used in other c
 💰 Support [contributors](https://www.patreon.com/splitcells_net).
 
 📣 Spread the word!
-## Features
-* Model assignment problems with a fluent API.
-* Execute complex queries on solutions in order to focus on sub problems.
-* Get reports reasoning the solution's rating.
-* Model inter dependent problems.
-* x64, ARM and RISC-V are supported and tested.
 ## Project Status
 * Cloud Status: [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
