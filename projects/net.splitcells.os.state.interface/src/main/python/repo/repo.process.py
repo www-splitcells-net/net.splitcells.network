@@ -86,7 +86,6 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 		peers = subprocess.run([peerListPath], stdout=subprocess.PIPE)
 		for peerRepo in peers.stdout.decode('utf-8').split("\n"):
 			if peerRepo.strip() != "":
-				logging.warning(peerRepo)
 				subRepoPath = Path('../' + peerRepo)
 				returnCode = processSub(relativePath + '/../' + peerRepo
 										, host
