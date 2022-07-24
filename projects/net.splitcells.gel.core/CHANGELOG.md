@@ -21,7 +21,10 @@
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
-* **2022-07-24** **\#8**: Deprecate `LinearInitialization` and prefer using `OnlineLinearInitialization` for better performance.
+* **2022-07-24** **\#8**:
+  1. Deprecate `LinearInitialization` and prefer using `OnlineLinearInitialization` for better performance.
+  2. Solution optimization now supports an `OptimizationConfig`,
+     which simplifies future backward-compatible changes to the Solution interface.
 * **2022-06-03** **\#8**: The history interface for allocations defines now a `toAnalysisFods` method,
   that creates an alternative more searchable version of `Table#toFods`.
   The new version has dedicated columns for fields of complex attributes.

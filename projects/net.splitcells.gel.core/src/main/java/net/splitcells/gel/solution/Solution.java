@@ -25,6 +25,7 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
+import net.splitcells.gel.solution.optimization.OptimizationConfig;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import java.util.function.BiPredicate;
@@ -50,6 +51,11 @@ public interface Solution extends Problem, SolutionView {
     }
 
     @ReturnsThis
+    default Solution optimize(OnlineOptimization optimization, OptimizationConfig config) {
+        return optimizeOnlineWithFunction(s -> optimization.optimize(s), config);
+    }
+
+    @ReturnsThis
     default Solution optimizeWithFunction(OfflineOptimization optimizationFunction) {
         return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal());
     }
@@ -57,6 +63,11 @@ public interface Solution extends Problem, SolutionView {
     @ReturnsThis
     default Solution optimizeOnlineWithFunction(OnlineOptimization optimizationFunction) {
         return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal());
+    }
+
+    @ReturnsThis
+    default Solution optimizeOnlineWithFunction(OnlineOptimization optimizationFunction, OptimizationConfig config) {
+        return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal(), config);
     }
 
     @ReturnsThis
@@ -83,6 +94,71 @@ public interface Solution extends Problem, SolutionView {
                 break;
             }
             ++i;
+        }
+        return this;
+    }
+
+    @Deprecated
+    @ReturnsThis
+    default Solution optimizeWithFunction(OnlineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition, OptimizationConfig config) {
+        if (config.recordHistory()) {
+            if (config.optimizeOnce()) {
+                optimizationFunction.optimize(this);
+            } else {
+                int i = 0;
+                while (continuationCondition.test(this, i)) {
+                    final int startAge = history().size();
+                    optimizationFunction.optimize(this);
+                    if (startAge == history().size()) {
+                        break;
+                    }
+                    ++i;
+                }
+            }
+        } else {
+            history().processWithoutHistory(() -> {
+                if (config.optimizeOnce()) {
+                    optimizationFunction.optimize(this);
+                } else {
+                    int i = 0;
+                    while (continuationCondition.test(this, i)) {
+                        optimizationFunction.optimize(this);
+                        ++i;
+                    }
+                }
+            });
+        }
+        return this;
+    }
+
+    @ReturnsThis
+    default Solution optimizeWithFunction(OnlineOptimization optimizationFunction, OptimizationConfig config) {
+        if (config.recordHistory()) {
+            if (config.optimizeOnce()) {
+                optimizationFunction.optimize(this);
+            } else {
+                int i = 0;
+                while (config.continuationCondition().test(this, i)) {
+                    final int startAge = history().size();
+                    optimizationFunction.optimize(this);
+                    if (startAge == history().size()) {
+                        break;
+                    }
+                    ++i;
+                }
+            }
+        } else {
+            history().processWithoutHistory(() -> {
+                if (config.optimizeOnce()) {
+                    optimizationFunction.optimize(this);
+                } else {
+                    int i = 0;
+                    while (config.continuationCondition().test(this, i)) {
+                        optimizationFunction.optimize(this);
+                        ++i;
+                    }
+                }
+            });
         }
         return this;
     }

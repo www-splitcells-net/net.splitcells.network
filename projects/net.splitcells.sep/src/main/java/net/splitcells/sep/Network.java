@@ -5,7 +5,9 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
+import net.splitcells.gel.solution.optimization.OptimizationConfig;
 
+import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -74,6 +76,14 @@ public class Network {
     public Network withOptimization(String argumentKey, OnlineOptimization optimization) {
         return withExecution(argumentKey, s -> {
             optimization.optimize(s);
+            return s;
+        });
+    }
+
+    @ReturnsThis
+    public Network withOptimization(String argumentKey, OnlineOptimization optimization, OptimizationConfig config) {
+        return withExecution(argumentKey, s -> {
+            s.optimize(optimization, config);
             return s;
         });
     }
