@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://splitcells.net/sew.xsd">
+    <meta>
+        <title>Filesystem Guidelines</title>
+    </meta>
+    <chapter>
+        <title>File And Folder Names</title>
+        <paragraph>File and folder names should comply with the regular expression <quote>\.?[a-zA-Z][a-zA-Z0-9]*([\-][a-zA-Z0-9]+)*([\.][a-zA-Z0-9]+)*</quote>.
+            A path complying with this grammar may look like this: <quote>/home/splitcells/Documents/.links-to-nothing.txt</quote>.
+            Before that, underscore instead of hyphen/dashes were considered,
+            because this way, non-hidden files, without their respective file suffixes are also legal variable names in most programming languages and shells.
+            Therefore, this format should be very portable, by avoiding symbols with special meaning.
+            However, hyphens are much more preferred by
+            <link>
+                <text>search engines</text>
+                <url>https://developers.google.com/style/filenames</url>
+            </link>
+            and are also used in
+            <link>
+                <text>Linux package names</text>
+                <url>https://packages.ubuntu.com/search?suite=jammy&amp;section=all&amp;arch=any&amp;keywords=jdk&amp;searchon=names</url>
+            </link>.
+            The use of hyphens makes it possible to have complex file names and may also represent a path for themselves.
+            Also, a file name should not be longer than 255 characters.
+        </paragraph>
+        <paragraph>
+            Assume and use case sensitivity, but do not rely on the fact,
+            that 2 files with the same case insensitive content but different case sensitive content can be stored in the same folder.
+            Prefer using only lower case file names, in order to avoid this problem.
+        </paragraph>
+    </chapter>
+</article>
