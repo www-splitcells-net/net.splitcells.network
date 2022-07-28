@@ -25,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -252,5 +253,10 @@ public class DatabaseI implements Database {
                 .filter(citaRinda -> citaRinda.value(atribūts).index() == rinda.index())
                 .reduce(StreamUtils.ensureSingle())
                 .get();
+    }
+
+    @Override
+    public Stream<Line> linesStream() {
+        return lines.stream();
     }
 }
