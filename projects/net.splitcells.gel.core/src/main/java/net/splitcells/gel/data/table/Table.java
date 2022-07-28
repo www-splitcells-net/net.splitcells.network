@@ -43,6 +43,11 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
 public interface Table extends Discoverable, Domable {
+    /**
+     * true is faster than false, according to a manual test run with a CPU profiler.
+     */
+    boolean GET_LINE_VIA_STREAM = true;
+    
     List<Attribute<Object>> headerView();
 
     <T> ColumnView<T> columnView(Attribute<T> atribūts);
@@ -87,7 +92,7 @@ public interface Table extends Discoverable, Domable {
 
     /**
      * This is a helper method in order to retrieve a {@link Line} quickly.
-     * 
+     *
      * @param index This is the raw index of the {@link Line} to be retrieved.
      * @return This is the {@link Line} according to the {@param index} or null,
      * if the {@param index} is smaller than {@link #size()} and no {@link Line} is located there.
@@ -103,7 +108,15 @@ public interface Table extends Discoverable, Domable {
      * @return Requested Line
      */
     default Line getLines(int index) {
-        return getLines().get(index);
+        if (GET_LINE_VIA_STREAM) {
+            if (index == 0) {
+                return linesStream().findFirst().orElseThrow();
+            } else {
+                return linesStream().skip(index - 1).findFirst().orElseThrow();
+            }
+        } else {
+            return getLines().get(index);
+        }
     }
 
     int size();
