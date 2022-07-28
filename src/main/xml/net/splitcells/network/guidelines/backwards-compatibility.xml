@@ -8,4 +8,29 @@
     <paragraph>Exceptions are not considered to be part of the API.
         Only unchecked exceptions are used.
     </paragraph>
+    <chapter><title>Fast Function Removal Protocol</title>
+        <paragraph>If there are not many users of the affected function or
+            if the migration costs for the code users are reasonable,
+            the fast protocol can be considered.
+            In this case, the removal should be done with a minimum amount of commits and time.
+            After the removal is done, the rest of the main project's code still needs to work.
+            Any required adjustments for the function removal are part of the function removal and
+            should be done in the same time.
+            In other words, do not break the build with a function removal.
+            Other projects, that are using the removed functions and which are maintained by the people of the main project,
+            should migrate to the new API as fast as reasonable possible.
+        </paragraph>
+    </chapter>
+    <chapter><title>Slow Function Removal Protocol</title>
+        <paragraph>When a function is to be removed, that is important for code users, prefer the following protocol:</paragraph>
+        <list>
+            <item>Mark function as deprecated and thereby create compile time warnings.</item>
+            <item>Create warning log message,  when the deprecated method is executed.
+                Users, maintainers and developers are thereby warned about the deprecation.</item>
+            <item>Create error log message, in order to create urgency.</item>
+            <item>Move the deprecated function to another project, so it's not included in the project.
+                Instead the function will be injected into the project via the other project.
+            </item>
+        </list>
+    </chapter>
 </article>
