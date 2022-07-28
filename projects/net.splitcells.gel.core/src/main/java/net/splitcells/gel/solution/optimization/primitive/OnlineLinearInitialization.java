@@ -34,8 +34,8 @@ public class OnlineLinearInitialization implements OnlineOptimization {
     @Override
     public void optimize(Solution solution) {
         while (solution.demandsFree().hasContent() && solution.suppliesFree().hasContent()) {
-            solution.allocate(solution.demandsFree().getLines().get(0)
-                    , solution.suppliesFree().getLines().get(0));
+            solution.allocate(solution.demandsFree().getLines(0)
+                    , solution.suppliesFree().getLines(0));
 
         }
     }
