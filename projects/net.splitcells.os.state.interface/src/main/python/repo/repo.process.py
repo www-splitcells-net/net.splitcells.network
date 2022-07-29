@@ -107,8 +107,8 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 			for currentSubDir in Path('.').iterdir():
 				if not currentSubDir.name.startswith('.') and currentSubDir.is_dir():
 					subName = currentSubDir.name
-					if not currentSubDir.name in repoList['subs']:
-						unknownSubRepoScript = 'set -e; cd ' + subName + ' ; repo.process' + " --command='" + commandForUnknown + "' --host=" + host + ' --relative-path=' + relativePath
+					if not subName in repoList['subs']:
+						unknownSubRepoScript = 'set -e; cd ' + subName + ' ; repo.process' + " --command='" + commandForUnknown + "' --host=" + host + ' --relative-path=' + relativePath + '/' + subName
 						unknownSubRepoScript = unknownSubRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 						logging.debug('unknownSubRepoScript: ' + unknownSubRepoScript)
 						returnCode = subprocess.call(unknownSubRepoScript, shell='True')
