@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Shell Script Guidelines</title>
+    </meta>
+    <paragraph>Use Shell scripts only for simple programs.
+        Generally speaking, Python should be used,
+        if a complex loop is required or more than one argument needs to be passed to the program.
+    </paragraph>
+</article>
