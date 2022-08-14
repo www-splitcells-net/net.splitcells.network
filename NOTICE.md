@@ -292,3 +292,7 @@ mermaid
 mermaid-cli
 * License: MIT
 * Source Code: https://github.com/mermaid-js/mermaid-cli
+
+swaylock
+* License: MIT
+* Source Code: https://github.com/swaywm/swaylock
