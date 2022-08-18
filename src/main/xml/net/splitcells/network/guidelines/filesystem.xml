@@ -28,5 +28,9 @@
             that 2 files with the same case insensitive content but different case sensitive content can be stored in the same folder.
             Prefer using only lower case file names, in order to avoid this problem.
         </paragraph>
+        <paragraph>Even though, folders suffixes like file suffixes are not common,
+            it is of no use to allow different sub name separators for files and folders.
+            Therefore, it is not allowed to use dots (<quote>.</quote>) instead of hyphen symbols (<quote>-</quote>) in folder names.
+        </paragraph>
     </chapter>
 </article>
