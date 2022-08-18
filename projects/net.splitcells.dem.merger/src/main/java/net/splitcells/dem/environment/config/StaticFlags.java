@@ -10,6 +10,10 @@
  */
 package net.splitcells.dem.environment.config;
 
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
+
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
@@ -59,5 +63,15 @@ public final class StaticFlags {
 
     private StaticFlags() {
         throw constructorIllegal();
+    }
+
+    public static void logStaticFlags() {
+        final var staticFlagsOverridden= perspective("static-flags-overridden");
+        if (INLINE_STANDARD_FACTORIES) {
+            staticFlagsOverridden.withText("`" + INLINE_STANDARD_FACTORIES_KEY + "` set to `" + INLINE_STANDARD_FACTORIES + "`.");
+        }
+        if (staticFlagsOverridden.children().hasElements()) {
+            domsole().append(staticFlagsOverridden, LogLevel.INFO);
+        }
     }
 }

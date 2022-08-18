@@ -25,6 +25,7 @@ import java.util.function.Consumer;
 
 import static net.splitcells.dem.ProcessResult.processResult;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 
@@ -108,6 +109,7 @@ public final class Dem {
         // IDEA Invalidate write access to configuration through down casting after configuration via a wrapper.
         configurator.accept(rVal);
         CURRENT.set(rVal);
+        logStaticFlags();
         return rVal;
     }
 
