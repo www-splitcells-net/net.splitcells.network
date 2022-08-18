@@ -15,6 +15,8 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.SetFI_configured.setFiConfigured;
+import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
+import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 
 public class Sets extends ResourceOptionI<SetF> {
     public Sets() {
@@ -44,18 +46,30 @@ public class Sets extends ResourceOptionI<SetF> {
     }
 
     public static <T> Set<T> setOfUniques() {
-        return configValue(Sets.class).<T>set();
+        if (INLINE_STANDARD_FACTORIES) {
+            return setLegacyWrapper(new java.util.LinkedHashSet<>());
+        } else {
+            return configValue(Sets.class).<T>set();
+        }
     }
 
     @JavaLegacyBody
     @SafeVarargs
     public static <T> Set<T> setOfUniques(T... args) {
-        return setOfUniques(java.util.Arrays.asList(args));
+        if (INLINE_STANDARD_FACTORIES) {
+            return setLegacyWrapper(new java.util.LinkedHashSet<T>()).with(args);
+        } else {
+            return setOfUniques(java.util.Arrays.asList(args));
+        }
     }
 
     public static <T> Set<T> setOfUniques(java.util.Collection<T> arg) {
-        final var rVal = configValue(Sets.class).<T>set();
-        rVal.addAll(arg);
-        return rVal;
+        if (INLINE_STANDARD_FACTORIES) {
+            return setLegacyWrapper(new java.util.LinkedHashSet<T>()).with(arg);
+        } else {
+            final var rVal = configValue(Sets.class).<T>set();
+            rVal.addAll(arg);
+            return rVal;
+        }
     }
 }

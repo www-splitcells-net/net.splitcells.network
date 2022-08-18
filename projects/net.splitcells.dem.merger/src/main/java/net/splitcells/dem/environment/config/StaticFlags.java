@@ -54,6 +54,9 @@ public final class StaticFlags {
      */
     public static final boolean TRACING = false;
 
+    private static final String INLINE_STANDARD_FACTORIES_KEY = "net.splitcells.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES";
+    public static final boolean INLINE_STANDARD_FACTORIES = Boolean.parseBoolean(System.getProperty(INLINE_STANDARD_FACTORIES_KEY, "false"));
+
     private StaticFlags() {
         throw constructorIllegal();
     }
