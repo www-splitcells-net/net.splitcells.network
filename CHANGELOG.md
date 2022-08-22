@@ -82,6 +82,10 @@ Releases are done every time an important ticket is completed.
     because it tried to open a website with the most common URL.
     In other words `https://localhost:8443/index.html` becomes `https://localhost:8443`.
 ### Minor Changes
+* **2022-08-22**: Create new projects and link to their respective peer repos:
+  * `net.splitcells.network.community.via.javadoc`
+  * `net.splitcells.network.community.git-bug`
+  * `net.splitcells.network.repo.bom`
 * **2022-07-29**: [**\#165**](https://github.com/www-splitcells-net/net.splitcells.network/issues/165) Create [deprecation protocol guidelines](https://splitcells.net/net/splitcells/network/guidelines/backwards-compatibility.html).
 * **2022-04-04**: [**\#171**: Log number of warnings:](https://github.com/www-splitcells-net/net.splitcells.network/issues/171)
   This are logged via `./bin/test.via.network.worker` and logged at `net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/$(hostname).csv`.
