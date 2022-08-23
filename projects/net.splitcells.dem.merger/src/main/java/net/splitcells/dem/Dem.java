@@ -40,7 +40,7 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
  * This is done, by having 1 and only one variable representing the state of the environment
  * and passing it through everywhere.
  */
-public final class Dem {
+public class Dem {
     /**
      * Currently it would be enough to use a static variable.
      * Thread locals are required in order to implement a tree of programs as a cactus stack (https://wiki.c2.com/?CactusStack).
