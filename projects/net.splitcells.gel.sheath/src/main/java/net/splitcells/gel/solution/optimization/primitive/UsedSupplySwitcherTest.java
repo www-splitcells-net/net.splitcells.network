@@ -55,12 +55,12 @@ public class UsedSupplySwitcherTest {
                 .asSolution();
         {
             testSolution.optimize(linearInitialization());
-            assertThat(testSolution.allocations().getLines(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().getLines(0).value(B)).isEqualTo(1);
-            assertThat(testSolution.allocations().getLines(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().getLines(1).value(B)).isEqualTo(2);
-            assertThat(testSolution.demandsFree().getLines()).isEmpty();
-            assertThat(testSolution.suppliesFree().getLines()).isEmpty();
+            assertThat(testSolution.allocations().line(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(0).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().line(1).value(B)).isEqualTo(2);
+            assertThat(testSolution.demandsFree().lines()).isEmpty();
+            assertThat(testSolution.suppliesFree().lines()).isEmpty();
         }
         final var randomness = mock(Randomness.class);
         doReturn(0, 1)
@@ -68,10 +68,10 @@ public class UsedSupplySwitcherTest {
                 .integer(any(), any());
         testSolution.optimizeOnce(UsedSupplySwitcher.usedSupplySwitcher(randomness));
         {
-            assertThat(testSolution.allocations().getLines(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().getLines(0).value(B)).isEqualTo(2);
-            assertThat(testSolution.allocations().getLines(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().getLines(1).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(0).value(B)).isEqualTo(2);
+            assertThat(testSolution.allocations().line(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().line(1).value(B)).isEqualTo(1);
         }
     }
 
@@ -95,12 +95,12 @@ public class UsedSupplySwitcherTest {
                 .asSolution();
         {
             testSolution.optimize(linearInitialization());
-            assertThat(testSolution.allocations().getLines(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().getLines(0).value(B)).isEqualTo(1);
-            assertThat(testSolution.allocations().getLines(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().getLines(1).value(B)).isEqualTo(2);
-            assertThat(testSolution.demandsFree().getLines()).isEmpty();
-            assertThat(testSolution.suppliesFree().getLines()).hasSize(1);
+            assertThat(testSolution.allocations().line(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(0).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().line(1).value(B)).isEqualTo(2);
+            assertThat(testSolution.demandsFree().lines()).isEmpty();
+            assertThat(testSolution.suppliesFree().lines()).hasSize(1);
         }
         final var randomness = mock(Randomness.class);
         doReturn(0, 1)
@@ -108,10 +108,10 @@ public class UsedSupplySwitcherTest {
                 .integer(any(), any());
         testSolution.optimizeOnce(UsedSupplySwitcher.usedSupplySwitcher(randomness));
         {
-            assertThat(testSolution.allocations().getLines(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().getLines(0).value(B)).isEqualTo(2);
-            assertThat(testSolution.allocations().getLines(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().getLines(1).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(0).value(B)).isEqualTo(2);
+            assertThat(testSolution.allocations().line(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().line(1).value(B)).isEqualTo(1);
         }
     }
 
@@ -135,12 +135,12 @@ public class UsedSupplySwitcherTest {
                 .asSolution();
         {
             testSolution.optimize(linearInitialization());
-            assertThat(testSolution.allocations().getLines(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().getLines(0).value(B)).isEqualTo(1);
-            assertThat(testSolution.allocations().getLines(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().getLines(1).value(B)).isEqualTo(2);
-            assertThat(testSolution.demandsFree().getLines()).hasSize(1);
-            assertThat(testSolution.suppliesFree().getLines()).isEmpty();
+            assertThat(testSolution.allocations().line(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(0).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().line(1).value(B)).isEqualTo(2);
+            assertThat(testSolution.demandsFree().lines()).hasSize(1);
+            assertThat(testSolution.suppliesFree().lines()).isEmpty();
         }
         final var randomness = mock(Randomness.class);
         doReturn(0, 1)
@@ -148,10 +148,10 @@ public class UsedSupplySwitcherTest {
                 .integer(any(), any());
         testSolution.optimizeOnce(UsedSupplySwitcher.usedSupplySwitcher(randomness));
         {
-            assertThat(testSolution.allocations().getLines(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().getLines(0).value(B)).isEqualTo(2);
-            assertThat(testSolution.allocations().getLines(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().getLines(1).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().line(0).value(B)).isEqualTo(2);
+            assertThat(testSolution.allocations().line(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().line(1).value(B)).isEqualTo(1);
         }
     }
 
@@ -173,9 +173,9 @@ public class UsedSupplySwitcherTest {
         {
             testSolution.optimize(linearInitialization());
             assertThat(testSolution.allocations().size()).isEqualTo(4);
-            range(0, variables).forEach(i -> assertThat(testSolution.allocations().getLines(i).value(A)).isEqualTo(i));
-            assertThat(testSolution.demandsFree().getLines()).isEmpty();
-            assertThat(testSolution.suppliesFree().getLines()).isEmpty();
+            range(0, variables).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
+            assertThat(testSolution.demandsFree().lines()).isEmpty();
+            assertThat(testSolution.suppliesFree().lines()).isEmpty();
         }
         final var randomness = mock(Randomness.class);
         doAnswer(returnsElementsOf(range(0, variables).boxed().collect(toList())))

@@ -27,7 +27,7 @@ public class SupplyOfflineSelectors {
             (BiFunction<Integer, Integer, Optional<SupplySelection>> indexSelector) {
         return (freeDemandGroups, freedSupplies) -> solution -> {
             final Set<OptimizationEvent> repairs = setOfUniques();
-            final var suppliesFree = solution.suppliesFree().getLines();
+            final var suppliesFree = solution.suppliesFree().lines();
             final var demandsUsed = Sets.<Line>setOfUniques();
             freeDemandGroups.entrySet().forEach(group -> {
                 group.getValue().forEach(demand -> {

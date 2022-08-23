@@ -22,19 +22,15 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
-import net.splitcells.gel.solution.Solution;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.w3c.dom.Element;
@@ -64,25 +60,25 @@ public interface Table extends Discoverable, Domable {
         }
     }
 
-    default List<Line> getLines() {
+    default List<Line> lines() {
         return rawLinesView().stream()
                 .filter(e -> e != null)
                 .collect(Lists.toList());
     }
 
     default Stream<Line> linesStream() {
-        return getLines().stream();
+        return lines().stream();
     }
 
-    default List<Line> getDistinctLines() {
-        return getDistinctLineValues().stream()
+    default List<Line> distinctLines() {
+        return distinctLineValues().stream()
                 .map(values -> lookupEquals(values).findFirst())
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Lists.toList());
     }
 
-    default Set<List<Object>> getDistinctLineValues() {
+    default Set<List<Object>> distinctLineValues() {
         return rawLinesView().stream()
                 .filter(e -> e != null)
                 .map(line -> headerView().stream().map(line::value).collect(Lists.toList()))
@@ -96,7 +92,7 @@ public interface Table extends Discoverable, Domable {
      * @return This is the {@link Line} according to the {@param index} or null,
      * if the {@param index} is smaller than {@link #size()} and no {@link Line} is located there.
      */
-    default Line getRawLine(int index) {
+    default Line rawLine(int index) {
         return rawLinesView().get(index);
     }
 
@@ -106,7 +102,7 @@ public interface Table extends Discoverable, Domable {
      * @param index Index Of The Requested Line
      * @return Requested Line
      */
-    default Line getLines(int index) {
+    default Line line(int index) {
         if (GET_LINE_VIA_STREAM) {
             if (index == 0) {
                 return linesStream().findFirst().orElseThrow();
@@ -115,7 +111,7 @@ public interface Table extends Discoverable, Domable {
                 return linesStream().skip(index).findFirst().orElseThrow();
             }
         } else {
-            return getLines().get(index);
+            return lines().get(index);
         }
     }
 
@@ -139,7 +135,7 @@ public interface Table extends Discoverable, Domable {
                 .collect(toList());
         try (final var printer = new CSVPrinter
                 (csv, CSVFormat.RFC4180.withHeader(header.toArray(new String[header.size()])))) {
-            getLines().stream()
+            lines().stream()
                     .map(line -> line.toStringList())
                     .forEach(line -> {
                         try {
@@ -164,7 +160,7 @@ public interface Table extends Discoverable, Domable {
     Line lookupEquals(Attribute<Line> attribute, Line values);
 
     default Stream<Line> lookupEquals(List<Object> values) {
-        return getLines().stream()
+        return lines().stream()
                 .filter(line ->
                         IntStream.range(0, headerView().size())
                                 .mapToObj(i -> Objects.equals(values.get(i), line.value(headerView().get(i))))
@@ -195,7 +191,7 @@ public interface Table extends Discoverable, Domable {
                             tabulasVertība.appendChild(textNode(attName));
                             return tabulasElements;
                         }).forEach(attDesc -> header.appendChild(attDesc));
-                getLines().forEach(line -> {
+                lines().forEach(line -> {
                     final var tableLine = elementWithChildren(FODS_TABLE, "table-row");
                     table.appendChild(tableLine);
                     headerView().stream()

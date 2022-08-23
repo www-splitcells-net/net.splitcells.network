@@ -29,7 +29,6 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.DerivedSolution;
-import net.splitcells.gel.rating.framework.MetaRating;
 
 import java.util.function.Function;
 
@@ -230,13 +229,13 @@ public class SolutionI implements Solution {
     }
 
     @java.lang.SuppressWarnings("all")
-    public List<Line> getLines() {
-        return this.problem.getLines();
+    public List<Line> lines() {
+        return this.problem.lines();
     }
 
     @java.lang.SuppressWarnings("all")
-    public Line getRawLine(final int index) {
-        return this.problem.getRawLine(index);
+    public Line rawLine(final int index) {
+        return this.problem.rawLine(index);
     }
 
     @java.lang.SuppressWarnings("all")

@@ -27,7 +27,6 @@ import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -220,13 +219,13 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public List<Line> getLines() {
-        return this.allocations.getLines();
+    public List<Line> lines() {
+        return this.allocations.lines();
     }
 
     @Override
-    public Line getRawLine(final int index) {
-        return this.allocations.getRawLine(index);
+    public Line rawLine(final int index) {
+        return this.allocations.rawLine(index);
     }
 
     @Override

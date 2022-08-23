@@ -176,7 +176,7 @@ public interface SolutionView extends ProblemView {
             table.setAttributeNode(attribute(NameSpaces.FODS_TABLE, "name", "values"));
             {
                 table.appendChild(attributesOfFodsAnalysis());
-                getLines().stream().
+                lines().stream().
                         map(this::toLinesFodsAnalysis)
                         .forEach(e -> table.appendChild(e));
             }

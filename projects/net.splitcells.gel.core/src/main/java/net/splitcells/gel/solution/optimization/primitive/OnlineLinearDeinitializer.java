@@ -10,16 +10,10 @@
  */
 package net.splitcells.gel.solution.optimization.primitive;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
-import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
-import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 public class OnlineLinearDeinitializer implements OnlineOptimization {
 
@@ -34,7 +28,7 @@ public class OnlineLinearDeinitializer implements OnlineOptimization {
     @Override
     public void optimize(Solution solution) {
         while (!solution.isEmpty()) {
-            solution.remove(solution.allocations().getLines().get(0));
+            solution.remove(solution.allocations().lines().get(0));
         }
     }
 }

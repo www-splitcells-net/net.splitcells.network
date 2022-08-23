@@ -10,7 +10,6 @@
  */
 package net.splitcells.gel.rating.rater;
 
-import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -43,15 +42,15 @@ public class RegulatedLength {
                 final int requiredLength = addition
                         .map(e -> e.value(LINE).value(targetLength))
                         .orElseGet(() -> removal.get().value(LINE).value(targetLength));
-                final var currentLength = lines.getLines()
+                final var currentLength = lines.lines()
                         .stream()
                         .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
                         .map(line -> line.value(LINE).value(lengthElement))
                         .reduce(Integer::sum)
                         .orElse(0);
                 final var totalCost = distance(requiredLength, currentLength);
-                return addition.map(a -> cost(totalCost / (lines.getLines().size())))
-                        .orElseGet(() -> cost(totalCost / (lines.getLines().size() - 1)));
+                return addition.map(a -> cost(totalCost / (lines.lines().size())))
+                        .orElseGet(() -> cost(totalCost / (lines.lines().size() - 1)));
             }
 
             @Override

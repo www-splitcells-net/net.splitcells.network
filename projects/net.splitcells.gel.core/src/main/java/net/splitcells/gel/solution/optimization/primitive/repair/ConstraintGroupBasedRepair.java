@@ -15,15 +15,12 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Maps;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
-import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -34,8 +31,6 @@ import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
-import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 
 /**
@@ -132,7 +127,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
         final Map<GroupId, Set<Line>> defianceCache = Maps.map();
         constraintGrouping
                 .lineProcessing()
-                .getLines()
+                .lines()
                 .stream()
                 /**
                  * TODO HACK This is code duplication.
@@ -194,7 +189,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                                 .lineProcessing()
                                 .columnView(LINE)
                                 .lookup(allocation)
-                                .getLines()
+                                .lines()
                                 .get(0)
                                 .value(RATING)
                                 .equalz(noCost());

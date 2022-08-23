@@ -212,14 +212,14 @@ public class LookupTest extends TestSuiteI {
                 .lookup(1)
                 .columnView(b)
                 .lookup(2);
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().getLines()).isEmpty();
+        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).isEmpty();
         final var firstLine = testSubject.addTranslated(list(1, 1));
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().getLines()).isEmpty();
+        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).isEmpty();
         final var secondLine = testSubject.addTranslated(list(1, 2));
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().getLines()).hasSize(1);
+        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).hasSize(1);
         testSubject.remove(firstLine);
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().getLines()).hasSize(1);
+        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).hasSize(1);
         testSubject.remove(secondLine);
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().getLines()).isEmpty();
+        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).isEmpty();
     }
 }

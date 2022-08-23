@@ -93,7 +93,7 @@ public class ConstraintGroupBasedOfflineRepairTest {
                                     optimizationEvent(
                                             ADDITION
                                             , freeDemand.toLinePointer()
-                                            , currentSolution.suppliesFree().getLines().get(i[0]++).toLinePointer()
+                                            , currentSolution.suppliesFree().lines().get(i[0]++).toLinePointer()
                                     ));
                         });
                     });
@@ -160,13 +160,13 @@ public class ConstraintGroupBasedOfflineRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        assertThat(solution.getLines()).hasSize(7);
+        assertThat(solution.lines()).hasSize(7);
 
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA));
-        assertThat(solution.getLines()).hasSize(3);
+        assertThat(solution.lines()).hasSize(3);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB));
-        assertThat(solution.getLines()).hasSize(1);
+        assertThat(solution.lines()).hasSize(1);
     }
 
     @Test
@@ -209,7 +209,7 @@ public class ConstraintGroupBasedOfflineRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        assertThat(solution.getLines()).hasSize(7);
+        assertThat(solution.lines()).hasSize(7);
 
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);
         final var testProduct = testSubject.demandGrouping

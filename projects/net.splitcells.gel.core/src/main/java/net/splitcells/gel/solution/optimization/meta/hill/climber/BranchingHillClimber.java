@@ -53,7 +53,7 @@ public class BranchingHillClimber implements OfflineOptimization {
             final var currentNeighbour = solution.branch();
             final var currentRating = solution
                     .history()
-                    .getLines()
+                    .lines()
                     .lastValue()
                     .get()
                     .value(History.META_DATA)

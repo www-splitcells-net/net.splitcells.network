@@ -6,7 +6,6 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.EnumerableOnlineOptimization;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.dem.utils.MathUtils.modulus;
 
 /**
  * This
@@ -47,9 +46,9 @@ public class Initializer implements EnumerableOnlineOptimization {
             }
         }
         final var demandIndex = MathUtils.floorToInt((double) parameter / solution.suppliesFree().size());
-        final var demand = solution.demandsFree().getLines(demandIndex);
+        final var demand = solution.demandsFree().line(demandIndex);
         final var supplyIndex = parameter - (demandIndex * solution.suppliesFree().size());
-        final var supply = solution.suppliesFree().getLines(supplyIndex);
+        final var supply = solution.suppliesFree().line(supplyIndex);
         solution.allocate(demand, supply);
     }
 }

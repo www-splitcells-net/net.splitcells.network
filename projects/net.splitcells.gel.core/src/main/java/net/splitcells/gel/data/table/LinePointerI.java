@@ -42,7 +42,7 @@ public class LinePointerI implements LinePointer {
         if (context.rawLinesView().size() <= index) {
             return Optional.empty();
         }
-        return Optional.ofNullable(context.getRawLine(index));
+        return Optional.ofNullable(context.rawLine(index));
     }
 
     @Override

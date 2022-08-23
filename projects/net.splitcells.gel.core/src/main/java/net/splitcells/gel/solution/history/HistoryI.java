@@ -33,7 +33,6 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.perspective.PerspectiveI;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.Solution;
@@ -196,7 +195,7 @@ public class HistoryI implements History {
         final var index = size() - 1;
         final var eventToRemove = columnView(ALLOCATION_ID)
                 .lookup(index)
-                .getLines(0)
+                .line(0)
                 .value(ALLOCATION_EVENT);
         final var eventType = eventToRemove.type();
         if (eventType.equals(ADDITION)) {
@@ -223,7 +222,7 @@ public class HistoryI implements History {
                 throw new RuntimeException(t);
             }
         }
-        removal_(columnView(ALLOCATION_ID).lookup(index).getLines(0));
+        removal_(columnView(ALLOCATION_ID).lookup(index).line(0));
     }
 
     /**

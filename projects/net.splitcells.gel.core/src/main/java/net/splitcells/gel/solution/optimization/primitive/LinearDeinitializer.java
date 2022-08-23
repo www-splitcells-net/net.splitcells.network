@@ -31,8 +31,8 @@ public class LinearDeinitializer implements OfflineOptimization {
 
     @Override
     public List<OptimizationEvent> optimize(SolutionView solution) {
-        if (!solution.allocations().getLines().isEmpty()) {
-            final var allocation = solution.allocations().getLines().get(0);
+        if (!solution.allocations().lines().isEmpty()) {
+            final var allocation = solution.allocations().lines().get(0);
             return
                     list(
                             optimizationEvent

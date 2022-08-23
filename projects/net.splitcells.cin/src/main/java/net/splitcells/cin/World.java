@@ -193,7 +193,7 @@ public class World {
                 .lookup(positionX)
                 .columnView(POSITION_Y)
                 .lookup(positionY)
-                .getLines()
+                .lines()
                 .lastValue();
     }
 

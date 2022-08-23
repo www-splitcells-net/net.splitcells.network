@@ -43,8 +43,8 @@ public class HistoryTest {
                 .toProblem()
                 .asSolution();
         testSubject.allocate(
-                testSubject.demands().getRawLine(0)
-                , testSubject.supplies().getRawLine(0));
+                testSubject.demands().rawLine(0)
+                , testSubject.supplies().rawLine(0));
         testSubject.history().resetTo(-1);
         assertThat(testSubject.history().size()).isEqualTo(0);
     }
@@ -66,8 +66,8 @@ public class HistoryTest {
                 .withConstraint(Then.then(constantRater(cost(7))))
                 .toProblem().asSolution();
         IntStream.rangeClosed(0, 3).forEach(i -> solution.allocate
-                (solution.demands().getRawLine(i)
-                        , solution.supplies().getRawLine(i)));
+                (solution.demands().rawLine(i)
+                        , solution.supplies().rawLine(i)));
         assertThat(solution.history().size()).isEqualTo(4);
         solution.history().resetTo(2);
         assertThat(solution.history().size()).isEqualTo(3);
@@ -86,24 +86,24 @@ public class HistoryTest {
         assertThat(solution.history().size()).isEqualTo(0);
         {
             solution.allocate
-                    (solution.demands().getRawLine(0)
-                            , solution.supplies().getRawLine(0));
+                    (solution.demands().rawLine(0)
+                            , solution.supplies().rawLine(0));
             assertThat(solution.history().size()).isEqualTo(1);
-            final var additionEvent = solution.history().getRawLine(0);
+            final var additionEvent = solution.history().rawLine(0);
             final var additionOperation = additionEvent.value(ALLOCATION_EVENT);
             assertThat(additionOperation.type()).isEqualTo(ADDITION);
-            assertThat(additionOperation.demand()).isEqualTo(solution.demands().getRawLine(0));
-            assertThat(additionOperation.supply()).isEqualTo(solution.supplies().getRawLine(0));
+            assertThat(additionOperation.demand()).isEqualTo(solution.demands().rawLine(0));
+            assertThat(additionOperation.supply()).isEqualTo(solution.supplies().rawLine(0));
         }
         {
             assertThat(solution.history().size()).isEqualTo(1);
             solution.remove(0);
             assertThat(solution.history().size()).isEqualTo(2);
-            final var removalEvent = solution.history().getRawLine(1);
+            final var removalEvent = solution.history().rawLine(1);
             final var removalOperation = removalEvent.value(ALLOCATION_EVENT);
             assertThat(removalOperation.type()).isEqualTo(REMOVAL);
-            assertThat(removalOperation.demand()).isEqualTo(solution.demands().getRawLine(0));
-            assertThat(removalOperation.supply()).isEqualTo(solution.supplies().getRawLine(0));
+            assertThat(removalOperation.demand()).isEqualTo(solution.demands().rawLine(0));
+            assertThat(removalOperation.supply()).isEqualTo(solution.supplies().rawLine(0));
         }
     }
 
@@ -118,12 +118,12 @@ public class HistoryTest {
                 .withConstraint(Then.then(constantRater(cost(7))))
                 .toProblem().asSolution();
         final var demandValue = solution.allocate
-                (solution.demands().getRawLine(0)
-                        , solution.supplies().getRawLine(0));
+                (solution.demands().rawLine(0)
+                        , solution.supplies().rawLine(0));
         assertThat
                 (solution
                         .history()
-                        .getRawLine(0)
+                        .rawLine(0)
                         .value(META_DATA)
                         .value(AllocationRating.class)
                         .get()
@@ -134,7 +134,7 @@ public class HistoryTest {
             assertThat
                     (solution
                             .history()
-                            .getRawLine(1)
+                            .rawLine(1)
                             .value(META_DATA)
                             .value(AllocationRating.class)
                             .get()

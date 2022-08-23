@@ -38,8 +38,8 @@ public class RandomInitialization implements OfflineOptimization {
             return list(
                     optimizationEvent
                             (ADDITION
-                                    , randomness.chooseOneOf(solution.demandsFree().getLines()).toLinePointer()
-                                    , randomness.chooseOneOf(solution.suppliesFree().getLines()).toLinePointer()));
+                                    , randomness.chooseOneOf(solution.demandsFree().lines()).toLinePointer()
+                                    , randomness.chooseOneOf(solution.suppliesFree().lines()).toLinePointer()));
 
         }
         return list();

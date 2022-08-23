@@ -57,8 +57,8 @@ public class ConstraintTest {
                 .map(e -> testVerifier.complying(e))
                 .flatMap(e -> e.stream())
                 .collect(toList());
-        assertThat(solution.getLines()).hasSize(4);
-        assertThat(allocations).containsAll(solution.getLines());
+        assertThat(solution.lines()).hasSize(4);
+        assertThat(allocations).containsAll(solution.lines());
     }
 
     @Test

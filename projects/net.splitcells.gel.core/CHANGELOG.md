@@ -1,6 +1,12 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2022-08-22 \#8**: Unify Table methods naming:
+  * Rename `Table#getLines` to `Table#lines`.
+  * Rename `Table#getDistinctLines` to `Table#distinctLines`.
+  * Rename `Table#getDistinctLineValues` to `Table#distinctLineValues`.
+  * Rename `Table#getLines(int)` to `Table#line(int)`.
+  * Rename `Table#getLines(int)` to `Table#line(int)`.
 * **2022-07-15 \#8**: Rename `RoutingRating#events` to `RoutingRating#ratingComponents`, in order to communicate meaning a bit better.
 * **2022-07-01 \#8**: Create `Query#constraintPath` in order to select a constraint path of a solution via the query interface,
   which is a lot easier to understand,

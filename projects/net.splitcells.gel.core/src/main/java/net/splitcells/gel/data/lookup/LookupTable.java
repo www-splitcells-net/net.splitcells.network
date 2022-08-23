@@ -80,12 +80,12 @@ public class LookupTable implements Table {
     }
 
     @Override
-    public Line getRawLine(int index) {
+    public Line rawLine(int index) {
         if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
             return rawLinesCache.get(index);
         }
         if (content.contains(index)) {
-            return tableView.getRawLine(index);
+            return tableView.rawLine(index);
         }
         return null;
     }
@@ -95,7 +95,7 @@ public class LookupTable implements Table {
         if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
             return rawLinesCache.stream().filter(e -> e != null);
         }
-        return content.stream().map(tableView::getRawLine).filter(e -> e != null);
+        return content.stream().map(tableView::rawLine).filter(e -> e != null);
     }
 
     @Override
@@ -202,7 +202,7 @@ public class LookupTable implements Table {
             return listWithValuesOf(rawLinesCache);
         }
         final var rawLines = Lists.<Line>list();
-        content.forEach(index -> rawLines.add(tableView.getRawLine(index)));
+        content.forEach(index -> rawLines.add(tableView.rawLine(index)));
         return rawLines;
     }
 

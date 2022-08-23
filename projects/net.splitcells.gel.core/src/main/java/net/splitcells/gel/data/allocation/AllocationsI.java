@@ -348,7 +348,7 @@ public class AllocationsI implements Allocations {
                     .next();
             assertThat(demandLine).isEqualTo(supplyLine);
         }
-        return allocations.getRawLine(
+        return allocations.rawLine(
                 usedDemandIndexes_to_allocationIndexes
                         .get(demand.index())
                         .iterator()

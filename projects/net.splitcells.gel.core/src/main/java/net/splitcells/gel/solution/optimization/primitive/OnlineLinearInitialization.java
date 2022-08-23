@@ -10,16 +10,10 @@
  */
 package net.splitcells.gel.solution.optimization.primitive;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
-import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
-import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 
 public class OnlineLinearInitialization implements OnlineOptimization {
 
@@ -34,8 +28,8 @@ public class OnlineLinearInitialization implements OnlineOptimization {
     @Override
     public void optimize(Solution solution) {
         while (solution.demandsFree().hasContent() && solution.suppliesFree().hasContent()) {
-            solution.allocate(solution.demandsFree().getLines(0)
-                    , solution.suppliesFree().getLines(0));
+            solution.allocate(solution.demandsFree().line(0)
+                    , solution.suppliesFree().line(0));
 
         }
     }

@@ -31,6 +31,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.LineI;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnI;
@@ -147,7 +148,7 @@ public class DatabaseI implements Database {
         indexesOfFree.delete(index);
         range(0, lineValues.size()).forEach(i -> columns.get(i).set(index, lineValues.get(i)));
         ++size;
-        final var line = line(this, index);
+        final var line = LineI.line(this, index);
         rawLines.set(line.index(), line);
         lines.add(line);
         additionSubscriber.forEach(subscriber -> subscriber.registerAddition(line));
@@ -169,13 +170,13 @@ public class DatabaseI implements Database {
         final Line line;
         if (indexesOfFree.isEmpty()) {
             lineIndex = rawLines.size();
-            line = line(this, lineIndex);
+            line = LineI.line(this, lineIndex);
             rawLines.add(line);
             range(0, lineValues.size()).forEach(i -> columns.get(i).add(lineValues.get(i)));
         } else {
             lineIndex = removeAny(indexesOfFree);
             range(0, lineValues.size()).forEach(i -> columns.get(i).set(lineIndex, lineValues.get(i)));
-            line = line(this, lineIndex);
+            line = LineI.line(this, lineIndex);
             rawLines.set(lineIndex, line);
         }
         ++size;

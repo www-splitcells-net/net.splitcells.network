@@ -28,7 +28,7 @@ public class DatabaseFactoryTest {
                                 , stringAttribute("b"))
                 , Xml.parse(resourceOfClass(DatabaseFactoryTest.class, "database.example.fods"))
                         .getDocumentElement());
-        assertThat(testProduct.getLines().get(0).values()).isEqualTo(list(1, "2"));
-        assertThat(testProduct.getLines().get(1).values()).isEqualTo(list(2, "1"));
+        assertThat(testProduct.lines().get(0).values()).isEqualTo(list(1, "2"));
+        assertThat(testProduct.lines().get(1).values()).isEqualTo(list(2, "1"));
     }
 }

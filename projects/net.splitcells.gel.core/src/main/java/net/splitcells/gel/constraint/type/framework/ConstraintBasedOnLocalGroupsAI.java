@@ -88,7 +88,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
                                 .lookup(incomingGroup)
                                 .columnView(LINE)
                                 .lookup(removal)
-                                .getLines(0)
+                                .line(0)
                         , children
                         , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
         super.processLinesBeforeRemoval(incomingGroup, removal);

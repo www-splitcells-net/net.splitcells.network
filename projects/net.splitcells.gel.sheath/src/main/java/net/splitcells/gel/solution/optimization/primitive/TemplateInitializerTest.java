@@ -45,9 +45,9 @@ public class TemplateInitializerTest {
                                         , list(1, 2)
                                         , list(1, 1)
                                         , list(1, 1)))));
-        assertThat(testProduct.getLines().get(0).values()).isEqualTo(list(2, 1));
-        assertThat(testProduct.getLines().get(1).values()).isEqualTo(list(2, 1));
-        assertThat(testProduct.getLines().get(2).values()).isEqualTo(list(1, 2));
+        assertThat(testProduct.lines().get(0).values()).isEqualTo(list(2, 1));
+        assertThat(testProduct.lines().get(1).values()).isEqualTo(list(2, 1));
+        assertThat(testProduct.lines().get(2).values()).isEqualTo(list(1, 2));
         /*
          * Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
          *
@@ -64,8 +64,8 @@ public class TemplateInitializerTest {
          *
          * SPDX-License-Identifier: EPL-2.0 OR MIT
          */
-        assertThat(testProduct.getLines().get(3).values()).isEqualTo(list(1, 2));
-        assertThat(testProduct.getLines().get(4).values()).isEqualTo(list(1, 1));
-        assertThat(testProduct.getLines().get(5).values()).isEqualTo(list(1, 1));
+        assertThat(testProduct.lines().get(3).values()).isEqualTo(list(1, 2));
+        assertThat(testProduct.lines().get(4).values()).isEqualTo(list(1, 1));
+        assertThat(testProduct.lines().get(5).values()).isEqualTo(list(1, 1));
     }
 }

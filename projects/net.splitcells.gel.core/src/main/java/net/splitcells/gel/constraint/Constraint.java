@@ -31,7 +31,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -47,7 +46,6 @@ import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.LocalRating;
-import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 
 /**
@@ -230,7 +228,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     default Set<GroupId> childGroups(GroupId incomingGroup) {
         return lineProcessing().columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(incomingGroup)
-                .getLines()
+                .lines()
                 .stream()
                 .map(lineResult -> lineResult.value(RESULTING_CONSTRAINT_GROUP))
                 .collect(toSetOfUniques());

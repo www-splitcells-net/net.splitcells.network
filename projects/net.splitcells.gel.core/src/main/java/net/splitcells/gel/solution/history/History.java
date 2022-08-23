@@ -11,14 +11,11 @@
 package net.splitcells.gel.solution.history;
 
 import static net.splitcells.dem.lang.Xml.*;
-import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.utils.FodsUtility.tableCell;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.utils.FodsUtility;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.event.Allocation;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -105,15 +102,15 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
                 table.appendChild(header);
                 header.appendChild(tableCell(ALLOCATION_ID.name()));
                 header.appendChild(tableCell("allocation-type"));
-                if (!getLines().isEmpty()) {
+                if (!lines().isEmpty()) {
                     // TODO HACK Prevents errors if the history is empty.
-                    getLines().get(0).value(ALLOCATION_EVENT).demand().context().headerView().forEach(a -> header.appendChild(tableCell("demand-" + a.name())));
-                    getLines().get(0).value(ALLOCATION_EVENT).supply().context().headerView().forEach(a -> header.appendChild(tableCell("supply-" + a.name())));
+                    lines().get(0).value(ALLOCATION_EVENT).demand().context().headerView().forEach(a -> header.appendChild(tableCell("demand-" + a.name())));
+                    lines().get(0).value(ALLOCATION_EVENT).supply().context().headerView().forEach(a -> header.appendChild(tableCell("supply-" + a.name())));
                 }
                 header.appendChild(tableCell("allocation-cost"));
                 header.appendChild(tableCell("complete-cost"));
                 header.appendChild(tableCell(META_DATA.name()));
-                getLines().forEach(line -> {
+                lines().forEach(line -> {
                     final var tableLine = elementWithChildren(FODS_TABLE, "table-row");
                     table.appendChild(tableLine);
                     tableLine.appendChild(tableCell("" + line.value(ALLOCATION_ID)));

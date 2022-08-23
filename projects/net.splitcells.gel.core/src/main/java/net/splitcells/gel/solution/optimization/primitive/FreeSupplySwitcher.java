@@ -75,7 +75,7 @@ public class FreeSupplySwitcher implements OfflineOptimization {
                     , Set<LinePointer> processedSupplies) {
         if (solution.demandsUsed().hasContent() && solution.suppliesFree().hasContent()) {
             final int usedDemandIndex = randomness.integer(0, solution.demandsUsed().size() - 1);
-            final var usedDemand = solution.demandsUsed().getLines(usedDemandIndex);
+            final var usedDemand = solution.demandsUsed().line(usedDemandIndex);
             final var usedDemandPointer = usedDemand.toLinePointer();
             if (processedDemands.contains(usedDemandPointer)) {
                 return list();
@@ -94,11 +94,11 @@ public class FreeSupplySwitcher implements OfflineOptimization {
                             , optimizationEvent(
                                     ADDITION
                                     , solution.demands()
-                                            .getRawLine(usedDemand.index())
+                                            .rawLine(usedDemand.index())
                                             .toLinePointer()
                                     , solution
                                             .supplies()
-                                            .getRawLine
+                                            .rawLine
                                                     (randomness.integer(0, solution.suppliesFree().size()))
                                             .toLinePointer()
                             ));

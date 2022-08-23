@@ -11,19 +11,13 @@
 package net.splitcells.gel.rating.rater;
 
 import net.splitcells.dem.data.order.Comparator;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.utils.MathUtils;
-import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
-import net.splitcells.gel.rating.type.Cost;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -43,7 +37,7 @@ public class AllSame {
             @Override
             public Rating lineRating(Table lines, Optional<Line> addition, Optional<Line> removal) {
                 final Map<T, Integer> valueCounter = map();
-                lines.getLines()
+                lines.lines()
                         .stream()
                         .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
                         .map(line -> line.value(LINE).value(attribute))
@@ -79,7 +73,7 @@ public class AllSame {
                 return "values of " + attribute.name() + " should have the same value";
             }
         }, (line, groupLineProcessing, incomingGroup) -> {
-            final var distinctValues = groupLineProcessing.getLines().stream()
+            final var distinctValues = groupLineProcessing.lines().stream()
                     .map(l -> l.value(LINE).value(attribute).toString())
                     .reduce((a, b) -> a + ", " + b)
                     .orElse("undefined");

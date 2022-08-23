@@ -21,7 +21,6 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import org.w3c.dom.Node;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import net.splitcells.gel.rating.framework.Rating;
@@ -49,7 +48,7 @@ public class RaterBasedOnLineGroup implements Rater {
             public RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, java.util.List<Constraint> children) {
                 final var lineRating = rater.lineRating(lines, addition, removal);
                 final var ratingEvent = ratingEvent();
-                lines.getLines().stream()
+                lines.lines().stream()
                         .filter(e -> addition.map(line -> e.index() != line.index()).orElse(true))
                         .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
                         .forEach(e -> ratingEvent.updateRating_withReplacement(e
