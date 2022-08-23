@@ -47,7 +47,7 @@ public interface Table extends Discoverable, Domable {
      * true is faster than false, according to a manual test run with a CPU profiler.
      */
     boolean GET_LINE_VIA_STREAM = false;
-    
+
     List<Attribute<Object>> headerView();
 
     <T> ColumnView<T> columnView(Attribute<T> atribūts);
@@ -65,10 +65,9 @@ public interface Table extends Discoverable, Domable {
     }
 
     default List<Line> getLines() {
-        return listWithValuesOf
-                (rawLinesView().stream()
-                        .filter(e -> e != null)
-                        .collect(Collectors.toList()));
+        return rawLinesView().stream()
+                .filter(e -> e != null)
+                .collect(Lists.toList());
     }
 
     default Stream<Line> linesStream() {
