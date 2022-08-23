@@ -10,6 +10,7 @@
     <paragraph>Use only private or public visibility modifier.
         Method arguments are implicitly final.
         The source code has to comply with <quote>net.splitcells.dem</quote>'s Java grammar.
+        Classes must not be final, because this is useful for <quote>net.splitcells.network.community.via.javadoc</quote>.
         </paragraph>
     <chapter>
         <title>Java's Limitations</title>
