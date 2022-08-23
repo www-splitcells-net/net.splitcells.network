@@ -46,7 +46,7 @@ public interface Table extends Discoverable, Domable {
     /**
      * true is faster than false, according to a manual test run with a CPU profiler.
      */
-    boolean GET_LINE_VIA_STREAM = true;
+    boolean GET_LINE_VIA_STREAM = false;
     
     List<Attribute<Object>> headerView();
 
@@ -112,7 +112,8 @@ public interface Table extends Discoverable, Domable {
             if (index == 0) {
                 return linesStream().findFirst().orElseThrow();
             } else {
-                return linesStream().skip(index - 1).findFirst().orElseThrow();
+                // TODO TOFIX This does not work in BacktrackingTest#testBranching.
+                return linesStream().skip(index).findFirst().orElseThrow();
             }
         } else {
             return getLines().get(index);
