@@ -13,6 +13,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2022-08-27**: The global changelog now widens the definition of events searched in other changelogs.
+  Previously every list starting with just a date, was considered an event description.
+  Now random strings after the date are accepted, as long as these are seperated by a whitespace from the date.
 * **2022-05-29**: [**\#s84** Centralise build instruction documentaton.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/84):
   1. Render `CONTRIBUTING.md` for each project.
   2. Instead of duplicate build instructions links to the `CONTRIBUTING.md` document is provided.
