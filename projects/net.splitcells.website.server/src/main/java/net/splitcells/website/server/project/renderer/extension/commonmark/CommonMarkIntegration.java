@@ -63,16 +63,16 @@ public class CommonMarkIntegration {
         return renderer.render(node);
     }
 
-    public List<Event> events(String arg, ProjectRenderer projectRenderer, String path, Config config) {
+    public List<Event> events(String eventsAsCommonMark, ProjectRenderer projectRenderer, String path, Config config) {
         final Optional<String> title;
         final String contentToRender;
-        if (arg.startsWith("#")) {
-            final var titleLine = arg.split("[\r\n]+")[0];
+        if (eventsAsCommonMark.startsWith("#")) {
+            final var titleLine = eventsAsCommonMark.split("[\r\n]+")[0];
             title = Optional.of(titleLine.replaceAll("#", "").trim());
-            contentToRender = arg.substring(titleLine.length());
+            contentToRender = eventsAsCommonMark.substring(titleLine.length());
         } else {
             title = Optional.empty();
-            contentToRender = arg;
+            contentToRender = eventsAsCommonMark;
         }
         final var parsed = parser.parse(contentToRender);
         final var eventExtractor = EventExtractor.eventExtractor();
