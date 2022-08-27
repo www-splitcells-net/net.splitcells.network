@@ -61,7 +61,7 @@ public class LinkTranslator extends AbstractVisitor {
                     .replaceAll("/md", ".md");
         } else {
             normalizedDestination = destinationWithoutProtocol.replace("../", "")
-                    .replaceAll("src\\/main\\/[a-z]+\\/", "/")
+                    .replaceAll("^\\.?/src\\/main\\/[a-z]+\\/", "/")
                     .replaceAll("projects\\/[a-z\\.]+\\/", "/")
                     .replace("//", "/");
         }
