@@ -66,6 +66,14 @@ public interface Table extends Discoverable, Domable {
                 .collect(Lists.toList());
     }
 
+    /**
+     * This method exists for improved performance compared to calling
+     * <code>linest().stream()</code> on certain {@link Table} implementations.
+     * This is caused by the fact, that this method does not need a copy all {@link Line} references,
+     * before constructing this {@link Stream}.
+     *
+     * @return An ordered {@linl Stream} of {@łink #lines}.
+     */
     default Stream<Line> linesStream() {
         return lines().stream();
     }
