@@ -1,7 +1,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
-* **2022-08-22 \#8**: Unify Table methods naming:
+* **2022-08-24 \#8**: Unify Table methods naming:
   * Rename `Table#getLines` to `Table#lines`.
   * Rename `Table#getDistinctLines` to `Table#distinctLines`.
   * Rename `Table#getDistinctLineValues` to `Table#distinctLineValues`.
