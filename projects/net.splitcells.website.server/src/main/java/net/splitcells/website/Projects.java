@@ -104,6 +104,14 @@ public class Projects {
                                 , config)
                 , projectRenderer
                         (profile
+                                , integratedProjectRepositories.resolve("net.splitcells.gel.core/")
+                                , xslLib
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/net/splitcells/gel"
+                                , sourceValidator
+                                , config)
+                , projectRenderer
+                        (profile
                                 , integratedProjectRepositories.resolve("net.splitcells.gel.sheath/")
                                 , xslLib
                                 , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
