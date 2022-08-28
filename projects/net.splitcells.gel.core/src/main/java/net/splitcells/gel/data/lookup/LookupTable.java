@@ -13,7 +13,9 @@ package net.splitcells.gel.data.lookup;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -25,6 +27,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -33,15 +37,22 @@ import net.splitcells.gel.data.table.column.Column;
 import org.w3c.dom.Element;
 import net.splitcells.dem.data.set.list.Lists;
 
+/**
+ * TODO Test runtime improvements by {@link #USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS},
+ * {@link #USE_EXPERIMENTAL_RAW_LINE_CACHE} and {@link #USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE}.
+ */
 public class LookupTable implements Table {
 
+    private static final boolean USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS = true;
     private static final boolean USE_EXPERIMENTAL_RAW_LINE_CACHE = true;
+    private static final boolean USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE = true;
     protected final Table tableView;
     protected final String name;
     protected final Set<Integer> content = setOfUniques();
     protected final List<Column<Object>> columns;
     protected final List<Column<Object>> columnsView;
     private final List<Line> rawLinesCache = list();
+    private final Map<Integer, Line> rawLinesHashedCache = map();
 
     public static LookupTable lookupTable(Table table, String name) {
         return new LookupTable(table, name);
@@ -84,6 +95,9 @@ public class LookupTable implements Table {
         if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
             return rawLinesCache.get(index);
         }
+        if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
+            return rawLinesHashedCache.getOrDefault(index, null);
+        }
         if (content.contains(index)) {
             return tableView.rawLine(index);
         }
@@ -95,13 +109,27 @@ public class LookupTable implements Table {
         if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
             return rawLinesCache.stream().filter(e -> e != null);
         }
+        if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
+            return rawLinesHashedCache.values().stream();
+        }
         return content.stream().map(tableView::rawLine).filter(e -> e != null);
     }
 
     @Override
-    public List<Line> rawLinesView() {
+    public ListView<Line> rawLinesView() {
         if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
-            return listWithValuesOf(rawLinesCache);
+            return listView(rawLinesCache);
+        }
+        if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
+            return tableView.rawLinesView().stream().map(l -> {
+                if (l == null) {
+                    return null;
+                }
+                if (rawLinesHashedCache.containsKey(l.index())) {
+                    return l;
+                }
+                return null;
+            }).collect(Lists.toList());
         }
         final var rawLines = Lists.<Line>list();
         final var parentRawLines = tableView.rawLinesView();
@@ -125,15 +153,29 @@ public class LookupTable implements Table {
     public void register(Line line) {
         if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
             if (rawLinesCache.size() < line.index()) {
-                rangeClosed(1, line.index() - rawLinesCache.size()).forEach(i -> rawLinesCache.add(null));
+                rawLinesCache.prepareForSizeOf(line.index());
+                if (USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS) {
+                    final var limit = line.index() - rawLinesCache.size();
+                    for (int i = 1; i <= limit; ++i) {
+                        rawLinesCache.add(null);
+                    }
+                } else {
+                    rangeClosed(1, line.index() - rawLinesCache.size()).forEach(i -> {
+                        rawLinesCache.add(null);
+                    });
+                }
                 rawLinesCache.add(line);
             } else if (rawLinesCache.size() == line.index()) {
+                rawLinesCache.prepareForSizeOf(rawLinesCache.size() + 1);
                 rawLinesCache.add(line);
             } else if (rawLinesCache.size() > line.index()) {
                 rawLinesCache.set(line.index(), line);
             } else {
                 throw executionException("Unaccounted indexes: rawLinesCache-size=" + rawLinesCache.size() + ", line-index=" + line.index());
             }
+        }
+        if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
+            rawLinesHashedCache.put(line.index(), line);
         }
         content.add(line.index());
         // TODO PERFORMANCE
@@ -161,6 +203,9 @@ public class LookupTable implements Table {
             } else {
                 rawLinesCache.set(line.index(), null);
             }
+        }
+        if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
+            rawLinesHashedCache.remove(line.index());
         }
     }
 
