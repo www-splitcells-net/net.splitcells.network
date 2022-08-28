@@ -25,4 +25,9 @@ public class ListI<T> extends ArrayList<T> implements List<T> {
 	 */
 	private ListI() {
 	}
+
+	@Override
+	public void prepareForSizeOf(int targetSize) {
+		this.ensureCapacity(targetSize * 2);
+	}
 }

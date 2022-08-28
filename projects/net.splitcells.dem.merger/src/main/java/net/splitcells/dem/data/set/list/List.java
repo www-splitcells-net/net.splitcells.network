@@ -93,4 +93,14 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     default void assertEquals(List<T> arg) {
         assertThat(this).isEqualTo(arg);
     }
+
+    /**
+     * Allows the list allocate memory in advance in relation to the expected {@link #size()} of this.
+     * This method is currently only intended for runtime improvements.
+     *
+     * @param targetSize The expected future return value of {@link #size()}.
+     */
+    default void prepareForSizeOf(int targetSize) {
+
+    }
 }
