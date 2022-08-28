@@ -140,6 +140,7 @@ public class DatabaseI implements Database {
             range(0, lineValues.size()).forEach(i -> {
                 extend_content_to(columns.get(i), index);
             });
+            rawLines.prepareForSizeOf(index);
             rangeClosed(rawLines.size(), index).forEach(i -> {
                 indexesOfFree.add(i);
                 rawLines.add(null);
