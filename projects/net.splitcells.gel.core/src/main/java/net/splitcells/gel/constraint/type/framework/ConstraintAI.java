@@ -111,6 +111,7 @@ public abstract class ConstraintAI implements Constraint {
         }
         // TODO Move this to a different project.
         if (ENFORCING_UNIT_CONSISTENCY) {
+            // TODO The runtime performance of this check is bad, when many lines are present (i.e. > 10_000).
             assertThat(
                     lines
                             .columnView(INCOMING_CONSTRAINT_GROUP)
