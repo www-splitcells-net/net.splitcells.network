@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+echo -Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false
