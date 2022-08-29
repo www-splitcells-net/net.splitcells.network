@@ -11,6 +11,7 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -48,7 +49,7 @@ public class LookupTableRef extends LookupTable {
      * TODO PERFORMANCE
      */
     @Override
-    public List<Line> rawLinesView() {
+    public ListView<Line> rawLinesView() {
         if (ENFORCING_UNIT_CONSISTENCY) {
             range(0, tableView.rawLinesView().size()).forEach(i -> {
                 if (content.contains(i)) {
