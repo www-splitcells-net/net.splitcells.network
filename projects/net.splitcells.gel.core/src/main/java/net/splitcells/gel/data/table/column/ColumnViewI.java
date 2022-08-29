@@ -24,9 +24,9 @@ public class ColumnViewI<T> implements ColumnView<T> {
     public static <T> ColumnView<T> columnView(Column<T> kolonna) {
         return new ColumnViewI<>(kolonna);
     }
-    private final Column<T> kolonna;
-    private ColumnViewI(Column<T> kolonna) {
-        this.kolonna = kolonna;
+    private final Column<T> column;
+    private ColumnViewI(Column<T> column) {
+        this.column = column;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ColumnViewI<T> implements ColumnView<T> {
 
     @Override
     public T get(int i) {
-        return kolonna.get(i);
+        return column.get(i);
     }
 
     @Override
@@ -56,22 +56,22 @@ public class ColumnViewI<T> implements ColumnView<T> {
 
     @Override
     public int indexOf(Object o) {
-        return kolonna.indexOf(o);
+        return column.indexOf(o);
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return kolonna.lastIndexOf(o);
+        return column.lastIndexOf(o);
     }
 
     @Override
     public ListIterator<T> listIterator() {
-        return kolonna.listIterator();
+        return column.listIterator();
     }
 
     @Override
     public ListIterator<T> listIterator(int i) {
-        return kolonna.listIterator(i);
+        return column.listIterator(i);
     }
 
     @Override
@@ -81,32 +81,32 @@ public class ColumnViewI<T> implements ColumnView<T> {
 
     @Override
     public int size() {
-        return kolonna.size();
+        return column.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return kolonna.isEmpty();
+        return column.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return kolonna.contains(o);
+        return column.contains(o);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return kolonna.iterator();
+        return column.iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return kolonna.toArray();
+        return column.toArray();
     }
 
     @Override
     public <T1> T1[] toArray(T1[] t1s) {
-        return kolonna.toArray(t1s);
+        return column.toArray(t1s);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class ColumnViewI<T> implements ColumnView<T> {
 
     @Override
     public boolean containsAll(Collection<?> collection) {
-        return kolonna.containsAll(collection);
+        return column.containsAll(collection);
     }
 
     @Override
@@ -146,11 +146,11 @@ public class ColumnViewI<T> implements ColumnView<T> {
 
     @Override
     public Table lookup(T value) {
-        return kolonna.lookup(value);
+        return column.lookup(value);
     }
 
     @Override
-    public Table lookup(Predicate<T> predikāts) {
-        return kolonna.lookup(predikāts);
+    public Table lookup(Predicate<T> selector) {
+        return column.lookup(selector);
     }
 }
