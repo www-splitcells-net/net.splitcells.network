@@ -54,15 +54,35 @@ public class LookupTable implements Table {
     private final List<Line> rawLinesCache = list();
     private final Map<Integer, Line> rawLinesHashedCache = map();
 
+    private final boolean useExperimentalRawLineCache;
+
+    /**
+     * @param table The {@link Table} on which the lookup will be performed.
+     * @param name This is the name of the {@link LookupTable} being constructed.
+     * @return An instance, where no {@link Line} of {@link Table} is {@link #register(Line)}.
+     */
     public static LookupTable lookupTable(Table table, String name) {
-        return new LookupTable(table, name);
+        return new LookupTable(table, name, USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE);
     }
 
+    /**
+     * @param table The {@link Table} on which the lookup will be performed.
+     * @param attribute The {@link Attribute}, that will be looked up.
+     * @return An instance, where no {@link Line} of {@link Table} is {@link #register(Line)}.
+     */
     public static LookupTable lookupTable(Table table, Attribute<?> attribute) {
-        return new LookupTable(table, attribute.name());
+        return new LookupTable(table, attribute.name(), USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE);
+    }
+
+    public static LookupTable lookupTable(Table table, Attribute<?> attribute, boolean cacheRawLines) {
+        return new LookupTable(table, attribute.name(), cacheRawLines);
     }
 
     protected LookupTable(Table table, String name) {
+        this(table, name, USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE);
+    }
+
+    protected LookupTable(Table table, String name, boolean useExperimentalRawLineCache) {
         this.tableView = table;
         this.name = name;
         columns = listWithValuesOf
@@ -70,6 +90,7 @@ public class LookupTable implements Table {
                         .map(attribute -> LookupColumn.lookupColumn(this, attribute))
                         .collect(toList()));
         columnsView = listWithValuesOf(columns);
+        this.useExperimentalRawLineCache = useExperimentalRawLineCache;
     }
 
     @Override
@@ -92,7 +113,7 @@ public class LookupTable implements Table {
 
     @Override
     public Line rawLine(int index) {
-        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+        if (useExperimentalRawLineCache) {
             return rawLinesCache.get(index);
         }
         if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
@@ -106,7 +127,7 @@ public class LookupTable implements Table {
 
     @Override
     public Stream<Line> linesStream() {
-        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+        if (useExperimentalRawLineCache) {
             return rawLinesCache.stream().filter(e -> e != null);
         }
         if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
@@ -117,7 +138,7 @@ public class LookupTable implements Table {
 
     @Override
     public ListView<Line> rawLinesView() {
-        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+        if (useExperimentalRawLineCache) {
             return listView(rawLinesCache);
         }
         if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
@@ -151,8 +172,8 @@ public class LookupTable implements Table {
     }
 
     public void register(Line line) {
-        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
-            if (rawLinesCache.size() < line.index()) {
+        if (useExperimentalRawLineCache) {
+           if (rawLinesCache.size() < line.index()) {
                 rawLinesCache.prepareForSizeOf(line.index());
                 if (USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS) {
                     final var limit = line.index() - rawLinesCache.size();
@@ -197,7 +218,7 @@ public class LookupTable implements Table {
             final var column = columns.get(i);
             column.set(line.index(), null);
         });
-        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+        if (useExperimentalRawLineCache) {
             if (rawLinesCache.size() == line.index() + 1) {
                 rawLinesCache.remove(line.index());
             } else {
@@ -243,7 +264,7 @@ public class LookupTable implements Table {
 
     @Override
     public List<Line> rawLines() {
-        if (USE_EXPERIMENTAL_RAW_LINE_CACHE) {
+        if (useExperimentalRawLineCache) {
             return listWithValuesOf(rawLinesCache);
         }
         final var rawLines = Lists.<Line>list();
