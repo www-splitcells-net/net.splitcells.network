@@ -1,2 +1,4 @@
 #!/usr/bin/env sh
-echo -Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false
+echo '-Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false'
+echo '-Dnet.splitcells.dem.environment.config.StaticFlags.TELLING_STORY=false'
+echo '-Dnet.splitcells.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES=true'
