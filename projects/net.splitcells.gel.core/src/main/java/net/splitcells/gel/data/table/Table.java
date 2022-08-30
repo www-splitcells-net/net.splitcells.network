@@ -67,10 +67,18 @@ public interface Table extends Discoverable, Domable {
     }
 
     /**
-     * This method exists for improved performance compared to calling
-     * <code>linest().stream()</code> on certain {@link Table} implementations.
+     * <p>This method exists for improved performance compared to calling
+     * <code>lines().stream()</code> on certain {@link Table} implementations.
      * This is caused by the fact, that this method does not need a copy all {@link Line} references,
-     * before constructing this {@link Stream}.
+     * before constructing this {@link Stream}.</p>
+     *
+     * <p>Also, it is expected, that generally {@link #linesStream()} is the fastest method,
+     * in order to iterate or list all {@link Line}.
+     * Especially, it is expected to be generally faster, than {@link #rawLines()}.
+     * Only in select cases {@link #rawLines()} is expected to be faster,
+     * where knowledge of the underlining {@link Table} implementation is present.
+     * The reason for this, is the fact, that it is faster to construct {@link #linesStream()} via {@link #rawLines()},
+     * than the other way around.</p>
      *
      * @return An ordered {@linl Stream} of {@łink #lines}.
      */
