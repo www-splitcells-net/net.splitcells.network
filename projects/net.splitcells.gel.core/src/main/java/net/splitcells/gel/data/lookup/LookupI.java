@@ -45,7 +45,7 @@ public class LookupI<T> implements Lookup<T> {
             if (content.containsKey(addition)) {
                 lookupTable = content.get(addition);
             } else {
-                lookupTable = lookupTable(table, attribute);
+                lookupTable = lookupTable(table, attribute, false);
                 content.put(addition, lookupTable);
             }
             lookupTable.register(table.rawLine(index));
