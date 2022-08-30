@@ -48,7 +48,7 @@ public class LookupI<T> implements Lookup<T> {
                 lookupTable = lookupTable(table, attribute);
                 content.put(addition, lookupTable);
             }
-            lookupTable.register(table.rawLinesView().get(index));
+            lookupTable.register(table.rawLine(index));
         }
         register_beforeAddition_atComplexContent(addition, index);
     }
