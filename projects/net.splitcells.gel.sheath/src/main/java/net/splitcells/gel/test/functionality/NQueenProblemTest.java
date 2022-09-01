@@ -65,7 +65,6 @@ public class NQueenProblemTest extends TestSuiteI {
     public static final Attribute<Integer> COLUMN = attribute(Integer.class, "column");
     public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
 
-    @Disabled
     @Tag(CAPABILITY_TEST)
     @Test
     public void test_8_queen_problem_with_rolling_the_dice() {
