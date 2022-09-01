@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 logFolder=../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/
 logFile=$logFolder/$(hostname).csv
 numberOfWarnings=$(mvn clean install -DskipTests | grep --ignore-case warning | wc -l)
