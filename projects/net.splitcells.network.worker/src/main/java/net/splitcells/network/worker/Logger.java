@@ -1,13 +1,10 @@
 package net.splitcells.network.worker;
 
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.host.SystemUtils;
-import net.splitcells.dem.testing.ReportEntryKey;
 import org.junit.platform.engine.TestExecutionResult;
-import org.junit.platform.engine.reporting.ReportEntry;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
@@ -15,10 +12,7 @@ import org.junit.platform.launcher.TestPlan;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -28,10 +22,6 @@ import static net.splitcells.dem.resource.Files.appendToFile;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Files.writeToFile;
-import static net.splitcells.dem.resource.Paths.userHome;
-import static net.splitcells.dem.testing.ReportEntryKey.END_TIME;
-import static net.splitcells.dem.testing.ReportEntryKey.START_TIME;
-import static net.splitcells.dem.testing.ReportEntryTimeKey.DATE_TIME_FORMAT;
 
 /**
  * <p>Logs the runtime of tests into a project folder
@@ -98,22 +88,7 @@ public class Logger implements TestExecutionListener {
 
     @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
-        final var splitTestIdentifier = list(testIdentifier.getUniqueId().split("/"));
-        final Optional<String> testPath;
-        if (splitTestIdentifier.size() == 1) {
-            testPath = Optional.of(BUILDER_RUNTIME_LOG);
-        } else {
-            testPath = splitTestIdentifier
-                    .withRemovedByIndex(0)
-                    .stream()
-                    .map(e -> e.replace("[", ""))
-                    .map(e -> e.replace("]", ""))
-                    .map(e -> e.split(":")[1])
-                    .map(e -> e.replace(".", "/"))
-                    .map(e -> e.replaceAll("[^a-zA-Z-_/]", "_"))
-                    .reduce((a, b) -> a + "/" + b)
-                    .map(e -> e.replaceAll("/+", "/"));
-        }
+        final var testPath = parseTestIdentifier(testIdentifier.getUniqueId());
         if (testPath.isPresent()) {
             final var endDateTime = System.nanoTime();
             final var startDateTime = testToStartTime.get(testIdentifier);
@@ -125,6 +100,27 @@ public class Logger implements TestExecutionListener {
                     , runTime);
         }
 
+    }
+
+    protected Optional<String> parseTestIdentifier(String testIdentifier) {
+        final var splitTestIdentifier = list(testIdentifier.split("/"));
+        final Optional<String> testPath;
+        if (splitTestIdentifier.size() == 1) {
+            testPath = Optional.of(BUILDER_RUNTIME_LOG);
+        } else {
+            testPath = splitTestIdentifier
+                    .withRemovedByIndex(0)
+                    .stream()
+                    .map(e -> e.replace("()", ""))
+                    .map(e -> e.replace("[", ""))
+                    .map(e -> e.replace("]", ""))
+                    .map(e -> e.split(":")[1])
+                    .map(e -> e.replace(".", "/"))
+                    .map(e -> e.replaceAll("[^a-zA-Z-_/1-8]", "_"))
+                    .reduce((a, b) -> a + "/" + b)
+                    .map(e -> e.replaceAll("/+", "/"));
+        }
+        return testPath;
     }
 
     /**
