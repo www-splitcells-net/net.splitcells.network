@@ -8,10 +8,18 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class LinkTranslatorTest {
     @Test
-    public void test() {
+    public void testSourceRelativeLink() {
         final var testSubject = linkTranslator();
         final var testData = new Link("./src/main/md/net/splitcells/network/guidelines/changelog.md", "here");
         testSubject.visit(testData);
         assertThat(testData.getDestination()).isEqualTo("/net/splitcells/network/guidelines/changelog.html");
+    }
+
+    @Test
+    public void testSourceRelativeParentLink() {
+        final var testSubject = linkTranslator();
+        final var testData = new Link("../../../../../../src/main/xml/net/splitcells/gel/objectives.xml", "here");
+        testSubject.visit(testData);
+        assertThat(testData.getDestination()).isEqualTo("/net/splitcells/gel/objectives.html");
     }
 }
