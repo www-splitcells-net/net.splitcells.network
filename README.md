@@ -127,5 +127,6 @@ and probably will never be finished.
   * Review advertisement, introductions and info linked by README,
     because that is the primary material for newcomers.
 * Improve compatibility, portability and adaptability.
+* Deploy and execute the software.
 ## Credits
 * [Main Author's Public Key](https://keys.openpgp.org/search?q=F844A8297DEB16D9B9486323A6A6108FC3486F37)
