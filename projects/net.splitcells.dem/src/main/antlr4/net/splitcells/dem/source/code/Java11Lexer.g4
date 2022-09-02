@@ -43,17 +43,21 @@ lexer grammar Java11Lexer;
     		: 'import java.nio.file.Path;'
     		| 'import java.nio.file.Paths;'
     		| 'import java.time.format.DateTimeFormatter;'
+    		| 'import java.time.LocalDate;'
     		| 'import java.time.ZonedDateTime;'
     		| 'import java.util.function.Consumer;'
     		| 'import java.util.function.Function;'
     		| 'import java.util.function.Supplier;'
     		| 'import java.util.function.Predicate;'
     		| 'import java.util.Optional;'
+    		| 'import java.util.regex.Pattern;'
+    		| 'import java.util.stream.Stream;'
     		| 'import org.junit.jupiter.api.Test;'
+    		| 'import org.junit.jupiter.api.Tag;'
     		| 'import static org.assertj.core.api.Assertions.assertThat;'
     		| 'import static org.junit.jupiter.api.Assertions.assertThrows;'
+    		| 'import static java.util.stream.IntStream.range;'
     		| 'import static java.util.stream.IntStream.rangeClosed;'
-    		| 'import java.util.stream.Stream;'
     		;
 	Arrow: '->';
 	Bigger_than: '>';
@@ -129,8 +133,6 @@ lexer grammar Java11Lexer;
 	Char: '\'' String_character '\'';
 	fragment String_character
 		: [a-zA-Z0-9_-]
-		| '\\n'
-		| '\\"'
 		| '.'
 		| ' '
 		| '<'
@@ -150,6 +152,9 @@ lexer grammar Java11Lexer;
 		| '\''
 		| '('
 		| ')'
+		| '^'
+		| ';'
+		| '"'
 		;
 /* Tokens Of Last Resort */
 	WS:

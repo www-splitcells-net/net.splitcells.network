@@ -10,6 +10,7 @@
  */
 package net.splitcells.website.server.project.validator;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -24,6 +25,7 @@ import java.util.Optional;
 
 import static java.util.Arrays.asList;
 
+@JavaLegacyArtifact
 public class SourceValidatorViaSchema implements SourceValidator {
     public static SourceValidatorViaSchema validatorViaSchema(Path schemaPath) {
         return new SourceValidatorViaSchema(schemaPath);
