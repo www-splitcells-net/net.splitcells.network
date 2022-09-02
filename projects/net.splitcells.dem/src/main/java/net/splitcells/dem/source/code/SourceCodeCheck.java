@@ -13,11 +13,14 @@ package net.splitcells.dem.source.code;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.resource.Files;
+import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -62,7 +65,7 @@ public class SourceCodeCheck {
                     } else {
                         System.out.println("line " + line + ":" + charPositionInLine + " " + msg + ", " + offendingSymbol);
                     }
-                    throw new ParseCancellationException("line " + line + ":" + charPositionInLine + " " + msg);
+                    throw new ParseCancellationException("line " + line + ":" + charPositionInLine + " " + msg, e);
                 }
             });
             parser.source_unit();
