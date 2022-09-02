@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://splitcells.net/sew.xsd">
+    <meta>
+        <title>command.managed.environment.configure</title>
+        <license>standard</license>
+        <description>Sets up user environment of interactive shells.</description>
+    </meta>
+    <paragraph>Sets up user environment of interactive shells,
+        so that user can use commands of os state interface in shell.
+        Nothing is done, if this is already present.</paragraph>
+    <list>
+        <item>Creates a command folder, where commands will be installed by os state interface.
+            It is located at "~/bin/net.splitcells.os.state.interface.commands.managed"
+            by default or at &lt;arg&gt; if specified.</item>
+        <item>Adds the new path via .bashrc to $PATH.</item>
+    </list>
+</article>

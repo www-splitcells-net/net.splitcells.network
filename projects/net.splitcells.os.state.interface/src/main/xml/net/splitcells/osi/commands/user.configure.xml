@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://splitcells.net/sew.xsd">
+    <meta>
+        <title>user.configure</title>
+        <license>standard</license>
+        <description>Configures the current user.</description>
+    </meta>
+    <paragraph>Configures the current user.
+        The main difference to "package.install" is the fact,
+        that "user.configure" works without arguments and defines the configuration of the current user.
+        This command may or may not require extended rights.</paragraph>
+    <paragraph>It is preferred that every "user.configure" command calls a set of "package.install" commands.
+        This ensures the portability of user configurations.
+        It also makes it possible to install the same set of commands on multiple computers,
+        even if the computers require different configurations.
+        In this case the administrator has only to create the "~/.config/net.splitcells.os.state.interface/user.configure" command on each computer,
+        that defines which configurations are required for each computer.</paragraph>
+</article>
