@@ -41,6 +41,19 @@ parser grammar Java11Parser;
 options {
     tokenVocab=Java11Lexer;
 }
+source_unit /* This is the root node. Root nodes should be placed on the start of the document. */
+    : (.)*? Keysymbol_at Keyword_JavaLegacyArtifact (.)*? EOF
+    | license_declaration package_declaration import_declaration* class_definition
+    	EOF
+    | license_declaration package_declaration import_declaration* interface_definition
+        EOF
+    | license_declaration package_declaration import_declaration* interface_definition
+    	EOF
+    | license_declaration package_declaration import_declaration* annotation_definition
+        EOF
+    | license_declaration package_declaration import_declaration* enum_definition
+            	EOF
+    ;
 access
     : Dot type_argument? name call_arguments access?
     | Dot name access?
@@ -59,13 +72,14 @@ call_arguments
     ;
 call_arguments_element
     : annotation? reference
+    | annotation? expression
     | annotation? variable_declaration
     ;
 call_arguments_next
     : Comma call_arguments_element
     ;
 class_definition
-    : javadoc? Keysymbol_at Keyword_JavaLegacyBody .*
+    : javadoc? Keysymbol_at Keyword_JavaLegacyBody (.)*?
     | javadoc? annotation* Keyword_public? Keyword_final?
         /* Keyword_abstract? TODO Is this really needed? */
     	Keyword_class
@@ -77,7 +91,7 @@ class_extension
 	: (Keyword_extends type_declaration)? (Keyword_implements type_declaration (Comma type_declaration)* )? Extension_Exception?
 	;
 class_member
-    : javadoc? Keysymbol_at Keyword_JavaLegacyBody .* Brace_curly_open .* Brace_curly_closed
+    : javadoc? Keysymbol_at Keyword_JavaLegacyBody (.)*? Brace_curly_open (.)*? Brace_curly_closed
     | class_constructor
     | class_member_method_definition
     | class_member_value_declaration
@@ -201,7 +215,7 @@ interface_definition_member_static
 	;
 interface_definition_member
 	: interface_definition_member_method
-	| javadoc? Keysymbol_at Keyword_JavaLegacyBody .*
+	| javadoc? Keysymbol_at Keyword_JavaLegacyBody (.)*?
 	;
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/
@@ -238,7 +252,7 @@ operator
 	| Keysymbol_slash
 	;
 package_declaration
-    : 'package' package_name Semicolon
+    : Keyword_package package_name Semicolon
     ;
 package_name
     : name
@@ -297,19 +311,6 @@ statement_catch
     ;
 statement_finally
     : Keyword_finally Brace_curly_open statement+ Brace_curly_closed
-    ;
-source_unit
-    : .* Keysymbol_at Keyword_JavaLegacyArtifact .*
-    | license_declaration package_declaration import_declaration* class_definition
-    	EOF
-    | license_declaration package_declaration import_declaration* interface_definition
-        EOF
-    | license_declaration package_declaration import_declaration* interface_definition
-    	EOF
-    | license_declaration package_declaration import_declaration* annotation_definition
-        EOF
-    | license_declaration package_declaration import_declaration* enum_definition
-            	EOF
     ;
 type_declaration
     : type_path type_argument? Keysymbol_vararg? type_declaration_array?

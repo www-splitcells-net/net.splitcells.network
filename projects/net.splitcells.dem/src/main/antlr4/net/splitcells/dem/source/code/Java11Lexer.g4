@@ -133,6 +133,7 @@ lexer grammar Java11Lexer;
 	Char: '\'' String_character '\'';
 	fragment String_character
 		: [a-zA-Z0-9_-]
+		| '\\"'
 		| '.'
 		| ' '
 		| '<'
@@ -145,7 +146,6 @@ lexer grammar Java11Lexer;
 		| ','
 		| '['
 		| ']'
-		| '-'
 		| '$'
 		| '*'
 		| '`'
@@ -154,12 +154,12 @@ lexer grammar Java11Lexer;
 		| ')'
 		| '^'
 		| ';'
-		| '"'
 		;
 /* Tokens Of Last Resort */
 	WS:
 		/* Ignore whitespace. */
     	[ \t\r\n]+ -> skip;
 /* Token Fragments */
+    /* These are special cases of String patterns, that do not require a special token. */
 	fragment Line_ending: [\n\r]+;
-	/* These are special cases of String patterns, that do not require a special token. */
+Digits: [0-9];
