@@ -35,12 +35,17 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <antlr.version>4.9.2</antlr.version>
+                <antlr.version>4.10.1</antlr.version>
             </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr4-runtime</artifactId>
+                    <version>${antlr.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4</artifactId>
                     <version>${antlr.version}</version>
                 </dependency>
             </dependencies>
