@@ -3,6 +3,7 @@ package net.splitcells.network.worker;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.host.SystemUtils;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
@@ -22,6 +23,7 @@ import static net.splitcells.dem.resource.Files.appendToFile;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Files.writeToFile;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
 /**
  * <p>Logs the runtime of tests into a project folder
@@ -134,7 +136,8 @@ public class Logger implements TestExecutionListener {
      */
     @Deprecated
     public void commit() {
-        SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", networkProject);
+        domsole().append("`Logger#commit` is not implemented." ,LogLevel.ERROR);
+        // TODO TOFIX SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", networkProject);
     }
 
     @Override
