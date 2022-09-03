@@ -2,7 +2,10 @@
 set -e
 logFolder=../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/
 logFile=$logFolder/$(hostname).csv
-numberOfWarnings=$(mvn clean install -DskipTests | grep --ignore-case warning | wc -l)
+mkdir ../net.splitcells.network.log/target
+    rm ../net.splitcells.network.log/target/test.via.network.worker.log
+    mvn clean install -DskipTests > ../net.splitcells.network.log/target/test.via.network.worker.log
+    numberOfWarnings=$(cat ../net.splitcells.network.log/target/test.via.network.worker.log | grep --ignore-case warning | wc -l)
 mkdir -p $logFolder
 test -f $logFile || echo 'Date,Number Of Warnings' >> $logFile
 echo $(date +'%Y-%m-%d')','$numberOfWarnings >> $logFile
