@@ -2,7 +2,7 @@
 set -e
 logFolder=../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/
 logFile=$logFolder/$(hostname).csv
-mkdir ../net.splitcells.network.log/target
+test -d ../net.splitcells.network.log/target/test.via.network.worker.log || mkdir ../net.splitcells.network.log/target
     test -f ../net.splitcells.network.log/target/test.via.network.worker.log && rm ../net.splitcells.network.log/target/test.via.network.worker.log
     mvn clean install -DskipTests > ../net.splitcells.network.log/target/test.via.network.worker.log
     numberOfWarnings=$(cat ../net.splitcells.network.log/target/test.via.network.worker.log | grep --ignore-case warning | wc -l)
