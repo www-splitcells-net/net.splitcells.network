@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
@@ -42,11 +43,15 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
                 contentsPath.appendChild(Xml.textNode("/" + csvPath));
                 content.appendChild(contentsPath);
                 content.appendChild(Xml.textNode(Paths.readString(requestedFile)));
-                return Optional.of(renderingResult(projectRenderer.renderXml(
-                                Xml.toPrettyWithoutHeaderString(content)
-                                , layoutConfig(path)
-                                , config
-                        ).get()
+
+                final var page = Xml.rElement(NameSpaces.SEW, "article");
+                final var metaElement = Xml.rElement(NameSpaces.SEW, "meta");
+                final var pathElement = Xml.rElement(NameSpaces.SEW, "path");
+                pathElement.appendChild(Xml.textNode(path));
+                metaElement.appendChild(pathElement);
+                page.appendChild(metaElement);
+                page.appendChild(content);
+                return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(page), config).get()
                         , TEXT_HTML.toString()));
             }
         }
