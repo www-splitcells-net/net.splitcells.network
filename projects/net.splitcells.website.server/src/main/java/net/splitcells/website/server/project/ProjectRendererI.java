@@ -50,6 +50,7 @@ import static net.splitcells.website.server.project.renderer.extension.TextProje
 import static net.splitcells.website.server.project.renderer.extension.UserCommandProjectRendererExtension.userCommandRenderer;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.extension.XmlProjectRendererExtension.xmlRenderer;
+import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkBuildProjectRendererExtension.commonMarkBuildRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogProjectRendererExtension.commonMarkChangelogRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkContributingProjectRendererExtension.commonMarkContributingRenderer;
@@ -122,7 +123,8 @@ public class ProjectRendererI implements ProjectRenderer {
                 .registerExtension(resourceRenderer())
                 .registerExtension(csvChartRenderer())
                 .registerExtension(commonMarkContributingRenderer())
-                .registerExtension(commonMarkDevelopmentRenderer());
+                .registerExtension(commonMarkDevelopmentRenderer())
+                .registerExtension(commonMarkBuildRenderer());
         if (config.cacheRenderers()) {
             transformer = Optional.of(createRenderer());
         }
