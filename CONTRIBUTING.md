@@ -1,11 +1,7 @@
 # Contributing to Splitcells Network
 * [Licensing](./LICENSE.md) and [License Notices](./NOTICE.md) of This Project
 * [Source Code Guidelines](https://splitcells.net/net/splitcells/network/guidelines/index.html)
-## Building the Project
-Java 11 (AdoptOpenJDK is preferred), Maven, Python 3 and Bash is required in
-order to build this project.
-Execute `./bin/build`, that's it. ✨
-The Java projects can be build via `mvn clean install` at the root folder.
+* [Build Instructions](https://splitcells.net/net/splitcells/network/BUILD.html)
 ## Submitting via Pull Request
 * The authors of the commits have to sign off all commits of the pull request
   according to the [Developer’s Certificate of Origin (DCO)](src/main/txt/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.txt).
