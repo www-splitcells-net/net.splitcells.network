@@ -52,7 +52,9 @@ public class TimeStepsTest {
         testSubject.optimize(linearInitialization());
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
-                .values()
-                .requireSizeOf(3);
+                .stream()
+                .distinct()
+                .collect(toList())
+                .requireSizeOf(6);
     }
 }
