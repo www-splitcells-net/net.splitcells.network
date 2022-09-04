@@ -57,6 +57,7 @@ import static net.splitcells.website.server.project.renderer.extension.commonmar
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkDevelopmentProjectRendererExtension.commonMarkDevelopmentRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkProjectRendererExtension.commonMarkExtension;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkReadmeProjectRendererExtension.commonMarkReadmeRenderer;
+import static net.splitcells.website.server.project.renderer.extension.commonmark.RootFileProjectRendererExtension.rootFileProjectRendererExtension;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
@@ -124,7 +125,9 @@ public class ProjectRendererI implements ProjectRenderer {
                 .registerExtension(csvChartRenderer())
                 .registerExtension(commonMarkContributingRenderer())
                 .registerExtension(commonMarkDevelopmentRenderer())
-                .registerExtension(commonMarkBuildRenderer());
+                .registerExtension(commonMarkBuildRenderer())
+                .registerExtension(rootFileProjectRendererExtension("LICENSE"))
+                .registerExtension(rootFileProjectRendererExtension("NOTICE"));
         if (config.cacheRenderers()) {
             transformer = Optional.of(createRenderer());
         }
