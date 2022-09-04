@@ -28,12 +28,15 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 
 public class TimeSteps implements Rater {
-    private TimeSteps() {
 
+    public static Rater timeSteps(Attribute<Integer> attribute)  {
+        return new TimeSteps(attribute);
     }
 
-    public static Rater timeSteps(Attribute<?> attribute)  {
-        return new TimeSteps();
+    private final Attribute<Integer> attribute;
+
+    private TimeSteps(Attribute<Integer> attribute) {
+        this.attribute = attribute;
     }
 
     @Override
