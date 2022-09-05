@@ -84,6 +84,14 @@ public interface Solution extends Problem, SolutionView {
         return this;
     }
 
+    /**
+     * @param optimizationFunction
+     * @param continuationCondition
+     * @return
+     * @deprecated This is deprecated, because this method checks automatically, if the {@code optimizationFunction} did nothing and thereby aborts the executions.
+     * This should done by {@code continuationCondition} instead explicitly.
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimizeWithFunction(OnlineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
         int i = 0;
@@ -93,6 +101,16 @@ public interface Solution extends Problem, SolutionView {
             if (startAge == history().size()) {
                 break;
             }
+            ++i;
+        }
+        return this;
+    }
+
+    @ReturnsThis
+    default Solution optimizeWithMethod(OnlineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
+        int i = 0;
+        while (continuationCondition.test(this, i)) {
+            optimizationFunction.optimize(this);
             ++i;
         }
         return this;
