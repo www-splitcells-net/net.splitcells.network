@@ -160,7 +160,7 @@ public class UsedSupplySwitcherTest {
     public void testSwitchMultipleStepsInOptimization() {
         final var stepCount = 2;
         final var variables = 4;
-        final var testSolution = defineProblem()
+        final var testSolution = defineProblem("testSwitchMultipleStepsInOptimization")
                 .withDemandAttributes(A)
                 .withDemands(
                         range(0, variables).boxed().map(i -> Lists.<Object>list(i)).collect(Lists.toList()))
@@ -170,18 +170,20 @@ public class UsedSupplySwitcherTest {
                 .withConstraint(Then.then(constantRater(cost(1))))
                 .toProblem()
                 .asSolution();
-        {
-            testSolution.optimize(linearInitialization());
-            assertThat(testSolution.allocations().size()).isEqualTo(4);
-            range(0, variables).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
-            assertThat(testSolution.demandsFree().lines()).isEmpty();
-            assertThat(testSolution.suppliesFree().lines()).isEmpty();
-        }
-        final var randomness = mock(Randomness.class);
-        doAnswer(returnsElementsOf(range(0, variables).boxed().collect(toList())))
-                .when(randomness)
-                .integer(any(), any());
-        testSolution.optimizeOnce(usedSupplySwitcher(randomness, stepCount));
-        assertThat(testSolution.history().size()).isEqualTo(variables + stepCount * 4);
+        testSolution.history().processWithHistory(() -> {
+            {
+                testSolution.optimize(linearInitialization());
+                assertThat(testSolution.allocations().size()).isEqualTo(4);
+                range(0, variables).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
+                assertThat(testSolution.demandsFree().lines()).isEmpty();
+                assertThat(testSolution.suppliesFree().lines()).isEmpty();
+            }
+            final var randomness = mock(Randomness.class);
+            doAnswer(returnsElementsOf(range(0, variables).boxed().collect(toList())))
+                    .when(randomness)
+                    .integer(any(), any());
+            testSolution.optimizeOnce(usedSupplySwitcher(randomness, stepCount));
+            assertThat(testSolution.history().size()).isEqualTo(variables + stepCount * 4);
+        });
     }
 }

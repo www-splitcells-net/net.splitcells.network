@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EnumerableOptimizationSpaceTest {
     @Test
     public void testSimpleHistory() {
-        final var testData = defineProblem()
+        final var testData = defineProblem("testSimpleHistory")
                 .withDemandAttributes()
                 .withDemands(list
                         (list()
@@ -29,24 +29,26 @@ public class EnumerableOptimizationSpaceTest {
                 .withConstraint(forAll())
                 .toProblem()
                 .asSolution();
-        var testSubject = enumerableOptimizationSpace(testData, initializer());
-        assertThat(testSubject.currentState().size()).isEqualTo(0);
-        testSubject = testSubject.child(0);
-        assertThat(testSubject.currentState().size()).isEqualTo(1);
-        testSubject = testSubject.child(0);
-        assertThat(testSubject.currentState().size()).isEqualTo(2);
-        testSubject = testSubject.parent().get();
-        assertThat(testSubject.currentState().size()).isEqualTo(1);
-        testSubject = testSubject.parent().get();
-        assertThat(testSubject.currentState().size()).isEqualTo(0);
-        assertThat(testSubject.parent()).isEqualTo(Optional.empty());
+        testData.history().processWithHistory(() -> {
+            var testSubject = enumerableOptimizationSpace(testData, initializer());
+            assertThat(testSubject.currentState().size()).isEqualTo(0);
+            testSubject = testSubject.child(0);
+            assertThat(testSubject.currentState().size()).isEqualTo(1);
+            testSubject = testSubject.child(0);
+            assertThat(testSubject.currentState().size()).isEqualTo(2);
+            testSubject = testSubject.parent().get();
+            assertThat(testSubject.currentState().size()).isEqualTo(1);
+            testSubject = testSubject.parent().get();
+            assertThat(testSubject.currentState().size()).isEqualTo(0);
+            assertThat(testSubject.parent()).isEqualTo(Optional.empty());
+        });
     }
 
     @Test
     public void testDiscoveryPath() {
         final var demandAttribute = integerAttribute("d");
         final var supplyAttribute = integerAttribute("s");
-        final var testData = defineProblem()
+        final var testData = defineProblem("testDiscoveryPath")
                 .withDemandAttributes(demandAttribute)
                 .withDemands(list
                         (list(1)
@@ -64,67 +66,69 @@ public class EnumerableOptimizationSpaceTest {
                 .withConstraint(forAll())
                 .toProblem()
                 .asSolution();
-        var testSubject = enumerableOptimizationSpace(testData, initializer());
-        assertThat(testSubject.currentState().size()).isEqualTo(0);
+        testData.history().processWithHistory(() -> {
+            var testSubject = enumerableOptimizationSpace(testData, initializer());
+            assertThat(testSubject.currentState().size()).isEqualTo(0);
 
-        // Test allocation of first free demand and supply.
-        testSubject = testSubject.child(0);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
-        assertThat(testSubject.currentState().size()).isEqualTo(1);
+            // Test allocation of first free demand and supply.
+            testSubject = testSubject.child(0);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
+            assertThat(testSubject.currentState().size()).isEqualTo(1);
 
-        // Test allocation of first free demand and last free supply.
-        testSubject = testSubject.child(2);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
-        assertThat(testSubject.currentState().size()).isEqualTo(2);
+            // Test allocation of first free demand and last free supply.
+            testSubject = testSubject.child(2);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
+            assertThat(testSubject.currentState().size()).isEqualTo(2);
 
-        // Test allocation of last free demand  and first free supply.
-        testSubject = testSubject.child(2);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(2)).isEqualTo(4);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(2)).isEqualTo(6);
-        assertThat(testSubject.currentState().size()).isEqualTo(3);
-        
-        testSubject = testSubject.child(0);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(2)).isEqualTo(4);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(2)).isEqualTo(6);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(3)).isEqualTo(3);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(3)).isEqualTo(7);
-        assertThat(testSubject.currentState().size()).isEqualTo(4);
+            // Test allocation of last free demand  and first free supply.
+            testSubject = testSubject.child(2);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(2)).isEqualTo(4);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(2)).isEqualTo(6);
+            assertThat(testSubject.currentState().size()).isEqualTo(3);
 
-        testSubject = testSubject.parent().get();
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(2)).isEqualTo(4);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(2)).isEqualTo(6);
-        assertThat(testSubject.currentState().size()).isEqualTo(3);
+            testSubject = testSubject.child(0);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(2)).isEqualTo(4);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(2)).isEqualTo(6);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(3)).isEqualTo(3);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(3)).isEqualTo(7);
+            assertThat(testSubject.currentState().size()).isEqualTo(4);
 
-        testSubject = testSubject.parent().get();
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
-        assertThat(testSubject.currentState().size()).isEqualTo(2);
+            testSubject = testSubject.parent().get();
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(2)).isEqualTo(4);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(2)).isEqualTo(6);
+            assertThat(testSubject.currentState().size()).isEqualTo(3);
 
-        testSubject = testSubject.parent().get();
-        assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
-        assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
-        assertThat(testSubject.currentState().size()).isEqualTo(1);
+            testSubject = testSubject.parent().get();
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(1)).isEqualTo(2);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(1)).isEqualTo(8);
+            assertThat(testSubject.currentState().size()).isEqualTo(2);
 
-        testSubject = testSubject.parent().get();
-        assertThat(testSubject.currentState().size()).isEqualTo(0);
-        assertThat(testSubject.parent()).isEqualTo(Optional.empty());
+            testSubject = testSubject.parent().get();
+            assertThat(testSubject.currentState().columnView(demandAttribute).get(0)).isEqualTo(1);
+            assertThat(testSubject.currentState().columnView(supplyAttribute).get(0)).isEqualTo(5);
+            assertThat(testSubject.currentState().size()).isEqualTo(1);
+
+            testSubject = testSubject.parent().get();
+            assertThat(testSubject.currentState().size()).isEqualTo(0);
+            assertThat(testSubject.parent()).isEqualTo(Optional.empty());
+        });
     }
 }

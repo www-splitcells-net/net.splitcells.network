@@ -32,6 +32,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
 import java.util.Optional;
 
 import static java.lang.Math.*;
@@ -55,8 +56,10 @@ import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtra
 import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.shouldHaveThrown;
 
 /**
  * TODO Clean up this.
@@ -86,14 +89,15 @@ public class NQueenProblemTest extends TestSuiteI {
     public void test_8_queen_problem_with_repair() {
         GelDev.process(() -> {
             final var testSubject = nQueenProblem(8, 8).asSolution();
-            testSubject.optimize(linearInitialization());
-            testSubject.optimizeWithFunction(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(3)
+            onlineLinearInitialization().optimize(testSubject);
+            testSubject.optimizeWithMethod(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(3)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            testSubject.optimizeWithFunction(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(2)
+            testSubject.optimizeWithMethod(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(2)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            testSubject.optimizeWithFunction(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(1)
+            testSubject.optimizeWithMethod(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(1)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
-            testSubject.optimize(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0));
+            testSubject.optimizeWithMethod(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0)
+                    , (currentSolution, step) -> !currentSolution.isOptimal());
             assertThat(testSubject.isOptimal()).isTrue();
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()

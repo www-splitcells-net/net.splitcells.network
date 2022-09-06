@@ -31,21 +31,23 @@ public class BacktrackingTest {
                 .withConstraint(forAll())
                 .toProblem()
                 .asSolution();
-        backtracking().optimize(testData);
-        assertThat(testData.size()).isEqualTo(3);
-        assertThat(testData.columnView(demandAttribute).get(0)).isEqualTo(1);
-        assertThat(testData.columnView(supplyAttribute).get(0)).isEqualTo(4);
-        assertThat(testData.columnView(demandAttribute).get(1)).isEqualTo(2);
-        assertThat(testData.columnView(supplyAttribute).get(1)).isEqualTo(5);
-        assertThat(testData.columnView(demandAttribute).get(2)).isEqualTo(3);
-        assertThat(testData.columnView(supplyAttribute).get(2)).isEqualTo(6);
+        testData.history().processWithHistory(() -> {
+            backtracking().optimize(testData);
+            assertThat(testData.size()).isEqualTo(3);
+            assertThat(testData.columnView(demandAttribute).get(0)).isEqualTo(1);
+            assertThat(testData.columnView(supplyAttribute).get(0)).isEqualTo(4);
+            assertThat(testData.columnView(demandAttribute).get(1)).isEqualTo(2);
+            assertThat(testData.columnView(supplyAttribute).get(1)).isEqualTo(5);
+            assertThat(testData.columnView(demandAttribute).get(2)).isEqualTo(3);
+            assertThat(testData.columnView(supplyAttribute).get(2)).isEqualTo(6);
+        });
     }
 
     @Test
     public void testBranching() {
         final var demandAttribute = integerAttribute("d");
         final var supplyAttribute = integerAttribute("s");
-        final var testData = defineProblem()
+        final var testData = defineProblem("testBranching")
                 .withDemandAttributes(demandAttribute)
                 .withDemands(list
                         (list(1)
@@ -63,14 +65,16 @@ public class BacktrackingTest {
                 })
                 .toProblem()
                 .asSolution();
-        backtracking().optimize(testData);
-        assertThat(testData.size()).isEqualTo(3);
-        assertThat(testData.columnView(demandAttribute).get(0)).isEqualTo(1);
-        assertThat(testData.columnView(supplyAttribute).get(0)).isEqualTo(4);
-        assertThat(testData.columnView(demandAttribute).get(1)).isEqualTo(2);
-        assertThat(testData.columnView(supplyAttribute).get(1)).isEqualTo(6);
-        assertThat(testData.columnView(demandAttribute).get(2)).isEqualTo(3);
-        assertThat(testData.columnView(supplyAttribute).get(2)).isEqualTo(5);
-        assertThat(testData.isOptimal()).isTrue();
+        testData.history().processWithHistory(() -> {
+            backtracking().optimize(testData);
+            assertThat(testData.size()).isEqualTo(3);
+            assertThat(testData.columnView(demandAttribute).get(0)).isEqualTo(1);
+            assertThat(testData.columnView(supplyAttribute).get(0)).isEqualTo(4);
+            assertThat(testData.columnView(demandAttribute).get(1)).isEqualTo(2);
+            assertThat(testData.columnView(supplyAttribute).get(1)).isEqualTo(6);
+            assertThat(testData.columnView(demandAttribute).get(2)).isEqualTo(3);
+            assertThat(testData.columnView(supplyAttribute).get(2)).isEqualTo(5);
+            assertThat(testData.isOptimal()).isTrue();
+        });
     }
 }

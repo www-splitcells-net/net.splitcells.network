@@ -79,35 +79,37 @@ public class ConstraintGroupBasedRepairTest {
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
-        final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(
-                groupSelector(constraintGroup -> list(constraintGroup.get(6))) // Select the first defying group.
-                , freeDemandGroups -> currentSolution -> {
-                    freeDemandGroups.entrySet().forEach(freeGroup -> {
-                        freeGroup.getValue().forEach(freeDemand -> {
-                            currentSolution.allocate(freeDemand, currentSolution.suppliesFree().lines().get(0));
+        solution.history().processWithHistory(() -> {
+            solution.optimize(linearInitialization());
+            final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(
+                    groupSelector(constraintGroup -> list(constraintGroup.get(6))) // Select the first defying group.
+                    , freeDemandGroups -> currentSolution -> {
+                        freeDemandGroups.entrySet().forEach(freeGroup -> {
+                            freeGroup.getValue().forEach(freeDemand -> {
+                                currentSolution.allocate(freeDemand, currentSolution.suppliesFree().lines().get(0));
+                            });
                         });
-                    });
-                }
-        );
-        final var groupsOfConstraintGroup = testSubject.groupOfConstraintGroup(solution);
-        final var demandClassifications = groupsOfConstraintGroup
-                .stream()
-                .map(e -> e
-                        .lastValue()
-                        .map(f -> testSubject.demandGrouping(f, solution))
-                        .orElseGet(() -> map()))
-                .collect(toList());
-        testSubject.repair(solution, demandClassifications.get(0));
-        assertThat(solution.history().size()).isEqualTo(initHistorySize + 4);
-        final var freeSupplyIndexes = solution.history().lines().stream()
-                .map(l -> l.value(ALLOCATION_EVENT).supply().index())
-                .collect(toList());
-        assertThat(freeSupplyIndexes).contains(7, 8, 9, 10);
-        final var demandIndexes = solution.history().lines().stream()
-                .map(l -> l.value(ALLOCATION_EVENT).demand().index())
-                .collect(toList());
-        assertThat(demandIndexes).contains(0, 1, 2, 3);
+                    }
+            );
+            final var groupsOfConstraintGroup = testSubject.groupOfConstraintGroup(solution);
+            final var demandClassifications = groupsOfConstraintGroup
+                    .stream()
+                    .map(e -> e
+                            .lastValue()
+                            .map(f -> testSubject.demandGrouping(f, solution))
+                            .orElseGet(() -> map()))
+                    .collect(toList());
+            testSubject.repair(solution, demandClassifications.get(0));
+            assertThat(solution.history().size()).isEqualTo(initHistorySize + 4);
+            final var freeSupplyIndexes = solution.history().lines().stream()
+                    .map(l -> l.value(ALLOCATION_EVENT).supply().index())
+                    .collect(toList());
+            assertThat(freeSupplyIndexes).contains(7, 8, 9, 10);
+            final var demandIndexes = solution.history().lines().stream()
+                    .map(l -> l.value(ALLOCATION_EVENT).demand().index())
+                    .collect(toList());
+            assertThat(demandIndexes).contains(0, 1, 2, 3);
+        });
     }
 
     @Test

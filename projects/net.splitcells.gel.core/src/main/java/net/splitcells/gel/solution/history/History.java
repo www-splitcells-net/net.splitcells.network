@@ -28,6 +28,8 @@ import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 
+import java.util.function.Supplier;
+
 /**
  * Provides the availability to reset a given {@link Solution}
  * to a  previous state.
@@ -88,6 +90,8 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
      * @param runnable This is the code to be run during which the {@link History} is enabled.
      */
     void processWithHistory(Runnable runnable);
+
+    <T> T supplyWithHistory(Supplier<T> runnable);
 
     /**
      * Marks if the {@link History} is consistent, with the tracked {@link Solution}.

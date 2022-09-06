@@ -54,11 +54,11 @@ public class SimplifiedAnnealingProblem extends DerivedSolution {
             , Randomness randomness) {
         super(() -> list(), allocations);
         constraint = derivation(originalConstraint
-                , rating -> {
+                , rating -> SimplifiedAnnealingProblem.this.history().supplyWithHistory(() -> {
                     if (randomness.truthValue(temperatureFunction.apply(SimplifiedAnnealingProblem.this.history().size()))) {
                         return Optimality.optimality(1).asMetaRating();
                     }
                     return rating;
-                });
+                }));
     }
 }

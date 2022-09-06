@@ -34,7 +34,7 @@ public class HistoryTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_reset_to_beginning() {
-        final var testSubject = defineProblem()
+        final var testSubject = defineProblem("test_reset_to_beginning")
                 .withDemandAttributes()
                 .withDemands(list(list()))
                 .withSupplyAttributes()
@@ -42,17 +42,19 @@ public class HistoryTest {
                 .withConstraint(Then.then(constantRater(cost(7))))
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(
-                testSubject.demands().rawLine(0)
-                , testSubject.supplies().rawLine(0));
-        testSubject.history().resetTo(-1);
-        assertThat(testSubject.history().size()).isEqualTo(0);
+        testSubject.history().processWithHistory(() -> {
+            testSubject.allocate(
+                    testSubject.demands().rawLine(0)
+                    , testSubject.supplies().rawLine(0));
+            testSubject.history().resetTo(-1);
+            assertThat(testSubject.history().size()).isEqualTo(0);
+        });
     }
 
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_reset_to_middle() {
-        final var solution = defineProblem()
+        final var solution = defineProblem("test_reset_to_middle")
                 .withDemandAttributes()
                 .withDemands(list(list()
                         , list()
@@ -64,82 +66,91 @@ public class HistoryTest {
                         , list()
                         , list()))
                 .withConstraint(Then.then(constantRater(cost(7))))
-                .toProblem().asSolution();
-        IntStream.rangeClosed(0, 3).forEach(i -> solution.allocate
-                (solution.demands().rawLine(i)
-                        , solution.supplies().rawLine(i)));
-        assertThat(solution.history().size()).isEqualTo(4);
-        solution.history().resetTo(2);
-        assertThat(solution.history().size()).isEqualTo(3);
+                .toProblem()
+                .asSolution();
+        solution.history().processWithHistory(() -> {
+            IntStream.rangeClosed(0, 3).forEach(i -> solution.allocate
+                    (solution.demands().rawLine(i)
+                            , solution.supplies().rawLine(i)));
+            assertThat(solution.history().size()).isEqualTo(4);
+            solution.history().resetTo(2);
+            assertThat(solution.history().size()).isEqualTo(3);
+        });
     }
 
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_subscription_of_history_to_solution() {
-        final var solution = defineProblem()
+        final var solution = defineProblem("test_subscription_of_history_to_solution")
                 .withDemandAttributes()
                 .withDemands(list(list()))
                 .withSupplyAttributes()
                 .withSupplies(list(list()))
                 .withConstraint(Then.then(constantRater(cost(7))))
-                .toProblem().asSolution();
-        assertThat(solution.history().size()).isEqualTo(0);
-        {
-            solution.allocate
-                    (solution.demands().rawLine(0)
-                            , solution.supplies().rawLine(0));
-            assertThat(solution.history().size()).isEqualTo(1);
-            final var additionEvent = solution.history().rawLine(0);
-            final var additionOperation = additionEvent.value(ALLOCATION_EVENT);
-            assertThat(additionOperation.type()).isEqualTo(ADDITION);
-            assertThat(additionOperation.demand()).isEqualTo(solution.demands().rawLine(0));
-            assertThat(additionOperation.supply()).isEqualTo(solution.supplies().rawLine(0));
-        }
-        {
-            assertThat(solution.history().size()).isEqualTo(1);
-            solution.remove(0);
-            assertThat(solution.history().size()).isEqualTo(2);
-            final var removalEvent = solution.history().rawLine(1);
-            final var removalOperation = removalEvent.value(ALLOCATION_EVENT);
-            assertThat(removalOperation.type()).isEqualTo(REMOVAL);
-            assertThat(removalOperation.demand()).isEqualTo(solution.demands().rawLine(0));
-            assertThat(removalOperation.supply()).isEqualTo(solution.supplies().rawLine(0));
-        }
+                .toProblem()
+                .asSolution();
+        solution.history().processWithHistory(() -> {
+            assertThat(solution.history().size()).isEqualTo(0);
+            {
+                solution.allocate
+                        (solution.demands().rawLine(0)
+                                , solution.supplies().rawLine(0));
+                assertThat(solution.history().size()).isEqualTo(1);
+                final var additionEvent = solution.history().rawLine(0);
+                final var additionOperation = additionEvent.value(ALLOCATION_EVENT);
+                assertThat(additionOperation.type()).isEqualTo(ADDITION);
+                assertThat(additionOperation.demand()).isEqualTo(solution.demands().rawLine(0));
+                assertThat(additionOperation.supply()).isEqualTo(solution.supplies().rawLine(0));
+            }
+            {
+                assertThat(solution.history().size()).isEqualTo(1);
+                solution.remove(0);
+                assertThat(solution.history().size()).isEqualTo(2);
+                final var removalEvent = solution.history().rawLine(1);
+                final var removalOperation = removalEvent.value(ALLOCATION_EVENT);
+                assertThat(removalOperation.type()).isEqualTo(REMOVAL);
+                assertThat(removalOperation.demand()).isEqualTo(solution.demands().rawLine(0));
+                assertThat(removalOperation.supply()).isEqualTo(solution.supplies().rawLine(0));
+            }
+        });
     }
 
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_history_allocation_rating() {
-        final var solution = defineProblem()
+        final var solution = defineProblem("test_history_allocation_rating")
                 .withDemandAttributes()
                 .withDemands(list(list()))
                 .withSupplyAttributes()
                 .withSupplies(list(list()))
                 .withConstraint(Then.then(constantRater(cost(7))))
-                .toProblem().asSolution();
-        final var demandValue = solution.allocate
-                (solution.demands().rawLine(0)
-                        , solution.supplies().rawLine(0));
-        assertThat
-                (solution
-                        .history()
-                        .rawLine(0)
-                        .value(META_DATA)
-                        .value(AllocationRating.class)
-                        .get()
-                        .value())
-                .isEqualTo(cost(7));
-        {
-            solution.remove(demandValue);
+                .toProblem()
+                .asSolution();
+        solution.history().processWithHistory(() -> {
+            final var demandValue = solution.allocate
+                    (solution.demands().rawLine(0)
+                            , solution.supplies().rawLine(0));
             assertThat
                     (solution
                             .history()
-                            .rawLine(1)
+                            .rawLine(0)
                             .value(META_DATA)
                             .value(AllocationRating.class)
                             .get()
-                            .value()
-                    ).isEqualTo(noCost());
-        }
+                            .value())
+                    .isEqualTo(cost(7));
+            {
+                solution.remove(demandValue);
+                assertThat
+                        (solution
+                                .history()
+                                .rawLine(1)
+                                .value(META_DATA)
+                                .value(AllocationRating.class)
+                                .get()
+                                .value()
+                        ).isEqualTo(noCost());
+            }
+        });
     }
 }

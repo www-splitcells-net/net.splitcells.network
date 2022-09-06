@@ -11,6 +11,7 @@
 package net.splitcells.gel.solution.history;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.perspective.Perspective.toStringPathsDescription;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -50,6 +51,8 @@ import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import org.w3c.dom.Node;
 
+import java.util.function.Supplier;
+
 /**
  * TODO Limit or disable meta data in order to improve runtime performance.
  */
@@ -59,7 +62,8 @@ public class HistoryI implements History {
     private int lastEventId = -1;
     private Allocations allocations;
     private boolean isRegisterEventIsEnabled = false;
-    private boolean isHistoryConsistent = true;
+    private boolean isHistoryConsistent = false;
+    private boolean synchronizes = false;
 
     protected HistoryI(Solution solution) {
         allocations = Allocationss.allocations
@@ -102,7 +106,9 @@ public class HistoryI implements History {
                             , solution.supplyOfAllocation(allocationValues))));
             allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
         } else {
-            isHistoryConsistent = false;
+            if (!synchronizes) {
+                isHistoryConsistent = true;
+            }
         }
     }
 
@@ -122,7 +128,9 @@ public class HistoryI implements History {
                             , solution.supplyOfAllocation(removal))));
             allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
         } else {
-            isHistoryConsistent = false;
+            if (!synchronizes) {
+                isHistoryConsistent = true;
+            }
         }
     }
 
@@ -141,17 +149,17 @@ public class HistoryI implements History {
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(index).isGreaterThanOrEqualTo(-1);
-            if (size() > 0) {
-                assertThat(index).isLessThanOrEqualTo(size() - 1);
+            if (allocations.size() > 0) {
+                assertThat(index).isLessThanOrEqualTo(allocations.size() - 1);
             }
         }
-        if (size() == 0 && index == -1) {
+        if (allocations.size() == 0 && index == -1) {
             return;
         }
-        if (size() - 1 == index) {
+        if (allocations.size() - 1 == index) {
             return;
         }
-        if (size() == 0) {
+        if (allocations.size() == 0) {
             if (ENFORCING_UNIT_CONSISTENCY) {
                 assertThat(index).isEqualTo(-1);
             }
@@ -163,22 +171,18 @@ public class HistoryI implements History {
          * when allocations are removed from {@link #solution} during reset.
          */
         final var indexToReversal = reverse
-                (rangeClosed(index, this.size() - 1)
+                (rangeClosed(index, allocations.size() - 1)
                         .boxed()
                         .filter(i -> i != -1)
                         .filter(i -> i != index)
-                ).collect(Lists.toList());
+                ).collect(toList());
         resetToInOrder(indexToReversal);
         isRegisterEventIsEnabled = true;
     }
 
     @Override
     public void processWithoutHistory(Runnable runnable) {
-        try {
-            runnable.run();
-        } finally {
-            isRegisterEventIsEnabled = true;
-        }
+        runnable.run();
     }
 
     @Override
@@ -187,9 +191,15 @@ public class HistoryI implements History {
         runnable.run();
     }
 
+    @Override
+    public <T> T supplyWithHistory(Supplier<T> supplier) {
+        isRegisterEventIsEnabled = true;
+        return supplier.get();
+    }
+
     private void resetToInOrder(List<Integer> indexes) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            if (size() != 0) {
+            if (allocations.size() != 0) {
                 assertThat(indexes).isNotEmpty();
             } else {
                 assertThat(indexes).isEmpty();
@@ -199,11 +209,12 @@ public class HistoryI implements History {
     }
 
     private void resetLast() {
+        synchronizes = true;
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(columnView(ALLOCATION_ID).lookup(size() - 1).size()).isEqualTo(1);
+            assertThat(allocations.columnView(ALLOCATION_ID).lookup(allocations.size() - 1).size()).isEqualTo(1);
         }
-        final var index = size() - 1;
-        final var eventToRemove = columnView(ALLOCATION_ID)
+        final var index = allocations.size() - 1;
+        final var eventToRemove = allocations.columnView(ALLOCATION_ID)
                 .lookup(index)
                 .line(0)
                 .value(ALLOCATION_EVENT);
@@ -220,19 +231,20 @@ public class HistoryI implements History {
             throw new UnsupportedOperationException();
         }
         resetLastRemoval(index);
+        synchronizes = false;
     }
 
     private void resetLastRemoval(int index) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(size() - 1).isEqualTo(index);
+            assertThat(allocations.size() - 1).isEqualTo(index);
             try {
-                assertThat(columnView(ALLOCATION_ID).lookup(index + 1).size()).isEqualTo(0);
-                assertThat(columnView(ALLOCATION_ID).lookup(index).size()).isEqualTo(1);
+                assertThat(allocations.columnView(ALLOCATION_ID).lookup(index + 1).size()).isEqualTo(0);
+                assertThat(allocations.columnView(ALLOCATION_ID).lookup(index).size()).isEqualTo(1);
             } catch (Throwable t) {
                 throw new RuntimeException(t);
             }
         }
-        removal_(columnView(ALLOCATION_ID).lookup(index).line(0));
+        removal_(allocations.columnView(ALLOCATION_ID).lookup(index).line(0));
     }
 
     /**
@@ -252,7 +264,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         throw notImplementedYet();
@@ -278,7 +290,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         throw notImplementedYet();
@@ -289,7 +301,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         throw notImplementedYet();
@@ -300,7 +312,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         if (size() != indexes + 1) {
@@ -314,7 +326,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return lastEventId;
@@ -325,7 +337,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         throw notImplementedYet();
@@ -336,7 +348,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return this.allocations.allocationOf(demand, supply);
@@ -347,7 +359,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.supplies();
@@ -358,7 +370,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.suppliesUsed();
@@ -369,7 +381,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.suppliesFree();
@@ -380,7 +392,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.demands();
@@ -391,7 +403,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.demandsUsed();
@@ -402,7 +414,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.demandsFree();
@@ -413,7 +425,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.demandOfAllocation(allocation);
@@ -424,7 +436,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.supplyOfAllocation(allocation);
@@ -435,7 +447,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.allocationsOfSupply(supply);
@@ -446,7 +458,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.allocationsOfDemand(demand);
@@ -457,7 +469,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.headerView();
@@ -468,7 +480,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.columnView(attribute);
@@ -479,7 +491,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.columnsView();
@@ -490,7 +502,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.rawLinesView();
@@ -501,7 +513,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.size();
@@ -512,7 +524,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.rawLines();
@@ -523,7 +535,7 @@ public class HistoryI implements History {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");
         }
-        if (!isHistoryConsistent) {
+        if (isHistoryConsistent) {
             throw executionException("History is inconsistent.");
         }
         return allocations.lookupEquals(attribute, other);

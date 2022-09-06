@@ -481,8 +481,6 @@ public class SchoolCourseSchedulingTest {
         studentAllocationsForCourses.optimize(linearInitialization());
         assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
         assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
-        studentAllocationsForCourses.createStandardAnalysis();
-        assertThat(studentAllocationsForCourses.isOptimal()).isTrue();
     }
 
     /**
