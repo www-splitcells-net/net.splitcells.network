@@ -1,6 +1,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2022-09-06 \#8**: Disable history of solutions by default.
 * **2022-08-24 \#8**: Unify Table methods naming:
   * Rename `Table#getLines` to `Table#lines`.
   * Rename `Table#getDistinctLines` to `Table#distinctLines`.

@@ -25,13 +25,14 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.history.meta.MetaDataView;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
+import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 
 /**
- * Provides the availability to reset a given {@link net.splitcells.gel.solution.Solution}
+ * Provides the availability to reset a given {@link Solution}
  * to a  previous state.
  * Each state has an index, which identifies a point in the history's timeline.
- * The first state of an {@link net.splitcells.gel.solution.Solution}
+ * The first state of an {@link Solution}
  * has the index -1 (where usually no allocations are present).
  * The following states have successive ascending indexes (-1,0,1,2...,n-1).
  * <p>
@@ -65,12 +66,46 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
     void resetTo(int index);
 
     /**
-     * <p>During {@link Runnable#run()} this object does not log the history of the tracked {@link net.splitcells.gel.solution.Solution}.</p>
+     * <p>This method indicates,
+     * that during the {@link Runnable#run()} this object may not log the history of the tracked {@link Solution}.
+     * If the history is disabled, the runtime performance is thereby improved.
+     * Note, that there is no guarantee, that the {@link Solution#history()} is in fact disabled,
+     * because the caller might require the {@link Solution#history()}.
+     * In other words, this object's state and implementation decides, if the {@link Solution} history will be recorded or not.
+     * </p>
      * <p>TODO IDEA Create an event marking, that this method was called.</p>
      *
-     * @param runnable This is the code to be run during which the {@link History} is disabled.
+     * @param runnable This is the code to be run during which the {@link History} is allowed to be disabled.
      */
     void processWithoutHistory(Runnable runnable);
+
+    /**
+     * <p>This method guarantees,
+     * that during the {@link Runnable#run()} this object logs the history of the tracked {@link Solution}.
+     * If the history is enabled, the runtime performance is thereby deteriorated.
+     * </p>
+     *
+     * @param runnable This is the code to be run during which the {@link History} is enabled.
+     */
+    void processWithHistory(Runnable runnable);
+
+    /**
+     * Marks if the {@link History} is consistent, with the tracked {@link Solution}.
+     * If this is false, {@link #resetTo(int)} cannot be used.
+     * An history is not consistent, if the tracked {@link Solution},
+     * was changed, while {@link #isRegisterEventIsEnabled()} was false.
+     *
+     * @return Consistency Of The {@link History}
+     */
+    boolean isHistoryConsistent();
+
+    /**
+     * Signals if the {@link History} records changes to the tracked {@link Solution}.
+     * If this is the case, {@link #isHistoryConsistent()} is going to be false.
+     *
+     * @return Tracking State Of The {@link Solution}
+     */
+    boolean isRegisterEventIsEnabled();
 
     /**
      * @return Number Of Events Since History Start
