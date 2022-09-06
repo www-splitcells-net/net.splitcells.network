@@ -91,7 +91,15 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
      */
     void processWithHistory(Runnable runnable);
 
-    <T> T supplyWithHistory(Supplier<T> runnable);
+    /**
+     * <p>This method guarantees,
+     * that during the {@link Supplier#get()} this object logs the history of the tracked {@link Solution}.
+     * If the history is enabled, the runtime performance is thereby deteriorated.
+     * </p>
+     *
+     * @param supplier This is the code to be run during which the {@link History} is enabled.
+     */
+    <T> T supplyWithHistory(Supplier<T> supplier);
 
     /**
      * Marks if the {@link History} is consistent, with the tracked {@link Solution}.
