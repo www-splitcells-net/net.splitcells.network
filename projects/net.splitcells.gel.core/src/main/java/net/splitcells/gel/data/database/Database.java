@@ -39,7 +39,13 @@ public interface Database extends Table {
 
     Line add(Line line);
 
-    @Deprecated
+    /**
+     * Removes the {@link Line}, where {@link Line#index()} is equal to the argument.
+     * Index calculation should be omitted and therefore this method too, if possible.
+     * Unfortunately, this method is needed in case a {@link Line} has to be removed from 2 synchronized {@link Database}.
+     *
+     * @param lineIndex The {@link Line#index()} to be removed.
+     */
     void remove(int lineIndex);
 
     void remove(Line line);
