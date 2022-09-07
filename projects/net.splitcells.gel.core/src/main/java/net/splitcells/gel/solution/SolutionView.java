@@ -151,7 +151,9 @@ public interface SolutionView extends ProblemView {
         writeToFile(targetFolder.resolve("constraint.state.xml"), constraint().toDom());
         writeToFile(targetFolder.resolve("demands.fods"), demands().toFods());
         writeToFile(targetFolder.resolve("supplies.fods"), supplies().toFods());
-        writeToFile(targetFolder.resolve("history.fods"), history().toAnalysisFods());
+        if (history().isRegisterEventIsEnabled()) {
+            writeToFile(targetFolder.resolve("history.fods"), history().toAnalysisFods());
+        }
         writeToFile(targetFolder.resolve("constraint.natural-argumentation.txt")
                 , constraint()
                         .naturalArgumentation()
