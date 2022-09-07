@@ -124,7 +124,7 @@ public class SchoolCourseSchedulingTest {
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3, false)
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
                 network.process(RAILS_FOR_SCHOOL_SCHEDULING, s -> s.createStandardAnalysis(1));*/
-                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, linearInitialization());
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, onlineLinearInitialization());
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, simpleConstraintGroupBasedRepair(groupSelector(randomness(), 3
                                 , 1), hillClimber(), false)
                         , (currentSolution, step) -> step <= 10 && !currentSolution.isOptimal());
@@ -154,7 +154,7 @@ public class SchoolCourseSchedulingTest {
             network.process(RAILS_FOR_SCHOOL_SCHEDULING, Solution::createStandardAnalysis);
             network.process(TEACHER_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
             network.process(STUDENT_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
-            network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, linearInitialization());
+            network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, onlineLinearInitialization());
             network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, studentAllocationOptimization()
                     , (currentSolution, step) -> step <= 3 && !currentSolution.isOptimal());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
