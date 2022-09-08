@@ -11,8 +11,13 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
+
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * <p>TODO Line index randomizer in order to test index calculations.</p>
@@ -38,6 +43,17 @@ public interface Database extends Table {
     Line addTranslated(List<? extends Object> values);
 
     Line add(Line line);
+
+    /**
+     * This is done to make queries on {@link Database},
+     * that are more complex, than {@link #lookup(Attribute, Object)} and similar methods.
+     * Keep in mind, that this is the recommended way, to do performant and complex queries.
+     *
+     * @return {@link Constraint} that is subscribed to this {@link Database}.
+     */
+    default Query query() {
+        throw notImplementedYet();
+    }
 
     /**
      * Removes the {@link Line}, where {@link Line#index()} is equal to the argument.

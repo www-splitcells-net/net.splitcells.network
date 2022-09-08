@@ -19,6 +19,7 @@ import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.LineI.line;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,6 +31,8 @@ import java.util.stream.Stream;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LineI;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -58,6 +61,7 @@ public class DatabaseI implements Database {
     protected final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
     protected final List<BeforeRemovalSubscriber> afterRemovalSubscriber = list();
     protected final net.splitcells.dem.data.set.Set<Integer> indexesOfFree = setOfUniques();
+    private Optional<Constraint> constraint = Optional.empty();
 
 
     @Deprecated
@@ -260,5 +264,15 @@ public class DatabaseI implements Database {
     @Override
     public Stream<Line> linesStream() {
         return lines.stream();
+    }
+
+    @Override
+    public Query query() {
+        if (constraint.isEmpty()) {
+            final var constraintRoot = forAll();
+            synchronize(constraintRoot);
+            constraint = Optional.of(constraintRoot);
+        }
+        return constraint.get().query();
     }
 }
