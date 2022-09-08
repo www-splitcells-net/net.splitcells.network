@@ -258,4 +258,15 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     }
 
     Table lines();
+
+    /**
+     * Removes all {@link #lineProcessing()} from {@link #childrenView()} and gives them back again.
+     * This in turn is the same, as recalculating the {@link Rating} of all {@link Line} in the sub tree of the {@link Constraint} tree.
+     * Note, that no recalculation of {@link Rating} is done on {@code this}.
+     *
+     * This is useful, if a new node is added to the {@link Constraint} tree,
+     * while some {@link Line} are already processed in the {@link Constraint} tree.
+     * See {@link Query}.
+     */
+    void recalculatePropagation();
 }
