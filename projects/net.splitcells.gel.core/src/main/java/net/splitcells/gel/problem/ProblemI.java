@@ -199,6 +199,11 @@ public class ProblemI implements Problem {
     }
 
     @Override
+    public List<Attribute<? extends Object>> headerView2() {
+        return this.allocations.headerView2();
+    }
+
+    @Override
     public <T extends Object> ColumnView<T> columnView(final Attribute<T> attribute) {
         return this.allocations.<T>columnView(attribute);
     }

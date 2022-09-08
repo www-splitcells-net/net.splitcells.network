@@ -476,6 +476,17 @@ public class HistoryI implements History {
     }
 
     @Override
+    public List<Attribute<? extends Object>> headerView2() {
+        if (!isRegisterEventIsEnabled) {
+            throw executionException("History is disabled.");
+        }
+        if (isHistoryConsistent) {
+            throw executionException("History is inconsistent.");
+        }
+        return allocations.headerView2();
+    }
+
+    @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
         if (!isRegisterEventIsEnabled) {
             throw executionException("History is disabled.");

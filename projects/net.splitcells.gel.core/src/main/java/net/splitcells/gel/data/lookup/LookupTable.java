@@ -98,6 +98,11 @@ public class LookupTable implements Table {
         return tableView.headerView();
     }
 
+    @Override
+    public List<Attribute<? extends Object>> headerView2() {
+        return tableView.headerView2();
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public <T> Column<T> columnView(Attribute<T> attribute) {

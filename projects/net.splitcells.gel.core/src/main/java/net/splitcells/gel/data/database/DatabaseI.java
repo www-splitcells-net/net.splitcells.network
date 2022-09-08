@@ -51,6 +51,7 @@ public class DatabaseI implements Database {
     protected final String name;
     protected final Optional<Discoverable> parent;
     protected final List<Attribute<Object>> attributes;
+    protected final List<Attribute<? extends Object>> attributes2;
     protected final List<Column<Object>> columns = list();
     protected final Map<Attribute<?>, Integer> typed_column_index = map();
     protected final Set<Line> lines = setOfUniques();
@@ -83,6 +84,8 @@ public class DatabaseI implements Database {
         this.attributes = listWithValuesOf(headerAttributes);
         columns.forEach(this::subscribeToAfterAdditions);
         columns.forEach(this::subscribeToBeforeRemoval);
+        attributes2 = list();
+        attributes2.addAll(attributes);
     }
 
     @Deprecated
@@ -103,6 +106,11 @@ public class DatabaseI implements Database {
     @Override
     public List<Attribute<Object>> headerView() {
         return attributes;
+    }
+
+    @Override
+    public List<Attribute<? extends Object>> headerView2() {
+        return attributes2;
     }
 
     @SuppressWarnings("unchecked")

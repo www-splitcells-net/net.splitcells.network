@@ -207,6 +207,11 @@ public class SolutionI implements Solution {
         return this.problem.headerView();
     }
 
+    @Override
+    public List<Attribute<? extends Object>> headerView2() {
+        return problem.headerView2();
+    }
+
     @java.lang.SuppressWarnings("all")
     public <T extends Object> ColumnView<T> columnView(final Attribute<T> atribūts) {
         return this.problem.<T>columnView(atribūts);

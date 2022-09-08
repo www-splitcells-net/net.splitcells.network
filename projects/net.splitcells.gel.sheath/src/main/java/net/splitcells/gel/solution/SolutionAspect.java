@@ -242,6 +242,11 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
+    public List<Attribute<? extends Object>> headerView2() {
+        return solution.headerView2();
+    }
+
+    @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
         return solution.columnView(attribute);
     }

@@ -195,6 +195,11 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
+    public List<Attribute<? extends Object>> headerView2() {
+        return allocations.headerView2();
+    }
+
+    @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
         return allocations.columnView(attribute);
     }
