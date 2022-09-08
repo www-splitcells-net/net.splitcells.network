@@ -142,6 +142,11 @@ public final class Derivation implements Constraint {
     }
 
     @Override
+    public void recalculatePropagation() {
+        derivationTarget.recalculatePropagation();
+    }
+
+    @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
         final var path = derivationTarget.path();
         path.add(getClass().getSimpleName());

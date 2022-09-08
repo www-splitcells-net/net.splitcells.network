@@ -18,6 +18,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.gel.rating.framework.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
+import static net.splitcells.gel.rating.rater.classification.ForAllValueCombinations.forAllValueCombinations;
 
 import java.util.Optional;
 
@@ -201,7 +202,7 @@ public class QueryI implements Query {
 
     @Override
     public Query forAllCombinationsOf(List<Attribute<? extends Object>> attributes) {
-        final Constraint resultBase
+        var resultBase
                 = currentInjectionGroups.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
                 .filter(child -> !child.arguments().isEmpty())
@@ -218,17 +219,24 @@ public class QueryI implements Query {
                             .filter(index -> !attributes.get(index).equals(attributeClassification.arguments().get(index)))
                             .findAny()
                             .isEmpty();
-                }).reduce(ensureSingle()).get();
+                }).reduce(ensureSingle());
         final var resultingGroups = Sets.<GroupId>setOfUniques();
-        for (GroupId groups : groups) {
-            resultingGroups.addAll(
-                    currentInjectionGroups.lineProcessing()
-                            .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                            .lookup(groups)
-                            .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
-                            .values());
+        if (resultBase.isPresent()) {
+            for (GroupId groups : groups) {
+                resultingGroups.addAll(
+                        currentInjectionGroups.lineProcessing()
+                                .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
+                                .lookup(groups)
+                                .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
+                                .values());
+            }
+        } else {
+            resultBase = Optional.of(ForAlls.forEach(forAllValueCombinations(attributes)));
+            currentInjectionGroups.withChildren(resultBase.get());
+            root.ifPresent(Constraint::recalculatePropagation);
+            resultingGroups.addAll(groups);
         }
-        return nextQueryPathElement(this, resultingGroups, resultBase);
+        return nextQueryPathElement(this, resultingGroups, resultBase.get());
     }
 
     @Override

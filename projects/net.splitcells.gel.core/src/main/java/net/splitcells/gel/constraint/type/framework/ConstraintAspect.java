@@ -154,6 +154,11 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
+    public void recalculatePropagation() {
+        constraint.recalculatePropagation();
+    }
+
+    @Override
     public Constraint withChildren(Constraint... constraints) {
         ratingCache.clear();
         constraint.withChildren(constraints);
