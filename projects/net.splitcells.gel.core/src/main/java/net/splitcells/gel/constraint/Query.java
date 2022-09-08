@@ -14,9 +14,13 @@ import java.util.Optional;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
+
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
 /**
  * <p>This interface allows one to construct {@link Constraint} trees via paths of {@link Constraint}s.
@@ -39,7 +43,12 @@ public interface Query {
 
     Query then(Rating rating);
 
-    Query forAllCombinationsOf(Attribute<?>... args);
+    default Query forAllCombinationsOf(Attribute<? extends Object>... args) {
+        return forAllCombinationsOf(listWithValuesOf(args));
+    }
+
+    Query forAllCombinationsOf(List<Attribute<? extends Object>> args);
+
 
     /**
      * @return This {@link Rating} states the value of all {@link #currentInjectionGroups}.

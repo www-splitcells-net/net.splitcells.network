@@ -200,7 +200,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Query forAllCombinationsOf(Attribute<?>... attributes) {
+    public Query forAllCombinationsOf(List<Attribute<? extends Object>> attributes) {
         final Constraint resultBase
                 = currentInjectionGroups.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))
@@ -211,11 +211,11 @@ public class QueryI implements Query {
                     if (!attributeClassification.type().equals(ForAllValueCombinations.class)) {
                         return false;
                     }
-                    if (attributes.length != attributeClassification.arguments().size()) {
+                    if (attributes.size() != attributeClassification.arguments().size()) {
                         return false;
                     }
-                    return range(0, attributes.length)
-                            .filter(index -> !attributes[index].equals(attributeClassification.arguments().get(index)))
+                    return range(0, attributes.size())
+                            .filter(index -> !attributes.get(index).equals(attributeClassification.arguments().get(index)))
                             .findAny()
                             .isEmpty();
                 }).reduce(ensureSingle()).get();

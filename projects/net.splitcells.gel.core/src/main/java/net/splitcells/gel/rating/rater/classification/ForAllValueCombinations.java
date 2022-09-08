@@ -39,6 +39,10 @@ import org.w3c.dom.Node;
 
 public class ForAllValueCombinations implements Rater {
     public static ForAllValueCombinations forAllValueCombinations(final Attribute<?>... attributes) {
+        return new ForAllValueCombinations(listWithValuesOf(attributes));
+    }
+
+    public static ForAllValueCombinations forAllValueCombinations(final List<Attribute<?>> attributes) {
         return new ForAllValueCombinations(attributes);
     }
 
@@ -49,14 +53,12 @@ public class ForAllValueCombinations implements Rater {
     private final List<Attribute<?>> attributes = list();
     private final List<Discoverable> contexts = list();
 
-    private ForAllValueCombinations(final Attribute<?>... attributes) {
-        for (final var atribūti : attributes) {
-            this.attributes.add(atribūti);
-        }
+    private ForAllValueCombinations(final List<Attribute<?>> attributes) {
+        this.attributes.addAll(attributes);
     }
 
     public List<Attribute<?>> attributes() {
-        return Lists.listWithValuesOf(attributes);
+        return listWithValuesOf(attributes);
     }
 
     @Override
