@@ -18,8 +18,10 @@ Changes are now written to the root changelog instead.
 
 ## Unreleased
 ### Major Changes
-* **2022-09-11** **\#168**: Rename `dependencies.test` to `test.dependencies`,
-  in order to prepare `test.*` prefix for all test commands.
+* **2022-09-11** **\#168**:
+  1. Rename `dependencies.test` to `test.dependencies`,
+     in order to prepare `test.*` prefix for all test commands.
+  2. Also rename `user.bin.configure.uses.dependencies.test` to `user.bin.configure.uses.test.dependencies`. 
 * **2022-07-06** Installed project commands now pass their arguments to the original real command, instead of suppressing these.
   If one installs the `net.splitcells.network` as a project repository, arguments to the call of `net.splitcells.network.deploy.build.at` are now passed to `net.splitcells.network/bin/deploy.build.at`.
 * **2022-04-17** `repo.synchronize.with` executes `repo.is.clean` after `repo.repair`,
