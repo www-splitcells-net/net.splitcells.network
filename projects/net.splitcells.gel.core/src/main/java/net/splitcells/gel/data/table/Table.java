@@ -29,6 +29,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import org.apache.commons.csv.CSVFormat;
@@ -88,6 +89,11 @@ public interface Table extends Discoverable, Domable {
         return lines().stream();
     }
 
+    /**
+     * @see {@link Database#query()}
+     * @return {@link Line} With Distinct Values
+     */
+    @Deprecated
     default List<Line> distinctLines() {
         return distinctLineValues().stream()
                 .map(values -> lookupEquals(values).findFirst())
