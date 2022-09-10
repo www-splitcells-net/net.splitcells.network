@@ -12,9 +12,9 @@ this.requires user.bin.configure.0 && command.managed.execute conjunction user.b
 command.repositories.install
 command.managed.install.project.commands
   chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
-if user.bin.configure.uses.dependencies.test
+if user.bin.configure.uses.test.dependencies
 then
-  dependencies.test
+  test.dependencies
   echo Dependency tests executed.
 else
   echo "Dependencies are not validated during this installation."

@@ -8,8 +8,8 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 
-# Exits with 0, if every call of "user.bin.configure" should execute "dependencies.test" at the end.
+# Exits with 0, if every call of "user.bin.configure" should execute "test.dependencies" at the end.
 # Otherwise this command exits with 1.
 
-. this.requires user.bin.configure.uses.dependencies.test.0
-command.managed.execute disjunction user.bin.configure.uses.dependencies.test
+. this.requires user.bin.configure.uses.test.dependencies.0
+command.managed.execute disjunction user.bin.configure.uses.test.dependencies
