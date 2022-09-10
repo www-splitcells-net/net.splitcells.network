@@ -4,10 +4,10 @@
         <title>Features</title>
     </meta>
     <list>
-        <item>Model assignment problems with a fluent API.</item>
+        <item>Comfortably model assignment problems with a fluent API.</item>
         <item>Execute complex queries on solutions in order to focus on sub problems.</item>
-        <item>Get reports reasoning the solution's rating.</item>
-        <item>Model inter dependent problems.</item>
+        <item>Get reports reasoning the solution's rating, equipping you with the tools to understand your problems.</item>
+        <item>Model inter dependent problems in order to work on complex interactions.</item>
         <item>x64, ARM and RISC-V are supported and tested.</item>
     </list>
 </article>
