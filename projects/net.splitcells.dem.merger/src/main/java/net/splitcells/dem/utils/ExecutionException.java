@@ -10,8 +10,10 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
+@JavaLegacyArtifact
 public class ExecutionException extends RuntimeException {
     /**
      * TODO Support {@link net.splitcells.dem.lang.perspective.Perspective} as message.
@@ -23,8 +25,15 @@ public class ExecutionException extends RuntimeException {
         return new ExecutionException(message);
     }
 
-    @JavaLegacyBody
+    public static ExecutionException executionException(Throwable t) {
+        return new ExecutionException(t);
+    }
+
     private ExecutionException(String message) {
         super(message);
+    }
+
+    private ExecutionException(Throwable t) {
+        super(t);
     }
 }

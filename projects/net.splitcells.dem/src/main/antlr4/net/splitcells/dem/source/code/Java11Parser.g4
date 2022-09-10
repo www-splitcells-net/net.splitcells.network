@@ -95,6 +95,7 @@ class_member
     | class_constructor
     | class_member_method_definition
     | class_member_value_declaration
+    | Comment_multiline
     ;
 class_constructor
     : javadoc? annotation* Keyword_private name call_arguments statement_body
@@ -340,6 +341,7 @@ type_argument_element
 	| type_name Keyword_super type_argument_element type_argument?
 	| Question_mark
 	| type_path type_argument?
+	| type_name Brackets_open Brackets_closed
 	;
 type_name
 	: name

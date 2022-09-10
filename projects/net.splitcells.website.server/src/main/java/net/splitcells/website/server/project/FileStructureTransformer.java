@@ -10,20 +10,19 @@
  */
 package net.splitcells.website.server.project;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.translation.to.html.XslTransformer;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static java.nio.file.Files.newInputStream;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.Files.newInputStream;
 import static net.splitcells.dem.resource.Paths.generateFolderPath;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.CommonFunctions.appendToFile;
@@ -102,8 +101,7 @@ public class FileStructureTransformer {
             return new XslTransformer
                     (newInputStream(xslLibs.resolve(transformerXsl))
                             , pathBasedUriResolver(xslLibs, config::apply));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

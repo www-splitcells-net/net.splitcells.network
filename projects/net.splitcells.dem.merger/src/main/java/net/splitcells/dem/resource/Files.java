@@ -16,12 +16,15 @@ import org.w3c.dom.Node;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
 import static net.splitcells.dem.lang.Xml.toPrettyString;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * Some additional methods for the java.nio.file.Files class.
@@ -125,6 +128,14 @@ public interface Files {
             return java.nio.file.Files.readString(path);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    static InputStream newInputStream(Path path) {
+        try {
+            return java.nio.file.Files.newInputStream(path);
+        } catch (IOException e) {
+            throw executionException(e);
         }
     }
 }
