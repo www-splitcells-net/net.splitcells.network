@@ -257,6 +257,10 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         return this;
     }
 
+    /**
+     * Contains all processed {@link Line} and their corresponding {@link #INCOMING_CONSTRAINT_GROUP}.
+     * @return
+     */
     Table lines();
 
     /**
