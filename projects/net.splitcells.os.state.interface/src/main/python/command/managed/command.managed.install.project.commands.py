@@ -33,7 +33,13 @@ class Command:
 			globalProjectCommandName = self.projectName + '.' + projectCommand.name
 			targetCommandFile = self.targetFolder.joinpath(globalProjectCommandName)
 			if targetCommandFile.exists():
-				raise Exception('Cannot install ' + projectCommand.name + ' of project ' + self.projectName + ' to ' + str(targetCommandFile) + '.')
+				executionCounter = 0
+				while True:
+					globalProjectCommandName = self.projectName + '.' + projectCommand.name + '.' + str(executionCounter)
+					targetCommandFile = self.targetFolder.joinpath(globalProjectCommandName)
+					executionCounter += 1
+					if not targetCommandFile.exists():
+						break
 			targetCommandFile.write_text("#!/usr/bin/env sh\n"
 			    + 'cd ' + str(projectCommand.resolve().parent.parent) + " \n"
 			    + './bin/' + projectCommand.name + " $@\n")
