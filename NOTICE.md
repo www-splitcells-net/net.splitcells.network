@@ -296,3 +296,7 @@ mermaid-cli
 swaylock
 * License: MIT
 * Source Code: https://github.com/swaywm/swaylock
+
+ping
+* License: BSD-3
+* Source: https://github.com/iputils/iputils/blob/master/LICENSE
