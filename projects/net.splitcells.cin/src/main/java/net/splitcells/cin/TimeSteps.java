@@ -26,6 +26,7 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
@@ -41,8 +42,7 @@ public class TimeSteps implements Rater {
     }
 
     private final Attribute<Integer> timeAttribute;
-    private final Map<Integer, GroupId> timeToFirstGroup = map();
-    private final Map<Integer, GroupId> timeToSecondGroup = map();
+    private final Map<Integer, GroupId> timeToPreviousTimeGroup = map();
 
     private TimeSteps(Attribute<Integer> timeAttribute) {
         this.timeAttribute = timeAttribute;
@@ -67,18 +67,52 @@ public class TimeSteps implements Rater {
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final RatingEvent rating = ratingEvent();
         final var timeValue = addition.value(LINE).value(timeAttribute);
-        final var firstGroup = timeToFirstGroup.computeIfAbsent(timeValue, x -> group("" + x));
-        final var secondGroup = timeToSecondGroup.computeIfAbsent(timeValue + 1, x -> group("" + x));
-        final List<LocalRating> localRatings = list();
-        localRatings.add(localRating()
-                .withPropagationTo(children)
-                .withRating(noCost())
-                .withResultingGroupId(firstGroup));
-        localRatings.add(localRating()
-                .withPropagationTo(children)
-                .withRating(noCost())
-                .withResultingGroupId(secondGroup));
-        rating.complexAdditions().put(addition, localRatings);
+        final var firstTimeAddition = lines
+                .columnView(LINE)
+                .lookup(l -> l.value(timeAttribute).equals(timeValue))
+                .size() > 1;
+        if (firstTimeAddition) {
+            ratingAfterFirstAddition(lines, children, timeValue, rating);
+            ratingAfterFirstAddition(lines, children, timeValue + 1, rating);
+        } else {
+            ratingAfterConsecutiveAddition(lines, addition, children, timeValue, rating);
+            ratingAfterConsecutiveAddition(lines, addition, children, timeValue + 1, rating);
+        }
         return rating;
+    }
+
+    private void ratingAfterConsecutiveAddition(Table lines, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
+        final var isPreviousGroupPresent = timeToPreviousTimeGroup.containsKey(timeValue);
+        if (isPreviousGroupPresent) {
+            final var previousGroup = timeToPreviousTimeGroup.get(timeValue);
+            final List<LocalRating> localRatings = listWithValuesOf(localRating()
+                    .withPropagationTo(children)
+                    .withRating(noCost())
+                    .withResultingGroupId(previousGroup));
+            rating.complexAdditions().put(addition, localRatings);
+        }
+    }
+
+    private void ratingAfterFirstAddition(Table lines, List<Constraint> children, int timeValue, RatingEvent rating) {
+        final var previousTimePresent = lines.columnView(LINE)
+                .lookup(l -> l.value(timeAttribute).equals(timeValue - 1))
+                .isPresent();
+        if (previousTimePresent) {
+            final var previousGroup = timeToPreviousTimeGroup.computeIfAbsent(timeValue, x -> group((x - 1) + " -> " + x));
+            final List<LocalRating> localRatings = listWithValuesOf(localRating()
+                    .withPropagationTo(children)
+                    .withRating(noCost())
+                    .withResultingGroupId(previousGroup));
+            lines.columnView(LINE)
+                    .lookup(l -> l.value(timeAttribute).equals(timeValue))
+                    .linesStream()
+                    .forEach(l -> {
+                        if (rating.complexAdditions().containsKey(l)) {
+                            rating.complexAdditions().get(l).addAll(localRatings);
+                        } else {
+                            rating.complexAdditions().put(l, localRatings);
+                        }
+                    });
+        }
     }
 }
