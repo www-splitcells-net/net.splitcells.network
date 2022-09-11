@@ -1,6 +1,3 @@
 #!/usr/bin/env sh
 # Variables needed to be exported.
-    export net_splitcells_network_pom_github_username=$net_splitcells_network_pom_github_username
-    export net_splitcells_network_pom_github_password=$net_splitcells_network_pom_github_password
-cd projects/net.splitcells.system.root
-mvn --settings ../../src/main/xml-pom/pom-github-test.xml verify
+mvn --settings src/main/xml-pom/net/splitcells/network/build-with-github-snapshot.pom.xml verify

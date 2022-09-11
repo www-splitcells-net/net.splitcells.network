@@ -27,11 +27,4 @@
     </profiles>
     <!-- Use freshly created .m2 repo in order to test, if everything can be downloaded, by avoiding cache on local computer. -->
     <localRepository>./target/m2</localRepository>
-    <servers>
-        <server>
-            <id>github</id>
-            <username>${env.net_splitcells_network_pom_github_username}</username>
-            <password>${env.net_splitcells_network_pom_github_password}</password>
-        </server>
-    </servers>
 </settings>
