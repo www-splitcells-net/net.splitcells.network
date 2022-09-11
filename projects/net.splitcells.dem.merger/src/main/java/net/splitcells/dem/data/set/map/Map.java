@@ -22,6 +22,10 @@ import java.util.function.Supplier;
 @JavaLegacyArtifact
 public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
+    default Optional<Value> getOptionally(Key key) {
+        return Optional.ofNullable(get(key));
+    }
+
     default Map<Key, Value> with(Key key, Value value) {
         put(key, value);
         return this;
