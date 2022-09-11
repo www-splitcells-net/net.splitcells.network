@@ -21,7 +21,7 @@ Some of them are not strictly related to optimization and can be used in other c
 
 🚀 [Model and optimize problems.](http://splitcells.net/net/splitcells/gel/index.html)
 
-🏗️ [Deploy](http://splitcells.net/net/splitcells/network/deployment.html) the software.
+🏗️ [Deploy](http://splitcells.net/net/splitcells/network/deployment.html) the software or [develop](http://splitcells.net/net/splitcells/network/DEVELOPMENT.html) programs with this project.
 
 🔬 Analyze and organize your operations and prepare schedules.
 
