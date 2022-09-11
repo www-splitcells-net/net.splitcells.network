@@ -23,6 +23,7 @@ import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class TimeStepsTest {
     @Tag(EXPERIMENTAL_TEST)
@@ -49,12 +50,25 @@ public class TimeStepsTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.optimize(linearInitialization());
-        testSubject.constraint().childrenView().get(0).lineProcessing()
-                .columnView(RESULTING_CONSTRAINT_GROUP)
-                .stream()
-                .distinct()
-                .collect(toList())
-                .requireSizeOf(6);
+        testSubject.history().processWithHistory(() -> {
+            testSubject.optimize(onlineLinearInitialization());
+            testSubject.constraint().childrenView().get(0).lineProcessing()
+                    .columnView(RESULTING_CONSTRAINT_GROUP)
+                    .stream()
+                    .distinct()
+                    .collect(toList())
+                    .requireSizeOf(2);
+            final var oneToTwo = testSubject.constraint().childrenView().get(0).lineProcessing()
+                    .columnView(RESULTING_CONSTRAINT_GROUP)
+                    .stream()
+                    .distinct()
+                    .collect(toList())
+                    .get(0);
+            testSubject.constraint().childrenView().get(0).lineProcessing()
+                    .columnView(RESULTING_CONSTRAINT_GROUP)
+                    .lookup(oneToTwo)
+                    .lines()
+                    .requireSizeOf(33);
+        });
     }
 }
