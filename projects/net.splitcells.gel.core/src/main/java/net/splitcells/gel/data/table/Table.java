@@ -145,6 +145,10 @@ public interface Table extends Discoverable, Domable {
         return 0 == size();
     }
 
+    default boolean isPresent() {
+        return 0 != size();
+    }
+
     default boolean hasContent() {
         return !isEmpty();
     }
