@@ -22,4 +22,14 @@ public class LinkTranslatorTest {
         testSubject.visit(testData);
         assertThat(testData.getDestination()).isEqualTo("/net/splitcells/gel/objectives.html");
     }
+
+    @Test
+    public void testSourceProjectRelativeLink() {
+        final var testSubject = linkTranslator();
+        final var testData = new Link("../../../../../../../../projects/net.splitcells.gel.sheath/src/main/md/net/splitcells/gel/test/functionality/n-queen-problem.md", "here");
+        testSubject.visit(testData);
+        assertThat(testData.getDestination()).isEqualTo("/net/splitcells/gel/test/functionality/n-queen-problem.html");
+    }
+
+
 }
