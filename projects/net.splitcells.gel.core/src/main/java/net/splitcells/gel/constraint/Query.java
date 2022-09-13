@@ -43,6 +43,7 @@ public interface Query {
 
     Query then(Rating rating);
 
+    @SuppressWarnings("unchecked")
     default Query forAllCombinationsOf(Attribute<? extends Object>... args) {
         return forAllCombinationsOf(listWithValuesOf(args));
     }
