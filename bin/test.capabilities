@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
-mvn clean test -DincludedGroups=testing_capabilities -DexcludedGroups=""
+mvn clean install -DincludedGroups=testing_capabilities -DexcludedGroups="experimental_test"
+mvn clean install -Dtest_via_pitest_enabled=1 -Dtest_via_junit_disabled=1
+mvn clean install -D report_disabled
 cd projects/net.splitcells.dem
   ./bin/java.code.verify
