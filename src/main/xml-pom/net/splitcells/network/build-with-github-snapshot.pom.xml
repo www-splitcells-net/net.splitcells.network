@@ -25,6 +25,6 @@
             </repositories>
         </profile>
     </profiles>
-    <!-- Use freshly created .m2 repo in order to test, if everything can be downloaded, by avoiding cache on local computer. -->
+    <!-- Remove this as needed. Use freshly created .m2 repo in order to test, if everything can be downloaded, by avoiding cache on local computer. -->
     <localRepository>./target/m2</localRepository>
 </settings>
