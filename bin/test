@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
-# This tests every command.
+#!/usr/bin/env sh
+# This executes tests, that should not have relevant side effects for the host.
+# Test executors and therefore `./bin/test.via.*` commands, are not tested via tests.
+# These commands have to be tested by the appropriate hosts themselves.
 ./bin/test.routine
-./bin/test.via.gitlab-runner
