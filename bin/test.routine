@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-# This tests every command.
+#!/usr/bin/env sh
 set -e
-./bin/repos.push
 ./build
