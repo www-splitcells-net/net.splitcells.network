@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/intellij,maven,eclipse,java
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij,maven,eclipse,java
 
+# Generated files by ANTLR v4.
+gen/
+
 ### Eclipse ###
 .metadata
 
