@@ -24,12 +24,18 @@ public class LinkTranslatorTest {
     }
 
     @Test
-    public void testSourceProjectRelativeLink() {
+    public void testSourceProjectParentRelativeLink() {
         final var testSubject = linkTranslator();
         final var testData = new Link("../../../../../../../../projects/net.splitcells.gel.sheath/src/main/md/net/splitcells/gel/test/functionality/n-queen-problem.md", "here");
         testSubject.visit(testData);
         assertThat(testData.getDestination()).isEqualTo("/net/splitcells/gel/test/functionality/n-queen-problem.html");
     }
 
-
+    @Test
+    public void testSourceProjectRelativeLink() {
+        final var testSubject = linkTranslator();
+        final var testData = new Link("src/main/xml-pom/net/splitcells/network/build-with-github-snapshot.pom.xml", "here");
+        testSubject.visit(testData);
+        assertThat(testData.getDestination()).isEqualTo("/net/splitcells/network/build-with-github-snapshot.pom.html");
+    }
 }
