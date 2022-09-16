@@ -131,11 +131,23 @@ public interface Files {
         }
     }
 
+    static byte[] readFileAsBytes(Path path) {
+        try {
+            return java.nio.file.Files.readAllBytes(path);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     static InputStream newInputStream(Path path) {
         try {
             return java.nio.file.Files.newInputStream(path);
         } catch (IOException e) {
             throw executionException(e);
         }
+    }
+
+    static boolean fileExists(Path path) {
+        return java.nio.file.Files.exists(path);
     }
 }
