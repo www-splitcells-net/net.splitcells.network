@@ -14,3 +14,6 @@ mkdir -p ~/.config/net.splitcells.os.state.interface/testing
     cd ~/.config/net.splitcells.os.state.interface/testing
 repo.clone.into.current.test > /dev/null 2>&1 || echo.error '"'repo.clone.into.current'"' has no valid implementation.
 rm -rf ~/.config/net.splitcells.os.state.interface/testing
+command.managed.execute.test
+user.ssh.key.generate.test
+repo.process.test
