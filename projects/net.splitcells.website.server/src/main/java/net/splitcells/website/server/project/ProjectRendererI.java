@@ -12,32 +12,32 @@ package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtensionMerger;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
-import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.readAllBytes;
 import static java.util.stream.Stream.concat;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.ContentType.UTF_8;
+import static net.splitcells.dem.resource.Files.fileExists;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
+import static net.splitcells.dem.resource.Files.readFileAsBytes;
+import static net.splitcells.dem.resource.Files.readFileAsString;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.project.FileStructureTransformer.fileStructureTransformer;
 import static net.splitcells.website.server.project.renderer.extension.CsvChartProjectRendererExtension.csvChartRenderer;
 import static net.splitcells.website.server.project.renderer.extension.CsvProjectRendererExtension.csvRenderer;
@@ -58,7 +58,6 @@ import static net.splitcells.website.server.project.renderer.extension.commonmar
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkProjectRendererExtension.commonMarkExtension;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkReadmeProjectRendererExtension.commonMarkReadmeRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.RootFileProjectRendererExtension.rootFileProjectRendererExtension;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * <p>TODO Use resource folder for xml, txt and etc.</p>
@@ -215,13 +214,13 @@ public class ProjectRendererI implements ProjectRenderer {
                 return artifactResult;
             } else if (path.endsWith(".csv")) {
                 final var file = resolveSourceFolder(path, "csv");
-                if (java.nio.file.Files.exists(file)) {
-                    return Optional.of(renderingResult(java.nio.file.Files.readAllBytes(file), "text/csv"));
+                if (fileExists(file)) {
+                    return Optional.of(renderingResult(Files.readFileAsBytes(file), "text/csv"));
                 } else {
                     return Optional.empty();
                 }
             } else {
-                return readArtifact(path).map(r -> renderingResult(r, TEXT_HTML.toString()));
+                return readArtifact(path).map(r -> renderingResult(r, "text/html"));
             }
         } catch (Exception e) {
             throw new RuntimeException("resourceRootPath: " + resourceRootPath, e);
@@ -236,9 +235,13 @@ public class ProjectRendererI implements ProjectRenderer {
      */
     @Override
     public Optional<byte[]> renderString(String arg) {
-        return Optional.of(renderer()
-                .transform(arg)
-                .getBytes(UTF_8));
+        try {
+            return Optional.of(renderer()
+                    .transform(arg)
+                    .getBytes(UTF_8.codeName()));
+        } catch (Exception e) {
+            throw executionException(e);
+        }
     }
 
     private Optional<byte[]> renderFile(String path) {
@@ -253,11 +256,11 @@ public class ProjectRendererI implements ProjectRenderer {
             // System.out.println("Rendering Relative Resource: " + sourcePath);
             // System.out.println("Rendering Absolute Resource: " + absolutePath);
             // TODO HACK Use optional instead of manual file checking.
-            if (java.nio.file.Files.isRegularFile(absolutePath)) {
+            if (fileExists(absolutePath)) {
                 // System.out.println("Rendering: " + path);
                 return Optional.of(renderer()
                         .transform(absolutePath)
-                        .getBytes(UTF_8));
+                        .getBytes(UTF_8.codeName()));
             }
             // System.out.println("Reading artifact: " + path);
             return readArtifact(path);
@@ -267,20 +270,29 @@ public class ProjectRendererI implements ProjectRenderer {
         }
     }
 
+
+    /**
+     * TODO Is decoding necessary?
+     *
+     * @param projectPath projectPath
+     * @param type        type
+     * @return return
+     */
+    @JavaLegacyBody
     private Path resolveSourceFolder(String projectPath, String type) {
         if (flatRepository) {
             projectPath = projectPath.replace(resourceRootPath.substring(1), "");
         }
         if (typedFolder) {
             try {
-                return projectSrcFolder.resolve(type).resolve(URLDecoder.decode(projectPath, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
+                return projectSrcFolder.resolve(type).resolve(java.net.URLDecoder.decode(projectPath, "UTF-8"));
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else {
             try {
-                return projectSrcFolder.resolve(URLDecoder.decode(projectPath, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
+                return projectSrcFolder.resolve(java.net.URLDecoder.decode(projectPath, "UTF-8"));
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -310,10 +322,14 @@ public class ProjectRendererI implements ProjectRenderer {
         }
         final var contentAsString = Xml.toPrettyString(content);
         domsole().append(perspective(contentAsString), LogLevel.DEBUG);
-        return Optional.of(renderer()
-                .transform(contentAsString)
-                .replace(MARKER, bodyContent)
-                .getBytes(UTF_8));
+        try {
+            return Optional.of(renderer()
+                    .transform(contentAsString)
+                    .replace(MARKER, bodyContent)
+                    .getBytes(UTF_8.codeName()));
+        } catch (Exception e) {
+            throw executionException(e);
+        }
     }
 
     @Override
@@ -338,32 +354,38 @@ public class ProjectRendererI implements ProjectRenderer {
             contentElement.appendChild(Xml.textNode(MARKER));
             layoutConfigElement.appendChild(contentElement);
         }
-        return Optional.of(renderer()
-                .transform(Xml.toPrettyString(layoutConfigElement)
-                        .replace(MARKER, xml))
-                .getBytes(UTF_8));
+        try {
+            return Optional.of(renderer()
+                    .transform(Xml.toPrettyString(layoutConfigElement)
+                            .replace(MARKER, xml))
+                    .getBytes(UTF_8.codeName()));
+        } catch (Exception e) {
+            throw executionException(e);
+        }
     }
 
     @Override
     public Optional<byte[]> renderRawXml(String xml, Config config) {
-        return Optional.of(renderer()
-                .transform(xml)
-                .getBytes(UTF_8));
+        try {
+            return Optional.of(renderer()
+                    .transform(xml)
+                    .getBytes(UTF_8.codeName()));
+        } catch (Exception e) {
+            throw executionException(e);
+        }
     }
 
     private Optional<byte[]> renderTextFile(String path) {
         try {
             final var absolutePath = resolveSourceFolder(path, "txt");
-            if (java.nio.file.Files.isRegularFile(absolutePath)) {
+            if (fileExists(absolutePath)) {
                 final var content = Xml.rElement(NameSpaces.NATURAL, "text");
                 content.appendChild
                         (Xml.textNode
-                                (new String
-                                        (readAllBytes
-                                                (absolutePath))));
+                                (readFileAsString(absolutePath)));
                 return Optional.of(renderer()
                         .transform(Xml.toPrettyString(content))
-                        .getBytes(UTF_8));
+                        .getBytes(UTF_8.codeName()));
             }
             return readArtifact(path);
         } catch (Exception e) {
@@ -377,7 +399,7 @@ public class ProjectRendererI implements ProjectRenderer {
             return Optional.empty();
         }
         try {
-            return Optional.of(readAllBytes(resourcePath));
+            return Optional.of(readFileAsBytes(resourcePath));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -389,7 +411,7 @@ public class ProjectRendererI implements ProjectRenderer {
             return Optional.empty();
         }
         try {
-            return Optional.of(readAllBytes(resourcePath));
+            return Optional.of(readFileAsBytes(resourcePath));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -403,8 +425,8 @@ public class ProjectRendererI implements ProjectRenderer {
     private static void extendProjectLayout(Perspective layout, Path folder, boolean replaceFileSuffix) {
         if (isDirectory(folder)) {
             try {
-                java.nio.file.Files.walk(folder)
-                        .filter(java.nio.file.Files::isRegularFile)
+                Files.walk_recursively(folder)
+                        .filter(Files::fileExists)
                         .forEach(file -> {
                             final var relativePath = folder.relativize(file);
                             if (replaceFileSuffix) {
@@ -416,7 +438,7 @@ public class ProjectRendererI implements ProjectRenderer {
                                 LayoutUtils.extendPerspectiveWithPath(layout, relativePath);
                             }
                         });
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(folder.toAbsolutePath().toString(), e);
             }
         }
@@ -432,8 +454,8 @@ public class ProjectRendererI implements ProjectRenderer {
                     .filter(folder -> Files.isDirectory(folder))
                     .map(folder -> {
                         try {
-                            return java.nio.file.Files.walk(folder)
-                                    .filter(java.nio.file.Files::isRegularFile)
+                            return Files.walk_recursively(folder)
+                                    .filter(Files::fileExists)
                                     .map(file -> {
                                         return folder.relativize(
                                                 file.getParent()
@@ -441,7 +463,7 @@ public class ProjectRendererI implements ProjectRenderer {
                                                                 (file.getFileName().toString() + ".html"))
                                         );
                                     });
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
                     }).reduce((a, b) -> concat(a, b));
@@ -458,10 +480,10 @@ public class ProjectRendererI implements ProjectRenderer {
                     .filter(folder -> Files.isDirectory(folder))
                     .map(folder -> {
                         try {
-                            return java.nio.file.Files.walk(folder)
-                                    .filter(java.nio.file.Files::isRegularFile)
+                            return Files.walk_recursively(folder)
+                                    .filter(Files::fileExists)
                                     .map(file -> folder.relativize(file));
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
                     }).reduce((a, b) -> concat(a, b));

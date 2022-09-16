@@ -58,6 +58,7 @@ lexer grammar Java11Lexer;
     		| 'import static org.junit.jupiter.api.Assertions.assertThrows;'
     		| 'import static java.util.stream.IntStream.range;'
     		| 'import static java.util.stream.IntStream.rangeClosed;'
+    		| 'import static java.util.stream.Stream.concat;'
     		;
 	Arrow: '->';
 	Bigger_than: '>';
