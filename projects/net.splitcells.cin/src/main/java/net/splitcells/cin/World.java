@@ -49,11 +49,11 @@ import static net.splitcells.gel.solution.optimization.primitive.LinearInitializ
 import static net.splitcells.sep.Network.network;
 
 public class World {
-    private static final String WORLD_HISTORY = "world-history";
-    private static final Attribute<Integer> WORLD_TIME = attribute(Integer.class, "world-time");
-    private static final Attribute<Integer> POSITION_X = attribute(Integer.class, "position-x");
-    private static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-y");
-    private static final Attribute<Integer> VALUE = attribute(Integer.class, "value");
+    public static final String WORLD_HISTORY = "world-history";
+    public static final Attribute<Integer> WORLD_TIME = attribute(Integer.class, "world-time");
+    public static final Attribute<Integer> POSITION_X = attribute(Integer.class, "position-x");
+    public static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-y");
+    public static final Attribute<Integer> VALUE = attribute(Integer.class, "value");
 
     public static void main(String... args) {
         GelDev.process(() -> {
@@ -64,7 +64,7 @@ public class World {
         }, env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful())));
     }
 
-    private static Solution worldHistory() {
+    public static Solution worldHistory() {
         return defineProblem("Conway's Game of Life")
                 .withDemandAttributes(WORLD_TIME)
                 .withDemands(worldsTimeSpace(0))

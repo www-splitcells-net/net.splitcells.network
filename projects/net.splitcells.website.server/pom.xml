@@ -31,6 +31,11 @@
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
+            <artifactId>sep</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
             <artifactId>network.worker</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
