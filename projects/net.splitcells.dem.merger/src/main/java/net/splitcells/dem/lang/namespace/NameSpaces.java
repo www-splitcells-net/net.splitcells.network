@@ -33,6 +33,8 @@ public class NameSpaces {
     public static final NameSpace DEN = nameSpace("d", "http://splitcells.net/den.xsd");
     public static final NameSpace GEL = nameSpace("d", "http://splitcells.net/gel.xsd");
     public static final NameSpace SEW = nameSpace("s", "http://splitcells.net/sew.xsd");
+
+    public static final NameSpace HTML = nameSpace("html", "http://www.w3.org/1999/xhtml");
     public static final String LINK = "link";
     public static final String URL = "url";
     public static final NameSpace NATURAL = nameSpace("n", "http://splitcells.net/natural.xsd");
