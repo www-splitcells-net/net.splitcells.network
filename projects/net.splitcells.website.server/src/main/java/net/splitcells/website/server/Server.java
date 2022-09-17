@@ -24,6 +24,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.RenderingResult;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -73,18 +74,22 @@ public class Server {
                     router.route("/*").handler(routingContext -> {
                         HttpServerResponse response = routingContext.response();
                         vertx.<byte[]>executeBlocking((promise) -> {
-                            final String requestPath;
-                            if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
-                                requestPath = "index.html";
-                            } else {
-                                requestPath = routingContext.request().path();
-                            }
-                            final var result = renderer.apply(requestPath);
-                            if (result.isPresent()) {
-                                response.putHeader("content-type", result.get().getFormat());
-                                promise.complete(result.get().getContent());
-                            } else {
-                                promise.fail("Could not render path:" + requestPath);
+                            try {
+                                final String requestPath;
+                                if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
+                                    requestPath = "index.html";
+                                } else {
+                                    requestPath = routingContext.request().path();
+                                }
+                                final var result = renderer.apply(java.net.URLDecoder.decode(requestPath, StandardCharsets.UTF_8.name()));
+                                if (result.isPresent()) {
+                                    response.putHeader("content-type", result.get().getFormat());
+                                    promise.complete(result.get().getContent());
+                                } else {
+                                    promise.fail("Could not render path:" + requestPath);
+                                }
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
                             }
                         }, (result) -> {
                             if (result.failed()) {
