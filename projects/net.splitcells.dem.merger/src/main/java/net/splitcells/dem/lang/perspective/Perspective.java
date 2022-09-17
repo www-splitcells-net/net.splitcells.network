@@ -24,6 +24,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -196,6 +197,25 @@ public interface Perspective extends PerspectiveView {
                 .filter(pathChild -> !child.propertyInstances(propertyName, nameSpace).isEmpty())
                 .forEach(pathChild -> withPath(child, pathChild, propertyName, nameSpace));
         return current;
+    }
+
+    default String toHtmlString() {
+        String htmlString = "";
+        if (nameSpace().equals(HTML)) {
+            if (children().isEmpty()) {
+                htmlString += "<" + name() + "/>";
+            } else {
+                htmlString += "<" + name() + ">";
+                htmlString += children().stream().map(Perspective::toHtmlString).reduce((a, b) -> a + b).orElse("");
+                htmlString += "</" + name() + ">";
+            }
+        } else if (nameSpace().equals(STRING)) {
+            htmlString += name();
+            htmlString += children().stream().map(Perspective::toHtmlString).reduce((a, b) -> a + b).orElse("");
+        } else {
+            throw executionException("Unsupported namespace `" + nameSpace().uri() + "`.");
+        }
+        return htmlString;
     }
 
 }
