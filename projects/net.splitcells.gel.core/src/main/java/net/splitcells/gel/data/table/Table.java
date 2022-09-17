@@ -18,6 +18,8 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TEXT;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -29,6 +31,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -90,8 +93,8 @@ public interface Table extends Discoverable, Domable {
     }
 
     /**
-     * @see {@link Database#query()}
      * @return {@link Line} With Distinct Values
+     * @see {@link Database#query()}
      */
     @Deprecated
     default List<Line> distinctLines() {
@@ -193,6 +196,19 @@ public interface Table extends Discoverable, Domable {
                         IntStream.range(0, headerView().size())
                                 .mapToObj(i -> Objects.equals(values.get(i), line.value(headerView().get(i))))
                                 .reduce(true, (a, b) -> a && b));
+    }
+
+    default Perspective toHtmlTable() {
+        final var htmlTable = perspective("table", HTML);
+        final var header = perspective("tr", HTML);
+        headerView().forEach(attribute -> header.withChild(perspective("th", HTML).withText(attribute.name())));
+        htmlTable.withChild(header);
+        lines().forEach(line -> {
+            final var row = perspective("tr", HTML);
+            headerView().forEach(attribute -> row.withChild(perspective("td", HTML).withText(line.value(attribute).toString())));
+            htmlTable.withChild(row);
+        });
+        return htmlTable;
     }
 
     default Element toFods() {
