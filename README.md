@@ -10,7 +10,6 @@
 We provide an open source ecosystem centered around optimization and operations research.
 
 The main project is the [Generic Allocator](http://splitcells.net/net/splitcells/gel/index.html).
-A detailed introduction and documentation can be found [here](http://splitcells.net/net/splitcells/gel/index.html).
 
 An overview of the projects can be found [here](https://splitcells.net/net/splitcells/network/overview.html).
 Some of them are not strictly related to optimization and can be used in other contexts as well.
