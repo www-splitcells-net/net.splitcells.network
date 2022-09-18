@@ -65,7 +65,8 @@ public class World {
     }
 
     public static Solution worldHistory() {
-        return defineProblem("Conway's Game of Life")
+        // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
+        return defineProblem("conway-s-game-of-life")
                 .withDemandAttributes(WORLD_TIME)
                 .withDemands(worldsTimeSpace(0))
                 .withSupplyAttributes(POSITION_X, POSITION_Y, VALUE)
