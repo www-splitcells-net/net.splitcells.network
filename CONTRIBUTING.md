@@ -45,6 +45,3 @@ to visualize its content:
 ### Inspirational External Guidelines
 * [Submitting patches: the essential guide to getting your code into the kernel](https://www.kernel.org/doc/html/latest/process/submitting-patches.html)
 * [Creating Pull Requests](https://www.kernel.org/doc/html/latest/maintainer/pull-requests.html)
-### Helpful Development Tools
-This [PlantUML Editor](https://plantuml-editor.kkeisuke.com/) can be used to
-edit PlantUMLs without installing software locally.
