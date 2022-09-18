@@ -20,8 +20,14 @@
 # should be used. 
 # This way packages can be organized in an hierarchy and name conflicts can be omitted.
 
-# Use package specific installer if present first, in case this framework imports a starter script for this program.
+# Use package specific installer, if present, first, in case this framework imports a starter script for this program.
 # In this case you cannot check via PATH environment, if the program is already installed.
+# One might think, that this is bad, when a program is already installed via other means,
+# but otherwise, it is not easily possible to ensure, that everything is present on the computer.
+# So, if a piece of software is installed via alternative means,
+# it's best to not call `package.install` on it anymore.
+# So, if you have a setup script, use the alternative command to install the software or check for its existence,
+# instead of using `package.install`.
 if [ -x "$(command -v package.install.$1)" ]; then
 	echo Executing package.install.$1
 	package.install.$1
