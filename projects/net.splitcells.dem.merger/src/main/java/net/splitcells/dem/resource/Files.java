@@ -148,6 +148,6 @@ public interface Files {
     }
 
     static boolean fileExists(Path path) {
-        return java.nio.file.Files.exists(path);
+        return java.nio.file.Files.isRegularFile(path);
     }
 }
