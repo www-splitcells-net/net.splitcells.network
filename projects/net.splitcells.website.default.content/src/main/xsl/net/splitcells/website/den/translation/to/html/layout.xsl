@@ -223,6 +223,10 @@ window.onload = function() {
                         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
                         <meta http-equiv="Pragma" content="no-cache"/>
                         <meta http-equiv="Expires" content="0"/>
+                        <script type="text/javascript" charset="utf-8">
+                            document.__defineGetter__("cookie", function() { return '';} );
+                            document.__defineSetter__("cookie", function() { return '';} );
+                        </script>
                         <link rel="image_src" type="image/svg+xml">
                             <xsl:attribute name="href">
                                 <xsl:value-of
@@ -400,6 +404,11 @@ window.onload = function() {
                         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
                         <meta http-equiv="Pragma" content="no-cache"/>
                         <meta http-equiv="Expires" content="0"/>
+                        <script type="text/javascript" charset="utf-8">
+                            /* Disable all cookie functionality. */
+                            document.__defineGetter__("cookie", function() { return '';} );
+                            document.__defineSetter__("cookie", function() { return '';} );
+                        </script>
                         <link rel="image_src" type="image/svg+xml">
                             <xsl:attribute name="href">
                                 <xsl:value-of
