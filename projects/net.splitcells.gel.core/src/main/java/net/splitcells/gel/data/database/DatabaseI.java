@@ -280,6 +280,7 @@ public class DatabaseI implements Database {
             final var constraintRoot = forAll();
             synchronize(constraintRoot);
             constraint = Optional.of(constraintRoot);
+            linesStream().forEach(constraintRoot::registerAddition);
         }
         return constraint.get().query();
     }
