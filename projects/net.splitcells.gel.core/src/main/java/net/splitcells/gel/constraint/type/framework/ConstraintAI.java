@@ -493,11 +493,4 @@ public abstract class ConstraintAI implements Constraint {
     public Optional<Discoverable> mainContext() {
         return mainContext;
     }
-
-    @Override
-    public void recalculatePropagation() {
-        final var processedLines = lineProcessing.lines();
-        processedLines.forEach(ConstraintAI::propagateRemoval);
-        processedLines.forEach(ConstraintAI::propagateAddition);
-    }
 }
