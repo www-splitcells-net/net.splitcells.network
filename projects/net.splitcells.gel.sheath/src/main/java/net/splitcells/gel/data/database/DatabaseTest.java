@@ -46,7 +46,6 @@ import static org.mockito.Mockito.when;
  */
 public class DatabaseTest extends TestSuiteI {
     @Test
-    @Tag(TestTypes.EXPERIMENTAL_TEST)
     public void testQueryInitialization() {
         final var index = attribute(Integer.class);
         final var testSubject = database(listWithValuesOf(index));
