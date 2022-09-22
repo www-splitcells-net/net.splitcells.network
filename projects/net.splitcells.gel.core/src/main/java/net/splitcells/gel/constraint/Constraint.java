@@ -14,6 +14,7 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
@@ -31,6 +32,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -98,7 +100,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
                 .max(Integer::compareTo);
         return longestChildPath.map(i -> i + 1).orElse(1);
     }
-    
+
     GroupId injectionGroup();
 
     default Rating rating() {
@@ -259,18 +261,49 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     /**
      * Contains all processed {@link Line} and their corresponding {@link #INCOMING_CONSTRAINT_GROUP}.
+     *
      * @return
      */
     Table lines();
 
     /**
+     * TODO Is this needed anymore?
+     *
      * Removes all {@link #lineProcessing()} from {@link #childrenView()} and gives them back again.
      * This in turn is the same, as recalculating the {@link Rating} of all {@link Line} in the sub tree of the {@link Constraint} tree.
      * Note, that no recalculation of {@link Rating} is done on {@code this}.
-     *
+     * <p>
      * This is useful, if a new node is added to the {@link Constraint} tree,
      * while some {@link Line} are already processed in the {@link Constraint} tree.
      * See {@link Query}.
      */
-    void recalculatePropagation();
+    @Deprecated
+    default void recalculatePropagation() {
+        lineProcessing().linesStream().forEach(l -> {
+            l.value(PROPAGATION_TO).forEach(c -> c.registerBeforeRemoval(l.value(RESULTING_CONSTRAINT_GROUP), l.value(LINE)));
+        });
+        lineProcessing().linesStream().forEach(l -> {
+            l.value(PROPAGATION_TO).forEach(c -> c.registerAdditions(l.value(RESULTING_CONSTRAINT_GROUP), l.value(LINE)));
+        });
+    }
+
+    /**
+     * Removes all registered {@link Line} from {@link #lineProcessing()} and adds them back to this {@link Constraint}.
+     * Thereby everything is recalculated.
+     * The removals and additions made during the recalculation are also propagated to {@link #childrenView()}.
+     * <p>
+     * This is useful, if a new {@link Constraint} node is added to the {@link Constraint} tree,
+     * while some {@link Line} are already processed in the {@link Constraint} tree.
+     * See {@link Query} for a use case.
+     */
+    default void recalculateProcessing() {
+        final Map<GroupId, List<Line>> registeredAdditions = map();
+        lineProcessing().linesStream().forEach(l -> {
+            final var incomingConstraintGroup = l.value(INCOMING_CONSTRAINT_GROUP);
+            registeredAdditions.computeIfAbsent(incomingConstraintGroup, i -> list()).add(l.value(LINE));
+        });
+        registeredAdditions.entrySet().forEach(e -> e.getValue().forEach(l -> registerBeforeRemoval(e.getKey(), l)));
+        registeredAdditions.entrySet().forEach(e -> e.getValue().forEach(l -> registerAdditions(e.getKey(), l)));
+    }
+
 }
