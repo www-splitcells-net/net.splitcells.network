@@ -233,7 +233,7 @@ public class QueryI implements Query {
         } else {
             resultBase = Optional.of(ForAlls.forEach(forAllValueCombinations(attributes)));
             currentInjectionGroups.withChildren(resultBase.get());
-            root.ifPresent(Constraint::recalculatePropagation);
+            root.ifPresent(Constraint::recalculateProcessing);
             resultingGroups.addAll(groups);
         }
         return nextQueryPathElement(this, resultingGroups, resultBase.get());
