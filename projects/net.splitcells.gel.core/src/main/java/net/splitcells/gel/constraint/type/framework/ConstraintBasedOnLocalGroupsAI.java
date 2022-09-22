@@ -56,7 +56,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
                         lines.columnView(INCOMING_CONSTRAINT_GROUP)
                                 .lookup(incomingGroup)
                         , addition
-                        , children
+                        , childrenView()
                         , lineProcessing
                                 .columnView(INCOMING_CONSTRAINT_GROUP)
                                 .lookup(incomingGroup)));
@@ -89,7 +89,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
                                 .columnView(LINE)
                                 .lookup(removal)
                                 .line(0)
-                        , children
+                        , childrenView()
                         , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
         super.processLinesBeforeRemoval(incomingGroup, removal);
     }

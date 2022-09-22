@@ -65,7 +65,7 @@ import net.splitcells.gel.rating.framework.Rating;
 @Deprecated
 public abstract class ConstraintAI implements Constraint {
     private final GroupId injectionGroup;
-    protected final net.splitcells.dem.data.set.list.List<Constraint> children = list();
+    private final net.splitcells.dem.data.set.list.List<Constraint> children = list();
     protected Optional<Discoverable> mainContext = Optional.empty();
     private final List<Discoverable> contexts = list();
     protected final Database lines;
