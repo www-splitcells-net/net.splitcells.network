@@ -60,6 +60,17 @@ public class DatabaseTest extends TestSuiteI {
                 .columnView(LINE)
                 .values()
                 .requireSizeOf(10);
+        rangeClosed(1, 10).forEach(i -> {
+            testSubject.addTranslated(listWithValuesOf(i));
+        });
+        testSubject
+                .query()
+                .forAllCombinationsOf(listWithValuesOf(index))
+                .currentConstraint()
+                .lines()
+                .columnView(LINE)
+                .values()
+                .requireSizeOf(20);
     }
 
     @Tag(UNIT_TEST)
