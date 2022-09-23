@@ -9,11 +9,11 @@
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 set -e
 # Currently there is only one dependency test and therefore this test type only consists of one file.
-mkdir -p ~/.config/net.splitcells.os.state.interface/testing
-    rm -rf ~/.config/net.splitcells.os.state.interface/testing/*
-    cd ~/.config/net.splitcells.os.state.interface/testing
+mkdir -p ~/.cache/net.splitcells.os.state.interface/testing
+    rm -rf ~/.cache/net.splitcells.os.state.interface/testing/*
+    cd ~/.cache/net.splitcells.os.state.interface/testing
 repo.clone.into.current.test > /dev/null 2>&1 || echo.error '"'repo.clone.into.current'"' has no valid implementation.
-rm -rf ~/.config/net.splitcells.os.state.interface/testing
 command.managed.execute.test
 user.ssh.key.generate.test
 repo.process.test
+rm -rf ~/.cache/net.splitcells.os.state.interface/testing
