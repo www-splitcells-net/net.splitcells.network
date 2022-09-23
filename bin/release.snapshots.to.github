@@ -3,4 +3,4 @@ set -e
 # Variables needed to be exported.
     export net_splitcells_network_pom_github_username=$net_splitcells_network_pom_github_username
     export net_splitcells_network_pom_github_password=$net_splitcells_network_pom_github_password
-mvn clean deploy -Drepo-github-enable=1
+mvn clean deploy source:jar javadoc:jar -Drepo-github-enable=1
