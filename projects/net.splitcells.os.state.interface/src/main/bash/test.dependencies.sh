@@ -16,4 +16,5 @@ repo.clone.into.current.test > /dev/null 2>&1 || echo.error '"'repo.clone.into.c
 command.managed.execute.test
 user.ssh.key.generate.test
 repo.process.test
+this.requires test.dependencies.0 && command.managed.execute conjunction test.dependencies
 rm -rf ~/.cache/net.splitcells.os.state.interface/testing
