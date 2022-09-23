@@ -10,7 +10,7 @@ It started with Jekyll, which was abandoned in favor of an XML/XSL based static 
 because it's easier to generate arbitrary output formats,
 when one has full control of the input format and can therefore limit it as much as possible.
 Than the software was refactored, because the quality was very poor.
-Afterwards, support for rendering multiple per project websites as one website was and
+Afterwards, support for rendering multiple per project websites as one website and
 support for CommonMark was added.
 This makes it easy to have documentation for each project independent of each other.
 At last, the support for special pages, like the [global changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html) was added.
@@ -31,11 +31,12 @@ when the website is a unification of multiple sub websites (1 project = 1 sub we
 where links between sub websites are quite common.
 
 Another issue is the fact, that the website's renderer consists of multiple sub renderers.
+One for each file format.
 Here the biggest issue is the mapping between URLs and the appropriate renderers.
-Big spaghetti-if-else-hell without tests were just asking for trouble.
+Big spaghetti-if-else-hells without tests were just asking for trouble.
 Every time a new sub renderer was introduced or a bug in the URL/renderer mapping was fixed,
 a new bug was created, because nothing was tested.
 # Conclusion
 > You know what's coming.
 
-For ones own sanity, if one migrates a functionality, prefer automated test for the feature in question.
+For ones own sanity, if one migrates a functionality, prefer automated tests for the feature in question.
