@@ -66,8 +66,12 @@ if test -d "$HOME/.config/net.splitcells.os.state.interface/src"; then
 	cd "$HOME/.config/net.splitcells.os.state.interface/src"
 	find . -mindepth 1 -type f -exec command.managed.install {} \;
 fi
-echo "The commands were installed at '~/bin/net.splitcells.os.state.interface.commands.managed'."
-echo In order to use these, the folder needs to be added to the PATH variable.
-echo "One can edit the '~/.bashrc' automatically via the command"
-echo "'~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.environment.configure.sh',"
-echo in order to add the new folder to the PATH variable in new shells by default.
+if [[ ":$PATH:" == *":$HOME/bin/net.splitcells.os.state.interface.commands.managed:"* ]]; then
+  exit
+else
+  echo "The commands were installed at '~/bin/net.splitcells.os.state.interface.commands.managed'."
+  echo In order to use these, the folder needs to be added to the PATH variable.
+  echo "One can edit the '~/.bashrc' automatically via the command"
+  echo "'~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.environment.configure.sh',"
+  echo in order to add the new folder to the PATH variable in new shells by default.
+fi
