@@ -13,13 +13,13 @@ package net.splitcells.website.server.project.renderer.extension;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutRenderer;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -58,7 +58,8 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
         if (RENDERING_PATH.equals(path) && isDirectory(BIN_FOLDER)) {
             final var layout = perspective(NameSpaces.VAL, NameSpaces.DEN);
             try {
-                java.nio.file.Files.walk(BIN_FOLDER).forEach(command -> {
+
+                Files.walk_recursively(BIN_FOLDER).forEach(command -> {
                             final var commandName = listWithValuesOf(command.getFileName().toString().split("\\."));
                             // Filters commands installed via 'command.managed.install'.
                             if (!commandName.lastValue().get().matches("[0-9]+")) {
@@ -67,7 +68,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
                             }
                         }
                 );
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             return projectRenderer.renderString(layout.toString())

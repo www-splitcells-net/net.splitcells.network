@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JavaLegacyArtifact
@@ -102,5 +103,11 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
      */
     default void prepareForSizeOf(int targetSize) {
 
+    }
+
+    default void requirePresenceOf(T element) {
+        if (!contains(element)) {
+            throw executionException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
+        }
     }
 }

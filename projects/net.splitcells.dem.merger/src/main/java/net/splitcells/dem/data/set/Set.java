@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -91,5 +92,11 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
 
     default void assertSizeIs(int expectedSize) {
         assertThat(this).hasSize(expectedSize);
+    }
+
+    default void requirePresenceOf(T element) {
+        if (!contains(element)) {
+            throw executionException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
+        }
     }
 }

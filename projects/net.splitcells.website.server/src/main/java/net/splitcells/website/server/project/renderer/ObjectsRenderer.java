@@ -22,7 +22,6 @@ import net.splitcells.website.server.project.renderer.extension.commonmark.LinkT
 
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.map.Maps.map;
