@@ -18,7 +18,6 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
-import net.splitcells.website.server.project.renderer.extension.commonmark.LinkTranslator;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -28,9 +27,9 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
-public class ObjectsRenderer implements ProjectRenderer {
-    public static ObjectsRenderer objectsRenderer(Path basePath, ProjectRenderer projectRenderer, Config config) {
-        return new ObjectsRenderer(basePath, projectRenderer, config);
+public class ObjectsRendererI implements ProjectRenderer {
+    public static ObjectsRendererI objectsRenderer(Path basePath, ProjectRenderer projectRenderer, Config config) {
+        return new ObjectsRendererI(basePath, projectRenderer, config);
     }
 
     private final String pathPrefix;
@@ -38,7 +37,7 @@ public class ObjectsRenderer implements ProjectRenderer {
     private final ProjectRenderer projectRenderer;
     private final Config config;
 
-    private ObjectsRenderer(Path basePath, ProjectRenderer projectRenderer, Config config) {
+    private ObjectsRendererI(Path basePath, ProjectRenderer projectRenderer, Config config) {
         this.pathPrefix = basePath.toString();
         this.projectRenderer = projectRenderer;
         this.config = config;
@@ -49,32 +48,32 @@ public class ObjectsRenderer implements ProjectRenderer {
         return Path.of("/invalid/");
     }
 
-    public ObjectsRenderer withObject(DiscoverableRenderer object) {
+    public ObjectsRendererI withObject(DiscoverableRenderer object) {
         objects.put(Path.of("/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElse("/")), object);
         return this;
     }
 
     @Override
     public Optional<byte[]> renderString(String arg) {
-        domsole().append(ObjectsRenderer.class.getName() + "#renderString not implemented.", LogLevel.WARNING);
+        domsole().append(ObjectsRendererI.class.getName() + "#renderString not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
     public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path, Config config) {
-        domsole().append(ObjectsRenderer.class.getName() + "#renderHtmlBodyContent not implemented.", LogLevel.WARNING);
+        domsole().append(ObjectsRendererI.class.getName() + "#renderHtmlBodyContent not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
     public Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config) {
-        domsole().append(ObjectsRenderer.class.getName() + "#renderXml not implemented.", LogLevel.WARNING);
+        domsole().append(ObjectsRendererI.class.getName() + "#renderXml not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
     public Optional<byte[]> renderRawXml(String xml, Config config) {
-        domsole().append(ObjectsRenderer.class.getName() + "#renderRawXml not implemented.", LogLevel.WARNING);
+        domsole().append(ObjectsRendererI.class.getName() + "#renderRawXml not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
