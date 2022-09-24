@@ -8,19 +8,17 @@ graph TD
     repos --> git
     Network --> Osi
     Network --> Blog
+    Dem --> Worker
     Blog --> Sew
     Osi --> Pom
     Osi --> OsiLib(lib)
     Pom --> Dem
-    Dem --> Gel
+    Sew --> Gel
     Gel --> Sep
-    Sep --> Worker
     Worker --> Sew
     Sep --> Cin
-    Cin --> Sew
     Sew --> splitcells.net
     Sew --> logs
-    logs --> Sew
     splitcells.net --> user
     </code>
 </div>
