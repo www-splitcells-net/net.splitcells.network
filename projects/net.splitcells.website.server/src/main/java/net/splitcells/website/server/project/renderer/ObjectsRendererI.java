@@ -89,7 +89,7 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Optional<RenderingResult> render(String argPath, LayoutConfig layoutConfig, Config config, ProjectRenderer projectRenderer) {
+    public Optional<RenderingResult> render(String argPath, Config config, ProjectRenderer projectRenderer) {
         if (argPath.startsWith(pathPrefix)) {
             final var objectPath = Path.of(argPath.substring(pathPrefix.length()));
             if (objects.containsKey(objectPath)) {
