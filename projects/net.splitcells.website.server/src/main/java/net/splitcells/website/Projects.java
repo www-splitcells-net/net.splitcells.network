@@ -10,10 +10,12 @@
  */
 package net.splitcells.website;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.validator.SourceValidator;
 
@@ -182,7 +184,7 @@ public class Projects {
                                 , "/net/splitcells/cin"
                                 , sourceValidator
                                 , config)
-        );
+                , Dem.configValue(ObjectsRenderer.class));
         if (isDirectory(integratedProjectRepositories)) {
             projectRenderers.add(projectRenderer
                     (profile
