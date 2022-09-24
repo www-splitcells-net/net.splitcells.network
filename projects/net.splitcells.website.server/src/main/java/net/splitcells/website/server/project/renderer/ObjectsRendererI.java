@@ -28,19 +28,15 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class ObjectsRendererI implements ProjectRenderer {
-    public static ObjectsRendererI objectsRenderer(Path basePath, ProjectRenderer projectRenderer, Config config) {
-        return new ObjectsRendererI(basePath, projectRenderer, config);
+    public static ObjectsRendererI objectsRenderer(Path basePath) {
+        return new ObjectsRendererI(basePath);
     }
 
     private final String pathPrefix;
     private final Map<Path, DiscoverableRenderer> objects = map();
-    private final ProjectRenderer projectRenderer;
-    private final Config config;
 
-    private ObjectsRendererI(Path basePath, ProjectRenderer projectRenderer, Config config) {
+    private ObjectsRendererI(Path basePath) {
         this.pathPrefix = basePath.toString();
-        this.projectRenderer = projectRenderer;
-        this.config = config;
     }
 
     @Override
@@ -89,6 +85,11 @@ public class ObjectsRendererI implements ProjectRenderer {
 
     @Override
     public Optional<RenderingResult> render(String argPath) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<RenderingResult> render(String argPath, LayoutConfig layoutConfig, Config config, ProjectRenderer projectRenderer) {
         if (argPath.startsWith(pathPrefix)) {
             final var objectPath = Path.of(argPath.substring(pathPrefix.length()));
             if (objects.containsKey(objectPath)) {
