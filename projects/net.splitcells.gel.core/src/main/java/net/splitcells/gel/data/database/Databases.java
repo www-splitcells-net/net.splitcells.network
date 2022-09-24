@@ -18,10 +18,11 @@ import org.w3c.dom.Element;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
+import static net.splitcells.gel.data.database.DatabaseIFactory.databaseFactory;
 
 public class Databases extends ResourceOptionI<DatabaseFactory> {
     public Databases() {
-        super(() -> new DatabaseIFactory());
+        super(() -> databaseFactory());
     }
 
     public static Database database(String name, Attribute<? extends Object>... attributes) {

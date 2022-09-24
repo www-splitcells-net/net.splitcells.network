@@ -14,9 +14,30 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
+import java.util.function.Consumer;
+
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
 public class DatabaseIFactory implements DatabaseFactory {
+
+    public static DatabaseFactory databaseFactory(Consumer<Database> databaseConsumer) {
+        return new DatabaseIFactory(databaseConsumer);
+    }
+
+    public static DatabaseFactory databaseFactory() {
+        return new DatabaseIFactory();
+    }
+
+    private final Consumer<Database> databaseConsumer;
+
+    private DatabaseIFactory(Consumer<Database> databaseConsumer) {
+        this.databaseConsumer = databaseConsumer;
+    }
+
+    private DatabaseIFactory() {
+        databaseConsumer = x -> {
+        };
+    }
 
     @Override
     public Database database(String name, Attribute<? extends Object>... attributes) {
@@ -45,7 +66,7 @@ public class DatabaseIFactory implements DatabaseFactory {
 
     @Override
     @Deprecated
-    public Database database(String name, Discoverable  parent, Attribute<? extends Object>... attributes) {
+    public Database database(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
         return new DatabaseI(name, parent, listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a));
     }
 
