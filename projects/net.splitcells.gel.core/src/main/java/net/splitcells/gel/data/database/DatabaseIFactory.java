@@ -19,18 +19,18 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 public class DatabaseIFactory implements DatabaseFactory {
 
     @Override
-    public Database database(String vārds, Attribute<? extends Object>... atribūti) {
-        return new DatabaseI(vārds, null, atribūti);
+    public Database database(String name, Attribute<? extends Object>... attributes) {
+        return new DatabaseI(name, null, attributes);
     }
 
     @Override
-    public Database database(Attribute<? extends Object>... atribūti) {
-        return new DatabaseI(atribūti);
+    public Database database(Attribute<? extends Object>... attributes) {
+        return new DatabaseI(attributes);
     }
 
     @Override
-    public Database database(List<Attribute<?>> atribūti) {
-        return new DatabaseI(atribūti);
+    public Database database(List<Attribute<?>> attributes) {
+        return new DatabaseI(attributes);
     }
 
     @Override
@@ -39,19 +39,19 @@ public class DatabaseIFactory implements DatabaseFactory {
     }
 
     @Override
-    public Database database(List<Attribute<? extends Object>> atribūti, List<List<Object>> rindasVertības) {
-        return new DatabaseI(atribūti, rindasVertības);
+    public Database database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
+        return new DatabaseI(attributes, linesValues);
     }
 
     @Override
     @Deprecated
-    public Database database(String vārds, Discoverable vecāks, Attribute<? extends Object>... atribūti) {
-        return new DatabaseI(vārds, vecāks, listWithValuesOf(atribūti).mapped(a -> (Attribute<Object>) a));
+    public Database database(String name, Discoverable  parent, Attribute<? extends Object>... attributes) {
+        return new DatabaseI(name, parent, listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a));
     }
 
     @Override
-    public Database database(String vārds, Discoverable vecāks, List<Attribute<? extends Object>> atribūti) {
-        return new DatabaseI(vārds, vecāks, atribūti.mapped(a -> (Attribute<Object>) a));
+    public Database database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
+        return new DatabaseI(name, parent, attributes.mapped(a -> (Attribute<Object>) a));
     }
 
     @Override
