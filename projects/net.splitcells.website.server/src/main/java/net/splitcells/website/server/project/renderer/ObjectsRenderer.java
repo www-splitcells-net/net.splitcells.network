@@ -33,13 +33,13 @@ public class ObjectsRenderer implements ProjectRenderer {
         return new ObjectsRenderer(basePath, projectRenderer, config);
     }
 
-    private final Path basePath;
+    private final String pathPrefix;
     private final Map<Path, DiscoverableRenderer> objects = map();
     private final ProjectRenderer projectRenderer;
     private final Config config;
 
     private ObjectsRenderer(Path basePath, ProjectRenderer projectRenderer, Config config) {
-        this.basePath = basePath;
+        this.pathPrefix = basePath.toString();
         this.projectRenderer = projectRenderer;
         this.config = config;
     }
@@ -90,14 +90,16 @@ public class ObjectsRenderer implements ProjectRenderer {
 
     @Override
     public Optional<RenderingResult> render(String argPath) {
-        final var path = Path.of(argPath);
-        if (objects.containsKey(path)) {
-            final var object = objects.get(path);
-            return Optional.of(renderingResult(projectRenderer.renderHtmlBodyContent(object.render()
-                            , object.title()
-                            , Optional.of(argPath)
-                            , config).get()
-                    , TEXT_HTML.toString()));
+        if (argPath.startsWith(pathPrefix)) {
+            final var objectPath = Path.of(argPath.substring(pathPrefix.length()));
+            if (objects.containsKey(objectPath)) {
+                final var object = objects.get(objectPath);
+                return Optional.of(renderingResult(projectRenderer.renderHtmlBodyContent(object.render()
+                                , object.title()
+                                , Optional.of(argPath)
+                                , config).get()
+                        , TEXT_HTML.toString()));
+            }
         }
         return Optional.empty();
     }
