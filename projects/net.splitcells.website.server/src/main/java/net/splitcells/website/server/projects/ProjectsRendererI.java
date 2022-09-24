@@ -211,7 +211,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                         if (render.isPresent()) {
                             return render;
                         }
-                        return renderer.render(normalizedPath, config, renderer);
+                        return renderer.render(normalizedPath, config, fallbackRenderer);
                     })
                     .filter(Optional::isPresent)
                     .findFirst();
