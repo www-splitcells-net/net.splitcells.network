@@ -193,7 +193,12 @@ public class ProjectsRendererI implements ProjectsRenderer {
             if (matchingRoots.isEmpty()) {
                 // System.out.println("No match for: " + path);
                 //System.out.println("Patterns: " + renderers.keySet());
-                return validateRenderingResult(fallbackRenderer.render(normalizedPath), Path.of(normalizedPath));
+                final var render = fallbackRenderer.render(normalizedPath);
+                if (render.isPresent()) {
+                    return validateRenderingResult(render, Path.of(normalizedPath));
+                }
+                return validateRenderingResult(fallbackRenderer.render(normalizedPath, config, fallbackRenderer)
+                        , Path.of(normalizedPath));
             }
             // System.out.println("Match for: " + path);
             // System.out.println("Match on: " + matchingRoots.get(0));
@@ -201,7 +206,13 @@ public class ProjectsRendererI implements ProjectsRenderer {
             matchingRoots.sort((a, b) -> Integer.valueOf(a.resourceRootPath().length()).compareTo(b.resourceRootPath().length()));
             matchingRoots.reverse();
             final var renderingResult = matchingRoots.stream()
-                    .map(renderer -> renderer.render(normalizedPath))
+                    .map(renderer -> {
+                        final var render = renderer.render(normalizedPath);
+                        if (render.isPresent()) {
+                            return render;
+                        }
+                        return renderer.render(normalizedPath, config, renderer);
+                    })
                     .filter(Optional::isPresent)
                     .findFirst();
             if (renderingResult.isEmpty()) {

@@ -81,6 +81,18 @@ public interface ProjectRenderer extends Renderer {
     Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, @Deprecated Config config);
 
     /**
+     * TODO Use {@link Path} objects instead of {@link String}s.
+     *
+     * @param path            Path To Be Rendered
+     * @param config          This is the general webserver config.
+     * @param projectRenderer Provides basic rendering utilities.
+     * @return This is the rendering result, if the path is supported.
+     */
+    default Optional<RenderingResult> render(String path, Config config,  @Deprecated ProjectRenderer projectRenderer) {
+        return Optional.empty();
+    }
+
+    /**
      * TODO This method was created in order to remove direct usage of {@link FileStructureTransformer}.
      * This method will be later removed as well, as this is basically the same,
      * but without direct access.
