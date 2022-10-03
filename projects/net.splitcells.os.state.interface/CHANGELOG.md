@@ -35,6 +35,7 @@ Changes are now written to the root changelog instead.
   This way there is still a command,
   that installs the OSSI project with full functionality.
 ### Minor Changes
+* **2022-10-03** Deprecate `shell.execute.as.background.task`, because it is not working correctly.
 * **2022-09-11** **\#162**: Create command `system.network.peer.reachable`,
   in order to test if peer is reachable via (local/internet etc.) network.
 * **2022-07-29** Deprecate `repo.push.to.sh`.
