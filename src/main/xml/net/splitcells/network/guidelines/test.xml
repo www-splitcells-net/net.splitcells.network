@@ -18,5 +18,7 @@
                 (i.e. install and uninstall a software package in order to test installation and deletion).
             </item>
         </list>
+        <paragraph>It can be helpful to create a <quote>bin/test.everything</quote> command,
+            in order to easily ensure, that every test is executed.</paragraph>
     </chapter>
 </article>
