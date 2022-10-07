@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+bin/test.minimal
+bin/test.extensive
+bin/test.side.effects

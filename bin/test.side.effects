@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+>&2 echo No side effect tests defined yet.
