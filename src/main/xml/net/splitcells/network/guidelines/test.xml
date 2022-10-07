@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Test Guidelines</title>
+    </meta>
+    <chapter>
+        <title>Test Complexity Scopes</title>
+        <paragraph>Every project should provide for each test complexity scope a dedicated project command,
+            if there are such tests present.</paragraph>
+        <list>
+            <item><quote>bin/test</quote>: Minimal test should always be tested and run in CI.</item>
+            <item><quote>bin/test.extensive</quote>:Extensive test should test the projects core functionality as much as reasonable.</item>
+            <item><quote>bin/test.side.effects</quote>:Side effect tests check side effects, that may modify the host system in a unreasonable way
+                (i.e. install and uninstall a software package in order to test installation and deletion).
+            </item>
+        </list>
+    </chapter>
+</article>
