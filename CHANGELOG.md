@@ -20,6 +20,7 @@ Links to such platforms may or may not be valid.
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2022-10-07** **\#162**: [There are now 3 recommended types of test](https://splitcells.net/net/splitcells/network/guidelines/test.html): minimal, extensive and side effect tests
 * **2022-02-28** **\#125**:
   1. Rename `*Renderer*` of `net.splitcells.website.server.project.renderer.**`
      to `*ProjectRendererExtension*` in order to ensure unique class names in the
