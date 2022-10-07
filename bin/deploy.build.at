@@ -20,7 +20,16 @@ import logging
 
 if __name__ == '__main__':
 	argsParser = argparse.ArgumentParser(
-		description='Deploys the build process to a different server.')
+		description="""Deploys the build process to a different server.
+
+Steps required on the target computer to set this up:
+* The computer deploying the build process needs ssh access to the target server.
+* Upload all repositories to the target server.
+  This can be done via sshfs mounts or by cloning the repos from some other servers to the target server.
+* Install all required software on the target server.
+  This is usually Python 3 and Java 11.
+* Configure git via `git config --global user.email && git config --global user.name`.
+""")
 	argsParser.add_argument('--target-server', dest='targetServer', type = str, required = True)
 	argsParser.add_argument('--user', type = str, required = True)
 	argsParser.add_argument('--build-command', dest='buildCommand', type = str, required = False, default = './bin/test.via.network.worker')
