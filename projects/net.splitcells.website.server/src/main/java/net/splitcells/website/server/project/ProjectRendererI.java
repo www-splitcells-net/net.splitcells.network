@@ -98,6 +98,9 @@ public class ProjectRendererI implements ProjectRenderer {
             , SourceValidator sourceValidator
             , Path projectFolder
             , Config config) {
+        if (resourceRootPath.isEmpty()) {
+            throw executionException("resourceRootPath is not allowed to be empty. It has to at least be `/`.");
+        }
         this.typedFolder = typedFolder;
         this.profile = renderer;
         this.projectSrcFolder = projectSrcFolder;

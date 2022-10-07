@@ -81,17 +81,13 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
         final var sourceFolder = projectRenderer.projectFolder().resolve("src/main").resolve("xml");
         // TODO Move this code block into a function, in order to avoid
         if (Files.isDirectory(sourceFolder)) {
-            try {
-                Files.walk_recursively(sourceFolder)
-                        .filter(Files::fileExists)
-                        .map(file -> sourceFolder.relativize(
-                                file.getParent()
-                                        .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
-                                                (file.getFileName().toString()) + ".html")))
-                        .forEach(projectPaths::addAll);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            Files.walk_recursively(sourceFolder)
+                    .filter(Files::fileExists)
+                    .map(file -> sourceFolder.relativize(
+                            file.getParent()
+                                    .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
+                                            (file.getFileName().toString()) + ".html")))
+                    .forEach(projectPaths::addAll);
         }
         return projectPaths;
     }

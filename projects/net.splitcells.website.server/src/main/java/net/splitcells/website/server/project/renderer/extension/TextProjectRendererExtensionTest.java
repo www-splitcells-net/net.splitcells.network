@@ -21,7 +21,7 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TextProjectRendererTestExtension {
+public class TextProjectRendererExtensionTest {
     /**
      * TODO Test extension explicitly.
      */

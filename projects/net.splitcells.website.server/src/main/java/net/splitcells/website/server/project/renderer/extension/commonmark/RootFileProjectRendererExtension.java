@@ -22,8 +22,8 @@ import net.splitcells.website.server.project.renderer.extension.ProjectRendererE
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
@@ -52,7 +52,7 @@ public class RootFileProjectRendererExtension implements ProjectRendererExtensio
                 final var pathContent = readString(readmePath);
                 return Optional.of(
                         renderingResult(renderer.render(pathContent, projectRenderer, path, config)
-                                , TEXT_HTML.toString()));
+                                , HTML_TEXT.codeName()));
             }
         }
         return Optional.empty();

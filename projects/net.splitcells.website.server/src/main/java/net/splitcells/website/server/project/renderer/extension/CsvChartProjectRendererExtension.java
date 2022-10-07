@@ -1,24 +1,31 @@
+/*
+ * Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0, which is available at
+ * http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+ * which is available at https://spdx.org/licenses/MIT.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ */
 package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
+import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class CsvChartProjectRendererExtension implements ProjectRendererExtension {
@@ -52,7 +59,7 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
                 page.appendChild(metaElement);
                 page.appendChild(content);
                 return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(page), config).get()
-                        , TEXT_HTML.toString()));
+                        , HTML_TEXT.codeName()));
             }
         }
         return Optional.empty();
@@ -65,17 +72,13 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
                 .projectFolder()
                 .resolve("src/main/csv/");
         if (isDirectory(sourceFolder)) {
-            try {
-                java.nio.file.Files.walk(sourceFolder)
-                        .filter(java.nio.file.Files::isRegularFile)
-                        .map(file -> sourceFolder.relativize(
-                                file.getParent()
-                                        .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
-                                                (file.getFileName().toString()) + ".csv.html")))
-                        .forEach(projectPaths::addAll);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            Files.walk_recursively(sourceFolder)
+                    .filter(Files::is_file)
+                    .map(file -> sourceFolder.relativize(
+                            file.getParent()
+                                    .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
+                                            (file.getFileName().toString()) + ".csv.html")))
+                    .forEach(projectPaths::addAll);
         }
         return projectPaths;
     }
