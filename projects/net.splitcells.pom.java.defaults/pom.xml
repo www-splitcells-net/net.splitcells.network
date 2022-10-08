@@ -116,7 +116,9 @@
         <profile>
             <id>deployable-jar</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>deployable_jar</name>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -189,7 +191,9 @@
         <profile>
             <id>develop</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>develop_profile_enabled</name>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -217,7 +221,9 @@
             @Delegate is not used, because it is experimental and may have complex bugs. -->
             <id>generate-code-with-lombok</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>generate_code_with_lombok</name>
+                </property>
             </activation>
             <properties>
                 <lombok.version>1.18.10</lombok.version>
@@ -270,7 +276,9 @@
         <profile>
             <id>develop-with-source-code-errors</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>develop_with_source_code_errors</name>
+                </property>
             </activation>
             <build>
                 <plugins>
