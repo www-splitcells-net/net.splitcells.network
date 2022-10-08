@@ -169,7 +169,10 @@ def processSub(relativePath, host, command, commandForMissing, commandForUnknown
 if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level=logging.DEBUG)
-	parser = argparse.ArgumentParser(description="""Setting the environment variable 'log_level' to 'debug', enables debug level logging.
+	parser = argparse.ArgumentParser(description="""
+Generates and executes a set of commands over a set of repositories.
+
+Setting the environment variable 'log_level' to 'debug', enables debug level logging.
 
 All command arguments support the variables $subRepo and $peerRepo.
 `$subRepo` is replaced with the relative path from the root --relative-path to the next child repo folder, that will be processed next.
