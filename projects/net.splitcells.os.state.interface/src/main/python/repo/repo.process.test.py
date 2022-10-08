@@ -11,5 +11,44 @@ __authors__ = ["and other"]
 __copyright__ = "Copyright 2022"
 __license__ = "EPL-2.0 OR MIT"
 
+import subprocess
+import sys
+from threading import Thread
+
+is_running = True
+def store_output(stream, output):
+    with stream:
+        for line in iter(stream.readline, b''):
+            if is_running:
+                line_str = line.decode(sys.stdout.encoding)
+                output.append(line_str)
+            else:
+                return
 if __name__ == '__main__':
-    exit(0)
+    process = subprocess.Popen("repo.process --command 'echo $subRepo'",
+                               shell = True,
+                               bufsize = 100000,
+                               stdout = subprocess.PIPE,
+                               stderr = subprocess.PIPE)
+    output = list()
+    output_thread = Thread(target=store_output, args=[process.stdout, output])
+    error_thread = Thread(target=store_output, args=[process.stderr, output])
+    output_thread.start()
+    error_thread.start()
+    exit_code = process.wait()
+    is_running = False
+    output_thread.join()
+    error_thread.join()
+    expected_results = ["\n" # The first entry is empty, because the first repo processed is the current repo.
+        ,"../net.splitcells.cin.log/\n"
+        ,"../net.splitcells.network.community.via.javadoc/\n"
+        ,"../net.splitcells.network.community.git-bug/\n"
+        ,"../net.splitcells.network.log/\n"
+        ,"../net.splitcells.network.media/\n"
+        ,"../net.splitcells.network.repos/\n"
+        ,"../net.splitcells.os.state.interface.lib.gpl.2/\n"
+        ,"../net.splitcells.os.state.interface.lib.gpl.3/\n"
+                        ]
+    if not expected_results == output:
+        raise Exception('output is not valid: ' + str(output))
+    sys.exit(exit_code)
