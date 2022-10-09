@@ -41,21 +41,21 @@ if __name__ == '__main__':
     output_thread.join()
     error_thread.join()
     expected_results = ["" # The first entry is empty, because the first repo processed is the current repo.
-        ,"../net.splitcells.cin.log/"
-        ,"../net.splitcells.network.community.via.javadoc/"
-        ,"../net.splitcells.network.community.git-bug/"
-        ,"../net.splitcells.network.log/"
-        ,"../net.splitcells.network.media/"
-        ,"../net.splitcells.network.repos/"
-        ,"../net.splitcells.os.state.interface.lib.gpl.2/"
-        ,"../net.splitcells.os.state.interface.lib.gpl.3/"
+        ,"../net.splitcells.cin.log"
+        ,"../net.splitcells.network.community.via.javadoc"
+        ,"../net.splitcells.network.community.git-bug"
+        ,"../net.splitcells.network.log"
+        ,"../net.splitcells.network.media"
+        ,"../net.splitcells.network.repos"
+        ,"../net.splitcells.os.state.interface.lib.gpl.2"
+        ,"../net.splitcells.os.state.interface.lib.gpl.3"
                         ]
     output_is_valid = True
     for i in range(1, len(expected_results)):
         # `contains` is needed in case the peer repos are not present.
         element_is_valid = expected_results[i] in output[i]
         if not element_is_valid:
-            logging.error('Invalid repo: ' + expected_results[i])
+            logging.error('Invalid repo: ' + expected_results[i] + ", " + output[i])
         output_is_valid = output_is_valid and element_is_valid
     if not output_is_valid:
         raise Exception('output is not valid: ' + str(output))
