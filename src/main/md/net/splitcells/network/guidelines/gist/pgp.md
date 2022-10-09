@@ -35,6 +35,11 @@ server: `gpg --export [your_address@example.net] | curl -T - https://keys.openpg
 Consider commands output and verify upload.
 The public URL for the uploaded key can be used for public key distribution.
 
+## Sign files.
+
+Files can be signed with the default key via `gpg -ab --sign [file to sign]`.
+Keyring managers may ask for passwords during this process.
+
 ## Git Integration
 
 ## Helpful Detailed Guides
