@@ -49,6 +49,10 @@ if __name__ == '__main__':
         ,"../net.splitcells.os.state.interface.lib.gpl.2/\n"
         ,"../net.splitcells.os.state.interface.lib.gpl.3/\n"
                         ]
+    output_is_valid = output[0] == expected_results[1]
+    for i in range(1, len(expected_results)):
+        # `contains` is needed in case the peer repos are not present.
+        output_is_valid = output_is_valid and output[i].contains(expected_results[i])
     if not expected_results == output:
         raise Exception('output is not valid: ' + str(output))
     sys.exit(exit_code)
