@@ -192,7 +192,7 @@
             <id>release</id>
             <activation>
                 <property>
-                    <name>!release_disabled</name>
+                    <name>release_enabled</name>
                 </property>
             </activation>
             <build>
@@ -217,6 +217,19 @@
                                 <id>attach-javadocs</id>
                                 <goals>
                                     <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
                                 </goals>
                             </execution>
                         </executions>
