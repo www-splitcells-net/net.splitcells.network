@@ -53,6 +53,6 @@ if __name__ == '__main__':
     for i in range(1, len(expected_results)):
         # `contains` is needed in case the peer repos are not present.
         output_is_valid = output_is_valid and output[i].contains(expected_results[i])
-    if not expected_results == output:
+    if not output_is_valid:
         raise Exception('output is not valid: ' + str(output))
     sys.exit(exit_code)
