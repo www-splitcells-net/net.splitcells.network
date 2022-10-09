@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.testing.TestTypes.BENCHMARK_RUNTIME;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -27,9 +29,27 @@ import static net.splitcells.gel.solution.history.History.ALLOCATION_EVENT;
 import static net.splitcells.gel.solution.history.History.META_DATA;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.ADDITION;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
+import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HistoryTest {
+
+    @Tag(BENCHMARK_RUNTIME)
+    @Test
+    public void test_rest_to_beginning_runtime() {
+        final var testSubject = defineProblem("test_rest_to_beginning_runtime")
+                .withDemandAttributes()
+                .withDemands(IntStream.rangeClosed(1, 10000).mapToObj(i -> list()).collect(toList()))
+                .withSupplyAttributes()
+                .withSupplies(IntStream.rangeClosed(1, 10000).mapToObj(i -> list()).collect(toList()))
+                .withConstraint(Then.then(constantRater(cost(7))))
+                .toProblem()
+                .asSolution();
+        testSubject.history().processWithHistory(() -> {
+            testSubject.optimize(onlineLinearInitialization());
+            testSubject.history().resetTo(0);
+        });
+    }
 
     @Tag(INTEGRATION_TEST)
     @Test
