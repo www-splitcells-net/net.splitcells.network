@@ -11,6 +11,7 @@ __authors__ = ["and other"]
 __copyright__ = "Copyright 2022"
 __license__ = "EPL-2.0 OR MIT"
 
+import logging
 import subprocess
 import sys
 from threading import Thread
@@ -39,20 +40,23 @@ if __name__ == '__main__':
     is_running = False
     output_thread.join()
     error_thread.join()
-    expected_results = ["\n" # The first entry is empty, because the first repo processed is the current repo.
-        ,"../net.splitcells.cin.log/\n"
-        ,"../net.splitcells.network.community.via.javadoc/\n"
-        ,"../net.splitcells.network.community.git-bug/\n"
-        ,"../net.splitcells.network.log/\n"
-        ,"../net.splitcells.network.media/\n"
-        ,"../net.splitcells.network.repos/\n"
-        ,"../net.splitcells.os.state.interface.lib.gpl.2/\n"
-        ,"../net.splitcells.os.state.interface.lib.gpl.3/\n"
+    expected_results = ["" # The first entry is empty, because the first repo processed is the current repo.
+        ,"../net.splitcells.cin.log/"
+        ,"../net.splitcells.network.community.via.javadoc/"
+        ,"../net.splitcells.network.community.git-bug/"
+        ,"../net.splitcells.network.log/"
+        ,"../net.splitcells.network.media/"
+        ,"../net.splitcells.network.repos/"
+        ,"../net.splitcells.os.state.interface.lib.gpl.2/"
+        ,"../net.splitcells.os.state.interface.lib.gpl.3/"
                         ]
-    output_is_valid = output[0] == expected_results[1]
+    output_is_valid = True
     for i in range(1, len(expected_results)):
         # `contains` is needed in case the peer repos are not present.
-        output_is_valid = output_is_valid and output[i].contains(expected_results[i])
+        element_is_valid = expected_results[i] in output[i]
+        if not element_is_valid:
+            logging.error('Invalid repo: ' + expected_results[i])
+        output_is_valid = output_is_valid and element_is_valid
     if not output_is_valid:
         raise Exception('output is not valid: ' + str(output))
     sys.exit(exit_code)
