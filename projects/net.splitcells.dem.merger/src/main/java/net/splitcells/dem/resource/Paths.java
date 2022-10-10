@@ -14,16 +14,13 @@ import com.google.common.io.Files;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
 import static java.nio.file.Files.createDirectories;
-import static java.nio.file.Files.readAllBytes;
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;

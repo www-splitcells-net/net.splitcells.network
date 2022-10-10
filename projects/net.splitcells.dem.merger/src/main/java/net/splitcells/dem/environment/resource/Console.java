@@ -10,8 +10,11 @@
  */
 package net.splitcells.dem.environment.resource;
 
+import net.splitcells.dem.Dem;
+import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
@@ -35,8 +38,8 @@ public final class Console extends ResourceOptionI<Sender<String>> {
         super(() -> {
             if (environment().config().configValue(IsEchoToFile.class)) {
                 var consolePath
-                        = environment().config().configValue(ProcessPath.class)
-                        .resolve("console")
+                        = Paths.usersStateFiles().resolve("src/main/xml")
+                        .resolve("net/splitcells/dem/console/instance")
                         .resolve(
                                 environment().config().configValue(StartTime.class)
                                         .format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss.nnnn")));
