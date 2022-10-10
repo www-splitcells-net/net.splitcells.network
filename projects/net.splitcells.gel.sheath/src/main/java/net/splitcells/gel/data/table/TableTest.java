@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 
-public final class TabulaTest extends TestSuiteI {
+public final class TableTest extends TestSuiteI {
 
     /**
      * TODO Use {@link Allocations}.
