@@ -11,6 +11,8 @@
 package net.splitcells.dem.resource;
 
 import com.google.common.io.Files;
+import net.splitcells.dem.Dem;
+import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
@@ -55,6 +57,21 @@ public final class Paths {
 
     public static Path userHome(String... relativePath) {
         return path(System.getProperty("user.home"), relativePath);
+    }
+
+    /**
+     * <p>Folder containing the user's temporary (`~/.local/state/<ProgramName>`) files for this program based on {@link ProgramName}.
+     * This is based on the <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG Base Directory Specification</a>.
+     * The format there should abide by the <a href="https://splitcells.net/net/splitcells/network/guidelines/filesystem.html">Software Project File System Standards</a>.
+     * </p>
+     * <p>By execution this method the corresponding folders are created, if these are not already present.</p>
+     *
+     * @return Returns the user's state files.
+     */
+    public static Path usersStateFiles() {
+        final var usersStateFiles = userHome().resolve(".local/state/").resolve(Dem.configValue(ProgramName.class));
+        Paths.generateFolderPath(usersStateFiles);
+        return usersStateFiles;
     }
 
     public static Path path(Path root, String... elements) {
