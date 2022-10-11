@@ -17,6 +17,12 @@
 
 ## Articles
 
+=> gemini://splitcells-net.srht.site/2022-10-11-Reprioritization.gmi 2022-10-11 Reprioritization
+
+=> gemini://splitcells-net.srht.site/2022-09-23-We-want-to-use-the-software-guys-RIGHT-Right-right-ehhh.gmi 2022-09-23 We want to use the software guys! RIGHT!? Right? right? ehhh...
+
+=> gemini://splitcells-net.srht.site/2022-07-18-Writing-tests-after-the-fact.gmi 2022-07-18 Writing tests after the fact
+
 => gemini://splitcells-net.srht.site/2022-05-01-Note-On-Creating-Your-Own-Web-Layout-And-Style.gmi 2022-05-01 Note On Creating Your Own Web Layout And Style
 
 => gemini://splitcells-net.srht.site/2022-02-15-Generic-Allocators-Fourth-Version.gmi 2022-02-15 Generic Allocators Fourth Version
