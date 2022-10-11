@@ -120,20 +120,20 @@ public class SchoolCourseSchedulingTest {
     public static void main(String... args) {
         GelDev.process(() -> {
             var network = registerSchoolScheduling(network()
-                    , 15
-                    , 20
-                    , 30
-                    , 27
-                    , 17
-                    , 30
-                    , 410d / 158d
+                    , 1
+                    , 1
+                    , 1
+                    , 2
+                    , 2
+                    , 8
+                    , 1
+                    , 1
                     , 4
-                    , 56
-                    , 3
-                    , 11
-                    , 115
-                    , 11
-                    , 92
+                    , 4
+                    , 2
+                    , 2
+                    , 2
+                    , 2
             );
             rangeClosed(1, 1).forEach(i -> {
                 /* TODO This can be used to demonstrate the problems of implementing own custom supply selector.
@@ -180,6 +180,71 @@ public class SchoolCourseSchedulingTest {
                     .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
                     .withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)));
         }));
+        if (false) {
+            // TODO Will be done later. Simpler instance will be solved first.
+            GelDev.process(() -> {
+                var network = registerSchoolScheduling(network()
+                        , 15
+                        , 20
+                        , 30
+                        , 27
+                        , 17
+                        , 30
+                        , 410d / 158d
+                        , 4
+                        , 56
+                        , 3
+                        , 11
+                        , 115
+                        , 11
+                        , 92
+                );
+                rangeClosed(1, 1).forEach(i -> {
+                /* TODO This can be used to demonstrate the problems of implementing own custom supply selector.
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3, false)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+                network.process(RAILS_FOR_SCHOOL_SCHEDULING, s -> s.createStandardAnalysis(1));*/
+                    network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, onlineLinearInitialization());
+                    network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, simpleConstraintGroupBasedRepair(groupSelector(randomness(), 3
+                                    , 1), hillClimber(), false)
+                            , (currentSolution, step) -> step <= 10 && !currentSolution.isOptimal());
+
+                /*network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3)
+                        , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(2)
+                        , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(1)
+                        , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(4)
+                        , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());*/
+                    // TODO REMOVE network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, linearInitialization());
+                    network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, teacherAllocationForCoursesOptimization()
+                            , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
+                    network.process(TEACHER_ALLOCATION_FOR_COURSES, s -> s.createStandardAnalysis(1));
+                /*network.withOptimization(TEACHER_ALLOCATION_FOR_COURSES, simpleConstraintGroupBasedRepair(groupSelector(randomness(), 3
+                                , 1), hillClimber(), false)
+                        , (currentSolution, step) -> step <= 1 && !currentSolution.isOptimal());*/
+                });
+                network.process(RAILS_FOR_SCHOOL_SCHEDULING, Solution::createStandardAnalysis);
+                network.process(TEACHER_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
+                network.process(STUDENT_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
+                network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, onlineLinearInitialization());
+                network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, studentAllocationOptimization()
+                        , (currentSolution, step) -> step <= 3 && !currentSolution.isOptimal());
+            }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
+                env.config()
+                        .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
+                        .withConfigValue(IsEchoToFile.class, true)
+                        .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
+                        .withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)));
+            }));
+        }
     }
 
     private static OnlineOptimization studentAllocationOptimization() {
