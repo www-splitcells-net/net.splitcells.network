@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>HTML Guidelines</title>
+    </meta>
+    <chapter><title>German Legalities</title>
+        <paragraph>An Impressum is always required.</paragraph>
+    </chapter>
+    <chapter>
+        <title>EU Legalities</title>
+        <paragraph>A privacy policy is always required.</paragraph>
+        <paragraph>By default it should be tried to use no Javascript.
+            If any third party Javascript (i.e. via third party server or bundled library) is used and no cookies are expected to be created,
+            cookies have to be explicitly disabled on the HTML page via inlined Javascript code,
+            that is executed before any other code,
+            by overriding the getter and setter method of the document's cookies.
+            If any cookies are expected to be created or if one is not sure,
+            if the third party code creates cookies,
+            one should add a cookie banner to HTML page, just to be sure.
+            Adding a cookie/privacy banner to website just to be sure by default is preferred.</paragraph>
+    </chapter>
+</article>
