@@ -119,7 +119,22 @@ public class SchoolCourseSchedulingTest {
     @Test
     public static void main(String... args) {
         GelDev.process(() -> {
-            var network = registerSchoolScheduling(network(), 15, 20, 30);
+            var network = registerSchoolScheduling(network()
+                    , 15
+                    , 20
+                    , 30
+                    , 27
+                    , 17
+                    , 30
+                    , 410d / 158d
+                    , 4
+                    , 56
+                    , 3
+                    , 11
+                    , 115
+                    , 11
+                    , 92
+            );
             rangeClosed(1, 1).forEach(i -> {
                 /* TODO This can be used to demonstrate the problems of implementing own custom supply selector.
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, railsForSchoolSchedulingOptimization(3, false)
@@ -497,37 +512,47 @@ public class SchoolCourseSchedulingTest {
 
     private static Network registerSchoolScheduling(Network network, int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
-            , int maximumNumberOfStudentsPerCourse) {
-        final var numberOfSubjects = 27;
-        final var numberOfRails = 17;
+            , int maximumNumberOfStudentsPerCourse
+            , int numberOfSubjects
+            , int numberOfRails
+            , int numberOfCourses
+            , double averageCourseLength
+            , int maximumCourseLength
+            , int numberOfTeachers
+            , int teacherChoiceFactor
+            , int numberOfSubjectsPerStudentsInSecondVintage
+            , int numberOfStudentsInFirstVintage
+            , int numberOfSubjectsPerStudentsInVintage
+            , int numberOfStudentsInSecondVintage
+    ) {
+        final var averageNumberOfCoursesPerTeacher = numberOfCourses / numberOfTeachers;
         network.withNode(RAILS_FOR_SCHOOL_SCHEDULING
                         , defineRailsForSchoolScheduling(2
                                 , numberOfSubjects
-                                , 30
-                                , 410d / 158d
-                                , 4
+                                , numberOfCourses
+                                , averageCourseLength
+                                , maximumCourseLength
                                 , numberOfRails))
                 .withNode(TEACHER_ALLOCATION_FOR_COURSES
                         , railsForSchoolScheduling ->
                                 defineTeacherAllocationForCourses
                                         (railsForSchoolScheduling
-                                                , 56
-                                                , 158d / 56d
-                                                , 158
+                                                , numberOfTeachers
+                                                , averageNumberOfCoursesPerTeacher
                                                 , numberOfSubjects
                                                 , numberOfRails
-                                                , 3)
+                                                , teacherChoiceFactor)
                         , RAILS_FOR_SCHOOL_SCHEDULING)
                 .withNode(STUDENT_ALLOCATION_FOR_COURSES
                         , teacherAllocationForCourses -> defineStudentAllocationsForCourses
                                 (teacherAllocationForCourses
-                                        , 92
-                                        , 11
+                                        , numberOfStudentsInSecondVintage
+                                        , numberOfSubjectsPerStudentsInSecondVintage
                                         , minimalNumberOfStudentsPerCourse
                                         , optimalNumberOfStudentsPerCourse
                                         , maximumNumberOfStudentsPerCourse
-                                        , 115
-                                        , 11)
+                                        , numberOfStudentsInFirstVintage
+                                        , numberOfSubjectsPerStudentsInVintage)
                         , TEACHER_ALLOCATION_FOR_COURSES);
         return network;
     }
@@ -547,7 +572,6 @@ public class SchoolCourseSchedulingTest {
                 (railsForSchoolScheduling
                         , 56
                         , 158d / 56d
-                        , 158
                         , numberOfSubjects
                         , numberOfRails
                         , 3);
@@ -632,7 +656,6 @@ public class SchoolCourseSchedulingTest {
     private static Solution defineTeacherAllocationForCourses(Solution solution
             , int numberOfTeachers
             , double averageNumberOfCoursesPerTeacher
-            , @Deprecated int numberOfCourses
             , int numberOfSubjects
             , int numberOfRails
             , int teacherChoiceFactor) {
