@@ -17,6 +17,14 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 public class AspectOrientedConstructorBase<T> implements AspectOrientedConstructor<T> {
+
+    public static <A> AspectOrientedConstructorBase<A> aspectOrientedConstructor() {
+        return new AspectOrientedConstructorBase<>();
+    }
+
+    private AspectOrientedConstructorBase() {
+        
+    }
     private List<Function<T, T>> aspects = list();
 
     @ReturnsThis
