@@ -10,9 +10,10 @@
  */
 package net.splitcells.gel.solution;
 
+import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.gel.problem.Problem;
 
-public class SolutionFactoryI extends SolutionFactory {
+public class SolutionFactoryI extends AspectOrientedConstructorBase<Solution> implements SolutionFactory {
     @Override
     public Solution solution(Problem problem) {
         return joinAspects(SolutionI.solution(problem));

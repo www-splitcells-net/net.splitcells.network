@@ -8,13 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.gel.solution;
+package net.splitcells.dem.resource;
 
 import net.splitcells.dem.environment.resource.Resource;
-import net.splitcells.dem.resource.AspectOrientedConstructor;
-import net.splitcells.dem.resource.AspectOrientedConstructorBase;
-import net.splitcells.gel.problem.Problem;
 
-public interface SolutionFactory extends AspectOrientedConstructor<Solution>, Resource {
-    Solution solution(Problem problem);
+public interface AspectOrientedResource<T> extends Resource, AspectOrientedConstructor<T> {
 }
