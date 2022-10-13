@@ -14,6 +14,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.resource.AspectOrientedResource;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -26,7 +27,7 @@ import static net.splitcells.dem.lang.Xml.directChildElementByName;
 import static net.splitcells.dem.lang.Xml.directChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 
-public interface DatabaseFactory extends Resource {
+public interface DatabaseFactory extends AspectOrientedResource<Database> {
     Database database(String name, Attribute<? extends Object>... attributes);
 
     Database database(Attribute<? extends Object>... attributes);
