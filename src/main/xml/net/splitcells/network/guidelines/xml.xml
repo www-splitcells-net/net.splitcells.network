@@ -11,5 +11,10 @@
             text, there is no limit on the line length.
             Otherwise, a maximum length of 80 characters is preferred.
         </paragraph>
+        <paragraph>The star and end tag should have the same indention,
+            so that formatters do not change their position during automatic formatting.
+            Elements inside flowing text are allowed and
+            do not require new line symbols between the start and end tag.
+        </paragraph>
     </chapter>
 </article>
