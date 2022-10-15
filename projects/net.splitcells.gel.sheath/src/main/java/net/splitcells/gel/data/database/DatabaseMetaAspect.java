@@ -29,6 +29,7 @@ import static net.splitcells.gel.common.Language.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * <p>This aspect adds mainly logging and runtime check functionality to {@link Database} instances.</p>
  * <p>TODO Make this an aspect in order to make it usable for other implementations of {@link Database}.<p/>
  * <p>TODO Require the usage of a non empty name during construction.<p/>
  * <p>TODO Invalidate Lines pointing to an index where values are already replaced.<p/>
