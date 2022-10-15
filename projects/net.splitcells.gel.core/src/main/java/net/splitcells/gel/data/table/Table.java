@@ -52,7 +52,7 @@ public interface Table extends Discoverable, Domable {
 
     List<Attribute<? extends Object>> headerView2();
 
-    <T> ColumnView<T> columnView(Attribute<T> atribūts);
+    <T> ColumnView<T> columnView(Attribute<T> attribute);
 
     List<Column<Object>> columnsView();
 
