@@ -12,7 +12,6 @@ package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -20,10 +19,7 @@ import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import org.w3c.dom.Node;
 
-import java.util.Collection;
-
 import static java.util.stream.IntStream.range;
-import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.*;
@@ -33,26 +29,23 @@ import static net.splitcells.gel.common.Language.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * TODO Make this an aspect in order to make it usable for other implementations of {@link Database}.
- * <p/>
- * TODO Require the usage of a non empty name during construction.
- * <p/>
- * TODO Invalidate Lines pointing to an index where values are already replaced.
- * <p/>
- * TODO PERFORMANCE Abstract Database implementation with generic storage in order to
+ * <p>TODO Make this an aspect in order to make it usable for other implementations of {@link Database}.<p/>
+ * <p>TODO Require the usage of a non empty name during construction.<p/>
+ * <p>TODO Invalidate Lines pointing to an index where values are already replaced.<p/>
+ * <p>TODO PERFORMANCE Abstract Database implementation with generic storage in order to
  * simplify implementation and maintenance row and column based Databases.
  * <p/>
- * TODO IDEA Implement Java collection interface.
+ * <p>TODO IDEA Implement Java collection interface.</p>
  */
-public class DatabaseIRef implements Database {
+public class DatabaseMetaAspect implements Database {
 
     public static Database databaseIRef(Database database) {
-        return new DatabaseIRef(database);
+        return new DatabaseMetaAspect(database);
     }
 
     final Database database;
 
-    private DatabaseIRef(Database database) {
+    private DatabaseMetaAspect(Database database) {
         this.database = database;
     }
 
@@ -76,10 +69,10 @@ public class DatabaseIRef implements Database {
             assert database.headerView().size() == line.context().headerView().size() : path() + "" + line.context().path();
             assert !database.lines().contains(line);
             assert line.index() >= database.rawLines().size() || database.rawLines().get(line.index()) == null : path().toString() + line.index();
+            range(0, database.headerView().size()).forEach(i -> {
+                assert database.headerView().get(i).equals(line.context().headerView().get(i));
+            });
         }
-        range(0, database.headerView().size()).forEach(i -> {
-            assert database.headerView().get(i).equals(line.context().headerView().get(i));
-        });
         return database.add(line);
     }
 
@@ -89,7 +82,7 @@ public class DatabaseIRef implements Database {
     }
 
     /**
-     * TODO REMOVE Code duplication of {@link DatabaseIRef#addTranslated} methods.
+     * TODO REMOVE Code duplication of {@link DatabaseMetaAspect#addTranslated} methods.
      */
     @Override
     public Line addTranslated(List<? extends Object> lineValues) {

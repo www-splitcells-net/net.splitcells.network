@@ -30,7 +30,7 @@ public class DatabaseSF {
     }
 
     public static List<Function<List<Attribute<?>>, Database>> testDatabaseFactory() {
-        List<Function<List<Attribute<?>>, Database>> tester = list((a) -> DatabaseIRef.databaseIRef(Databases.database(a)));
+        List<Function<List<Attribute<?>>, Database>> tester = list((a) -> DatabaseMetaAspect.databaseIRef(Databases.database(a)));
         return tester;
     }
 

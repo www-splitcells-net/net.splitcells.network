@@ -19,7 +19,7 @@ import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.allocation.Allocationss;
 import net.splitcells.gel.data.allocations.AllocationsIRefFactory;
-import net.splitcells.gel.data.database.DatabaseIRef;
+import net.splitcells.gel.data.database.DatabaseMetaAspect;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.lookup.LookupRefFactory;
 import net.splitcells.gel.data.lookup.Lookups;
@@ -85,7 +85,7 @@ public final class GelEnv {
                     .withConfigValue(ProcessPath.class, Paths.userHome("connections"
                             , "tmp.storage"
                             , "net.splitcells.dem"));
-            env.config().configValue(Databases.class).withAspect(DatabaseIRef::databaseIRef);
+            env.config().configValue(Databases.class).withAspect(DatabaseMetaAspect::databaseIRef);
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
         };
     }
