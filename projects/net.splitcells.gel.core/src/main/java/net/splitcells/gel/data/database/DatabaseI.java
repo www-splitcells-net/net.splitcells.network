@@ -12,6 +12,11 @@ package net.splitcells.gel.data.database;
 
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
+import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.CommonFunctions.removeAny;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -45,7 +50,8 @@ import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
 
 /**
- * TODO Make all constructors private. One can use configurators for {@link DatabaseFactory} instead.
+ * <p>TODO Make all constructors private. One can use configurators for {@link DatabaseFactory} instead.</p>
+ * <p>TODO Test consistency of meta data.</p>
  */
 public class DatabaseI implements Database {
     protected final String name;
@@ -113,9 +119,33 @@ public class DatabaseI implements Database {
         return attributes2;
     }
 
+    /**
+     * TODO PERFORMANCE Cache list views in Order to minimize number of objects.
+     *
+     * @param attribute This is the {@link Attribute} of the corresponding {@link Column}.
+     * @return This is the {@link Column} corresponding to given {@link Attribute}.
+     * @param <T> This is the type of the column.
+     */
     @SuppressWarnings("unchecked")
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            assertThat(headerView().contains(attribute))
+                    .describedAs(attributes.stream()
+                            .map(a -> a.name() + ", ")
+                            .reduce((a, b) -> a + b)
+                            .orElse("")
+                            + ": " + attribute.name())
+                    .isTrue();
+            assertThat(typed_column_index.containsKey(attribute))
+                    .describedAs(attribute.name() + " is not present in "
+                            + typed_column_index.keySet().stream()
+                            .map(a -> a.name())
+                            .reduce((a, b) -> a + ", " + b)
+                            .get()
+                    )
+                    .isTrue();
+        }
         try {
             return ColumnViewI.columnView((Column<T>) columns.get(typed_column_index.get(attribute)));
         } catch (Exception e) {
@@ -148,6 +178,22 @@ public class DatabaseI implements Database {
     }
 
     protected Line addTranslated(List<Object> lineValues, int index) {
+        if (TRACING) {
+            domsole().append(
+                    event("addTranslatingAt." + Database.class.getSimpleName()
+                            , path().toString()
+                            , elementWithChildren("index", textNode("" + index))
+                            , elementWithChildren("line-values", textNode(lineValues.toString()))
+                    )
+                    , this
+                    , DEBUG
+            );
+        }
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            assertThat(lineValues.size()).isEqualTo(headerView().size());
+            require(indexesOfFree.contains(index) || index >= rawLines.size());
+            range(0, lineValues.size()).forEach(i -> attributes.get(i).isInstanceOf(lineValues.get(i)).required());
+        }
         if (index >= rawLines.size()) {
             range(0, lineValues.size()).forEach(i -> {
                 extend_content_to(columns.get(i), index);
@@ -200,6 +246,18 @@ public class DatabaseI implements Database {
 
     @Override
     public void remove(int lineIndex) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            assertThat(indexesOfFree).doesNotContain(lineIndex);
+            assertThat(lineIndex).isNotNegative();
+            assert lineIndex < rawLines.size() : lineIndex + ":" + rawLines.size() + path();
+            assertThat(rawLines.get(lineIndex)).isNotNull();
+            lines.hasOnlyOnce(rawLines.get(lineIndex));
+            columns.forEach(column -> {
+                assert lineIndex < column.size();
+                assert rawLines.size() == column.size();
+            });
+            assert lineIndex < rawLines.size();
+        }
         final var removalFrom = rawLines.get(lineIndex);
         beforeRemovalSubscriber.forEach(subscriber -> subscriber.registerBeforeRemoval(removalFrom));
         columns.forEach(kolonna -> {

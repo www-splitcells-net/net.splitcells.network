@@ -11,11 +11,14 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
+import org.w3c.dom.Node;
 
 import java.util.Collection;
 
@@ -39,65 +42,18 @@ import static org.assertj.core.api.Assertions.assertThat;
  * TODO PERFORMANCE Abstract Database implementation with generic storage in order to
  * simplify implementation and maintenance row and column based Databases.
  * <p/>
- * TODO Test consistency of meta data.
- * <p/>
  * TODO IDEA Implement Java collection interface.
  */
-public class DatabaseIRef extends DatabaseI {
-    @Deprecated
-    protected DatabaseIRef(List<Attribute<? extends Object>> attribute) {
-        super(attribute);
+public class DatabaseIRef implements Database {
+
+    public static Database databaseIRef(Database database) {
+        return new DatabaseIRef(database);
     }
 
-    protected DatabaseIRef(String name, Discoverable parent, List<Attribute<Object>> header) {
-        super(name, parent, header);
-        assert this.attributes.size() == columns.size();
-        header.requireUniqueness();
-    }
+    final Database database;
 
-    @Deprecated
-    protected DatabaseIRef(List<Attribute<?>> header, Collection<List<Object>> linesValues) {
-        super(header, linesValues);
-    }
-
-    protected DatabaseIRef(String name, Discoverable parent, Attribute<? extends Object>... header) {
-        super(name, parent, header);
-    }
-
-    @Deprecated
-    protected DatabaseIRef(Attribute<?>... header) {
-        super(header);
-    }
-
-    /**
-     * TODO PERFORMANCE Cache list views in Order to minimize number of objects.
-     * <p/>
-     * TODO Return an unmodifiable view of the column.
-     *
-     * @param attribute
-     * @param <T>
-     * @return
-     */
-    @Override
-    public <T> ColumnView<T> columnView(Attribute<T> attribute) {
-        if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(attributes.contains(attribute))
-                    .describedAs(attributes.stream()
-                            .map(a -> a.name() + ", ")
-                            .reduce((a, b) -> a + b)
-                            .orElse("")
-                            + ": " + attribute.name())
-                    .isTrue();
-            assertThat(typed_column_index.containsKey(attribute))
-                    .describedAs(attribute.name() + " is not present in "
-                            + typed_column_index.keySet().stream()
-                            .map(a -> a.name())
-                            .reduce((a, b) -> a + ", " + b)
-                            .get()
-                    )
-                    .isTrue();
-        }
-        return super.columnView(attribute);
+    private DatabaseIRef(Database database) {
+        this.database = database;
     }
 
     /**
@@ -117,37 +73,19 @@ public class DatabaseIRef extends DatabaseI {
     @Override
     public Line add(Line line) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assert attributes.size() == line.context().headerView().size() : path() + "" + line.context().path();
-            assert !lines.contains(line);
-            assert line.index() >= rawLines.size() || rawLines.get(line.index()) == null : path().toString() + line.index();
+            assert database.headerView().size() == line.context().headerView().size() : path() + "" + line.context().path();
+            assert !database.lines().contains(line);
+            assert line.index() >= database.rawLines().size() || database.rawLines().get(line.index()) == null : path().toString() + line.index();
         }
-        range(0, attributes.size()).forEach(i -> {
-            assert attributes.get(i).equals(line.context().headerView().get(i));
+        range(0, database.headerView().size()).forEach(i -> {
+            assert database.headerView().get(i).equals(line.context().headerView().get(i));
         });
-        return super.add(line);
+        return database.add(line);
     }
 
-    /**
-     * @param lineValues TODO Support {@link net.splitcells.dem.lang.dom.Domable#toDom} for logging.
-     */
-    protected Line addTranslated(List<Object> lineValues, int index) {
-        if (TRACING) {
-            domsole().append(
-                    event("addTranslatingAt." + Database.class.getSimpleName()
-                            , path().toString()
-                            , elementWithChildren("index", textNode("" + index))
-                            , elementWithChildren("line-values", textNode(lineValues.toString()))
-                    )
-                    , this
-                    , DEBUG
-            );
-        }
-        if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(lineValues.size()).isEqualTo(attributes.size());
-            require(indexesOfFree.contains(index) || index >= rawLines.size());
-            range(0, lineValues.size()).forEach(i -> attributes.get(i).isInstanceOf(lineValues.get(i)).required());
-        }
-        return super.addTranslated(lineValues, index);
+    @Override
+    public void remove(int lineIndex) {
+
     }
 
     /**
@@ -156,16 +94,16 @@ public class DatabaseIRef extends DatabaseI {
     @Override
     public Line addTranslated(List<? extends Object> lineValues) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(lineValues.size()).isEqualTo(attributes.size());
+            assertThat(lineValues.size()).isEqualTo(database.headerView().size());
             /**
              * TODO Check for {@link Attribute} compatibility and not Class compatibility.
              */
             lineValues.stream().forEach(e ->
                     assertThat(e).as("A line <%s> should not contain nulls.", lineValues)
                             .isNotNull());
-            range(0, lineValues.size()).forEach(i -> attributes.get(i).isInstanceOf(lineValues.get(i)).required());
+            range(0, lineValues.size()).forEach(i -> database.headerView().get(i).isInstanceOf(lineValues.get(i)).required());
         }
-        final var translatedAddition = super.addTranslated(lineValues);
+        final var translatedAddition = database.addTranslated(lineValues);
         if (TRACING) {
             domsole().append(
                     event("addTranslating." + Database.class.getSimpleName()
@@ -179,23 +117,6 @@ public class DatabaseIRef extends DatabaseI {
     }
 
     @Override
-    public void remove(int lineIndex) {
-        if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(indexesOfFree).doesNotContain(lineIndex);
-            assertThat(lineIndex).isNotNegative();
-            assert lineIndex < rawLines.size() : lineIndex + ":" + rawLines.size() + path();
-            assertThat(rawLines.get(lineIndex)).isNotNull();
-            lines.hasOnlyOnce(rawLines.get(lineIndex));
-            columns.forEach(column -> {
-                assert lineIndex < column.size();
-                assert rawLines.size() == column.size();
-            });
-            assert lineIndex < rawLines.size();
-        }
-        super.remove(lineIndex);
-    }
-
-    @Override
     public void remove(Line line) {
         if (TRACING) {
             domsole().append(event(REMOVE.value()
@@ -205,6 +126,71 @@ public class DatabaseIRef extends DatabaseI {
                             , elementWithChildren(LINE.value(), line.toDom()))
                     , this, LogLevel.DEBUG);
         }
-        super.remove(line);
+        database.remove(line);
+    }
+
+    @Override
+    public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
+        database.subscribeToAfterAdditions(subscriber);
+    }
+
+    @Override
+    public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
+        database.subscribeToBeforeRemoval(subscriber);
+    }
+
+    @Override
+    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
+        database.subscribeToAfterRemoval(subscriber);
+    }
+
+    @Override
+    public Node toDom() {
+        return database.toDom();
+    }
+
+    @Override
+    public List<String> path() {
+        return database.path();
+    }
+
+    @Override
+    public List<Attribute<Object>> headerView() {
+        return database.headerView();
+    }
+
+    @Override
+    public List<Attribute<? extends Object>> headerView2() {
+        return database.headerView2();
+    }
+
+    @Override
+    public <T> ColumnView<T> columnView(Attribute<T> attribute) {
+        return database.columnView(attribute);
+    }
+
+    @Override
+    public List<Column<Object>> columnsView() {
+        return database.columnsView();
+    }
+
+    @Override
+    public ListView<Line> rawLinesView() {
+        return database.rawLinesView();
+    }
+
+    @Override
+    public int size() {
+        return database.size();
+    }
+
+    @Override
+    public List<Line> rawLines() {
+        return database.rawLines();
+    }
+
+    @Override
+    public Line lookupEquals(Attribute<Line> attribute, Line values) {
+        return database.lookupEquals(attribute, values);
     }
 }
