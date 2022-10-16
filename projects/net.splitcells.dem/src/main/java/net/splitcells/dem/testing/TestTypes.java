@@ -10,8 +10,10 @@
  */
 package net.splitcells.dem.testing;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
@@ -34,6 +36,10 @@ public final class TestTypes {
     public static final String PROFILING_RUNTIME = "profiling_runtime";
     public static final String PROFILING_MEMORY_USAGE = "profiling_memoryUsage";
     public static final String EXPERIMENTAL_TEST = "experimental_test";
+
+    public static List<String> extensiveTestTags() {
+        return list(UNIT_TEST, INTEGRATION_TEST, FUNCTIONAL_TEST, CAPABILITY_TEST, BENCHMARK_RUNTIME, BENCHMARK_MEMORY_USAGE, PROFILING_RUNTIME, PROFILING_MEMORY_USAGE);
+    }
 
     private TestTypes() {
         throw constructorIllegal();
