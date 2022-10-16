@@ -8,3 +8,12 @@ Source: https://splitcells.net
 # Files: src/*
 # Copyright: $YEAR $NAME <$CONTACT>
 # License: ...
+
+
+Files: src/main/txt/net/splitcells/network/legal/licenses/*
+Copyright: See the files' content.
+License: LicenseRef-NSID.txt
+
+Files: src/main/txt/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.txt
+Copyright: See the files' content.
+License: LicenseRef-NSID.txt
