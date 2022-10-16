@@ -89,12 +89,6 @@
             Empty lines are omitted, if indentation is enough to easily separate code
             blocks.
         </paragraph>
-        <paragraph>Automatic code styling/formatting should never remove already present new line characters,
-            as otherwise it is hard to structure large code statements.
-            The automatic formatting should also not add new line symbols,
-            as this makes it harder to structure flowing text,
-            where long lines are more acceptable.
-        </paragraph>
         <paragraph>It is preferred that symbols that structure the code are located
             at the most left side instead at the most right side when whitespace is ignored.
             This allows the navigate the code structure easily while minimizing

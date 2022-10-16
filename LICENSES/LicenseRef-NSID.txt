@@ -1,0 +1,15 @@
+# net-splitcells-individual-distributable (NSID)
+
+This is a pseudo license.
+Files marked with this license, have their own license, copyright notice and similar in the file itself.
+Files are only allowed to be marked with this pseudo license,
+if at least copying and distributing the file without changes is allowed.
+
+This pseudo license is used, so it can be ensured,
+that every file has license info in its meta data.
+This is needed because SPDX does not seem to have a dedicated identifier for non-standard licenses,
+that indicates a minimum amount of rights.
+Thereby, REUSE compliance in spirit probably becomes a bit better as files without a license identifier are omitted.
+
+This is especially useful for legal documents,
+where one wants to avoid any changes being done on these, if possible.

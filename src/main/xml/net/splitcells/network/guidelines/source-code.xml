@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <title>Source Code</title>
+    </meta>
+    <chapter>
+        <title>Automatic Formatting</title>
+        <paragraph>Automatic code styling/formatting should never remove already present new line characters,
+            as otherwise it is hard to structure large code statements.
+            The automatic formatting should also not add new line symbols,
+            as this makes it harder to structure flowing text,
+            where long lines are more acceptable.
+            In most cases, during automatic formatting only whitespaces (without new line symbols) between symbols should be normalized.
+        </paragraph>
+    </chapter>
+</article>
