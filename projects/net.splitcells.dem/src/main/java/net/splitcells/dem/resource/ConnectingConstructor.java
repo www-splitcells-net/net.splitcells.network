@@ -19,7 +19,7 @@ public interface ConnectingConstructor<T> {
      * @param connector This is the object creation listener.
      * @return This
      */
-    ConnectingConstructor withConnector(Consumer<T> connector);
+    ConnectingConstructor<T> withConnector(Consumer<T> connector);
 
     /**
      * Processes the given instances via the listeners.
