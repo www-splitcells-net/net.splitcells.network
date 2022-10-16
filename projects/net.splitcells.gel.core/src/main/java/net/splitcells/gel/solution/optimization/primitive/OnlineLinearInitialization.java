@@ -32,16 +32,14 @@ public class OnlineLinearInitialization implements OnlineOptimization {
 
     @Override
     public void optimize(Solution solution) {
-        solution.history().processWithHistory(() -> {
-            while (solution.demandsFree().hasContent() && solution.suppliesFree().hasContent()) {
-                if (GET_NEXT_LINE_BY_STREAM) {
-                    solution.allocate(solution.demandsFree().linesStream().findFirst().orElseThrow()
-                            , solution.suppliesFree().linesStream().findFirst().orElseThrow());
-                } else {
-                    solution.allocate(solution.demandsFree().line(0)
-                            , solution.suppliesFree().line(0));
-                }
+        while (solution.demandsFree().hasContent() && solution.suppliesFree().hasContent()) {
+            if (GET_NEXT_LINE_BY_STREAM) {
+                solution.allocate(solution.demandsFree().linesStream().findFirst().orElseThrow()
+                        , solution.suppliesFree().linesStream().findFirst().orElseThrow());
+            } else {
+                solution.allocate(solution.demandsFree().line(0)
+                        , solution.suppliesFree().line(0));
             }
-        });
+        }
     }
 }
