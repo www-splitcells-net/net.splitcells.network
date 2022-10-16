@@ -164,7 +164,7 @@
                             <useUnlimitedThreads>true</useUnlimitedThreads>
                             <!-- TODO Execute tests in parallel. parallel>all</parallel>
                             <useUnlimitedThreads>true</useUnlimitedThreads-->
-                            <excludedGroups>testing_capabilities,experimental_test,benchmarking_runtime</excludedGroups>
+                            <groups>!testing_capabilities&amp;!experimental_test&amp;!benchmarking_runtime</groups>
                             <argLine>${surefireArgLine}</argLine>
                         </configuration>
                     </plugin>
