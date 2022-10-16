@@ -23,11 +23,15 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.FailureDetector.failureDetector;
 import static net.splitcells.dem.testing.LiveReporter.liveReporter;
+import static net.splitcells.dem.testing.TestTypes.BENCHMARK_RUNTIME;
+import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.dem.testing.TestTypes.FUNCTIONAL_TEST;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
+import static net.splitcells.dem.testing.TestTypes.extensiveTestTags;
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
+import static org.junit.platform.engine.discovery.PackageNameFilter.includePackageNames;
 import static org.junit.platform.launcher.TagFilter.includeTags;
 
 /**
@@ -84,6 +88,25 @@ public class Test {
         final var failureDetector = failureDetector();
         testExecutor.discover(testDiscovery);
         testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        return !failureDetector.hasWatchedErrors();
+    }
+
+    public static boolean testExtensively(List<TestExecutionListener> executionListeners) {
+        // TODO REMOVE
+        System.setProperty("net.splitcells.mode.build", "true");
+        Dem.ensuredInitialized();
+        System.out.println(extensiveTestTags());
+        final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
+                .selectors(selectPackage("net"))
+                .filters(includeTags(extensiveTestTags()))
+                .build();
+        final var testExecutor = LauncherFactory.create();
+        final var failureDetector = failureDetector();
+        testExecutor.discover(testDiscovery);
+        testExecutor.execute(testDiscovery
+                , executionListeners
+                        .withAppended(liveReporter(), failureDetector)
+                        .toArray(new TestExecutionListener[0]));
         return !failureDetector.hasWatchedErrors();
     }
 
