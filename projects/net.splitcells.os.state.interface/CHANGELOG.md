@@ -35,6 +35,24 @@ Changes are now written to the root changelog instead.
   This way there is still a command,
   that installs the OSSI project with full functionality.
 ### Minor Changes
+* **2022-10-16** [**\#168** Integrate repo management](https://github.com/www-splitcells-net/net.splitcells.network/issues/168).
+  1. `repo.process` now uses `bin/net.splitcells.osi.repos.peers` in order to find all peer repos,
+     that are on the same folder level as the current repo.
+     Sub repos are repos located in the folder of the current repo.
+     Peer repos are repos located at the same folder as the current repo.
+     This make synchronizing local repos with online repo hosters like SourceHut and GitHub a lot easier,
+     because before that, each repo had to be pushed manually, or via a script.
+     This was more burdensome compared to pushing a meta to another meta repo,
+     because online repo hosters typically do not allow nested hierachies of repos.
+     Now one can push all SourceHut repos via `repo.push.at.all`,
+     instead of using many instances of `cd [...]; git remote show SourceHut || git remote add SourceHut [...]; git remote set-url SourceHut [...]; git push SourceHut`.
+  2. Introduction of the project file `bin/net.splitcells.osi.repos.hosts`.
+     This command echos all hosts of the current repo, its subs and peers.
+     This is used by `repo.push.at.all` in order to not only push all repos,
+     but to also push these to all hosts (i.e. GitLab, GitHub, SourceHut etc.).
+  3. Overall, the changes made it a lot easier to adapt to changes of the repo structure and its hosts.
+     This is particularly the case, when mainstream git hosters are used.
+     It makes it a lot easier, to create completely new commands.
 * **2022-10-03** Deprecate `shell.execute.as.background.task`, because it is not working correctly.
 * **2022-09-11** **\#162**: Create command `system.network.peer.reachable`,
   in order to test if peer is reachable via (local/internet etc.) network.
