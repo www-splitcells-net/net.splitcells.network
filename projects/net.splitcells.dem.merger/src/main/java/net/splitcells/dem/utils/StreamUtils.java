@@ -27,6 +27,9 @@ public final class StreamUtils {
         throw constructorIllegal();
     }
 
+    public static <T> Stream<T> stream(T[] content) {
+        return Stream.of(content);
+    }
     public static <T> Stream<T> reverse(Stream<T> stream) {
         return stream.collect(
                 collectingAndThen(

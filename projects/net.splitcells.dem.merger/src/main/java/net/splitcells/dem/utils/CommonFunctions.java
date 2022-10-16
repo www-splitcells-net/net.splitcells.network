@@ -12,6 +12,7 @@ package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.resource.ContentType;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +21,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.channels.FileLock;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -30,6 +32,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * TODO cleanup
@@ -122,7 +126,23 @@ public class CommonFunctions {
         });
     }
 
-    public static String toString(Throwable arg) {
+    public static String asString(byte[] content, ContentType contentType) {
+        try {
+            return new String(content, contentType.codeName());
+        } catch (UnsupportedEncodingException e) {
+            throw executionException(e);
+        }
+    }
+
+    public static byte[] getBytes(String content, ContentType contentType) {
+        try {
+            return content.getBytes(contentType.codeName());
+        } catch (UnsupportedEncodingException e) {
+            throw executionException(e);
+        }
+    }
+
+    public static String asString(Throwable arg) {
         return arg.getMessage() + "\n" + CommonFunctions.stackTraceString(arg);
     }
 
@@ -196,7 +216,7 @@ public class CommonFunctions {
     @JavaLegacyBody
     public static Stream<String> selectMatchesByRegex(String string, Pattern pattern, int group) {
         Stream.Builder<String> matches = Stream.builder();
-        try(Scanner scanner = new Scanner(string)) {
+        try (Scanner scanner = new Scanner(string)) {
             while (scanner.findWithinHorizon(pattern, 0) != null) {
                 matches.accept(scanner.match().group(group));
             }

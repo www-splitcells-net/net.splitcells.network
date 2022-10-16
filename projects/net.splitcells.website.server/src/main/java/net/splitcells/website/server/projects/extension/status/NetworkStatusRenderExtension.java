@@ -1,10 +1,22 @@
+/*
+ * Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0, which is available at
+ * http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+ * which is available at https://spdx.org/licenses/MIT.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ */
 package net.splitcells.website.server.projects.extension.status;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.host.HostName;
+import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.RenderingResult;
@@ -15,10 +27,7 @@ import net.splitcells.website.server.projects.extension.ProjectsRendererExtensio
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.order.Comparator.ASCENDING_DOUBLES;
 import static net.splitcells.dem.data.order.Comparators.naturalComparator;
@@ -26,8 +35,10 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.resource.Paths.userHome;
+import static net.splitcells.dem.utils.CommonFunctions.asString;
+import static net.splitcells.dem.utils.CommonFunctions.getBytes;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.StreamUtils.stream;
 import static net.splitcells.network.worker.Logger.logger;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.projects.extension.status.StatusReport.statusReport;
@@ -53,8 +64,10 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     .filter(p -> p.startsWith(RUNTIME_FOLDER))
                     .filter(p -> p.toString().endsWith(".csv"))
                     .forEach(p -> {
-                        final var csvContent = new String(projectsRendererI.render(config.rootPath() + "/" + p.toString()).get().getContent(), UTF_8);
-                        final var lastMeasurement = Stream.of(csvContent.split("\\R"))
+                        final var csvContent = asString(projectsRendererI.render(config.rootPath() + "/" + p.toString())
+                                .get()
+                                .getContent(), ContentType.UTF_8);
+                        final var lastMeasurement = stream(csvContent.split("\\R"))
                                 .filter(l -> !l.trim().isEmpty())
                                 .collect(toList())
                                 .lastValue();
@@ -90,7 +103,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                                     , Optional.of(STATUS_DOCUMENT_PATH)
                                     , config)
                             .get()
-                    , TEXT_HTML.toString()));
+                    , ContentType.HTML_TEXT.codeName()));
         }
         if (path.equals("/" + STATUS_PATH)) {
             final List<LogLevel> logLevels = list();
@@ -98,8 +111,10 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     .filter(p -> p.startsWith(RUNTIME_FOLDER))
                     .filter(p -> p.toString().endsWith(".csv"))
                     .forEach(p -> {
-                        final var csvContent = new String(projectsRendererI.render(config.rootPath() + "/" + p.toString()).get().getContent(), UTF_8);
-                        final var lastMeasurement = Stream.of(csvContent.split("\\R"))
+                        final var csvContent = asString(projectsRendererI.render(config.rootPath() + "/" + p.toString())
+                                .get()
+                                .getContent(), ContentType.UTF_8);
+                        final var lastMeasurement = stream(csvContent.split("\\R"))
                                 .filter(l -> !l.trim().isEmpty())
                                 .collect(toList())
                                 .lastValue();
@@ -114,7 +129,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     });
             logLevels.sort(naturalComparator());
             final var statusLevel = logLevels.get(0);
-            return Optional.of(renderingResult(statusLevel.name().getBytes(UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
+            return Optional.of(renderingResult(getBytes(statusLevel.name(), ContentType.UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
         }
         return Optional.empty();
     }
