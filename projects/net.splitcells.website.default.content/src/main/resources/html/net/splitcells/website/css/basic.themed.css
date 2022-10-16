@@ -67,6 +67,16 @@ ol > ol {
     background-color: var(--background-color-priority-0);
     color: var(--foreground-color-priority-0);
     }
+.net-splitcells-content-column th {
+    background-color: var(--background-color-priority-0);
+	color: var(--foreground-color-priority-0);
+	box-shadow: 0.2em 0.2em 0.2em -0.2em var(--shadow-color-priority-0);
+    }
+.net-splitcells-content-column td {
+    background-color: var(--background-color-priority-1);
+	color: var(--foreground-color-priority-1);
+	box-shadow: 0.2em 0.2em 0.2em -0.2em var(--shadow-color-priority-1);
+    }
 .net-splitcells-component-priority-2 .heading,
 .net-splitcells-component-priority-2 h2 {
     background-color: var(--background-color-priority-1);
