@@ -59,6 +59,7 @@ lexer grammar Java11Lexer;
     		| 'import static java.util.stream.IntStream.range;'
     		| 'import static java.util.stream.IntStream.rangeClosed;'
     		| 'import static java.util.stream.Stream.concat;'
+    		| 'import java.util.function.Function;'
     		;
 	Arrow: '->';
 	Bigger_than: '>';
