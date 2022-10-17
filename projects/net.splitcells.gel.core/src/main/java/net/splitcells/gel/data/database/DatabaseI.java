@@ -24,6 +24,7 @@ import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.LineI.line;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,6 +39,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LineI;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -346,5 +348,14 @@ public class DatabaseI implements Database {
     @Override
     public Object identity() {
         return this;
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof Database) {
+            final var castedArg = (Database) arg;
+            return identity() == castedArg.identity();
+        }
+        throw executionException("Invalid argument type: " + arg);
     }
 }

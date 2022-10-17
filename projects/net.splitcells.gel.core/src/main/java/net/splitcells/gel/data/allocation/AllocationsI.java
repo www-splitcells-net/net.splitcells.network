@@ -13,6 +13,7 @@ package net.splitcells.gel.data.allocation;
 import static java.util.Objects.requireNonNull;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.concat;
@@ -398,5 +399,14 @@ public class AllocationsI implements Allocations {
     @Override
     public Object identity() {
         return this;
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof Allocations) {
+            final var castedArg = (Allocations) arg;
+            return identity().equals(castedArg.identity());
+        }
+        throw executionException("Invalid argument type: " + arg);
     }
 }
