@@ -9,36 +9,36 @@
         <title>Life Cycle</title>
         <paragraph>It should be known, why a project is created and under which conditions it will be dismantled.
         </paragraph>
-        <chapter>
-            <title>Version Control</title>
-            <paragraph>The commit log is a program, that describes the development of the project.
-                The
-                <link>
-                    <text>semantic versioning</text>
-                    <url>https://semver.org/</url>
-                </link>
-                is used as a default versioning format.
-            </paragraph>
-            <paragraph>Make clear what is guaranteed and do this only via an explicit interface,
-                that has no implementation specifics.
-                Prefer backward compatible changes to backward incompatible changes.
-                Make as much undefined as possible for not essential things in order to minimize the set of guarantees.
-                Breaking other software, because it relied on implementation specifics is better,
-                than breaking other software via incompatible API changes.
-                Do not just break features, but also migrate its usage to other appropriate features before breaking
-                said features.
-            </paragraph>
-        </chapter>
-        <chapter>
-            <title>Development Process</title>
-            <paragraph>Do not assume that better skills, more intelligence, working harder, etc. automatically lead to a
-                better result.
-                Prioritize a working project state at every point in the development.
-                Prefer test driven development.
-                Ensure that the project is build, tested and executed in different environments,
-                in order to ensure, that the projects works.
-            </paragraph>
-            <paragraph>Every part of the development process should have a task</paragraph>
-        </chapter>
+    </chapter>
+    <chapter>
+        <title>Version Control</title>
+        <paragraph>The commit log is a program, that describes the development of the project.
+            The
+            <link>
+                <text>semantic versioning</text>
+                <url>https://semver.org/</url>
+            </link>
+            is used as a default versioning format.
+        </paragraph>
+        <paragraph>Make clear what is guaranteed and do this only via an explicit interface,
+            that has no implementation specifics.
+            Prefer backward compatible changes to backward incompatible changes.
+            Make as much undefined as possible for not essential things in order to minimize the set of guarantees.
+            Breaking other software, because it relied on implementation specifics is better,
+            than breaking other software via incompatible API changes.
+            Do not just break features, but also migrate its usage to other appropriate features before breaking
+            said features.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Development Process</title>
+        <paragraph>Do not assume that better skills, more intelligence, working harder, etc. automatically lead to a
+            better result.
+            Prioritize a working project state at every point in the development.
+            Prefer test driven development.
+            Ensure that the project is build, tested and executed in different environments,
+            in order to ensure, that the projects works.
+        </paragraph>
+        <paragraph>Every part of the development process should have a task</paragraph>
     </chapter>
 </article>
