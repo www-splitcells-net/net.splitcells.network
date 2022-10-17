@@ -25,6 +25,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.common.Language.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -191,5 +192,19 @@ public class DatabaseMetaAspect implements Database {
     @Override
     public Object identity() {
         return database.identity();
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof Database) {
+            final var castedArg = (Database) arg;
+            return identity().equals(castedArg.identity());
+        }
+        throw executionException("Invalid argument type: " + arg);
+    }
+
+    @Override
+    public int hashCode() {
+        return database.hashCode();
     }
 }

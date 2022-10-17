@@ -28,6 +28,7 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.event;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.common.Language.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -84,8 +85,8 @@ public class AllocationsIRef extends AllocationsI {
             assertThat(list(supply.context())).containsAnyOf(supplies, supplies_free);
             assertThat(demands.rawLinesView().get(demand.index())).isNotNull();
             assertThat(supplies.rawLinesView().get(supply.index())).isNotNull();
-            assertThat(supply.context()).isIn(setOfUniques(supplies, supplies_free, supplies_used));
-            assertThat(demand.context()).isIn(setOfUniques(demands, demands_free, demands_used));
+            assertThat(list(supply.context())).containsAnyOf(supplies, supplies_free, supplies_used);
+            assertThat(list(demand.context())).containsAnyOf(demands, demands_free, demands_used);
             if (usedDemandIndexes_to_allocationIndexes.containsKey(demand.index())
                     && usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
                 final var allocationIndexes_of_demand
@@ -189,5 +190,14 @@ public class AllocationsIRef extends AllocationsI {
             }
         }
         return super.allocationsOfDemand(demand);
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof Database) {
+            final var castedArg = (Database) arg;
+            return identity().equals(castedArg.identity());
+        }
+        throw executionException("Invalid argument type: " + arg);
     }
 }
