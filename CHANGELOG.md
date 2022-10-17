@@ -83,6 +83,7 @@ Releases are done every time an important ticket is completed.
     because it tried to open a website with the most common URL.
     In other words `https://localhost:8443/index.html` becomes `https://localhost:8443`.
 ### Minor Changes
+* **2022-10-17**: **\#s107** Document core, API and extension concepts in the project guidelines.
 * **2022-10-16**:
   1. **\#210**: Create general source code guidelines with the current main on automatically formatting the code.
   2. **\#200**: [Join the OpenSSF Best Practices Badge Program.](https://bestpractices.coreinfrastructure.org/en/projects/6588)

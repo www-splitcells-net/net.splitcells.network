@@ -41,4 +41,36 @@
         </paragraph>
         <paragraph>Every part of the development process should have a task</paragraph>
     </chapter>
+    <chapter>
+        <title>Project Partitioning</title>
+        <paragraph>If projects become big or mature enough,
+            it should be considered to partition these into parts dedicated to certain overhaul aspects of the projects in relation to their environment.
+        </paragraph>
+        <paragraph>One way of doing this, is to partition the project into layers,
+            where the deepest parts ensure,
+            that the core idea of the project works.
+            Partitions on the outer layers are more and more concerned with the environment like dependencies:</paragraph>
+        <list>
+            <item>Core: the core contains the minimal implementation to get the project running.</item>
+            <item>Merger: the merger establishes a common vocabulary and interface, for the core features of the project.
+                It has the authority to define and verify every core feature of the project.</item>
+            <item>Sheath: the sheath contains alternative implementations, plugins, extensions, etc.
+                These are often used with project or are explicitly supported.
+                It is often used to add external dependencies to the project, without polluting the core.</item>
+            <item>Environment (Env): the environment is an dependency, software, alternative implementation or plugin,
+                that is not explicitly supported.
+                Such things may be absolute necessary to run the software, which is the case for operation systems,
+                but they may also be perfectly integrated plugins, that were not published yet.</item>
+        </list>
+        <paragraph>This is a nice metaphor, but is very uncommon in the public, so the following partitioning makes more sense in practice
+            and should be used instead:</paragraph>
+        <list>
+            <item>Core: the core contains the minimal implementation to get the project running.</item>
+            <item>API: establishes a common vocabulary and interface, for the core features of the project.
+                It has the authority to define and verify every core feature of the project and
+                therefore may contain the testsuite of the project.</item>
+            <item>Extension (Ext): Contains alternative implementations, plugins, extensions, etc. for the project.</item>
+            <item>Documentation (Doc): The doc contains documentation, media files and such and may be especially useful for user manuals and similar.</item>
+        </list>
+    </chapter>
 </article>
