@@ -187,4 +187,9 @@ public class DatabaseMetaAspect implements Database {
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
         return database.lookupEquals(attribute, values);
     }
+
+    @Override
+    public Object identity() {
+        return database.identity();
+    }
 }

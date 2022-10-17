@@ -286,4 +286,9 @@ public class LookupTable implements Table {
         // TODO Fix interface. Instead of return null, an error should be thrown.
         return null;
     }
+
+    @Override
+    public Object identity() {
+        return this;
+    }
 }

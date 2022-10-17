@@ -290,4 +290,9 @@ public class SolutionAspect implements Solution {
     public String toString() {
         return path().toString();
     }
+
+    @Override
+    public Object identity() {
+        return solution.identity();
+    }
 }

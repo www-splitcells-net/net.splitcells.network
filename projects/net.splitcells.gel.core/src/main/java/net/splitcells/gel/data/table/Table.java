@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.Identifiable;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -42,7 +43,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
-public interface Table extends Discoverable, Domable {
+public interface Table extends Discoverable, Domable, Identifiable {
     /**
      * true is faster than false, according to a manual test run with a CPU profiler.
      */

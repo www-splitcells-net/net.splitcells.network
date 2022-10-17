@@ -275,4 +275,9 @@ public class ProblemI implements Problem {
     public Node toDom() {
         return this.allocations.toDom();
     }
+
+    @Override
+    public Object identity() {
+        return this;
+    }
 }

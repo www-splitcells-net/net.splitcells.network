@@ -394,4 +394,9 @@ public class AllocationsI implements Allocations {
     public Line lookupEquals(Attribute<Line> atribūts, Line cits) {
         return allocations.lookupEquals(atribūts, cits);
     }
+
+    @Override
+    public Object identity() {
+        return this;
+    }
 }

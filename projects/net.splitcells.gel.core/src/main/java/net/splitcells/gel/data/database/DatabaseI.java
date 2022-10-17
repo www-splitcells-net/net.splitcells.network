@@ -342,4 +342,9 @@ public class DatabaseI implements Database {
         }
         return constraint.get().query();
     }
+
+    @Override
+    public Object identity() {
+        return this;
+    }
 }

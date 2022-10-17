@@ -573,4 +573,9 @@ public class HistoryI implements History {
     public boolean isRegisterEventIsEnabled() {
         return isRegisterEventIsEnabled;
     }
+
+    @Override
+    public Object identity() {
+        return this;
+    }
 }

@@ -292,4 +292,9 @@ public class SolutionI implements Solution {
     public String toString() {
         return path().toString();
     }
+
+    @Override
+    public Object identity() {
+        return this;
+    }
 }

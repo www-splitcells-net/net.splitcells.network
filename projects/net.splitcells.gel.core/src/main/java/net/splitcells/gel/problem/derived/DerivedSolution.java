@@ -243,4 +243,9 @@ public class DerivedSolution implements Solution {
     public History history() {
         return history;
     }
+
+    @Override
+    public Object identity() {
+        return this;
+    }
 }
