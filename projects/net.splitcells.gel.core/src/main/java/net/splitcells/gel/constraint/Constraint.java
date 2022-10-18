@@ -16,6 +16,9 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
+import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
+import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -268,7 +271,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     /**
      * TODO Is this needed anymore?
-     *
+     * <p>
      * Removes all {@link #lineProcessing()} from {@link #childrenView()} and gives them back again.
      * This in turn is the same, as recalculating the {@link Rating} of all {@link Line} in the sub tree of the {@link Constraint} tree.
      * Note, that no recalculation of {@link Rating} is done on {@code this}.
@@ -304,6 +307,19 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         });
         registeredAdditions.entrySet().forEach(e -> e.getValue().forEach(l -> registerBeforeRemoval(e.getKey(), l)));
         registeredAdditions.entrySet().forEach(e -> e.getValue().forEach(l -> registerAdditions(e.getKey(), l)));
+    }
+
+    default Perspective renderToHtml() {
+        final var html = perspective("ol", HTML);
+        html.withChild(renderCurrentNodeToHtml());
+        html.withChildren(childrenView().stream().map(Constraint::renderToHtml));
+        return html;
+    }
+
+    default Perspective renderCurrentNodeToHtml() {
+        final var html = perspective("li", HTML);
+        html.withChild(perspective(toString(), STRING));
+        return html;
     }
 
 }
