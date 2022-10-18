@@ -42,7 +42,7 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
  */
 public class Dem {
     /**
-     * Currently it would be enough to use a static variable.
+     * Currently it would be enough to use a static variable instead.
      * Thread locals are required in order to implement a tree of programs as a cactus stack (https://wiki.c2.com/?CactusStack).
      * It generally allows to execute multiple instances of a Dem program, without having interference between them.
      */
