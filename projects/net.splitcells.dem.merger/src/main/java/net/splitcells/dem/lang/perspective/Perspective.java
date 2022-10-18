@@ -19,6 +19,7 @@ import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -128,6 +129,11 @@ public interface Perspective extends PerspectiveView {
     }
 
     default Perspective withChildren(List<Perspective> argChildren) {
+        argChildren.forEach(children()::add);
+        return this;
+    }
+
+    default Perspective withChildren(Stream<Perspective> argChildren) {
         argChildren.forEach(children()::add);
         return this;
     }
