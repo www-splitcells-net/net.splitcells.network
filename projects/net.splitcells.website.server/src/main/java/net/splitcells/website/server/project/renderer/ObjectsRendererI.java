@@ -45,7 +45,7 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public ObjectsRendererI withObject(DiscoverableRenderer object) {
-        objects.put(Path.of("/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElse("/")), object);
+        objects.put(Path.of(pathPrefix + object.path().stream().reduce((a, b) -> a + "/" + b).orElse("/")), object);
         return this;
     }
 
@@ -90,16 +90,14 @@ public class ObjectsRendererI implements ProjectRenderer {
 
     @Override
     public Optional<RenderingResult> render(String argPath, Config config, ProjectRenderer projectRenderer) {
-        if (argPath.startsWith(pathPrefix)) {
-            final var objectPath = Path.of(argPath.substring(pathPrefix.length()));
-            if (objects.containsKey(objectPath)) {
-                final var object = objects.get(objectPath);
-                return Optional.of(renderingResult(projectRenderer.renderHtmlBodyContent(object.render()
-                                , object.title()
-                                , Optional.of(argPath)
-                                , config).get()
-                        , TEXT_HTML.toString()));
-            }
+        final var path = Path.of(argPath);
+        if (objects.containsKey(path)) {
+            final var object = objects.get(path);
+            return Optional.of(renderingResult(projectRenderer.renderHtmlBodyContent(object.render()
+                            , object.title()
+                            , Optional.of(argPath)
+                            , config).get()
+                    , TEXT_HTML.toString()));
         }
         return Optional.empty();
     }
