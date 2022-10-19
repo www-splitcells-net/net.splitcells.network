@@ -61,5 +61,22 @@ public class Cin {
                         return solution.path();
                     }
                 }));
+        env.config().configValue(Solutions.class)
+                .withConnector(solution -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
+                    @Override
+                    public String render() {
+                        return solution.constraint().renderToHtml().toHtmlString();
+                    }
+
+                    @Override
+                    public Optional<String> title() {
+                        return Optional.of(solution.path().toString());
+                    }
+
+                    @Override
+                    public List<String> path() {
+                        return solution.path().withAppended("constraint");
+                    }
+                }));
     }
 }
