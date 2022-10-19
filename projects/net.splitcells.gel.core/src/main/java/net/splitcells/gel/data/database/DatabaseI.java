@@ -361,6 +361,6 @@ public class DatabaseI implements Database {
 
     @Override
     public int hashCode() {
-        return identity().hashCode();
+        return hashCode();
     }
 }
