@@ -11,6 +11,7 @@
 package net.splitcells.website.server.projects.extension;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.RenderingResult;
@@ -36,7 +37,15 @@ public class LayoutExtension implements ProjectsRendererExtension {
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path) && config.layout().isPresent()) {
-            return projectsRendererI.renderContent(config.layout().get(), LayoutConfig.layoutConfig(PATH));
+            return projectsRendererI.renderContent
+                    ("<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
+                                    + projectsRendererI.projectsPaths().stream()
+                                    .sorted()
+                                    .map(p -> "<li><a href=\"" + p + "\">" + p + "</a></li>")
+                                    .reduce((a, b) -> a + b)
+                                    .orElse("")
+                                    + "</ol>"
+                            , LayoutConfig.layoutConfig(PATH));
         }
         return Optional.empty();
     }
