@@ -45,7 +45,7 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public ObjectsRendererI withObject(DiscoverableRenderer object) {
-        objects.put(Path.of(pathPrefix + object.path().stream().reduce((a, b) -> a + "/" + b).orElse("/")), object);
+        objects.put(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow()), object);
         return this;
     }
 
