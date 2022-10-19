@@ -358,4 +358,9 @@ public class DatabaseI implements Database {
         }
         throw executionException("Invalid argument type: " + arg);
     }
+
+    @Override
+    public int hashCode() {
+        return identity().hashCode();
+    }
 }

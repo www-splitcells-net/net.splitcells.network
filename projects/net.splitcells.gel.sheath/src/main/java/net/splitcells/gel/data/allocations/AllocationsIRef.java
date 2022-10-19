@@ -200,4 +200,9 @@ public class AllocationsIRef extends AllocationsI {
         }
         throw executionException("Invalid argument type: " + arg);
     }
+
+    @Override
+    public int hashCode() {
+        return identity().hashCode();
+    }
 }
