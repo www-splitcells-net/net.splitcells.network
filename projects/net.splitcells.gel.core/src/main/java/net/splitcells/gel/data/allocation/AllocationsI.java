@@ -412,6 +412,6 @@ public class AllocationsI implements Allocations {
 
     @Override
     public int hashCode() {
-        return hashCode();
+        return super.hashCode();
     }
 }
