@@ -58,8 +58,14 @@ public interface ProjectsRenderer {
      */
     Optional<RenderingResult> render(String path);
 
+    /**
+     * @return All Paths In Relative Form
+     */
     Set<Path> projectsPaths();
 
+    /**
+     * @return All Relevant Paths In Relative Form
+     */
     Set<Path> relevantProjectsPaths();
 
     Config config();
