@@ -75,7 +75,15 @@ public class ObjectsRendererI implements ProjectRenderer {
 
     @Override
     public Set<Path> projectPaths() {
-        return Sets.setOfUniques(objects.keySet());
+        return objects.keySet().stream().map(p -> {
+                    final var ps = p.toString();
+                    if (ps.startsWith("/")) {
+                        return ps.substring(1);
+                    }
+                    return ps;
+                })
+                .map(Path::of)
+                .collect(Sets.toSetOfUniques());
     }
 
     @Override
