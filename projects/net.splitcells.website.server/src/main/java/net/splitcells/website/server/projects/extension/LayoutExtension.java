@@ -40,6 +40,14 @@ public class LayoutExtension implements ProjectsRendererExtension {
             return projectsRendererI.renderContent
                     ("<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
                                     + projectsRendererI.projectsPaths().stream()
+                                    .map(p -> {
+                                        // TODO This is an hack. All layout paths should already be relative.
+                                        final var sp = p.toString();
+                                        if (sp.startsWith("/")) {
+                                            return sp;
+                                        }
+                                        return "/" + sp;
+                                    })
                                     .sorted()
                                     .map(p -> "<li><a href=\"" + p + "\">" + p + "</a></li>")
                                     .reduce((a, b) -> a + b)
