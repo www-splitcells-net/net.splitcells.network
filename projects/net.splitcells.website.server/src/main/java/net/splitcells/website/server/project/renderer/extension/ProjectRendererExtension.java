@@ -26,6 +26,14 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
  * but also {@link #renderFile(String, ProjectRenderer, Config)}.
  */
 public interface ProjectRendererExtension {
+    /**
+     * Renders a file for a given {@code path}.
+     *
+     * @param path Absolute Path To Be Rendered
+     * @param projectRenderer Basic Rendering Utilities
+     * @param config Web Server Configuration
+     * @return
+     */
     Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config);
 
     /**

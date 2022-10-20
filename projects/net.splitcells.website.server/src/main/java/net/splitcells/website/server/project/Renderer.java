@@ -49,7 +49,7 @@ public interface Renderer {
     /**
      * TODO Use {@link Path} objects instead of {@link String}s.
      *
-     * @param path Path To Be Rendered
+     * @param path Absolute Path To Be Rendered
      * @return This is the rendering result, if the path is supported.
      */
     Optional<RenderingResult> render(String path);
