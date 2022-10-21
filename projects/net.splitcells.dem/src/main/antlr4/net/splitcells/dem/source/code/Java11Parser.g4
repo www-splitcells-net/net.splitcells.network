@@ -293,6 +293,7 @@ statement
     | statement_for
     | Brace_curly_open statement+ Brace_curly_closed
     | Keyword_while Brace_round_open expression Brace_round_closed statement_body
+    | annotation statement
     ;
 statement_for
     : Keyword_for Brace_round_open variable_declaration (Equals expression)? Semicolon expression Semicolon expression Brace_round_closed statement_body

@@ -24,7 +24,6 @@ import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ProblemTest {
 
