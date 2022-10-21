@@ -16,13 +16,14 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.solution.Solution;
 import org.junit.jupiter.api.Test;
 
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ProblemTest {
@@ -36,10 +37,13 @@ class ProblemTest {
                 .withNoSupplies()
                 .withConstraint(Then.then(constantRater(cost(7))))
                 .toProblem().asSolution();
-        assertTrue(solution.isComplete());
-        assertTrue(solution.isEmpty());
-        assertThat(solution.constraint().rating().compare_partially_to(cost(0)).get())
-                .isEqualTo(EQUAL);
+        require(solution.isComplete());
+        require(solution.isEmpty());
+        solution.constraint()
+                .rating()
+                .compare_partially_to(cost(0))
+                .get()
+                .requireEqualsTo(EQUAL);
     }
 
     @Test
@@ -53,51 +57,66 @@ class ProblemTest {
                 .withSupplies(list(), list(), list())
                 .withConstraint(Then.then(constantRater(cost(defaultCost))))
                 .toProblem().asSolution();
-        assertThat(solution.isComplete()).isFalse();
-        assertThat(solution.rawLinesView()).isEmpty();
-        assertThat(solution.constraint().rating().compare_partially_to(noCost()).get())
-                .isEqualTo(EQUAL);
+        require(!solution.isComplete());
+        solution.rawLinesView().requireEmpty();
+        solution.constraint()
+                .rating()
+                .compare_partially_to(noCost())
+                .get()
+                .requireEqualsTo(EQUAL);
         final Line firstAllocation;
         {
             firstAllocation = solution.allocate
                     (solution.demandsFree().rawLinesView().get(0)
                             , solution.suppliesFree().rawLinesView().get(0));
-            assertThat(solution.size()).isEqualTo(1);
-            assertThat(solution.isComplete()).isFalse();
-            assertThat(solution.constraint().rating().compare_partially_to(cost(defaultCost)).get())
-                    .isEqualTo(EQUAL);
+            requireEqualInts(solution.size(), 1);
+            require(!solution.isComplete());
+            solution.constraint()
+                    .rating()
+                    .compare_partially_to(cost(defaultCost))
+                    .get()
+                    .requireEqualsTo(EQUAL);
         }
         final Line secondAllocation;
         {
             secondAllocation = solution.allocate
                     (solution.demandsFree().rawLinesView().get(1)
                             , solution.suppliesFree().rawLinesView().get(1));
-            assertThat(solution.size()).isEqualTo(2);
-            assertThat(solution.isComplete()).isTrue();
-            assertThat(solution.constraint().rating().compare_partially_to(cost(2 * defaultCost)).get())
-                    .isEqualTo(EQUAL);
+            requireEqualInts(solution.size(), 2);
+            require(solution.isComplete());
+            solution.constraint()
+                    .rating()
+                    .compare_partially_to(cost(2 * defaultCost))
+                    .get()
+                    .requireEqualsTo(EQUAL);
         }
         {
             solution.remove(firstAllocation);
             {
                 /** TODO Move these tests to {@link ConstraintTest}.
                  */
-                assertThat(solution.size()).isEqualTo(1);
-                assertThat(solution.demandsFree().size()).isEqualTo(1);
-                assertThat(solution.suppliesFree().size()).isEqualTo(2);
-                assertThat(solution.demandsUsed().size()).isEqualTo(1);
-                assertThat(solution.suppliesUsed().size()).isEqualTo(1);
+                requireEqualInts(solution.size(), 1);
+                requireEqualInts(solution.demandsFree().size(), 1);
+                requireEqualInts(solution.suppliesFree().size(), 2);
+                requireEqualInts(solution.demandsUsed().size(), 1);
+                requireEqualInts(solution.suppliesUsed().size(), 1);
             }
-            assertThat(solution.isComplete()).isFalse();
-            assertThat(solution.constraint().rating().compare_partially_to(cost(defaultCost)).get())
-                    .isEqualTo(EQUAL);
+            require(!solution.isComplete());
+            solution.constraint()
+                    .rating()
+                    .compare_partially_to(cost(defaultCost))
+                    .get()
+                    .requireEqualsTo(EQUAL);
         }
         {
             solution.remove(secondAllocation);
-            assertThat(solution.isComplete()).isFalse();
-            assertThat(solution.size()).isEqualTo(0);
-            assertThat(solution.constraint().rating().compare_partially_to(noCost()).get())
-                    .isEqualTo(EQUAL);
+            require(!solution.isComplete());
+            requireEqualInts(solution.size(), 0);
+            solution.constraint()
+                    .rating()
+                    .compare_partially_to(noCost())
+                    .get()
+                    .requireEqualsTo(EQUAL);
         }
     }
 
