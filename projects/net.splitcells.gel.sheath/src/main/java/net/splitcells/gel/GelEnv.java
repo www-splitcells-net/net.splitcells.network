@@ -81,10 +81,7 @@ public final class GelEnv {
             env.config()
                     .withConfigValue(Histories.class, new HistoryRefFactory())
                     .withConfigValue(Allocationss.class, new AllocationsIRefFactory())
-                    .withConfigValue(Lookups.class, new LookupRefFactory())
-                    .withConfigValue(ProcessPath.class, Paths.userHome("connections"
-                            , "tmp.storage"
-                            , "net.splitcells.dem"));
+                    .withConfigValue(Lookups.class, new LookupRefFactory());
             env.config().configValue(Databases.class).withAspect(DatabaseMetaAspect::databaseIRef);
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
         };

@@ -113,6 +113,7 @@ public interface SolutionView extends ProblemView {
     }
 
     default Path dataContainer() {
+        System.out.println(environment().config().configValue(ProcessPath.class));
         final var standardDocumentFolder = environment().config().configValue(ProcessPath.class)
                 .resolve("src/main/xml/net/splitcells/gel/GelEnv");
         return standardDocumentFolder

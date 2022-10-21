@@ -66,7 +66,7 @@ public final class Paths {
      * @return Returns the user's state files.
      */
     public static Path usersStateFiles() {
-        final var usersStateFiles = userHome().resolve(".local/state/").resolve(Dem.configValue(ProgramName.class));
+        final var usersStateFiles = userHome().resolve(".local/state/net.splitcells.dem").resolve(Dem.configValue(ProgramName.class));
         Paths.generateFolderPath(usersStateFiles);
         return usersStateFiles;
     }

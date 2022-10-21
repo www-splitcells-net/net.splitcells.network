@@ -23,9 +23,6 @@ import static net.splitcells.dem.Dem.environment;
  */
 public class ProcessPath extends OptionI<Path> {
     public ProcessPath() {
-        super(() ->
-                environment().config().configValue(ProcessHostPath.class)
-                        .resolve(Paths.get("."
-                                , environment().config().configValue(ProgramName.class).split("\\."))));
+        super(() -> net.splitcells.dem.resource.Paths.usersStateFiles());
     }
 }

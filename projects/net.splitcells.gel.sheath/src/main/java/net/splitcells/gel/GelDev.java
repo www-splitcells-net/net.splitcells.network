@@ -69,9 +69,7 @@ public final class GelDev {
                             , a -> a.path().equals(list("debugging")))
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
-                    .withConfigValue(DeterministicRootSourceSeed.class, 1000L)
-                    .withConfigValue(ProcessHostPath.class
-                            , Paths.userHome("connections", "tmp.storage", "dem"));
+                    .withConfigValue(DeterministicRootSourceSeed.class, 1000L);
         });
     }
 }
