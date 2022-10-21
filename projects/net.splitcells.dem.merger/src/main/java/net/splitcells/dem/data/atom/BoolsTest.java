@@ -10,6 +10,7 @@
  */
 package net.splitcells.dem.data.atom;
 
+import net.splitcells.dem.utils.ExecutionException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,6 +27,6 @@ public class BoolsTest {
 
     @Test
     public void testRequiredUntruth() {
-        assertThrows(AssertionError.class, () -> Bools.require(false));
+        assertThrows(ExecutionException.class, () -> Bools.require(false));
     }
 }
