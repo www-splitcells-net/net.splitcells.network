@@ -31,7 +31,7 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     @JavaLegacyBody
     /**
      * This method avoids problems caused by {@link java.util.List#remove(Object)}.
-     * 
+     *
      * @param index
      */
     default void removeAt(int index) {
@@ -103,11 +103,5 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
      */
     default void prepareForSizeOf(int targetSize) {
 
-    }
-
-    default void requirePresenceOf(T element) {
-        if (!contains(element)) {
-            throw executionException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
-        }
     }
 }

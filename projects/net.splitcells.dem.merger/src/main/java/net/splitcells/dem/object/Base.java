@@ -8,20 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.dem.data.order;
+package net.splitcells.dem.object;
 
-import net.splitcells.dem.object.Base;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
-public enum Ordering implements Base {
-    EQUAL, LESSER_THAN, GREATER_THAN;
-
-    public Ordering invert() {
-        if (this.equals(LESSER_THAN)) {
-            return GREATER_THAN;
-        } else if (this.equals(GREATER_THAN)) {
-            return LESSER_THAN;
-        } else {
-            return EQUAL;
+public interface Base {
+    default <T> void requireEqualsTo(T arg) {
+        if (!this.equals(arg)) {
+            throw executionException("This should be equals to arg, but is not: this is `" + this + "` and arg is `" + arg + "`.");
         }
     }
 }

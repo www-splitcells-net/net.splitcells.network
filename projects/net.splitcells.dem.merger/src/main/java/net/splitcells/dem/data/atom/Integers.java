@@ -13,6 +13,7 @@ package net.splitcells.dem.data.atom;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class Integers {
     private Integers() {
@@ -22,5 +23,11 @@ public class Integers {
     @JavaLegacyBody
     public static boolean isEven(Integer arg) {
         return arg % 2 == 0;
+    }
+
+    public static void requireEqualInts(int a, int b) {
+        if (a != b) {
+            throw executionException("Ints should be equals, but are not: " + a + ", " + b);
+        }
     }
 }

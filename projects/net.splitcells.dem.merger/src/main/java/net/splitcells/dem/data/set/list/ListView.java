@@ -14,6 +14,8 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Collection;
 
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+
 /**
  * TODO Extend interface with functional write methods: https://www.vavr.io/vavr-docs/#_list
  */
@@ -26,5 +28,23 @@ public interface ListView<T> extends Collection<T>, java.util.List<T> {
      */
     default boolean hasElements() {
         return !isEmpty();
+    }
+
+    default void requirePresenceOf(T element) {
+        if (!contains(element)) {
+            throw executionException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
+        }
+    }
+
+    default void requireEmpty() {
+        if (isEmpty()) {
+            throw executionException("Expecting list to be empty, but is not: " + this);
+        }
+    }
+
+    default void requireSizeOf(int arg) {
+        if (size() == arg) {
+            throw executionException("List should be size of " + arg + " but has size of " + size() + " instead: " + this);
+        }
     }
 }
