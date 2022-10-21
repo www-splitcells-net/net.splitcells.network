@@ -12,7 +12,7 @@ echo $(date +'%Y-%m-%d')','$numberOfWarnings >> $logFile
 cd ../net.splitcells.network.log
     repo.commit.all
     cd ../net.splitcells.network
-cd projects/net.splitcells.network.worker
+cd projects/net.splitcells.system
 bin/execute
 cd ../../../net.splitcells.network.log
     # Normally this is done via the Java code in 'bin/execute'.
