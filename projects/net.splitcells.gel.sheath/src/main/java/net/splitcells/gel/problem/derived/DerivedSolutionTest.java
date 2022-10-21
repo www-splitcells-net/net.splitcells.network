@@ -23,7 +23,6 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class DerivedSolutionTest {
 
@@ -60,15 +59,15 @@ public class DerivedSolutionTest {
                 .asSolution();
         final var testSubject
                 = rootSolution
-                .derived(novērtējums ->
-                        cost(novērtējums.asMetaRating().getContentValue(Cost.class).value()
+                .derived(rating ->
+                        cost(rating.asMetaRating().getContentValue(Cost.class).value()
                                 * derivedCostManipulationFactor).asMetaRating());
-        assertThat(rootSolution.constraint().rating()).isEqualTo(cost(0));
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
+        rootSolution.constraint().rating().requireEqualsTo(cost(0));
+        testSubject.constraint().rating().requireEqualsTo(cost(0));
         rootSolution.optimize(linearInitialization());
-        assertThat(rootSolution.constraint().rating()).isEqualTo(cost(2 * defianceCost));
-        assertThat(testSubject.constraint().rating()).isEqualTo(
-                cost(2 * defianceCost * derivedCostManipulationFactor));
+        rootSolution.constraint().rating().requireEqualsTo(cost(2 * defianceCost));
+        testSubject.constraint().rating()
+                .requireEqualsTo(cost(2 * defianceCost * derivedCostManipulationFactor));
     }
 
     @Tag(INTEGRATION_TEST)
@@ -105,11 +104,11 @@ public class DerivedSolutionTest {
         rootSolution.optimize(linearInitialization());
         final var testSubject
                 = rootSolution
-                .derived(novērtējums ->
-                        cost(novērtējums.asMetaRating().getContentValue(Cost.class).value()
+                .derived(rating ->
+                        cost(rating.asMetaRating().getContentValue(Cost.class).value()
                                 * derivedCostManipulationFactor).asMetaRating());
-        assertThat(rootSolution.constraint().rating()).isEqualTo(cost(2 * defianceCost));
-        assertThat(testSubject.constraint().rating()).isEqualTo(
-                cost(2 * defianceCost * derivedCostManipulationFactor));
+        rootSolution.constraint().rating().requireEqualsTo(cost(2 * defianceCost));
+        testSubject.constraint().rating()
+                .requireEqualsTo(cost(2 * defianceCost * derivedCostManipulationFactor));
     }
 }

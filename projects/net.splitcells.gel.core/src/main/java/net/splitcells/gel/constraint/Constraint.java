@@ -37,6 +37,7 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.object.Base;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;

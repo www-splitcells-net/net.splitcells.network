@@ -13,14 +13,15 @@ package net.splitcells.gel.rating.framework;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.order.PartiallyOrdered;
+import net.splitcells.dem.object.Base;
 
 /**
  * TODO Make Rating immutable.
  */
-public interface Rating extends PartiallyOrdered<Rating>, Domable {
+public interface Rating extends PartiallyOrdered<Rating>, Domable, Base {
 
     @ReturnsThis
-    <R extends Rating> R combine(Rating... additionalNovērtējums);
+    <R extends Rating> R combine(Rating... additionalRatings);
 
     default MetaRating asMetaRating() {
         return MetaRatingI.metaRating().combine(this);
