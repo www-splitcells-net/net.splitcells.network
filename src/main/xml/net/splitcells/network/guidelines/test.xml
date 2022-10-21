@@ -8,7 +8,11 @@
     <chapter>
         <title>Test Complexity Scopes</title>
         <paragraph>Every project should provide for each test complexity scope a dedicated project command,
-            if there are such tests present.</paragraph>
+            if there are such tests present.
+            The command <quote>bin/text.everything</quote> can be created in order to execute every test.
+            Every test should be annotated with a complexity scope, so it easy to execute all relevant tests.
+            Other test scopes and tags can optionally be used as well, but the complexity scope must be present in every test.
+        </paragraph>
         <list>
             <item><quote>bin/test</quote>: Default test complexity scope, which should be minimal or extensive.
                 The default test scope should never be <quote>bin/test.side.effects</quote> in order to prevent damaging systems.</item>
