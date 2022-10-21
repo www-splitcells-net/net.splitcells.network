@@ -37,13 +37,13 @@ public interface ListView<T> extends Collection<T>, java.util.List<T> {
     }
 
     default void requireEmpty() {
-        if (isEmpty()) {
+        if (!isEmpty()) {
             throw executionException("Expecting list to be empty, but is not: " + this);
         }
     }
 
     default void requireSizeOf(int arg) {
-        if (size() == arg) {
+        if (size() != arg) {
             throw executionException("List should be size of " + arg + " but has size of " + size() + " instead: " + this);
         }
     }
