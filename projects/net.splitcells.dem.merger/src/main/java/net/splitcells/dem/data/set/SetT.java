@@ -57,7 +57,7 @@ public interface SetT<T> extends Collection<T> {
         Bools.require(!this.hasDuplicates());
     }
     
-    default void requireSizeOf(int requiredSize) {
+    default void requireSetSizeOf(int requiredSize) {
         if (size() != requiredSize) {
             throw executionException("Set needs to have " + requiredSize + " elements, but has " + size() + " elements instead.");
         }
