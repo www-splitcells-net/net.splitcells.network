@@ -62,7 +62,6 @@ public class Network {
         return execution.apply(solutions.get(argumentKey));
     }
 
-    @ReturnsThis
     public void process(String argumentKey, Consumer<Solution> execution) {
         execution.accept(solutions.get(argumentKey));
     }
