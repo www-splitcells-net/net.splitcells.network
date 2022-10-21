@@ -12,7 +12,7 @@
     <dependencies>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>sep</artifactId>
+            <artifactId>cin</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
