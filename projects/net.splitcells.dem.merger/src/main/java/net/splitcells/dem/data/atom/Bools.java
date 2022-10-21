@@ -11,6 +11,7 @@
 package net.splitcells.dem.data.atom;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class Bools {
     private Bools() {
@@ -19,7 +20,7 @@ public class Bools {
 
     public static void require(boolean arg) {
         if (!arg) {
-            throw new AssertionError();
+            throw executionException("Boolean should be true, but is not.");
         }
     }
 
