@@ -44,22 +44,28 @@ public interface SetT<T> extends Collection<T> {
 
     default boolean hasDuplicates() {
         final java.util.Set<T> uniques = new HashSet<>();
-        for(T e : this) {
-            if(uniques.contains(e)) {
+        for (T e : this) {
+            if (uniques.contains(e)) {
                 return true;
             }
             uniques.add(e);
         }
         return false;
     }
-    
+
     default void requireUniqueness() {
         Bools.require(!this.hasDuplicates());
     }
-    
+
     default void requireSetSizeOf(int requiredSize) {
         if (size() != requiredSize) {
-            throw executionException("Set needs to have " + requiredSize + " elements, but has " + size() + " elements instead.");
+            throw executionException("Set needs to have " + requiredSize + " elements, but has " + size() + " elements instead: " + this);
+        }
+    }
+
+    default void requireEmptySet() {
+        if (!isEmpty()) {
+            throw executionException("Set should be empty, but has " + size() + " elements instead: " + this);
         }
     }
 }
