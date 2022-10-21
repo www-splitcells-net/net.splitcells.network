@@ -66,6 +66,10 @@ public class Network {
         execution.accept(solutions.get(argumentKey));
     }
 
+    public void processAll(Consumer<Solution> execution) {
+        solutions.values().forEach(execution::accept);
+    }
+
     @ReturnsThis
     public Network withOptimization(String argumentKey, OfflineOptimization execution) {
         return withExecution(argumentKey, s -> s.optimize(execution));

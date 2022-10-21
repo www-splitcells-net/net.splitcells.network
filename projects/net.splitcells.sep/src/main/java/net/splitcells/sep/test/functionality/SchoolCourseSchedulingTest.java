@@ -170,9 +170,7 @@ public class SchoolCourseSchedulingTest {
             network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, onlineLinearInitialization());
             network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, studentAllocationOptimization()
                     , (currentSolution, step) -> step <= 3 && !currentSolution.isOptimal());
-            network.process(RAILS_FOR_SCHOOL_SCHEDULING, Solution::createStandardAnalysis);
-            network.process(TEACHER_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
-            network.process(STUDENT_ALLOCATION_FOR_COURSES, Solution::createStandardAnalysis);
+            network.processAll(Solution::createStandardAnalysis);
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
