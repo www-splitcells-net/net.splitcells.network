@@ -29,10 +29,10 @@ public class DerivedSolutionTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_rating_manipulation_from_start() {
-        final var derivedCostManipulationFactor = 11;
-        final var complianceValue = 5;
-        final var defianceValue = 7;
-        final var defianceCost = 3;
+        final var derivedCostManipulationFactor = 11d;
+        final var complianceValue = 5d;
+        final var defianceValue = 7d;
+        final var defianceCost = 3d;
         final var attribute = AttributeI.attribute(Integer.class);
         final var rootSolution = defineProblem()
                 .withDemandAttributes()
@@ -65,18 +65,18 @@ public class DerivedSolutionTest {
         rootSolution.constraint().rating().requireEqualsTo(cost(0));
         testSubject.constraint().rating().requireEqualsTo(cost(0));
         rootSolution.optimize(linearInitialization());
-        rootSolution.constraint().rating().requireEqualsTo(cost(2 * defianceCost));
+        rootSolution.constraint().rating().requireEqualsTo(cost(2d * defianceCost));
         testSubject.constraint().rating()
-                .requireEqualsTo(cost(2 * defianceCost * derivedCostManipulationFactor));
+                .requireEqualsTo(cost(2d * defianceCost * derivedCostManipulationFactor));
     }
 
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_rating_manipulation_after_solution_optimization() {
-        final var derivedCostManipulationFactor = 11;
-        final var complianceValue = 5;
-        final var defianceValue = 7;
-        final var defianceCost = 3;
+        final var derivedCostManipulationFactor = 11d;
+        final var complianceValue = 5d;
+        final var defianceValue = 7d;
+        final var defianceCost = 3d;
         final var attribute = AttributeI.attribute(Integer.class);
         final var rootSolution = defineProblem()
                 .withDemandAttributes()
@@ -107,8 +107,8 @@ public class DerivedSolutionTest {
                 .derived(rating ->
                         cost(rating.asMetaRating().getContentValue(Cost.class).value()
                                 * derivedCostManipulationFactor).asMetaRating());
-        rootSolution.constraint().rating().requireEqualsTo(cost(2 * defianceCost));
+        rootSolution.constraint().rating().requireEqualsTo(cost(2d * defianceCost));
         testSubject.constraint().rating()
-                .requireEqualsTo(cost(2 * defianceCost * derivedCostManipulationFactor));
+                .requireEqualsTo(cost(2d * defianceCost * derivedCostManipulationFactor));
     }
 }
