@@ -373,7 +373,8 @@ public class AllocationsI implements Allocations {
 
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
-        return allocations.path();
+        //return allocations.path();
+        return net.splitcells.dem.data.set.list.Lists.list(names);
     }
 
     @Override
