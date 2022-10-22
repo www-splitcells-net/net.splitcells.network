@@ -85,7 +85,7 @@ class ProblemTest {
             require(solution.isComplete());
             solution.constraint()
                     .rating()
-                    .compare_partially_to(cost(2 * defaultCost))
+                    .compare_partially_to(cost(2d * defaultCost))
                     .get()
                     .requireEqualsTo(EQUAL);
         }
