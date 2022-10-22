@@ -758,6 +758,13 @@ window.onload = function() {
                                    onclick="const Http = new XMLHttpRequest(); Http.open('GET', '/net/splitcells/website/layout/build'); Http.send();">
                                     Refresh layout.
                                 </a>
+                                <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:default-root-relative-url('net/splitcells/website/layout.html')"/>
+                                    </xsl:attribute>
+                                    Layout
+                                </a>
                                 <a class="net-splitcells-button net-splitcells-component-priority-3"
                                    href="http://splitcells.net">
                                     Public Site
