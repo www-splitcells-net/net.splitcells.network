@@ -11,6 +11,7 @@
 package net.splitcells.website.server.project;
 
 import net.splitcells.dem.lang.annotations.ReturnsThis;
+import net.splitcells.dem.lang.perspective.Perspective;
 
 import java.util.Optional;
 
@@ -26,6 +27,10 @@ public class LayoutConfig {
     private final String path;
     private Optional<String> title = Optional.empty();
 
+    private Optional<Perspective> localPathContext = Optional.empty();
+
+    private Optional<Perspective> relevantLocalPathContext = Optional.empty();
+
     private LayoutConfig(String path) {
         this.path = path;
     }
@@ -38,8 +43,58 @@ public class LayoutConfig {
         return title;
     }
 
+    /**
+     * TODO In the future, there should be probably something like an {@link LayoutConfig},
+     * that is internal to the main renderer,
+     * in order to prevent an incorrect {@code localPathContext},
+     * because only the main renderer can determine the correct {@code localPathContext}.
+     *
+     * @return These are all paths, that are children, to {@link #path},
+     * and which can be requested from relevant {@link Renderer}.
+     */
+    public Optional<Perspective> localPathContext() {
+        return localPathContext;
+    }
+
+    /**
+     * TODO In the future, there should be probably something like an {@link LayoutConfig},
+     * that is internal to the main renderer,
+     * in order to prevent an incorrect {@code relevantLocalPathContext}.
+     * Extension should only be allowed to determine a subset of {@link #localPathContext},
+     * which should be provided by the main renderer.
+     *
+     * @return These are all paths, that are children, to {@link #path},
+     * which can be requested from relevant {@link Renderer} and
+     * which are relevant to the user.
+     */
+    public Optional<Perspective> relevantLocalPathContext() {
+        return relevantLocalPathContext;
+    }
+
     public LayoutConfig withTitle(String title) {
         this.title = Optional.of(title);
+        return this;
+    }
+
+    /**
+     * This should only be set by the {@link Renderer}.
+     *
+     * @param localPathContext The Local Path Context
+     * @return This
+     */
+    public LayoutConfig withLocalPathContext(Perspective localPathContext) {
+        this.localPathContext = Optional.of(localPathContext);
+        return this;
+    }
+
+    /**
+     * This should only be set by the {@link Renderer}.
+     *
+     * @param relevantLocalPathContext The Relevant Local Path Context
+     * @return This
+     */
+    public LayoutConfig withRelevantLocalPathContext(Perspective relevantLocalPathContext) {
+        this.relevantLocalPathContext = Optional.of(relevantLocalPathContext);
         return this;
     }
 }
