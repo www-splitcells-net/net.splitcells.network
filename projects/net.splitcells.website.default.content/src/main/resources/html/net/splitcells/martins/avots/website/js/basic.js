@@ -36,8 +36,13 @@
     }
  function showOneOfChildren(node) {
  	let child=node.childNodes[getRandomInt(node.childNodes.length)];
- 	while (!child.hasOwnProperty('style')) {
+ 	let i = 0;
+ 	while (!child.hasOwnProperty('style') && i < 10) {
+ 	    ++i;
  	    child=node.childNodes[getRandomInt(node.childNodes.length)];
+ 	    }
+ 	if (!child.hasOwnProperty('style')) {
+ 	    return;
  	    }
  	child.style.display = 'inherit';
  	child.style.visibility = 'inherit';
