@@ -15,6 +15,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -176,11 +177,15 @@ public class ProjectRendererI implements ProjectRenderer {
                 });
     }
 
+    @Override
+    public Optional<RenderingResult> render(String path) {
+        return addMissingMetaData(renderInternal(path));
+    }
+
     /**
      * TODO Create root for each file type, that needs its one processing method.
      */
-    @Override
-    public Optional<RenderingResult> render(String path) {
+    private Optional<RenderingResult> renderInternal(String path) {
         try {
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
@@ -192,6 +197,7 @@ public class ProjectRendererI implements ProjectRenderer {
             // TODO Do not use path, in the following code.
             final var normalizedPath = path;
             // TODO Devide rendering function into routing and content type determination.
+            // TODO Move this into extensions.
             if (path.endsWith(".png")) {
                 return readArtifact(path).map(r -> renderingResult(r, "image/png"));
             } else if (path.endsWith(".jpg")) {
@@ -227,6 +233,24 @@ public class ProjectRendererI implements ProjectRenderer {
         } catch (Exception e) {
             throw new RuntimeException("resourceRootPath: " + resourceRootPath, e);
         }
+    }
+
+    private Optional<RenderingResult> addMissingMetaData(Optional<RenderingResult> result) {
+        return result.map(r -> {
+            if (ContentType.HTML_TEXT.codeName().equals(r.getFormat())) {
+                final var content = new String(r.getContent());
+                final var docTypePrefix = "<!DOCTYPE html>";
+                if (!content.startsWith(docTypePrefix)) {
+                    try {
+                        return renderingResult((docTypePrefix + content).getBytes(UTF_8.codeName())
+                                , r.getFormat());
+                    } catch (Exception e) {
+                        throw executionException(e);
+                    }
+                }
+            }
+            return r;
+        });
     }
 
     /**
