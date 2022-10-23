@@ -12,6 +12,7 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -52,6 +53,10 @@ public class ResourceProjectRendererExtension implements ProjectRendererExtensio
                 format = "image/svg+xml";
             } else if (path.endsWith(".jpg")) {
                 format = "image/jpeg";
+            } else if (path.endsWith(".css")) {
+                format = ContentType.CSS.codeName();
+            } else if (path.endsWith(".js")) {
+                format = ContentType.JS.codeName();
             } else {
                 format = HTML_TEXT.codeName();
             }
