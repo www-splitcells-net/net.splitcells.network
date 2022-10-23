@@ -30,8 +30,8 @@ public class DerivedSolutionTest {
     @Test
     public void test_rating_manipulation_from_start() {
         final var derivedCostManipulationFactor = 11d;
-        final var complianceValue = 5d;
-        final var defianceValue = 7d;
+        final var complianceValue = 5;
+        final var defianceValue = 7;
         final var defianceCost = 3d;
         final var attribute = AttributeI.attribute(Integer.class);
         final var rootSolution = defineProblem()
@@ -74,8 +74,8 @@ public class DerivedSolutionTest {
     @Test
     public void test_rating_manipulation_after_solution_optimization() {
         final var derivedCostManipulationFactor = 11d;
-        final var complianceValue = 5d;
-        final var defianceValue = 7d;
+        final var complianceValue = 5;
+        final var defianceValue = 7;
         final var defianceCost = 3d;
         final var attribute = AttributeI.attribute(Integer.class);
         final var rootSolution = defineProblem()
