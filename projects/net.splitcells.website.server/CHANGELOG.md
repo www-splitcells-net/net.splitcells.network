@@ -13,6 +13,10 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2022-10-23**: [**\#s89** Fix cookie issue.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/89)
+  1. There is now [HTML guidelines](https://splitcells.net/net/splitcells/network/guidelines/html.html) regarding cookies.
+  2. Access to `document.cookie` is now blocked, by overwriting its getter and setter methods in the standard layout.
+     This ensures, that cookies are not used by accident.
 * **2022-09-04**:
   1. Render `DEVELOPMENT.md` of each project.
   2. Render `BUILD.md` of each project.
