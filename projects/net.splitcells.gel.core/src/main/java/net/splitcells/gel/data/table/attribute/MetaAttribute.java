@@ -11,6 +11,7 @@
 package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import org.w3c.dom.Element;
 
@@ -40,6 +41,16 @@ public class MetaAttribute<T> implements Attribute<Class<T>> {
     @Override
     public Bool isInstanceOf(Object arg) {
         return bool(type.isAssignableFrom((Class<?>) arg));
+    }
+
+    @Override
+    public void assertArgumentCompatibility(Object arg) {
+        if (isInstanceOf(arg).isFalse()) {
+            throw executionException("Given object not compatible to attribute: name=" + name
+                    + ", type=" + type
+                    + ", givenType=" + arg.getClass()
+                    + ", arg=" + arg);
+        }
     }
 
     @Override

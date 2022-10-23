@@ -13,6 +13,7 @@ package net.splitcells.gel.data.table.attribute;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.atom.Bools.bool;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.common.Language;
@@ -69,6 +70,16 @@ public final class AttributeI<T> implements Attribute<T> {
     @Override
     public Bool isInstanceOf(Object arg) {
         return bool(type.isAssignableFrom(arg.getClass()));
+    }
+
+    @Override
+    public void assertArgumentCompatibility(Object arg) {
+        if (!type.isAssignableFrom(arg.getClass())) {
+            throw executionException("Given object not compatible to attribute: name=" + name
+                    + ", type=" + type
+                    + ", givenType=" + arg.getClass()
+                    + ", arg=" + arg);
+        }
     }
 
     @Override

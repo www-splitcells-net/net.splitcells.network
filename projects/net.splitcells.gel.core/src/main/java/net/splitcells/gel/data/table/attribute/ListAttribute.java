@@ -12,6 +12,7 @@ package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.untrue;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import java.util.List;
 
@@ -53,6 +54,16 @@ public class ListAttribute<T> implements Attribute<List<T>> {
                             .allMatch(i -> type.isAssignableFrom(i.getClass())));
         } else {
             return untrue();
+        }
+    }
+
+    @Override
+    public void assertArgumentCompatibility(Object arg) {
+        if (isInstanceOf(arg).isFalse()) {
+            throw executionException("Given object not compatible to list attribute: name=" + name
+                    + ", type=" + type
+                    + ", givenType=" + arg.getClass()
+                    + ", arg=" + arg);
         }
     }
 

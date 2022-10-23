@@ -23,6 +23,14 @@ public interface Attribute<T> extends Domable {
     }
 
     Bool isInstanceOf(Object arg);
+
+    /**
+     * Asserts that {@link #isInstanceOf} returns {@code true} given {@code arg}.
+     * If this not the case, an exception with an description is thrown.
+     *
+     * @param arg Object Required To Be Usable For This
+     */
+    void assertArgumentCompatibility(Object arg);
     
     default T deserializeValue(String value) {
         throw new UnsupportedOperationException();

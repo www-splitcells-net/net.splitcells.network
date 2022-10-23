@@ -12,6 +12,7 @@ package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.untrue;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import java.util.Map;
 
@@ -47,6 +48,16 @@ public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
                     ));
         } else {
             return untrue();
+        }
+    }
+
+    @Override
+    public void assertArgumentCompatibility(Object arg) {
+        if (isInstanceOf(arg).isFalse()) {
+            throw executionException("Given object not compatible to attribute: name=" + name
+                    + ", type=" + type
+                    + ", givenType=" + arg.getClass()
+                    + ", arg=" + arg);
         }
     }
 
