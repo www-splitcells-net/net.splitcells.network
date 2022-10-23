@@ -23,15 +23,15 @@
     SPDX-License-Identifier: EPL-2.0 OR MIT
     -->
     <!-- Microdata from https://schema.org/docs/gs.html is used for meta data. -->
-    <!-- TODO Annotate type of item described by rdf:description via Microdata
+    <!-- TODO Annotate type of item described by  via Microdata
         annotation. -->
     <!-- Microdata: Note that the order of the attributes itemprop, itemtype
         and itemscope have a meaning: https://schema.org/docs/gs.html#microdata_how -->
-    <xsl:template match="rdf:Description">
+    <xsl:template match="">
         <xsl:if test="s:is.public.ontology.fully.allowed(.) = false()">
             <!-- TODO reactivate -->
             <xsl:message terminate="false">
-                rdf:description: Reference require a license in order to check if
+                : Reference require a license in order to check if
                 public tags are
                 allowed.
             </xsl:message>
@@ -75,26 +75,26 @@
                  style="display: flex; flex-direction: row; flex-wrap: wrap;">
                 <xsl:for-each select="./*">
                     <xsl:apply-templates select="."
-                                         mode="rdf:description"/>
+                                         mode=""/>
                 </xsl:for-each>
             </div>
         </div>
     </xsl:template>
-    <xsl:template match="skos:broader" mode="rdf:description">
+    <xsl:template match="skos:broader" mode="">
         <div class="cell">
             <xsl:value-of select="@rdf:id"/>
         </div>
     </xsl:template>
-    <xsl:template match="dc:title" mode="rdf:description">
+    <xsl:template match="dc:title" mode="">
         <!-- The title is displayed at the top of the card. -->
     </xsl:template>
-    <xsl:template match="dc:creator" mode="rdf:description">
+    <xsl:template match="dc:creator" mode="">
         <div class="cell" itemprop="author" itemscope=""
              itemtype="https://schema.org/Person">
             <xsl:apply-templates select="node()"/>
         </div>
     </xsl:template>
-    <xsl:template match="dc:source" mode="rdf:description">
+    <xsl:template match="dc:source" mode="">
         <div class="cell" itemprop="url">
             <a>
                 <xsl:attribute name="href" select="@rdf:resource"/>
@@ -102,25 +102,25 @@
             </a>
         </div>
     </xsl:template>
-    <xsl:template match="d:todo" mode="rdf:description">
+    <xsl:template match="d:todo" mode="">
         <div class="cell premature">
             <xsl:apply-templates select="node()"/>
         </div>
     </xsl:template>
-    <xsl:template match="dc:date" mode="rdf:description">
+    <xsl:template match="dc:date" mode="">
         <div class="cell" itemprop="datePublished">
             <xsl:apply-templates select="node()"/>
         </div>
     </xsl:template>
-    <xsl:template match="dc:description" mode="rdf:description">
+    <xsl:template match="dc:description" mode="">
         <div class="cell">
             <xsl:apply-templates select="node()"/>
         </div>
     </xsl:template>
-    <xsl:template match="p:*" mode="rdf:description">
+    <xsl:template match="p:*" mode="">
         <!-- Hide private information. -->
     </xsl:template>
-    <xsl:template match="*" mode="rdf:description">
+    <xsl:template match="*" mode="">
         <xsl:message terminate="true">
             prefix
             <xsl:copy-of select="."/>

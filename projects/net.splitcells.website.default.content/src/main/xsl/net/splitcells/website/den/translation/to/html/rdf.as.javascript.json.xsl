@@ -33,7 +33,7 @@
         </xsl:for-each>
         <xsl:text>]</xsl:text>
     </xsl:template>
-    <xsl:template match="rdf:description" mode="rdf-document-to-javascript-json">
+    <xsl:template match="rdf:Description" mode="rdf-document-to-javascript-json">
         <xsl:text>{"resource":"</xsl:text>
         <xsl:value-of select="@rdf:resource"/>
         <xsl:text>","label":"</xsl:text>
