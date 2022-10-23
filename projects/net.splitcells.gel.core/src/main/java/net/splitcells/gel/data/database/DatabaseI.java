@@ -125,8 +125,8 @@ public class DatabaseI implements Database {
      * TODO PERFORMANCE Cache list views in Order to minimize number of objects.
      *
      * @param attribute This is the {@link Attribute} of the corresponding {@link Column}.
+     * @param <T>       This is the type of the column.
      * @return This is the {@link Column} corresponding to given {@link Attribute}.
-     * @param <T> This is the type of the column.
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -194,7 +194,7 @@ public class DatabaseI implements Database {
         if (ENFORCING_UNIT_CONSISTENCY) {
             assertThat(lineValues.size()).isEqualTo(headerView().size());
             require(indexesOfFree.contains(index) || index >= rawLines.size());
-            range(0, lineValues.size()).forEach(i -> attributes.get(i).isInstanceOf(lineValues.get(i)).required());
+            range(0, lineValues.size()).forEach(i -> attributes.get(i).assertArgumentCompatibility(lineValues.get(i)));
         }
         if (index >= rawLines.size()) {
             range(0, lineValues.size()).forEach(i -> {
