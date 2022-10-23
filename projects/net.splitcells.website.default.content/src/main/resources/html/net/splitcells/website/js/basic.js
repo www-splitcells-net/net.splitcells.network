@@ -39,11 +39,13 @@
  	child.style.display = 'inherit';
  	child.style.visibility = 'inherit';
  	}
- function unshowAllChildren(node) {
-  	for (var i = 0; i < node.childNodes.length; i++) {
-    	unshowElement(node.childNodes[i]);
-    	}
-  	}
+function unshowAllChildren(node) {
+    for (var i = 0; i < node.childNodes.length; i++) {
+        if (node.childNodes[i].hasOwnProperty('style')) {
+            unshowElement(node.childNodes[i]);
+            }
+        }
+    }
 function unshowByCssClass(cssClass) {
     hide(cssClass);
     undisplay(cssClass);
