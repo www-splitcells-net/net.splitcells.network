@@ -120,9 +120,9 @@ public class SchoolCourseSchedulingTest {
     public static void main(String... args) {
         GelDev.process(() -> {
             var network = registerSchoolScheduling(network()
-                    , 1
-                    , 1
-                    , 1
+                    , 15
+                    , 20
+                    , 30
                     , 2
                     , 2
                     , 8
@@ -131,7 +131,7 @@ public class SchoolCourseSchedulingTest {
                     , 4
                     , 4
                     , 2
-                    , 2
+                    , 20
                     , 2
                     , 2
                     , 2
