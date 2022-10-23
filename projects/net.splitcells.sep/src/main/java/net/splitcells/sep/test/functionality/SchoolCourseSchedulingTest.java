@@ -669,7 +669,7 @@ public class SchoolCourseSchedulingTest {
                 })
                 .flatMap(e -> e.stream())
                 .collect(toList());
-        final var railCapacity = rangeClosed(2, numberOfRails + 1)
+        final var railCapacity = rangeClosed(1, numberOfRails)
                 .mapToObj(railId ->
                         rangeClosed(1, courses.size())
                                 .mapToObj(i -> rangeClosed(1, maximumCourseLength)
