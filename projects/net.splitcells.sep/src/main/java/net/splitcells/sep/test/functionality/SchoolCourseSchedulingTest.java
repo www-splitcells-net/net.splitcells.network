@@ -134,6 +134,7 @@ public class SchoolCourseSchedulingTest {
                     , 2
                     , 2
                     , 2
+                    , 2
             );
             rangeClosed(1, 1).forEach(i -> {
                 /* TODO This can be used to demonstrate the problems of implementing own custom supply selector.
@@ -196,6 +197,7 @@ public class SchoolCourseSchedulingTest {
                         , 115
                         , 11
                         , 92
+                        , 2
                 );
                 rangeClosed(1, 1).forEach(i -> {
                 /* TODO This can be used to demonstrate the problems of implementing own custom supply selector.
@@ -587,10 +589,11 @@ public class SchoolCourseSchedulingTest {
             , int numberOfStudentsInFirstVintage
             , int numberOfSubjectsPerStudentsInVintage
             , int numberOfStudentsInSecondVintage
+            , int numberOfVintages
     ) {
         final var averageNumberOfCoursesPerTeacher = numberOfCourses / numberOfTeachers;
         network.withNode(RAILS_FOR_SCHOOL_SCHEDULING
-                        , defineRailsForSchoolScheduling(2
+                        , defineRailsForSchoolScheduling(numberOfVintages
                                 , numberOfSubjects
                                 , numberOfCourses
                                 , averageCourseLength
