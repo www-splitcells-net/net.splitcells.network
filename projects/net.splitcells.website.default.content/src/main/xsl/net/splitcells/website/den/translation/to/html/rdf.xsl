@@ -27,7 +27,7 @@
         annotation. -->
     <!-- Microdata: Note that the order of the attributes itemprop, itemtype
         and itemscope have a meaning: https://schema.org/docs/gs.html#microdata_how -->
-    <xsl:template match="">
+    <xsl:template match="rdf:Description">
         <xsl:if test="s:is.public.ontology.fully.allowed(.) = false()">
             <!-- TODO reactivate -->
             <xsl:message terminate="false">
@@ -75,26 +75,26 @@
                  style="display: flex; flex-direction: row; flex-wrap: wrap;">
                 <xsl:for-each select="./*">
                     <xsl:apply-templates select="."
-                                         mode=""/>
+                                         mode="rdf:Description"/>
                 </xsl:for-each>
             </div>
         </div>
     </xsl:template>
-    <xsl:template match="skos:broader" mode="">
+    <xsl:template match="skos:broader" mode="rdf:Description">
         <div class="cell">
             <xsl:value-of select="@rdf:id"/>
         </div>
     </xsl:template>
-    <xsl:template match="dc:title" mode="">
+    <xsl:template match="dc:title" mode="rdf:Description">
         <!-- The title is displayed at the top of the card. -->
     </xsl:template>
-    <xsl:template match="dc:creator" mode="">
+    <xsl:template match="dc:creator" mode="rdf:Description">
         <div class="cell" itemprop="author" itemscope=""
              itemtype="https://schema.org/Person">
             <xsl:apply-templates select="node()"/>
         </div>
     </xsl:template>
-    <xsl:template match="dc:source" mode="">
+    <xsl:template match="dc:source" mode="rdf:Description">
         <div class="cell" itemprop="url">
             <a>
                 <xsl:attribute name="href" select="@rdf:resource"/>
@@ -102,25 +102,25 @@
             </a>
         </div>
     </xsl:template>
-    <xsl:template match="d:todo" mode="">
+    <xsl:template match="d:todo" mode="rdf:Description">
         <div class="cell premature">
             <xsl:apply-templates select="node()"/>
         </div>
     </xsl:template>
-    <xsl:template match="dc:date" mode="">
+    <xsl:template match="dc:date" mode="rdf:Description">
         <div class="cell" itemprop="datePublished">
             <xsl:apply-templates select="node()"/>
         </div>
     </xsl:template>
-    <xsl:template match="dc:description" mode="">
+    <xsl:template match="dc:description" mode="rdf:Description">
         <div class="cell">
             <xsl:apply-templates select="node()"/>
         </div>
     </xsl:template>
-    <xsl:template match="p:*" mode="">
+    <xsl:template match="p:*" mode="rdf:Description">
         <!-- Hide private information. -->
     </xsl:template>
-    <xsl:template match="*" mode="">
+    <xsl:template match="*" mode="rdf:Description">
         <xsl:message terminate="true">
             prefix
             <xsl:copy-of select="."/>
