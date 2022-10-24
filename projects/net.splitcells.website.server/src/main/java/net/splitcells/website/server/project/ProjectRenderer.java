@@ -64,6 +64,8 @@ public interface ProjectRenderer extends Renderer {
 
     /**
      * TODO  This method should be based on {@link #renderXml(String, LayoutConfig, Config)}.
+     *
+     * @param path Relative path of document to be rendered.
      */
     Optional<byte[]> renderHtmlBodyContent(String bodyContent
             , Optional<String> title
