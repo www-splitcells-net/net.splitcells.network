@@ -101,9 +101,15 @@ public class ObjectsRendererI implements ProjectRenderer {
         final var path = Path.of(argPath);
         if (objects.containsKey(path)) {
             final var object = objects.get(path);
+            final String relativeArgPath;
+            if (argPath.startsWith("/")) {
+                relativeArgPath = argPath.substring(1);
+            } else {
+                relativeArgPath = argPath;
+            }
             return Optional.of(renderingResult(projectRenderer.renderHtmlBodyContent(object.render()
                             , object.title()
-                            , Optional.of(argPath)
+                            , Optional.of(relativeArgPath)
                             , config).get()
                     , TEXT_HTML.toString()));
         }
