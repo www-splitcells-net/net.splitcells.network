@@ -107,16 +107,6 @@ function addWorldData(updatedData) {
     initializeCameraPosition();
 }
 
-Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
-    , {
-        download: true
-        , worker: false
-        , dynamicTyping: true
-        , complete: function (results) {
-            addWorldData(results.data);
-        }
-    });
-
 function listenToInput() {
     function onDocumentKeyDown(event) {
         var keyCode = event.which;
@@ -144,6 +134,16 @@ function initializeCameraPosition() {
     }
 }
 
+// Only function calls after this.
+Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
+    , {
+        download: true
+        , worker: false
+        , dynamicTyping: true
+        , complete: function (results) {
+            addWorldData(results.data);
+        }
+    });
 addLightToScene();
 listenToInput();
 animate();
