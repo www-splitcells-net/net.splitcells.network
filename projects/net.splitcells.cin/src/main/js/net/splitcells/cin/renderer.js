@@ -10,6 +10,7 @@ let worldSceneObjects = new Map();
     //"const" cannot be used, as otherwise changes to the Map are not sent between the functions.
 let worldVariables = new Map();
 worldVariables.set('camera.position.initialized', false);
+worldVariables.set('camera.focus.current', undefined);
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -103,7 +104,6 @@ function addWorldData(updatedData) {
         scene.add(cube);
         addWorldSceneObject(row[1], row[2], 0, cube);
     }
-    console.log(worldSceneObjects);
     initializeCameraPosition();
 }
 
@@ -131,6 +131,7 @@ function initializeCameraPosition() {
         controls.target.y = chosenFocus.position.y;
         controls.target.z = chosenFocus.position.z;
         worldVariables.set('camera.position.initialized', true);
+        worldVariables.set('camera.focus.current', [chosenFocus.position.x, chosenFocus.position.y, chosenFocus.position.z]);
     }
 }
 
