@@ -1,3 +1,6 @@
+// Three.js API doc: https://threejs.org/docs/
+// Architecture: define all base variables first and than operate on these only via methods.
+
 import * as THREE from 'three';
 import { OrbitControls } from 'OrbitControls';
 
