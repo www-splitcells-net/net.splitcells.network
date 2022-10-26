@@ -5,7 +5,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'OrbitControls';
 
-let worldSceneObjects = new Map(); //"const" cannot be used, as otherwise changes to the Map are not sent between the functions.
+let worldSceneObjects = new Map();
+    //x -> y -> z -> scene object
+    //"const" cannot be used, as otherwise changes to the Map are not sent between the functions.
 let worldVariables = new Map();
 worldVariables.set('camera.position.initialized', false);
 
@@ -23,6 +25,8 @@ document.getElementById("net-splitcells-canvas-main").appendChild(renderer.domEl
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.enablePan = false;
+
+// Only functions and calls of it, after this point.
 
 function animate() {
     requestAnimationFrame(animate);
@@ -43,6 +47,48 @@ function addLightToScene() {
     scene.add(ambientLight);
 }
 
+function addWorldSceneObject(x, y, z, sceneObject) {
+    let xContainer = worldSceneObjects.get(x);
+    if (xContainer === undefined) {
+        xContainer = new Map();
+        worldSceneObjects.set(x, xContainer);
+    }
+    let yContainer = xContainer.get(y);
+    if (yContainer === undefined) {
+        yContainer = new Map();
+        xContainer.set(y, yContainer);
+    }
+    yContainer.set(z, sceneObject);
+}
+
+function getRandomWorldSceneObject() {
+    let xChosenIndex = Math.floor(Math.random() * worldSceneObjects.size);
+    let xCounter = 0;
+    let xContainer;
+    for (let key of worldSceneObjects.keys()) {
+        if (xCounter++ >= xChosenIndex) {
+            xContainer = worldSceneObjects.get(key);
+            break;
+        }
+    }
+    let yChosenIndex = Math.floor(Math.random() * xContainer.size);
+    let yCounter = 0;
+    let yContainer;
+    for (let key of xContainer.keys()) {
+        if (yCounter++ >= yChosenIndex) {
+            yContainer = xContainer.get(key);
+            break;
+        }
+    }
+    let chosenIndex = Math.floor(Math.random() * yContainer.size);
+    let counter = 0;
+    for (let key of yContainer.keys()) {
+        if (counter++ >= chosenIndex) {
+            return yContainer.get(key);
+        }
+    }
+}
+
 function addWorldData(updatedData) {
     var rowIndex;
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
@@ -55,8 +101,9 @@ function addWorldData(updatedData) {
         const cube = new THREE.Mesh(geometry, material);
         cube.position.set(1 * row[1], 1 * row[2], 0);
         scene.add(cube);
-        worldSceneObjects.set(row[1] + ',' + row[2] + ',' + 0, cube);
+        addWorldSceneObject(row[1], row[2], 0, cube);
     }
+    console.log(worldSceneObjects);
     initializeCameraPosition();
 }
 
@@ -89,15 +136,7 @@ function listenToInput() {
 
 function initializeCameraPosition() {
     if (worldVariables.get('camera.position.initialized') === false) {
-        let chosenIndex = Math.floor(Math.random() * worldSceneObjects.size);
-        let counter = 0;
-        let chosenFocus;
-        for (let key of worldSceneObjects.keys()) {
-            if (counter++ >= chosenIndex) {
-                chosenFocus = worldSceneObjects.get(key);
-                break;
-            }
-        }
+        let chosenFocus = getRandomWorldSceneObject();
         controls.target.x = chosenFocus.position.x;
         controls.target.y = chosenFocus.position.y;
         controls.target.z = chosenFocus.position.z;
