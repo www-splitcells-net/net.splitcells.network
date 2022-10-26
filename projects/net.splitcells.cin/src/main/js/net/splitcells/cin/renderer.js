@@ -107,6 +107,48 @@ function addWorldData(updatedData) {
     initializeCameraPosition();
 }
 
+function focusNextWorldSceneObjectToLeft() {
+    const x = worldVariables.get('camera.focus.current')[0];
+    const y = worldVariables.get('camera.focus.current')[1];
+    const z = worldVariables.get('camera.focus.current')[2];
+    let nextX = undefined;
+    for (let keyX of worldSceneObjects.keys()) {
+        if ((keyX < nextX && keyX > x) || nextX === undefined) {
+            nextX = keyX;
+        }
+    }
+    if (nextX === undefined) {
+        return;
+    }
+    const xContainer = worldSceneObjects.get(nextX);
+    let nextY = undefined;
+    for (let keyY of xContainer.keys()) {
+        nextY = keyY;
+        break;
+    }
+    for (let keyY of xContainer.keys()) {
+        if (keyY < nextY && keyY > y) {
+            nextX = keyX;
+        }
+    }
+    const yContainer = xContainer.get(nextY);
+    let nextZ = undefined;
+    for (let keyZ of yContainer.keys()) {
+        nextZ = keyZ;
+        break;
+    }
+    for (let keyZ of yContainer.keys()) {
+        if (keyZ < nextZ && keyZ > z) {
+            nextZ = keyZ;
+        }
+    }
+    const nextSceneObject = yContainer.get(nextZ);
+    controls.target.x = nextSceneObject.position.x;
+    controls.target.z = nextSceneObject.position.y;
+    controls.target.z = nextSceneObject.position.z;
+    controls.update();
+}
+
 function listenToInput() {
     function onDocumentKeyDown(event) {
         var keyCode = event.which;
@@ -117,9 +159,8 @@ function listenToInput() {
         } else if (keyCode == 65) { // A
             controls.target.x -= movement;
         } else if (keyCode == 68) { // D
-            controls.target.x += movement;
+            focusNextWorldSceneObjectToLeft();
         }
-        controls.update();
     };
     document.addEventListener("keydown", onDocumentKeyDown, false);
 }
