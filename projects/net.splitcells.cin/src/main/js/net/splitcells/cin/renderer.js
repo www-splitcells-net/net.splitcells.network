@@ -63,21 +63,23 @@ Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.
         }
     });
 
-function onDocumentKeyDown(event) {
-    var keyCode = event.which;
-    if (keyCode == 87) { // W
-        controls.target.y += movement;
-    } else if (keyCode == 83) { // S
-        controls.target.y -= movement;
-    } else if (keyCode == 65) { // A
-        controls.target.x -= movement;
-    } else if (keyCode == 68) { // D
-        controls.target.x += movement;
-    }
-    controls.update();
-};
-document.addEventListener("keydown", onDocumentKeyDown, false);
+function listenToInput() {
+    function onDocumentKeyDown(event) {
+        var keyCode = event.which;
+        if (keyCode == 87) { // W
+            controls.target.y += movement;
+        } else if (keyCode == 83) { // S
+            controls.target.y -= movement;
+        } else if (keyCode == 65) { // A
+            controls.target.x -= movement;
+        } else if (keyCode == 68) { // D
+            controls.target.x += movement;
+        }
+        controls.update();
+    };
+    document.addEventListener("keydown", onDocumentKeyDown, false);
+}
 
-addLightToScene()
-
+addLightToScene();
+listenToInput();
 animate();
