@@ -151,18 +151,23 @@ function focusNextWorldSceneObjectToLeft() {
 
 function listenToInput() {
     function onDocumentKeyDown(event) {
-        var keyCode = event.which;
-        if (keyCode == 87) { // W
-            controls.target.y += movement;
-        } else if (keyCode == 83) { // S
-            controls.target.y -= movement;
-        } else if (keyCode == 65) { // A
-            controls.target.x -= movement;
-        } else if (keyCode == 68) { // D
-            focusNextWorldSceneObjectToLeft();
+        // TODO WASD is not implemented yet, because capturing D was not working.
+        switch(event.code) {
+            case "ArrowUp":
+                controls.target.y += movement;
+                break;
+            case "ArrowRight":
+                focusNextWorldSceneObjectToLeft();
+                break;
+            case "ArrowDown":
+                controls.target.y -= movement;
+                break;
+            case "ArrowLeft":
+                controls.target.x -= movement;
+                break;
         }
     };
-    document.addEventListener("keydown", onDocumentKeyDown, false);
+    document.addEventListener('keydown', onDocumentKeyDown);
 }
 
 function initializeCameraPosition() {
