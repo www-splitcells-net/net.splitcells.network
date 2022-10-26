@@ -31,7 +31,7 @@ function addWorldData(updatedData) {
         var row = updatedData[rowIndex];
         console.log(row);
         const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const material = new THREE.MeshPhongMaterial({ color: 0x7D7D7D });
         // Wireframe is disabled for now.
         // material.wireframe = true;
         // material.wireframeLinecap = 'square';
