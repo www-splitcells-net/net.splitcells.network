@@ -4,6 +4,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'OrbitControls';
 
+const worldSceneObjects = new Map();
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
@@ -42,7 +44,6 @@ function addWorldData(updatedData) {
     var rowIndex;
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
         var row = updatedData[rowIndex];
-        console.log(row);
         const geometry = new THREE.BoxGeometry();
         const material = new THREE.MeshPhongMaterial({ color: 0x7D7D7D });
         // Wireframe is disabled for now.
@@ -51,6 +52,7 @@ function addWorldData(updatedData) {
         const cube = new THREE.Mesh(geometry, material);
         cube.position.set(1 * row[1], 1 * row[2], 0);
         scene.add(cube);
+        worldSceneObjects.set(row[1] + ',' + row[2] + ',' + 0);
     }
 }
 
