@@ -25,6 +25,19 @@ function animate() {
     controls.update();
 };
 
+function addLightToScene() {
+    const mainLightColor = 0xFFFFFF;
+    const mainLightIntensity = 1;
+    const mainLight = new THREE.PointLight(mainLightColor, mainLightIntensity);
+    mainLight.position.set(0, 1000, 1000);
+    scene.add(mainLight);
+
+    const ambientLightColor = 0xFFFFFF;
+    const ambientLightIntensity = .5;
+    const ambientLight = new THREE.AmbientLight(ambientLightColor, ambientLightIntensity);
+    scene.add(ambientLight);
+}
+
 function addWorldData(updatedData) {
     var rowIndex;
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
@@ -64,5 +77,7 @@ function onDocumentKeyDown(event) {
     controls.update();
 };
 document.addEventListener("keydown", onDocumentKeyDown, false);
+
+addLightToScene()
 
 animate();
