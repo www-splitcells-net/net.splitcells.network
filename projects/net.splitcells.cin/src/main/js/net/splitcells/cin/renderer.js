@@ -13,10 +13,13 @@ renderer.domElement.style.width = "100%";
 document.getElementById("net-splitcells-canvas-main").appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.enablePan = false;
 
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+    controls.update();
 };
 
 function addWorldData(updatedData) {
