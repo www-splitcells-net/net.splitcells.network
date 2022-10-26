@@ -55,9 +55,7 @@ function addWorldData(updatedData) {
         const cube = new THREE.Mesh(geometry, material);
         cube.position.set(1 * row[1], 1 * row[2], 0);
         scene.add(cube);
-        console.log(row[1] + ',' + row[2] + ',' + 0);
         worldSceneObjects.set(row[1] + ',' + row[2] + ',' + 0, cube);
-        console.log(worldSceneObjects);
     }
     initializeCameraPosition();
 }
@@ -91,22 +89,15 @@ function listenToInput() {
 
 function initializeCameraPosition() {
     if (worldVariables.get('camera.position.initialized') === false) {
-        console.log(worldSceneObjects);
         let chosenIndex = Math.floor(Math.random() * worldSceneObjects.size);
         let counter = 0;
         let chosenFocus;
-        console.log(worldSceneObjects.get("1,1,0"));
-        console.log('456');
-        console.log(worldSceneObjects.keys());
-        console.log(Array.from(worldSceneObjects.keys()));
         for (let key of worldSceneObjects.keys()) {
-            console.log(key);
             if (counter++ >= chosenIndex) {
                 chosenFocus = worldSceneObjects.get(key);
                 break;
             }
         }
-        console.log(chosenFocus);
         controls.target.x = chosenFocus.position.x;
         controls.target.y = chosenFocus.position.y;
         controls.target.z = chosenFocus.position.z;
