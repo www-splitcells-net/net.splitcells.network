@@ -1,4 +1,5 @@
 // Three.js API doc: https://threejs.org/docs/
+// Papa Parse: https://www.papaparse.com/
 // Architecture: define all base variables first and than operate on these only via methods.
 
 import * as THREE from 'three';
