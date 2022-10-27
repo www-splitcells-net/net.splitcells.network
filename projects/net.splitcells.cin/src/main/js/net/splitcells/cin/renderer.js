@@ -52,7 +52,7 @@ function addLightToScene() {
     scene.add(ambientLight);
 }
 
-function addWorldSceneObject(x, y, z, sceneObject) {
+function worldScenesObject_add(x, y, z, sceneObject) {
     let xContainer = worldSceneObjects.get(x);
     if (xContainer === undefined) {
         xContainer = new Map();
@@ -66,7 +66,7 @@ function addWorldSceneObject(x, y, z, sceneObject) {
     yContainer.set(z, sceneObject);
 }
 
-function getRandomWorldSceneObject() {
+function worldSceneObject_get_random() {
     let xChosenIndex = Math.floor(Math.random() * worldSceneObjects.size);
     let xCounter = 0;
     let xContainer;
@@ -94,7 +94,7 @@ function getRandomWorldSceneObject() {
     }
 }
 
-function addWorldData(updatedData) {
+function worldSceneObjects_addObject(updatedData) {
     var rowIndex;
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
         var row = updatedData[rowIndex];
@@ -106,12 +106,12 @@ function addWorldData(updatedData) {
         const cube = new THREE.Mesh(geometry, material);
         cube.position.set(1 * row[1], 1 * row[2], 0);
         scene.add(cube);
-        addWorldSceneObject(row[1], row[2], 0, cube);
+        worldScenesObject_add(row[1], row[2], 0, cube);
     }
-    initializeCameraPosition();
+    camera_position_initialize();
 }
 
-function focusNextWorldSceneObjectToLeft() {
+function camera_focus_worldSceneObject_to_left() {
     const x = worldVariables.get('camera.focus.current')[0];
     const y = worldVariables.get('camera.focus.current')[1];
     const z = worldVariables.get('camera.focus.current')[2];
@@ -146,10 +146,10 @@ function focusNextWorldSceneObjectToLeft() {
             nextZ = keyZ;
         }
     }
-    cameraFocusOnSceneObject(yContainer.get(nextZ));
+    camera_focus_on_sceneObject(yContainer.get(nextZ));
 }
 
-function cameraFocusOnSceneObject(sceneObject) {
+function camera_focus_on_sceneObject(sceneObject) {
     controls.target.x = sceneObject.position.x;
     controls.target.z = sceneObject.position.y;
     controls.target.z = sceneObject.position.z;
@@ -165,7 +165,7 @@ function listenToInput() {
                 controls.target.y += movement;
                 break;
             case "ArrowRight":
-                focusNextWorldSceneObjectToLeft();
+                camera_focus_worldSceneObject_to_left();
                 break;
             case "ArrowDown":
                 controls.target.y -= movement;
@@ -178,10 +178,10 @@ function listenToInput() {
     document.addEventListener('keydown', onDocumentKeyDown);
 }
 
-function initializeCameraPosition() {
+function camera_position_initialize() {
     if (worldVariables.get('camera.position.initialized') === false) {
-        let chosenFocus = getRandomWorldSceneObject();
-        cameraFocusOnSceneObject(chosenFocus);
+        let chosenFocus = worldSceneObject_get_random();
+        camera_focus_on_sceneObject(chosenFocus);
         worldVariables.set('camera.position.initialized', true);
         worldVariables.set('camera.focus.current', [chosenFocus.position.x, chosenFocus.position.y, chosenFocus.position.z]);
     }
@@ -195,7 +195,7 @@ Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.
         , worker: false
         , dynamicTyping: true
         , complete: function (results) {
-            addWorldData(results.data);
+            worldSceneObjects_addObject(results.data);
         }
     });*/
 Papa.parse("/net/splitcells/run/conway-s-game-of-life.csv"
@@ -204,7 +204,7 @@ Papa.parse("/net/splitcells/run/conway-s-game-of-life.csv"
         , worker: false
         , dynamicTyping: true
         , complete: function (results) {
-            addWorldData(results.data);
+            worldSceneObjects_addObject(results.data);
         }
     });
 addLightToScene();
