@@ -51,19 +51,19 @@ public class ObjectsRendererI implements ProjectRenderer {
 
     @Override
     public Optional<byte[]> renderString(String arg) {
-        domsole().append(ObjectsRendererI.class.getName() + "#renderString not implemented.", LogLevel.WARNING);
+        domsole().append(getClass().getName() + "#renderString not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
     public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path, Config config) {
-        domsole().append(ObjectsRendererI.class.getName() + "#renderHtmlBodyContent not implemented.", LogLevel.WARNING);
+        domsole().append(getClass().getName() + "#renderHtmlBodyContent not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
     public Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config) {
-        domsole().append(ObjectsRendererI.class.getName() + "#renderXml not implemented.", LogLevel.WARNING);
+        domsole().append(getClass().getName() + "#renderXml not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
