@@ -13,6 +13,8 @@ let worldSceneObjects = new Map();
 let worldVariables = new Map();
 worldVariables.set('camera.position.initialized', false);
 worldVariables.set('camera.focus.current', undefined);
+const worldSceneObjectDefaultColor = 0x7D7D7D;
+const worldSceneObjectHighlightedColor = 0x8D8D8D;
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -97,7 +99,7 @@ function addWorldData(updatedData) {
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
         var row = updatedData[rowIndex];
         const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshPhongMaterial({ color: 0x7D7D7D });
+        const material = new THREE.MeshPhongMaterial({ color: worldSceneObjectDefaultColor });
         // Wireframe is disabled for now.
         // material.wireframe = true;
         // material.wireframeLinecap = 'square';
@@ -144,10 +146,14 @@ function focusNextWorldSceneObjectToLeft() {
             nextZ = keyZ;
         }
     }
-    const nextSceneObject = yContainer.get(nextZ);
-    controls.target.x = nextSceneObject.position.x;
-    controls.target.z = nextSceneObject.position.y;
-    controls.target.z = nextSceneObject.position.z;
+    cameraFocusOnSceneObject(yContainer.get(nextZ));
+}
+
+function cameraFocusOnSceneObject(sceneObject) {
+    controls.target.x = sceneObject.position.x;
+    controls.target.z = sceneObject.position.y;
+    controls.target.z = sceneObject.position.z;
+    sceneObject.material.color.setHex(worldSceneObjectHighlightedColor);
     controls.update();
 }
 
@@ -175,9 +181,7 @@ function listenToInput() {
 function initializeCameraPosition() {
     if (worldVariables.get('camera.position.initialized') === false) {
         let chosenFocus = getRandomWorldSceneObject();
-        controls.target.x = chosenFocus.position.x;
-        controls.target.y = chosenFocus.position.y;
-        controls.target.z = chosenFocus.position.z;
+        cameraFocusOnSceneObject(chosenFocus);
         worldVariables.set('camera.position.initialized', true);
         worldVariables.set('camera.focus.current', [chosenFocus.position.x, chosenFocus.position.y, chosenFocus.position.z]);
     }
