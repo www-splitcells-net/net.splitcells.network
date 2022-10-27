@@ -2,6 +2,8 @@
 // Papa Parse: https://www.papaparse.com/
 // Architecture: define all base variables first and than operate on these only via methods.
 
+// Define all global variables in this section.
+
 import * as THREE from 'three';
 import { OrbitControls } from 'OrbitControls';
 
@@ -27,7 +29,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.enablePan = false;
 
-// Only functions and calls of it, after this point.
+// Define only functions in this section.
 
 function animate() {
     requestAnimationFrame(animate);
@@ -181,7 +183,7 @@ function initializeCameraPosition() {
     }
 }
 
-// Only function calls after this.
+// State only function calls in this section.
 Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
     , {
         download: true
