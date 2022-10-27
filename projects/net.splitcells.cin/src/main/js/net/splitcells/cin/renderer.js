@@ -184,7 +184,17 @@ function initializeCameraPosition() {
 }
 
 // State only function calls in this section.
+/* TODO This is demonstration, on how to load data from GitHub.
 Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
+    , {
+        download: true
+        , worker: false
+        , dynamicTyping: true
+        , complete: function (results) {
+            addWorldData(results.data);
+        }
+    });*/
+Papa.parse("/net/splitcells/run/conway-s-game-of-life.csv"
     , {
         download: true
         , worker: false
