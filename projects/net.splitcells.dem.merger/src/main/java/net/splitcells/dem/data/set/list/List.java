@@ -23,6 +23,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JavaLegacyArtifact
@@ -34,8 +35,8 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
      *
      * @param index
      */
-    default void removeAt(int index) {
-        this.remove(index);
+    default T removeAt(int index) {
+        return this.remove(index);
     }
 
     @Deprecated
