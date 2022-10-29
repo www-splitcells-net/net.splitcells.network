@@ -4,17 +4,12 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
-import net.splitcells.gel.rating.rater.RatingEventI;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-
-import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.GroupId.group;
@@ -66,7 +61,7 @@ public class ConstraintTest {
         final List<Line> lines = list();
         {
             lines.withAppended(lineSupplier.addTranslated(list(1)), lineSupplier.addTranslated(list(2)));
-            testSubject.register_papildinājumi(lines);
+            testSubject.register_addition(lines);
         }
         {
             assertThat(testSubject.defying()).isEmpty();

@@ -21,11 +21,11 @@ public interface AfterAdditionSubscriber {
 
     void registerAddition(Line line);
 
-    default void register_papildinājumi(Collection<Line> lines) {
+    default void register_addition(Collection<Line> lines) {
         lines.forEach(line -> registerAddition(line));
     }
 
-    default void register_papildinājumi(Line... lines) {
-        register_papildinājumi(asList(lines));
+    default void register_addition(Line... lines) {
+        register_addition(asList(lines));
     }
 }
