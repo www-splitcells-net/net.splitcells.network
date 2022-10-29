@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ */
 package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
