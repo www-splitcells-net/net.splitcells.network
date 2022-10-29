@@ -19,8 +19,7 @@ import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Profit.profit;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.assertThrows;
 
 public class MetaRatingMergerTest {
 
@@ -41,9 +40,9 @@ public class MetaRatingMergerTest {
                     return rVal;
                 });
         MetaRating firstResult = testSubject.combine(profit(1));
-        assertThat(firstResult.content().get(Profit.class).compare_partially_to(profit(4)).get()).isEqualTo(EQUAL);
+        firstResult.content().get(Profit.class).compare_partially_to(profit(4)).get().requireEqualsTo(EQUAL);
         MetaRating secondResult = firstResult.combine(profit(3));
-        assertThat(secondResult.content().get(Profit.class).compare_partially_to(profit(7)).get()).isEqualTo(EQUAL);
+        secondResult.content().get(Profit.class).compare_partially_to(profit(7)).get().requireEqualsTo(EQUAL);
     }
 
     @Test
@@ -64,7 +63,7 @@ public class MetaRatingMergerTest {
                     return rVal;
                 });
         MetaRating firstResult = testSubject.combine(cost(1));
-        assertThat(firstResult.content().get(Profit.class).compare_partially_to(cost(6)).get()).isEqualTo(EQUAL);
+        firstResult.content().get(Profit.class).compare_partially_to(cost(6)).get().requireEqualsTo(EQUAL);
     }
 
     @Test
