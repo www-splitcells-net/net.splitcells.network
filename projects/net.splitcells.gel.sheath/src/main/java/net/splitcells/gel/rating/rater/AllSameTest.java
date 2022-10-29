@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ */
 package net.splitcells.gel.rating.rater;
 
 import net.splitcells.gel.constraint.type.Then;
