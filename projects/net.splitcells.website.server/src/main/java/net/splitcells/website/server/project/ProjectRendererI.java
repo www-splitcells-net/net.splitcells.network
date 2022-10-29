@@ -18,6 +18,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtensionMerger;
@@ -25,7 +26,6 @@ import net.splitcells.website.server.project.renderer.extension.ProjectRendererE
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static java.util.stream.Stream.concat;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -38,6 +38,7 @@ import static net.splitcells.dem.resource.Files.readFileAsBytes;
 import static net.splitcells.dem.resource.Files.readFileAsString;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.StreamUtils.concat;
 import static net.splitcells.website.server.project.FileStructureTransformer.fileStructureTransformer;
 import static net.splitcells.website.server.project.renderer.extension.CsvChartProjectRendererExtension.csvChartRenderer;
 import static net.splitcells.website.server.project.renderer.extension.CsvProjectRendererExtension.csvRenderer;

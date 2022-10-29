@@ -27,16 +27,21 @@ public final class StreamUtils {
         throw constructorIllegal();
     }
 
+    public static <T> Stream<T> concat(Stream<T> a, Stream<T> b) {
+        return java.util.stream.Stream.concat(a, b);
+    }
+
     public static <T> Stream<T> stream(T[] content) {
         return Stream.of(content);
     }
+
     public static <T> Stream<T> reverse(Stream<T> stream) {
         return stream.collect(
-                collectingAndThen(
-                        toList(), l -> {
-                            Collections.reverse(l);
-                            return l;
-                        }))
+                        collectingAndThen(
+                                toList(), l -> {
+                                    Collections.reverse(l);
+                                    return l;
+                                }))
                 .stream();
     }
 
