@@ -476,12 +476,6 @@ window.onload = function() {
                                         select="s:default-root-relative-url('net/splitcells/website/css/layout.default.css')"/>
                             </xsl:attribute>
                         </link>
-                        <link rel="stylesheet" type="text/css">
-                            <xsl:attribute name="href">
-                                <xsl:value-of
-                                        select="s:default-root-relative-url('net/splitcells/website/js/syntaxhighlighter.white/theme.css')"/>
-                            </xsl:attribute>
-                        </link>
                     </head>
                     <body>
                         <header class="Standard_p5 topLightShadow">
