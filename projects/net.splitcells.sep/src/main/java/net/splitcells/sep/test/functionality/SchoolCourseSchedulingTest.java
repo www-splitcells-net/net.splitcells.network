@@ -39,6 +39,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -249,18 +250,42 @@ public class SchoolCourseSchedulingTest {
 
     private static OnlineOptimization studentAllocationOptimization() {
         final var randomness = randomness();
-        return simpleConstraintGroupBasedRepair(rootConstraint -> list(rootConstraint.query().forAll(STUDENT).forAll(REQUIRED_SUBJECT).constraintPath())
+        return simpleConstraintGroupBasedRepair(rootConstraint -> list(rootConstraint.query().constraintPath())
                 , freeDemandsByStudentSubjects -> solution -> {
                     for (final var demandByStudentSubject : freeDemandsByStudentSubjects.values()) {
                         for (final var demandOfStudentSubject : demandByStudentSubject) {
+                            final var student = demandOfStudentSubject.value(STUDENT);
                             final var requiredSubject = demandOfStudentSubject.value(REQUIRED_SUBJECT);
                             final var studentsVintage = demandOfStudentSubject.value(STUDENT_S_VINTAGE);
-                            solution.suppliesFree()
-                                    .lookup(SUBJECT, requiredSubject)
-                                    .lookup(COURSE_S_VINTAGE, studentsVintage)
-                                    .linesStream()
-                                    .findFirst().
-                                    ifPresent(fittingSupply -> solution.allocate(demandOfStudentSubject, fittingSupply));
+                            final var usedRails = solution.lookup(STUDENT, student)
+                                    .columnView(RAIL)
+                                    .values()
+                                    .stream()
+                                    .distinct()
+                                    .collect(toList());
+                            final var fittingRails = solution.suppliesFree()
+                                    .columnView(RAIL)
+                                    .values()
+                                    .stream()
+                                    .distinct()
+                                    .filter(rail -> !usedRails.contains(rail))
+                                    .collect(toList());
+                            if (fittingRails.isEmpty()) {
+                                return;
+                            }
+                            randomness.chooseOneOf(fittingRails);
+                            fittingRails.shuffle(randomness)
+                                    .stream()
+                                    .map(rail -> solution.suppliesFree()
+                                            .lookup(SUBJECT, requiredSubject)
+                                            .lookup(COURSE_S_VINTAGE, studentsVintage)
+                                            .lookup(RAIL, rail)
+                                            .linesStream()
+                                            .findFirst())
+                                    .filter(Optional::isPresent)
+                                    .map(Optional::get)
+                                    .findFirst()
+                                    .ifPresent(fittingSupply -> solution.allocate(demandOfStudentSubject, fittingSupply));
                         }
                     }
                 }
