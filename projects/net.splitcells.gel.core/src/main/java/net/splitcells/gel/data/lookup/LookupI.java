@@ -33,9 +33,7 @@ public class LookupI<T> implements Lookup<T> {
         this.table = table;
         this.lookupTable = lookupTable(table, attribute);
         this.attribute = attribute;
-        table.rawLinesView().stream()
-                .filter(e -> e != null)
-                .forEach(e -> register_addition(e.value(attribute), e.index()));
+        table.linesStream().forEach(e -> register_addition(e.value(attribute), e.index()));
     }
 
     @Override
