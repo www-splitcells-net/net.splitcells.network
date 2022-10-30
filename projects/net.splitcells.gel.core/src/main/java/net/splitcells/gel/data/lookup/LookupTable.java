@@ -85,10 +85,9 @@ public class LookupTable implements Table {
     protected LookupTable(Table table, String name, boolean useExperimentalRawLineCache) {
         this.tableView = table;
         this.name = name;
-        columns = listWithValuesOf
-                (table.headerView().stream()
+        columns = table.headerView().stream()
                         .map(attribute -> LookupColumn.lookupColumn(this, attribute))
-                        .collect(toList()));
+                        .collect(Lists.toList());
         columnsView = listWithValuesOf(columns);
         this.useExperimentalRawLineCache = useExperimentalRawLineCache;
     }
