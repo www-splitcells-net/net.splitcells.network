@@ -2,6 +2,10 @@
 This is the aggregation of common file and folder structures in software
 projects.
 ## `net.splitcells.network` Specific Standard
+The number of non-hidden files and folders at the top level folder should be minimized,
+in order to simplify the introduction of the repo and
+simplify the overview and overhaul structure of the repo.
+
 Every project should have a POM at its root folder,
 even if such a project does not use Maven.
 By defining a Maven multi project module,
