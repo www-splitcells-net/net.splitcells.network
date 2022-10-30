@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://splitcells.net/sew.xsd">
+    <meta>
+        <title>Support Document</title>
+        <description>Helps users to do stuff.</description>
+    </meta>
+    <chapter>
+        <title>How to easily get the source code of a command.</title>
+        <paragraph>
+            Sometimes there is no command provided by OSI, that fits to ones needs.
+            For instance, one might want to look at the operation systems logs and search for specific messages.
+            One of the few commands provided in that regard is <quote>system.log.browser</quote>,
+            but the user might not want to browse all log messages.
+            Instead of looking the command up on the internet for specific things,
+            one might want to just look up the shell commands of <quote>system.log.browser</quote>
+            and adopt these quickly.
+        </paragraph>
+        <paragraph>This can be done via <quote>cat $(which system.log.browser)</quote> on most shells.
+            When executed, you can see the actual command executed for the task and
+            use this command instead directly.
+            Often enough the <quote>--help</quote> flag or the man pages can be helpful enough,
+            to figure out, what needs to be changed.
+            If this is not the case, the underlying command might help one,
+            to easier find the desired solution online by using the underlying command for the search queries.
+        </paragraph>
+    </chapter>
+</article>
