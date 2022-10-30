@@ -134,7 +134,7 @@ public class SchoolCourseSchedulingTest {
                     , 20
                     , 2
                     , 2
-                    , 2
+                    , 1
             );
             rangeClosed(1, 1).forEach(i -> {
                 /* TODO This can be used to demonstrate the problems of implementing own custom supply selector.
