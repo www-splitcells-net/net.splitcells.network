@@ -17,3 +17,23 @@ License: LicenseRef-NSID.txt
 Files: src/main/txt/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.txt
 Copyright: See the files' content.
 License: LicenseRef-NSID.txt
+
+Files: projects/net.splitcells.website.default.content/src/main/resources/html/net/splitcells/website/license-AGPL-3-0.txt
+Copyright: See the files' content.
+License: LicenseRef-NSID.txt
+
+Files: projects/net.splitcells.website.default.content/src/main/resources/html/net/splitcells/website/license-Apache-2-0.txt
+Copyright: See the files' content.
+License: LicenseRef-NSID.txt
+
+Files: projects/net.splitcells.website.default.content/src/main/resources/html/net/splitcells/website/license-CC-BY-SA-4.txt
+Copyright: See the files' content.
+License: LicenseRef-NSID.txt
+
+Files: projects/net.splitcells.website.default.content/src/main/resources/html/net/splitcells/website/license-CC0-1-0.txt
+Copyright: See the files' content.
+License: LicenseRef-NSID.txt
+
+Files: projects/net.splitcells.website.default.content/src/main/resources/html/net/splitcells/website/license-MIT.txt
+Copyright: See the files' content.
+License: LicenseRef-NSID.txt
