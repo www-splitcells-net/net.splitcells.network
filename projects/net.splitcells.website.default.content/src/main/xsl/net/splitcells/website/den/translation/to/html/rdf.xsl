@@ -120,7 +120,10 @@
     <xsl:template match="p:*" mode="rdf:Description">
         <!-- Hide private information. -->
     </xsl:template>
-    <xsl:template match="*" mode="rdf:label">
+    <xsl:template match="rdf:label" mode="rdf:Description">
+        <!-- Not needed for now. -->
+    </xsl:template>
+    <xsl:template match="rdf:comment" mode="rdf:Description">
         <!-- Not needed for now. -->
     </xsl:template>
     <xsl:template match="*" mode="rdf:Description">
