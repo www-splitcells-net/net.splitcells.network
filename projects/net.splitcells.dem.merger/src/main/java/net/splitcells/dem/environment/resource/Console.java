@@ -39,7 +39,8 @@ public final class Console extends ResourceOptionI<Sender<String>> {
             if (environment().config().configValue(IsEchoToFile.class)) {
                 var consolePath
                         = Paths.usersStateFiles().resolve("src/main/xml")
-                        .resolve("net/splitcells/dem/console/instance")
+                        .resolve(Dem.configValue(ProgramName.class).replace('.', '/'))
+                        .resolve("console")
                         .resolve(
                                 environment().config().configValue(StartTime.class)
                                         .format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss.nnnn")));
