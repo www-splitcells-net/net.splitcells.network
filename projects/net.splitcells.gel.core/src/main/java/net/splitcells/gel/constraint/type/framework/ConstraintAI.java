@@ -136,7 +136,7 @@ public abstract class ConstraintAI implements Constraint {
                 .lookup(injectionGroup)
                 .columnView(LINE)
                 .lookup(removal)
-                .lines()
+                .linesStream()
                 .forEach(lineProcessing::remove);
         lines.lookup(LINE, removal)
                 .lookup(INCOMING_CONSTRAINT_GROUP, injectionGroup)
