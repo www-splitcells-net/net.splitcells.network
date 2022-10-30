@@ -120,6 +120,9 @@
     <xsl:template match="p:*" mode="rdf:Description">
         <!-- Hide private information. -->
     </xsl:template>
+    <xsl:template match="*" mode="rdf:label">
+        <!-- Not needed for now. -->
+    </xsl:template>
     <xsl:template match="*" mode="rdf:Description">
         <xsl:message terminate="true">
             prefix
