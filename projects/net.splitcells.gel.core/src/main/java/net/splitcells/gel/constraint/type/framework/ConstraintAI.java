@@ -138,11 +138,9 @@ public abstract class ConstraintAI implements Constraint {
                 .lookup(removal)
                 .lines()
                 .forEach(lineProcessing::remove);
-        // TODO PERFORMANCE
-        lines.rawLinesView().stream()
-                .filter(e -> e != null)
-                .filter(line -> line.value(LINE).equals(removal))
-                .filter(line -> line.value(INCOMING_CONSTRAINT_GROUP).equals(injectionGroup))
+        lines.lookup(LINE, removal)
+                .lookup(INCOMING_CONSTRAINT_GROUP, injectionGroup)
+                .linesStream()
                 .forEach(lines::remove);
     }
 
