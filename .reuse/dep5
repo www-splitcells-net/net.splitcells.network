@@ -18,6 +18,10 @@ Files: src/main/txt/net/splitcells/network/legal/Developer_Certificate_of_Origin
 Copyright: See the files' content.
 License: LicenseRef-NSID.txt
 
+Files: projects/net.splitcells.os.state.interface/src/main/txt/net/splitcells/os/state/interface/process/Developer_Certificate_of_Origin.v1.1.txt
+Copyright: See the files' content.
+License: LicenseRef-NSID.txt
+
 Files: projects/net.splitcells.website.default.content/src/main/resources/html/net/splitcells/website/license-AGPL-3-0.txt
 Copyright: See the files' content.
 License: LicenseRef-NSID.txt
