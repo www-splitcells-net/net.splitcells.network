@@ -1,6 +1,36 @@
 # Software Project File System Standards
 This is the aggregation of common file and folder structures in software
 projects.
+## Software Project File System Overview
+```
+Top Level Folder
+├── bin
+│   ├── [Project Commands]
+│   └── [...]
+├── .reuse/dep5
+├── lib
+│   └── [...]
+├── LICENSES
+│   └── [...]
+├── src
+│   ├── doc
+│   │   └── [Source Type]
+│   │       └── [Files Of Source Type]
+│   └── main
+│       └── [Source Type]
+│           └── [Files Of Source Type]
+├── projects
+│   ├── [Project Top Level Folders]
+│   └── [...]
+├── BUILD.*
+├── CHANGELOG.*
+├── CONTRIBUTING.*
+├── DEVELOPMENT.*
+├── NOTICE.*
+├── pom.xml
+├── README.*
+└── [...]
+```
 ## `net.splitcells.network` Specific Standard
 The number of non-hidden files and folders at the top level folder should be minimized,
 in order to simplify the introduction of the repo and
