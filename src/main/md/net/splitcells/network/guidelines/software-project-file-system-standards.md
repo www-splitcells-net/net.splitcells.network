@@ -29,8 +29,13 @@ can be documented.
 Its source code can be found on [Github](https://github.com/olivierlacan/keep-a-changelog).
 If the project uses Semantic Versioning, it may make sense to use the chapters
 `Major Changes`, `Minor Changes` and `Patches` for each release.
-## Files at `./LICENSE.*` and `.src/license/**`
-Contains licensing information. For the most part it contains copies of licenses.
+## Copyright Files
+### Files at `./LICENSE.*` and `./NOTICE.*`
+Contains non-standardized licensing information.
+### REUSE Conforming Files
+See [REUSE software recommendations](https://reuse.software/) for more details. 
+* `./reuse/dep5`
+* `./LICENSES/*`
 ## Files at `./README.*`
 Contains the initial description of the project.
 ## Files at `./.*`
@@ -41,10 +46,8 @@ Contains executable programs regarding tasks of the project.
 It is preferred, if the scripts are written in such a way,
 that the current folder is located at the project's root folder.
 Such commands are called project commands.
-## Files at `.src/doc/*`
+## Files at `.src/doc/[file types]/*`
 Contains projects documentation.
-### Files at `src/doc/task` and `src/doc/task/*`
-Contains task of the projects that are relevant.
 ## Files at `./lib/*`
 Contains dependencies of the project.
 ## Files at `./projects/*`
