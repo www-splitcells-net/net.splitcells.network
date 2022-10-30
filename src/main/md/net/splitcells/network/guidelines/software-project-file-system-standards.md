@@ -7,6 +7,13 @@ Top Level Folder
 ├── bin
 │   ├── [Project Commands]
 │   └── [...]
+├── [.*]
+│   └── [...]
+├── [.config]
+│   ├── hakoerber.git-repo-manager
+│   │   └── [config.yml]
+│   └── [Software Specific Config Folders]
+│       └── [...]
 ├── .reuse/dep5
 ├── lib
 │   └── [...]
