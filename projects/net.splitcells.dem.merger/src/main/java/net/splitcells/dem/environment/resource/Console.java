@@ -43,7 +43,8 @@ public final class Console extends ResourceOptionI<Sender<String>> {
                         .resolve("console")
                         .resolve(
                                 environment().config().configValue(StartTime.class)
-                                        .format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss.nnnn")));
+                                        .format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss.nnnn"))
+                                        .replace('.', '/'));
                 createDirectory(consolePath);
                 try {
                     return stringSender
