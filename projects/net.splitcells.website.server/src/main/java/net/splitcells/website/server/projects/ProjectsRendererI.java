@@ -40,6 +40,7 @@ import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithSimplePath;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
@@ -84,12 +85,20 @@ public class ProjectsRendererI implements ProjectsRenderer {
             final var relevantLayout = perspective(VAL, NATURAL);
             this.relevantProjectsPaths().forEach(p -> extendPerspectiveWithPath(relevantLayout, p));
             config.withLayoutRelevant(Xml.toPrettyString(relevantLayout.toDom()));
-            config.withLayoutRelevantPerspective(Optional.of(relevantLayout));
+        }
+        {
+            final var simpleRelevantLayout = perspective("relevant-layout", NATURAL);
+            this.relevantProjectsPaths().forEach(p -> extendPerspectiveWithSimplePath(simpleRelevantLayout, p));
+            config.withLayoutRelevantPerspective(Optional.of(simpleRelevantLayout));
+        }
+        {
+            final var simpleLayout = perspective("layout", NATURAL);
+            this.projectsPaths().forEach(p -> extendPerspectiveWithSimplePath(simpleLayout, p));
+            config.withLayoutPerspective(Optional.of(simpleLayout));
         }
         final var layout = perspective(VAL, NATURAL);
         this.projectsPaths().forEach(p -> extendPerspectiveWithPath(layout, p));
         config.withLayout(Xml.toPrettyString(layout.toDom()));
-        config.withLayoutPerspective(Optional.of(layout));
         return layout;
     }
 

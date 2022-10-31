@@ -57,4 +57,28 @@ public class LayoutUtils {
                                 .withChild(perspective("/" + relativeProjectPath.toString(), STRING))));
         return current;
     }
+
+    public static Perspective extendPerspectiveWithSimplePath(Perspective current, Path relativeProjectPath) {
+        for (final var element : list(relativeProjectPath.toString().split("/"))
+                .stream()
+                .filter(e -> !"".contentEquals(e))
+                .collect(toList())) {
+            final var children = current.children().stream()
+                    .filter(child -> child.nameIs(element, NameSpaces.NATURAL))
+                    .collect(Lists.toList());
+            final Perspective child;
+            if (children.isEmpty()) {
+                child = perspective(element, NameSpaces.NATURAL);
+                current.withChild(child);
+            } else {
+                child = children.get(0);
+            }
+            current = child;
+        }
+        current.withChild(
+                perspective(NameSpaces.LINK, NameSpaces.DEN)
+                        .withChild(perspective(NameSpaces.URL, NameSpaces.DEN)
+                                .withChild(perspective("/" + relativeProjectPath.toString(), STRING))));
+        return current;
+    }
 }
