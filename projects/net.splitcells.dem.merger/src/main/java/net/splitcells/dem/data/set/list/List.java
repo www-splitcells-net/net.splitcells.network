@@ -60,6 +60,11 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         return this;
     }
 
+    default List<T> withRemovedFromBehind(int offset) {
+        remove(size() - 1 - offset);
+        return this;
+    }
+
     default Optional<T> lastValue() {
         if (isEmpty()) {
             return Optional.empty();
