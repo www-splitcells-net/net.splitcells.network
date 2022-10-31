@@ -35,16 +35,4 @@ public interface PerspectiveView extends Domable {
     default boolean nameIs(String value, NameSpace nameSpace) {
         return nameSpace().equals(nameSpace) && name().equals(value);
     }
-
-    default PerspectiveView subtree(List<String> path) {
-        if (path.isEmpty()) {
-            return this;
-        }
-        final var next = path.remove(0);
-        return children().stream()
-                .filter(child -> child.name().equals(next))
-                .findFirst()
-                .orElseThrow()
-                .subtree(path);
-    }
 }

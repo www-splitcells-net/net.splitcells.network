@@ -218,10 +218,29 @@ public interface Perspective extends PerspectiveView {
         } else if (nameSpace().equals(STRING)) {
             htmlString += name();
             htmlString += children().stream().map(Perspective::toHtmlString).reduce((a, b) -> a + b).orElse("");
+        } else if (nameSpace().equals(NATURAL) || nameSpace().equals(DEN)) {
+            if (children().isEmpty()) {
+                htmlString += "<" + name() + "/>";
+            } else {
+                htmlString += "<" + name() + ">";
+                htmlString += children().stream().map(Perspective::toHtmlString).reduce((a, b) -> a + b).orElse("");
+                htmlString += "</" + name() + ">";
+            }
         } else {
             throw executionException("Unsupported namespace `" + nameSpace().uri() + "`.");
         }
         return htmlString;
     }
 
+    default Perspective subtree(List<String> path) {
+        if (path.isEmpty()) {
+            return this;
+        }
+        final var next = path.remove(0);
+        return children().stream()
+                .filter(child -> child.name().equals(next))
+                .findFirst()
+                .orElseThrow()
+                .subtree(path);
+    }
 }
