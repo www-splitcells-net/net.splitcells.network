@@ -84,10 +84,12 @@ public class ProjectsRendererI implements ProjectsRenderer {
             final var relevantLayout = perspective(VAL, NATURAL);
             this.relevantProjectsPaths().forEach(p -> extendPerspectiveWithPath(relevantLayout, p));
             config.withLayoutRelevant(Xml.toPrettyString(relevantLayout.toDom()));
+            config.withLayoutRelevantPerspective(Optional.of(relevantLayout));
         }
         final var layout = perspective(VAL, NATURAL);
         this.projectsPaths().forEach(p -> extendPerspectiveWithPath(layout, p));
         config.withLayout(Xml.toPrettyString(layout.toDom()));
+        config.withLayoutPerspective(Optional.of(layout));
         return layout;
     }
 
