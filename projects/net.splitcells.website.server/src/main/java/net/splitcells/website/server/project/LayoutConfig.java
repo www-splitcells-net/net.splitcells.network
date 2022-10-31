@@ -82,8 +82,8 @@ public class LayoutConfig {
      * @param localPathContext The Local Path Context
      * @return This
      */
-    public LayoutConfig withLocalPathContext(Perspective localPathContext) {
-        this.localPathContext = Optional.of(localPathContext);
+    public LayoutConfig withLocalPathContext(Optional<Perspective> localPathContext) {
+        this.localPathContext = localPathContext;
         return this;
     }
 
@@ -93,8 +93,8 @@ public class LayoutConfig {
      * @param relevantLocalPathContext The Relevant Local Path Context
      * @return This
      */
-    public LayoutConfig withRelevantLocalPathContext(Perspective relevantLocalPathContext) {
-        this.relevantLocalPathContext = Optional.of(relevantLocalPathContext);
+    public LayoutConfig withRelevantLocalPathContext(Optional<Perspective> relevantLocalPathContext) {
+        this.relevantLocalPathContext = relevantLocalPathContext;
         return this;
     }
 }

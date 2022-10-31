@@ -181,6 +181,10 @@ public class Config {
         return layoutPerspective;
     }
 
+    public Optional<Perspective> layoutPerspectiveSubtree(List<String> path) {
+        return layoutPerspective;
+    }
+
     @ReturnsThis
     public Config withLayoutPerspective(Optional<Perspective> arg) {
         layoutPerspective = arg;
