@@ -30,9 +30,10 @@ public class Assertions {
         try {
             run.run();
         } catch (Throwable th) {
-            if (!expectedExceptionType.isInstance(th)) {
-                throw executionException("Runnable should throw `" + expectedExceptionType + "` but did throw  ");
+            if (expectedExceptionType.isInstance(th)) {
+                return;
             }
+            throw executionException("Runnable should throw `" + expectedExceptionType + "` but did throw  `" + th.getClass() + "`.");
         }
         throw executionException("Runnable should throw `" + expectedExceptionType + "` but did not.");
     }
