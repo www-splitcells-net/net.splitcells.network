@@ -205,6 +205,11 @@ window.onload = function() {
                         <xsl:copy-of select="./s:meta/s:republication/node()"/>
                     </s:republication>
                 </xsl:if>
+                <xsl:if test="./s:meta/s:path.context">
+                    <s:path.context>
+                        <xsl:copy-of select="./s:meta/s:path.context/node()"/>
+                    </s:path.context>
+                </xsl:if>
                 <s:content>
                     <xsl:copy-of select="./node()"/>
                 </s:content>
@@ -358,6 +363,7 @@ window.onload = function() {
                             </s:item>
                         </s:list>
                     </xsl:if>
+                    <xsl:apply-templates select="./s:path.context"/>
                     <s:chapter>
                         <s:title>Relevant Local Path Context</s:title>
                         <xsl:variable name="file-path-environment-relevant">

@@ -135,9 +135,9 @@
                     </s:post>
                 </s:link>
                 <xsl:text>Some posts turn out to be unsatisfying and in need of a revision.
-					In these cases I sometimes decide to depublish such articles
-					and later publish the updated versions.
-				</xsl:text>
+                    In these cases I sometimes decide to depublish such articles
+                    and later publish the updated versions.
+                </xsl:text>
             </s:paragraph>
         </xsl:variable>
         <xsl:apply-templates select="$tmp"/>
@@ -220,7 +220,7 @@
         <div class="cell">
             <xsl:choose>
                 <xsl:when test="$tmp = ''">
-                    <xsl:text> </xsl:text>
+                    <xsl:text></xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:copy-of select="$tmp"/>
@@ -423,12 +423,12 @@
                             </xsl:element>
                         </div>
                         <div class="IndexPostHeader">
-                            <xsl:text> </xsl:text><!-- REMOVE Used in order to ommit empty 'a' elements which break browsers. -->
+                            <xsl:text></xsl:text><!-- REMOVE Used in order to ommit empty 'a' elements which break browsers. -->
                             <!-- FIXME Prevent creation of empty tags with other means. -->
                             <xsl:if test="./s:description">
                                 <div class="highlighted_paragraph"
                                      style="font-weight: 400; text-align: justify; margin-top: .5em;">
-                                    <xsl:text> </xsl:text>
+                                    <xsl:text></xsl:text>
                                     <xsl:apply-templates select="./s:description/node()"/>
                                 </div>
                             </xsl:if>
@@ -463,7 +463,7 @@
                             <xsl:attribute name="onclick">
                                 <xsl:value-of select="translate(normalize-space($link), ' ', '')"/>
                             </xsl:attribute>
-                            <xsl:text> </xsl:text>
+                            <xsl:text></xsl:text>
                         </xsl:element>
                     </xsl:if>
                 </xsl:element>
@@ -471,23 +471,23 @@
         </xsl:choose>
     </xsl:template>
     <xsl:template match="s:div">
-        <xsl:text> </xsl:text>
+        <xsl:text></xsl:text>
         <xsl:apply-templates/>
-        <xsl:text> </xsl:text>
+        <xsl:text></xsl:text>
     </xsl:template>
     <xsl:template match="s:strong">
         <strong>
-            <xsl:text> </xsl:text>
+            <xsl:text></xsl:text>
             <xsl:apply-templates/>
-            <xsl:text> </xsl:text>
+            <xsl:text></xsl:text>
         </strong>
     </xsl:template>
     <xsl:template match="s:quote">
-        <xsl:text> </xsl:text>
+        <xsl:text></xsl:text>
         <q>
             <xsl:apply-templates/>
         </q>
-        <xsl:text> </xsl:text>
+        <xsl:text></xsl:text>
     </xsl:template>
     <xsl:template match="s:link">
         <!-- See <xsl:template name="link.target"> -->
@@ -553,11 +553,11 @@
         <xsl:value-of select="'.html'"/>
     </xsl:template>
     <xsl:template match="s:marked">
-        <xsl:text> </xsl:text>
+        <xsl:text></xsl:text>
         <xsl:element name="strong">
             <xsl:apply-templates/>
         </xsl:element>
-        <xsl:text> </xsl:text>
+        <xsl:text></xsl:text>
     </xsl:template>
     <xsl:template match="text()">
         <!-- Selects everything which is a text node. -->
@@ -671,6 +671,13 @@
     </xsl:template>
     <xsl:template match="s:choice">
         <xsl:apply-templates select="./s:option"/>
+    </xsl:template>
+    <xsl:template match="s:path.context">
+        <x:ol>
+            <xsl:apply-templates select="." mode="path.context"/>
+        </x:ol>
+    </xsl:template>
+    <xsl:template match="s:*" mode="path.context">
     </xsl:template>
     <xsl:template match="s:*">
         <xsl:message terminate="true">
