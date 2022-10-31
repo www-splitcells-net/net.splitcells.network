@@ -12,17 +12,22 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
+import javax.xml.stream.events.Namespace;
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Paths.readString;
@@ -35,6 +40,9 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
  * All files need to end with ".xml".
  */
 public class XmlProjectRendererExtension implements ProjectRendererExtension {
+
+    private static final String MARKER = "834ZT09345ZHGF09H3457G90H34";
+
     public static XmlProjectRendererExtension xmlRenderer() {
         return new XmlProjectRendererExtension();
     }
@@ -50,6 +58,13 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                     .projectFolder()
                     .resolve("src/main/xml")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
+            final var pathFolder = StreamUtils.stream(path.split("/"))
+                    .filter(s -> !s.isEmpty())
+                    .collect(toList())
+                    .withRemovedFromBehind(0);
+            final var layoutConfig = layoutConfig(path)
+                    .withLocalPathContext(config.layoutPerspective()
+                            .map(l -> l.subtree(pathFolder)));
             if (is_file(xmlFile)) {
                 final var xmlContent = readString(xmlFile);
                 final var document = Xml.parse(xmlContent);
@@ -65,10 +80,21 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                         pathElement.appendChild(document.createTextNode(path));
                         metaElement.appendChild(pathElement);
                     }
-                    return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toDocumentString(document), config).get()
+                    metaElement.appendChild(document.createTextNode(MARKER));
+                    final String documentString;
+                    if (layoutConfig.localPathContext().isPresent()) {
+                        documentString = Xml.toDocumentString(document)
+                                .replace(MARKER, perspective("path.context", NameSpaces.NATURAL)
+                                        .withChild(layoutConfig.localPathContext().get())
+                                        .toHtmlString());
+                    } else {
+                        documentString = Xml.toDocumentString(document);
+                    }
+                    return Optional.of(renderingResult(projectRenderer.renderRawXml(documentString, config).get()
                             , HTML_TEXT.codeName()));
                 } else {
-                    return Optional.of(renderingResult(projectRenderer.renderXml(xmlContent, layoutConfig(path), config).get(), HTML_TEXT.codeName()));
+                    return Optional.of(renderingResult(projectRenderer.renderXml(xmlContent, layoutConfig, config).get()
+                            , HTML_TEXT.codeName()));
                 }
             }
         }
