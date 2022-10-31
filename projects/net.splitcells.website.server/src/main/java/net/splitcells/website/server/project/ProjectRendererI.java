@@ -381,6 +381,11 @@ public class ProjectRendererI implements ProjectRenderer {
             contentElement.appendChild(Xml.textNode(MARKER));
             layoutConfigElement.appendChild(contentElement);
         }
+        layoutConfig.localPathContext().ifPresent(localPathContext -> {
+            final var pathContext = Xml.elementWithChildren(NameSpaces.SEW, "path.context");
+            pathContext.appendChild(Xml.parse(localPathContext.toHtmlString()));
+            layoutConfigElement.appendChild(pathContext);
+        });
         try {
             return Optional.of(renderer()
                     .transform(Xml.toPrettyString(layoutConfigElement)
