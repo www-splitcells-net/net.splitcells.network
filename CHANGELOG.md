@@ -656,6 +656,15 @@ Starting from this point a deprecated changelog format is used.
 10. **2021-04-07**: #42: Make Gel workspace visible in website.
 11. **2021-04-12**: #46: Use deterministic environment and execution in CI.
 12. Some undocumented work.
+13. Some undocumented work.
+14. **2020-12-31**: Create public git repository.
+15. Some undocumented work.
+16. **2019-05-05**: Create private git repositories.
+17. Some undocumented work without version control.
+18. **2016-11-XX**: Created the second version of assignment solver written from the ground up for master thesis and named it `Generic Allocator` for the first time.
+    See [here](https://splitcells.net/net/splitcells/gel/history/origin-of-the-project-generic-allocator.html) for more info.
+19. **2015-XX-XX**(approximate): Created precursor assignment solver of this project during an internship at university.
+    See [here](https://splitcells.net/net/splitcells/gel/history/origin-of-the-project-generic-allocator.html) for more info.
 ### Minor Changes
 1. **2021-06-27**:
    1. Publish Ses project.
@@ -670,11 +679,6 @@ Starting from this point a deprecated changelog format is used.
    This can be used as a safeguard for automated synchronization command
    by exiting a command, when uncommitted changes are present.
 1. **2021-06-06**: [#54: Integrate CommonMark documentation into project rendering.](https://github.com/www-splitcells-net/net.splitcells.network/issues/54)
-1. Some undocumented work.
-1. **2020-12-31**: Create public git repository.
-1. Some undocumented work.
-1. **2019-05-05**: Create private git repositories.
-1. Some undocumented work.
 ### Patches
 1. **2021-06-27** Log error stack traces in web server.
 2. **2021-06-26** Add optimization to `den.xsd`.
