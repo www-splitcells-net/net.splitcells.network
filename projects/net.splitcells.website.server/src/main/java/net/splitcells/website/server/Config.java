@@ -30,7 +30,18 @@ public class Config {
 
     private Optional<String> sslKeystorePassword = Optional.of("password");
     private Optional<Path> sslKeystoreFile = Optional.of(Paths.get("target/keystore.p12"));
+
+    /**
+     * This is an XML document provided for the XSL based renderer.
+     * It contains all paths supported by the renderer.
+     */
+    @Deprecated
     private Optional<String> layout = Optional.empty();
+    /**
+     * This is an XML document provided for the XSL based renderer.
+     * It contains all paths supported by the renderer, that are relevant to the targeted common user.
+     */
+    @Deprecated
     private Optional<String> layoutRelevant = Optional.empty();
     private int openPort = 443;
     private String generationStyle = "standard";
