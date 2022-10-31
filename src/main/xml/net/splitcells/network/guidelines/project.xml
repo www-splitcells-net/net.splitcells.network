@@ -45,6 +45,8 @@
         <title>Project Partitioning</title>
         <paragraph>If projects become big or mature enough,
             it should be considered to partition these into parts dedicated to certain overhaul aspects of the projects in relation to their environment.
+            If projects are not big enough to be split up,
+            it may help to consider every folder with source code as its own mini sub project.
         </paragraph>
         <paragraph>One way of doing this, is to partition the project into layers,
             where the deepest parts ensure,

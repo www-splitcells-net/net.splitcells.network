@@ -7,8 +7,6 @@
     </meta>
     <chapter>
         <title>Dependency Management</title>
-        <paragraph>Every folder containing source files should be regarded as its own project.</paragraph>
-        <d:toDo>Define core, merger, core.merger, sheath and environment concept.</d:toDo>
         <paragraph>
             Prefer deterministic builds strongly.
             Update dependencies explicitly and not implicitly.
