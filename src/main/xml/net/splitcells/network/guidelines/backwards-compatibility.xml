@@ -5,6 +5,16 @@
     <meta>
         <title>Backwards Compatibility</title>
     </meta>
+    <paragraph>Make clear what is guaranteed and do this only via an explicit interface,
+        that has no implementation specifics.
+        Prefer backward compatible changes to backward incompatible changes.
+        Make as much undefined as possible for not essential things in order to minimize the set of guarantees.
+        Breaking other software, because it relied on implementation specifics is better,
+        than breaking other software via incompatible API changes.
+        Do not just break features, but also migrate its usage to other appropriate features before breaking
+        said features.
+        Feature flags are your friend.
+    </paragraph>
     <paragraph>Exceptions are not considered to be part of the API.
         Only unchecked exceptions are used.
     </paragraph>
@@ -28,8 +38,12 @@
             <item>Create warning log message,  when the deprecated method is executed.
                 Users, maintainers and developers are thereby warned about the deprecation.</item>
             <item>Create error log message, in order to create urgency.</item>
+            <item>Create feature flag for function and enable function by default.</item>
+            <item>Make the feature disabled by default via the feature flag.</item>
+            <item>Drop support for the function and mark it as unsupported.</item>
             <item>Move the deprecated function to another project, so it's not included in the project.
                 Instead the function will be injected into the project via the other project.
+                This step may not be important and may be ignored.
             </item>
         </list>
     </chapter>

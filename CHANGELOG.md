@@ -666,6 +666,7 @@ Starting from this point a deprecated changelog format is used.
 19. **2015-XX-XX**(approximate): Created precursor assignment solver of this project during an internship at university.
     See [here](https://splitcells.net/net/splitcells/gel/history/origin-of-the-project-generic-allocator.html) for more info.
 ### Minor Changes
+1. **2022-10-31**: [**\#s97** Document migration based development.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/97)
 1. **2021-06-27**:
    1. Publish Ses project.
    1. Limit depth of `Local Path Context` in default web layout.

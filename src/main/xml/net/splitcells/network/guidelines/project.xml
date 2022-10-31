@@ -20,26 +20,30 @@
             </link>
             is used as a default versioning format.
         </paragraph>
-        <paragraph>Make clear what is guaranteed and do this only via an explicit interface,
-            that has no implementation specifics.
-            Prefer backward compatible changes to backward incompatible changes.
-            Make as much undefined as possible for not essential things in order to minimize the set of guarantees.
-            Breaking other software, because it relied on implementation specifics is better,
-            than breaking other software via incompatible API changes.
-            Do not just break features, but also migrate its usage to other appropriate features before breaking
-            said features.
-        </paragraph>
     </chapter>
     <chapter>
         <title>Development Process</title>
-        <paragraph>Do not assume that better skills, more intelligence, working harder, etc. automatically lead to a
+        <chapter>
+            <title>Migration Based Development Process</title>
+            <paragraph>
+                Prioritize a buildable and working project state at every point in the development.
+                Prefer test driven development.
+                Ensure that the project is build, tested and executed in different environments,
+                in order to ensure, that the projects works.
+            </paragraph>
+            <paragraph>Prefer that
+                <link>
+                    <text>backwards compatibility</text>
+                    <post>/net/splitcells/network/guidelines/backwards-compatibility</post>
+                </link>
+                is provided as good as planned.
+            </paragraph>
+        </chapter>
+        <paragraph>
+            Do not assume that better skills, more intelligence, working harder, etc. automatically lead to a
             better result.
-            Prioritize a working project state at every point in the development.
-            Prefer test driven development.
-            Ensure that the project is build, tested and executed in different environments,
-            in order to ensure, that the projects works.
         </paragraph>
-        <paragraph>Every part of the development process should have a task</paragraph>
+        <paragraph>Prefer every part of the development process having a task or goal.</paragraph>
     </chapter>
     <chapter>
         <title>Project Partitioning</title>
