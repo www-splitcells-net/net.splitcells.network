@@ -12,6 +12,8 @@ package net.splitcells.website.server;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
+import net.splitcells.dem.lang.perspective.Perspective;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,6 +45,18 @@ public class Config {
      */
     @Deprecated
     private Optional<String> layoutRelevant = Optional.empty();
+    /**
+     * <p>This is a tree structure containing all paths supported by the renderer.</p>
+     * <p>Replaces {@link #layout}.</p>
+     */
+    private Optional<Perspective> layoutPerspective = Optional.empty();
+
+    /**
+     * <p>This is a tree structure containing all paths supported by the renderer,
+     * that are relevant to the targeted common user.</p>
+     * <p>Replaces {@link #layoutRelevant}.</p>
+     */
+    private Optional<Perspective> layoutRelevantPerspective = Optional.empty();
     private int openPort = 443;
     private String generationStyle = "standard";
     /**
@@ -64,9 +78,9 @@ public class Config {
      * Browsers like Firefox like to call <q>[...]/index.html</q> instead of <q>[...]/</q>.
      */
     private List<String> possibleRootIndex = Lists.list(rootIndex
-                    , "index.html"
-                    , ""
-                    , "/");
+            , "index.html"
+            , ""
+            , "/");
 
     /**
      * States whether {@link net.splitcells.website.server.project.Renderer}s may cache certain parts,
@@ -155,11 +169,31 @@ public class Config {
     }
 
     public Config withCacheRenderers(boolean cacheRenderers) {
-        this.cacheRenderers =  cacheRenderers;
+        this.cacheRenderers = cacheRenderers;
         return this;
     }
 
     public boolean cacheRenderers() {
         return cacheRenderers;
+    }
+
+    public Optional<Perspective> layoutPerspective() {
+        return layoutPerspective;
+    }
+
+    @ReturnsThis
+    public Config withLayoutPerspective(Optional<Perspective> arg) {
+        layoutPerspective = arg;
+        return this;
+    }
+
+    public Optional<Perspective> layoutRelevantPerspective() {
+        return layoutRelevantPerspective;
+    }
+
+    @ReturnsThis
+    public Config withLayoutRelevantPerspective(Optional<Perspective> arg) {
+        layoutRelevantPerspective = arg;
+        return this;
     }
 }
