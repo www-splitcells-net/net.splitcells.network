@@ -7,11 +7,10 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'OrbitControls';
 
-let worldSceneObjects = new Map();
-    //x -> y -> z -> scene object
+var worldSceneObjects = [];
+    // Contains the list of all interactable scene objects.
     //"const" cannot be used, as otherwise changes to the Map are not sent between the functions.
-let worldVariables = new Map();
-worldVariables.set('camera.position.initialized', false);
+var worldVariables = new Map();
 worldVariables.set('camera.focus.current', undefined);
 const worldSceneObjectDefaultColor = 0x7D7D7D;
 const worldSceneObjectHighlightedColor = 0x8D8D8D;
@@ -30,6 +29,8 @@ document.getElementById("net-splitcells-canvas-main").appendChild(renderer.domEl
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.enablePan = false;
+
+scene.add(new THREE.AxesHelper(5)); // https://threejs.org/docs/#api/en/helpers/AxesHelper
 
 // Define only functions in this section.
 
@@ -52,52 +53,19 @@ function addLightToScene() {
     scene.add(ambientLight);
 }
 
-function worldScenesObject_add(x, y, z, sceneObject) {
-    let xContainer = worldSceneObjects.get(x);
-    if (xContainer === undefined) {
-        xContainer = new Map();
-        worldSceneObjects.set(x, xContainer);
-    }
-    let yContainer = xContainer.get(y);
-    if (yContainer === undefined) {
-        yContainer = new Map();
-        xContainer.set(y, yContainer);
-    }
-    yContainer.set(z, sceneObject);
+function worldScenesObject_add(sceneObject) {
+    worldSceneObjects.push(sceneObject);
 }
 
 function worldSceneObject_get_random() {
-    let xChosenIndex = Math.floor(Math.random() * worldSceneObjects.size);
-    let xCounter = 0;
-    let xContainer;
-    for (let key of worldSceneObjects.keys()) {
-        if (xCounter++ >= xChosenIndex) {
-            xContainer = worldSceneObjects.get(key);
-            break;
-        }
-    }
-    let yChosenIndex = Math.floor(Math.random() * xContainer.size);
-    let yCounter = 0;
-    let yContainer;
-    for (let key of xContainer.keys()) {
-        if (yCounter++ >= yChosenIndex) {
-            yContainer = xContainer.get(key);
-            break;
-        }
-    }
-    let chosenIndex = Math.floor(Math.random() * yContainer.size);
-    let counter = 0;
-    for (let key of yContainer.keys()) {
-        if (counter++ >= chosenIndex) {
-            return yContainer.get(key);
-        }
-    }
+    let chosenIndex = Math.floor(Math.random() * worldSceneObjects.length);
+    return worldSceneObjects[chosenIndex];
 }
 
-function worldSceneObjects_addObject(updatedData) {
-    var rowIndex;
+function worldSceneObjects_import(updatedData) {
+    let rowIndex;
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
-        var row = updatedData[rowIndex];
+        let row = updatedData[rowIndex];
         const geometry = new THREE.BoxGeometry();
         const material = new THREE.MeshPhongMaterial({ color: worldSceneObjectDefaultColor });
         // Wireframe is disabled for now.
@@ -106,50 +74,45 @@ function worldSceneObjects_addObject(updatedData) {
         const cube = new THREE.Mesh(geometry, material);
         cube.position.set(1 * row[1], 1 * row[2], 0);
         scene.add(cube);
-        worldScenesObject_add(row[1], row[2], 0, cube);
+        worldScenesObject_add(cube);
     }
-    camera_position_initialize();
 }
 
-function camera_focus_worldSceneObject_to_left() {
-    const x = worldVariables.get('camera.focus.current')[0];
-    const y = worldVariables.get('camera.focus.current')[1];
-    const z = worldVariables.get('camera.focus.current')[2];
-    let nextX = undefined;
-    for (let keyX of worldSceneObjects.keys()) {
-        if ((keyX < nextX && keyX > x) || nextX === undefined) {
-            nextX = keyX;
+function camera_focus_worldSceneObject_to_right() {
+    let camera_focus_current = worldVariables.get('camera.focus.current');
+    if (camera_focus_current != undefined) {
+        const currentX = camera_focus_current.position.x;
+        const currentY = camera_focus_current.position.y;
+        const currentZ = camera_focus_current.position.z;
+        let nearestRight = undefined;
+        let nearestDistance = undefined;
+        for (const nextObject of worldSceneObjects) {
+            if (nearestRight == undefined && nextObject.position.x > camera_focus_current.position.x) {
+                nearestRight = nextObject;
+                nearestDistance = Math.pow(currentX - nextObject.position.x, 2)
+                    + Math.pow(currentY - nextObject.position.y, 2)
+                    + Math.pow(currentZ - nextObject.position.z, 2);
+            } else {
+                if (nextObject.position.x > camera_focus_current.position.x) {
+                    let nextDistance = Math.pow(currentX - nextObject.position.x, 2)
+                                    + Math.pow(currentY - nextObject.position.y, 2)
+                                    + Math.pow(currentZ - nextObject.position.z, 2);
+                    if (nextDistance < nearestDistance) {
+                        nearestRight = nextObject;
+                        nearestDistance = nextDistance;
+                    }
+                }
+            }
         }
+        camera_focus_on_sceneObject(nearestRight);
     }
-    if (nextX === undefined) {
-        return;
-    }
-    const xContainer = worldSceneObjects.get(nextX);
-    let nextY = undefined;
-    for (let keyY of xContainer.keys()) {
-        nextY = keyY;
-        break;
-    }
-    for (let keyY of xContainer.keys()) {
-        if (keyY < nextY && keyY > y) {
-            nextX = keyX;
-        }
-    }
-    const yContainer = xContainer.get(nextY);
-    let nextZ = undefined;
-    for (let keyZ of yContainer.keys()) {
-        nextZ = keyZ;
-        break;
-    }
-    for (let keyZ of yContainer.keys()) {
-        if (keyZ < nextZ && keyZ > z) {
-            nextZ = keyZ;
-        }
-    }
-    camera_focus_on_sceneObject(yContainer.get(nextZ));
 }
 
 function camera_focus_on_sceneObject(sceneObject) {
+    let camera_focus_current = worldVariables.get('camera.focus.current');
+    if (camera_focus_current != undefined) {
+        camera_focus_current.material.color.setHex(worldSceneObjectDefaultColor);
+    }
     controls.target.x = sceneObject.position.x;
     controls.target.z = sceneObject.position.y;
     controls.target.z = sceneObject.position.z;
@@ -165,7 +128,7 @@ function listenToInput() {
                 controls.target.y += movement;
                 break;
             case "ArrowRight":
-                camera_focus_worldSceneObject_to_left();
+                camera_focus_worldSceneObject_to_right();
                 break;
             case "ArrowDown":
                 controls.target.y -= movement;
@@ -179,12 +142,9 @@ function listenToInput() {
 }
 
 function camera_position_initialize() {
-    if (worldVariables.get('camera.position.initialized') === false) {
-        let chosenFocus = worldSceneObject_get_random();
-        camera_focus_on_sceneObject(chosenFocus);
-        worldVariables.set('camera.position.initialized', true);
-        worldVariables.set('camera.focus.current', [chosenFocus.position.x, chosenFocus.position.y, chosenFocus.position.z]);
-    }
+    let chosenFocus = worldSceneObject_get_random();
+    camera_focus_on_sceneObject(chosenFocus);
+    worldVariables.set('camera.focus.current', chosenFocus);
 }
 
 // State only function calls in this section.
@@ -195,7 +155,7 @@ Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.
         , worker: false
         , dynamicTyping: true
         , complete: function (results) {
-            worldSceneObjects_addObject(results.data);
+            worldSceneObjects_import(results.data);
         }
     });*/
 Papa.parse("/net/splitcells/run/conway-s-game-of-life.csv"
