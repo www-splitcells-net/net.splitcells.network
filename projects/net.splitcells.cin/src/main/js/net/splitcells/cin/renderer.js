@@ -103,13 +103,14 @@ function camera_focus_worldSceneObject_nearest_on_condition(condition) {
         let nearestRight = undefined;
         let nearestDistance = undefined;
         for (const nextObject of worldSceneObjects) {
-            if (nearestRight == undefined && nextObject.position.x > camera_focus_current.position.x) {
+            let isConditionMet = condition(nextObject, camera_focus_current);
+            if (nearestRight == undefined && isConditionMet) {
                 nearestRight = nextObject;
                 nearestDistance = Math.sqrt(Math.pow(currentX - nextObject.position.x, 2)
                     + Math.pow(currentY - nextObject.position.y, 2)
                     + Math.pow(currentZ - nextObject.position.z, 2));
             } else {
-                if (condition(nextObject, camera_focus_current)) {
+                if (isConditionMet) {
                     let nextDistance = Math.sqrt(Math.pow(currentX - nextObject.position.x, 2)
                                     + Math.pow(currentY - nextObject.position.y, 2)
                                     + Math.pow(currentZ - nextObject.position.z, 2));
