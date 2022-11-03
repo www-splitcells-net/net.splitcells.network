@@ -204,9 +204,10 @@ Papa.parse("/net/splitcells/run/conway-s-game-of-life.csv"
         , worker: false
         , dynamicTyping: true
         , complete: function (results) {
-            worldSceneObjects_addObject(results.data);
+            worldSceneObjects_import(results.data);
+            addLightToScene();
+            listenToInput();
+            animate();
+            camera_position_initialize();
         }
     });
-addLightToScene();
-listenToInput();
-animate();
