@@ -79,6 +79,11 @@ function worldSceneObjects_import(updatedData) {
 }
 
 function camera_focus_worldSceneObject_to_right() {
+
+    camera_focus_worldSceneObject_nearest_on_condition((nextObject, camera_focus_current) => nextObject.position.x > camera_focus_current.position.x);
+}
+
+function camera_focus_worldSceneObject_nearest_on_condition(condition) {
     let camera_focus_current = worldVariables.get('camera.focus.current');
     if (camera_focus_current != undefined) {
         const currentX = camera_focus_current.position.x;
@@ -93,7 +98,7 @@ function camera_focus_worldSceneObject_to_right() {
                     + Math.pow(currentY - nextObject.position.y, 2)
                     + Math.pow(currentZ - nextObject.position.z, 2);
             } else {
-                if (nextObject.position.x > camera_focus_current.position.x) {
+                if (condition(nextObject, camera_focus_current)) {
                     let nextDistance = Math.pow(currentX - nextObject.position.x, 2)
                                     + Math.pow(currentY - nextObject.position.y, 2)
                                     + Math.pow(currentZ - nextObject.position.z, 2);
