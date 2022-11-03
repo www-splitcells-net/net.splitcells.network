@@ -104,7 +104,9 @@ function camera_focus_worldSceneObject_to_right() {
                 }
             }
         }
-        camera_focus_on_sceneObject(nearestRight);
+        if (nearestRight != undefined) {
+            camera_focus_on_sceneObject(nearestRight);
+        }
     }
 }
 
