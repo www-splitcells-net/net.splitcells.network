@@ -52,7 +52,7 @@ public class World {
     public static final String WORLD_HISTORY = "world-history";
     public static final Attribute<Integer> WORLD_TIME = attribute(Integer.class, "world-time");
     public static final Attribute<Integer> POSITION_X = attribute(Integer.class, "position-x");
-    public static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-y");
+    public static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-z");
     public static final Attribute<Integer> VALUE = attribute(Integer.class, "value");
 
     public static void main(String... args) {
