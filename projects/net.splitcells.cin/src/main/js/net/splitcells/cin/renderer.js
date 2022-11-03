@@ -72,7 +72,7 @@ function worldSceneObjects_import(updatedData) {
         // material.wireframe = true;
         // material.wireframeLinecap = 'square';
         const cube = new THREE.Mesh(geometry, material);
-        cube.position.set(1 * row[1], 1 * row[2], 0);
+        cube.position.set(1 * row[1], 0, 1 * row[2]);
         scene.add(cube);
         worldScenesObject_add(cube);
     }
