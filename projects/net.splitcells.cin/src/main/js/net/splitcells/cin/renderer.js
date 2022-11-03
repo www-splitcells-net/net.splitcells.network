@@ -79,7 +79,7 @@ function worldSceneObjects_import(updatedData) {
 }
 
 function camera_focus_worldSceneObject_to_forward() {
-    camera_focus_worldSceneObject_nearest_on_condition((nextObject, camera_focus_current) => nextObject.position.z > camera_focus_current.position.z);
+    camera_focus_worldSceneObject_nearest_on_condition((nextObject, camera_focus_current) => nextObject.position.z < camera_focus_current.position.z);
 }
 
 function camera_focus_worldSceneObject_to_right() {
@@ -87,7 +87,7 @@ function camera_focus_worldSceneObject_to_right() {
 }
 
 function camera_focus_worldSceneObject_to_backward() {
-    camera_focus_worldSceneObject_nearest_on_condition((nextObject, camera_focus_current) => nextObject.position.z < camera_focus_current.position.z);
+    camera_focus_worldSceneObject_nearest_on_condition((nextObject, camera_focus_current) => nextObject.position.z > camera_focus_current.position.z);
 }
 
 function camera_focus_worldSceneObject_to_left() {
