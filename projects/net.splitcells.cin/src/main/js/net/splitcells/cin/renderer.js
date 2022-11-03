@@ -117,6 +117,7 @@ function camera_focus_on_sceneObject(sceneObject) {
     controls.target.z = sceneObject.position.y;
     controls.target.z = sceneObject.position.z;
     sceneObject.material.color.setHex(worldSceneObjectHighlightedColor);
+    worldVariables.set('camera.focus.current', sceneObject);
     controls.update();
 }
 
