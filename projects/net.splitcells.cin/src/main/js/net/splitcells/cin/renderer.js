@@ -34,7 +34,7 @@ controls.enablePan = false;
 scene.add(new THREE.AxesHelper(5)); // https://threejs.org/docs/#api/en/helpers/AxesHelper
 
 var gamepad = {
-	device_state: undefined,
+    device_state: undefined,
     device_id: undefined,
     update_time_last: Date.now(),
     update_time_interval: 100,
