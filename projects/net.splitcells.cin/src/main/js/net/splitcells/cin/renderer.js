@@ -10,8 +10,9 @@ import { OrbitControls } from 'OrbitControls';
 var worldSceneObjects = [];
     // Contains the list of all interactable scene objects.
     //"const" cannot be used, as otherwise changes to the Map are not sent between the functions.
-var worldVariables = new Map();
-worldVariables.set('camera.focus.current', undefined);
+var worldVariables = {
+    camera_focus_current: undefined
+};
 const worldSceneObjectDefaultColor = 0x7D7D7D;
 const worldSceneObjectHighlightedColor = 0x8D8D8D;
 
@@ -95,7 +96,7 @@ function camera_focus_worldSceneObject_to_left() {
 }
 
 function camera_focus_worldSceneObject_nearest_on_condition(condition) {
-    let camera_focus_current = worldVariables.get('camera.focus.current');
+    let camera_focus_current = worldVariables.camera_focus_current;
     if (camera_focus_current != undefined) {
         const currentX = camera_focus_current.position.x;
         const currentY = camera_focus_current.position.y;
@@ -128,7 +129,7 @@ function camera_focus_worldSceneObject_nearest_on_condition(condition) {
 }
 
 function camera_focus_on_sceneObject(sceneObject) {
-    let camera_focus_current = worldVariables.get('camera.focus.current');
+    let camera_focus_current = worldVariables.camera_focus_current;
     if (camera_focus_current != undefined) {
         camera_focus_current.material.color.setHex(worldSceneObjectDefaultColor);
     }
@@ -136,7 +137,7 @@ function camera_focus_on_sceneObject(sceneObject) {
     controls.target.z = sceneObject.position.y;
     controls.target.z = sceneObject.position.z;
     sceneObject.material.color.setHex(worldSceneObjectHighlightedColor);
-    worldVariables.set('camera.focus.current', sceneObject);
+    worldVariables.camera_focus_current = sceneObject;
     controls.update();
 }
 
@@ -164,7 +165,7 @@ function listenToInput() {
 function camera_position_initialize() {
     let chosenFocus = worldSceneObject_get_random();
     camera_focus_on_sceneObject(chosenFocus);
-    worldVariables.set('camera.focus.current', chosenFocus);
+    worldVariables.camera_focus_current = chosenFocus;
 }
 
 // State only function calls in this section.
