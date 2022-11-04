@@ -37,8 +37,11 @@ var gamepad = {
 	device_state: undefined,
     device_id: undefined,
     update_time_last: Date.now(),
-    update_time_interval: 1000,
-    button_map: {
+    update_time_interval: 100,
+    button_map: { // TODO Only works in Chrome.
+        'D-Pad-Top': 12,
+        'D-Pad-Right': 15,
+        'D-Pad-Bottom': 13,
         'D-Pad-Left': 14
     },
 	connect: function(evt) {
@@ -92,7 +95,15 @@ function update_by_gamepad() {
     if (gamepad.isDeviceReady()) {
         gamepad.scanState();
         // TODO console.log(gamepad.device_state.timestamp);
-        // TODO console.log(gamepad.isButtonPressed(gamepad.button_map['D-Pad-Left']));
+        if (gamepad.isButtonPressed(12)) {
+            camera_focus_worldSceneObject_to_forward();
+        } else if (gamepad.isButtonPressed(15)) {
+            camera_focus_worldSceneObject_to_right();
+        } else if (gamepad.isButtonPressed(13)) {
+            camera_focus_worldSceneObject_to_backward();
+        } else if (gamepad.isButtonPressed(14)) {
+            camera_focus_worldSceneObject_to_left();
+        }
         gamepad.setStateProcessed();
     }
 }
