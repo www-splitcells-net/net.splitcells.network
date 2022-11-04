@@ -33,13 +33,69 @@ controls.enablePan = false;
 
 scene.add(new THREE.AxesHelper(5)); // https://threejs.org/docs/#api/en/helpers/AxesHelper
 
+var gamepad = {
+	device_state: undefined,
+    device_id: undefined,
+    update_time_last: Date.now(),
+    update_time_interval: 1000,
+    button_map: {
+        'D-Pad-Left': 14
+    },
+	connect: function(evt) {
+		gamepad.device_state = evt.gamepad;
+        gamepad.device_id = evt.gamepad.index;
+        console.log('Gamepad device connected.');
+	},
+	disconnect: function(evt) {
+		gamepad.device_state = undefined;
+        gamepad.device_id = undefined;
+		console.log('Gamepad device disconnected.');
+	},
+    isButtonPressed: function(button) {
+        if (gamepad.device_state.buttons[button] == undefined) {
+            return false;
+        }
+		return gamepad.device_state.buttons[button].pressed;
+	},
+    isDeviceReady: function(button) {
+        if (gamepad.device_state == undefined) {
+            return false;
+        }
+        let currentTime = Date.now();
+        let delta = currentTime - gamepad.update_time_last;
+        if (delta < gamepad.update_time_interval) {
+            return false;
+        }
+		return gamepad.device_state != undefined;
+	},
+    setStateProcessed: function() {
+        gamepad.update_time_last = Date.now();
+    },
+    scanState: function() {
+        if (gamepad.device_id == undefined) {
+            return;
+        }
+        gamepad.device_state = navigator.getGamepads()[gamepad.device_id];
+    }
+};
+
 // Define only functions in this section.
 
-function animate() {
-    requestAnimationFrame(animate);
+function update() {
+    requestAnimationFrame(update);
+    update_by_gamepad();
     renderer.render(scene, camera);
     controls.update();
-};
+}
+
+function update_by_gamepad() {
+    if (gamepad.isDeviceReady()) {
+        gamepad.scanState();
+        // TODO console.log(gamepad.device_state.timestamp);
+        // TODO console.log(gamepad.isButtonPressed(gamepad.button_map['D-Pad-Left']));
+        gamepad.setStateProcessed();
+    }
+}
 
 function addLightToScene() {
     const mainLightColor = 0xFFFFFF;
@@ -188,7 +244,9 @@ Papa.parse("/net/splitcells/run/conway-s-game-of-life.csv"
             worldSceneObjects_import(results.data);
             addLightToScene();
             listenToInput();
-            animate();
             camera_position_initialize();
+            window.addEventListener("gamepadconnected", gamepad.connect);
+            window.addEventListener("gamepaddisconnected", gamepad.disconnect);
         }
     });
+update();
