@@ -36,6 +36,12 @@
                     <s:url>renderer.fullscreen.html?world_import_from=live</s:url>
                 </s:link>
             </s:item>
+            <s:item>
+                <s:link>
+                    <s:text>Live Fullscreen Debug View (Currently this is only for self hosting.)</s:text>
+                    <s:url>renderer.fullscreen.html?world_import_from=live&amp;debug_enabled=true</s:url>
+                </s:link>
+            </s:item>
         </s:list>
     </s:content>
 </s:article>
