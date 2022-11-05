@@ -11,7 +11,8 @@ var worldSceneObjects = [];
     // Contains the list of all interactable scene objects.
     //"const" cannot be used, as otherwise changes to the Map are not sent between the functions.
 var worldVariables = {
-    camera_focus_current: undefined
+    camera_focus_current: undefined,
+    world_import_from: undefined
 };
 const worldSceneObjectDefaultColor = 0x7D7D7D;
 const worldSceneObjectHighlightedColor = 0x8D8D8D;
@@ -32,6 +33,13 @@ controls.enableDamping = true;
 controls.enablePan = false;
 
 scene.add(new THREE.AxesHelper(5)); // https://threejs.org/docs/#api/en/helpers/AxesHelper
+
+if ( window != undefined) {
+    const browserUrl = window.location.search;
+    const urlParams = new URLSearchParams(browserUrl);
+    const world_import_from = urlParams.get('world_import_from');
+    worldVariables.world_import_from = world_import_from;
+}
 
 var gamepad = {
     device_state: undefined,
@@ -255,28 +263,37 @@ function camera_position_initialize() {
 }
 
 // State only function calls in this section.
-/* TODO This is demonstration, on how to load data from GitHub.
-Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
-    , {
-        download: true
-        , worker: false
-        , dynamicTyping: true
-        , complete: function (results) {
-            worldSceneObjects_import(results.data);
-        }
-    });*/
-Papa.parse("/net/splitcells/run/conway-s-game-of-life.csv"
-    , {
-        download: true
-        , worker: false
-        , dynamicTyping: true
-        , complete: function (results) {
-            worldSceneObjects_import(results.data);
-            addLightToScene();
-            listenToInput();
-            camera_position_initialize();
-            window.addEventListener("gamepadconnected", gamepad.connect);
-            window.addEventListener("gamepaddisconnected", gamepad.disconnect);
-        }
-    });
+
+if (worldVariables.world_import_from == undefined) {
+    Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
+        , {
+            download: true
+            , worker: false
+            , dynamicTyping: true
+            , complete: function (results) {
+                worldSceneObjects_import(results.data);
+                addLightToScene();
+                listenToInput();
+                camera_position_initialize();
+                window.addEventListener("gamepadconnected", gamepad.connect);
+                window.addEventListener("gamepaddisconnected", gamepad.disconnect);
+            }  
+        });
+} else if (worldVariables.world_import_from === 'live') {
+    Papa.parse("/net/splitcells/run/conway-s-game-of-life.csv"
+        , {
+            download: true
+            , worker: false
+            , dynamicTyping: true
+            , complete: function (results) {
+                worldSceneObjects_import(results.data);
+                addLightToScene();
+                listenToInput();
+                camera_position_initialize();
+                window.addEventListener("gamepadconnected", gamepad.connect);
+                window.addEventListener("gamepaddisconnected", gamepad.disconnect);
+            }  
+        });
+}
+
 update();
