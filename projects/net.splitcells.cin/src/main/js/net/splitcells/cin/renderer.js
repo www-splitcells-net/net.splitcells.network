@@ -12,7 +12,8 @@ var worldSceneObjects = [];
     //"const" cannot be used, as otherwise changes to the Map are not sent between the functions.
 var worldVariables = {
     camera_focus_current: undefined,
-    world_import_from: undefined
+    world_import_from: undefined,
+    debug_enabled: undefined
 };
 const worldSceneObjectDefaultColor = 0x7D7D7D;
 const worldSceneObjectHighlightedColor = 0x8D8D8D;
@@ -32,13 +33,16 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.enablePan = false;
 
-scene.add(new THREE.AxesHelper(5)); // https://threejs.org/docs/#api/en/helpers/AxesHelper
-
 if ( window != undefined) {
     const browserUrl = window.location.search;
     const urlParams = new URLSearchParams(browserUrl);
     const world_import_from = urlParams.get('world_import_from');
     worldVariables.world_import_from = world_import_from;
+    worldVariables.debug_enabled =urlParams.get('debug_enabled')
+}
+
+if (worldVariables.debug_enabled === 'true') {
+    scene.add(new THREE.AxesHelper(5)); // https://threejs.org/docs/#api/en/helpers/AxesHelper
 }
 
 var gamepad = {
