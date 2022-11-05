@@ -38,20 +38,26 @@ var gamepad = {
     device_id: undefined,
     update_time_last: Date.now(),
     update_time_interval: 100,
-    button_map: { // TODO Only works in Chrome.
+    button_map: {
         'D-Pad-Top': 12,
         'D-Pad-Right': 15,
         'D-Pad-Bottom': 13,
         'D-Pad-Left': 14
     },
+    axe_map: {
+        'D-Pad-Horizontal': 6,
+        'D-Pad-Vertical': 7
+    },
 	connect: function(evt) {
 		gamepad.device_state = evt.gamepad;
         gamepad.device_id = evt.gamepad.index;
+        gamepad.update_time_last = performance.now();
         console.log('Gamepad device connected.');
 	},
 	disconnect: function(evt) {
 		gamepad.device_state = undefined;
         gamepad.device_id = undefined;
+        gamepad.update_time_last = performance.now();
 		console.log('Gamepad device disconnected.');
 	},
     isButtonPressed: function(button) {
@@ -60,41 +66,47 @@ var gamepad = {
         }
 		return gamepad.device_state.buttons[button].pressed;
 	},
-    isDeviceReady: function(button) {
+    getAxeValue: function(axe) {
+        if (gamepad.device_state.axes[axe] == undefined) {
+            return undefined;
+        }
+		return gamepad.device_state.axes[axe];
+	},
+    isDeviceReady: function(currentTime) {
         if (gamepad.device_state == undefined) {
             return false;
         }
-        let currentTime = Date.now();
         let delta = currentTime - gamepad.update_time_last;
         if (delta < gamepad.update_time_interval) {
             return false;
         }
 		return gamepad.device_state != undefined;
 	},
-    setStateProcessed: function() {
-        gamepad.update_time_last = Date.now();
-    },
-    scanState: function() {
+    scanState: function(currentTime) {
         if (gamepad.device_id == undefined) {
             return;
         }
+        gamepad.update_time_last = currentTime;
         gamepad.device_state = navigator.getGamepads()[gamepad.device_id];
     }
 };
 
 // Define only functions in this section.
 
-function update() {
+function update(currentTime) {
     requestAnimationFrame(update);
-    update_by_gamepad();
+    update_by_gamepad(currentTime);
     renderer.render(scene, camera);
     controls.update();
 }
 
-function update_by_gamepad() {
-    if (gamepad.isDeviceReady()) {
-        gamepad.scanState();
+function update_by_gamepad(currentTime) {
+    if (gamepad.isDeviceReady(currentTime)) {
+        gamepad.scanState(currentTime);
         // TODO console.log(gamepad.device_state.timestamp);
+        /* For reading directional buttons the buttons and the axes have to checked,
+         * because on Firefox only the axes values are set.
+         */
         if (gamepad.isButtonPressed(12)) {
             camera_focus_worldSceneObject_to_forward();
         } else if (gamepad.isButtonPressed(15)) {
@@ -103,8 +115,15 @@ function update_by_gamepad() {
             camera_focus_worldSceneObject_to_backward();
         } else if (gamepad.isButtonPressed(14)) {
             camera_focus_worldSceneObject_to_left();
+        } else if (gamepad.getAxeValue(7) == -1) {
+            camera_focus_worldSceneObject_to_forward();
+        } else if (gamepad.getAxeValue(6) == 1) {
+            camera_focus_worldSceneObject_to_right();
+        } else if (gamepad.getAxeValue(7) == 1) {
+            camera_focus_worldSceneObject_to_backward();
+        } else if (gamepad.getAxeValue(6) == -1) {
+            camera_focus_worldSceneObject_to_left();
         }
-        gamepad.setStateProcessed();
     }
 }
 
