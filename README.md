@@ -112,7 +112,7 @@ Project Cluster
 ## Service Tasks And Projects
 Tasks that are being worked cyclically,
 and probably will never be finished.
-* Add or improve features.
+* Improve, add or remove features.
 * Foster cooperation and symbiosis.
   * Migrate inactive tickets into source code repository,
     so that they each one acts as trigger at one fitting position.
