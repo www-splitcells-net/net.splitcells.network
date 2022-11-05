@@ -104,7 +104,7 @@ public class Server {
                         });
                     });
                     router.errorHandler(500, e -> {
-                        e.failure().printStackTrace();
+                        domsole().appendError(e.failure());
                     });
                     final var server = vertx.createHttpServer(webServerOptions);//
                     server.requestHandler(router);//
