@@ -144,6 +144,7 @@ public final class SystemUtils {
             }
             process.waitFor();
         } catch (Throwable e) {
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
     }
@@ -178,6 +179,7 @@ public final class SystemUtils {
             }
             process.waitFor();
         } catch (Throwable e) {
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
     }

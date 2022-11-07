@@ -49,6 +49,7 @@ public class EventProcessorExecutorTest {
             try {
                 f.acquire(2);
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 throw new RuntimeException(e);
             }
         }

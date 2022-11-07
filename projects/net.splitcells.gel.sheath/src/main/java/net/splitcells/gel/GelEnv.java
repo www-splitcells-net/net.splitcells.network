@@ -53,6 +53,7 @@ public final class GelEnv {
                 // Wait in order for log files to be written completely.
                 Thread.sleep(3_000L);
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 throw new RuntimeException(e);
             }
         }, configurator);
@@ -65,6 +66,7 @@ public final class GelEnv {
                 // Wait in order for log files to be written completely.
                 Thread.sleep(3_000L);
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 throw new RuntimeException(e);
             }
         }, configurator);

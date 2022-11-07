@@ -19,6 +19,8 @@ import java.util.Optional;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+
 @Deprecated
 @JavaLegacyArtifact
 public class EventProcessorExecutor implements Resource {
@@ -62,7 +64,8 @@ public class EventProcessorExecutor implements Resource {
         try {
             tasks.take().processEvents();
         } catch (InterruptedException e) {
-            // Nothing is done.
+            Thread.currentThread().interrupt();
+            throw executionException(e);
         }
     }
 
@@ -86,7 +89,8 @@ public class EventProcessorExecutor implements Resource {
                 Thread.sleep(500L);
             }
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
+            throw executionException(e);
         }
     }
 }
