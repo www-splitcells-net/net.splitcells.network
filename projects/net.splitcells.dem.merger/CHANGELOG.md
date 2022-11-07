@@ -4,6 +4,7 @@
 * **2022-11-07**
    1. Remove unused methods `CommonFunctions#findSystemOutput`.
    2. Remove unused methods `CommonFunctions#currentTime`.
+   3. Remove unused methods `CommonFunctions#disableSystemOutput`.
 * **2022-04-03** **\#10**: Rename `Resource` interface to `ResourceOption` and it's `ResourceI`
      implementation to `ResourceOptionI` in order to clarify its meaning.
      This also makes it possible to use the name `Resource` for an interface

@@ -57,10 +57,6 @@ public class CommonFunctions {
         return Objects.hash(args);
     }
 
-    public static String currentTime() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss.SSS"));
-    }
-
     public static void disableSystemOutput() {
         final PrintStream outF = new PrintStream(System.out);
         System.setOut(new PrintStream(System.out) {
