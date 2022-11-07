@@ -165,15 +165,17 @@ function worldSceneObjects_import(updatedData) {
     let rowIndex;
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
         let row = updatedData[rowIndex];
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshPhongMaterial({ color: worldSceneObjectDefaultColor });
-        // Wireframe is disabled for now.
-        // material.wireframe = true;
-        // material.wireframeLinecap = 'square';
-        const cube = new THREE.Mesh(geometry, material);
-        cube.position.set(1 * row[1], 0, 1 * row[2]);
-        scene.add(cube);
-        worldScenesObject_add(cube);
+        if (row[3] != 0) {
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshPhongMaterial({ color: worldSceneObjectDefaultColor });
+            // Wireframe is disabled for now.
+            // material.wireframe = true;
+            // material.wireframeLinecap = 'square';
+            const cube = new THREE.Mesh(geometry, material);
+            cube.position.set(1 * row[1], 0, 1 * row[2]);
+            scene.add(cube);
+            worldScenesObject_add(cube);
+        }
     }
 }
 
