@@ -57,27 +57,6 @@ public class CommonFunctions {
         return Objects.hash(args);
     }
 
-    public static void disableSystemOutput() {
-        final PrintStream outF = new PrintStream(System.out);
-        System.setOut(new PrintStream(System.out) {
-            public void println(String x) {
-            }
-
-            public void println(long x) {
-            }
-
-            public void println(boolean x) {
-
-            }
-
-            public void println(Object x) {
-            }
-
-            public void println(int x) {
-            }
-        });
-    }
-
     public static void makeSystemOutputTracing() {
         final PrintStream outF = new PrintStream(System.out);
         System.setOut(new PrintStream(System.out) {

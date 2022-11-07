@@ -154,7 +154,7 @@ public class Server {
                         }
                     }, (result) -> {
                         if (result.failed()) {
-                            result.cause().printStackTrace();
+                            domsole().appendError(result.cause());
                             response.setStatusCode(500);
                             response.end();
                         } else {
