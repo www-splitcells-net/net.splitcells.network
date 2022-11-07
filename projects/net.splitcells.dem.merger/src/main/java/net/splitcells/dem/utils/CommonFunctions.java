@@ -57,25 +57,6 @@ public class CommonFunctions {
         return Objects.hash(args);
     }
 
-    public static void findSystemOutput() {
-        System.setOut(new PrintStream(System.out) {
-            @Override
-            public void println(long arg) {
-                new RuntimeException().printStackTrace();
-            }
-
-            @Override
-            public void println(Object arg) {
-                new RuntimeException().printStackTrace();
-            }
-
-            @Override
-            public void println(String arg) {
-                new RuntimeException().printStackTrace();
-            }
-        });
-    }
-
     public static String currentTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss.SSS"));
     }
