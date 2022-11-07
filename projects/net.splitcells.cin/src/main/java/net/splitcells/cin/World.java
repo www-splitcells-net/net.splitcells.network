@@ -52,7 +52,7 @@ public class World {
     public static final String WORLD_HISTORY = "world-history";
     public static final Attribute<Integer> WORLD_TIME = attribute(Integer.class, "world-time");
     public static final Attribute<Integer> POSITION_X = attribute(Integer.class, "position-x");
-    public static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-z");
+    public static final Attribute<Integer> POSITION_Z = attribute(Integer.class, "position-z");
     public static final Attribute<Integer> VALUE = attribute(Integer.class, "value");
 
     public static void main(String... args) {
@@ -69,7 +69,7 @@ public class World {
         return defineProblem("conway-s-game-of-life")
                 .withDemandAttributes(WORLD_TIME)
                 .withDemands(worldsTimeSpace(0))
-                .withSupplyAttributes(POSITION_X, POSITION_Y, VALUE)
+                .withSupplyAttributes(POSITION_X, POSITION_Z, VALUE)
                 .withSupplies(worldWithGlider())
                 .withConstraint(r -> {
                     r.forAll(timeSteps(WORLD_TIME));
@@ -136,7 +136,7 @@ public class World {
             public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
                 final var ratingEvent = ratingEvent();
                 final var positionX = addition.value(POSITION_X);
-                final var positionY = addition.value(POSITION_Y);
+                final var positionY = addition.value(POSITION_Z);
                 final var xNeighbourhood = floorToInt(positionX / 3d);
                 final var yNeighbourhood = floorToInt(positionY / 3d);
                 final var neighbourhoodId = pair(xNeighbourhood, yNeighbourhood);
@@ -192,7 +192,7 @@ public class World {
     private static Optional<Line> retrievePosition(Table lines, int positionX, int positionY) {
         return lines.columnView(POSITION_X)
                 .lookup(positionX)
-                .columnView(POSITION_Y)
+                .columnView(POSITION_Z)
                 .lookup(positionY)
                 .lines()
                 .lastValue();
