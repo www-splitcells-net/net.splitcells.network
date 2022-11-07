@@ -18,6 +18,7 @@ import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
@@ -148,7 +149,7 @@ public final class SystemUtils {
     }
 
     public static void executeProgram(String... command) {
-        domsole().append(perspective("Executing program.").withChild(perspective(command.toString())), LogLevel.DEBUG);
+        domsole().append(perspective("Executing program.").withChild(perspective(Arrays.toString(command))), LogLevel.DEBUG);
         final Process process;
         try {
             process = Runtime.getRuntime().exec(command);
