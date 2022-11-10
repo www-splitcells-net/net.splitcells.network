@@ -67,11 +67,11 @@ public class TimeSteps implements Rater {
     public RatingEvent ratingAfterAddition(Table linesOfGroup, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final RatingEvent rating = ratingEvent();
         final var timeValue = addition.value(LINE).value(timeAttribute);
-        final var firstTimeAddition = linesOfGroup
+        final var afterFirstTimeAddition = linesOfGroup
                 .columnView(LINE)
                 .lookup(l -> l.value(timeAttribute).equals(timeValue))
-                .size() > 1;
-        if (firstTimeAddition) {
+                .isPresent();
+        if (afterFirstTimeAddition) {
             ratingAfterFirstAddition(linesOfGroup, children, timeValue, rating);
             ratingAfterFirstAddition(linesOfGroup, children, timeValue + 1, rating);
         } else {
