@@ -64,24 +64,24 @@ public class TimeSteps implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+    public RatingEvent ratingAfterAddition(Table linesOfGroup, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final RatingEvent rating = ratingEvent();
         final var timeValue = addition.value(LINE).value(timeAttribute);
-        final var firstTimeAddition = lines
+        final var firstTimeAddition = linesOfGroup
                 .columnView(LINE)
                 .lookup(l -> l.value(timeAttribute).equals(timeValue))
                 .size() > 1;
         if (firstTimeAddition) {
-            ratingAfterFirstAddition(lines, children, timeValue, rating);
-            ratingAfterFirstAddition(lines, children, timeValue + 1, rating);
+            ratingAfterFirstAddition(linesOfGroup, children, timeValue, rating);
+            ratingAfterFirstAddition(linesOfGroup, children, timeValue + 1, rating);
         } else {
-            ratingAfterConsecutiveAddition(lines, addition, children, timeValue, rating);
-            ratingAfterConsecutiveAddition(lines, addition, children, timeValue + 1, rating);
+            ratingAfterConsecutiveAddition(linesOfGroup, addition, children, timeValue, rating);
+            ratingAfterConsecutiveAddition(linesOfGroup, addition, children, timeValue + 1, rating);
         }
         return rating;
     }
 
-    private void ratingAfterConsecutiveAddition(Table lines, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
+    private void ratingAfterConsecutiveAddition(Table linesOfGroup, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
         final var isPreviousGroupPresent = timeToPreviousTimeGroup.containsKey(timeValue);
         if (isPreviousGroupPresent) {
             final var previousGroup = timeToPreviousTimeGroup.get(timeValue);
