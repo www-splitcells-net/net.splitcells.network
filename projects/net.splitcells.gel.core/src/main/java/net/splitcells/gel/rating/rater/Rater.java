@@ -44,6 +44,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * Calculates the {@link Rating} updates of the given {@code linesOfGroup}.
      *
      * @param linesOfGroup The already present lines of the group after the addition.
+     *                     The {@link Table#headerView()} of this is the same as of {@link Constraint#lineProcessing()}.
      * @param addition The new {@link Line} of the {@code linesOfGroup}.
      * @param children These are all sub {@link Constraint}s, to which the {@code linesOfGroup} can be propagated to.
      *                 A classic implementation to propagate all complying lines to all {@code children}.
