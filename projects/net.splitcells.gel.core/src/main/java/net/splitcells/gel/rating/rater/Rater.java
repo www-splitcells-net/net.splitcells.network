@@ -14,6 +14,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 
 import net.splitcells.gel.common.Language;
+import net.splitcells.gel.constraint.type.framework.ConstraintAI;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
@@ -40,14 +41,17 @@ public interface Rater extends PubliclyTyped<Rater>
         , Domable {
 
     /**
+     * Calculates the {@link Rating} updates of the given {@code linesOfGroup}.
      *
-     * @param lines TODO Why is this needed? Is this not contained in other variables?
-     * @param addition
-     * @param children
-     * @param ratingsBeforeAddition
+     * @param linesOfGroup The already present lines of the group after the addition.
+     * @param addition The new {@link Line} of the {@code linesOfGroup}.
+     * @param children These are all sub {@link Constraint}s, to which the {@code linesOfGroup} can be propagated to.
+     *                 A classic implementation to propagate all complying lines to all {@code children}.
+     *                 See {@link Constraint#childrenView()}.
+     * @param lineProcessingBeforeAddition See {@link Constraint#lineProcessing}.
      * @return
      */
-    RatingEvent ratingAfterAddition(Table  lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition);
+    RatingEvent ratingAfterAddition(Table  linesOfGroup, Line addition, List<Constraint> children, Table lineProcessingBeforeAddition);
 
     /**
      * Nothing needs to be done here, if the {@link Rating} of one {@link Line} is not dependent on the rating of another line.
