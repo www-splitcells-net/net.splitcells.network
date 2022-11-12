@@ -2,6 +2,10 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
                       http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR MIT
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
     <!-- These Maven settings are used, in order to test, if packages can be downloaded from GitHub. -->
     <activeProfiles>
         <activeProfile>github</activeProfile>

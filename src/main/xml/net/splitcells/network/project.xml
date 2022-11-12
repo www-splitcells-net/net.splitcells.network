@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://splitcells.net/den.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR MIT
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
     <scheduling>
         <service>
             <task>Process TODOs inside source code.</task>
