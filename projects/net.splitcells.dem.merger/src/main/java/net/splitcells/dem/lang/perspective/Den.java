@@ -10,6 +10,9 @@
  */
 package net.splitcells.dem.lang.perspective;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.namespace.NameSpaces;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
@@ -45,5 +48,19 @@ public class Den {
 
     public static Perspective solution(Perspective... arg) {
         return perspective("solution");
+    }
+
+    public static Perspective subtree(Perspective perspective, List<String> path) {
+        if (path.isEmpty()) {
+            return perspective;
+        }
+        final var next = path.remove(0);
+        return subtree(perspective.children().stream()
+                        .filter(child -> child.nameIs(NameSpaces.VAL, NameSpaces.DEN))
+                        .filter(child -> child.propertyInstances(NameSpaces.NAME, NameSpaces.DEN).stream()
+                                .anyMatch(property -> property.value().get().name().equals(next)))
+                        .findFirst()
+                        .orElseThrow()
+                , path);
     }
 }

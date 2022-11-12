@@ -64,11 +64,14 @@ public class LayoutUtils {
                 .filter(e -> !"".contentEquals(e))
                 .collect(toList())) {
             final var children = current.children().stream()
-                    .filter(child -> child.nameIs(element, NameSpaces.NATURAL))
+                    .filter(child -> child.nameIs(NameSpaces.VAL, NameSpaces.DEN))
+                    .filter(child -> child.propertyInstances(NameSpaces.NAME, NameSpaces.DEN).stream()
+                            .anyMatch(property -> property.value().get().name().equals(element)))
                     .collect(Lists.toList());
             final Perspective child;
             if (children.isEmpty()) {
-                child = perspective(element, NameSpaces.NATURAL);
+                child = perspective(NameSpaces.VAL, NameSpaces.DEN)
+                        .withProperty(NameSpaces.NAME, NameSpaces.DEN, element);
                 current.withChild(child);
             } else {
                 child = children.get(0);

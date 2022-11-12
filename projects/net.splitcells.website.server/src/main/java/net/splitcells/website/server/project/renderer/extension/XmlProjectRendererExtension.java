@@ -27,6 +27,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
+import static net.splitcells.dem.lang.perspective.Den.subtree;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Files.is_file;
@@ -64,7 +65,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                     .withRemovedFromBehind(0);
             final var layoutConfig = layoutConfig(path)
                     .withLocalPathContext(config.layoutPerspective()
-                            .map(l -> l.subtree(pathFolder)));
+                            .map(l -> subtree(l, pathFolder)));
             if (is_file(xmlFile)) {
                 final var xmlContent = readString(xmlFile);
                 final var document = Xml.parse(xmlContent);
