@@ -110,34 +110,18 @@ public class CommonFunctions {
     }
 
     public static void appendToFile(Path filePath, String content) {
-        FileOutputStream basicOutput = null;
-        OutputStreamWriter managedOutput = null;
-        FileLock outputFileLock = null;
         try {
-            try {
-                File file = filePath.toFile();
-                if (!file.exists()) {
-                    file.createNewFile();
+            File file = filePath.toFile();
+            if (!file.exists()) {
+                if (!file.createNewFile()) {
+                    throw executionException("Could not create file: " + filePath);
                 }
-                basicOutput = new FileOutputStream(file);
-                managedOutput = new OutputStreamWriter(basicOutput, "UTF8");
-                outputFileLock = basicOutput.getChannel().lock();
+            }
+            try (FileOutputStream basicOutput = new FileOutputStream(file);
+                 OutputStreamWriter managedOutput = new OutputStreamWriter(basicOutput, "UTF8");
+                 FileLock outputFileLock = basicOutput.getChannel().lock()) {
                 managedOutput.append(content);
                 managedOutput.flush();
-            } finally {
-                try {
-                    if (outputFileLock != null) {
-                        outputFileLock.release();
-                    }
-                    if (basicOutput != null) {
-                        basicOutput.close();
-                    }
-                    if (managedOutput != null) {
-                        managedOutput.close();
-                    }
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

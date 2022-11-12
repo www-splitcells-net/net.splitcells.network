@@ -55,6 +55,7 @@ public class EventProcessorExecutor implements Resource {
                 executor.get().join();
             }
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
         executor = Optional.empty();

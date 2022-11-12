@@ -89,7 +89,7 @@ public class RandomnessTest {
                 .map(i -> randomness.integer(min, mean, max))
                 .reduce((a, b) -> a + b)
                 .getAsInt();
-        assertThat(acceptable(sum, runs * mean)).isTrue();
+        assertThat(acceptable(sum, (double) runs * mean)).isTrue();
     }
 
     @Test

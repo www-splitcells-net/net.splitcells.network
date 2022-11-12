@@ -105,6 +105,9 @@ public final class SystemUtils {
                 throw new RuntimeException(e);
             }
             process.waitFor();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }

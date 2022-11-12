@@ -100,8 +100,8 @@ public final class MathUtils {
         return Double.valueOf(arg);
     }
 
-    public static float doubleToFloat(double arg) {
-        return Double.valueOf(arg).floatValue();
+    public static float doubleToFloat(Double arg) {
+        return arg.floatValue();
     }
 
     /**
