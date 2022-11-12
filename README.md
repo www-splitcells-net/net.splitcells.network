@@ -13,7 +13,7 @@ The main project is the [Generic Allocator](http://splitcells.net/net/splitcells
 
 An overview of the projects can be found [here](https://splitcells.net/net/splitcells/network/overview.html).
 Some of them are not strictly related to optimization and can be used in other contexts as well.
-[OS State Interface](projects/net.splitcells.os.state.interface/README.md) is the main example of such.
+[OS State Interface](https://splitcells.net/net/splitcells/os/state/interface/README.html) is the main example of such.
 
 ## Where to start?
 🪧 Get to know the main [features](https://splitcells.net/net/splitcells/network/features.html).
