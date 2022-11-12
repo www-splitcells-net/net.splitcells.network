@@ -21,7 +21,6 @@ const worldSceneObjectHighlightedColor = 0x8D8D8D;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
-const movement = 1;
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -38,7 +37,7 @@ if ( window != undefined) {
     const urlParams = new URLSearchParams(browserUrl);
     const world_import_from = urlParams.get('world_import_from');
     worldVariables.world_import_from = world_import_from;
-    worldVariables.debug_enabled =urlParams.get('debug_enabled')
+    worldVariables.debug_enabled =urlParams.get('debug_enabled');
 }
 
 if (worldVariables.debug_enabled === 'true') {
