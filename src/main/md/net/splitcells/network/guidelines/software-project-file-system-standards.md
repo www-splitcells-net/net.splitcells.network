@@ -98,3 +98,7 @@ Contains the source code of the project.
 ## Files at `./target/*`
 Contain results of the build and test system. Also contains the results of
 executing other project tasks.
+
+----
+SPDX-License-Identifier: EPL-2.0 OR MIT
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
