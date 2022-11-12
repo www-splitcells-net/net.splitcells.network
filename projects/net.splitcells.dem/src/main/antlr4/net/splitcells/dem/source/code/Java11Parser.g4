@@ -71,9 +71,9 @@ call_arguments
     | Brace_round_open call_arguments_element call_arguments_next* Brace_round_closed
     ;
 call_arguments_element
-    : annotation? reference
-    | annotation? expression
-    | annotation? variable_declaration
+    : Line_comment* annotation? reference
+    | Line_comment* annotation? expression
+    | Line_comment* annotation? variable_declaration
     ;
 call_arguments_next
     : Comma call_arguments_element
