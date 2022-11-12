@@ -5,7 +5,7 @@
     </meta>
     <chapter>
         <title>File And Folder Names</title>
-        <paragraph>File and folder names should comply with the regular expression <quote>\.?[a-zA-Z][a-zA-Z0-9]*([\-][a-zA-Z0-9]+)*([\.][a-zA-Z0-9]+)*</quote>.
+        <paragraph>File and folder names should comply with the regular expression <quote>\.?[a-zA-Z0-9]*([\-][a-zA-Z0-9]+)*([\.][a-zA-Z0-9]+)*</quote>.
             A path complying with this grammar may look like this: <quote>/home/splitcells/Documents/.links-to-nothing.txt</quote>.
             Before that, underscore instead of hyphen/dashes were considered,
             because this way, non-hidden files, without their respective file suffixes are also legal variable names in most programming languages and shells.
@@ -31,6 +31,15 @@
         <paragraph>Even though, folders suffixes like file suffixes are not common,
             it is of no use to allow different sub name separators for files and folders.
             Therefore, it is not allowed to use dots (<quote>.</quote>) instead of hyphen symbols (<quote>-</quote>) in folder names.
+        </paragraph>
+        <paragraph>
+            File and folder names starting with a digit are allowed,
+            as otherwise paths for archive like things can get overly complicated.
+            See <quote>blog/2022/11/12/article.xml</quote> or <quote>blog/2022-11-12-article.xml</quote>,
+            where using a non digit prefix would not lead to any improvements.
+            Also, keep in mind, that file names cannot be assumed to be always translate able to variable names in programming languages,
+            because of special symbols like dots <quote>.</quote> or hyphens <quote>-</quote>.
+            Therefore, leading digit in names do not worsen this situation.
         </paragraph>
     </chapter>
 </article>
