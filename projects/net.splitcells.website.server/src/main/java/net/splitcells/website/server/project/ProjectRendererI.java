@@ -69,6 +69,7 @@ import static net.splitcells.website.server.project.renderer.extension.commonmar
  */
 public class ProjectRendererI implements ProjectRenderer {
     private static final String MARKER = "198032jrf013jf09j13f13f4290fj2394fj24";
+    private static final String PATH_CONTEXT_MARKER = "89efzu89eaz8FC9ZASE89ASDAPF";
     private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
     @Override
@@ -383,13 +384,16 @@ public class ProjectRendererI implements ProjectRenderer {
         }
         layoutConfig.localPathContext().ifPresent(localPathContext -> {
             final var pathContext = Xml.elementWithChildren(NameSpaces.SEW, "path.context");
-            pathContext.appendChild(Xml.parse(localPathContext.toHtmlString()));
+            pathContext.appendChild(Xml.textNode(PATH_CONTEXT_MARKER));
             layoutConfigElement.appendChild(pathContext);
         });
         try {
+            var xmlToRender = Xml.toPrettyString(layoutConfigElement).replace(MARKER, xml);
+            if (layoutConfig.localPathContext().isPresent()) {
+                xmlToRender = xmlToRender.replace(PATH_CONTEXT_MARKER, layoutConfig.localPathContext().get().toHtmlString());
+            }
             return Optional.of(renderer()
-                    .transform(Xml.toPrettyString(layoutConfigElement)
-                            .replace(MARKER, xml))
+                    .transform(xmlToRender)
                     .getBytes(UTF_8.codeName()));
         } catch (Exception e) {
             throw executionException(e);
