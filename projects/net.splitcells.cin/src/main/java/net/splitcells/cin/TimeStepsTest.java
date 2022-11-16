@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.cin.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.TestTypes.EXPERIMENTAL_TEST;
