@@ -42,6 +42,9 @@ public class TimeSteps implements Rater {
     }
 
     private final Attribute<Integer> timeAttribute;
+    /**
+     * The keys are the end time of each group.
+     */
     private final Map<Integer, GroupId> timeToPreviousTimeGroup = map();
 
     private TimeSteps(Attribute<Integer> timeAttribute) {
@@ -70,18 +73,18 @@ public class TimeSteps implements Rater {
         final var afterFirstTimeAddition = linesOfGroup
                 .columnView(LINE)
                 .lookup(l -> l.value(timeAttribute).equals(timeValue))
-                .isPresent();
+                .size() > 1;
         if (afterFirstTimeAddition) {
-            ratingAfterFirstAddition(linesOfGroup, children, timeValue, rating);
-            ratingAfterFirstAddition(linesOfGroup, children, timeValue + 1, rating);
+            rateTimesAfterFirstAddition(linesOfGroup, addition, children, timeValue, rating);
+            rateTimesAfterFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
         } else {
-            ratingAfterConsecutiveAddition(linesOfGroup, addition, children, timeValue, rating);
-            ratingAfterConsecutiveAddition(linesOfGroup, addition, children, timeValue + 1, rating);
+            rateTimesFirstAddition(linesOfGroup, addition, children, timeValue, rating);
+            rateTimesFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
         }
         return rating;
     }
 
-    private void ratingAfterConsecutiveAddition(Table linesOfGroup, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
+    private void rateTimesAfterFirstAddition(Table linesOfGroup, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
         final var isPreviousGroupPresent = timeToPreviousTimeGroup.containsKey(timeValue);
         if (isPreviousGroupPresent) {
             final var previousGroup = timeToPreviousTimeGroup.get(timeValue);
@@ -93,16 +96,20 @@ public class TimeSteps implements Rater {
         }
     }
 
-    private void ratingAfterFirstAddition(Table lines, List<Constraint> children, int timeValue, RatingEvent rating) {
+
+    private void rateTimesFirstAddition(Table lines, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
         final var previousTimePresent = lines.columnView(LINE)
                 .lookup(l -> l.value(timeAttribute).equals(timeValue - 1))
                 .isPresent();
-        if (previousTimePresent) {
-            final var previousGroup = timeToPreviousTimeGroup.computeIfAbsent(timeValue, x -> group((x - 1) + " -> " + x));
+        final var currentTimePresent = lines.columnView(LINE)
+                .lookup(l -> l.value(timeAttribute).equals(timeValue))
+                .isPresent();
+        if (previousTimePresent && currentTimePresent) {
+            final var timeStep = timeToPreviousTimeGroup.computeIfAbsent(timeValue, x -> group((x - 1) + " -> " + x));
             final List<LocalRating> localRatings = listWithValuesOf(localRating()
                     .withPropagationTo(children)
                     .withRating(noCost())
-                    .withResultingGroupId(previousGroup));
+                    .withResultingGroupId(timeStep));
             lines.columnView(LINE)
                     .lookup(l -> l.value(timeAttribute).equals(timeValue))
                     .linesStream()
