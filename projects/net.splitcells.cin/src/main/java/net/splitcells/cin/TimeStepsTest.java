@@ -45,7 +45,7 @@ public class TimeStepsTest {
                 .withSupplyAttributes(value)
                 .withSupplies(range(0, 100).mapToObj(i -> list((Object) i)).collect(toList()))
                 .withConstraint(c -> {
-                    c.forAll(TimeSteps.timeSteps(time));
+                    c.forAll(timeSteps(time));
                     return c;
                 })
                 .toProblem()
@@ -68,7 +68,7 @@ public class TimeStepsTest {
                     .columnView(RESULTING_CONSTRAINT_GROUP)
                     .lookup(oneToTwo)
                     .lines()
-                    .requireSizeOf(33);
+                    .requireSizeOf(34);
         });
     }
 }
