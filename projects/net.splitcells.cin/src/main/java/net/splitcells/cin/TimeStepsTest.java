@@ -15,6 +15,8 @@ import net.splitcells.gel.Gel;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static java.util.stream.IntStream.range;
 import static net.splitcells.cin.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -52,31 +54,33 @@ public class TimeStepsTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.history().processWithHistory(() -> {
-            testSubject.optimize(onlineLinearInitialization());
-            testSubject.constraint().childrenView().get(0).lineProcessing()
-                    .columnView(RESULTING_CONSTRAINT_GROUP)
-                    .stream()
-                    .distinct()
-                    .collect(toList())
-                    .requireSizeOf(2);
-            final var oneToTwo = testSubject.constraint().childrenView().get(0).lineProcessing()
-                    .columnView(RESULTING_CONSTRAINT_GROUP)
-                    .stream()
-                    .distinct()
-                    .collect(toList())
-                    .get(0);
-            testSubject.constraint().childrenView().get(0).lineProcessing()
-                    .columnView(RESULTING_CONSTRAINT_GROUP)
-                    .lookup(oneToTwo)
-                    .lines()
-                    .requireSizeOf(34);
-            onlineLinearDeinitializer().optimize(testSubject);
-            testSubject.allocations().lines().requireSizeOf(0);
-            testSubject.constraint().childrenView().get(0)
-                    .lineProcessing()
-                    .lines()
-                    .requireSizeOf(0);
-        });
+        IntStream.rangeClosed(1, 3).forEach(i ->
+                testSubject.history().processWithHistory(() -> {
+                    testSubject.optimize(onlineLinearInitialization());
+                    testSubject.constraint().childrenView().get(0).lineProcessing()
+                            .columnView(RESULTING_CONSTRAINT_GROUP)
+                            .stream()
+                            .distinct()
+                            .collect(toList())
+                            .requireSizeOf(2);
+                    final var oneToTwo = testSubject.constraint().childrenView().get(0).lineProcessing()
+                            .columnView(RESULTING_CONSTRAINT_GROUP)
+                            .stream()
+                            .distinct()
+                            .collect(toList())
+                            .get(0);
+                    testSubject.constraint().childrenView().get(0).lineProcessing()
+                            .columnView(RESULTING_CONSTRAINT_GROUP)
+                            .lookup(oneToTwo)
+                            .lines()
+                            .requireSizeOf(34);
+                    onlineLinearDeinitializer().optimize(testSubject);
+                    testSubject.allocations().lines().requireSizeOf(0);
+                    testSubject.constraint().childrenView().get(0)
+                            .lineProcessing()
+                            .lines()
+                            .requireSizeOf(0);
+                })
+        );
     }
 }
