@@ -13,6 +13,7 @@ package net.splitcells.cin;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
@@ -28,6 +29,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.GroupId.group;
@@ -93,6 +95,9 @@ public class TimeSteps implements Rater {
                 .size() == 1;
         if (removalOfLastTimeElement) {
             timeToPreviousTimeGroup.remove(timeValue);
+        }
+        if (ENFORCING_UNIT_CONSISTENCY && linesOfGroup.size() == 1) {
+            timeToPreviousTimeGroup.requireEmpty();
         }
         return ratingEvent();
     }
