@@ -19,6 +19,8 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+
 @JavaLegacyArtifact
 public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
@@ -60,4 +62,16 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     default Optional<Boolean> _isDeterministic() {
         return Optional.empty();
     }
+    default void requireEmpty() {
+        if (!isEmpty()) {
+            throw executionException("Expecting map to be empty, but is not: " + this);
+        }
+    }
+
+    default void requireSizeOf(int arg) {
+        if (size() != arg) {
+            throw executionException("Map should be size of " + arg + " but has size of " + size() + " instead: " + this);
+        }
+    }
+
 }
