@@ -24,6 +24,7 @@ import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDeinitializer.onlineLinearDeinitializer;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class TimeStepsTest {
@@ -70,6 +71,12 @@ public class TimeStepsTest {
                     .lookup(oneToTwo)
                     .lines()
                     .requireSizeOf(34);
+            onlineLinearDeinitializer().optimize(testSubject);
+            testSubject.allocations().lines().requireSizeOf(0);
+            testSubject.constraint().childrenView().get(0)
+                    .lineProcessing()
+                    .lines()
+                    .requireSizeOf(0);
         });
     }
 }
