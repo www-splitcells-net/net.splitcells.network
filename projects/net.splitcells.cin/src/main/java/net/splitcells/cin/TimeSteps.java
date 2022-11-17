@@ -84,6 +84,19 @@ public class TimeSteps implements Rater {
         return rating;
     }
 
+    @Override
+    public RatingEvent rating_before_removal(Table linesOfGroup, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+        final var timeValue = removal.value(LINE).value(timeAttribute);
+        final var removalOfLastTimeElement = linesOfGroup
+                .columnView(LINE)
+                .lookup(l -> l.value(timeAttribute).equals(timeValue))
+                .size() == 1;
+        if (removalOfLastTimeElement) {
+            timeToPreviousTimeGroup.remove(timeValue);
+        }
+        return ratingEvent();
+    }
+
     private void rateTimesAfterFirstAddition(Table linesOfGroup, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
         final var isPreviousGroupPresent = timeToPreviousTimeGroup.containsKey(timeValue);
         if (isPreviousGroupPresent) {
