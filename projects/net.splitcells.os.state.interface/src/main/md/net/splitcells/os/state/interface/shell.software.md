@@ -2,6 +2,8 @@
 ## Recommended And Supported Software Stack
 * [Fish](https://fishshell.com/):
   User/Beginner friendly shell with great autocompletion.
+* [starship cross-shell prompt](https://starship.rs/):
+  shell-prompt that is compatible with many shells.
 * [chezmoi](https://github.com/twpayne/chezmoi): this is a dotfiles manager.
   It is a very recognized and maintained dotfile manager.
   Dotbot is not recommended instead, because it only supports sym linking and not copying,
