@@ -35,7 +35,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <antlr.version>4.10.1</antlr.version>
+                <antlr.version>4.11.1</antlr.version>
             </properties>
             <dependencies>
                 <dependency>
