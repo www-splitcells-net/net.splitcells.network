@@ -43,12 +43,6 @@ public final class TableTest extends TestSuiteI {
         return dynamicTests(this::testEmptyTable, new DatabaseI());
     }
 
-    @Tag(UNIT_TEST)
-    @TestFactory
-    public Stream<DynamicTest> invalid_column_write_access_tests() {
-        return dynamicTests2(this::test_invalid_column_write_access, TableSF.testTableFactory());
-    }
-
     /**
      * TODO Use {@link Allocations}.
      */
@@ -61,18 +55,6 @@ public final class TableTest extends TestSuiteI {
     private void testEmptyTable(Table emptyTable) {
         assertThat(emptyTable.headerView().isEmpty());
         assertThat(emptyTable.rawLinesView().isEmpty());
-    }
-
-    private void test_invalid_column_write_access
-            (Function<List<Attribute<? extends Object>>, Table> factory) {
-        try {
-            final var attribute = attribute(Integer.class, anyString());
-            final var testSubject = factory.apply(list(attribute));
-            testSubject.columnView(attribute).add(anyInt());
-        } catch (UnsupportedOperationException e) {
-            return;
-        }
-        fail("Column view should not allow write access to column data.");
     }
 
     private void test_invalid_content_write_access(Table emptyTable) {
