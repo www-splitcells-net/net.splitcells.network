@@ -34,3 +34,7 @@ The changelog format can be found [here](./src/main/md/net/splitcells/network/gu
 ### Patches
 <Like Major Changes>
 ```
+
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects

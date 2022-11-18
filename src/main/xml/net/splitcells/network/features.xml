@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <article xmlns="http://splitcells.net/sew.xsd">
     <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR MIT
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
         <title>Features</title>
     </meta>
     <list>

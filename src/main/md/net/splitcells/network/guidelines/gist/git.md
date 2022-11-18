@@ -10,3 +10,7 @@ Commit can be signed-off according to the Developer Certificate of Origin via
 
 * Set used key: `git config --global user.signingkey [fingerprint]`
 * Sign commit with default key: `git commit -S --amend`
+
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects

@@ -5,6 +5,10 @@
          xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
          xmlns:m="http://www.w3.org/1998/Math/MathML" xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
     <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR MIT
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
         <title>
             <siteName/>'s Guidelines
         </title>

@@ -12,3 +12,7 @@ On the other hand, this may not always easily possible for a user.
 * [Project Command](../../../../../../projects/net.splitcells.dem/src/main/md/net/splitcells/dem/guidelines/software-project-file-system-standards.md)
 * parameter = A parameter is a declared variable of an interface.
 * Sep = State Network Optimization
+
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects

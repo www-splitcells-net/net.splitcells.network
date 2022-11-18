@@ -18,3 +18,7 @@ Every CommonMark file should state its license:
 As long as not otherwise noted,
 this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).
 ```
+
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects

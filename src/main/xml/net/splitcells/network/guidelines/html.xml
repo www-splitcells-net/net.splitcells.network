@@ -3,6 +3,10 @@
          xmlns="http://splitcells.net/sew.xsd"
          xmlns:d="http://splitcells.net/den.xsd">
     <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR MIT
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
         <title>HTML Guidelines</title>
     </meta>
     <chapter><title>German Legalities</title>

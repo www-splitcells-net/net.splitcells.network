@@ -48,3 +48,7 @@ Keyring managers may ask for passwords during this process.
 * [Protecting Code Integrity With PGP](https://github.com/lfit/itpol/blob/master/protecting-code-integrity.md)
 * [keys.openpgp.org Usage Guide](https://keys.openpgp.org/about/usage)
 * [Kernel Maintainer PGP guide](https://www.kernel.org/doc/html/latest/process/maintainer-pgp-guide.html)
+
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
