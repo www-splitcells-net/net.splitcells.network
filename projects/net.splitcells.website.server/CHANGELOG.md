@@ -13,8 +13,15 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
-* **2022-11-18**: **\\#8**: Add project at `~/.local/state/net.splitcells.dem/` to the default set of projects for the project renderer.
-  This project is used to store log files and other documents.
+* **2022-11-18**: **\\#8**: If `net.splitcells.website.RenderUserStateRepo` is set to true,
+  add the project at `~/.local/state/net.splitcells.dem/` to the default set of projects for the project renderer.
+  This project is used in order to store log files and other documents.
+  `RenderUserStateRepo` is set to false by default,
+  because this should only be rendered, if the user explicitly wants it,
+  in order to prevent leakage of private information be accident.
+  This could otherwise happen,
+  if the user renders a website with defaults settings and
+  uploads it without checking the results in detail.
 * **2022-10-23**: [**\#s89** Fix cookie issue.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/89)
   1. There is now [HTML guidelines](https://splitcells.net/net/splitcells/network/guidelines/html.html) regarding cookies.
   2. Access to `document.cookie` is now blocked, by overwriting its getter and setter methods in the standard layout.
