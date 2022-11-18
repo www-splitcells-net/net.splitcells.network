@@ -16,12 +16,15 @@ import net.splitcells.dem.resource.communication.Sender;
 
 import java.util.function.Predicate;
 
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * Pdsui = Path Based Dom Stream User Interface
  */
 public class Pdsui implements Ui {
+
+    private static final boolean ENABLE_EXPERIMENTAL_XML_RENDERING = true;
 
     public static Pdsui pdsui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
         return new Pdsui(output, messageFilter);
@@ -33,6 +36,7 @@ public class Pdsui implements Ui {
     private Pdsui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
         this.output = output;
         this.messageFilter = messageFilter;
+        this.output.append("<start>");
     }
 
     @Override
@@ -44,28 +48,32 @@ public class Pdsui implements Ui {
     }
 
     private static void print(Sender<String> output, Perspective content, String prefix) {
-        if (content.children().size() == 1) {
-            if (prefix.isEmpty()) {
-                print(output, content.children().get(0), content.name());
-            } else {
-                print(output, content.children().get(0), prefix + "." + content.name());
-            }
-            return;
-        } else if (content.children().size() > 0) {
-            output.append(prefix + content.name() + ":");
-        } else if (content.children().size() == 0) {
-            if (prefix.isEmpty()) {
-                output.append(content.name());
-            } else {
-                output.append(prefix + "." + content.name());
-            }
-            return;
+        if (ENABLE_EXPERIMENTAL_XML_RENDERING) {
+            output.append(content.toXmlString());
         } else {
-            throw new UnsupportedOperationException();
+            if (content.children().size() == 1) {
+                if (prefix.isEmpty()) {
+                    print(output, content.children().get(0), content.name());
+                } else {
+                    print(output, content.children().get(0), prefix + "." + content.name());
+                }
+                return;
+            } else if (content.children().size() > 0) {
+                output.append(prefix + content.name() + ":");
+            } else if (content.children().size() == 0) {
+                if (prefix.isEmpty()) {
+                    output.append(content.name());
+                } else {
+                    output.append(prefix + "." + content.name());
+                }
+                return;
+            } else {
+                throw new UnsupportedOperationException();
+            }
+            content.children().forEach(child -> {
+                print(Sender.extend(output, "\t", ""), child);
+            });
         }
-        content.children().forEach(child -> {
-            print(Sender.extend(output, "\t", ""), child);
-        });
     }
 
     private static void print(Sender<String> output, Perspective content) {
@@ -74,6 +82,7 @@ public class Pdsui implements Ui {
 
     @Override
     public void close() {
+        output.append("</start>");
         output.close();
     }
 
