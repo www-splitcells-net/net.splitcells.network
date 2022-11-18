@@ -70,7 +70,7 @@ public class SimplifiedAnnealingProblemTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_host_start_rating_with_multiple_lines() {
-        final var defianceCost = 7;
+        final var defianceCost = 7d;
         final var lineCount = 3;
         final var solution = defineProblem()
                 .withDemandAttributes()
@@ -90,7 +90,7 @@ public class SimplifiedAnnealingProblemTest {
     @Tag(INTEGRATION_TEST)
     @Test
     public void test_cold_start_rating_with_multiple_lines() {
-        final var defianceCost = 7;
+        final var defianceCost = 7d;
         final var lineCount = 3;
         final var solution = defineProblem()
                 .withDemandAttributes()
@@ -112,7 +112,7 @@ public class SimplifiedAnnealingProblemTest {
     public void testProbability() {
         final var probability = .5f;
         final var tryCount = 100;
-        final var defianceCost = 7;
+        final var defianceCost = 7d;
         final var lineCount = 3;
         final var solution = defineProblem()
                 .withDemandAttributes()
