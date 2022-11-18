@@ -23,4 +23,27 @@
         which makes the software more portable.
         This requirement does not exist the other way around by default.
     </paragraph>
+    <paragraph>
+        Every software stack should be compatible to the
+        <link>
+            <post>net/splitcells/network/guidelines/software-project-file-system-standards</post>
+            <text>software project file system standards</text>
+        </link>
+        by default.
+    </paragraph>
+    <chapter>
+        <title>Recommended Default Software Stacks</title>
+        <paragraph>The following software stacks are currently recommended:</paragraph>
+        <list>
+            <item>
+                <link>
+                    <post>net/splitcells/os/state/interface/shell.software</post>
+                    <text>Shell Software</text>
+                </link>
+            </item>
+            <item>Java 11</item>
+            <item>Maven 3</item>
+            <item>Python 3</item>
+        </list>
+    </chapter>
 </article>
