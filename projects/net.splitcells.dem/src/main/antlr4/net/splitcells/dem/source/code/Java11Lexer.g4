@@ -74,7 +74,7 @@ lexer grammar Java11Lexer;
 	Extension_Exception: 'extends RuntimeException';
 	Hyphen_minus: '-';
 	Floating_point: [-+]?[0-9]+([_][0-9]+)*([\\.][_0-9]+)?[dflL]?;
-	Floating_point_short: [\\.][_0-9]+[dflL]?;
+	Floating_point_short: [\\.][_]?[0-9]+[dflL]?;
 	Integer: [-+]?[0-9]+([_][0-9]+)*[dflL]?;
 	JavaImportPrefix: 'java.';
 	Keysymbol_and: '&&';
