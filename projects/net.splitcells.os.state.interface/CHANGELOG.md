@@ -35,6 +35,7 @@ Changes are now written to the root changelog instead.
   This way there is still a command,
   that installs the OSSI project with full functionality.
 ### Minor Changes
+* **2022-11-18** Recommend [chezmoi](https://github.com/twpayne/chezmoi) for dotfile management.
 * **2022-10-16** [**\#168** Integrate repo management](https://github.com/www-splitcells-net/net.splitcells.network/issues/168).
   1. `repo.process` now uses `bin/net.splitcells.osi.repos.peers` in order to find all peer repos,
      that are on the same folder level as the current repo.
