@@ -7,14 +7,20 @@
             SPDX-License-Identifier: EPL-2.0 OR MIT
             SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
         -->
-        <title>Technology Stack Guidelines</title>
+        <title>Software Stack Guidelines</title>
     </meta>
     <paragraph>These guidelines describe, which technologies should be used.
-        There are 2 different technology stacks in general:
-        the classical stack is the actual source code and
-        the additional stack integrates the source code with the environment.
-        The first stack is more restricted as the second one,
+        There are 2 different software stacks in general:
+        the core stack is the actual source code and
+        the extending stack integrates the source code with the environment.
+        The core stack represents the minimal software required to run it.
+        The extending stack extends the usefulness of the core stack.
+    </paragraph>
+    <paragraph>
+        By default, the core stack is more restricted as the extending one,
         because the second stack needs to be compatible with first one.
+        Also, one wants the core stack to be compatible to as many extending stacks as possible,
+        which makes the software more portable.
         This requirement does not exist the other way around by default.
     </paragraph>
 </article>
