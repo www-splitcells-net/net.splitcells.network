@@ -186,7 +186,15 @@ public class Projects {
                                 , sourceValidator
                                 , config)
                 , Dem.configValue(ObjectsRenderer.class)
-                , Dem.configValue(ObjectsMediaRenderer.class));
+                , Dem.configValue(ObjectsMediaRenderer.class)
+                , projectRenderer
+                        (profile
+                                , net.splitcells.dem.resource.Paths.usersStateFiles()
+                                , xslLib
+                                , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                , "/"
+                                , sourceValidator
+                                , config));
         if (isDirectory(integratedProjectRepositories)) {
             projectRenderers.add(projectRenderer
                     (profile
