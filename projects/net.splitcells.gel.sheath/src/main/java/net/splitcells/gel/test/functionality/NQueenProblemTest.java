@@ -125,7 +125,7 @@ public class NQueenProblemTest extends TestSuiteI {
             // The temperature functions was determined by trial and error with universal allocation program's temperature functions.
             testSubject.optimize(linearInitialization());
             SimplifiedAnnealingProblem.simplifiedAnnealingProblem(testSubject,
-                            i -> max((float) (log(4.0) / pow(log(i + 3), 15))
+                            i -> max((float) (log(4.0) / pow(log(i + 3d), 15))
                                     , 0))
                     .optimizeOnce(functionalHillClimber(
                             linearIterator(
