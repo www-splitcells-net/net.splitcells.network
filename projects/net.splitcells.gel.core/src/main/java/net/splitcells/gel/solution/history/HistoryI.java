@@ -219,7 +219,9 @@ public class HistoryI implements History {
         final var index = allocations.size() - 1;
         final var eventToRemove = allocations.columnView(ALLOCATION_ID)
                 .lookup(index)
-                .line(0)
+                .linesStream()
+                .findFirst()
+                .orElseThrow()
                 .value(ALLOCATION_EVENT);
         final var eventType = eventToRemove.type();
         if (eventType.equals(ADDITION)) {
@@ -247,7 +249,7 @@ public class HistoryI implements History {
                 throw new RuntimeException(t);
             }
         }
-        removal_(allocations.columnView(ALLOCATION_ID).lookup(index).line(0));
+        removal_(allocations.columnView(ALLOCATION_ID).lookup(index).linesStream().findFirst().orElseThrow());
     }
 
     /**
