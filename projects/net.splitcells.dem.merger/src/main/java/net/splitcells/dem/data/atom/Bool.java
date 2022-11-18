@@ -56,4 +56,12 @@ public interface Bool extends DeepCloneable {
         }
         return (R) this;
     }
+
+    @ReturnsThis
+    default Bool requireFalse() {
+        if (isTrue()) {
+            throw new RuntimeException();
+        }
+        return this;
+    }
 }
