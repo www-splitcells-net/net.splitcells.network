@@ -674,10 +674,33 @@
     </xsl:template>
     <xsl:template match="s:path.context">
         <x:ol>
-            <xsl:apply-templates select="." mode="path.context"/>
+            <xsl:apply-templates select="./*" mode="path.context"/>
         </x:ol>
     </xsl:template>
-    <xsl:template match="s:*" mode="path.context">
+    <xsl:template match="val" mode="path.context">
+        <x:li>
+            <xsl:choose>
+                <xsl:when test="./link/url">
+                    <a>
+                        <xsl:attribute name="href">
+                            <xsl:value-of select="./link/url"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="./name"/>
+                    </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="./name"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </x:li>
+        <xsl:if test="./val">
+            <x:ol>
+                <xsl:apply-templates select="./val" mode="path.context"/>
+            </x:ol>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*" mode="path.context">
+        <xsl:value-of select ="name(.)"/>
     </xsl:template>
     <xsl:template match="s:*">
         <xsl:message terminate="true">
