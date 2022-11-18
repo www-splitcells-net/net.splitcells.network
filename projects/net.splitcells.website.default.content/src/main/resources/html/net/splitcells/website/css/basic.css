@@ -83,7 +83,6 @@ pre {
     margin-right: .0625em;
     font-weight: bold;
     line-height: 1.5em;
-    vertical-align: middle;
     padding-left: .5em;
     padding-right: .5em;
     height: 2em;
@@ -94,11 +93,6 @@ pre {
     justify-content: center;
     align-items: center;
     text-indent: 0em;
-    margin-left: .0625em;
-    margin-right: .0625em;
-	}
-.net-splitcells-space-filler {
-	flex: auto;
 	}
 .net-splitcells-website-hidden-by-default {
     /* We hide errors by default and only show them via Javascript. */
@@ -191,7 +185,6 @@ ul {
 	height: 2em;
 	margin-top: 0em;
 	text-align: center;
-	vertical-align: middle;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -211,7 +204,6 @@ ul {
 	margin-right: .0625em;
 	font-weight: bold;
 	line-height: 1.5em;
-	vertical-align: middle;
 	padding-left: .5em;
 	padding-right: .5em;
 	height: 2em;
@@ -222,8 +214,6 @@ ul {
 	justify-content: center;
 	align-items: center;
 	text-indent: 0em;
-	margin-left: .0625em;
-	margin-right: .0625em;
 	}
 html,
 body {
@@ -355,12 +345,7 @@ article h2 {
     padding-right: 1em;
     padding-bottom: .5em;
     padding-left: 1em;
-
-    margin-left: .2em;
-	font-size: 125%;
-	font-weight: bold;
-	margin-top: 3em;
-	margin-bottom: 2em;
+    margin-left: .8em;
     }
 h3 {
     padding-left: .4em;
@@ -381,9 +366,6 @@ article h4 {
     padding-right: 1em;
     padding-bottom: .5em;
     padding-left: 1em;
-	}
-article h2 {
-    margin-left: .8em;
 	}
 article h3 {
     margin-left: 1.6em;
