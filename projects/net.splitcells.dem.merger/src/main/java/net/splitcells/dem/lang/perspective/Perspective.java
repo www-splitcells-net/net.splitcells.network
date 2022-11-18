@@ -19,6 +19,7 @@ import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -49,6 +50,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * A perspective has children, if it contains multiple values.
  */
 public interface Perspective extends PerspectiveView {
+
+    Pattern _VALID_XML_NAME = Pattern.compile("[a-zA-Z][a-zA-Z0-9-_\\.]*");
 
     List<Perspective> children();
 
@@ -230,6 +233,45 @@ public interface Perspective extends PerspectiveView {
             throw executionException("Unsupported namespace `" + nameSpace().uri() + "`.");
         }
         return htmlString;
+    }
+
+    default String toXmlString() {
+        String xmlString = "";
+        if (name().isBlank()) {
+            return "<empty/>";
+        } else if (!_VALID_XML_NAME.matcher(name()).matches()) {
+            xmlString += "<val name=\"" + name() + "\">";
+            xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+            xmlString += "</val>";
+        } else if (nameSpace().equals(HTML)) {
+            if (children().isEmpty()) {
+                xmlString += "<" + name() + "/>";
+            } else {
+                xmlString += "<" + name() + ">";
+                xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+                xmlString += "</" + name() + ">";
+            }
+        } else if (nameSpace().equals(STRING)) {
+            xmlString += name();
+            xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+        } else if (nameSpace().equals(NATURAL) || nameSpace().equals(DEN)) {
+            if (children().isEmpty()) {
+                xmlString += "<" + name() + "/>";
+            } else {
+                xmlString += "<" + name() + ">";
+                xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+                xmlString += "</" + name() + ">";
+            }
+        } else {
+            if (children().isEmpty()) {
+                xmlString += "<" + name() + "/>";
+            } else {
+                xmlString += "<" + name() + ">";
+                xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+                xmlString += "</" + name() + ">";
+            }
+        }
+        return xmlString;
     }
 
     default Perspective subtree(List<String> path) {
