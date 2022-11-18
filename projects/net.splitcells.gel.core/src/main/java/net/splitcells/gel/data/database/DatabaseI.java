@@ -149,7 +149,7 @@ public class DatabaseI implements Database {
                     .isTrue();
         }
         try {
-            return ColumnViewI.columnView((Column<T>) columns.get(typed_column_index.get(attribute)));
+            return (Column<T>) columns.get(typed_column_index.get(attribute));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
