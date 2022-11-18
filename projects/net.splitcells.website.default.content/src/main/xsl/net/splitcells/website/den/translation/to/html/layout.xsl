@@ -367,7 +367,6 @@ window.onload = function() {
                             </s:item>
                         </s:list>
                     </xsl:if>
-                    <xsl:apply-templates select="./s:path.context"/>
                     <s:chapter>
                         <s:title>Relevant Local Path Context</s:title>
                         <xsl:variable name="file-path-environment-relevant">
@@ -383,6 +382,7 @@ window.onload = function() {
                     </s:chapter>
                     <s:chapter>
                         <s:title>Local Path Context</s:title>
+                        <!-- TODO REMOVE This is deprecated. See #s109.
                         <xsl:variable name="file-path-environment">
                             <xsl:call-template name="file-path-environment">
                                 <xsl:with-param name="path"
@@ -392,7 +392,8 @@ window.onload = function() {
                         <xsl:call-template name="file-path-environment">
                             <xsl:with-param name="path"
                                             select="./s:path/node()"/>
-                        </xsl:call-template>
+                        </xsl:call-template>-->
+                        <xsl:apply-templates select="./s:path.context"/>
                     </s:chapter>
                     <xsl:if test="./s:content/s:meta/rdf:RDF">
                         <s:chapter>
