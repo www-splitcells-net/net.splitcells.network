@@ -33,7 +33,6 @@ import static org.assertj.core.api.Assertions.not;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.Solution;
@@ -232,8 +231,8 @@ public class HistoryI implements History {
                             , eventToRemove.supply().toLinePointer()));
         } else if (eventType.equals(REMOVAL)) {
             solution.allocate
-                    (eventToRemove.demand().toLinePointer().interpret(solution.demands()).get()
-                            , eventToRemove.supply().toLinePointer().interpret(solution.supplies()).get());
+                    (eventToRemove.demand().toLinePointer().interpret(solution.demands()).orElseThrow()
+                            , eventToRemove.supply().toLinePointer().interpret(solution.supplies()).orElseThrow());
         } else {
             throw new UnsupportedOperationException();
         }
