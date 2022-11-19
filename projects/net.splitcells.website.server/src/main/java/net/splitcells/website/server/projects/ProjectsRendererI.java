@@ -143,6 +143,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
     private final String profile;
     private final Config config;
     private final List<ProjectRenderer> renderers;
+
+    private Optional<Set<Path>> projectPathsCache = Optional.empty();
     private final ProjectRenderer fallbackRenderer;
     private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
     private final ProjectsRendererExtensionMerger extension = projectsRendererExtensionMerger()
@@ -243,6 +245,16 @@ public class ProjectsRendererI implements ProjectsRenderer {
 
     @Override
     public Set<Path> projectsPaths() {
+        if (config.mutableProjectsPath()) {
+            return calculateProjectsPaths();
+        }
+        if (projectPathsCache.isEmpty()) {
+            projectPathsCache = Optional.of(calculateProjectsPaths());
+        }
+        return projectPathsCache.get();
+    }
+
+    private Set<Path> calculateProjectsPaths() {
         return renderers.stream()
                 .map(Renderer::projectPaths)
                 .reduce((a, b) -> a.with(b))

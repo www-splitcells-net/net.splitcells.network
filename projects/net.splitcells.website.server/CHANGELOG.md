@@ -13,6 +13,13 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2022-11-19**: [**\\#s115** Speed up website deployment.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/115):
+  Introduce `net.splitcells.website.server.Config.mutableProjectsPath` in order to state,
+  if `projectsPath` can be assumed to stay the same during the web servers execution.
+  This speeds up the rendering of static websites enormously,
+  because `ProjectsRendererI` caches `projectsPath`, if `mutableProjectsPath` is set to true.
+  This in turn greatly improves the performance of `RenderingValidatorForHtmlLinks`,
+  as it uses `projectsPath` in order to validate internal links.
 * **2022-11-18**: **\\#8**: If `net.splitcells.website.RenderUserStateRepo` is set to true,
   add the project at `~/.local/state/net.splitcells.dem/` to the default set of projects for the project renderer.
   This project is used in order to store log files and other documents.

@@ -14,6 +14,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -87,6 +88,13 @@ public class Config {
      * like the output and styling information, or not.
      */
     private boolean cacheRenderers = false;
+
+    /**
+     * Determines whether it can be assumed, that {@link ProjectsRenderer#projectsPaths()} changes.
+     * Otherwise, {@link ProjectsRenderer#projectsPaths()} can be cached, for increased performance,
+     * which is useful, when a static website is rendered.
+     */
+    private boolean mutableProjectsPath = true;
 
     private Config() {
     }
@@ -198,6 +206,16 @@ public class Config {
     @ReturnsThis
     public Config withLayoutRelevantPerspective(Optional<Perspective> arg) {
         layoutRelevantPerspective = arg;
+        return this;
+    }
+
+    public boolean mutableProjectsPath() {
+        return mutableProjectsPath;
+    }
+
+    @ReturnsThis
+    public Config withMutableProjectsPath(boolean arg) {
+        mutableProjectsPath = arg;
         return this;
     }
 }
