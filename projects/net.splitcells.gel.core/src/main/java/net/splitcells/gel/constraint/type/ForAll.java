@@ -14,6 +14,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.framework.ConstraintAspect.constraintAspect;
 import static net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping.raterBasedGrouping;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.type.framework.ConstraintBasedOnLocalGroupsAI;
 import net.splitcells.gel.constraint.Constraint;
@@ -27,12 +28,16 @@ import java.util.Optional;
 
 public class ForAll extends ConstraintBasedOnLocalGroupsAI {
 
+    private static final String FOR_ALL = "for-all";
+
     public static Constraint forAll(Rater classifier) {
         return create(classifier);
     }
 
     public static Constraint forAll(Rater classifier, Optional<Discoverable> parent) {
-        return constraintAspect(new ForAll(classifier, parent));
+        return constraintAspect(new ForAll(classifier
+                , parent.map(d -> d.child(Lists.list(FOR_ALL, classifier.toString())))
+        ));
     }
 
     @Deprecated

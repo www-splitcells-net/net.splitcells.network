@@ -24,7 +24,18 @@ public interface Discoverable {
 
     /**
      * TODO Use {@link net.splitcells.dem.data.set.list.ListView}.
+     *
      * @return
      */
     List<String> path();
+
+    default Discoverable child(List<String> extension) {
+        final var rThis = this;
+        return new Discoverable() {
+            @Override
+            public List<String> path() {
+                return rThis.path().shallowCopy().withAppended(extension);
+            }
+        };
+    }
 }
