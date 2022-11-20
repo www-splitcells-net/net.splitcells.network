@@ -10,9 +10,12 @@
  */
 package net.splitcells.gel.constraint.type;
 
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
+
+import java.util.Optional;
 
 public class ForAlls {
 
@@ -29,6 +32,10 @@ public class ForAlls {
         return ForAllFactory.instance().forAll();
     }
 
+    public static Constraint forAll(Optional<Discoverable> parent) {
+        return ForAllFactory.instance().forAll(parent);
+    }
+
     /**
      * This Method exists in order to boost performance. TEST If this method does
      * indeed boost performance compared to some other methods with the same name.
@@ -42,6 +49,10 @@ public class ForAlls {
 
     public static Constraint forEach(Rater classifier) {
         return ForAllFactory.instance().forAll(classifier);
+    }
+
+    public static Constraint forEach(Rater classifier, Optional<Discoverable> parent) {
+        return ForAllFactory.instance().forAll(classifier, parent);
     }
 
     /**

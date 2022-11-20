@@ -21,6 +21,8 @@ import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 
+import java.util.Optional;
+
 public class Then extends ConstraintBasedOnLocalGroupsAI {
 
     public static Constraint then(Rater rater) {
@@ -32,7 +34,7 @@ public class Then extends ConstraintBasedOnLocalGroupsAI {
     }
 
     protected Then(Rater rater) {
-        super(rater, rater.getClass().getSimpleName());
+        super(rater, rater.getClass().getSimpleName(), Optional.empty());
     }
 
     @Override

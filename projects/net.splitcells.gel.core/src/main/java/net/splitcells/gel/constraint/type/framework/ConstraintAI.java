@@ -74,14 +74,20 @@ public abstract class ConstraintAI implements Constraint {
     protected final Map<GroupId, Rating> groupProcessing = map();
 
     @Deprecated
-    protected ConstraintAI(GroupId injectionGroup) {
-        this(injectionGroup, "");
+    protected ConstraintAI(GroupId injectionGroup, Optional<Discoverable> parent) {
+        this(injectionGroup, "", parent);
     }
 
     @Deprecated
-    protected ConstraintAI(GroupId injectionGroup, String name) {
+    protected ConstraintAI(GroupId injectionGroup, String name, Optional<Discoverable> parent) {
         this.injectionGroup = injectionGroup;
-        lines = Databases.database(name + ".lines", this, list(LINE, INCOMING_CONSTRAINT_GROUP));
+        final Discoverable parentPath;
+        if (parent.isPresent()) {
+            parentPath = parent.get();
+        } else {
+            parentPath = this;
+        }
+        lines = Databases.database(name + ".lines", parentPath, list(LINE, INCOMING_CONSTRAINT_GROUP));
         lineProcessing = allocations("linesProcessing", lines, results);
         lineProcessing.subscribeToAfterAdditions(ConstraintAI::propagateAddition);
         lineProcessing.subscribeToBeforeRemoval(ConstraintAI::propagateRemoval);
@@ -89,8 +95,8 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Deprecated
-    protected ConstraintAI() {
-        this(Constraint.standardGroup());
+    protected ConstraintAI(Optional<Discoverable> parent) {
+        this(Constraint.standardGroup(), parent);
     }
 
     @Override

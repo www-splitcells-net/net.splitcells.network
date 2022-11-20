@@ -1,6 +1,13 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2022-11-20 \#170**: Constraint nodes (i.e. `ForAll` and `Then`) now internally require an optional parent discoverability path.
+  This is the basis required, so that constraints can be viewed via the web server.
+  The end goal is to provide for each constraint a path,
+  that starts with the problem's path and after that continues with the constraint node's path.
+  For example: `/net/splitcells/run/conway-s-game-of-life/forAll/timeSteps` points to the constraint node
+  of an instance of conway's game of life, that groups all values according to their time value.
+  In other words, the aim is to provide a unique id for all constraint nodes, that can be easily discovered.
 * **2022-09-06 \#8**: Disable history of solutions by default.
 * **2022-08-24 \#8**: Unify Table methods naming:
   * Rename `Table#getLines` to `Table#lines`.

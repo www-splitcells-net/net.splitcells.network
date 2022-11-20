@@ -12,10 +12,12 @@ package net.splitcells.gel.constraint.type.framework;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
@@ -27,24 +29,24 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     protected final Rater rater;
 
     @Deprecated
-    protected ConstraintBasedOnLocalGroupsAI(Function<Constraint, Rater> raterFactory) {
-        super(Constraint.standardGroup());
+    protected ConstraintBasedOnLocalGroupsAI(Function<Constraint, Rater> raterFactory, Optional<Discoverable> parent) {
+        super(Constraint.standardGroup(), parent);
         rater = raterFactory.apply(this);
     }
 
     @Deprecated
-    protected ConstraintBasedOnLocalGroupsAI(Rater rater, String name) {
-        this(Constraint.standardGroup(), rater, name);
+    protected ConstraintBasedOnLocalGroupsAI(Rater rater, String name, Optional<Discoverable> parent) {
+        this(Constraint.standardGroup(), rater, name, parent);
     }
 
     @Deprecated
-    protected ConstraintBasedOnLocalGroupsAI(Rater rater) {
-        this(Constraint.standardGroup(), rater, "");
+    protected ConstraintBasedOnLocalGroupsAI(Rater rater, Optional<Discoverable> parent) {
+        this(Constraint.standardGroup(), rater, "", parent);
     }
 
     @Deprecated
-    protected ConstraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name) {
-        super(standardGroup, name);
+    protected ConstraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name, Optional<Discoverable> parent) {
+        super(standardGroup, name, parent);
         this.rater = rater;
     }
 
