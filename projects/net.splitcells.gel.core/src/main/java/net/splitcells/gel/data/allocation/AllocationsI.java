@@ -70,7 +70,7 @@ public class AllocationsI implements Allocations {
     @Deprecated
     protected AllocationsI(String name, Database demand, Database supply) {
         this.names = name;
-        allocations = database2(Language.ALLOCATIONS.value(), demand, concat(demand.headerView(), supply.headerView()));
+        allocations = database2(Language.ALLOCATIONS.value() + "/" + name, demand, concat(demand.headerView(), supply.headerView()));
         // TODO Remove code and comment duplications.
         {
             this.demands = demand;
