@@ -12,6 +12,7 @@ package net.splitcells.gel.constraint;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -110,7 +111,8 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(ForAlls.forEach(classifier));
+            resultBase = Optional.of(ForAlls.forEach(classifier
+                    , Optional.of(discoverable(root.map(c -> c.path()).orElseThrow()))));
             currentInjectionGroups.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }

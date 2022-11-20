@@ -12,18 +12,24 @@ package net.splitcells.gel.solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.common.Language.*;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 
 import static net.splitcells.gel.problem.ProblemI.problem;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.function.Function;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.constraint.QueryI;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -92,6 +98,18 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     public ProblemGenerator withConstraint(Constraint constraint) {
         this.constraint = constraint;
         return this;
+    }
+
+    @Override
+    public ProblemGenerator withConstraint(Function<Query, Query> builder) {
+        final var path = Lists.<String>list();
+        if (demandsDatabase.isPresent()) {
+            path.withAppended(demandsDatabase.get().path());
+        }
+        if (name.isPresent()) {
+            path.withAppended(name.get());
+        }
+        return withConstraint(builder.apply(QueryI.query(forAll(Optional.of(discoverable(path))))).currentConstraint());
     }
 
     @Override
