@@ -71,14 +71,20 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Resource {
 
     @JavaLegacyBody
     default Ui appendError(Throwable throwable) {
-        final var error = perspective("error");
-        error.withProperty("message", throwable.getMessage());
-        {
-            final var stackTraceValue = new java.io.StringWriter();
-            throwable.printStackTrace(new java.io.PrintWriter(stackTraceValue));
-            error.withProperty("stack-trace", stackTraceValue.toString());
+        try {
+            final var error = perspective("error");
+            error.withProperty("message", throwable.getMessage());
+            {
+                final var stackTraceValue = new java.io.StringWriter();
+                throwable.printStackTrace(new java.io.PrintWriter(stackTraceValue));
+                error.withProperty("stack-trace", stackTraceValue.toString());
+            }
+            return append(logMessage(error, NO_CONTEXT, LogLevel.CRITICAL));
+        } catch (Throwable th) {
+            // This is a fallback, if the error could not be logged.
+            throwable.printStackTrace();
+            throw th;
         }
-        return append(logMessage(error, NO_CONTEXT, LogLevel.CRITICAL));
     }
 
     @JavaLegacyBody
