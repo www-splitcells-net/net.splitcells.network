@@ -84,6 +84,7 @@ public abstract class ConstraintAI implements Constraint {
         final Discoverable parentPath;
         if (parent.isPresent()) {
             parentPath = parent.get();
+            mainContext = parent;
         } else {
             parentPath = this;
         }
