@@ -38,6 +38,9 @@ import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class TimeSteps implements Rater {
+    public static String timeStepId(int startTime, int endTime) {
+        return startTime + " -> " + endTime;
+    }
 
     public static Rater timeSteps(Attribute<Integer> timeAttribute) {
         return new TimeSteps(timeAttribute);

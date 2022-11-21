@@ -66,6 +66,7 @@ public class TimeStepsTest {
                     final var oneToTwo = testSubject.constraint().childrenView().get(0).lineProcessing()
                             .columnView(RESULTING_CONSTRAINT_GROUP)
                             .stream()
+                            .filter(s -> s.name().orElseThrow().equals(timeStepId(1, 2)))
                             .distinct()
                             .collect(toList())
                             .get(0);
