@@ -62,7 +62,7 @@ public class TimeStepsTest {
                             .stream()
                             .distinct()
                             .collect(toList())
-                            .requireSizeOf(2);
+                            .requireSizeOf(3);
                     final var oneToTwo = testSubject.constraint().childrenView().get(0).lineProcessing()
                             .columnView(RESULTING_CONSTRAINT_GROUP)
                             .stream()
