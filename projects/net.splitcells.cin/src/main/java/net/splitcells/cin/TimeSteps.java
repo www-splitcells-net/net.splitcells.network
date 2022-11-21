@@ -38,6 +38,8 @@ import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class TimeSteps implements Rater {
+    public static final String NO_TIME_STEP_GROUP = "no-time-step-group";
+
     public static String timeStepId(int startTime, int endTime) {
         return startTime + " -> " + endTime;
     }
@@ -51,6 +53,8 @@ public class TimeSteps implements Rater {
      * The keys are the end time of each group.
      */
     private final Map<Integer, GroupId> timeToPreviousTimeGroup = map();
+
+    private final GroupId noTimeStepGroup = group(NO_TIME_STEP_GROUP);
 
     private TimeSteps(Attribute<Integer> timeAttribute) {
         this.timeAttribute = timeAttribute;
@@ -83,8 +87,16 @@ public class TimeSteps implements Rater {
             rateTimesAfterFirstAddition(linesOfGroup, addition, children, timeValue, rating);
             rateTimesAfterFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
         } else {
-            rateTimesFirstAddition(linesOfGroup, addition, children, timeValue, rating);
-            rateTimesFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
+            boolean additionInTimeStep = false;
+            additionInTimeStep &= rateTimesFirstAddition(linesOfGroup, addition, children, timeValue, rating);
+            additionInTimeStep &= rateTimesFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
+            if (!additionInTimeStep) {
+                final List<LocalRating> localRatings = listWithValuesOf(localRating()
+                        .withPropagationTo(children)
+                        .withRating(noCost())
+                        .withResultingGroupId(noTimeStepGroup));
+                rating.complexAdditions().put(addition, localRatings);
+            }
         }
         return rating;
     }
@@ -118,15 +130,16 @@ public class TimeSteps implements Rater {
     }
 
 
-    private void rateTimesFirstAddition(Table lines, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
+    private boolean rateTimesFirstAddition(Table lines, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
         final var previousTimePresent = lines.columnView(LINE)
                 .lookup(l -> l.value(timeAttribute).equals(timeValue - 1))
                 .isPresent();
         final var currentTimePresent = lines.columnView(LINE)
                 .lookup(l -> l.value(timeAttribute).equals(timeValue))
                 .isPresent();
-        if (previousTimePresent && currentTimePresent) {
-            final var timeStep = timeToPreviousTimeGroup.computeIfAbsent(timeValue, x -> group((x - 1) + " -> " + x));
+        final var createNewGroup = previousTimePresent && currentTimePresent;
+        if (createNewGroup) {
+            final var timeStep = timeToPreviousTimeGroup.computeIfAbsent(timeValue, x -> group(timeStepId(x - 1, x)));
             final List<LocalRating> localRatings = listWithValuesOf(localRating()
                     .withPropagationTo(children)
                     .withRating(noCost())
@@ -142,5 +155,6 @@ public class TimeSteps implements Rater {
                         }
                     });
         }
+        return createNewGroup;
     }
 }

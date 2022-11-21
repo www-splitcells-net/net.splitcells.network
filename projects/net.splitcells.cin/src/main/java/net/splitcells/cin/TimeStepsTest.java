@@ -67,9 +67,19 @@ public class TimeStepsTest {
                             .columnView(RESULTING_CONSTRAINT_GROUP)
                             .stream()
                             .filter(s -> s.name().orElseThrow().equals(timeStepId(1, 2)))
-                            .distinct()
-                            .collect(toList())
-                            .get(0);
+                            .findFirst()
+                            .orElseThrow();
+                    final var noTimeStepGroup = testSubject.constraint().childrenView().get(0).lineProcessing()
+                            .columnView(RESULTING_CONSTRAINT_GROUP)
+                            .stream()
+                            .filter(s -> s.name().orElseThrow().equals(NO_TIME_STEP_GROUP))
+                            .findFirst()
+                            .orElseThrow();
+                    testSubject.constraint().childrenView().get(0).lineProcessing()
+                            .columnView(RESULTING_CONSTRAINT_GROUP)
+                            .lookup(noTimeStepGroup)
+                            .lines()
+                            .requireSizeOf(0);
                     testSubject.constraint().childrenView().get(0).lineProcessing()
                             .columnView(RESULTING_CONSTRAINT_GROUP)
                             .lookup(oneToTwo)
