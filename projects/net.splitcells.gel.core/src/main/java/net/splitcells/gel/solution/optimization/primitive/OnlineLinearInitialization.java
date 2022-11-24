@@ -15,6 +15,9 @@ import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+/**
+ * Allocates {@link Solution#demandsFree()} and {@link Solution#suppliesFree()} in their respective order.
+ */
 public class OnlineLinearInitialization implements OnlineOptimization {
 
     /**
@@ -34,8 +37,8 @@ public class OnlineLinearInitialization implements OnlineOptimization {
     public void optimize(Solution solution) {
         while (solution.demandsFree().hasContent() && solution.suppliesFree().hasContent()) {
             if (GET_NEXT_LINE_BY_STREAM) {
-                solution.allocate(solution.demandsFree().linesStream().findFirst().orElseThrow()
-                        , solution.suppliesFree().linesStream().findFirst().orElseThrow());
+                solution.allocate(solution.demandsFree().orderedLinesStream().findFirst().orElseThrow()
+                        , solution.suppliesFree().orderedLinesStream().findFirst().orElseThrow());
             } else {
                 solution.allocate(solution.demandsFree().line(0)
                         , solution.suppliesFree().line(0));
