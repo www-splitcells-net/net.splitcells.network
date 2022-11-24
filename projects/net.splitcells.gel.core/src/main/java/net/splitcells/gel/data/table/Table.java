@@ -20,6 +20,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -71,6 +72,12 @@ public interface Table extends Discoverable, Domable, Identifiable {
         }
     }
 
+    /**
+     * @return {@link List} of {@link Line}, that is ordered by {@link Line#index()}.
+     */
+    default List<Line> orderedLines() {
+        throw notImplementedYet();
+    }
 
     /**
      * @return List of lines in any order.
@@ -99,6 +106,13 @@ public interface Table extends Discoverable, Domable, Identifiable {
      */
     default Stream<Line> linesStream() {
         return lines().stream();
+    }
+
+    /**
+     * @return {@link Stream} of {@link Line} ordered by {@link Line#index()}.
+     */
+    default Stream<Line> orderedLinesStream() {
+        return orderedLines().stream();
     }
 
     /**
