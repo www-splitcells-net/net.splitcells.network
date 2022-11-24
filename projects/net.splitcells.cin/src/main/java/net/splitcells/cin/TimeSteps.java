@@ -91,11 +91,11 @@ public class TimeSteps implements Rater {
             additionInTimeStep &= rateTimesFirstAddition(linesOfGroup, addition, children, timeValue, rating);
             additionInTimeStep &= rateTimesFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
             if (!additionInTimeStep) {
-                final List<LocalRating> localRatings = listWithValuesOf(localRating()
+                final var localRating = localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
-                        .withResultingGroupId(noTimeStepGroup));
-                rating.complexAdditions().put(addition, localRatings);
+                        .withResultingGroupId(noTimeStepGroup);
+                rating.additions().put(addition, localRating);
             }
         }
         return rating;
@@ -121,11 +121,11 @@ public class TimeSteps implements Rater {
         final var isPreviousGroupPresent = timeToPreviousTimeGroup.containsKey(timeValue);
         if (isPreviousGroupPresent) {
             final var previousGroup = timeToPreviousTimeGroup.get(timeValue);
-            final List<LocalRating> localRatings = listWithValuesOf(localRating()
+            final var localRating = localRating()
                     .withPropagationTo(children)
                     .withRating(noCost())
-                    .withResultingGroupId(previousGroup));
-            rating.complexAdditions().put(addition, localRatings);
+                    .withResultingGroupId(previousGroup);
+            rating.additions().put(addition, localRating);
         }
     }
 
@@ -140,19 +140,17 @@ public class TimeSteps implements Rater {
         final var createNewGroup = previousTimePresent && currentTimePresent;
         if (createNewGroup) {
             final var timeStep = timeToPreviousTimeGroup.computeIfAbsent(timeValue, x -> group(timeStepId(x - 1, x)));
-            final List<LocalRating> localRatings = listWithValuesOf(localRating()
+            final var localRating = localRating()
                     .withPropagationTo(children)
                     .withRating(noCost())
-                    .withResultingGroupId(timeStep));
+                    .withResultingGroupId(timeStep);
+            rating.additions().put(addition, localRating);
             lines.columnView(LINE)
                     .lookup(l -> l.value(timeAttribute).equals(timeValue))
                     .linesStream()
+                    .filter(l -> l.index() != addition.index())
                     .forEach(l -> {
-                        if (rating.complexAdditions().containsKey(l)) {
-                            rating.complexAdditions().get(l).addAll(localRatings);
-                        } else {
-                            rating.complexAdditions().put(l, localRatings);
-                        }
+                        rating.updateRating_withReplacement(l, localRating);
                     });
         }
         return createNewGroup;
