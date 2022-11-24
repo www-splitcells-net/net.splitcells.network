@@ -37,6 +37,7 @@ import java.util.stream.Stream;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -332,6 +333,19 @@ public class DatabaseI implements Database {
     @Override
     public Stream<Line> linesStream() {
         return lines.stream();
+    }
+
+    @Override
+    public List<Line> orderedLines() {
+        return rawLines.stream()
+                .filter(e -> e != null)
+                .collect(Lists.toList());
+
+    }
+
+    @Override
+    public Stream<Line> orderedLinesStream() {
+        return rawLines.stream().filter(e -> e != null);
     }
 
     @Override
