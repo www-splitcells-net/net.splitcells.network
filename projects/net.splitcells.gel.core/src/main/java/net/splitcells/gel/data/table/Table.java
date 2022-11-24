@@ -57,6 +57,10 @@ public interface Table extends Discoverable, Domable, Identifiable {
 
     List<Column<Object>> columnsView();
 
+    /**
+     * @return List containing every {@link Line}, where {@link List#indexOf(Object)} matches {@link Line#index()}.
+     * If there are indexes without a matching {@link Line#index()}, the location in the {@link List} has the element null.
+     */
     ListView<Line> rawLinesView();
 
     default boolean contains(Line line) {
@@ -67,6 +71,10 @@ public interface Table extends Discoverable, Domable, Identifiable {
         }
     }
 
+
+    /**
+     * @return List of lines in any order.
+     */
     default List<Line> lines() {
         return rawLinesView().stream()
                 .filter(e -> e != null)
