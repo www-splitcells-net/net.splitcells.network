@@ -35,6 +35,12 @@ public class Config {
     private Optional<Path> sslKeystoreFile = Optional.of(Paths.get("target/keystore.p12"));
 
     /**
+     * Points to the folder containing projects required for data, like XSL transformations.
+     * These are needed in order to render the website.
+     */
+    private Optional<Path> mainProjectRepositoryPath = Optional.empty();
+
+    /**
      * This is an XML document provided for the XSL based renderer.
      * It contains all paths supported by the renderer.
      */
@@ -217,5 +223,15 @@ public class Config {
     public Config withMutableProjectsPath(boolean arg) {
         mutableProjectsPath = arg;
         return this;
+    }
+
+    @ReturnsThis
+    public Config withMainProjectRepositoryPath(Path arg) {
+        mainProjectRepositoryPath = Optional.of(arg);
+        return this;
+    }
+
+    public Optional<Path> mainProjectRepositoryPath() {
+        return mainProjectRepositoryPath;
     }
 }
