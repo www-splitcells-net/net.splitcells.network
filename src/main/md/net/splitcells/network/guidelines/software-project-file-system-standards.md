@@ -109,6 +109,20 @@ Documentation and program source code files about the same topic should have the
 project path (`./src/main/[file-format]/[project-path].[file-suffix]`).
 This is especially useful, if the program source cannot be used in order to generate
 a fitting documentation for the program source's project path.
+
+Following file formats are explicitly supported, but any formats can be used:
+* `src/main/bash`
+* `src/main/chezmoi`
+* `src/main/csv`
+* `src/main/css`
+* `src/main/java`
+* `src/main/hugo.md`
+* `src/main/md`
+* `src/main/null`
+* `src/main/sh`
+* `src/main/svg`
+* `src/main/txt`
+* `src/main/xml`
 ## Files at `./target/*`
 Contain results of the build and test system. Also contains the results of
 executing other project tasks.
