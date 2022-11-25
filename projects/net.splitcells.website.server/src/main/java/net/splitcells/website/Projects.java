@@ -21,7 +21,6 @@ import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.validator.SourceValidator;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.isDirectory;
@@ -31,10 +30,9 @@ import static net.splitcells.website.server.project.validator.SourceValidatorVia
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 
 public class Projects {
-    @Deprecated
     public static ProjectsRendererI projectsRenderer(Config config) {
         final var profile = "public";
-        final var projectsRepository = Paths.get("../");
+        final var projectsRepository = config.mainProjectRepositoryPath().orElse(Path.of("../"));
         final var validator = validatorViaSchema(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
         return projectsRenderer(projectsRepository
                 , profile
