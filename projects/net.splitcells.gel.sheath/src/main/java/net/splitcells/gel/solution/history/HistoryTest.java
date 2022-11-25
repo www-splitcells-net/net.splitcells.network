@@ -10,6 +10,7 @@
  */
 package net.splitcells.gel.solution.history;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import org.junit.jupiter.api.Tag;
@@ -20,6 +21,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.TestTypes.BENCHMARK_RUNTIME;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
@@ -31,7 +33,6 @@ import static net.splitcells.gel.solution.history.History.META_DATA;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.ADDITION;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class HistoryTest {
 
@@ -68,7 +69,7 @@ public class HistoryTest {
                     testSubject.demands().rawLine(0)
                     , testSubject.supplies().rawLine(0));
             testSubject.history().resetTo(-1);
-            assertThat(testSubject.history().size()).isEqualTo(0);
+            testSubject.history().lines().requireSizeOf(0);
         });
     }
 
@@ -90,12 +91,12 @@ public class HistoryTest {
                 .toProblem()
                 .asSolution();
         solution.history().processWithHistory(() -> {
-            IntStream.rangeClosed(0, 3).forEach(i -> solution.allocate
+            rangeClosed(0, 3).forEach(i -> solution.allocate
                     (solution.demands().rawLine(i)
                             , solution.supplies().rawLine(i)));
-            assertThat(solution.history().size()).isEqualTo(4);
+            solution.history().lines().requireSizeOf(4);
             solution.history().resetTo(2);
-            assertThat(solution.history().size()).isEqualTo(3);
+            solution.history().lines().requireSizeOf(3);
         });
     }
 
@@ -111,27 +112,27 @@ public class HistoryTest {
                 .toProblem()
                 .asSolution();
         solution.history().processWithHistory(() -> {
-            assertThat(solution.history().size()).isEqualTo(0);
+            solution.history().lines().requireSizeOf(0);
             {
                 solution.allocate
                         (solution.demands().rawLine(0)
                                 , solution.supplies().rawLine(0));
-                assertThat(solution.history().size()).isEqualTo(1);
+                solution.history().lines().requireSizeOf(1);
                 final var additionEvent = solution.history().rawLine(0);
                 final var additionOperation = additionEvent.value(ALLOCATION_EVENT);
-                assertThat(additionOperation.type()).isEqualTo(ADDITION);
-                assertThat(additionOperation.demand()).isEqualTo(solution.demands().rawLine(0));
-                assertThat(additionOperation.supply()).isEqualTo(solution.supplies().rawLine(0));
+                requireEquals(additionOperation.type(), ADDITION);
+                requireEquals(additionOperation.demand(), solution.demands().rawLine(0));
+                requireEquals(additionOperation.supply(), solution.supplies().rawLine(0));
             }
             {
-                assertThat(solution.history().size()).isEqualTo(1);
+                solution.history().lines().requireSizeOf(1);
                 solution.remove(0);
-                assertThat(solution.history().size()).isEqualTo(2);
+                solution.history().lines().requireSizeOf(2);
                 final var removalEvent = solution.history().rawLine(1);
                 final var removalOperation = removalEvent.value(ALLOCATION_EVENT);
-                assertThat(removalOperation.type()).isEqualTo(REMOVAL);
-                assertThat(removalOperation.demand()).isEqualTo(solution.demands().rawLine(0));
-                assertThat(removalOperation.supply()).isEqualTo(solution.supplies().rawLine(0));
+                requireEquals(removalOperation.type(), REMOVAL);
+                requireEquals(removalOperation.demand(), solution.demands().rawLine(0));
+                requireEquals(removalOperation.supply(), solution.supplies().rawLine(0));
             }
         });
     }
@@ -151,26 +152,24 @@ public class HistoryTest {
             final var demandValue = solution.allocate
                     (solution.demands().rawLine(0)
                             , solution.supplies().rawLine(0));
-            assertThat
-                    (solution
+            requireEquals(solution
                             .history()
                             .rawLine(0)
                             .value(META_DATA)
                             .value(AllocationRating.class)
                             .get()
-                            .value())
-                    .isEqualTo(cost(7));
+                            .value()
+                    , cost(7));
             {
                 solution.remove(demandValue);
-                assertThat
-                        (solution
+                requireEquals(solution
                                 .history()
                                 .rawLine(1)
                                 .value(META_DATA)
                                 .value(AllocationRating.class)
                                 .get()
                                 .value()
-                        ).isEqualTo(noCost());
+                        , noCost());
             }
         });
     }

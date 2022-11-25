@@ -26,6 +26,12 @@ public class Assertions {
         }
     }
 
+    public static <T> void requireEquals(T a, T b) {
+        if (!a.equals(b)) {
+            throw executionException("Arguments are required to be equal, but are not: " + a + ", " + b);
+        }
+    }
+
     public static void assertThrows(Class<? extends Throwable> expectedExceptionType, Runnable run) {
         try {
             run.run();
