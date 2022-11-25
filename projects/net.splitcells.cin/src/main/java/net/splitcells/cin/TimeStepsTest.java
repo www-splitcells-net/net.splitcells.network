@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.cin.TimeSteps.NO_TIME_STEP_GROUP;
+import static net.splitcells.cin.TimeSteps.timeStepId;
 import static net.splitcells.cin.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
