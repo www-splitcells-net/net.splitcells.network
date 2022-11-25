@@ -73,8 +73,9 @@ public final class Xml {
     private static Transformer newTransformer() {
         try {
             final var factory = TransformerFactory.newInstance();
-            factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-            factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+            /* The following security settings do not work, because these are not supported.
+             * factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+             * factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");*/
             return factory.newTransformer();
         } catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
             throw new RuntimeException(e);
