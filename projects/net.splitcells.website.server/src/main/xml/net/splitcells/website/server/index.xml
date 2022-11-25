@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://splitcells.net/den.xsd"
          xmlns:xl="http://www.w3.org/1999/xlink">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR MIT
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
     <name>Website Server</name>
     <optimization>
         <scheduling>
