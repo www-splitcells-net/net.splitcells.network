@@ -3,10 +3,6 @@
 	</div>
 
 # Operation System State Interface
-## Status
-* GitHub: [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
-* GitLab: [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
-* SourceHut: [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
 
 ## Getting Started
 1. [Manifesto](src/main/md/net/splitcells/os/state/interface/manifesto.md)
