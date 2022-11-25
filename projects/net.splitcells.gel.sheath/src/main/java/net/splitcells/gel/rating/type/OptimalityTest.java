@@ -12,7 +12,9 @@ package net.splitcells.gel.rating.type;
 
 import org.junit.jupiter.api.Test;
 
-import static net.splitcells.dem.data.order.Ordering.*;
+import static net.splitcells.dem.data.order.Ordering.EQUAL;
+import static net.splitcells.dem.data.order.Ordering.GREATER_THAN;
+import static net.splitcells.dem.data.order.Ordering.LESSER_THAN;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.gel.rating.type.Optimality.optimality;
 
