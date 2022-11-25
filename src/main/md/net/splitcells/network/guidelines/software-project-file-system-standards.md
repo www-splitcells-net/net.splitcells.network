@@ -93,6 +93,22 @@ Contains dependencies of the project.
 Contains folders with subproject. Prefer to not use recursive projects.
 ## Files at `./src/main/[file-format]/*`
 Contains the source code of the project.
+
+Documentation is placed here for now,
+because currently there is no need to make a distinction between files,
+that are part of the program and files that are part of the documentation.
+The build process creating the documentation determines,
+which files are used for documentation.
+
+One reason for this, is the fact, that the documentation might link to source code,
+if the documentation's target audience are programmers.
+
+Links in the README are the preferred way to find the documentation's root file.
+
+Documentation and program source code files about the same topic should have the same
+project path (`./src/main/[file-format]/[project-path].[file-suffix]`).
+This is especially useful, if the program source cannot be used in order to generate
+a fitting documentation for the program source's project path.
 ## Files at `./target/*`
 Contain results of the build and test system. Also contains the results of
 executing other project tasks.
