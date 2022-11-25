@@ -13,6 +13,7 @@ package net.splitcells.dem.source.code;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.source.code.antlr.Java11Lexer;
 import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -69,7 +70,15 @@ public class SourceCodeCheck {
                 }
             });
             parser.source_unit();
-        } catch (IOException e) {
+        } catch (Throwable e) {
+            System.out.println("Fallback output:");
+            try {
+                final Java11Lexer lexer = new Java11Lexer
+                        (CharStreams.fromFileName(file.toString()));
+                // System.out.println(lexer.getAllTokens()); TODO The output is too big.
+            } catch (IOException ex) {
+                throw new RuntimeException(e);
+            }
             throw new RuntimeException(e);
         }
     }
