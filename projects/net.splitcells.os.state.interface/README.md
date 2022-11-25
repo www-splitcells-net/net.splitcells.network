@@ -22,7 +22,6 @@
 1. [Why are things done a certain way?](src/main/md/net/splitcells/os/state/interface/reasoning.md)
 
 ## Administration
-1. [Licensing](src/main/md/net/splitcells/os/state/interface/licensing.md)
 1. [Open Tasks](src/main/md/net/splitcells/os/state/interface/tasks.md)
 
 ## Guide Lines
