@@ -15,9 +15,8 @@ import net.splitcells.gel.Gel;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-
 import static java.util.stream.IntStream.range;
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.TimeSteps.NO_TIME_STEP_GROUP;
 import static net.splitcells.cin.TimeSteps.timeStepId;
 import static net.splitcells.cin.TimeSteps.timeSteps;
@@ -56,7 +55,7 @@ public class TimeStepsTest {
                 })
                 .toProblem()
                 .asSolution();
-        IntStream.rangeClosed(1, 3).forEach(i ->
+        rangeClosed(1, 3).forEach(i ->
                 testSubject.history().processWithHistory(() -> {
                     testSubject.optimize(onlineLinearInitialization());
                     testSubject.constraint().childrenView().get(0).lineProcessing()

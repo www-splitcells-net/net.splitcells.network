@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.TestTypes.BENCHMARK_RUNTIME;
@@ -39,9 +40,9 @@ public class HistoryTest {
     public void test_rest_to_beginning_runtime() {
         final var testSubject = defineProblem("test_rest_to_beginning_runtime")
                 .withDemandAttributes()
-                .withDemands(IntStream.rangeClosed(1, 10000).mapToObj(i -> list()).collect(toList()))
+                .withDemands(rangeClosed(1, 10000).mapToObj(i -> list()).collect(toList()))
                 .withSupplyAttributes()
-                .withSupplies(IntStream.rangeClosed(1, 10000).mapToObj(i -> list()).collect(toList()))
+                .withSupplies(rangeClosed(1, 10000).mapToObj(i -> list()).collect(toList()))
                 .withConstraint(Then.then(constantRater(cost(7))))
                 .toProblem()
                 .asSolution();
