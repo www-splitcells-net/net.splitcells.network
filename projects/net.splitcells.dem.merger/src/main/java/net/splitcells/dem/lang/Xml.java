@@ -71,7 +71,10 @@ public final class Xml {
 
     private static Transformer newTransformer() {
         try {
-            return TransformerFactory.newInstance().newTransformer();
+            final var factory = TransformerFactory.newInstance();
+            factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            return factory.newTransformer();
         } catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
             throw new RuntimeException(e);
         }
@@ -80,6 +83,8 @@ public final class Xml {
     private static DocumentBuilder rootDocumentBuilder() {
         try {
             final DocumentBuilderFactory rBase = DocumentBuilderFactory.newInstance();
+            rBase.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            rBase.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             rBase.setNamespaceAware(true);
             return rBase.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
