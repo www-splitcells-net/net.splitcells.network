@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR MIT
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
+        <title>Python Guidelines</title>
+    </meta>
+    <paragraph>
+        Python is used mainly for easily portable scripts and project commands.
+        No dependencies should be used in this case, if possible.
+        If dependencies are required, consider Java instead.
+    </paragraph>
+    <paragraph>
+        Use dedicated documentation files for detailed documentation.
+        Help messages in CLI commands should only describe the minimal interface and
+        show how more detailed information can be obtained.
+    </paragraph>
+</article>
