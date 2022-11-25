@@ -91,7 +91,7 @@ Such commands are called project commands.
 Contains dependencies of the project.
 ## Files at `./projects/*`
 Contains folders with subproject. Prefer to not use recursive projects.
-## Files at `./src/*`
+## Files at `./src/main/[file-format]/*`
 Contains the source code of the project.
 ## Files at `./target/*`
 Contain results of the build and test system. Also contains the results of
