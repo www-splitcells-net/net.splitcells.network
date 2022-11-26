@@ -34,6 +34,8 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 @JavaLegacyArtifact
 public final class Console extends ResourceOptionI<Sender<String>> {
 
+    public static final String CONSOLE_FILE_NAME = "echo.xml";
+
     public Console() {
         super(() -> {
             if (environment().config().configValue(IsEchoToFile.class)) {
@@ -49,7 +51,7 @@ public final class Console extends ResourceOptionI<Sender<String>> {
                 try {
                     return stringSender
                             (new FileOutputStream
-                                    (consolePath.resolve("echo.xml")
+                                    (consolePath.resolve(CONSOLE_FILE_NAME)
                                             .toFile()));
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);

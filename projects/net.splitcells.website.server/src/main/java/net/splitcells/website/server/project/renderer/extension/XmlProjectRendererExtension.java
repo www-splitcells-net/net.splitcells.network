@@ -24,8 +24,10 @@ import net.splitcells.website.server.project.RenderingResult;
 import javax.xml.stream.events.Namespace;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.environment.resource.Console.CONSOLE_FILE_NAME;
 import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.lang.perspective.Den.subtree;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -43,6 +45,8 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
 public class XmlProjectRendererExtension implements ProjectRendererExtension {
 
     private static final String MARKER = "834ZT09345ZHGF09H3457G90H34";
+    private static final Pattern XML_OPENING_ELEMENT = Pattern.compile("^([\\n\\r\\s]*<)([a-zA-Z][a-zA-Z0-9-]*)(\\s*[a-zA-Z0-9-=\\\":/[.\\n\\r]]*)(>[.\\n\\r]*)");
+    private static final Pattern XML_CLOSING_ELEMENT = Pattern.compile("(\\n\\r.*<)([a-zA-Z][a-zA-Z0-9-]*)([\\n\\r\\s]*[a-zA-Z0-9-=\\\":/\\.\\n\\r]*)(>[\\n\\r\\s]*)$");
 
     public static XmlProjectRendererExtension xmlRenderer() {
         return new XmlProjectRendererExtension();
@@ -68,6 +72,16 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                             .map(l -> subtree(l, pathFolder)));
             if (is_file(xmlFile)) {
                 final var xmlContent = readString(xmlFile);
+                // TODO This is probably a hack.
+                if (CONSOLE_FILE_NAME.equals(xmlFile.getFileName().toString())) {
+                    final var openingMatch = XML_OPENING_ELEMENT.matcher(xmlContent);
+                    final var closingMatch = XML_CLOSING_ELEMENT.matcher(xmlContent);
+                    if (openingMatch.matches()) {
+                        if (!closingMatch.matches()) {
+                            System.out.println("Incomplete xml found: " + path);
+                        }
+                    }
+                }
                 final var document = Xml.parse(xmlContent);
                 if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
                     final var metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.SEW)
