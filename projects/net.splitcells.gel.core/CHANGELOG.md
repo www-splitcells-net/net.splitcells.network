@@ -1,6 +1,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2022-11-27 ##8**: `OnlineLinearInitialization` now ensures,
+  demands and supplies are allocated in the same order,
+  as it is present in their respective tables. 
 * **2022-11-20 \#170**: Constraint nodes (i.e. `ForAll` and `Then`) now internally require an optional parent discoverability path.
   This is the basis required, so that constraints can be viewed via the web server.
   The end goal is to provide for each constraint a path,
