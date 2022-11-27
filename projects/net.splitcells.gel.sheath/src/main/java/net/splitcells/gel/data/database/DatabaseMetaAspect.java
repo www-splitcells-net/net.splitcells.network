@@ -207,4 +207,9 @@ public class DatabaseMetaAspect implements Database {
     public int hashCode() {
         return database.hashCode();
     }
+
+    @Override
+    public List<Line> orderedLines() {
+        return database.orderedLines();
+    }
 }
