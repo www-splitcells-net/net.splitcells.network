@@ -134,7 +134,7 @@ public class SchoolCourseSchedulingTest {
                     , 2
                     , 20
                     , 2
-                    , 2
+                    , 0
                     , 1
             );
             rangeClosed(1, 1).forEach(i -> {
