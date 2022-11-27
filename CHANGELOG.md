@@ -20,6 +20,9 @@ Links to such platforms may or may not be valid.
 Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2022-11-27 \#183**: The property `test.groups` is now used in Maven to determine,
+  which Tags are required for a test to be executed,
+  during the build.
 * **2022-11-12** Allow leading digits in file and folder names in filesystem guidelines.
 * **2022-10-07** **\#162**: [There are now 3 recommended types of test](https://splitcells.net/net/splitcells/network/guidelines/test.html): minimal, extensive and side effect tests
 * **2022-02-28** **\#125**:

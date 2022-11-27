@@ -23,6 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <packaging>jar</packaging>
+        <test.groups>!testing_capabilities&amp;!experimental_test&amp;!benchmarking_runtime</test.groups>
     </properties>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -165,7 +166,7 @@
                             <!-- TODO Execute tests in parallel. parallel>all</parallel>
                             <useUnlimitedThreads>true</useUnlimitedThreads-->
                             <!-- Doc Of Tag Expressions: https://junit.org/junit5/docs/current/user-guide/#running-tests-tag-expressions -->
-                            <groups>!testing_capabilities&amp;!experimental_test&amp;!benchmarking_runtime</groups>
+                            <groups>${test.groups}</groups>
                             <argLine>${surefireArgLine}</argLine>
                         </configuration>
                     </plugin>
