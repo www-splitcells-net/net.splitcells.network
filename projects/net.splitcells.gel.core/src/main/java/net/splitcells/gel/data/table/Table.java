@@ -76,7 +76,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
      * @return {@link List} of {@link Line}, that is ordered by {@link Line#index()}.
      */
     default List<Line> orderedLines() {
-        throw notImplementedYet();
+        throw notImplementedYet(this.getClass().getName() + " does not implemented `orderedLines`.");
     }
 
     /**
