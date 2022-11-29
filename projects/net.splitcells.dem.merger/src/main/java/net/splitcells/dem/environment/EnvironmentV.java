@@ -19,7 +19,7 @@ import net.splitcells.dem.resource.communication.Closeable;
  * 
  * TODO Implement Stacking and sandboxing.
  */
-public interface EnvironmentV extends Closeable {
+public interface EnvironmentV {
 
     ConfigurationV config();
 }

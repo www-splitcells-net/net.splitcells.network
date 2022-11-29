@@ -75,7 +75,7 @@ public class Dem {
                 throw t;
             } finally {
                 processEnvironment.config().withConfigValue(EndTime.class, Optional.of(ZonedDateTime.now()));
-                environment().close();
+                processEnvironment.close();
                 CURRENT.remove();
             }
             try {
