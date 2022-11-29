@@ -16,6 +16,14 @@ import net.splitcells.dem.resource.communication.Flushable;
 
 public interface Environment
 		extends EnvironmentV, Closeable, Flushable {
+/**
+ * TODO Create a meta config in order to add arbitrary information, methods etc. to a config.
+ * This also allows to omit reflection in order to close all {@link net.splitcells.dem.environment.resource.Resource}
+ * during {@link #close()}, for instance.
+ * This would also be a way to generate state reports or documentation via injection mechanisms.
+ * Thereby, the whole environment configuration could be modelled as a table,
+ * which would simplify the visualization.
+ */
 
 	/**
 	 * It is not allowed to be called multiple times.
