@@ -239,10 +239,10 @@ public interface Solution extends Problem, SolutionView {
     }
 
     default void createAnalysis() {
-        createDirectory(environment().config().configValue(ProcessPath.class));
-        final var path = this.path().stream().reduce((left, right) -> left + "." + right);
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".solution.constraint.toDom.xml"), constraint().toDom());
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve(path + ".solution.constraint.graph.xml"), constraint().graph());
+        final var dataContainer = dataContainer();
+        createDirectory(dataContainer);
+        writeToFile(dataContainer.resolve("solution.constraint.toDom.xml"), constraint().toDom());
+        writeToFile(dataContainer.resolve("solution.constraint.graph.xml"), constraint().graph());
     }
 
     default Rating rating(List<OptimizationEvent> events) {
