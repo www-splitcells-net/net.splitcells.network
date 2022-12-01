@@ -11,6 +11,7 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.Gel;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import static net.splitcells.cin.TimeSteps.timeStepId;
 import static net.splitcells.cin.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.TestTypes.EXPERIMENTAL_TEST;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
@@ -55,6 +57,12 @@ public class TimeStepsTest {
                 })
                 .toProblem()
                 .asSolution();
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .forEach(g -> requireEquals(g.name().get(), NO_TIME_STEP_GROUP));
     }
 
     @Tag(EXPERIMENTAL_TEST)
