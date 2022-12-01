@@ -151,6 +151,13 @@ public class TimeSteps implements Rater {
                     .forEach(l -> {
                         rating.updateRating_withReplacement(l, localRating);
                     });
+            lines.columnView(LINE)
+                    .lookup(l -> l.value(timeAttribute).equals(timeValue - 1))
+                    .linesStream()
+                    .filter(l -> l.index() != addition.index())
+                    .forEach(l -> {
+                        rating.updateRating_withReplacement(l, localRating);
+                    });
         }
         return createNewGroup;
     }
