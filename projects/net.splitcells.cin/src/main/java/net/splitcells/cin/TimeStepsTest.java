@@ -31,6 +31,32 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDei
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class TimeStepsTest {
+
+    @Test
+    public void testTimeStepsDetails() {
+        final var time = attribute(Integer.class, "time");
+        final var value = attribute(Integer.class, "value");
+        final var testSubject = defineProblem("testTimeSteps")
+                .withDemandAttributes(time)
+                .withDemands(list(
+                        list(1)
+                        , list(2)
+                        , list(3)
+                ))
+                .withSupplyAttributes(value)
+                .withSupplies(list(
+                        list(0)
+                        , list(0)
+                        , list(0)
+                ))
+                .withConstraint(c -> {
+                    c.forAll(timeSteps(time));
+                    return c;
+                })
+                .toProblem()
+                .asSolution();
+    }
+
     @Tag(EXPERIMENTAL_TEST)
     @Test
     public void testTimeSteps() {
