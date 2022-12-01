@@ -87,9 +87,8 @@ public class TimeSteps implements Rater {
             rateTimesAfterFirstAddition(linesOfGroup, addition, children, timeValue, rating);
             rateTimesAfterFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
         } else {
-            boolean additionInTimeStep = false;
-            additionInTimeStep &= rateTimesFirstAddition(linesOfGroup, addition, children, timeValue, rating);
-            additionInTimeStep &= rateTimesFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
+            boolean additionInTimeStep = rateTimesFirstAddition(linesOfGroup, addition, children, timeValue, rating);
+            additionInTimeStep |= rateTimesFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
             if (!additionInTimeStep) {
                 final var localRating = localRating()
                         .withPropagationTo(children)
