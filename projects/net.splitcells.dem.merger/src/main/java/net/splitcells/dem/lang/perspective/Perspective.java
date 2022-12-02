@@ -184,7 +184,7 @@ public interface Perspective extends PerspectiveView {
         }
         assertThat(propertyInstances).hasSize(1);
         final var element = propertyInstances.get(0);
-        final var propertyValue = element.value().get().name();
+        final var propertyValue = element.value().orElseThrow().name();
         final var propertyHosters = current.children().stream()
                 .filter(child -> child.propertiesWithValue(propertyName, nameSpace, propertyValue).size() == 1)
                 .collect(toList());
