@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Changelog
 The changelog format can be found [here](../../src/main/md/net/splitcells/network/guidelines/changelog.md).
 
@@ -86,7 +90,3 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   and `https://splitcells.net/net/splitcells/website/minimal/net/splitcells/martins/avots/website/index.html`.
   Previously, this was supported in theory,
   but there was a bug making it impossible.
-
-----
-* SPDX-License-Identifier: EPL-2.0 OR MIT
-* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects

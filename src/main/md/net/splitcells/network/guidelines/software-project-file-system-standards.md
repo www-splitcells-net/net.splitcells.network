@@ -1,4 +1,9 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Software Project File System Standards
+
 This is the aggregation of common file and folder structures in software
 projects.
 ## Software Project File System Overview

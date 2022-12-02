@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""This Source Code Form is subject to the terms of the Mozilla Public
-License, v. 2.0. If a copy of the MPL was not distributed with this
-file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-Based on the paper "Correlation Matrix Memories" by TEUVO KOHONEN.
 """
+SPDX-License-Identifier: EPL-2.0 OR MIT
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+"""
+
+__author__ = "Mārtiņš Avots"
+__authors__ = ["and other"]
+__copyright__ = "Copyright 2021"
+__license__ = "EPL-2.0 OR MIT"
 __author__ = 'Mārtiņš Avots'
+
 from completeCorrelationMatrixMemories import CompleteCorrelationMatrixMemory
 from unittest import TestCase, expectedFailure
 from testingArtifacts import floatTuple, difference, images3x3
