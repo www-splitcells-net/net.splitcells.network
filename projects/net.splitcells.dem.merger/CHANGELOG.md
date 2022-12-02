@@ -1,6 +1,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2022-12-02 \#27** When `IsEchoToFile` is set to true,
+  `Console` does no longer cancel its output to the standard output.
+  If `IsEchoToFile` is set to true, console output is written to a file and to the standard output.
 * **2022-11-07**
    1. Remove unused methods `CommonFunctions#findSystemOutput`.
    2. Remove unused methods `CommonFunctions#currentTime`.

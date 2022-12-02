@@ -93,7 +93,6 @@ public class Server {
                             }
                         }, (result) -> {
                             if (result.failed()) {
-                                System.out.println(result.cause().toString());
                                 domsole().append(perspective(result.cause().toString()), LogLevel.ERROR);
                                 domsole().appendError(result.cause());
                                 response.setStatusCode(500);

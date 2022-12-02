@@ -11,6 +11,7 @@
 package net.splitcells.dem.environment.resource;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -38,6 +39,8 @@ public final class Console extends ResourceOptionI<Sender<String>> {
 
     public Console() {
         super(() -> {
+            final var systemOutSender = stringSenderWithoutClosing(System.out);
+
             if (environment().config().configValue(IsEchoToFile.class)) {
                 var consolePath
                         = Paths.usersStateFiles().resolve("src/main/xml")
@@ -49,15 +52,35 @@ public final class Console extends ResourceOptionI<Sender<String>> {
                                         .replace('.', '/'));
                 createDirectory(consolePath);
                 try {
-                    return stringSender
+                    final var fileOutSender = stringSender
                             (new FileOutputStream
                                     (consolePath.resolve(CONSOLE_FILE_NAME)
                                             .toFile()));
+                    return new Sender<>() {
+
+                        @Override
+                        public void flush() {
+                            systemOutSender.flush();
+                            fileOutSender.flush();
+                        }
+
+                        @Override
+                        public void close() {
+                            systemOutSender.close();
+                            fileOutSender.close();
+                        }
+
+                        @Override
+                        public <R extends ListWA<String>> R append(String arg) {
+                            systemOutSender.append(arg);
+                            return fileOutSender.append(arg);
+                        }
+                    };
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             } else {
-                return stringSenderWithoutClosing(System.out);
+                return systemOutSender;
             }
         });
     }

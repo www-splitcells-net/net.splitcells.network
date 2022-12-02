@@ -76,7 +76,9 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Resource {
             error.withProperty("message", throwable.getMessage());
             {
                 final var stackTraceValue = new java.io.StringWriter();
-                throwable.printStackTrace(new java.io.PrintWriter(stackTraceValue));
+                final var stackTracePrinter = new java.io.PrintWriter(stackTraceValue);
+                throwable.printStackTrace(stackTracePrinter);
+                stackTracePrinter.flush();
                 error.withProperty("stack-trace", stackTraceValue.toString());
             }
             return append(logMessage(error, NO_CONTEXT, LogLevel.CRITICAL));
