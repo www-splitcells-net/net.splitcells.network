@@ -90,7 +90,11 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
                         // TODO HACK
                         if (!isValid) {
                             ++invalidLinkCount;
-                            domsole().append("Invalid link `" + link + "` from `" + requestedPath + "` resolved to `" + resolvedLink + "`.", LogLevel.ERROR);
+                            domsole().append("Invalid link `"
+                                            + link + "` from `"
+                                            + requestedPath + "` resolved to `"
+                                            + resolvedLink + "`."
+                                    , LogLevel.ERROR);
                         }
                         return !isValid;
                     }
@@ -114,7 +118,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
                 , invalidLinkCount);
         logger.commit();
     }
-    
+
     public static String reportPath(String reportName) {
         return RenderingValidatorForHtmlLinks.class.getName().replace('.', '/') + "/" + reportName;
     }
