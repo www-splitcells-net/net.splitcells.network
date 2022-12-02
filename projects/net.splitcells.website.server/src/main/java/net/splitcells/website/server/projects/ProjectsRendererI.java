@@ -81,6 +81,9 @@ public class ProjectsRendererI implements ProjectsRenderer {
     }
 
     private Perspective createLayout() {
+        config.withLayout("<element>This is a placeholder. "
+                + "This is used, so that calling projectsPaths returns a link to the layout."
+                + "</element>");
         {
             final var relevantLayout = perspective(VAL, NATURAL);
             this.relevantProjectsPaths().forEach(p -> extendPerspectiveWithPath(relevantLayout, p));
