@@ -1,1 +1,0 @@
-java -jar nap.jar -h
