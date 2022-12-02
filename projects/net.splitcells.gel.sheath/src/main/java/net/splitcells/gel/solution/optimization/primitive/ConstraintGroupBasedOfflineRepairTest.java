@@ -11,6 +11,7 @@
 package net.splitcells.gel.solution.optimization.primitive;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.type.ForAlls.forAllWithValue;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.Then.then;
@@ -30,7 +32,6 @@ import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimiz
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConstraintGroupBasedOfflineRepairTest {
 
@@ -43,6 +44,9 @@ public class ConstraintGroupBasedOfflineRepairTest {
         final var validValue = 5;
         final var defyingGroupA = then(cost(1));
         final var defyingGroupB = then(cost(1));
+        /**
+         * Needless constraints are added, in order to check, if the correct {@link Constraint} is selected.
+         */
         @SuppressWarnings("unchecked") final var solution
                 = defineProblem()
                 .withDemandAttributes(a, b)
@@ -69,9 +73,6 @@ public class ConstraintGroupBasedOfflineRepairTest {
                                 , list()
                         )
                 .withConstraint
-                /**
-                 * Needless constraints are added, in order to check, if the correct {@link Constraint} is selected.
-                 */
                         (forAll().withChildren
                                 (forAllWithValue(a, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))
@@ -82,19 +83,22 @@ public class ConstraintGroupBasedOfflineRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
+        // Select the first defying group.
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(
-                constraintGroup -> list(constraintGroup.get(6)) // Select the first defying group.
+                constraintGroup -> list(constraintGroup.get(6))
                 , (freeDemandGroups, freedSupplies) -> currentSolution -> {
                     final List<OptimizationEvent> repairs = list();
-                    final int i[] = {0};
+                    final var i = list(0);
                     freeDemandGroups.entrySet().forEach(freeGroup -> {
                         freeGroup.getValue().forEach(freeDemand -> {
+                            final var i2 = i.get(0) + 1;
                             repairs.add(
                                     optimizationEvent(
                                             ADDITION
                                             , freeDemand.toLinePointer()
-                                            , currentSolution.suppliesFree().lines().get(i[0]++).toLinePointer()
+                                            , currentSolution.suppliesFree().lines().get(i2).toLinePointer()
                                     ));
+                            i.set(0, i2);
                         });
                     });
                     return repairs;
@@ -109,15 +113,15 @@ public class ConstraintGroupBasedOfflineRepairTest {
                         .orElseGet(() -> map()))
                 .collect(toList());
         final var testProduct = testSubject.repair(solution, demandClassifications.get(0), list());
-        assertThat(testProduct).hasSize(4);
+        testProduct.requireSizeOf(4);
         final var freeSupplyIndexes = testProduct.stream()
                 .map(optimizationEvent -> optimizationEvent.supply().index())
                 .collect(toList());
-        assertThat(freeSupplyIndexes).contains(7, 8, 9, 10);
+        freeSupplyIndexes.assertEquals(list(7, 8, 9, 10));
         final var demandIndexes = testProduct.stream()
                 .map(optimizationEvent -> optimizationEvent.demand().index())
                 .collect(toList());
-        assertThat(demandIndexes).contains(0, 1, 2, 3);
+        demandIndexes.assertEquals(list(0, 1, 2, 3));
     }
 
     @Test
@@ -160,13 +164,13 @@ public class ConstraintGroupBasedOfflineRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        assertThat(solution.lines()).hasSize(7);
+        solution.lines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA));
-        assertThat(solution.lines()).hasSize(3);
+        solution.lines().requireSizeOf(3);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB));
-        assertThat(solution.lines()).hasSize(1);
+        solution.lines().requireSizeOf(1);
     }
 
     @Test
@@ -209,15 +213,14 @@ public class ConstraintGroupBasedOfflineRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        assertThat(solution.lines()).hasSize(7);
+        solution.lines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);
         final var testProduct = testSubject.demandGrouping
                 (solution.constraint().childrenView().get(3).childrenView().get(0)
                         , solution);
-        assertThat(testProduct).hasSize(1);
-        assertThat(testProduct.values().iterator().next()).hasSize(2);
-        testProduct.values().iterator().next()
-                .forEach(line -> assertThat(line.value(b)).isEqualTo(invalidValueB));
+        testProduct.requireSizeOf(1);
+        testProduct.values().iterator().next().requireSetSizeOf(2);
+        testProduct.values().iterator().next().forEach(line -> requireEquals(line.value(b), invalidValueB));
     }
 }
