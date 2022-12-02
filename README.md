@@ -15,6 +15,8 @@ An overview of the projects can be found [here](https://splitcells.net/net/split
 Some of them are not strictly related to optimization and can be used in other contexts as well.
 [OS State Interface](https://splitcells.net/net/splitcells/os/state/interface/README.html) is the main example of such.
 
+You have your own open source optimization software? How about working together? 
+
 ## Where to start?
 🪧 Get to know the main [features](https://splitcells.net/net/splitcells/network/features.html).
 
