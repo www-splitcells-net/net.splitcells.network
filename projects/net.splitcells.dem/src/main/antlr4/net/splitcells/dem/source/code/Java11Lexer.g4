@@ -70,6 +70,7 @@ lexer grammar Java11Lexer;
 	Brackets_closed: ']';
 	Comma: ',';
 	Equals: '=';
+	Equals_or: '|=';
 	Equals_and: '&=';
 	Extension_Exception: 'extends RuntimeException';
 	Floating_point: [-+]?[0-9]+([_][0-9]+)*([\\.][_0-9]+)?[dflL]?;
