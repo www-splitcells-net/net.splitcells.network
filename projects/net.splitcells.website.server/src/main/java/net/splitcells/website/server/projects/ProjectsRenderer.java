@@ -23,6 +23,17 @@ import java.util.Optional;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public interface ProjectsRenderer {
+    /**
+     * <p>
+     *     Creates all meta info maybe required for rendering.
+     *     This method is called by all rendering methods, that render all files at once, by default,
+     *     except, if otherwise explicitly stated in the arguments.</p>
+     * <p>
+     *     So normally, this method does not have to be called explicitly.
+     *     This is not the case for rendering methods, that only render single paths
+     *     like {@link #render(String)}.
+     * </p>
+     */
     void build();
 
     /**
