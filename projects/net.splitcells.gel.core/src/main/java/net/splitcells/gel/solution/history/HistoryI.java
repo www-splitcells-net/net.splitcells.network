@@ -60,14 +60,13 @@ public class HistoryI implements History {
     private static final String ERROR_HISTORY_DISABLED = "History is disabled.";
     private static final String ERROR_HISTORY_INCONSISTENT = "History is inconsistent.";
 
-    private static final boolean NATURAL_ARGUMENTATION_IS_DISABLED = false;
-
     private final Solution solution;
     private int lastEventId = -1;
     private Allocations allocations;
     private boolean isRegisterEventIsEnabled = false;
     private boolean isHistoryConsistent = false;
     private boolean synchronizes = false;
+    private boolean logNaturalArgumentation = false;
 
     protected HistoryI(Solution solution) {
         allocations = Allocationss.allocations
@@ -93,7 +92,7 @@ public class HistoryI implements History {
                     , completeRating(solution.constraint().rating()));
             metaData.with(AllocationRating.class
                     , allocationRating(solution.constraint().rating(allocationValues)));
-            if (!NATURAL_ARGUMENTATION_IS_DISABLED) {
+            if (logNaturalArgumentation) {
                 final var naturalArgumentation = solution.constraint()
                         .naturalArgumentation(allocationValues, solution.constraint().injectionGroup());
                 if (naturalArgumentation.isPresent()) {
