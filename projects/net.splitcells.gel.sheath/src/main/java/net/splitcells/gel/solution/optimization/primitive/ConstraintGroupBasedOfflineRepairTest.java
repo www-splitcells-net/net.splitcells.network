@@ -91,14 +91,14 @@ public class ConstraintGroupBasedOfflineRepairTest {
                     final var i = list(0);
                     freeDemandGroups.entrySet().forEach(freeGroup -> {
                         freeGroup.getValue().forEach(freeDemand -> {
-                            final var i2 = i.get(0) + 1;
+                            final var i2 = i.get(0);
                             repairs.add(
                                     optimizationEvent(
                                             ADDITION
                                             , freeDemand.toLinePointer()
                                             , currentSolution.suppliesFree().lines().get(i2).toLinePointer()
                                     ));
-                            i.set(0, i2);
+                            i.set(0, i2 + 1);
                         });
                     });
                     return repairs;
