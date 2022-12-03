@@ -580,4 +580,15 @@ public class HistoryI implements History {
     public Object identity() {
         return this;
     }
+
+    @Override
+    public boolean logNaturalArgumentation() {
+        return logNaturalArgumentation;
+    }
+
+    @Override
+    public History withLogNaturalArgumentation(boolean newValue) {
+        logNaturalArgumentation = newValue;
+        return this;
+    }
 }

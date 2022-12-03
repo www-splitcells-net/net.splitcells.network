@@ -119,6 +119,14 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
      */
     boolean isRegisterEventIsEnabled();
 
+    History withLogNaturalArgumentation(boolean logNaturalArgumentation);
+
+    /**
+     * @return Determines whether {@link #lines()} contain {@link MetaDataView} with {@link net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation}.
+     * If set to false, this will improve performance, but the {@link History}
+     */
+    boolean logNaturalArgumentation();
+
     /**
      * @return Number Of Events Since History Start
      */
