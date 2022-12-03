@@ -123,7 +123,8 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
 
     /**
      * @return Determines whether {@link #lines()} contain {@link MetaDataView} with {@link net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation}.
-     * If set to false, this will improve performance, but the {@link History}
+     * If set to false, this will improve performance, but the {@link History} will contain less info.
+     * The default value is false.
      */
     boolean logNaturalArgumentation();
 
