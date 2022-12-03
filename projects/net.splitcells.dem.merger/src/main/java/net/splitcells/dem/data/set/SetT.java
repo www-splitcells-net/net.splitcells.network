@@ -14,6 +14,7 @@ import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.StreamUtils;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -67,5 +68,16 @@ public interface SetT<T> extends Collection<T> {
         if (!isEmpty()) {
             throw executionException("Set should be empty, but has " + size() + " elements instead: " + this);
         }
+    }
+
+    default void requireContentsOf(T... content) {
+        StreamUtils.stream(content).forEach(c -> {
+            if (!contains(c)) {
+                throw executionException("Set should contents in any order, but does not: set="
+                        + this
+                        + ", contents="
+                        + content);
+            }
+        });
     }
 }

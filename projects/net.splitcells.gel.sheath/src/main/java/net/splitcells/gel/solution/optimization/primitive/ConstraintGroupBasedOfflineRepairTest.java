@@ -121,7 +121,7 @@ public class ConstraintGroupBasedOfflineRepairTest {
         final var demandIndexes = testProduct.stream()
                 .map(optimizationEvent -> optimizationEvent.demand().index())
                 .collect(toList());
-        demandIndexes.assertEquals(list(0, 1, 2, 3));
+        demandIndexes.requireContentsOf(0, 1, 2, 3);
     }
 
     @Test
