@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: EPL-2.0 OR MIT
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+set -e
+chmod +x ./bin/*
+export JAVA_VERSION=11 # This is required on FreeBSD, if an older Java version is set as default.
+mvn --settings ../../src/main/xml-pom/net/splitcells/network/build-with-github-snapshot.pom.xml \
+    -Dmaven.repo.local=../../../net.splitcells.network.m2/src/main/m2 \
+     --offline \
+    clean install
