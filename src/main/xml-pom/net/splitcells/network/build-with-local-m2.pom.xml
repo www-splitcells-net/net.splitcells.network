@@ -1,0 +1,25 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR MIT
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <activeProfiles>
+        <activeProfile>maven-central</activeProfile>
+    </activeProfiles>
+    <profiles>
+        <profile>
+            <id>maven-central</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+    <!-- Remove this as needed. Use freshly created .m2 repo in order to test, if everything can be downloaded, by avoiding cache on local computer. -->
+    <localRepository>../net.splitcells.network.m2/src/main/m2</localRepository>
+</settings>
