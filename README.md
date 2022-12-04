@@ -121,6 +121,8 @@ Project Cluster
   * [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
   * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) is currently used only for continuous integration (CI).
   * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network) is used mainly for writing articles and web rendering.
+    It's CI pipeline is also used with the repo `net.splitcells.network.m2`, in order to ensure,
+    that this project can be build offline and without the user's local Maven m2 repo.
 ## Service Tasks And Projects
 Tasks that are being worked cyclically,
 and probably will never be finished.
