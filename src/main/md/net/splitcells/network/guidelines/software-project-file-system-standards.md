@@ -122,6 +122,7 @@ Following file formats are explicitly supported, but any formats can be used:
 * `src/main/css`
 * `src/main/java`
 * `src/main/hugo.md`
+* `src/main/m2`
 * `src/main/md`
 * `src/main/null`
 * `src/main/sh`
