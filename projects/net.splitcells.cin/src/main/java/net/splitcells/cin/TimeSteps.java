@@ -13,16 +13,13 @@ package net.splitcells.cin;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
@@ -47,7 +44,11 @@ public class TimeSteps implements Rater {
     }
 
     public static Rater timeSteps(Attribute<Integer> timeAttribute) {
-        return new TimeSteps(timeAttribute);
+        return new TimeSteps(timeAttribute, true);
+    }
+
+    public static Rater timeSteps(Attribute<Integer> timeAttribute, boolean isEven) {
+        return new TimeSteps(timeAttribute, isEven);
     }
 
     private final Attribute<Integer> timeAttribute;
@@ -57,9 +58,14 @@ public class TimeSteps implements Rater {
     private final Map<Integer, GroupId> timeToPreviousTimeGroup = map();
 
     private final GroupId noTimeStepGroup = group(NO_TIME_STEP_GROUP);
+    /**
+     * Determines whether the start time of each time step {@link GroupId} is even or odd.
+     */
+    private final boolean isStartTimeEven;
 
-    private TimeSteps(Attribute<Integer> timeAttribute) {
+    private TimeSteps(Attribute<Integer> timeAttribute, boolean isStartTimeEven) {
         this.timeAttribute = timeAttribute;
+        this.isStartTimeEven = isStartTimeEven;
     }
 
     @Override
@@ -82,8 +88,13 @@ public class TimeSteps implements Rater {
         final RatingEvent rating = ratingEvent();
         final var timeValue = addition.value(LINE).value(timeAttribute);
         final var timeSpanModulus = modulus(timeValue, 2);
-        final var isTimeValueStart = timeSpanModulus == 0;
         final int startTime;
+        final boolean isTimeValueStart;
+        if (isStartTimeEven) {
+            isTimeValueStart = timeSpanModulus == 0;
+        } else {
+            isTimeValueStart = timeSpanModulus == 1;
+        }
         if (isTimeValueStart) {
             startTime = timeValue;
         } else {
@@ -109,7 +120,7 @@ public class TimeSteps implements Rater {
                     .lookup(l -> l.value(timeAttribute).equals(endTime))
                     .isPresent();
             if (startTimePresent && endTimePresent) {
-                final var timeStep = timeToPreviousTimeGroup.computeIfAbsent(timeValue, x -> group(timeStepId(x - 1, x)));
+                final var timeStep = timeToPreviousTimeGroup.computeIfAbsent(startTime, x -> group(timeStepId(x, x + 1)));
                 final var localRating = localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
