@@ -37,7 +37,6 @@ public class TimeStepsTest {
     @Test
     public void testTimeStepsDetails() {
         final var time = attribute(Integer.class, "time");
-        final var value = attribute(Integer.class, "value");
         final var testSubject = defineProblem("testTimeSteps")
                 .withDemandAttributes(time)
                 .withDemands(list(
@@ -46,12 +45,12 @@ public class TimeStepsTest {
                         , list(2)
                         , list(3)
                 ))
-                .withSupplyAttributes(value)
+                .withSupplyAttributes()
                 .withSupplies(list(
-                        list(0)
-                        , list(0)
-                        , list(0)
-                        , list(0)
+                        list()
+                        , list()
+                        , list()
+                        , list()
                 ))
                 .withConstraint(c -> {
                     c.forAll(timeSteps(time));
