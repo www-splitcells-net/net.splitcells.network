@@ -35,7 +35,7 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearIni
 public class TimeStepsTest {
 
     @Test
-    public void testTimeStepsDetails() {
+    public void testTimeEvenSteps() {
         final var time = attribute(Integer.class, "time");
         final var testSubject = defineProblem("testTimeSteps")
                 .withDemandAttributes(time)
@@ -82,6 +82,44 @@ public class TimeStepsTest {
                         , timeStepId(0, 1)
                         , timeStepId(2, 3)
                         , timeStepId(2, 3)));
+    }
+
+    @Test
+    public void testTimeOddSteps() {
+        final var time = attribute(Integer.class, "time");
+        final var testSubject = defineProblem("testTimeSteps")
+                .withDemandAttributes(time)
+                .withDemands(list(
+                        list(0)
+                        , list(1)
+                        , list(2)
+                        , list(3)
+                ))
+                .withSupplyAttributes()
+                .withSupplies(list(
+                        list()
+                        , list()
+                        , list()
+                        , list()
+                ))
+                .withConstraint(c -> {
+                    c.forAll(timeSteps(time, false));
+                    return c;
+                })
+                .toProblem()
+                .asSolution();
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .forEach(g -> requireEquals(g.name().get(), NO_TIME_STEP_GROUP));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .forEach(g -> requireEquals(g.name().get(), NO_TIME_STEP_GROUP));
     }
 
     @Tag(EXPERIMENTAL_TEST)
