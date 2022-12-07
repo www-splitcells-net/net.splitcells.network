@@ -84,6 +84,11 @@ public final class MathUtils {
         return nextResults;
     }
 
+    /**
+     * @param dividend This is the dividend of the modulus.
+     * @param divisor This is the divisor of the modulus.
+     * @return {@code dividend mod divisor}
+     */
     public static int modulus(int dividend, int divisor) {
         return Math.floorMod(dividend, divisor);
     }
