@@ -16,6 +16,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
@@ -30,6 +31,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.GroupId.group;
@@ -79,22 +81,59 @@ public class TimeSteps implements Rater {
     public RatingEvent ratingAfterAddition(Table linesOfGroup, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final RatingEvent rating = ratingEvent();
         final var timeValue = addition.value(LINE).value(timeAttribute);
-        final var afterFirstTimeAddition = linesOfGroup
-                .columnView(LINE)
-                .lookup(l -> l.value(timeAttribute).equals(timeValue))
-                .size() > 1;
-        if (afterFirstTimeAddition) {
-            rateTimesAfterFirstAddition(linesOfGroup, addition, children, timeValue, rating);
-            rateTimesAfterFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
+        final var timeSpanModulus = modulus(timeValue, 2);
+        final var isTimeValueStart = timeSpanModulus == 0;
+        final int startTime;
+        if (isTimeValueStart) {
+            startTime = timeValue;
         } else {
-            boolean additionInTimeStep = rateTimesFirstAddition(linesOfGroup, addition, children, timeValue, rating);
-            additionInTimeStep |= rateTimesFirstAddition(linesOfGroup, addition, children, timeValue + 1, rating);
-            if (!additionInTimeStep) {
+            startTime = timeValue - 1;
+        }
+        final var endTime = startTime + 1;
+        final var afterFirstTimeAddition = timeToPreviousTimeGroup.containsKey(startTime);
+        if (afterFirstTimeAddition) {
+            final var isPreviousGroupPresent = timeToPreviousTimeGroup.containsKey(timeValue);
+            if (isPreviousGroupPresent) {
+                final var previousGroup = timeToPreviousTimeGroup.get(timeValue);
                 final var localRating = localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
-                        .withResultingGroupId(noTimeStepGroup);
+                        .withResultingGroupId(previousGroup);
                 rating.additions().put(addition, localRating);
+            }
+        } else {
+            final var startTimePresent = linesOfGroup.columnView(LINE)
+                    .lookup(l -> l.value(timeAttribute).equals(startTime))
+                    .isPresent();
+            final var endTimePresent = linesOfGroup.columnView(LINE)
+                    .lookup(l -> l.value(timeAttribute).equals(endTime))
+                    .isPresent();
+            if (startTimePresent && endTimePresent) {
+                final var timeStep = timeToPreviousTimeGroup.computeIfAbsent(timeValue, x -> group(timeStepId(x - 1, x)));
+                final var localRating = localRating()
+                        .withPropagationTo(children)
+                        .withRating(noCost())
+                        .withResultingGroupId(timeStep);
+                rating.additions().put(addition, localRating);
+                linesOfGroup.columnView(LINE)
+                        .lookup(l -> l.value(timeAttribute).equals(startTime))
+                        .linesStream()
+                        .filter(l -> l.index() != addition.index())
+                        .forEach(l -> {
+                            rating.updateRating_withReplacement(l, localRating);
+                        });
+                linesOfGroup.columnView(LINE)
+                        .lookup(l -> l.value(timeAttribute).equals(endTime))
+                        .linesStream()
+                        .filter(l -> l.index() != addition.index())
+                        .forEach(l -> {
+                            rating.updateRating_withReplacement(l, localRating);
+                        });
+            } else {
+                rating.additions().put(addition, localRating()
+                        .withPropagationTo(children)
+                        .withRating(noCost())
+                        .withResultingGroupId(noTimeStepGroup));
             }
         }
         return rating;
@@ -114,51 +153,5 @@ public class TimeSteps implements Rater {
             timeToPreviousTimeGroup.requireEmpty();
         }
         return ratingEvent();
-    }
-
-    private void rateTimesAfterFirstAddition(Table linesOfGroup, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
-        final var isPreviousGroupPresent = timeToPreviousTimeGroup.containsKey(timeValue);
-        if (isPreviousGroupPresent) {
-            final var previousGroup = timeToPreviousTimeGroup.get(timeValue);
-            final var localRating = localRating()
-                    .withPropagationTo(children)
-                    .withRating(noCost())
-                    .withResultingGroupId(previousGroup);
-            rating.additions().put(addition, localRating);
-        }
-    }
-
-
-    private boolean rateTimesFirstAddition(Table lines, Line addition, List<Constraint> children, int timeValue, RatingEvent rating) {
-        final var previousTimePresent = lines.columnView(LINE)
-                .lookup(l -> l.value(timeAttribute).equals(timeValue - 1))
-                .isPresent();
-        final var currentTimePresent = lines.columnView(LINE)
-                .lookup(l -> l.value(timeAttribute).equals(timeValue))
-                .isPresent();
-        final var createNewGroup = previousTimePresent && currentTimePresent;
-        if (createNewGroup) {
-            final var timeStep = timeToPreviousTimeGroup.computeIfAbsent(timeValue, x -> group(timeStepId(x - 1, x)));
-            final var localRating = localRating()
-                    .withPropagationTo(children)
-                    .withRating(noCost())
-                    .withResultingGroupId(timeStep);
-            rating.additions().put(addition, localRating);
-            lines.columnView(LINE)
-                    .lookup(l -> l.value(timeAttribute).equals(timeValue))
-                    .linesStream()
-                    .filter(l -> l.index() != addition.index())
-                    .forEach(l -> {
-                        rating.updateRating_withReplacement(l, localRating);
-                    });
-            lines.columnView(LINE)
-                    .lookup(l -> l.value(timeAttribute).equals(timeValue - 1))
-                    .linesStream()
-                    .filter(l -> l.index() != addition.index())
-                    .forEach(l -> {
-                        rating.updateRating_withReplacement(l, localRating);
-                    });
-        }
-        return createNewGroup;
     }
 }

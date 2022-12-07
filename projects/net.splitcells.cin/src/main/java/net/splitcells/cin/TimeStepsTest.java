@@ -41,13 +41,15 @@ public class TimeStepsTest {
         final var testSubject = defineProblem("testTimeSteps")
                 .withDemandAttributes(time)
                 .withDemands(list(
-                        list(1)
+                        list(0)
+                        , list(1)
                         , list(2)
                         , list(3)
                 ))
                 .withSupplyAttributes(value)
                 .withSupplies(list(
                         list(0)
+                        , list(0)
                         , list(0)
                         , list(0)
                 ))
@@ -68,7 +70,19 @@ public class TimeStepsTest {
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), timeStepId(1, 2)));
+                .forEach(g -> requireEquals(g.name().get(), timeStepId(0, 1)));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(timeStepId(0, 1)
+                        , timeStepId(0, 1)
+                        , timeStepId(2, 3)
+                        , timeStepId(2, 3)));
     }
 
     @Tag(EXPERIMENTAL_TEST)
