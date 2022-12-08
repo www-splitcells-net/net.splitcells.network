@@ -35,6 +35,10 @@ import net.splitcells.gel.data.table.LinePointer;
 public interface Allocations extends Database, AllocationsLiveView {
     Line allocate(Line demand, Line supply);
 
+    default void deallocate(Line demand, Line supply) {
+        allocationsOf(demand, supply).forEach(this::remove);
+    }
+
     default Set<Line> allocationsOf(Line demand, Line supply) {
         final var allocationsOf = allocationsOfSupply(supply);
         return allocationsOfDemand(demand)
