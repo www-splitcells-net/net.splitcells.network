@@ -53,9 +53,9 @@ public class TimeSteps implements Rater {
 
     private final Attribute<Integer> timeAttribute;
     /**
-     * The keys are the end time of each group.
+     * The keys are the start time of each group.
      */
-    private final Map<Integer, GroupId> timeToPreviousTimeGroup = map();
+    private final Map<Integer, GroupId> startTimeToTimeStepGroup = map();
 
     private final GroupId noTimeStepGroup = group(NO_TIME_STEP_GROUP);
     /**
@@ -101,17 +101,13 @@ public class TimeSteps implements Rater {
             startTime = timeValue - 1;
         }
         final var endTime = startTime + 1;
-        final var afterFirstTimeAddition = timeToPreviousTimeGroup.containsKey(startTime);
+        final var afterFirstTimeAddition = startTimeToTimeStepGroup.containsKey(startTime);
         if (afterFirstTimeAddition) {
-            final var isPreviousGroupPresent = timeToPreviousTimeGroup.containsKey(timeValue);
-            if (isPreviousGroupPresent) {
-                final var previousGroup = timeToPreviousTimeGroup.get(timeValue);
-                final var localRating = localRating()
-                        .withPropagationTo(children)
-                        .withRating(noCost())
-                        .withResultingGroupId(previousGroup);
-                rating.additions().put(addition, localRating);
-            }
+            final var localRating = localRating()
+                    .withPropagationTo(children)
+                    .withRating(noCost())
+                    .withResultingGroupId(startTimeToTimeStepGroup.get(startTime));
+            rating.additions().put(addition, localRating);
         } else {
             final var startTimePresent = linesOfGroup.columnView(LINE)
                     .lookup(l -> l.value(timeAttribute).equals(startTime))
@@ -120,7 +116,7 @@ public class TimeSteps implements Rater {
                     .lookup(l -> l.value(timeAttribute).equals(endTime))
                     .isPresent();
             if (startTimePresent && endTimePresent) {
-                final var timeStep = timeToPreviousTimeGroup.computeIfAbsent(startTime, x -> group(timeStepId(x, x + 1)));
+                final var timeStep = startTimeToTimeStepGroup.computeIfAbsent(startTime, x -> group(timeStepId(x, x + 1)));
                 final var localRating = localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
