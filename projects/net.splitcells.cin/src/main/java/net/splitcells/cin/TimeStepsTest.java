@@ -129,6 +129,16 @@ public class TimeStepsTest {
                 .assertEquals(list(NO_TIME_STEP_GROUP
                         , timeStepId(1, 2)
                         , timeStepId(1, 2)));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(NO_TIME_STEP_GROUP
+                        , timeStepId(1, 2)
+                        , timeStepId(1, 2)
+                        , NO_TIME_STEP_GROUP));
     }
 
     @Tag(EXPERIMENTAL_TEST)
