@@ -120,10 +120,14 @@ public class TimeStepsTest {
                         , list(1)
                         , list(2)
                         , list(3)
+                        , list(4)
+                        , list(5)
                 ))
                 .withSupplyAttributes()
                 .withSupplies(list(
                         list()
+                        , list()
+                        , list()
                         , list()
                         , list()
                         , list()
@@ -164,6 +168,29 @@ public class TimeStepsTest {
                 .assertEquals(list(NO_TIME_STEP_GROUP
                         , timeStepId(1, 2)
                         , timeStepId(1, 2)
+                        , NO_TIME_STEP_GROUP));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(NO_TIME_STEP_GROUP
+                        , timeStepId(1, 2)
+                        , timeStepId(1, 2)
+                        , timeStepId(3, 4)
+                        , timeStepId(3, 4)));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(NO_TIME_STEP_GROUP
+                        , timeStepId(1, 2)
+                        , timeStepId(1, 2)
+                        , timeStepId(3, 4)
+                        , timeStepId(3, 4)
                         , NO_TIME_STEP_GROUP));
     }
 
