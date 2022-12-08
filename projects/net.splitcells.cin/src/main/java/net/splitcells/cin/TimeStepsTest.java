@@ -45,10 +45,12 @@ public class TimeStepsTest {
                         , list(1)
                         , list(2)
                         , list(3)
+                        , list(4)
                 ))
                 .withSupplyAttributes()
                 .withSupplies(list(
                         list()
+                        , list()
                         , list()
                         , list()
                         , list()
@@ -94,6 +96,18 @@ public class TimeStepsTest {
                         , timeStepId(0, 1)
                         , timeStepId(2, 3)
                         , timeStepId(2, 3)));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(NO_TIME_STEP_GROUP
+                        , timeStepId(0, 1)
+                        , timeStepId(0, 1)
+                        , timeStepId(2, 3)
+                        , timeStepId(2, 3)
+                        , NO_TIME_STEP_GROUP));
     }
 
     @Test
