@@ -70,7 +70,7 @@ public class RaterBasedOnGrouping implements Rater {
 
     @Override
     public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
-        return ratingEvent();
+        return grouping.rating_before_removal(lines, removal, children, ratingsBeforeRemoval);
     }
 
     @Override
