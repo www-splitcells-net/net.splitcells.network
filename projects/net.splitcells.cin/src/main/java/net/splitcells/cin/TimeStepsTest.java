@@ -153,6 +153,13 @@ public class TimeStepsTest {
                 .values()
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(NO_TIME_STEP_GROUP));
+        testSubject.deallocate(testSubject.demandsUsed().line(0),
+                testSubject.suppliesUsed().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list());
     }
 
     @Test
@@ -282,6 +289,13 @@ public class TimeStepsTest {
                 .values()
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(NO_TIME_STEP_GROUP));
+        testSubject.deallocate(testSubject.demandsUsed().line(0)
+                , testSubject.suppliesUsed().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list());
     }
 
     @Tag(EXPERIMENTAL_TEST)
