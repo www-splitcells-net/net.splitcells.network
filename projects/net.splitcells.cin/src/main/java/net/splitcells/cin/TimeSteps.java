@@ -148,17 +148,47 @@ public class TimeSteps implements Rater {
 
     @Override
     public RatingEvent rating_before_removal(Table linesOfGroup, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+        final RatingEvent rating = ratingEvent();
         final var timeValue = removal.value(LINE).value(timeAttribute);
+        final var timeSpanModulus = modulus(timeValue, 2);
+        final int startTime;
+        final boolean isTimeValueStart;
+        if (isStartTimeEven) {
+            isTimeValueStart = timeSpanModulus == 0;
+        } else {
+            isTimeValueStart = timeSpanModulus == 1;
+        }
+        if (isTimeValueStart) {
+            startTime = timeValue;
+        } else {
+            startTime = timeValue - 1;
+        }
         final var removalOfLastTimeElement = linesOfGroup
                 .columnView(LINE)
                 .lookup(l -> l.value(timeAttribute).equals(timeValue))
                 .size() == 1;
         if (removalOfLastTimeElement) {
-            timeToPreviousTimeGroup.remove(timeValue);
+            startTimeToTimeStepGroup.remove(startTime);
+            linesOfGroup
+                    .columnView(LINE)
+                    .lookup(l -> l.value(timeAttribute).equals(startTime))
+                    .linesStream()
+                    .forEach(l -> rating.updateRating_withReplacement(l, localRating()
+                            .withPropagationTo(children)
+                            .withRating(noCost())
+                            .withResultingGroupId(noTimeStepGroup)));
+            linesOfGroup
+                    .columnView(LINE)
+                    .lookup(l -> l.value(timeAttribute).equals(startTime + 1))
+                    .linesStream()
+                    .forEach(l -> rating.updateRating_withReplacement(l, localRating()
+                            .withPropagationTo(children)
+                            .withRating(noCost())
+                            .withResultingGroupId(noTimeStepGroup)));
         }
         if (ENFORCING_UNIT_CONSISTENCY && linesOfGroup.size() == 1) {
-            timeToPreviousTimeGroup.requireEmpty();
+            startTimeToTimeStepGroup.requireEmpty();
         }
-        return ratingEvent();
+        return rating;
     }
 }

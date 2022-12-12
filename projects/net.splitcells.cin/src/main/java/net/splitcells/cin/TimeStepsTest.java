@@ -108,6 +108,51 @@ public class TimeStepsTest {
                         , timeStepId(2, 3)
                         , timeStepId(2, 3)
                         , NO_TIME_STEP_GROUP));
+        testSubject.deallocate(testSubject.demandsUsed().line(0),
+                testSubject.suppliesUsed().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(timeStepId(0, 1)
+                        , timeStepId(0, 1)
+                        , timeStepId(2, 3)
+                        , timeStepId(2, 3)
+                        , NO_TIME_STEP_GROUP));
+        testSubject.deallocate(testSubject.demandsUsed().line(0),
+                testSubject.suppliesUsed().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(NO_TIME_STEP_GROUP
+                        , timeStepId(2, 3)
+                        , timeStepId(2, 3)
+                        , NO_TIME_STEP_GROUP));
+        testSubject.deallocate(testSubject.demandsUsed().line(0),
+                testSubject.suppliesUsed().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(timeStepId(2, 3)
+                        , timeStepId(2, 3)
+                        , NO_TIME_STEP_GROUP));
+        testSubject.deallocate(testSubject.demandsUsed().line(0),
+                testSubject.suppliesUsed().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(NO_TIME_STEP_GROUP
+                        , NO_TIME_STEP_GROUP));
+        testSubject.deallocate(testSubject.demandsUsed().line(0),
+                testSubject.suppliesUsed().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(NO_TIME_STEP_GROUP));
     }
 
     @Test
