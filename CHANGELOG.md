@@ -1,23 +1,8 @@
 # Changelog
-The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
-Tickets that create lasting requirements can be found [here](./src/main/md/net/splitcells/network/tickets/).
-
-Tickets are referenced with a hashtag and prefix in order to indicate the
-server, that hosts the ticket:
-for example `#g1` stands for the first Github issue and `#s1` for the first
-sourcehut issue.
-Ticket references without a prefix are probably hosted on
-[Github](https://github.com/www-splitcells-net/net.splitcells.network/issues).
-
-Prefix To Server Dictionary:
-* g = Github: [https://github.com/www-splitcells-net/net.splitcells.network/issues](https://github.com/www-splitcells-net/net.splitcells.network/issues)
-* s = sourcehut: [https://todo.sr.ht/~splitcells-net/net.splitcells.network](https://todo.sr.ht/~splitcells-net/net.splitcells.network)
- 
-Ticket information located on platforms and not in the repository are
-considered throw away information.
-Links to such platforms may or may not be valid.
-
-Releases are done every time an important ticket is completed.
+* The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
+* Tickets that create lasting requirements can be found [here](./src/main/md/net/splitcells/network/tickets/).
+* The ticket reference scheme can be looked up [here](./src/main/md/net/splitcells/network/tickets/index.md).
+* Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
 * **2022-11-27 \#183**: The property `test.groups` is now used in Maven to determine,

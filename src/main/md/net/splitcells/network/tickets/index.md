@@ -36,13 +36,20 @@ if a versioned documents of the tickets are required or not.
 
 ## Ticket Numbering
 
-This repo determines how tickets are numbered.
-Ticket numbers already used in this repo therefore cannot be used for new
-tickets.
-There is no dedicated ticketing system of truth also currently Github
-is being used for this job.
-The reason for this, is the fact that there is no real portable shared
-ticketing file standard.
+Tickets are referenced with a hashtag and prefix in order to indicate the
+server, that hosts the ticket:
+for example `#g1` stands for the first Github issue and `#s1` for the first
+sourcehut issue.
+Ticket references without a prefix are probably hosted on
+[Github](https://github.com/www-splitcells-net/net.splitcells.network/issues).
+
+Prefix To Server Dictionary:
+* g = Github: [https://github.com/www-splitcells-net/net.splitcells.network/issues](https://github.com/www-splitcells-net/net.splitcells.network/issues)
+* s = sourcehut: [https://todo.sr.ht/~splitcells-net/net.splitcells.network](https://todo.sr.ht/~splitcells-net/net.splitcells.network)
+
+Ticket information located on platforms and not in the repository are
+considered throw away information.
+Links to such platforms may or may not be valid.
 
 ## Content Guideline
 
