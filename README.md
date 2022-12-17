@@ -110,9 +110,9 @@ Project Cluster
     of `net.splitcells.os.state.interface`.
 ## Social Contacts
 * [Main Blog](https://splitcells-net.srht.site/)
-* Livestreaming via [Youtube](https://www.youtube.com/channel/UCyHsL0W1QKPOc7iUkJe3mAA) 
-* Messaging via [Mastadon/Fosstodon](https://fosstodon.org/@splitcells)
-* Blogging with Images on [Medium](https://martins-avots.medium.com/)
+* Livestreaming Via [Youtube](https://www.youtube.com/channel/UCyHsL0W1QKPOc7iUkJe3mAA) 
+* Messaging Via English [Mastodon/Fosstodon](https://fosstodon.org/@splitcells) 
+* Blogging With Images On [Medium](https://martins-avots.medium.com/)
 ## Infrastructure
 * Rendered Documentation via [a personal website](https://splitcells.net/net/splitcells/network/README.html)
 * Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) and
