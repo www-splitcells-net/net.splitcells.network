@@ -33,7 +33,10 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 
 /**
  * TODO Log all used {@link LogMessage#path()} to dedicated file.
+ *
+ * TODO REMOVE This class seems to be a mess and was only used for tests.
  */
+@Deprecated
 @JavaLegacyArtifact
 public class UiRouter implements Ui {
 
