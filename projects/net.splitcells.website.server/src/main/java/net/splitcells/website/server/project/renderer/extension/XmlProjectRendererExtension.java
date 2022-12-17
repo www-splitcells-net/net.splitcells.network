@@ -21,7 +21,6 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 
-import javax.xml.stream.events.Namespace;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -45,7 +44,7 @@ import static net.splitcells.website.server.project.RenderingResult.renderingRes
 public class XmlProjectRendererExtension implements ProjectRendererExtension {
 
     private static final String MARKER = "834ZT09345ZHGF09H3457G90H34";
-    protected static final Pattern XML_OPENING_ELEMENT = Pattern.compile("^([\\n\\r\\s]*)(<[a-zA-Z][a-zA-Z0-9-])(\\s*[\\sa-zA-Z0-9-=\\\":/[.\\n\\r]]*)(>).*");
+    public static final Pattern XML_OPENING_ELEMENT = Pattern.compile("^([\\n\\r\\s]*)(<[a-zA-Z][a-zA-Z0-9-])(\\s*[\\sa-zA-Z0-9-=\\\":/[.\\n\\r]]*)(>).*");
     private static final Pattern XML_CLOSING_ELEMENT = Pattern.compile("(\\n\\r.*<)([a-zA-Z][a-zA-Z0-9-]*)([\\n\\r\\s]*[a-zA-Z0-9-=\\\":/\\.\\n\\r]*)(>[\\n\\r\\s]*)$");
 
     public static XmlProjectRendererExtension xmlRenderer() {
