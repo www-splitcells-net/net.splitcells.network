@@ -46,20 +46,6 @@ public class FileStructureTransformer {
     private final String transformerXsl;
     private final Function<String, Optional<String>> config;
 
-    /* TODO REMOVE by 2022
-    @Deprecated
-    public static void main(String... args) throws IOException {
-        final var articles = java.nio.file.Paths.get(System.getProperty("user.home")
-                + "/Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/src/main/xml/net/splitcells/martins/avots/website/articles");
-        Files.list(articles).forEach(a -> {
-            final var folder = articles.resolve(a.getFileName().toString().split("-")[0])
-                    .resolve(a.getFileName().toString().split("-")[1])
-                    .resolve(a.getFileName().toString().split("-")[2]);
-            generateFolderPath(folder);
-            Paths.copyFileFrom(a, folder.resolve(a.getFileName().toString().substring(11)));
-        });
-    }*/
-
     private FileStructureTransformer(Path fileStructureRoot
             , Path xslLibs
             , String transformerXsl
