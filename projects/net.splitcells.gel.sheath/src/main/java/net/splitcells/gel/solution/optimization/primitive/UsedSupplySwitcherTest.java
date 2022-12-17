@@ -17,10 +17,11 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
+import static net.splitcells.dem.utils.random.Randomness.listBasedRandomness;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -163,10 +164,10 @@ public class UsedSupplySwitcherTest {
         final var testSolution = defineProblem("testSwitchMultipleStepsInOptimization")
                 .withDemandAttributes(A)
                 .withDemands(
-                        range(0, variables).boxed().map(i -> Lists.<Object>list(i)).collect(Lists.toList()))
+                        range(0, variables).boxed().map(i -> Lists.<Object>list(i)).collect(toList()))
                 .withSupplyAttributes(B)
                 .withSupplies(
-                        range(0, variables).boxed().map(i -> Lists.<Object>list(i)).collect(Lists.toList()))
+                        range(0, variables).boxed().map(i -> Lists.<Object>list(i)).collect(toList()))
                 .withConstraint(Then.then(constantRater(cost(1))))
                 .toProblem()
                 .asSolution();
@@ -178,11 +179,7 @@ public class UsedSupplySwitcherTest {
                 assertThat(testSolution.demandsFree().lines()).isEmpty();
                 assertThat(testSolution.suppliesFree().lines()).isEmpty();
             }
-            final var randomness = mock(Randomness.class);
-            doAnswer(returnsElementsOf(range(0, variables).boxed().collect(toList())))
-                    .when(randomness)
-                    .integer(any(), any());
-            testSolution.optimizeOnce(usedSupplySwitcher(randomness, stepCount));
+            testSolution.optimizeOnce(usedSupplySwitcher(listBasedRandomness(range(0, variables).boxed().iterator()), stepCount));
             assertThat(testSolution.history().size()).isEqualTo(variables + stepCount * 4);
         });
     }
