@@ -6,6 +6,10 @@
          xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
          xmlns:n="http://splitcells.net/natural.xsd"
          xmlns:e="http://splitcells.net/sen.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR MIT
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
     <optimization>
         <scheduling>
             <current>Establish test coverage report.</current>
