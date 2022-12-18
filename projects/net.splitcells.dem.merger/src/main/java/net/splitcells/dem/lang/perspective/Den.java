@@ -15,6 +15,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class Den {
 
@@ -55,12 +56,15 @@ public class Den {
             return perspective;
         }
         final var next = path.remove(0);
-        return subtree(perspective.children().stream()
-                        .filter(child -> child.nameIs(NameSpaces.VAL, NameSpaces.DEN))
-                        .filter(child -> child.propertyInstances(NameSpaces.NAME, NameSpaces.DEN).stream()
-                                .anyMatch(property -> property.value().get().name().equals(next)))
-                        .findFirst()
-                        .orElseThrow()
+        final var fittingChild = perspective.children().stream()
+                .filter(child -> child.nameIs(NameSpaces.VAL, NameSpaces.DEN))
+                .filter(child -> child.propertyInstances(NameSpaces.NAME, NameSpaces.DEN).stream()
+                        .anyMatch(property -> property.value().get().name().equals(next)))
+                .findFirst();
+        if (fittingChild.isEmpty()) {
+            throw executionException("Looking for `" + next + "` but only found `" + perspective.children() + "`.");
+        }
+        return subtree(fittingChild.get()
                 , path);
     }
 }
