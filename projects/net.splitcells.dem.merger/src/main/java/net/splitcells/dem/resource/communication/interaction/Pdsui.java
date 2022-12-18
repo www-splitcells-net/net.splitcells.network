@@ -36,7 +36,6 @@ public class Pdsui implements Ui {
     private Pdsui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
         this.output = output;
         this.messageFilter = messageFilter;
-        this.output.append("<start>");
     }
 
     @Override
@@ -82,7 +81,6 @@ public class Pdsui implements Ui {
 
     @Override
     public void close() {
-        output.append("</start>");
         output.close();
     }
 
