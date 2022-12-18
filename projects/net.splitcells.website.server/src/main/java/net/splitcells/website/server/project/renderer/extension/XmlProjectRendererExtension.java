@@ -18,12 +18,15 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import org.w3c.dom.Document;
 
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.resource.Console.CONSOLE_FILE_NAME;
@@ -33,6 +36,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.resource.Paths.readString;
+import static net.splitcells.dem.utils.StreamUtils.emptyStream;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
@@ -70,49 +74,54 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                     .withLocalPathContext(config.layoutPerspective()
                             .map(l -> subtree(l, pathFolder)));
             if (is_file(xmlFile)) {
-                final var xmlContent = readString(xmlFile);
-                // TODO This is probably a hack.
-                if (CONSOLE_FILE_NAME.equals(xmlFile.getFileName().toString())) {
-                    final var openingMatch = XML_OPENING_ELEMENT.matcher(xmlContent);
-                    final var closingMatch = XML_CLOSING_ELEMENT.matcher(xmlContent);
-                    if (openingMatch.matches()) {
-                        if (!closingMatch.matches()) {
-                            System.out.println("Incomplete xml found: " + path);
-                        }
-                    }
-                }
-                final var document = Xml.parse(xmlContent);
-                if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
-                    final var metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.SEW)
-                            .orElseGet(() -> {
-                                final var newMeta = document.createElementNS(NameSpaces.SEW.uri(), "meta");
-                                document.getDocumentElement().appendChild(newMeta);
-                                return newMeta;
-                            });
-                    if (optionalDirectChildElementsByName(document.getDocumentElement(), "path", NameSpaces.SEW).isEmpty()) {
-                        final var pathElement = document.createElementNS(NameSpaces.SEW.uri(), "path");
-                        pathElement.appendChild(document.createTextNode(path));
-                        metaElement.appendChild(pathElement);
-                    }
-                    metaElement.appendChild(document.createTextNode(MARKER));
-                    final String documentString;
-                    if (layoutConfig.localPathContext().isPresent()) {
-                        documentString = Xml.toDocumentString(document)
-                                .replace(MARKER, perspective("path.context", NameSpaces.NATURAL)
-                                        .withChild(layoutConfig.localPathContext().get())
-                                        .toHtmlString());
-                    } else {
-                        documentString = Xml.toDocumentString(document);
-                    }
-                    return Optional.of(renderingResult(projectRenderer.renderRawXml(documentString, config).get()
-                            , HTML_TEXT.codeName()));
-                } else {
-                    return Optional.of(renderingResult(projectRenderer.renderXml(xmlContent, layoutConfig, config).get()
-                            , HTML_TEXT.codeName()));
+                return renderFile(path, readString(xmlFile), projectRenderer, config, layoutConfig);
+            } else {
+                final var sumXmlFile = projectRenderer
+                        .projectFolder()
+                        .resolve("src/main/sum.xml")
+                        .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
+                if (is_file(sumXmlFile)) {
+                    return renderFile(path, "<start xmlns=\"http://splitcells.net/den.xsd\">" + readString(sumXmlFile) + "</start>", projectRenderer, config, layoutConfig);
                 }
             }
         }
         return Optional.empty();
+    }
+
+    private Optional<RenderingResult> renderFile(String path
+            , String xmlContent
+            , ProjectRenderer projectRenderer
+            , Config config
+            , LayoutConfig layoutConfig) {
+        final var document = Xml.parse(xmlContent);
+        if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
+            final var metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.SEW)
+                    .orElseGet(() -> {
+                        final var newMeta = document.createElementNS(NameSpaces.SEW.uri(), "meta");
+                        document.getDocumentElement().appendChild(newMeta);
+                        return newMeta;
+                    });
+            if (optionalDirectChildElementsByName(document.getDocumentElement(), "path", NameSpaces.SEW).isEmpty()) {
+                final var pathElement = document.createElementNS(NameSpaces.SEW.uri(), "path");
+                pathElement.appendChild(document.createTextNode(path));
+                metaElement.appendChild(pathElement);
+            }
+            metaElement.appendChild(document.createTextNode(MARKER));
+            final String documentString;
+            if (layoutConfig.localPathContext().isPresent()) {
+                documentString = Xml.toDocumentString(document)
+                        .replace(MARKER, perspective("path.context", NameSpaces.NATURAL)
+                                .withChild(layoutConfig.localPathContext().get())
+                                .toHtmlString());
+            } else {
+                documentString = Xml.toDocumentString(document);
+            }
+            return Optional.of(renderingResult(projectRenderer.renderRawXml(documentString, config).get()
+                    , HTML_TEXT.codeName()));
+        } else {
+            return Optional.of(renderingResult(projectRenderer.renderXml(xmlContent, layoutConfig, config).get()
+                    , HTML_TEXT.codeName()));
+        }
     }
 
     @Override
@@ -129,7 +138,21 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                                             (file.getFileName().toString()) + ".html")))
                     .forEach(projectPaths::addAll);
         }
+        projectSumXlPaths(projectRenderer).forEach(projectPaths::addAll);
         return projectPaths;
+    }
+
+    private Stream<Path> projectSumXlPaths(ProjectRenderer projectRenderer) {
+        final var sumXmlFolder = projectRenderer.projectFolder().resolve("src/main").resolve("sum.xml");
+        if (Files.isDirectory(sumXmlFolder)) {
+            return Files.walk_recursively(sumXmlFolder)
+                    .filter(Files::fileExists)
+                    .map(file -> sumXmlFolder.relativize(
+                            file.getParent()
+                                    .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
+                                            (file.getFileName().toString()) + ".html")));
+        }
+        return emptyStream();
     }
 
     @Override
