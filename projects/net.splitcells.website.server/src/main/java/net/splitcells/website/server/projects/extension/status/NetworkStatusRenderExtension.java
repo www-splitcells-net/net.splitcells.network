@@ -167,6 +167,6 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                         + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
                         + config().configValue(HostName.class)
                         + ".csv.html"
-                        + "\">There are increases in the history of the invalid link count.</a></li>");
+                        + "\">The history of invalid link counts is increasing between deployment overall.</a></li>");
     }
 }
