@@ -115,33 +115,13 @@ Project Cluster
 * Blogging With Images On [Medium](https://martins-avots.medium.com/)
 ## Infrastructure
 * Rendered Documentation via [a personal website](https://splitcells.net/net/splitcells/network/README.html)
-* Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) and
-[Sourcehut](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)).
+* Tickets are managed via a [Blog](https://git.sr.ht/~splitcells-net/net.splitcells.network.community.via.hugo), deprecated [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) and
+[Sourcehut's todo](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)).
 * Repository Hosts:
-  * [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
+  * (deprecated) [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
   * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) is currently used only for continuous integration (CI).
   * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network) is used mainly for writing articles and web rendering.
     It's CI pipeline is also used with the repo `net.splitcells.network.m2`, in order to ensure,
     that this project can be build offline and without the user's local Maven m2 repo.
-## Service Tasks And Projects
-Tasks that are being worked cyclically,
-and probably will never be finished.
-* Improve, add or remove features.
-* Foster cooperation and symbiosis.
-  * Migrate inactive tickets into source code repository,
-    so that they each one acts as trigger at one fitting position.
-* Maintain project.
-  * Update dependencies.
-  * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
-  * Improve Test Coverage. See the [Project Status chapter](#project-status).
-* Documentation
-  * Add inspirational quotes to code documentation in order to provide an
-    alternative perspective via metaphors.
-    This is deprecated.
-    See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
-  * Review advertisement, introductions and info linked by README,
-    because that is the primary material for newcomers.
-* Improve compatibility, portability and adaptability.
-* Deploy and execute the software.
 ## Credits
 * [Main Author's Public Key](https://keys.openpgp.org/search?q=F844A8297DEB16D9B9486323A6A6108FC3486F37)
