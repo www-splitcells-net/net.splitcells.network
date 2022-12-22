@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -e
+echo net.splitcells.cin.log
+echo net.splitcells.network.community.via.javadoc
+echo net.splitcells.network.community.git-bug
+echo net.splitcells.network.log
+echo net.splitcells.network.media
+echo net.splitcells.network.repos
+echo net.splitcells.os.state.interface.lib.gpl.2
+echo net.splitcells.os.state.interface.lib.gpl.3
+echo net.splitcells.network.m2
