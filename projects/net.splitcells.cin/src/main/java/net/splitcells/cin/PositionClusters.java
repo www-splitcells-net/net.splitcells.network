@@ -13,6 +13,12 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+/**
+ * Groups all positions of a 2 dimensional space.
+ * Every existing (x, y) coordinate has a corresponding position group.
+ * Every such group also contains every neighbouring position.
+ * This also applies to neighbouring positions only sharing a corner with the center position.
+ */
 public class PositionClusters implements Rater {
 
     public static PositionClusters positionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute) {
