@@ -21,6 +21,15 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  */
 public class PositionClusters implements Rater {
 
+    /**
+     * @param x This is the x coordinate of the group.
+     * @param y This is the y coordinate of the group.
+     * @return Creates the group name of the position cluster, given the center position of the cluster.
+     */
+    public static String groupNameOfPositionCluster(int x, int y) {
+        return "(x=" + x + ", y=" + y + ")";
+    }
+
     public static PositionClusters positionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute) {
         return new PositionClusters(xAttribute, yAttribute);
     }
