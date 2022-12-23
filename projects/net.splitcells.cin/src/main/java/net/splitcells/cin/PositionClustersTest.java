@@ -43,5 +43,7 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
     }
 }
