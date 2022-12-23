@@ -10,9 +10,12 @@
  */
 package net.splitcells.gel.rating.rater;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.constraint.type.framework.ConstraintAI;
 import net.splitcells.gel.data.table.Line;
@@ -91,5 +94,14 @@ public interface Rater extends PubliclyTyped<Rater>
 
     default String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         throw notImplementedYet(getClass().getName());
+    }
+
+    default Set<List<String>> paths() {
+        return setOfUniques();
+    }
+
+    @Override
+    default void addContext(Discoverable context) {
+
     }
 }

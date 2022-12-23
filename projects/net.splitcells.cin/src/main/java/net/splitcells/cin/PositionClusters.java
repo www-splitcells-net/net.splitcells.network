@@ -11,6 +11,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -43,22 +44,12 @@ public class PositionClusters implements Rater {
     }
 
     @Override
-    public Set<List<String>> paths() {
-        throw notImplementedYet();
-    }
-
-    @Override
-    public void addContext(Discoverable context) {
+    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
         throw notImplementedYet();
     }
 
     @Override
     public List<Domable> arguments() {
-        throw notImplementedYet();
-    }
-
-    @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
-        throw notImplementedYet();
+        return list();
     }
 }

@@ -69,16 +69,6 @@ public class TimeSteps implements Rater {
     }
 
     @Override
-    public Set<List<String>> paths() {
-        return setOfUniques();
-    }
-
-    @Override
-    public void addContext(Discoverable context) {
-
-    }
-
-    @Override
     public List<Domable> arguments() {
         return list();
     }
