@@ -23,7 +23,7 @@ public class BuilderRandomConfigurable implements RndSrcF {
 
     protected BuilderRandomConfigurable() {
         if (environment().config().configValue(IsDeterministic.class).isEmpty()
-                || environment().config().configValue(IsDeterministic.class).get().isTrue()) {
+                || environment().config().configValue(IsDeterministic.class).orElseThrow().isTrue()) {
             deterministic_builder(environment().config().configValue(DeterministicRootSourceSeed.class));
         } else {
             builderRandom = new RndSrcStandardF();

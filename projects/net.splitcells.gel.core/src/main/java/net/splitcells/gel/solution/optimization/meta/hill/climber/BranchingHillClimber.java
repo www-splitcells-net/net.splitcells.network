@@ -55,10 +55,10 @@ public class BranchingHillClimber implements OfflineOptimization {
                     .history()
                     .lines()
                     .lastValue()
-                    .get()
+                    .orElseThrow()
                     .value(History.META_DATA)
                     .value(CompleteRating.class)
-                    .get()
+                    .orElseThrow()
                     .value();
             if (currentRating.betterThan(rootRating)) {
                 bestNeighbour = Optional.of(currentNeighbour);

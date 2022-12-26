@@ -64,7 +64,7 @@ public class AllSame {
                 valueCounts.remove(valueCounts.size() - 1);
                 return cost((double) valueCounts.stream()
                         .reduce(Integer::sum)
-                        .get()
+                        .orElseThrow()
                         / (double) futureLineSize);
             }
 

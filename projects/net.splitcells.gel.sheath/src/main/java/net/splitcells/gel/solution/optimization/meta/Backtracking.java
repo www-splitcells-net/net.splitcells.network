@@ -49,7 +49,7 @@ public class Backtracking implements OnlineOptimization {
                     return resultingChild;
                 }
             }
-            searchSpace = nextChild.parent().get();
+            searchSpace = nextChild.parent().orElseThrow();
         }
         return searchSpace;
     }
