@@ -61,12 +61,7 @@ You have your own open source optimization software? How about working together?
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
 [![REUSE status](https://api.reuse.software/badge/github.com/www-splitcells-net/net.splitcells.network)](https://api.reuse.software/info/github.com/www-splitcells-net/net.splitcells.network)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6588/badge)](https://bestpractices.coreinfrastructure.org/projects/6588)
-
-
-* [![CodeQL-Analysis](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml):
-  The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
-  workflow has to be run manually.
-  The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
+[![CodeQL-Analysis](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
 ## Project Cluster Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories without nesting:
