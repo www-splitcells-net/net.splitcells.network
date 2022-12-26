@@ -24,6 +24,9 @@ jobs:
       actions: read
       contents: read
       security-events: write
+    on:
+      schedule:
+        - cron:  '0 0 1 * *' # Monthly execution is used for now, as there are now critical users.
 
     strategy:
       fail-fast: false
