@@ -46,10 +46,6 @@ You have your own open source optimization software? How about working together?
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
 [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
 [![codecov](https://codecov.io/gh/www-splitcells-net/net.splitcells.network/branch/master/graph/badge.svg?token=Q1X4816ZAN)](https://codecov.io/gh/www-splitcells-net/net.splitcells.network)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/alerts/)
-[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:java)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:python)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:javascript)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_shield)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_small)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
@@ -66,7 +62,8 @@ You have your own open source optimization software? How about working together?
 [![REUSE status](https://api.reuse.software/badge/github.com/www-splitcells-net/net.splitcells.network)](https://api.reuse.software/info/github.com/www-splitcells-net/net.splitcells.network)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6588/badge)](https://bestpractices.coreinfrastructure.org/projects/6588)
 
-* [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security):
+
+* [![CodeQL-Analysis](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml):
   The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
   workflow has to be run manually.
   The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
