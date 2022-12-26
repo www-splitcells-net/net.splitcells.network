@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.cin.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
+import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 public class PositionClustersTest {
@@ -45,5 +46,10 @@ public class PositionClustersTest {
                 .asSolution();
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(PositionClusters.groupNameOfPositionCluster(0, 0)));
     }
 }
