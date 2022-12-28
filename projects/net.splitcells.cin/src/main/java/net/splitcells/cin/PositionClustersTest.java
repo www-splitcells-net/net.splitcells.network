@@ -28,10 +28,12 @@ public class PositionClustersTest {
                         , list(0, 0)
                         , list(0, 1)
                         , list(0, 2)
+                        , list(1, 0)
                 ))
                 .withSupplyAttributes()
                 .withSupplies(list(
                         list()
+                        , list()
                         , list()
                         , list()
                         , list()
@@ -47,13 +49,14 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
-        IntStream.rangeClosed(1, 9).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
+        IntStream.rangeClosed(1, 10).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
                         , groupNameOfPositionCluster(0, 0)
                         , groupNameOfPositionCluster(0, 0)
                         , groupNameOfPositionCluster(0, 0)
