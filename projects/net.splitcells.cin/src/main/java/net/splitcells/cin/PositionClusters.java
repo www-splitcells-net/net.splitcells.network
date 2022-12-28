@@ -1,11 +1,8 @@
 package net.splitcells.cin;
 
-import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
@@ -16,7 +13,7 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -62,8 +59,8 @@ public class PositionClusters implements Rater {
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
         final var xVal = addition.value(LINE).value(xAttribute);
         final var yVal = addition.value(LINE).value(yAttribute);
-        final var xCoord = MathUtils.modulus(xVal, 3);
-        final var yCoord = MathUtils.modulus(yVal, 3);
+        final var xCoord = xVal - modulus(xVal, 3);
+        final var yCoord = yVal - modulus(yVal, 3);
         final RatingEvent rating = ratingEvent();
         final var positionGroup = positionGroups
                 .computeIfAbsent(xCoord, x -> map())

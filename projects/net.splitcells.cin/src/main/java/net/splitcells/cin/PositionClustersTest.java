@@ -2,6 +2,9 @@ package net.splitcells.cin;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
+import static net.splitcells.cin.PositionClusters.groupNameOfPositionCluster;
 import static net.splitcells.cin.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
@@ -16,15 +19,15 @@ public class PositionClustersTest {
         final var testSubject = defineProblem("testPositions")
                 .withDemandAttributes(x, y)
                 .withDemands(list(
-                        list(0, 0)
-                        , list(0, 1)
-                        , list(1, 1)
+                        list(1, 1)
+                        , list(1, 2)
+                        , list(2, 2)
+                        , list(2, 1)
+                        , list(2, 0)
                         , list(1, 0)
-                        , list(1, -1)
-                        , list(0, -1)
-                        , list(-1, -1)
-                        , list(-1, 0)
-                        , list(-1, 1)
+                        , list(0, 0)
+                        , list(0, 1)
+                        , list(0, 2)
                 ))
                 .withSupplyAttributes()
                 .withSupplies(list(
@@ -44,12 +47,20 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
+        IntStream.rangeClosed(1, 9).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(PositionClusters.groupNameOfPositionCluster(0, 0)));
+                .assertEquals(list(groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)));
     }
 }
