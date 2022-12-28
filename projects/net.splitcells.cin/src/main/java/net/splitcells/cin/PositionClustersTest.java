@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.PositionClusters.groupNameOfPositionCluster;
 import static net.splitcells.cin.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -49,7 +50,7 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
-        IntStream.rangeClosed(1, 10).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
+        rangeClosed(1, 10).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -57,6 +58,21 @@ public class PositionClustersTest {
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(groupNameOfPositionCluster(0, 0)
                         , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)
+                        , groupNameOfPositionCluster(0, 0)));
+        testSubject.deallocate(testSubject.demandsUsed().line(0)
+                , testSubject.suppliesUsed().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(groupNameOfPositionCluster(0, 0)
                         , groupNameOfPositionCluster(0, 0)
                         , groupNameOfPositionCluster(0, 0)
                         , groupNameOfPositionCluster(0, 0)
