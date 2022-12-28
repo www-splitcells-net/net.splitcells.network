@@ -81,5 +81,12 @@ public class PositionClustersTest {
                         , groupNameOfPositionCluster(0, 0)
                         , groupNameOfPositionCluster(0, 0)
                         , groupNameOfPositionCluster(0, 0)));
+        rangeClosed(1, 9).forEach(i -> testSubject.deallocate(testSubject.demandsUsed().line(0)
+                , testSubject.suppliesUsed().line(0)));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list());
     }
 }
