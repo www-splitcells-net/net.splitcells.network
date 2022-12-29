@@ -89,4 +89,43 @@ public class PositionClustersTest {
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list());
     }
+
+    @Test
+    public void testBottomRightPositionCluster() {
+        final var x = attribute(Integer.class, "x");
+        final var y = attribute(Integer.class, "y");
+        final var testSubject = defineProblem("testPositions")
+                .withDemandAttributes(x, y)
+                .withDemands(list(
+                        list(1, -2)
+                        , list(1, -1)
+                        , list(2, -1)
+                        , list(2, -2)
+                        , list(2, -3)
+                        , list(1, -3)
+                        , list(0, -3)
+                        , list(0, -2)
+                        , list(0, -1)
+                        , list(1, -3)
+                ))
+                .withSupplyAttributes()
+                .withSupplies(list(
+                        list()
+                        , list()
+                        , list()
+                        , list()
+                        , list()
+                        , list()
+                        , list()
+                        , list()
+                        , list()
+                        , list()
+                ))
+                .withConstraint(c -> {
+                    c.forAll(positionClusters(x, y));
+                    return c;
+                })
+                .toProblem()
+                .asSolution();
+    }
 }
