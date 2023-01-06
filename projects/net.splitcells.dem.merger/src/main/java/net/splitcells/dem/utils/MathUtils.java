@@ -12,18 +12,18 @@ package net.splitcells.dem.utils;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.StaticFlags;
 
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public final class MathUtils {
 
     /**
-     *
-     *
-     * @param target Each returned sum should amount to this parameter.
-     * @param sumComponents These are all components, which are allowed to be used in order to reach the {@param target} value.
+     * @param target              Each returned sum should amount to this parameter.
+     * @param sumComponents       These are all components, which are allowed to be used in order to reach the {@param target} value.
      * @param exactComponentCount Number of components that each valid sum is allowed to have.
      * @return A list of sums, that amount to the given {@param target}.
      * Each element has exactly {@param exactComponentCount} components.
@@ -86,10 +86,18 @@ public final class MathUtils {
 
     /**
      * @param dividend This is the dividend of the modulus.
-     * @param divisor This is the divisor of the modulus.
+     * @param divisor  This is the divisor of the modulus.
      * @return {@code dividend mod divisor}
      */
     public static int modulus(int dividend, int divisor) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            if (divisor < 0) {
+                throw executionException("Negative divisor is not supported: " + divisor);
+            }
+            if (dividend < 0) {
+                throw executionException("Negative dividend is not supported: " + dividend);
+            }
+        }
         return Math.floorMod(dividend, divisor);
     }
 
@@ -149,6 +157,26 @@ public final class MathUtils {
         } else {
             return Math.abs(a - b);
         }
+    }
+
+    /**
+     * @param arg The number for that the sign is calculated.
+     * @return The sign represented by a number with the absolute of 1.
+     */
+    public static int sign(int arg) {
+        if (arg < 0) {
+            return -1;
+        }
+        return 1;
+    }
+
+    /**
+     * @param arg The number for that the absolute is calculated.
+     * @return Returns the absolute value of the given number.
+     * This is the distance between 0 and the given number.
+     */
+    public static int absolute(int arg) {
+        return Math.abs(arg);
     }
 
     private MathUtils() {
