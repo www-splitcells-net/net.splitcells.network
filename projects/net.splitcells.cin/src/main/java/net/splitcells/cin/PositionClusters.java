@@ -13,6 +13,7 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.GroupId.group;
@@ -59,8 +60,20 @@ public class PositionClusters implements Rater {
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
         final var xVal = addition.value(LINE).value(xAttribute);
         final var yVal = addition.value(LINE).value(yAttribute);
-        final var xCoord = xVal - modulus(xVal, 3);
-        final var yCoord = yVal - modulus(yVal, 3);
+        final int xCoord;
+        final int yCoord;
+        final int xAbs = absolute(xVal);
+        final int yAbs = absolute(yVal);
+        if (xVal < 0) {
+            xCoord = xVal + modulus(xAbs - 1, 3);
+        } else {
+            xCoord = xVal - modulus(xVal, 3);
+        }
+        if (yVal < 0) {
+            yCoord = yVal + modulus(yAbs - 1, 3);
+        } else {
+            yCoord = yVal - modulus(yVal, 3);
+        }
         final RatingEvent rating = ratingEvent();
         final var positionGroup = positionGroups
                 .computeIfAbsent(xCoord, x -> map())

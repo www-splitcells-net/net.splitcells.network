@@ -1,5 +1,6 @@
 package net.splitcells.cin;
 
+import net.splitcells.dem.utils.MathUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
@@ -127,5 +128,21 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
+        rangeClosed(1, 10).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0)));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(groupNameOfPositionCluster(0, -1)
+                        , groupNameOfPositionCluster(0, -1)
+                        , groupNameOfPositionCluster(0, -1)
+                        , groupNameOfPositionCluster(0, -1)
+                        , groupNameOfPositionCluster(0, -1)
+                        , groupNameOfPositionCluster(0, -1)
+                        , groupNameOfPositionCluster(0, -1)
+                        , groupNameOfPositionCluster(0, -1)
+                        , groupNameOfPositionCluster(0, -1)
+                        , groupNameOfPositionCluster(0, -1)));
     }
 }
