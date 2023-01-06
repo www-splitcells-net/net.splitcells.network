@@ -28,7 +28,9 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
+import static net.splitcells.dem.utils.MathUtils.sign;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.GroupId.group;
@@ -77,7 +79,7 @@ public class TimeSteps implements Rater {
     public RatingEvent ratingAfterAddition(Table linesOfGroup, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
         final RatingEvent rating = ratingEvent();
         final var timeValue = addition.value(LINE).value(timeAttribute);
-        final var timeSpanModulus = modulus(timeValue, 2);
+        final var timeSpanModulus = sign(timeValue) * modulus(absolute(timeValue), 2);
         final int startTime;
         final boolean isTimeValueStart;
         if (isStartTimeEven) {
@@ -140,7 +142,7 @@ public class TimeSteps implements Rater {
     public RatingEvent rating_before_removal(Table linesOfGroup, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
         final RatingEvent rating = ratingEvent();
         final var timeValue = removal.value(LINE).value(timeAttribute);
-        final var timeSpanModulus = modulus(timeValue, 2);
+        final var timeSpanModulus = sign(timeValue) * modulus(absolute(timeValue), 2);
         final int startTime;
         final boolean isTimeValueStart;
         if (isStartTimeEven) {
