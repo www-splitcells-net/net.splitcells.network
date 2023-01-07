@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
-import static net.splitcells.website.server.project.renderer.extension.XmlProjectRendererExtension.XML_OPENING_ELEMENT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class XmlProjectRendererExtensionTest {
