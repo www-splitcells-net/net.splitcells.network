@@ -106,11 +106,11 @@ public class ConstraintGroupBasedRepairTest {
             final var freeSupplyIndexes = solution.history().lines().stream()
                     .map(l -> l.value(ALLOCATION_EVENT).supply().index())
                     .collect(toList());
-            freeSupplyIndexes.assertEquals(list(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+            freeSupplyIndexes.requireContentsOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             final var demandIndexes = solution.history().lines().stream()
                     .map(l -> l.value(ALLOCATION_EVENT).demand().index())
                     .collect(toList());
-            demandIndexes.assertEquals(list(0, 1, 2, 3, 4, 5, 6, 3, 2, 1, 0));
+            demandIndexes.requireContentsOf(0, 1, 2, 3, 4, 5, 6, 3, 2, 1, 0);
         });
     }
 
