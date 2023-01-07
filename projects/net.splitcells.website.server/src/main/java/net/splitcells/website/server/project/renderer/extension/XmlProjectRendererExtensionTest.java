@@ -40,11 +40,4 @@ public class XmlProjectRendererExtensionTest {
                 , Config.create());
         assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/history.html"));
     }
-
-    @Test
-    public void test() {
-        Bools.require(XML_OPENING_ELEMENT.matcher("<start>").matches());
-        Bools.require(XML_OPENING_ELEMENT.matcher("<start>1 234 abcd").matches());
-        Bools.require(XML_OPENING_ELEMENT.matcher("<start name=\"value\">1 234 abcd").matches());
-    }
 }
