@@ -159,6 +159,7 @@ lexer grammar Java11Lexer;
 		| '+'
 		| '#'
 		| '!'
+		| '&'
 		;
 /* Tokens Of Last Resort */
 	WS:
