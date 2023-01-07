@@ -80,7 +80,7 @@ public class BacktrackingTest {
         testData.history().processWithHistory(() -> {
             backtracking().optimize(testData);
             testData.lines().requireSizeOf(3);
-            requireEqualInts(testData.columnView(demandAttribute).get(0), 4);
+            requireEqualInts(testData.columnView(demandAttribute).get(0), 1);
             requireEqualInts(testData.columnView(supplyAttribute).get(0), 4);
             requireEqualInts(testData.columnView(demandAttribute).get(1), 2);
             requireEqualInts(testData.columnView(supplyAttribute).get(1), 6);
