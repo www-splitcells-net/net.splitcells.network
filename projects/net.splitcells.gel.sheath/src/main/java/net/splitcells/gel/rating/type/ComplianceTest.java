@@ -27,21 +27,21 @@ public class ComplianceTest {
     }
 
     @Test
-    public void test_combinations_and_order_consistency() {
-        assertThat(compliance(false).combine(compliance(false)).compare_partially_to(compliance(false)).get())
+    public void testCombinationsAndOrderConsistency() {
+        assertThat(compliance(false).combine(compliance(false)).compare_partially_to(compliance(false)).orElseThrow())
                 .isEqualTo(EQUAL);
-        assertThat(compliance(false).combine(compliance(true)).compare_partially_to(compliance(false)).get())
+        assertThat(compliance(false).combine(compliance(true)).compare_partially_to(compliance(false)).orElseThrow())
                 .isEqualTo(EQUAL);
-        assertThat(compliance(true).combine(compliance(false)).compare_partially_to(compliance(true)).get())
+        assertThat(compliance(true).combine(compliance(false)).compare_partially_to(compliance(true)).orElseThrow())
                 .isNotEqualTo(EQUAL);
     }
 
     @Test
-    public void test_order_consistency() {
-        assertThat(compliance(true).compare_partially_to(compliance(true)).get()).isEqualTo(EQUAL);
-        assertThat(compliance(false).compare_partially_to(compliance(false)).get()).isEqualTo(EQUAL);
-        assertThat(compliance(false).compare_partially_to(compliance(true)).get()).isEqualTo(LESSER_THAN);
-        assertThat(compliance(true).compare_partially_to(compliance(false)).get()).isEqualTo(GREATER_THAN);
+    public void testOrderConsistency() {
+        assertThat(compliance(true).compare_partially_to(compliance(true)).orElseThrow()).isEqualTo(EQUAL);
+        assertThat(compliance(false).compare_partially_to(compliance(false)).orElseThrow()).isEqualTo(EQUAL);
+        assertThat(compliance(false).compare_partially_to(compliance(true)).orElseThrow()).isEqualTo(LESSER_THAN);
+        assertThat(compliance(true).compare_partially_to(compliance(false)).orElseThrow()).isEqualTo(GREATER_THAN);
     }
 
 }

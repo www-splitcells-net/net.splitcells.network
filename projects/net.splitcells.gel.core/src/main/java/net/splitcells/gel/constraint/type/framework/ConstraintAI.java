@@ -267,8 +267,8 @@ public abstract class ConstraintAI implements Constraint {
     public Rating rating(GroupId group) {
         final var routingRating
                 = routingRating(group, lineSelector -> true);
-        routingRating.children_to_groups().forEach((children, groups) ->
-                groups.forEach(group2 -> routingRating.ratingComponents().add(children.rating(group2))));
+        routingRating.children_to_groups().forEach((routingRhildren, groups) ->
+                groups.forEach(group2 -> routingRating.ratingComponents().add(routingRhildren.rating(group2))));
         if (routingRating.ratingComponents().isEmpty()) {
             return noCost();
         }
