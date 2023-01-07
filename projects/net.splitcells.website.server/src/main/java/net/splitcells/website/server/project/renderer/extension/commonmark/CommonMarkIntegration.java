@@ -31,13 +31,6 @@ public class CommonMarkIntegration {
     private CommonMarkIntegration() {
     }
 
-    public static void main(String... args) {
-        final var t = commonMarkIntegration();
-        final var tmp = "<p>Paragraph that should be ignored</p>\n" +
-                "<h2>[Unreleased]</h2>";
-        Xml.parse("<html>" + tmp + "</html>");
-    }
-
     public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config) {
         final Optional<String> title;
         final String contentToRender;
