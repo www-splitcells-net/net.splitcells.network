@@ -55,8 +55,8 @@ source_unit /* This is the root node. Root nodes should be placed on the start o
             	EOF
     ;
 access
-    : Dot type_argument? name call_arguments access?
-    | Dot name access?
+    : inline_comment? Dot type_argument? name call_arguments access?
+    | inline_comment? Dot name access?
     | Brackets_open expression Brackets_closed
     ;
 annotation
@@ -174,6 +174,11 @@ import_static_declaration
 import_type_declaration
     : Keyword_import type_path (Dot Keysymbol_star)? Semicolon
     | Legacy_Imports
+    ;
+inline_comment
+    : Line_comment
+    | Comment_multiline
+    | Javadoc
     ;
 integer
 	: Integer
