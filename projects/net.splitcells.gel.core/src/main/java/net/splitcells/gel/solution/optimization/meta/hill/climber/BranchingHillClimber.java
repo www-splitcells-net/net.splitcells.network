@@ -39,10 +39,6 @@ public class BranchingHillClimber implements OfflineOptimization {
     @Override
     public List<OptimizationEvent> optimize(SolutionView solution) {
         final var nextBranch = nextBranch(solution);
-        return nextOperation(nextBranch.get());
-    }
-
-    private List<OptimizationEvent> nextOperation(Solution branch) {
         throw notImplementedYet();
     }
 
