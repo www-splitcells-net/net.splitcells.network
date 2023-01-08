@@ -659,10 +659,24 @@
     <xsl:template match="s:option">
         <a class="linkButton">
             <xsl:attribute name="href">
-                <xsl:variable name="link">
-                    <xsl:apply-templates select="./s:url/node()"/>
-                </xsl:variable>
-                <xsl:value-of select="normalize-space($link)"/>
+                <xsl:choose>
+                    <xsl:when test="s:url">
+                        <xsl:apply-templates select="s:url"/>
+                    </xsl:when>
+                    <xsl:when test="s:page">
+                        <xsl:variable name="postLink">
+                            <xsl:copy-of select="$site-instance-root-path-default"/>
+                            <xsl:text></xsl:text>
+                            <xsl:apply-templates
+                                    select="s:page/node()"/>
+                            <xsl:text>.html</xsl:text>
+                        </xsl:variable>
+                        <xsl:value-of select="replace($postLink, '//', '/')"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message terminate="yes"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:attribute>
             <div class="highlighted_button MainButton_S">
                 <xsl:apply-templates select="./s:name/node()"/>
@@ -700,7 +714,7 @@
         </xsl:if>
     </xsl:template>
     <xsl:template match="*" mode="path.context">
-        <xsl:value-of select ="name(.)"/>
+        <xsl:value-of select="name(.)"/>
     </xsl:template>
     <xsl:template match="s:*">
         <xsl:message terminate="true">

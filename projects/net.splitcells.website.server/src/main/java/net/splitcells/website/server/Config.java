@@ -102,6 +102,12 @@ public class Config {
      */
     private boolean mutableProjectsPath = true;
 
+    /**
+     * Contains the content of the detailed menu for each page.
+     * The content should be processable by XSL.
+     */
+    private Optional<String> detailedXslMenu = Optional.empty();
+
     private Config() {
     }
 
@@ -233,5 +239,15 @@ public class Config {
 
     public Optional<Path> mainProjectRepositoryPath() {
         return mainProjectRepositoryPath;
+    }
+
+    @ReturnsThis
+    public Config withDetailedXslMenu(Optional<String> arg) {
+        detailedXslMenu = arg;
+        return this;
+    }
+
+    public Optional<String> detailedXslMenu() {
+        return detailedXslMenu;
     }
 }

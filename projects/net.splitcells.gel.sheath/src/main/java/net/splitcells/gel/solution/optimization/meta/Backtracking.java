@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0, which is available at
+ * http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+ * which is available at https://spdx.org/licenses/MIT.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ */
 package net.splitcells.gel.solution.optimization.meta;
 
 import net.splitcells.dem.environment.config.framework.Option;
@@ -5,9 +15,6 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpace;
-
-import java.util.Optional;
-import java.util.stream.IntStream;
 
 import static net.splitcells.gel.solution.optimization.primitive.enumerable.Initializer.initializer;
 import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpaceI.enumerableOptimizationSpace;
@@ -49,7 +56,7 @@ public class Backtracking implements OnlineOptimization {
                     return resultingChild;
                 }
             }
-            searchSpace = nextChild.parent().get();
+            searchSpace = nextChild.parent().orElseThrow();
         }
         return searchSpace;
     }

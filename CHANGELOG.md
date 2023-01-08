@@ -1,23 +1,8 @@
 # Changelog
-The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
-Tickets that create lasting requirements can be found [here](./src/main/md/net/splitcells/network/tickets/).
-
-Tickets are referenced with a hashtag and prefix in order to indicate the
-server, that hosts the ticket:
-for example `#g1` stands for the first Github issue and `#s1` for the first
-sourcehut issue.
-Ticket references without a prefix are probably hosted on
-[Github](https://github.com/www-splitcells-net/net.splitcells.network/issues).
-
-Prefix To Server Dictionary:
-* g = Github: [https://github.com/www-splitcells-net/net.splitcells.network/issues](https://github.com/www-splitcells-net/net.splitcells.network/issues)
-* s = sourcehut: [https://todo.sr.ht/~splitcells-net/net.splitcells.network](https://todo.sr.ht/~splitcells-net/net.splitcells.network)
- 
-Ticket information located on platforms and not in the repository are
-considered throw away information.
-Links to such platforms may or may not be valid.
-
-Releases are done every time an important ticket is completed.
+* The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
+* Tickets that create lasting requirements can be found [here](./src/main/md/net/splitcells/network/tickets/).
+* The ticket reference scheme can be looked up [here](./src/main/md/net/splitcells/network/tickets/index.md).
+* Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
 * **2022-11-27 \#183**: The property `test.groups` is now used in Maven to determine,
@@ -87,6 +72,10 @@ Releases are done every time an important ticket is completed.
     because it tried to open a website with the most common URL.
     In other words `https://localhost:8443/index.html` becomes `https://localhost:8443`.
 ### Minor Changes
+* **2022-12-05** [**\#s118 Speed up SourceHut build via m2 cache**](https://todo.sr.ht/~splitcells-net/net.splitcells.network/118):
+  The new repo `net.splitcells.network.m2` is created, that contains a Maven m2 repo.
+  This m2 repo is used in order to build Maven projects locally.
+  This m2 repo also works as an inventory of external Maven dependencies.
 * **2022-12-02** [**\#198** Manage dot files](https://github.com/www-splitcells-net/net.splitcells.network/issues/198):
   Recommend Chezmoi in order to manage dotfiles.
 * **2022-10-21** [**\#162** Ensure that integration and capabilities tests are executed from time to time.](https://github.com/www-splitcells-net/net.splitcells.network/issues/162)
@@ -666,11 +655,13 @@ Starting from this point a deprecated changelog format is used.
 14. **2020-12-31**: Create public git repository.
 15. Some undocumented work.
 16. **2019-05-05**: Create private git repositories.
-17. Some undocumented work without version control.
-18. **2016-11-XX**: Created the second version of assignment solver written from the ground up for master thesis and named it `Generic Allocator` for the first time.
+17. **2017-01-01**: Work Without Version Control (The date is an approximation.)
+18. **2016-11-01**: Created the second version of assignment solver written from the ground up for master thesis and named it `Generic Allocator` for the first time.
     See [here](https://splitcells.net/net/splitcells/gel/history/origin-of-the-project-generic-allocator.html) for more info.
-19. **2015-XX-XX**(approximate): Created precursor assignment solver of this project during an internship at university.
+    (The date is an approximation.)
+19. **2015-01-01**: Created precursor assignment solver of this project during an internship at university.
     See [here](https://splitcells.net/net/splitcells/gel/history/origin-of-the-project-generic-allocator.html) for more info.
+    (The date is an approximation.)
 ### Minor Changes
 1. **2022-10-31**: [**\#s97** Document migration based development.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/97)
 1. **2021-06-27**:

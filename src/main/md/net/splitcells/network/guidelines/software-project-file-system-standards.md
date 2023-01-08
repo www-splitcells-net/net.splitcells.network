@@ -122,12 +122,18 @@ Following file formats are explicitly supported, but any formats can be used:
 * `src/main/css`
 * `src/main/java`
 * `src/main/hugo.md`
+* `src/main/m2`
 * `src/main/md`
 * `src/main/null`
 * `src/main/sh`
 * `src/main/svg`
 * `src/main/txt`
 * `src/main/xml`
+* `src/main/sum.xml`: This file format is like XML, but without the root element and the XML header.
+  In other words, this file is a collection of XML elements,
+  where just appending XML elements without doing anything else to such files results in still valid files.
+  This makes it possible to easily render this file, even though the file is not fully written yet.
+  This is often the case, when the program is still running.
 ## Files at `./target/*`
 Contain results of the build and test system. Also contains the results of
 executing other project tasks.

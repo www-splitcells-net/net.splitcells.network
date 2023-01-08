@@ -46,10 +46,6 @@ You have your own open source optimization software? How about working together?
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
 [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
 [![codecov](https://codecov.io/gh/www-splitcells-net/net.splitcells.network/branch/master/graph/badge.svg?token=Q1X4816ZAN)](https://codecov.io/gh/www-splitcells-net/net.splitcells.network)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/alerts/)
-[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:java)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:python)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/www-splitcells-net/net.splitcells.network.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/www-splitcells-net/net.splitcells.network/context:javascript)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_shield)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwww-splitcells-net%2Fnet.splitcells.network?ref=badge_small)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
@@ -65,11 +61,7 @@ You have your own open source optimization software? How about working together?
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
 [![REUSE status](https://api.reuse.software/badge/github.com/www-splitcells-net/net.splitcells.network)](https://api.reuse.software/info/github.com/www-splitcells-net/net.splitcells.network)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6588/badge)](https://bestpractices.coreinfrastructure.org/projects/6588)
-
-* [Github Security Analysis](https://github.com/www-splitcells-net/net.splitcells.network/security):
-  The [CodeQL](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
-  workflow has to be run manually.
-  The results can be found [here](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml).
+[![CodeQL-Analysis](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
 ## Project Cluster Structure
 This project is meant to be part of a cluster, with a certain filesystem structure in mind.
 The cluster's filesystem consists of a folder containing repositories without nesting:
@@ -110,36 +102,19 @@ Project Cluster
     of `net.splitcells.os.state.interface`.
 ## Social Contacts
 * [Main Blog](https://splitcells-net.srht.site/)
-* Livestreaming via [Youtube](https://www.youtube.com/channel/UCyHsL0W1QKPOc7iUkJe3mAA) 
-* Messaging via [Mastadon/Fosstodon](https://fosstodon.org/@splitcells)
-* Blogging with Images on [Medium](https://martins-avots.medium.com/)
+* Livestreaming Via [Youtube](https://www.youtube.com/channel/UCyHsL0W1QKPOc7iUkJe3mAA) 
+* Messaging Via English [Mastodon/Fosstodon](https://fosstodon.org/@splitcells) 
+* Blogging With Images On [Medium](https://martins-avots.medium.com/)
 ## Infrastructure
 * Rendered Documentation via [a personal website](https://splitcells.net/net/splitcells/network/README.html)
-* Tickets are managed via [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) and
-[Sourcehut](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)).
+* Tickets are managed via a [Blog](https://splitcells-net.srht.site/net.splitcells.network.community.via.hugo) (Source code is [here](https://git.sr.ht/~splitcells-net/net.splitcells.network.community.via.hugo).) for complex and important tickets,
+  [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) for the community and
+[Sourcehut's todo](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)) for tickets related to the webserver.
 * Repository Hosts:
-  * [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
+  * (deprecated) [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
   * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) is currently used only for continuous integration (CI).
   * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network) is used mainly for writing articles and web rendering.
-## Service Tasks And Projects
-Tasks that are being worked cyclically,
-and probably will never be finished.
-* Improve, add or remove features.
-* Foster cooperation and symbiosis.
-  * Migrate inactive tickets into source code repository,
-    so that they each one acts as trigger at one fitting position.
-* Maintain project.
-  * Update dependencies.
-  * [#72 Improve Software Quality](./src/main/md/net/splitcells/network/tickets/open/72.md)
-  * Improve Test Coverage. See the [Project Status chapter](#project-status).
-* Documentation
-  * Add inspirational quotes to code documentation in order to provide an
-    alternative perspective via metaphors.
-    This is deprecated.
-    See [#160](https://github.com/www-splitcells-net/net.splitcells.network/issues/160).
-  * Review advertisement, introductions and info linked by README,
-    because that is the primary material for newcomers.
-* Improve compatibility, portability and adaptability.
-* Deploy and execute the software.
+    It's CI pipeline is also used with the repo `net.splitcells.network.m2`, in order to ensure,
+    that this project can be build offline and without the user's local Maven m2 repo.
 ## Credits
 * [Main Author's Public Key](https://keys.openpgp.org/search?q=F844A8297DEB16D9B9486323A6A6108FC3486F37)

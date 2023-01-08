@@ -9,41 +9,84 @@
     </meta>
     <chapter>
         <title>File And Folder Names</title>
-        <paragraph>File and folder names should comply with the regular expression <quote>\.?[a-zA-Z0-9]*([\-][a-zA-Z0-9]+)*([\.][a-zA-Z0-9]+)*</quote>.
-            A path complying with this grammar may look like this: <quote>/home/splitcells/Documents/.links-to-nothing.txt</quote>.
-            Before that, underscore instead of hyphen/dashes were considered,
-            because this way, non-hidden files, without their respective file suffixes are also legal variable names in most programming languages and shells.
-            Therefore, this format should be very portable, by avoiding symbols with special meaning.
-            However, hyphens are much more preferred by
-            <link>
-                <text>search engines</text>
-                <url>https://developers.google.com/style/filenames</url>
-            </link>
-            and are also used in
-            <link>
-                <text>Linux package names</text>
-                <url>https://packages.ubuntu.com/search?suite=jammy&amp;section=all&amp;arch=any&amp;keywords=jdk&amp;searchon=names</url>
-            </link>.
-            The use of hyphens makes it possible to have complex file names and may also represent a path for themselves.
-            Also, a file name should not be longer than 255 characters.
-        </paragraph>
-        <paragraph>
-            Assume and use case sensitivity, but do not rely on the fact,
-            that 2 files with the same case insensitive content but different case sensitive content can be stored in the same folder.
-            Prefer using only lower case file names, in order to avoid this problem.
-        </paragraph>
-        <paragraph>Even though, folders suffixes like file suffixes are not common,
-            it is of no use to allow different sub name separators for files and folders.
-            Therefore, it is not allowed to use dots (<quote>.</quote>) instead of hyphen symbols (<quote>-</quote>) in folder names.
-        </paragraph>
-        <paragraph>
-            File and folder names starting with a digit are allowed,
-            as otherwise paths for archive like things can get overly complicated.
-            See <quote>blog/2022/11/12/article.xml</quote> or <quote>blog/2022-11-12-article.xml</quote>,
-            where using a non digit prefix would not lead to any improvements.
-            Also, keep in mind, that file names cannot be assumed to be always translate able to variable names in programming languages,
-            because of special symbols like dots <quote>.</quote> or hyphens <quote>-</quote>.
-            Therefore, leading digit in names do not worsen this situation.
-        </paragraph>
+        <chapter>
+            <title>Allowed Character Patterns</title>
+            <paragraph>File and folder names should comply with the regular expression <quote>\.?[a-zA-Z0-9]*([\-][a-zA-Z0-9]+)*([\.][a-zA-Z0-9]+)*</quote>.
+                A path complying with this grammar may look like this: <quote>/home/splitcells/Documents/.links-to-nothing.txt</quote>.
+                Before that, underscore instead of hyphen/dashes were considered,
+                because this way, non-hidden files, without their respective file suffixes are also legal variable names in most programming languages and shells.
+                Therefore, this format should be very portable, by avoiding symbols with special meaning.
+                However, hyphens are much more preferred by
+                <link>
+                    <text>search engines</text>
+                    <url>https://developers.google.com/style/filenames</url>
+                </link>
+                and are also used in
+                <link>
+                    <text>Linux package names</text>
+                    <url>https://packages.ubuntu.com/search?suite=jammy&amp;section=all&amp;arch=any&amp;keywords=jdk&amp;searchon=names</url>
+                </link>
+                .
+                The use of hyphens makes it possible to have complex file names and may also represent a path for themselves.
+                Also, a file name should not be longer than 255 characters.
+            </paragraph>
+            <paragraph>
+                Assume and use case sensitivity, but do not rely on the fact,
+                that 2 files with the same case insensitive content but different case sensitive content can be stored in the same folder.
+                Prefer using only lower case file names, in order to avoid this problem.
+            </paragraph>
+            <paragraph>Even though, folders suffixes like file suffixes are not common,
+                it is of no use to allow different sub name separators for files and folders.
+                Therefore, it is not allowed to use dots (<quote>.</quote>) instead of hyphen symbols (<quote>-</quote>) in folder names.
+            </paragraph>
+            <paragraph>
+                File and folder names starting with a digit are allowed,
+                as otherwise paths for archive like things can get overly complicated.
+                See <quote>blog/2022/11/12/article.xml</quote> or <quote>blog/2022-11-12-article.xml</quote>,
+                where using a non digit prefix would not lead to any improvements.
+                Also, keep in mind, that file names cannot be assumed to be always translate able to variable names in programming languages,
+                because of special symbols like dots <quote>.</quote> or hyphens <quote>-</quote>.
+                Therefore, leading digit in names do not worsen this situation.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Recommended File Name, Folder Name, Path Lengths</title>
+            <paragraph>In this chapter file and folder names are used interchangeably.</paragraph>
+            <paragraph>
+                There is no global standard for supported path and file name lengths.
+                <link>
+                    <text>Windows may support only up to 260 characters for paths,
+                        but sometimes seems to support up to about 32,767 characters.
+                    </text>
+                    <url>https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=registry</url>
+                </link>
+                <link>
+                    <text>The filesystem ext4 does only seem to support file name lengths of up to 255 bytes.</text>
+                    <url>https://en.wikipedia.org/wiki/Ext4</url>
+                </link>
+                ,
+                <link>
+                    <text>whereas there seems to be no path length limit present.</text>
+                    <url>https://doc.owncloud.com/server/next/admin_manual/troubleshooting/path_filename_length.html</url>
+                </link>
+                <link>
+                    <text>Encrypted drives on Synology have no limits on their path length,
+                        but the file and folder names seem to be limited to about 143 characters.
+                    </text>
+                    <url>https://www.reddit.com/r/synology/comments/m93gha/synology_encryption_143_character_limit_does_it/</url>
+                </link>
+                In other words, the support for long paths and file names varies greatly,
+                and therefore overly long path and file names must be avoided.
+            </paragraph>
+            <paragraph>In order to maximise compatibility, the file name and path length should be greatly limited.
+                Especially, because adjusting paths on mass, when finding a problem, may be a great problem.
+            </paragraph>
+            <paragraph>File names should be no longer than 80 symbols and have to be shorter than 100 symbols.
+                Path names have to be shorter than 250 symbols, in order to have a some left over space for a parent folder.
+                Path length limits apply to the relative path, starting form the affected repo's root folder.
+                A repo might be a git repository, a folder that is synchronized over the network or something else.
+                Absolute path length are not concerned here, as this is a hard to control variable.
+            </paragraph>
+        </chapter>
     </chapter>
 </article>

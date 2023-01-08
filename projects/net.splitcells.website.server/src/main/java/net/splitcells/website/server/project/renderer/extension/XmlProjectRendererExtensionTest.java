@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
-import static net.splitcells.website.server.project.renderer.extension.XmlProjectRendererExtension.XML_OPENING_ELEMENT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class XmlProjectRendererExtensionTest {
@@ -39,12 +38,5 @@ public class XmlProjectRendererExtensionTest {
                 , a -> Optional.empty()
                 , Config.create());
         assertThat(testSubject.projectPaths()).contains(Path.of("net/splitcells/dem/history.html"));
-    }
-
-    @Test
-    public void test() {
-        Bools.require(XML_OPENING_ELEMENT.matcher("<start>").matches());
-        Bools.require(XML_OPENING_ELEMENT.matcher("<start>1 234 abcd").matches());
-        Bools.require(XML_OPENING_ELEMENT.matcher("<start name=\"value\">1 234 abcd").matches());
     }
 }

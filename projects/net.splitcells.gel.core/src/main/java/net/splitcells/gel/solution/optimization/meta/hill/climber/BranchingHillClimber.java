@@ -39,10 +39,6 @@ public class BranchingHillClimber implements OfflineOptimization {
     @Override
     public List<OptimizationEvent> optimize(SolutionView solution) {
         final var nextBranch = nextBranch(solution);
-        return nextOperation(nextBranch.get());
-    }
-
-    private List<OptimizationEvent> nextOperation(Solution branch) {
         throw notImplementedYet();
     }
 
@@ -55,10 +51,10 @@ public class BranchingHillClimber implements OfflineOptimization {
                     .history()
                     .lines()
                     .lastValue()
-                    .get()
+                    .orElseThrow()
                     .value(History.META_DATA)
                     .value(CompleteRating.class)
-                    .get()
+                    .orElseThrow()
                     .value();
             if (currentRating.betterThan(rootRating)) {
                 bestNeighbour = Optional.of(currentNeighbour);

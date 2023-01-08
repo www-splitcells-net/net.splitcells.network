@@ -10,10 +10,12 @@
  */
 package net.splitcells.gel.solution.optimization.primitive;
 
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
 import org.junit.jupiter.api.Test;
 
+import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -27,7 +29,6 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.history.History.ALLOCATION_EVENT;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConstraintGroupBasedRepairTest {
 
@@ -66,10 +67,10 @@ public class ConstraintGroupBasedRepairTest {
                                 , list()
                                 , list()
                         )
-                .withConstraint
                 /**
                  * Needless constraints are added, in order to check, if the correct {@link Constraint} is selected.
                  */
+                .withConstraint
                         (forAll().withChildren
                                 (forAllWithValue(a, validValue).withChildren(then(noCost()))
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))
@@ -82,7 +83,8 @@ public class ConstraintGroupBasedRepairTest {
         solution.history().processWithHistory(() -> {
             solution.optimize(linearInitialization());
             final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(
-                    groupSelector(constraintGroup -> list(constraintGroup.get(6))) // Select the first defying group.
+                    // Select the first defying group.
+                    groupSelector(constraintGroup -> list(constraintGroup.get(6)))
                     , freeDemandGroups -> currentSolution -> {
                         freeDemandGroups.entrySet().forEach(freeGroup -> {
                             freeGroup.getValue().forEach(freeDemand -> {
@@ -100,15 +102,15 @@ public class ConstraintGroupBasedRepairTest {
                             .orElseGet(() -> map()))
                     .collect(toList());
             testSubject.repair(solution, demandClassifications.get(0));
-            assertThat(solution.history().size()).isEqualTo(initHistorySize + 4);
+            solution.history().lines().requireSizeOf(initHistorySize + 4);
             final var freeSupplyIndexes = solution.history().lines().stream()
                     .map(l -> l.value(ALLOCATION_EVENT).supply().index())
                     .collect(toList());
-            assertThat(freeSupplyIndexes).contains(7, 8, 9, 10);
+            freeSupplyIndexes.requireContentsOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             final var demandIndexes = solution.history().lines().stream()
                     .map(l -> l.value(ALLOCATION_EVENT).demand().index())
                     .collect(toList());
-            assertThat(demandIndexes).contains(0, 1, 2, 3);
+            demandIndexes.requireContentsOf(0, 1, 2, 3, 4, 5, 6, 3, 2, 1, 0);
         });
     }
 
@@ -152,13 +154,13 @@ public class ConstraintGroupBasedRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        assertThat(solution.lines()).hasSize(7);
+        solution.lines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
         testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA);
-        assertThat(solution.lines()).hasSize(3);
+        solution.lines().requireSizeOf(3);
         testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB);
-        assertThat(solution.lines()).hasSize(1);
+        solution.lines().requireSizeOf(1);
     }
 
     @Test
@@ -201,15 +203,14 @@ public class ConstraintGroupBasedRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        assertThat(solution.lines()).hasSize(7);
+        solution.lines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
         final var testProduct = testSubject.demandGrouping
                 (solution.constraint().childrenView().get(3).childrenView().get(0)
                         , solution);
-        assertThat(testProduct).hasSize(1);
-        assertThat(testProduct.values().iterator().next()).hasSize(2);
-        testProduct.values().iterator().next()
-                .forEach(line -> assertThat(line.value(b)).isEqualTo(invalidValueB));
+        testProduct.requireSizeOf(1);
+        testProduct.values().iterator().next().requireSetSizeOf(2);
+        testProduct.values().iterator().next().forEach(line -> requireEqualInts(line.value(b), invalidValueB));
     }
 }

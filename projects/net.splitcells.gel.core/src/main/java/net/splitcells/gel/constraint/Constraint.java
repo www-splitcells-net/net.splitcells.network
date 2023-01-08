@@ -21,7 +21,6 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
-import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -37,7 +36,6 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.object.Base;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
@@ -76,7 +74,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     Attribute<Rating> RATING = attribute(Rating.class, "rating");
 
     static List<List<Constraint>> allocationGroups(List<Constraint> currentPath) {
-        final var constraint = currentPath.lastValue().get();
+        final var constraint = currentPath.lastValue().orElseThrow();
         final List<List<Constraint>> allocationGroups = list();
         allocationGroups.add(currentPath);
         allocationGroups.addAll(
@@ -243,7 +241,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     default Element graph() {
         final var graph = Xml.rElement(GEL, type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> graph.appendChild(Xml.elementWithChildren(ARGUMENTATION.value(), arg.toDom())));
+            arguments().forEach(arg -> graph.appendChild(Xml.elementWithChildren(ARGUMENTATION.value(), arg.toPerspective().toDom())));
         }
         childrenView().forEach(child -> {
             graph.appendChild(child.graph());

@@ -14,6 +14,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.utils.MathUtils;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -23,9 +24,32 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.MathUtils.*;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public interface Randomness {
+
+    /**
+     * Creates a deterministic {@link Randomness}, that returns it's values according to the given
+     * {@link Iterator} of values. This useful in order to write simple tests.
+     *
+     * @param valueList Requires values returned by the {@link Randomness} to be created.
+     * @return Deterministic {@link Randomness}
+     */
+    static Randomness listBasedRandomness(Iterator<Integer> valueList) {
+        return new Randomness() {
+
+            @Override
+            public int integer(Integer min, Integer max) {
+                return valueList.next();
+            }
+
+            @Override
+            public Random asRandom() {
+                throw notImplementedYet();
+            }
+        };
+    }
 
     default int integer() {
         return integer(Integer.MIN_VALUE, Integer.MAX_VALUE);

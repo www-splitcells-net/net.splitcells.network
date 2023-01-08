@@ -30,12 +30,20 @@ import static net.splitcells.dem.resource.communication.Sender.stringSenderWitho
 import static net.splitcells.dem.resource.Files.createDirectory;
 
 /**
- * TODO Use alternative async backend.
+ * <p>This is the primary basic text output of the program.</p>
+ * <p>If {@link IsEchoToFile} is set to true, than the output is echoed to an {@link #CONSOLE_FILE_NAME} file.
+ * <p>If {@link IsEchoToFile} is set to false, the output is written to {@link System#out}.</p>
+ * <p>The format is like XML, but without the root element and the XML header.
+ * In other words, this file is a collection of XML elements,
+ * where just appending XML elements without doing anything else to such files results in still valid files.</p>
+ * <p>This makes it possible to easily render this file, even though the file is not fully written yet.
+ * This is often the case, when the program is still running.</p>
+ * <p>TODO Use alternative async backend.</p>
  */
 @JavaLegacyArtifact
 public final class Console extends ResourceOptionI<Sender<String>> {
 
-    public static final String CONSOLE_FILE_NAME = "echo.xml";
+    public static final String CONSOLE_FILE_NAME = "echo.sum.xml";
 
     public Console() {
         super(() -> {
@@ -43,7 +51,7 @@ public final class Console extends ResourceOptionI<Sender<String>> {
 
             if (environment().config().configValue(IsEchoToFile.class)) {
                 var consolePath
-                        = Paths.usersStateFiles().resolve("src/main/xml")
+                        = Paths.usersStateFiles().resolve("src/main/sum.xml")
                         .resolve(Dem.configValue(ProgramName.class).replace('.', '/'))
                         .resolve("console")
                         .resolve(

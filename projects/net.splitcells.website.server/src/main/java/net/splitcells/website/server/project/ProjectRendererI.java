@@ -174,6 +174,8 @@ public class ProjectRendererI implements ProjectRenderer {
                                 .of("<val xmlns=\"http://splitcells.net/den.xsd\">"
                                         + config.rootPath()
                                         + "</val>");
+                    } else if ("/net/splitcells/website/server/config/menu/detailed.xsl".equals(p)) {
+                        return config.detailedXslMenu();
                     }
                     return Optional.empty();
                 });

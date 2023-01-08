@@ -20,6 +20,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.LinePointer;
+import net.splitcells.gel.data.table.attribute.Attribute;
 
 /**
  * <p>
@@ -34,6 +35,18 @@ import net.splitcells.gel.data.table.LinePointer;
  */
 public interface Allocations extends Database, AllocationsLiveView {
     Line allocate(Line demand, Line supply);
+
+    /**
+     * Removes all allocations,
+     * that are identified by the {@link Line#index()} of {@code demand} and {@code supply}.
+     * The {@link Line#values()} of {@code demand} and {@code supply} are not considered.
+     *
+     * @param demand Demand of the allocations to be removed.
+     * @param supply Supply of the allocations to be removed.
+     */
+    default void deallocate(Line demand, Line supply) {
+        allocationsOf(demand, supply).forEach(this::remove);
+    }
 
     default Set<Line> allocationsOf(Line demand, Line supply) {
         final var allocationsOf = allocationsOfSupply(supply);

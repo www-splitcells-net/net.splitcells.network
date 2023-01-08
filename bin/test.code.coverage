@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
-set -e
-./bin/build.part.with.java
-./bin/build.part.with.python
+mvn clean
+mkdir -p target/test.code.coverage/src
+cp -r projects/*/src/ target/test.code.coverage

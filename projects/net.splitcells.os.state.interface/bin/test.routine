@@ -15,7 +15,7 @@ projectFolder=$(pwd)
 	cd target/test
 command.managed.execute.test
 user.ssh.key.generate.test
-cd $projectFolder/../..
+cd $projectFolder/src/test/repo.process.test
   repo.process.test
 cd $projectFolder # Leave current folder before it is deleted.
 	rm -rf $projectFolder/target/test

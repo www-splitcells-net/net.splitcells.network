@@ -23,24 +23,24 @@ public class BuilderRandomConfigurable implements RndSrcF {
 
     protected BuilderRandomConfigurable() {
         if (environment().config().configValue(IsDeterministic.class).isEmpty()
-                || environment().config().configValue(IsDeterministic.class).get().isTrue()) {
-            deterministic_builder(environment().config().configValue(DeterministicRootSourceSeed.class));
+                || environment().config().configValue(IsDeterministic.class).orElseThrow().isTrue()) {
+            deterministicBuilder(environment().config().configValue(DeterministicRootSourceSeed.class));
         } else {
             builderRandom = new RndSrcStandardF();
         }
     }
 
     protected BuilderRandomConfigurable(Optional<Bool> deterministic) {
-        update_determinism(deterministic);
+        updateDeterminism(deterministic);
     }
 
     protected BuilderRandomConfigurable(Long seed) {
-        deterministic_builder(seed);
+        deterministicBuilder(seed);
     }
 
-    public void update_determinism(Optional<Bool> arg) {
+    public void updateDeterminism(Optional<Bool> arg) {
         if (arg.isEmpty() || arg.get().isTrue()) {
-            deterministic_builder(environment().config().configValue(DeterministicRootSourceSeed.class));
+            deterministicBuilder(environment().config().configValue(DeterministicRootSourceSeed.class));
         } else if (arg.isPresent() && arg.get().isFalse()) {
             this.builderRandom = new RndSrcStandardF();
         } else {
@@ -48,7 +48,7 @@ public class BuilderRandomConfigurable implements RndSrcF {
         }
     }
 
-    private void deterministic_builder(Long seed) {
+    private void deterministicBuilder(Long seed) {
         this.builderRandom = new BuilderRandomDeterministic(seed);
     }
 

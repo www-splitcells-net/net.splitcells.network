@@ -7,6 +7,10 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2022-12-17: \#27**: Extend Config with detailedXslMenu.
+  If this value is present use its content for the detailed menu in the page layout.
+  This is the start to remove hard coded personal info from the default layout.
+  Its content is a XSL template, that declares the XSL variable `net-splitcells-website-server-config-menu-detailed`.
 * **2022-07-06**: **\#114**: Links to XML documents in CommonMark documents are translated to links to corresponding HTML documents
   (i.e. `/net/splitcells/gel/index.xml` -> `/net/splitcells/gel/index.html`)
   in order to link between different document types.

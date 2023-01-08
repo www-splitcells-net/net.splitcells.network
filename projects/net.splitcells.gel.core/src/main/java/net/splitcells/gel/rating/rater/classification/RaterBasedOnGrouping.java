@@ -47,10 +47,18 @@ public class RaterBasedOnGrouping implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+        return stripCosts(grouping.ratingAfterAddition(lines, addition, children, ratingsBeforeAddition));
+    }
+
+    @Override
+    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+        return stripCosts(grouping.rating_before_removal(lines, removal, children, ratingsBeforeRemoval));
+    }
+
+    private static RatingEvent stripCosts(RatingEvent arg) {
         final var ratingEvent = ratingEvent();
-        final var rBase = grouping.ratingAfterAddition(lines, addition, children, ratingsBeforeAddition);
-        ratingEvent.removal().addAll(rBase.removal());
-        rBase.additions().forEach((line, localRating) ->
+        ratingEvent.removal().addAll(arg.removal());
+        arg.additions().forEach((line, localRating) ->
                 ratingEvent.additions()
                         .put(line
                                 , localRating()
@@ -58,7 +66,7 @@ public class RaterBasedOnGrouping implements Rater {
                                         .withRating(noCost())
                                         .withResultingGroupId
                                                 (localRating.resultingConstraintGroupId())));
-        rBase.complexAdditions().forEach((line, ratings) ->
+        arg.complexAdditions().forEach((line, ratings) ->
                 ratings.forEach(rating -> ratingEvent.extendComplexRating(line
                         , localRating()
                                 .withPropagationTo(rating.propagateTo())
@@ -66,11 +74,6 @@ public class RaterBasedOnGrouping implements Rater {
                                 .withResultingGroupId
                                         (rating.resultingConstraintGroupId()))));
         return ratingEvent;
-    }
-
-    @Override
-    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
-        return ratingEvent();
     }
 
     @Override

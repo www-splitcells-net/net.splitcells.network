@@ -7,4 +7,9 @@
 # which is available at https://spdx.org/licenses/MIT.html.
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
-pip3 install --user reuse
+set -e
+bin/build.hugo
+projectFolder=$(pwd)
+cd ../../../net.splitcells.network.community.via.hugo
+bin/build
+cp -rf target/site.hugo/net.splitcells.network.community.via.hugo/ $projectFolder/target/site.hugo

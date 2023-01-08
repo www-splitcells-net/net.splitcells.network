@@ -5,7 +5,8 @@ packages:
   - python3
 sources:
   - https://git.sr.ht/~splitcells-net/net.splitcells.network
+  - https://git.sr.ht/~splitcells-net/net.splitcells.network.m2
 tasks:
   - build: |
       cd net.splitcells.network/projects/net.splitcells.system.root
-      ./bin/build
+      ./bin/build.offline

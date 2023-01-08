@@ -240,7 +240,7 @@ public interface Perspective extends PerspectiveView {
         if (name().isBlank()) {
             return "<empty/>";
         } else if (!_VALID_XML_NAME.matcher(name()).matches()) {
-            xmlString += "<val name=\"" + name() + "\">";
+            xmlString += "<val name=\"" + xmlName() + "\">";
             xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
             xmlString += "</val>";
         } else if (nameSpace().equals(HTML)) {
@@ -252,7 +252,7 @@ public interface Perspective extends PerspectiveView {
                 xmlString += "</" + name() + ">";
             }
         } else if (nameSpace().equals(STRING)) {
-            xmlString += name();
+            xmlString += xmlName();
             xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
         } else if (nameSpace().equals(NATURAL) || nameSpace().equals(DEN)) {
             if (children().isEmpty()) {

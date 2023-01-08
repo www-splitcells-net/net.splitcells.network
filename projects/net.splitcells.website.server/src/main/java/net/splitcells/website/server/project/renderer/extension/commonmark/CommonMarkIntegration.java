@@ -31,19 +31,12 @@ public class CommonMarkIntegration {
     private CommonMarkIntegration() {
     }
 
-    public static void main(String... args) {
-        final var t = commonMarkIntegration();
-        final var tmp = "<p>Paragraph that should be ignored</p>\n" +
-                "<h2>[Unreleased]</h2>";
-        Xml.parse("<html>" + tmp + "</html>");
-    }
-
     public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config) {
         final Optional<String> title;
         final String contentToRender;
         if (arg.startsWith("#")) {
             final var titleLine = arg.split("[\r\n]+")[0];
-            title = Optional.of(titleLine.replaceAll("#", "").trim());
+            title = Optional.of(titleLine.replace("#", "").trim());
             contentToRender = arg.substring(titleLine.length());
         } else {
             title = Optional.empty();
@@ -56,7 +49,7 @@ public class CommonMarkIntegration {
                         , title
                         , Optional.of(path)
                         , config)
-                .get();
+                .orElseThrow();
     }
 
     public String render(Node node) {

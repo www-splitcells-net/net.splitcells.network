@@ -10,9 +10,12 @@
  */
 package net.splitcells.gel.rating.rater;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.constraint.type.framework.ConstraintAI;
 import net.splitcells.gel.data.table.Line;
@@ -63,6 +66,8 @@ public interface Rater extends PubliclyTyped<Rater>
      * @param children These are the children {@link Constraint}s of the current {@link Constraint} node.
      * @param lineProcessing This is the {@link Constraint#lineProcessing()} of the incoming group before the removal.
      * @return The events needed to update the {@link Rating} of all lines.
+     * A {@link Rating} update for the {@code removal} argument is not required,
+     * because its {@link Rating} will be automatically removed from the {@link Constraint} during the actual removal.
      */
     default RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table lineProcessing) {
         return ratingEvent();
@@ -89,5 +94,14 @@ public interface Rater extends PubliclyTyped<Rater>
 
     default String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         throw notImplementedYet(getClass().getName());
+    }
+
+    default Set<List<String>> paths() {
+        return setOfUniques();
+    }
+
+    @Override
+    default void addContext(Discoverable context) {
+
     }
 }

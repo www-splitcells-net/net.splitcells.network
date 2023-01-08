@@ -23,6 +23,14 @@ public interface PerspectiveView extends Domable {
 
     String name();
 
+    default String xmlName() {
+        return name().replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&apos;")
+                .replace("&", "&amp;");
+    }
+
     default Optional<Perspective> value() {
         if (children().size() == 1) {
             return Optional.of(children().get(0));

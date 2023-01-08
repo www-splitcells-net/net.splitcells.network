@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # net.splitcells.system
 
 <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/starting-to-learn-how-to-draw-a-face.jpg" height="500" alt="Logo"/>

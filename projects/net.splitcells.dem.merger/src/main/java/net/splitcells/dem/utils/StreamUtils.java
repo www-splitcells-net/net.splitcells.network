@@ -35,6 +35,10 @@ public final class StreamUtils {
         return Stream.of(content);
     }
 
+    public static <T> Stream<T> emptyStream() {
+        return Stream.empty();
+    }
+
     public static <T> Stream<T> reverse(Stream<T> stream) {
         return stream.collect(
                         collectingAndThen(
