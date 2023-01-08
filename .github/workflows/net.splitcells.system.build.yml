@@ -25,6 +25,10 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Build BOM
+        uses: actions/checkout@master
+        with:
+          repository: www-splitcells-net/net.splitcells.network.bom
       - name: Build
         run: |
           cd $GITHUB_WORKSPACE/..
