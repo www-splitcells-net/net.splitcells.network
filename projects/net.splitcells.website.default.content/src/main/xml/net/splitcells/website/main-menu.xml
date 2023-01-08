@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:x="http://www.w3.org/1999/xhtml" xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <meta>
+        <title>Main Menu Page</title>
+        <license>standard</license>
+    </meta>
+    <content>
+        <option>
+            <name>Global Changelog</name>
+            <page>net/splitcells/CHANGELOG.global</page>
+        </option>
+        <option>
+            <name>Impressum</name>
+            <page>/net/splitcells/martins/avots/website//legal/impressum</page>
+        </option>
+        <option>
+            <name>Licensing</name>
+            <page>net/splitcells/martins/avots/website//legal/licensing</page>
+        </option>
+        <option>
+            <name>Network Status</name>
+            <page>net/splitcells/network/status</page>
+        </option>
+        <option>
+            <name>Refresh Layout</name>
+            <page>'/net/splitcells/website/layout/build</page>
+        </option>
+        <option>
+            <name>Privacy Policy</name>
+            <page>net/splitcells/martins/avots/website//legal/privacy-policy</page>
+        </option>
+        <option>
+            <name>Website's Layout</name>
+            <page>net/splitcells/website/layout</page>
+        </option>
+    </content>
+</article>

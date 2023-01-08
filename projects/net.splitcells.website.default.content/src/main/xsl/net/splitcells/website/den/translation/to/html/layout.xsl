@@ -656,17 +656,17 @@ window.onload = function() {
                                 </div>
                                 <br></br>
                                 <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">Content</a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of select="concat($site-instance-host-root-path, 'net/splitcells/CHANGELOG.global.html')"/>
-                                    </xsl:attribute>
-                                    Global Changelog
-                                </a>
                                 <a class="net-splitcells-button net-splitcells-component-priority-3">
                                     <xsl:attribute name="href">
                                         <xsl:value-of select="s:root-relative-url('/legal/impressum.html')"/>
                                     </xsl:attribute>
                                     Impressum
+                                </a>
+                                <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of select="concat($site-instance-host-root-path, 'net/splitcells/website/main-menu.html')"/>
+                                    </xsl:attribute>
+                                    Main Menu
                                 </a>
                                 <a class="net-splitcells-button net-splitcells-component-priority-3">
                                     <xsl:attribute name="href">
