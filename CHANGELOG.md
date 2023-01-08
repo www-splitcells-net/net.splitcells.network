@@ -655,11 +655,13 @@ Starting from this point a deprecated changelog format is used.
 14. **2020-12-31**: Create public git repository.
 15. Some undocumented work.
 16. **2019-05-05**: Create private git repositories.
-17. Some undocumented work without version control.
-18. **2016-11-XX**: Created the second version of assignment solver written from the ground up for master thesis and named it `Generic Allocator` for the first time.
+17. **2017-01-01**: Work Without Version Control (The date is an approximation.)
+18. **2016-11-01**: Created the second version of assignment solver written from the ground up for master thesis and named it `Generic Allocator` for the first time.
     See [here](https://splitcells.net/net/splitcells/gel/history/origin-of-the-project-generic-allocator.html) for more info.
-19. **2015-XX-XX**(approximate): Created precursor assignment solver of this project during an internship at university.
+    (The date is an approximation.)
+19. **2015-01-01**: Created precursor assignment solver of this project during an internship at university.
     See [here](https://splitcells.net/net/splitcells/gel/history/origin-of-the-project-generic-allocator.html) for more info.
+    (The date is an approximation.)
 ### Minor Changes
 1. **2022-10-31**: [**\#s97** Document migration based development.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/97)
 1. **2021-06-27**:
