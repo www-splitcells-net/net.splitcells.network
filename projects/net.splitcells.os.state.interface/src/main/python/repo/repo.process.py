@@ -3,6 +3,19 @@
 SPDX-License-Identifier: EPL-2.0 OR MIT
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+TODO Document that `repo.synchronize` etc. only work on default branch by default.
+     This is done in order to avoid complex synchronization in case of deleted branches by default.
+TODO Ensure that during repo cloning the default branch for origin is set.
+TODO Make it possible, to store the default branch in a file in the repo.
+     Check this file, if present, and throw an error if the current branch does not match default branch.
+TODO Repo process should have an optional flag in order to only process the current repo.
+     This would than be used in order to execute complex commands on the current repo first and than on its sub repos.
+     For example the command "repo.process 'repo.repair [...] && repo.remote.set [...] && repo.pull [...]'",
+     would than work more reliable, when the remote server deletes sub repos at arbitrary times.
+TODO Ignore peer repos with explicit flag and via environment (net_splitcells_os_state_interface_repo_process_repo_peer_disabled).
+     Ignoring peers is required in order to synchronize meta repos more reliably automatically.
+
+
 TODO Instead of "./.net.splitcells.os.state.interface.repo/subs.json" use the
      more simple "./.net.splitcells.os.state.interface.repo/subs.txt",
      which needs to be defined yet.
