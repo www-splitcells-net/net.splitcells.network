@@ -2,7 +2,6 @@
 set -e
 echo net.splitcells.cin.log
 echo net.splitcells.network.community.via.javadoc
-echo net.splitcells.network.community.git-bug
 echo net.splitcells.network.log
 echo net.splitcells.network.media
 echo net.splitcells.network.repos
