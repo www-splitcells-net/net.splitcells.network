@@ -8,33 +8,42 @@
         <license>standard</license>
     </meta>
     <content>
-        <option>
-            <name>Global Changelog</name>
-            <page>net/splitcells/CHANGELOG.global</page>
-        </option>
-        <option>
-            <name>Impressum</name>
-            <page>/net/splitcells/martins/avots/website//legal/impressum</page>
-        </option>
-        <option>
-            <name>Licensing</name>
-            <page>net/splitcells/martins/avots/website//legal/licensing</page>
-        </option>
-        <option>
-            <name>Network Status</name>
-            <page>net/splitcells/network/status</page>
-        </option>
-        <option>
-            <name>Refresh Layout</name>
-            <page>'/net/splitcells/website/layout/build</page>
-        </option>
-        <option>
-            <name>Privacy Policy</name>
-            <page>net/splitcells/martins/avots/website//legal/privacy-policy</page>
-        </option>
+        <chapter>
+            <title>Legal</title>
+            <option>
+                <name>Impressum</name>
+                <page>/net/splitcells/martins/avots/website//legal/impressum</page>
+            </option>
+            <option>
+                <name>Licensing</name>
+                <page>net/splitcells/martins/avots/website//legal/licensing</page>
+            </option>
+            <option>
+                <name>Privacy Policy</name>
+                <page>net/splitcells/martins/avots/website//legal/privacy-policy</page>
+            </option>
+        </chapter>
+        <chapter>
+            <title>Overview</title>
+            <option>
+                <name>Global Changelog</name>
+                <page>net/splitcells/CHANGELOG.global</page>
+            </option>
+            <option>
+                <name>Network Status</name>
+                <page>net/splitcells/network/status</page>
+            </option>
+        </chapter>
         <option>
             <name>Website's Layout</name>
             <page>net/splitcells/website/layout</page>
         </option>
+        <chapter>
+            <title>Commands</title>
+            <option>
+                <name>Refresh Layout</name>
+                <page>'/net/splitcells/website/layout/build</page>
+            </option>
+        </chapter>
     </content>
 </article>
