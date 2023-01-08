@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
 echo net.splitcells.cin.log
+echo net.splitcells.network.bom
 echo net.splitcells.network.community.via.javadoc
 echo net.splitcells.network.community.via.hugo
 echo net.splitcells.network.log
