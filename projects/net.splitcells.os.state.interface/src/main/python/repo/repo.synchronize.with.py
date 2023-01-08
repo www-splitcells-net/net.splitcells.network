@@ -4,6 +4,8 @@ SPDX-License-Identifier: EPL-2.0 OR MIT
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
 'repo.repair' is executed before 'repo.is.clean', because the other way around fails, if some sub repos are missing locally.
+'repo.repair' is executed before 'repo.remote.set', because the other way around can fail,
+if a local repo is already delete on remote.
 """
 
 __author__ = "Mārtiņš Avots"
@@ -25,8 +27,8 @@ if __name__ == '__main__':
 	# TODO Do not create shell script, but call directly.
 	# TODO Log errors to error stream.
 	synchronizationScript = """system.network.peer.ssh.reachable {0} \\
-	&& repo.remote.set {1} \\
 	&& repo.repair --remote-repo={1} \\
+	&& repo.remote.set {1} \\
 	&& repo.is.clean \\
 	&& repo.pull \\
 	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo)
