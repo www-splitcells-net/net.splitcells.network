@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
 #
 # This program and the accompanying materials are made available under the
@@ -8,7 +8,8 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR MIT
 set -e
-mvn clean
-./bin/build.source.dependencies
-./bin/build.hugo.with.additional.blogs
-./bin/build.gemini
+bin/build.hugo
+projectFolder=$(pwd)
+cd ../../../net.splitcells.network.community.via.hugo
+bin/build
+cp -rf target/site.hugo/net.splitcells.network.community.via.hugo/ $projectFolder/target/site.hugo
