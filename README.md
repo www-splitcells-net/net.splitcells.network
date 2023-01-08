@@ -107,7 +107,7 @@ Project Cluster
 * Blogging With Images On [Medium](https://martins-avots.medium.com/)
 ## Infrastructure
 * Rendered Documentation via [a personal website](https://splitcells.net/net/splitcells/network/README.html)
-* Tickets are managed via a [Blog](https://git.sr.ht/~splitcells-net/net.splitcells.network.community.via.hugo) for complex and important tickets,
+* Tickets are managed via a [Blog](https://splitcells-net.srht.site/net.splitcells.network.community.via.hugo) (Source code is [here](https://git.sr.ht/~splitcells-net/net.splitcells.network.community.via.hugo).) for complex and important tickets,
   [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) for the community and
 [Sourcehut's todo](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)) for tickets related to the webserver.
 * Repository Hosts:
