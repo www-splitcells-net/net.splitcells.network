@@ -655,193 +655,37 @@ window.onload = function() {
                                     <div class="splitcells-net-window-menu-line-2"></div>
                                 </div>
                                 <br></br>
-                                <xsl:choose>
-                                    <xsl:when test="document('/net/splitcells/website/server/config/menu/detailed.xsl')">
-                                        <xsl:variable name="detailedXslMenu">
-                                            <xsl:copy-of select="document('/net/splitcells/website/server/config/menu/detailed.xsl')"/>
-                                        </xsl:variable>
-                                        <xsl:apply-templates select="$detailedXslMenu"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">
-                                            Content
-                                        </a>
-                                        <div class="messages">
-                                            <h3>Messages</h3>
-                                            <div class="noScriptMessage TextCell text_error">- Activate Javascript in
-                                                order to enable all
-                                                functions
-                                                of this site.
-                                            </div>
-                                            <br/>
-                                        </div>
-                                        <a class="net-splitcells-button net-splitcells-component-priority-3 net-splitcells-network-status">
-                                            <xsl:attribute name="href">
-                                                <xsl:value-of
-                                                        select="s:default-root-relative-url('net/splitcells/network/status.html')"/>
-                                            </xsl:attribute>
-                                        </a>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <h3>Sections</h3>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:root-relative-url('/info/about-this-site.html')"/>
-                                    </xsl:attribute>
-                                    About
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of select="s:root-relative-url('/info/contact.html')"/>
-                                    </xsl:attribute>
-                                    Contact
-                                </a>
+                                <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">Content</a>
                                 <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
                                     <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="concat($site-instance-host-root-path, 'net/splitcells/CHANGELOG.global.html')"/>
+                                        <xsl:value-of select="concat($site-instance-host-root-path, 'net/splitcells/CHANGELOG.global.html')"/>
                                     </xsl:attribute>
                                     Global Changelog
                                 </a>
                                 <a class="net-splitcells-button net-splitcells-component-priority-3">
                                     <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:root-relative-url('/legal/impressum.html')"/>
+                                        <xsl:value-of select="s:root-relative-url('/legal/impressum.html')"/>
                                     </xsl:attribute>
                                     Impressum
                                 </a>
                                 <a class="net-splitcells-button net-splitcells-component-priority-3">
                                     <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:root-relative-url('/legal/licensing.html')"/>
-                                    </xsl:attribute>
-                                    Licensing
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:root-relative-url('/index.html')"/>
-                                    </xsl:attribute>
-                                    Main Page
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:root-relative-url('/legal/privacy-policy.html')"/>
+                                        <xsl:value-of select="s:root-relative-url('/legal/privacy-policy.html')"/>
                                     </xsl:attribute>
                                     Privacy Policy
                                 </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:root-relative-url('/programs/index.html')"/>
-                                    </xsl:attribute>
-                                    Programs
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:root-relative-url('/projects/index.html')"/>
-                                    </xsl:attribute>
-                                    Projects
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:root-relative-url('/programs/search.html')"/>
-                                    </xsl:attribute>
-                                    Search
-                                </a>
-                                <h3>Local Instances</h3>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3"
-                                   href="javascript:void(0);"
-                                   onclick="const Http = new XMLHttpRequest(); Http.open('GET', '/net/splitcells/website/layout/build'); Http.send();">
-                                    Refresh layout.
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:default-root-relative-url('net/splitcells/website/layout.html')"/>
-                                    </xsl:attribute>
-                                    Layout
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3"
-                                   href="http://splitcells.net">
-                                    Public Site
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3"
-                                   href="https://localhost:8443">
-                                    Local Public Site
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
-                                   href="https://localhost:8444">Local Private Site
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
-                                   href="http://localhost:1313/">
-                                    Local Hugo Site
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
-                                   href="https://localhost:8445/net/splitcells/website/minimal/net/splitcells/martins/avots/website/index.html">
-                                    Minimal Version
-                                </a>
-                                <h3>Mārtiņš Avots's Support System</h3>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
-                                   href="https://localhost:8444/net/splitcells/martins/avots/support/system/index.html">
-                                    Root
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific"
-                                   href="https://localhost:8444/net/splitcells/martins/avots/support/system/projects.html">
-                                    Discovery
-                                </a>
-                                <h3>Interesting Third Party Sites</h3>
-                                <div class="advertise-one-of">
-                                    <xsl:for-each
-                                            select="document('/net.splitcells.website/current/xml/net/splitcells/martins/avots/website/advertisement-object-social.xml')/rdf:RDF/rdf:Description">
-                                        <div>
-                                            <xsl:if test="position() != 1">
-                                                <xsl:attribute name="class"
-                                                               select="'net-splitcells-hidden'"/>
-                                            </xsl:if>
-                                            <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                                <xsl:attribute name="href" select="@rdf:resource"/>
-                                                <xsl:value-of select="./rdf:label"/>
-                                            </a>
-                                            <a class="net-splitcells-button net-splitcells-component-priority-4">
-                                                <xsl:attribute name="href" select="@rdf:resource"/>
-                                                <xsl:value-of select="./rdf:comment"/>
-                                            </a>
-                                        </div>
-                                    </xsl:for-each>
+                                <div class="messages">
+                                    <h3>Messages</h3>
+                                    <div class="noScriptMessage TextCell text_error">- Activate Javascript in order to enable all functions of this site.</div>
+                                    <br/>
                                 </div>
-                                <div class="advertise-one-of">
-                                    <xsl:for-each
-                                            select="document('/net.splitcells.website/current/xml/net/splitcells/martins/avots/website/advertisement-object-technical.xml')/rdf:RDF/rdf:Description">
-                                        <div>
-                                            <xsl:if test="position() != 1">
-                                                <xsl:attribute name="class"
-                                                               select="'net-splitcells-hidden'"/>
-                                            </xsl:if>
-                                            <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                                <xsl:attribute name="href" select="@rdf:resource"/>
-                                                <xsl:value-of select="./rdf:label"/>
-                                            </a>
-                                            <div class="net-splitcells-button net-splitcells-component-priority-4">
-                                                <xsl:attribute name="href" select="@rdf:resource"/>
-                                                <xsl:value-of select="./rdf:comment"/>
-                                            </div>
-                                        </div>
-                                    </xsl:for-each>
-                                </div>
-                                <h3>This Site Uses Amongst Others</h3>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3"
-                                   href="https://alexgorbatchev.com/SyntaxHighlighter/">
-                                    SyntaxHighlighter
+                                <a class="net-splitcells-button net-splitcells-component-priority-3 net-splitcells-network-status">
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:default-root-relative-url('net/splitcells/network/status.html')"/>
+                                    </xsl:attribute>
                                 </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-4"
-                                   href="https://alexgorbatchev.com/SyntaxHighlighter/">
-                                    for Code Syntax Highlighting
-                                </a>
+                                <xsl:copy-of select="$net-splitcells-website-server-config-menu-detailed"/>
                                 <h3>Metadata About This Document</h3>
                                 <p>Unless otherwise noted, the
                                     content of this
