@@ -44,7 +44,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 	if not execute(relativePath, host.replace('$peerRepo', ''), command):
 		return False
 	peerListPath = Path('./bin/net.splitcells.osi.repos.peers')
-	if peerListPath.is_file():
+	if peerListPath.is_file() and environ.get('net_splitcells_os_state_interface_repo_process_repo_peer_disabled') == '1':
 		peers = subprocess.run([peerListPath], stdout=subprocess.PIPE)
 		for peerRepo in peers.stdout.decode('utf-8').split("\n"):
 			if peerRepo.strip() != "":
