@@ -27,6 +27,10 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build
         run: |
+          cd $GITHUB_WORKSPACE/..
+          git clone git@github.com:www-splitcells-net/net.splitcells.network.bom.git
+          cd net.splitcells.network.bom
+          mvn install
           cd $GITHUB_WORKSPACE/projects/net.splitcells.system.root
           echo $GITHUB_WORKSPACE
           export test_codecov=1
