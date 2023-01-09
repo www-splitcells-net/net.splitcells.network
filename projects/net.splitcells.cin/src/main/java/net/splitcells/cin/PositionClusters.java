@@ -32,10 +32,14 @@ import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
- * Groups all positions of a 2 dimensional space.
- * Every existing (x, y) coordinate has a corresponding position group.
- * Every such group also contains every neighbouring position.
+ * <p>Groups all positions of a 2 dimensional space.
+ * Every existing (x, y) coordinate has a corresponding position group, that is identified by its center.
+ * Every such group has a center position and also contains every neighbouring position.
  * This also applies to neighbouring positions only sharing a corner with the center position.
+ * All position clusters are non overlapping.</p>
+ * <p>Overlapping position clusters can be implemented via multiple parallel constraint nodes,
+ * with different offset of the position center.
+ * In this case there is on additional offset for each neighbouring positions of the original center position</p>
  */
 public class PositionClusters implements Rater {
 
