@@ -3,8 +3,11 @@
 SPDX-License-Identifier: EPL-2.0 OR MIT
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+TODO Use only python for recursion and not shell, in order simplify command.
 TODO Document that `repo.synchronize` etc. only work on default branch by default.
      This is done in order to avoid complex synchronization in case of deleted branches by default.
+     If branches are explicitly deleted somewhere, there needs to be a way to state, that this branch is deleted.
+     Otherwise, the branch will be restored by the other repositories.
 TODO Ensure that during repo cloning the default branch for origin is set.
 TODO Make it possible, to store the default branch in a file in the repo.
      Check this file, if present, and throw an error if the current branch does not match default branch.
@@ -14,20 +17,21 @@ TODO Repo process should have an optional flag in order to only process the curr
      would than work more reliable, when the remote server deletes sub repos at arbitrary times.
 TODO Ignore peer repos with explicit flag and via environment (net_splitcells_os_state_interface_repo_process_repo_peer_disabled).
      Ignoring peers is required in order to synchronize meta repos more reliably automatically.
-
-
 TODO Instead of "./.net.splitcells.os.state.interface.repo/subs.json" use the
      more simple "./.net.splitcells.os.state.interface.repo/subs.txt",
      which needs to be defined yet.
      The reason for this migration is the fact,
      that the JSON format is too complex yet
      and unnecessary hard to process.
-TODO Use only python for recursion and not shell, in order simplify command.
 TODO Improve documentation and make it friendly to new users.
 TODO Remove duplicate code.
 TODO Support moving child repositories semi-automatically.
 TODO Create compatibility tooling for alternative like meta: https://github.com/mateodelnorte/meta
      This would create metadata files for the meta tool,
+TODO Make it possible to `repo.synchronize` etc. all branches of a repo.
+     Create a new peer meta repo, that contains the names of all deleted branches.
+     Beware that different branches can be created over time with the same name.
+     The meta repo therefore needs to store some commit info as well and not just the name of the deleted branch.
 """
 
 __author__ = "Mārtiņš Avots"
