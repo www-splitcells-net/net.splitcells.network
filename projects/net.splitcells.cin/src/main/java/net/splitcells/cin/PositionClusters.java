@@ -38,8 +38,16 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
  * This also applies to neighbouring positions only sharing a corner with the center position.
  * All position clusters are non overlapping.</p>
  * <p>Overlapping position clusters can be implemented via multiple parallel constraint nodes,
- * with different offset of the position center.
- * In this case there is on additional offset for each neighbouring positions of the original center position</p>
+ * with different (x,y) offset of the position center.
+ * In this case, there is on additional offset for each neighbouring positions of the original center position</p>
+ * <p>An (x,y) offset of (0,0), means that the most central position group on the 2D grid is (0,0).
+ * Its center is located at (1,1).
+ * The neighbouring position group to the right (x direction) is (3,0) and
+ * its center position is (4,1).</p>
+ * <p>An (x,y) offset of (1,1), means that the most central position group on the 2D grid is (1,1).
+ * Its center is located at (2,2).
+ * The neighbouring position group to the right (x direction) is (4,1) and
+ * its center position is (5,2).</p>
  */
 public class PositionClusters implements Rater {
 
