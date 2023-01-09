@@ -61,11 +61,17 @@ public class PositionClusters implements Rater {
     }
 
     public static PositionClusters positionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute) {
-        return new PositionClusters(xAttribute, yAttribute);
+        return new PositionClusters(xAttribute, yAttribute, 0, 0);
+    }
+
+    public static PositionClusters positionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute, int xCenterOffset, int yCenterOffset) {
+        return new PositionClusters(xAttribute, yAttribute, xCenterOffset, yCenterOffset);
     }
 
     private final Attribute<Integer> xAttribute;
     private final Attribute<Integer> yAttribute;
+    private final int xCenterOffset;
+    private final int yCenterOffset;
 
     /**
      * Maps x and y coordinates to the respective groups.
@@ -73,9 +79,11 @@ public class PositionClusters implements Rater {
      */
     private final Map<Integer, Map<Integer, GroupId>> positionGroups = map();
 
-    private PositionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute) {
+    private PositionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute, int xCenterOffset, int yCenterOffset) {
         this.xAttribute = xAttribute;
         this.yAttribute = yAttribute;
+        this.xCenterOffset = xCenterOffset;
+        this.yCenterOffset = yCenterOffset;
     }
 
     @Override
