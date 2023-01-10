@@ -47,7 +47,7 @@ if __name__ == '__main__':
         ,"../net.splitcells.network.repos/\n"
         ,"../net.splitcells.os.state.interface.lib.gpl.2/\n"
         ,"../net.splitcells.os.state.interface.lib.gpl.3/\n"
-        ,"../echo net.splitcells.network.m2/\n"
+        ,"../net.splitcells.network.m2/\n"
                         ]
     output_is_valid = True
     for i in range(1, len(expected_results)):

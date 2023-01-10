@@ -88,8 +88,8 @@ public class PositionClusters implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
-        final var xVal = addition.value(LINE).value(xAttribute);
-        final var yVal = addition.value(LINE).value(yAttribute);
+        final var xVal = addition.value(LINE).value(xAttribute) + xCenterOffset;
+        final var yVal = addition.value(LINE).value(yAttribute) + yCenterOffset;
         final int xCoord;
         final int yCoord;
         final int xAbs = absolute(xVal);
