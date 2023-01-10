@@ -39,15 +39,15 @@ if __name__ == '__main__':
     output_thread.join()
     error_thread.join()
     expected_results = ["\n" # The first entry is empty, because the first repo processed is the current repo.
-        ,"../net.splitcells.cin.log\n"
-        ,"../net.splitcells.network.community.via.javadoc\n"
-        ,"../net.splitcells.network.community.git-bug\n"
-        ,"../net.splitcells.network.log\n"
-        ,"../net.splitcells.network.media\n"
-        ,"../net.splitcells.network.repos\n"
-        ,"../net.splitcells.os.state.interface.lib.gpl.2\n"
-        ,"../net.splitcells.os.state.interface.lib.gpl.3\n"
-        ,"../echo net.splitcells.network.m2\n"
+        ,"../net.splitcells.cin.log/\n"
+        ,"../net.splitcells.network.community.via.javadoc/\n"
+        ,"../net.splitcells.network.community.git-bug/\n"
+        ,"../net.splitcells.network.log/\n"
+        ,"../net.splitcells.network.media/\n"
+        ,"../net.splitcells.network.repos/\n"
+        ,"../net.splitcells.os.state.interface.lib.gpl.2/\n"
+        ,"../net.splitcells.os.state.interface.lib.gpl.3/\n"
+        ,"../echo net.splitcells.network.m2/\n"
                         ]
     output_is_valid = True
     for i in range(1, len(expected_results)):
