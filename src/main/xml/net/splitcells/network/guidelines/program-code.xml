@@ -90,17 +90,13 @@
         <paragraph>The code should be formatted in such a way that the
             required space is minimized and
             the readability and navigability of the text is maximized.
-            Empty lines are omitted, if indentation is enough to easily separate code
-            blocks.
+            Empty lines are omitted, if indentation is enough to easily separate code blocks.
         </paragraph>
-        <paragraph>It is preferred that symbols that structure the code are located
-            at the most left side instead at the most right side when whitespace is ignored.
-            This allows the navigate the code structure easily while minimizing
-            the need to look into the meaning of the code.
-        </paragraph>
-        <paragraph>Prefer tabbing, if automatic source code formatting is preferred and details of the format are
-            not important, in order to prefer writing speed.
-            Prefer whitespace, if formatting details are important.
+        <paragraph>
+            Trailing special symbols like commas in lists are preferred to leading symbols,
+            as this is the most common way.
+            Thereby, generally speaking, the overall structure of the source code is visible on the left side,
+            whereas the meaning of the structure is located at the right side.
         </paragraph>
     </chapter>
     <chapter>
