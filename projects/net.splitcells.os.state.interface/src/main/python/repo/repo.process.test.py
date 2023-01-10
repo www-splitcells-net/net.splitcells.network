@@ -24,7 +24,7 @@ def store_output(stream, output):
             else:
                 return
 if __name__ == '__main__':
-    process = subprocess.Popen("repo.process --command='echo $subRepo' --command-for-missing='exit'",
+    process = subprocess.Popen("cd projects/net.splitcells.os.state.interface/src/test/repo.process.test && repo.process --command='echo $subRepo' --command-for-missing='exit'",
                                shell = True,
                                bufsize = 100000,
                                stdout = subprocess.PIPE,
@@ -47,6 +47,7 @@ if __name__ == '__main__':
         ,"../net.splitcells.network.repos"
         ,"../net.splitcells.os.state.interface.lib.gpl.2"
         ,"../net.splitcells.os.state.interface.lib.gpl.3"
+        ,"../echo net.splitcells.network.m2"
                         ]
     output_is_valid = True
     for i in range(1, len(expected_results)):
