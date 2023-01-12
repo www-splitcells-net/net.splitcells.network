@@ -63,6 +63,20 @@ public class PositionClusters implements Rater {
     /**
      * @param xAttribute This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
      * @param yAttribute This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @return Returns the list of all overlapping position clusters.
+     */
+    public static List<PositionClusters> positionClustering(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute) {
+        return list(new PositionClusters(xAttribute, yAttribute, 0, 0),
+                new PositionClusters(xAttribute, yAttribute, 0, 1),
+                new PositionClusters(xAttribute, yAttribute, 1, 1),
+                new PositionClusters(xAttribute, yAttribute, 1, 0),
+                new PositionClusters(xAttribute, yAttribute, 1, -1),
+                new PositionClusters(xAttribute, yAttribute, 0, -1),
+                new PositionClusters(xAttribute, yAttribute, -1, -1),
+                new PositionClusters(xAttribute, yAttribute, -1, 0),
+                new PositionClusters(xAttribute, yAttribute, -1, 1));
+    }
+
     /**
      * @param xAttribute This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
      * @param yAttribute This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
