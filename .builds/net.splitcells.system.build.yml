@@ -6,7 +6,10 @@ packages:
 sources:
   - https://git.sr.ht/~splitcells-net/net.splitcells.network
   - https://git.sr.ht/~splitcells-net/net.splitcells.network.m2
+  - https://git.sr.ht/~splitcells-net/net.splitcells.network.bom
 tasks:
   - build: |
-      cd net.splitcells.network/projects/net.splitcells.system.root
+      cd net.splitcells.network.bom
+      mvn clean install
+      cd ../net.splitcells.network/projects/net.splitcells.system.root
       ./bin/build.offline
