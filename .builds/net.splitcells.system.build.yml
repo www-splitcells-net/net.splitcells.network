@@ -10,6 +10,6 @@ sources:
 tasks:
   - build: |
       cd net.splitcells.network.bom
-      mvn clean install
+      mvn clean install -Dmaven.repo.local=../net.splitcells.network.m2/src/main/m2 --offline
       cd ../net.splitcells.network/projects/net.splitcells.system.root
       ./bin/build.offline
