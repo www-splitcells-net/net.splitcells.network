@@ -60,10 +60,25 @@ public class PositionClusters implements Rater {
         return "(x=" + x + ", y=" + y + ")";
     }
 
+    /**
+     * @param xAttribute This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @param yAttribute This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
+    /**
+     * @param xAttribute This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @param yAttribute This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @return Returns the {@link PositionClusters} with offset of 0.
+     */
     public static PositionClusters positionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute) {
         return new PositionClusters(xAttribute, yAttribute, 0, 0);
     }
 
+    /**
+     * @param xAttribute This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @param yAttribute This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @param xCenterOffset This is the x-axis offset of the position center.
+     * @param yCenterOffset This is the y-axis offset of the position center.
+     * @return Returns the {@link PositionClusters} with offset of 0.
+     */
     public static PositionClusters positionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute, int xCenterOffset, int yCenterOffset) {
         return new PositionClusters(xAttribute, yAttribute, xCenterOffset, yCenterOffset);
     }
