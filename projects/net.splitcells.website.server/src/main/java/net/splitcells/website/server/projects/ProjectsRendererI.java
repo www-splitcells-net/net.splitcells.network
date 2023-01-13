@@ -30,6 +30,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -122,7 +123,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                     try {
                         final var targetPath = path(target, path.substring(1));
                         createDirectory(targetPath.getParent());
-                        Files.writeToFile(targetPath, render(path).get().getContent());
+                        Files.writeToFile(targetPath, render(path).orElseThrow().getContent());
                     } catch (Exception e) {
                         throw new RuntimeException(target.toString() + path, e);
                     }
@@ -261,7 +262,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         return renderers.stream()
                 .map(Renderer::projectPaths)
                 .reduce((a, b) -> a.with(b))
-                .get()
+                .orElse(setOfUniques())
                 .with(extension.projectPaths(this));
     }
 
@@ -270,7 +271,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         return renderers.stream()
                 .map(Renderer::relevantProjectPaths)
                 .reduce((a, b) -> a.with(b))
-                .get()
+                .orElse(setOfUniques())
                 .with(extension.projectPaths(this));
     }
 
@@ -279,7 +280,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         final var children = current.children().stream()
                 .filter(child -> child.nameIs(VAL, NATURAL))
                 .filter(child -> child.propertyInstances(NAME, NATURAL).stream()
-                        .anyMatch(property -> property.value().get().name().equals(element)))
+                        .anyMatch(property -> property.value().orElseThrow().name().equals(element)))
                 .collect(toList());
         assertThat(children).hasSizeLessThan(2);
         return children;
@@ -305,6 +306,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
 
     @Override
     public Optional<RenderingResult> renderContent(String content, LayoutConfig metaContent) {
-        return Optional.of(renderingResult(fallbackRenderer.renderXml(content, metaContent, config).get(), TEXT_HTML.toString()));
+        return Optional.of(renderingResult(fallbackRenderer.renderXml(content, metaContent, config).orElseThrow(), TEXT_HTML.toString()));
     }
 }

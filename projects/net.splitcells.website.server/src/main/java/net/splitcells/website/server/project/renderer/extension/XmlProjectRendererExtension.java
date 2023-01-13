@@ -106,18 +106,19 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
             }
             metaElement.appendChild(document.createTextNode(MARKER));
             final String documentString;
-            if (layoutConfig.localPathContext().isPresent()) {
+            final var localPathContext = layoutConfig.localPathContext();
+            if (localPathContext.isPresent()) {
                 documentString = Xml.toDocumentString(document)
                         .replace(MARKER, perspective("path.context", NameSpaces.NATURAL)
-                                .withChild(layoutConfig.localPathContext().get())
+                                .withChild(localPathContext.get())
                                 .toHtmlString());
             } else {
                 documentString = Xml.toDocumentString(document);
             }
-            return Optional.of(renderingResult(projectRenderer.renderRawXml(documentString, config).get()
+            return Optional.of(renderingResult(projectRenderer.renderRawXml(documentString, config).orElseThrow()
                     , HTML_TEXT.codeName()));
         } else {
-            return Optional.of(renderingResult(projectRenderer.renderXml(xmlContent, layoutConfig, config).get()
+            return Optional.of(renderingResult(projectRenderer.renderXml(xmlContent, layoutConfig, config).orElseThrow()
                     , HTML_TEXT.codeName()));
         }
     }

@@ -65,7 +65,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     .filter(p -> p.toString().endsWith(".csv"))
                     .forEach(p -> {
                         final var csvContent = asString(projectsRendererI.render(config.rootPath() + "/" + p.toString())
-                                .get()
+                                .orElseThrow()
                                 .getContent(), ContentType.UTF_8);
                         final var lastMeasurement = stream(csvContent.split("\\R"))
                                 .filter(l -> !l.trim().isEmpty())
@@ -102,7 +102,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                                     , Optional.of("Network Status")
                                     , Optional.of(STATUS_DOCUMENT_PATH)
                                     , config)
-                            .get()
+                            .orElseThrow()
                     , ContentType.HTML_TEXT.codeName()));
         }
         if (path.equals("/" + STATUS_PATH)) {
@@ -112,7 +112,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     .filter(p -> p.toString().endsWith(".csv"))
                     .forEach(p -> {
                         final var csvContent = asString(projectsRendererI.render(config.rootPath() + "/" + p.toString())
-                                .get()
+                                .orElseThrow()
                                 .getContent(), ContentType.UTF_8);
                         final var lastMeasurement = stream(csvContent.split("\\R"))
                                 .filter(l -> !l.trim().isEmpty())

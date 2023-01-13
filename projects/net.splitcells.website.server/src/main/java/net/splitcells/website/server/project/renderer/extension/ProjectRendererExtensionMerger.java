@@ -58,7 +58,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
                     .filter(r -> r.renderFile(path, projectRenderer, config).isPresent())
                     .map(Object::toString)
                     .reduce((a, b) -> a + ", " + b)
-                    .get();
+                    .orElseThrow();
             throw new RuntimeException("Multiple matches are present: "
                     + projectRenderer.resourceRootPath2().toString()
                     + ": "

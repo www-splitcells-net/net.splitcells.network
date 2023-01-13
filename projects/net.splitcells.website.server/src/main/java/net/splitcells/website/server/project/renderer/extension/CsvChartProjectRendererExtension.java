@@ -58,7 +58,7 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
                 metaElement.appendChild(pathElement);
                 page.appendChild(metaElement);
                 page.appendChild(content);
-                return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(page), config).get()
+                return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(page), config).orElseThrow()
                         , HTML_TEXT.codeName()));
             }
         }

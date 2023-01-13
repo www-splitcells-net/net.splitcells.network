@@ -110,7 +110,7 @@ public class ObjectsRendererI implements ProjectRenderer {
             return Optional.of(renderingResult(projectRenderer.renderHtmlBodyContent(object.render()
                             , object.title()
                             , Optional.of(relativeArgPath)
-                            , config).get()
+                            , config).orElseThrow()
                     , TEXT_HTML.toString()));
         }
         return Optional.empty();

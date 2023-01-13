@@ -68,7 +68,7 @@ public class TextProjectRendererExtension implements ProjectRendererExtension {
             metaElement.appendChild(pathElement);
             content.appendChild(metaElement);
             content.appendChild(Xml.textNode(Paths.readString(fileToRender.get())));
-            return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(content), config).get()
+            return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(content), config).orElseThrow()
                     , HTML_TEXT.codeName()));
         }
         return Optional.empty();

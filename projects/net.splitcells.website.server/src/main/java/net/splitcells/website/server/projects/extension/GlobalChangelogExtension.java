@@ -54,7 +54,7 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
                     renderingResult(projectsRendererI.renderHtmlBodyContent("<ol>" + eventUtils.renderEvents(events) + "</ol>"
                                     , Optional.of("Global Changelog")
                                     , Optional.of(path)
-                                    , config).get()
+                                    , config).orElseThrow()
                             , TEXT_HTML.toString()));
         }
         return Optional.empty();
