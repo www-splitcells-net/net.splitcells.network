@@ -3,6 +3,10 @@
          xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://splitcells.net/sew.xsd"
          xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
          xmlns:x="http://www.w3.org/1999/xhtml" xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR MIT
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
     <meta>
         <title>Main Menu</title>
         <license>standard</license>

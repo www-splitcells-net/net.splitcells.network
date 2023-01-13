@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Tasks
 1. Require https://gitlab.com/splitcells/net.splitcells.os.state.interface for this 
    project.

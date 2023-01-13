@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Standard Maven Pom for Java Projects for splitcells.net
 ## Profiles
 ### deployable-jar
