@@ -39,6 +39,11 @@ public class MetaAttribute<T> implements Attribute<Class<T>> {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
     public Bool isInstanceOf(Object arg) {
         return bool(type.isAssignableFrom((Class<?>) arg));
     }

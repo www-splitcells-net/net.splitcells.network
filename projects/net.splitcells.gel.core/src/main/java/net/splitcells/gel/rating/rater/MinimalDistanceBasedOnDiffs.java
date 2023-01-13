@@ -105,7 +105,8 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
         final int sortedIndexes = sortedLines.indexOf(
                 sortedLines.stream()
                         .filter(e -> e.value(LINE).equals(removal.value(LINE)))
-                        .findFirst().get());
+                        .findFirst()
+                        .orElseThrow());
         if (sortedIndexes == 0) {
             // KOMPORMISS
             int i = 1;
@@ -238,7 +239,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                 sortedLines.stream()
                         .filter(e -> e.value(LINE).equals(addition.value(LINE)))
                         .findFirst()
-                        .get());
+                        .orElseThrow());
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             assertThat
                     (sortedLines.stream()

@@ -56,7 +56,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
         return (R) MetaRatingI.metaRating(combiners.entrySet().stream()
                 .filter(combiner -> combiner.getKey().test(ratings, additionalRatingMap))
                 .findFirst()
-                .get()
+                .orElseThrow()
                 .getValue()
                 .apply(ratings, additionalRatingMap));
     }

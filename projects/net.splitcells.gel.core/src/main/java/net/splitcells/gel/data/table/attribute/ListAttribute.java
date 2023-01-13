@@ -46,6 +46,11 @@ public class ListAttribute<T> implements Attribute<List<T>> {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
     public Bool isInstanceOf(Object arg) {
         if (arg instanceof List<?>) {
             return bool(

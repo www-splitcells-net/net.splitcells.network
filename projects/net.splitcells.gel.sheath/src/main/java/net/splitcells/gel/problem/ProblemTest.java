@@ -41,7 +41,7 @@ class ProblemTest {
         solution.constraint()
                 .rating()
                 .compare_partially_to(cost(0))
-                .get()
+                .orElseThrow()
                 .requireEqualsTo(EQUAL);
     }
 
@@ -61,7 +61,7 @@ class ProblemTest {
         solution.constraint()
                 .rating()
                 .compare_partially_to(noCost())
-                .get()
+                .orElseThrow()
                 .requireEqualsTo(EQUAL);
         final Line firstAllocation;
         {
@@ -73,7 +73,7 @@ class ProblemTest {
             solution.constraint()
                     .rating()
                     .compare_partially_to(cost(defaultCost))
-                    .get()
+                    .orElseThrow()
                     .requireEqualsTo(EQUAL);
         }
         final Line secondAllocation;
@@ -86,7 +86,7 @@ class ProblemTest {
             solution.constraint()
                     .rating()
                     .compare_partially_to(cost(2d * defaultCost))
-                    .get()
+                    .orElseThrow()
                     .requireEqualsTo(EQUAL);
         }
         {
@@ -104,7 +104,7 @@ class ProblemTest {
             solution.constraint()
                     .rating()
                     .compare_partially_to(cost(defaultCost))
-                    .get()
+                    .orElseThrow()
                     .requireEqualsTo(EQUAL);
         }
         {
@@ -114,7 +114,7 @@ class ProblemTest {
             solution.constraint()
                     .rating()
                     .compare_partially_to(noCost())
-                    .get()
+                    .orElseThrow()
                     .requireEqualsTo(EQUAL);
         }
     }

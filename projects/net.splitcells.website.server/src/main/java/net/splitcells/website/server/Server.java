@@ -62,11 +62,11 @@ public class Server {
                             .setLogActivity(true)//
                             .setSsl(true)//
                             .setKeyCertOptions(new PfxOptions()
-                                    .setPath(config.sslKeystoreFile().get().toString())
-                                    .setPassword(config.sslKeystorePassword().get()))
+                                    .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                    .setPassword(config.sslKeystorePassword().orElseThrow()))
                             .setTrustOptions(new PfxOptions()
-                                    .setPath(config.sslKeystoreFile().get().toString())
-                                    .setPassword(config.sslKeystorePassword().get()))
+                                    .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                    .setPassword(config.sslKeystorePassword().orElseThrow()))
                             .setPort(config.openPort());
                     final var router = Router.router(vertx);
                     router.route("/favicon.ico").handler(a -> {
@@ -124,11 +124,11 @@ public class Server {
                 final var webServerOptions = new HttpServerOptions()
                         .setSsl(true)
                         .setKeyCertOptions(new PfxOptions()
-                                .setPath(config.sslKeystoreFile().get().toString())
-                                .setPassword(config.sslKeystorePassword().get()))
+                                .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                .setPassword(config.sslKeystorePassword().orElseThrow()))
                         .setTrustOptions(new PfxOptions()
-                                .setPath(config.sslKeystoreFile().get().toString())
-                                .setPassword(config.sslKeystorePassword().get()))
+                                .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                .setPassword(config.sslKeystorePassword().orElseThrow()))
                         .setClientAuth(ClientAuth.REQUIRED)
                         .setLogActivity(true)
                         .setPort(config.openPort());

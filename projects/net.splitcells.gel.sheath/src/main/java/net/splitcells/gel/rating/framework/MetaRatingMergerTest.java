@@ -40,9 +40,9 @@ public class MetaRatingMergerTest {
                     return rVal;
                 });
         MetaRating firstResult = testSubject.combine(profit(1));
-        firstResult.content().get(Profit.class).compare_partially_to(profit(4)).get().requireEqualsTo(EQUAL);
+        firstResult.content().get(Profit.class).compare_partially_to(profit(4)).orElseThrow().requireEqualsTo(EQUAL);
         MetaRating secondResult = firstResult.combine(profit(3));
-        secondResult.content().get(Profit.class).compare_partially_to(profit(7)).get().requireEqualsTo(EQUAL);
+        secondResult.content().get(Profit.class).compare_partially_to(profit(7)).orElseThrow().requireEqualsTo(EQUAL);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class MetaRatingMergerTest {
                     return rVal;
                 });
         MetaRating firstResult = testSubject.combine(cost(1));
-        firstResult.content().get(Profit.class).compare_partially_to(cost(6)).get().requireEqualsTo(EQUAL);
+        firstResult.content().get(Profit.class).compare_partially_to(cost(6)).orElseThrow().requireEqualsTo(EQUAL);
     }
 
     @Test

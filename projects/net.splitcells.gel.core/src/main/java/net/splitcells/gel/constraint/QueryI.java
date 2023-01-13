@@ -167,7 +167,7 @@ public class QueryI implements Query {
                     final var attributeClassification = (Rater) classification.arguments().get(0);
                     return attributeClassification.arguments().isEmpty();
                 }).reduce(ensureSingle())
-                .get();
+                .orElseThrow();
         return nextQueryPathElement(this, setOfUniques(groups), resultBase);
     }
 

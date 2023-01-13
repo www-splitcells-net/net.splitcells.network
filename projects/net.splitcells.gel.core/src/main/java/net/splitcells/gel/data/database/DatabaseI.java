@@ -145,7 +145,7 @@ public class DatabaseI implements Database {
                             + typed_column_index.keySet().stream()
                             .map(a -> a.name())
                             .reduce((a, b) -> a + ", " + b)
-                            .get()
+                            .orElseThrow()
                     )
                     .isTrue();
         }
@@ -327,7 +327,7 @@ public class DatabaseI implements Database {
         return lines.stream()
                 .filter(citaRinda -> citaRinda.value(atribūts).index() == rinda.index())
                 .reduce(StreamUtils.ensureSingle())
-                .get();
+                .orElseThrow();
     }
 
     @Override

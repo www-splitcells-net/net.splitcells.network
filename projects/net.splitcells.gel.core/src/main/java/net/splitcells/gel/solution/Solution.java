@@ -217,8 +217,8 @@ public interface Solution extends Problem, SolutionView {
     default Solution optimize(OptimizationEvent event, OptimizationParameters parameters) {
         if (event.stepType().equals(ADDITION)) {
             this.allocate(
-                    demandsFree().rawLine(event.demand().interpret().get().index()),
-                    suppliesFree().rawLine(event.supply().interpret().get().index()));
+                    demandsFree().rawLine(event.demand().interpret().orElseThrow().index()),
+                    suppliesFree().rawLine(event.supply().interpret().orElseThrow().index()));
         } else if (event.stepType().equals(REMOVAL)) {
             final var demandBeforeRemoval = event.demand().interpret();
             final var supplyBeforeRemoval = event.supply().interpret();
@@ -228,8 +228,8 @@ public interface Solution extends Problem, SolutionView {
                 }
             }
             remove(allocationsOf
-                    (demandBeforeRemoval.get()
-                            , supplyBeforeRemoval.get())
+                    (demandBeforeRemoval.orElseThrow()
+                            , supplyBeforeRemoval.orElseThrow())
                     .iterator()
                     .next());
         } else {

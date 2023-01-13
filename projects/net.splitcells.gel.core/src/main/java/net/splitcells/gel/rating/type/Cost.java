@@ -10,6 +10,7 @@
  */
 package net.splitcells.gel.rating.type;
 
+import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
@@ -40,10 +41,11 @@ public class Cost implements Rating {
                 return Ordering.EQUAL;
             } else if (a < b) {
                 return Ordering.LESSER_THAN;
-            } else if (a > b) {
-                return Ordering.GREATER_THAN;
             } else {
-                throw new IllegalArgumentException();
+                if (ENFORCING_UNIT_CONSISTENCY) {
+                    bool(a > b).required();
+                }
+                return Ordering.GREATER_THAN;
             }
         }
     };
@@ -122,7 +124,7 @@ public class Cost implements Rating {
     @Override
     public boolean equals(Object ob) {
         if (ob instanceof Rating) {
-            return compare_partially_to((Rating) ob).get().equals(EQUAL);
+            return compare_partially_to((Rating) ob).orElseThrow().equals(EQUAL);
         }
         return false;
     }

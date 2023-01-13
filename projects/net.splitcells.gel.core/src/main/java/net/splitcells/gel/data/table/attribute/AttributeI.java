@@ -68,6 +68,11 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
     public Bool isInstanceOf(Object arg) {
         return bool(type.isAssignableFrom(arg.getClass()));
     }

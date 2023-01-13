@@ -49,7 +49,7 @@ public class RatingTranslatorI implements RatingTranslator {
                 .filter(i -> i.getKey().test(ratings))
                 .map(i -> i.getValue())
                 .findFirst();
-        fittingTranslator = translatorCandidate.get();
+        fittingTranslator = translatorCandidate.orElseThrow();
         return (T) fittingTranslator.apply(ratings);
     }
 

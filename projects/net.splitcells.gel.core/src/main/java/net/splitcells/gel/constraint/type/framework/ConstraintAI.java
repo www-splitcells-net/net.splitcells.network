@@ -217,7 +217,7 @@ public abstract class ConstraintAI implements Constraint {
         }
         return routingRating.ratingComponents().stream()
                 .reduce((a, b) -> a.combine(b))
-                .get();
+                .orElseThrow();
     }
 
     protected RoutingRating routingRating
@@ -274,7 +274,7 @@ public abstract class ConstraintAI implements Constraint {
         }
         return routingRating.ratingComponents().stream()
                 .reduce((a, b) -> a.combine(b))
-                .get();
+                .orElseThrow();
     }
 
     /**

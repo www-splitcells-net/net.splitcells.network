@@ -21,9 +21,9 @@ import static net.splitcells.gel.rating.type.Optimality.optimality;
 public class OptimalityTest {
     @Test
     public void testOrder() {
-        optimality(0).compare_partially_to(optimality(.1)).get().requireEqualsTo(LESSER_THAN);
-        optimality(.1).compare_partially_to(optimality(0)).get().requireEqualsTo(GREATER_THAN);
-        optimality().compare_partially_to(optimality()).get().requireEqualsTo(EQUAL);
+        optimality(0).compare_partially_to(optimality(.1)).orElseThrow().requireEqualsTo(LESSER_THAN);
+        optimality(.1).compare_partially_to(optimality(0)).orElseThrow().requireEqualsTo(GREATER_THAN);
+        optimality().compare_partially_to(optimality()).orElseThrow().requireEqualsTo(EQUAL);
     }
 
     @Test

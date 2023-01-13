@@ -374,11 +374,11 @@ public class ProjectRendererI implements ProjectRenderer {
             pathElement.appendChild(Xml.textNode(layoutConfig.path()));
             layoutConfigElement.appendChild(pathElement);
         }
-        if (layoutConfig.title().isPresent()) {
+        layoutConfig.title().ifPresent(title -> {
             final var titleElement = Xml.elementWithChildren(NameSpaces.SEW, "title");
             titleElement.appendChild(Xml.textNode(layoutConfig.title().get()));
             layoutConfigElement.appendChild(titleElement);
-        }
+        });
         {
             final var contentElement = Xml.elementWithChildren(NameSpaces.SEW, "content");
             contentElement.appendChild(Xml.textNode(MARKER));
@@ -391,8 +391,9 @@ public class ProjectRendererI implements ProjectRenderer {
         });
         try {
             var xmlToRender = Xml.toPrettyString(layoutConfigElement).replace(MARKER, xml);
-            if (layoutConfig.localPathContext().isPresent()) {
-                xmlToRender = xmlToRender.replace(PATH_CONTEXT_MARKER, layoutConfig.localPathContext().get().toHtmlString());
+            final var localPathContext = layoutConfig.localPathContext();
+            if (localPathContext.isPresent()) {
+                xmlToRender = xmlToRender.replace(PATH_CONTEXT_MARKER, localPathContext.get().toHtmlString());
             }
             return Optional.of(renderer()
                     .transform(xmlToRender)
