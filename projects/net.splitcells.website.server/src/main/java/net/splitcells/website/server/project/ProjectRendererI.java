@@ -176,6 +176,12 @@ public class ProjectRendererI implements ProjectRenderer {
                                         + "</val>");
                     } else if ("/net/splitcells/website/server/config/menu/detailed.xsl".equals(p)) {
                         return config.detailedXslMenu();
+                    } else if ("/net/splitcells/website/server/config/css/files.xml".equals(p) && !config.cssFiles().isEmpty()) {
+                        return Optional.of("<val xmlns=\"http://splitcells.net/den.xsd\">" +
+                                config.cssFiles().stream()
+                                        .map(css -> "<val>" + css + "</val>")
+                                        .reduce("", (a, b) -> a + b) +
+                                "</val>");
                     }
                     return Optional.empty();
                 });

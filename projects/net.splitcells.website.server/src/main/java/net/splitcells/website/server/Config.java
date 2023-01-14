@@ -20,6 +20,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
+
 /**
  * TODO IDEA Use string and enum based mapping as a backend,
  * so that clones can easily be created.
@@ -67,6 +69,10 @@ public class Config {
     private int openPort = 443;
     private String generationStyle = "standard";
     /**
+     * Lists all CSS files, that should be used for the layouts instead of the standard ones, used by the layout.
+     */
+    private List<String> cssFiles = list();
+    /**
      * TODO This does not seem to be used actively anymore.
      * It was used for some specific resources,
      * but this way of resource loading should probably not be used anymore,
@@ -84,7 +90,7 @@ public class Config {
      * List of paths, that are equivalent to {@link #rootIndex}.
      * Browsers like Firefox like to call <q>[...]/index.html</q> instead of <q>[...]/</q>.
      */
-    private List<String> possibleRootIndex = Lists.list(rootIndex
+    private List<String> possibleRootIndex = list(rootIndex
             , "index.html"
             , ""
             , "/");
@@ -249,5 +255,15 @@ public class Config {
 
     public Optional<String> detailedXslMenu() {
         return detailedXslMenu;
+    }
+
+    @ReturnsThis
+    public Config withCssFiles(List<String> arg) {
+        cssFiles = arg;
+        return this;
+    }
+
+    public List<String> cssFiles() {
+        return cssFiles;
     }
 }

@@ -21,6 +21,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2023-01-14**: **\\#27** Introduce `net.splitcells.website.server.Config.cssFiles`,
+  in order to be able to replace the used css files used by the layout.
+  This in turn improves customizability of the layout, with 
 * **2022-11-19**: [**\\#s115** Speed up website deployment.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/115):
   Introduce `net.splitcells.website.server.Config.mutableProjectsPath` in order to state,
   if `projectsPath` can be assumed to stay the same during the web servers execution.
