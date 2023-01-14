@@ -16,10 +16,6 @@
 */
 /* TODO Split CSS in CSS without classes and CSS with specifics for this website.
 */
-main {
-    background-size: 100%;
-    background-image: linear-gradient(to bottom, var(--background-color-start), var(--background-color-end) 300em), url('/net/splitcells/martins/avots/website/images/license.standard/white.background.blog.discovery.0.jpg');
-	}
 code {
 	/* Code blocks are created by default CommonMark rendering. */
 	font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
