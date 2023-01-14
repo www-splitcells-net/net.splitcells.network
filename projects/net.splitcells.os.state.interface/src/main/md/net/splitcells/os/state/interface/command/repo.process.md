@@ -15,6 +15,36 @@ executes the generated command for each sub repo.
 
 In order to make this VCS independent, additional `repo.*` commands are provided.
 For instance, `repo.commit.all` is defined to commit all file changes.
+## Common Use Cases
+### Add new remote to each sub repo.
+This can be done via a Git specific command pattern:
+```
+repo.process --command='git remote add GitHub git@github.com:www-splitcells-net/$subRepo'
+```
+Alternatively, there is also a way, to do this more independently from Git.
+This has the advantage of being independent of the underlying VCS.
+Also, the concrete underlying implementation of updating the remote, can be changed later,
+without adjusting the command itself.
+This may be important, if such scripts are maintained for a longer period of time or
+if errors are found in the git commands itself.
+```
+repo.remote.set git@github.com:www-splitcells-net
+```
+### Cloning Meta Repos
+The following command clones a meta repo and its sub repos from another computer.
+```
+repo.clone.into.current ssh://some-user@computer.local:/home/some-user/repos
+```
+### Cloning Meta Repos From Git Hosters
+A bug is preventing the peer repos being cloned.
+So the following does not work at the moment.
+```
+repo.clone git@github.com:www-splitcells-net/net.splitcells.network.git
+repo.clone git@gitlab.com:splitcells-net/net.splitcells.network.git
+repo.clone git@git.sr.ht:~splitcells-net/net.splitcells.network
+```
+The nice thing about this, is the fact,
+that this works with any Git hoster and without any hoster specific adaptations.
 ## Repo Process Reasoning
 ### Objectives
 Provide a way to create a collection of all file system based repositories of a user, which can be worked on as one.
