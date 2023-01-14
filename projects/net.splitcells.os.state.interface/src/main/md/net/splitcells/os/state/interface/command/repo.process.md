@@ -2,6 +2,19 @@
 * SPDX-License-Identifier: EPL-2.0 OR MIT
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
+# Repo Process
+Repo process (`repo.process` is the name in the shell) is a command,
+that enables one to iterate over a set of repos,
+in order to interact with them as one.
+
+This is done, by providing a program,
+that takes a starting repo and a command pattern as an argument.
+Repo process iterates over all sub repositories,
+generates a command via the given pattern for each repo and
+executes the generated command for each sub repo.
+
+In order to make this VCS independent, additional `repo.*` commands are provided.
+For instance, `repo.commit.all` is defined to commit all file changes.
 ## Repo Process Reasoning
 ### Objectives
 Provide a way to create a collection of all file system based repositories of a user, which can be worked on as one.
