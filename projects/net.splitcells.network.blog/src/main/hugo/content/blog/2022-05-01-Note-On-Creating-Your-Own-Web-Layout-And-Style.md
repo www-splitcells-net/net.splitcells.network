@@ -19,6 +19,10 @@ even though Jekyll was abandoned.
 
 Luckily, the designing itself did not take a lot of time,
 but bug fixing and refactoring the code took plenty of time.
+
+Nevertheless, I should have used an existing layout at least at the beginning and
+only create a custom one,
+if there is a concrete need for it and possible future requirements are known as well.
 # Cleaning up the mess.
 By now, I'm at the point, where the state of the site is ok and
 advantages of a custom layout and styling are present.
