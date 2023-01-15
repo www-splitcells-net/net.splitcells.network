@@ -38,6 +38,22 @@ ol > ol {
 	background-color: var(--background-color-priority-2);
         color: var(--foreground-color-priority-2);
 	}
+.net-splitcells-priority-4 > .net-splitcells-button {
+	background-color: var(--background-color-priority-3);
+    color: var(--foreground-color-priority-3);
+	}
+.net-splitcells-priority-4 > .net-splitcells-button:hover {
+	background-color: var(--background-color-priority-0);
+    color: var(--foreground-color-priority-0);
+	}
+.net-splitcells-content-column .net-splitcells-button {
+	background-color: var(--background-color-priority-0);
+    color: var(--foreground-color-priority-0);
+	}
+.net-splitcells-content-column .net-splitcells-button:hover {
+	background-color: var(--background-color-structural-guide);
+    color: var(--foreground-color-structural-guide);
+	}
 .net-splitcells-quote-display > .label {
     background-image: linear-gradient(var(--paragraph-background-color-priority-1-a) 1.4em, var(--paragraph-background-color-priority-1-b) 1.4em);
     width: 100%;
@@ -111,7 +127,7 @@ main {
 	}
 *.user-specific {
 	}
-*.Standard_p4 {
+*.Standard_p4, *.net-splitcells-priority-4 {
 	background-color: var(--background-color-priority-4);
 	color: var(--foreground-color-priority-4);
 	}
@@ -267,6 +283,13 @@ a.NonStandard {
 a {
 	text-decoration: none;
 	font-weight: bold;
+	}
+.net-splitcells-menu a {
+	text-decoration: none;
+	font-weight: bold;
+    color: var(--foreground-color-priority-3);
+	}
+.net-splitcells-content-column a, .rightDecoration a, .splitcells-net-title-logo a {
     color: var(--foreground-color-priority-0);
 	}
 .paragraph a,
