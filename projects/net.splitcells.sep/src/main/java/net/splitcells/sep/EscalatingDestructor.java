@@ -14,19 +14,19 @@ import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+/**
+ * This optimizer processes
+ */
 public class EscalatingDestructor {
 
-    public static EscalatingDestructor escalatingDestructor(SolutionConnection dependentToOriginal) {
-        return new EscalatingDestructor(dependentToOriginal);
+    public static EscalatingDestructor escalatingDestructor() {
+        return new EscalatingDestructor();
     }
 
-    private final SolutionConnection dependentToOriginal;
-
-    private EscalatingDestructor(SolutionConnection dependentToOriginal) {
-        this.dependentToOriginal = dependentToOriginal;
+    private EscalatingDestructor() {
     }
 
-    public void optimize(Solution original, Solution dependent) {
+    public void optimize(Solution original, Solution dependent, SolutionConnection dependentToOriginal) {
         throw notImplementedYet();
     }
 }
