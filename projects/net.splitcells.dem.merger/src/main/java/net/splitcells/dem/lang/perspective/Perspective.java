@@ -274,6 +274,47 @@ public interface Perspective extends PerspectiveView {
         return xmlString;
     }
 
+    default String toXmlStringWithPrefixes() {
+        String xmlString = "";
+        if (name().isBlank()) {
+            return "<empty/>";
+        } else if (!_VALID_XML_NAME.matcher(name()).matches()) {
+            xmlString += "<d:val name=\"" + xmlName() + "\">";
+            xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+            xmlString += "</d:val>";
+        } else if (nameSpace().equals(HTML)) {
+            if (children().isEmpty()) {
+                xmlString += "<x:" + name() + "/>";
+            } else {
+                xmlString += "<x:" + name() + ">";
+                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += "</x:" + name() + ">";
+            }
+        } else if (nameSpace().equals(STRING)) {
+            xmlString += xmlName();
+            xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+        } else if (nameSpace().equals(NATURAL)) {
+            if (children().isEmpty()) {
+                xmlString += "<n:" + name() + "/>";
+            } else {
+                xmlString += "<n:" + name() + ">";
+                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += "</n:" + name() + ">";
+            }
+        } else if (nameSpace().equals(DEN)) {
+            if (children().isEmpty()) {
+                xmlString += "<d:" + name() + "/>";
+            } else {
+                xmlString += "<d:" + name() + ">";
+                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += "</d:" + name() + ">";
+            }
+        } else {
+            throw executionException("No prefix known for given perspective: " + nameSpace().uri());
+        }
+        return xmlString;
+    }
+
     default Perspective subtree(List<String> path) {
         if (path.isEmpty()) {
             return this;
