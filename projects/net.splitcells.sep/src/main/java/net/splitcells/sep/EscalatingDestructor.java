@@ -15,7 +15,7 @@ import net.splitcells.gel.solution.Solution;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
- * This optimizer processes
+ * This optimizer processes a given
  */
 public class EscalatingDestructor {
 
@@ -26,7 +26,7 @@ public class EscalatingDestructor {
     private EscalatingDestructor() {
     }
 
-    public void optimize(Solution original, Solution dependent, SolutionConnection dependentToOriginal) {
+    public void optimize(SolutionConnection dependentToOriginal) {
         throw notImplementedYet();
     }
 }
