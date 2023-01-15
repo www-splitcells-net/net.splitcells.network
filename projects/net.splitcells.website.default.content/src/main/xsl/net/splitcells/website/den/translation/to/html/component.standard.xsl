@@ -657,7 +657,7 @@
         <xsl:value-of select="."/>
     </xsl:template>
     <xsl:template match="s:option">
-        <a class="linkButton">
+        <a class="net-splitcells-button">
             <xsl:attribute name="href">
                 <xsl:choose>
                     <xsl:when test="s:url">
@@ -678,9 +678,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-            <div class="highlighted_button MainButton_S">
-                <xsl:apply-templates select="./s:name/node()"/>
-            </div>
+            <xsl:apply-templates select="./s:name/node()"/>
         </a>
     </xsl:template>
     <xsl:template match="s:choice">
@@ -837,5 +835,25 @@ window.onload = function() {
 };
 ]]>
         </script>
+    </xsl:template>
+    <xsl:template match="s:import">
+        <xsl:choose>
+            <xsl:when test="s:from-variable">
+                <xsl:variable name="fromVariable">
+                    <xsl:value-of select="s:from-variable"/>
+                </xsl:variable>
+                <xsl:choose>
+                    <xsl:when test="$fromVariable='net-splitcells-website-server-config-menu-detailed'">
+                        <xsl:copy-of select="$net-splitcells-website-server-config-menu-detailed"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message terminate="true" select="'Unknown variable.'"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:message terminate="true" select="'Import parameters are unknown.'"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>
