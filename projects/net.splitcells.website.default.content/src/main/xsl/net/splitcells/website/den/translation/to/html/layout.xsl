@@ -21,6 +21,7 @@
     -->
     <!-- Defines the standard html layout. -->
     <!-- TODO s:root-relative-url(
+    TODO Use only css classes with net-splitcells prefix for best portability.
     TODO PERFORMANCE Do not import libraries which are not needed.
     TODO Minimize number of elements with css classes,
          in order to improve compatibility with external css stylesheet.-->
@@ -651,7 +652,7 @@ window.onload = function() {
                                 </xsl:if>
                                 <div class="net-splitcells-content-filler net-splitcells-component-priority-2 net-splitcells-space-filler"></div>
                             </div>
-                            <div class="menu Left_shadow TextCell Layout Standard_p4 net-splitcells-menu">
+                            <div class="menu Left_shadow TextCell Layout net-splitcells-priority-4">
                                 <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">
                                     <div class="splitcells-net-window-menu-line-1">
                                         <a class="net-splitcells-button net-splitcells-main-button-project-logo">
@@ -671,94 +672,95 @@ window.onload = function() {
                                     <div class="net-splitcells-structural-guide"></div>
                                     <div class="splitcells-net-window-menu-line-2"></div>
                                 </div>
-                                <br></br>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">Content</a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of select="s:root-relative-url('/legal/impressum.html')"/>
-                                    </xsl:attribute>
-                                    Impressum
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of select="concat($site-instance-host-root-path, 'net/splitcells/website/main-menu.html')"/>
-                                    </xsl:attribute>
-                                    Main Menu
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of select="s:root-relative-url('/legal/privacy-policy.html')"/>
-                                    </xsl:attribute>
-                                    Privacy Policy
-                                </a>
-                                <div class="messages">
-                                    <h3>Messages</h3>
-                                    <div class="noScriptMessage TextCell text_error">- Activate Javascript in order to enable all functions of this site.</div>
-                                    <br/>
+                                <div class="net-splitcells-menu">
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">Content</a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href">
+                                            <xsl:value-of select="s:root-relative-url('/legal/impressum.html')"/>
+                                        </xsl:attribute>
+                                        Impressum
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
+                                        <xsl:attribute name="href">
+                                            <xsl:value-of select="concat($site-instance-host-root-path, 'net/splitcells/website/main-menu.html')"/>
+                                        </xsl:attribute>
+                                        Main Menu
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href">
+                                            <xsl:value-of select="s:root-relative-url('/legal/privacy-policy.html')"/>
+                                        </xsl:attribute>
+                                        Privacy Policy
+                                    </a>
+                                    <div class="messages">
+                                        <h3>Messages</h3>
+                                        <div class="noScriptMessage TextCell text_error">- Activate Javascript in order to enable all functions of this site.</div>
+                                        <br/>
+                                    </div>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3 net-splitcells-network-status">
+                                        <xsl:attribute name="href">
+                                            <xsl:value-of
+                                                    select="s:default-root-relative-url('net/splitcells/network/status.html')"/>
+                                        </xsl:attribute>
+                                    </a>
+                                    <xsl:copy-of select="$net-splitcells-website-server-config-menu-detailed"/>
+                                    <h3>Metadata About This Document</h3>
+                                    <p>Unless otherwise noted, the
+                                        content of this
+                                        html file is licensed under the
+                                        <a href="/net/splitcells/network/legal/licenses/EPL-2.0.html">EPL-2.0</a>
+                                        OR <a href="/net/splitcells/network/legal/licenses/MIT.html">MIT</a>.
+                                    </p>
+                                    <p>Files and other contents, which are linked to by this
+                                        HTML file, have their own rulings.
+                                    </p>
+                                    <h4>Validation</h4>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href"
+                                                       select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, '/', ./s:path/text(), '/', substring(./s:name, 1, string-length(./s:name) - 4), '.html')"/>
+                                        HTML Validation
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href"
+                                                       select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/basic.themed.css'))"/>
+                                        basic.themed.css
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href"
+                                                       select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/basic.css'))"/>
+                                        basic.css
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href"
+                                                       select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/theme.white.variables.css'))"/>
+                                        theme.white.variables .css
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href"
+                                                       select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/layout.column.main.fullscreen.css'))"/>
+                                        layout.column.main. fullscreen.css
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href"
+                                                       select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/den.css'))"/>
+                                        den.css
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href"
+                                                       select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/layout.default.css'))"/>
+                                        layout.default.css
+                                    </a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
+                                        <xsl:attribute name="href"
+                                                       select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/theme.css'))"/>
+                                        theme.css
+                                    </a>
+                                    <div class="net-splitcells-space-filler"></div>
+                                    <h3>Footer Functions</h3>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3" href="#topElement">
+                                        back to top
+                                    </a>
                                 </div>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3 net-splitcells-network-status">
-                                    <xsl:attribute name="href">
-                                        <xsl:value-of
-                                                select="s:default-root-relative-url('net/splitcells/network/status.html')"/>
-                                    </xsl:attribute>
-                                </a>
-                                <xsl:copy-of select="$net-splitcells-website-server-config-menu-detailed"/>
-                                <h3>Metadata About This Document</h3>
-                                <p>Unless otherwise noted, the
-                                    content of this
-                                    html file is licensed under the
-                                    <a href="/net/splitcells/network/legal/licenses/EPL-2.0.html">EPL-2.0</a>
-                                    OR <a href="/net/splitcells/network/legal/licenses/MIT.html">MIT</a>.
-                                </p>
-                                <p>Files and other contents, which are linked to by this
-                                    HTML file, have their own rulings.
-                                </p>
-                                <h4>Validation</h4>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href"
-                                                   select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, '/', ./s:path/text(), '/', substring(./s:name, 1, string-length(./s:name) - 4), '.html')"/>
-                                    HTML Validation
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href"
-                                                   select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/basic.themed.css'))"/>
-                                    basic.themed.css
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href"
-                                                   select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/basic.css'))"/>
-                                    basic.css
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href"
-                                                   select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/theme.white.variables.css'))"/>
-                                    theme.white.variables .css
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href"
-                                                   select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/layout.column.main.fullscreen.css'))"/>
-                                    layout.column.main. fullscreen.css
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href"
-                                                   select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/den.css'))"/>
-                                    den.css
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href"
-                                                   select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/layout.default.css'))"/>
-                                    layout.default.css
-                                </a>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                    <xsl:attribute name="href"
-                                                   select="concat('http://jigsaw.w3.org/css-sourceValidator/sourceValidator?uri=', $site.url, s:default-root-relative-url('/css/theme.css'))"/>
-                                    theme.css
-                                </a>
-                                <div class="net-splitcells-space-filler"></div>
-                                <h3>Footer Functions</h3>
-                                <a class="net-splitcells-button net-splitcells-component-priority-3" href="#topElement">
-                                    back to top
-                                </a>
                             </div>
                             <div class="rightDecoration Right_shadow">
                                 <div class="Borderless Standard_p2 Layout decorationBoxRight"
