@@ -19,14 +19,33 @@ import net.splitcells.gel.solution.Solution;
  * <p>TODO Make this interface the main one to create protocols,
  * synchronizing 2 {@link Solution} in a {@link Network},
  * instead of {@link DatabaseSynchronization}.</p>
- * <p>This interface contains information about 2 {@link Solution}, that are linked to each other.</p>
+ * <p>This interface contains information about 2 {@link Solution}, that are linked to each other.
+ * Allocated {@link Line} from {@link #original()} are sent to {@link #dependent()}.</p>
  */
 public interface SolutionConnection {
+
     /**
-     * @param original
-     * @param dependent
-     * @param dependentLine
-     * @return
+     * {@link Line} of {@link Solution#allocations()} are provided,
+     * in order to create {@link Line} of {@link #dependent()}'s. {@link Solution#demands()} or {@link Solution#supplies()}.
+     *
+     * @return The source of {@link Line} for {@link #dependent()}
      */
-    List<Line> findLinesOfOriginal(Solution original, Solution dependent, Line dependentLine);
+    Solution original();
+
+    /**
+     * The {@link Line} of {@link Solution#supplies()} or {@link Solution#demands()} of the {@link #dependent()}
+     * are derived from {@link Line} of {@link #original()}.
+     *
+     * @return The {@link Solution} that depends on {@link Line} from {@link #original()}.
+     */
+    Solution dependent();
+
+    /**
+     * For a given {@link Line} of {@link #dependent()},
+     * returns the corresponding {@link Line} of {@link #original()}.
+     *
+     * @param dependentLine {@link Line} of {@link #dependent()}
+     * @return corresponding {@link Line} of {@link #original()}
+     */
+    List<Line> findLinesOfOriginal(Line dependentLine);
 }
