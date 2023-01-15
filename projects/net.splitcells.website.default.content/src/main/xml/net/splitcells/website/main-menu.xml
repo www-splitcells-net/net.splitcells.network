@@ -18,27 +18,30 @@
         </option>
         <option>
             <name>Licensing</name>
-            <page>net/splitcells/martins/avots/website//legal/licensing</page>
+            <page>/net/splitcells/martins/avots/website//legal/licensing</page>
         </option>
         <option>
             <name>Privacy Policy</name>
-            <page>net/splitcells/martins/avots/website//legal/privacy-policy</page>
+            <page>/net/splitcells/martins/avots/website//legal/privacy-policy</page>
         </option>
         <option>
             <name>Global Changelog</name>
-            <page>net/splitcells/CHANGELOG.global</page>
+            <page>/net/splitcells/CHANGELOG.global</page>
         </option>
         <option>
             <name>Network Status</name>
-            <page>net/splitcells/network/status</page>
+            <page>/net/splitcells/network/status</page>
         </option>
         <option>
             <name>Website's Layout</name>
-            <page>net/splitcells/website/layout</page>
+            <page>/net/splitcells/website/layout</page>
         </option>
         <option>
             <name>Refresh Layout</name>
-            <page>'/net/splitcells/website/layout/build</page>
+            <page>/net/splitcells/website/layout/build</page>
         </option>
+        <import>
+            <from-variable>net-splitcells-website-server-config-menu-detailed</from-variable>
+        </import>
     </content>
 </article>
