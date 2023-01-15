@@ -108,7 +108,7 @@ public final class Xml {
             elementWithChildren(rVal, nameSpaceDecleration(nameSpace));
             return rVal;
         } catch (Throwable e) {
-            throw ExecutionException.executionException("Could not transform String to XML element: " + name);
+            throw ExecutionException.executionException("Could not transform String to XML element: " + name, e);
         }
     }
 

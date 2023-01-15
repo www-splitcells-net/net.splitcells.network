@@ -25,6 +25,14 @@ public class ExecutionException extends RuntimeException {
         return new ExecutionException(message);
     }
 
+    public static ExecutionException executionException(String message, Throwable t) {
+        return new ExecutionException(message, t);
+    }
+
+    private ExecutionException(String message, Throwable t) {
+        super(message, t);
+    }
+
     public static ExecutionException executionException(Throwable t) {
         return new ExecutionException(t);
     }
