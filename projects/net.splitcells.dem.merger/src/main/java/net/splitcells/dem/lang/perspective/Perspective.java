@@ -157,7 +157,8 @@ public interface Perspective extends PerspectiveView {
     default org.w3c.dom.Node toDom() {
         final org.w3c.dom.Node dom;
         // HACK Use generic rendering specifics based on argument.
-        if (STRING.equals(nameSpace()) && children().isEmpty()) {
+        if (STRING.equals(nameSpace()) && children().isEmpty() ||
+                TEXT.equals(nameSpace()) && children().isEmpty()) {
             dom = Xml.textNode(name());
         } else {
             if (name().contains(" ")) {
