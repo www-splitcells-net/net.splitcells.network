@@ -7,7 +7,7 @@ test:
   image: maven:3.6.3-openjdk-11
   script:
     - cd ..
-    - git clone gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com:splitcells-net/net.splitcells.network.bom.git
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com:splitcells-net/net.splitcells.network.bom.git
     - cd net.splitcells.network.bom
     - mvn clean install
     - cd ../net.splitcells.network/projects/net.splitcells.system.root
