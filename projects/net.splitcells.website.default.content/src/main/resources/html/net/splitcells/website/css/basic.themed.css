@@ -38,11 +38,11 @@ ol > ol {
 	background-color: var(--background-color-priority-2);
         color: var(--foreground-color-priority-2);
 	}
-.net-splitcells-priority-4 > .net-splitcells-button {
+.net-splitcells-priority-4 .net-splitcells-button {
 	background-color: var(--background-color-priority-3);
     color: var(--foreground-color-priority-3);
 	}
-.net-splitcells-priority-4 > .net-splitcells-button:hover {
+.net-splitcells-priority-4 .net-splitcells-button:hover {
 	background-color: var(--background-color-priority-0);
     color: var(--foreground-color-priority-0);
 	}

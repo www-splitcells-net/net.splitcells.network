@@ -652,7 +652,7 @@ window.onload = function() {
                                 </xsl:if>
                                 <div class="net-splitcells-content-filler net-splitcells-component-priority-2 net-splitcells-space-filler"></div>
                             </div>
-                            <div class="menu Left_shadow TextCell Layout net-splitcells-priority-4">
+                            <div class="menu Left_shadow TextCell Layout">
                                 <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">
                                     <div class="splitcells-net-window-menu-line-1">
                                         <a class="net-splitcells-button net-splitcells-main-button-project-logo">
@@ -672,7 +672,7 @@ window.onload = function() {
                                     <div class="net-splitcells-structural-guide"></div>
                                     <div class="splitcells-net-window-menu-line-2"></div>
                                 </div>
-                                <div class="net-splitcells-menu">
+                                <div class="net-splitcells-menu net-splitcells-priority-4">
                                     <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">Content</a>
                                     <a class="net-splitcells-button net-splitcells-component-priority-3">
                                         <xsl:attribute name="href">
