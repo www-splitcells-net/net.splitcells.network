@@ -343,13 +343,15 @@ article h2 {
     padding-left: 1em;
     margin-left: .8em;
     }
-h3 {
+h3, .heading {
     padding-left: .4em;
+    margin-top: 1em;
+    margin-bottom: 1em;
     }
 h4 {
     padding-left: .4em;
     }
-.heading,
+article .heading,
 article h1,
 article h2,
 article h3,
