@@ -109,9 +109,11 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
             final var localPathContext = layoutConfig.localPathContext();
             if (localPathContext.isPresent()) {
                 documentString = Xml.toDocumentString(document)
-                        .replace(MARKER, perspective("path.context", NameSpaces.NATURAL)
-                                .withChild(localPathContext.get())
-                                .toHtmlString());
+                        .replace(MARKER, "<path.context " +
+                                "xmlns:d=\"http://splitcells.net/den.xsd\"" +
+                                ">" +
+                                localPathContext.get().toXmlStringWithPrefixes() +
+                                "</path.context>");
             } else {
                 documentString = Xml.toDocumentString(document);
             }
