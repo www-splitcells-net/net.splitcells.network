@@ -50,8 +50,10 @@ public final class StaticFlags {
     public static final boolean TELLING_STORY
             = Boolean.parseBoolean
             (System.getProperty("net.splitcells.dem.environment.config.StaticFlags.TELLING_STORY", "false"));
-    @Deprecated
-    public static final boolean WARNING = true;
+    /**
+     * TODO Warn, if warnings are disabled.
+     */
+    public static final boolean WARNING = false;
     /**
      * If this is true, logging is enabled.
      * This logging provides method call information.
