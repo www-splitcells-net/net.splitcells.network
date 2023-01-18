@@ -47,7 +47,7 @@ public class TimeSteps implements Rater {
         return new TimeSteps(timeAttribute, true);
     }
 
-    public static List<Rater> denseTimeSteps(Attribute<Integer> timeAttribute) {
+    public static List<Rater> overlappingTimeSteps(Attribute<Integer> timeAttribute) {
         return list(new TimeSteps(timeAttribute, true),
                 new TimeSteps(timeAttribute, false));
     }
