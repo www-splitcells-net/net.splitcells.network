@@ -29,6 +29,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JavaLegacyArtifact
 public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
 
+    /**
+     * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.
+     *
+     * @return Whether this list has a size bigger than zero.
+     */
+    default boolean hasElements() {
+        return !isEmpty();
+    }
+
     @JavaLegacyBody
     /**
      * This method avoids problems caused by {@link java.util.List#remove(Object)}.

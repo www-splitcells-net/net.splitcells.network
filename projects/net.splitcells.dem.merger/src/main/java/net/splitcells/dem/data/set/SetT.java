@@ -27,6 +27,16 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
 public interface SetT<T> extends Collection<T> {
+
+    /**
+     * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.
+     *
+     * @return Whether this list has a size bigger than zero.
+     */
+    default boolean hasElements() {
+        return !isEmpty();
+    }
+
     default <R> List<R> mapped(Function<T, R> mapper) {
         return Lists.<R>list().withAppended(
                 stream().map(mapper).collect(Lists.toList())
