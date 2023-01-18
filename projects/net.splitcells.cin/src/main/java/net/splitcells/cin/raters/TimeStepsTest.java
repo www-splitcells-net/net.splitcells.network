@@ -8,19 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.cin;
+package net.splitcells.cin.raters;
 
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.testing.Assertions;
-import net.splitcells.gel.Gel;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.cin.TimeSteps.NO_TIME_STEP_GROUP;
-import static net.splitcells.cin.TimeSteps.timeStepId;
-import static net.splitcells.cin.TimeSteps.timeSteps;
+import static net.splitcells.cin.raters.TimeSteps.NO_TIME_STEP_GROUP;
+import static net.splitcells.cin.raters.TimeSteps.timeStepId;
+import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -28,7 +25,6 @@ import static net.splitcells.dem.testing.TestTypes.EXPERIMENTAL_TEST;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDeinitializer.onlineLinearDeinitializer;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 

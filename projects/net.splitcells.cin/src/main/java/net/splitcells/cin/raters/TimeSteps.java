@@ -8,13 +8,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.cin;
+package net.splitcells.cin.raters;
 
-import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;

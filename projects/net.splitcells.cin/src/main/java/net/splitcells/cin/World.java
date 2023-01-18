@@ -33,9 +33,9 @@ import net.splitcells.gel.solution.SolutionView;
 import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.cin.PositionClusters.positionClustering;
-import static net.splitcells.cin.TimeSteps.denseTimeSteps;
-import static net.splitcells.cin.TimeSteps.timeSteps;
+import static net.splitcells.cin.raters.PositionClusters.positionClustering;
+import static net.splitcells.cin.raters.TimeSteps.denseTimeSteps;
+import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Pair.pair;

@@ -8,14 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.cin;
+package net.splitcells.cin.raters;
 
-import net.splitcells.dem.utils.MathUtils;
 import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.cin.PositionClusters.groupNameOfPositionCluster;
-import static net.splitcells.cin.PositionClusters.positionClusters;
+import static net.splitcells.cin.raters.PositionClusters.groupNameOfPositionCluster;
+import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package net.splitcells.cin;
+package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
