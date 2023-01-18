@@ -49,6 +49,11 @@ public class TimeSteps implements Rater {
         return new TimeSteps(timeAttribute, true);
     }
 
+    public static List<Rater> denseTimeSteps(Attribute<Integer> timeAttribute) {
+        return list(new TimeSteps(timeAttribute, true),
+                new TimeSteps(timeAttribute, false));
+    }
+
     public static Rater timeSteps(Attribute<Integer> timeAttribute, boolean isEven) {
         return new TimeSteps(timeAttribute, isEven);
     }
