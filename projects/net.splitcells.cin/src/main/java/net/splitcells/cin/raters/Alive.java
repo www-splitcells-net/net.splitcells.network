@@ -21,20 +21,31 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+/**
+ * <p>Given a group based on {@link TimeSteps} and {@link PositionClusters},
+ * filters {@link Line} where the player {@link #playerValue} is alive at the starting time.
+ * Other players are ignored by this {@link Rater} and are not propagated.</p>
+ * <p>The player of a group is identified by the {@link #playerAttribute} at the center position at the starting time.
+ * If {@link #playerAttribute} is equal to {@link #playerValue},
+ * than this {@link Rater} applies to the group.
+ * This way it is possible, to create different rules to different players.</p>
+ */
 public class Alive implements Rater {
-    public Rater alive(Attribute<Integer> aliveAttribute) {
-        return new Alive(aliveAttribute);
+    public Rater alive(Attribute<Integer> playerAttribute, int playerValue) {
+        return new Alive(playerAttribute, playerValue);
     }
 
-    final Attribute<Integer> aliveAttribute;
+    private final Attribute<Integer> playerAttribute;
+    private int playerValue;
 
-    private Alive(Attribute<Integer> aliveAttribute) {
-        this.aliveAttribute = aliveAttribute;
+    private Alive(Attribute<Integer> playerAttribute, int playerValue) {
+        this.playerAttribute = playerAttribute;
+        this.playerValue = playerValue;
     }
 
     @Override
     public List<Domable> arguments() {
-        return list((Domable) aliveAttribute);
+        return list((Domable) playerAttribute);
     }
 
     @Override
