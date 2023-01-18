@@ -12,7 +12,9 @@ package net.splitcells.gel.constraint;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.environment.config.StaticFlags.WARNING;
 import static net.splitcells.dem.object.Discoverable.discoverable;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -26,6 +28,9 @@ import java.util.Optional;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.ForAlls;
@@ -269,5 +274,17 @@ public class QueryI implements Query {
     @Override
     public Set<GroupId> currentInjectionGroups() {
         return groups;
+    }
+
+    @Override
+    public Query forAll(List<Rater> classifiers) {
+        if (WARNING) domsole().append("Groups are not supported yet: " + groups.toString(), LogLevel.WARNING);
+        final var forAllCatcher = ForAlls.forAll();
+        classifiers.forEach(c -> {
+            final var f = ForAlls.forEach(c);
+            f.withChildren(forAllCatcher);
+            currentInjectionGroups.withChildren(f);
+        });
+        return nextQueryPathElement(this, setOfUniques(), forAllCatcher);
     }
 }

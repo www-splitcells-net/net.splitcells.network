@@ -11,6 +11,7 @@
 package net.splitcells.gel.constraint;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -57,7 +58,6 @@ public interface Query {
     Rating rating();
 
     /**
-     * 
      * @return The currently selected {@link Constraint}.
      */
     Constraint currentConstraint();
@@ -70,9 +70,10 @@ public interface Query {
     List<Constraint> constraintPath();
 
     /**
-     *
      * @return Set of all {@link #currentConstraint()}'s {@link GroupId}s,
      * that where indirectly created via {@link Constraint#injectionGroup()} of the {@link #root()}.
      */
     Set<GroupId> currentInjectionGroups();
+
+    Query forAll(List<Rater> classifiers);
 }
