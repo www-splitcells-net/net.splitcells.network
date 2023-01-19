@@ -32,7 +32,7 @@ public class AliveTest {
                 .withSupplies(list
                         (list()))
                 .withConstraint(c -> {
-                    c.forAll(alive(player, 1));
+                    c.forAll(alive(1, player, time, xCoord, yCoord));
                     return c;
                 })
                 .toProblem()

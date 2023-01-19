@@ -31,16 +31,30 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  * This way it is possible, to create different rules to different players.</p>
  */
 public class Alive implements Rater {
-    public static Rater alive(Attribute<Integer> playerAttribute, int playerValue) {
-        return new Alive(playerAttribute, playerValue);
+    public static Rater alive(int playerValue
+            , Attribute<Integer> playerAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return new Alive(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate);
     }
 
     private final Attribute<Integer> playerAttribute;
+    private final Attribute<Integer> timeAttribute;
+    private final Attribute<Integer> xCoordinate;
+    private final Attribute<Integer> yCoordinate;
     private int playerValue;
 
-    private Alive(Attribute<Integer> playerAttribute, int playerValue) {
+    private Alive(int playerValue
+            , Attribute<Integer> playerAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
         this.playerAttribute = playerAttribute;
         this.playerValue = playerValue;
+        this.timeAttribute = timeAttribute;
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
     }
 
     @Override
