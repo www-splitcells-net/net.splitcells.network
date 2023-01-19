@@ -31,7 +31,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  * This way it is possible, to create different rules to different players.</p>
  */
 public class Alive implements Rater {
-    public Rater alive(Attribute<Integer> playerAttribute, int playerValue) {
+    public static Rater alive(Attribute<Integer> playerAttribute, int playerValue) {
         return new Alive(playerAttribute, playerValue);
     }
 
