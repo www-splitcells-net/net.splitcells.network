@@ -10,7 +10,7 @@
  */
 package net.splitcells.cin.raters;
 
-import net.splitcells.dem.testing.UnitTest;
+import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.raters.Alive.alive;
 import static net.splitcells.dem.data.set.list.Lists.list;

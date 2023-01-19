@@ -1,9 +1,6 @@
 package net.splitcells.gel.constraint;
 
-import net.splitcells.dem.testing.UnitTest;
-import net.splitcells.gel.Gel;
-import net.splitcells.gel.constraint.type.ForAlls;
-import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
+import net.splitcells.dem.testing.annotations.UnitTest;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;

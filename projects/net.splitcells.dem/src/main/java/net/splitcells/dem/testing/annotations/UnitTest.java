@@ -1,4 +1,4 @@
-package net.splitcells.dem.testing;
+package net.splitcells.dem.testing.annotations;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import org.junit.jupiter.api.Tag;
