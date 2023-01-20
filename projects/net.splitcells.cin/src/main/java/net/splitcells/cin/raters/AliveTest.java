@@ -40,6 +40,7 @@ public class AliveTest {
                 .asSolution();
         testSubject.optimize(linearInitialization());
         testSubject.constraint().lineProcessing().lines().requireSizeOf(1);
-        testSubject.constraint().childrenView().get(0).lineProcessing().lines().requireEmpty();
+        testSubject.constraint().childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireEmpty();
     }
 }
