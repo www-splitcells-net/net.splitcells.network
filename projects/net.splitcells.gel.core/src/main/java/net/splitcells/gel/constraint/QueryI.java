@@ -171,9 +171,13 @@ public class QueryI implements Query {
                     final var classification = (Rater) child.arguments().get(0);
                     final var attributeClassification = (Rater) classification.arguments().get(0);
                     return attributeClassification.arguments().isEmpty();
-                }).reduce(ensureSingle())
-                .orElseThrow();
-        return nextQueryPathElement(this, setOfUniques(groups), resultBase);
+                }).reduce(ensureSingle());
+        if (resultBase.isPresent()) {
+            return nextQueryPathElement(this, setOfUniques(groups), resultBase.get());
+        }
+        final var forAll = ForAlls.forAll();
+        currentInjectionGroups.withChildren(forAll);
+        return nextQueryPathElement(this, setOfUniques(groups), forAll);
     }
 
     @Override
