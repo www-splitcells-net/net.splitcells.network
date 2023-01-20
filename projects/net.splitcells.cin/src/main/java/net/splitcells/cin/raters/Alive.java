@@ -20,6 +20,7 @@ import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 
 /**
  * <p>Given a group based on {@link TimeSteps} and {@link PositionClusters},
@@ -64,6 +65,7 @@ public class Alive implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
-        return null;
+        final var ratingEvent = ratingEvent();
+        return ratingEvent;
     }
 }
