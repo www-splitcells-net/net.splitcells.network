@@ -16,6 +16,7 @@ import static net.splitcells.cin.raters.Alive.alive;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 
 public class AliveTest {
     @UnitTest
@@ -32,10 +33,13 @@ public class AliveTest {
                 .withSupplies(list
                         (list()))
                 .withConstraint(c -> {
-                    c.forAll(alive(1, player, time, xCoord, yCoord));
+                    c.forAll(alive(1, player, time, xCoord, yCoord)).forAll();
                     return c;
                 })
                 .toProblem()
                 .asSolution();
+        testSubject.optimize(linearInitialization());
+        testSubject.constraint().lineProcessing().lines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).lineProcessing().lines().requireEmpty();
     }
 }
