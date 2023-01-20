@@ -11,6 +11,7 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
@@ -19,8 +20,14 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
  * <p>Given a group based on {@link TimeSteps} and {@link PositionClusters},
@@ -66,6 +73,15 @@ public class Alive implements Rater {
     @Override
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
         final var ratingEvent = ratingEvent();
+        final var timeValues = lines.columnView(LINE)
+                .values()
+                .stream()
+                .map(l -> l.value(timeAttribute))
+                .distinct()
+                .sorted(ASCENDING_INTEGERS)
+                .collect(toList());
+        final var startTime = timeValues.get(0);
+        ratingEvent.addRating_viaAddition(addition, noCost(), list(), Optional.empty());
         return ratingEvent;
     }
 }
