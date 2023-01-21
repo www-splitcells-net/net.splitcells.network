@@ -10,16 +10,19 @@
  */
 package net.splitcells.gel.data.allocations;
 
+import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.data.database.Databases;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AllocationsTest extends TestSuiteI {
@@ -31,7 +34,7 @@ public class AllocationsTest extends TestSuiteI {
         final var supplies = Databases.database();
         final var allocations = allocations("test", demands, supplies);
         allocations.subscribeToAfterAdditions(
-                pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)).isNotNull());
+                allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
         allocations.allocate
                 (demands.addTranslated(list())
                         , supplies.addTranslated(list()));
@@ -44,7 +47,7 @@ public class AllocationsTest extends TestSuiteI {
         final var supplies = Databases.database();
         final var allocations = allocations("test", demands, supplies);
         allocations.subscribeToBeforeRemoval
-                (pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)).isNotNull());
+                (allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
         allocations.remove(
                 allocations.allocate
                         (demands.addTranslated(list())
@@ -60,7 +63,7 @@ public class AllocationsTest extends TestSuiteI {
             final var supplies = Databases.database();
             final var allocations = allocations("test", demands, supplies);
             allocations.subscribeToAfterRemoval
-                    (pieķiršana -> assertThat(allocations.demandOfAllocation(pieķiršana)));
+                    (allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
             allocations.remove(
                     allocations.allocate
                             (demands.addTranslated(list())
@@ -79,26 +82,25 @@ public class AllocationsTest extends TestSuiteI {
         final var supplies = Databases.database(supplyAttribute);
         supplies.addTranslated(list(2));
         final var testSubject = allocations("test", demands, supplies);
-        assertThat(testSubject.headerView())
-                .containsExactly(demands.headerView().get(0), supplies.headerView().get(0));
-        assertThat(testSubject.demands().size()).isEqualTo(1);
-        assertThat(testSubject.supplies().size()).isEqualTo(1);
+        testSubject.headerView().requireEqualityTo(list(demands.headerView().get(0), supplies.headerView().get(0)));
+        testSubject.demands().lines().requireSizeOf(1);
+        testSubject.supplies().lines().requireSizeOf(1);
         demands.addTranslated(list(3.0));
         supplies.addTranslated(list(4));
-        assertThat(testSubject.demands().size()).isEqualTo(2);
-        assertThat(testSubject.supplies().size()).isEqualTo(2);
+        testSubject.demands().lines().requireSizeOf(2);
+        testSubject.supplies().lines().requireSizeOf(2);
         final var firstAllocation = testSubject
                 .allocate(testSubject.demands().rawLinesView().get(0)
                         , testSubject.supplies().rawLinesView().get(0));
-        assertThat(firstAllocation.value(demandAttribute)).isEqualTo(1.0);
-        assertThat(firstAllocation.value(supplyAttribute)).isEqualTo(2);
+        requireEquals(firstAllocation.value(demandAttribute), 1.0);
+        requireEquals(firstAllocation.value(supplyAttribute), 2);
         final var secondAllocation = testSubject
                 .allocate(testSubject.demands().rawLinesView().get(1)
                         , testSubject.supplies().rawLinesView().get(1));
-        assertThat(secondAllocation.value(demandAttribute)).isEqualTo(3.0);
-        assertThat(secondAllocation.value(supplyAttribute)).isEqualTo(4);
-        assertThat(testSubject.size()).isEqualTo(2);
+        requireEquals(secondAllocation.value(demandAttribute), 3.0);
+        requireEquals(secondAllocation.value(supplyAttribute), 4);
+        requireEquals(testSubject.size(), 2);
         testSubject.remove(firstAllocation);
-        assertThat(testSubject.size()).isEqualTo(1);
+        requireEquals(testSubject.size(), 1);
     }
 }

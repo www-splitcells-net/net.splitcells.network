@@ -10,6 +10,7 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Arrays;
@@ -21,7 +22,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
  * TODO Extend interface with functional write methods: https://www.vavr.io/vavr-docs/#_list
  */
 @JavaLegacyArtifact
-public interface ListView<T> extends Collection<T>, java.util.List<T> {
+public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing {
     /**
      * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.
      *
