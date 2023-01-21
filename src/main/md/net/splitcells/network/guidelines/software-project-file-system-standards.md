@@ -92,6 +92,12 @@ Contains executable programs regarding tasks of the project.
 It is preferred, if the scripts are written in such a way,
 that the current folder is located at the project's root folder.
 Such commands are called project commands.
+
+Common commands and command prefixes:
+* `build` & `build.*`
+* `check` & `check.*`
+* `deploy` & `deploy.*`
+* `test` & `test.*`
 ## Files at `./lib/*`
 Contains dependencies of the project.
 ## Files at `./projects/*`
