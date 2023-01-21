@@ -99,4 +99,10 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
             throw executionException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
         }
     }
+
+    default void requireAbsenceOf(T element) {
+        if (contains(element)) {
+            throw executionException("Expecting `" + this + "` to not contain `" + element + "`, but it is present.");
+        }
+    }
 }

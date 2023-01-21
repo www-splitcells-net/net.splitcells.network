@@ -26,7 +26,7 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
-import static org.assertj.core.api.Assertions.assertThat;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 
 public class LookupTableRef extends LookupTable {
     protected LookupTableRef(Table table, String name) {
@@ -53,9 +53,9 @@ public class LookupTableRef extends LookupTable {
         if (ENFORCING_UNIT_CONSISTENCY) {
             range(0, tableView.rawLinesView().size()).forEach(i -> {
                 if (content.contains(i)) {
-                    assertThat(tableView.rawLinesView().get(i)).isNotNull();
+                    requireNotNull(tableView.rawLinesView().get(i));
                 } else {
-                    assertThat(content).doesNotContain(i);
+                    content.requireAbsenceOf(i);
                 }
             });
         }
@@ -68,12 +68,12 @@ public class LookupTableRef extends LookupTable {
     @Override
     public void register(Line line) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assert !content.contains(line.index());
+            content.requireAbsenceOf(line.index());
         }
         if (TRACING) {
             domsole().append(Xml.elementWithChildren("register.LookupTable"
-                    , Xml.elementWithChildren("subject", textNode(path().toString()))
-                    , line.toDom()
+                            , Xml.elementWithChildren("subject", textNode(path().toString()))
+                            , line.toDom()
                     )
                     , this, DEBUG);
         }
@@ -87,14 +87,14 @@ public class LookupTableRef extends LookupTable {
     public void removeRegistration(Line line) {
         if (TRACING) {
             domsole().append(Xml.elementWithChildren("deregister." + getClass().getSimpleName()
-                    , Xml.elementWithChildren("subject", textNode(path().toString()))
-                    , Xml.elementWithChildren("content", textNode(content.toString()))
-                    , line.toDom()
+                            , Xml.elementWithChildren("subject", textNode(path().toString()))
+                            , Xml.elementWithChildren("content", textNode(content.toString()))
+                            , line.toDom()
                     )
                     , this, DEBUG);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assert content.contains(line.index());
+            content.requirePresenceOf(line.index());
         }
         super.removeRegistration(line);
         if (TRACING) {
@@ -112,7 +112,7 @@ public class LookupTableRef extends LookupTable {
         final var dom = super.toDom();
         content.forEach(i -> {
             if (ENFORCING_UNIT_CONSISTENCY) {
-                assertThat(rawLinesView().get(i)).isNotNull();
+                requireNotNull(rawLinesView().get(i));
             }
         });
         return dom;
