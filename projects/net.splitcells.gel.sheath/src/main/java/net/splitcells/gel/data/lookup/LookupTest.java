@@ -23,9 +23,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * TODO {@link Database} and {@link Column} should not be based on {@link Lookup}.
@@ -40,39 +40,39 @@ public class LookupTest extends TestSuiteI {
         final var b = attribute(Integer.class, "b");
         final var testSubject = new DatabaseI(a, b);
         testSubject.addTranslated(list(1, 2));
-        assertThat(testSubject.columnView(a).lookup(1).size()).isEqualTo(1);
-        assertThat(testSubject.columnView(a).lookup(3).size()).isEqualTo(0);
-        assertThat(testSubject.columnView(a).lookup(1).columnView(b).lookup(2).size())
-                .isEqualTo(1);
-        assertThat(testSubject
+        testSubject.columnView(a).lookup(1).lines().requireSizeOf(1);
+        testSubject.columnView(a).lookup(3).lines().requireEmpty();
+        testSubject.columnView(a).lookup(1).columnView(b).lookup(2)
+                .lines()
+                .requireSizeOf(1);
+        requireNotNull(testSubject
                 .columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(2)
                 .rawLinesView()
-                .get(0)
-        ).isNotNull();
-        assertThat(testSubject
+                .get(0));
+        testSubject
                 .columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(3)
-                .size()
-        ).isEqualTo(0);
-        assertThat(testSubject
+                .lines()
+                .requireEmpty();
+        testSubject
                 .columnView(a)
                 .lookup(3)
                 .columnView(b)
                 .lookup(3)
-                .size()
-        ).isEqualTo(0);
-        assertThat(testSubject
+                .lines()
+                .requireEmpty();
+        testSubject
                 .columnView(a)
                 .lookup(3)
                 .columnView(b)
                 .lookup(2)
-                .size()
-        ).isEqualTo(0);
+                .lines()
+                .requireEmpty();
     }
 
     @Test
@@ -88,58 +88,56 @@ public class LookupTest extends TestSuiteI {
         testSubject.addTranslated(list(3, 3));
         testSubject.addTranslated(list(1, 3));
         testSubject.addTranslated(list(3, 2));
-        assertThat(testSubject.columnView(a).lookup(1).size()).isEqualTo(3);
-        assertThat(testSubject
+        testSubject.columnView(a).lookup(1).lines().requireSizeOf(3);
+        testSubject
                 .columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(2)
-                .size()
-        ).isEqualTo(2);
-        assertThat(testSubject
-                .columnView(a)
-                .lookup(1)
-                .columnView(b)
-                .lookup(2)
-                .rawLinesView()
-                .get(0)
-        ).isNotNull();
-        assertThat(testSubject
+                .lines()
+                .requireSizeOf(2);
+        requireNotNull(testSubject
                 .columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(2)
                 .rawLinesView()
-                .get(1)
-        ).isNotNull();
-        assertThat(testSubject
+                .get(0));
+        requireNotNull(testSubject
+                .columnView(a)
+                .lookup(1)
+                .columnView(b)
+                .lookup(2)
+                .rawLinesView()
+                .get(1));
+        testSubject
                 .columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(3)
-                .size()
-        ).isEqualTo(1);
-        assertThat(testSubject
+                .lines()
+                .requireSizeOf(1);
+        testSubject
                 .columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(4)
-                .size()
-        ).isEqualTo(0);
-        assertThat(testSubject
+                .lines()
+                .requireEmpty();
+        testSubject
                 .columnView(a)
                 .lookup(3)
                 .columnView(b)
                 .lookup(2)
-                .size()
-        ).isEqualTo(1);
-        assertThat(testSubject
+                .lines()
+                .requireSizeOf(1);
+        testSubject
                 .columnView(a)
                 .lookup(3)
                 .columnView(b)
                 .lookup(1)
-                .size()
-        ).isEqualTo(0);
+                .lines()
+                .requireEmpty();
     }
 
     @Test
@@ -149,24 +147,24 @@ public class LookupTest extends TestSuiteI {
         final var b = attribute(Integer.class, "b");
         final var testSubject = Databases.database(a, b);
         {
-            assertThat(testSubject
+            testSubject
                     .columnView(a)
                     .lookup(1)
                     .columnView(b)
                     .lookup(1)
-                    .size()
-            ).isEqualTo(0);
-            assertThat(testSubject
+                    .lines()
+                    .requireEmpty();
+            testSubject
                     .columnView(a)
                     .lookup(1)
                     .columnView(b)
                     .lookup(2)
-                    .size()
-            ).isEqualTo(0);
-            assertThat(testSubject.columnView(a).lookup(1).columnView(b).lookup(3).size()).isEqualTo(0);
-            assertThat(testSubject.columnView(a).lookup(1).columnView(b).lookup(4).size()).isEqualTo(0);
-            assertThat(testSubject.columnView(a).lookup(3).columnView(b).lookup(2).size()).isEqualTo(0);
-            assertThat(testSubject.columnView(a).lookup(3).columnView(b).lookup(1).size()).isEqualTo(0);
+                    .lines()
+                    .requireEmpty();
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(3).lines().requireEmpty();
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(4).lines().requireEmpty();
+            testSubject.columnView(a).lookup(3).columnView(b).lookup(2).lines().requireEmpty();
+            testSubject.columnView(a).lookup(3).columnView(b).lookup(1).lines().requireEmpty();
         }
         {
             testSubject.addTranslated(list(1, 2));
@@ -178,14 +176,14 @@ public class LookupTest extends TestSuiteI {
             testSubject.addTranslated(list(3, 2));
         }
         {
-            assertThat(testSubject.columnView(a).lookup(1).size()).isEqualTo(3);
-            assertThat(testSubject.columnView(a).lookup(1).columnView(b).lookup(2).size()).isEqualTo(2);
-            assertThat(testSubject.columnView(a).lookup(1).columnView(b).lookup(2).rawLinesView().get(0)).isNotNull();
-            assertThat(testSubject.columnView(a).lookup(1).columnView(b).lookup(2).rawLinesView().get(1)).isNotNull();
-            assertThat(testSubject.columnView(a).lookup(1).columnView(b).lookup(3).size()).isEqualTo(1);
-            assertThat(testSubject.columnView(a).lookup(1).columnView(b).lookup(4).size()).isEqualTo(0);
-            assertThat(testSubject.columnView(a).lookup(3).columnView(b).lookup(2).size()).isEqualTo(1);
-            assertThat(testSubject.columnView(a).lookup(3).columnView(b).lookup(1).size()).isEqualTo(0);
+            testSubject.columnView(a).lookup(1).lines().requireSizeOf(3);
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(2).lines().requireSizeOf(2);
+            requireNotNull(testSubject.columnView(a).lookup(1).columnView(b).lookup(2).rawLinesView().get(0));
+            requireNotNull(testSubject.columnView(a).lookup(1).columnView(b).lookup(2).rawLinesView().get(1));
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(3).lines().requireSizeOf(1);
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(4).lines().requireEmpty();
+            testSubject.columnView(a).lookup(3).columnView(b).lookup(2).lines().requireSizeOf(1);
+            testSubject.columnView(a).lookup(3).columnView(b).lookup(1).lines().requireEmpty();
         }
     }
 
@@ -197,9 +195,9 @@ public class LookupTest extends TestSuiteI {
         final var testSubject = new DatabaseI(a, b);
         testSubject.addTranslated(list(1, 2));
         final Predicate<Integer> predicate = aa -> aa == 1;
-        assertThat(testSubject.columnView(a).lookup(1).size()).isEqualTo(1);
-        assertThat(testSubject.columnView(a).lookup(3).size()).isEqualTo(0);
-        assertThat(testSubject.columnView(a).lookup(predicate).size()).isEqualTo(1);
+        testSubject.columnView(a).lookup(1).lines().requireSizeOf(1);
+        testSubject.columnView(a).lookup(3).lines().requireEmpty();
+        testSubject.columnView(a).lookup(predicate).lines().requireSizeOf(1);
     }
 
     @Test
@@ -212,14 +210,14 @@ public class LookupTest extends TestSuiteI {
                 .lookup(1)
                 .columnView(b)
                 .lookup(2);
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).isEmpty();
+        pārbaudesPriekšmetsVeidotajs.get().lines().requireEmpty();
         final var firstLine = testSubject.addTranslated(list(1, 1));
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).isEmpty();
+        pārbaudesPriekšmetsVeidotajs.get().lines().requireEmpty();
         final var secondLine = testSubject.addTranslated(list(1, 2));
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).hasSize(1);
+        pārbaudesPriekšmetsVeidotajs.get().lines().requireSizeOf(1);
         testSubject.remove(firstLine);
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).hasSize(1);
+        pārbaudesPriekšmetsVeidotajs.get().lines().requireSizeOf(1);
         testSubject.remove(secondLine);
-        assertThat(pārbaudesPriekšmetsVeidotajs.get().lines()).isEmpty();
+        pārbaudesPriekšmetsVeidotajs.get().lines().requireEmpty();
     }
 }
