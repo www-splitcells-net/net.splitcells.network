@@ -10,11 +10,11 @@
  */
 package net.splitcells.dem.data.set.map;
 
-import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -40,7 +40,7 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
     /**
      * TODO Is this a duplicate of {@link #computeIfAbsent(Object, Function)}?
-     * 
+     * <p>
      * RENAME
      */
     default Value addIfAbsent(Key key, Supplier<Value> valueSupplier) {
@@ -62,6 +62,7 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     default Optional<Boolean> _isDeterministic() {
         return Optional.empty();
     }
+
     default void requireEmpty() {
         if (!isEmpty()) {
             throw executionException("Expecting map to be empty, but is not: " + this);
@@ -73,5 +74,4 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
             throw executionException("Map should be size of " + arg + " but has size of " + size() + " instead: " + this);
         }
     }
-
 }

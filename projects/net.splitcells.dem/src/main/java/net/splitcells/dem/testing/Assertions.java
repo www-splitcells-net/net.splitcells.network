@@ -26,6 +26,18 @@ public class Assertions {
         }
     }
 
+    public static <T> void requireNotNull(T arg) {
+        if (arg == null) {
+            throw executionException("The given variable is null, but should not be.");
+        }
+    }
+
+    public static <T> void requireNotNull(T arg, String message) {
+        if (arg == null) {
+            throw executionException(message);
+        }
+    }
+
     public static <T> void requireEquals(T a, T b) {
         if (!a.equals(b)) {
             throw executionException("Arguments are required to be equal, but are not: " + a + ", " + b);

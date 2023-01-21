@@ -10,9 +10,11 @@
  */
 package net.splitcells.gel.data.allocations;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.allocation.AllocationsI;
 import net.splitcells.gel.data.database.Database;
@@ -28,10 +30,10 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.event;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.common.Language.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * {@link #demandsUsed()} ()} and {@link #demandsFree()} contain all {@link Line} of {@link #demands()}.
@@ -69,8 +71,8 @@ public class AllocationsIRef extends AllocationsI {
     @Override
     public Line allocate(Line demand, Line supply) {
         if (TRACING) {
-            assertThat(demand).withFailMessage("Cannot allocate without demand.").isNotNull();
-            assertThat(supply).withFailMessage("Cannot allocate without supply.").isNotNull();
+            requireNotNull(demand, "Cannot allocate without demand.");
+            requireNotNull(supply, "Cannot allocate without supply.");
             domsole().append
                     (event(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Allocations.class.getSimpleName()
                                     , path().toString()
@@ -81,12 +83,13 @@ public class AllocationsIRef extends AllocationsI {
                     );
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(list(demand.context())).containsAnyOf(demands_free, demands);
-            assertThat(list(supply.context())).containsAnyOf(supplies, supplies_free);
-            assertThat(demands.rawLinesView().get(demand.index())).isNotNull();
-            assertThat(supplies.rawLinesView().get(supply.index())).isNotNull();
-            assertThat(list(supply.context())).containsAnyOf(supplies, supplies_free, supplies_used);
-            assertThat(list(demand.context())).containsAnyOf(demands, demands_free, demands_used);
+            list(demand.context()).requireContainsOneOf(demands_free, demands);
+            list(demand.context()).requireContainsOneOf(demands_free, demands);
+            list(supply.context()).requireContainsOneOf(supplies, supplies_free);
+            requireNotNull(demands.rawLinesView().get(demand.index()));
+            requireNotNull(supplies.rawLinesView().get(supply.index()));
+            list(supply.context()).requireContainsOneOf(supplies, supplies_free, supplies_used);
+            list(demand.context()).requireContainsOneOf(demands, demands_free, demands_used);
             if (usedDemandIndexes_to_allocationIndexes.containsKey(demand.index())
                     && usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
                 final var allocationIndexes_of_demand
@@ -98,7 +101,11 @@ public class AllocationsIRef extends AllocationsI {
                     if (allocationIndexes_of_supply.contains(allocationIndex_of_demand)) {
                         /** TODO IDEA Support multiple and partial allocations between {@link Demand} and {@link Supply}.
                          */
-                        fail("The demand " + demand.index() + "and the supply" + supply.index() + "are already allocated to each other. Multiple assignments to same variables are currently not supported.");
+                        throw executionException("The demand "
+                                + demand.index()
+                                + "and the supply"
+                                + supply.index()
+                                + "are already allocated to each other. Multiple assignments to same variables are currently not supported.");
                     }
                 }
             }
@@ -151,13 +158,13 @@ public class AllocationsIRef extends AllocationsI {
                     );
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(list(demand.context())).containsAnyOf(demands, demands_used);
-            assertThat(list(supply.context())).containsAnyOf(supplies, supplies_used);
-            assertThat(allocation.context()).isEqualTo(allocations);
-            assertThat(usedDemandIndexes_to_allocationIndexes.get(demand.index())).contains(allocation.index());
-            assertThat(usedSupplyIndexes_to_allocationIndexes.get(supply.index())).contains(allocation.index());
-            assertThat(allocationsIndex_to_usedDemandIndex.get(allocation.index())).isEqualTo(demand.index());
-            assertThat(allocationsIndex_to_usedSupplyIndex.get(allocation.index())).isEqualTo(supply.index());
+            list(demand.context()).requireContainsOneOf(demands, demands_used);
+            list(supply.context()).requireContainsOneOf(supplies, supplies_used);
+            requireEquals(allocation.context(), allocations);
+            usedDemandIndexes_to_allocationIndexes.get(demand.index()).requirePresenceOf(allocation.index());
+            usedSupplyIndexes_to_allocationIndexes.get(supply.index()).requirePresenceOf(allocation.index());
+            requireEquals(allocationsIndex_to_usedDemandIndex.get(allocation.index()), demand.index());
+            requireEquals(allocationsIndex_to_usedSupplyIndex.get(allocation.index()), supply.index());
         }
         super.remove(allocation);
     }
@@ -165,7 +172,7 @@ public class AllocationsIRef extends AllocationsI {
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assert demands.headerView().contains(attribute) || supplies.headerView().contains(attribute);
+            Bools.require(demands.headerView().contains(attribute) || supplies.headerView().contains(attribute));
         }
         return super.columnView(attribute);
     }
@@ -173,9 +180,9 @@ public class AllocationsIRef extends AllocationsI {
     @Override
     public Set<Line> allocationsOfSupply(Line supply) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(usedSupplyIndexes_to_allocationIndexes)
-                    .describedAs("No allocations for the given supply are present.")
-                    .containsKey(supply.index());
+            if (usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
+                throw executionException("No allocations for the given supply are present.");
+            }
         }
         return super.allocationsOfSupply(supply);
     }
@@ -184,7 +191,7 @@ public class AllocationsIRef extends AllocationsI {
     public Set<Line> allocationsOfDemand(Line demand) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             try {
-                assertThat(usedDemandIndexes_to_allocationIndexes).containsKey(demand.index());
+                setOfUniques(usedDemandIndexes_to_allocationIndexes.keySet()).requirePresenceOf(demand.index());
             } catch (Throwable e) {
                 throw new RuntimeException(e);
             }

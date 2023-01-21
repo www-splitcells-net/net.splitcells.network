@@ -12,6 +12,7 @@ package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -33,6 +34,16 @@ public interface ListView<T> extends Collection<T>, java.util.List<T> {
     default void requirePresenceOf(T element) {
         if (!contains(element)) {
             throw executionException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
+        }
+    }
+
+    default void requireContainsOneOf(T... arg) {
+        if (!Arrays.stream(arg).map(this::contains).filter(a -> a).findFirst().orElse(false)) {
+            throw executionException("Expecting `"
+                    + this
+                    + "` to contain any element of `"
+                    + arg
+                    + "`, but does not contain any of them.");
         }
     }
 
