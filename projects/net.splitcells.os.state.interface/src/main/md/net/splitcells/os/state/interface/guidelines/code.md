@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Code Guidelines
 Prefer aborting a command on first error.
 ## Cross Platform Compatibility

@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Program Compatibility
 
 It assumed that every program, that can be accessed by the current user are compatible with each other.

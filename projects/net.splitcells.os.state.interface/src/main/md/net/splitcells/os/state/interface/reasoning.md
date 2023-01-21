@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Why no Ansible etc.?
 The framework's aim is to require as little as possible and to be compatible to as 
 many things as possible.

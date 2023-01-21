@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Setup Instructions
 In order to install this program following instructions have to be executed in the console.
 Note that thereby a folder will be created in the current location.

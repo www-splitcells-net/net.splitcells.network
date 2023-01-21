@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Suggested Development Workflow Using this Framework
 The idea for this workflow is to improve the framework while having a benefit of using this framework.
 1. Do some administrative task.

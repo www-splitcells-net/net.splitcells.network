@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Manifesto
 We want to install programs.
 It does not interest us, whether the program is installed by PackageKit, dnf, apt, Flatpak, snap, a Windows installer, a bash script or something else.

@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 ## Tasks
 Tasks at the top have generally a higher priority than task at the button.
 This does not mean, that tasks are processed according to the priority order.

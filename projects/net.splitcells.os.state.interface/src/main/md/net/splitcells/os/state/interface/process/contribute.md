@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 There is currently only 2 rules for contributing code to this project:
 1. The author of commits sent to the project need to certify that the commits comply with the [Developer Certificate of Origin](../../../../../../../txt/net/splitcells/os/state/interface/process/Developer_Certificate_of_Origin.v1.1.txt).
    This is done by signing of the commit with the following line:

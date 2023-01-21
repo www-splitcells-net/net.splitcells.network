@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Update Instructions
 There are 2 options, in order to update or reinstall the program via the console.
 Both can be executed at any location.
