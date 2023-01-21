@@ -652,7 +652,7 @@ window.onload = function() {
                                 </xsl:if>
                                 <div class="net-splitcells-content-filler net-splitcells-component-priority-2 net-splitcells-space-filler"></div>
                             </div>
-                            <div class="menu Left_shadow TextCell Layout">
+                            <div class="menu Left_shadow TextCell Layout net-splitcells-component-priority-4">
                                 <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">
                                     <div class="splitcells-net-window-menu-line-1">
                                         <a class="net-splitcells-button net-splitcells-main-button-project-logo">
