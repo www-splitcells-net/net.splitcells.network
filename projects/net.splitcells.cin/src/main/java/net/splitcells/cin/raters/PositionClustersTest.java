@@ -25,7 +25,7 @@ public class PositionClustersTest {
     public void testTopRightPositionCluster() {
         final var x = attribute(Integer.class, "x");
         final var y = attribute(Integer.class, "y");
-        final var testSubject = defineProblem("testPositions")
+        final var testSubject = defineProblem("testTopRightPositionCluster")
                 .withDemandAttributes(x, y)
                 .withDemands(list(
                         list(1, 1)
@@ -117,7 +117,7 @@ public class PositionClustersTest {
     public void testBottomRightPositionCluster() {
         final var x = attribute(Integer.class, "x");
         final var y = attribute(Integer.class, "y");
-        final var testSubject = defineProblem("testPositions")
+        final var testSubject = defineProblem("testBottomRightPositionCluster")
                 .withDemandAttributes(x, y)
                 .withDemands(list(
                         list(1, -2)
@@ -202,7 +202,7 @@ public class PositionClustersTest {
     public void testBottomLeftPositionCluster() {
         final var x = attribute(Integer.class, "x");
         final var y = attribute(Integer.class, "y");
-        final var testSubject = defineProblem("testPositions")
+        final var testSubject = defineProblem("testBottomLeftPositionCluster")
                 .withDemandAttributes(x, y)
                 .withDemands(list(
                         list(-2, -2)
@@ -287,7 +287,7 @@ public class PositionClustersTest {
     public void testTopLeftPositionCluster() {
         final var x = attribute(Integer.class, "x");
         final var y = attribute(Integer.class, "y");
-        final var testSubject = defineProblem("testPositions")
+        final var testSubject = defineProblem("testTopLeftPositionCluster")
                 .withDemandAttributes(x, y)
                 .withDemands(list(
                         list(-2, 1)
@@ -379,7 +379,7 @@ public class PositionClustersTest {
     public void testTopRightPositionClusterWithOffset() {
         final var x = attribute(Integer.class, "x");
         final var y = attribute(Integer.class, "y");
-        final var testSubject = defineProblem("testPositions")
+        final var testSubject = defineProblem("testTopRightPositionClusterWithOffset")
                 .withDemandAttributes(x, y)
                 .withDemands(list(
                         list(1, 1)
