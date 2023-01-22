@@ -80,7 +80,7 @@ public class DatabaseMetaAspect implements Database {
 
     @Override
     public void remove(int lineIndex) {
-
+        database.remove(lineIndex);
     }
 
     /**
