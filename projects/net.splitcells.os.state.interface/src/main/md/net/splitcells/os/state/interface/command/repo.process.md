@@ -15,6 +15,11 @@ executes the generated command for each sub repo.
 
 In order to make this VCS independent, additional `repo.*` commands are provided.
 For instance, `repo.commit.all` is defined to commit all file changes.
+
+[Here](https://splitcells-net.srht.site/blog/2022-01-10-a-case-for-repo-process/)
+the initial blog article,
+explaining the reasoning behind repo process,
+can be found.
 ## Common Use Cases
 ### Add new remote to each sub repo.
 This can be done via a Git specific command pattern:
