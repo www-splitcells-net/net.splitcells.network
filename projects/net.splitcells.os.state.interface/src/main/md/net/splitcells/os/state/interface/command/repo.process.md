@@ -48,7 +48,7 @@ that this works with any Git hoster and without any hoster specific adaptations.
 ## Repo Process Reasoning
 ### Objectives
 Provide a way to create a collection of all file system based repositories of a user, which can be worked on as one.
-This is especially useful for decentralized backups or if many projects need to be organized/used.
+This is especially useful for decentralized backups or when many projects need to be organized/used.
 
 The necessary meta info should be stored as simple and portable as possible.
 In best case scenario only the relative paths of the sub repos and its possible remote servers has to be stored.
@@ -77,7 +77,7 @@ It is encouraged to use globally unique names for each repo,
 in order to be able to minimize the number of second level repositories.
 Java package name convention is a good start for that.
 ## Implementation Details
-Repo process is shell centric.
+The repo process is shell centric.
 Every interaction with the VCS directly and many other interactions are done via shell calls.
 This makes it possible, to replace every command completely,
 but makes the integration of these commands more costly.
