@@ -51,6 +51,7 @@ repo.clone git@git.sr.ht:~splitcells-net/net.splitcells.network
 The nice thing about this, is the fact,
 that this works with any Git hoster and without any hoster specific adaptations.
 # Repo Process Reasoning
+> Why are we doing this?
 ## Objectives
 Provide a way to create a collection of all file system based repositories of a user, which can be worked on as one.
 This is especially useful for decentralized backups or when many projects need to be organized/used.
@@ -82,6 +83,8 @@ It is encouraged to use globally unique names for each repo,
 in order to be able to minimize the number of second level repositories.
 Java package name convention is a good start for that.
 # Implementation Details
+> Every abstraction leaks.
+
 The repo process is shell centric.
 Every interaction with the VCS directly and many other interactions are done via shell calls.
 This makes it possible, to replace every command completely,
