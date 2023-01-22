@@ -581,6 +581,7 @@ p {
 	margin-bottom: 1.4em;
 	padding-left: 1em;
 	padding-right: 1em;
+	box-shadow: 0em 0.25em 0.25em -0.1em var(--shadow-color-priority-3);
 	}
 ol p {
 	font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif;
