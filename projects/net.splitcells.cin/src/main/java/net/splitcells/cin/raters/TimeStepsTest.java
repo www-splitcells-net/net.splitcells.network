@@ -33,7 +33,7 @@ public class TimeStepsTest {
     @Test
     public void testTimeEvenSteps() {
         final var time = attribute(Integer.class, "time");
-        final var testSubject = defineProblem("testTimeSteps")
+        final var testSubject = defineProblem("testTimeEvenSteps")
                 .withDemandAttributes(time)
                 .withDemands(list(
                         list(-1)
@@ -161,7 +161,7 @@ public class TimeStepsTest {
     @Test
     public void testTimeOddSteps() {
         final var time = attribute(Integer.class, "time");
-        final var testSubject = defineProblem("testTimeSteps")
+        final var testSubject = defineProblem("testTimeOddSteps")
                 .withDemandAttributes(time)
                 .withDemands(list(
                         list(0)
