@@ -21,6 +21,12 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import java.util.Optional;
 
 public class CommonMarkIntegration {
+
+    private static final String LICENSE_HEADER = "----\n"
+            + "* SPDX-License-Identifier: EPL-2.0 OR MIT\n"
+            + "* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects\n"
+            + "----\n";
+
     public static CommonMarkIntegration commonMarkIntegration() {
         return new CommonMarkIntegration();
     }
@@ -34,6 +40,9 @@ public class CommonMarkIntegration {
     public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config) {
         final Optional<String> title;
         final String contentToRender;
+        if (arg.startsWith(LICENSE_HEADER)) {
+            arg = arg.substring(LICENSE_HEADER.length()) + "\n\n" + LICENSE_HEADER;
+        }
         if (arg.startsWith("#")) {
             final var titleLine = arg.split("[\r\n]+")[0];
             title = Optional.of(titleLine.replace("#", "").trim());
