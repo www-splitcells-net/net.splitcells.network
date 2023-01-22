@@ -9,7 +9,7 @@ On the other hand, this may not always easily possible for a user.
 * Den = Discovery based Networks of Perspectives and Changes
 * Gel = Generic Allocator
 * Ossi = OS State Interface
-* [Project Command](../../../../../../projects/net.splitcells.dem/src/main/md/net/splitcells/dem/guidelines/software-project-file-system-standards.md)
+* [Project Command](../../../../../../src/main/md/net/splitcells/network/guidelines/software-project-file-system-standards.md)
 * parameter = A parameter is a declared variable of an interface.
 * Sep = State Network Optimization
 
