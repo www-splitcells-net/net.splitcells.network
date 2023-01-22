@@ -9,48 +9,6 @@
         <description></description>
         <publication_date year="2020" month="01" day_of_month="06"/>
         <license>standard</license>
-        <d:toDo>
-            <d:toDo>Implementation guide lines for concepts.
-                <d:toDo>Implement tree set representation.
-                    <d:toDo>Implement via construction tree.</d:toDo>
-                    <d:toDo>Implement via builders.
-                        <d:toDo>Implement via named arguments.</d:toDo>
-                        <d:toDo>Implement via fluent interface.</d:toDo>
-                    </d:toDo>
-                    <d:toDo>Implement overview features.
-                        <d:toDo>Implement multiple interactions on same objects.
-                        </d:toDo>
-                        <d:toDo>Implement pipelines.
-                            <d:toDo>Use for path set representation.</d:toDo>
-                            <d:toDo>Use for function call chain.</d:toDo>
-                        </d:toDo>
-                    </d:toDo>
-                </d:toDo>
-                <d:toDo>Implement relation registry representation.
-                    <d:toDo>Relation registry is a set of applications of predicates with multiple arguments.</d:toDo>
-                    <d:toDo>Implement public and private attributes via 2 related objects representing public and
-                        private parts
-                        of object.
-                    </d:toDo>
-                    <d:toDo>RDF, OWL, SKOF, onthologies, thesaurus and relations in databases are examples of this.
-                    </d:toDo>
-                </d:toDo>
-                <d:toDo>Implement access and linking.
-                    <d:toDo>Function Argument Convention
-                        <d:toDo>Lookup functions with certain type at nth argument.
-                            Returns list sorted by the type of nth argument in hierarchy descending.
-                        </d:toDo>
-                        <d:toDo>Later arguments should preferably be related only to previous arguments or not at all.
-                        </d:toDo>
-                    </d:toDo>
-                    <d:toDo>Implement relation via file location in folder structure as an alternative to direct and
-                        explicit
-                        linking.
-                    </d:toDo>
-                </d:toDo>
-            </d:toDo>
-            <d:toDo>Perspectives describe and constructor tree.</d:toDo>
-        </d:toDo>
     </meta>
     <chapter>
         <title>Minimize Size of Perspectives</title>
