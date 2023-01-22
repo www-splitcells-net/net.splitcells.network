@@ -1,6 +1,10 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-01-22 \#s109** `Perspective#toXmlStringWithPrefixes` now renders leaf nodes as normal strings,
+  if these contain characters that are not allowed in XML element names.
+  For example, the perspective `perspective("test", DEN).withChild(perspective("values.", DEN))` will now be rendered as `<d:test>values.</d:test>`,
+  instead of `<d:test><d:val name="values."></d:val></d:test>`.
 * **2022-12-02 \#27** When `IsEchoToFile` is set to true,
   `Console` does no longer cancel its output to the standard output.
   If `IsEchoToFile` is set to true, console output is written to a file and to the standard output.

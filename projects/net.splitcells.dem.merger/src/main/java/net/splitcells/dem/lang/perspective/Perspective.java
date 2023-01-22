@@ -280,9 +280,13 @@ public interface Perspective extends PerspectiveView {
         if (name().isBlank()) {
             return "<empty/>";
         } else if (!_VALID_XML_NAME.matcher(name()).matches()) {
-            xmlString += "<d:val name=\"" + xmlName() + "\">";
-            xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
-            xmlString += "</d:val>";
+            if (children().isEmpty()) {
+                xmlString += xmlName();
+            } else {
+                xmlString += "<d:val name=\"" + xmlName() + "\">";
+                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += "</d:val>";
+            }
         } else if (nameSpace().equals(HTML)) {
             if (children().isEmpty()) {
                 xmlString += "<x:" + name() + "/>";
