@@ -2,7 +2,7 @@
 * SPDX-License-Identifier: EPL-2.0 OR MIT
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
-# Repo Process
+# The Repo Process
 Repo process (`repo.process` is the name in the shell) is a command,
 that enables one to iterate over a set of repos,
 in order to interact with them as one.
@@ -20,8 +20,8 @@ For instance, `repo.commit.all` is defined to commit all file changes.
 the initial blog article,
 explaining the reasoning behind repo process,
 can be found.
-## Common Use Cases
-### Add new remote to each sub repo.
+# Common Use Cases
+## Add new remote to each sub repo.
 This can be done via a Git specific command pattern:
 ```
 repo.process --command='git remote add GitHub git@github.com:www-splitcells-net/$subRepo'
@@ -35,12 +35,12 @@ if errors are found in the git commands itself.
 ```
 repo.remote.set git@github.com:www-splitcells-net
 ```
-### Cloning Meta Repos
+## Cloning Meta Repos
 The following command clones a meta repo and its sub repos from another computer.
 ```
 repo.clone.into.current ssh://some-user@computer.local:/home/some-user/repos
 ```
-### Cloning Meta Repos From Git Hosters
+## Cloning Meta Repos From Git Hosters
 A bug is preventing the peer repos being cloned.
 So the following does not work at the moment.
 ```
@@ -50,14 +50,14 @@ repo.clone git@git.sr.ht:~splitcells-net/net.splitcells.network
 ```
 The nice thing about this, is the fact,
 that this works with any Git hoster and without any hoster specific adaptations.
-## Repo Process Reasoning
-### Objectives
+# Repo Process Reasoning
+## Objectives
 Provide a way to create a collection of all file system based repositories of a user, which can be worked on as one.
 This is especially useful for decentralized backups or when many projects need to be organized/used.
 
 The necessary meta info should be stored as simple and portable as possible.
 In best case scenario only the relative paths of the sub repos and its possible remote servers has to be stored.
-### Solution
+## Solution
 Support processing a tree of repositories (meta repo) and therefore allow working on all repos as one
 (i.e. in order to backup everything).
 
@@ -81,7 +81,7 @@ They are portable, but generally it is harder to migrate these to an other platf
 It is encouraged to use globally unique names for each repo,
 in order to be able to minimize the number of second level repositories.
 Java package name convention is a good start for that.
-## Implementation Details
+# Implementation Details
 The repo process is shell centric.
 Every interaction with the VCS directly and many other interactions are done via shell calls.
 This makes it possible, to replace every command completely,
