@@ -105,3 +105,75 @@ Therefore, only Python 3 is required.
 Just make sure, that every required command is present in the environment path and
 that the file suffixes are trimmed.
 Every interaction between the commands is done via shell calls.
+# Alternatives
+> Of course, this is a not invented here syndrome.
+
+Of course, there is similar software, but before the software was created,
+fitting alternatives, that provided following functionality, were not found.
+Keep in mind, that it could very well be the case,
+that the missing functionality could have been available in alternative software,
+by using them in creative ways.
+Unfortunately, these ways may have been overlooked.
+
+1. Easy switching between different remotes.
+2. Easy way of nesting meta repos, so it's easily and safely possible to use this
+   process in order to synchronize public sub repos with public servers and
+   without risking publishing private repos by accident.
+   Simultaneously, synchronization of private and public repos with private servers
+   should be easy and consist of only one manual step, in order to minimize user error.
+   In other words, synchronization with private servers should be simple,
+   while synchronization with public servers should not endanger private repos.
+3. Support different implementations for common tasks,
+   as there can always be important details,
+   that need to be considered.
+   Implementations should be easily changed, because adapting all existing
+   synchronization scripts can be hard.
+4. Ensure that it is easy to migrate from the chosen system to another one,
+   by making the software simple and replaceable.
+   There is no guarantee,
+   that git will be widely available in 30 years or that there will not be
+   a standard for managing multiple repos in the future.
+
+Here are some alternatives.
+Some of them are viable and some not:
+
+## GRM — Git Repository Manager
+[This software](https://github.com/hakoerber/git-repo-manager)
+is the closest thing, to feature parity, when looking at the requirements.
+It was implemented a few years after the repo process and was therefore not considered at
+the time of creating the process.
+
+It can search for repos [on remotes](https://hakoerber.github.io/git-repo-manager/forge_integration.html)
+and [in the local file system](https://hakoerber.github.io/git-repo-manager/local_configuration.html#generate-your-own-configuration),
+although, nested repos are not explicitly supported [yet](https://github.com/hakoerber/git-repo-manager/issues/49).
+
+For the time being the following command can create a config file of a meta repo for GRM.
+One has to keep in mind, that in the output every instance of `trees:`,
+except the very first one, has to be removed,
+because the output of the command is the concatenation of the config files for each git repo.
+```
+repo.process --command='grm repos find local $(pwd) --format yaml' > ../config.yml
+```
+## Javascript Project Meta
+The [Javascript project meta](https://github.com/mateodelnorte/meta)
+seems to be a similar tool.
+
+The major downside of this is, that no repo nesting is explicitly supported.
+Nesting could be achieved, by creating a dedicated config file for each level and sub meta repo.
+I also think, that complete support for each remote, would have to be implemented,
+by creating a new config file for each meta repo and each remote.
+
+In other words, in order to use this software for nested repos with multiple remotes,
+one would probably have to create config files on the fly.
+This probably could be done via repo process,
+so future compatibility is possible.
+## Google's Mono Repo
+[Google uses a single repository](https://cacm.acm.org/magazines/2016/7/204032-why-google-stores-billions-of-lines-of-code-in-a-single-repository/fulltext)
+for most of its source code, but it is not available to the public,
+as I understand it.
+## Microsoft's Big Repo(s)
+Microsoft seems to use a large monorepo and has a special tool for that.
+[VGS for Git](https://github.com/microsoft/VFSForGit) was the first version
+and seems to be deprecated.
+It is replaced by [Scalar](https://github.com/microsoft/scalar),
+which offers a similar functionality with a different technical approach.
