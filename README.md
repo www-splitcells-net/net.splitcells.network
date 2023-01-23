@@ -42,6 +42,9 @@ You have your own open source optimization software? How about working together?
 
 📣 Spread the word!
 ## Project Status
+* Statistics: [![Commits per month](https://img.shields.io/github/commit-activity/m/www-splitcells-net/net.splitcells.network?label=commits)](https://github.com/www-splitcells-net/net.splitcells.network/pulse)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
+[![Code size](https://img.shields.io/github/languages/code-size/www-splitcells-net/net.splitcells.network)](https://github.com/www-splitcells-net/net.splitcells.network)
 * Cloud Status: [![Continuous Integration](https://github.com/www-splitcells-net/net.splitcells.network/workflows/Continous%20Integration/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions)
 [![Gitlab Continuous Integration](https://gitlab.com/splitcells-net/net.splitcells.network/badges/master/pipeline.svg)](https://gitlab.com/splitcells-net/net.splitcells.network/-/pipelines)
 [![builds.sr.ht status](https://builds.sr.ht/~splitcells-net/net.splitcells.svg)](https://builds.sr.ht/~splitcells-net)
@@ -51,7 +54,6 @@ You have your own open source optimization software? How about working together?
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=coverage)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=www-splitcells-net_net.splitcells.network&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=www-splitcells-net_net.splitcells.network)
