@@ -52,8 +52,8 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 public class PositionClusters implements Rater {
 
     /**
-     * @param x This is the x coordinate of the group.
-     * @param y This is the y coordinate of the group.
+     * @param x This is the center x coordinate of the group.
+     * @param y This is the center y coordinate of the group.
      * @return Creates the group name of the position cluster, given the center position of the cluster.
      */
     public static String groupNameOfPositionCluster(int x, int y) {
@@ -87,8 +87,8 @@ public class PositionClusters implements Rater {
     }
 
     /**
-     * @param xAttribute This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
-     * @param yAttribute This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @param xAttribute    This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @param yAttribute    This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
      * @param xCenterOffset This is the x-axis offset of the position center.
      * @param yCenterOffset This is the y-axis offset of the position center.
      * @return Returns the {@link PositionClusters} with offset of 0.
@@ -120,23 +120,29 @@ public class PositionClusters implements Rater {
         final var xVal = addition.value(LINE).value(xAttribute) + xCenterOffset;
         final var yVal = addition.value(LINE).value(yAttribute) + yCenterOffset;
         final int xCoord;
+        final int xCoordCenter;
         final int yCoord;
+        final int yCoordCenter;
         final int xAbs = absolute(xVal);
         final int yAbs = absolute(yVal);
         if (xVal < 0) {
             xCoord = xVal + modulus(xAbs - 1, 3);
+            xCoordCenter = xCoord - 1;
         } else {
             xCoord = xVal - modulus(xVal, 3);
+            xCoordCenter = xCoord + 1;
         }
         if (yVal < 0) {
             yCoord = yVal + modulus(yAbs - 1, 3);
+            yCoordCenter = yCoord - 1;
         } else {
             yCoord = yVal - modulus(yVal, 3);
+            yCoordCenter = yCoord + 1;
         }
         final RatingEvent rating = ratingEvent();
         final var positionGroup = positionGroups
                 .computeIfAbsent(xCoord, x -> map())
-                .computeIfAbsent(yCoord, y -> group(groupNameOfPositionCluster(xCoord, yCoord)));
+                .computeIfAbsent(yCoord, y -> group(groupNameOfPositionCluster(xCoordCenter, yCoordCenter)));
         rating.additions().put(addition, localRating()
                 .withPropagationTo(children)
                 .withRating(noCost())
