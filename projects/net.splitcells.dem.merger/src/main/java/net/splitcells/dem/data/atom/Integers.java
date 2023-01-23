@@ -21,6 +21,11 @@ public class Integers {
     }
 
     @JavaLegacyBody
+    public static int parse(String arg) {
+        return java.lang.Integer.parseInt(arg);
+    }
+
+    @JavaLegacyBody
     public static boolean isEven(Integer arg) {
         return arg % 2 == 0;
     }

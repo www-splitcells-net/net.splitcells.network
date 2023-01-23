@@ -10,6 +10,7 @@
  */
 package net.splitcells.cin.raters;
 
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
@@ -58,6 +59,15 @@ public class PositionClusters implements Rater {
      */
     public static String groupNameOfPositionCluster(int x, int y) {
         return "(x=" + x + ", y=" + y + ")";
+    }
+
+    public static int centerXPositionOf(GroupId group) {
+        return Integers.parse(group.name().orElseThrow().split(",")[0].substring(3));
+    }
+
+    public static int centerYPositionOf(GroupId group) {
+        final String yCoordinate = group.name().orElseThrow().split(",")[1];
+        return Integers.parse(yCoordinate.substring(3, yCoordinate.length() - 1));
     }
 
     /**
