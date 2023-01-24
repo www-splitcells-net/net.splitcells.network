@@ -22,11 +22,16 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 import java.util.Optional;
 
+import static net.splitcells.cin.raters.PositionClusters.centerXPositionOf;
+import static net.splitcells.cin.raters.PositionClusters.centerYPositionOf;
 import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
@@ -73,15 +78,45 @@ public class Alive implements Rater {
     @Override
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
         final var ratingEvent = ratingEvent();
-        final var timeValues = lines.columnView(LINE)
-                .values()
+        final var lineValues = lines.columnView(LINE).values();
+        final var timeValues = lineValues
                 .stream()
                 .map(l -> l.value(timeAttribute))
                 .distinct()
                 .sorted(ASCENDING_INTEGERS)
                 .collect(toList());
         final var startTime = timeValues.get(0);
-        ratingEvent.addRating_viaAddition(addition, noCost(), list(), Optional.empty());
+        final var incomingConstraintGroup = lines.lines().get(0).value(INCOMING_CONSTRAINT_GROUP);
+        final var centerXPosition = centerXPositionOf(incomingConstraintGroup);
+        final var centerYPosition = centerYPositionOf(incomingConstraintGroup);
+        final var centerEndingPosition = lineValues
+                .stream()
+                .filter(l -> l.value(timeAttribute) == startTime + 1)
+                .filter(l -> l.value(xCoordinate) == centerXPosition)
+                .filter(l -> l.value(yCoordinate) == centerYPosition)
+                .findFirst();
+        if (centerEndingPosition.isEmpty()) {
+            ratingEvent.additions().put(addition
+                    , localRating()
+                            .withPropagationTo(list())
+                            .withRating(cost(1))
+                            .withResultingGroupId(incomingConstraintGroup));
+            return ratingEvent;
+        }
+        final var startPlayer = centerEndingPosition.get().value(playerAttribute);
+        if (startPlayer == playerValue) {
+            ratingEvent.additions().put(addition
+                    , localRating()
+                            .withPropagationTo(children)
+                            .withRating(noCost())
+                            .withResultingGroupId(incomingConstraintGroup));
+        } else {
+            ratingEvent.additions().put(addition
+                    , localRating()
+                            .withPropagationTo(list())
+                            .withRating(cost(1))
+                            .withResultingGroupId(incomingConstraintGroup));
+        }
         return ratingEvent;
     }
 }

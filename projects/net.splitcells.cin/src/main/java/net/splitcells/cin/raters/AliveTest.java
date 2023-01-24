@@ -13,6 +13,7 @@ package net.splitcells.cin.raters;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.raters.Alive.alive;
+import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -33,7 +34,9 @@ public class AliveTest {
                 .withSupplies(list
                         (list()))
                 .withConstraint(c -> {
-                    c.forAll(alive(1, player, time, xCoord, yCoord)).forAll();
+                    c.forAll(positionClusters(xCoord, yCoord))
+                            .then(alive(1, player, time, xCoord, yCoord))
+                            .forAll();
                     return c;
                 })
                 .toProblem()
@@ -41,6 +44,7 @@ public class AliveTest {
         testSubject.optimize(linearInitialization());
         testSubject.constraint().lineProcessing().lines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
-        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireEmpty();
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireEmpty();
     }
 }
