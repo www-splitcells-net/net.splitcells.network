@@ -12,14 +12,13 @@ package net.splitcells.cin.raters;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
 
-import static net.splitcells.cin.raters.Alive.alive;
+import static net.splitcells.cin.raters.IsAlive.isAlive;
 import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 
-public class AliveTest {
+public class IsAliveTest {
     @UnitTest
     public void testAlive() {
         final var player = attribute(Integer.class, "player");
@@ -33,7 +32,7 @@ public class AliveTest {
                 .withSupplies(list(list(), list()))
                 .withConstraint(c -> {
                     c.forAll(positionClusters(xCoord, yCoord))
-                            .then(alive(1, player, time, xCoord, yCoord))
+                            .then(isAlive(1, player, time, xCoord, yCoord))
                             .forAll();
                     return c;
                 })
@@ -64,7 +63,7 @@ public class AliveTest {
                 .withSupplies(list(list(), list()))
                 .withConstraint(c -> {
                     c.forAll(positionClusters(xCoord, yCoord))
-                            .then(alive(1, player, time, xCoord, yCoord))
+                            .then(isAlive(1, player, time, xCoord, yCoord))
                             .forAll();
                     return c;
                 })

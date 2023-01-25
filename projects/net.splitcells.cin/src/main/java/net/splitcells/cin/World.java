@@ -33,6 +33,7 @@ import net.splitcells.gel.solution.SolutionView;
 import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.cin.raters.IsAlive.isAlive;
 import static net.splitcells.cin.raters.PositionClusters.positionClustering;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
@@ -76,7 +77,7 @@ public class World {
                 .withConstraint(r -> {
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Z))
-                            .forAll(isAlive());
+                            .forAll(isAlive(0, VALUE, WORLD_TIME, POSITION_X, POSITION_Z));
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(crowded()).then(dies());
@@ -208,10 +209,6 @@ public class World {
 
     private static Rater survives() {
         throw notImplementedYet();
-    }
-
-    private static Rater isAlive() {
-        return lineValueRater(line -> line.value(VALUE) > 0);
     }
 
     private static Rater isDead() {

@@ -11,7 +11,6 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
@@ -20,8 +19,6 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
-
-import java.util.Optional;
 
 import static net.splitcells.cin.raters.PositionClusters.centerXPositionOf;
 import static net.splitcells.cin.raters.PositionClusters.centerYPositionOf;
@@ -44,13 +41,13 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
  * than this {@link Rater} applies to the group.
  * This way it is possible, to create different rules to different players.</p>
  */
-public class Alive implements Rater {
-    public static Rater alive(int playerValue
+public class IsAlive implements Rater {
+    public static Rater isAlive(int playerValue
             , Attribute<Integer> playerAttribute
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
-        return new Alive(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate);
+        return new IsAlive(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate);
     }
 
     private final Attribute<Integer> playerAttribute;
@@ -59,7 +56,7 @@ public class Alive implements Rater {
     private final Attribute<Integer> yCoordinate;
     private int playerValue;
 
-    private Alive(int playerValue
+    private IsAlive(int playerValue
             , Attribute<Integer> playerAttribute
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
