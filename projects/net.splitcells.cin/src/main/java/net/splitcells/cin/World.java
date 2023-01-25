@@ -74,7 +74,9 @@ public class World {
                 .withSupplyAttributes(POSITION_X, POSITION_Z, VALUE)
                 .withSupplies(worldWithGlider())
                 .withConstraint(r -> {
-                    r.forAll(overlappingTimeSteps(WORLD_TIME)).forAll(positionClustering(POSITION_X, POSITION_Z));
+                    r.forAll(overlappingTimeSteps(WORLD_TIME))
+                            .forAll(positionClustering(POSITION_X, POSITION_Z))
+                            .forAll(isAlive());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(crowded()).then(dies());
