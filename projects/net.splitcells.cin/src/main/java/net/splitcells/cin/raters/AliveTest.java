@@ -21,7 +21,7 @@ import static net.splitcells.gel.solution.optimization.primitive.LinearInitializ
 
 public class AliveTest {
     @UnitTest
-    public void testDeadOfLoneliness() {
+    public void testTimeWIthOnlyStart() {
         final var player = attribute(Integer.class, "player");
         final var time = attribute(Integer.class, "time");
         final var xCoord = attribute(Integer.class, "x-coordinate");
@@ -45,6 +45,6 @@ public class AliveTest {
         testSubject.constraint().lineProcessing().lines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
-        testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireEmpty();
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
     }
 }

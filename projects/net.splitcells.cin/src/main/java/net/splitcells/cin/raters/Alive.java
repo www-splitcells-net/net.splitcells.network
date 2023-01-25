@@ -89,13 +89,13 @@ public class Alive implements Rater {
         final var incomingConstraintGroup = lines.lines().get(0).value(INCOMING_CONSTRAINT_GROUP);
         final var centerXPosition = centerXPositionOf(incomingConstraintGroup);
         final var centerYPosition = centerYPositionOf(incomingConstraintGroup);
-        final var centerEndingPosition = lineValues
+        final var centerStartPosition = lineValues
                 .stream()
-                .filter(l -> l.value(timeAttribute) == startTime + 1)
+                .filter(l -> l.value(timeAttribute) == startTime)
                 .filter(l -> l.value(xCoordinate) == centerXPosition)
                 .filter(l -> l.value(yCoordinate) == centerYPosition)
                 .findFirst();
-        if (centerEndingPosition.isEmpty()) {
+        if (centerStartPosition.isEmpty()) {
             ratingEvent.additions().put(addition
                     , localRating()
                             .withPropagationTo(list())
@@ -103,7 +103,7 @@ public class Alive implements Rater {
                             .withResultingGroupId(incomingConstraintGroup));
             return ratingEvent;
         }
-        final var startPlayer = centerEndingPosition.get().value(playerAttribute);
+        final var startPlayer = centerStartPosition.get().value(playerAttribute);
         if (startPlayer == playerValue) {
             ratingEvent.additions().put(addition
                     , localRating()
