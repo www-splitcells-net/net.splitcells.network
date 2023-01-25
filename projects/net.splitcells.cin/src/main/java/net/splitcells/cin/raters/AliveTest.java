@@ -28,7 +28,7 @@ public class AliveTest {
         final var yCoord = attribute(Integer.class, "y-coordinate");
         final var testSubject = defineProblem("testAlive")
                 .withDemandAttributes(player, time, xCoord, yCoord)
-                .withDemands(list(list(1, 1, 1, 1), list(1, 1, 1, 1)))
+                .withDemands(list(list(1, 0, 1, 1), list(1, 1, 1, 1)))
                 .withSupplyAttributes()
                 .withSupplies(list(list(), list()))
                 .withConstraint(c -> {
