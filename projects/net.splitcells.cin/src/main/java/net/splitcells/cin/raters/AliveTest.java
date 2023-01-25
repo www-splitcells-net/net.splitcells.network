@@ -50,4 +50,35 @@ public class AliveTest {
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(2);
     }
+
+    @UnitTest
+    public void testDead() {
+        final var player = attribute(Integer.class, "player");
+        final var time = attribute(Integer.class, "time");
+        final var xCoord = attribute(Integer.class, "x-coordinate");
+        final var yCoord = attribute(Integer.class, "y-coordinate");
+        final var testSubject = defineProblem("testDead")
+                .withDemandAttributes(player, time, xCoord, yCoord)
+                .withDemands(list(list(0, 0, 1, 1), list(1, 1, 1, 1)))
+                .withSupplyAttributes()
+                .withSupplies(list(list(), list()))
+                .withConstraint(c -> {
+                    c.forAll(positionClusters(xCoord, yCoord))
+                            .then(alive(1, player, time, xCoord, yCoord))
+                            .forAll();
+                    return c;
+                })
+                .toProblem()
+                .asSolution();
+        testSubject.allocate(testSubject.demandsFree().line(0), testSubject.suppliesFree().line(0));
+        testSubject.constraint().lineProcessing().lines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireEmpty();
+        testSubject.allocate(testSubject.demandsFree().line(0), testSubject.suppliesFree().line(0));
+        testSubject.constraint().lineProcessing().lines().requireSizeOf(2);
+        testSubject.constraint().childrenView().get(0).lineProcessing().lines().requireSizeOf(2);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(2);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireEmpty();
+    }
 }
