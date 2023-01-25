@@ -21,18 +21,16 @@ import static net.splitcells.gel.solution.optimization.primitive.LinearInitializ
 
 public class AliveTest {
     @UnitTest
-    public void testTimeWIthOnlyStart() {
+    public void testAlive() {
         final var player = attribute(Integer.class, "player");
         final var time = attribute(Integer.class, "time");
         final var xCoord = attribute(Integer.class, "x-coordinate");
         final var yCoord = attribute(Integer.class, "y-coordinate");
         final var testSubject = defineProblem("testAlive")
                 .withDemandAttributes(player, time, xCoord, yCoord)
-                .withDemands(list
-                        (list(1, 1, 1, 1)))
+                .withDemands(list(list(1, 1, 1, 1), list(1, 1, 1, 1)))
                 .withSupplyAttributes()
-                .withSupplies(list
-                        (list()))
+                .withSupplies(list(list(), list()))
                 .withConstraint(c -> {
                     c.forAll(positionClusters(xCoord, yCoord))
                             .then(alive(1, player, time, xCoord, yCoord))
@@ -41,10 +39,15 @@ public class AliveTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.optimize(linearInitialization());
+        testSubject.allocate(testSubject.demandsFree().line(0), testSubject.suppliesFree().line(0));
         testSubject.constraint().lineProcessing().lines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
+        testSubject.allocate(testSubject.demandsFree().line(0), testSubject.suppliesFree().line(0));
+        testSubject.constraint().lineProcessing().lines().requireSizeOf(2);
+        testSubject.constraint().childrenView().get(0).lineProcessing().lines().requireSizeOf(2);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(2);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(2);
     }
 }
