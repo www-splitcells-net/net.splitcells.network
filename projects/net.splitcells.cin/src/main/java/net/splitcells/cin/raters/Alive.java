@@ -17,6 +17,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
@@ -95,11 +96,15 @@ public class Alive implements Rater {
                 .filter(l -> l.value(xCoordinate) == centerXPosition)
                 .filter(l -> l.value(yCoordinate) == centerYPosition)
                 .findFirst();
+        final var additionLine = addition.value(LINE);
+        final boolean isAdditionCenterStart = startTime.equals(additionLine.value(timeAttribute))
+                && centerXPosition == additionLine.value(xCoordinate)
+                && centerYPosition == additionLine.value(yCoordinate);
         if (centerStartPosition.isEmpty()) {
             ratingEvent.additions().put(addition
                     , localRating()
                             .withPropagationTo(list())
-                            .withRating(cost(1))
+                            .withRating(cost(0))
                             .withResultingGroupId(incomingConstraintGroup));
             return ratingEvent;
         }
@@ -111,10 +116,16 @@ public class Alive implements Rater {
                             .withRating(noCost())
                             .withResultingGroupId(incomingConstraintGroup));
         } else {
+            final Rating defianceCost;
+            if (isAdditionCenterStart) {
+                defianceCost = cost(1);
+            } else {
+                defianceCost = noCost();
+            }
             ratingEvent.additions().put(addition
                     , localRating()
                             .withPropagationTo(list())
-                            .withRating(cost(1))
+                            .withRating(defianceCost)
                             .withResultingGroupId(incomingConstraintGroup));
         }
         return ratingEvent;
