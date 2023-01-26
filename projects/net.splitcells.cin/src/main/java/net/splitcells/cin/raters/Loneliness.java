@@ -19,6 +19,8 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+
 public class Loneliness implements Rater {
     public static Rater loneliness(int playerValue
             , Attribute<Integer> playerAttribute
@@ -48,7 +50,7 @@ public class Loneliness implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return null;
+        throw notImplementedYet();
     }
 
     @Override

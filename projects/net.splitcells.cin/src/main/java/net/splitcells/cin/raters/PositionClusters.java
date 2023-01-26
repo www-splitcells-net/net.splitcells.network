@@ -26,6 +26,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -162,6 +163,6 @@ public class PositionClusters implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list();
+        throw notImplementedYet();
     }
 }

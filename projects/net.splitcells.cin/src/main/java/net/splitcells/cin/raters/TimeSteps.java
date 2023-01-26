@@ -75,7 +75,7 @@ public class TimeSteps implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list();
+        throw notImplementedYet();
     }
 
     @Override

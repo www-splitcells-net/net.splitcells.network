@@ -25,6 +25,7 @@ import static net.splitcells.cin.raters.PositionClusters.centerYPositionOf;
 import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -70,7 +71,7 @@ public class IsAlive implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list((Domable) playerAttribute);
+        throw notImplementedYet();
     }
 
     @Override
