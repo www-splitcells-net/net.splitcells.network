@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 set -e
-echo The logs of the build are located at `../net.splitcells.network.log/target/test.via.network.worker.log`.
+echo 'Some logs of the build are located at `../net.splitcells.network.log/target`.'
+cd ../net.splitcells.network.bom
+    mvn clean install
+    cd ../net.splitcells.network
 logFolder=../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/
 logFile=$logFolder/$(hostname).csv
 test -d ../net.splitcells.network.log/target || mkdir ../net.splitcells.network.log/target
