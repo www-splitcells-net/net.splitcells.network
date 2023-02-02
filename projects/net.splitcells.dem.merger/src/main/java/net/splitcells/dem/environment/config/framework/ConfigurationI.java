@@ -11,6 +11,7 @@
 package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.map.typed.TypedMap;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
@@ -21,8 +22,9 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
- * TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
- * Automatic {@link Option} update based on other {@link Option} updates should not be done via these {@link #subscribers}.
+ * <p>TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
+ * Automatic {@link Option} update based on other {@link Option} updates should not be done via these {@link #subscribers}.</p>
+ * <p>TODO Use {@link TypedMap}, instead of {@link Map}, in order to reduce the amount of reflection usage.</p>
  */
 @JavaLegacyArtifact
 public class ConfigurationI implements Configuration {
