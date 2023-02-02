@@ -10,11 +10,13 @@
  */
 package net.splitcells.gel.constraint;
 
+import static net.splitcells.dem.data.set.map.typed.TypedMapI.typedMap;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 
 import java.util.Optional;
 
+import net.splitcells.dem.data.set.map.typed.TypedMapView;
 import net.splitcells.dem.lang.Xml;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
@@ -24,16 +26,6 @@ import net.splitcells.dem.lang.dom.Domable;
  * <p>IDEA Create value based grouping.</p>
  */
 public class GroupId implements Domable {
-    @Deprecated
-    public GroupId() {
-        name = Optional.empty();
-    }
-
-    private GroupId(String name) {
-        this.name = Optional.ofNullable(name);
-    }
-
-    private final Optional<String> name;
 
     public static GroupId group() {
         return new GroupId();
@@ -42,6 +34,32 @@ public class GroupId implements Domable {
     public static GroupId group(String name) {
         return new GroupId(name);
     }
+
+    public static GroupId group(String name, TypedMapView metaData) {
+        return new GroupId(name, metaData);
+    }
+
+    @Deprecated
+    public GroupId() {
+        name = Optional.empty();
+        metaData = typedMap();
+    }
+
+    private GroupId(String name) {
+        this.name = Optional.ofNullable(name);
+        metaData = typedMap();
+    }
+
+    private GroupId(String name, TypedMapView metaData) {
+        this.name = Optional.ofNullable(name);
+        this.metaData = metaData;
+    }
+
+    /**
+     * TODO Move name inside {@link #metaData}
+     */
+    private final Optional<String> name;
+    private final TypedMapView metaData;
 
     @Deprecated
     public String getName() {
@@ -69,5 +87,9 @@ public class GroupId implements Domable {
         }
         dom.appendChild(Xml.elementWithChildren("id", textNode(this.hashCode() + "")));
         return dom;
+    }
+
+    public TypedMapView metaData() {
+        return metaData;
     }
 }

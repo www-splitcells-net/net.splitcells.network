@@ -38,6 +38,7 @@
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
+* **2023-02-02** **\#170**: Add meta data container to GroupId.
 * **2022-07-24** **\#8**:
   1. Deprecate `LinearInitialization` and prefer using `OnlineLinearInitialization` for better performance.
   2. Solution optimization now supports an `OptimizationConfig`,
