@@ -21,6 +21,10 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+/**
+ * Determines if the player {@link #playerValue},
+ * has enough neighbouring positions with the same {@link #playerValue} given a {@link TimeSteps}.
+ */
 public class Loneliness implements Rater {
     public static Rater loneliness(int playerValue
             , Attribute<Integer> playerAttribute
