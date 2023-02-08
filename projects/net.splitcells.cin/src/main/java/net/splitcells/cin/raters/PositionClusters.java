@@ -24,6 +24,7 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.data.set.map.typed.TypedMapI.typedMap;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -153,7 +154,9 @@ public class PositionClusters implements Rater {
         final RatingEvent rating = ratingEvent();
         final var positionGroup = positionGroups
                 .computeIfAbsent(xCoord, x -> map())
-                .computeIfAbsent(yCoord, y -> group(groupNameOfPositionCluster(xCoordCenter, yCoordCenter)));
+                .computeIfAbsent(yCoord, y -> group(groupNameOfPositionCluster(xCoordCenter, yCoordCenter)
+                        , typedMap().withAssignment(PositionClustersCenterX.class, xCoordCenter)
+                                .withAssignment(PositionClustersCenterY.class, yCoord)));
         rating.additions().put(addition, localRating()
                 .withPropagationTo(children)
                 .withRating(noCost())
