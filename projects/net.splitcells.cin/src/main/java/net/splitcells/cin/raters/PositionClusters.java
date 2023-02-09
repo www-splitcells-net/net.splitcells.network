@@ -156,7 +156,7 @@ public class PositionClusters implements Rater {
                 .computeIfAbsent(xCoord, x -> map())
                 .computeIfAbsent(yCoord, y -> group(groupNameOfPositionCluster(xCoordCenter, yCoordCenter)
                         , typedMap().withAssignment(PositionClustersCenterX.class, xCoordCenter)
-                                .withAssignment(PositionClustersCenterY.class, yCoord)));
+                                .withAssignment(PositionClustersCenterY.class, yCoordCenter)));
         rating.additions().put(addition, localRating()
                 .withPropagationTo(children)
                 .withRating(noCost())
