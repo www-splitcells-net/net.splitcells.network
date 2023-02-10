@@ -90,7 +90,7 @@ public class IsAlive implements Rater {
         final var centerYPosition = centerYPositionOf(incomingConstraintGroup);
         final var centerStartPosition = lineValues
                 .stream()
-                .filter(l -> l.value(timeAttribute) == startTime)
+                .filter(l -> l.value(timeAttribute).equals(startTime))
                 .filter(l -> l.value(xCoordinate) == centerXPosition)
                 .filter(l -> l.value(yCoordinate) == centerYPosition)
                 .findFirst();
