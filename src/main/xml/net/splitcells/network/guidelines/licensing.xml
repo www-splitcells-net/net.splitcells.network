@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR MIT
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
+        <title>Licensing Guidelines</title>
+        <toDo xl:href="https://sfconservancy.org/blog/2020/jan/06/copyleft-equality/"/>
+    </meta>
+    <paragraph>This is no lawyer advice, the following only represents some contributor opinions and understanding.</paragraph>
+    <chapter>
+        <title>General Licensing Decisions</title>
+        <paragraph>The preferred license for source code and documentation is
+            <quote>EPL-2.0 OR GPL-2.0-or-later</quote>
+            (<quote>EPL 2.0</quote> with <quote>GPL-2.0-or-later</quote> as the secondary license).
+        </paragraph>
+        <paragraph>When referring to a license use its full name or its SPDX-License-Identifier.
+            Projects should be
+            <link>
+                <text>REUSE recommendations</text>
+                <url>https://reuse.software/</url>
+            </link>
+            compliant regarding licensing information.
+            The
+            <link>
+                <text>Eclipse Foundation Project Handbook</text>
+                <url>https://www.eclipse.org/projects/handbook/</url>
+            </link>
+            is used as a guide in order to determine licensing related
+            license notice files and similar.
+            Detailed information about EPL 2.0 can be found
+            <link>
+                <text>here</text>
+                <url>https://www.eclipse.org/legal/epl-2.0/</url>
+            </link>
+            .
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>External Guides And Inspirations</title>
+        <paragraph>Following sites were used as a kind of general guide and inspiration:</paragraph>
+        <list>
+            <item>
+                <link>
+                    <text>Software Freedom Conservancy</text>
+                    <url>https://sfconservancy.org/</url>
+                </link>
+            </item>
+            <item>
+                <link>
+                    <text>The Eclipse Project Handbook</text>
+                    <url>https://www.eclipse.org/projects/handbook/</url>
+                </link>
+            </item>
+            <item>
+                <link>
+                    <text>Eclipse IP Management Modernization by Sharon Corbett</text>
+                    <url>https://www.eclipsecon.org/sites/default/files/slides/IP%20Management%20Modernization.pdf</url>
+                </link>
+            </item>
+        </list>
+    </chapter>
+    <chapter>
+        <title>History</title>
+        <paragraph>
+            With the ticket
+            <link>
+                <text>#86</text>
+                <url>https://github.com/www-splitcells-net/net.splitcells.network/issues/86</url>
+            </link>
+            the GPL-2.0-or-later license as a secondary license to EPL-2.0 was dropped,
+            because the dependencies of the project were not compatible with GPL-2.0-or-later,
+            as it was understood, that dependencies needed to comply with the secondary license at all time.
+            Later, it was found out, that the secondary license does not have to apply to the dependencies.
+            The person that publishes the work only under the secondary license,
+            is required to only include complying dependencies.
+            The person publishing the work under EPL-2.0 with GPL-2.0-or-later as the secondary license,
+            is not required to only include complying dependencies.
+            See 2 e) and 3.2 a) in the EPL-2.0 for more details.
+        </paragraph>
+        <paragraph>
+            With the ticket
+            <link>
+                <text>#88</text>
+                <url>https://github.com/www-splitcells-net/net.splitcells.network/issues/86</url>
+            </link>
+            GPL compatibility is planned for the core code.
+            Instead <quote>EPL-2.0 OR MIT</quote> was adopted with the later goal to adopt
+            <quote>EPL-2.0 OR GPL-2.0-or-later</quote>
+            (<quote>EPL 2.0</quote> with <quote>GPL-2.0-or-later</quote> as the secondary license),
+            when GPL-2.0-or-later compliance of the dependencies is achieved.
+        </paragraph>
+        <paragraph>
+            Later it was noticed, that dependencies compliance with the GPL-2.0-or-later is not relevant,
+            if the GPL-2.0-or-later is used as a secondary license to the EPL-2.0.
+            So it was decided to immediately fallback to the EPL-2.0 with GPL-2.0-or-later as the secondary license.
+            Adopting the <quote>EPL-2.0 OR GPL-2.0-or-later</quote> is done via the ticket
+            <link>
+                <text>
+                    <quote>#218: Relicense main repo to EPL-2.0 with GPL-2.0-or-later as a secondary license.</quote>
+                </text>
+                <url>https://github.com/www-splitcells-net/net.splitcells.network/issues/218</url>
+            </link>
+            .
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Understanding of the EPL-2.0</title>
+        <paragraph>
+            To the current understanding of the EPL 2.0 license and the
+            <link>
+                <text>Eclipse EPL 2.0 FAQ</text>
+                <url>https://www.eclipse.org/legal/epl-2.0/faq.php#epl-derivative</url>
+            </link>
+            derivative works do not seem to include works that merely link (or bind by name)
+            the original work and derivative works.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Licensing Reasoning</title>
+        <paragraph>
+            Dual licensing the program source code under MIT and Apache 2.0
+            was considered as a correct way,
+            because Rust seemed to be a good open source role model.
+            It provided patent protections and great flexibility.
+            The reasoning for
+            <link>
+                <text>dual licensing</text>
+                <url>https://mail.mozilla.org/pipermail/rust-dev/2012-November/002664.html</url>
+            </link>
+            seemed to be good, so it was considered.
+        </paragraph>
+        <paragraph>
+            Alternative licenses,
+            which provided extended copyright protection via copyleft
+            (
+            <link>
+                <text>example argumentation context for copyleft</text>
+                <url>https://sfconservancy.org/blog/2021/jul/23/tivoization-and-the-gpl-right-to-install/</url>
+            </link>
+            ),
+            were also checked.
+            Some additional protections were wanted,
+            but using strong copyleft from the start seemed to have some downsides in practice,
+            primarily because of standard dependencies like JUnit.
+            Furthermore, the inability to integrate external code with incompatible licenses,
+            would be hindered.
+            So, instead weak copyleft licensing was considered.
+        </paragraph>
+        <paragraph>
+            MPL 2.0 was considered,
+            but the termination clause seemed to be awful:
+            if one did some error regarding the licensing,
+            one could loose the license of an IP simply by missing some time frames
+            set by the license.
+            It was also noted, that one may even get terminated after fixing of licensing issues,
+            if the contributor choose to do so and if certain conditions are met.
+            This seems to be a too big uncertainty.
+        </paragraph>
+        <paragraph>
+            A similar problem arises from the termination clause in the (L)GPL 2.x license.
+            Some corporations even explicitly stated,
+            <link>
+                <text>that the termination clause of this license will not be enforced</text>
+                <url>https://gplcc.github.io/gplcc/</url>
+            </link>
+            (
+            <link>
+                <text>additional source</text>
+                <url>https://sfconservancy.org/blog/2019/may/11/termination-backports/</url>
+            </link>
+            ).
+        </paragraph>
+        <paragraph>
+            Next the EPL 2.0 was considered.
+            The termination clauses seemed to be very ...**drom roll** ... reasonable
+            **BA DUM TSS** and it was a weak copyleft license.
+        </paragraph>
+        <paragraph>
+            The Apache Software Foundation is an American organization,
+            whereas the Eclipse Foundation AISBL is an Euorpean-based organization.
+            The founder of the project is located in Europe,
+            so it makes more sense to target European communities.
+            The weak copy-left approach of the EPL-2.0 also enables some extended copyright protections,
+            while offering improved license compatibility,
+            so <quote>EPL-2.0 OR GPL-2.0-or-later</quote> was adopted (
+            <link>
+                <text>Developing Software at Gunpoint: Weak Copy Left Versus Pseudo Permissive</text>
+                <url>https://splitcells-net.srht.site/blog/2021-08-10-developing-software-at-gunpoint-weak-copy-left-versus-pseudo-permissive/</url>
+            </link>
+            ).
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Licensing Implementation</title>
+        <chapter>
+            <title>Notice File</title>
+            <paragraph>
+                This file states the project and contains the licensing and attributions of the
+                project's content.
+                Third party dependencies not inside the repo may also be attributed here.
+            </paragraph>
+            <paragraph>
+                The notice file also contains additional legally required notifications and
+                attributions (i.e. required notification by the Apache 2.0 license).
+            </paragraph>
+            <paragraph>
+                The notice file should contain all licensing and attribution information,
+                except for the actual complete copies of the licenses etc.
+                Keep in mind that the notice file may need to be updated/extended,
+                if the project is distributed with bundled third party dependencies.
+            </paragraph>
+            <code_block><![CDATA[# Notices for [project]
+
+## Copyright
+
+All content is the property of the respective authors or their employers.
+For more information regarding authorship of content, please consult the
+listed source code repository logs.
+
+## Project Licenses
+
+[...]
+
+## Notes
+
+## Third Party Content
+
+[Only needed if present.]
+
+### Third Party Dependencies
+
+[Third Party Content ID/Name]
+
+* [optional if no specific version is used] Version: [...]
+* License: [...]
+* [optional] Website: [...]
+* [optional] Source Code: [...]
+]]></code_block>
+        </chapter>
+        <chapter>
+            <title>File License Header</title>
+            <paragraph>For short Bash/sh scripts a license header is not required.</paragraph>
+            <code_block><![CDATA[/*
+ * Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0, which is available at
+ * http://www.eclipse.org/legal/epl-2.0, or the MIT License,
+ * which is available at https://spdx.org/licenses/MIT.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ */
+]]></code_block>
+            <blockquote>This is the license header template for Java files.</blockquote>
+            <paragraph>
+                A long header is maintained, because most other projects seem to be doing this for Java files.
+                It is suspected, that this is needless, as long it is part of a repo,
+                where this info is present and easily notable.
+                Maybe the short only SPDX version will be enough in the future.
+            </paragraph>
+            <code_block><![CDATA[# SPDX-License-Identifier: EPL-2.0 OR MIT
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+]]></code_block>
+            <blockquote>This is the license header template for Bash, sh and .gitignore files.</blockquote>
+            <code_block><![CDATA["""
+SPDX-License-Identifier: EPL-2.0 OR MIT
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+"""
+
+__author__ = "Mārtiņš Avots"
+__authors__ = ["and other"]
+__copyright__ = "Copyright 2021"
+__license__ = "EPL-2.0 OR MIT"
+]]></code_block>
+            <blockquote>This is the license header for Python 3 files.</blockquote>
+            <code_block><![CDATA[<!--
+  SPDX-License-Identifier: EPL-2.0 OR MIT
+  SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+-->
+]]></code_block>
+            <blockquote>This is the license header template for HTML and XML files.</blockquote>
+            <code_block><![CDATA[<!--
+  SPDX-License-Identifier: EPL-2.0 OR MIT
+  SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+-->
+]]></code_block>
+            <blockquote>This is the license header template for HTML and XML files.</blockquote>
+            <code_block><![CDATA[----
+* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
+]]></code_block>
+            <blockquote>This is the license header template for CommonMark files.</blockquote>
+        </chapter>
+        <chapter>
+            <title>License File</title>
+            <paragraph>
+                The license file in the top level folder has to contain all licensing
+                of the information (like source code and documentation) in this repository.
+                The actual full license text has to be present in the license file,
+                in order to ensure that everything is present.
+                The license file has to contain all licensing of bundled dependencies in a
+                distribution.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>License Information on File Basis</title>
+            <paragraph>
+                Each file should have its own licensing info.
+                In other words licensing is done on a per-file basis.
+                It is recommended, that the licensing info is located in the licensed files
+                itself.
+                This is usually done via copyright headers.
+            </paragraph>
+            <paragraph>
+                Alternatively, Licensing info of a file can be split into a separate file,
+                but each such file needs its own separate licensing file.
+                This is separate licensing file should be in the same folder as the file with
+                the actual content.
+                Their relation should be clearly visible by using the same file prefix.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>License Obligations</title>
+            <paragraph>
+                Every copy and distribution of this project should contain copies of the licenses,
+                the notice and the license file of all present components in general.
+                Also, always provide a list of all components and their attributions.
+                They should be easily findable via top level files,
+                whereby linking to further files is acceptable and often good
+                in order to avoid cluttering the top level folder.
+                If the distribution is in the form of a program etc., it should provide this
+                information in its native way easily.
+            </paragraph>
+            <paragraph>
+                It is recommended to not change the licensing of the project's components
+                and leave these in its original form.
+            </paragraph>
+            <chapter>
+                <title>Overview of License Specific License Obligations</title>
+                <paragraph>Apache-2.0:</paragraph>
+                <list>
+                    <item>Provide license file, attribution and license notice.</item>
+                    <item>Provide NOTICE, when the component is bundled.</item>
+                    <item>* State changes done to these if any.</item>
+                </list>
+                <paragraph>BSD-2-Clause:</paragraph>
+                <list>
+                    <item>Provide license file.</item>
+                    <item>Provide copyright notice and attribution.</item>
+                </list>
+                <paragraph>BSD-3-Clause:</paragraph>
+                <list>
+                    <item>Provide license file.</item>
+                    <item>Provide copyright notice and attribution.</item>
+                </list>
+                <paragraph>GPL-2.0-or-later WITH Classpath-exception-2.0:</paragraph>
+                <list>
+                    <item>This license is not accepted for third party content of a project at the moment.</item>
+                </list>
+                <paragraph>EPL-2.0:</paragraph>
+                <list>
+                    <item>Provide license file, attribution and license notice.</item>
+                    <item>When bundled provide NOTICE, source code or working link to source code.</item>
+                    <item>Generally, do not provide third party code</item>
+                    <item>Do not mix EPL 2.0 code with other code, because of the EPL 2.0 copy left
+                        nature. EPL 2.0 code and other licensed code should be kept in separate
+                        projects.
+                    </item>
+                    <item>Point to <quote>NO WARRANTY</quote> and <quote>DISCLAIMER OF LIABILITY</quote> in distributions.
+                    </item>
+                    <item>This is weak copy left.</item>
+                </list>
+                <paragraph>ISC:</paragraph>
+                <list>
+                    <item>Provide license file.</item>
+                    <item>Provide copyright notice and attribution.</item>
+                </list>
+                <paragraph>LGPL-2.1-or-later:</paragraph>
+                <list>
+                    <item>Link to or provide original source code.</item>
+                    <item>Provide license file, copyright notice and attribution.</item>
+                    <item>Statically linked/bundled requires a way to change or replace this dependency.</item>
+                    <item>Sublicensing is not allowed.</item>
+                    <item>This is weak copy left.</item>
+                </list>
+                <paragraph>MIT:</paragraph>
+                <list>
+                    <item>Provide license file.</item>
+                    <item>Provide copyright notice and attribution.</item>
+                </list>
+                <paragraph>MPL 2.0:</paragraph>
+                <list>
+                    <item>Provide license file.</item>
+                    <item>Provide copyright notice and attribution.</item>
+                    <item>This is weak copy left.</item>
+                    <item>Link to or provide original source code.</item>
+                </list>
+            </chapter>
+        </chapter>
+        <chapter>
+            <title>Organize Contributions</title>
+            <chapter>
+                <title>Determine contribution protocol.</title>
+                <paragraph>The Linux kernel and Git are the main role models for this.</paragraph>
+                <paragraph>
+                    CTAs (copyright transfer agreement) and CLAs (copyright licensing aggreements)
+                    are not required by default,
+                    because the meaning, usage, effects, consequence, etc. of this are hard to manage
+                    and understand.
+                    Keep in mind, that the legal system in USA works different from the legal system
+                    of the EU and Germany.
+                </paragraph>
+                <list>
+                    <item>
+                        <link>
+                            <text>It Matters Who Owns Your Copylefted Copyrights</text>
+                            <url>https://sfconservancy.org/blog/2021/jun/30/who-should-own-foss-copyrights/</url>
+                        </link>
+                    </item>
+                    <item>
+                        <link>
+                            <text>Owning Your Own Copyrights in Open Source</text>
+                            <url>https://blog.hansenpartnership.com/owning-your-own-copyrights-in-open-source/</url>
+                        </link>
+                    </item>
+                    <item>
+                        <link>
+                            <text>Why Your Project Doesn't Need a Contributor Licensing Agreement</text>
+                            <url>https://sfconservancy.org/blog/2014/jun/09/do-not-need-cla/</url>
+                        </link>
+                    </item>
+                    <item>
+                        <link>
+                            <text>What is ContractPatch?</text>
+                            <url>https://sfconservancy.org/contractpatch/</url>
+                        </link>
+                    </item>
+                </list>
+            </chapter>
+            <chapter>
+                <title>Determine contribution documents.</title>
+                <paragraph>
+                    The <quote>CONTRIBUTING.md</quote> and the
+                    <quote>Developer_Certificate_of_Origin.v1.1.txt</quote>
+                    are used as contribution guidelines.
+                    Support information and tutorials will also be added
+                    as they are needed.
+                </paragraph>
+            </chapter>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Interesting Third Party Documents</title>
+        <list>
+            <item>
+                <link>
+                    <text>ASF 3rd Party License Policy</text>
+                    <url>https://www.apache.org/legal/resolved.html</url>
+                </link>
+            </item>
+            <item>
+                <link>
+                    <text>The installer of GPL software seems to not have to be licensed under GPL.</text>
+                    <url>https://www.gnu.org/licenses/gpl-faq.html#GPLCompatInstaller</url>
+                </link>
+            </item>
+        </list>
+    </chapter>
+</article>
