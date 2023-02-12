@@ -4,7 +4,7 @@
          xmlns:d="http://splitcells.net/den.xsd">
     <meta>
         <!--
-            SPDX-License-Identifier: EPL-2.0 OR MIT
+            SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
             SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
         -->
         <title>Licensing Guidelines</title>
@@ -17,8 +17,18 @@
             <quote>EPL-2.0 OR GPL-2.0-or-later</quote>
             (<quote>EPL 2.0</quote> with <quote>GPL-2.0-or-later</quote> as the secondary license).
         </paragraph>
-        <paragraph>When referring to a license use its full name or its SPDX-License-Identifier.
-            Projects should be
+        <paragraph>When referring to a license use its full name or its
+            <link>
+                <text>SPDX-License-Identifier</text>
+                <url>https://spdx.org/licenses/EPL-2.0.html</url>
+            </link>
+            (
+            <link>
+                <text>Eclipse FAQ</text>
+                <url>https://www.eclipse.org/legal/epl-2.0/faq.php#h.aq5xwcjmpy2a</url>
+            </link>
+            )
+            . Projects should be
             <link>
                 <text>REUSE recommendations</text>
                 <url>https://reuse.software/</url>
@@ -59,6 +69,12 @@
                 <link>
                     <text>Eclipse IP Management Modernization by Sharon Corbett</text>
                     <url>https://www.eclipsecon.org/sites/default/files/slides/IP%20Management%20Modernization.pdf</url>
+                </link>
+            </item>
+            <item>
+                <link>
+                    <text>Eclipse Public License (EPL) Frequently Asked Questions</text>
+                    <url>https://www.eclipse.org/legal/epl-2.0/faq.php</url>
                 </link>
             </item>
         </list>
@@ -245,14 +261,18 @@ listed source code repository logs.
             <title>File License Header</title>
             <paragraph>For short Bash/sh scripts a license header is not required.</paragraph>
             <code_block><![CDATA[/*
- * Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+ * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0, which is available at
- * http://www.eclipse.org/legal/epl-2.0, or the MIT License,
- * which is available at https://spdx.org/licenses/MIT.html.
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
  *
- * SPDX-License-Identifier: EPL-2.0 OR MIT
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
+ * is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 ]]></code_block>
@@ -263,35 +283,35 @@ listed source code repository logs.
                 where this info is present and easily notable.
                 Maybe the short only SPDX version will be enough in the future.
             </paragraph>
-            <code_block><![CDATA[# SPDX-License-Identifier: EPL-2.0 OR MIT
+            <code_block><![CDATA[# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ]]></code_block>
             <blockquote>This is the license header template for Bash, sh and .gitignore files.</blockquote>
             <code_block><![CDATA["""
-SPDX-License-Identifier: EPL-2.0 OR MIT
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 """
 
 __author__ = "Mārtiņš Avots"
 __authors__ = ["and other"]
 __copyright__ = "Copyright 2021"
-__license__ = "EPL-2.0 OR MIT"
+__license__ = "EPL-2.0 OR GPL-2.0-or-later"
 ]]></code_block>
             <blockquote>This is the license header for Python 3 files.</blockquote>
             <code_block><![CDATA[<!--
-  SPDX-License-Identifier: EPL-2.0 OR MIT
+  SPDX-License-Identifier: SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
   SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 -->
 ]]></code_block>
             <blockquote>This is the license header template for HTML and XML files.</blockquote>
             <code_block><![CDATA[<!--
-  SPDX-License-Identifier: EPL-2.0 OR MIT
+  SPDX-License-Identifier: SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
   SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 -->
 ]]></code_block>
             <blockquote>This is the license header template for HTML and XML files.</blockquote>
             <code_block><![CDATA[----
-* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-License-Identifier: SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
 ]]></code_block>
