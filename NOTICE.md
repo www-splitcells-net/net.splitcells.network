@@ -2,44 +2,53 @@
 
 ## Copyright
 
-All content is the property of the respective authors or their employers.
+All content is the property of the respective authors.
 For more information regarding authorship of content, please consult the
 listed source code repository logs.
 
 ## Project Licenses
 
-This does not apply to third party content.
+The following does not apply to third party content and dependencies.
+These have their own copyright and licensing.
+See later notes regarding third party content.
 
-[License files/text](./src/main/txt/net/splitcells/network/legal/licenses) have
-their own copyright and licensing.
-
-Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
+Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
 
 This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0, which is available at
-http://www.eclipse.org/legal/epl-2.0, or the MIT License,
-which is available at https://spdx.org/licenses/MIT.html.
+terms of the Eclipse Public License 2.0 which is available at
+http://www.eclipse.org/legal/epl-2.0.
 
-SPDX-License-Identifier: EPL-2.0 OR MIT
+This Source Code may also be made available under the following Secondary
+Licenses when the conditions for such availability set forth in the Eclipse
+Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
+which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
 
-## Notes
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
-### Third Party Content
+# Secondary License
 
-SyntaxHighlighter
+If the source code is also made available under the secondary license `GPL-2.0-or-later`,
+the distributor is responsible for the compliance with the secondary license.
+This is especially the case for third party content and third party dependencies.
+See the license texts for more details.
 
-* License: The MIT License
-* Source: https://github.com/syntaxhighlighter/syntaxhighlighter
-  SyntaxHighlighter
+## Third Party Content
 
-MathJax
+Third party content is created by external parties and
+copies of these are inside the program's source code.
+These have their own copyright and licensing.
 
-* License: Apache 2.0 License
-* Site: https://www.mathjax.org/
+* MathJax:
+  * License: Apache 2.0 License
+  * Site: https://www.mathjax.org/
+* [License files/text](./src/main/txt/net/splitcells/network/legal/licenses)
 
-### Third Party Dependencies
+## Third Party Dependencies
 
-#### Third Party Dependencies License List
+This content is created by external parties and used by this project.
+
+### Third Party Dependencies License List
 
 All third party content licenses are listed here in order to have an overview of
 all licenses present.
@@ -59,6 +68,12 @@ all licenses present.
 #### Third Party Dependencies List
 
 The licenses of the transitive dependencies are not listed here.
+
+SyntaxHighlighter
+
+* License: The MIT License
+* Source: https://github.com/syntaxhighlighter/syntaxhighlighter
+  SyntaxHighlighter
 
 md2gemini:
 * License: LGPL-2.1-or-later
