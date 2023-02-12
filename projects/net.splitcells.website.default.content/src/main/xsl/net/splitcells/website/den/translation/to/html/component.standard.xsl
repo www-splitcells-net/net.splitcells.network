@@ -492,31 +492,43 @@
     <xsl:template match="s:link">
         <!-- See <xsl:template name="link.target"> -->
         <!-- TODO Remove unecessary whitespaces before and after an link. -->
-        <xsl:element name="a">
-            <xsl:attribute name="href">
-                <xsl:choose>
-                    <xsl:when test="s:url">
-                        <xsl:apply-templates select="s:url"/>
-                    </xsl:when>
-                    <xsl:when test="s:post">
-                        <xsl:variable name="postLink">
-                            <xsl:copy-of select="$site-instance-root-path-default"/>
-                            <xsl:text></xsl:text>
-                            <xsl:apply-templates
-                                    select="s:post/node()"/>
-                            <xsl:text>.html</xsl:text>
-                        </xsl:variable>
-                        <xsl:value-of select="replace($postLink, '//', '/')"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:message terminate="yes"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:text>&#160;</xsl:text>
-            <xsl:apply-templates select="s:text"/>
-            <xsl:text>&#160;</xsl:text>
-        </xsl:element>
+        <xsl:choose>
+            <xsl:when test="@url">
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="@url"/>
+                    </xsl:attribute>
+                    <xsl:value-of select="node()"/>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:element name="a">
+                    <xsl:attribute name="href">
+                        <xsl:choose>
+                            <xsl:when test="s:url">
+                                <xsl:apply-templates select="s:url"/>
+                            </xsl:when>
+                            <xsl:when test="s:post">
+                                <xsl:variable name="postLink">
+                                    <xsl:copy-of select="$site-instance-root-path-default"/>
+                                    <xsl:text></xsl:text>
+                                    <xsl:apply-templates
+                                            select="s:post/node()"/>
+                                    <xsl:text>.html</xsl:text>
+                                </xsl:variable>
+                                <xsl:value-of select="replace($postLink, '//', '/')"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:message terminate="yes"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <xsl:text>&#160;</xsl:text>
+                    <xsl:apply-templates select="s:text"/>
+                    <xsl:text>&#160;</xsl:text>
+                </xsl:element>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <xsl:template name="link.target">
         <!-- See <xsl:template match="s:link"> -->

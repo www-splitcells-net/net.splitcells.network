@@ -96,10 +96,7 @@
             The person publishing the work under EPL-2.0 with GPL-2.0-or-later as the secondary license,
             is not required to only include complying dependencies.
             See 2 e) and 3.2 a) in the EPL-2.0 for more details (
-            <link>
-                <text>Relevant discussion.</text>
-                <url>https://www.eclipse.org/lists/epl-discuss/msg00159.html</url>
-            </link>
+            <link url="https://www.eclipse.org/lists/epl-discuss/msg00159.html">relevant discussion.</link>
             ).
         </paragraph>
         <paragraph>
