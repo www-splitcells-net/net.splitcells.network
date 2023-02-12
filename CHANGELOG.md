@@ -5,6 +5,15 @@
 * Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2023-02-12 \#218** [Relicense main repo to EPL-2.0 with GPL-2.0-or-later as a secondary license.](https://github.com/www-splitcells-net/net.splitcells.network/issues/218)
+  1. This was done, because `EPL-2.0 OR MIT` was planned as an transitioning licensing,
+     until `EPL 2.0` with `GPL-2.0-or-later` as the secondary license (`EPL-2.0 OR GPL-2.0-or-later`) could be adopted.
+     Before this change it was assumed, that `EPL-2.0 OR GPL-2.0-or-later` requires dependencies to be
+     compliant with `GPL-2.0-or-later` at all times.
+     It was later found out, that `GPL-2.0-or-later` compliance seems to be only relevant,
+     when work is actively made available under the secondary license `GPL-2.0-or-later` and
+     this only has to be done by the distributor.
+  2. Create [licensing guidelines](https://splitcells.net/net/splitcells/network/guidelines/licensing.html).
 * **2022-11-27 \#183**: The property `test.groups` is now used in Maven to determine,
   which Tags are required for a test to be executed,
   during the build.
