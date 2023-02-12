@@ -50,5 +50,5 @@ Keyring managers may ask for passwords during this process.
 * [Kernel Maintainer PGP guide](https://www.kernel.org/doc/html/latest/process/maintainer-pgp-guide.html)
 
 ----
-* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects

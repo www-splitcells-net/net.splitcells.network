@@ -13,5 +13,5 @@ TODO
 Tasks are not grouped by status in order to avoid merge conflicts by moving tasks to different lines. 
 
 ----
-* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects

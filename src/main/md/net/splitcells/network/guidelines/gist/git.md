@@ -12,5 +12,5 @@ Commit can be signed-off according to the Developer Certificate of Origin via
 * Sign commit with default key: `git commit -S --amend`
 
 ----
-* SPDX-License-Identifier: EPL-2.0 OR MIT
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
