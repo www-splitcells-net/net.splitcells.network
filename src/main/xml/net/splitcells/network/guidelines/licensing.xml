@@ -342,12 +342,12 @@ __license__ = "EPL-2.0 OR MIT"
                 and leave these in its original form.
             </paragraph>
             <chapter>
-                <title>Overview of License Specific License Obligations</title>
+                <title>Partial Overview of License Specific License Obligations</title>
                 <paragraph>Apache-2.0:</paragraph>
                 <list>
                     <item>Provide license file, attribution and license notice.</item>
                     <item>Provide NOTICE, when the component is bundled.</item>
-                    <item>* State changes done to these if any.</item>
+                    <item>State changes done to these if any.</item>
                 </list>
                 <paragraph>BSD-2-Clause:</paragraph>
                 <list>
@@ -359,15 +359,10 @@ __license__ = "EPL-2.0 OR MIT"
                     <item>Provide license file.</item>
                     <item>Provide copyright notice and attribution.</item>
                 </list>
-                <paragraph>GPL-2.0-or-later WITH Classpath-exception-2.0:</paragraph>
-                <list>
-                    <item>This license is not accepted for third party content of a project at the moment.</item>
-                </list>
                 <paragraph>EPL-2.0:</paragraph>
                 <list>
                     <item>Provide license file, attribution and license notice.</item>
-                    <item>When bundled provide NOTICE, source code or working link to source code.</item>
-                    <item>Generally, do not provide third party code</item>
+                    <item>When distributed provide NOTICE, source code or working link to source code.</item>
                     <item>Do not mix EPL 2.0 code with other code, because of the EPL 2.0 copy left
                         nature. EPL 2.0 code and other licensed code should be kept in separate
                         projects.
