@@ -18,6 +18,3 @@ Generally it is recommended to reinstall this program and to reapply all user co
 ```sh
 user.configure
 ```
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

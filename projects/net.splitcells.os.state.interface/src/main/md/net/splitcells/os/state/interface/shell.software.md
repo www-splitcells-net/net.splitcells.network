@@ -22,6 +22,3 @@
 ## Interesting Shell Software
 * [Zsh](https://www.zsh.org/): Advanced popular shell.
 * [Awesome Shell](https://github.com/alebcay/awesome-shell): A curated list of awesome command-line frameworks, toolkits, guides and gizmos
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

@@ -42,6 +42,3 @@ Keep in mind, that the system specific code is mostly not provided by this frame
 but is copied into an existing installation of this framework.
 In other words the detailed technical know-how of managing operation systems is mostly not provided by this framework.
 There are other projects that provide the technical know-how.
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

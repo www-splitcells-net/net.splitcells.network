@@ -43,6 +43,3 @@ This project provides a framework in order to also support the following seconda
    to fix all perceived of an operation system.
    Anyone can provide such a command, but the management of such a command is
    currently out of scope.
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

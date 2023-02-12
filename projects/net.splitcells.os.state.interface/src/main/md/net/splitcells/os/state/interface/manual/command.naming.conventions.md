@@ -25,6 +25,3 @@ object ::= [0-9a-fA-F]+
 viaTool ::= '.via.'object
 identifier ::= .[0-9]+
 ```
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

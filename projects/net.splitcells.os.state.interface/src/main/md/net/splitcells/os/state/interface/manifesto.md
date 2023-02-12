@@ -19,6 +19,3 @@ In most cases the operation system knows what to do.
 If there is no real need to interfere with the defaults, we do not do it.
 
 [So lets get started.](./manual/setup.md)
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 <div align="center">
 	<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/bird_s.banner.jpg" width="200">
 	</div>
@@ -25,6 +29,3 @@
 1. [Dictionary](src/main/md/net/splitcells/os/state/interface/guide.lines/dictionary.md)
 1. [File Extension](src/main/md/net/splitcells/os/state/interface/guide.lines/file.extensions.md)
 1. __TODO__ Define publication methods.
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

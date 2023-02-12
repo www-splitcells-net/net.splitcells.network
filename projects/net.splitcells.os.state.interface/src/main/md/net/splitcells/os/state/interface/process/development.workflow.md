@@ -15,6 +15,3 @@ The idea for this workflow is to improve the framework while having a benefit of
    1. Find a short and easy to find identifier of the form "< system component >.< task to reach a certain state >" for that task.
    1. Implement the currently required functionality.
    1. Share your new idea to the world.
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

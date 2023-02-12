@@ -49,6 +49,3 @@ The priority of a task is just a guideline.
    Note that one cannot execute the corresponding repo command automatically,
    because this may not always be possible
    (i.e. `repo.push` without an internet connection may not be possible).
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).

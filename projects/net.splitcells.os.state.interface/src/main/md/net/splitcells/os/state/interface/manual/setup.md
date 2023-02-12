@@ -77,6 +77,3 @@ One can enable extended logging by setting the environment variable 'log_level' 
 So you decided that enough is enough?
 You want to get rid of the program?
 [Go on.](./uninstall.md)
-
-As long as not otherwise noted,
-this text is licensed under the EPL-2.0 OR MIT (SPDX-License-Identifier).
