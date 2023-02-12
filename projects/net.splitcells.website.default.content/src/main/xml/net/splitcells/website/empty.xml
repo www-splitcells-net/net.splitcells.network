@@ -7,7 +7,7 @@
          xmlns:n="http://splitcells.net/natural.xsd"
          xmlns:e="http://splitcells.net/sen.xsd">
     <!--
-        SPDX-License-Identifier: EPL-2.0 OR MIT
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
 </project>

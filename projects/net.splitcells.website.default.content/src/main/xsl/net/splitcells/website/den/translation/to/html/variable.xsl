@@ -2,14 +2,8 @@
 <xsl:stylesheet version="2.0" xmlns:s="http://splitcells.net/sew.xsd"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
     <!--
-    Copyright (c) 2021 Mārtiņš Avots (Martins Avots) and others
-
-    This program and the accompanying materials are made available under the
-    terms of the Eclipse Public License 2.0, which is available at
-    http://www.eclipse.org/legal/epl-2.0, or the MIT License,
-    which is available at https://spdx.org/licenses/MIT.html.
-
-    SPDX-License-Identifier: EPL-2.0 OR MIT
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+    SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
     <!-- TODO Bad naming: pseudo root is the real root. -->
     <!-- purl = pseudo root relative URL -->

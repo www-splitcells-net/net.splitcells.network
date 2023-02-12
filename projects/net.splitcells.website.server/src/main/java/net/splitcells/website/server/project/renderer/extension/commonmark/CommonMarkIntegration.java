@@ -28,7 +28,7 @@ import java.util.Optional;
 public class CommonMarkIntegration {
 
     private static final String LICENSE_HEADER = "----\n"
-            + "* SPDX-License-Identifier: EPL-2.0 OR MIT\n"
+            + "* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later\n"
             + "* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects\n"
             + "----\n";
 

@@ -2,7 +2,7 @@
 title: Pulling The Rip Line
 date: 2021-07-15
 author: Mārtiņš Avots
-license: EPL-2.0 OR MIT
+license: EPL-2.0 OR GPL-2.0-or-later
 ---
 # The Situation
 As mentioned in the previous post,

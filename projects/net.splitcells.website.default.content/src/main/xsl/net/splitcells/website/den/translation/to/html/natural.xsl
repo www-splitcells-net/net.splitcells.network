@@ -19,7 +19,7 @@
     http://www.eclipse.org/legal/epl-2.0, or the MIT License,
     which is available at https://spdx.org/licenses/MIT.html.
 
-    SPDX-License-Identifier: EPL-2.0 OR MIT
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
     -->
     <xsl:template match="n:val">
         <xsl:apply-templates select="." mode="perspective"/>

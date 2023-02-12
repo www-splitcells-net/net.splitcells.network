@@ -2,7 +2,7 @@
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
 draft: true
-license: EPL-2.0 OR MIT
+license: EPL-2.0 OR GPL-2.0-or-later
 comment: The license text in the end is currently needed, because the theme does not support license metadata.
 ---
 

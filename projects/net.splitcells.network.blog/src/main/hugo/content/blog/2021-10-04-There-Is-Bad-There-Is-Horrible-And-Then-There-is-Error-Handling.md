@@ -2,7 +2,7 @@
 title: "There is the bad, there is the horrible, and then there is <sight> error handling."
 date: 2021-10-04
 author: Mārtiņš Avots
-license: EPL-2.0 OR MIT
+license: EPL-2.0 OR GPL-2.0-or-later
 ---
 # There is the bad, there is the horrible, and then there is <sight> error handling.
 I'm sorry dear reader, but I am emotionally triggered 🙇🏽‍♂️

@@ -2,7 +2,7 @@
 title: A Case For Repo Process
 date: 2022-01-10
 author: Mārtiņš Avots
-license: EPL-2.0 OR MIT
+license: EPL-2.0 OR GPL-2.0-or-later
 ---
 # An Advantage Of SVN Over Git
 > Git is a good version control system for one repository,
