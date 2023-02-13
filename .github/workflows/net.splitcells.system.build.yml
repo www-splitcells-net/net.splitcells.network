@@ -41,5 +41,5 @@ jobs:
           echo $GITHUB_WORKSPACE
           export test_codecov=1
           ./bin/build.part.with.python
-          mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=www-splitcells-net_net.splitcells.network -Dsonar.test.exclusions=src/main/java/** -DskipTests -Dsonar.organization=www-splitcells-net -Dsonar.host.url=https://sonarcloud.io
+          mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=www-splitcells-net_net.splitcells.network -Dsonar.test.exclusions=src/main/java/** -DskipTests -Dsonar.organization=www-splitcells-net -Dsonar.host.url=https://sonarcloud.io -Dsonar.sources=src/main/java,src/main/bash,src/main/python,bin
           bash <(curl -s https://codecov.io/bash) # Upload tests to codecov.io.
