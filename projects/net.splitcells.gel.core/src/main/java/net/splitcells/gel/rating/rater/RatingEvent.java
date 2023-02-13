@@ -41,8 +41,15 @@ import org.assertj.core.api.Assertions;
  */
 public interface RatingEvent {
 
+    /**
+     * @return This map contains one {@link LocalRating} for each {@link Constraint#lines()}.
+     */
     Map<Line, LocalRating> additions();
 
+    /**
+     * @return This map contains one or more {@link LocalRating} for each {@link Constraint#lines()}.
+     * A {@link Constraint} creates one {@link Line} for each {@link LocalRating} at the {@link Constraint#lineProcessing()}.
+     */
     Map<Line, List<LocalRating>> complexAdditions();
 
     default List<LocalRating> allAdditions() {
