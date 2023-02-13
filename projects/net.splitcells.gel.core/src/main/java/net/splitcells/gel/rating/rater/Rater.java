@@ -37,10 +37,12 @@ import net.splitcells.dem.utils.reflection.PubliclyConstructed;
 import net.splitcells.dem.utils.reflection.PubliclyTyped;
 
 /**
- * <p>Someone will be said to have spoken ill of you; think whether you did not first speak ill of him; think of how
- * many persons you have yourself spoken ill. - Lucius Annaeus Seneca
- * </p>
- *
+ * <p>When a {@link Rater} is implemented, one often has a choice,
+ * to implement a simple {@link Rater} or a performant {@link Rater}.
+ * A simple instance will calculate the {@link Rating} of all {@link Line} in a given group.
+ * The performant one, will only calculate the changes in {@link Rating} of a given group and
+ * the added or removed {@link Line}.</p>
+ * <p>
  * TODO RENAME Rater seems to be an incorrect name, because it produces more than a rating.
  */
 public interface Rater extends PubliclyTyped<Rater>
@@ -51,24 +53,24 @@ public interface Rater extends PubliclyTyped<Rater>
     /**
      * Calculates the {@link Rating} updates of the given {@code linesOfGroup}.
      *
-     * @param lines The already present lines of the group after the addition.
-     *                     The {@link Table#headerView()} of this is the same as of {@link Constraint#lines()}.
-     * @param addition The new {@link Line} of the {@code linesOfGroup} and {@link Constraint#lines()}.
-     * @param children These are all sub {@link Constraint}s, to which the {@code linesOfGroup} can be propagated to.
-     *                 A classic implementation to propagate all complying lines to all {@code children}.
-     *                 See {@link Constraint#childrenView()}.
+     * @param lines          The already present lines of the group after the addition.
+     *                       The {@link Table#headerView()} of this is the same as of {@link Constraint#lines()}.
+     * @param addition       The new {@link Line} of the {@code linesOfGroup} and {@link Constraint#lines()}.
+     * @param children       These are all sub {@link Constraint}s, to which the {@code linesOfGroup} can be propagated to.
+     *                       A classic implementation to propagate all complying lines to all {@code children}.
+     *                       See {@link Constraint#childrenView()}.
      * @param lineProcessing This is the {@link Constraint#lineProcessing()} of the incoming group before the addition.
      * @return
      */
-    RatingEvent ratingAfterAddition(Table  lines, Line addition, List<Constraint> children, Table lineProcessing);
+    RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing);
 
     /**
      * Nothing needs to be done here, if the {@link Rating} of one {@link Line} is not dependent on the rating of another line.
      * {@link RaterBasedOnLineValue} can be used for constructing such {@link Rater}s.
      *
-     * @param lines These are all {@link Constraint#lines()} of the incoming group present before the removal.
-     * @param removal This is the line of {@link Constraint#lines()} and {@code linesOfGroup} that will be removed.
-     * @param children These are the children {@link Constraint}s of the current {@link Constraint} node.
+     * @param lines          These are all {@link Constraint#lines()} of the incoming group present before the removal.
+     * @param removal        This is the line of {@link Constraint#lines()} and {@code linesOfGroup} that will be removed.
+     * @param children       These are the children {@link Constraint}s of the current {@link Constraint} node.
      * @param lineProcessing This is the {@link Constraint#lineProcessing()} of the incoming group before the removal.
      * @return The events needed to update the {@link Rating} of all lines.
      * A {@link Rating} update for the {@code removal} argument is not required,
