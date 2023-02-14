@@ -25,6 +25,8 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
+import java.util.Optional;
+
 import static net.splitcells.cin.raters.PositionClusters.centerXPositionOf;
 import static net.splitcells.cin.raters.PositionClusters.centerYPositionOf;
 import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
@@ -89,7 +91,8 @@ public class Loneliness implements Rater {
         final var incomingConstraintGroup = lines.lines().get(0).value(INCOMING_CONSTRAINT_GROUP);
         final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
         final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
-        final var centerStartPosition = lineValues
+        final Optional<Line> centerStartPosition;
+        final var centerStartPositionPossibly = lineValues
                 .stream()
                 .filter(l -> l.value(timeAttribute).equals(startTime))
                 .filter(l -> l.value(xCoordinate).equals(centerXPosition))
@@ -99,6 +102,11 @@ public class Loneliness implements Rater {
         final boolean isAdditionCenterStart = startTime.equals(additionLine.value(timeAttribute))
                 && centerXPosition.equals(additionLine.value(xCoordinate))
                 && centerYPosition.equals(additionLine.value(yCoordinate));
+        if (centerStartPositionPossibly.isEmpty() && isAdditionCenterStart) {
+            centerStartPosition = Optional.of(addition);
+        } else {
+            centerStartPosition = centerStartPositionPossibly;
+        }
         final boolean isAdditionCenterEnd = additionLine.value(timeAttribute).equals(startTime + 1)
                 && centerXPosition.equals(additionLine.value(xCoordinate))
                 && centerYPosition.equals(additionLine.value(yCoordinate));
@@ -119,7 +127,7 @@ public class Loneliness implements Rater {
                 .filter(l -> l.value(xCoordinate).equals(centerXPosition))
                 .filter(l -> l.value(yCoordinate).equals(centerYPosition))
                 .findFirst();
-        if (centerEndPosition.isEmpty()) {
+        if (centerEndPosition.isEmpty() && !isAdditionCenterEnd) {
             lines.linesStream()
                     .filter(line -> !line.equalsTo(addition))
                     .forEach(line -> ratingEvent.updateRating_withReplacement(line
