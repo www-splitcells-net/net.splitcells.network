@@ -58,6 +58,7 @@ lexer grammar Java11Lexer;
     		| 'import java.util.stream.Stream;'
     		| 'import org.junit.jupiter.api.Test;'
     		| 'import org.junit.jupiter.api.Tag;'
+    		| 'import org.junit.jupiter.api.TestFactory;'
     		| 'import static org.assertj.core.api.Assertions.assertThat;'
     		| 'import static org.junit.jupiter.api.Assertions.assertThrows;'
     		| 'import static java.util.stream.IntStream.range;'
