@@ -55,6 +55,9 @@ public interface Rater extends PubliclyTyped<Rater>
      *
      * @param lines          The already present lines of the group after the addition.
      *                       The {@link Table#headerView()} of this is the same as of {@link Constraint#lines()}.
+     *                       In order to check, whether {@code addition} is equal to an element of {@code lines},
+     *                       one should not use {@link Line#equalsTo(Line)}, as both have different {@link Line#context()}.
+     *                       Compare their {@link Line#index()} instead.
      * @param addition       The new {@link Line} of the {@code linesOfGroup} and {@link Constraint#lines()}.
      * @param children       These are all sub {@link Constraint}s, to which the {@code linesOfGroup} can be propagated to.
      *                       A classic implementation to propagate all complying lines to all {@code children}.
