@@ -91,7 +91,7 @@ public class Loneliness implements Rater {
             }
             final var centerEndPosition = lineValues
                     .stream()
-                    .filter(l -> l.value(timeAttribute).equals(startTime))
+                    .filter(l -> l.value(timeAttribute).equals(startTime + 1))
                     .filter(l -> l.value(xCoordinate).equals(centerXPosition))
                     .filter(l -> l.value(yCoordinate).equals(centerYPosition))
                     .findFirst();
