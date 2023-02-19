@@ -118,7 +118,6 @@ public class LonelinessTest {
                 .toProblem()
                 .asSolution();
         onlineLinearInitialization().optimize(testSubject);
-        testSubject.createStandardAnalysis();
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
