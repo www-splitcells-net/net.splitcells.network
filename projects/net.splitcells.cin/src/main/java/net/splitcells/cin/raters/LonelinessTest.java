@@ -35,17 +35,14 @@ public class LonelinessTest {
         final var positionY = attribute(Integer.class, "positionY");
         final var testSubject = defineProblem("testTimeEvenSteps")
                 .withDemandAttributes(time, playerValue, positionX, positionY)
-                .withDemands(list(
-                        list(0, 1, 1, 1)
+                .withDemands(list(list(0, 1, 1, 1)
                         , list(1, 1, 1, 1)
                         , list(0, 2, 1, 2)
                         , list(0, 2, 2, 2)
-                        , list(0, 1, 1, 2)
-                        , list(0, 1, 2, 2)
-                ))
+                        , list(0, 1, 1, 1)
+                        , list(0, 1, 2, 2)))
                 .withSupplyAttributes()
-                .withSupplies(list(
-                        list()
+                .withSupplies(list(list()
                         , list()
                         , list()
                         , list()
@@ -54,8 +51,7 @@ public class LonelinessTest {
                         , list()
                         , list()
                         , list()
-                        , list()
-                ))
+                        , list()))
                 .withConstraint(c -> {
                     c.forAll(timeSteps(time))
                             .forAll(positionClusters(positionX, positionY))
@@ -68,7 +64,26 @@ public class LonelinessTest {
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
-        onlineLinearInitialization().optimize(testSubject);
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0)
+                .childrenView().get(0)
+                .childrenView().get(0)
+                .childrenView().get(0)
+                .lineProcessing().lines().requireSizeOf(4);
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.createStandardAnalysis();
+        testSubject.constraint().childrenView().get(0)
+                .childrenView().get(0)
+                .childrenView().get(0)
+                .lineProcessing().lines().requireSizeOf(6);
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
