@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.TestTypes;
 import net.splitcells.gel.data.table.Line;
@@ -25,21 +26,20 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.testing.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Mocking.anyObject;
 import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -108,12 +108,12 @@ public class DatabaseTest extends TestSuiteI {
 
     public void test_single_addition_and_removal(Database voidDatabase) {
         List<?> lineValues = list();
-        assertThat(voidDatabase.isEmpty());
+        voidDatabase.lines().requireEmpty();
         final var addedLine = voidDatabase.addTranslated(lineValues);
-        assertThat(voidDatabase.size()).isEqualTo(1);
+        voidDatabase.lines().requireSizeOf(1);
         voidDatabase.remove(addedLine);
-        assertThat(voidDatabase.isEmpty());
-        assertThat(voidDatabase.rawLinesView().get(0)).isNull();
+        voidDatabase.lines().requireEmpty();
+        requireEquals(voidDatabase.rawLinesView().get(0), null);
     }
 
     @Tag(UNIT_TEST)
@@ -128,10 +128,10 @@ public class DatabaseTest extends TestSuiteI {
         when(line.context()).thenReturn(context);
         when(line.value(any())).thenReturn(1);
         when(line.index()).thenReturn(2);
-        assertThat(voidDatabase.addTranslated(list()).index()).isEqualTo(0);
-        assertThat(voidDatabase.add(line).index()).isEqualTo(2);
-        assertThat(voidDatabase.addTranslated(list()).index()).isEqualTo(1);
-        assertThat(voidDatabase.addTranslated(list()).index()).isEqualTo(3);
+        requireEquals(voidDatabase.addTranslated(list()).index(), 0);
+        requireEquals(voidDatabase.add(line).index(), 2);
+        requireEquals(voidDatabase.addTranslated(list()).index(), 1);
+        requireEquals(voidDatabase.addTranslated(list()).index(), 3);
     }
 
     @Tag(UNIT_TEST)
@@ -141,13 +141,13 @@ public class DatabaseTest extends TestSuiteI {
     }
 
     public void test_subscriptions(Database voidDatabase) {
-        final var additionCounter = new AtomicInteger(0);// Mutable integer Object required.
-        final var removalCounter = new AtomicInteger(0);// Mutable integer Object required.
-        voidDatabase.subscribeToAfterAdditions(additionOf -> additionCounter.incrementAndGet());
-        voidDatabase.subscribeToBeforeRemoval(removalOf -> removalCounter.incrementAndGet());
+        final var additionCounter = list(0);// Mutable integer Object required.
+        final var removalCounter = list(0);// Mutable integer Object required.
+        voidDatabase.subscribeToAfterAdditions(additionOf -> additionCounter.set(0, additionCounter.get(0) + 1));
+        voidDatabase.subscribeToBeforeRemoval(removalOf -> removalCounter.set(0, removalCounter.get(0) + 1));
         test_single_addition_and_removal(voidDatabase);
-        assertThat(additionCounter).hasValue(1);
-        assertThat(removalCounter).hasValue(1);
+        additionCounter.requireContentsOf(1);
+        removalCounter.requireContentsOf(1);
     }
 
     @Tag(UNIT_TEST)

@@ -25,14 +25,20 @@ import net.splitcells.gel.data.table.column.ColumnView;
 import org.w3c.dom.Node;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
-import static net.splitcells.dem.lang.Xml.*;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
+import static net.splitcells.dem.lang.Xml.event;
+import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.requireNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.gel.common.Language.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import static net.splitcells.gel.common.Language.LINE;
+import static net.splitcells.gel.common.Language.PATH_ACCESS_SYMBOL;
+import static net.splitcells.gel.common.Language.REMOVE;
 
 /**
  * <p>This aspect adds mainly logging and runtime check functionality to {@link Database} instances.</p>
@@ -73,11 +79,14 @@ public class DatabaseMetaAspect implements Database {
     @Override
     public Line add(Line line) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assert database.headerView().size() == line.context().headerView().size() : path() + "" + line.context().path();
-            assert !database.lines().contains(line);
-            assert line.index() >= database.rawLines().size() || database.rawLines().get(line.index()) == null : path().toString() + line.index();
+            database.headerView().requireSizeOf(line.context().headerView().size());
+            database.lines().requirePresenceOf(line);
+            describedBool(line.index() >= database.rawLines().size()
+                            || database.rawLines().get(line.index()) == null
+                    , () -> path().toString() + line.index())
+                    .required();
             range(0, database.headerView().size()).forEach(i -> {
-                assert database.headerView().get(i).equals(line.context().headerView().get(i));
+                requireEquals(database.headerView().get(i), line.context().headerView().get(i));
             });
         }
         return database.add(line);
@@ -94,13 +103,12 @@ public class DatabaseMetaAspect implements Database {
     @Override
     public Line addTranslated(List<? extends Object> lineValues) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(lineValues.size()).isEqualTo(database.headerView().size());
             /**
              * TODO Check for {@link Attribute} compatibility and not Class compatibility.
              */
+            lineValues.requireSizeOf(database.headerView().size());
             lineValues.stream().forEach(e ->
-                    assertThat(e).as("A line <%s> should not contain nulls.", lineValues)
-                            .isNotNull());
+                    requireNull(e, "The line " + lineValues + " should not contain nulls."));
             range(0, lineValues.size()).forEach(i -> database.headerView().get(i).isInstanceOf(lineValues.get(i)).required());
         }
         final var translatedAddition = database.addTranslated(lineValues);

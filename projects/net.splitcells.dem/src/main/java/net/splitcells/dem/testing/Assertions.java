@@ -43,6 +43,12 @@ public class Assertions {
         }
     }
 
+    public static <T> void requireNull(T arg, String message) {
+        if (arg != null) {
+            throw executionException(message);
+        }
+    }
+
     public static <T> void requireEquals(T a, T b) {
         if (!a.equals(b)) {
             throw executionException("Arguments are required to be equal, but are not: " + a + ", " + b);
