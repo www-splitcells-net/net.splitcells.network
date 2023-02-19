@@ -210,19 +210,18 @@ public class LookupTest extends TestSuiteI {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
         final var testSubject = Databases.database(list(a, b), list());
-        final Supplier<Table> pārbaudesPriekšmetsVeidotajs
-                = () -> testSubject.columnView(a)
+        final Supplier<Table> testValues = () -> testSubject.columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(2);
-        pārbaudesPriekšmetsVeidotajs.get().lines().requireEmpty();
+        testValues.get().lines().requireEmpty();
         final var firstLine = testSubject.addTranslated(list(1, 1));
-        pārbaudesPriekšmetsVeidotajs.get().lines().requireEmpty();
+        testValues.get().lines().requireEmpty();
         final var secondLine = testSubject.addTranslated(list(1, 2));
-        pārbaudesPriekšmetsVeidotajs.get().lines().requireSizeOf(1);
+        testValues.get().lines().requireSizeOf(1);
         testSubject.remove(firstLine);
-        pārbaudesPriekšmetsVeidotajs.get().lines().requireSizeOf(1);
+        testValues.get().lines().requireSizeOf(1);
         testSubject.remove(secondLine);
-        pārbaudesPriekšmetsVeidotajs.get().lines().requireEmpty();
+        testValues.get().lines().requireEmpty();
     }
 }
