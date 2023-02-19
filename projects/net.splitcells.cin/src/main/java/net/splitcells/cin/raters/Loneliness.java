@@ -158,8 +158,9 @@ public class Loneliness implements Rater {
             return ratingEvent;
         }
         final var playerCount = lineValues.stream()
+                .filter(l -> startTime.equals(l.value(timeAttribute)))
                 .map(l -> l.value(playerAttribute))
-                .filter(player -> player.equals(startPlayer))
+                .filter(line -> line.equals(startPlayer))
                 .count();
         if (playerCount < 2) {
             ratingEvent.additions().put(addition
