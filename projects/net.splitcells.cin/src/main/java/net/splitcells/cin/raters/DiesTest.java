@@ -93,14 +93,13 @@ public class DiesTest {
                 .withConstraint(c -> {
                     c.forAll(timeSteps(time))
                             .forAll(positionClusters(positionX, positionY))
-                            .forAll(dies(1, playerValue, time, positionX, positionY))
+                            .then(dies(1, playerValue, time, positionX, positionY))
                             .forAll();
                     return c;
                 })
                 .toProblem()
                 .asSolution();
         onlineLinearInitialization().optimize(testSubject);
-        testSubject.createStandardAnalysis();
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
@@ -110,7 +109,7 @@ public class DiesTest {
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .lineProcessing().lines().requireSizeOf(0);
-        testSubject.constraint().rating().requireEqualsTo(cost(1));
+        testSubject.constraint().rating().requireEqualsTo(cost(2));
     }
 
 }
