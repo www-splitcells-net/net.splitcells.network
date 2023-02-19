@@ -23,6 +23,7 @@ import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDeinitializer.onlineLinearDeinitializer;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class LonelinessTest {
@@ -116,20 +117,61 @@ public class LonelinessTest {
                 })
                 .toProblem()
                 .asSolution();
-        //onlineLinearInitialization().optimize(testSubject);
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
+        onlineLinearInitialization().optimize(testSubject);
         testSubject.createStandardAnalysis();
+        testSubject.constraint().childrenView().get(0)
+                .childrenView().get(0)
+                .childrenView().get(0)
+                .lineProcessing().lines().requireSizeOf(6);
+        testSubject.constraint().childrenView().get(0)
+                .childrenView().get(0)
+                .childrenView().get(0)
+                .childrenView().get(0)
+                .lineProcessing().lines().requireSizeOf(0);
+    }
+
+    @UnitTest
+    public void testLonelinessRemoval() {
+        final var time = attribute(Integer.class, "time");
+        final var playerValue = attribute(Integer.class, "playerValue");
+        final var positionX = attribute(Integer.class, "positionX");
+        final var positionY = attribute(Integer.class, "positionY");
+        final var testSubject = defineProblem("testTimeEvenSteps")
+                .withDemandAttributes(time, playerValue, positionX, positionY)
+                .withDemands(list(list(0, 1, 2, 2)
+                        , list(1, 1, 1, 1)
+                        , list(0, 2, 1, 2)
+                        , list(0, 2, 2, 2)
+                        , list(0, 1, 2, 1)
+                        , list(0, 1, 1, 2)))
+                .withSupplyAttributes()
+                .withSupplies(list(list()
+                        , list()
+                        , list()
+                        , list()
+                        , list()
+                        , list()))
+                .withConstraint(c -> {
+                    c.forAll(timeSteps(time))
+                            .forAll(positionClusters(positionX, positionY))
+                            .forAll(loneliness(1, playerValue, time, positionX, positionY))
+                            .forAll();
+                    return c;
+                })
+                .toProblem()
+                .asSolution();
+        onlineLinearInitialization().optimize(testSubject);
+        testSubject.constraint().childrenView().get(0)
+                .childrenView().get(0)
+                .childrenView().get(0)
+                .lineProcessing().lines().requireSizeOf(6);
+        testSubject.constraint().childrenView().get(0)
+                .childrenView().get(0)
+                .childrenView().get(0)
+                .childrenView().get(0)
+                .lineProcessing().lines().requireSizeOf(0);
+        onlineLinearDeinitializer().optimize(testSubject);
+        onlineLinearInitialization().optimize(testSubject);
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
