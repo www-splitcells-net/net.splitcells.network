@@ -34,6 +34,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.requireNull;
 import static net.splitcells.dem.testing.Mocking.anyObject;
 import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
@@ -113,7 +114,7 @@ public class DatabaseTest extends TestSuiteI {
         voidDatabase.lines().requireSizeOf(1);
         voidDatabase.remove(addedLine);
         voidDatabase.lines().requireEmpty();
-        requireEquals(voidDatabase.rawLinesView().get(0), null);
+        requireNull(voidDatabase.rawLinesView().get(0));
     }
 
     @Tag(UNIT_TEST)
