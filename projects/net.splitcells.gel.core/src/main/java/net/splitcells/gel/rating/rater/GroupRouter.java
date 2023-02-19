@@ -19,10 +19,22 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.rating.framework.Rating;
 
 import java.util.Optional;
 
+/**
+ * This is a helper interface, in order to create a rater based on one method.
+ */
 @FunctionalInterface
-public interface RaterBasedOnLineGroupLambda {
-    RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children);
+public interface GroupRouter {
+
+    /**
+     * The {@link Rating} of an Event, has to be applied to all {@link Line}s of a group.
+     *
+     * @param lines    lines
+     * @param children children
+     * @return return
+     */
+    RatingEvent routing(Table lines, List<Constraint> children);
 }

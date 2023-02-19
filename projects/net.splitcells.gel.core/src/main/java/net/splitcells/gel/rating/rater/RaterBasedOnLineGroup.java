@@ -50,7 +50,7 @@ public class RaterBasedOnLineGroup implements Rater {
         return raterBasedOnLineGroup(new RaterBasedOnLineGroupLambda() {
 
             @Override
-            public RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, java.util.List<Constraint> children) {
+            public RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children) {
                 final var lineRating = rater.lineRating(lines, addition, removal);
                 final var ratingEvent = ratingEvent();
                 lines.lines().stream()
@@ -70,6 +70,39 @@ public class RaterBasedOnLineGroup implements Rater {
                                         .withResultingGroupId
                                                 (line.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
                 return ratingEvent;
+            }
+
+            @Override
+            public String toString() {
+                return rater.toString();
+            }
+        }, simpleDescriptor);
+    }
+
+    public static RaterBasedOnLineGroup groupRouter(GroupRouter rater) {
+        return groupRouter(rater, (a, b, c) -> rater.toString());
+    }
+
+    public static RaterBasedOnLineGroup groupRouter(GroupRouter rater, SimpleDescriptor simpleDescriptor) {
+        return new RaterBasedOnLineGroup(new RaterBasedOnLineGroupLambda() {
+
+            @Override
+            public RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children) {
+                final var rating = rater.routing(lines, children);
+                if (addition.isPresent()) {
+                    if (rating.removal().contains(addition.get())) {
+                        rating.removal().remove(addition.get());
+                    }
+                }
+                if (removal.isPresent()) {
+                    if (rating.additions().keySet().contains(removal.get())) {
+                        rating.additions().remove(removal.get());
+                    }
+                    if (rating.removal().contains(removal.get())) {
+                        rating.removal().remove(removal.get());
+                    }
+                }
+                return rating;
             }
 
             @Override

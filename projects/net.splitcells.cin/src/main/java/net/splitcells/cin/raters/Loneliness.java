@@ -37,6 +37,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRater;
+import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRouter;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -47,12 +49,92 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
  * {@link Loneliness} can only be calculated, if the start and end time of the center position is present.
  */
 public class Loneliness implements Rater {
-    public static Rater loneliness(int playerValue
+    @Deprecated
+    private static Rater deprecatedLoneliness(int playerValue
             , Attribute<Integer> playerAttribute
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return new Loneliness(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate);
+    }
+
+    public static Rater loneliness(int playerValue
+            , Attribute<Integer> playerAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return groupRouter((lines, children) -> {
+            final var ratingEvent = ratingEvent();
+            final var lineValues = lines.columnView(LINE).values();
+            final var timeValues = lineValues
+                    .stream()
+                    .map(l -> l.value(timeAttribute))
+                    .distinct()
+                    .sorted(ASCENDING_INTEGERS)
+                    .collect(toList());
+            final var startTime = timeValues.get(0);
+            final var incomingConstraintGroup = lines.lines().get(0).value(INCOMING_CONSTRAINT_GROUP);
+            final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
+            final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
+            final var centerStartPosition = lineValues.stream()
+                    .filter(l -> l.value(timeAttribute).equals(startTime))
+                    .filter(l -> l.value(xCoordinate).equals(centerXPosition))
+                    .filter(l -> l.value(yCoordinate).equals(centerYPosition))
+                    .findFirst();
+            if (centerStartPosition.isEmpty()) {
+                lines.linesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
+                        , localRating()
+                                .withPropagationTo(list())
+                                .withRating(noCost())
+                                .withResultingGroupId(incomingConstraintGroup)));
+                return ratingEvent;
+            }
+            final var centerEndPosition = lineValues
+                    .stream()
+                    .filter(l -> l.value(timeAttribute).equals(startTime))
+                    .filter(l -> l.value(xCoordinate).equals(centerXPosition))
+                    .filter(l -> l.value(yCoordinate).equals(centerYPosition))
+                    .findFirst();
+            if (centerEndPosition.isEmpty()) {
+                lines.linesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
+                        , localRating()
+                                .withPropagationTo(list())
+                                .withRating(noCost())
+                                .withResultingGroupId(incomingConstraintGroup)));
+                return ratingEvent;
+            }
+            final var startPlayer = centerStartPosition.get().value(playerAttribute);
+            if (startPlayer != playerValue) {
+                lines.linesStream()
+                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                                , localRating()
+                                        .withPropagationTo(list())
+                                        .withRating(noCost())
+                                        .withResultingGroupId(incomingConstraintGroup)));
+                return ratingEvent;
+            }
+            final var playerCount = lineValues.stream()
+                    .filter(l -> startTime.equals(l.value(timeAttribute)))
+                    .map(l -> l.value(playerAttribute))
+                    .filter(line -> line.equals(startPlayer))
+                    .count();
+            if (playerCount < 2) {
+                lines.linesStream()
+                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                                , localRating()
+                                        .withPropagationTo(children)
+                                        .withRating(noCost())
+                                        .withResultingGroupId(incomingConstraintGroup)));
+            } else {
+                lines.linesStream()
+                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                                , localRating()
+                                        .withPropagationTo(list())
+                                        .withRating(cost(1))
+                                        .withResultingGroupId(incomingConstraintGroup)));
+            }
+            return ratingEvent;
+        });
     }
 
     private final int playerValue;
@@ -200,5 +282,10 @@ public class Loneliness implements Rater {
                                     .withResultingGroupId(incomingConstraintGroup)));
         }
         return ratingEvent;
+    }
+
+    @Override
+    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table lineProcessing) {
+        throw notImplementedYet();
     }
 }
