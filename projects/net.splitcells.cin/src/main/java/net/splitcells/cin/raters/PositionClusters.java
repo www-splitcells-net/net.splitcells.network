@@ -30,6 +30,7 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.typed.TypedMapI.typedMap;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -171,6 +172,9 @@ public class PositionClusters implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        throw notImplementedYet();
+        return list(xAttribute
+                , yAttribute
+                , perspective("" + xCenterOffset)
+                , perspective("" + yCenterOffset));
     }
 }

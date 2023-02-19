@@ -30,6 +30,7 @@ import static net.splitcells.cin.raters.PositionClusters.centerYPositionOf;
 import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
@@ -76,7 +77,11 @@ public class IsAlive implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        throw notImplementedYet();
+        return list(perspective("" + playerValue)
+                , playerAttribute
+                , timeAttribute
+                , xCoordinate
+                , yCoordinate);
     }
 
     @Override
