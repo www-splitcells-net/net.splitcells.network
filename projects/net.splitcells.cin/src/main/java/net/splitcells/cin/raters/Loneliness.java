@@ -115,10 +115,15 @@ public class Loneliness implements Rater {
                 && centerXPosition.equals(additionLine.value(xCoordinate))
                 && centerYPosition.equals(additionLine.value(yCoordinate));
         if (centerStartPosition.isEmpty()) {
+            ratingEvent.additions().put(addition
+                    , localRating()
+                            .withPropagationTo(list())
+                            .withRating(cost(1))
+                            .withResultingGroupId(incomingConstraintGroup));
             lines.linesStream()
                     .filter(line -> line.index() != addition.index())
                     .forEach(line ->
-                            ratingEvent.additions().put(line
+                            ratingEvent.updateRating_withReplacement(line
                                     , localRating()
                                             .withPropagationTo(list())
                                             .withRating(noCost())
@@ -132,6 +137,11 @@ public class Loneliness implements Rater {
                 .filter(l -> l.value(yCoordinate).equals(centerYPosition))
                 .findFirst();
         if (centerEndPosition.isEmpty() && !isAdditionCenterEnd) {
+            ratingEvent.additions().put(addition
+                    , localRating()
+                            .withPropagationTo(list())
+                            .withRating(cost(1))
+                            .withResultingGroupId(incomingConstraintGroup));
             lines.linesStream()
                     .filter(line -> line.index() != addition.index())
                     .forEach(line -> ratingEvent.updateRating_withReplacement(line
