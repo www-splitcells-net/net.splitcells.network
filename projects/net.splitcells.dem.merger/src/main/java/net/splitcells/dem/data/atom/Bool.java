@@ -55,11 +55,11 @@ public interface Bool extends DeepCloneable {
 
     @SuppressWarnings("unchecked")
     @ReturnsThis
-    default <R extends DeepCloneable> R required() {
+    default Bool required() {
         if (isFalse()) {
             throw new RuntimeException();
         }
-        return (R) this;
+        return this;
     }
 
     @ReturnsThis
