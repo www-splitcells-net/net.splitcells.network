@@ -160,6 +160,7 @@ expression
     | name access?
     | expression operator expression
     | expression_with_prefix
+    | lambda
     ;
 expression_with_prefix
     : Operator_plus Operator_plus expression
@@ -231,6 +232,14 @@ interface_definition_member
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/
     ;
+lambda
+	: name Arrow expression
+    | name Arrow reference
+    | name Arrow Brace_curly_open statement* Brace_curly_closed
+    | call_arguments Arrow Brace_curly_open statement* Brace_curly_closed
+    | call_arguments Arrow expression
+    | call_arguments Arrow reference
+    ;
 license_declaration
     : Comment_multiline
     ;
@@ -274,13 +283,7 @@ prefix_operator
 	;
 reference
 	: expression
-    /* This is an Lambda definition. */
-    | name Arrow expression
-    | name Arrow reference
-    | name Arrow Brace_curly_open statement* Brace_curly_closed
-    | call_arguments Arrow Brace_curly_open statement* Brace_curly_closed
-    | call_arguments Arrow expression
-    | call_arguments Arrow reference
+    | lambda
     | String
     | String Operator_plus reference
     | reference Keysymbol_function_reference type_argument? name
