@@ -96,6 +96,10 @@ public class World {
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .forAll(goodCompany(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(survives(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
+                    r.forAll(overlappingTimeSteps(WORLD_TIME))
+                            .forAll(positionClustering(POSITION_X, POSITION_Y))
+                            .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .forAll(crowded(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(crowded()).then(dies());
@@ -221,8 +225,13 @@ public class World {
                 .lastValue();
     }
 
-    private static Rater crowded() {
-        throw notImplementedYet();
+    private static Rater crowded(int playerValue
+            , Attribute<Integer> playerAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
+                playerCount -> playerCount < 3);
     }
 
     private static Rater survives(int playerValue
