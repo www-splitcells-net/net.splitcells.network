@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin;
 
+import net.splitcells.cin.raters.TimeSteps;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -38,6 +39,7 @@ import net.splitcells.gel.solution.SolutionView;
 import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.cin.raters.CrowdDetector.crowdDetector;
 import static net.splitcells.cin.raters.Dies.dies;
 import static net.splitcells.cin.raters.IsAlive.isAlive;
 import static net.splitcells.cin.raters.Loneliness.loneliness;
@@ -87,6 +89,10 @@ public class World {
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .forAll(loneliness(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
+                    r.forAll(overlappingTimeSteps(WORLD_TIME))
+                            .forAll(positionClustering(POSITION_X, POSITION_Y))
+                            .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .forAll(goodCompany(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(crowded()).then(dies());
@@ -236,7 +242,17 @@ public class World {
         throw notImplementedYet();
     }
 
-    private static Rater goodCompany() {
-        throw notImplementedYet();
+    /**
+     * Determines if the player {@code playerValue},
+     * has 2-3 neighbouring positions with the same {@code playerValue} given a {@link TimeSteps} during the start.
+     * {@link #goodCompany} can only be calculated, if the start and end time of the center position is present.
+     */
+    private static Rater goodCompany(int playerValue
+            , Attribute<Integer> playerAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
+                playerCount -> 2 <= playerCount && playerCount <= 3);
     }
 }
