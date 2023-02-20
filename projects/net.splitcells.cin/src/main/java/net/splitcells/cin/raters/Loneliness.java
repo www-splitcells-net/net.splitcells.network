@@ -45,7 +45,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
  * Determines if the player {@link #playerValue},
- * has at least 2 neighbouring positions with the same {@link #playerValue} given a {@link TimeSteps} during the start.
+ * has no more than 2 neighbouring positions with the same {@link #playerValue} given a {@link TimeSteps} during the start.
  * {@link Loneliness} can only be calculated, if the start and end time of the center position is present.
  */
 public class Loneliness implements Rater {
