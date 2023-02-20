@@ -99,7 +99,8 @@ public class World {
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Y))
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                            .forAll(crowded(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
+                            .forAll(crowded(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
                     // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(crowded()).then(dies());
