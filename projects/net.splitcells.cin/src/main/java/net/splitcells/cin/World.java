@@ -81,9 +81,9 @@ public class World {
     public static Solution worldHistory() {
         // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
         return defineProblem("conway-s-game-of-life")
-                .withDemandAttributes(WORLD_TIME)
+                .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
                 .withDemands(worldsTimeSpace(0))
-                .withSupplyAttributes(POSITION_X, POSITION_Y, VALUE)
+                .withSupplyAttributes(VALUE)
                 .withSupplies(worldWithGlider())
                 .withConstraint(r -> {
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
