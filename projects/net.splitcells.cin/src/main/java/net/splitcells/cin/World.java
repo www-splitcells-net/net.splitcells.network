@@ -101,11 +101,11 @@ public class World {
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .forAll(crowded(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
-                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(loneliness()).then(dies());
-                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(goodCompany()).then(survives());
-                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isAlive()).forAll(crowded()).then(dies());
-                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).forAll(isDead()).forAll(revivalCondition()).then(becomesAlive());
-                    // TODO r.forAll(timeSteps()).forAll(positionClusters()).then(unchanged());
+                    r.forAll(overlappingTimeSteps(WORLD_TIME))
+                            .forAll(positionClustering(POSITION_X, POSITION_Y))
+                            .forAll(isDead(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .forAll(revivalCondition(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .then(reproduction(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
                     return r;
                 }).toProblem()
                 .asSolution();
