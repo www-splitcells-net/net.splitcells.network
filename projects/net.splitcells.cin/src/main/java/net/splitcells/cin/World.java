@@ -244,16 +244,22 @@ public class World {
                 Objects::equals);
     }
 
-    private static Rater isDead() {
-        throw notImplementedYet();
+    private static Rater isDead(int playerValue
+            , Attribute<Integer> playerAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
+                (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue);
     }
 
-    private static Rater revivalCondition() {
-        throw notImplementedYet();
-    }
-
-    private static Rater becomesAlive() {
-        throw notImplementedYet();
+    private static Rater revivalCondition(int playerValue
+            , Attribute<Integer> playerAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
+                playerCount -> playerCount == 3);
     }
 
     private static Rater reproduction(int playerValue
