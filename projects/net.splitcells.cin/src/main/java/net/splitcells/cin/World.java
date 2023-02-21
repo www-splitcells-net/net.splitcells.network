@@ -256,8 +256,13 @@ public class World {
         throw notImplementedYet();
     }
 
-    private static Rater unchanged() {
-        throw notImplementedYet();
+    private static Rater reproduction(int playerValue
+            , Attribute<Integer> playerAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
+                (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue && startPlayerValue != playerValue);
     }
 
     /**
