@@ -82,9 +82,9 @@ public class World {
         // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
         return defineProblem("conway-s-game-of-life")
                 .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
-                .withDemands(worldsTimeSpace(0))
+                .withDemands(worldsTimeSpace(0, 1, 0, 10, 0, 10))
                 .withSupplyAttributes(VALUE)
-                .withSupplies(worldWithGlider())
+                .withSupplies(values(0, 1, 0, 10, 0, 10, 0, 1))
                 .withConstraint(r -> {
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Y))
@@ -111,13 +111,34 @@ public class World {
                 .asSolution();
     }
 
-    private static List<List<Object>> worldsTimeSpace(Integer worldTime) {
+    private static List<List<Object>> worldsTimeSpace(Integer startTime
+            , Integer endTime
+            , Integer startX
+            , Integer endX
+            , Integer startY
+            , Integer endY) {
         final List<List<Object>> worldsTimeSpace = list();
-        rangeClosed(-10, 0).forEach(i -> {
-            rangeClosed(-10, 0).forEach(j -> {
-                worldsTimeSpace.add(list(worldTime));
-            });
-        });
+        rangeClosed(startTime, endTime).forEach(time ->
+                rangeClosed(startX, endX).forEach(x ->
+                        rangeClosed(startY, endY).forEach(y ->
+                                worldsTimeSpace.add(list(time, x, y)))));
+        return worldsTimeSpace;
+    }
+
+    private static List<List<Object>> values(Integer startTime
+            , Integer endTime
+            , Integer startX
+            , Integer endX
+            , Integer startY
+            , Integer endY
+            , Integer startValue
+            , Integer endValue) {
+        final List<List<Object>> worldsTimeSpace = list();
+        rangeClosed(startTime, endTime).forEach(time ->
+                rangeClosed(startX, endX).forEach(x ->
+                        rangeClosed(startY, endY).forEach(y ->
+                                rangeClosed(startValue, endValue).forEach(value ->
+                                        worldsTimeSpace.add(list(value))))));
         return worldsTimeSpace;
     }
 
