@@ -34,6 +34,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -121,10 +122,10 @@ public class PositionClusters implements Rater {
     private final int yCenterOffset;
 
     /**
-     * Maps x and y coordinates to the respective groups.
+     * Maps the incoming group id, x and y coordinates to the respective groups.
      * The first key is the x coordinate.
      */
-    private final Map<Integer, Map<Integer, GroupId>> positionGroups = map();
+    private final Map<GroupId, Map<Integer, Map<Integer, GroupId>>> positionGroups = map();
 
     private PositionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute, int xCenterOffset, int yCenterOffset) {
         this.xAttribute = xAttribute;
@@ -159,6 +160,7 @@ public class PositionClusters implements Rater {
         }
         final RatingEvent rating = ratingEvent();
         final var positionGroup = positionGroups
+                .computeIfAbsent(addition.value(INCOMING_CONSTRAINT_GROUP), icg -> map())
                 .computeIfAbsent(xCoord, x -> map())
                 .computeIfAbsent(yCoord, y -> group(groupNameOfPositionCluster(xCoordCenter, yCoordCenter)
                         , typedMap().withAssignment(PositionClustersCenterX.class, xCoordCenter)
@@ -168,6 +170,11 @@ public class PositionClusters implements Rater {
                 .withRating(noCost())
                 .withResultingGroupId(positionGroup));
         return rating;
+    }
+
+    @Override
+    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table lineProcessing) {
+        return ratingEvent();
     }
 
     @Override
