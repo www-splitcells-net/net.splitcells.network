@@ -60,7 +60,7 @@ public class DescribedBool implements Bool {
 
     @Override
     public Bool required() {
-        if (content) {
+        if (!content) {
             throw new RuntimeException("The following is required, but not present: " + description.get());
         }
         return this;
