@@ -20,6 +20,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -35,6 +36,12 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing {
      */
     default boolean hasElements() {
         return !isEmpty();
+    }
+
+    default void requireComplianceByEveryElementWith(Predicate<T> constraint) {
+        stream().filter(e -> !constraint.test(e)).findFirst().ifPresent(e -> {
+            throw executionException("List element `" + e + "` does not comply with `" + constraint + "`.");
+        });
     }
 
     default void requirePresenceOf(T element) {
