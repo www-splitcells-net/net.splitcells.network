@@ -34,6 +34,7 @@ import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.Assertions.requireNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.common.Language.LINE;
@@ -80,7 +81,7 @@ public class DatabaseMetaAspect implements Database {
     public Line add(Line line) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             database.headerView().requireSizeOf(line.context().headerView().size());
-            database.lines().requirePresenceOf(line);
+            database.lines().requireComplianceByEveryElementWith(e -> !line.equalsTo(e));
             describedBool(line.index() >= database.rawLines().size()
                             || database.rawLines().get(line.index()) == null
                     , () -> path().toString() + line.index())
@@ -108,7 +109,7 @@ public class DatabaseMetaAspect implements Database {
              */
             lineValues.requireSizeOf(database.headerView().size());
             lineValues.stream().forEach(e ->
-                    requireNull(e, "The line " + lineValues + " should not contain nulls."));
+                    requireNotNull(e, "The line " + lineValues + " should not contain nulls."));
             range(0, lineValues.size()).forEach(i -> database.headerView().get(i).isInstanceOf(lineValues.get(i)).required());
         }
         final var translatedAddition = database.addTranslated(lineValues);
