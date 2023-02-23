@@ -23,10 +23,17 @@ import java.util.Optional;
 
 import net.splitcells.dem.data.set.map.typed.TypedMapView;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.gel.data.table.Line;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
 
 /**
+ * <p>TODO By default it should not be possible to create a {@link GroupId} without a given {@link GroupId}.
+ * This makes it a lot easier, to avoid errors, when a {@link Line} is present in a {@link Constraint},
+ * with multiple different {@link Constraint#INCOMING_CONSTRAINT_GROUP}.
+ * Thereby, it can be easier to avoid the use of the same {@link Constraint#RESULTING_CONSTRAINT_GROUP}
+ * for multiple occurrences of one {@link Line}.
+ * Such a functionality, could also be used in order to optionally trace the creation of groups.</p>
  * <p>IDEA Implement GroupId#name as constraint path like in reasoning system.</p>
  * <p>IDEA Create value based grouping.</p>
  */
