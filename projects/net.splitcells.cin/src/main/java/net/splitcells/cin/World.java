@@ -82,7 +82,8 @@ public class World {
         // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
         return defineProblem("conway-s-game-of-life")
                 .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
-                .withDemands(worldsTimeSpace(0, 1, 0, 10, 0, 10))
+                .withDemands(worldsTimeSpace(0, 1, 0, 10, 0, 10)
+                        .withAppended(blinker()))
                 .withSupplyAttributes(VALUE)
                 .withSupplies(values(0, 1, 0, 10, 0, 10, 0, 1))
                 .withConstraint(r -> {
@@ -143,21 +144,13 @@ public class World {
     }
 
     @SuppressWarnings("unchecked")
-    private static List<List<Object>> worldWithGlider() {
+    private static List<List<Object>> blinker() {
         final List<List<Object>> worldWithGlider = list();
         worldWithGlider.withAppended(
-                list(1, 0, 1)
-                , list(2, -1, 1)
-                , list(3, -1, 1)
-                , list(1, -2, 1)
-                , list(2, -2, 1));
-        rangeClosed(-10, 0).forEach(i -> {
-            rangeClosed(-10, 0).forEach(j -> {
-                if (!worldWithGlider.contains(list(i, j, 1))) {
-                    worldWithGlider.add(list(i, j, 0));
-                }
-            });
-        });
+                list(0, 1, 2)
+                , list(0, 2, 2)
+                , list(0, 3, 2)
+        );
         return worldWithGlider;
     }
 
