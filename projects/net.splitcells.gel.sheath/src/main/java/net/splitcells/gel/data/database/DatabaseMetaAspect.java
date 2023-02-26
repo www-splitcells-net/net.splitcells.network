@@ -31,6 +31,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.event;
 import static net.splitcells.dem.lang.Xml.textNode;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -95,6 +96,19 @@ public class DatabaseMetaAspect implements Database {
 
     @Override
     public void remove(int lineIndex) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            if (database.rawLinesView().size() <= lineIndex) {
+                throw executionException(perspective("Cannot remove line by index, because the index is bigger than the biggest index in the database.")
+                        .withText("lineIndex = " + lineIndex)
+                        .withText("database = " + database.path())
+                        .withText("database.size() = " + database.size()));
+            }
+            if (database.rawLinesView().get(lineIndex) == null) {
+                throw executionException(perspective("Cannot remove line by index, because this line was already removed.")
+                        .withText("lineIndex = " + lineIndex)
+                        .withText("database = " + database.path()));
+            }
+        }
         database.remove(lineIndex);
     }
 

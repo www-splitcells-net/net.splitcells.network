@@ -17,6 +17,7 @@ package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.perspective.Perspective;
 
 @JavaLegacyArtifact
 public class ExecutionException extends RuntimeException {
@@ -28,6 +29,10 @@ public class ExecutionException extends RuntimeException {
      */
     public static ExecutionException executionException(String message) {
         return new ExecutionException(message);
+    }
+
+    public static ExecutionException executionException(Perspective message) {
+        return new ExecutionException(message.toXmlString());
     }
 
     public static ExecutionException executionException(String message, Throwable t) {
