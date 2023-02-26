@@ -35,6 +35,7 @@ import java.util.function.Function;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.interaction.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
 /**
@@ -63,16 +64,20 @@ public class Server {
                 @Override
                 public void start() {
                     // TODO Errors are not logged.
-                    final var webServerOptions = new HttpServerOptions()//
-                            .setLogActivity(true)//
-                            .setSsl(true)//
-                            .setKeyCertOptions(new PfxOptions()
-                                    .setPath(config.sslKeystoreFile().orElseThrow().toString())
-                                    .setPassword(config.sslKeystorePassword().orElseThrow()))
-                            .setTrustOptions(new PfxOptions()
-                                    .setPath(config.sslKeystoreFile().orElseThrow().toString())
-                                    .setPassword(config.sslKeystorePassword().orElseThrow()))
-                            .setPort(config.openPort());
+                    final var webServerOptions = new HttpServerOptions();
+                    if (config.isSecured()) {
+                        webServerOptions.setLogActivity(true)//
+                                .setSsl(true)//
+                                .setKeyCertOptions(new PfxOptions()
+                                        .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                        .setPassword(config.sslKeystorePassword().orElseThrow()))
+                                .setTrustOptions(new PfxOptions()
+                                        .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                        .setPassword(config.sslKeystorePassword().orElseThrow()));
+                    } else {
+                        domsole().append(perspective("Webserver is not secured!"), WARNING);
+                    }
+                    webServerOptions.setPort(config.openPort());
                     final var router = Router.router(vertx);
                     router.route("/favicon.ico").handler(a -> {
                     });

@@ -38,6 +38,8 @@ public class Config {
         return new Config();
     }
 
+    private boolean isSecured = true;
+
     private Optional<String> sslKeystorePassword = Optional.of("password");
     private Optional<Path> sslKeystoreFile = Optional.of(Paths.get("target/keystore.p12"));
 
@@ -270,5 +272,15 @@ public class Config {
 
     public List<String> cssFiles() {
         return cssFiles;
+    }
+
+    public boolean isSecured() {
+        return isSecured;
+    }
+
+    @ReturnsThis
+    public Config withIsSecured(boolean arg) {
+        isSecured = arg;
+        return this;
     }
 }
