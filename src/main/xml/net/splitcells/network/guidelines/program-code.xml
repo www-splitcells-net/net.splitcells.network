@@ -178,4 +178,13 @@
             </paragraph>
         </chapter>
     </chapter>
+    <chapter>
+        <title>Support</title>
+        <paragraph>Prefer placing support documentation for errors and similar in program code,
+            instead of documentation, as this is more stable regarding automatic code refactoring.
+            This can be done by adding runtime checks with an extensive error message.
+        </paragraph>
+        <paragraph>If a support documentation is needed, try to structure it in the form of a decision tree,
+            that finds the appropriate problem and solution given a set of symptoms.</paragraph>
+    </chapter>
 </article>
