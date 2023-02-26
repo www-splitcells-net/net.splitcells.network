@@ -20,9 +20,12 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.Xml.toFlatString;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.gel.common.Language.*;
 
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.PerspectiveI;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.dom.Domable;
@@ -72,7 +75,31 @@ public class LineI implements Line {
 
     @Override
     public String toString() {
-        return toFlatString(toDom());
+        return toPerspective().toXmlString();
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        final var perspective = perspective(Line.class.getSimpleName());
+        perspective.withProperty(INDEX.value(), "" + index);
+        context.headerView().forEach(attribute -> {
+            final var value = context.columnView(attribute).get(index);
+            final Perspective domValue;
+            if (value == null) {
+                domValue = perspective("");
+            } else {
+                if (value instanceof Domable) {
+                    domValue = perspective(Xml.toPrettyString(((Domable) value).toDom()));
+                } else {
+                    domValue = perspective(value.toString());
+                }
+            }
+            final var valuePerspective = perspective(VALUE.value());
+            valuePerspective.withProperty(TYPE.value(), attribute.name());
+            valuePerspective.withChild(perspective(CONTENT.value()).withChild(domValue));
+            perspective.withChild(valuePerspective);
+        });
+        return perspective;
     }
 
     @Override

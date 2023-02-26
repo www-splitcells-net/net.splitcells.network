@@ -20,6 +20,7 @@ public enum Language {
     ALLOCATION("allocation"),
     ALLOCATIONS("allocations"),
     ARGUMENTATION("argumentation"),
+    CONTENT("content"),
     DATA("data"),
     DEMAND("demand"),
     @Deprecated

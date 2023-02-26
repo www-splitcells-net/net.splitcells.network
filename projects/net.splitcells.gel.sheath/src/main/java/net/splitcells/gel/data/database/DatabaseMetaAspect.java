@@ -85,7 +85,7 @@ public class DatabaseMetaAspect implements Database {
             database.lines().requireComplianceByEveryElementWith(e -> !line.equalsTo(e));
             describedBool(line.index() >= database.rawLines().size()
                             || database.rawLines().get(line.index()) == null
-                    , () -> path().toString() + line.index())
+                    , () -> "path: " + path().toString() + ", line.index(): " + line.index())
                     .required();
             range(0, database.headerView().size()).forEach(i -> {
                 requireEquals(database.headerView().get(i), line.context().headerView().get(i));
