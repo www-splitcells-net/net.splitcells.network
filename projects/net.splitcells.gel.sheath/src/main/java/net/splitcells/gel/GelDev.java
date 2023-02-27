@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.ProcessResult;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
@@ -38,6 +39,7 @@ import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 import java.util.Optional;
+import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -60,12 +62,8 @@ public final class GelDev {
     }
 
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
-        return GelEnv.analyseProcess(program, standardDeveloperConfigurator().andThen(configurator));
-    }
-
-    public static Consumer<Environment> standardDeveloperConfigurator() {
-        return GelEnv.standardDeveloperConfigurator().andThen(env -> {
-            new Thread(() -> {
+        return GelEnv.analyseProcess(standardDeveloperConfigurator().andThen(configurator), () -> {
+            Dem.process(program, () -> {
                 // TODO This is a hack, because the webserver still depends on private documents, in order to render the website.
                 final var publicProjectRepository = userHome(
                         "Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network/projects");
@@ -79,22 +77,22 @@ public final class GelDev {
                         .withIsSecured(false)
                         .withSiteFolder(Optional.of(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network/projects/").toString()))
                         .withDetailedXslMenu(Optional.of(readFileAsString(userHome("Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/src/main/resources/detailed-menu.xsl"))))
-                        .withCssFiles(list("net/splitcells/website/css/theme.white.variables.css",
-                                "net/splitcells/website/css/basic.themed.css",
-                                "net/splitcells/website/css/basic.css",
-                                "net/splitcells/website/css/den.css",
-                                "net/splitcells/website/css/layout.default.css",
-                                "net/splitcells/martins/avots/website/css/theme.css"));
-                projectsRenderer(publicProjectRepository, "public",
-                        projectRenderer(
+                        .withCssFiles(list("net/splitcells/website/css/theme.white.variables.css"
+                                , "net/splitcells/website/css/basic.themed.css"
+                                , "net/splitcells/website/css/basic.css"
+                                , "net/splitcells/website/css/den.css"
+                                , "net/splitcells/website/css/layout.default.css"
+                                , "net/splitcells/martins/avots/website/css/theme.css"));
+                projectsRenderer(publicProjectRepository, "public"
+                        , projectRenderer(
                                 "public", privateProjectRepository.resolve("net.splitcells.martins.avots.website/")
                                 , xslLib
                                 , privateProjectRepository
                                         .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/"
                                 , validator
-                                , config),
-                        list(projectRenderer("public"
+                                , config)
+                        , list(projectRenderer("public"
                                         , privateProjectRepository.resolve("net.splitcells.martins.avots.website/")
                                         , xslLib
                                         , privateProjectRepository
@@ -111,9 +109,16 @@ public final class GelDev {
                                         , "/"
                                         , validator
                                         , config)
-                        ), validator
+                                , Dem.configValue(ObjectsRenderer.class)
+                                , Dem.configValue(ObjectsMediaRenderer.class))
+                        , validator
                         , config).serveToHttpAt();
-            }).start();
+            });
+        });
+    }
+
+    public static Consumer<Environment> standardDeveloperConfigurator() {
+        return GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class
                             , a -> a.path().equals(list("debugging")))
