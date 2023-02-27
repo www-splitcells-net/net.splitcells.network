@@ -62,7 +62,7 @@ public final class GelDev {
     }
 
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
-        return GelEnv.analyseProcess(standardDeveloperConfigurator().andThen(configurator), () -> {
+        return GelEnv.analyseProcess(() -> {
             Dem.process(program, () -> {
                 // TODO This is a hack, because the webserver still depends on private documents, in order to render the website.
                 final var publicProjectRepository = userHome(
@@ -114,7 +114,7 @@ public final class GelDev {
                         , validator
                         , config).serveToHttpAt();
             });
-        });
+        }, standardDeveloperConfigurator().andThen(configurator));
     }
 
     public static Consumer<Environment> standardDeveloperConfigurator() {

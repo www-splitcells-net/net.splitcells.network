@@ -26,8 +26,10 @@ import net.splitcells.dem.resource.communication.log.MessageFilter;
 
 import java.time.ZonedDateTime;
 import java.util.Optional;
+import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
+import static java.util.Arrays.asList;
 import static net.splitcells.dem.ProcessResult.processResult;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
@@ -52,6 +54,21 @@ public class Dem {
      * It generally allows to execute multiple instances of a Dem program, without having interference between them.
      */
     private static final InheritableThreadLocal<Environment> CURRENT = new InheritableThreadLocal<Environment>();
+
+    /**
+     * TODO This is a hack.
+     *
+     * @param program program
+     * @return return
+     */
+    public static void process(Runnable... program) {
+        asList(program).forEach(p -> new Thread(p).start());
+        try {
+            new Semaphore(1).acquire(2);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static ProcessResult process(Runnable program) {
         return process(program, m -> {
