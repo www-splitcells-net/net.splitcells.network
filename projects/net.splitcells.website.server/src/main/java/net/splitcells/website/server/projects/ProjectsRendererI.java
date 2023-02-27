@@ -206,7 +206,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             if (normalizedPath.equals(LAYOUT_PATH)) {
                 domsole().append(perspective("Refreshing layout."), LogLevel.INFO);
                 this.build();
-                return validateRenderingResult(Optional.empty(), Path.of(normalizedPath));
+                return render("/");
             }
             final var matchingRoots = renderers
                     .stream()
