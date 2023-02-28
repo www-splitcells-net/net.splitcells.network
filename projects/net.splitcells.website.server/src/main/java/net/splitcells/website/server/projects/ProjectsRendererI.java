@@ -52,6 +52,7 @@ import static net.splitcells.website.server.project.validator.RenderingValidator
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static net.splitcells.website.server.projects.extension.GlobalChangelogExtension.globalChangelogExtension;
 import static net.splitcells.website.server.projects.extension.LayoutExtension.layoutExtension;
+import static net.splitcells.website.server.projects.extension.LayoutTreeExtension.layoutTreeExtension;
 import static net.splitcells.website.server.projects.extension.status.NetworkStatusRenderExtension.networkStatusRenderExtension;
 import static net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger.projectsRendererExtensionMerger;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -159,7 +160,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
     private final ProjectsRendererExtensionMerger extension = projectsRendererExtensionMerger()
             .withRegisteredExtension(globalChangelogExtension())
             .withRegisteredExtension(networkStatusRenderExtension())
-            .withRegisteredExtension(layoutExtension());
+            .withRegisteredExtension(layoutExtension())
+            .withRegisteredExtension(layoutTreeExtension());
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer
