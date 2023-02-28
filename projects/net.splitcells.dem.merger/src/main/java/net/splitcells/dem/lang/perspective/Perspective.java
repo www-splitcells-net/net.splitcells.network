@@ -325,6 +325,46 @@ public interface Perspective extends PerspectiveView {
         return xmlString;
     }
 
+    @ReturnsThis
+    default Perspective extendWith(List<String> path) {
+        if (path.isEmpty()) {
+            return this;
+        }
+        final var next = path.remove(0);
+        final var match = children().stream()
+                .filter(child -> child.name().equals(next))
+                .findFirst();
+        if (match.isEmpty()) {
+            final var nextPerspective = perspective(next);
+            this.withChild(nextPerspective);
+            nextPerspective.extendWith(path);
+        } else {
+            match.get().extendWith(path);
+        }
+        return this;
+    }
+
+    default String asXhtmlList() {
+        return asXhtmlList(true);
+    }
+
+    default String asXhtmlList(boolean isRoot) {
+        final String htmlList;
+        if (children().isEmpty()) {
+            htmlList = "<li>" + xmlName() + "</li>";
+        } else {
+            final String childrenHtmlList = children().stream()
+                    .map(c -> c.asXhtmlList(false))
+                    .reduce("", (a, b) -> a + b);
+            htmlList = "<li>" + xmlName() + "</li>"
+                    + "<ol>" + childrenHtmlList + "</ol>";
+        }
+        if (isRoot) {
+            return "<ol>" + htmlList + "</ol>";
+        }
+        return htmlList;
+    }
+
     default Perspective subtree(List<String> path) {
         if (path.isEmpty()) {
             return this;
