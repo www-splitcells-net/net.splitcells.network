@@ -33,7 +33,8 @@ public interface PerspectiveView extends Domable {
                 .replace(">", "&gt;")
                 .replace("\"", "&quot;")
                 .replace("'", "&apos;")
-                .replace("&", "&amp;");
+                .replace("&", "&amp;")
+                .replace("~", "&Tilde;");
     }
 
     default Optional<Perspective> value() {
