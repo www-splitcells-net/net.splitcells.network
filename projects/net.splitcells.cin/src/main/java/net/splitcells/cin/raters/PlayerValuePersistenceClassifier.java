@@ -18,12 +18,14 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class PlayerValuePersistenceClassifier {
+
     public static Rater playerValuePersistenceClassifier(int playerValue
             , Attribute<Integer> playerAttribute
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate
-            , BiPredicate<Integer, Integer> classifier) {
+            , BiPredicate<Integer, Integer> classifier
+            , String name) {
         return groupRouter((lines, children) -> {
             final var ratingEvent = ratingEvent();
             final var lineValues = lines.columnView(LINE).values();
@@ -91,7 +93,7 @@ public class PlayerValuePersistenceClassifier {
                                         .withResultingGroupId(incomingConstraintGroup)));
             }
             return ratingEvent;
-        });
+        }, name);
     }
 
     private PlayerValuePersistenceClassifier() {

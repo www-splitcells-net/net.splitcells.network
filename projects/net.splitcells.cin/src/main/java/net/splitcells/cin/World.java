@@ -173,8 +173,9 @@ public class World {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
-        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                playerCount -> playerCount < 3);
+        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
+                , playerCount -> playerCount < 3
+                , "crowded");
     }
 
     private static Rater survives(int playerValue
@@ -182,8 +183,9 @@ public class World {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
-        return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                Objects::equals);
+        return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
+                , Objects::equals
+                , "survives");
     }
 
     private static Rater isDead(int playerValue
@@ -192,7 +194,7 @@ public class World {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue);
+                (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue, "isDead");
     }
 
     private static Rater revivalCondition(int playerValue
@@ -200,8 +202,9 @@ public class World {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
-        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                playerCount -> playerCount == 3);
+        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
+                , playerCount -> playerCount == 3
+                , "revivalCondition");
     }
 
     private static Rater reproduction(int playerValue
@@ -209,8 +212,9 @@ public class World {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
-        return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue && startPlayerValue != playerValue);
+        return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
+                , (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue && startPlayerValue != playerValue
+                , "reproduction");
     }
 
     /**
@@ -223,7 +227,8 @@ public class World {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
-        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                playerCount -> 2 <= playerCount && playerCount <= 3);
+        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
+                , playerCount -> 2 <= playerCount && playerCount <= 3
+                , "goodCompany");
     }
 }

@@ -15,7 +15,7 @@ public class Dies {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                (startPlayerValue, endPlayerValue) -> !Objects.equals(startPlayerValue, endPlayerValue));
+                (startPlayerValue, endPlayerValue) -> !Objects.equals(startPlayerValue, endPlayerValue), "dies");
     }
 
     private Dies() {

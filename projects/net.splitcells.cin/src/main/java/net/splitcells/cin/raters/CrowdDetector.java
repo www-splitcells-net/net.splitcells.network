@@ -39,7 +39,8 @@ public class CrowdDetector {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate
-            , Predicate<Long> crowdClassifier) {
+            , Predicate<Long> crowdClassifier
+            , String name) {
         return groupRouter((lines, children) -> {
             final var ratingEvent = ratingEvent();
             final var lineValues = lines.columnView(LINE).values();
@@ -111,7 +112,7 @@ public class CrowdDetector {
                                         .withResultingGroupId(incomingConstraintGroup)));
             }
             return ratingEvent;
-        });
+        }, name);
     }
 
     private CrowdDetector() {
