@@ -24,6 +24,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.gel.constraint.type.Then.*;
 import static net.splitcells.gel.rating.framework.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.rater.classification.ForAllValueCombinations.forAllValueCombinations;
@@ -154,7 +155,8 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(ForAlls.forEach(attribute));
+            resultBase = Optional.of(ForAlls.forEach(attribute
+                    , Optional.of(discoverable(root.map(c -> c.path()).orElseThrow()))));
             currentInjectionGroups.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
         }
@@ -180,7 +182,7 @@ public class QueryI implements Query {
         if (resultBase.isPresent()) {
             return nextQueryPathElement(this, setOfUniques(groups), resultBase.get());
         }
-        final var forAll = ForAlls.forAll();
+        final var forAll = ForAlls.forAll(Optional.of(discoverable(root.map(c -> c.path()).orElseThrow())));
         currentInjectionGroups.withChildren(forAll);
         return nextQueryPathElement(this, setOfUniques(groups), forAll);
     }
@@ -204,7 +206,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(Then.then(rater));
+            resultBase = Optional.of(Then.then(rater, Optional.of(discoverable(root.map(c -> c.path()).orElseThrow()))));
             currentInjectionGroups.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
@@ -247,7 +249,8 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(ForAlls.forEach(forAllValueCombinations(attributes)));
+            resultBase = Optional.of(ForAlls.forEach(forAllValueCombinations(attributes)
+                    , Optional.of(discoverable(root.map(c -> c.path()).orElseThrow()))));
             currentInjectionGroups.withChildren(resultBase.get());
             root.ifPresent(Constraint::recalculateProcessing);
             resultingGroups.addAll(groups);
@@ -288,9 +291,9 @@ public class QueryI implements Query {
     @Override
     public Query forAll(List<Rater> classifiers) {
         if (WARNING) domsole().append("Groups are not supported yet: " + groups.toString(), LogLevel.WARNING);
-        final var forAllCatcher = ForAlls.forAll();
+        final var forAllCatcher = ForAlls.forAll(Optional.of(discoverable(root.map(c -> c.path()).orElseThrow())));
         classifiers.forEach(c -> {
-            final var f = ForAlls.forEach(c);
+            final var f = ForAlls.forEach(c, Optional.of(discoverable(root.map(r -> r.path()).orElseThrow())));
             f.withChildren(forAllCatcher);
             currentInjectionGroups.withChildren(f);
         });

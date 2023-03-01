@@ -52,6 +52,10 @@ public class ForAlls {
         return ForAllFactory.instance().forAll(attribute);
     }
 
+    public static Constraint forEach(final Attribute<?> attribute, Optional<Discoverable> parent) {
+        return ForAllFactory.instance().forAll(attribute, parent);
+    }
+
     public static Constraint forEach(Rater classifier) {
         return ForAllFactory.instance().forAll(classifier);
     }

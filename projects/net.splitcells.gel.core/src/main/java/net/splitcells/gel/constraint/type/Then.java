@@ -19,6 +19,8 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.framework.ConstraintAspect.constraintAspect;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 
+import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
 import net.splitcells.gel.constraint.type.framework.ConstraintBasedOnLocalGroupsAI;
 import net.splitcells.gel.constraint.Constraint;
@@ -30,16 +32,25 @@ import java.util.Optional;
 
 public class Then extends ConstraintBasedOnLocalGroupsAI {
 
+    @Deprecated
     public static Constraint then(Rater rater) {
         return constraintAspect(new Then(rater));
+    }
+
+    public static Constraint then(Rater rater, Optional<Discoverable> parent) {
+        return constraintAspect(new Then(rater, parent));
     }
 
     public static Constraint then(Rating rating) {
         return constraintAspect(new Then(constantRater(rating)));
     }
 
+    protected Then(Rater rater, Optional<Discoverable> parent) {
+        super(rater, rater.name(), parent.map(d -> d.child(Lists.list(rater.name()))));
+    }
+
     protected Then(Rater rater) {
-        super(rater, rater.getClass().getSimpleName(), Optional.empty());
+        super(rater, rater.name(), Optional.empty());
     }
 
     @Override

@@ -88,7 +88,7 @@ public abstract class ConstraintAI implements Constraint {
         this.injectionGroup = injectionGroup;
         final Discoverable parentPath;
         if (parent.isPresent()) {
-            parentPath = parent.get();
+            parentPath = () -> parent.get().path().withAppended(getClass().getSimpleName());
             mainContext = parent;
         } else {
             parentPath = this;

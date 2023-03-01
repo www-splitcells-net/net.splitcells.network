@@ -51,6 +51,10 @@ public class ForAllFactory {
         return ForAll.forAll(propagation(), discoverable);
     }
 
+    public Constraint forAll(final Attribute<?> attribute, Optional<Discoverable> parent) {
+        return ForAll.forAll(forAllAttributeValues(attribute), parent);
+    }
+
     public Constraint forAll(final Attribute<?> attribute) {
         return ForAll.forAll(forAllAttributeValues(attribute));
     }

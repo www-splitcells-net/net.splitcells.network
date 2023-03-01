@@ -33,15 +33,13 @@ import java.util.Optional;
 
 public class ForAll extends ConstraintBasedOnLocalGroupsAI {
 
-    private static final String FOR_ALL = "for-all";
-
     public static Constraint forAll(Rater classifier) {
         return create(classifier);
     }
 
     public static Constraint forAll(Rater classifier, Optional<Discoverable> parent) {
         return constraintAspect(new ForAll(classifier
-                , parent.map(d -> d.child(Lists.list(FOR_ALL, classifier.toString())))
+                , parent.map(d -> d.child(Lists.list(classifier.name())))
         ));
     }
 

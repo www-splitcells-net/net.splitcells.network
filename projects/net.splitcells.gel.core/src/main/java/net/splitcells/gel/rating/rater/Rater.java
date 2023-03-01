@@ -116,4 +116,8 @@ public interface Rater extends PubliclyTyped<Rater>
     default void addContext(Discoverable context) {
 
     }
+
+    default String name() {
+        return getClass().getSimpleName();
+    }
 }
