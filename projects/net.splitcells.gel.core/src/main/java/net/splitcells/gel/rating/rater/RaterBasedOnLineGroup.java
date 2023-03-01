@@ -80,10 +80,14 @@ public class RaterBasedOnLineGroup implements Rater {
     }
 
     public static RaterBasedOnLineGroup groupRouter(GroupRouter rater) {
-        return groupRouter(rater, (a, b, c) -> rater.toString());
+        return groupRouter(rater, (a, b, c) -> rater.toString(), RaterBasedOnLineGroup.class.getSimpleName());
     }
 
-    public static RaterBasedOnLineGroup groupRouter(GroupRouter rater, SimpleDescriptor simpleDescriptor) {
+    public static RaterBasedOnLineGroup groupRouter(GroupRouter rater, String name) {
+        return groupRouter(rater, (a, b, c) -> rater.toString(), name);
+    }
+
+    public static RaterBasedOnLineGroup groupRouter(GroupRouter rater, SimpleDescriptor simpleDescriptor, String name) {
         return new RaterBasedOnLineGroup(new RaterBasedOnLineGroupLambda() {
 
             @Override
@@ -109,23 +113,28 @@ public class RaterBasedOnLineGroup implements Rater {
             public String toString() {
                 return rater.toString();
             }
-        }, simpleDescriptor);
+        }
+                , simpleDescriptor
+                , name);
     }
 
     public static RaterBasedOnLineGroup raterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater, SimpleDescriptor simpleDescriptor) {
-        return new RaterBasedOnLineGroup(rater, simpleDescriptor);
+        return new RaterBasedOnLineGroup(rater, simpleDescriptor, rater.getClass().getSimpleName());
     }
 
     public static RaterBasedOnLineGroup raterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater) {
-        return new RaterBasedOnLineGroup(rater, (a, b, c) -> rater.toString());
+        return new RaterBasedOnLineGroup(rater, (a, b, c) -> rater.toString(), rater.getClass().getSimpleName());
     }
 
     private final RaterBasedOnLineGroupLambda rater;
     private final SimpleDescriptor simpleDescriptor;
 
-    private RaterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater, SimpleDescriptor simpleDescriptor) {
+    private final String name;
+
+    private RaterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater, SimpleDescriptor simpleDescriptor, String name) {
         this.rater = rater;
         this.simpleDescriptor = simpleDescriptor;
+        this.name = name;
     }
 
     @Override
@@ -162,5 +171,10 @@ public class RaterBasedOnLineGroup implements Rater {
     @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return simpleDescriptor.toSimpleDescription(line, groupsLineProcessing, incomingGroup);
+    }
+
+    @Override
+    public String name() {
+        return name;
     }
 }
