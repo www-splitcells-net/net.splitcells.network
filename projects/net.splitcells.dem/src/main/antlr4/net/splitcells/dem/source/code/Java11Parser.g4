@@ -60,8 +60,8 @@ source_unit /* This is the root node. Root nodes should be placed on the start o
             	EOF
     ;
 access
-    : inline_comment? Dot type_argument? name call_arguments access?
-    | inline_comment? Dot name access?
+    : inline_comment? Dot type_argument? name call_arguments access? inline_comment?
+    | inline_comment? Dot name access? inline_comment?
     | Brackets_open expression Brackets_closed
     ;
 annotation
