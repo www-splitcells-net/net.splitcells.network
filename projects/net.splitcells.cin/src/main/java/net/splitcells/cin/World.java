@@ -17,6 +17,7 @@ package net.splitcells.cin;
 
 import net.splitcells.cin.raters.TimeSteps;
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
@@ -36,7 +37,6 @@ import net.splitcells.gel.rating.rater.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.SolutionView;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
@@ -184,7 +184,7 @@ public class World {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
-                , Objects::equals
+                , Thing::equals
                 , "survives");
     }
 

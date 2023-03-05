@@ -17,14 +17,17 @@ package net.splitcells.dem.utils;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.stream.IntStream;
 
-import static net.splitcells.dem.data.set.list.Lists.*;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static org.assertj.core.api.Assertions.assertThat;
 
+@JavaLegacyArtifact
 public final class MathUtils {
 
     /**

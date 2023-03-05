@@ -21,6 +21,7 @@ import net.splitcells.dem.environment.EnvironmentV;
 import net.splitcells.dem.environment.config.EndTime;
 import net.splitcells.dem.environment.config.framework.ConfigurationV;
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 
@@ -47,6 +48,7 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
  * This is done, by having 1 and only one variable representing the state of the environment
  * and passing it through everywhere.
  */
+@JavaLegacyArtifact
 public class Dem {
     /**
      * Currently it would be enough to use a static variable instead.

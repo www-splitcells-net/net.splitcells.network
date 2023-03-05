@@ -34,6 +34,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.StringUtils.partOf;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.GroupId.group;
@@ -71,11 +72,11 @@ public class PositionClusters implements Rater {
     }
 
     public static int centerXPositionOf(GroupId group) {
-        return Integers.parse(group.name().orElseThrow().split(",")[0].substring(3));
+        return Integers.parse(partOf(group.name().orElseThrow(), ",", 0).substring(3));
     }
 
     public static int centerYPositionOf(GroupId group) {
-        final String yCoordinate = group.name().orElseThrow().split(",")[1];
+        final String yCoordinate = partOf(group.name().orElseThrow(), ",", 1);
         return Integers.parse(yCoordinate.substring(3, yCoordinate.length() - 1));
     }
 
