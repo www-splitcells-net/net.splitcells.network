@@ -21,6 +21,9 @@ import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.dem.testing.annotations.CapabilityTest;
+import net.splitcells.dem.testing.annotations.DisabledTest;
+import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.constraint.Constraint;
@@ -30,18 +33,18 @@ import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
-import org.junit.jupiter.api.*;
 
 import java.time.ZonedDateTime;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
-import static java.lang.Math.floorMod;
+import static net.splitcells.dem.data.atom.Bools.bool;
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
-import static net.splitcells.dem.testing.TestTypes.*;
+import static net.splitcells.dem.utils.MathUtils.intervalClosed;
+import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.GelEnv.*;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
@@ -56,7 +59,6 @@ import static net.splitcells.gel.solution.optimization.meta.Escalator.escalator;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * TODO IDEA Test object orientation by making all people an instance of a certain
@@ -76,8 +78,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
     public static final Attribute<Integer> DATE = integerAttribute("date");
     public static final Attribute<Integer> ROOM_NUMBER = integerAttribute("room-number");
 
-    @Tag(CAPABILITY_TEST)
-    @Test
+    @CapabilityTest
     public void testRandomInstanceSolving() {
         analyseProcess(() -> {
             final var testSubject = randomColloquiumPlanning
@@ -100,7 +101,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
             testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(1), (currentSolution, step) ->
                     step <= 100 && !currentSolution.isOptimal());
-            assertThat(testSubject.isOptimal()).isTrue();
+            require(testSubject.isOptimal());
         }, standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class, a -> false)
@@ -115,8 +116,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
      * This is done by trying as many allocations via the {@link FunctionalHillClimber} as is done
      * in {@link #testRandomInstanceSolving} via the {@link ConstraintGroupBasedOfflineRepair}.
      */
-    @Tag(CAPABILITY_TEST)
-    @Test
+    @CapabilityTest
     public void testComplexity() {
         analyseProcess(() -> {
             final var testSubject = randomColloquiumPlanning
@@ -131,7 +131,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                             , randomness(0L))
                     .asSolution();
             testSubject.optimize(functionalHillClimber(400 * 177));
-            assertThat(testSubject.isOptimal()).isFalse();
+            bool(testSubject.isOptimal()).requireFalse();
         }, standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class, a -> false)
@@ -140,9 +140,15 @@ public class ColloquiumPlanningTest extends TestSuiteI {
         })).requireErrorFree();
     }
 
-    @Disabled
-    @Test
-    @Deprecated
+    /**
+     * if (Files.exists(initialSolutionTemplate)) {
+     * testSubject.optimize
+     * (templateInitializer
+     * (databaseOfFods(objectAttributes(testSubject.headerView())
+     * , Xml.parse(initialSolutionTemplate).getDocumentElement())));
+     * }
+     */
+    @DisabledTest
     public void testCurrentDevelopment() {
         final var testSubject = randomColloquiumPlanning
                 (88
@@ -156,15 +162,8 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                         , randomness(0L))
                 .asSolution();
         final var initialSolutionTemplate = testSubject.dataContainer().resolve("previous").resolve("results.fods");
-        /*
-        if (Files.exists(initialSolutionTemplate)) {
-            testSubject.optimize
-                    (templateInitializer
-                            (databaseOfFods(objectAttributes(testSubject.headerView())
-                                    , Xml.parse(initialSolutionTemplate).getDocumentElement())));
-        }*/
         testSubject.optimize(linearInitialization());
-        IntStream.rangeClosed(1, 100).forEach(i -> {
+        intervalClosed(1, 100).forEach(i -> {
             if (testSubject.isOptimal()) {
                 return;
             }
@@ -230,7 +229,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                     for (int shift = 1; shift <= shiftsPerDayCount; ++shift) {
                         supplies.add
                                 (list
-                                        (floorMod(examDay, examDayCountPerWeek) + 1
+                                        (modulus(examDay, examDayCountPerWeek) + 1
                                                         + (week - 1) * 7
                                                 , shift
                                                 , room));
@@ -247,6 +246,13 @@ public class ColloquiumPlanningTest extends TestSuiteI {
         return colloquiumPlanning(demands, supplies);
     }
 
+    /**
+     * TODO Every examiner and observer wants to minimize the number of days with exams.
+     * <p/>
+     * TODO Every examiner and observer wants to minimize the pause between 2 exams of one day.
+     * <p/>
+     * TODO Every examiner and observer wants to minimize the number of room switches per day.
+     */
     public Problem colloquiumPlanning(List<List<Object>> demands, List<List<Object>> supplies) {
         return defineProblem("colloquium-planning")
                 .withDemandAttributes(STUDENTS, EXAMINER, OBSERVER)
@@ -267,12 +273,6 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                                                         , then(has_minimal_distance_of(DATE, 3.0))
                                                         , then(has_minimal_distance_of(DATE, 5.0))
                                                 )
-                                        /** TODO Every examiner and observer wants to minimize the number of days with exams.
-                                         * <p/>
-                                         * TODO Every examiner and observer wants to minimize the pause between 2 exams of one day.
-                                         * <p/>
-                                         * TODO Every examiner and observer wants to minimize the number of room switches per day.
-                                         */
                                         , forAllCombinationsOf(DATE, SHIFT, ROOM_NUMBER)
                                                 .withChildren(then(hasSize(1)))
                                         , studentSpecificConstraints()
@@ -282,16 +282,14 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                         ).toProblem();
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void testRatingsOfSingleExam() {
         Solution testSubject = colloquiumPlanning(list(list(1, 1, 1)), list(list(1, 1, 1))).asSolution();
         testSubject.optimize(linearInitialization());
-        assertThat(testSubject.constraint().rating()).isEqualTo(noCost());
+        testSubject.constraint().rating().requireEqualsTo(noCost());
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void testRatingsOfPeopleWithMultipleExamClones() {
         Solution testSubject = colloquiumPlanning
                 (list
@@ -301,69 +299,61 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                 .asSolution();
         testSubject.optimize(linearInitialization());
         {
-            assertThat(testSubject.constraint().query()
+            testSubject.constraint().query()
                     .forAll(OBSERVER)
                     .forAllCombinationsOf(DATE, SHIFT)
                     .then(hasSize(1))
                     .rating()
-            ).isEqualTo(cost(1));
-            assertThat(testSubject.constraint().query()
+                    .requireEqualsTo(cost(1));
+            testSubject.constraint().query()
                     .forAll(EXAMINER)
                     .forAllCombinationsOf(DATE, SHIFT)
                     .then(hasSize(1))
                     .rating()
-            ).isEqualTo(cost(1));
+                    .requireEqualsTo(cost(1));
             {
-                assertThat
-                        (testSubject.constraint().query()
-                                .forAll(STUDENTS)
-                                .forAllCombinationsOf(DATE, SHIFT)
-                                .then(hasSize(1))
-                                .rating()
-                        ).isEqualTo(cost(1));
-                assertThat
-                        (testSubject.constraint().query()
-                                .forAll(STUDENTS)
-                                .then(has_minimal_distance_of(DATE, 3.0))
-                                .rating()
-                        ).isEqualTo(cost(3));
-                assertThat
-                        (testSubject.constraint().query()
-                                .forAll(STUDENTS)
-                                .then(has_minimal_distance_of(DATE, 5.0))
-                                .rating()
-                        ).isEqualTo(cost(5));
+                testSubject.constraint().query()
+                        .forAll(STUDENTS)
+                        .forAllCombinationsOf(DATE, SHIFT)
+                        .then(hasSize(1))
+                        .rating()
+                        .requireEqualsTo(cost(1));
+                testSubject.constraint().query()
+                        .forAll(STUDENTS)
+                        .then(has_minimal_distance_of(DATE, 3.0))
+                        .rating()
+                        .requireEqualsTo(cost(3));
+                testSubject.constraint().query()
+                        .forAll(STUDENTS)
+                        .then(has_minimal_distance_of(DATE, 5.0))
+                        .rating()
+                        .requireEqualsTo(cost(5));
             }
         }
         {
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(OBSERVER)
-                            .rating()
-                    ).isEqualTo(cost(1));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(EXAMINER)
-                            .rating()
-                    ).isEqualTo(cost(1));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .rating()
-                    ).isEqualTo(cost(9));
-            assertThat(
-                    testSubject.constraint().query()
-                            .forAllCombinationsOf(DATE, SHIFT, ROOM_NUMBER)
-                            .then(hasSize(1))
-                            .rating()
-            ).isEqualTo(cost(1));
+            testSubject.constraint().query()
+                    .forAll(OBSERVER)
+                    .rating()
+                    .requireEqualsTo(cost(1));
+            testSubject.constraint().query()
+                    .forAll(EXAMINER)
+                    .rating()
+                    .requireEqualsTo(cost(1));
+            testSubject.constraint().query()
+                    .forAll(STUDENTS)
+                    .rating()
+                    .requireEqualsTo(cost(9));
+            testSubject.constraint().query()
+                    .forAllCombinationsOf(DATE, SHIFT, ROOM_NUMBER)
+                    .then(hasSize(1))
+                    .rating()
+                    .requireEqualsTo(cost(1));
         }
-        assertThat(testSubject.constraint().query().rating()).isEqualTo(cost(12));
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(12));
+        testSubject.constraint().query().rating().requireEqualsTo(cost(12));
+        testSubject.constraint().rating().requireEqualsTo(cost(12));
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void testRatingsOfExamsInSameTimeslot() {
         Solution testSubject = colloquiumPlanning
                 (list
@@ -381,51 +371,44 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                 ).asSolution();
         testSubject.optimize(linearInitialization());
         {
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .forAllCombinationsOf(DATE, SHIFT)
-                            .then(hasSize(1)).rating()
-                    ).isEqualTo(cost(2));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .then(has_minimal_distance_of(DATE, 3.0))
-                            .rating()
-                    ).isEqualTo(cost(26));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .then(has_minimal_distance_of(DATE, 5.0))
-                            .rating()
-                    ).isEqualTo(cost(46));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(EXAMINER)
-                            .forAllCombinationsOf(DATE, SHIFT)
-                            .then(hasSize(1))
-                            .rating()
-                    ).isEqualTo(cost(2));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(OBSERVER)
-                            .forAllCombinationsOf(DATE, SHIFT)
-                            .then(hasSize(1))
-                            .rating()
-                    ).isEqualTo(cost(2));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAllCombinationsOf(DATE, SHIFT, ROOM_NUMBER)
-                            .then(hasSize(1))
-                            .rating()
-                    ).isEqualTo(cost(1));
+            testSubject.constraint().query()
+                    .forAll(STUDENTS)
+                    .forAllCombinationsOf(DATE, SHIFT)
+                    .then(hasSize(1)).rating()
+                    .requireEqualsTo(cost(2));
+            testSubject.constraint().query()
+                    .forAll(STUDENTS)
+                    .then(has_minimal_distance_of(DATE, 3.0))
+                    .rating()
+                    .requireEqualsTo(cost(26));
+            testSubject.constraint().query()
+                    .forAll(STUDENTS)
+                    .then(has_minimal_distance_of(DATE, 5.0))
+                    .rating()
+                    .requireEqualsTo(cost(46));
+            testSubject.constraint().query()
+                    .forAll(EXAMINER)
+                    .forAllCombinationsOf(DATE, SHIFT)
+                    .then(hasSize(1))
+                    .rating()
+                    .requireEqualsTo(cost(2));
+            testSubject.constraint().query()
+                    .forAll(OBSERVER)
+                    .forAllCombinationsOf(DATE, SHIFT)
+                    .then(hasSize(1))
+                    .rating()
+                    .requireEqualsTo(cost(2));
+            testSubject.constraint().query()
+                    .forAllCombinationsOf(DATE, SHIFT, ROOM_NUMBER)
+                    .then(hasSize(1))
+                    .rating()
+                    .requireEqualsTo(cost(1));
         }
-        assertThat(testSubject.constraint().query().rating()).isEqualTo(cost(79));
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(79));
+        testSubject.constraint().query().rating().requireEqualsTo(cost(79));
+        testSubject.constraint().rating().requireEqualsTo(cost(79));
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void testRatingsOfStudentWithMultipleExamsInSameDay() {
         Solution testSubject = colloquiumPlanning
                 (list
@@ -439,53 +422,46 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                 ).asSolution();
         testSubject.optimize(linearInitialization());
         {
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .then(has_minimal_distance_of(DATE, 3.0))
-                            .rating()
-                    ).isEqualTo(cost(9));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .then(has_minimal_distance_of(DATE, 5.0))
-                            .rating()
-                    ).isEqualTo(cost(15));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .forAllCombinationsOf(DATE, SHIFT)
-                            .then(hasSize(1))
-                            .rating()
-                    ).isEqualTo(cost(1));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(STUDENTS)
-                            .rating()
-                    ).isEqualTo(cost(25));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(OBSERVER)
-                            .forAllCombinationsOf(DATE, SHIFT)
-                            .then(hasSize(1))
-                            .rating()
-                    ).isEqualTo(cost(1));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAll(EXAMINER)
-                            .forAllCombinationsOf(DATE, SHIFT)
-                            .then(hasSize(1))
-                            .rating()
-                    ).isEqualTo(cost(1));
-            assertThat
-                    (testSubject.constraint().query()
-                            .forAllCombinationsOf(DATE, SHIFT, ROOM_NUMBER)
-                            .then(hasSize(1))
-                            .rating()
-                    ).isEqualTo(noCost());
+            testSubject.constraint().query()
+                    .forAll(STUDENTS)
+                    .then(has_minimal_distance_of(DATE, 3.0))
+                    .rating()
+                    .requireEqualsTo(cost(9));
+            testSubject.constraint().query()
+                    .forAll(STUDENTS)
+                    .then(has_minimal_distance_of(DATE, 5.0))
+                    .rating()
+                    .requireEqualsTo(cost(15));
+            testSubject.constraint().query()
+                    .forAll(STUDENTS)
+                    .forAllCombinationsOf(DATE, SHIFT)
+                    .then(hasSize(1))
+                    .rating()
+                    .requireEqualsTo(cost(1));
+            testSubject.constraint().query()
+                    .forAll(STUDENTS)
+                    .rating()
+                    .requireEqualsTo(cost(25));
+            testSubject.constraint().query()
+                    .forAll(OBSERVER)
+                    .forAllCombinationsOf(DATE, SHIFT)
+                    .then(hasSize(1))
+                    .rating()
+                    .requireEqualsTo(cost(1));
+            testSubject.constraint().query()
+                    .forAll(EXAMINER)
+                    .forAllCombinationsOf(DATE, SHIFT)
+                    .then(hasSize(1))
+                    .rating()
+                    .requireEqualsTo(cost(1));
+            testSubject.constraint().query()
+                    .forAllCombinationsOf(DATE, SHIFT, ROOM_NUMBER)
+                    .then(hasSize(1))
+                    .rating()
+                    .requireEqualsTo(noCost());
         }
-        assertThat(testSubject.constraint().query().rating()).isEqualTo(cost(27));
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(27));
+        testSubject.constraint().query().rating().requireEqualsTo(cost(27));
+        testSubject.constraint().rating().requireEqualsTo(cost(27));
     }
 
     /**

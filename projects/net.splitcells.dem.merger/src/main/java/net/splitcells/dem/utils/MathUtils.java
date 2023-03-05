@@ -16,8 +16,9 @@
 package net.splitcells.dem.utils;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
+
+import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -182,6 +183,22 @@ public final class MathUtils {
      */
     public static int absolute(int arg) {
         return Math.abs(arg);
+    }
+
+    public static IntStream intervalClosed(int min, int max) {
+        return IntStream.rangeClosed(min, max);
+    }
+
+    public static double max(double a, double b) {
+        return Math.max(a, b);
+    }
+
+    public static double naturalLogarithm(double exponent) {
+        return Math.log(exponent);
+    }
+
+    public static double power(double base, double exponent) {
+        return Math.pow(base, exponent);
     }
 
     private MathUtils() {

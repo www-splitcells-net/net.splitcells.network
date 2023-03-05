@@ -16,12 +16,14 @@
 package net.splitcells.gel.test.functionality;
 
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
@@ -31,27 +33,24 @@ import net.splitcells.gel.problem.derived.SimplifiedAnnealingProblem;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.primitive.UsedSupplySwitcher;
-import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
 import java.util.Optional;
 
-import static java.lang.Math.*;
-import static java.util.Optional.empty;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.environment;
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
-import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
+import static net.splitcells.dem.utils.MathUtils.max;
+import static net.splitcells.dem.utils.MathUtils.naturalLogarithm;
+import static net.splitcells.dem.utils.MathUtils.power;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
@@ -63,8 +62,6 @@ import static net.splitcells.gel.solution.optimization.meta.hill.climber.Functio
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.shouldHaveThrown;
 
 /**
  * TODO Clean up this.
@@ -86,7 +83,7 @@ public class NQueenProblemTest extends TestSuiteI {
                 , testSubject.history().toFods());
         writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods")
                 , testSubject.toFodsTableAnalysis());
-        assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
+        testSubject.constraint().rating().requireEqualsTo(cost(0));
     }
 
     @Tag(CAPABILITY_TEST)
@@ -103,7 +100,7 @@ public class NQueenProblemTest extends TestSuiteI {
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
             testSubject.optimizeWithMethod(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0)
                     , (currentSolution, step) -> !currentSolution.isOptimal());
-            assertThat(testSubject.isOptimal()).isTrue();
+            require(testSubject.isOptimal());
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
@@ -115,13 +112,13 @@ public class NQueenProblemTest extends TestSuiteI {
     public void test_8_queen_problem_with_backtracking() {
         final var testSubject = nQueenProblem(8, 8).asSolution();
         backtracking().optimize(testSubject);
-        assertThat(testSubject.isOptimal()).isTrue();
+        require(testSubject.isOptimal());
     }
 
     /**
      * TODO
      */
-    @Disabled
+    @DisabledTest
     @Tag(CAPABILITY_TEST)
     @Test
     public void test_8_queen_problem_with_annealing_hill_climber() {
@@ -130,8 +127,8 @@ public class NQueenProblemTest extends TestSuiteI {
             // The temperature functions was determined by trial and error with universal allocation program's temperature functions.
             testSubject.optimize(linearInitialization());
             SimplifiedAnnealingProblem.simplifiedAnnealingProblem(testSubject,
-                            i -> max((float) (log(4.0) / pow(log(i + 3d), 15))
-                                    , 0))
+                            i -> max(naturalLogarithm(4.0d) / power(naturalLogarithm(i + 3d), 15d)
+                                    , 0d))
                     .optimizeOnce(functionalHillClimber(
                             linearIterator(
                                     list(
@@ -143,8 +140,8 @@ public class NQueenProblemTest extends TestSuiteI {
                     , testSubject.history().toFods());
             writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods")
                     , testSubject.toFodsTableAnalysis());
-            domsole().append(testSubject.constraint().rating(), empty(), LogLevel.UNKNOWN_ERROR);
-            assertThat(testSubject.constraint().rating()).isEqualTo(cost(0));
+            domsole().append(testSubject.constraint().rating(), Optional.empty(), LogLevel.UNKNOWN_ERROR);
+            testSubject.constraint().rating().requireEqualsTo(cost(0));
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
@@ -160,11 +157,11 @@ public class NQueenProblemTest extends TestSuiteI {
         final var demands = listWithValuesOf(
                 rangeClosed(1, columns)
                         .mapToObj(i -> list((Object) i))
-                        .collect(toList()));
+                        .collect(Lists.toList()));
         final var supplies = listWithValuesOf(
                 rangeClosed(1, rows)
                         .mapToObj(i -> list((Object) i))
-                        .collect(toList()));
+                        .collect(Lists.toList()));
         return Gel.defineProblem()
                 .withDemandAttributes(COLUMN)
                 .withDemands(demands)

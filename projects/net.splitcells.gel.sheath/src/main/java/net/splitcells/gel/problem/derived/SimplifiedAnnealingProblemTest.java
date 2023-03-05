@@ -50,7 +50,7 @@ public class SimplifiedAnnealingProblemTest {
                 .toProblem()
                 .asSolution();
         assertThat(solution.constraint().rating()).isEqualTo(noCost());
-        final var testSubject = simplifiedAnnealingProblem(solution, i -> 1f);
+        final var testSubject = simplifiedAnnealingProblem(solution, i -> 1d);
         assertThat(testSubject.constraint().rating()).isEqualTo(noCost());
     }
 
@@ -68,7 +68,7 @@ public class SimplifiedAnnealingProblemTest {
                 .toProblem()
                 .asSolution();
         assertThat(solution.constraint().rating()).isEqualTo(noCost());
-        final var testSubject = simplifiedAnnealingProblem(solution, i -> 0f);
+        final var testSubject = simplifiedAnnealingProblem(solution, i -> 0d);
         assertThat(testSubject.constraint().rating()).isEqualTo(noCost());
     }
 
@@ -88,7 +88,7 @@ public class SimplifiedAnnealingProblemTest {
                 .asSolution();
         solution.optimize(linearInitialization());
         assertThat(solution.constraint().rating()).isEqualTo(cost(defianceCost * lineCount));
-        final var testSubject = simplifiedAnnealingProblem(solution, i -> 1f);
+        final var testSubject = simplifiedAnnealingProblem(solution, i -> 1d);
         assertThat(testSubject.constraint().rating()).isEqualTo(noCost());
     }
 
@@ -108,14 +108,14 @@ public class SimplifiedAnnealingProblemTest {
                 .asSolution();
         solution.optimize(linearInitialization());
         assertThat(solution.constraint().rating()).isEqualTo(cost(defianceCost * lineCount));
-        final var testSubject = simplifiedAnnealingProblem(solution, i -> 0f);
+        final var testSubject = simplifiedAnnealingProblem(solution, i -> 0d);
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(defianceCost * lineCount));
     }
 
     @Tag(INTEGRATION_TEST)
     @Test
     public void testProbability() {
-        final var probability = .5f;
+        final var probability = .5d;
         final var tryCount = 100;
         final var defianceCost = 7d;
         final var lineCount = 3;

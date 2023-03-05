@@ -36,26 +36,26 @@ public class SimplifiedAnnealingProblem extends DerivedSolution {
 
     public static Solution simplifiedAnnealingProblem(Solution solution) {
         return simplifiedAnnealingProblem(solution, i ->
-                1f / (i.floatValue() + 1f));
+                1f / (i.doubleValue() + 1f));
     }
 
-    public static Solution simplifiedAnnealingProblem(Solution solution, Function<Integer, Float> temperatureFunction) {
+    public static Solution simplifiedAnnealingProblem(Solution solution, Function<Integer, Double> temperatureFunction) {
         return new SimplifiedAnnealingProblem(solution.allocations(), solution.constraint(), temperatureFunction);
     }
 
-    public static Solution simplifiedAnnealingProblem(Solution solution, Function<Integer, Float> temperatureFunction
+    public static Solution simplifiedAnnealingProblem(Solution solution, Function<Integer, Double> temperatureFunction
             , Randomness randomness) {
         return new SimplifiedAnnealingProblem(solution.allocations(), solution.constraint(), temperatureFunction
                 , randomness);
     }
 
     protected SimplifiedAnnealingProblem(Allocations allocations, Constraint originalConstraint
-            , Function<Integer, Float> temperatureFunction) {
+            , Function<Integer, Double> temperatureFunction) {
         this(allocations, originalConstraint, temperatureFunction, randomness());
     }
 
     protected SimplifiedAnnealingProblem(Allocations allocations, Constraint originalConstraint
-            , Function<Integer, Float> temperatureFunction
+            , Function<Integer, Double> temperatureFunction
             , Randomness randomness) {
         super(() -> list(), allocations);
         constraint = derivation(originalConstraint

@@ -160,9 +160,9 @@ public interface Randomness {
         return arg.remove(asRandom().nextInt(arg.size()));
     }
 
-    static void assertPlausibility(float chance, int tries, int positives) {
+    static void assertPlausibility(double chance, int tries, int positives) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(chance).isBetween(0f, 1f);
+            assertThat(chance).isBetween(0d, 1d);
             assertThat(tries).isGreaterThan(-1);
             assertThat(positives).isGreaterThan(-1);
         }
