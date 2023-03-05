@@ -118,6 +118,7 @@ lexer grammar Java11Lexer;
 	Keyword_interface: 'interface';
 	Keyword_new: 'new';
 	Keyword_package: 'package';
+	Keyword_percent: '%';
 	Keyword_private: 'private';
 	Keyword_public: 'public';
 	Keyword_return: 'return';
@@ -168,6 +169,7 @@ lexer grammar Java11Lexer;
 		| '#'
 		| '!'
 		| '&'
+		| '~'
 		;
 /* Tokens Of Last Resort */
 	WS:
