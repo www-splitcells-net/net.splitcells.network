@@ -39,7 +39,6 @@ import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 import java.util.Optional;
-import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.set.list.Lists.list;

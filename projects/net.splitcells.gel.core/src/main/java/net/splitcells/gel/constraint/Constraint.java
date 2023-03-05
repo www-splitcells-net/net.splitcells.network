@@ -34,10 +34,10 @@ import static net.splitcells.gel.rating.framework.MetaRating.neutral;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;

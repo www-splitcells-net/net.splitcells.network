@@ -15,10 +15,10 @@
  */
 package net.splitcells.gel.constraint;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.gel.constraint.type.Then;
 import org.junit.jupiter.api.Test;
 
-import static java.util.Arrays.asList;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.database.Databases.database;
@@ -213,10 +213,10 @@ public class ThenTest {
     }
 
     void testEmptyThen(Constraint testSubject, GroupId... groups) {
-        asList(groups).forEach(grupa -> {
-            assertThat(testSubject.rating(grupa)).isEqualTo(cost(0));
-            assertThat(testSubject.complying(grupa)).isEmpty();
-            assertThat(testSubject.defying(grupa)).isEmpty();
+        list(groups).forEach(group -> {
+            testSubject.rating(group).requireEqualsTo(cost(0));
+            assertThat(testSubject.complying(group)).isEmpty();
+            assertThat(testSubject.defying(group)).isEmpty();
         });
         assertThat(testSubject.complying()).isEmpty();
         assertThat(testSubject.defying()).isEmpty();

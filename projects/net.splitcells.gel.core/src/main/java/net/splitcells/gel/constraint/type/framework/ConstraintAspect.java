@@ -2,6 +2,7 @@ package net.splitcells.gel.constraint.type.framework;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
@@ -18,7 +19,6 @@ import org.w3c.dom.Element;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 

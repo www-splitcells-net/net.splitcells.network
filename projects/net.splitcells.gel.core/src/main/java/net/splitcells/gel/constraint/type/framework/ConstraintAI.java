@@ -38,11 +38,11 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.database.Databases;
@@ -406,7 +406,7 @@ public abstract class ConstraintAI implements Constraint {
                                                 .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP))
                                                 .collect(toSet()))
                                         .flatMap(resultingGroupings -> resultingGroupings.stream())
-                                        .collect(toSet()))));
+                                        .collect(toSetOfUniques()))));
         return dom;
     }
 
