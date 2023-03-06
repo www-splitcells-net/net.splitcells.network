@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.table;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.Xml.toFlatString;
@@ -75,7 +76,15 @@ public class LineI implements Line {
 
     @Override
     public String toString() {
-        return toPerspective().toXmlString();
+        final var header = context().headerView();
+        return "index = " + index() + ", " + range(0, header.size())
+                .mapToObj(i -> header.get(i).name() + " = " + value(header.get(i)).toString())
+                .reduce("", (a, b) -> {
+                    if (!a.isBlank()) {
+                        return a + ", " + b;
+                    }
+                    return b;
+                });
     }
 
     @Override
