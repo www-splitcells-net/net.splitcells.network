@@ -20,6 +20,7 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.common.Language.FOR_ALL;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -70,7 +71,7 @@ public class ForAllAttributeValues implements Rater {
             group.put(incomingGroup, map());
         }
         if (!group.get(incomingGroup).containsKey(groupingValue)) {
-            group.get(incomingGroup).put(groupingValue, group(groupingValue.toString()));
+            group.get(incomingGroup).put(groupingValue, group(incomingGroup, groupingValue.toString()));
         }
         final var ratingEvent = ratingEvent();
         ratingEvent.additions().put(addition
@@ -95,7 +96,7 @@ public class ForAllAttributeValues implements Rater {
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.elementWithChildren("for-all");
+        final var argumentation = Xml.elementWithChildren(FOR_ALL.value());
         argumentation.appendChild(
                 Xml.elementWithChildren("words"
                         , Xml.textNode(getClass().getSimpleName())));
@@ -122,7 +123,7 @@ public class ForAllAttributeValues implements Rater {
     public Class<? extends Rater> type() {
         return ForAllAttributeValues.class;
     }
-    
+
     @Override
     public String toString() {
         return ForAllAttributeValues.class.getSimpleName() + "-" + attribute.name();

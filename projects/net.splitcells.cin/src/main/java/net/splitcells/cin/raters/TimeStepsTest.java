@@ -28,6 +28,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.TestTypes.EXPERIMENTAL_TEST;
 import static net.splitcells.gel.Gel.defineProblem;
+import static net.splitcells.gel.common.Language.FOR_ALL;
 import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDeinitializer.onlineLinearDeinitializer;
@@ -68,92 +69,92 @@ public class TimeStepsTest {
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), NO_TIME_STEP_GROUP));
+                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), NO_TIME_STEP_GROUP));
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
-        testSubject.constraint().childrenView().get(0).lineProcessing()
-                .columnView(RESULTING_CONSTRAINT_GROUP)
-                .values()
-                .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , timeStepId(0, 1)
-                        , timeStepId(0, 1)));
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
+                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , timeStepId(0, 1)
-                        , timeStepId(0, 1)
-                        , timeStepId(2, 3)
-                        , timeStepId(2, 3)));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + timeStepId(0, 1)
+                        , FOR_ALL.value() + " " + timeStepId(0, 1)));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , timeStepId(0, 1)
-                        , timeStepId(0, 1)
-                        , timeStepId(2, 3)
-                        , timeStepId(2, 3)
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + timeStepId(0, 1)
+                        , FOR_ALL.value() + " " + timeStepId(0, 1)
+                        , FOR_ALL.value() + " " + timeStepId(2, 3)
+                        , FOR_ALL.value() + " " + timeStepId(2, 3)));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + timeStepId(0, 1)
+                        , FOR_ALL.value() + " " + timeStepId(0, 1)
+                        , FOR_ALL.value() + " " + timeStepId(2, 3)
+                        , FOR_ALL.value() + " " + timeStepId(2, 3)
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0),
                 testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(timeStepId(0, 1)
-                        , timeStepId(0, 1)
-                        , timeStepId(2, 3)
-                        , timeStepId(2, 3)
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + timeStepId(0, 1)
+                        , FOR_ALL.value() + " " + timeStepId(0, 1)
+                        , FOR_ALL.value() + " " + timeStepId(2, 3)
+                        , FOR_ALL.value() + " " + timeStepId(2, 3)
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0),
                 testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , timeStepId(2, 3)
-                        , timeStepId(2, 3)
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + timeStepId(2, 3)
+                        , FOR_ALL.value() + " " + timeStepId(2, 3)
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0),
                 testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(timeStepId(2, 3)
-                        , timeStepId(2, 3)
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + timeStepId(2, 3)
+                        , FOR_ALL.value() + " " + timeStepId(2, 3)
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0),
                 testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0),
                 testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0),
                 testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
@@ -196,100 +197,100 @@ public class TimeStepsTest {
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), NO_TIME_STEP_GROUP));
+                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), NO_TIME_STEP_GROUP));
-        testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0));
-        testSubject.constraint().childrenView().get(0).lineProcessing()
-                .columnView(RESULTING_CONSTRAINT_GROUP)
-                .values()
-                .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , timeStepId(1, 2)
-                        , timeStepId(1, 2)));
+                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , timeStepId(1, 2)
-                        , timeStepId(1, 2)
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + timeStepId(1, 2)
+                        , FOR_ALL.value() + " " + timeStepId(1, 2)));
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , timeStepId(1, 2)
-                        , timeStepId(1, 2)
-                        , timeStepId(3, 4)
-                        , timeStepId(3, 4)));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + timeStepId(1, 2)
+                        , FOR_ALL.value() + " " + timeStepId(1, 2)
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , timeStepId(1, 2)
-                        , timeStepId(1, 2)
-                        , timeStepId(3, 4)
-                        , timeStepId(3, 4)
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + timeStepId(1, 2)
+                        , FOR_ALL.value() + " " + timeStepId(1, 2)
+                        , FOR_ALL.value() + " " + timeStepId(3, 4)
+                        , FOR_ALL.value() + " " + timeStepId(3, 4)));
+        testSubject.allocate(testSubject.demandsFree().line(0)
+                , testSubject.suppliesFree().line(0));
+        testSubject.constraint().childrenView().get(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + timeStepId(1, 2)
+                        , FOR_ALL.value() + " " + timeStepId(1, 2)
+                        , FOR_ALL.value() + " " + timeStepId(3, 4)
+                        , FOR_ALL.value() + " " + timeStepId(3, 4)
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0)
                 , testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(timeStepId(1, 2)
-                        , timeStepId(1, 2)
-                        , timeStepId(3, 4)
-                        , timeStepId(3, 4)
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + timeStepId(1, 2)
+                        , FOR_ALL.value() + " " + timeStepId(1, 2)
+                        , FOR_ALL.value() + " " + timeStepId(3, 4)
+                        , FOR_ALL.value() + " " + timeStepId(3, 4)
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0)
                 , testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , timeStepId(3, 4)
-                        , timeStepId(3, 4)
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + timeStepId(3, 4)
+                        , FOR_ALL.value() + " " + timeStepId(3, 4)
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0)
                 , testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(timeStepId(3, 4)
-                        , timeStepId(3, 4)
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + timeStepId(3, 4)
+                        , FOR_ALL.value() + " " + timeStepId(3, 4)
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0)
                 , testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP
-                        , NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0)
                 , testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(NO_TIME_STEP_GROUP));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP));
         testSubject.deallocate(testSubject.demandsUsed().line(0)
                 , testSubject.suppliesUsed().line(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()

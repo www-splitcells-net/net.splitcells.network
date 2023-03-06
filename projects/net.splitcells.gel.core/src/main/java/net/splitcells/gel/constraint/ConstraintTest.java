@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.GroupId.group;
+import static net.splitcells.gel.constraint.GroupId.rootGroup;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.ForAlls.forEach;
 import static net.splitcells.gel.data.database.Databases.database;
@@ -27,8 +28,8 @@ public class ConstraintTest {
     public void testMultipleGroupAssignment() {
         final var attribute = attribute(Integer.class);
         final var lineSupplier = database(attribute);
-        final var group1 = group("1");
-        final var group2 = group("2");
+        final var group1 = rootGroup("1");
+        final var group2 = rootGroup("2");
         final var testSubject = forEach(new Rater() {
 
             @Override

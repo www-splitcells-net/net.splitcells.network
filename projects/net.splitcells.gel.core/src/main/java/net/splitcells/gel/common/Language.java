@@ -28,6 +28,7 @@ public enum Language {
     DEMANDS("demands"),
     EMPTY_STRING(""),
     EVENT("event"),
+    FOR_ALL("for-all"),
     GROUP("group"),
     HISTORY("history"),
     INDEX("index"),

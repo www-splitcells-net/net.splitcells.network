@@ -115,7 +115,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     }
 
     static GroupId standardGroup() {
-        return GroupId.group("for-all");
+        return GroupId.rootGroup("for-all");
     }
 
     default Rating rating(Line line) {

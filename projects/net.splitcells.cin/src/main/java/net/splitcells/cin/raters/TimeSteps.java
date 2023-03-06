@@ -36,6 +36,7 @@ import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.MathUtils.sign;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -68,7 +69,7 @@ public class TimeSteps implements Rater {
      */
     private final Map<Integer, GroupId> startTimeToTimeStepGroup = map();
 
-    private final GroupId noTimeStepGroup = group(NO_TIME_STEP_GROUP);
+    private final Map<GroupId, GroupId> noTimeStepGroups = map();
     /**
      * Determines whether the start time of each time step {@link GroupId} is even or odd.
      */
@@ -116,8 +117,10 @@ public class TimeSteps implements Rater {
             final var endTimePresent = linesOfGroup.columnView(LINE)
                     .lookup(l -> l.value(timeAttribute).equals(endTime))
                     .isPresent();
+            final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
             if (startTimePresent && endTimePresent) {
-                final var timeStep = startTimeToTimeStepGroup.computeIfAbsent(startTime, x -> group(timeStepId(x, x + 1)));
+                final var timeStep = startTimeToTimeStepGroup.computeIfAbsent(startTime
+                        , x -> group(incomingGroup, timeStepId(x, x + 1)));
                 final var localRating = localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
@@ -141,7 +144,8 @@ public class TimeSteps implements Rater {
                 rating.additions().put(addition, localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
-                        .withResultingGroupId(noTimeStepGroup));
+                        .withResultingGroupId(
+                                noTimeStepGroups.computeIfAbsent(incomingGroup, ig -> group(ig, NO_TIME_STEP_GROUP))));
             }
         }
         return rating;
@@ -168,6 +172,7 @@ public class TimeSteps implements Rater {
                 .columnView(LINE)
                 .lookup(l -> l.value(timeAttribute).equals(timeValue))
                 .size() == 1;
+        final var incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
         if (removalOfLastTimeElement) {
             startTimeToTimeStepGroup.remove(startTime);
             linesOfGroup
@@ -177,7 +182,7 @@ public class TimeSteps implements Rater {
                     .forEach(l -> rating.updateRating_withReplacement(l, localRating()
                             .withPropagationTo(children)
                             .withRating(noCost())
-                            .withResultingGroupId(noTimeStepGroup)));
+                            .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
             linesOfGroup
                     .columnView(LINE)
                     .lookup(l -> l.value(timeAttribute).equals(startTime + 1))
@@ -185,7 +190,7 @@ public class TimeSteps implements Rater {
                     .forEach(l -> rating.updateRating_withReplacement(l, localRating()
                             .withPropagationTo(children)
                             .withRating(noCost())
-                            .withResultingGroupId(noTimeStepGroup)));
+                            .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
         }
         if (ENFORCING_UNIT_CONSISTENCY && linesOfGroup.size() == 1) {
             startTimeToTimeStepGroup.requireEmpty();

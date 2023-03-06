@@ -1,6 +1,10 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-03-07 ##170**: New `GroupId` now require an parent `GroupId`,
+  if the new `GroupId` is explicitly stated to be a root `GroupId`.
+  This makes it easier to get the meaning of a `GroupId` during debugging,
+  if Constraints with overlapping `GroupId` are present.
 * **2022-11-27 ##8**: `OnlineLinearInitialization` now ensures,
   demands and supplies are allocated in the same order,
   as it is present in their respective tables. 

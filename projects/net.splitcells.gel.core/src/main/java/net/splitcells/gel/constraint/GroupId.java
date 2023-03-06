@@ -39,16 +39,26 @@ import net.splitcells.dem.lang.dom.Domable;
  */
 public class GroupId implements Domable {
 
-    public static GroupId group() {
+    private static final String NOT_DESCRIBED_PARENT_GROUP = "not described parent group";
+
+    public static GroupId rootGroup() {
         return new GroupId();
     }
 
-    public static GroupId group(String name) {
+    public static GroupId group(GroupId group) {
+        return new GroupId(group.name().orElse(NOT_DESCRIBED_PARENT_GROUP));
+    }
+
+    public static GroupId rootGroup(String name) {
         return new GroupId(name);
     }
 
-    public static GroupId group(String name, TypedMapView metaData) {
-        return new GroupId(name, metaData);
+    public static GroupId group(GroupId parentGroup, String name) {
+        return new GroupId(parentGroup.name().orElse(NOT_DESCRIBED_PARENT_GROUP) + " " + name);
+    }
+
+    public static GroupId group(GroupId parentGroup, String name, TypedMapView metaData) {
+        return new GroupId(parentGroup.name().orElse(NOT_DESCRIBED_PARENT_GROUP) + " " + name, metaData);
     }
 
     @Deprecated

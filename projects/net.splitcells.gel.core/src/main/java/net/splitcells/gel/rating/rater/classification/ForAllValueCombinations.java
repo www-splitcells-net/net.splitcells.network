@@ -78,8 +78,8 @@ public class ForAllValueCombinations implements Rater {
         }
         if (!grouping.get(incomingGroup).containsKey(groupValues)) {
             grouping.get(incomingGroup).put(groupValues
-                    , GroupId.group(
-                            groupValues.stream()
+                    , GroupId.group(incomingGroup
+                            , groupValues.stream()
                                     .map(value -> value.toString()).reduce((a, b) -> a + "," + b)
                                     .orElse("empty")));
         }

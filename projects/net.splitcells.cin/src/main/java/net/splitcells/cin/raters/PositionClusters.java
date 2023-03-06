@@ -72,12 +72,11 @@ public class PositionClusters implements Rater {
     }
 
     public static int centerXPositionOf(GroupId group) {
-        return Integers.parse(partOf(group.name().orElseThrow(), ",", 0).substring(3));
+        return group.metaData().value(PositionClustersCenterX.class);
     }
 
     public static int centerYPositionOf(GroupId group) {
-        final String yCoordinate = partOf(group.name().orElseThrow(), ",", 1);
-        return Integers.parse(yCoordinate.substring(3, yCoordinate.length() - 1));
+        return group.metaData().value(PositionClustersCenterY.class);
     }
 
     /**
@@ -160,10 +159,11 @@ public class PositionClusters implements Rater {
             yCoordCenter = yCoord + 1;
         }
         final RatingEvent rating = ratingEvent();
+        final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
         final var positionGroup = positionGroups
-                .computeIfAbsent(addition.value(INCOMING_CONSTRAINT_GROUP), icg -> map())
+                .computeIfAbsent(incomingGroup, icg -> map())
                 .computeIfAbsent(xCoord, x -> map())
-                .computeIfAbsent(yCoord, y -> group(groupNameOfPositionCluster(xCoordCenter, yCoordCenter)
+                .computeIfAbsent(yCoord, y -> group(incomingGroup, groupNameOfPositionCluster(xCoordCenter, yCoordCenter)
                         , typedMap().withAssignment(PositionClustersCenterX.class, xCoordCenter)
                                 .withAssignment(PositionClustersCenterY.class, yCoordCenter)));
         rating.additions().put(addition, localRating()

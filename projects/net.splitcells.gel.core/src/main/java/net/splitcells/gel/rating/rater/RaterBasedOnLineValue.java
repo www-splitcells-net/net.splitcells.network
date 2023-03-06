@@ -20,6 +20,7 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Lambdas.describedFunction;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -58,7 +59,8 @@ public class RaterBasedOnLineValue implements Rater {
             public GroupId apply(Line arg) {
                 return lineNumbering.computeIfAbsent
                         (classifier.apply(arg.value(LINE))
-                                , classification -> GroupId.group(description + ": " + classification));
+                                , classification -> GroupId.group(arg.value(INCOMING_CONSTRAINT_GROUP)
+                                        , description + ": " + classification));
             }
 
             @Override

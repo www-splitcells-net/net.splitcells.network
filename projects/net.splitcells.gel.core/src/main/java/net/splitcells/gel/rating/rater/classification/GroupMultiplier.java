@@ -86,7 +86,7 @@ public class GroupMultiplier implements Rater {
                 groupingOfAddition
                 , key -> key
                         .reduced((a, b) -> GroupId.multiply(a, b))
-                        .orElseGet(() -> GroupId.group()));
+                        .orElseGet(() -> GroupId.group(groupingOfAddition.get(0))));
         ratingEvent.additions().put(
                 addition
                 , localRating()
