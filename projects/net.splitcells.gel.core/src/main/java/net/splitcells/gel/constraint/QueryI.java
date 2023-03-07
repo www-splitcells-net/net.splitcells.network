@@ -123,7 +123,7 @@ public class QueryI implements Query {
             }
         } else {
             resultBase = Optional.of(ForAlls.forEach(classifier
-                    , Optional.of(discoverable(root.map(c -> c.path()).orElseThrow()))));
+                    , Optional.of(discoverable(currentInjectionGroups.path()))));
             currentInjectionGroups.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
@@ -156,7 +156,7 @@ public class QueryI implements Query {
             }
         } else {
             resultBase = Optional.of(ForAlls.forEach(attribute
-                    , Optional.of(discoverable(root.map(c -> c.path()).orElseThrow()))));
+                    , Optional.of(discoverable(currentInjectionGroups.path()))));
             currentInjectionGroups.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
         }
@@ -182,7 +182,7 @@ public class QueryI implements Query {
         if (resultBase.isPresent()) {
             return nextQueryPathElement(this, setOfUniques(groups), resultBase.get());
         }
-        final var forAll = ForAlls.forAll(Optional.of(discoverable(root.map(c -> c.path()).orElseThrow())));
+        final var forAll = ForAlls.forAll(Optional.of(discoverable(currentInjectionGroups.path())));
         currentInjectionGroups.withChildren(forAll);
         return nextQueryPathElement(this, setOfUniques(groups), forAll);
     }
@@ -206,7 +206,7 @@ public class QueryI implements Query {
                                 .values());
             }
         } else {
-            resultBase = Optional.of(Then.then(rater, Optional.of(discoverable(root.map(c -> c.path()).orElseThrow()))));
+            resultBase = Optional.of(Then.then(rater, Optional.of(discoverable(currentInjectionGroups.path()))));
             currentInjectionGroups.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         }
@@ -250,7 +250,7 @@ public class QueryI implements Query {
             }
         } else {
             resultBase = Optional.of(ForAlls.forEach(forAllValueCombinations(attributes)
-                    , Optional.of(discoverable(root.map(c -> c.path()).orElseThrow()))));
+                    , Optional.of(discoverable(currentInjectionGroups.path()))));
             currentInjectionGroups.withChildren(resultBase.get());
             root.ifPresent(Constraint::recalculateProcessing);
             resultingGroups.addAll(groups);
