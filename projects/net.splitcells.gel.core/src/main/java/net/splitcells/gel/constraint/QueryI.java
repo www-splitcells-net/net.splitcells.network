@@ -291,9 +291,11 @@ public class QueryI implements Query {
     @Override
     public Query forAll(List<Rater> classifiers) {
         if (WARNING) domsole().append("Groups are not supported yet: " + groups.toString(), LogLevel.WARNING);
-        final var forAllCatcher = ForAlls.forAll(Optional.of(discoverable(root.map(c -> c.path()).orElseThrow())));
+        final var forAllCatcher = ForAlls.forAll(Optional.of(discoverable(currentInjectionGroups.path()
+                .withAppended("" + currentInjectionGroups.childrenView().size()))));
         classifiers.forEach(c -> {
-            final var f = ForAlls.forEach(c, Optional.of(discoverable(root.map(r -> r.path()).orElseThrow())));
+            final var f = ForAlls.forEach(c, Optional.of(discoverable(currentInjectionGroups.path()
+                    .withAppended("" + currentInjectionGroups.childrenView().size()))));
             f.withChildren(forAllCatcher);
             currentInjectionGroups.withChildren(f);
         });
