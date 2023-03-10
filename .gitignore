@@ -2,6 +2,7 @@
 *.iml
 .idea/
 .asciidoctorconfig.adoc
+projects/net.splitcells.dem/src/main/antlr4/net/splitcells/dem/source/code/Java11Lexer.tokens
 ### Eclipse
 .settings/
 .classpath
