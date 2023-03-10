@@ -378,6 +378,62 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
+    public Perspective toPerspective() {
+        final var dom = perspective(type().getSimpleName());
+        if (!arguments().isEmpty()) {
+            arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toPerspective()));
+        }
+        dom.withProperty("rating", rating().toPerspective());
+        {
+            final var ratings = perspective("ratings");
+            dom.withChild(ratings);
+            lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
+                    .lookup(injectionGroup())
+                    .lines()
+                    .forEach(line -> ratings.withChild(line.toPerspective()));
+        }
+        childrenView().forEach(child ->
+                dom.withChild(
+                        child.toPerspective(
+                                setOfUniques(results
+                                        .columnView(RESULTING_CONSTRAINT_GROUP)
+                                        .values()))));
+        return dom;
+    }
+
+    public Perspective toPerspective(Set<GroupId> groups) {
+        final var dom = perspective(type().getSimpleName());
+        if (!arguments().isEmpty()) {
+            arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toPerspective()));
+        }
+        dom.withProperty("rating", rating(groups).toPerspective());
+        {
+            final var ratings = perspective("ratings");
+            dom.withChild(ratings);
+            groups.forEach(group ->
+                    lineProcessing
+                            .columnView(INCOMING_CONSTRAINT_GROUP)
+                            .lookup(group)
+                            .lines().
+                            forEach(line -> ratings.withChild(line.toPerspective())));
+        }
+        childrenView().forEach(child ->
+                dom.withChild(
+                        child.toPerspective(
+                                groups.stream().
+                                        map(group -> lineProcessing
+                                                .columnView(INCOMING_CONSTRAINT_GROUP)
+                                                .lookup(group)
+                                                .lines()
+                                                .stream()
+                                                .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP))
+                                                .collect(toSet()))
+                                        .flatMap(resultingGroupings -> resultingGroupings.stream())
+                                        .collect(toSetOfUniques()))));
+        return dom;
+    }
+
+    @Override
     public Element toDom(Set<GroupId> groups) {
         final var dom = Xml.elementWithChildren(type().getSimpleName());
         if (!arguments().isEmpty()) {

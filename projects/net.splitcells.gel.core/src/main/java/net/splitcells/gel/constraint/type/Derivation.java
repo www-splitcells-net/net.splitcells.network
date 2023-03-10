@@ -142,6 +142,11 @@ public final class Derivation implements Constraint {
     }
 
     @Override
+    public Perspective toPerspective(Set<GroupId> groups) {
+        return derivationTarget.toPerspective(groups);
+    }
+
+    @Override
     public Table lines() {
         throw notImplementedYet();
     }

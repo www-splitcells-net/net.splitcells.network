@@ -149,6 +149,11 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
+    public Perspective toPerspective(Set<GroupId> groups) {
+        return constraint.toPerspective(groups);
+    }
+
+    @Override
     public Table lines() {
         return constraint.lines();
     }

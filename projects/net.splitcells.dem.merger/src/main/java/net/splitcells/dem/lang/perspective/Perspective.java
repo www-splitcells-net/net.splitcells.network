@@ -74,6 +74,10 @@ public interface Perspective extends PerspectiveView {
                 .withValue(perspective(value, STRING)));
     }
 
+    default Perspective withProperty(String name, Perspective value) {
+        return withValue(perspective(name).withValue(value));
+    }
+
     default Perspective withValues(Perspective... args) {
         children().addAll(list(args));
         return this;
@@ -375,5 +379,14 @@ public interface Perspective extends PerspectiveView {
                 .findFirst()
                 .orElseThrow()
                 .subtree(path);
+    }
+
+    /**
+     * TODO It would be best to return a copy of {@link Perspective} instead of {@code this}.
+     *
+     * @return return
+     */
+    default Perspective toPerspective() {
+        return this;
     }
 }

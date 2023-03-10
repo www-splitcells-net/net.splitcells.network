@@ -203,6 +203,8 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     Element toDom(Set<GroupId> groups);
 
+    Perspective toPerspective(Set<GroupId> groups);
+
     @Deprecated
     default Set<GroupId> childGroups(Line lines, Constraint subject) {
         final Set<GroupId> childGroups = setOfUniques();
