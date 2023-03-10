@@ -2,6 +2,7 @@ package net.splitcells.network.worker;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.host.SystemUtils;
@@ -40,6 +41,7 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
  * <p>{@link #BUILDER_RUNTIME_LOG}"/<host>.csv" contains the start times of all runs for a given host.
  * </p>
  */
+@JavaLegacyArtifact
 public class Logger implements TestExecutionListener {
 
     public static Logger logger() {

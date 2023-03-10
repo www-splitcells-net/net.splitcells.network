@@ -290,6 +290,7 @@ reference
     ;
 statement
     : Line_comment
+    | Comment_multiline
     | Keyword_try (Brace_round_open variable_declaration Equals expression Brace_round_closed)? Brace_curly_open statement+ Brace_curly_closed statement_catch?
         statement_finally?
     | Keyword_try Brace_round_open variable_declaration Brace_round_closed Brace_curly_open statement+ Brace_curly_closed statement_catch?

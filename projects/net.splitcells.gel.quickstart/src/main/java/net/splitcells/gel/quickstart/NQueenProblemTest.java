@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.quickstart;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
@@ -24,10 +25,11 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.HasSize.hasSize;
@@ -36,7 +38,6 @@ import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtra
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.LinearDeinitializer.linearDeinitializer;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>This class solves the widely known 8 queen problem with the commonly known
@@ -61,7 +62,7 @@ public class NQueenProblemTest {
         testSubject.createAnalysis(Path.of("./target/analysis-hill-climber/"));
         testSubject.optimize(linearDeinitializer());
         backtracking().optimize(testSubject);
-        assertThat(testSubject.isOptimal()).isTrue();
+        require(testSubject.isOptimal());
         testSubject.createAnalysis(Path.of("./target/analysis-backtracking/"));
 
     }

@@ -128,6 +128,10 @@ public interface Files {
         }
     }
 
+    static void appendToFile(Path path, String content) {
+        appendToFile(path, content);
+    }
+
     static String readFileAsString(Path path) {
         try {
             return java.nio.file.Files.readString(path);

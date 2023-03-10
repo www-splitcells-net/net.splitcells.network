@@ -26,6 +26,8 @@ import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.dem.testing.annotations.DisabledTest;
+import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -39,14 +41,11 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
 import net.splitcells.sep.Network;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
@@ -78,8 +77,6 @@ import static net.splitcells.gel.solution.optimization.primitive.LinearInitializ
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.hillClimber;
 import static net.splitcells.sep.Network.network;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 public class SchoolCourseSchedulingTest {
 
@@ -121,8 +118,6 @@ public class SchoolCourseSchedulingTest {
      *
      * @param args
      */
-    @Disabled
-    @Test
     public static void main(String... args) {
         GelDev.process(() -> {
             var network = registerSchoolScheduling(network()
@@ -529,8 +524,7 @@ public class SchoolCourseSchedulingTest {
                 , supplySelector());*/
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void testCourseWithTooManyStudents() {
         final List<List<Object>> courses = list(
                 course(1, 1, 1, 2)
@@ -560,13 +554,12 @@ public class SchoolCourseSchedulingTest {
         railsForSchoolScheduling.optimize(linearInitialization());
         teacherAllocationForCourses.optimize(linearInitialization());
         studentAllocationsForCourses.optimize(linearInitialization());
-        assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
-        assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
-        assertThat(studentAllocationsForCourses.constraint().rating()).isEqualTo(cost(1));
+        require(railsForSchoolScheduling.isOptimal());
+        require(teacherAllocationForCourses.isOptimal());
+        studentAllocationsForCourses.constraint().rating().requireEqualsTo(cost(1));
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void testSingleCourseAssignment() {
         final List<List<Object>> courses = list(
                 course(1, 1, 1, 1));
@@ -590,19 +583,17 @@ public class SchoolCourseSchedulingTest {
         railsForSchoolScheduling.optimize(linearInitialization());
         teacherAllocationForCourses.optimize(linearInitialization());
         studentAllocationsForCourses.optimize(linearInitialization());
-        assertThat(railsForSchoolScheduling.isOptimal()).isTrue();
-        assertThat(teacherAllocationForCourses.isOptimal()).isTrue();
+        require(railsForSchoolScheduling.isOptimal());
+        require(teacherAllocationForCourses.isOptimal());
     }
 
     /**
      * TODO
      */
-    @Tag(INTEGRATION_TEST)
-    @Disabled
-    @Test
+    @DisabledTest
     public void testSchoolScheduling() {
         schoolScheduling(15, 20, 30);
-        fail("Test not implemented");
+        throw executionException("Test not implemented");
     }
 
     private static Network registerSchoolScheduling(Network network, int minimalNumberOfStudentsPerCourse
