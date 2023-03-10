@@ -18,9 +18,11 @@ package net.splitcells.gel.rating.type;
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.data.order.Comparator.ASCENDING_BOOLEANS;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 import java.util.Optional;
 
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
@@ -91,5 +93,10 @@ public class Compliance implements Rating {
         final var dom = Xml.elementWithChildren(this.getClass().getSimpleName());
         dom.appendChild(Xml.textNode("" + value));
         return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
     }
 }

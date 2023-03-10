@@ -21,6 +21,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Maps.typeMapping;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
@@ -29,6 +30,7 @@ import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.Perspective;
 import org.w3c.dom.Element;
 import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
@@ -121,5 +123,10 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     @Override
     public Element toDom() {
         return Xml.elementWithChildren(MetaRatingMerger.class.getSimpleName());
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(MetaRatingMerger.class.getSimpleName());
     }
 }

@@ -18,6 +18,7 @@ package net.splitcells.gel.problem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
@@ -279,6 +280,11 @@ public class ProblemI implements Problem {
 
     public Node toDom() {
         return this.allocations.toDom();
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return allocations.toPerspective();
     }
 
     @Override

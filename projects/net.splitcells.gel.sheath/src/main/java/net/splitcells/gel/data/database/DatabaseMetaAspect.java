@@ -17,6 +17,7 @@ package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -170,6 +171,11 @@ public class DatabaseMetaAspect implements Database {
     @Override
     public Node toDom() {
         return database.toDom();
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return database.toPerspective();
     }
 
     @Override

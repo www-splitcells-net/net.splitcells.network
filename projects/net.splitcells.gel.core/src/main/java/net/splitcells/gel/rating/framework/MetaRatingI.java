@@ -16,6 +16,7 @@
 package net.splitcells.gel.rating.framework;
 
 import static java.util.Arrays.asList;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
@@ -29,6 +30,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.rating.type.Optimality;
@@ -261,6 +263,14 @@ public class MetaRatingI implements MetaRating {
         }
         final var dom = Xml.elementWithChildren(MetaRating.class.getSimpleName());
         return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        if (1 == ratingMap.size()) {
+            return ratingMap.values().iterator().next().toPerspective();
+        }
+        return perspective(MetaRating.class.getSimpleName());
     }
 
     @Override

@@ -35,6 +35,7 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
@@ -100,14 +101,7 @@ public class ForAllWithCondition<T> implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(
-                new Domable() {
-                    @Override
-                    public Node toDom() {
-                        return Xml.textNode(condition.toString());
-                    }
-                }
-        );
+        return list(perspective(condition.toString()));
     }
 
     @Override

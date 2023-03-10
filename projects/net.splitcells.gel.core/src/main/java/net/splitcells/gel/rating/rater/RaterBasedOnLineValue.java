@@ -20,6 +20,7 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Lambdas.describedFunction;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
@@ -34,6 +35,7 @@ import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -168,11 +170,10 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.elementWithChildren(getClass().getSimpleName()
-                , Xml.textNode(classifier.toString()
+        return list(perspective(getClass().getSimpleName())
+                .withChild(perspective(classifier.toString()
                         + " "
-                        + rater.toString()
-                )));
+                        + rater.toString())));
     }
 
     @Override
@@ -198,6 +199,11 @@ public class RaterBasedOnLineValue implements Rater {
         final Element dom = Xml.elementWithChildren(getClass().getSimpleName());
         dom.appendChild(Xml.elementWithChildren("args", arguments().get(0).toDom()));
         return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(getClass().getSimpleName()).withProperty("args", arguments().get(0).toPerspective());
     }
 
     @Override

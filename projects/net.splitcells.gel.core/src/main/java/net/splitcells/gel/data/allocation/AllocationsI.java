@@ -18,6 +18,7 @@ package net.splitcells.gel.data.allocation;
 import static java.util.Objects.requireNonNull;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -36,6 +37,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
@@ -388,6 +390,16 @@ public class AllocationsI implements Allocations {
         rawLinesView().stream()
                 .filter(line -> line != null)
                 .forEach(line -> dom.appendChild(line.toDom()));
+        return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        final var dom = perspective(Allocations.class.getSimpleName());
+        dom.withChild(perspective(path().toString()));
+        rawLinesView().stream()
+                .filter(line -> line != null)
+                .forEach(line -> dom.withChild(line.toPerspective()));
         return dom;
     }
 

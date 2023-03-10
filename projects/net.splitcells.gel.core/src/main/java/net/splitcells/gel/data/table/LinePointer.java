@@ -17,12 +17,14 @@ package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.perspective.Perspective;
 import org.w3c.dom.Node;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 public interface LinePointer extends Domable {
     Table context();
@@ -44,6 +46,18 @@ public interface LinePointer extends Domable {
             dom.appendChild(rinda.get().toDom());
         } else {
             dom.appendChild(Xml.elementWithChildren("indekss", textNode(index() + "")));
+        }
+        return dom;
+    }
+
+    @Override
+    default Perspective toPerspective() {
+        final var dom = perspective(LinePointer.class.getSimpleName());
+        final var line = interpret();
+        if (line.isPresent()) {
+            dom.withChild(line.get().toPerspective());
+        } else {
+            dom.withProperty("index", index() + "");
         }
         return dom;
     }

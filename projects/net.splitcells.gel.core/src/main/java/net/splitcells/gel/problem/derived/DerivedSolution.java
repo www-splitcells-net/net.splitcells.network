@@ -18,6 +18,7 @@ package net.splitcells.gel.problem.derived;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.rating.framework.Rating;
@@ -236,7 +237,12 @@ public class DerivedSolution implements Solution {
 
     @Override
     public Node toDom() {
-        throw notImplementedYet();
+        return allocations.toDom();
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return allocations.toPerspective();
     }
 
     @Override

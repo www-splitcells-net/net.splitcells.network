@@ -31,6 +31,7 @@ import java.util.Optional;
 import net.splitcells.gel.rating.framework.Rating;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -150,12 +151,7 @@ public class RaterBasedOnLineGroup implements Rater {
     @Override
     public List<Domable> arguments() {
         // TODO
-        return list(new Domable() {
-            @Override
-            public Node toDom() {
-                return Xml.textNode("Arguments not implemented.");
-            }
-        });
+        return list(perspective("Arguments not implemented."));
     }
 
     @Override

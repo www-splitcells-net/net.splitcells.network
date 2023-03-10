@@ -18,6 +18,7 @@ package net.splitcells.gel.rating.rater;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
@@ -25,6 +26,7 @@ import java.util.Collection;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
@@ -99,6 +101,11 @@ public class ConstantRater implements Rater {
         final var dom = Xml.elementWithChildren(getClass().getSimpleName());
         dom.appendChild(rating.toDom());
         return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(getClass().getSimpleName()).withChild(rating.toPerspective());
     }
 
     @Override

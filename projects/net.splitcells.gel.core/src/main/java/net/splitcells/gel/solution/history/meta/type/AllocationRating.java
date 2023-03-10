@@ -16,8 +16,11 @@
 package net.splitcells.gel.solution.history.meta.type;
 
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Node;
+
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 public class AllocationRating implements MetaData<Rating> {
 
@@ -41,5 +44,10 @@ public class AllocationRating implements MetaData<Rating> {
         final var dom = Xml.elementWithChildren(getClass().getSimpleName());
         dom.appendChild(rating.toDom());
         return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(getClass().getSimpleName()).withChild(rating.toPerspective());
     }
 }

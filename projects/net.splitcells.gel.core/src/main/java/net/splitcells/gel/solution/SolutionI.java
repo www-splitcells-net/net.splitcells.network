@@ -18,6 +18,7 @@ package net.splitcells.gel.solution;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.rating.framework.Rating;
@@ -291,6 +292,11 @@ public class SolutionI implements Solution {
     @java.lang.SuppressWarnings("all")
     public org.w3c.dom.Node toDom() {
         return this.problem.toDom();
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return problem.toPerspective();
     }
 
     @Override

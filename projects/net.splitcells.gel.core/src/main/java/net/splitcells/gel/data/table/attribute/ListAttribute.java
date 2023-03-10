@@ -17,10 +17,13 @@ package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.untrue;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import java.util.List;
 
+import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.gel.common.Language;
 import org.w3c.dom.Element;
 
 import net.splitcells.dem.lang.Xml;
@@ -83,5 +86,12 @@ public class ListAttribute<T> implements Attribute<List<T>> {
                 , Xml.elementWithChildren(getClass().getSimpleName())
                 , Xml.elementWithChildren(type.getSimpleName())
         );
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(name)
+                .withProperty(Language.NAME.value(), getClass().getSimpleName())
+                .withProperty(Language.TYPE.value(), type.getSimpleName());
     }
 }

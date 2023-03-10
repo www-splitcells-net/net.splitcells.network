@@ -19,11 +19,13 @@ import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Objects;
 import java.util.Optional;
 
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
@@ -155,6 +157,11 @@ public class Cost implements Rating {
         final var dom = Xml.elementWithChildren(this.getClass().getSimpleName());
         dom.appendChild(Xml.textNode("" + value));
         return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
     }
 
     @Override

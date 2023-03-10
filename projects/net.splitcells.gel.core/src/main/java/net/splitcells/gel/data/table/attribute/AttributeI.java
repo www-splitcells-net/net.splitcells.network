@@ -18,9 +18,11 @@ package net.splitcells.gel.data.table.attribute;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.atom.Bools.bool;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.common.Language;
 import org.w3c.dom.Element;
 
@@ -98,6 +100,13 @@ public final class AttributeI<T> implements Attribute<T> {
                 , Xml.elementWithChildren(Language.NAME.value(), textNode(name))
                 , Xml.elementWithChildren(type.getSimpleName())
         );
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(Attribute.class.getSimpleName())
+                .withProperty(Language.NAME.value(), name)
+                .withProperty(Language.TYPE.value(), type.getSimpleName());
     }
 
     @Override

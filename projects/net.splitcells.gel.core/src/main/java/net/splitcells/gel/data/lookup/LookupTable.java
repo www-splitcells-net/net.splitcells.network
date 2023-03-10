@@ -24,6 +24,7 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import java.util.stream.Stream;
@@ -33,6 +34,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -61,7 +63,7 @@ public class LookupTable implements Table {
 
     /**
      * @param table The {@link Table} on which the lookup will be performed.
-     * @param name This is the name of the {@link LookupTable} being constructed.
+     * @param name  This is the name of the {@link LookupTable} being constructed.
      * @return An instance, where no {@link Line} of {@link Table} is {@link #register(Line)}.
      */
     public static LookupTable lookupTable(Table table, String name) {
@@ -69,7 +71,7 @@ public class LookupTable implements Table {
     }
 
     /**
-     * @param table The {@link Table} on which the lookup will be performed.
+     * @param table     The {@link Table} on which the lookup will be performed.
      * @param attribute The {@link Attribute}, that will be looked up.
      * @return An instance, where no {@link Line} of {@link Table} is {@link #register(Line)}.
      */
@@ -89,8 +91,8 @@ public class LookupTable implements Table {
         this.tableView = table;
         this.name = name;
         columns = table.headerView().stream()
-                        .map(attribute -> LookupColumn.lookupColumn(this, attribute))
-                        .collect(Lists.toList());
+                .map(attribute -> LookupColumn.lookupColumn(this, attribute))
+                .collect(Lists.toList());
         columnsView = listWithValuesOf(columns);
         this.useExperimentalRawLineCache = useExperimentalRawLineCache;
     }
@@ -180,7 +182,7 @@ public class LookupTable implements Table {
 
     public void register(Line line) {
         if (useExperimentalRawLineCache) {
-           if (rawLinesCache.size() < line.index()) {
+            if (rawLinesCache.size() < line.index()) {
                 rawLinesCache.prepareForSizeOf(line.index());
                 if (USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS) {
                     final var limit = line.index() - rawLinesCache.size();
@@ -261,6 +263,17 @@ public class LookupTable implements Table {
         rVal.appendChild(Xml.elementWithChildren("subject", textNode(path().toString())));
         rVal.appendChild(Xml.elementWithChildren("content", textNode(content.toString())));
         content.forEach(i -> rVal.appendChild(rawLinesView().get(i).toDom()));
+        return rVal;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        final var rVal = perspective(LookupTable.class.getSimpleName());
+        // REMOVE
+        rVal.withProperty("hashCode", "" + hashCode());
+        rVal.withProperty("subject", path().toString());
+        rVal.withProperty("content", content.toString());
+        content.forEach(i -> rVal.withChild(rawLinesView().get(i).toPerspective()));
         return rVal;
     }
 

@@ -17,11 +17,13 @@ package net.splitcells.gel.rating.type;
 
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
@@ -99,6 +101,11 @@ public class Optimality implements Rating {
         final var dom = Xml.elementWithChildren(this.getClass().getSimpleName());
         dom.appendChild(Xml.textNode("" + value));
         return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
     }
 
     @Override

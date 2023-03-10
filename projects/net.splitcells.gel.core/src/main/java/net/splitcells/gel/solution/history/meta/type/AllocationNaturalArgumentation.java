@@ -4,6 +4,8 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.PerspectiveI;
 import org.w3c.dom.Node;
 
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+
 public class AllocationNaturalArgumentation implements MetaData<String> {
     public static AllocationNaturalArgumentation allocationNaturalArgumentation(String allocationNaturalArgumentation) {
         return new AllocationNaturalArgumentation(allocationNaturalArgumentation);
@@ -17,7 +19,12 @@ public class AllocationNaturalArgumentation implements MetaData<String> {
 
     @Override
     public Node toDom() {
-        return PerspectiveI.perspective(allocationNaturalArgumentation).toDom();
+        return perspective(allocationNaturalArgumentation).toDom();
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(allocationNaturalArgumentation);
     }
 
     @Override

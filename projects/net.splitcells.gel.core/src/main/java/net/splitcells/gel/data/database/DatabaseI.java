@@ -20,6 +20,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.CommonFunctions.removeAny;
@@ -43,6 +44,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -319,6 +321,15 @@ public class DatabaseI implements Database {
         rawLinesView().stream()
                 .filter(rinda -> rinda != null)
                 .forEach(rinda -> dom.appendChild(rinda.toDom()));
+        return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        final var dom = perspective(Database.class.getSimpleName());
+        rawLinesView().stream()
+                .filter(line -> line != null)
+                .forEach(line -> dom.withChild(line.toPerspective()));
         return dom;
     }
 

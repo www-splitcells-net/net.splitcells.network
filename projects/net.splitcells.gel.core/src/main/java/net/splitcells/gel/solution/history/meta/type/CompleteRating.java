@@ -17,8 +17,11 @@ package net.splitcells.gel.solution.history.meta.type;
 
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Node;
+
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 public final class CompleteRating implements MetaData<Rating>, Domable {
 
@@ -39,14 +42,19 @@ public final class CompleteRating implements MetaData<Rating>, Domable {
     }
 
     @Override
-	public String toString() {
-    	return Xml.toPrettyString(toDom());
-	}
+    public String toString() {
+        return Xml.toPrettyString(toDom());
+    }
 
-	@Override
-	public Node toDom() {
-    	final var dom = Xml.elementWithChildren(getClass().getSimpleName());
-    	dom.appendChild(rating.toDom());
-		return dom;
-	}
+    @Override
+    public Node toDom() {
+        final var dom = Xml.elementWithChildren(getClass().getSimpleName());
+        dom.appendChild(rating.toDom());
+        return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(getClass().getSimpleName()).withChild(rating.toPerspective());
+    }
 }

@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -284,6 +285,11 @@ public class SolutionAspect implements Solution {
     @Override
     public Node toDom() {
         return solution.toDom();
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return solution.toPerspective();
     }
 
     @Override

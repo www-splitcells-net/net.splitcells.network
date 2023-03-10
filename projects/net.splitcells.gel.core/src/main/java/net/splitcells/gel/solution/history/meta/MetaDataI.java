@@ -18,6 +18,7 @@ package net.splitcells.gel.solution.history.meta;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.Xml.toPrettyString;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.gel.common.Language.*;
 
 import java.util.Optional;
@@ -25,6 +26,7 @@ import java.util.Optional;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.perspective.Perspective;
 import org.w3c.dom.Node;
 
 public class MetaDataI implements MetaDataView, MetaDataWriter {
@@ -74,6 +76,27 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
             }
             dom.appendChild(keyData);
             dom.appendChild(valueData);
+        });
+        return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        final var dom = perspective(META_DATA.value());
+        data.forEach((key, value) -> {
+            final var data = perspective(META_DATA.value());
+            final var keyData = perspective(KEY.value());
+            keyData.withChild(perspective(key.getName()));
+            final var valueData = perspective(VALUE.value());
+            {
+                if (value instanceof Domable) {
+                    valueData.withChild(((Domable) value).toPerspective());
+                } else {
+                    valueData.withChild(perspective(value.toString()));
+                }
+            }
+            dom.withChild(keyData);
+            dom.withChild(valueData);
         });
         return dom;
     }

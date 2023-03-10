@@ -23,6 +23,7 @@ import static net.splitcells.dem.data.order.Comparator.*;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
@@ -263,11 +264,10 @@ public class MinimalDistance<T> implements Rater {
     @Override
     public List<Domable> arguments() {
         return Lists.list
-                (() -> Xml.elementWithChildren("minimumDistance", Xml.textNode("" + minimumDistance))
-                        , () -> Xml.elementWithChildren("attribute", attribute.toDom())
-                        , () -> Xml.elementWithChildren("comparator", Xml.textNode("" + comparator))
-                        , () -> Xml.elementWithChildren("distanceMeassurer", Xml.textNode("" + distanceMeassurer))
-                );
+                (perspective("minimumDistance").withChild(perspective("" + minimumDistance))
+                        , perspective("attribute").withChild(attribute.toPerspective())
+                        , perspective("comparator").withChild(perspective("" + comparator))
+                        , perspective("distanceMeassurer").withChild(perspective("" + distanceMeassurer)));
     }
 
     @Override

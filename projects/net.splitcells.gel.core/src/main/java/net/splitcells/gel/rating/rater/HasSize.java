@@ -18,6 +18,7 @@ package net.splitcells.gel.rating.rater;
 import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
@@ -136,7 +137,7 @@ public class HasSize implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.elementWithChildren(HasSize.class.getSimpleName(), Xml.textNode("" + targetSize)));
+        return list(perspective(HasSize.class.getSimpleName()).withChild(perspective("" + targetSize)));
     }
 
     @Override

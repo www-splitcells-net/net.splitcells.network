@@ -18,6 +18,7 @@ package net.splitcells.gel.data.lookup;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -121,5 +122,16 @@ public class LookupTableRef extends LookupTable {
             }
         });
         return dom;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        final var perspective = super.toPerspective();
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            content.forEach(i -> {
+                requireNotNull(rawLinesView().get(i));
+            });
+        }
+        return perspective;
     }
 }

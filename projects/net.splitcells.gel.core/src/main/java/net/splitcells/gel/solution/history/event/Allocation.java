@@ -17,9 +17,11 @@ package net.splitcells.gel.solution.history.event;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.Line;
 import org.w3c.dom.Node;
 
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.gel.common.Language.*;
 
 public class Allocation implements Domable {
@@ -59,6 +61,14 @@ public class Allocation implements Domable {
         allocation.appendChild
                 (Xml.elementWithChildren(SUPPLY.value()).appendChild(supply.toDom()));
         return allocation;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(ALLOCATION.value())
+                .withProperty(TYPE.value(), type.name())
+                .withProperty(DEMAND2.value(), demand.toPerspective())
+                .withProperty(SUPPLY.value(), supply.toPerspective());
     }
 
     @Override
