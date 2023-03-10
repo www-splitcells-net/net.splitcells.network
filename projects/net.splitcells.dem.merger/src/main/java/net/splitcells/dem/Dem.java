@@ -68,7 +68,7 @@ public class Dem {
         try {
             new Semaphore(1).acquire(2);
         } catch (InterruptedException e) {
-
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
     }
