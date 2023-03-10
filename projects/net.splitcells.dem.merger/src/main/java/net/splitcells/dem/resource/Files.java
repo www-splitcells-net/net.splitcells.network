@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -130,7 +131,7 @@ public interface Files {
     }
 
     static void appendToFile(Path path, String content) {
-        appendToFile(path, content);
+        appendToFile(path, content.getBytes(StandardCharsets.UTF_8));
     }
 
     static String readFileAsString(Path path) {
