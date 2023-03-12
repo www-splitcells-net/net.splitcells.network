@@ -17,7 +17,7 @@ cd ../net.splitcells.network.log
     repo.commit.all
     cd ../net.splitcells.network
 cd projects/net.splitcells.system
-bin/execute
+bin/execute | echo.error '`net.splitcells.system/bin/execute` was not successful.'
 cd ../../../net.splitcells.network.log
     # Normally this is done via the Java code in 'bin/execute'.
     # Under some conditions this does not work, because git cannot find the 'user.name' or 'user.email' config.
