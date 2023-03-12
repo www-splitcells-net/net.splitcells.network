@@ -44,7 +44,8 @@ in order to make the service deployable again.
 		cd ../net.splitcells.network.bom
 		git push {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.bom master:net-splitcells-martins-avots-connection
 		cd ../net.splitcells.network
-		ssh -t {0} systemctl is-active build || ssh -t {0} systemd-run --uid={1} --unit=build --working-directory='/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network' 'sh -c "git merge net-splitcells-martins-avots-connection && . ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin && {2}"'
+		ssh -t {0} sudo systemctl reset-failed # Ensure, that service instance of previous run is not present, in case the previous run failed.
+		ssh -t {0} systemctl is-active build || ssh -t {0} sudo systemd-run --uid={1} --unit=build --working-directory='/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network' 'sh -c "git merge net-splitcells-martins-avots-connection && . ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin && {2}"'
 		cd ../net.splitcells.network.log/
 		if git ls-remote --heads {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log master; then
 			git pull --ff {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log master
