@@ -38,15 +38,13 @@ import static net.splitcells.dem.resource.communication.interaction.LogLevel.UNK
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 
 /**
- * This is the starting point of all process definitions.
+ * <p>This is the starting point of all process definitions.
  * For a process it defines the program that is executed and the environment in which it is executed.
  * <p/>
- * One of the main goals is to make the environment of a program as side effect free as possible.
- * This framework does not try to enforce freedom of side effects on the language level,
- * as this is not possible.
- * It just gives tools in order to minimize side effects.
+ * <p>One of the main goals is to control side effects caused by the program to the environment.
  * This is done, by having 1 and only one variable representing the state of the environment
  * and passing it through everywhere.
+ * </p>
  */
 @JavaLegacyArtifact
 public class Dem {
