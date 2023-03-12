@@ -26,5 +26,5 @@ then
   # a notification for each not available computer is helpful.
   # In this case it can be normal, that some computers were not available during each synchronization,
   # and therefore the execution as a whole does not have to be aborted or marked as a failure.
-  notify.error $@
+  notify.error "$@"
 fi
