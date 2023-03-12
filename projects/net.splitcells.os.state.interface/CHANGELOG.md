@@ -35,6 +35,13 @@ Changes are now written to the root changelog instead.
   This way there is still a command,
   that installs the OSSI project with full functionality.
 ### Minor Changes
+* **2022-03-12** `echo.error` now also sends the message to `notify.error`,
+  if `$echo_error_notifies_user` is set to true.
+  Thereby, it is more easily to know, if some optional feature was not executed during a long command.
+  For instance, when a command synchronizes a repo with multiple other computers,
+  a notification for each not available computer is helpful.
+  In this case it can be normal, that some computers were not available during each synchronization,
+  and therefore the execution as a whole does not have to be aborted or marked as a failure.
 * **2022-11-18** Recommend [chezmoi](https://github.com/twpayne/chezmoi) for dotfile management.
 * **2022-10-16** [**\#168** Integrate repo management](https://github.com/www-splitcells-net/net.splitcells.network/issues/168).
   1. `repo.process` now uses `bin/net.splitcells.osi.repos.peers` in order to find all peer repos,
