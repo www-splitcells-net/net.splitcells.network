@@ -229,10 +229,12 @@ public interface Table extends Discoverable, Domable, Identifiable {
     default Perspective toHtmlTable() {
         final var htmlTable = perspective("table", HTML);
         final var header = perspective("tr", HTML);
+        header.withChild(perspective("th", HTML).withText("index"));
         headerView().forEach(attribute -> header.withChild(perspective("th", HTML).withText(attribute.name())));
         htmlTable.withChild(header);
         lines().forEach(line -> {
             final var row = perspective("tr", HTML);
+            row.withChild(perspective("td", HTML).withText(line.index() + ""));
             headerView().forEach(attribute -> row.withChild(perspective("td", HTML).withText(line.value(attribute).toString())));
             htmlTable.withChild(row);
         });
