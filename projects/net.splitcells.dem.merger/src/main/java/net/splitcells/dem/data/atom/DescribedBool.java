@@ -76,7 +76,7 @@ public class DescribedBool implements Bool {
     @Override
     public Bool required() {
         if (!content) {
-            throw new RuntimeException("The following is required, but not present: " + description.get());
+            throw new RuntimeException("The following is required, but not true: " + description.get());
         }
         return this;
     }
@@ -84,7 +84,7 @@ public class DescribedBool implements Bool {
     @Override
     public Bool requireFalse() {
         if (content) {
-            throw new RuntimeException("The following is prohibited, but is present: " + description.get());
+            throw new RuntimeException("The following is prohibited, but is true: " + description.get());
         }
         return this;
     }
