@@ -15,14 +15,26 @@
  */
 package net.splitcells.gel.data.allocations;
 
+import net.splitcells.dem.resource.AspectOrientedConstructor;
+import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.allocation.AllocationsFactory;
 import net.splitcells.gel.data.database.Database;
 
+import java.util.function.Function;
+
+import static net.splitcells.dem.resource.AspectOrientedConstructorBase.aspectOrientedConstructor;
+
+/**
+ * TODO {@link AllocationsIRef} should be implemented as an aspect.
+ */
+@Deprecated
 public class AllocationsIRefFactory implements AllocationsFactory {
+
+    private final AspectOrientedConstructorBase<Allocations> aspects = aspectOrientedConstructor();
     @Override
     public Allocations allocations(String name, Database demand, Database supply) {
-        return new AllocationsIRef(name, demand, supply);    }
+        return aspects.joinAspects(new AllocationsIRef(name, demand, supply));    }
 
     @Override
     public void close() {
@@ -32,5 +44,15 @@ public class AllocationsIRefFactory implements AllocationsFactory {
     @Override
     public void flush() {
 
+    }
+
+    @Override
+    public AspectOrientedConstructor<Allocations> withAspect(Function<Allocations, Allocations> aspect) {
+        return aspects.withAspect(aspect);
+    }
+
+    @Override
+    public Allocations joinAspects(Allocations arg) {
+        return aspects.joinAspects(arg);
     }
 }

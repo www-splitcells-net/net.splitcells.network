@@ -17,10 +17,11 @@ package net.splitcells.gel.data.allocation;
 
 
 import net.splitcells.dem.environment.resource.Resource;
+import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.gel.data.database.Database;
 
-public interface AllocationsFactory extends Resource {
+public interface AllocationsFactory extends Resource, AspectOrientedConstructor<Allocations> {
     Allocations allocations(String name, Database demands, Database supply);
 }
