@@ -8,12 +8,12 @@
 ## Introduction
 
 We provide an open source ecosystem centered around optimization and operations research.
-
-The main project is the [Generic Allocator](http://splitcells.net/net/splitcells/gel/index.html).
+The main project is the [Generic Allocator](http://splitcells.net/net/splitcells/gel/index.html),
+which is a constraint satisfaction solver based on the assignment problem model.
 
 An overview of the projects can be found [here](https://splitcells.net/net/splitcells/network/overview.html).
 Some of them are not strictly related to optimization and can be used in other contexts as well.
-[OS State Interface](https://splitcells.net/net/splitcells/os/state/interface/README.html) is the main example of such.
+[OS State Interface](https://splitcells.net/net/splitcells/os/state/interface/README.html) is a good example of such.
 
 You have your own open source optimization software? How about working together? 
 
