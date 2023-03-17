@@ -30,27 +30,27 @@ public enum LogLevel implements Ordered<LogLevel> {
 	/**
 	 * Environment might be damaged.
 	 */
-	CRITICAL(1),
+	CRITICAL(-1),
 	/**
 	 * Running application is damaged.
 	 */
-	ERROR(2),
+	ERROR(-2),
 	/**
 	 * Not everything is working or something was done but could not be completed (i.e. additional user interaction is required).
 	 */
-	WARNING(3),
+	WARNING(-3),
 	/**
 	 * Information that is important for interactive usage.
 	 */
-	INFO(4),
+	INFO(-4),
 	/**
 	 * Show all changes of state.
 	 */
-	DEBUG(5),
+	DEBUG(-5),
 	/**
 	 * Show everything that is executed.
 	 */
-	TRACE(6);
+	TRACE(-6);
 
 	private final int priority;
 

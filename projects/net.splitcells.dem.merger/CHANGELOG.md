@@ -1,6 +1,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-03-17** Revers priorities of `LogLevel` so that `LogLevel.DEBUG.smallerThan(LogLevel.ERROR)` returns `true`. 
 * **2023-01-22 \#s109** `Perspective#toXmlStringWithPrefixes` now renders leaf nodes as normal strings,
   if these contain characters that are not allowed in XML element names.
   For example, the perspective `perspective("test", DEN).withChild(perspective("values.", DEN))` will now be rendered as `<d:test>values.</d:test>`,
