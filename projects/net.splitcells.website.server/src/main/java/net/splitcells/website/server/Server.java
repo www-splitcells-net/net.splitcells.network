@@ -99,6 +99,7 @@ public class Server {
                                     promise.fail("Could not render path:" + requestPath);
                                 }
                             } catch (Exception e) {
+                                domsole().appendError(e);
                                 throw new RuntimeException(e);
                             }
                         }, (result) -> {
