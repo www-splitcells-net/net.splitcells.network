@@ -16,10 +16,20 @@
 package net.splitcells.gel.data.table;
 
 import static net.splitcells.dem.data.set.list.Lists.*;
+import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
+import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.gel.common.Language.CONTENT;
+import static net.splitcells.gel.common.Language.INDEX;
+import static net.splitcells.gel.common.Language.TYPE;
+import static net.splitcells.gel.common.Language.VALUE;
 import static net.splitcells.gel.data.table.LinePointerI.linePointer;
 
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
 /**
@@ -77,5 +87,28 @@ public interface Line extends Domable {
                 .stream()
                 .map(attribute -> value(attribute))
                 .collect(toList());
+    }
+
+    default Perspective toHtmlPerspective() {
+        final var perspective = perspective(Line.class.getSimpleName(), HTML);
+        perspective.withProperty("div", HTML, "" + index());
+        context().headerView().forEach(attribute -> {
+            final var value = context().columnView(attribute).get(index());
+            final Perspective domValue;
+            if (value == null) {
+                domValue = perspective("");
+            } else {
+                if (value instanceof Domable) {
+                    domValue = perspective(Xml.toPrettyString(((Domable) value).toDom()), STRING);
+                } else {
+                    domValue = perspective(value.toString(), STRING);
+                }
+            }
+            final var valuePerspective = perspective(VALUE.value(), HTML);
+            valuePerspective.withProperty(TYPE.value(), HTML, attribute.name());
+            valuePerspective.withChild(perspective(CONTENT.value(), HTML).withChild(domValue));
+            perspective.withChild(valuePerspective);
+        });
+        return perspective;
     }
 }
