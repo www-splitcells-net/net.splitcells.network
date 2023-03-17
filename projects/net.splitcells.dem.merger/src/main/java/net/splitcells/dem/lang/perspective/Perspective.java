@@ -240,7 +240,7 @@ public interface Perspective extends PerspectiveView {
                 htmlString += "</" + name() + ">";
             }
         } else {
-            throw executionException("Unsupported namespace `" + nameSpace().uri() + "`.");
+            throw executionException("Unsupported namespace `" + nameSpace().uri() + "` for value `" + name() + "`.");
         }
         return htmlString;
     }
