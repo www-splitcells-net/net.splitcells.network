@@ -20,7 +20,13 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import java.util.function.Function;
 
 /**
- * <p>This is the basis for technically very simple aspect oriented programming.</p>
+ * <p>This is the basis for technically very simple aspect oriented programming.
+ * An aspect is basically something, that changes the behaviour of methods for a given type.
+ * In this case, an aspect is implemented as an object wrapper, that wraps the original instance.
+ * Thereby, the functionality can be changed or extended, without code generation or reflection.
+ * For instance, such a wrapper could cache the results of method calls,
+ * in order to improve the runtime performance by avoiding calling the original instance.
+ * </p>
  * <p>The name of classes, that provide an aspect, should end with `Aspect`,
  * in order to hint at their main functionality,
  * if the class name does not get too long.</p>
@@ -29,8 +35,12 @@ import java.util.function.Function;
  */
 public interface AspectOrientedConstructor<T> {
     /**
-     * Registers an {@code aspect} to the this.
-     * An {@code aspect} takes a given argument and returns a wrapper of it.
+     * <p>Registers an {@code aspect} to the this.
+     * An {@code aspect} takes a given argument and returns a wrapper of it.</p>
+     * <p>Sometimes the question arises, if one or multiple aspects should be created for multiple functionalities.
+     * Writing wrappers can sometimes take a bit much time, if the corresponding interface is large.
+     * In this case it is often easier to use one aspect for multiple features,
+     * where each feature is controlled via a boolean flag.</p>
      *
      * @param aspect Aspect To Be Registered
      * @return This
