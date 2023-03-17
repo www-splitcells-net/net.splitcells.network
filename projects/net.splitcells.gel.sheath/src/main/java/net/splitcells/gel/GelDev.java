@@ -23,6 +23,7 @@ import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Paths;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
@@ -120,7 +121,7 @@ public final class GelDev {
         return GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class
-                            , a -> a.path().equals(list("debugging")))
+                            , a -> a.path().equals(list("debugging")) || a.priority().greaterThan(LogLevel.INFO))
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(DeterministicRootSourceSeed.class, 1000L);
