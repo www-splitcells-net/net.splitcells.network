@@ -92,5 +92,11 @@ public interface Database extends Table {
 
     void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber);
 
+    /**
+     * TODO The argument type is false.
+     *
+     * @param subscriber Object to be informed of removal after the fact.
+     */
+    @Deprecated
     void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber);
 }

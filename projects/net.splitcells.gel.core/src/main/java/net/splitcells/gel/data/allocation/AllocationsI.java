@@ -316,6 +316,7 @@ public class AllocationsI implements Allocations {
     @Override
     public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
         afterRemovalSubscriptions.add(subscriber);
+        throw notImplementedYet("This method is not correct: the argument type is completely of.");
     }
 
     @Override
