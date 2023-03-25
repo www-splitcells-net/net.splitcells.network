@@ -18,9 +18,12 @@ package net.splitcells.gel.data.allocations;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.database.Databases;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -31,6 +34,20 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AllocationsTest extends TestSuiteI {
+
+
+    @UnitTest
+    public void testRawLinesGrowth() {
+        final var demands = Databases.database();
+        final var supplies = Databases.database();
+        final var allocations = allocations("test", demands, supplies);
+        IntStream.rangeClosed(1, 10).forEach(i -> {
+            final var allocation = allocations.allocate(demands.addTranslated(list())
+                    , supplies.addTranslated(list()));
+            allocations.remove(allocation);
+        });
+        allocations.rawLinesView().requireSizeOf(1);
+    }
 
     @Tag(UNIT_TEST)
     @Test
