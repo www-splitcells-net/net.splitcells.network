@@ -17,6 +17,7 @@ package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Arrays;
@@ -71,6 +72,19 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
         return this;
     }
 
+    @Override
+    default boolean remove(Object arg) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            if (!contains(arg)) {
+                throw executionException("" + arg);
+            }
+        }
+        ensureRemoved((T) arg);
+        return true;
+    }
+
+    void ensureRemoved(T arg);
+    
     default void delete(T arg) {
         if (!remove(arg)) {
             throw new IllegalArgumentException("" + arg);

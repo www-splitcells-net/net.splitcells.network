@@ -81,9 +81,9 @@ public class SetLegacyWrapper<T> implements Set<T> {
         content.add(e);
     }
 
-    @SuppressWarnings("all")
-    public boolean remove(final Object arg0) {
-        return this.content.remove(arg0);
+    @Override
+    public void ensureRemoved(T arg) {
+        content.remove(arg);
     }
 
     @SuppressWarnings("all")

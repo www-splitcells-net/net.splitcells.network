@@ -1,6 +1,12 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-03-25** `Set#remove(Object)` will throw an exception,
+  if the given Object is not present inside the set.
+  In this case there is a higher probability, that the developer made a programming mistake,
+  compared to the case, where the to be removed element is really present.
+  If the developer really intended optionally remove an element of a Set,
+  the method `Set#ensureRemoved(T)` is provided instead.
 * **2023-03-17** Revers priorities of `LogLevel` so that `LogLevel.DEBUG.smallerThan(LogLevel.ERROR)` returns `true`. 
 * **2023-01-22 \#s109** `Perspective#toXmlStringWithPrefixes` now renders leaf nodes as normal strings,
   if these contain characters that are not allowed in XML element names.

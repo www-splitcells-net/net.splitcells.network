@@ -77,8 +77,8 @@ public class SetI<T> implements Set<T> {
     }
 
     @Override
-    public boolean remove(Object o) {
-        return values.remove(o);
+    public void ensureRemoved(T arg) {
+        values.remove(arg);
     }
 
     @Override
