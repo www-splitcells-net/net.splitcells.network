@@ -21,6 +21,7 @@ import static net.splitcells.dem.utils.FodsUtility.tableCell;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.event.Allocation;
 import net.splitcells.gel.data.allocation.Allocations;
@@ -36,12 +37,12 @@ import org.w3c.dom.Element;
 import java.util.function.Supplier;
 
 /**
- * Provides the availability to reset a given {@link Solution}
+ * <p>Provides the availability to reset a given {@link Solution}
  * to a  previous state.
  * Each state has an index, which identifies a point in the history's timeline.
  * The first state of an {@link Solution}
  * has the index -1 (where usually no allocations are present).
- * The following states have successive ascending indexes (-1,0,1,2...,n-1).
+ * The following states have successive ascending indexes (-1,0,1,2...,n-1).</p>
  * <p>
  * The reason why the first state has the index -1 is caused by the fact,
  * that the history's timeline concept is a list of events.
@@ -51,10 +52,11 @@ import java.util.function.Supplier;
  * The first state recorded by the history does not require any changes,
  * because there is no previous state from the perspective of the timeline.
  * In other words, the first state is implicitly recorded by the history,
- * whereas the following states are explicitly recorded.
- * <p>
- * IDEA History should only contain primary demand/supply references and no references to used or unused demand/supply,
- * in order to preserve line pointer validity.
+ * whereas the following states are explicitly recorded.</p>
+ * <p>TODO There does not seem to be a need, for this to be an {@link Allocations} instead of {@link Table}.
+ * Unfortunately, this fact degrades the performance.</p>
+ * <p>IDEA History should only contain primary demand/supply references and no references to used or unused demand/supply,
+ * in order to preserve line pointer validity.</p>
  */
 public interface History extends Allocations, AfterAdditionSubscriber, BeforeRemovalSubscriber {
     Attribute<Integer> ALLOCATION_ID = attribute(Integer.class, "allocation-id");
