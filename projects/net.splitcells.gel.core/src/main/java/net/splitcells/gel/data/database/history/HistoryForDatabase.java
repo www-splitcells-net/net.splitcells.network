@@ -46,6 +46,7 @@ import static net.splitcells.gel.data.database.history.DatabaseEventType.REMOVAL
 public class HistoryForDatabase implements History {
 
     public static final Attribute<DatabaseEventType> DATABASE_EVENT_TYPE = attribute(DatabaseEventType.class, "database-event-type");
+    public static final Attribute<Integer> LINE_INDEX = attribute(Integer.class, "line-index");
 
     public static HistoryForDatabase historyForDatabase(Database database) {
         return new HistoryForDatabase(database);
@@ -60,7 +61,7 @@ public class HistoryForDatabase implements History {
     private HistoryForDatabase(Database database) {
         history = allocations(DATABASE_HISTORY.value(),
                 database(HISTORIC_VALUES.value(), database, database.headerView2())
-                , database(EVENTS.value(), database, list(DATABASE_EVENT_TYPE)));
+                , database(EVENTS.value(), database, list(LINE_INDEX, DATABASE_EVENT_TYPE)));
         this.database = database;
         database.subscribeToAfterAdditions(this);
         database.subscribeToBeforeRemoval(this);
@@ -69,14 +70,14 @@ public class HistoryForDatabase implements History {
     @Override
     public void registerAddition(Line addition) {
         final var addedLine = history.demands().addTranslated(addition.values());
-        final var eventType = history.supplies().addTranslated(list(ADDITION));
+        final var eventType = history.supplies().addTranslated(list(addition.index(), ADDITION));
         history.allocate(addedLine, eventType);
     }
 
     @Override
     public void registerBeforeRemoval(Line removal) {
         final var removedLine = history.demands().addTranslated(removal.values());
-        final var eventType = history.supplies().addTranslated(list(REMOVAL));
+        final var eventType = history.supplies().addTranslated(list(removal.index(), REMOVAL));
         history.allocate(removedLine, eventType);
     }
 
