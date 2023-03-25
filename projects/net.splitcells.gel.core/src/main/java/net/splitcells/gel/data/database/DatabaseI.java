@@ -335,7 +335,7 @@ public class DatabaseI implements Database {
 
     @Override
     public List<Line> rawLines() {
-        return listWithValuesOf(lines);
+        return listWithValuesOf(rawLines);
     }
 
     @Override
