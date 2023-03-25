@@ -184,6 +184,12 @@ public interface Table extends Discoverable, Domable, Identifiable {
         return !isEmpty();
     }
 
+    /**
+     * This method is deprecated, as write access to this list is not wanted.
+     * See {@link #rawLinesView()}.
+     *
+     * @return raw lines
+     */
     @Deprecated
     List<Line> rawLines();
 
