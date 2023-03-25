@@ -1,6 +1,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-03-25 ** Deprecate `Databases` without a name,
+  because such `Database` instances make it harder to understand these compared to a named `Database`.
 * **2023-03-17 ##170**: Introduce `HistoryForDatabase` for debugging purposes.
   An instance can be connected to a given database via the `DatabaseFactory`,
   which can be viewed via the webserver in order to understand how the content of the given database was created.

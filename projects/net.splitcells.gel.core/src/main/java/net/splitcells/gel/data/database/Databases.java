@@ -34,10 +34,25 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
         return environment().config().configValue(Databases.class).database(name, attributes);
     }
 
+    /**
+     * TODO REMOVE Every database should have a name.
+     *
+     * @param attributes
+     * @return
+     */
+    @Deprecated
     public static Database database(Attribute<? extends Object>... attributes) {
         return environment().config().configValue(Databases.class).database(attributes);
     }
 
+    /**
+     * TODO REMOVE Every database should have a name.
+     *
+     * @param attributes
+     * @param linesValues
+     * @return
+     */
+    @Deprecated
     public static Database database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
         return environment().config().configValue(Databases.class).database(attributes, linesValues);
     }
@@ -46,10 +61,24 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
         return environment().config().configValue(Databases.class).database(name, parent, attributes);
     }
 
+    /**
+     * TODO REMOVE Every database should have a name.
+     *
+     * @param attributes
+     * @return
+     */
+    @Deprecated
     public static Database database(List<Attribute<?>> attributes) {
         return environment().config().configValue(Databases.class).database(attributes);
     }
 
+    /**
+     * TODO REMOVE Every database should have a name.
+     *
+     * @param attributes
+     * @return
+     */
+    @Deprecated
     public static Database database2(List<Attribute<Object>> attributes) {
         return environment().config().configValue(Databases.class).database(attributes.mapped(a -> (Attribute<Object>) a));
     }
@@ -58,10 +87,25 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
         return environment().config().configValue(Databases.class).database2(name, parent, attributes);
     }
 
+    /**
+     * TODO REMOVE Every database should have a name.
+     *
+     * @param attributes
+     * @param fods
+     * @return
+     */
+    @Deprecated
     public static Database databaseOfFods(List<Attribute<?>> attributes, Element fods) {
         return environment().config().configValue(Databases.class).databaseOfFods(attributes, fods);
     }
 
+    /**
+     * TODO REMOVE Every database should have a name.
+     *
+     * @param attributes
+     * @return
+     */
+    @Deprecated
     public static List<Attribute<? extends Object>> objectAttributes(List<Attribute<Object>> attributes) {
         return attributes.stream()
                 .map(a -> (Attribute<? extends Object>) a)
