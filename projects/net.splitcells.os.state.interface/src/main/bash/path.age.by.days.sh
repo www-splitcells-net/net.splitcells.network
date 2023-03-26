@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 # SOURCE https://unix.stackexchange.com/questions/102691/get-age-of-given-file/102698#102698
 # According to https://meta.stackexchange.com/questions/271080/the-mit-license-clarity-on-using-code-on-stack-overflow-and-stack-exchange
 # and the fact that the source was created on Nov 27 '13 at 0:12
