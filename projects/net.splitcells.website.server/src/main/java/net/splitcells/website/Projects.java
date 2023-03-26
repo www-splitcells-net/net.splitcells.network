@@ -22,15 +22,18 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
+import net.splitcells.website.server.project.validator.SourceValidatorViaSchema;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.validator.SourceValidator;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
 import static net.splitcells.website.server.project.validator.SourceValidatorViaSchema.validatorViaSchema;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 
@@ -38,7 +41,8 @@ public class Projects {
     public static ProjectsRendererI projectsRenderer(Config config) {
         final var profile = "public";
         final var projectsRepository = config.mainProjectRepositoryPath().orElse(Path.of("../"));
-        final var validator = validatorViaSchema(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
+        final var validator = config.xmlSchema().map(s -> (SourceValidator) validatorViaSchema(s))
+                .orElse(VOID_VALIDATOR);
         return projectsRenderer(projectsRepository
                 , profile
                 , fallbackProjectRenderer(profile, projectsRepository, validator, config)

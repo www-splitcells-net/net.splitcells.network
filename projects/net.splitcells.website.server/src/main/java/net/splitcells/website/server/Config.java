@@ -43,6 +43,8 @@ public class Config {
     private Optional<String> sslKeystorePassword = Optional.of("password");
     private Optional<Path> sslKeystoreFile = Optional.of(Paths.get("target/keystore.p12"));
 
+    private Optional<Path> xmlSchema = Optional.of(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
+
     /**
      * Points to the folder containing projects required for data, like XSL transformations.
      * These are needed in order to render the website.
@@ -282,5 +284,15 @@ public class Config {
     public Config withIsSecured(boolean arg) {
         isSecured = arg;
         return this;
+    }
+
+    @ReturnsThis
+    public Config withXmlSchema(Optional<Path> arg) {
+        xmlSchema = arg;
+        return this;
+    }
+
+    public Optional<Path> xmlSchema() {
+        return xmlSchema;
     }
 }
