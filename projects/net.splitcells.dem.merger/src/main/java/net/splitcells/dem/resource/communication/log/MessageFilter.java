@@ -31,6 +31,6 @@ import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEB
  */
 public class MessageFilter extends OptionI<Predicate<LogMessage<Perspective>>> {
     public MessageFilter() {
-        super(() -> logMessage -> logMessage.priority().smallerThan(DEBUG));
+        super(() -> logMessage -> logMessage.priority().greaterThan(DEBUG));
     }
 }
