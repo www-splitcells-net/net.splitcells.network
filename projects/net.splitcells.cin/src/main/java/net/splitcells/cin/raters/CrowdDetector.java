@@ -15,8 +15,11 @@
  */
 package net.splitcells.cin.raters;
 
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.RatingEvent;
 
 import java.util.function.Predicate;
 
@@ -60,12 +63,7 @@ public class CrowdDetector {
                     .filter(l -> l.value(yCoordinate).equals(centerYPosition))
                     .findFirst();
             if (centerStartPosition.isEmpty()) {
-                lines.linesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
-                        , localRating()
-                                .withPropagationTo(list())
-                                .withRating(noCost())
-                                .withResultingGroupId(incomingConstraintGroup)));
-                return ratingEvent;
+                return updateWithNoCost(ratingEvent, lines, incomingConstraintGroup);
             }
             final var centerEndPosition = lineValues
                     .stream()
@@ -74,22 +72,11 @@ public class CrowdDetector {
                     .filter(l -> l.value(yCoordinate).equals(centerYPosition))
                     .findFirst();
             if (centerEndPosition.isEmpty()) {
-                lines.linesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
-                        , localRating()
-                                .withPropagationTo(list())
-                                .withRating(noCost())
-                                .withResultingGroupId(incomingConstraintGroup)));
-                return ratingEvent;
+                return updateWithNoCost(ratingEvent, lines, incomingConstraintGroup);
             }
             final var startPlayer = centerStartPosition.get().value(playerAttribute);
             if (startPlayer != playerValue) {
-                lines.linesStream()
-                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
-                                , localRating()
-                                        .withPropagationTo(list())
-                                        .withRating(noCost())
-                                        .withResultingGroupId(incomingConstraintGroup)));
-                return ratingEvent;
+                return updateWithNoCost(ratingEvent, lines, incomingConstraintGroup);
             }
             final var playerCount = lineValues.stream()
                     .filter(l -> startTime.equals(l.value(timeAttribute)))
@@ -113,6 +100,16 @@ public class CrowdDetector {
             }
             return ratingEvent;
         }, name);
+    }
+
+    private static RatingEvent updateWithNoCost(RatingEvent ratingEvent, Table lines, GroupId incomingConstraintGroup) {
+        lines.linesStream()
+                .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                        , localRating()
+                                .withPropagationTo(list())
+                                .withRating(noCost())
+                                .withResultingGroupId(incomingConstraintGroup)));
+        return ratingEvent;
     }
 
     private CrowdDetector() {
