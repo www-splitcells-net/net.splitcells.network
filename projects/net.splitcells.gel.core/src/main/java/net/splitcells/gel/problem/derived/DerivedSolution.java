@@ -45,7 +45,7 @@ import static net.splitcells.gel.constraint.type.Derivation.derivation;
 
 public class DerivedSolution implements Solution {
 
-    protected Constraint constraint;
+    private Constraint constraint;
     private final Allocations allocations;
     private final History history;
     private final Discoverable contexts;
@@ -61,12 +61,18 @@ public class DerivedSolution implements Solution {
         return new DerivedSolution(context, allocations, constraint, derivation);
     }
 
-    protected DerivedSolution(Discoverable context, Allocations allocations, Constraint originalConstraints
+    private DerivedSolution(Discoverable context, Allocations allocations, Constraint originalConstraints
             , Function<Rating, Rating> derivation) {
         this(context, allocations, originalConstraints, derivation(originalConstraints, derivation));
     }
 
-    protected DerivedSolution(Discoverable context, Allocations allocations, Constraint constraint
+    public static DerivedSolution derivedSolution(Discoverable contexts, Allocations allocations, Function<Solution, Constraint> constraintBuilder) {
+        final var derivedSolution = new DerivedSolution(contexts, allocations);
+        derivedSolution.constraint = constraintBuilder.apply(derivedSolution);
+        return derivedSolution;
+    }
+
+    private DerivedSolution(Discoverable context, Allocations allocations, Constraint constraint
             , Constraint derivation) {
         this.allocations = allocations;
         this.constraint = derivation;
@@ -74,7 +80,7 @@ public class DerivedSolution implements Solution {
         this.contexts = context;
     }
 
-    protected DerivedSolution(Discoverable contexts, Allocations allocations) {
+    private DerivedSolution(Discoverable contexts, Allocations allocations) {
         this.allocations = allocations;
         history = Histories.history(this);
         this.contexts = contexts;

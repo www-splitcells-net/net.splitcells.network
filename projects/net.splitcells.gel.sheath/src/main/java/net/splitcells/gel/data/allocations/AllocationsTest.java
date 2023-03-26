@@ -20,18 +20,15 @@ import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.database.Databases;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AllocationsTest extends TestSuiteI {
 
@@ -41,16 +38,14 @@ public class AllocationsTest extends TestSuiteI {
         final var demands = Databases.database();
         final var supplies = Databases.database();
         final var allocations = allocations("test", demands, supplies);
-        IntStream.rangeClosed(1, 10).forEach(i -> {
-            final var allocation = allocations.allocate(demands.addTranslated(list())
-                    , supplies.addTranslated(list()));
+        rangeClosed(1, 10).forEach(i -> {
+            final var allocation = allocations.allocate(demands.addTranslated(list()), supplies.addTranslated(list()));
             allocations.remove(allocation);
         });
         allocations.rawLinesView().requireSizeOf(1);
     }
 
-    @Tag(UNIT_TEST)
-    @Test
+    @UnitTest
     public void test_subscribe_to_afterAdditions() {
         final var demands = Databases.database();
         final var supplies = Databases.database();
@@ -62,8 +57,7 @@ public class AllocationsTest extends TestSuiteI {
                         , supplies.addTranslated(list()));
     }
 
-    @Tag(UNIT_TEST)
-    @Test
+    @UnitTest
     public void test_subscriber_to_beforeRemoval() {
         final var demands = Databases.database();
         final var supplies = Databases.database();
@@ -77,8 +71,7 @@ public class AllocationsTest extends TestSuiteI {
         );
     }
 
-    @Tag(UNIT_TEST)
-    @Test
+    @UnitTest
     public void test_subscriber_to_afterRemoval() {
         assertThrows(Exception.class, () -> {
             final var demands = Databases.database();
@@ -94,8 +87,7 @@ public class AllocationsTest extends TestSuiteI {
         });
     }
 
-    @Tag(UNIT_TEST)
-    @Test
+    @UnitTest
     public void test_allocate_and_remove() {
         final var demandAttribute = attribute(Double.class);
         final var demands = Databases.database(demandAttribute);

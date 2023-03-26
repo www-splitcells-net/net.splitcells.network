@@ -33,6 +33,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 @JavaLegacyArtifact
 public class SourceCodeCheck {
     public static void main(String... arg) {
+        checkJavaSourceCodeProject(Path.of("../net.splitcells.gel.core"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.network.worker"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.gel.sheath"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.merger"));

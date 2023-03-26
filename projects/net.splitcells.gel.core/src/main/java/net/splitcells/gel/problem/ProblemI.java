@@ -47,7 +47,7 @@ public class ProblemI implements Problem {
 
     private final Constraint constraint;
     private final Allocations allocations;
-    protected Solution asSolution;
+    private Solution asSolution;
 
     public static Problem problem(Allocations allocations, Constraint constraint) {
         final var problem = new ProblemI(allocations, constraint);
@@ -55,7 +55,7 @@ public class ProblemI implements Problem {
         return problem;
     }
 
-    protected ProblemI(Allocations allocations, Constraint constraint) {
+    private ProblemI(Allocations allocations, Constraint constraint) {
         this.allocations = allocations;
         this.constraint = constraint;
     }
