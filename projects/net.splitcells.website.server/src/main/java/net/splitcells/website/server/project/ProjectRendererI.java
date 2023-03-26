@@ -350,17 +350,17 @@ public class ProjectRendererI implements ProjectRenderer {
         htmlBodyContent.appendChild
                 (Xml.textNode(MARKER));
         content.appendChild(htmlBodyContent);
+        final var metaElement = Xml.elementWithChildren(NameSpaces.SEW, "meta");
+        content.appendChild(metaElement);
         if (title.isPresent()) {
-            final var metaElement = Xml.elementWithChildren(NameSpaces.SEW, "meta");
             final var titleElement = Xml.elementWithChildren(NameSpaces.SEW, "title");
             metaElement.appendChild(titleElement);
             titleElement.appendChild(Xml.textNode(title.get()));
-            content.appendChild(metaElement);
-            if (path.isPresent()) {
-                final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
-                pathElement.appendChild(Xml.textNode(path.get().toString()));
-                metaElement.appendChild(pathElement);
-            }
+        }
+        if (path.isPresent()) {
+            final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
+            pathElement.appendChild(Xml.textNode(path.get().toString()));
+            metaElement.appendChild(pathElement);
         }
         final var contentAsString = Xml.toPrettyString(content);
         domsole().append(perspective(contentAsString), LogLevel.DEBUG);
