@@ -301,19 +301,19 @@ __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 ]]></code_block>
             <blockquote>This is the license header for Python 3 files.</blockquote>
             <code_block><![CDATA[<!--
-  SPDX-License-Identifier: SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+  SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
   SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 -->
 ]]></code_block>
             <blockquote>This is the license header template for HTML and XML files.</blockquote>
             <code_block><![CDATA[<!--
-  SPDX-License-Identifier: SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+  SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
   SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 -->
 ]]></code_block>
             <blockquote>This is the license header template for HTML and XML files.</blockquote>
             <code_block><![CDATA[----
-* SPDX-License-Identifier: SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
 ]]></code_block>
