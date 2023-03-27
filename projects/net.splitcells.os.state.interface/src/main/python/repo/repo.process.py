@@ -3,6 +3,7 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+TODO Use a config object instead of arguments, in order to simplify code.
 TODO Use only python for recursion and not shell, in order simplify command.
 TODO Document that `repo.synchronize` etc. only work on default branch by default.
      This is done in order to avoid complex synchronization in case of deleted branches by default.
@@ -46,7 +47,6 @@ import logging
 import re
 from os import (environ, getcwd)
 from pathlib import Path
-
 
 def execute(relativePath, host, command):
 	logging.debug('relativePath: ' + relativePath)
@@ -110,7 +110,9 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 	return True
 def processSub(relativePath, host, command, commandForMissing, commandForUnknown, commandForCurrent, commandForChildren, subName, subRepoPath):
 	if not subRepoPath.is_dir():
-		logging.error('Folder of sub repository "' + str(subRepoPath) + '" is missing.')
+		if commandForMissing is None:
+			logging.error('Folder of sub repository "' + str(subRepoPath) + '" is missing.')
+			return False
 		missingSubRepoScript = 'set -e; mkdir -p ' + str(subRepoPath) + '; ' + 'cd ' + str(subRepoPath) + ' ; repo.process' + " --command='" + commandForMissing + "' --host=" + host + ' --relative-path=' + relativePath
 		missingSubRepoScript += " --command-for-missing='" + commandForMissing + "'"
 		missingSubRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
@@ -132,7 +134,8 @@ def processSub(relativePath, host, command, commandForMissing, commandForUnknown
 		logging.error("No commands present. Please specify argument '--command=[...]' or '--command-for-current=[...]'.")
 		return False
 	subRepoScript = 'set -e; mkdir -p ' + str(subRepoPath) + '; ' + 'cd ' + str(subRepoPath) + ' ; ' + r + " --command='" + currentCommand + "' --host=" + host + ' --relative-path=' + relativePath
-	subRepoScript += " --command-for-missing='" + commandForMissing + "'"
+	if commandForMissing is not None:
+		subRepoScript += " --command-for-missing='" + commandForMissing + "'"
 	subRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
 	if commandForCurrent is not None:
 		subRepoScript += " --command-for-current='" + commandForCurrent + "'"
@@ -165,8 +168,8 @@ This is often useful, when the target server is a public server, where a user of
 	parser.add_argument('--relative-path', dest='relativePath', default='./')
 	parser.add_argument('--host', dest='host', default="''")
 	parser.add_argument('--command', dest='command', required=True)
-	parser.add_argument('--command-for-missing', dest='commandForMissing', default="exit 1")
-	parser.add_argument('--command-for-unknown', dest='commandForUnknown', default="exit 1")
+	parser.add_argument('--command-for-missing', dest='commandForMissing', required=False)
+	parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
 	parser.add_argument('--command-for-current', dest='commandForCurrent', required=False) # TODO What is the purpose of this?
 	parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
 	parsedArgs = parser.parse_args()
