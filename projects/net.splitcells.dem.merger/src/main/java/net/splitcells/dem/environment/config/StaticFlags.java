@@ -34,12 +34,12 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  * <p>IDEA Get values out of properties file.</p>
  */
 public final class StaticFlags {
+    private static final String ENFORCING_UNIT_CONSISTENCY_KEY = "net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY";
     /**
      *
      */
     public static final boolean ENFORCING_UNIT_CONSISTENCY
-            = Boolean.parseBoolean
-            (System.getProperty("net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY", "true"));
+            = Boolean.parseBoolean(System.getProperty(ENFORCING_UNIT_CONSISTENCY_KEY, "true"));
     @Deprecated
     public static final boolean FUZZING = false;
     @Deprecated
@@ -87,6 +87,9 @@ public final class StaticFlags {
         final var staticFlagsOverridden = perspective("static-flags-overridden");
         if (INLINE_STANDARD_FACTORIES) {
             staticFlagsOverridden.withText("`" + INLINE_STANDARD_FACTORIES_KEY + "` set to `" + INLINE_STANDARD_FACTORIES + "`.");
+        }
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            staticFlagsOverridden.withText("`" + ENFORCING_UNIT_CONSISTENCY_KEY + "` set to `true`.");
         }
         if (staticFlagsOverridden.children().hasElements()) {
             domsole().append(staticFlagsOverridden, LogLevel.WARNING);
