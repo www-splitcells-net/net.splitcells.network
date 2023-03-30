@@ -72,13 +72,25 @@ public final class StaticFlags {
         throw constructorIllegal();
     }
 
+    private static void logIfMostPerformant() {
+        if (ENFORCING_UNIT_CONSISTENCY || TELLING_STORY || WARNING || TRACING || INLINE_STANDARD_FACTORIES) {
+            domsole().append(perspective("The most performant settings are not enabled.").withChild(
+                            perspective("ENFORCING_UNIT_CONSISTENCY = " + ENFORCING_UNIT_CONSISTENCY
+                                    + ", TELLING_STORY = " + TELLING_STORY
+                                    + ", WARNING = " + WARNING
+                                    + ", INLINE_STANDARD_FACTORIES = " + INLINE_STANDARD_FACTORIES))
+                    , LogLevel.WARNING);
+        }
+    }
+
     public static void logStaticFlags() {
-        final var staticFlagsOverridden= perspective("static-flags-overridden");
+        final var staticFlagsOverridden = perspective("static-flags-overridden");
         if (INLINE_STANDARD_FACTORIES) {
             staticFlagsOverridden.withText("`" + INLINE_STANDARD_FACTORIES_KEY + "` set to `" + INLINE_STANDARD_FACTORIES + "`.");
         }
         if (staticFlagsOverridden.children().hasElements()) {
-            domsole().append(staticFlagsOverridden, LogLevel.INFO);
+            domsole().append(staticFlagsOverridden, LogLevel.WARNING);
         }
+        logIfMostPerformant();
     }
 }
