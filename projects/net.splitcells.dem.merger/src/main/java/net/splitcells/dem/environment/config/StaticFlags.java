@@ -86,7 +86,7 @@ public final class StaticFlags {
     public static void logStaticFlags() {
         final var staticFlagsOverridden = perspective("static-flags-overridden");
         if (INLINE_STANDARD_FACTORIES) {
-            staticFlagsOverridden.withText("`" + INLINE_STANDARD_FACTORIES_KEY + "` set to `" + INLINE_STANDARD_FACTORIES + "`.");
+            staticFlagsOverridden.withText("`" + INLINE_STANDARD_FACTORIES_KEY + "` set to `true`.");
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
             staticFlagsOverridden.withText("`" + ENFORCING_UNIT_CONSISTENCY_KEY + "` set to `true`.");
