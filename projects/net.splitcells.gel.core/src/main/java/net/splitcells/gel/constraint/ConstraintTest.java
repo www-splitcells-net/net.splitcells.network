@@ -43,6 +43,11 @@ public class ConstraintTest {
             }
 
             @Override
+            public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+                return "no cost and 2 resulting groups for every line";
+            }
+
+            @Override
             public List<Domable> arguments() {
                 return list();
             }

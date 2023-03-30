@@ -18,6 +18,7 @@ package net.splitcells.cin.raters;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -287,5 +288,16 @@ public class Loneliness implements Rater {
     @Override
     public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table lineProcessing) {
         throw notImplementedYet();
+    }
+
+    @Override
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+        return "Check whether player "
+                + playerValue
+                + " based on player attribute " + playerAttribute.name()
+                + ", time attribute " + timeAttribute.name()
+                + ", x coordinates " + xCoordinate.name()
+                + ", y coordinates " + yCoordinate.name()
+                + " dies.";
     }
 }

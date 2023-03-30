@@ -104,9 +104,16 @@ public interface Rater extends PubliclyTyped<Rater>
         return dom;
     }
 
-    default String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
-        throw notImplementedYet(getClass().getName());
-    }
+    /**
+     * Describes in a natural way, how this is rating given {@link Line}.
+     * Prefer using one complete sentence for the description.
+     *
+     * @param line
+     * @param groupsLineProcessing
+     * @param incomingGroup
+     * @return
+     */
+    String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup);
 
     default Set<List<String>> paths() {
         return setOfUniques();

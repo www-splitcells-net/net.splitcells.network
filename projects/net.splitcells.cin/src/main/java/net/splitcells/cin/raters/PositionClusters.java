@@ -179,6 +179,17 @@ public class PositionClusters implements Rater {
     }
 
     @Override
+    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+        return "Clusters lines into positions based on "
+                + xAttribute.name()
+                + " for x coordinates, "
+                + yAttribute.name() + " for y coordinates "
+                + ", a center X offset of " + xCenterOffset
+                + " and a center Y offset of " + yCenterOffset
+                + ".";
+    }
+
+    @Override
     public List<Domable> arguments() {
         return list(xAttribute
                 , yAttribute

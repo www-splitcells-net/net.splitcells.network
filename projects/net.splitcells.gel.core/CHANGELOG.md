@@ -1,6 +1,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-03-30 \#170** Require raters to implement toSimpleDescription in order always have a working report,
+  for a given optimization problem.
 * **2023-03-25 ** Deprecate `Databases` without a name,
   because such `Database` instances make it harder to understand these compared to a named `Database`.
 * **2023-03-17 ##170**: Introduce `HistoryForDatabase` for debugging purposes.
