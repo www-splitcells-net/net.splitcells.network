@@ -28,6 +28,7 @@ Steps required on the target computer to set this up:
   This is usually Python 3 and Java 11.
 * Configure git via `git config --global user.email && git config --global user.name`.
 
+`journalctl --follow --unit build` can be used in order to follow the log of the service in real time. 
 """)
 	argsParser.add_argument('--target-server', dest='targetServer', type = str, required = True)
 	argsParser.add_argument('--user', type = str, required = True)
