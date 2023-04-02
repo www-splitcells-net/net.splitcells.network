@@ -28,12 +28,6 @@ Steps required on the target computer to set this up:
   This is usually Python 3 and Java 11.
 * Configure git via `git config --global user.email && git config --global user.name`.
 
-A one time Systemd service is used to spawn the process on the server.
-If an error occurs a new deployment cannot be done immediately,
-because the old one time service instance is not deleted automatically,
-when an error occurs.
-Use `sudo systemctl reset-failed` on the target server,
-in order to make the service deployable again.
 """)
 	argsParser.add_argument('--target-server', dest='targetServer', type = str, required = True)
 	argsParser.add_argument('--user', type = str, required = True)
