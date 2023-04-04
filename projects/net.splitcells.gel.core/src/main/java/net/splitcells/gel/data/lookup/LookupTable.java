@@ -43,8 +43,11 @@ import org.w3c.dom.Element;
 import net.splitcells.dem.data.set.list.Lists;
 
 /**
- * TODO Test runtime improvements by {@link #USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS},
- * {@link #USE_EXPERIMENTAL_RAW_LINE_CACHE} and {@link #USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE}.
+ * <p>Provides a view to a subset of a {@link Table} as a {@link Table}.
+ * By default the {@link LookupTable} is empty.
+ * {@link Line} has to be removed via {@link #register(Line)} and {@link #removeRegistration(Line)}.</p>
+ * <p>TODO Test runtime improvements by {@link #USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS},
+ * {@link #USE_EXPERIMENTAL_RAW_LINE_CACHE} and {@link #USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE}.</p>
  */
 public class LookupTable implements Table {
 

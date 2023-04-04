@@ -23,9 +23,16 @@ import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
+/**
+ * <p>Provides a view to a subset of a {@link Table} as a {@link Table}.
+ * {@link Line} that are part via the subset are either determined and accessed by a {@link Attribute} value or via custom a {@link Predicate}.
+ * </p>
+ * @param <T>
+ */
 public class LookupI<T> implements Lookup<T> {
     private final LookupTable lookupTable;
 
