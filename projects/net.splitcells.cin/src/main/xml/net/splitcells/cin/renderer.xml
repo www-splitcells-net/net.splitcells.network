@@ -11,16 +11,14 @@
     </s:meta>
     <s:content>
         <div id="net-splitcells-canvas-main"/>
-        <script async="" src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
         <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
         <script type="importmap">
             {
-            "imports": {
-            "three": "https://unpkg.com/three@0.139.0/build/three.module.js",
-            "OrbitControls": "https://unpkg.com/three@0.139.0/examples/jsm/controls/OrbitControls.js"
+                "imports": {
+                    "three": "https://unpkg.com/three@0.139.0/build/three.module.js",
+                    "OrbitControls": "https://unpkg.com/three@0.139.0/examples/jsm/controls/OrbitControls.js"
+                }
             }
-            }
-
         </script>
         <script type="module" src="/net/splitcells/cin/renderer.js"></script>
         <s:list>
@@ -43,5 +41,12 @@
                 </s:link>
             </s:item>
         </s:list>
+        <s:paragraph>On Firefox the page sometimes has to be reloaded,
+            as otherwise <s:quote>render.js</s:quote> will be run before the <s:quote>importmap</s:quote> is loaded.
+            Do not a full reload via shift plus reload button (or shift plus F5),
+            as otherwise the local cache is not used for the <s:quote>importmap</s:quote> and
+            therefor leads to the same error.
+            Sometimes the page has to be reloaded multiple times.
+        </s:paragraph>
     </s:content>
 </s:article>
