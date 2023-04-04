@@ -41,7 +41,8 @@
                 </s:link>
             </s:item>
         </s:list>
-        <s:paragraph>On Firefox the page sometimes has to be reloaded,
+        <s:paragraph>On Firefox this site has to be opened with the JavaScript debugger opened.
+            On Firefox the page sometimes has to be reloaded,
             as otherwise <s:quote>render.js</s:quote> will be run before the <s:quote>importmap</s:quote> is loaded.
             Do not a full reload via shift plus reload button (or shift plus F5),
             as otherwise the local cache is not used for the <s:quote>importmap</s:quote> and
