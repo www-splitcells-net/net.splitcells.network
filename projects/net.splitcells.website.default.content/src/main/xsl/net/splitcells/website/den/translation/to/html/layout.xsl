@@ -872,18 +872,11 @@ window.onload = function() {
                                 src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
                                 integrity="sha384-Wuix6BuhrWbjDBs24bXrjf4ZQ5aFeFWBuKkFekO2t8xFU0iNaLQfp2K6/1Nxveei"
                                 crossorigin="anonymous"></script>
-                        <script type="text/javascript"><![CDATA[
-                            var httpRequest = new XMLHttpRequest();
-                            httpRequest.open("GET", "/net/splitcells/network/status.csv", false);
-                            httpRequest.send(null);
-                            var status = httpRequest.responseText;
-                            function setContent(node) {
-                                node.innerHTML = status
-                                }
-                            document
-                                .querySelectorAll("a[class$='net-splitcells-network-status']")
-                                .forEach(setContent);
-                            ]]></script>
+                        <script type="text/javascript" charset="utf-8">
+                            <xsl:attribute name="src">
+                                <xsl:value-of select="s:root-relative-url('/js/status-render.js')"/>
+                            </xsl:attribute>
+                        </script>
                     </body>
                 </html>
             </xsl:otherwise>
