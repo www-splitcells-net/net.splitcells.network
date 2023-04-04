@@ -79,7 +79,8 @@ public class World {
             network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
                     repairConfig().withRepairCompliants(false)));
             network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
-        }, env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful())));
+        }, env -> {
+        });
     }
 
     public static Solution worldHistory() {
