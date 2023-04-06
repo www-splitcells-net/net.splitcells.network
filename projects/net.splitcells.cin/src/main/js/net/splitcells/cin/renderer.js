@@ -12,8 +12,9 @@ var worldSceneObjects = [];
     //"const" cannot be used, as otherwise changes to the Map are not sent between the functions.
 var worldVariables = {
     camera_focus_current: undefined,
-    world_import_from: undefined,
-    debug_enabled: undefined
+    debug_enabled: undefined,
+    render_specific_time: undefined, // When world data is imported, only data is processed, that is for the time `renderSpecificTime`.
+    world_import_from: undefined
 };
 const worldSceneObjectDefaultColor = 0x7D7D7D;
 const worldSceneObjectHighlightedColor = 0x8D8D8D;
@@ -37,7 +38,8 @@ if ( window != undefined) {
     const urlParams = new URLSearchParams(browserUrl);
     const world_import_from = urlParams.get('world_import_from');
     worldVariables.world_import_from = world_import_from;
-    worldVariables.debug_enabled =urlParams.get('debug_enabled');
+    worldVariables.debug_enabled = urlParams.get('debug_enabled');
+    worldVariables.render_specific_time = urlParams.get('render_specific_time');
 }
 
 if (worldVariables.debug_enabled === 'true') {
@@ -164,6 +166,11 @@ function worldSceneObjects_import(updatedData) {
     let rowIndex;
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
         let row = updatedData[rowIndex];
+        if (worldVariables.render_specific_time != undefined) {
+            if (row[0] != worldVariables.render_specific_time) {
+                continue;
+            }
+        }
         if (row[3] != 0) {
             const geometry = new THREE.BoxGeometry();
             const material = new THREE.MeshPhongMaterial({ color: worldSceneObjectDefaultColor });
@@ -285,7 +292,7 @@ if (worldVariables.world_import_from == undefined) {
             }  
         });
 } else if (worldVariables.world_import_from === 'live') {
-    Papa.parse("/net/splitcells/run/conway-s-game-of-life.csv"
+    Papa.parse("/net/splitcells/run/conway-s-game-of-life/allocations/conway-s-game-of-life/conway-s-game-of-life.csv"
         , {
             download: true
             , worker: false
