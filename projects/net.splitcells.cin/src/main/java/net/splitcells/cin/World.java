@@ -69,7 +69,7 @@ public class World {
                 network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
                 network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
                         repairConfig().withRepairCompliants(false)));
-            }, "World history optimization", LogLevel.WARNING);
+            }, "World history optimization", LogLevel.INFO);
             network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
         }, env -> {
         });
