@@ -22,7 +22,6 @@ import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationConfig;
 
-import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -30,6 +29,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
+ * <p>TODO Clean up the interface and document intent of this.</p>
  * <p>TODO Ensure that all solutions have a name,
  * because otherwise it can get hard pretty easily to distinguish one {@link net.splitcells.gel.problem.Problem}
  * from another.</p>
@@ -72,7 +72,10 @@ public class Network {
         return this;
     }
 
-    @ReturnsThis
+    public Solution node(String argumentKey) {
+        return solutions.get(argumentKey);
+    }
+
     public <T> T extract(String argumentKey, Function<Solution, T> execution) {
         return execution.apply(solutions.get(argumentKey));
     }

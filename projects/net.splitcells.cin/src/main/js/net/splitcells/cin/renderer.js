@@ -292,7 +292,7 @@ if (worldVariables.world_import_from == undefined) {
             }  
         });
 } else if (worldVariables.world_import_from === 'live') {
-    Papa.parse("/net/splitcells/run/conway-s-game-of-life/allocations/conway-s-game-of-life/conway-s-game-of-life.csv"
+    Papa.parse("/net/splitcells/run/current-world-history/allocations/current-world-history/current-world-history.csv"
         , {
             download: true
             , worker: false

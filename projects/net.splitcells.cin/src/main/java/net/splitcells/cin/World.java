@@ -17,10 +17,9 @@ package net.splitcells.cin;
 
 import net.splitcells.cin.raters.TimeSteps;
 import net.splitcells.dem.data.atom.Thing;
+import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.dem.utils.Time;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -30,6 +29,7 @@ import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.SolutionView;
+import net.splitcells.sep.Network;
 
 import java.util.Optional;
 
@@ -45,7 +45,6 @@ import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.Time.reportRuntime;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -57,7 +56,8 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.RepairCo
 import static net.splitcells.sep.Network.network;
 
 public class World {
-    public static final String WORLD_HISTORY = "world-history";
+    public static final String CURRENT_WORLD_HISTORY = "current-world-history";
+    public static final String COMMITTED_WORLD_HISTORY = "committed-world-history";
     public static final Attribute<Integer> WORLD_TIME = attribute(Integer.class, "world-time");
     public static final Attribute<Integer> POSITION_X = attribute(Integer.class, "position-x");
     public static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-y");
@@ -66,28 +66,51 @@ public class World {
     public static void main(String... args) {
         GelDev.process(() -> {
             final var network = network();
-            network.withNode(WORLD_HISTORY, worldHistory());
+            final var committedWorldHistory = emptyWorldHistory(COMMITTED_WORLD_HISTORY);
+            final var currentWorldHistory = emptyWorldHistory(CURRENT_WORLD_HISTORY);
+            network.withNode(COMMITTED_WORLD_HISTORY, committedWorldHistory);
+            network.withNode(CURRENT_WORLD_HISTORY, currentWorldHistory);
+            initWorldHistory(currentWorldHistory);
+            allocateGlider(currentWorldHistory);
+            allocateRestAsDead(currentWorldHistory);
+            commitWorldHistory(network);
             reportRuntime(() -> {
-                network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
-                network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
+                network.withOptimization(CURRENT_WORLD_HISTORY, onlineLinearInitialization());
+                network.withOptimization(CURRENT_WORLD_HISTORY, constraintGroupBasedRepair(
                         repairConfig().withRepairCompliants(false)));
             }, "World history optimization", LogLevel.INFO);
-            network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
+            reportRuntime(() -> {
+                network.process(CURRENT_WORLD_HISTORY, SolutionView::createStandardAnalysis);
+            }, "createStandardAnalysis", LogLevel.INFO);
+
         }, env -> {
         });
     }
 
-    public static Solution worldHistory() {
-        final var worldHistory = worldHistory(worldsTimeSpace(0, 1, 0, 10, 0, 10),
-                values(0, 1, 0, 10, 0, 10, 0, 1));
-        allocateGlider(worldHistory);
-        allocateRestAsDead(worldHistory);
-        return worldHistory;
+    private static void commitWorldHistory(Network network) {
+        final var currentWorldHistory = network.node(CURRENT_WORLD_HISTORY);
+        final var committedWorldHistory = network.node(COMMITTED_WORLD_HISTORY);
+        final var currentTime = currentWorldHistory.allocations().unorderedLinesStream()
+                .map(a -> a.value(WORLD_TIME))
+                .max(Comparators.ASCENDING_INTEGERS)
+                .orElseThrow();
+        currentWorldHistory.allocations().lookup(WORLD_TIME, currentTime).unorderedLines().forEach(a -> {
+            final var newDemand = committedWorldHistory.demands().add(currentWorldHistory.demandOfAllocation(a));
+            final var newSupply = committedWorldHistory.supplies().add(currentWorldHistory.supplyOfAllocation(a));
+            committedWorldHistory.allocations().allocate(newDemand, newSupply);
+        });
+    }
+
+    private static void initWorldHistory(Solution world) {
+        worldsTimeSpace(0, 0, 0, 10, 0, 10)
+                .forEach(world.demands()::addTranslated);
+        values(0, 0, 0, 10, 0, 10, 0, 1)
+                .forEach(world.supplies()::addTranslated);
     }
 
     private static void allocateRestAsDead(Solution worldHistory) {
         final var freeDemands = worldHistory.demandsFree().unorderedLinesStream().collect(toList());
-        final var playerSupply = worldHistory.suppliesFree().lookup(VALUE, 1).unorderedLinesStream().collect(toList());
+        final var playerSupply = worldHistory.suppliesFree().lookup(VALUE, 0).unorderedLinesStream().collect(toList());
         freeDemands.forEach(d -> worldHistory.allocate(d, playerSupply.removeAt(0)));
     }
 
@@ -97,7 +120,7 @@ public class World {
                         .lookup(POSITION_X, 1)
                         .lookup(POSITION_Y, 2)
                         .line(0)
-                , worldHistory.demandsFree()
+                , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)
                         .line(0));
         worldHistory.allocate(worldHistory.demandsFree()
@@ -105,7 +128,7 @@ public class World {
                         .lookup(POSITION_X, 2)
                         .lookup(POSITION_Y, 2)
                         .line(0)
-                , worldHistory.demandsFree()
+                , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)
                         .line(0));
         worldHistory.allocate(worldHistory.demandsFree()
@@ -113,18 +136,18 @@ public class World {
                         .lookup(POSITION_X, 3)
                         .lookup(POSITION_Y, 2)
                         .line(0)
-                , worldHistory.demandsFree()
+                , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)
                         .line(0));
     }
 
-    public static Solution emptyWorldHistory() {
-        return worldHistory(list(), list());
+    public static Solution emptyWorldHistory(String name) {
+        return worldHistory(name, list(), list());
     }
 
-    public static Solution worldHistory(List<List<Object>> demands, List<List<Object>> supplies) {
+    public static Solution worldHistory(String name, List<List<Object>> demands, List<List<Object>> supplies) {
         // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
-        return defineProblem("conway-s-game-of-life")
+        return defineProblem(name)
                 .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
                 .withDemands(demands)
                 .withSupplyAttributes(VALUE)
