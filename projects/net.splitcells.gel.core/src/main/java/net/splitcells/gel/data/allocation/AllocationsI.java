@@ -31,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Map;
+import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -431,5 +432,10 @@ public class AllocationsI implements Allocations {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    @Override
+    public Stream<Line> orderedLinesStream() {
+        return allocations.orderedLinesStream();
     }
 }
