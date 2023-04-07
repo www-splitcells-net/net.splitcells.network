@@ -18,6 +18,8 @@ package net.splitcells.cin;
 import net.splitcells.cin.raters.TimeSteps;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.utils.Time;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -41,7 +43,9 @@ import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.Time.reportRuntime;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueRater;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
@@ -61,9 +65,11 @@ public class World {
         GelDev.process(() -> {
             final var network = network();
             network.withNode(WORLD_HISTORY, worldHistory());
-            network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
-            network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
-                    repairConfig().withRepairCompliants(false)));
+            reportRuntime(() -> {
+                network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
+                network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
+                        repairConfig().withRepairCompliants(false)));
+            }, "World history optimization", LogLevel.WARNING);
             network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
         }, env -> {
         });
