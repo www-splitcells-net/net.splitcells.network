@@ -113,7 +113,7 @@ Project Cluster
   [Sourcehut's todo](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)) for tickets related to the webserver, and
   for complex and important tickets a [Blog](https://splitcells-net.srht.site/net.splitcells.network.community.via.hugo) (Source code is [here](https://git.sr.ht/~splitcells-net/net.splitcells.network.community.via.hugo).) is used.
 * Repository Hosts:
-  * (deprecated) [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
+  * [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
   * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) is currently used only for continuous integration (CI).
   * [sourcehut](https://sr.ht/~splitcells-net/net.splitcells.network) is used mainly for writing articles and web rendering.
     It's CI pipeline is also used with the repo `net.splitcells.network.m2`, in order to ensure,
