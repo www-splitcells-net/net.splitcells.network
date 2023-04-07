@@ -18,7 +18,9 @@ Changes are now written to the root changelog instead.
 
 ## Unreleased
 ### Major Changes
-* **2023-04-07 \#170** Rename `Table#lines` to `Table#unorderedLines` in order to avoid programmer errors.
+* **2023-04-07 \#170**
+  1. Rename `Table#lines` to `Table#unorderedLines` in order to avoid programmer errors.
+  2. Rename `Table#linesStream` to `Table#unorderedLinesStream` in order to avoid programmer errors.
 * **2023-03-26** [**\#s109** `repo.process` should not create the folder of missing sub repos by default.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/119)
   If `--command-for-missing` is not set or is set as `exit 1`,
   the folder

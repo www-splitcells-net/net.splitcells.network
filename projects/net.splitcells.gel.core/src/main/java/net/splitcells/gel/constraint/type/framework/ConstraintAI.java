@@ -148,11 +148,11 @@ public abstract class ConstraintAI implements Constraint {
                 .lookup(injectionGroup)
                 .columnView(LINE)
                 .lookup(removal)
-                .linesStream()
+                .unorderedLinesStream()
                 .forEach(lineProcessing::remove);
         lines.lookup(LINE, removal)
                 .lookup(INCOMING_CONSTRAINT_GROUP, injectionGroup)
-                .linesStream()
+                .unorderedLinesStream()
                 .forEach(lines::remove);
     }
 
@@ -212,7 +212,7 @@ public abstract class ConstraintAI implements Constraint {
         final var routingRating = routingRating(lineProcessing
                 .lookup(LINE, line)
                 .lookup(INCOMING_CONSTRAINT_GROUP, group)
-                .linesStream());
+                .unorderedLinesStream());
         routingRating.children_to_groups().forEach((child, groups) ->
                 groups.forEach(group2 -> routingRating.ratingComponents().add(child.rating(group2, line)))
         );

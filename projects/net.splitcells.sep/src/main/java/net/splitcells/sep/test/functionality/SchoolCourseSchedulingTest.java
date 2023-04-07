@@ -279,7 +279,7 @@ public class SchoolCourseSchedulingTest {
                                             .lookup(SUBJECT, requiredSubject)
                                             .lookup(COURSE_S_VINTAGE, studentsVintage)
                                             .lookup(RAIL, rail)
-                                            .linesStream()
+                                            .unorderedLinesStream()
                                             .findFirst())
                                     .filter(Optional::isPresent)
                                     .map(Optional::get)

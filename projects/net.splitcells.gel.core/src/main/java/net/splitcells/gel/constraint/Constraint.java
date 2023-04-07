@@ -288,10 +288,10 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
      */
     @Deprecated
     default void recalculatePropagation() {
-        lineProcessing().linesStream().forEach(l -> {
+        lineProcessing().unorderedLinesStream().forEach(l -> {
             l.value(PROPAGATION_TO).forEach(c -> c.registerBeforeRemoval(l.value(RESULTING_CONSTRAINT_GROUP), l.value(LINE)));
         });
-        lineProcessing().linesStream().forEach(l -> {
+        lineProcessing().unorderedLinesStream().forEach(l -> {
             l.value(PROPAGATION_TO).forEach(c -> c.registerAdditions(l.value(RESULTING_CONSTRAINT_GROUP), l.value(LINE)));
         });
     }
@@ -307,7 +307,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
      */
     default void recalculateProcessing() {
         final Map<GroupId, List<Line>> registeredAdditions = map();
-        lineProcessing().linesStream().forEach(l -> {
+        lineProcessing().unorderedLinesStream().forEach(l -> {
             final var incomingConstraintGroup = l.value(INCOMING_CONSTRAINT_GROUP);
             registeredAdditions.computeIfAbsent(incomingConstraintGroup, i -> list()).add(l.value(LINE));
         });

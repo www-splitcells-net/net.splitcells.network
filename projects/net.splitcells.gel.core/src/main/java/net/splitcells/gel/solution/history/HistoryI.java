@@ -224,7 +224,7 @@ public class HistoryI implements History {
         final var index = allocations.size() - 1;
         final var eventToRemove = allocations.columnView(ALLOCATION_ID)
                 .lookup(index)
-                .linesStream()
+                .unorderedLinesStream()
                 .findFirst()
                 .orElseThrow()
                 .value(ALLOCATION_EVENT);
@@ -254,7 +254,7 @@ public class HistoryI implements History {
                 throw new RuntimeException(t);
             }
         }
-        removal_(allocations.columnView(ALLOCATION_ID).lookup(index).linesStream().findFirst().orElseThrow());
+        removal_(allocations.columnView(ALLOCATION_ID).lookup(index).unorderedLinesStream().findFirst().orElseThrow());
     }
 
     /**

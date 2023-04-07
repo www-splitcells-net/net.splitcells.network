@@ -84,14 +84,14 @@ public class CrowdDetector {
                     .filter(line -> line.equals(startPlayer))
                     .count();
             if (crowdClassifier.test(playerCount)) {
-                lines.linesStream()
+                lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
                                         .withPropagationTo(children)
                                         .withRating(noCost())
                                         .withResultingGroupId(incomingConstraintGroup)));
             } else {
-                lines.linesStream()
+                lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
                                         .withPropagationTo(list())
@@ -103,7 +103,7 @@ public class CrowdDetector {
     }
 
     private static RatingEvent updateWithNoCost(RatingEvent ratingEvent, Table lines, GroupId incomingConstraintGroup) {
-        lines.linesStream()
+        lines.unorderedLinesStream()
                 .forEach(line -> ratingEvent.updateRating_withReplacement(line
                         , localRating()
                                 .withPropagationTo(list())

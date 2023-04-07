@@ -140,7 +140,7 @@ public class LookupTable implements Table {
     }
 
     @Override
-    public Stream<Line> linesStream() {
+    public Stream<Line> unorderedLinesStream() {
         if (useExperimentalRawLineCache) {
             return rawLinesCache.stream().filter(e -> e != null);
         }

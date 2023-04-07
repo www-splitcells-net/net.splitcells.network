@@ -128,14 +128,14 @@ public class TimeSteps implements Rater {
                 rating.additions().put(addition, localRating);
                 linesOfGroup.columnView(LINE)
                         .lookup(l -> l.value(timeAttribute).equals(startTime))
-                        .linesStream()
+                        .unorderedLinesStream()
                         .filter(l -> l.index() != addition.index())
                         .forEach(l -> {
                             rating.updateRating_withReplacement(l, localRating);
                         });
                 linesOfGroup.columnView(LINE)
                         .lookup(l -> l.value(timeAttribute).equals(endTime))
-                        .linesStream()
+                        .unorderedLinesStream()
                         .filter(l -> l.index() != addition.index())
                         .forEach(l -> {
                             rating.updateRating_withReplacement(l, localRating);
@@ -178,7 +178,7 @@ public class TimeSteps implements Rater {
             linesOfGroup
                     .columnView(LINE)
                     .lookup(l -> l.value(timeAttribute).equals(startTime))
-                    .linesStream()
+                    .unorderedLinesStream()
                     .forEach(l -> rating.updateRating_withReplacement(l, localRating()
                             .withPropagationTo(children)
                             .withRating(noCost())
@@ -186,7 +186,7 @@ public class TimeSteps implements Rater {
             linesOfGroup
                     .columnView(LINE)
                     .lookup(l -> l.value(timeAttribute).equals(startTime + 1))
-                    .linesStream()
+                    .unorderedLinesStream()
                     .forEach(l -> rating.updateRating_withReplacement(l, localRating()
                             .withPropagationTo(children)
                             .withRating(noCost())

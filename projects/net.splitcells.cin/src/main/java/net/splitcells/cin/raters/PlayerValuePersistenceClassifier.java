@@ -60,7 +60,7 @@ public class PlayerValuePersistenceClassifier {
                     .filter(l -> l.value(yCoordinate).equals(centerYPosition))
                     .findFirst();
             if (centerStartPosition.isEmpty()) {
-                lines.linesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
+                lines.unorderedLinesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
                         , localRating()
                                 .withPropagationTo(list())
                                 .withRating(noCost())
@@ -75,7 +75,7 @@ public class PlayerValuePersistenceClassifier {
                     .findFirst();
             final var startPlayer = centerStartPosition.get().value(playerAttribute);
             if (startPlayer != playerValue) {
-                lines.linesStream()
+                lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
                                         .withPropagationTo(list())
@@ -84,7 +84,7 @@ public class PlayerValuePersistenceClassifier {
                 return ratingEvent;
             }
             if (centerEndPosition.isEmpty()) {
-                lines.linesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
+                lines.unorderedLinesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
                         , localRating()
                                 .withPropagationTo(children)
                                 .withRating(noCost())
@@ -93,14 +93,14 @@ public class PlayerValuePersistenceClassifier {
             }
             final var endPlayer = centerEndPosition.get().value(playerAttribute);
             if (classifier.test(playerValue, endPlayer)) {
-                lines.linesStream()
+                lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
                                         .withPropagationTo(children)
                                         .withRating(noCost())
                                         .withResultingGroupId(incomingConstraintGroup)));
             } else {
-                lines.linesStream()
+                lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
                                         .withPropagationTo(list())

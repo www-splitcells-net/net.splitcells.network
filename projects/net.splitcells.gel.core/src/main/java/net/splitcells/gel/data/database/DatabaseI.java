@@ -32,7 +32,6 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.data.table.LineI.line;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
@@ -47,14 +46,12 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LineI;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnI;
 import net.splitcells.gel.data.table.column.ColumnView;
-import net.splitcells.gel.data.table.column.ColumnViewI;
 import org.w3c.dom.Element;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
@@ -347,7 +344,7 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public Stream<Line> linesStream() {
+    public Stream<Line> unorderedLinesStream() {
         return lines.stream();
     }
 
@@ -370,7 +367,7 @@ public class DatabaseI implements Database {
             final var constraintRoot = forAll();
             synchronize(constraintRoot);
             constraint = Optional.of(constraintRoot);
-            linesStream().forEach(constraintRoot::registerAddition);
+            unorderedLinesStream().forEach(constraintRoot::registerAddition);
         }
         return constraint.get().query();
     }

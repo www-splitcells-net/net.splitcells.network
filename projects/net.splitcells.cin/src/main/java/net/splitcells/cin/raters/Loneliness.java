@@ -80,7 +80,7 @@ public class Loneliness implements Rater {
                     .filter(l -> l.value(yCoordinate).equals(centerYPosition))
                     .findFirst();
             if (centerStartPosition.isEmpty()) {
-                lines.linesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
+                lines.unorderedLinesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
                         , localRating()
                                 .withPropagationTo(list())
                                 .withRating(noCost())
@@ -94,7 +94,7 @@ public class Loneliness implements Rater {
                     .filter(l -> l.value(yCoordinate).equals(centerYPosition))
                     .findFirst();
             if (centerEndPosition.isEmpty()) {
-                lines.linesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
+                lines.unorderedLinesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
                         , localRating()
                                 .withPropagationTo(list())
                                 .withRating(noCost())
@@ -103,7 +103,7 @@ public class Loneliness implements Rater {
             }
             final var startPlayer = centerStartPosition.get().value(playerAttribute);
             if (startPlayer != playerValue) {
-                lines.linesStream()
+                lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
                                         .withPropagationTo(list())
@@ -117,14 +117,14 @@ public class Loneliness implements Rater {
                     .filter(line -> line.equals(startPlayer))
                     .count();
             if (playerCount < 2) {
-                lines.linesStream()
+                lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
                                         .withPropagationTo(children)
                                         .withRating(noCost())
                                         .withResultingGroupId(incomingConstraintGroup)));
             } else {
-                lines.linesStream()
+                lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
                                         .withPropagationTo(list())
@@ -200,7 +200,7 @@ public class Loneliness implements Rater {
                             .withPropagationTo(list())
                             .withRating(cost(1))
                             .withResultingGroupId(incomingConstraintGroup));
-            lines.linesStream()
+            lines.unorderedLinesStream()
                     .filter(line -> line.index() != addition.index())
                     .forEach(line ->
                             ratingEvent.updateRating_withReplacement(line
@@ -222,7 +222,7 @@ public class Loneliness implements Rater {
                             .withPropagationTo(list())
                             .withRating(cost(1))
                             .withResultingGroupId(incomingConstraintGroup));
-            lines.linesStream()
+            lines.unorderedLinesStream()
                     .filter(line -> line.index() != addition.index())
                     .forEach(line -> ratingEvent.updateRating_withReplacement(line
                             , localRating()
@@ -238,7 +238,7 @@ public class Loneliness implements Rater {
                             .withPropagationTo(list())
                             .withRating(noCost())
                             .withResultingGroupId(incomingConstraintGroup));
-            lines.linesStream()
+            lines.unorderedLinesStream()
                     .filter(line -> line.index() != addition.index())
                     .forEach(line -> ratingEvent.updateRating_withReplacement(line
                             , localRating()
@@ -258,7 +258,7 @@ public class Loneliness implements Rater {
                             .withPropagationTo(children)
                             .withRating(noCost())
                             .withResultingGroupId(incomingConstraintGroup));
-            lines.linesStream()
+            lines.unorderedLinesStream()
                     .filter(line -> line.index() != addition.index())
                     .forEach(line -> ratingEvent.updateRating_withReplacement(line
                             , localRating()
@@ -271,7 +271,7 @@ public class Loneliness implements Rater {
                             .withPropagationTo(list())
                             .withRating(cost(1))
                             .withResultingGroupId(incomingConstraintGroup));
-            lines.linesStream()
+            lines.unorderedLinesStream()
                     .filter(line -> line.index() != addition.index())
                     .forEach(line -> ratingEvent.updateRating_withReplacement(line
                             , localRating()
