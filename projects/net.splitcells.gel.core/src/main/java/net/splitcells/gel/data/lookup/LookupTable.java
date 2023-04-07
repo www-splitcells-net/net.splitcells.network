@@ -19,6 +19,7 @@ import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
@@ -29,6 +30,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -95,7 +97,7 @@ public class LookupTable implements Table {
         this.name = name;
         columns = table.headerView().stream()
                 .map(attribute -> LookupColumn.lookupColumn(this, attribute))
-                .collect(Lists.toList());
+                .collect(toList());
         columnsView = listWithValuesOf(columns);
         this.useExperimentalRawLineCache = useExperimentalRawLineCache;
     }
@@ -162,7 +164,7 @@ public class LookupTable implements Table {
                     return l;
                 }
                 return null;
-            }).collect(Lists.toList());
+            }).collect(toList());
         }
         final var rawLines = Lists.<Line>list();
         final var parentRawLines = tableView.rawLinesView();
@@ -308,5 +310,15 @@ public class LookupTable implements Table {
     @Override
     public Object identity() {
         return this;
+    }
+
+    @Override
+    public Stream<Line> orderedLinesStream() {
+        if (useExperimentalRawLineCache) {
+            return rawLinesCache.stream().filter(e -> e != null);
+        }
+        final var sortedContent = content.stream().collect(toList());
+        sortedContent.sort(Comparators.ASCENDING_INTEGERS);
+        return sortedContent.stream().map(tableView::line).collect(toList()).stream();
     }
 }
