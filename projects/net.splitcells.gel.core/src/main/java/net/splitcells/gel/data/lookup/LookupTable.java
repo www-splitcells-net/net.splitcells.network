@@ -70,7 +70,7 @@ public class LookupTable implements Table {
      * @return An instance, where no {@link Line} of {@link Table} is {@link #register(Line)}.
      */
     public static LookupTable lookupTable(Table table, String name) {
-        return new LookupTable(table, name, USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE);
+        return new LookupTable(table, name, USE_EXPERIMENTAL_RAW_LINE_CACHE);
     }
 
     /**
@@ -79,7 +79,7 @@ public class LookupTable implements Table {
      * @return An instance, where no {@link Line} of {@link Table} is {@link #register(Line)}.
      */
     public static LookupTable lookupTable(Table table, Attribute<?> attribute) {
-        return new LookupTable(table, attribute.name(), USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE);
+        return new LookupTable(table, attribute.name(), USE_EXPERIMENTAL_RAW_LINE_CACHE);
     }
 
     public static LookupTable lookupTable(Table table, Attribute<?> attribute, boolean cacheRawLines) {
