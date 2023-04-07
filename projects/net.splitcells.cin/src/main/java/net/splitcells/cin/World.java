@@ -18,6 +18,7 @@ package net.splitcells.cin;
 import net.splitcells.cin.raters.TimeSteps;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.utils.Time;
 import net.splitcells.gel.GelDev;
@@ -42,6 +43,7 @@ import static net.splitcells.cin.raters.PositionClusters.positionClustering;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -76,13 +78,57 @@ public class World {
     }
 
     public static Solution worldHistory() {
+        final var worldHistory = worldHistory(worldsTimeSpace(0, 1, 0, 10, 0, 10),
+                values(0, 1, 0, 10, 0, 10, 0, 1));
+        allocateGlider(worldHistory);
+        allocateRestAsDead(worldHistory);
+        return worldHistory;
+    }
+
+    private static void allocateRestAsDead(Solution worldHistory) {
+        final var freeDemands = worldHistory.demandsFree().unorderedLinesStream().collect(toList());
+        final var playerSupply = worldHistory.suppliesFree().lookup(VALUE, 1).unorderedLinesStream().collect(toList());
+        freeDemands.forEach(d -> worldHistory.allocate(d, playerSupply.removeAt(0)));
+    }
+
+    private static void allocateGlider(Solution worldHistory) {
+        worldHistory.allocate(worldHistory.demandsFree()
+                        .lookup(WORLD_TIME, 0)
+                        .lookup(POSITION_X, 1)
+                        .lookup(POSITION_Y, 2)
+                        .line(0)
+                , worldHistory.demandsFree()
+                        .lookup(VALUE, 1)
+                        .line(0));
+        worldHistory.allocate(worldHistory.demandsFree()
+                        .lookup(WORLD_TIME, 0)
+                        .lookup(POSITION_X, 2)
+                        .lookup(POSITION_Y, 2)
+                        .line(0)
+                , worldHistory.demandsFree()
+                        .lookup(VALUE, 1)
+                        .line(0));
+        worldHistory.allocate(worldHistory.demandsFree()
+                        .lookup(WORLD_TIME, 0)
+                        .lookup(POSITION_X, 3)
+                        .lookup(POSITION_Y, 2)
+                        .line(0)
+                , worldHistory.demandsFree()
+                        .lookup(VALUE, 1)
+                        .line(0));
+    }
+
+    public static Solution emptyWorldHistory() {
+        return worldHistory(list(), list());
+    }
+
+    public static Solution worldHistory(List<List<Object>> demands, List<List<Object>> supplies) {
         // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
         return defineProblem("conway-s-game-of-life")
                 .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
-                .withDemands(worldsTimeSpace(0, 1, 0, 10, 0, 10)
-                        .withAppended(blinker()))
+                .withDemands(demands)
                 .withSupplyAttributes(VALUE)
-                .withSupplies(values(0, 1, 0, 10, 0, 10, 0, 1))
+                .withSupplies(supplies)
                 .withConstraint(r -> {
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Y))
@@ -138,17 +184,6 @@ public class World {
                                 rangeClosed(startValue, endValue).forEach(value ->
                                         worldsTimeSpace.add(list(value))))));
         return worldsTimeSpace;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static List<List<Object>> blinker() {
-        final List<List<Object>> worldWithGlider = list();
-        worldWithGlider.withAppended(
-                list(0, 1, 2)
-                , list(0, 2, 2)
-                , list(0, 3, 2)
-        );
-        return worldWithGlider;
     }
 
     private static void addPosition(Table lines, Line addition, int positionX, int positionY, RatingEvent ratingEvent, LocalRating localRating) {
