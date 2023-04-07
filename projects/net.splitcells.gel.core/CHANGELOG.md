@@ -8,18 +8,6 @@
   for a given optimization problem.
 * **2023-03-25 ** Deprecate `Databases` without a name,
   because such `Database` instances make it harder to understand these compared to a named `Database`.
-* **2023-03-17 ##170**: Introduce `HistoryForDatabase` for debugging purposes.
-  An instance can be connected to a given database via the `DatabaseFactory`,
-  which can be viewed via the webserver in order to understand how the content of the given database was created.
-```
-GelDev.process(() -> {
-   [Actual Code]
-}, env -> env.config().configValue(Databases.class).withConnector(d -> {
-   if (d.path().equals(list("conway-s-game-of-life", "Propagation", "ForAll", "6", "Propagation", "ForAll", "0", "Propagation", "ForAll", "isDead", "ForAll", ".lines", "allocations/linesProcessing", "linesProcessing", "demands-free"))) {
-      historyForDatabase(d);
-   }
-}));
-```
 * **2023-03-07 ##170**: New `GroupId` now require an parent `GroupId`,
   if the new `GroupId` is explicitly stated to be a root `GroupId`.
   This makes it easier to get the meaning of a `GroupId` during debugging,
@@ -61,6 +49,18 @@ GelDev.process(() -> {
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
+* **2023-03-17 ##170**: Introduce `HistoryForDatabase` for debugging purposes.
+  An instance can be connected to a given database via the `DatabaseFactory`,
+  which can be viewed via the webserver in order to understand how the content of the given database was created.
+```
+GelDev.process(() -> {
+   [Actual Code]
+}, env -> env.config().configValue(Databases.class).withConnector(d -> {
+   if (d.path().equals(list("conway-s-game-of-life", "Propagation", "ForAll", "6", "Propagation", "ForAll", "0", "Propagation", "ForAll", "isDead", "ForAll", ".lines", "allocations/linesProcessing", "linesProcessing", "demands-free"))) {
+      historyForDatabase(d);
+   }
+}));
+```
 * **2023-02-02** **\#170**: Add meta data container to GroupId.
 * **2022-07-24** **\#8**:
   1. Deprecate `LinearInitialization` and prefer using `OnlineLinearInitialization` for better performance.
