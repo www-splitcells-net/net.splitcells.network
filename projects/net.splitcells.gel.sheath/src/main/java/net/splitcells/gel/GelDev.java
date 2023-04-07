@@ -121,7 +121,7 @@ public final class GelDev {
         return GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class
-                            , a -> a.path().equals(list("debugging")) || a.priority().greaterThan(LogLevel.INFO))
+                            , a -> a.path().equals(list("debugging")) || a.priority().greaterThanOrEqual(LogLevel.INFO))
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(DeterministicRootSourceSeed.class, 1000L);
