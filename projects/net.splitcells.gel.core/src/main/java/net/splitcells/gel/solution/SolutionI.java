@@ -240,8 +240,8 @@ public class SolutionI implements Solution {
     }
 
     @java.lang.SuppressWarnings("all")
-    public List<Line> lines() {
-        return this.problem.lines();
+    public List<Line> unorderedLines() {
+        return this.problem.unorderedLines();
     }
 
     @java.lang.SuppressWarnings("all")

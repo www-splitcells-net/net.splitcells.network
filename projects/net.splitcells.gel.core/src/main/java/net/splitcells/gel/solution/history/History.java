@@ -129,7 +129,7 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
     History withLogNaturalArgumentation(boolean logNaturalArgumentation);
 
     /**
-     * @return Determines whether {@link #lines()} contain {@link MetaDataView} with {@link net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation}.
+     * @return Determines whether {@link #unorderedLines()} contain {@link MetaDataView} with {@link net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation}.
      * If set to false, this will improve performance, but the {@link History} will contain less info.
      * The default value is false.
      */
@@ -165,15 +165,15 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
                 table.appendChild(header);
                 header.appendChild(tableCell(ALLOCATION_ID.name()));
                 header.appendChild(tableCell("allocation-type"));
-                if (!lines().isEmpty()) {
+                if (!unorderedLines().isEmpty()) {
                     // TODO HACK Prevents errors if the history is empty.
-                    lines().get(0).value(ALLOCATION_EVENT).demand().context().headerView().forEach(a -> header.appendChild(tableCell("demand-" + a.name())));
-                    lines().get(0).value(ALLOCATION_EVENT).supply().context().headerView().forEach(a -> header.appendChild(tableCell("supply-" + a.name())));
+                    unorderedLines().get(0).value(ALLOCATION_EVENT).demand().context().headerView().forEach(a -> header.appendChild(tableCell("demand-" + a.name())));
+                    unorderedLines().get(0).value(ALLOCATION_EVENT).supply().context().headerView().forEach(a -> header.appendChild(tableCell("supply-" + a.name())));
                 }
                 header.appendChild(tableCell("allocation-cost"));
                 header.appendChild(tableCell("complete-cost"));
                 header.appendChild(tableCell(META_DATA.name()));
-                lines().forEach(line -> {
+                unorderedLines().forEach(line -> {
                     final var tableLine = elementWithChildren(FODS_TABLE, "table-row");
                     table.appendChild(tableLine);
                     tableLine.appendChild(tableCell("" + line.value(ALLOCATION_ID)));

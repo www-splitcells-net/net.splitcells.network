@@ -26,7 +26,7 @@ public class SupplySelectors {
                     if (demandsUsed.contains(demand)) {
                         return;
                     }
-                    final var freeSupplies = solution.suppliesFree().lines();
+                    final var freeSupplies = solution.suppliesFree().unorderedLines();
                     if (freeSupplies.hasElements()) {
                         final var supplySelection = freeSupplies.get(indexSelector.apply(freeSupplies.size() - 1));
                         demandsUsed.add(demand);

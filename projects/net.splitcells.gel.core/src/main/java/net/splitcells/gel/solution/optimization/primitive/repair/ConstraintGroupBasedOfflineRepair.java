@@ -157,7 +157,7 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
         final Map<GroupId, Set<Line>> demandGrouping = map();
         constraintGrouping
                 .lineProcessing()
-                .lines()
+                .unorderedLines()
                 .stream()
                 /**
                  * TODO HACK This is code duplication.
@@ -222,7 +222,7 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
                                 .lineProcessing()
                                 .columnView(LINE)
                                 .lookup(allocation)
-                                .lines()
+                                .unorderedLines()
                                 .get(0)
                                 .value(RATING)
                                 .equalz(noCost());

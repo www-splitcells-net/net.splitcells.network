@@ -56,8 +56,8 @@ public class FreeSupplySwitcherTest {
             {
                 testSolution.optimize(linearInitialization());
                 range(0, demands).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
-                assertThat(testSolution.demandsFree().lines()).isEmpty();
-                assertThat(testSolution.suppliesFree().lines()).hasSize(1);
+                assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();
+                assertThat(testSolution.suppliesFree().unorderedLines()).hasSize(1);
             }
             final var randomness = mock(Randomness.class);
             doReturn(0)
@@ -92,8 +92,8 @@ public class FreeSupplySwitcherTest {
             {
                 testSolution.optimize(linearInitialization());
                 range(0, variableCount).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
-                assertThat(testSolution.demandsFree().lines()).isEmpty();
-                assertThat(testSolution.suppliesFree().lines()).isEmpty();
+                assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();
+                assertThat(testSolution.suppliesFree().unorderedLines()).isEmpty();
             }
             final var randomness = mock(Randomness.class);
             doReturn(0)

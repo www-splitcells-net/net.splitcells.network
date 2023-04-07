@@ -348,18 +348,18 @@ public class TimeStepsTest {
                     testSubject.constraint().childrenView().get(0).lineProcessing()
                             .columnView(RESULTING_CONSTRAINT_GROUP)
                             .lookup(noTimeStepGroup)
-                            .lines()
+                            .unorderedLines()
                             .requireSizeOf(0);
                     testSubject.constraint().childrenView().get(0).lineProcessing()
                             .columnView(RESULTING_CONSTRAINT_GROUP)
                             .lookup(oneToTwo)
-                            .lines()
+                            .unorderedLines()
                             .requireSizeOf(34);
                     onlineLinearDeinitializer().optimize(testSubject);
-                    testSubject.allocations().lines().requireSizeOf(0);
+                    testSubject.allocations().unorderedLines().requireSizeOf(0);
                     testSubject.constraint().childrenView().get(0)
                             .lineProcessing()
-                            .lines()
+                            .unorderedLines()
                             .requireSizeOf(0);
                 })
         );

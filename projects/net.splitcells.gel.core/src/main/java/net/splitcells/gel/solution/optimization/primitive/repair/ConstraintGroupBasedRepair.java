@@ -136,7 +136,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
         final Map<GroupId, Set<Line>> defianceCache = Maps.map();
         constraintGrouping
                 .lineProcessing()
-                .lines()
+                .unorderedLines()
                 .stream()
                 /**
                  * TODO HACK This is code duplication.
@@ -198,7 +198,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                                 .lineProcessing()
                                 .columnView(LINE)
                                 .lookup(allocation)
-                                .lines()
+                                .unorderedLines()
                                 .get(0)
                                 .value(RATING)
                                 .equalz(noCost());

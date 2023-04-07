@@ -16,7 +16,6 @@
 package net.splitcells.gel.solution.optimization.primitive;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
@@ -101,7 +100,7 @@ public class ConstraintGroupBasedOfflineRepairTest {
                                     optimizationEvent(
                                             ADDITION
                                             , freeDemand.toLinePointer()
-                                            , currentSolution.suppliesFree().lines().get(i2).toLinePointer()
+                                            , currentSolution.suppliesFree().unorderedLines().get(i2).toLinePointer()
                                     ));
                             i.set(0, i2 + 1);
                         });
@@ -169,13 +168,13 @@ public class ConstraintGroupBasedOfflineRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        solution.lines().requireSizeOf(7);
+        solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA));
-        solution.lines().requireSizeOf(3);
+        solution.unorderedLines().requireSizeOf(3);
         solution.optimize(testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB));
-        solution.lines().requireSizeOf(1);
+        solution.unorderedLines().requireSizeOf(1);
     }
 
     @Test
@@ -218,7 +217,7 @@ public class ConstraintGroupBasedOfflineRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        solution.lines().requireSizeOf(7);
+        solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);
         final var testProduct = testSubject.demandGrouping

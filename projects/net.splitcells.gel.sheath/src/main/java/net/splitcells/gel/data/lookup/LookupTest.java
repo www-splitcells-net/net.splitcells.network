@@ -45,10 +45,10 @@ public class LookupTest extends TestSuiteI {
         final var b = attribute(Integer.class, "b");
         final var testSubject = new DatabaseI(a, b);
         testSubject.addTranslated(list(1, 2));
-        testSubject.columnView(a).lookup(1).lines().requireSizeOf(1);
-        testSubject.columnView(a).lookup(3).lines().requireEmpty();
+        testSubject.columnView(a).lookup(1).unorderedLines().requireSizeOf(1);
+        testSubject.columnView(a).lookup(3).unorderedLines().requireEmpty();
         testSubject.columnView(a).lookup(1).columnView(b).lookup(2)
-                .lines()
+                .unorderedLines()
                 .requireSizeOf(1);
         requireNotNull(testSubject
                 .columnView(a)
@@ -62,21 +62,21 @@ public class LookupTest extends TestSuiteI {
                 .lookup(1)
                 .columnView(b)
                 .lookup(3)
-                .lines()
+                .unorderedLines()
                 .requireEmpty();
         testSubject
                 .columnView(a)
                 .lookup(3)
                 .columnView(b)
                 .lookup(3)
-                .lines()
+                .unorderedLines()
                 .requireEmpty();
         testSubject
                 .columnView(a)
                 .lookup(3)
                 .columnView(b)
                 .lookup(2)
-                .lines()
+                .unorderedLines()
                 .requireEmpty();
     }
 
@@ -93,13 +93,13 @@ public class LookupTest extends TestSuiteI {
         testSubject.addTranslated(list(3, 3));
         testSubject.addTranslated(list(1, 3));
         testSubject.addTranslated(list(3, 2));
-        testSubject.columnView(a).lookup(1).lines().requireSizeOf(3);
+        testSubject.columnView(a).lookup(1).unorderedLines().requireSizeOf(3);
         testSubject
                 .columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(2)
-                .lines()
+                .unorderedLines()
                 .requireSizeOf(2);
         requireNotNull(testSubject
                 .columnView(a)
@@ -120,28 +120,28 @@ public class LookupTest extends TestSuiteI {
                 .lookup(1)
                 .columnView(b)
                 .lookup(3)
-                .lines()
+                .unorderedLines()
                 .requireSizeOf(1);
         testSubject
                 .columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(4)
-                .lines()
+                .unorderedLines()
                 .requireEmpty();
         testSubject
                 .columnView(a)
                 .lookup(3)
                 .columnView(b)
                 .lookup(2)
-                .lines()
+                .unorderedLines()
                 .requireSizeOf(1);
         testSubject
                 .columnView(a)
                 .lookup(3)
                 .columnView(b)
                 .lookup(1)
-                .lines()
+                .unorderedLines()
                 .requireEmpty();
     }
 
@@ -157,19 +157,19 @@ public class LookupTest extends TestSuiteI {
                     .lookup(1)
                     .columnView(b)
                     .lookup(1)
-                    .lines()
+                    .unorderedLines()
                     .requireEmpty();
             testSubject
                     .columnView(a)
                     .lookup(1)
                     .columnView(b)
                     .lookup(2)
-                    .lines()
+                    .unorderedLines()
                     .requireEmpty();
-            testSubject.columnView(a).lookup(1).columnView(b).lookup(3).lines().requireEmpty();
-            testSubject.columnView(a).lookup(1).columnView(b).lookup(4).lines().requireEmpty();
-            testSubject.columnView(a).lookup(3).columnView(b).lookup(2).lines().requireEmpty();
-            testSubject.columnView(a).lookup(3).columnView(b).lookup(1).lines().requireEmpty();
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(3).unorderedLines().requireEmpty();
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(4).unorderedLines().requireEmpty();
+            testSubject.columnView(a).lookup(3).columnView(b).lookup(2).unorderedLines().requireEmpty();
+            testSubject.columnView(a).lookup(3).columnView(b).lookup(1).unorderedLines().requireEmpty();
         }
         {
             testSubject.addTranslated(list(1, 2));
@@ -181,14 +181,14 @@ public class LookupTest extends TestSuiteI {
             testSubject.addTranslated(list(3, 2));
         }
         {
-            testSubject.columnView(a).lookup(1).lines().requireSizeOf(3);
-            testSubject.columnView(a).lookup(1).columnView(b).lookup(2).lines().requireSizeOf(2);
+            testSubject.columnView(a).lookup(1).unorderedLines().requireSizeOf(3);
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(2).unorderedLines().requireSizeOf(2);
             requireNotNull(testSubject.columnView(a).lookup(1).columnView(b).lookup(2).rawLinesView().get(0));
             requireNotNull(testSubject.columnView(a).lookup(1).columnView(b).lookup(2).rawLinesView().get(1));
-            testSubject.columnView(a).lookup(1).columnView(b).lookup(3).lines().requireSizeOf(1);
-            testSubject.columnView(a).lookup(1).columnView(b).lookup(4).lines().requireEmpty();
-            testSubject.columnView(a).lookup(3).columnView(b).lookup(2).lines().requireSizeOf(1);
-            testSubject.columnView(a).lookup(3).columnView(b).lookup(1).lines().requireEmpty();
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(3).unorderedLines().requireSizeOf(1);
+            testSubject.columnView(a).lookup(1).columnView(b).lookup(4).unorderedLines().requireEmpty();
+            testSubject.columnView(a).lookup(3).columnView(b).lookup(2).unorderedLines().requireSizeOf(1);
+            testSubject.columnView(a).lookup(3).columnView(b).lookup(1).unorderedLines().requireEmpty();
         }
     }
 
@@ -200,9 +200,9 @@ public class LookupTest extends TestSuiteI {
         final var testSubject = new DatabaseI(a, b);
         testSubject.addTranslated(list(1, 2));
         final Predicate<Integer> predicate = aa -> aa == 1;
-        testSubject.columnView(a).lookup(1).lines().requireSizeOf(1);
-        testSubject.columnView(a).lookup(3).lines().requireEmpty();
-        testSubject.columnView(a).lookup(predicate).lines().requireSizeOf(1);
+        testSubject.columnView(a).lookup(1).unorderedLines().requireSizeOf(1);
+        testSubject.columnView(a).lookup(3).unorderedLines().requireEmpty();
+        testSubject.columnView(a).lookup(predicate).unorderedLines().requireSizeOf(1);
     }
 
     @Test
@@ -214,14 +214,14 @@ public class LookupTest extends TestSuiteI {
                 .lookup(1)
                 .columnView(b)
                 .lookup(2);
-        testValues.get().lines().requireEmpty();
+        testValues.get().unorderedLines().requireEmpty();
         final var firstLine = testSubject.addTranslated(list(1, 1));
-        testValues.get().lines().requireEmpty();
+        testValues.get().unorderedLines().requireEmpty();
         final var secondLine = testSubject.addTranslated(list(1, 2));
-        testValues.get().lines().requireSizeOf(1);
+        testValues.get().unorderedLines().requireSizeOf(1);
         testSubject.remove(firstLine);
-        testValues.get().lines().requireSizeOf(1);
+        testValues.get().unorderedLines().requireSizeOf(1);
         testSubject.remove(secondLine);
-        testValues.get().lines().requireEmpty();
+        testValues.get().unorderedLines().requireEmpty();
     }
 }

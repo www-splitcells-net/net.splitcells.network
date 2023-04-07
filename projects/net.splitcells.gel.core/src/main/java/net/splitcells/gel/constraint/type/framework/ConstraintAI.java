@@ -131,7 +131,7 @@ public abstract class ConstraintAI implements Constraint {
                             .lookup(injectionGroup)
                             .columnView(LINE)
                             .lookup(addition)
-                            .lines()
+                            .unorderedLines()
             ).isEmpty();
         }
         lines.addTranslated(list(addition, injectionGroup));
@@ -364,7 +364,7 @@ public abstract class ConstraintAI implements Constraint {
             dom.appendChild(ratings);
             lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
                     .lookup(injectionGroup())
-                    .lines()
+                    .unorderedLines()
                     .forEach(line -> ratings.appendChild(line.toDom()));
         }
         childrenView().forEach(bērns ->
@@ -388,7 +388,7 @@ public abstract class ConstraintAI implements Constraint {
             dom.withChild(ratings);
             lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
                     .lookup(injectionGroup())
-                    .lines()
+                    .unorderedLines()
                     .forEach(line -> ratings.withChild(line.toPerspective()));
         }
         childrenView().forEach(child ->
@@ -413,7 +413,7 @@ public abstract class ConstraintAI implements Constraint {
                     lineProcessing
                             .columnView(INCOMING_CONSTRAINT_GROUP)
                             .lookup(group)
-                            .lines().
+                            .unorderedLines().
                             forEach(line -> ratings.withChild(line.toPerspective())));
         }
         childrenView().forEach(child ->
@@ -423,7 +423,7 @@ public abstract class ConstraintAI implements Constraint {
                                         map(group -> lineProcessing
                                                 .columnView(INCOMING_CONSTRAINT_GROUP)
                                                 .lookup(group)
-                                                .lines()
+                                                .unorderedLines()
                                                 .stream()
                                                 .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP))
                                                 .collect(toSet()))
@@ -446,7 +446,7 @@ public abstract class ConstraintAI implements Constraint {
                     lineProcessing
                             .columnView(INCOMING_CONSTRAINT_GROUP)
                             .lookup(group)
-                            .lines().
+                            .unorderedLines().
                             forEach(line -> ratings.appendChild(line.toDom())));
         }
         childrenView().forEach(child ->
@@ -456,7 +456,7 @@ public abstract class ConstraintAI implements Constraint {
                                         map(group -> lineProcessing
                                                 .columnView(INCOMING_CONSTRAINT_GROUP)
                                                 .lookup(group)
-                                                .lines()
+                                                .unorderedLines()
                                                 .stream()
                                                 .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP))
                                                 .collect(toSet()))
@@ -475,7 +475,7 @@ public abstract class ConstraintAI implements Constraint {
                 .lookup(line)
                 .columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(group)
-                .lines()
+                .unorderedLines()
                 .stream()
                 .filter(allocation -> allocationSelector
                         .test(lineRating
@@ -495,7 +495,7 @@ public abstract class ConstraintAI implements Constraint {
         final var naturalArgumentation = lineProcessing
                 .columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(group)
-                .lines()
+                .unorderedLines()
                 .stream()
                 .map(allocation -> allocation.value(LINE))
                 .map(line -> naturalArgumentation(line, group, AllocationSelector::selectLinesWithCost))
@@ -533,7 +533,7 @@ public abstract class ConstraintAI implements Constraint {
                 .lookup(line)
                 .columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(group)
-                .lines()
+                .unorderedLines()
                 .stream()
                 .filter(allocation
                         -> allocationSelector

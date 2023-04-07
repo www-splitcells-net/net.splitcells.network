@@ -15,11 +15,7 @@
  */
 package net.splitcells.gel.solution.optimization.space;
 
-import net.splitcells.dem.data.atom.Bools;
-import net.splitcells.dem.testing.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -49,15 +45,15 @@ public class EnumerableOptimizationSpaceTest {
                 .asSolution();
         testData.history().processWithHistory(() -> {
             var testSubject = enumerableOptimizationSpace(testData, initializer());
-            testSubject.currentState().lines().requireSizeOf(0);
+            testSubject.currentState().unorderedLines().requireSizeOf(0);
             testSubject = testSubject.child(0);
-            testSubject.currentState().lines().requireSizeOf(1);
+            testSubject.currentState().unorderedLines().requireSizeOf(1);
             testSubject = testSubject.child(0);
-            testSubject.currentState().lines().requireSizeOf(2);
+            testSubject.currentState().unorderedLines().requireSizeOf(2);
             testSubject = testSubject.parent().get();
-            testSubject.currentState().lines().requireSizeOf(1);
+            testSubject.currentState().unorderedLines().requireSizeOf(1);
             testSubject = testSubject.parent().get();
-            testSubject.currentState().lines().requireSizeOf(0);
+            testSubject.currentState().unorderedLines().requireSizeOf(0);
             bool(testSubject.parent().isEmpty()).required();
         });
     }
@@ -86,13 +82,13 @@ public class EnumerableOptimizationSpaceTest {
                 .asSolution();
         testData.history().processWithHistory(() -> {
             var testSubject = enumerableOptimizationSpace(testData, initializer());
-            testSubject.currentState().lines().requireSizeOf(0);
+            testSubject.currentState().unorderedLines().requireSizeOf(0);
 
             // Test allocation of first free demand and supply.
             testSubject = testSubject.child(0);
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
-            testSubject.currentState().lines().requireSizeOf(1);
+            testSubject.currentState().unorderedLines().requireSizeOf(1);
 
             // Test allocation of first free demand and last free supply.
             testSubject = testSubject.child(2);
@@ -100,7 +96,7 @@ public class EnumerableOptimizationSpaceTest {
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
-            testSubject.currentState().lines().requireSizeOf(2);
+            testSubject.currentState().unorderedLines().requireSizeOf(2);
 
             // Test allocation of last free demand  and first free supply.
             testSubject = testSubject.child(2);
@@ -110,7 +106,7 @@ public class EnumerableOptimizationSpaceTest {
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(2), 4);
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(2), 6);
-            testSubject.currentState().lines().requireSizeOf(3);
+            testSubject.currentState().unorderedLines().requireSizeOf(3);
 
             testSubject = testSubject.child(0);
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
@@ -121,7 +117,7 @@ public class EnumerableOptimizationSpaceTest {
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(2), 6);
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(3), 3);
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(3), 7);
-            testSubject.currentState().lines().requireSizeOf(4);
+            testSubject.currentState().unorderedLines().requireSizeOf(4);
 
             testSubject = testSubject.parent().orElseThrow();
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
@@ -130,22 +126,22 @@ public class EnumerableOptimizationSpaceTest {
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(2), 4);
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(2), 6);
-            testSubject.currentState().lines().requireSizeOf(3);
+            testSubject.currentState().unorderedLines().requireSizeOf(3);
 
             testSubject = testSubject.parent().get();
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
-            testSubject.currentState().lines().requireSizeOf(2);
+            testSubject.currentState().unorderedLines().requireSizeOf(2);
 
             testSubject = testSubject.parent().get();
             requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
             requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
-            testSubject.currentState().lines().requireSizeOf(1);
+            testSubject.currentState().unorderedLines().requireSizeOf(1);
 
             testSubject = testSubject.parent().get();
-            testSubject.currentState().lines().requireSizeOf(0);
+            testSubject.currentState().unorderedLines().requireSizeOf(0);
             bool(testSubject.parent().isEmpty()).required();
         });
     }

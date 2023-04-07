@@ -42,7 +42,7 @@ public class AllSame {
             @Override
             public Rating lineRating(Table lines, Optional<Line> addition, Optional<Line> removal) {
                 final Map<T, Integer> valueCounter = map();
-                lines.lines()
+                lines.unorderedLines()
                         .stream()
                         .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
                         .map(line -> line.value(LINE).value(attribute))
@@ -78,7 +78,7 @@ public class AllSame {
                 return "values of " + attribute.name() + " should have the same value";
             }
         }, (line, groupLineProcessing, incomingGroup) -> {
-            final var distinctValues = groupLineProcessing.lines().stream()
+            final var distinctValues = groupLineProcessing.unorderedLines().stream()
                     .map(l -> l.value(LINE).value(attribute).toString())
                     .reduce((a, b) -> a + ", " + b)
                     .orElse("undefined");

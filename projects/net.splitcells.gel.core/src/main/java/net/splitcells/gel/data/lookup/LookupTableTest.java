@@ -22,14 +22,14 @@ public class LookupTableTest {
                 .withConstraint(forAll())
                 .toProblem()
                 .asSolution();
-        testSubject.lookup(a, 1).lookup(b, 2).lines();
+        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
         testSubject.optimize(linearInitialization());
-        testSubject.lookup(a, 1).lookup(b, 2).lines();
+        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
         testSubject.optimize(linearDeinitializer());
-        testSubject.lookup(a, 1).lookup(b, 2).lines();
+        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
         testSubject.optimize(linearInitialization());
-        testSubject.lookup(a, 1).lookup(b, 2).lines();
+        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
         testSubject.optimize(linearDeinitializer());
-        testSubject.lookup(a, 1).lookup(b, 2).lines();
+        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
     }
 }

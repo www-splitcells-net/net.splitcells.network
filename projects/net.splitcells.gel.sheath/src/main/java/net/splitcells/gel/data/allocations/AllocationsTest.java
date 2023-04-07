@@ -15,8 +15,6 @@
  */
 package net.splitcells.gel.data.allocations;
 
-import net.splitcells.dem.data.atom.Bools;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.database.Databases;
@@ -26,7 +24,6 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
-import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
@@ -97,12 +94,12 @@ public class AllocationsTest extends TestSuiteI {
         supplies.addTranslated(list(2));
         final var testSubject = allocations("test", demands, supplies);
         testSubject.headerView().requireEqualityTo(list(demands.headerView().get(0), supplies.headerView().get(0)));
-        testSubject.demands().lines().requireSizeOf(1);
-        testSubject.supplies().lines().requireSizeOf(1);
+        testSubject.demands().unorderedLines().requireSizeOf(1);
+        testSubject.supplies().unorderedLines().requireSizeOf(1);
         demands.addTranslated(list(3.0));
         supplies.addTranslated(list(4));
-        testSubject.demands().lines().requireSizeOf(2);
-        testSubject.supplies().lines().requireSizeOf(2);
+        testSubject.demands().unorderedLines().requireSizeOf(2);
+        testSubject.supplies().unorderedLines().requireSizeOf(2);
         final var firstAllocation = testSubject
                 .allocate(testSubject.demands().rawLinesView().get(0)
                         , testSubject.supplies().rawLinesView().get(0));

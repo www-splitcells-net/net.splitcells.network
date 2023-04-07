@@ -60,7 +60,7 @@ public class LonelinessTest {
                 .asSolution();
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
-        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().lines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.allocate(testSubject.demandsFree().line(0)
@@ -71,7 +71,7 @@ public class LonelinessTest {
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(4);
+                .lineProcessing().unorderedLines().requireSizeOf(4);
         testSubject.allocate(testSubject.demandsFree().line(0)
                 , testSubject.suppliesFree().line(0));
         testSubject.allocate(testSubject.demandsFree().line(0)
@@ -79,12 +79,12 @@ public class LonelinessTest {
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(6);
+                .lineProcessing().unorderedLines().requireSizeOf(6);
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(0);
+                .lineProcessing().unorderedLines().requireSizeOf(0);
     }
 
     @UnitTest
@@ -121,12 +121,12 @@ public class LonelinessTest {
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(6);
+                .lineProcessing().unorderedLines().requireSizeOf(6);
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(0);
+                .lineProcessing().unorderedLines().requireSizeOf(0);
     }
 
     @UnitTest
@@ -163,22 +163,22 @@ public class LonelinessTest {
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(6);
+                .lineProcessing().unorderedLines().requireSizeOf(6);
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(0);
+                .lineProcessing().unorderedLines().requireSizeOf(0);
         onlineLinearDeinitializer().optimize(testSubject);
         onlineLinearInitialization().optimize(testSubject);
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(6);
+                .lineProcessing().unorderedLines().requireSizeOf(6);
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(0);
+                .lineProcessing().unorderedLines().requireSizeOf(0);
     }
 }

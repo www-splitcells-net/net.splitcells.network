@@ -16,9 +16,7 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
-import net.splitcells.dem.testing.TestTypes;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import org.junit.jupiter.api.DynamicTest;
@@ -109,11 +107,11 @@ public class DatabaseTest extends TestSuiteI {
 
     public void test_single_addition_and_removal(Database voidDatabase) {
         List<?> lineValues = list();
-        voidDatabase.lines().requireEmpty();
+        voidDatabase.unorderedLines().requireEmpty();
         final var addedLine = voidDatabase.addTranslated(lineValues);
-        voidDatabase.lines().requireSizeOf(1);
+        voidDatabase.unorderedLines().requireSizeOf(1);
         voidDatabase.remove(addedLine);
-        voidDatabase.lines().requireEmpty();
+        voidDatabase.unorderedLines().requireEmpty();
         requireNull(voidDatabase.rawLinesView().get(0));
     }
 

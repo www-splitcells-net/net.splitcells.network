@@ -230,8 +230,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public List<Line> lines() {
-        return this.allocations.lines();
+    public List<Line> unorderedLines() {
+        return this.allocations.unorderedLines();
     }
 
     @Override

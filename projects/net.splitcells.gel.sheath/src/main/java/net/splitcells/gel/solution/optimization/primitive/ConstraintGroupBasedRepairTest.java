@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.solution.optimization.primitive;
 
-import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
 import org.junit.jupiter.api.Test;
@@ -93,7 +92,7 @@ public class ConstraintGroupBasedRepairTest {
                     , freeDemandGroups -> currentSolution -> {
                         freeDemandGroups.entrySet().forEach(freeGroup -> {
                             freeGroup.getValue().forEach(freeDemand -> {
-                                currentSolution.allocate(freeDemand, currentSolution.suppliesFree().lines().get(0));
+                                currentSolution.allocate(freeDemand, currentSolution.suppliesFree().unorderedLines().get(0));
                             });
                         });
                     }
@@ -107,12 +106,12 @@ public class ConstraintGroupBasedRepairTest {
                             .orElseGet(() -> map()))
                     .collect(toList());
             testSubject.repair(solution, demandClassifications.get(0));
-            solution.history().lines().requireSizeOf(initHistorySize + 4);
-            final var freeSupplyIndexes = solution.history().lines().stream()
+            solution.history().unorderedLines().requireSizeOf(initHistorySize + 4);
+            final var freeSupplyIndexes = solution.history().unorderedLines().stream()
                     .map(l -> l.value(ALLOCATION_EVENT).supply().index())
                     .collect(toList());
             freeSupplyIndexes.requireContentsOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-            final var demandIndexes = solution.history().lines().stream()
+            final var demandIndexes = solution.history().unorderedLines().stream()
                     .map(l -> l.value(ALLOCATION_EVENT).demand().index())
                     .collect(toList());
             demandIndexes.requireContentsOf(0, 1, 2, 3, 4, 5, 6, 3, 2, 1, 0);
@@ -159,13 +158,13 @@ public class ConstraintGroupBasedRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        solution.lines().requireSizeOf(7);
+        solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
         testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA);
-        solution.lines().requireSizeOf(3);
+        solution.unorderedLines().requireSizeOf(3);
         testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB);
-        solution.lines().requireSizeOf(1);
+        solution.unorderedLines().requireSizeOf(1);
     }
 
     @Test
@@ -208,7 +207,7 @@ public class ConstraintGroupBasedRepairTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(linearInitialization());
-        solution.lines().requireSizeOf(7);
+        solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
         final var testProduct = testSubject.demandGrouping

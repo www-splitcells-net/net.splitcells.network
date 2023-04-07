@@ -54,7 +54,7 @@ public class CrowdDetector {
                     .sorted(ASCENDING_INTEGERS)
                     .collect(toList());
             final var startTime = timeValues.get(0);
-            final var incomingConstraintGroup = lines.lines().get(0).value(INCOMING_CONSTRAINT_GROUP);
+            final var incomingConstraintGroup = lines.unorderedLines().get(0).value(INCOMING_CONSTRAINT_GROUP);
             final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
             final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
             final var centerStartPosition = lineValues.stream()

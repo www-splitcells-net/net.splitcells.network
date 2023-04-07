@@ -33,7 +33,7 @@ public class OnlineLinearDeinitializer implements OnlineOptimization {
     @Override
     public void optimize(Solution solution) {
         while (!solution.isEmpty()) {
-            solution.remove(solution.allocations().lines().get(0));
+            solution.remove(solution.allocations().unorderedLines().get(0));
         }
     }
 }

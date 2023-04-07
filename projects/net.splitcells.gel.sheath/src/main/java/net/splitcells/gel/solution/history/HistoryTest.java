@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.solution.history;
 
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import org.junit.jupiter.api.Tag;
@@ -72,7 +71,7 @@ public class HistoryTest {
                     testSubject.demands().rawLine(0)
                     , testSubject.supplies().rawLine(0));
             testSubject.history().resetTo(-1);
-            testSubject.history().lines().requireSizeOf(0);
+            testSubject.history().unorderedLines().requireSizeOf(0);
         });
     }
 
@@ -97,9 +96,9 @@ public class HistoryTest {
             rangeClosed(0, 3).forEach(i -> solution.allocate
                     (solution.demands().rawLine(i)
                             , solution.supplies().rawLine(i)));
-            solution.history().lines().requireSizeOf(4);
+            solution.history().unorderedLines().requireSizeOf(4);
             solution.history().resetTo(2);
-            solution.history().lines().requireSizeOf(3);
+            solution.history().unorderedLines().requireSizeOf(3);
         });
     }
 
@@ -115,12 +114,12 @@ public class HistoryTest {
                 .toProblem()
                 .asSolution();
         solution.history().processWithHistory(() -> {
-            solution.history().lines().requireSizeOf(0);
+            solution.history().unorderedLines().requireSizeOf(0);
             {
                 solution.allocate
                         (solution.demands().rawLine(0)
                                 , solution.supplies().rawLine(0));
-                solution.history().lines().requireSizeOf(1);
+                solution.history().unorderedLines().requireSizeOf(1);
                 final var additionEvent = solution.history().rawLine(0);
                 final var additionOperation = additionEvent.value(ALLOCATION_EVENT);
                 requireEquals(additionOperation.type(), ADDITION);
@@ -128,9 +127,9 @@ public class HistoryTest {
                 requireEquals(additionOperation.supply(), solution.supplies().rawLine(0));
             }
             {
-                solution.history().lines().requireSizeOf(1);
+                solution.history().unorderedLines().requireSizeOf(1);
                 solution.remove(0);
-                solution.history().lines().requireSizeOf(2);
+                solution.history().unorderedLines().requireSizeOf(2);
                 final var removalEvent = solution.history().rawLine(1);
                 final var removalOperation = removalEvent.value(ALLOCATION_EVENT);
                 requireEquals(removalOperation.type(), REMOVAL);

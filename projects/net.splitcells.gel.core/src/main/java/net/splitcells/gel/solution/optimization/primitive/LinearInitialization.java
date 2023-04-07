@@ -41,8 +41,8 @@ public class LinearInitialization implements OfflineOptimization {
             return list(
                     optimizationEvent
                             (ADDITION
-                                    , solution.demandsFree().lines().get(0).toLinePointer()
-                                    , solution.suppliesFree().lines().get(0).toLinePointer()));
+                                    , solution.demandsFree().unorderedLines().get(0).toLinePointer()
+                                    , solution.suppliesFree().unorderedLines().get(0).toLinePointer()));
 
         }
         return list();

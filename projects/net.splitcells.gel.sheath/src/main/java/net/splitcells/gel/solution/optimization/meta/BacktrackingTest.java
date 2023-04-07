@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.solution.optimization.meta;
 
-import net.splitcells.dem.data.atom.Integers;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.atom.Bools.require;
@@ -26,7 +25,6 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribut
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueRater;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
-import static net.splitcells.gel.solution.optimization.primitive.enumerable.Initializer.initializer;
 import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpaceI.enumerableOptimizationSpace;
 
 public class BacktrackingTest {
@@ -50,7 +48,7 @@ public class BacktrackingTest {
                 .asSolution();
         testData.history().processWithHistory(() -> {
             backtracking().optimize(testData);
-            testData.lines().requireSizeOf(3);
+            testData.unorderedLines().requireSizeOf(3);
             requireEqualInts(testData.columnView(demandAttribute).get(0), 1);
             requireEqualInts(testData.columnView(supplyAttribute).get(0), 4);
             requireEqualInts(testData.columnView(demandAttribute).get(1), 2);
@@ -84,7 +82,7 @@ public class BacktrackingTest {
                 .asSolution();
         testData.history().processWithHistory(() -> {
             backtracking().optimize(testData);
-            testData.lines().requireSizeOf(3);
+            testData.unorderedLines().requireSizeOf(3);
             requireEqualInts(testData.columnView(demandAttribute).get(0), 1);
             requireEqualInts(testData.columnView(supplyAttribute).get(0), 4);
             requireEqualInts(testData.columnView(demandAttribute).get(1), 2);

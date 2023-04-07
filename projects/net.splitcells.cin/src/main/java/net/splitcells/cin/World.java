@@ -16,18 +16,9 @@
 package net.splitcells.cin;
 
 import net.splitcells.cin.raters.TimeSteps;
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.atom.Thing;
-import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.data.set.map.Pair;
-import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.GelDev;
-import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -50,14 +41,9 @@ import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.data.set.map.Pair.pair;
-import static net.splitcells.dem.utils.MathUtils.floorToInt;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueRater;
-import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
-import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
@@ -169,7 +155,7 @@ public class World {
                 .lookup(positionX)
                 .columnView(POSITION_Y)
                 .lookup(positionY)
-                .lines()
+                .unorderedLines()
                 .lastValue();
     }
 

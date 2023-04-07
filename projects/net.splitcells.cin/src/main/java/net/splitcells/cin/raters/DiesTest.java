@@ -18,7 +18,6 @@ package net.splitcells.cin.raters;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.raters.Dies.dies;
-import static net.splitcells.cin.raters.Loneliness.loneliness;
 import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -26,7 +25,6 @@ import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDeinitializer.onlineLinearDeinitializer;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class DiesTest {
@@ -63,12 +61,12 @@ public class DiesTest {
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(3);
+                .lineProcessing().unorderedLines().requireSizeOf(3);
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(3);
+                .lineProcessing().unorderedLines().requireSizeOf(3);
         testSubject.constraint().rating().requireEqualsTo(noCost());
     }
 
@@ -103,12 +101,12 @@ public class DiesTest {
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(2);
+                .lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
-                .lineProcessing().lines().requireSizeOf(0);
+                .lineProcessing().unorderedLines().requireSizeOf(0);
         testSubject.constraint().rating().requireEqualsTo(cost(2));
     }
 

@@ -17,14 +17,12 @@ package net.splitcells.gel.rating.rater;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
-import org.w3c.dom.Node;
 
 import java.util.Optional;
 
@@ -54,7 +52,7 @@ public class RaterBasedOnLineGroup implements Rater {
             public RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children) {
                 final var lineRating = rater.lineRating(lines, addition, removal);
                 final var ratingEvent = ratingEvent();
-                lines.lines().stream()
+                lines.unorderedLines().stream()
                         .filter(e -> addition.map(line -> e.index() != line.index()).orElse(true))
                         .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
                         .forEach(e -> ratingEvent.updateRating_withReplacement(e

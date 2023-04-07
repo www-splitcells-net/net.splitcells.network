@@ -239,7 +239,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     default Set<GroupId> childGroups(GroupId incomingGroup) {
         return lineProcessing().columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(incomingGroup)
-                .lines()
+                .unorderedLines()
                 .stream()
                 .map(lineResult -> lineResult.value(RESULTING_CONSTRAINT_GROUP))
                 .collect(toSetOfUniques());

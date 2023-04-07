@@ -22,14 +22,11 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 
 import java.util.Optional;
 
-import static net.splitcells.cin.raters.PositionClusters.centerXPositionOf;
-import static net.splitcells.cin.raters.PositionClusters.centerYPositionOf;
 import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -74,7 +71,7 @@ public class Loneliness implements Rater {
                     .sorted(ASCENDING_INTEGERS)
                     .collect(toList());
             final var startTime = timeValues.get(0);
-            final var incomingConstraintGroup = lines.lines().get(0).value(INCOMING_CONSTRAINT_GROUP);
+            final var incomingConstraintGroup = lines.unorderedLines().get(0).value(INCOMING_CONSTRAINT_GROUP);
             final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
             final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
             final var centerStartPosition = lineValues.stream()
@@ -175,7 +172,7 @@ public class Loneliness implements Rater {
                 .sorted(ASCENDING_INTEGERS)
                 .collect(toList());
         final var startTime = timeValues.get(0);
-        final var incomingConstraintGroup = lines.lines().get(0).value(INCOMING_CONSTRAINT_GROUP);
+        final var incomingConstraintGroup = lines.unorderedLines().get(0).value(INCOMING_CONSTRAINT_GROUP);
         final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
         final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
         final Optional<Line> centerStartPosition;

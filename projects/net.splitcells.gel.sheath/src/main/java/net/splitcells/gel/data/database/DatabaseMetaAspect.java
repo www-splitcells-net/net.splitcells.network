@@ -83,7 +83,7 @@ public class DatabaseMetaAspect implements Database {
     public Line add(Line line) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             database.headerView().requireSizeOf(line.context().headerView().size());
-            database.lines().requireComplianceByEveryElementWith(e -> !line.equalsTo(e));
+            database.unorderedLines().requireComplianceByEveryElementWith(e -> !line.equalsTo(e));
             describedBool(line.index() >= database.rawLines().size()
                             || database.rawLines().get(line.index()) == null
                     , () -> "path: " + path().toString() + ", line.index(): " + line.index())

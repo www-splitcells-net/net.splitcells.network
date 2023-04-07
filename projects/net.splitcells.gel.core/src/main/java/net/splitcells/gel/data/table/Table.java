@@ -51,7 +51,8 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 
 public interface Table extends Discoverable, Domable, Identifiable {
     /**
-     * true is faster than false, according to a manual test run with a CPU profiler.
+     * TODO TOFIX True is faster than false, according to a manual test run with a CPU profiler,
+     * but it causes errors.
      */
     boolean GET_LINE_VIA_STREAM = false;
 
@@ -87,7 +88,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
     /**
      * @return List of lines in any order.
      */
-    default List<Line> lines() {
+    default List<Line> unorderedLines() {
         return rawLinesView().stream()
                 .filter(e -> e != null)
                 .collect(Lists.toList());
@@ -106,11 +107,12 @@ public interface Table extends Discoverable, Domable, Identifiable {
      * where knowledge of the underlining {@link Table} implementation is present.
      * The reason for this, is the fact, that it is faster to construct {@link #linesStream()} via {@link #rawLines()},
      * than the other way around.</p>
+     * <p>There is no guarantee regarding the ordering.</p>
      *
      * @return An ordered {@linl Stream} of {@łink #lines}.
      */
     default Stream<Line> linesStream() {
-        return lines().stream();
+        return unorderedLines().stream();
     }
 
     /**
@@ -160,13 +162,13 @@ public interface Table extends Discoverable, Domable, Identifiable {
     default Line line(int index) {
         if (GET_LINE_VIA_STREAM) {
             if (index == 0) {
-                return linesStream().findFirst().orElseThrow();
+                return orderedLinesStream().findFirst().orElseThrow();
             } else {
                 // TODO TOFIX This does not work in BacktrackingTest#testBranching.
-                return linesStream().skip(index).findFirst().orElseThrow();
+                return orderedLinesStream().skip(index).findFirst().orElseThrow();
             }
         } else {
-            return lines().get(index);
+            return unorderedLines().get(index);
         }
     }
 
@@ -200,7 +202,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 .collect(toList());
         try (final var printer = new CSVPrinter
                 (csv, CSVFormat.RFC4180.withHeader(header.toArray(new String[header.size()])))) {
-            lines().stream()
+            unorderedLines().stream()
                     .map(line -> line.toStringList())
                     .forEach(line -> {
                         try {
@@ -225,7 +227,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
     Line lookupEquals(Attribute<Line> attribute, Line values);
 
     default Stream<Line> lookupEquals(List<Object> values) {
-        return lines().stream()
+        return unorderedLines().stream()
                 .filter(line ->
                         IntStream.range(0, headerView().size())
                                 .mapToObj(i -> Objects.equals(values.get(i), line.value(headerView().get(i))))
@@ -238,7 +240,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
         header.withChild(perspective("th", HTML).withText("index"));
         headerView().forEach(attribute -> header.withChild(perspective("th", HTML).withText(attribute.name())));
         htmlTable.withChild(header);
-        lines().forEach(line -> {
+        unorderedLines().forEach(line -> {
             final var row = perspective("tr", HTML);
             row.withChild(perspective("td", HTML).withText(line.index() + ""));
             headerView().forEach(attribute -> row.withChild(perspective("td", HTML).withText(line.value(attribute).toString())));
@@ -271,7 +273,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
                             tabulasVertība.appendChild(textNode(attName));
                             return tabulasElements;
                         }).forEach(attDesc -> header.appendChild(attDesc));
-                lines().forEach(line -> {
+                unorderedLines().forEach(line -> {
                     final var tableLine = elementWithChildren(FODS_TABLE, "table-row");
                     table.appendChild(tableLine);
                     headerView().stream()
