@@ -144,8 +144,7 @@ public abstract class ConstraintAI implements Constraint {
             Assertions.assertThat(removal.isValid()).isTrue();
         }
         processLinesBeforeRemoval(injectionGroup, removal);
-        lineProcessing
-                .columnView(INCOMING_CONSTRAINT_GROUP)
+        lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(injectionGroup)
                 .columnView(LINE)
                 .lookup(removal)
