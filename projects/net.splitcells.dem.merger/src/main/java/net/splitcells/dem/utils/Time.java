@@ -34,6 +34,6 @@ public class Time {
         final var startTime = LocalDateTime.now();
         run.run();
         final var endTime = LocalDateTime.now();
-        domsole().append(taskName + " took " + ChronoUnit.SECONDS.between(startTime, endTime) + " seconds to execute.", logLevel);
+        domsole().append("`" + taskName + "` took " + ChronoUnit.SECONDS.between(startTime, endTime) + " seconds to execute.", logLevel);
     }
 }
