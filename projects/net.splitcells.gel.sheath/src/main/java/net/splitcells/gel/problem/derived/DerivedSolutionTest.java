@@ -27,7 +27,7 @@ import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueBas
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 
 public class DerivedSolutionTest {
 
@@ -69,7 +69,7 @@ public class DerivedSolutionTest {
                                 * derivedCostManipulationFactor).asMetaRating());
         rootSolution.constraint().rating().requireEqualsTo(cost(0));
         testSubject.constraint().rating().requireEqualsTo(cost(0));
-        rootSolution.optimize(linearInitialization());
+        rootSolution.optimize(offlineLinearInitialization());
         rootSolution.constraint().rating().requireEqualsTo(cost(2d * defianceCost));
         testSubject.constraint().rating()
                 .requireEqualsTo(cost(2d * defianceCost * derivedCostManipulationFactor));
@@ -106,7 +106,7 @@ public class DerivedSolutionTest {
                         })))
                 .toProblem()
                 .asSolution();
-        rootSolution.optimize(linearInitialization());
+        rootSolution.optimize(offlineLinearInitialization());
         final var testSubject
                 = rootSolution
                 .derived(rating ->

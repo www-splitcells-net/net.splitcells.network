@@ -184,7 +184,7 @@ that needs an initialized solution,
 where all demands or all supplies are allocated.
 So we use `linearInitialization` to set all variables in the following example:
 ```
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.linearInitialization;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 [...]
 solution.optimize(linearInitialization());
@@ -261,7 +261,7 @@ import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOn
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.LinearDeinitializer.linearDeinitializer;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.linearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

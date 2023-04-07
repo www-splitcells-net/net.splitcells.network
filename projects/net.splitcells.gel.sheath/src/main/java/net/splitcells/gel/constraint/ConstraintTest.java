@@ -24,7 +24,7 @@ import static net.splitcells.gel.constraint.Constraint.incomingGroupsOfConstrain
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConstraintTest {
@@ -51,7 +51,7 @@ public class ConstraintTest {
                                                 .withChildren(ForAlls.forEach(attribute))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
+        solution.optimize(offlineLinearInitialization());
         final var testVerifier = solution.constraint().childrenView().get(1).childrenView().get(0);
         final var allocations = incomingGroupsOfConstraintPath
                 (list

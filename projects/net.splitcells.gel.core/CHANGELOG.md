@@ -1,9 +1,10 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
-* **2023-04-07 \#170**
+* **2023-04-07**
   1. Rename `Table#lines` to `Table#unorderedLines` in order to avoid programmer errors.
   2. Rename `Table#linesStream` to `Table#unorderedLinesStream` in order to avoid programmer errors.
+  3. Rename `LinearInitialization` to `OfflineLinearInitialization` in order to discourage its usage.
 * **2023-03-30 \#170** Require raters to implement toSimpleDescription in order always have a working report,
   for a given optimization problem.
 * **2023-03-25 ** Deprecate `Databases` without a name,

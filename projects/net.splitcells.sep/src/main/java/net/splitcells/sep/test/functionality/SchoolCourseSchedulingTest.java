@@ -72,7 +72,7 @@ import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimiz
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.hillClimber;
 import static net.splitcells.sep.Network.network;
@@ -550,9 +550,9 @@ public class SchoolCourseSchedulingTest {
                 , minimalNumberOfStudentsPerCourse
                 , optimalNumberOfStudentsPerCourse
                 , maximumNumberOfStudentsPerCourse);
-        railsForSchoolScheduling.optimize(linearInitialization());
-        teacherAllocationForCourses.optimize(linearInitialization());
-        studentAllocationsForCourses.optimize(linearInitialization());
+        railsForSchoolScheduling.optimize(offlineLinearInitialization());
+        teacherAllocationForCourses.optimize(offlineLinearInitialization());
+        studentAllocationsForCourses.optimize(offlineLinearInitialization());
         require(railsForSchoolScheduling.isOptimal());
         require(teacherAllocationForCourses.isOptimal());
         studentAllocationsForCourses.constraint().rating().requireEqualsTo(cost(1));
@@ -579,9 +579,9 @@ public class SchoolCourseSchedulingTest {
                 , minimalNumberOfStudentsPerCourse
                 , optimalNumberOfStudentsPerCourse
                 , maximumNumberOfStudentsPerCourse);
-        railsForSchoolScheduling.optimize(linearInitialization());
-        teacherAllocationForCourses.optimize(linearInitialization());
-        studentAllocationsForCourses.optimize(linearInitialization());
+        railsForSchoolScheduling.optimize(offlineLinearInitialization());
+        teacherAllocationForCourses.optimize(offlineLinearInitialization());
+        studentAllocationsForCourses.optimize(offlineLinearInitialization());
         require(railsForSchoolScheduling.isOptimal());
         require(teacherAllocationForCourses.isOptimal());
     }

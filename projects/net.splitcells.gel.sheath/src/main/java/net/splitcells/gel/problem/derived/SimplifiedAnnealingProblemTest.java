@@ -28,7 +28,7 @@ import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -86,7 +86,7 @@ public class SimplifiedAnnealingProblemTest {
                         Then.then(constantRater(cost(defianceCost))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
+        solution.optimize(offlineLinearInitialization());
         assertThat(solution.constraint().rating()).isEqualTo(cost(defianceCost * lineCount));
         final var testSubject = simplifiedAnnealingProblem(solution, i -> 1d);
         assertThat(testSubject.constraint().rating()).isEqualTo(noCost());
@@ -106,7 +106,7 @@ public class SimplifiedAnnealingProblemTest {
                         Then.then(constantRater(cost(defianceCost))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
+        solution.optimize(offlineLinearInitialization());
         assertThat(solution.constraint().rating()).isEqualTo(cost(defianceCost * lineCount));
         final var testSubject = simplifiedAnnealingProblem(solution, i -> 0d);
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(defianceCost * lineCount));
@@ -128,7 +128,7 @@ public class SimplifiedAnnealingProblemTest {
                         Then.then(constantRater(cost(defianceCost))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
+        solution.optimize(offlineLinearInitialization());
         assertThat(solution.constraint().rating()).isEqualTo(cost(defianceCost * lineCount));
         final var testSubject = simplifiedAnnealingProblem(solution, i -> probability, randomness(1L));
         assertPlausibility(probability, tryCount,

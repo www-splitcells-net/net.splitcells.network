@@ -32,7 +32,7 @@ import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -124,7 +124,7 @@ public class ForAllTest extends TestSuiteI {
                         .withChildren(Then.then(cost(1))))
                 .toProblem()
                 .asSolution();
-        testSubject.optimize(linearInitialization());
+        testSubject.optimize(offlineLinearInitialization());
         assertThat(testSubject.constraint().rating()).isEqualTo(cost(6));
         assertThat(testSubject.constraint().complying()).isEmpty();
         assertThat(testSubject.constraint().defying()).hasSize(6);

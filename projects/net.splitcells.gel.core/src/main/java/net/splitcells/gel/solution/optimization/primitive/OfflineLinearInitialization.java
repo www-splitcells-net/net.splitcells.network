@@ -24,14 +24,14 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
-public class LinearInitialization implements OfflineOptimization {
+public class OfflineLinearInitialization implements OfflineOptimization {
 
     @Deprecated
-    public static LinearInitialization linearInitialization() {
-        return new LinearInitialization();
+    public static OfflineLinearInitialization offlineLinearInitialization() {
+        return new OfflineLinearInitialization();
     }
 
-    private LinearInitialization() {
+    private OfflineLinearInitialization() {
 
     }
 

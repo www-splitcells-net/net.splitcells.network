@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.quickstart;
 
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
@@ -37,7 +36,7 @@ import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOn
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.LinearDeinitializer.linearDeinitializer;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 
 /**
  * <p>This class solves the widely known 8 queen problem with the commonly known
@@ -57,7 +56,7 @@ public class NQueenProblemTest {
     @Test
     public void test() {
         final var testSubject = nQueenProblem(8, 8).asSolution();
-        testSubject.optimize(linearInitialization());
+        testSubject.optimize(offlineLinearInitialization());
         testSubject.optimizeOnce(functionalHillClimber(100));
         testSubject.createAnalysis(Path.of("./target/analysis-hill-climber/"));
         testSubject.optimize(linearDeinitializer());

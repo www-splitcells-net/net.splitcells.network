@@ -59,7 +59,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
 import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 
@@ -75,7 +75,7 @@ public class NQueenProblemTest extends TestSuiteI {
     public void test_8_queen_problem_with_rolling_the_dice() {
         // TODO Setting the randomness seed.
         final Solution testSubject = nQueenProblem(8, 8).asSolution();
-        testSubject.optimize(linearInitialization());
+        testSubject.optimize(offlineLinearInitialization());
         testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(6), 50));
         testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(8), 100));
         createDirectory(environment().config().configValue(ProcessPath.class));
@@ -125,7 +125,7 @@ public class NQueenProblemTest extends TestSuiteI {
         GelDev.process(() -> {
             final var testSubject = nQueenProblem(8, 8).asSolution();
             // The temperature functions was determined by trial and error with universal allocation program's temperature functions.
-            testSubject.optimize(linearInitialization());
+            testSubject.optimize(offlineLinearInitialization());
             SimplifiedAnnealingProblem.simplifiedAnnealingProblem(testSubject,
                             i -> max(naturalLogarithm(4.0d) / power(naturalLogarithm(i + 3d), 15d)
                                     , 0d))

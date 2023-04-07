@@ -35,7 +35,7 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 
 public class ConstraintGroupBasedOfflineRepairTest {
 
@@ -86,7 +86,7 @@ public class ConstraintGroupBasedOfflineRepairTest {
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
+        solution.optimize(offlineLinearInitialization());
         // Select the first defying group.
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(
                 constraintGroup -> list(constraintGroup.get(6))
@@ -167,7 +167,7 @@ public class ConstraintGroupBasedOfflineRepairTest {
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
+        solution.optimize(offlineLinearInitialization());
         solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);
@@ -216,7 +216,7 @@ public class ConstraintGroupBasedOfflineRepairTest {
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
+        solution.optimize(offlineLinearInitialization());
         solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(0);

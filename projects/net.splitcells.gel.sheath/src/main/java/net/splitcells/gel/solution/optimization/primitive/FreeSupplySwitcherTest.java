@@ -28,7 +28,7 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -54,7 +54,7 @@ public class FreeSupplySwitcherTest {
                 .asSolution();
         testSolution.history().processWithHistory(() -> {
             {
-                testSolution.optimize(linearInitialization());
+                testSolution.optimize(offlineLinearInitialization());
                 range(0, demands).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
                 assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();
                 assertThat(testSolution.suppliesFree().unorderedLines()).hasSize(1);
@@ -90,7 +90,7 @@ public class FreeSupplySwitcherTest {
                 .asSolution();
         testSolution.history().processWithHistory(() -> {
             {
-                testSolution.optimize(linearInitialization());
+                testSolution.optimize(offlineLinearInitialization());
                 range(0, variableCount).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
                 assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();
                 assertThat(testSolution.suppliesFree().unorderedLines()).isEmpty();

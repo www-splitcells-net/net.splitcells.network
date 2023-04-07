@@ -32,7 +32,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MinimalDistanceTest {
@@ -54,7 +54,7 @@ public class MinimalDistanceTest {
                         (then(has_minimal_distance_of(integer, 3.0)))
                 .toProblem()
                 .asSolution();
-        testSubject.optimize(linearInitialization());
+        testSubject.optimize(offlineLinearInitialization());
         testSubject.optimize
                 (optimizationEvent
                         (StepType.REMOVAL

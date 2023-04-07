@@ -31,7 +31,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.history.History.ALLOCATION_EVENT;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 
 public class ConstraintGroupBasedRepairTest {
@@ -85,7 +85,7 @@ public class ConstraintGroupBasedRepairTest {
                 .toProblem()
                 .asSolution();
         solution.history().processWithHistory(() -> {
-            solution.optimize(linearInitialization());
+            solution.optimize(offlineLinearInitialization());
             final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(
                     // Select the first defying group.
                     groupSelector(constraintGroup -> list(constraintGroup.get(6)))
@@ -157,7 +157,7 @@ public class ConstraintGroupBasedRepairTest {
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
+        solution.optimize(offlineLinearInitialization());
         solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
@@ -206,7 +206,7 @@ public class ConstraintGroupBasedRepairTest {
                                         , forAllWithValue(b, validValue).withChildren(then(noCost()))))
                 .toProblem()
                 .asSolution();
-        solution.optimize(linearInitialization());
+        solution.optimize(offlineLinearInitialization());
         solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);

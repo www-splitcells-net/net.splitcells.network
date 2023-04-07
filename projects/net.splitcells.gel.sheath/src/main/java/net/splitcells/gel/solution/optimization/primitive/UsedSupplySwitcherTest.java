@@ -31,7 +31,7 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.UsedSupplySwitcher.usedSupplySwitcher;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -59,7 +59,7 @@ public class UsedSupplySwitcherTest {
                 .toProblem()
                 .asSolution();
         {
-            testSolution.optimize(linearInitialization());
+            testSolution.optimize(offlineLinearInitialization());
             assertThat(testSolution.allocations().line(0).value(A)).isEqualTo(1);
             assertThat(testSolution.allocations().line(0).value(B)).isEqualTo(1);
             assertThat(testSolution.allocations().line(1).value(A)).isEqualTo(2);
@@ -99,7 +99,7 @@ public class UsedSupplySwitcherTest {
                 .toProblem()
                 .asSolution();
         {
-            testSolution.optimize(linearInitialization());
+            testSolution.optimize(offlineLinearInitialization());
             assertThat(testSolution.allocations().line(0).value(A)).isEqualTo(1);
             assertThat(testSolution.allocations().line(0).value(B)).isEqualTo(1);
             assertThat(testSolution.allocations().line(1).value(A)).isEqualTo(2);
@@ -139,7 +139,7 @@ public class UsedSupplySwitcherTest {
                 .toProblem()
                 .asSolution();
         {
-            testSolution.optimize(linearInitialization());
+            testSolution.optimize(offlineLinearInitialization());
             assertThat(testSolution.allocations().line(0).value(A)).isEqualTo(1);
             assertThat(testSolution.allocations().line(0).value(B)).isEqualTo(1);
             assertThat(testSolution.allocations().line(1).value(A)).isEqualTo(2);
@@ -177,7 +177,7 @@ public class UsedSupplySwitcherTest {
                 .asSolution();
         testSolution.history().processWithHistory(() -> {
             {
-                testSolution.optimize(linearInitialization());
+                testSolution.optimize(offlineLinearInitialization());
                 assertThat(testSolution.allocations().size()).isEqualTo(4);
                 range(0, variables).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
                 assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();

@@ -58,7 +58,7 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.meta.Escalator.escalator;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
-import static net.splitcells.gel.solution.optimization.primitive.LinearInitialization.linearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 
 /**
  * TODO IDEA Test object orientation by making all people an instance of a certain
@@ -92,7 +92,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                             , 6
                             , randomness(0L))
                     .asSolution();
-            testSubject.optimize(linearInitialization());
+            testSubject.optimize(offlineLinearInitialization());
             testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(3)
                     , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedOfflineRepair(4, 2)
@@ -162,7 +162,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                         , randomness(0L))
                 .asSolution();
         final var initialSolutionTemplate = testSubject.dataContainer().resolve("previous").resolve("results.fods");
-        testSubject.optimize(linearInitialization());
+        testSubject.optimize(offlineLinearInitialization());
         intervalClosed(1, 100).forEach(i -> {
             if (testSubject.isOptimal()) {
                 return;
@@ -285,7 +285,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
     @IntegrationTest
     public void testRatingsOfSingleExam() {
         Solution testSubject = colloquiumPlanning(list(list(1, 1, 1)), list(list(1, 1, 1))).asSolution();
-        testSubject.optimize(linearInitialization());
+        testSubject.optimize(offlineLinearInitialization());
         testSubject.constraint().rating().requireEqualsTo(noCost());
     }
 
@@ -297,7 +297,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                                         , list(1, 1, 1))
                         , list(list(1, 1, 1), list(1, 1, 1)))
                 .asSolution();
-        testSubject.optimize(linearInitialization());
+        testSubject.optimize(offlineLinearInitialization());
         {
             testSubject.constraint().query()
                     .forAll(OBSERVER)
@@ -369,7 +369,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                                         , list(1, 2, 2)
                                         , list(2, 1, 2))
                 ).asSolution();
-        testSubject.optimize(linearInitialization());
+        testSubject.optimize(offlineLinearInitialization());
         {
             testSubject.constraint().query()
                     .forAll(STUDENTS)
@@ -420,7 +420,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                                         , list(1, 2, 1)
                                         , list(1, 1, 2))
                 ).asSolution();
-        testSubject.optimize(linearInitialization());
+        testSubject.optimize(offlineLinearInitialization());
         {
             testSubject.constraint().query()
                     .forAll(STUDENTS)
