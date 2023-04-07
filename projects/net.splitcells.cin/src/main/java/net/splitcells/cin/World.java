@@ -21,6 +21,8 @@ import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.GelDev;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -32,6 +34,7 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.sep.Network;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.raters.CrowdDetector.crowdDetector;
@@ -40,6 +43,7 @@ import static net.splitcells.cin.raters.IsAlive.isAlive;
 import static net.splitcells.cin.raters.Loneliness.loneliness;
 import static net.splitcells.cin.raters.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
 import static net.splitcells.cin.raters.PositionClusters.positionClustering;
+import static net.splitcells.cin.raters.TemplateAdherence.templateAdherence;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -66,8 +70,8 @@ public class World {
     public static void main(String... args) {
         GelDev.process(() -> {
             final var network = network();
-            final var committedWorldHistory = emptyWorldHistory(COMMITTED_WORLD_HISTORY);
-            final var currentWorldHistory = emptyWorldHistory(CURRENT_WORLD_HISTORY);
+            final var committedWorldHistory = committedWorldHistory(COMMITTED_WORLD_HISTORY);
+            final var currentWorldHistory = currentWorldHistory(CURRENT_WORLD_HISTORY, committedWorldHistory);
             network.withNode(COMMITTED_WORLD_HISTORY, committedWorldHistory);
             network.withNode(CURRENT_WORLD_HISTORY, currentWorldHistory);
             initWorldHistory(currentWorldHistory);
@@ -141,11 +145,19 @@ public class World {
                         .line(0));
     }
 
-    public static Solution emptyWorldHistory(String name) {
-        return worldHistory(name, list(), list());
+    public static Solution committedWorldHistory(String name) {
+        return worldHistory(name, list(), list(), q -> {
+        });
     }
 
-    public static Solution worldHistory(String name, List<List<Object>> demands, List<List<Object>> supplies) {
+    public static Solution currentWorldHistory(String name, Solution committedWorldHistory) {
+        return worldHistory(name, list(), list(), q -> {
+            q.then(templateAdherence(committedWorldHistory));
+        });
+    }
+
+    public static Solution worldHistory(String name, List<List<Object>> demands, List<List<Object>> supplies
+            , Consumer<Query> constraintExtension) {
         // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
         return defineProblem(name)
                 .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
@@ -173,6 +185,7 @@ public class World {
                             .forAll(isDead(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .forAll(revivalCondition(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(reproduction(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
+                    constraintExtension.accept(r);
                     return r;
                 }).toProblem()
                 .asSolution();
