@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.rating.rater.classification;
 
-import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -24,8 +23,6 @@ import static net.splitcells.gel.common.Language.PROPAGTION;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
-
-import java.util.Collection;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;

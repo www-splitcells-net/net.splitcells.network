@@ -15,15 +15,12 @@
  */
 package net.splitcells.gel.rating.rater.classification;
 
-import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
-
-import java.util.Collection;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.gel.data.table.Line;
@@ -46,7 +43,7 @@ public class RaterBasedOnGrouping implements Rater {
     private final Rater grouping;
     private final List<Discoverable> contexts = list();
 
-    protected RaterBasedOnGrouping(Rater classifier) {
+    private RaterBasedOnGrouping(Rater classifier) {
         this.grouping = classifier;
     }
 

@@ -54,6 +54,7 @@ lexer grammar Java11Lexer;
     		| 'import java.util.function.Supplier;'
     		| 'import java.util.function.Predicate;'
     		| 'import java.util.function.BiPredicate;'
+    		| 'import java.util.function.BiFunction;'
     		| 'import java.util.Optional;'
     		| 'import java.util.regex.Pattern;'
     		| 'import java.util.stream.Stream;'
