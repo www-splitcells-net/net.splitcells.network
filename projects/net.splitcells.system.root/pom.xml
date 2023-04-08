@@ -5,7 +5,6 @@
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.splitcells</groupId>
     <artifactId>system.root</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
