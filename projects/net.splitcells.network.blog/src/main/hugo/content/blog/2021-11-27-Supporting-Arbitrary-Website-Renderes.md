@@ -1,6 +1,8 @@
 ---
 title: Supporting Arbitrary Website Renderers
 date: 2021-11-27
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 # Previous Situation
 The best software is the one,

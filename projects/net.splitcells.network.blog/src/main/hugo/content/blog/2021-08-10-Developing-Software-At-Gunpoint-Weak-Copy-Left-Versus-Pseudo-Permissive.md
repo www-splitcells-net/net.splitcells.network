@@ -3,6 +3,8 @@ title: "Developing Software at Gunpoint: Weak Copy Left Versus Pseudo Permissive
 date: 2021-08-10
 author: Mārtiņš Avots
 license: EPL-2.0 OR GPL-2.0-or-later
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 I am not a lawyer: This is no legal advice,
 the following only represents some of my opinions and understandings.

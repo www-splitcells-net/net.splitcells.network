@@ -1,6 +1,8 @@
 ---
 title: Note On Creating Your Own Web Layout And Style
 date: 2022-05-01
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 # Sometimes one has to learn by pain.
 There is a known advice for new bloggers,

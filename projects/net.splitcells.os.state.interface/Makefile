@@ -1,7 +1,5 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 build :
 	@echo Makefile is only present for compatibility and to ease the initial setup.
 	@echo Tasks of the project are located in '"'./bin/*'"' and should be executed in the root folder of this project.

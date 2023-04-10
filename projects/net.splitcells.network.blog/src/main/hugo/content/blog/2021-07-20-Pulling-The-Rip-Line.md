@@ -3,6 +3,8 @@ title: Pulling The Rip Line
 date: 2021-07-15
 author: Mārtiņš Avots
 license: EPL-2.0 OR GPL-2.0-or-later
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 # The Situation
 As mentioned in the previous post,

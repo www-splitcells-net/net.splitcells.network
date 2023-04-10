@@ -1,6 +1,8 @@
 ---
 title: Writing tests after the fact.
 date: 2022-07-18
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 # Migrating The Webserver
 > It's temporary. We'll make it nice later... Well, that was a lie.

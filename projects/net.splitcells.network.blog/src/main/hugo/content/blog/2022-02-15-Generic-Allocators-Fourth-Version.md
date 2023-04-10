@@ -1,6 +1,8 @@
 ---
 title: Generic Allocator's Fourth Version
 date: 2022-02-15
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 # Original Plan For The Next Version
 Initially it was planned to solve all school problems for the next version:

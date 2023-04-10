@@ -3,6 +3,8 @@ title: On Creating The First Public Release
 date: 2021-07-07
 author: Mārtiņš Avots
 license: EPL-2.0 OR GPL-2.0-or-later
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 # Human's Software Development
 Have you heard of phrases like

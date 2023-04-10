@@ -1,6 +1,8 @@
 ---
 title: We want to use the software, guys. RIGHT?! Right? right? ... ehh
 date: 2022-09-23
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 # Current GUI Situation
 > The view breaks my heart.

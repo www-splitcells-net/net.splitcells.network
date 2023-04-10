@@ -3,6 +3,8 @@ title: "There is the bad, there is the horrible, and then there is <sight> error
 date: 2021-10-04
 author: Mārtiņš Avots
 license: EPL-2.0 OR GPL-2.0-or-later
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 # There is the bad, there is the horrible, and then there is <sight> error handling.
 I'm sorry dear reader, but I am emotionally triggered 🙇🏽‍♂️

@@ -1,6 +1,8 @@
 ---
 title: Reprioritization
 date: 2022-10-11
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ---
 # Reprioritization
 > At least to oneself, everybody should admit ones mistakes. 
