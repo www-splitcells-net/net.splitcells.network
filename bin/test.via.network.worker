@@ -21,7 +21,9 @@ cd ../net.splitcells.network.log
 cd projects/net.splitcells.system
 bin/execute | echo.error '`net.splitcells.system/bin/execute` was not successful.'
 endTime=$(date +%s)
-echo runTime=$(($endTime - startTime)) >> $networkProjectFolder/../net.splitcellsn.network.log/src/main/csv/net/splitcells/network/worker/builder/runtime/complete/$(hostname).csv
+completionRuntimeFolder=$networkProjectFolder/../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/runtime/complete/
+mkdir -p "$completionRuntimeFolder"
+echo runTime=$(($endTime - startTime)) >> "$completionRuntimeFolder/$(hostname).csv"
 cd ../../../net.splitcells.network.log
     # Normally this is done via the Java code in 'bin/execute'.
     # Under some conditions this does not work, because git cannot find the 'user.name' or 'user.email' config.
