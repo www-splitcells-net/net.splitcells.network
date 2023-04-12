@@ -17,6 +17,7 @@ package net.splitcells.gel.data.lookup;
 
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -28,6 +29,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.order.Comparators;
@@ -292,8 +294,14 @@ public class LookupTable implements Table {
         if (useExperimentalRawLineCache) {
             return listWithValuesOf(rawLinesCache);
         }
+        if (content.isEmpty()) {
+            return list();
+        }
+        final var contentList = Lists.listWithValuesOf(content);
+        contentList.sort(ASCENDING_INTEGERS);
         final var rawLines = Lists.<Line>list();
-        content.forEach(index -> rawLines.add(tableView.rawLine(index)));
+        range(0, contentList.requireLastValue() + 1).forEach(i -> rawLines.add(null));
+        content.forEach(index -> rawLines.set(index, tableView.rawLine(index)));
         return rawLines;
     }
 
