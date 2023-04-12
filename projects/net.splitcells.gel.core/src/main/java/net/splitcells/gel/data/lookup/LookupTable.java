@@ -318,7 +318,7 @@ public class LookupTable implements Table {
             return rawLinesCache.stream().filter(e -> e != null);
         }
         final var sortedContent = content.stream().collect(toList());
-        sortedContent.sort(Comparators.ASCENDING_INTEGERS);
-        return sortedContent.stream().map(tableView::line).collect(toList()).stream();
+        sortedContent.sort(ASCENDING_INTEGERS);
+        return sortedContent.stream().map(tableView::rawLine).collect(toList()).stream();
     }
 }
