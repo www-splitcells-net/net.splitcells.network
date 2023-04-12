@@ -54,7 +54,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
      * TODO TOFIX True is faster than false, according to a manual test run with a CPU profiler,
      * but it causes errors.
      */
-    boolean GET_LINE_VIA_STREAM = false;
+    boolean GET_LINE_VIA_STREAM = true;
 
     List<Attribute<Object>> headerView();
 
