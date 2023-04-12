@@ -156,19 +156,18 @@ public interface Table extends Discoverable, Domable, Identifiable {
     /**
      * TODO RENAME
      *
-     * @param index Index Of The Requested Line
+     * @param position Position Of The Requested Line indexed by ignoring nulls
      * @return Requested Line
      */
-    default Line line(int index) {
+    default Line line(int position) {
         if (GET_LINE_VIA_STREAM) {
-            if (index == 0) {
+            if (position == 0) {
                 return orderedLinesStream().findFirst().orElseThrow();
             } else {
-                // TODO TOFIX This does not work in BacktrackingTest#testBranching.
-                return orderedLinesStream().skip(index).findFirst().orElseThrow();
+                return orderedLinesStream().skip(position).findFirst().orElseThrow();
             }
         } else {
-            return unorderedLines().get(index);
+            return unorderedLines().get(position);
         }
     }
 
