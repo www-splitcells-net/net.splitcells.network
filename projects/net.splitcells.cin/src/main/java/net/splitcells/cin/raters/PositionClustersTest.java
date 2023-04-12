@@ -84,8 +84,8 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
-        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0)));
+        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().chooseLine(0)
+                , testSubject.suppliesFree().chooseLine(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
@@ -110,8 +110,8 @@ public class PositionClustersTest {
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(4, 4)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(4, 4)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(4, 4)));
-        rangeClosed(1, 20).forEach(i -> testSubject.deallocate(testSubject.demandsUsed().line(0)
-                , testSubject.suppliesUsed().line(0)));
+        rangeClosed(1, 20).forEach(i -> testSubject.deallocate(testSubject.demandsUsed().chooseLine(0)
+                , testSubject.suppliesUsed().chooseLine(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
@@ -176,8 +176,8 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
-        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0)));
+        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().chooseLine(0)
+                , testSubject.suppliesFree().chooseLine(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
@@ -261,8 +261,8 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
-        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0)));
+        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().chooseLine(0)
+                , testSubject.suppliesFree().chooseLine(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
@@ -346,8 +346,8 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
-        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0)));
+        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().chooseLine(0)
+                , testSubject.suppliesFree().chooseLine(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
@@ -372,8 +372,8 @@ public class PositionClustersTest {
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-5, 4)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-5, 4)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-5, 4)));
-        rangeClosed(1, 20).forEach(i -> testSubject.deallocate(testSubject.demandsUsed().line(0)
-                , testSubject.suppliesUsed().line(0)));
+        rangeClosed(1, 20).forEach(i -> testSubject.deallocate(testSubject.demandsUsed().chooseLine(0)
+                , testSubject.suppliesUsed().chooseLine(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
@@ -438,8 +438,8 @@ public class PositionClustersTest {
                 })
                 .toProblem()
                 .asSolution();
-        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().line(0)
-                , testSubject.suppliesFree().line(0)));
+        rangeClosed(1, 20).forEach(i -> testSubject.allocate(testSubject.demandsFree().chooseLine(0)
+                , testSubject.suppliesFree().chooseLine(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
@@ -464,8 +464,8 @@ public class PositionClustersTest {
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 4)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 4)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(4, 1)));
-        rangeClosed(1, 20).forEach(i -> testSubject.deallocate(testSubject.demandsUsed().line(0)
-                , testSubject.suppliesUsed().line(0)));
+        rangeClosed(1, 20).forEach(i -> testSubject.deallocate(testSubject.demandsUsed().chooseLine(0)
+                , testSubject.suppliesUsed().chooseLine(0)));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()

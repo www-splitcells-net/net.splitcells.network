@@ -96,7 +96,7 @@ public class IsAlive implements Rater {
                 .sorted(ASCENDING_INTEGERS)
                 .collect(toList());
         final var startTime = timeValues.get(0);
-        final var incomingConstraintGroup = lines.line(0).value(INCOMING_CONSTRAINT_GROUP);
+        final var incomingConstraintGroup = lines.chooseLine(0).value(INCOMING_CONSTRAINT_GROUP);
         final var centerXPosition = centerXPositionOf(incomingConstraintGroup);
         final var centerYPosition = centerYPositionOf(incomingConstraintGroup);
         final var centerStartPosition = lineValues

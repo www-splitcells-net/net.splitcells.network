@@ -21,7 +21,6 @@ import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.GelDev;
-import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -123,26 +122,26 @@ public class World {
                         .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 1)
                         .lookup(POSITION_Y, 2)
-                        .line(0)
+                        .chooseLine(0)
                 , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)
-                        .line(0));
+                        .chooseLine(0));
         worldHistory.allocate(worldHistory.demandsFree()
                         .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 2)
                         .lookup(POSITION_Y, 2)
-                        .line(0)
+                        .chooseLine(0)
                 , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)
-                        .line(0));
+                        .chooseLine(0));
         worldHistory.allocate(worldHistory.demandsFree()
                         .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 3)
                         .lookup(POSITION_Y, 2)
-                        .line(0)
+                        .chooseLine(0)
                 , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)
-                        .line(0));
+                        .chooseLine(0));
     }
 
     public static Solution committedWorldHistory(String name) {

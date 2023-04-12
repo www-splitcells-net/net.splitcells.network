@@ -43,12 +43,12 @@ public class IsAliveTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().line(0), testSubject.suppliesFree().line(0));
+        testSubject.allocate(testSubject.demandsFree().chooseLine(0), testSubject.suppliesFree().chooseLine(0));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
-        testSubject.allocate(testSubject.demandsFree().line(0), testSubject.suppliesFree().line(0));
+        testSubject.allocate(testSubject.demandsFree().chooseLine(0), testSubject.suppliesFree().chooseLine(0));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
@@ -74,12 +74,12 @@ public class IsAliveTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().line(0), testSubject.suppliesFree().line(0));
+        testSubject.allocate(testSubject.demandsFree().chooseLine(0), testSubject.suppliesFree().chooseLine(0));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireEmpty();
-        testSubject.allocate(testSubject.demandsFree().line(0), testSubject.suppliesFree().line(0));
+        testSubject.allocate(testSubject.demandsFree().chooseLine(0), testSubject.suppliesFree().chooseLine(0));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);

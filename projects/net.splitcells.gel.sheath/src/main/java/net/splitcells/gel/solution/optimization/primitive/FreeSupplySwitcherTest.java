@@ -55,7 +55,7 @@ public class FreeSupplySwitcherTest {
         testSolution.history().processWithHistory(() -> {
             {
                 testSolution.optimize(offlineLinearInitialization());
-                range(0, demands).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
+                range(0, demands).forEach(i -> assertThat(testSolution.allocations().chooseLine(i).value(A)).isEqualTo(i));
                 assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();
                 assertThat(testSolution.suppliesFree().unorderedLines()).hasSize(1);
             }
@@ -66,8 +66,8 @@ public class FreeSupplySwitcherTest {
             testSolution.optimizeOnce(FreeSupplySwitcher.freeSupplySwitcher(randomness, demands + 1));
             {
                 range(0, demands).forEach(i -> {
-                    assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i);
-                    assertThat(testSolution.allocations().line(i).value(B)).isEqualTo(i);
+                    assertThat(testSolution.allocations().chooseLine(i).value(A)).isEqualTo(i);
+                    assertThat(testSolution.allocations().chooseLine(i).value(B)).isEqualTo(i);
                 });
                 assertThat(testSolution.history().size()).isEqualTo(demands + 2);
             }
@@ -91,7 +91,7 @@ public class FreeSupplySwitcherTest {
         testSolution.history().processWithHistory(() -> {
             {
                 testSolution.optimize(offlineLinearInitialization());
-                range(0, variableCount).forEach(i -> assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i));
+                range(0, variableCount).forEach(i -> assertThat(testSolution.allocations().chooseLine(i).value(A)).isEqualTo(i));
                 assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();
                 assertThat(testSolution.suppliesFree().unorderedLines()).isEmpty();
             }
@@ -102,8 +102,8 @@ public class FreeSupplySwitcherTest {
             testSolution.optimizeOnce(FreeSupplySwitcher.freeSupplySwitcher(randomness, variableCount));
             {
                 range(0, variableCount).forEach(i -> {
-                    assertThat(testSolution.allocations().line(i).value(A)).isEqualTo(i);
-                    assertThat(testSolution.allocations().line(i).value(B)).isEqualTo(i);
+                    assertThat(testSolution.allocations().chooseLine(i).value(A)).isEqualTo(i);
+                    assertThat(testSolution.allocations().chooseLine(i).value(B)).isEqualTo(i);
                 });
                 assertThat(testSolution.history().size()).isEqualTo(variableCount);
             }

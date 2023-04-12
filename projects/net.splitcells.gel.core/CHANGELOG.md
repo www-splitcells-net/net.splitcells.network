@@ -1,6 +1,11 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-04-12 #170** Rename `Table#line(int)` to `Table#chooseLine(int)` in order to avoid misunderstandings.
+  By using the word `choose` it is attempted to point out,
+  that one of the existing Lines is retrieved and therefore
+  a null cannot be retrieved,
+  which is the case for `Table#rawLine(int)`.
 * **2023-04-07**
   1. Rename `Table#lines` to `Table#unorderedLines` in order to avoid programmer errors.
   2. Rename `Table#linesStream` to `Table#unorderedLinesStream` in order to avoid programmer errors.

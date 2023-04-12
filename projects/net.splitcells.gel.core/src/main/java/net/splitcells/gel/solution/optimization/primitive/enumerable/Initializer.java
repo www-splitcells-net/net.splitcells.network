@@ -46,9 +46,9 @@ public class Initializer implements EnumerableOnlineOptimization {
             }
         }
         final var demandIndex = MathUtils.floorToInt((double) parameter / solution.suppliesFree().size());
-        final var demand = solution.demandsFree().line(demandIndex);
+        final var demand = solution.demandsFree().chooseLine(demandIndex);
         final var supplyIndex = parameter - (demandIndex * solution.suppliesFree().size());
-        final var supply = solution.suppliesFree().line(supplyIndex);
+        final var supply = solution.suppliesFree().chooseLine(supplyIndex);
         solution.allocate(demand, supply);
     }
 }
