@@ -45,8 +45,8 @@ public class OnlineLinearInitialization implements OnlineOptimization {
                 solution.allocate(solution.demandsFree().orderedLinesStream().findFirst().orElseThrow()
                         , solution.suppliesFree().orderedLinesStream().findFirst().orElseThrow());
             } else {
-                solution.allocate(solution.demandsFree().chooseLine(0)
-                        , solution.suppliesFree().chooseLine(0));
+                solution.allocate(solution.demandsFree().orderedLine(0)
+                        , solution.suppliesFree().orderedLine(0));
             }
         }
     }

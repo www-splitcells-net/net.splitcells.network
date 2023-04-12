@@ -58,23 +58,23 @@ public class MinimalDistanceTest {
         testSubject.optimize
                 (optimizationEvent
                         (StepType.REMOVAL
-                                , testSubject.demands().chooseLine(1).toLinePointer()
-                                , testSubject.supplies().chooseLine(1).toLinePointer()));
+                                , testSubject.demands().orderedLine(1).toLinePointer()
+                                , testSubject.supplies().orderedLine(1).toLinePointer()));
         testSubject.optimize
                 (optimizationEvent
                         (StepType.REMOVAL
-                                , testSubject.demands().chooseLine(2).toLinePointer()
-                                , testSubject.supplies().chooseLine(2).toLinePointer()));
+                                , testSubject.demands().orderedLine(2).toLinePointer()
+                                , testSubject.supplies().orderedLine(2).toLinePointer()));
         testSubject.optimize
                 (optimizationEvent
                         (StepType.ADDITION
-                                , testSubject.demands().chooseLine(1).toLinePointer()
-                                , testSubject.supplies().chooseLine(2).toLinePointer()));
+                                , testSubject.demands().orderedLine(1).toLinePointer()
+                                , testSubject.supplies().orderedLine(2).toLinePointer()));
         testSubject.optimize
                 (optimizationEvent
                         (StepType.REMOVAL
-                                , testSubject.demands().chooseLine(1).toLinePointer()
-                                , testSubject.supplies().chooseLine(2).toLinePointer()));
+                                , testSubject.demands().orderedLine(1).toLinePointer()
+                                , testSubject.supplies().orderedLine(2).toLinePointer()));
 
     }
 

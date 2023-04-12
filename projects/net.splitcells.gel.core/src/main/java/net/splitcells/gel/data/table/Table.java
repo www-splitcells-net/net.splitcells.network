@@ -153,19 +153,11 @@ public interface Table extends Discoverable, Domable, Identifiable {
      * <p>Retrieves the N-th {@link Line} of this {@link Table},
      * where null {@link Line}s are ignored.
      * Therefore, N is not necessarily equals the returned {@link Line#index()}.</p>
-     * <p>This method {@link Table#chooseLine(int)} is named this way and is not simply called `line`,
-     * in order to point out,
-     * that the {@link Line} is not selected by its {@link Line#index()} and
-     * thereby to avoid confusion, misunderstandings and usage errors.
-     * By using the word `choose` it is attempted to point out,
-     * that one of the existing {@link Line} is retrieved and therefore
-     * a null cannot be retrieved.
-     * </p>
      *
      * @param n Position Of The Requested Line indexed by ignoring nulls
      * @return Requested Line
      */
-    default Line chooseLine(int n) {
+    default Line orderedLine(int n) {
         if (GET_LINE_VIA_STREAM) {
             if (n == 0) {
                 return orderedLinesStream().findFirst().orElseThrow();

@@ -60,10 +60,10 @@ public class UsedSupplySwitcherTest {
                 .asSolution();
         {
             testSolution.optimize(offlineLinearInitialization());
-            assertThat(testSolution.allocations().chooseLine(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().chooseLine(0).value(B)).isEqualTo(1);
-            assertThat(testSolution.allocations().chooseLine(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().chooseLine(1).value(B)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(0).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(1).value(B)).isEqualTo(2);
             assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();
             assertThat(testSolution.suppliesFree().unorderedLines()).isEmpty();
         }
@@ -73,10 +73,10 @@ public class UsedSupplySwitcherTest {
                 .integer(any(), any());
         testSolution.optimizeOnce(UsedSupplySwitcher.usedSupplySwitcher(randomness));
         {
-            assertThat(testSolution.allocations().chooseLine(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().chooseLine(0).value(B)).isEqualTo(2);
-            assertThat(testSolution.allocations().chooseLine(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().chooseLine(1).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(0).value(B)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(1).value(B)).isEqualTo(1);
         }
     }
 
@@ -100,10 +100,10 @@ public class UsedSupplySwitcherTest {
                 .asSolution();
         {
             testSolution.optimize(offlineLinearInitialization());
-            assertThat(testSolution.allocations().chooseLine(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().chooseLine(0).value(B)).isEqualTo(1);
-            assertThat(testSolution.allocations().chooseLine(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().chooseLine(1).value(B)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(0).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(1).value(B)).isEqualTo(2);
             assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();
             assertThat(testSolution.suppliesFree().unorderedLines()).hasSize(1);
         }
@@ -113,10 +113,10 @@ public class UsedSupplySwitcherTest {
                 .integer(any(), any());
         testSolution.optimizeOnce(UsedSupplySwitcher.usedSupplySwitcher(randomness));
         {
-            assertThat(testSolution.allocations().chooseLine(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().chooseLine(0).value(B)).isEqualTo(2);
-            assertThat(testSolution.allocations().chooseLine(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().chooseLine(1).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(0).value(B)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(1).value(B)).isEqualTo(1);
         }
     }
 
@@ -140,10 +140,10 @@ public class UsedSupplySwitcherTest {
                 .asSolution();
         {
             testSolution.optimize(offlineLinearInitialization());
-            assertThat(testSolution.allocations().chooseLine(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().chooseLine(0).value(B)).isEqualTo(1);
-            assertThat(testSolution.allocations().chooseLine(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().chooseLine(1).value(B)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(0).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(1).value(B)).isEqualTo(2);
             assertThat(testSolution.demandsFree().unorderedLines()).hasSize(1);
             assertThat(testSolution.suppliesFree().unorderedLines()).isEmpty();
         }
@@ -153,10 +153,10 @@ public class UsedSupplySwitcherTest {
                 .integer(any(), any());
         testSolution.optimizeOnce(UsedSupplySwitcher.usedSupplySwitcher(randomness));
         {
-            assertThat(testSolution.allocations().chooseLine(0).value(A)).isEqualTo(1);
-            assertThat(testSolution.allocations().chooseLine(0).value(B)).isEqualTo(2);
-            assertThat(testSolution.allocations().chooseLine(1).value(A)).isEqualTo(2);
-            assertThat(testSolution.allocations().chooseLine(1).value(B)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(0).value(A)).isEqualTo(1);
+            assertThat(testSolution.allocations().orderedLine(0).value(B)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(1).value(A)).isEqualTo(2);
+            assertThat(testSolution.allocations().orderedLine(1).value(B)).isEqualTo(1);
         }
     }
 
@@ -179,7 +179,7 @@ public class UsedSupplySwitcherTest {
             {
                 testSolution.optimize(offlineLinearInitialization());
                 assertThat(testSolution.allocations().size()).isEqualTo(4);
-                range(0, variables).forEach(i -> assertThat(testSolution.allocations().chooseLine(i).value(A)).isEqualTo(i));
+                range(0, variables).forEach(i -> assertThat(testSolution.allocations().orderedLine(i).value(A)).isEqualTo(i));
                 assertThat(testSolution.demandsFree().unorderedLines()).isEmpty();
                 assertThat(testSolution.suppliesFree().unorderedLines()).isEmpty();
             }

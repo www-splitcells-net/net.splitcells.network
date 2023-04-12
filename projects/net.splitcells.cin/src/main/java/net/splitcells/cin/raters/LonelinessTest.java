@@ -58,24 +58,24 @@ public class LonelinessTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().chooseLine(0)
-                , testSubject.suppliesFree().chooseLine(0));
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
-        testSubject.allocate(testSubject.demandsFree().chooseLine(0)
-                , testSubject.suppliesFree().chooseLine(0));
-        testSubject.allocate(testSubject.demandsFree().chooseLine(0)
-                , testSubject.suppliesFree().chooseLine(0));
-        testSubject.allocate(testSubject.demandsFree().chooseLine(0)
-                , testSubject.suppliesFree().chooseLine(0));
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .lineProcessing().unorderedLines().requireSizeOf(4);
-        testSubject.allocate(testSubject.demandsFree().chooseLine(0)
-                , testSubject.suppliesFree().chooseLine(0));
-        testSubject.allocate(testSubject.demandsFree().chooseLine(0)
-                , testSubject.suppliesFree().chooseLine(0));
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
