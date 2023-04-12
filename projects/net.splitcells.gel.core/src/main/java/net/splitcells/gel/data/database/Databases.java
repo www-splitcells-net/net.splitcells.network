@@ -30,6 +30,7 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
         super(() -> databaseFactory());
     }
 
+    @SafeVarargs
     public static Database database(String name, Attribute<? extends Object>... attributes) {
         return environment().config().configValue(Databases.class).database(name, attributes);
     }
@@ -40,6 +41,7 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
      * @param attributes
      * @return
      */
+    @SafeVarargs
     @Deprecated
     public static Database database(Attribute<? extends Object>... attributes) {
         return environment().config().configValue(Databases.class).database(attributes);
