@@ -151,7 +151,7 @@ public class World {
 
     public static Solution currentWorldHistory(String name, Solution committedWorldHistory) {
         return worldHistory(name, list(), list(), q -> {
-            q.then(templateAdherence(committedWorldHistory));
+            q.then(templateAdherence(committedWorldHistory, q.subject().orElseThrow()));
         });
     }
 

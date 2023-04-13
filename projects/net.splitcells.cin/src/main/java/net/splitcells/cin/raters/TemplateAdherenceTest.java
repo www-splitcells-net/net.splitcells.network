@@ -39,7 +39,7 @@ public class TemplateAdherenceTest {
                 .withSupplies(list(list(3)
                         , list(2)
                         , list(1)))
-                .withConstraint(r -> r.forAll(templateAdherence(template)))
+                .withConstraint(r -> r.forAll(templateAdherence(template, r.subject().orElseThrow())))
                 .toProblem()
                 .asSolution();
         testSubject.allocate(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
