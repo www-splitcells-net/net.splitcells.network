@@ -27,11 +27,7 @@ import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 public interface DefineConstraints {
     ProblemGenerator withConstraint(Constraint constraint);
 
-    default ProblemGenerator withConstraints(List<Function<Query, Query>> builders) {
-        final var root = forAll();
-        builders.forEach(b -> b.apply(QueryI.query(root)));
-        return withConstraint(root);
-    }
+    ProblemGenerator withConstraints(List<Function<Query, Query>> builders);
 
     ProblemGenerator withConstraint(Function<Query, Query> builder);
 }

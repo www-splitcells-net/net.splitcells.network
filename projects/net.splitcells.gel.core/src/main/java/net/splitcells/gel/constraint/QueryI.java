@@ -37,6 +37,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.communication.log.Domsole;
+import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.ForAlls;
@@ -55,11 +56,22 @@ public class QueryI implements Query {
         return new QueryI(constraint, setOfUniques(constraint.injectionGroup()), Optional.of(constraint));
     }
 
+    public static Query query(Constraint constraint, Allocations subject) {
+        return new QueryI(constraint, setOfUniques(constraint.injectionGroup()), Optional.of(constraint), subject);
+    }
+
     public static Query query(Constraint constraint, Set<GroupId> groups, Constraint root) {
         return new QueryI(constraint, groups, Optional.of(root));
     }
 
     public static Query nextQueryPathElement(Query query, Set<GroupId> nextGroups, Constraint nextConstraint) {
+        if (query.subject().isPresent()) {
+            return new QueryI(nextConstraint
+                    , nextGroups
+                    , query.root()
+                    , query.constraintPath().shallowCopy().withAppended(nextConstraint)
+                    , query.subject().orElseThrow());
+        }
         return new QueryI(nextConstraint
                 , nextGroups
                 , query.root()
@@ -81,6 +93,7 @@ public class QueryI implements Query {
      */
     private final List<Constraint> constraintPath;
     private final Set<GroupId> groups;
+    private final Optional<Allocations> subject;
 
     private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root) {
         this.currentInjectionGroups = currentInjectionGroups;
@@ -90,6 +103,18 @@ public class QueryI implements Query {
         if (root.isPresent()) {
             constraintPath.add(root.get());
         }
+        subject = Optional.empty();
+    }
+
+    private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root, Allocations subject) {
+        this.currentInjectionGroups = currentInjectionGroups;
+        this.groups = groups;
+        this.root = root;
+        constraintPath = list();
+        if (root.isPresent()) {
+            constraintPath.add(root.get());
+        }
+        this.subject = Optional.of(subject);
     }
 
     private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath) {
@@ -97,6 +122,15 @@ public class QueryI implements Query {
         this.groups = groups;
         this.root = root;
         this.constraintPath = constraintPath;
+        subject = Optional.empty();
+    }
+
+    private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath, Allocations subject) {
+        this.currentInjectionGroups = currentInjectionGroups;
+        this.groups = groups;
+        this.root = root;
+        this.constraintPath = constraintPath;
+        this.subject = Optional.of(subject);
     }
 
     @Override
@@ -128,6 +162,11 @@ public class QueryI implements Query {
             resultingGroups.addAll(groups);
         }
         return nextQueryPathElement(this, resultingGroups, resultBase.get());
+    }
+
+    @Override
+    public Optional<Allocations> subject() {
+        return subject;
     }
 
     @Override
