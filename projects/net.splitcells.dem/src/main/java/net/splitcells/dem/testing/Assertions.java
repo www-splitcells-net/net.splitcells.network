@@ -68,6 +68,8 @@ public class Assertions {
         assertThrows(ConstructorIllegal.class, () -> {
             try {
                 clazz.getDeclaredConstructor().newInstance();
+            } catch (ConstructorIllegal e) {
+                throw e;
             } catch (Throwable e) {
                 throw new RuntimeException(e);
             }
