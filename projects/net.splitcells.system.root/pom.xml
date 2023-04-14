@@ -18,7 +18,7 @@
         <module>../net.splitcells.pom.java.minimal</module>
         <module>../net.splitcells.pom.java.defaults</module>
         <module>../net.splitcells.dem.merger</module>
-        <module>../net.splitcells.dem.core</module>
+        <module>../net.splitcells.dem.ext</module>
         <module>../net.splitcells.dem</module>
         <module>../net.splitcells.gel</module>
         <module>../net.splitcells.os.state.interface</module>
