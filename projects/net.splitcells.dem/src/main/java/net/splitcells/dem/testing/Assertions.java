@@ -65,15 +65,18 @@ public class Assertions {
     }
 
     public static void requireIllegalConstructor(Class<?> clazz) {
-        assertThrows(ConstructorIllegal.class, () -> {
-            try {
-                clazz.getDeclaredConstructor().newInstance();
-            } catch (ConstructorIllegal e) {
-                throw e;
-            } catch (Throwable e) {
-                throw new RuntimeException(e);
+        try {
+            final var constructor = clazz.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            constructor.newInstance();
+        } catch (ConstructorIllegal e) {
+            throw e;
+        } catch (Throwable e) {
+            if (e.getCause() instanceof ConstructorIllegal) {
+                return;
             }
-        });
+            throw new RuntimeException(e);
+        }
     }
 
     public static void assertThrows(Class<? extends Throwable> expectedExceptionType, Runnable run) {
