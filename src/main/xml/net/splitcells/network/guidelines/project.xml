@@ -54,7 +54,8 @@
             <title>Definition</title>
             <image xl:href="project.partitioning.svg"/>
             <paragraph>If projects become big or mature enough,
-                it should be considered to partition these into parts dedicated to certain overhaul aspects of the projects
+                it should be considered to partition these into parts dedicated to certain overhaul aspects of the
+                projects
                 in relation to their environment.
                 If projects are not big enough to be split up,
                 it may help to consider every folder with source code as its own mini subproject,
@@ -80,9 +81,47 @@
             </list>
         </chapter>
         <chapter>
+            <title>Implementing the partitioning in Java</title>
+            <paragraph>In C this project partitioning is a lot easier to be done efficiently,
+                because of header files.
+                In this case, complying implementations can be swapped at will.
+            </paragraph>
+            <paragraph>In Java this is harder to be done efficiently,
+                as it is impossible to declare static methods,
+                without also stating the implementation at the same location as the declaration.
+                This is important, as all factories are used via static methods.
+                It is possible to retrieve the corresponding factory during each object creation dynamically from
+                the environment,
+                but this is not possible to be done when the best performance is to be achieved.
+            </paragraph>
+            <paragraph>In order to achieve the best performance, the following can be done.
+                Provide a static final boolean flag, that determines if the most performant code should be used.
+                In every relevant static factory method,
+                create an if branch, that uses the dynamic approach by default.
+                In the non default case, a factory from an appropriate static field should be used instead.
+                Initialize these static fields with null and keep these private.
+                Initialize these static fields with real factories via a public static method,
+                that allows the initialization to be done ones in order to omit invalid use cases.
+            </paragraph>
+            <paragraph>Maybe the dynamic approach is fast enough,
+                but in performance critical code tests should regularly be done,
+                in order to detect,
+                if the dynamic approach costs too much performance.
+                It's also possible to only support the static approach for performance critical factories.
+                Keep in mind, that both approaches need appropriate initialization functions.
+            </paragraph>
+            <paragraph>Note, that the dynamic approach allows one to run multiple configurations with completely
+                different factory configurations in one program with one class loader.
+                Maybe this feature is worth the distinction, and maybe not.
+                One of these 2 approaches are sometimes needed,
+                in order to move code to the core project.
+            </paragraph>
+        </chapter>
+        <chapter>
             <title>Historic Origin</title>
             <paragraph>This project partitioning originally had another naming scheme,
-                as originally the project partitioning was much more oriented towards access control, complexity management and security.
+                as originally the project partitioning was much more oriented towards access control, complexity
+                management and security.
                 Later it was adapted for software projects.
                 The original project partitioning naming scheme is still sometimes used:
             </paragraph>
