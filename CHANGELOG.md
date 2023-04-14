@@ -5,7 +5,9 @@
 * Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
-* **2023-04-14 \#241** Rename `net.splitcells.dem.core` to `net.splitcells.dem.ext`.
+* **2023-04-14 \#241**
+  1. Rename `net.splitcells.dem.core` to `net.splitcells.dem.ext`.
+  2. Rename `net.splitcells.dem.merger` to `net.splitcells.dem.api`.
 * **2023-02-12 \#218** [Relicense main repo to EPL-2.0 with GPL-2.0-or-later as a secondary license.](https://github.com/www-splitcells-net/net.splitcells.network/issues/218)
   1. This was done, because `EPL-2.0 OR MIT` was planned as an transitioning licensing,
      until `EPL 2.0` with `GPL-2.0-or-later` as the secondary license (`EPL-2.0 OR GPL-2.0-or-later`) could be adopted.
