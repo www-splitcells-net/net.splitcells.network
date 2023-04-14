@@ -13,12 +13,12 @@
     <dependencies>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>dem.merger</artifactId>
+            <artifactId>dem.api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>dem.core</artifactId>
+            <artifactId>dem.ext</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

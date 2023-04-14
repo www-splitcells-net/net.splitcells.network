@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <!-- TODO OpenJDK benchmark framework vs. simple benchmark framework -->
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>dem.core</artifactId>
+    <artifactId>dem.ext</artifactId>
     <name>Dependency Manager Core</name>
     <parent>
         <groupId>net.splitcells</groupId>
@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>dem.merger</artifactId>
+            <artifactId>dem.api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
