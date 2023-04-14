@@ -79,7 +79,7 @@
         <paragraph>This project partitioning originally had another naming scheme,
             as originally the project partitioning was much more oriented towards access control, complexity management and security.
             Later it was adapted for software projects.
-            The original project partitioning naming scheme is and is still sometimes used:
+            The original project partitioning naming scheme is still sometimes used:
         </paragraph>
         <list>
             <item>Core: contains the core subject.</item>
