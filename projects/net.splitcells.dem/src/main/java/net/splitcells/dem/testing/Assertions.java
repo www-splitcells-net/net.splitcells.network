@@ -15,6 +15,9 @@
  */
 package net.splitcells.dem.testing;
 
+import net.splitcells.dem.utils.ConstructorIllegal;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -59,6 +62,16 @@ public class Assertions {
         if (!a.equals(b)) {
             throw executionException("Arguments are required to be equal, but are not: " + a + ", " + b);
         }
+    }
+
+    public static void requireIllegalConstructor(Class<?> clazz) {
+        assertThrows(ConstructorIllegal.class, () -> {
+            try {
+                clazz.getDeclaredConstructor().newInstance();
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public static void assertThrows(Class<? extends Throwable> expectedExceptionType, Runnable run) {
