@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>gel.sheath</artifactId>
+            <artifactId>ext</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
