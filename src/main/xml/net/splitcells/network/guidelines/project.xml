@@ -10,27 +10,27 @@
         <title>Project Life Cycle Guidelines</title>
     </meta>
     <chapter>
-        <title>Life Cycle</title>
-        <paragraph>It should be known, why a project is created and under which conditions it will be dismantled.
-        </paragraph>
-    </chapter>
-    <chapter>
-        <title>Version Control</title>
-        <paragraph>The commit log is a program, that describes the development of the project.
-            The
-            <link>
-                <text>semantic versioning</text>
-                <url>https://semver.org/</url>
-            </link>
-            is used as a default versioning format.
-        </paragraph>
-    </chapter>
-    <chapter>
         <title>Development Process</title>
         <paragraph>
             Do not assume that better skills, more intelligence, working harder, etc. automatically lead to a
             better result.
         </paragraph>
+        <chapter>
+            <title>Life Cycle</title>
+            <paragraph>It should be known, why a project is created and under which conditions it will be dismantled.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Version Control</title>
+            <paragraph>The commit log is a program, that describes the development of the project.
+                The
+                <link>
+                    <text>semantic versioning</text>
+                    <url>https://semver.org/</url>
+                </link>
+                is used as a default versioning format.
+            </paragraph>
+        </chapter>
         <chapter>
             <title>Migration Based Development Process</title>
             <paragraph>
@@ -50,46 +50,52 @@
     </chapter>
     <chapter>
         <title>Project Partitioning</title>
-        <image xl:href="project.partitioning.svg"/>
-        <paragraph>If projects become big or mature enough,
-            it should be considered to partition these into parts dedicated to certain overhaul aspects of the projects
-            in relation to their environment.
-            If projects are not big enough to be split up,
-            it may help to consider every folder with source code as its own mini subproject,
-            where the split is done implicitly:
-        </paragraph>
-        <list>
-            <item>Core: the core contains the minimal implementation to get the project running.</item>
-            <item>API: establishes a common vocabulary and interfaces of the project.
-                It has the authority to define and verify every core feature and the interface of the project.
-                It therefore should contain the test suite of the project.
-            </item>
-            <item>Extension (Ext): Contains alternative implementations, plugins, extensions, etc. for the project.
-            </item>
-            <item>Environment (Env): contains things, that are relevant for the project,
-                but has no direct relation or interaction to the API.
-                This could be a Dockerfile describing the environment of the project.
-            </item>
-            <item>Documentation (Doc): Contains documentation, media files and such and may be especially useful
-                for manuals.
-                This may not be required, if the documentation is too specific to the other partitions,
-                but may be extra helpful for manuals directed at the users and not the developers.
-            </item>
-        </list>
-        <paragraph>This project partitioning originally had another naming scheme,
-            as originally the project partitioning was much more oriented towards access control, complexity management and security.
-            Later it was adapted for software projects.
-            The original project partitioning naming scheme is still sometimes used:
-        </paragraph>
-        <list>
-            <item>Core: contains the core subject.</item>
-            <item>Merger: the merger establishes a common vocabulary and interface
-                between the core and other project partitions.
-            </item>
-            <item>Sheath: contains the integration of the core to its environment.
-            </item>
-            <item>Environment: the environment contains all not integrated things.
-            </item>
-        </list>
+        <chapter>
+            <title>Definition</title>
+            <image xl:href="project.partitioning.svg"/>
+            <paragraph>If projects become big or mature enough,
+                it should be considered to partition these into parts dedicated to certain overhaul aspects of the projects
+                in relation to their environment.
+                If projects are not big enough to be split up,
+                it may help to consider every folder with source code as its own mini subproject,
+                where the split is done implicitly:
+            </paragraph>
+            <list>
+                <item>Core: the core contains the minimal implementation to get the project running.</item>
+                <item>API: establishes a common vocabulary and interfaces of the project.
+                    It has the authority to define and verify every core feature and the interface of the project.
+                    It therefore should contain the test suite of the project.
+                </item>
+                <item>Extension (Ext): Contains alternative implementations, plugins, extensions, etc. for the project.
+                </item>
+                <item>Environment (Env): contains things, that are relevant for the project,
+                    but has no direct relation or interaction to the API.
+                    This could be a Dockerfile describing the environment of the project.
+                </item>
+                <item>Documentation (Doc): Contains documentation, media files and such and may be especially useful
+                    for manuals.
+                    This may not be required, if the documentation is too specific to the other partitions,
+                    but may be extra helpful for manuals directed at the users and not the developers.
+                </item>
+            </list>
+        </chapter>
+        <chapter>
+            <title>Historic Origin</title>
+            <paragraph>This project partitioning originally had another naming scheme,
+                as originally the project partitioning was much more oriented towards access control, complexity management and security.
+                Later it was adapted for software projects.
+                The original project partitioning naming scheme is still sometimes used:
+            </paragraph>
+            <list>
+                <item>Core: contains the core subject.</item>
+                <item>Merger: the merger establishes a common vocabulary and interface
+                    between the core and other project partitions.
+                </item>
+                <item>Sheath: contains the integration of the core to its environment.
+                </item>
+                <item>Environment: the environment contains all not integrated things.
+                </item>
+            </list>
+        </chapter>
     </chapter>
 </article>
