@@ -17,7 +17,6 @@ package net.splitcells.dem.testing;
 
 import net.splitcells.dem.utils.ConstructorIllegal;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -64,7 +63,7 @@ public class Assertions {
         }
     }
 
-    public static void requireIllegalConstructor(Class<?> clazz) {
+    public static void requireIllegalDefaultConstructor(Class<?> clazz) {
         try {
             final var constructor = clazz.getDeclaredConstructor();
             constructor.setAccessible(true);
