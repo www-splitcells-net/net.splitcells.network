@@ -17,6 +17,7 @@ package net.splitcells.dem.testing;
 
 import net.splitcells.dem.utils.ConstructorIllegal;
 
+import java.lang.reflect.Constructor;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -64,9 +65,17 @@ public class Assertions {
     }
 
     public static void requireIllegalDefaultConstructor(Class<?> clazz) {
+        final Constructor<?> constructor;
         try {
-            final var constructor = clazz.getDeclaredConstructor();
-            constructor.setAccessible(true);
+            constructor = clazz.getDeclaredConstructor();
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        final var constructorWasAccessible = constructor.isAccessible();
+        try {
+            if (!constructorWasAccessible) {
+                constructor.setAccessible(true);
+            }
             constructor.newInstance();
         } catch (ConstructorIllegal e) {
             throw e;
@@ -75,6 +84,10 @@ public class Assertions {
                 return;
             }
             throw new RuntimeException(e);
+        } finally {
+            if (!constructorWasAccessible) {
+                constructor.setAccessible(false);
+            }
         }
     }
 
