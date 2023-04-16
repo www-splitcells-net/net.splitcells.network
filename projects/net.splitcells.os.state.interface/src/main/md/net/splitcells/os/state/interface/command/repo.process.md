@@ -67,7 +67,9 @@ where an SH script is generated.
 Support processing a tree of repositories (meta repo) and therefore allow working on all repos as one
 (i.e. in order to backup everything).
 
-The following tree structure is recommended for the meta repo:
+The following tree structure is recommended for the meta repo,
+in order to maximize the adaptability of the meta repo,
+while still keeping a relatively simple folder structure:
 The tree should only have 3 levels of root folders, that are processed by this.
 The first level consists of one folder and is the root of the meta repo.
 
