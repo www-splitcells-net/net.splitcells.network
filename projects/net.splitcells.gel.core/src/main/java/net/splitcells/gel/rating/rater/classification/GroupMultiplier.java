@@ -24,9 +24,6 @@ import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
-import java.util.Collection;
-import java.util.stream.Stream;
-
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.Xml;
@@ -47,7 +44,7 @@ public class GroupMultiplier implements Rater {
     }
 
     private final List<Rater> classifiers;
-    protected final Map<List<GroupId>, GroupId> groupMultiplier = map();
+    private final Map<List<GroupId>, GroupId> groupMultiplier = map();
     private final List<Discoverable> contexts = list();
 
     protected GroupMultiplier(Rater... classifiers) {
@@ -56,7 +53,7 @@ public class GroupMultiplier implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return classifiers.mapped(classifier -> (Domable) classifier);
+        return classifiers.mapped(classifier -> classifier);
     }
 
     @Override
