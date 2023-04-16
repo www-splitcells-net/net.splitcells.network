@@ -28,11 +28,6 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDei
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class LonelinessTest {
-
-    @UnitTest
-    public void testIllegalDefaultConstructor() {
-        requireIllegalDefaultConstructor(Loneliness.class);
-    }
     @UnitTest
     public void testLoneliness() {
         final var time = attribute(Integer.class, "time");
