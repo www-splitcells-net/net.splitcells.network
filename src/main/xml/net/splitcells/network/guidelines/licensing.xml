@@ -288,7 +288,7 @@ listed source code repository logs.
             <code_block><![CDATA[# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ]]></code_block>
-            <blockquote>This is the license header template for Bash, sh and .gitignore files.</blockquote>
+            <blockquote>This is the license header template for Bash, sh, toml and .gitignore files.</blockquote>
             <code_block><![CDATA["""
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
@@ -318,6 +318,17 @@ __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 ----
 ]]></code_block>
             <blockquote>This is the license header template for CommonMark files.</blockquote>
+            <code_block><![CDATA[----
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
+]]></code_block>
+            <blockquote>
+                This is the license header template for CommonMark files used for Hugo.
+                There is a distinction between Hugo files and CommonMark files,
+                because the formatting of the header does not look good in the Hugo format,
+                if the document is rendered by a renderer other than Hugo itself.
+            </blockquote>
         </chapter>
         <chapter>
             <title>License File</title>
