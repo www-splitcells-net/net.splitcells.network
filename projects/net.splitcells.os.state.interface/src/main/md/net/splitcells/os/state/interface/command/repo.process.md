@@ -21,6 +21,8 @@ the initial blog article,
 explaining the reasoning behind repo process,
 can be found.
 # Common Use Cases
+The command `repo.process` provides a `--help` flag,
+with details regarding all command flags.
 ## Add new remote to each sub repo.
 This can be done via a Git specific command pattern:
 ```
