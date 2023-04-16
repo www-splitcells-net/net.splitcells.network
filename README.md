@@ -18,7 +18,7 @@ Some of them are not strictly related to optimization and can be used in other c
 You have your own open source optimization software? How about working together? 
 
 ## Where to start?
-🪧 Get to know the main [features](https://splitcells.net/net/splitcells/network/features.html).
+🪧 Get to know the main [features](https://splitcells.net/net/splitcells/network/advertisement.html).
 
 🚀 [Model and optimize problems.](http://splitcells.net/net/splitcells/gel/index.html)
 
