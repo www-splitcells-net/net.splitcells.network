@@ -21,6 +21,7 @@ import static net.splitcells.cin.raters.Dies.dies;
 import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -29,6 +30,10 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearIni
 
 public class DiesTest {
 
+    @UnitTest
+    public void testIllegalDefaultConstructor() {
+        requireIllegalDefaultConstructor(Dies.class);
+    }
     @UnitTest
     public void testDying() {
         final var time = attribute(Integer.class, "time");

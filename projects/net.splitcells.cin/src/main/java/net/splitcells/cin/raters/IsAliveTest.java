@@ -20,10 +20,16 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import static net.splitcells.cin.raters.IsAlive.isAlive;
 import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 public class IsAliveTest {
+
+    @UnitTest
+    public void testIllegalDefaultConstructor() {
+        requireIllegalDefaultConstructor(IsAlive.class);
+    }
     @UnitTest
     public void testAlive() {
         final var player = attribute(Integer.class, "player");
