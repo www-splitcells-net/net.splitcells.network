@@ -20,6 +20,13 @@
   language makes such a custom format compelling.
 * Presentations based on HTML and `reveal.js`.
 * XML schemas based on XSD.
+* Mermaid is used in order to visualize graphs,
+  where only the relative arcs between 2 nodes (node a points to node b) is stored.
+  It is preferred to visualize every graph as flowcharts (`graph **` in Mermaid notation),
+  if possible,
+  as this is generally the most widely by software supported graph type.
+  For more complex graphs it is harder to find software.
+  In this case pure SVGs should be used instead.
 ### Secondary Supported Used File Formats
 These formats are primarily used for compatibility reasons.
 For example, it is a good idea to write READMEs in the CommonMark format,
