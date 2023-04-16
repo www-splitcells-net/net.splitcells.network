@@ -9,7 +9,11 @@
     </meta>
     <list>
         <item>Comfortably model assignment problems with a fluent API.</item>
-        <item>Execute complex queries on solutions in order to focus on sub problems.</item>
+        <item>
+            Contains an in-memory database system,
+            providing tools to model and manage data with an extensive query system.
+            A synchronized cache system enabling to make complex queries with a constant runtime.
+        </item>
         <item>Get reports reasoning the solution's rating, equipping you with the tools to understand your problems.</item>
         <item>Model inter dependent problems in order to work on complex interactions.</item>
         <item>x64, ARM and RISC-V are supported and tested.</item>
