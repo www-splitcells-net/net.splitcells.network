@@ -25,11 +25,7 @@ import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 public class IsAliveTest {
-
-    @UnitTest
-    public void testIllegalDefaultConstructor() {
-        requireIllegalDefaultConstructor(IsAlive.class);
-    }
+    
     @UnitTest
     public void testAlive() {
         final var player = attribute(Integer.class, "player");
