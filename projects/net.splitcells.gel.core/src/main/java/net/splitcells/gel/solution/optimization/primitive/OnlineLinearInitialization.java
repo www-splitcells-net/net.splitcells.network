@@ -25,7 +25,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  */
 public class OnlineLinearInitialization implements OnlineOptimization {
     private static final boolean IMPROVE_RUNTIME_GET_NEXT_LINE_BY_STREAM = true;
-    private static final boolean IMPROVE_RUNTIME_GET_NEXT_LINE_BY_CACHE = true;
+    private static final boolean IMPROVE_RUNTIME_GET_NEXT_LINE_BY_CACHE = false;
 
     public static OnlineLinearInitialization onlineLinearInitialization() {
         return new OnlineLinearInitialization();
