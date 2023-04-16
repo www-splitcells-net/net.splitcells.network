@@ -5,6 +5,8 @@ SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
 Deploys a build of this repository to a server,
 retrieves execution data and integrates these into the network log.
+
+TODO Use user services (`~/.config/systemd/user/*`) in order to avoid root privileges for deployment on the target server.
 """
 
 __author__ = "Mārtiņš Avots"
