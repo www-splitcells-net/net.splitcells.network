@@ -59,8 +59,11 @@ Provide a way to create a collection of all file system based repositories of a 
 This is especially useful for decentralized backups or when many projects need to be organized/used.
 
 The necessary meta info should be stored as simple and portable as possible.
-In best case scenario only the relative paths of the sub repos and its possible remote servers has to be stored.
-## Solution
+In the simplest and still practical scenario only the relative paths of the sub repos and its possible remote servers has to be stored.
+
+The program support a dry mode,
+where an SH script is generated.
+## Recommended Repo Organization
 Support processing a tree of repositories (meta repo) and therefore allow working on all repos as one
 (i.e. in order to backup everything).
 
