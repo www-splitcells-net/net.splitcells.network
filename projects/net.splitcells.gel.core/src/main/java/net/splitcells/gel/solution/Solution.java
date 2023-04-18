@@ -257,4 +257,13 @@ public interface Solution extends Problem, SolutionView {
         history().resetTo(historyRootIndex);
         return rating;
     }
+
+    /**
+     * <p>Initializes the {@link #constraint()}.</p>
+     * <p>TODO Introduce a solve methode,
+     * that always calls init and maybe hide methods like optimize behind an indirection.</p>
+     */
+    default void init() {
+        constraint().init(this);
+    }
 }

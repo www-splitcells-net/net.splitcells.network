@@ -45,6 +45,8 @@ import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -327,5 +329,15 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         html.withChild(perspective(toString(), STRING));
         return html;
     }
+
+    /**
+     * <p>Initializes the {@link Constraint} and its {@link #childrenView()}, so it can be used,
+     * which is not always the case before that,
+     * depending on the {@link Constraint} instance in question.
+     * This is called before the rated {@link Solution} is being optimized.</p>
+     *
+     * @param solution
+     */
+    void init(Solution solution);
 
 }

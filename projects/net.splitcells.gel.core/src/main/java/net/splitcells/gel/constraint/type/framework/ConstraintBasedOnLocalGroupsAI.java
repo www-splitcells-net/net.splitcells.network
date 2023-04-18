@@ -28,6 +28,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
+import net.splitcells.gel.solution.Solution;
 
 @Deprecated
 public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
@@ -53,6 +54,12 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     protected ConstraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name, Optional<Discoverable> parent) {
         super(standardGroup, name, parent);
         this.rater = rater;
+    }
+
+    @Override
+    public void init(Solution solution) {
+        rater.init(solution);
+        childrenView().forEach(c -> c.init(solution));
     }
 
     @Override
@@ -115,5 +122,6 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     public List<Domable> arguments() {
         return list(rater);
     }
+
 
 }

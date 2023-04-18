@@ -30,6 +30,7 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
+import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 
 import java.util.Collection;
@@ -154,6 +155,11 @@ public final class Derivation implements Constraint {
     @Override
     public void recalculatePropagation() {
         derivationTarget.recalculatePropagation();
+    }
+
+    @Override
+    public void init(Solution solution) {
+        derivationTarget.init(solution);
     }
 
     @Override

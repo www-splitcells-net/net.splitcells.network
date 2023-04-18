@@ -15,6 +15,7 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
+import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 
 import java.util.Collection;
@@ -161,6 +162,11 @@ public class ConstraintAspect implements Constraint {
     @Override
     public void recalculatePropagation() {
         constraint.recalculatePropagation();
+    }
+
+    @Override
+    public void init(Solution solution) {
+        constraint.init(solution);
     }
 
     @Override

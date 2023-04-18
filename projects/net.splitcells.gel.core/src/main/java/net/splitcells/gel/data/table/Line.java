@@ -81,6 +81,10 @@ public interface Line extends Domable {
                         .collect(toList()));
     }
 
+    default boolean equalContents(Line other) {
+        return values().equals(other.values());
+    }
+
     default List<Object> values() {
         return context()
                 .headerView()

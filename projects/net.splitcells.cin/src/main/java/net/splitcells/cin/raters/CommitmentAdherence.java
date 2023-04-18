@@ -16,45 +16,46 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
+import net.splitcells.gel.solution.Solution;
 
-import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.data.set.map.Maps.map;
 
-public class TemplateAdherence implements Rater {
-
-    public static Rater templateAdherence(Table template, Allocations subject) {
-        return new TemplateAdherence(template, subject);
+public class CommitmentAdherence implements Rater {
+    public static Rater commitmentAdherence() {
+        return new CommitmentAdherence();
     }
 
-    private final Table template;
-    private final Allocations subject;
+    private final Map<Integer, Integer> demandToSupplyIndex = map();
 
-    private TemplateAdherence(Table template, Allocations subject) {
-        this.template = template;
-        this.subject = subject;
-        throw notImplementedYet();
+    private CommitmentAdherence() {
+
+    }
+
+    @Override
+    public void init(Solution solution) {
 
     }
 
     @Override
     public List<Domable> arguments() {
-        throw notImplementedYet();
+        return null;
     }
 
     @Override
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
-        throw notImplementedYet();
+        return null;
     }
 
     @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
-        throw notImplementedYet();
+        return null;
     }
 }

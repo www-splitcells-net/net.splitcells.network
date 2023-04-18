@@ -28,6 +28,7 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.framework.Rating;
+import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -126,5 +127,23 @@ public interface Rater extends PubliclyTyped<Rater>
 
     default String name() {
         return getClass().getSimpleName();
+    }
+
+    /**
+     * <p>Initializes the {@link Rater}, so it can be used,
+     * which is not always the case before that,
+     * depending on the {@link Rater} instance in question.
+     * This is called before the rated {@link Solution} is being optimized.</p>
+     * <p>By default most {@link Rater} do not need to do anything.
+     * When writing a new {@link Rater},
+     * one will know,
+     * when an actual implementation is required.
+     * If it's unknown,
+     * if an actual implementation is required,
+     * one is probably not required.</p>
+     *
+     * @param solution
+     */
+    default void init(Solution solution) {
     }
 }

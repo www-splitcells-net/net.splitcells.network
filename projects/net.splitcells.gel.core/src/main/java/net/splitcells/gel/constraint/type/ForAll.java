@@ -28,6 +28,7 @@ import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
 import net.splitcells.gel.rating.rater.classification.Propagation;
 import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
+import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
