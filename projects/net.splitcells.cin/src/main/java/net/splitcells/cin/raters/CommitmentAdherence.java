@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin.raters;
 
+import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
@@ -22,40 +23,54 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.rating.rater.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
 
 public class CommitmentAdherence implements Rater {
-    public static Rater commitmentAdherence() {
-        return new CommitmentAdherence();
+
+    public static Rater commitmentAdherence(Attribute<Integer> time) {
+        return new CommitmentAdherence(time);
     }
 
-    private final Map<Integer, Integer> demandToSupplyIndex = map();
+    private final Attribute<Integer> time;
+    private int committedTime = -1;
 
-    private CommitmentAdherence() {
 
+    private CommitmentAdherence(Attribute<Integer> time) {
+        this.time = time;
     }
 
     @Override
     public void init(Solution solution) {
-
+        committedTime = solution.allocations().unorderedLinesStream()
+                .map(a -> a.value(time))
+                .max(Comparators.ASCENDING_INTEGERS)
+                .orElse(-1);
     }
 
     @Override
     public List<Domable> arguments() {
-        return null;
+        return list(time);
     }
 
+    /**
+     * TODO HACK The implementation is not really present.
+     *
+     * @return
+     */
     @Override
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
-        return null;
+        return ratingEvent();
     }
 
     @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
-        return null;
+        return "Lines are committed up to " + committedTime + " " + time.name() + ".";
     }
 }
