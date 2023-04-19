@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.rating.rater.classification.ForAllAttributeValues.forAllAttributeValues;
+import static net.splitcells.gel.rating.rater.lib.classification.ForAllAttributeValues.forAllAttributeValues;
 
 public class QueryTest {
     @Test

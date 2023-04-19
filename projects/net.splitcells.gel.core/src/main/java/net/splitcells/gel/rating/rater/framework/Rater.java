@@ -13,21 +13,21 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.rating.rater;
+package net.splitcells.gel.rating.rater.framework;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.common.Language;
-import net.splitcells.gel.constraint.type.framework.ConstraintAI;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.framework.Rating;
+import net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue;
 import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;

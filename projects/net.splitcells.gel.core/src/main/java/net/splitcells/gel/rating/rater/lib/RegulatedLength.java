@@ -13,19 +13,21 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.rating.rater;
+package net.splitcells.gel.rating.rater.lib;
 
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
+import net.splitcells.gel.rating.rater.framework.GroupRater;
+import net.splitcells.gel.rating.rater.framework.Rater;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRater;
+import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineGroup.groupRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 
 public class RegulatedLength {

@@ -26,8 +26,8 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.rating.rater.Rater;
-import net.splitcells.gel.rating.rater.RatingEvent;
+import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 
 @Deprecated

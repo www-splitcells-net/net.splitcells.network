@@ -17,7 +17,7 @@ package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.framework.Rater;
 
 import static net.splitcells.cin.raters.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;

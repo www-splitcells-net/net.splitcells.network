@@ -13,12 +13,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.rating.rater.classification;
+package net.splitcells.gel.rating.rater.lib.classification;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
@@ -27,7 +27,6 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
@@ -35,8 +34,8 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.rating.rater.Rater;
-import net.splitcells.gel.rating.rater.RatingEvent;
+import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import org.w3c.dom.Node;
 
 public class ForAllValueCombinations implements Rater {

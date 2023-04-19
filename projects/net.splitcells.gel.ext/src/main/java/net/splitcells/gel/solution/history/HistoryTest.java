@@ -26,7 +26,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.TestTypes.BENCHMARK_RUNTIME;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
-import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
+import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;

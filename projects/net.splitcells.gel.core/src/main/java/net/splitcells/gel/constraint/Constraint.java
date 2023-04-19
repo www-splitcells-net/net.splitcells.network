@@ -45,7 +45,6 @@ import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.rating.rater.Rater;
 import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;

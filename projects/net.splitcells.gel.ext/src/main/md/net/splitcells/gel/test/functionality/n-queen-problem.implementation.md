@@ -122,8 +122,8 @@ The constraint definition ends, when the modified builder is returned.
 Keep in mind, that the constraint defines rules,
 that apply to the allocations table:
 ```
-import static net.splitcells.gel.rating.rater.HasSize.hasSize;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.raterBasedOnLineValue;
 [...]
 /**
  * The ascending diagonal with the number 0 represents the diagonal in the middle.
@@ -245,7 +245,7 @@ package net.splitcells.gel.quickstart;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
-import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.framework.Rater;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -256,8 +256,8 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.rating.rater.HasSize.hasSize;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.raterBasedOnLineValue;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.raterBasedOnLineValue;
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.LinearDeinitializer.linearDeinitializer;

@@ -17,18 +17,17 @@ package net.splitcells.gel.constraint.type;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.framework.ConstraintAspect.constraintAspect;
-import static net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping.raterBasedGrouping;
+import static net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGrouping.raterBasedGrouping;
 
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.type.framework.ConstraintBasedOnLocalGroupsAI;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Report;
-import net.splitcells.gel.rating.rater.Rater;
-import net.splitcells.gel.rating.rater.classification.ForAllAttributeValues;
-import net.splitcells.gel.rating.rater.classification.Propagation;
-import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
-import net.splitcells.gel.solution.Solution;
+import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.lib.classification.ForAllAttributeValues;
+import net.splitcells.gel.rating.rater.lib.classification.Propagation;
+import net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGrouping;
 
 import java.util.Optional;
 

@@ -17,16 +17,15 @@ package net.splitcells.gel.constraint.type;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.framework.ConstraintAspect.constraintAspect;
-import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
+import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
 
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
 import net.splitcells.gel.constraint.type.framework.ConstraintBasedOnLocalGroupsAI;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.rating.framework.Rating;
-import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.framework.Rater;
 
 import java.util.Optional;
 

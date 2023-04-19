@@ -13,43 +13,44 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.rating.rater;
+package net.splitcells.gel.rating.rater.lib;
+
+import static java.lang.Math.abs;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.utils.CommonFunctions;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RatingEvent;
+import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.utils.CommonFunctions;
-import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.framework.Rating;
-import org.w3c.dom.Node;
-
-import java.util.Collection;
-
-import static java.lang.Math.abs;
-import static java.util.stream.Collectors.toList;
-import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
-import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
-import static net.splitcells.gel.rating.type.Cost.cost;
-import static net.splitcells.gel.rating.type.Cost.noCost;
 
 
-public class HasMinimalSize implements Rater {
-    public static HasMinimalSize hasMinimalSize(int minimalSize) {
-        return new HasMinimalSize(minimalSize);
+public class HasSize implements Rater {
+    public static HasSize hasSize(int targetSize) {
+        return new HasSize(targetSize);
     }
 
-    private final int minimalSize;
+    private final int targetSize;
     private final List<Discoverable> contexts = list();
 
-    protected HasMinimalSize(int minimalSize) {
-        this.minimalSize = minimalSize;
+    protected HasSize(int targetSize) {
+        this.targetSize = targetSize;
     }
 
     @Override
@@ -85,10 +86,10 @@ public class HasMinimalSize implements Rater {
 
     @Override
     public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.elementWithChildren(HasMinimalSize.class.getSimpleName());
+        final var argumentation = Xml.elementWithChildren(HasSize.class.getSimpleName());
         argumentation.appendChild(
-                Xml.elementWithChildren("minimal-size"
-                        , Xml.textNode(minimalSize + "")));
+                Xml.elementWithChildren("target-size"
+                        , Xml.textNode(targetSize + "")));
         argumentation.appendChild(
                 Xml.elementWithChildren("actual-size"
                         , Xml.textNode(allocations.size() + "")));
@@ -97,7 +98,7 @@ public class HasMinimalSize implements Rater {
 
     @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
-        return "size should be at least" + minimalSize + ", but is " + groupsLineProcessing.size();
+        return "size should be " + targetSize + ", but is " + groupsLineProcessing.size();
     }
 
     @Override
@@ -119,36 +120,36 @@ public class HasMinimalSize implements Rater {
         }
         if (actualSize == 0) {
             rating = noCost();
-        } else if (actualSize < minimalSize) {
-            final int difference = minimalSize - actualSize;
+        } else if (actualSize > 0) {
+            final int difference = abs(targetSize - actualSize);
             rating = cost(difference / ((double) actualSize));
         } else {
-            rating = noCost();
+            throw new AssertionError("negative size is: " + actualSize);
         }
         return rating;
     }
 
     @Override
     public Class<? extends Rater> type() {
-        return HasMinimalSize.class;
+        return HasSize.class;
     }
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.elementWithChildren(HasMinimalSize.class.getSimpleName(), Xml.textNode("" + minimalSize)));
+        return list(perspective(HasSize.class.getSimpleName()).withChild(perspective("" + targetSize)));
     }
 
     @Override
     public boolean equals(Object arg) {
-        if (arg != null && arg instanceof HasMinimalSize) {
-            return this.minimalSize == ((HasMinimalSize) arg).minimalSize;
+        if (arg != null && arg instanceof HasSize) {
+            return this.targetSize == ((HasSize) arg).targetSize;
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return CommonFunctions.hashCode(minimalSize);
+        return CommonFunctions.hashCode(targetSize);
     }
 
     @Override
@@ -163,6 +164,6 @@ public class HasMinimalSize implements Rater {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ", " + minimalSize;
+        return getClass().getSimpleName() + ", " + targetSize;
     }
 }

@@ -25,7 +25,7 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
+import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;

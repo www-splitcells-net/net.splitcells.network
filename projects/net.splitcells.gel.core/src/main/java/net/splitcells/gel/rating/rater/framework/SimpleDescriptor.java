@@ -1,4 +1,4 @@
-package net.splitcells.gel.rating.rater;
+package net.splitcells.gel.rating.rater.framework;
 
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;

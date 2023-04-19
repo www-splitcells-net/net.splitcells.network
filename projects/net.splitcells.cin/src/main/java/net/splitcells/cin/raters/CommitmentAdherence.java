@@ -17,20 +17,19 @@ package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.rater.Rater;
-import net.splitcells.gel.rating.rater.RatingEvent;
+import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
 public class CommitmentAdherence implements Rater {
 

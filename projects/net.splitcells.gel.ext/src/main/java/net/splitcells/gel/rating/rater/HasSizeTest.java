@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.data.database.Databases.database;
-import static net.splitcells.gel.rating.rater.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;

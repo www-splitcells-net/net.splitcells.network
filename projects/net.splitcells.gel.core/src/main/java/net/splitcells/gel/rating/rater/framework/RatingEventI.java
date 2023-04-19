@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.rating.rater;
+package net.splitcells.gel.rating.rater.framework;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.framework.LocalRating;
 

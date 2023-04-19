@@ -16,7 +16,7 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.framework.Rater;
 
 import java.util.function.BiPredicate;
 
@@ -27,8 +27,8 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRouter;
-import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineGroup.groupRouter;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 

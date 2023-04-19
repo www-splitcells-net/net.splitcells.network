@@ -24,28 +24,25 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.gel.constraint.type.Then.*;
 import static net.splitcells.gel.rating.framework.MetaRatingI.metaRating;
-import static net.splitcells.gel.rating.rater.ConstantRater.constantRater;
-import static net.splitcells.gel.rating.rater.classification.ForAllValueCombinations.forAllValueCombinations;
+import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
+import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.forAllValueCombinations;
 
 import java.util.Optional;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.constraint.type.Then;
-import net.splitcells.gel.rating.rater.classification.ForAllValueCombinations;
-import net.splitcells.gel.rating.rater.classification.RaterBasedOnGrouping;
+import net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations;
+import net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGrouping;
 import net.splitcells.gel.rating.framework.Rating;
-import net.splitcells.gel.rating.rater.Rater;
+import net.splitcells.gel.rating.rater.framework.Rater;
 
 public class QueryI implements Query {
     public static Query query(Constraint constraint, Optional<Constraint> root) {

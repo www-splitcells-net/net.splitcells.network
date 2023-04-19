@@ -22,7 +22,7 @@ import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineValue.lineValueRater;
+import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;
 import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpaceI.enumerableOptimizationSpace;

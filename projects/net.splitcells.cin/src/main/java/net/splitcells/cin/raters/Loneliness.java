@@ -22,8 +22,8 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.rater.Rater;
-import net.splitcells.gel.rating.rater.RatingEvent;
+import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import java.util.Optional;
 
@@ -35,9 +35,9 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRater;
-import static net.splitcells.gel.rating.rater.RaterBasedOnLineGroup.groupRouter;
-import static net.splitcells.gel.rating.rater.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineGroup.groupRater;
+import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineGroup.groupRouter;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
