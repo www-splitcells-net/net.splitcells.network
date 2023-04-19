@@ -18,6 +18,7 @@ package net.splitcells.gel.data.allocations;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.table.Line;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -25,15 +26,59 @@ import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
+import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 public class AllocationsTest extends TestSuiteI {
 
+    @UnitTest
+    public void testMultipleAllocationsPerDemand() {
+        final var demandValue = attribute(Integer.class, "demandValue");
+        final var supplyValue = attribute(Integer.class, "supplyValue");
+        final var demands = database("demand", demandValue);
+        demands.addTranslated(list(0));
+        demands.addTranslated(list(1));
+        demands.addTranslated(list(2));
+        final var supplies = database("supply", supplyValue);
+        supplies.addTranslated(list(0));
+        supplies.addTranslated(list(1));
+        supplies.addTranslated(list(2));
+        final var testSubject = allocations("testMultipleAllocationsPerDemand", demands, supplies);
+        testSubject.allocate(testSubject.demands().rawLine(0)
+                , testSubject.supplies().rawLine(0));
+        testSubject.allocate(testSubject.demands().rawLine(0)
+                , testSubject.supplies().rawLine(0));
+        testSubject.allocate(testSubject.demands().rawLine(1)
+                , testSubject.supplies().rawLine(1));
+        testSubject.allocate(testSubject.demands().rawLine(0)
+                , testSubject.supplies().rawLine(1));
+        testSubject.allocate(testSubject.demands().rawLine(2)
+                , testSubject.supplies().rawLine(2));
+        testSubject.allocate(testSubject.demands().rawLine(0)
+                , testSubject.supplies().rawLine(2));
+        testSubject.unorderedLines().requireSizeOf(6);
+        final var multipleAllocationsPerDemands = testSubject.allocationsOfDemand(testSubject.demands().rawLine(0));
+        multipleAllocationsPerDemands.requireSetSizeOf(4);
+        multipleAllocationsPerDemands
+                .mapped(Line::values)
+                .requireContentsOf(list(list(0, 0), list(0, 0), list(0, 1), list(0, 2)));
+        final var oneAllocationsPerDemands1 = testSubject.allocationsOfDemand(testSubject.demands().rawLine(1));
+        oneAllocationsPerDemands1.requireSetSizeOf(1);
+        oneAllocationsPerDemands1
+                .mapped(Line::values)
+                .requireContentsOf(list(list(1, 1)));
+        final var oneAllocationsPerDemands2 = testSubject.allocationsOfDemand(testSubject.demands().rawLine(2));
+        oneAllocationsPerDemands2.requireSetSizeOf(1);
+        oneAllocationsPerDemands2
+                .mapped(Line::values)
+                .requireContentsOf(list(list(2, 2)));
+    }
+
 
     @UnitTest
     public void testRawLinesGrowth() {
-        final var demands = Databases.database();
-        final var supplies = Databases.database();
+        final var demands = database();
+        final var supplies = database();
         final var allocations = allocations("test", demands, supplies);
         rangeClosed(1, 10).forEach(i -> {
             final var allocation = allocations.allocate(demands.addTranslated(list()), supplies.addTranslated(list()));
@@ -44,8 +89,8 @@ public class AllocationsTest extends TestSuiteI {
 
     @UnitTest
     public void test_subscribe_to_afterAdditions() {
-        final var demands = Databases.database();
-        final var supplies = Databases.database();
+        final var demands = database();
+        final var supplies = database();
         final var allocations = allocations("test", demands, supplies);
         allocations.subscribeToAfterAdditions(
                 allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
@@ -56,8 +101,8 @@ public class AllocationsTest extends TestSuiteI {
 
     @UnitTest
     public void test_subscriber_to_beforeRemoval() {
-        final var demands = Databases.database();
-        final var supplies = Databases.database();
+        final var demands = database();
+        final var supplies = database();
         final var allocations = allocations("test", demands, supplies);
         allocations.subscribeToBeforeRemoval
                 (allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
@@ -71,8 +116,8 @@ public class AllocationsTest extends TestSuiteI {
     @UnitTest
     public void test_subscriber_to_afterRemoval() {
         assertThrows(Exception.class, () -> {
-            final var demands = Databases.database();
-            final var supplies = Databases.database();
+            final var demands = database();
+            final var supplies = database();
             final var allocations = allocations("test", demands, supplies);
             allocations.subscribeToAfterRemoval
                     (allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
@@ -87,10 +132,10 @@ public class AllocationsTest extends TestSuiteI {
     @UnitTest
     public void test_allocate_and_remove() {
         final var demandAttribute = attribute(Double.class);
-        final var demands = Databases.database(demandAttribute);
+        final var demands = database(demandAttribute);
         demands.addTranslated(list(1.0));
         final var supplyAttribute = attribute(Integer.class);
-        final var supplies = Databases.database(supplyAttribute);
+        final var supplies = database(supplyAttribute);
         supplies.addTranslated(list(2));
         final var testSubject = allocations("test", demands, supplies);
         testSubject.headerView().requireEqualityTo(list(demands.headerView().get(0), supplies.headerView().get(0)));

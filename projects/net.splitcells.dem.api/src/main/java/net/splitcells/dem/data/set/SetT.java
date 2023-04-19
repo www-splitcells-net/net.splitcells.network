@@ -95,4 +95,15 @@ public interface SetT<T> extends Collection<T> {
             }
         });
     }
+
+    default void requireContentsOf(SetT<T> content) {
+        content.forEach(c -> {
+            if (!contains(c)) {
+                throw executionException("Set should contents in any order, but does not: set="
+                        + this
+                        + ", contents="
+                        + content);
+            }
+        });
+    }
 }
