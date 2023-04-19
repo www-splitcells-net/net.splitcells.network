@@ -45,6 +45,7 @@ import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.rating.rater.framework.Proposal;
 import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
@@ -338,5 +339,15 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
      * @param solution
      */
     void init(Solution solution);
+
+    /**
+     * By default, {@link Proposal}s are not processed.
+     *
+     * @param proposal Already present proposal.
+     * @return Adjustment to the proposal, so that the given proposal is compliant with this {@link Constraint}.
+     */
+    default Proposal propose(Proposal proposal) {
+        return proposal;
+    }
 
 }
