@@ -17,7 +17,6 @@ package net.splitcells.gel.proposal;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.rating.rater.framework.Proposal;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;

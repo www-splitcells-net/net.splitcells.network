@@ -26,6 +26,7 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue;
 import net.splitcells.gel.solution.Solution;
