@@ -146,4 +146,14 @@ public interface Rater extends PubliclyTyped<Rater>
      */
     default void init(Solution solution) {
     }
+
+    /**
+     * By default, {@link Proposal}s are not processed.
+     *
+     * @param proposal Already present proposal.
+     * @return Adjustment to the proposal, so that the given proposal is compliant with this {@link Rater}.
+     */
+    default Proposal propose(Proposal proposal) {
+        return proposal;
+    }
 }
