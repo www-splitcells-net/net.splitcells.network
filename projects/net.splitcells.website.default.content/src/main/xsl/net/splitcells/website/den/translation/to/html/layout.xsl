@@ -615,7 +615,7 @@ window.onload = function() {
                                         <article class="Standard_p2 net-splitcells-component-priority-2">
                                             <xsl:if test="$column_1 != ''">
                                                 <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
-                                                    <div class="Standard_p3 bottomLightShadow splitcells-net-line">
+                                                    <div class="Standard_p3 bottomLightShadow splitcells-net-line net-splitcells-minimal-not">
                                                         <div class="net-splitcells-space-filler"></div>
                                                         <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional net-splitcells-minimal-not"
                                                              onclick="javascript: fullScreenEnable();
@@ -636,7 +636,7 @@ window.onload = function() {
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
                                                     <div class="Standard_highlighted splitcells-net-line">
-                                                        <div class="net-splitcells-space-filler"></div>
+                                                        <div class="splitcells-net-line-title">Meta</div>
                                                     </div>
                                                 </div>
                                             </xsl:if>
