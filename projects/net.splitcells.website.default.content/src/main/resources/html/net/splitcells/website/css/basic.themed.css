@@ -86,8 +86,8 @@ ol > ol {
 .net-splitcells-content-column h2,
 .net-splitcells-content-column h3,
 .net-splitcells-content-column h4 {
-    background-color: var(--background-color-priority-0);
-    color: var(--foreground-color-priority-0);
+    background-color: var(--background-color-priority-1-a);
+    color: var(--foreground-color-priority-1-a);
     box-shadow: 0em 0.25em 0.25em -0.1em var(--shadow-color-priority-3);
     }
 .net-splitcells-content-column th {
@@ -258,10 +258,18 @@ main {
     background-color: var(--background-color-priority-1);
 	color: var(--foreground-color-priority-1);
 }
+.net-splitcells-component-priority-1-a {
+    background-color: var(--background-color-priority-1-a);
+	color: var(--foreground-color-priority-1-a);
+}
+.net-splitcells-component-priority-1-b {
+    background-color: var(--background-color-priority-1-b);
+	color: var(--foreground-color-priority-1-b);
+}
 .net-splitcells-component-priority-1 .heading,
 .net-splitcells-component-priority-1 h2 {
-    background-color: var(--background-color-priority-0);
-    color: var(--foreground-color-priority-0);
+    background-color: var(--background-color-priority-1-a);
+    color: var(--foreground-color-priority-1-a);
     }
 .MainButton:hover {
 	background-color: var(--background-color-selected-priority-3);
@@ -291,6 +299,9 @@ a {
 	text-decoration: none;
 	font-weight: bold;
 	}
+.splitcells-net-window-menu .splitcells-net-line {
+    box-shadow: 0em 0.1em .2em var(--shadow-color-priority-1);
+    }
 .net-splitcells-menu a {
 	text-decoration: none;
 	font-weight: bold;

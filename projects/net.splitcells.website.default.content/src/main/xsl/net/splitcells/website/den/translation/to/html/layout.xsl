@@ -566,7 +566,7 @@ window.onload = function() {
                                                 </div>
                                             </div>
                                             <div class="net-splitcells-structural-guide"/>
-                                            <div class="splitcells-net-line net-splitcells-component-priority-0">
+                                            <div class="splitcells-net-line net-splitcells-component-priority-1-a">
                                                 <div class="splitcells-net-line-title">
                                                     <xsl:if test="./s:title.detailed">
                                                         <xsl:value-of select="./s:title.detailed"/>
@@ -636,7 +636,7 @@ window.onload = function() {
                                                         </div>
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
-                                                    <div class="net-splitcells-component-priority-0 splitcells-net-line">
+                                                    <div class="net-splitcells-component-priority-1-a splitcells-net-line">
                                                         <div class="splitcells-net-line-title">Meta</div>
                                                     </div>
                                                 </div>
@@ -648,7 +648,7 @@ window.onload = function() {
                                 <div class="net-splitcells-content-filler net-splitcells-component-priority-2 net-splitcells-space-filler"></div>
                             </div>
                             <div class="menu Left_shadow TextCell Layout net-splitcells-component-priority-4">
-                                <div class="Left_shadow net-splitcells-structural-guide splitcells-net-title-logo splitcells-net-window-menu">
+                                <div class="Left_shadow net-splitcells-component-priority-1-a splitcells-net-title-logo splitcells-net-window-menu">
                                     <div class="splitcells-net-window-menu-line-1">
                                         <a class="net-splitcells-button net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
