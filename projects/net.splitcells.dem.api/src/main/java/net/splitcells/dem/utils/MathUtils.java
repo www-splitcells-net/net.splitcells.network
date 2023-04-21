@@ -24,6 +24,7 @@ import java.util.stream.IntStream;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -99,7 +100,7 @@ public final class MathUtils {
      * @return {@code dividend mod divisor}
      */
     public static int modulus(int dividend, int divisor) {
-        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
             if (divisor < 0) {
                 throw executionException("Negative divisor is not supported: " + divisor);
             }
@@ -185,6 +186,9 @@ public final class MathUtils {
      * This is the distance between 0 and the given number.
      */
     public static int absolute(int arg) {
+        if (ENFORCING_UNIT_CONSISTENCY && arg == Integer.MIN_VALUE) {
+            throw new IllegalArgumentException(Integer.MIN_VALUE + " is not supported.");
+        }
         return Math.abs(arg);
     }
 
