@@ -249,12 +249,15 @@
                     <div class="heading">
                         <xsl:attribute name="id" select="./s:title/@id"/>
                         <div style="width: 100%;">
-                            <a>
-                                <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
-                                <xsl:apply-templates select="./s:title/node()"/>
-                            </a>
-                            <a href="#topElement" style="float: right;">↑
-                            </a>
+                            <xsl:apply-templates select="./s:title/node()"/>
+                            <div style="float: right;">
+                                <a style="margin-right: .5em;">
+                                    <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
+                                    ↓
+                                </a>
+                                <a href="#topElement">↑
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <xsl:apply-templates select="node()[not(self::s:title)]"/>
