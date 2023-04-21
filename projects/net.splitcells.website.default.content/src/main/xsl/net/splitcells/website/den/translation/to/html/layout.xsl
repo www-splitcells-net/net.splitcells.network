@@ -448,7 +448,8 @@ window.onload = function() {
                         </title>
                         <xsl:choose>
                             <xsl:when test="document('/net/splitcells/website/server/config/css/files.xml')">
-                                <xsl:for-each select="document('/net/splitcells/website/server/config/css/files.xml')/d:val/*">
+                                <xsl:for-each
+                                        select="document('/net/splitcells/website/server/config/css/files.xml')/d:val/*">
                                     <link rel="stylesheet" type="text/css">
                                         <xsl:variable name="tmp">
                                             <xsl:value-of select="."/>
@@ -667,7 +668,9 @@ window.onload = function() {
                                     <div class="splitcells-net-window-menu-line-2"></div>
                                 </div>
                                 <div class="net-splitcells-menu net-splitcells-priority-4">
-                                    <a class="net-splitcells-button net-splitcells-component-priority-3" href="#content">Content</a>
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3"
+                                       href="#content">Content
+                                    </a>
                                     <a class="net-splitcells-button net-splitcells-component-priority-3">
                                         <xsl:attribute name="href">
                                             <xsl:value-of select="s:root-relative-url('/legal/impressum.html')"/>
@@ -676,7 +679,8 @@ window.onload = function() {
                                     </a>
                                     <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
                                         <xsl:attribute name="href">
-                                            <xsl:value-of select="concat($site-instance-host-root-path, 'net/splitcells/website/main-menu.html')"/>
+                                            <xsl:value-of
+                                                    select="concat($site-instance-host-root-path, 'net/splitcells/website/main-menu.html')"/>
                                         </xsl:attribute>
                                         Main Menu
                                     </a>
@@ -688,7 +692,9 @@ window.onload = function() {
                                     </a>
                                     <div class="messages">
                                         <h3>Messages</h3>
-                                        <div class="noScriptMessage TextCell text_error">- Activate Javascript in order to enable all functions of this site.</div>
+                                        <div class="noScriptMessage TextCell text_error">- Activate Javascript in order
+                                            to enable all functions of this site.
+                                        </div>
                                         <br/>
                                     </div>
                                     <a class="net-splitcells-button net-splitcells-component-priority-3 net-splitcells-network-status">
@@ -751,7 +757,8 @@ window.onload = function() {
                                     </a>
                                     <div class="net-splitcells-space-filler"></div>
                                     <h3>Footer Functions</h3>
-                                    <a class="net-splitcells-button net-splitcells-component-priority-3" href="#topElement">
+                                    <a class="net-splitcells-button net-splitcells-component-priority-3"
+                                       href="#topElement">
                                         back to top
                                     </a>
                                 </div>
