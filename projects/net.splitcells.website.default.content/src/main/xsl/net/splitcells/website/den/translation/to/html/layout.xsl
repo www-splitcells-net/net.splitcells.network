@@ -636,7 +636,7 @@ window.onload = function() {
                                                         </div>
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
-                                                    <div class="Standard_highlighted splitcells-net-line">
+                                                    <div class="net-splitcells-component-priority-0 splitcells-net-line">
                                                         <div class="splitcells-net-line-title">Meta</div>
                                                     </div>
                                                 </div>
