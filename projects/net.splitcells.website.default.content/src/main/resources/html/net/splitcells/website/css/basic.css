@@ -229,6 +229,7 @@ body {
 	 * https://developer.mozilla.org/en-US/docs/Web/CSS/font-size
 	 */
 	font-size: 16px;
+	background-color: var(--background-color-priority-5);
 	}
 .Borderless {
 	border: none;
