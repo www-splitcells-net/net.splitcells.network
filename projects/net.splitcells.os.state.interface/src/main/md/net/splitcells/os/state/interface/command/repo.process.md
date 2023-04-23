@@ -21,8 +21,16 @@ the initial blog article,
 explaining the reasoning behind repo process,
 can be found.
 # Common Use Cases
+> It's all about advertisement.
+
 The command `repo.process` provides a `--help` flag,
-with details regarding all command flags.
+with all details regarding all command flags.
+
+The following contains a small gallery of use cases,
+in order to get a feeling,
+of the programs capabilities and scope.
+Look into the program's `--help` flag output via `repo.process --help`,
+for more detailed documentation.
 ## Add new remote to each sub repo.
 This can be done via a Git specific command pattern:
 ```
