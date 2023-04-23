@@ -17,8 +17,6 @@ package net.splitcells.dem.data.order;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
-import java.util.function.BiFunction;
-
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -29,58 +27,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * @param <T>
  */
 public interface Comparator<T> extends java.util.Comparator<T> {
-
-    Comparator<Integer> ASCENDING_INTEGERS = comparator((a, b) -> {
-        if (a < b) {
-            return Ordering.LESSER_THAN;
-        } else if (b < a) {
-            return Ordering.GREATER_THAN;
-        } else {
-            return Ordering.EQUAL;
-        }
-    });
-
-    Comparator<Double> ASCENDING_DOUBLES = comparator((a, b) -> {
-        if (a < b) {
-            return Ordering.LESSER_THAN;
-        } else if (b < a) {
-            return Ordering.GREATER_THAN;
-        } else {
-            return Ordering.EQUAL;
-        }
-    });
-
-    Comparator<Boolean> ASCENDING_BOOLEANS = comparator((a, b) -> {
-        if (a && !b) {
-            return Ordering.GREATER_THAN;
-        } else if (!a && b) {
-            return Ordering.LESSER_THAN;
-        } else {
-            return Ordering.EQUAL;
-        }
-    });
-
-    static <T> Comparator<T> comparator(BiFunction<T, T, Ordering> comparator) {
-        return new Comparator<T>() {
-            @Override
-            public Ordering compareTo(T a, T b) {
-                return comparator.apply(a, b);
-            }
-        };
-    }
-
-    /**
-     * Create a compatibility wrapper for {@link java.util.Comparator}.
-     *
-     * @param comparator Comparator Of Java Standard Library
-     * @param <T>        Type of Values being Compared
-     * @return Wrapped Comparator
-     */
-    @JavaLegacyArtifact
-    static <T> Comparator<T> comparatorLegacy(BiFunction<T, T, Integer> comparator) {
-        return Comparators.comparator(comparator);
-
-    }
 
     default Ordering compareTo(T a, T b) {
         final int rBase = compare(a, b);

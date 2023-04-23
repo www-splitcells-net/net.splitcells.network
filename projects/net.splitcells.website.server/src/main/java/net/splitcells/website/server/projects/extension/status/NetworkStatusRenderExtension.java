@@ -21,7 +21,6 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.host.HostName;
-import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.RenderingResult;
@@ -34,7 +33,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static net.splitcells.dem.Dem.config;
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_DOUBLES;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_DOUBLES;
 import static net.splitcells.dem.data.order.Comparators.naturalComparator;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;

@@ -17,9 +17,9 @@ package net.splitcells.dem.data.order;
 
 import org.junit.jupiter.api.Test;
 
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_BOOLEANS;
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_DOUBLES;
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_BOOLEANS;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_DOUBLES;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -34,7 +34,7 @@ public class ComparatorTest {
     @Test
     public void testLegacyAscendingIntegers() {
         final var object = list(3, 1, 2);
-        object.sort(Comparators.comparator(Integer::compare));
+        object.sort(Comparators.legacyComparator(Integer::compare));
         assertThat(object).isEqualTo(list(1, 2, 3));
     }
 

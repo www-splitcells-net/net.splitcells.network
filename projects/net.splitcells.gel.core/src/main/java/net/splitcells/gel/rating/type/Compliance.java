@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.type;
 
 import static java.util.Arrays.asList;
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_BOOLEANS;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_BOOLEANS;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 

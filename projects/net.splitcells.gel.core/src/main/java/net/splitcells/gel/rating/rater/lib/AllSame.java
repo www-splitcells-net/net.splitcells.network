@@ -15,7 +15,7 @@
  */
 package net.splitcells.gel.rating.rater.lib;
 
-import net.splitcells.dem.data.order.Comparator;
+import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -66,7 +66,7 @@ public class AllSame {
                 }
                 final var valueCounts = valueCounter.values()
                         .stream()
-                        .sorted(Comparator.ASCENDING_INTEGERS)
+                        .sorted(Comparators.ASCENDING_INTEGERS)
                         .collect(toList());
                 valueCounts.remove(valueCounts.size() - 1);
                 return cost((double) valueCounts.stream()

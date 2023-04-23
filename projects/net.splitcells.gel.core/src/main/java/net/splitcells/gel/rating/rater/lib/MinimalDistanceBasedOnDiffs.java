@@ -16,6 +16,7 @@
 package net.splitcells.gel.rating.rater.lib;
 
 import net.splitcells.dem.data.order.Comparator;
+import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
@@ -42,7 +43,6 @@ import java.util.function.BiFunction;
 import static java.lang.Math.abs;
 import static java.util.Comparator.naturalOrder;
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.data.order.Comparator.*;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -66,12 +66,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     @Deprecated
     public static MinimalDistanceBasedOnDiffs<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, ASCENDING_INTEGERS, MathUtils::distance);
+        return minimalDistance(attribute, minimumDistance, Comparators.ASCENDING_INTEGERS, MathUtils::distance);
     }
 
     @Deprecated
     public static MinimalDistanceBasedOnDiffs<Double> minimalDistance(Attribute<Double> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, ASCENDING_DOUBLES, MathUtils::distance);
+        return minimalDistance(attribute, minimumDistance, Comparators.ASCENDING_DOUBLES, MathUtils::distance);
     }
 
     @Deprecated

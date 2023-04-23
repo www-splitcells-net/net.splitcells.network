@@ -28,7 +28,7 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import static net.splitcells.cin.raters.PositionClusters.centerXPositionOf;
 import static net.splitcells.cin.raters.PositionClusters.centerYPositionOf;
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;

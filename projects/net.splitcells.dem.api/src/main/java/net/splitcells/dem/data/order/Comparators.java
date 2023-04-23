@@ -27,18 +27,68 @@ import java.util.function.BiFunction;
 @JavaLegacyArtifact
 public class Comparators<T> implements Comparator<T> {
 
-    public static <T> Comparators<T> comparator(BiFunction<T, T, Integer> comparator) {
+    public static final Comparator<Integer> ASCENDING_INTEGERS = comparator((a, b) -> {
+        if (a < b) {
+            return Ordering.LESSER_THAN;
+        } else if (b < a) {
+            return Ordering.GREATER_THAN;
+        } else {
+            return Ordering.EQUAL;
+        }
+    });
+    public static final Comparator<Double> ASCENDING_DOUBLES = comparator((a, b) -> {
+        if (a < b) {
+            return Ordering.LESSER_THAN;
+        } else if (b < a) {
+            return Ordering.GREATER_THAN;
+        } else {
+            return Ordering.EQUAL;
+        }
+    });
+    public static final Comparator<Boolean> ASCENDING_BOOLEANS = comparator((a, b) -> {
+        if (a && !b) {
+            return Ordering.GREATER_THAN;
+        } else if (!a && b) {
+            return Ordering.LESSER_THAN;
+        } else {
+            return Ordering.EQUAL;
+        }
+    });
+
+    public static <T> Comparators<T> legacyComparator(BiFunction<T, T, Integer> comparator) {
         return new Comparators<>(comparator);
     }
 
     public static <T extends Comparable<T>> Comparators<T> naturalComparator() {
-        return comparator((a, b) -> a.compareTo(b));
+        return legacyComparator((a, b) -> a.compareTo(b));
     }
 
     private final BiFunction<T, T, Integer> comparator;
 
     private Comparators(BiFunction<T, T, Integer> comparator) {
         this.comparator = comparator;
+    }
+
+    public static <T> Comparator<T> comparator(BiFunction<T, T, Ordering> comparator) {
+        return new Comparator<T>() {
+            @Override
+            public Ordering compareTo(T a, T b) {
+                return comparator.apply(a, b);
+            }
+        };
+    }
+
+    /**
+     * Create a compatibility wrapper for {@link java.util.Comparator}.
+     *
+     * @param comparator Comparator Of Java Standard Library
+     * @param <T>        Type of Values being Compared
+     * @return Wrapped Comparator
+     */
+    @JavaLegacyArtifact
+    public static <T> Comparator<T> comparatorLegacy(BiFunction<T, T, Integer> comparator) {
+        return legacyComparator(comparator);
+
     }
 
     @Override

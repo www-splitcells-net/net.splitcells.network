@@ -17,8 +17,8 @@ package net.splitcells.gel.rating.rater.lib;
 
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_DOUBLES;
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_DOUBLES;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -36,7 +36,6 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
-import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;

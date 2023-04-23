@@ -20,7 +20,7 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 
 import java.util.function.BiPredicate;
 
-import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
