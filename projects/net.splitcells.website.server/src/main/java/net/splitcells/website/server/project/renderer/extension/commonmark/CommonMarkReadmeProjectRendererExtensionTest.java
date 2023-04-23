@@ -36,8 +36,8 @@ public class CommonMarkReadmeProjectRendererExtensionTest {
         final var testSubject = projectRenderer
                 ("public"
                         , Path.of("../net.splitcells.dem")
-                        , Path.of("../net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                        , Path.of("net.splitcells.website.default.content/src/main/resources/html")
+                        , Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                        , Path.of("net.splitcells.website.content.default/src/main/resources/html")
                         , "/net/splitcells/dem"
                         , a -> Optional.empty()
                         , Config.create());

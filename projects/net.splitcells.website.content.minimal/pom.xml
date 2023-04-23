@@ -5,11 +5,18 @@
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>website.default.content</artifactId>
+    <artifactId>website.content.minimal</artifactId>
     <parent>
         <groupId>net.splitcells</groupId>
         <artifactId>pom-java-defaults</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
+    <dependencies>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>website.server</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

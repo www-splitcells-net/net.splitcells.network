@@ -35,8 +35,8 @@ public class ResourceOptionProjectRendererExtensionTest {
         final var testSubject = projectRenderer
                 ("public"
                         , Path.of(".")
-                        , Path.of("../net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                        , Path.of("net.splitcells.website.default.content/src/main/resources/html")
+                        , Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                        , Path.of("net.splitcells.website.content.default/src/main/resources/html")
                         , "/net/splitcells/network"
                         , a -> Optional.empty()
                         , Config.create());

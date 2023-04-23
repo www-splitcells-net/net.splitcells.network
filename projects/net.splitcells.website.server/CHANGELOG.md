@@ -7,6 +7,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2023-04-24: \#199** Rename project `net.splitcells.website.default.content`
+  to `net.splitcells.website.content.default` in order to get more consistent project naming,
+  when the website project for minimal content is introduced.
 * **2022-12-17: \#27**: Extend Config with detailedXslMenu.
   If this value is present use its content for the detailed menu in the page layout.
   This is the start to remove hard coded personal info from the default layout.

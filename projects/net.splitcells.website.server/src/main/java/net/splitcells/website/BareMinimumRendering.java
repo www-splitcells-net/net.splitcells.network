@@ -44,7 +44,7 @@ public class BareMinimumRendering {
                     .withOpenPort(8080)
                     .withXmlSchema(Optional.empty())
                     .withIsSecured(false)
-                    .withDetailedXslMenu(Optional.of(readFileAsString(Paths.get("projects/net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/detailed-menu.xsl")))))
+                    .withDetailedXslMenu(Optional.of(readFileAsString(Paths.get("projects/net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/detailed-menu.xsl")))))
                     .serveToHttpAt();
         });
     }

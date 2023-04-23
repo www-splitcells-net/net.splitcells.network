@@ -57,7 +57,7 @@ public class Projects {
             , SourceValidator sourceValidator
             , Config config) {
         final var xslLib = projectRepository
-                .resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/");
+                .resolve("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/");
         return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer
                 , additionalProjects.withAppended(projectRenderers(profile, projectRepository, sourceValidator, xslLib, config))
                 , config);
@@ -76,9 +76,9 @@ public class Projects {
 
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories, SourceValidator sourceValidator, Config config) {
         return projectRenderer(profile
-                , projectRepositories.resolve("net.splitcells.website.default.content/")
-                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                , projectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/content")
+                , projectRepositories.resolve("net.splitcells.website.content.default/")
+                , projectRepositories.resolve("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                , projectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/content")
                 , "/"
                 , sourceValidator
                 , config);
@@ -92,7 +92,7 @@ public class Projects {
                         (profile
                                 , integratedProjectRepositories.resolve("net.splitcells.dem/")
                                 , xslLib
-                                , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , integratedProjectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/html")
                                 , "/net/splitcells/dem"
                                 , sourceValidator
                                 , config)
@@ -138,9 +138,9 @@ public class Projects {
                                 , config)
                 , projectRenderer
                         (profile
-                                , integratedProjectRepositories.resolve("net.splitcells.website.default.content/")
+                                , integratedProjectRepositories.resolve("net.splitcells.website.content.default/")
                                 , xslLib
-                                , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , integratedProjectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/html")
                                 , "/net/splitcells/website"
                                 , sourceValidator
                                 , config)
@@ -148,7 +148,7 @@ public class Projects {
                         (profile
                                 , integratedProjectRepositories.resolve("net.splitcells.website.server/")
                                 , xslLib
-                                , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                                , integratedProjectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/html")
                                 , "/"
                                 , sourceValidator
                                 , config)
@@ -209,7 +209,7 @@ public class Projects {
                     (profile
                             , projectClusterRepository.resolve("net.splitcells.network.media")
                             , xslLib
-                            , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                            , integratedProjectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/html")
                             , "/net/splitcells"
                             , sourceValidator
                             , config));
@@ -219,7 +219,7 @@ public class Projects {
                     (profile
                             , integratedProjectRepositories.resolve("../../net.splitcells.network.log/")
                             , xslLib
-                            , integratedProjectRepositories.resolve("net.splitcells.website.default.content/src/main/resources/html")
+                            , integratedProjectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/html")
                             , "/"
                             , sourceValidator
                             , config));
