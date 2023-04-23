@@ -122,7 +122,7 @@ public class Projects {
                                 , config)
                 , projectRenderer
                         (profile
-                                , integratedProjectRepositories.resolve("net.splitcells.gel.sheath/")
+                                , integratedProjectRepositories.resolve("net.splitcells.gel.ext/")
                                 , xslLib
                                 , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
@@ -162,7 +162,7 @@ public class Projects {
                                 , config)
                 , projectRenderer
                         (profile
-                                , integratedProjectRepositories.resolve("net.splitcells.dem.merger/")
+                                , integratedProjectRepositories.resolve("net.splitcells.dem.api/")
                                 , xslLib
                                 , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/dem"
