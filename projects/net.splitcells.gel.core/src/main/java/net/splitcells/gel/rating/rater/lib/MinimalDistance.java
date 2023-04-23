@@ -15,15 +15,15 @@
  */
 package net.splitcells.gel.rating.rater.lib;
 
-import static java.lang.Math.abs;
-import static java.util.Comparator.naturalOrder;
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.data.order.Comparator.*;
+import static net.splitcells.dem.data.order.Comparator.ASCENDING_DOUBLES;
+import static net.splitcells.dem.data.order.Comparator.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
@@ -36,6 +36,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
@@ -81,7 +82,7 @@ public class MinimalDistance<T> implements Rater {
     private final BiFunction<T, T, Double> distanceMeassurer;
     private final List<Discoverable> contextes = list();
 
-    protected MinimalDistance
+    private MinimalDistance
             (Attribute<T> attribute, double minimumDistance
                     , Comparator<T> comparator
                     , BiFunction<T, T, Double> distanceMeassurer) {
@@ -225,7 +226,7 @@ public class MinimalDistance<T> implements Rater {
         }
     }
 
-    protected Rating pairRating(Line left, Line right) {
+    private Rating pairRating(Line left, Line right) {
         final var actualDistance = distance(left, right);
         if (actualDistance >= minimumDistance) {
             return noCost();
@@ -235,7 +236,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     private double distance(Line left, Line right) {
-        return abs(distanceMeassurer
+        return absolute(distanceMeassurer
                 .apply(left.value(LINE).value(attribute)
                         , right.value(LINE).value(attribute)));
     }
@@ -348,7 +349,7 @@ public class MinimalDistance<T> implements Rater {
         final var minimalDistance = rangeClosed(0, sorted.size() - 2)
                 .filter(i -> sorted.get(i).value(LINE).equalsTo(line) || sorted.get(i + 1).value(LINE).equalsTo(line))
                 .mapToObj(i -> distance(sorted.get(i), sorted.get(i + 1)))
-                .min(naturalOrder());
+                .min(ASCENDING_DOUBLES);
         return minimalDistance.map(distance -> "Has a minimum distance of "
                         + distance
                         + " "

@@ -15,10 +15,8 @@
  */
 package net.splitcells.gel.rating.rater.lib.classification;
 
-import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -47,7 +45,7 @@ public class GroupMultiplier implements Rater {
     private final Map<List<GroupId>, GroupId> groupMultiplier = map();
     private final List<Discoverable> contexts = list();
 
-    protected GroupMultiplier(Rater... classifiers) {
+    private GroupMultiplier(Rater... classifiers) {
         this.classifiers = list(classifiers);
     }
 

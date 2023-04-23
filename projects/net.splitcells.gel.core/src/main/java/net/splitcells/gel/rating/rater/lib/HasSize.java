@@ -15,9 +15,9 @@
  */
 package net.splitcells.gel.rating.rater.lib;
 
-import static java.lang.Math.abs;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
@@ -49,7 +49,7 @@ public class HasSize implements Rater {
     private final int targetSize;
     private final List<Discoverable> contexts = list();
 
-    protected HasSize(int targetSize) {
+    private HasSize(int targetSize) {
         this.targetSize = targetSize;
     }
 
@@ -121,7 +121,7 @@ public class HasSize implements Rater {
         if (actualSize == 0) {
             rating = noCost();
         } else if (actualSize > 0) {
-            final int difference = abs(targetSize - actualSize);
+            final int difference = absolute(targetSize - actualSize);
             rating = cost(difference / ((double) actualSize));
         } else {
             throw new AssertionError("negative size is: " + actualSize);

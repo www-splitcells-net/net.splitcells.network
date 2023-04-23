@@ -192,6 +192,15 @@ public final class MathUtils {
         return Math.abs(arg);
     }
 
+    /**
+     * @param arg The number for that the absolute is calculated.
+     * @return Returns the absolute value of the given number.
+     * This is the distance between 0 and the given number.
+     */
+    public static double absolute(double arg) {
+        return Math.abs(arg);
+    }
+
     public static IntStream intervalClosed(int min, int max) {
         return IntStream.rangeClosed(min, max);
     }
