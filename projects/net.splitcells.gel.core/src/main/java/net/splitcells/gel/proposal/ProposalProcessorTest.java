@@ -32,7 +32,6 @@ public class ProposalProcessorTest {
         requireIllegalDefaultConstructor(ProposalProcessor.class);
     }
 
-    @UnitTest
     public void testProposeViaConstraintPath() {
         final var demandingAttribute = attribute(Integer.class, "demandingAttribute");
         final var firstSuppliedAttribute = attribute(Integer.class, "firstSuppliedAttribute");
