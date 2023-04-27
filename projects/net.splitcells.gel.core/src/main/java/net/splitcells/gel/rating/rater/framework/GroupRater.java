@@ -15,11 +15,17 @@
  */
 package net.splitcells.gel.rating.rater.framework;
 
+import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.Rating;
 
 import java.util.Optional;
+
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
 /**
  * This is a helper interface, in order to create a rater based on one method.
@@ -50,4 +56,19 @@ public interface GroupRater {
      * @return return
      */
     Rating lineRating(Table lines, Optional<Line> addition, Optional<Line> removal);
+
+    /**
+     * By default, {@link Proposal}s are not processed.
+     *
+     * @param proposal Already present proposal.
+     * @param lines    The already present lines of the group.
+     *                 The {@link Table#headerView()} of this is the same as of {@link Constraint#lines()}.
+     * @return Adjustment to the proposal, so that the given proposal is compliant with this {@link Rater}.
+     */
+    default Proposal propose(Proposal proposal, Table lines) {
+        if (StaticFlags.WARNING) {
+            domsole().appendUnimplementedWarning(getClass());
+        }
+        return proposal;
+    }
 }
