@@ -27,6 +27,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.table.attribute.ListAttribute.listAttribute;
@@ -40,7 +41,9 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
@@ -347,6 +350,9 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
      * @return Adjustment to the proposal, so that the given proposal is compliant with this {@link Constraint}.
      */
     default Proposal propose(Proposal proposal) {
+        if (StaticFlags.WARNING) {
+            domsole().append(getClass() + " does not implement `Constraint#propose(Proposal)`.", LogLevel.WARNING);
+        }
         return proposal;
     }
 
