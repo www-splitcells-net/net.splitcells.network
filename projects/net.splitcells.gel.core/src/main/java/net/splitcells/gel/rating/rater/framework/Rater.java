@@ -16,11 +16,14 @@
 package net.splitcells.gel.rating.rater.framework;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -155,6 +158,9 @@ public interface Rater extends PubliclyTyped<Rater>
      * @return Adjustment to the proposal, so that the given proposal is compliant with this {@link Rater}.
      */
     default Proposal propose(Proposal proposal) {
+        if (StaticFlags.WARNING) {
+            domsole().append(getClass() + " does not implement `Rater#propose(Proposal)`.", LogLevel.WARNING);
+        }
         return proposal;
     }
 }
