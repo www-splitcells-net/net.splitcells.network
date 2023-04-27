@@ -15,8 +15,10 @@
  */
 package net.splitcells.dem.resource.communication.interaction;
 
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.PerspectiveI;
@@ -30,6 +32,7 @@ import java.util.Optional;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.interaction.LogMessageI.logMessage;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 
 /**
@@ -47,6 +50,26 @@ public interface Ui extends Sui<LogMessage<Perspective>>, Resource {
 
     default Ui append(String message, LogLevel logLevel) {
         return append(logMessage(perspective(message), NO_CONTEXT, logLevel));
+    }
+
+    /**
+     * Mark code locations for optional functionality and makes it possible to detect,
+     * whether such optional functionality would be used,
+     * if it was present.
+     *
+     * @param clazz Points to the class with missing implementation.
+     *              This is useful for default implementations.
+     * @return this
+     */
+    @ReturnsThis
+    @JavaLegacyBody
+    default Ui appendUnimplementedWarning(Class<?> clazz) {
+        final var stackTrace = new RuntimeException();
+        final var stackTraceValue = new java.io.StringWriter();
+        final var stackTracePrinter = new java.io.PrintWriter(stackTraceValue);
+        stackTrace.printStackTrace(stackTracePrinter);
+        domsole().append("Unimplemented program part for class " + clazz + " at:\n" + stackTraceValue, LogLevel.WARNING);
+        return this;
     }
 
     default Ui append(Domable domable, LogLevel logLevel) {
