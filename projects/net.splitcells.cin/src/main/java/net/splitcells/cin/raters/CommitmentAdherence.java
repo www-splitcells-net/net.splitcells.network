@@ -23,11 +23,13 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
@@ -71,5 +73,16 @@ public class CommitmentAdherence implements Rater {
     @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return "Lines are committed up to " + committedTime + " " + time.name() + ".";
+    }
+
+    @Override
+    public Proposal propose(Proposal proposal) {
+        final var invalidDemands = proposal.proposedAllocations()
+                .demands()
+                .unorderedLinesStream()
+                .filter(a -> a.value(time) <= committedTime)
+                .collect(toList());
+        invalidDemands.forEach(a -> proposal.proposedAllocations().demands().remove(a));
+        return proposal;
     }
 }
