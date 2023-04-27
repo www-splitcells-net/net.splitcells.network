@@ -15,21 +15,30 @@
  */
 package net.splitcells.gel.proposal;
 
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.allocation.AllocationsI;
+import net.splitcells.gel.data.allocation.Allocationss;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
+
+import static net.splitcells.gel.data.allocation.Allocationss.allocations;
+import static net.splitcells.gel.data.database.Databases.database;
 
 public class Proposals implements Proposal {
 
-    public static Proposal proposal(Solution subject, Allocations proposedAllocations) {
-        return new Proposals(subject, proposedAllocations);
+    public static Proposal proposal(Solution subject) {
+        return new Proposals(subject);
     }
 
     private final Solution subject;
     private final Allocations proposedAllocations;
 
-    private Proposals(Solution subject, Allocations proposedAllocations) {
+    private Proposals(Solution subject) {
         this.subject = subject;
-        this.proposedAllocations = proposedAllocations;
+        this.proposedAllocations = allocations("proposed-allocations"
+                , database("proposed-demands", subject.demands(), subject.demands().headerView2())
+                , database("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
     }
 
     @Override

@@ -17,16 +17,22 @@ package net.splitcells.gel.proposal;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.proposal.Proposals.proposal;
 
 public class ProposalProcessor {
     private ProposalProcessor() {
         throw constructorIllegal();
     }
-    public static Proposal propose(Solution subject, List<Constraint> constraintPath) {
-        throw notImplementedYet();
+
+    public static Proposal propose(Solution subject, List<Constraint> constraintPath, List<Line> relevantDemands) {
+        final var proposal = proposal(subject);
+        relevantDemands.forEach(d -> proposal.proposedAllocations().demands().add(d));
+        constraintPath.forEach(constraint -> constraint.propose(proposal));
+        return proposal;
     }
 }
