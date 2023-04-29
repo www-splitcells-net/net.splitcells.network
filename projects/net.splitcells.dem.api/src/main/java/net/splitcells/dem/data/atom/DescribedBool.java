@@ -21,6 +21,10 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class DescribedBool implements Bool {
 
+    public static Bool describedBool(boolean content, String description) {
+        return new DescribedBool(content, () -> description);
+    }
+
     public static Bool describedBool(boolean content, Supplier<String> description) {
         return new DescribedBool(content, description);
     }

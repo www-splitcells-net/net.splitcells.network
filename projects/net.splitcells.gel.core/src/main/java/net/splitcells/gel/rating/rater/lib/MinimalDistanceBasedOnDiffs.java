@@ -40,19 +40,21 @@ import org.w3c.dom.Node;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-import static java.lang.Math.abs;
-import static java.util.Comparator.naturalOrder;
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_DOUBLES;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * TODO FIX This does not work.
@@ -71,7 +73,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
 
     @Deprecated
     public static MinimalDistanceBasedOnDiffs<Double> minimalDistance(Attribute<Double> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, Comparators.ASCENDING_DOUBLES, MathUtils::distance);
+        return minimalDistance(attribute, minimumDistance, ASCENDING_DOUBLES, MathUtils::distance);
     }
 
     @Deprecated
@@ -88,7 +90,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     private final BiFunction<T, T, Double> distanceMeassurer;
     private final List<Discoverable> contextes = list();
 
-    protected MinimalDistanceBasedOnDiffs
+    private MinimalDistanceBasedOnDiffs
             (Attribute<T> attribute, double minimumDistance
                     , Comparator<T> comparator
                     , BiFunction<T, T, Double> distanceMeassurer) {
@@ -165,7 +167,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                 }
             }
         } else {
-            throw new AssertionError("" + sortedIndexes);
+            throw executionException("" + sortedIndexes);
         }
         return ratingEvent;
     }
@@ -177,10 +179,9 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                 final var remainingDistance = minimumDistance
                         - distance(sortedProcessingLines.get(0), sortedProcessingLines.get(1));
                 if (remainingDistance > 0) {
-                    assertThat(noCost().betterThan(sortedProcessingLines.get(0).value(RATING)))
-                            .isTrue();
+                    require(noCost().betterThan(sortedProcessingLines.get(0).value(RATING)));
                 } else {
-                    assertThat(sortedProcessingLines.get(0).value(RATING).equalz(noCost())).isTrue();
+                    require(sortedProcessingLines.get(0).value(RATING).equalz(noCost()));
                 }
             }
             rangeClosed(1, sortedProcessingLines.size() - 2)
@@ -202,10 +203,9 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                             remainingDistance = 0;
                         }
                         if (remainingDistance > 0) {
-                            assertThat(noCost().betterThan(sortedProcessingLines.get(i).value(RATING)))
-                                    .isTrue();
+                            require(noCost().betterThan(sortedProcessingLines.get(i).value(RATING)));
                         } else {
-                            assertThat(sortedProcessingLines.get(i).value(RATING).equalz(noCost())).isTrue();
+                            require(sortedProcessingLines.get(i).value(RATING).equalz(noCost()));
                         }
                     });
             if (sortedProcessingLines.size() > 2) {
@@ -213,21 +213,17 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                         - distance(sortedProcessingLines.get(sortedProcessingLines.size() - 2)
                         , sortedProcessingLines.get(sortedProcessingLines.size() - 1));
                 if (remainingDistance > 0) {
-                    assertThat
-                            (noCost()
-                                    .betterThan(sortedProcessingLines
-                                            .get(sortedProcessingLines.size() - 2)
-                                            .value(RATING)))
-                            .isTrue();
+                    require(noCost()
+                            .betterThan(sortedProcessingLines
+                                    .get(sortedProcessingLines.size() - 2)
+                                    .value(RATING)));
                 } else {
-                    assertThat
-                            (noCost().betterThan
-                                    (sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)))
-                            .isTrue();
+                    require(noCost().betterThan
+                            (sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)));
                 }
             }
         } catch (Throwable t) {
-            throw new RuntimeException(t);
+            throw executionException(t);
         }
     }
 
@@ -248,12 +244,11 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                         .findFirst()
                         .orElseThrow());
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            assertThat
-                    (sortedLines.stream()
+            describedBool(sortedLines.stream()
                             .filter(e -> e.value(LINE).equals(addition.value(LINE)))
-                            .count())
-                    .describedAs("Multiple instances of an allocation are not supported.")
-                    .isLessThan(2);
+                            .count() < 2
+                    , "Multiple instances of an allocation are not supported."
+            ).required();
         }
         if (sortedIndex == 0) {
             if (sortedLines.size() == 1) {
@@ -308,19 +303,19 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                 }
             }
         } else {
-            throw new AssertionError("" + sortedIndex);
+            throw executionException("" + sortedIndex);
         }
         return ratingEvent;
     }
 
-    protected void rate_addition_ofAdditionPair
+    private void rate_addition_ofAdditionPair
             (RatingEvent rVal
                     , Line addition
                     , Line originalLine
                     , List<Constraint> children
                     , Optional<Rating> ratingBeforeAddition) {
         final Rating additionalCost;
-        if (abs(distanceMeassurer.apply(
+        if (absolute(distanceMeassurer.apply(
                 addition.value(LINE).value(attribute),
                 originalLine.value(LINE).value(attribute))) >= minimumDistance) {
             additionalCost = noCost();
@@ -332,7 +327,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     }
 
     private double distance(Line a, Line b) {
-        return abs(distanceMeassurer
+        return absolute(distanceMeassurer
                 .apply(a.value(LINE).value(attribute)
                         , b.value(LINE).value(attribute)));
     }
@@ -341,7 +336,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
         return distance(a, b) >= minimumDistance;
     }
 
-    protected void rate_addition_ofRemovalPair
+    private void rate_addition_ofRemovalPair
             (RatingEvent rVal
                     , Line removal
                     , Line rest
@@ -441,7 +436,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
         final var minimalDistance = rangeClosed(0, sorted.size() - 2)
                 .filter(i -> sorted.get(i).value(LINE).equalsTo(line) || sorted.get(i + 1).value(LINE).equalsTo(line))
                 .mapToObj(i -> distance(sorted.get(i), sorted.get(i + 1)))
-                .min(naturalOrder());
+                .min(ASCENDING_DOUBLES);
         return minimalDistance.map(distance -> "Has a minimum distance of "
                         + distance
                         + " "

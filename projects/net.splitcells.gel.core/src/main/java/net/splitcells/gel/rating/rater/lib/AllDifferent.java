@@ -57,7 +57,6 @@ public class AllDifferent<T> implements Rater {
     private AllDifferent(Attribute<T> attribute) {
         this.attribute = attribute;
         predicateFactory = value -> line -> line.value(this.attribute).equals(value);
-        ;
     }
 
     private Predicate<Line> predicate(T value) {
@@ -88,7 +87,7 @@ public class AllDifferent<T> implements Rater {
             group.rawLinesView().stream()
                     .filter(e -> e != null)
                     .forEach(e -> ratingEvent.additions()
-                            .put(e//
+                            .put(e
                                     , localRating()
                                             .withPropagationTo(children)
                                             .withRating(cost(1.0))
