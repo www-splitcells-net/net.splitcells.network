@@ -164,6 +164,7 @@ expression
     ;
 expression_with_prefix
     : Operator_plus Operator_plus expression
+    | Hyphen_minus Hyphen_minus expression
     ;
 expression_child
 	: access
