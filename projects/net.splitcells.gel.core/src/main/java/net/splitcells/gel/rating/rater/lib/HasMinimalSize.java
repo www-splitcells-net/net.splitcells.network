@@ -30,7 +30,6 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import org.w3c.dom.Node;
 
-import static java.lang.Math.abs;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
