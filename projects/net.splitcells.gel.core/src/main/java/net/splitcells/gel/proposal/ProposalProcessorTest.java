@@ -42,7 +42,7 @@ public class ProposalProcessorTest {
                 .withDemandAttributes(demandingAttribute)
                 .withDemands(list(list(1), list(1)))
                 .withSupplyAttributes(firstSuppliedAttribute, secondSuppliedAttribute)
-                .withSupplies(list(list(2, 3), list(2, 3), list(2, 4)))
+                .withSupplies(list(list(2, 3), list(2, 4), list(2, 3), list(2, 4)))
                 .withConstraint(q -> {
                     constraintPath.addAll(
                             q.forAll(demandingAttribute)
