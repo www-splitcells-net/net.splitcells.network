@@ -90,31 +90,28 @@ public class AllSame {
             }
 
             @Override
-            public Proposal propose(Proposal proposal, Table lines) {
-                final var values = lines.unorderedLinesStream()
-                        .map(l -> l.value(LINE).value(attribute))
+            public Proposal propose(Proposal proposal) {
+                final var values = proposal.proposedAllocations().unorderedLinesStream()
+                        .map(l -> l.value(attribute))
                         .collect(toSetOfUniques());
+                proposal.conextAllocations().unorderedLinesStream()
+                        .forEach(l -> values.add(l.value(attribute)));
                 if (values.size() == 1) {
                     final var value = values.stream().findFirst().orElseThrow();
-                    final var invalidProposals = proposal.proposedAllocations().unorderedLinesStream()
-                            .filter(pa -> !pa.value(attribute).equals(value))
-                            .collect(toList());
-                    invalidProposals.forEach(ip -> proposal.proposedAllocations().remove(ip));
-                    proposal.proposedAllocations().demandsFree().unorderedLines()
-                            .forEach(df -> {
-                                final var fittingSupplies = proposal.proposedAllocations()
-                                        .suppliesFree()
-                                        .lookup(attribute, value);
-                                if (fittingSupplies.hasContent()) {
-                                    proposal.proposedAllocations()
-                                            .allocate(df
-                                                    , fittingSupplies.unorderedLinesStream().findFirst().orElseThrow());
-                                }
-
-                            });
+                    proposal.proposedAllocations().demandsFree().unorderedLines().forEach(df -> {
+                        final var fittingSupplies = proposal.subject()
+                                .suppliesFree()
+                                .lookup(attribute, value);
+                        if (fittingSupplies.hasContent()) {
+                            final var fittingSupply = fittingSupplies.unorderedLinesStream()
+                                    .findFirst()
+                                    .orElseThrow();
+                            final var proposedSupply = proposal.proposedAllocations().suppliesFree().add(fittingSupply);
+                            proposal.proposedAllocations()
+                                    .allocate(df, proposedSupply);
+                        }
+                    });
                 } else if (values.size() > 1) {
-                    throw notImplementedYet();
-                } else {
                     throw notImplementedYet();
                 }
                 return proposal;
