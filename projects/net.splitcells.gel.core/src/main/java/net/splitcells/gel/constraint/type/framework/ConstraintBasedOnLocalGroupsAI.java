@@ -26,6 +26,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
@@ -123,5 +124,8 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
         return list(rater);
     }
 
-
+    @Override
+    public Proposal propose(Proposal proposal) {
+        return rater.propose(proposal);
+    }
 }

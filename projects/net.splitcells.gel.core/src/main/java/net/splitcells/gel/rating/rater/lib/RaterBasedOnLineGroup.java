@@ -26,6 +26,7 @@ import net.splitcells.gel.data.table.Table;
 
 import java.util.Optional;
 
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.*;
 
@@ -73,6 +74,11 @@ public class RaterBasedOnLineGroup implements Rater {
             }
 
             @Override
+            public Proposal propose(Proposal proposal) {
+                return rater.propose(proposal);
+            }
+
+            @Override
             public String toString() {
                 return rater.toString();
             }
@@ -107,6 +113,11 @@ public class RaterBasedOnLineGroup implements Rater {
                     }
                 }
                 return rating;
+            }
+
+            @Override
+            public Proposal propose(Proposal proposal) {
+                return rater.propose(proposal);
             }
 
             @Override
@@ -171,5 +182,10 @@ public class RaterBasedOnLineGroup implements Rater {
     @Override
     public String name() {
         return name;
+    }
+
+    @Override
+    public Proposal propose(Proposal proposal) {
+        return rater.propose(proposal);
     }
 }

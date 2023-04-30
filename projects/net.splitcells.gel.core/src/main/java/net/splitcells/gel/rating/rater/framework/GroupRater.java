@@ -61,11 +61,9 @@ public interface GroupRater {
      * By default, {@link Proposal}s are not processed.
      *
      * @param proposal Already present proposal.
-     * @param lines    The already present lines of the group.
-     *                 The {@link Table#headerView()} of this is the same as of {@link Constraint#lines()}.
      * @return Adjustment to the proposal, so that the given proposal is compliant with this {@link Rater}.
      */
-    default Proposal propose(Proposal proposal, Table lines) {
+    default Proposal propose(Proposal proposal) {
         if (StaticFlags.WARNING) {
             domsole().appendUnimplementedWarning(getClass());
         }

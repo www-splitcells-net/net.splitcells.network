@@ -13,6 +13,7 @@ import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
@@ -181,5 +182,10 @@ public class ConstraintAspect implements Constraint {
         ratingCache.clear();
         constraint.withChildren(builder);
         return this;
+    }
+
+    @Override
+    public Proposal propose(Proposal proposal) {
+        return constraint.propose(proposal);
     }
 }

@@ -16,13 +16,24 @@
 package net.splitcells.gel.rating.rater.framework;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.proposal.Proposal;
 
 import java.util.Optional;
+
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
 @FunctionalInterface
 public interface RaterBasedOnLineGroupLambda {
     RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children);
+
+    default Proposal propose(Proposal proposal) {
+        if (StaticFlags.WARNING) {
+            domsole().appendUnimplementedWarning(getClass());
+        }
+        return proposal;
+    }
 }
