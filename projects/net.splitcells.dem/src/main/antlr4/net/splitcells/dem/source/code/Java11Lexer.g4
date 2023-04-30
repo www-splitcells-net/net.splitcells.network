@@ -68,6 +68,8 @@ lexer grammar Java11Lexer;
     		| 'import static java.util.stream.Stream.concat;'
     		| 'import java.util.function.Function;'
     		| 'import java.util.Iterator;'
+    		| 'import java.util.ListIterator;'
+    		| 'import java.util.Collection;'
     		| 'import org.w3c.dom.Element;'
     		| 'import org.w3c.dom.Node;'
     		;
