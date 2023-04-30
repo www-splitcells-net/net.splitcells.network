@@ -33,10 +33,14 @@ public class Proposals implements Proposal {
 
     private final Solution subject;
     private final Allocations proposedAllocations;
+    private final Allocations contextAllocations;
 
     private Proposals(Solution subject) {
         this.subject = subject;
         this.proposedAllocations = allocations("proposed-allocations"
+                , database("proposed-demands", subject.demands(), subject.demands().headerView2())
+                , database("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
+        this.contextAllocations = allocations("context-allocations"
                 , database("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , database("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
     }
@@ -44,6 +48,11 @@ public class Proposals implements Proposal {
     @Override
     public Allocations proposedAllocations() {
         return proposedAllocations;
+    }
+
+    @Override
+    public Allocations conextAllocations() {
+        return contextAllocations;
     }
 
     @Override

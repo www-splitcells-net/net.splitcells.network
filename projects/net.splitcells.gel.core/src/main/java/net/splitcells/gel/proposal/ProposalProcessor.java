@@ -29,8 +29,24 @@ public class ProposalProcessor {
         throw constructorIllegal();
     }
 
+    /**
+     * TODO This is a simplified implementation, that does not working on many corner cases.
+     *
+     * @param subject
+     * @param constraintPath
+     * @param relevantDemands
+     * @return
+     */
     public static Proposal propose(Solution subject, List<Constraint> constraintPath, List<Line> relevantDemands) {
         final var proposal = proposal(subject);
+        subject.allocations().unorderedLinesStream()
+                .forEach(a -> {
+                    final var origDemand = subject.allocations().demandOfAllocation(a);
+                    final var origSupply = subject.allocations().supplyOfAllocation(a);
+                    final var demand = proposal.conextAllocations().demands().add(origDemand);
+                    final var supply = proposal.conextAllocations().supplies().add(origSupply);
+                    proposal.conextAllocations().allocate(demand, supply);
+                });
         relevantDemands.forEach(d -> proposal.proposedAllocations().demands().add(d));
         constraintPath.forEach(constraint -> constraint.propose(proposal));
         return proposal;

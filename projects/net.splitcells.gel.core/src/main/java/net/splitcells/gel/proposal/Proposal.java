@@ -15,7 +15,9 @@
  */
 package net.splitcells.gel.proposal;
 
+import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.solution.Solution;
 
 /**
@@ -27,7 +29,24 @@ import net.splitcells.gel.solution.Solution;
  * subsets of the {@link #subject()}'s {@link Allocations#demands()} and {@link Allocations#supplies()}.
  */
 public interface Proposal {
+
+    /**
+     * @return Set of {@link Allocations} proposed for the given {@link #subject()},
+     * in order to get a better {@link Solution}.
+     * With this often the domain of the demands is represented,
+     * when one compares this concept to the constraint satisfaction problem.
+     */
     Allocations proposedAllocations();
+
+    /**
+     * @return Set of {@link Allocations}, for which not the proposals are generated,
+     * but which provide context for the demands,
+     * that need supplies proposed in {@link #proposedAllocations()}.
+     * Often the {@link Line}s of {@link #proposedAllocations()} are in the same {@link GroupId}
+     * as the lines of {@link #conextAllocations()},
+     * This makes it easier to implement {@link Proposal}s for {@link net.splitcells.gel.rating.rater.framework.Rater}s.
+     */
+    Allocations conextAllocations();
 
     Solution subject();
 }
