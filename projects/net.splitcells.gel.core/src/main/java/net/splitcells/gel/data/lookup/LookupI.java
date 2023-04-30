@@ -15,14 +15,17 @@
  */
 package net.splitcells.gel.data.lookup;
 
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.data.lookup.LookupTable.lookupTable;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -31,17 +34,23 @@ import net.splitcells.gel.data.table.attribute.Attribute;
  * <p>Provides a view to a subset of a {@link Table} as a {@link Table}.
  * {@link Line} that are part via the subset are either determined and accessed by a {@link Attribute} value or via custom a {@link Predicate}.
  * </p>
+ *
  * @param <T>
  */
 public class LookupI<T> implements Lookup<T> {
+
+    public static <T> Lookup<T> lookupI(Table table, Attribute<T> attribute) {
+        return new LookupI<>(table, attribute);
+    }
+
     private final LookupTable lookupTable;
 
-    protected final Table table;
-    protected final Map<T, LookupTable> content = map();
-    protected final Attribute<T> attribute;
-    protected final Map<Predicate<T>, LookupTable> complexContent = map();
+    private final Table table;
+    private final Map<T, LookupTable> content = map();
+    private final Attribute<T> attribute;
+    private final Map<Predicate<T>, LookupTable> complexContent = map();
 
-    protected LookupI(Table table, Attribute<T> attribute) {
+    private LookupI(Table table, Attribute<T> attribute) {
         this.table = table;
         this.lookupTable = lookupTable(table, attribute);
         this.attribute = attribute;
@@ -50,6 +59,9 @@ public class LookupI<T> implements Lookup<T> {
 
     @Override
     public void register_addition(T addition, int index) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            require(table.rawLinesView().size() > index);
+        }
         {
             final LookupTable lookupTable;
             if (content.containsKey(addition)) {
@@ -73,6 +85,9 @@ public class LookupI<T> implements Lookup<T> {
 
     @Override
     public void register_removal(T removal, int index) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            requireNotNull(content.get(removal).rawLinesView().get(index));
+        }
         final var line = table.rawLine(index);
         content.get(removal).removeRegistration(line);
         complexContent.forEach((predicate, lookupTable) -> {

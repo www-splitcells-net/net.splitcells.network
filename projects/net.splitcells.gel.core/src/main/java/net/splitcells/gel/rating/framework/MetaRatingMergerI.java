@@ -15,22 +15,23 @@
  */
 package net.splitcells.gel.rating.framework;
 
-import static java.util.Arrays.asList;
-import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.toList;
-import static net.splitcells.dem.lang.Xml.elementWithChildren;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Maps.typeMapping;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
-import java.util.stream.Stream;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.utils.StreamUtils;
 import org.w3c.dom.Element;
 import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
@@ -52,7 +53,8 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     }
 
     private MetaRatingMergerI(Map<Class<? extends Rating>, Rating> ratings) {
-        this.ratings = requireNonNull(ratings);
+        requireNotNull(ratings);
+        this.ratings = ratings;
     }
 
     @SuppressWarnings("unchecked")
@@ -84,24 +86,24 @@ public class MetaRatingMergerI implements MetaRatingMerger {
      * {@link #combiners}.
      * For the N Queen problem {@link #simplifyMoreEfficiently} yielded better
      * performance.
-     * 
+     *
      * @param ratings Ratings To Simplify
      * @return Simplified Ratings
      */
-    private static java.util.List<Rating> simplifyMoreEfficiently(Rating... ratings) {
-        return asList(ratings);
+    private static List<Rating> simplifyMoreEfficiently(Rating... ratings) {
+        return list(ratings);
     }
 
     /*
      * TODO REMOVE
      */
     @Deprecated
-    private static java.util.List<Rating> simplify(Rating... ratings) {
-        return asList(ratings).stream().flatMap(rating -> {
+    private static List<Rating> simplify(Rating... ratings) {
+        return list(ratings).stream().flatMap(rating -> {
             if (rating instanceof MetaRating) {
                 return ((MetaRating) rating).content().values().stream();
             }
-            return Stream.of(rating);
+            return StreamUtils.streamOf(rating);
         }).collect(toList());
     }
 

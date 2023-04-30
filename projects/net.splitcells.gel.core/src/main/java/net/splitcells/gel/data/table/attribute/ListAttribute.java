@@ -20,8 +20,7 @@ import static net.splitcells.dem.data.atom.Bools.untrue;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
-import java.util.List;
-
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.common.Language;
 import org.w3c.dom.Element;

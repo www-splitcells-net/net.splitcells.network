@@ -15,6 +15,8 @@
  */
 package net.splitcells.dem.data.atom;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public interface Thing {
@@ -27,12 +29,17 @@ public interface Thing {
     /**
      * This method is used for lambda references.
      *
-     * @param a a
-     * @param b b
-     * @return return
+     * @param a   a
+     * @param b   b
      * @param <T> T
+     * @return return
      */
     static <T> boolean equals(T a, T b) {
         return a.equals(b);
+    }
+
+    @JavaLegacyBody
+    static int hashCode(Object... args) {
+        return java.util.Objects.hash(args);
     }
 }

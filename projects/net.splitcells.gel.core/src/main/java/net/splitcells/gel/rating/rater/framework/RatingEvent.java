@@ -15,24 +15,24 @@
  */
 package net.splitcells.gel.rating.rater.framework;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
-import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
-import org.assertj.core.api.Assertions;
 
 /**
  * This event describes how {@link Line}s should be updated in a {@link Constraint} node.
@@ -106,11 +106,11 @@ public interface RatingEvent {
 
     default void updateRating_withReplacement(Line subject, LocalRating newRating) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(additions().keySet()).doesNotContain(subject);
-            assertThat(removal()).doesNotContain(subject);
+            additions().keySet2().requireAbsenceOf(subject);
+            removal().requireAbsenceOf(subject);
             {
-                Assertions.assertThat(subject.value(Constraint.LINE)).isNotNull();
-                Assertions.assertThat(subject.value(Constraint.INCOMING_CONSTRAINT_GROUP)).isNotNull();
+                requireNotNull(subject.value(Constraint.LINE));
+                requireNotNull(subject.value(Constraint.INCOMING_CONSTRAINT_GROUP));
             }
         }
         removal().add(subject);

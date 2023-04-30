@@ -18,41 +18,40 @@ package net.splitcells.gel.rating.rater.framework;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
-import java.util.List;
-import java.util.Set;
-
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.rating.framework.LocalRating;
 
 public class RatingEventI implements RatingEvent {
 
-	private final Map<Line, LocalRating> additions = map();
+    private final Map<Line, LocalRating> additions = map();
 
-	private final Map<Line, List<LocalRating>> complexAdditions = map();
-	private final Set<Line> removal = setOfUniques();
+    private final Map<Line, List<LocalRating>> complexAdditions = map();
+    private final Set<Line> removal = setOfUniques();
 
-	public static RatingEvent ratingEvent() {
-		return new RatingEventI();
-	}
+    public static RatingEvent ratingEvent() {
+        return new RatingEventI();
+    }
 
-	private RatingEventI() {
+    private RatingEventI() {
 
-	}
+    }
 
-	@Override
-	public Map<Line, LocalRating> additions() {
-		return additions;
-	}
+    @Override
+    public Map<Line, LocalRating> additions() {
+        return additions;
+    }
 
-	@Override
-	public Map<Line, List<LocalRating>> complexAdditions() {
-		return complexAdditions;
-	}
+    @Override
+    public Map<Line, List<LocalRating>> complexAdditions() {
+        return complexAdditions;
+    }
 
-	@Override
-	public Set<Line> removal() {
-		return removal;
-	}
+    @Override
+    public Set<Line> removal() {
+        return removal;
+    }
 
 }

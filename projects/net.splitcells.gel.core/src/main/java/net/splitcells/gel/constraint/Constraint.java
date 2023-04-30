@@ -78,7 +78,7 @@ import net.splitcells.gel.rating.framework.Rating;
  */
 public interface Constraint extends DatabaseSynchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
     Attribute<Line> LINE = attribute(Line.class, "line");
-    Attribute<java.util.List<Constraint>> PROPAGATION_TO = listAttribute(Constraint.class, "propagation to");
+    Attribute<List<Constraint>> PROPAGATION_TO = listAttribute(Constraint.class, "propagation to");
     Attribute<GroupId> INCOMING_CONSTRAINT_GROUP = attribute(GroupId.class, "incoming constraint group");
     Attribute<GroupId> RESULTING_CONSTRAINT_GROUP = attribute(GroupId.class, "resulting constraint group");
     Attribute<Rating> RATING = attribute(Rating.class, "rating");

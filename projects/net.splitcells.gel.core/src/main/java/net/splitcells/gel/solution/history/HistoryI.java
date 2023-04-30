@@ -16,6 +16,8 @@
 package net.splitcells.gel.solution.history;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.perspective.Perspective.toStringPathsDescription;
@@ -32,9 +34,8 @@ import static net.splitcells.gel.solution.history.meta.MetaDataI.metaData;
 import static net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation.allocationNaturalArgumentation;
 import static net.splitcells.gel.solution.history.meta.type.AllocationRating.allocationRating;
 import static net.splitcells.gel.solution.history.meta.type.CompleteRating.completeRating;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.not;
 
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -62,6 +63,10 @@ import java.util.function.Supplier;
  */
 public class HistoryI implements History {
 
+    public static History historyI(Solution solution) {
+        return new HistoryI(solution);
+    }
+
     private static final String ERROR_HISTORY_DISABLED = "History is disabled.";
     private static final String ERROR_HISTORY_INCONSISTENT = "History is inconsistent.";
 
@@ -73,7 +78,7 @@ public class HistoryI implements History {
     private boolean synchronizes = false;
     private boolean logNaturalArgumentation = false;
 
-    protected HistoryI(Solution solution) {
+    private HistoryI(Solution solution) {
         allocations = Allocationss.allocations
                 (HISTORY.value()
                         , Databases.database
@@ -156,9 +161,9 @@ public class HistoryI implements History {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(index).isGreaterThanOrEqualTo(-1);
+            require(index >= -1);
             if (allocations.size() > 0) {
-                assertThat(index).isLessThanOrEqualTo(allocations.size() - 1);
+                require(index <= allocations.size() - 1);
             }
         }
         if (allocations.size() == 0 && index == -1) {
@@ -169,7 +174,7 @@ public class HistoryI implements History {
         }
         if (allocations.size() == 0) {
             if (ENFORCING_UNIT_CONSISTENCY) {
-                assertThat(index).isEqualTo(-1);
+                requireEqualInts(index, -1);
             }
             return;
         }
@@ -208,9 +213,9 @@ public class HistoryI implements History {
     private void resetToInOrder(List<Integer> indexes) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (allocations.size() != 0) {
-                assertThat(indexes).isNotEmpty();
+                indexes.requireAnyContent();
             } else {
-                assertThat(indexes).isEmpty();
+                indexes.requireEmptySet();
             }
         }
         indexes.forEach(i -> resetLast());
@@ -219,7 +224,10 @@ public class HistoryI implements History {
     private void resetLast() {
         synchronizes = true;
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(allocations.columnView(ALLOCATION_ID).lookup(allocations.size() - 1).size()).isEqualTo(1);
+            allocations.columnView(ALLOCATION_ID)
+                    .lookup(allocations.size() - 1)
+                    .unorderedLines()
+                    .requireSizeOf(1);
         }
         final var index = allocations.size() - 1;
         final var eventToRemove = allocations.columnView(ALLOCATION_ID)
@@ -246,10 +254,10 @@ public class HistoryI implements History {
 
     private void resetLastRemoval(int index) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(allocations.size() - 1).isEqualTo(index);
+            allocations.unorderedLines().requireSizeOf(index + 1);
             try {
-                assertThat(allocations.columnView(ALLOCATION_ID).lookup(index + 1).size()).isEqualTo(0);
-                assertThat(allocations.columnView(ALLOCATION_ID).lookup(index).size()).isEqualTo(1);
+                allocations.columnView(ALLOCATION_ID).lookup(index + 1).unorderedLines().requireEmptySet();
+                allocations.columnView(ALLOCATION_ID).lookup(index).unorderedLines().requireSizeOf(1);
             } catch (Throwable t) {
                 throw new RuntimeException(t);
             }

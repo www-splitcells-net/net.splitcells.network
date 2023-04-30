@@ -25,7 +25,6 @@ import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 
 import static net.splitcells.gel.problem.ProblemI.problem;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -159,7 +158,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     public DefineDemands withDemands(List<Object> demand, List<Object>... demands) {
         this.demands = list();
         this.demands.add(demand);
-        this.demands.addAll(Arrays.asList(demands));
+        this.demands.addAll(list(demands));
         return this;
     }
 

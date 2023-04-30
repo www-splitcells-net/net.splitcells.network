@@ -15,9 +15,10 @@
  */
 package net.splitcells.gel.data.table;
 
+import net.splitcells.dem.data.atom.Thing;
+
 import java.util.Optional;
 
-import static java.util.Objects.hash;
 
 public class LinePointerI implements LinePointer {
     public static LinePointer linePointer(Table context, int index) {
@@ -62,6 +63,6 @@ public class LinePointerI implements LinePointer {
 
     @Override
     public int hashCode() {
-        return hash(index(), context());
+        return Thing.hashCode(index(), context());
     }
 }

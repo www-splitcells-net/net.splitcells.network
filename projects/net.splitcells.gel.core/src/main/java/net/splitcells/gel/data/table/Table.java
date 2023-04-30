@@ -15,25 +15,23 @@
  */
 package net.splitcells.gel.data.table;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.*;
+import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_OFFICE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TEXT;
 import static net.splitcells.dem.lang.Xml.*;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.Identifiable;
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -87,7 +85,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
     default List<Line> unorderedLines() {
         return rawLinesView().stream()
                 .filter(e -> e != null)
-                .collect(Lists.toList());
+                .collect(toList());
     }
 
     /**
@@ -128,13 +126,13 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 .map(values -> lookupEquals(values).findFirst())
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .collect(Lists.toList());
+                .collect(toList());
     }
 
     default Set<List<Object>> distinctLineValues() {
         return rawLinesView().stream()
                 .filter(e -> e != null)
-                .map(line -> headerView().stream().map(line::value).collect(Lists.toList()))
+                .map(line -> headerView().stream().map(line::value).collect(toList()))
                 .collect(toSetOfUniques());
     }
 
@@ -193,25 +191,23 @@ public interface Table extends Discoverable, Domable, Identifiable {
     List<Line> rawLines();
 
     default String toCSV() {
-        final var csv = new StringBuffer();
         final var header = headerView().stream()
-                .map(atribūts -> atribūts.name())
+                .map(attribute -> attribute.name())
                 .collect(toList());
-        try (final var printer = new CSVPrinter
-                (csv, CSVFormat.RFC4180.withHeader(header.toArray(new String[header.size()])))) {
+        try (final var printer = csvDocument(header)) {
             unorderedLines().stream()
                     .map(line -> line.toStringList())
                     .forEach(line -> {
                         try {
-                            printer.printRecord(line);
-                        } catch (IOException e) {
+                            printer.addLine(line);
+                        } catch (Throwable e) {
                             throw new RuntimeException(e);
                         }
                     });
-        } catch (IOException e) {
+            return printer.toString();
+        } catch (Throwable e) {
             throw new RuntimeException();
         }
-        return csv.toString();
     }
 
     default <T> Table lookup(Attribute<T> attribute, T value) {
@@ -225,10 +221,9 @@ public interface Table extends Discoverable, Domable, Identifiable {
 
     default Stream<Line> lookupEquals(List<Object> values) {
         return unorderedLines().stream()
-                .filter(line ->
-                        IntStream.range(0, headerView().size())
-                                .mapToObj(i -> Objects.equals(values.get(i), line.value(headerView().get(i))))
-                                .reduce(true, (a, b) -> a && b));
+                .filter(line -> range(0, headerView().size())
+                        .mapToObj(i -> Thing.equals(values.get(i), line.value(headerView().get(i))))
+                        .reduce(true, (a, b) -> a && b));
     }
 
     default Perspective toHtmlTable() {
@@ -264,11 +259,11 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 headerView().stream()
                         .map(att -> att.name())
                         .map(attName -> {
-                            final var tabulasElements = elementWithChildren(FODS_TABLE, "table-cell");
-                            final var tabulasVertība = rElement(FODS_TEXT, "p");
-                            tabulasElements.appendChild(tabulasVertība);
-                            tabulasVertība.appendChild(textNode(attName));
-                            return tabulasElements;
+                            final var tableElements = elementWithChildren(FODS_TABLE, "table-cell");
+                            final var tableValue = rElement(FODS_TEXT, "p");
+                            tableElements.appendChild(tableValue);
+                            tableValue.appendChild(textNode(attName));
+                            return tableElements;
                         }).forEach(attDesc -> header.appendChild(attDesc));
                 unorderedLines().forEach(line -> {
                     final var tableLine = elementWithChildren(FODS_TABLE, "table-row");

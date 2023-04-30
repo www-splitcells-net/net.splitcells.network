@@ -21,10 +21,7 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
-import java.util.Arrays;
-
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class LinearIterator implements OfflineOptimization {
 

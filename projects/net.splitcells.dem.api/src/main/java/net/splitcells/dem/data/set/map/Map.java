@@ -24,6 +24,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
@@ -36,6 +37,10 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     default Map<Key, Value> with(Key key, Value value) {
         put(key, value);
         return this;
+    }
+
+    default net.splitcells.dem.data.set.Set<Key> keySet2() {
+        return setOfUniques(keySet());
     }
 
     default Map<Key, Value> withMerged(Map<Key, Value> args, BiFunction<Value, Value, Value> mergeFunction) {

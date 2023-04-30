@@ -85,6 +85,12 @@ public interface SetT<T> extends Collection<T> {
         }
     }
 
+    default void requireAnyContent() {
+        if (isEmpty()) {
+            throw executionException("Set should have any content, but has no elements instead: " + this);
+        }
+    }
+
     default void requireContentsOf(T... content) {
         StreamUtils.stream(content).forEach(c -> {
             if (!contains(c)) {

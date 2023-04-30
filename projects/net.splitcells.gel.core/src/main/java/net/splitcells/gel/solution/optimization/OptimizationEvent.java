@@ -15,14 +15,13 @@
  */
 package net.splitcells.gel.solution.optimization;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.LinePointer;
 import org.w3c.dom.Node;
-
-import java.util.Objects;
 
 import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
@@ -81,7 +80,7 @@ public final class OptimizationEvent implements Domable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(demand.index(), supply.index(), stepType);
+        return Thing.hashCode(demand.index(), supply.index(), stepType);
     }
 
     @Override

@@ -18,13 +18,12 @@ package net.splitcells.gel.rating.type;
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-import java.util.Objects;
 import java.util.Optional;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.MetaRating;
@@ -41,10 +40,10 @@ import net.splitcells.dem.data.order.Ordering;
  */
 public class Cost implements Rating {
     private static final Cost NO_COST = cost(0.0);
-    protected static final Comparator<Double> COST_VALUE_COMPARATOR = new Comparator<Double>() {
+    private static final Comparator<Double> COST_VALUE_COMPARATOR = new Comparator<Double>() {
         @Override
         public Ordering compareTo(Double a, Double b) {
-            if (Objects.equals(a, b)) {
+            if (Thing.equals(a, b)) {
                 return Ordering.EQUAL;
             } else if (a < b) {
                 return Ordering.LESSER_THAN;
@@ -66,7 +65,7 @@ public class Cost implements Rating {
         return NO_COST;
     }
 
-    protected Cost(double value) {
+    private Cost(double value) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (value < 0) {
                 throw new IllegalArgumentException("" + value);

@@ -19,12 +19,14 @@ import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
+import static net.splitcells.gel.data.lookup.LookupI.lookupI;
+
 public class Lookups extends ResourceOptionI<LookupFactory> {
     public Lookups() {
         super(() -> new LookupIFactory());
     }
 
     public static <R> Lookup<R> lookup(Table table, Attribute<R> attribute) {
-        return new LookupI<>(table, attribute);
+        return lookupI(table, attribute);
     }
 }

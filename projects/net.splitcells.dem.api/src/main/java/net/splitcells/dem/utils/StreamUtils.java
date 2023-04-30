@@ -32,6 +32,10 @@ public final class StreamUtils {
         throw constructorIllegal();
     }
 
+    public static <T> Stream<T> streamOf(T... args) {
+        return Stream.of(args);
+    }
+
     public static <T> Stream<T> concat(Stream<T> a, Stream<T> b) {
         return java.util.stream.Stream.concat(a, b);
     }

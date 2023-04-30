@@ -15,8 +15,7 @@
  */
 package net.splitcells.gel.rating.framework;
 
-import java.util.List;
-
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 

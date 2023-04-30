@@ -17,10 +17,12 @@ package net.splitcells.gel.solution.history;
 
 import net.splitcells.gel.solution.Solution;
 
+import static net.splitcells.gel.solution.history.HistoryRef.historyRef;
+
 public class HistoryRefFactory implements HistoryFactory {
     @Override
     public History history(Solution solution) {
-        return new HistoryRef(solution);
+        return historyRef(solution);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class OptimizationParameters {
         
     }
     @ReturnsThis
-    public OptimizationParameters arDubultuNoņemšanaAtļauts(boolean arg) {
+    public OptimizationParameters withDublicateRemovalAllowed(boolean arg) {
         dublicateRemovalAllowed = arg;
         return this;
     }

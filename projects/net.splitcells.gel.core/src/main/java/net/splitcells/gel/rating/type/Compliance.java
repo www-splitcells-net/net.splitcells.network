@@ -15,13 +15,14 @@
  */
 package net.splitcells.gel.rating.type;
 
-import static java.util.Arrays.asList;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_BOOLEANS;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 import java.util.Optional;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.Rating;
@@ -61,7 +62,7 @@ public class Compliance implements Rating {
         if (additionalRatings[0] instanceof Compliance) {
             return compliance(value && ((Compliance) additionalRatings[0]).value);
         }
-        throw new IllegalArgumentException(asList(additionalRatings).toString());
+        throw new IllegalArgumentException(list(additionalRatings).toString());
     }
 
     @Override

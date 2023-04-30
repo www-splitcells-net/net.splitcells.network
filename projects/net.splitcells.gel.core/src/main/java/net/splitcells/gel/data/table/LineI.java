@@ -15,15 +15,16 @@
  */
 package net.splitcells.gel.data.table;
 
-import static java.util.Objects.requireNonNull;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.Xml.toFlatString;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.common.Language.*;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.PerspectiveI;
@@ -31,8 +32,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.data.table.attribute.Attribute;
-
-import java.util.Objects;
 
 public class LineI implements Line {
     private final Table context;
@@ -49,7 +48,7 @@ public class LineI implements Line {
 
     @Override
     public <T> T value(Attribute<T> attribute) {
-        return context.columnView(requireNonNull(attribute)).get(index);
+        return context.columnView(requireNotNull(attribute)).get(index);
     }
 
     @Override
@@ -137,7 +136,7 @@ public class LineI implements Line {
 
     @Override
     public int hashCode() {
-        return Objects.hash(index(), context());
+        return Thing.hashCode(index(), context());
     }
 
 }

@@ -15,7 +15,7 @@
  */
 package net.splitcells.gel.rating.framework;
 
-import static java.util.Arrays.asList;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
@@ -59,12 +59,12 @@ public class MetaRatingI implements MetaRating {
 
     public static MetaRating metaRating(Rating... ratings) {
         final Map<Class<? extends Rating>, Rating> ratingMap = map();
-        asList(ratings).forEach(rating -> ratingMap.put(rating.getClass(), rating));
+        list(ratings).forEach(rating -> ratingMap.put(rating.getClass(), rating));
         final MetaRatingI metaRating = new MetaRatingI(ratingMap);
         return metaRating;
     }
 
-    protected MetaRatingI() {
+    private MetaRatingI() {
         this(map());
     }
 

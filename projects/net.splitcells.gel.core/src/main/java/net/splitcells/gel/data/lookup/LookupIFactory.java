@@ -18,10 +18,12 @@ package net.splitcells.gel.data.lookup;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
+import static net.splitcells.gel.data.lookup.LookupI.lookupI;
+
 public class LookupIFactory implements LookupFactory {
     @Override
     public <R> Lookup<R> lookup(Table table, Attribute<R> attribute) {
-        return new LookupI<>(table, attribute);
+        return lookupI(table, attribute);
     }
 
     @Override

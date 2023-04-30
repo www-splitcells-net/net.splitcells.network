@@ -35,10 +35,11 @@ public class Assertions {
         }
     }
 
-    public static <T> void requireNotNull(T arg) {
+    public static <T> T requireNotNull(T arg) {
         if (arg == null) {
             throw executionException("The given variable is null, but should not be.");
         }
+        return arg;
     }
 
     public static <T> void requireNotNull(T arg, String message) {

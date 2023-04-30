@@ -15,14 +15,13 @@
  */
 package net.splitcells.gel.rating.framework;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 
 public class RatingTranslatorI implements RatingTranslator {
@@ -69,7 +68,7 @@ public class RatingTranslatorI implements RatingTranslator {
     }
 
     public static List<Class<?>> classesOf(Class<?> clazz) {
-        final List<Class<?>> rVal = new ArrayList<>();
+        final List<Class<?>> rVal = list();
         rVal.add(clazz);
         Class<?> superclass = clazz.getSuperclass();
         while (superclass != null) {

@@ -33,16 +33,14 @@ public class RandomInitialization implements OfflineOptimization {
 
     private final Randomness randomness;
 
-    private RandomInitialization(Randomness nejaušiba) {
-        this.randomness = nejaušiba;
+    private RandomInitialization(Randomness randomness) {
+        this.randomness = randomness;
     }
 
     @Override
     public List<OptimizationEvent> optimize(SolutionView solution) {
         if (solution.demandsFree().hasContent() && solution.suppliesFree().hasContent()) {
-            return list(
-                    optimizationEvent
-                            (ADDITION
+            return list(optimizationEvent(ADDITION
                                     , randomness.chooseOneOf(solution.demandsFree().unorderedLines()).toLinePointer()
                                     , randomness.chooseOneOf(solution.suppliesFree().unorderedLines()).toLinePointer()));
 

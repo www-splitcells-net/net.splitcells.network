@@ -24,8 +24,8 @@ import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
-import static java.util.Objects.requireNonNull;
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -51,7 +51,8 @@ public class UsedSupplySwitcher implements OfflineOptimization {
     }
 
     private UsedSupplySwitcher(Randomness randomness, int stepCount) {
-        this.randomness = requireNonNull(randomness);
+        requireNotNull(randomness);
+        this.randomness = randomness;
         this.stepCount = stepCount;
     }
 

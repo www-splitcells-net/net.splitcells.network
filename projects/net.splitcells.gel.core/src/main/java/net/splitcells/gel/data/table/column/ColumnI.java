@@ -16,15 +16,17 @@
 package net.splitcells.gel.data.table.column;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.lookup.Lookup;
 import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.data.table.Line;
@@ -170,7 +172,7 @@ public class ColumnI<T> implements Column<T> {
 
 	@Override
 	public List<T> subList(int startIndex, int endIndex) {
-		return content.subList(startIndex, endIndex);
+		return listWithValuesOf(content.subList(startIndex, endIndex));
 	}
 
 	@Override

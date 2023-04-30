@@ -19,14 +19,14 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.ProcessResult;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.allocation.Allocationss;
 import net.splitcells.gel.data.allocations.AllocationsIRefFactory;
 import net.splitcells.gel.data.database.DatabaseMetaAspect;
 import net.splitcells.gel.data.database.Databases;
-import net.splitcells.gel.data.lookup.LookupRefFactory;
+import net.splitcells.gel.data.lookup.LookupFactory;
+import net.splitcells.gel.data.lookup.LookupIFactory;
 import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.solution.SolutionAspect;
 import net.splitcells.gel.solution.Solutions;
@@ -88,7 +88,7 @@ public final class GelEnv {
             env.config()
                     .withConfigValue(Histories.class, new HistoryRefFactory())
                     .withConfigValue(Allocationss.class, new AllocationsIRefFactory())
-                    .withConfigValue(Lookups.class, new LookupRefFactory());
+                    .withConfigValue(Lookups.class, new LookupIFactory());
             env.config().configValue(Databases.class).withAspect(DatabaseMetaAspect::databaseIRef);
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
         };

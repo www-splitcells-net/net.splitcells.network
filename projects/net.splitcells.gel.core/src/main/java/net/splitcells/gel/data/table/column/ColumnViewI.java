@@ -15,11 +15,11 @@
  */
 package net.splitcells.gel.data.table.column;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.Table;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Predicate;
 
