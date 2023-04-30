@@ -151,6 +151,7 @@ expression
     	Brace_round_closed expression_child?
     | String access?
     | Char access?
+    | expression Keyword_instanceof type_declaration
     | expression operator expression
     | prefix_operator expression
     | Keyword_new type_declaration call_arguments
@@ -159,6 +160,8 @@ expression
     | function_call access?
     | name access?
     | expression operator expression
+    | expression Hyphen_minus Hyphen_minus
+    | expression Operator_plus Operator_plus
     | expression_with_prefix
     | lambda
     ;
@@ -300,7 +303,9 @@ statement
     	Brace_curly_open statement+ Brace_curly_closed statement_if_else?
     | javadoc
     | Keyword_throw expression Semicolon
-    | Keyword_return (expression | reference)? Semicolon
+    | Keyword_return (expression | reference | name Operator_plus Equals expression | name Hyphen_minus Equals expression)? Semicolon
+    | name Operator_plus Equals expression Semicolon
+    | name Hyphen_minus Equals expression Semicolon
     | expression Semicolon
     | variable_declaration (Equals expression)? Semicolon
     | name access Equals expression Semicolon
