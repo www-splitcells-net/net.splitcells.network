@@ -32,6 +32,7 @@ public class ProposalProcessorTest {
         requireIllegalDefaultConstructor(ProposalProcessor.class);
     }
 
+    @UnitTest
     public void testProposeViaConstraintPath() {
         final var demandingAttribute = attribute(Integer.class, "demandingAttribute");
         final var firstSuppliedAttribute = attribute(Integer.class, "firstSuppliedAttribute");
@@ -53,7 +54,7 @@ public class ProposalProcessorTest {
                 .asSolution();
         testSubject.allocate(testSubject.demands().orderedLine(0)
                 , testSubject.supplies().orderedLine(0));
-        final var testProposal = propose(testSubject, list(), testSubject.demandsFree().unorderedLines());
+        final var testProposal = propose(testSubject, constraintPath, testSubject.demandsFree().unorderedLines());
         testProposal.proposedAllocations().unorderedLines().requireSizeOf(1);
     }
 }
