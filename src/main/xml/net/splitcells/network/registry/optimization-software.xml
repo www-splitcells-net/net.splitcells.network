@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://splitcells.net/sew.xsd">
+    <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
+        <title>Optimization Software Registry</title>
+    </meta>
+    <list>
+        <item>
+            <link>
+                <text>Jenetics</text>
+                <url>https://github.com/jenetics/jenetics</url>
+            </link>
+        </item>
+        <item>
+            <link>
+                <text>A Vehicle Routing Problem solver</text>
+                <url>https://github.com/reinterpretcat/vrp</url>
+            </link>
+        </item>
+        <item>
+            <link>
+                <text>Choco-solver</text>
+                <url>https://github.com/chocoteam/choco-solver</url>
+            </link>
+        </item>
+        <item>
+            <link>
+                <text>jMetal</text>
+                <url>https://github.com/jMetal/jMetal</url>
+            </link>
+        </item>
+    </list>
+</article>
