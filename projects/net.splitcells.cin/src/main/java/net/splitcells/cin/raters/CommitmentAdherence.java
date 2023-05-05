@@ -75,6 +75,14 @@ public class CommitmentAdherence implements Rater {
         return "Lines are committed up to " + committedTime + " " + time.name() + ".";
     }
 
+    /**
+     * TODO IDEA This method should propose for free demands of a committed time,
+     * the corresponding supply,
+     * that was present during {@link #init(Solution)}.
+     *
+     * @param proposal Already present proposal.
+     * @return
+     */
     @Override
     public Proposal propose(Proposal proposal) {
         final var invalidDemands = proposal.proposedAllocations()
