@@ -28,6 +28,7 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.SolutionView;
+import net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors;
 
 import java.util.Optional;
 
@@ -73,7 +74,10 @@ public class World {
             reportRuntime(() -> {
                 network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
                 network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
-                        repairConfig().withRepairCompliants(false)));
+                        repairConfig().withRepairCompliants(false)
+                                .withDemandSelector(DemandSelectors.demandSelector(true
+                                        , list(currentWorldHistory.constraint()
+                                                , currentWorldHistory.constraint().childrenView().get(0))))));
             }, "World history optimization", LogLevel.INFO);
             reportRuntime(() -> {
                 network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
