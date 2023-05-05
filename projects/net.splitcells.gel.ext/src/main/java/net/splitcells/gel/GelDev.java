@@ -69,7 +69,7 @@ public final class GelDev {
                         "Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network/projects");
                 final var privateProjectRepository = userHome("Documents/projects/net.splitcells.martins.avots.support.system/private");
                 final var xslLib = publicProjectRepository.resolve(
-                        "net.splitcells.website.default.content/src/main/xsl/net/splitcells/website/den/translation/to/html/");
+                        "net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/");
                 final var validator = validatorViaSchema(
                         publicProjectRepository.resolve("net.splitcells.website.server").resolve("src/main/xsd/den.xsd"));
                 final var config = Config.create()
