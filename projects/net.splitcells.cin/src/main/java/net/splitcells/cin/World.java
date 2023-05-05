@@ -88,9 +88,9 @@ public class World {
     }
 
     private static void initWorldHistory(Solution world) {
-        worldsTimeSpace(0, 0, 0, 10, 0, 10)
+        worldsTimeSpace(0, 1, 0, 10, 0, 10)
                 .forEach(world.demands()::addTranslated);
-        values(0, 0, 0, 10, 0, 10, 0, 1)
+        values(0, 1, 0, 10, 0, 10, 0, 1)
                 .forEach(world.supplies()::addTranslated);
     }
 
