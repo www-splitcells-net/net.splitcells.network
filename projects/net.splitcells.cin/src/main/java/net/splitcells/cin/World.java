@@ -32,6 +32,7 @@ import net.splitcells.gel.solution.SolutionView;
 import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
 import static net.splitcells.cin.raters.CrowdDetector.crowdDetector;
 import static net.splitcells.cin.raters.Dies.dies;
 import static net.splitcells.cin.raters.IsAlive.isAlive;
@@ -130,6 +131,7 @@ public class World {
                 .withSupplyAttributes(VALUE)
                 .withSupplies(supplies)
                 .withConstraint(r -> {
+                    r.then(commitmentAdherence(WORLD_TIME));
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Y))
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
