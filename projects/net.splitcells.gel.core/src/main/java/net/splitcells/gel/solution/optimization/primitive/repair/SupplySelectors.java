@@ -47,7 +47,7 @@ public class SupplySelectors {
                         demandsUsed.add(demand);
                         solution.allocate(demand, supplySelection);
                     } else {
-                        throw new RuntimeException();
+                        throw executionException("No free supplies available for repair.");
                     }
                 });
             });
