@@ -29,7 +29,10 @@ public class RepairConfig {
     private FluentGroupSelector groupSelector = GroupSelectors.groupSelector(randomness(), minimum_constraint_group_path
             , numberOfGroupsSelectedPerDefiance);
     private SupplySelector supplySelector = SupplySelectors.supplySelector();
+
     private boolean repairCompliants = true;
+
+    private DemandSelector demandSelector = DemandSelectors.demandSelector(repairCompliants);
 
     private RepairConfig() {
 
@@ -44,11 +47,30 @@ public class RepairConfig {
         return groupSelector;
     }
 
+    public RepairConfig withGroupSelector(FluentGroupSelector groupSelector) {
+        this.groupSelector = groupSelector;
+        return this;
+    }
+
     public SupplySelector supplySelector() {
         return supplySelector;
     }
 
+    public RepairConfig withSupplySelector(SupplySelector arg) {
+        supplySelector = arg;
+        return this;
+    }
+
     public boolean repairCompliants() {
         return repairCompliants;
+    }
+
+    public RepairConfig withDemandSelector(DemandSelector demandSelector) {
+        this.demandSelector = demandSelector;
+        return this;
+    }
+
+    public DemandSelector demandSelector() {
+        return demandSelector;
     }
 }

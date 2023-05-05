@@ -17,6 +17,7 @@ package net.splitcells.gel.solution.optimization.primitive;
 
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
+import net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
@@ -32,6 +33,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.history.History.ALLOCATION_EVENT;
 import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
+import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.demandSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 
 public class ConstraintGroupBasedRepairTest {
@@ -102,7 +104,7 @@ public class ConstraintGroupBasedRepairTest {
                     .stream()
                     .map(e -> e
                             .lastValue()
-                            .map(f -> testSubject.demandGrouping(f, solution))
+                            .map(f -> demandSelector(true).demandGrouping(f, solution))
                             .orElseGet(() -> map()))
                     .collect(toList());
             testSubject.repair(solution, demandClassifications.get(0));
@@ -210,8 +212,8 @@ public class ConstraintGroupBasedRepairTest {
         solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
-        final var testProduct = testSubject.demandGrouping
-                (solution.constraint().childrenView().get(3).childrenView().get(0)
+        final var testProduct = demandSelector(true)
+                .demandGrouping(solution.constraint().childrenView().get(3).childrenView().get(0)
                         , solution);
         testProduct.requireSizeOf(1);
         testProduct.values().iterator().next().requireSetSizeOf(2);

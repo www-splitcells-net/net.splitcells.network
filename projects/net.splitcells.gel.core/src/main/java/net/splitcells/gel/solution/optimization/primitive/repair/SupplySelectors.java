@@ -26,6 +26,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 
 public class SupplySelectors {

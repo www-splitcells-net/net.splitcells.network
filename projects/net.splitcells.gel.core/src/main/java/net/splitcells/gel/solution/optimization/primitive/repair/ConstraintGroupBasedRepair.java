@@ -37,6 +37,7 @@ import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
 /**
  * <p>
@@ -62,18 +63,23 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
 public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (FluentGroupSelector groupSelector, SupplySelector repairer, boolean repairCompliants) {
-        return new ConstraintGroupBasedRepair(groupSelector, repairer, repairCompliants);
+            (FluentGroupSelector groupSelector, SupplySelector supplySelector, boolean repairCompliants) {
+        return new ConstraintGroupBasedRepair(repairConfig()
+                .withGroupSelector(groupSelector)
+                .withSupplySelector(supplySelector)
+                .withRepairCompliants(repairCompliants));
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (FluentGroupSelector groupSelector, SupplySelector repairer) {
-        return new ConstraintGroupBasedRepair(groupSelector, repairer);
+            (FluentGroupSelector groupSelector, SupplySelector supplySelector) {
+        return new ConstraintGroupBasedRepair(repairConfig()
+                .withGroupSelector(groupSelector)
+                .withSupplySelector(supplySelector));
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
             (FluentGroupSelector groupSelector) {
-        return new ConstraintGroupBasedRepair(groupSelector, SupplySelectors.supplySelector());
+        return new ConstraintGroupBasedRepair(repairConfig().withGroupSelector(groupSelector));
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair(int minimumConstraintGroupPath) {
@@ -83,27 +89,27 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
             (int minimum_constraint_group_path, int numberOfGroupsSelectedPerDefiance) {
         final var randomness = randomness();
-        return new ConstraintGroupBasedRepair(groupSelector(randomness, minimum_constraint_group_path
-                , numberOfGroupsSelectedPerDefiance)
-                , SupplySelectors.supplySelector());
+        return new ConstraintGroupBasedRepair
+                (repairConfig().withGroupSelector(groupSelector(randomness, minimum_constraint_group_path
+                        , numberOfGroupsSelectedPerDefiance)));
     }
 
     public static ConstraintGroupBasedRepair constraintGroupBasedRepair(RepairConfig repairConfig) {
-        return new ConstraintGroupBasedRepair(repairConfig.groupSelector(), repairConfig.supplySelector(), repairConfig.repairCompliants());
+        return new ConstraintGroupBasedRepair(repairConfig);
     }
+
+    private final DemandSelector demandSelector;
 
     private final FluentGroupSelector groupSelector;
     private final SupplySelector supplySelector;
     private final boolean repairCompliants;
 
-    protected ConstraintGroupBasedRepair(FluentGroupSelector groupSelector, SupplySelector repairer) {
-        this(groupSelector, repairer, true);
-    }
 
-    protected ConstraintGroupBasedRepair(FluentGroupSelector groupSelector, SupplySelector repairer, boolean repairCompliants) {
-        this.groupSelector = groupSelector;
-        this.supplySelector = repairer;
-        this.repairCompliants = repairCompliants;
+    protected ConstraintGroupBasedRepair(RepairConfig repairConfig) {
+        groupSelector = repairConfig.groupSelector();
+        supplySelector = repairConfig.supplySelector();
+        repairCompliants = repairConfig.repairCompliants();
+        demandSelector = repairConfig.demandSelector();
     }
 
     @Override
@@ -113,7 +119,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                 .stream()
                 .map(e -> e
                         .lastValue()
-                        .map(f -> demandGrouping(f, solution))
+                        .map(f -> demandSelector.demandGrouping(f, solution))
                         .orElseGet(() -> map()))
                 .collect(toList());
         groupsOfConstraintGroup
@@ -129,46 +135,6 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     public void repair(Solution solution
             , Map<GroupId, Set<Line>> freeDemandGroups) {
         supplySelector.apply(freeDemandGroups).optimize(solution);
-    }
-
-    public Map<GroupId, Set<Line>> demandGrouping(Constraint constraintGrouping, Solution solution) {
-        final Map<GroupId, Set<Line>> demandGrouping = map();
-        final Map<GroupId, Set<Line>> defianceCache = Maps.map();
-        constraintGrouping
-                .lineProcessing()
-                .unorderedLines()
-                .stream()
-                /**
-                 * TODO HACK This is code duplication.
-                 * It reimplements part of {@link ConstraintGroupBasedRepair#freeDefyingGroupOfConstraintGroup}.
-                 */
-                .filter(processing -> {
-                    final var group = processing.value(INCOMING_CONSTRAINT_GROUP);
-                    return !defianceCache.computeIfAbsent(group, g -> constraintGrouping.defying(g)).isEmpty();
-                })
-                /**
-                 * TODO HACK This is code duplication.
-                 * It reimplements part of {@link ConstraintGroupBasedOfflineRepair#freeDefyingGroupOfConstraintGroup}.
-                 */
-                .filter(processing -> {
-                    if (!repairCompliants) {
-                        return !processing.value(RATING).equalz(noCost());
-                    }
-                    return true;
-                })
-                .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP)
-                        , processing.value(LINE)))
-                .forEach(processing -> {
-                    final Set<Line> group;
-                    if (!demandGrouping.containsKey(processing.getKey())) {
-                        group = Sets.setOfUniques();
-                        demandGrouping.put(processing.getKey(), group);
-                    } else {
-                        group = demandGrouping.get(processing.getKey());
-                    }
-                    group.with(solution.demandOfAllocation(processing.getValue()));
-                });
-        return demandGrouping;
     }
 
     public List<List<Constraint>> groupOfConstraintGroup(Solution solution) {
