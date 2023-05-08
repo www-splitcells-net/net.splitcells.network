@@ -55,6 +55,11 @@ public class IsAliveTest {
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
+        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0), testSubject.suppliesUsed().orderedLine(0));
+        testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
     }
 
     @UnitTest
