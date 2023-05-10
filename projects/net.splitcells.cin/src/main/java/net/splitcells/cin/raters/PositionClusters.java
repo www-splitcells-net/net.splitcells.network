@@ -61,12 +61,14 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 public class PositionClusters implements Rater {
 
     /**
-     * @param x This is the center x coordinate of the group.
-     * @param y This is the center y coordinate of the group.
+     * @param x  This is the center x coordinate of the group.
+     * @param y  This is the center y coordinate of the group.
+     * @param oX This is the center x offset used for determining the center position.
+     * @param oY This is the center y offset used for determining the center position.
      * @return Creates the group name of the position cluster, given the center position of the cluster.
      */
-    public static String groupNameOfPositionCluster(int x, int y) {
-        return "(x=" + x + ", y=" + y + ")";
+    public static String groupNameOfPositionCluster(int x, int y, int oX, int oY) {
+        return "(x=" + x + ", y=" + y + ", oX=" + oX + ", oY=" + oY + ")";
     }
 
     public static int centerXPositionOf(GroupId group) {
@@ -161,7 +163,7 @@ public class PositionClusters implements Rater {
         final var positionGroup = positionGroups
                 .computeIfAbsent(incomingGroup, icg -> map())
                 .computeIfAbsent(xCoord, x -> map())
-                .computeIfAbsent(yCoord, y -> group(incomingGroup, groupNameOfPositionCluster(xCoordCenter, yCoordCenter)
+                .computeIfAbsent(yCoord, y -> group(incomingGroup, groupNameOfPositionCluster(xCoordCenter, yCoordCenter, xCenterOffset, yCenterOffset)
                         , typedMap().withAssignment(PositionClustersCenterX.class, xCoordCenter)
                                 .withAssignment(PositionClustersCenterY.class, yCoordCenter)));
         rating.additions().put(addition, localRating()
