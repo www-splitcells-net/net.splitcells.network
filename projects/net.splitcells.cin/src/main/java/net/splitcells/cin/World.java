@@ -36,7 +36,6 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
 import static net.splitcells.cin.raters.CrowdDetector.crowdDetector;
 import static net.splitcells.cin.raters.Dies.dies;
-import static net.splitcells.cin.raters.IsAlive.isAlive;
 import static net.splitcells.cin.raters.Loneliness.loneliness;
 import static net.splitcells.cin.raters.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
 import static net.splitcells.cin.raters.PositionClusters.positionClustering;
@@ -233,6 +232,15 @@ public class World {
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
                 (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue, "isDead");
+    }
+
+    private static Rater isAlive(int playerValue
+            , Attribute<Integer> playerAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
+                (startPlayerValue, endPlayerValue) -> startPlayerValue == playerValue, "isAlive");
     }
 
     private static Rater revivalCondition(int playerValue
