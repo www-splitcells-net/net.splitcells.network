@@ -17,6 +17,7 @@ package net.splitcells.cin.raters;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
 
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.raters.IsAlive.isAlive;
 import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -60,6 +61,46 @@ public class IsAliveTest {
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
+    }
+    
+    public void testAliveWithMultiple() {
+        final var player = attribute(Integer.class, "player");
+        final var time = attribute(Integer.class, "time");
+        final var xCoord = attribute(Integer.class, "x-coordinate");
+        final var yCoord = attribute(Integer.class, "y-coordinate");
+        final var testSubject = defineProblem("testAlive")
+                .withDemandAttributes(player, time, xCoord, yCoord)
+                .withDemands(list(list(0, 0, 1, 1)
+                        , list(0, 0, 1, 1)
+                        , list(1, 0, 1, 1)
+                        , list(1, 1, 1, 1)))
+                .withSupplyAttributes()
+                .withSupplies(list(list()
+                        , list()
+                        , list()
+                        , list()))
+                .withConstraint(c -> {
+                    c.forAll(positionClusters(xCoord, yCoord))
+                            .forAll(isAlive(1, player, time, xCoord, yCoord))
+                            .forAll();
+                    return c;
+                })
+                .toProblem()
+                .asSolution();
+        rangeClosed(1, 4).forEach(i ->
+                testSubject.allocate(testSubject.demandsFree()
+                        .orderedLine(0), testSubject.suppliesFree().orderedLine(0)));
+        testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(4);
+        testSubject.constraint().child(0).lineProcessing().unorderedLines().requireSizeOf(4);
+        testSubject.constraint().child(0).child(0).lineProcessing().unorderedLines()
+                .requireSizeOf(4);
+        testSubject.constraint()
+                .child(0)
+                .child(0)
+                .child(0)
+                .lineProcessing()
+                .unorderedLines()
+                .requireSizeOf(4);
     }
 
     @UnitTest
