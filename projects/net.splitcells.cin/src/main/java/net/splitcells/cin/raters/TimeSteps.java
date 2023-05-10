@@ -141,11 +141,17 @@ public class TimeSteps implements Rater {
                             rating.updateRating_withReplacement(l, localRating);
                         });
             } else {
+                final String groupName;
+                if (this.isStartTimeEven) {
+                    groupName = NO_TIME_STEP_GROUP + " with even start time";
+                } else {
+                    groupName = NO_TIME_STEP_GROUP + " with uneven start time";
+                }
                 rating.additions().put(addition, localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
                         .withResultingGroupId(
-                                noTimeStepGroups.computeIfAbsent(incomingGroup, ig -> group(ig, NO_TIME_STEP_GROUP))));
+                                noTimeStepGroups.computeIfAbsent(incomingGroup, ig -> group(ig, groupName))));
             }
         }
         return rating;
