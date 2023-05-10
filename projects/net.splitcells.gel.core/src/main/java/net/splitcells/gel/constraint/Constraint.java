@@ -184,6 +184,10 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
      */
     List<Constraint> childrenView();
 
+    default Constraint child(int index) {
+        return childrenView().get(index);
+    }
+
     Set<Line> complying(GroupId group);
 
     default Set<Line> complying() {
