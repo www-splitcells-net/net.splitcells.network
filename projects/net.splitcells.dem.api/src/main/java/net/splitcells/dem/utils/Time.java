@@ -32,6 +32,7 @@ public class Time {
 
     public static void reportRuntime(Runnable run, String taskName, LogLevel logLevel) {
         final var startTime = LocalDateTime.now();
+        domsole().append("Executing `" + taskName + "`.", logLevel);
         run.run();
         final var endTime = LocalDateTime.now();
         domsole().append("`" + taskName + "` took " + ChronoUnit.SECONDS.between(startTime, endTime) + " seconds to execute.", logLevel);
