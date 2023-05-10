@@ -104,6 +104,7 @@ public class IsAlive implements Rater {
                 .filter(l -> l.value(timeAttribute).equals(startTime))
                 .filter(l -> l.value(xCoordinate) == centerXPosition)
                 .filter(l -> l.value(yCoordinate) == centerYPosition)
+                .filter(l -> l.value(playerAttribute) == playerValue)
                 .findFirst();
         final var additionLine = addition.value(LINE);
         final boolean isAdditionCenterStart = startTime.equals(additionLine.value(timeAttribute))
