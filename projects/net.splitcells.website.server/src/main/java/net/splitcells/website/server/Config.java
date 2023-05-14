@@ -305,15 +305,17 @@ public class Config {
     public Set<String> relevantParentPages(String path) {
         final Set<String> relevantParentPages = setOfUniques();
         final var pathElements = listWithValuesOf(path.split("/"));
-        pathElements.removeAt(pathElements.size() - 1);
-        pathElements.withAppended("index.html");
-        final var potentialPage = layoutPerspective.orElseThrow().pathOfDenValueTree(path);
-        if (potentialPage.isPresent()) {
-            final var parentPage = potentialPage.orElseThrow().stream()
-                    .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().name())
-                    .reduce("", (a, b) -> a + "/" + b);
-            System.out.println(parentPage);
-            relevantParentPages.with(parentPage);
+        while (pathElements.hasElements()) {
+            pathElements.removeAt(pathElements.size() - 1);
+            pathElements.withAppended("index.html");
+            final var potentialPage = layoutPerspective.orElseThrow().pathOfDenValueTree(path);
+            if (potentialPage.isPresent()) {
+                final var parentPage = potentialPage.orElseThrow().stream()
+                        .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())
+                        .reduce("", (a, b) -> a + "/" + b);
+                relevantParentPages.with(parentPage);
+            }
+            pathElements.removeAt(pathElements.size() - 1);
         }
         return relevantParentPages;
     }
