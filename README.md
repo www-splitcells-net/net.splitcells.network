@@ -28,7 +28,7 @@ You have your own open source optimization software? How about working together?
 
 🤝 Collaborate large decision-making networks.
 
-🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) ([also on Gemini](gemini://splitcells-net.srht.site)) and programming progress via our [changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
+🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) ([also on Gemini](gemini://splitcells-net.srht.site)), [Mastodon/Fosstodon](https://fosstodon.org/@splitcells) and programming progress via our [changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
 
 🦉 Get a [bird's-eye project view](https://splitcells.net/net/splitcells/network/overview.html).
 
@@ -102,11 +102,6 @@ Project Cluster
   * `net.splitcells.os.state.interface.lib.*` are command repositories,
     that can be used independently or can be registered to an installation
     of `net.splitcells.os.state.interface`.
-## Social Contacts
-* [Main Blog](https://splitcells-net.srht.site/)
-* Livestreaming Via [Youtube](https://www.youtube.com/channel/UCyHsL0W1QKPOc7iUkJe3mAA) 
-* Messaging Via English [Mastodon/Fosstodon](https://fosstodon.org/@splitcells) 
-* Blogging With Images On [Medium](https://martins-avots.medium.com/)
 ## Infrastructure
 * Rendered Documentation via [a personal website](https://splitcells.net/net/splitcells/network/README.html)
 * Tickets are managed [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) for the community,
