@@ -16,11 +16,14 @@
 package net.splitcells.dem.lang.perspective;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpace;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.environment.config.StaticFlags.WARNING;
 import static net.splitcells.dem.lang.namespace.NameSpaces.TEXT;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
 public class PerspectiveI implements Perspective {
 	public static Perspective perspective(String value, NameSpace nameSpace) {
@@ -55,8 +58,20 @@ public class PerspectiveI implements Perspective {
 		return children;
 	}
 
+	/**
+	 * TODO This method should not print {@link #toDom()},
+	 * because such strings can get very big,
+	 * which may cause huge performance problems for debuggers in IDEs,
+	 * which are calling {@link #toString()} very frequently.
+	 *
+	 * @return String representation of this.
+	 *
+	 */
 	@Override
 	public String toString() {
-		return Xml.toPrettyString(toDom());
+		if (WARNING) {
+			domsole().appendUnimplementedWarning(PerspectiveI.class);
+		}
+		return "not-implemented-yet";
 	}
 }
