@@ -15,6 +15,8 @@
  */
 package net.splitcells.website.server;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
@@ -25,7 +27,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
+import static net.splitcells.dem.lang.namespace.NameSpaces.NAME;
 
 /**
  * TODO IDEA Use string and enum based mapping as a backend,
@@ -294,5 +300,21 @@ public class Config {
 
     public Optional<Path> xmlSchema() {
         return xmlSchema;
+    }
+
+    public Set<String> relevantParentPages(String path) {
+        final Set<String> relevantParentPages = setOfUniques();
+        final var pathElements = listWithValuesOf(path.split("/"));
+        pathElements.removeAt(pathElements.size() - 1);
+        pathElements.withAppended("index.html");
+        final var potentialPage = layoutPerspective.orElseThrow().pathOfDenValueTree(path);
+        if (potentialPage.isPresent()) {
+            final var parentPage = potentialPage.orElseThrow().stream()
+                    .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().name())
+                    .reduce("", (a, b) -> a + "/" + b);
+            System.out.println(parentPage);
+            relevantParentPages.with(parentPage);
+        }
+        return relevantParentPages;
     }
 }
