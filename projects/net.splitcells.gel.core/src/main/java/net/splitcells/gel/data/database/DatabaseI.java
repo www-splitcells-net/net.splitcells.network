@@ -336,9 +336,9 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public Line lookupEquals(Attribute<Line> atribūts, Line rinda) {
+    public Line lookupEquals(Attribute<Line> attribute, Line line) {
         return lines.stream()
-                .filter(citaRinda -> citaRinda.value(atribūts).index() == rinda.index())
+                .filter(otherLine -> otherLine.value(attribute).index() == line.index())
                 .reduce(StreamUtils.ensureSingle())
                 .orElseThrow();
     }

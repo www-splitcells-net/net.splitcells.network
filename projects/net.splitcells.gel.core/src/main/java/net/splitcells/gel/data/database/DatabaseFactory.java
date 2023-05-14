@@ -62,7 +62,7 @@ public interface DatabaseFactory extends AspectOrientedResource<Database>, Conne
         directChildElementsByName(table, "table-row", FODS_TABLE)
                 .skip(1)
                 .map(row -> lineOfFodsRow(attributes, row))
-                .forEach(rindasVērtības -> databaseOfFods.addTranslated(rindasVērtības));
+                .forEach(lineValue -> databaseOfFods.addTranslated(lineValue));
         return databaseOfFods;
     }
 
