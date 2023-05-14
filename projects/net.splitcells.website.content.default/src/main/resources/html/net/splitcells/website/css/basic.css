@@ -48,23 +48,51 @@ article p img {
 	   See status badges on READMEs.
 	   This is achieved, by having no empty lines between images in CommonMark source code. */
 	}
-article ol {
-    /* We assume, that the a root list, can have more than 99 children,
-     * and therefore there can be 3 digest for root list numbering.
-     */
-    margin-left: 2em;
-    }
 ol {
-    margin-left: .5em;
+    list-style: none;
     padding-left: .5em;
     padding-bottom: .2em;
     }
 ol ol {
-    /* We assume, that the a sub list, can have more than 9 children,
-     * and therefore there can be 2 digest for sub list numbering.
-     */
-    margin-left: 0em !important;
     padding-left: 1.75em !important;
+    }
+li {
+   border-left: .1em solid rgb(100,100,100);
+   padding-left: .5em;
+   box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-3);
+   margin-top: .1em;
+   margin-right: .1em;
+   margin-bottom: .1em;
+   }
+ol li:last-child::before {
+  border-left: .1em solid rgb(100,100,100);
+}
+ol li:last-child {
+  border-left: none;
+}
+ol li::before {
+  position: relative;
+  top: -0.3em;
+  height: 1em;
+  width: 12px;
+  color: white;
+  border-bottom: .1em solid rgb(100,100,100);
+  content: "";
+  display: inline-block;
+  left: -.5em;
+}
+li:hover {
+    background-color: var(--background-color-selected-priority-0) !important;
+    color: var(--foreground-color-selected-priority-0) !important;
+    }
+li:nth-child(even) {
+    background: var(--paragraph-background-color-priority-1-b);
+    }
+li:nth-child(odd) {
+    background: var(--paragraph-background-color-priority-1-a);
+    }
+ol ol:last-child {
+    border-left:none;
     }
 pre {
     overflow-x: auto;

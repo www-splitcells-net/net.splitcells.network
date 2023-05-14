@@ -42,25 +42,6 @@ li.net-splitcells-den-perspective {
    margin-left: 0em;
    list-style-type: none;
    }
-li {
-   border-left: 1px solid rgb(100,100,100);
-   padding-left: .5em;
-   margin-left: 1.5em;
-   box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-3);
-   margin-top: .1em;
-   margin-right: .1em;
-   margin-bottom: .1em;
-   }
-li:hover {
-    background-color: var(--background-color-selected-priority-0) !important;
-    color: var(--foreground-color-selected-priority-0) !important;
-    }
-li:nth-child(even) {
-    background: var(--paragraph-background-color-priority-1-b);
-    }
-li:nth-child(odd) {
-    background: var(--paragraph-background-color-priority-1-a);
-    }
 .void {
     display: none;
     }
