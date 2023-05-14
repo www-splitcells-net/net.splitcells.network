@@ -76,6 +76,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
             final var layoutConfig = layoutConfig(path)
                     .withLocalPathContext(config.layoutPerspective()
                             .map(l -> subtree(l, pathFolder)));
+            // TODO #s86 layoutConfig.withRelevantParentPages(config.relevantParentPages(path));
             if (is_file(xmlFile)) {
                 return renderFile(path, readString(xmlFile), projectRenderer, config, layoutConfig);
             } else {
