@@ -347,8 +347,7 @@ public class ProjectRendererI implements ProjectRenderer {
             , Config config) {
         final var content = Xml.rElement(NameSpaces.SEW, "article");
         final var htmlBodyContent = Xml.rElement(NameSpaces.SEW, "html-body-content");
-        htmlBodyContent.appendChild
-                (Xml.textNode(MARKER));
+        htmlBodyContent.appendChild(Xml.textNode(MARKER));
         content.appendChild(htmlBodyContent);
         final var metaElement = Xml.elementWithChildren(NameSpaces.SEW, "meta");
         content.appendChild(metaElement);
