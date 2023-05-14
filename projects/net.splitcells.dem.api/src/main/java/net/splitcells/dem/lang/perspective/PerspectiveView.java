@@ -17,10 +17,17 @@ package net.splitcells.dem.lang.perspective;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.namespace.NameSpace;
+import net.splitcells.dem.lang.namespace.NameSpaces;
 
 import java.util.Optional;
+
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
+import static net.splitcells.dem.lang.namespace.NameSpaces.NAME;
+import static net.splitcells.dem.lang.namespace.NameSpaces.VAL;
 
 public interface PerspectiveView extends Domable {
 
@@ -48,5 +55,31 @@ public interface PerspectiveView extends Domable {
 
     default boolean nameIs(String value, NameSpace nameSpace) {
         return nameSpace().equals(nameSpace) && name().equals(value);
+    }
+
+    default Optional<List<Perspective>> pathOfDenValueTree(String stringPath) {
+        return pathOfDenValueTree(listWithValuesOf(stringPath.split("/")));
+    }
+
+    default Optional<List<Perspective>> pathOfDenValueTree(List<String> stringPath) {
+        final List<Perspective> path = listWithValuesOf();
+        while (stringPath.hasElements()) {
+            final var currentPathElement = stringPath.remove(0);
+            final var nextPathPerspective = children().stream()
+                    .filter(c -> c.nameIs(VAL, DEN))
+                    .filter(c -> {
+                        final var nameProp = c.propertyInstance(NAME, DEN);
+                        if (nameProp.isEmpty()) {
+                            return false;
+                        }
+                        return nameProp.orElseThrow().name().equals(currentPathElement);
+                    })
+                    .findFirst();
+            if (nextPathPerspective.isEmpty()) {
+                return Optional.empty();
+            }
+            path.withAppended(nextPathPerspective.orElseThrow());
+        }
+        return Optional.of(path);
     }
 }
