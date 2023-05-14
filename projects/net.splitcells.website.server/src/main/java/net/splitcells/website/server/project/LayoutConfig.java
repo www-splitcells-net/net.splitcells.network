@@ -15,10 +15,13 @@
  */
 package net.splitcells.website.server.project;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
 
 import java.util.Optional;
+
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
 /**
  * This config contains the metadata of a path/document,
@@ -35,6 +38,8 @@ public class LayoutConfig {
     private Optional<Perspective> localPathContext = Optional.empty();
 
     private Optional<Perspective> relevantLocalPathContext = Optional.empty();
+
+    private Set<String> relevantParentPages = setOfUniques();
 
     private LayoutConfig(String path) {
         this.path = path;
@@ -100,6 +105,15 @@ public class LayoutConfig {
      */
     public LayoutConfig withRelevantLocalPathContext(Optional<Perspective> relevantLocalPathContext) {
         this.relevantLocalPathContext = relevantLocalPathContext;
+        return this;
+    }
+
+    public Set<String> relevantParentPages() {
+        return relevantParentPages;
+    }
+
+    public LayoutConfig withRelevantParentPages(Set<String> arg) {
+        relevantParentPages = arg;
         return this;
     }
 }
