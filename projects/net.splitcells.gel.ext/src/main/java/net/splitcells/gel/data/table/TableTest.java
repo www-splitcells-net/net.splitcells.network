@@ -31,6 +31,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Mocking.anyInt;
 import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
+import static net.splitcells.gel.data.database.DatabaseI.databaseI;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -45,7 +46,7 @@ public final class TableTest extends TestSuiteI {
     @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> emptyTableTest() {
-        return dynamicTests(this::testEmptyTable, new DatabaseI());
+        return dynamicTests(this::testEmptyTable, databaseI());
     }
 
     /**
@@ -54,7 +55,7 @@ public final class TableTest extends TestSuiteI {
     @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> invalid_content_write_access_tests() {
-        return dynamicTests(this::test_invalid_content_write_access, new DatabaseI());
+        return dynamicTests(this::test_invalid_content_write_access, databaseI());
     }
 
     private void testEmptyTable(Table emptyTable) {

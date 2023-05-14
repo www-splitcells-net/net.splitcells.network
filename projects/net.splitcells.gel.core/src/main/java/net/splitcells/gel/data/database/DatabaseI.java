@@ -61,31 +61,40 @@ import net.splitcells.dem.object.Discoverable;
  * <p>TODO Test consistency of meta data.</p>
  */
 public class DatabaseI implements Database {
-    protected final String name;
-    protected final Optional<Discoverable> parent;
-    protected final List<Attribute<Object>> attributes;
-    protected final List<Attribute<? extends Object>> attributes2;
-    protected final List<Column<Object>> columns = list();
-    protected final Map<Attribute<?>, Integer> typed_column_index = map();
-    protected final Set<Line> lines = setOfUniques();
-    protected final List<Line> rawLines = list();
-    protected final ListView<Line> rawLinesView = listView(rawLines);
-    protected int size;
-    protected final List<AfterAdditionSubscriber> additionSubscriber = list();
-    protected final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
-    protected final List<BeforeRemovalSubscriber> afterRemovalSubscriber = list();
-    protected final net.splitcells.dem.data.set.Set<Integer> indexesOfFree = setOfUniques();
+    private final String name;
+    private final Optional<Discoverable> parent;
+    private final List<Attribute<Object>> attributes;
+    private final List<Attribute<? extends Object>> attributes2;
+    private final List<Column<Object>> columns = list();
+    private final Map<Attribute<?>, Integer> typed_column_index = map();
+    private final Set<Line> lines = setOfUniques();
+    private final List<Line> rawLines = list();
+    private final ListView<Line> rawLinesView = listView(rawLines);
+    private int size;
+    private final List<AfterAdditionSubscriber> additionSubscriber = list();
+    private final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
+    private final List<BeforeRemovalSubscriber> afterRemovalSubscriber = list();
+    private final net.splitcells.dem.data.set.Set<Integer> indexesOfFree = setOfUniques();
     private Optional<Constraint> constraint = Optional.empty();
+
+    @Deprecated
+    public static Database databaseI(List<Attribute<? extends Object>> attributes) {
+        return new DatabaseI(attributes);
+    }
 
 
     @Deprecated
-    protected DatabaseI(List<Attribute<? extends Object>> attributes) {
+    private DatabaseI(List<Attribute<? extends Object>> attributes) {
         this("", null, attributes.mapped(a -> (Attribute<Object>) a));
+    }
+
+    public static Database databaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+        return new DatabaseI(name, parent, attributes);
     }
 
     @Deprecated
     @SuppressWarnings("unchecked")
-    protected DatabaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+    private DatabaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         this.name = name;
         this.parent = Optional.ofNullable(parent);
         final List<Attribute<Object>> headerAttributes = list();
@@ -101,18 +110,31 @@ public class DatabaseI implements Database {
         attributes2.addAll(attributes);
     }
 
+    public static Database databaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
+        return new DatabaseI(attributes, linesValues);
+    }
+
+    public static Database databaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+        return new DatabaseI(name, parent, attributes);
+    }
+
     @Deprecated
-    protected DatabaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
+    public static Database databaseI(Attribute<?>... attributes) {
+        return new DatabaseI(attributes);
+    }
+
+    @Deprecated
+    private DatabaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
         this(attributes);
         linesValues.forEach(line_values -> addTranslated(line_values));
     }
 
-    protected DatabaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+    private DatabaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
         this(name, parent, listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a));
     }
 
     @Deprecated
-    public DatabaseI(Attribute<?>... attributes) {
+    private DatabaseI(Attribute<?>... attributes) {
         this(listWithValuesOf(attributes));
     }
 
