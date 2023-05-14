@@ -49,6 +49,14 @@ article p img {
 	   This is achieved, by having no empty lines between images in CommonMark source code. */
 	}
 ol {
+    /* Numbering of list items is not done, because CSS does not seem to have a way,
+     * to adjust the padding/margin of the left according to the size of the biggest list item number.
+     * The only known way to get this working, is to allocate enough space according to the biggest
+     * expected number of elements in the list.
+     * This number can get very large.
+     * See the website layout document.
+     * If this would not be done, the numbering of list items crosses with neighbouring HTML elements.
+     */
     list-style: none;
     padding-left: .5em;
     padding-bottom: .2em;
