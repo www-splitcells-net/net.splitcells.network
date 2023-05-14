@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -35,24 +36,23 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Interface for adhoc and dynamic trees.
+ * <p>Interface for adhoc and dynamic trees.</p>
  * <p>
  * There is no distinction between text, attributes and elements like in XML, as there is no
  * actual meaning in this distinction. In XML this is used for rendering and
  * helps to distinct between text and elements in XSL. In Perspective this distinction is
- * done via name spaces.
+ * done via name spaces.</p>
+ * <p>IDEA Create alternative to XSL.</p>
  * <p>
- * IDEA Create alternative to XSL.
- * <p></p>
  * A perspective is like an variable. An variable may only hold one value,
  * that may be a list of values. A perspective holds a value and a list of perspectives.
- * In other words, a Perspective is an structure for variables.
- * <p></p>
+ * In other words, a Perspective is an structure for variables.</p>
+ * <p>
  * It has a name in a certain scope which is the namespace.
  * The name is only valid in this scope and may restrict the possible values of the perspective.
  * In other words the namespace may have an type encoded in it, that is described externally.
  * A perspective has a value, if it only contains exactly one value.
- * A perspective has children, if it contains multiple values.
+ * A perspective has children, if it contains multiple values.</p>
  */
 public interface Perspective extends PerspectiveView {
 
@@ -388,5 +388,33 @@ public interface Perspective extends PerspectiveView {
      */
     default Perspective toPerspective() {
         return this;
+    }
+
+    default Optional<List<Perspective>> pathOfDenValueTree(String stringPath) {
+        return pathOfDenValueTree(listWithValuesOf(stringPath.split("/")));
+    }
+
+    default Optional<List<Perspective>> pathOfDenValueTree(List<String> stringPath) {
+        final List<Perspective> path = listWithValuesOf();
+        Perspective currentNode = this;
+        while (stringPath.hasElements()) {
+            final var currentPathElement = stringPath.remove(0);
+            final var nextPathPerspective = currentNode.children().stream()
+                    .filter(c -> c.nameIs(VAL, DEN))
+                    .filter(c -> {
+                        final var nameProp = c.propertyInstance(NAME, DEN);
+                        if (nameProp.isEmpty()) {
+                            return false;
+                        }
+                        return nameProp.orElseThrow().valueName().equals(currentPathElement);
+                    })
+                    .findFirst();
+            if (nextPathPerspective.isEmpty()) {
+                return Optional.empty();
+            }
+            currentNode = nextPathPerspective.orElseThrow();
+            path.withAppended(currentNode);
+        }
+        return Optional.of(path);
     }
 }
