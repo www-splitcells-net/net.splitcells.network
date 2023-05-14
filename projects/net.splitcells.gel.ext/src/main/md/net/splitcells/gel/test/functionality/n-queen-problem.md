@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Constraint System Demonstration Via The N Queen Problem
 The \\(N\\) queens puzzle requires \\(N\\) queens to be placed on a
 \\(N \\times N\\) chessboard so that there is no row,
