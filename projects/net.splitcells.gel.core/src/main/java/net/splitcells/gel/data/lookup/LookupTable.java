@@ -22,11 +22,16 @@ import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import java.util.stream.Stream;
@@ -56,11 +61,11 @@ public class LookupTable implements Table {
     private static final boolean USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS = true;
     private static final boolean USE_EXPERIMENTAL_RAW_LINE_CACHE = true;
     private static final boolean USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE = true;
-    protected final Table tableView;
-    protected final String name;
-    protected final Set<Integer> content = setOfUniques();
-    protected final List<Column<Object>> columns;
-    protected final List<Column<Object>> columnsView;
+    private final Table tableView;
+    private final String name;
+    private final Set<Integer> content = setOfUniques();
+    private final List<Column<Object>> columns;
+    private final List<Column<Object>> columnsView;
     private final List<Line> rawLinesCache = list();
     private final Map<Integer, Line> rawLinesHashedCache = map();
 
@@ -150,8 +155,22 @@ public class LookupTable implements Table {
         return content.stream().map(tableView::rawLine).filter(e -> e != null);
     }
 
+    /**
+     * The indexes needs to be preserved and therefore the null value gaps needs to be added as well.
+     *
+     * @return
+     */
     @Override
     public ListView<Line> rawLinesView() {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            range(0, tableView.rawLinesView().size()).forEach(i -> {
+                if (content.contains(i)) {
+                    requireNotNull(tableView.rawLinesView().get(i));
+                } else {
+                    content.requireAbsenceOf(i);
+                }
+            });
+        }
         if (useExperimentalRawLineCache) {
             return listView(rawLinesCache);
         }
@@ -186,6 +205,16 @@ public class LookupTable implements Table {
     }
 
     public void register(Line line) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            content.requireAbsenceOf(line.index());
+        }
+        if (TRACING) {
+            domsole().append(Xml.elementWithChildren("register.LookupTable"
+                            , Xml.elementWithChildren("subject", textNode(path().toString()))
+                            , line.toDom()
+                    )
+                    , this, DEBUG);
+        }
         if (useExperimentalRawLineCache) {
             if (rawLinesCache.size() < line.index()) {
                 rawLinesCache.prepareForSizeOf(line.index());
@@ -225,6 +254,17 @@ public class LookupTable implements Table {
     }
 
     public void removeRegistration(Line line) {
+        if (TRACING) {
+            domsole().append(Xml.elementWithChildren("deregister." + getClass().getSimpleName()
+                            , Xml.elementWithChildren("subject", textNode(path().toString()))
+                            , Xml.elementWithChildren("content", textNode(content.toString()))
+                            , line.toDom()
+                    )
+                    , this, DEBUG);
+        }
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            content.requirePresenceOf(line.index());
+        }
         columns.forEach(column -> column.registerBeforeRemoval(line));
         content.remove(line.index());
         range(0, columns.size()).forEach(i -> {
@@ -241,6 +281,14 @@ public class LookupTable implements Table {
         }
         if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
             rawLinesHashedCache.remove(line.index());
+        }
+        if (TRACING) {
+            domsole().append(
+                    Xml.elementWithChildren("after.deregister." + getClass().getSimpleName()
+                            , Xml.elementWithChildren("subject", textNode(path().toString()))
+                            , Xml.elementWithChildren("content", textNode(content.toString()))
+                            , line.toDom())
+                    , this, DEBUG);
         }
     }
 
@@ -268,6 +316,9 @@ public class LookupTable implements Table {
         rVal.appendChild(Xml.elementWithChildren("subject", textNode(path().toString())));
         rVal.appendChild(Xml.elementWithChildren("content", textNode(content.toString())));
         content.forEach(i -> rVal.appendChild(rawLinesView().get(i).toDom()));
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            content.forEach(i -> requireNotNull(rawLinesView().get(i)));
+        }
         return rVal;
     }
 
@@ -279,6 +330,9 @@ public class LookupTable implements Table {
         rVal.withProperty("subject", path().toString());
         rVal.withProperty("content", content.toString());
         content.forEach(i -> rVal.withChild(rawLinesView().get(i).toPerspective()));
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            content.forEach(i -> requireNotNull(rawLinesView().get(i)));
+        }
         return rVal;
     }
 
