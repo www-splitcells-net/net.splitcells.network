@@ -308,7 +308,8 @@ public class Config {
         while (pathElements.hasElements()) {
             pathElements.removeAt(pathElements.size() - 1);
             pathElements.withAppended("index.html");
-            final var potentialPage = layoutPerspective.orElseThrow().pathOfDenValueTree(path);
+            final var potentialPage = layoutPerspective.orElseThrow().pathOfDenValueTree
+                    (pathElements.stream().reduce("", (a, b) -> a + "/" + b).substring(1));
             if (potentialPage.isPresent()) {
                 final var parentPage = potentialPage.orElseThrow().stream()
                         .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())
