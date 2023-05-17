@@ -24,7 +24,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
-* **2023-05-17: \#s86** Deprecate Renderer interface.
+* **2023-05-17: \#s86**
+  1. Deprecate Renderer interface.
+  2. Make sub renderer interfaces ProjectRenderer, ProjectsRenderer and ProjectRendererExtension more uniform.
 * **2023-01-22**:
   1. [**\\#196** Create sane default config and behaviour regarding temporary data for, i.e. logging:](https://github.com/www-splitcells-net/net.splitcells.network/issues/196)
      1. Store logs etc. at `~./.local/state/net.splitcells.dem/src/main/[file type]/[program name]/[date time of program start]/` by default.

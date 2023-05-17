@@ -17,6 +17,7 @@ package net.splitcells.website.server.project;
 
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -97,6 +98,18 @@ public interface ProjectRenderer extends Renderer {
      */
     default Optional<RenderingResult> render(String path, Config config,  @Deprecated ProjectRenderer projectRenderer) {
         return Optional.empty();
+    }
+
+    /**
+     * TODO Use {@link Path} objects instead of {@link String}s.
+     *
+     * @param path             Absolute Path To Be Rendered
+     * @param projectsRenderer This is the complete renderer infrastructure.
+     *                         For instance, here the {@link Config} of that infrastructure can be retrieved.
+     * @return This is the rendering result, if the path is supported.
+     */
+    default Optional<RenderingResult> render(String path, ProjectsRenderer projectsRenderer) {
+        return render(path);
     }
 
     /**

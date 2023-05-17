@@ -20,6 +20,8 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -33,13 +35,34 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 public interface ProjectRendererExtension {
     /**
      * Renders a file for a given {@code path}.
+     * This method is deprecated an {@link #renderFile(String, ProjectsRenderer, ProjectRenderer)} should be used
+     * instead.
+     * This was done, in order to allow {@link ProjectsRendererExtension} capabilities to be used
+     * in {@link ProjectRendererExtension}.
+     * The primary difference between the 2, is that, the former does not require any files/resources.
+     * The latter always requires a folder containing projects files,
+     * that are to be rendered on the website.
      *
-     * @param path Absolute Path To Be Rendered
+     * @param path            Absolute Path To Be Rendered
      * @param projectRenderer Basic Rendering Utilities
-     * @param config Web Server Configuration
+     * @param config          Web Server Configuration
      * @return
      */
+    @Deprecated
     Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config);
+
+    /**
+     * Renders a file for a given {@code path}.
+     *
+     * @param path             Absolute Path To Be Rendered
+     * @param projectsRenderer This is the complete renderer infrastructure.
+     *                         For instance, here the {@link Config} of that infrastructure can be retrieved.
+     * @param projectRenderer  Basic Rendering Utilities
+     * @return
+     */
+    default Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        return renderFile(path, projectRenderer, projectsRenderer.config());
+    }
 
     /**
      * TODO A list of paths should be returned instead. Also the layout would not be needed anymore in this case.

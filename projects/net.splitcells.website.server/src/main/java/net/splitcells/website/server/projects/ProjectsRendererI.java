@@ -217,7 +217,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             if (matchingRoots.isEmpty()) {
                 // System.out.println("No match for: " + path);
                 //System.out.println("Patterns: " + renderers.keySet());
-                final var render = fallbackRenderer.render(normalizedPath);
+                final var render = fallbackRenderer.render(normalizedPath, this);
                 if (render.isPresent()) {
                     return validateRenderingResult(render, Path.of(normalizedPath));
                 }
@@ -231,7 +231,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             matchingRoots.reverse();
             final var renderingResult = matchingRoots.stream()
                     .map(renderer -> {
-                        final var render = renderer.render(normalizedPath);
+                        final var render = renderer.render(normalizedPath, this);
                         if (render.isPresent()) {
                             return render;
                         }

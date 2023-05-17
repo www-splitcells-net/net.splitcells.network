@@ -27,6 +27,7 @@ import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtensionMerger;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -43,6 +44,7 @@ import static net.splitcells.dem.resource.Files.readFileAsBytes;
 import static net.splitcells.dem.resource.Files.readFileAsString;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.concat;
 import static net.splitcells.website.server.project.FileStructureTransformer.fileStructureTransformer;
 import static net.splitcells.website.server.project.renderer.extension.CsvChartProjectRendererExtension.csvChartRenderer;
@@ -194,19 +196,19 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Optional<RenderingResult> render(String path) {
-        return addMissingMetaData(renderInternal(path));
+    public Optional<RenderingResult> render(String path, ProjectsRenderer projectsRenderer) {
+        return addMissingMetaData(renderInternal(path, projectsRenderer));
     }
 
     /**
      * TODO Create root for each file type, that needs its one processing method.
      */
-    private Optional<RenderingResult> renderInternal(String path) {
+    private Optional<RenderingResult> renderInternal(String path, ProjectsRenderer projectsRenderer) {
         try {
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
             }
-            final var extensionRendering = renderer.renderFile(path, this, config);
+            final var extensionRendering = renderer.renderFile(path, projectsRenderer, this);
             if (extensionRendering.isPresent()) {
                 return extensionRendering;
             }
@@ -286,6 +288,7 @@ public class ProjectRendererI implements ProjectRenderer {
         }
     }
 
+    @Deprecated
     private Optional<byte[]> renderFile(String path) {
         // TODO REMOVE Split by dot.
         final var splitByDot = path.split("\\.");
@@ -549,6 +552,11 @@ public class ProjectRendererI implements ProjectRenderer {
     @Override
     public Set<Path> relevantProjectPaths() {
         return this.renderer.relevantProjectPaths(this);
+    }
+
+    @Override
+    public Optional<RenderingResult> render(String path) {
+        throw notImplementedYet();
     }
 
 }
