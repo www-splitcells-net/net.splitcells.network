@@ -26,6 +26,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import org.w3c.dom.Document;
 
 import java.nio.file.Path;
@@ -63,7 +64,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
             final var xmlFile = projectRenderer
                     .projectFolder()
@@ -74,19 +75,22 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                     .collect(toList())
                     .withRemovedFromBehind(0);
             final var layoutConfig = layoutConfig(path)
-                    .withLocalPathContext(config.layoutPerspective()
+                    .withLocalPathContext(projectsRenderer.config().layoutPerspective()
                             .map(l -> subtree(l, pathFolder)));
             if (is_file(xmlFile)) {
-                layoutConfig.withRelevantParentPages(config.relevantParentPages(path));
-                return renderFile(path, readString(xmlFile), projectRenderer, config, layoutConfig);
+                return renderFile(path, readString(xmlFile), projectRenderer, projectsRenderer, layoutConfig);
             } else {
                 final var sumXmlFile = projectRenderer
                         .projectFolder()
                         .resolve("src/main/sum.xml")
                         .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
                 if (is_file(sumXmlFile)) {
-                    layoutConfig.withRelevantParentPages(config.relevantParentPages(path));
-                    return renderFile(path, "<start xmlns=\"http://splitcells.net/den.xsd\">" + readString(sumXmlFile) + "</start>", projectRenderer, config, layoutConfig);
+                    return renderFile(path, "<start xmlns=\"http://splitcells.net/den.xsd\">"
+                            + readString(sumXmlFile)
+                            + "</start>"
+                            , projectRenderer
+                            , projectsRenderer
+                            , layoutConfig);
                 }
             }
         }
@@ -96,7 +100,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
     private Optional<RenderingResult> renderFile(String path
             , String xmlContent
             , ProjectRenderer projectRenderer
-            , Config config
+            , ProjectsRenderer projectsRenderer
             , LayoutConfig layoutConfig) {
         final var document = Xml.parse(xmlContent);
         if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
@@ -124,11 +128,13 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
             } else {
                 documentString = Xml.toDocumentString(document);
             }
-            return Optional.of(renderingResult(projectRenderer.renderRawXml(documentString, config).orElseThrow()
-                    , HTML_TEXT.codeName()));
+            return Optional.of(renderingResult
+                    (projectRenderer.renderRawXml(documentString, projectsRenderer.config()).orElseThrow()
+                            , HTML_TEXT.codeName()));
         } else {
-            return Optional.of(renderingResult(projectRenderer.renderXml(xmlContent, layoutConfig, config).orElseThrow()
-                    , HTML_TEXT.codeName()));
+            return Optional.of(renderingResult
+                    (projectRenderer.renderXml(xmlContent, layoutConfig, projectsRenderer.config()).orElseThrow()
+                            , HTML_TEXT.codeName()));
         }
     }
 
