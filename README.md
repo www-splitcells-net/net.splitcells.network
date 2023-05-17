@@ -115,4 +115,4 @@ Project Cluster
     It's CI pipeline is also used with the repo `net.splitcells.network.m2`, in order to ensure,
     that this project can be build offline and without the user's local Maven m2 repo.
 ## Credits
-* [Main Author's Public Key](https://keys.openpgp.org/search?q=F844A8297DEB16D9B9486323A6A6108FC3486F37)
+* [Public Key of Mārtiņš Avots (Martins Avots)](https://keys.openpgp.org/search?q=F844A8297DEB16D9B9486323A6A6108FC3486F37)
