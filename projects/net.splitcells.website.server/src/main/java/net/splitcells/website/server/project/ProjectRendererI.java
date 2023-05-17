@@ -196,6 +196,11 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     @Override
+    public Optional<String> title(String path, ProjectsRenderer projectsRenderer) {
+        return renderer.title(path, projectsRenderer);
+    }
+
+    @Override
     public Optional<RenderingResult> render(String path, ProjectsRenderer projectsRenderer) {
         return addMissingMetaData(renderInternal(path, projectsRenderer));
     }

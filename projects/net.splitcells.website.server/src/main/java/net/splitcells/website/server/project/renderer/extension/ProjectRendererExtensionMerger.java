@@ -54,6 +54,29 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
     }
 
     @Override
+    public Optional<String> title(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        final var rendering = projectRendererExtensions.stream()
+                .map(e -> e.title(path, projectsRenderer, projectRenderer))
+                .filter(Optional::isPresent)
+                .map(Optional::orElseThrow)
+                .collect(Lists.toList());
+        if (rendering.size() > 1) {
+            final var matchedExtensions = rendering.stream()
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElseThrow();
+            throw new RuntimeException("Multiple matches are present: "
+                    + projectRenderer.resourceRootPath2().toString()
+                    + ": "
+                    + matchedExtensions);
+        }
+        if (rendering.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(rendering.get(0));
+        }
+    }
+
+    @Override
     public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         final var rendering = projectRendererExtensions.stream()
                 .map(e -> e.renderFile(path, projectsRenderer, projectRenderer))

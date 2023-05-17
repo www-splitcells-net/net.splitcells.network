@@ -54,6 +54,10 @@ public interface ProjectRendererExtension {
         throw notImplementedYet();
     }
 
+    default Optional<String> title(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        return Optional.empty();
+    }
+
     /**
      * Renders a file for a given {@code path}.
      *

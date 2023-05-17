@@ -65,6 +65,8 @@ public interface ProjectRenderer extends Renderer {
 
     Path projectFolder();
 
+    Optional<String> title(String path, ProjectsRenderer projectsRenderer);
+
     @Deprecated
     Optional<byte[]> renderString(String arg);
 
@@ -96,7 +98,7 @@ public interface ProjectRenderer extends Renderer {
      * @param projectRenderer Provides basic rendering utilities.
      * @return This is the rendering result, if the path is supported.
      */
-    default Optional<RenderingResult> render(String path, Config config,  @Deprecated ProjectRenderer projectRenderer) {
+    default Optional<RenderingResult> render(String path, Config config, @Deprecated ProjectRenderer projectRenderer) {
         return Optional.empty();
     }
 
@@ -119,8 +121,8 @@ public interface ProjectRenderer extends Renderer {
      * Is this method maybe a good future idea, or should it be really deleted?
      * It should be deleted, because this makes it possible to render data without a path.
      *
-     * @param xml          This is the document's content being rendered.
-     * @param config       This is the general webserver config.
+     * @param xml    This is the document's content being rendered.
+     * @param config This is the general webserver config.
      * @return The rendered document. Currently, the output format is HTML.
      */
     @Deprecated
