@@ -152,16 +152,30 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
             metaElement.appendChild(document.createTextNode(MARKER));
             final String documentString;
             final var localPathContext = layoutConfig.localPathContext();
+            var pathContext = "";
             if (localPathContext.isPresent()) {
-                documentString = Xml.toDocumentString(document)
-                        .replace(MARKER, "<path.context " +
-                                "xmlns:d=\"http://splitcells.net/den.xsd\"" +
-                                ">" +
-                                localPathContext.get().toXmlStringWithPrefixes() +
-                                "</path.context>");
-            } else {
-                documentString = Xml.toDocumentString(document);
+                pathContext += localPathContext.get().toXmlStringWithPrefixes();
             }
+            var metaData = "";
+            final var queriedMetaData = projectsRenderer.relevantParentPages(path);
+            if (queriedMetaData.hasElements()) {
+                final var relevantParentPages = optionalDirectChildElementsByName(metaElement, "relevant-parent-pages", NameSpaces.SEW)
+                        .orElseGet(() -> document.createElementNS(NameSpaces.SEW.uri(), "relevant-parent-pages"));
+                queriedMetaData.forEach(m -> {
+                    final var parent = document.createElementNS(NameSpaces.SEW.uri(), "parent");
+                    parent.setAttribute("path", m.path());
+                    parent.setAttribute("title", m.title().orElse(path));
+                    relevantParentPages.appendChild(parent);
+                });
+                metaData += Xml.toPrettyWithoutHeaderString(relevantParentPages);
+            }
+            documentString = Xml.toDocumentString(document)
+                    .replace(MARKER, "<path.context "
+                            + "xmlns:d=\"http://splitcells.net/den.xsd\""
+                            + ">"
+                            + pathContext
+                            + "</path.context>"
+                            + metaData);
             return Optional.of(renderingResult
                     (projectRenderer.renderRawXml(documentString, projectsRenderer.config()).orElseThrow()
                             , HTML_TEXT.codeName()));
