@@ -86,6 +86,7 @@ public interface ProjectsRenderer {
 
     Config config();
 
+    @Deprecated
     List<ProjectRenderer> projectRenderers();
 
     @Deprecated
