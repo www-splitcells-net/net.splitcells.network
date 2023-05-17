@@ -35,11 +35,11 @@ public class LayoutConfig {
     private final String path;
     private Optional<String> title = Optional.empty();
 
+    @Deprecated
     private Optional<Perspective> localPathContext = Optional.empty();
 
+    @Deprecated
     private Optional<Perspective> relevantLocalPathContext = Optional.empty();
-
-    private Set<String> relevantParentPages = setOfUniques();
 
     private LayoutConfig(String path) {
         this.path = path;
@@ -62,6 +62,7 @@ public class LayoutConfig {
      * @return These are all paths, that are children, to {@link #path},
      * and which can be requested from relevant {@link Renderer}.
      */
+    @Deprecated
     public Optional<Perspective> localPathContext() {
         return localPathContext;
     }
@@ -77,6 +78,7 @@ public class LayoutConfig {
      * which can be requested from relevant {@link Renderer} and
      * which are relevant to the user.
      */
+    @Deprecated
     public Optional<Perspective> relevantLocalPathContext() {
         return relevantLocalPathContext;
     }
@@ -92,6 +94,7 @@ public class LayoutConfig {
      * @param localPathContext The Local Path Context
      * @return This
      */
+    @Deprecated
     public LayoutConfig withLocalPathContext(Optional<Perspective> localPathContext) {
         this.localPathContext = localPathContext;
         return this;
@@ -103,17 +106,9 @@ public class LayoutConfig {
      * @param relevantLocalPathContext The Relevant Local Path Context
      * @return This
      */
+    @Deprecated
     public LayoutConfig withRelevantLocalPathContext(Optional<Perspective> relevantLocalPathContext) {
         this.relevantLocalPathContext = relevantLocalPathContext;
-        return this;
-    }
-
-    public Set<String> relevantParentPages() {
-        return relevantParentPages;
-    }
-
-    public LayoutConfig withRelevantParentPages(Set<String> arg) {
-        relevantParentPages = arg;
         return this;
     }
 }
