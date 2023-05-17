@@ -17,6 +17,7 @@ package net.splitcells.website.server.projects;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -27,6 +28,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NAME;
@@ -111,8 +113,8 @@ public interface ProjectsRenderer {
      */
     Optional<RenderingResult> renderContent(String content, LayoutConfig metaContent);
 
-    default Set<PageMetaData> relevantParentPages(String path) {
-        final Set<PageMetaData> relevantParentPages = setOfUniques();
+    default List<PageMetaData> relevantParentPages(String path) {
+        final List<PageMetaData> relevantParentPages = list();
         final var pathElements = listWithValuesOf(path.split("/"));
         while (pathElements.hasElements()) {
             pathElements.removeAt(pathElements.size() - 1);
@@ -125,7 +127,7 @@ public interface ProjectsRenderer {
                         .reduce("", (a, b) -> a + "/" + b)
                         .substring(1);
                 final var potentialMetaData = metaData(parentPage);
-                potentialMetaData.ifPresent(relevantParentPages::with);
+                potentialMetaData.ifPresent(relevantParentPages::withAppended);
             }
             pathElements.removeAt(pathElements.size() - 1);
         }
