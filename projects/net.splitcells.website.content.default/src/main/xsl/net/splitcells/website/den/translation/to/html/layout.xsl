@@ -372,14 +372,17 @@ window.onload = function() {
                                 select="concat('Deprecated tag: ./s:content/s:meta/s:related_to:', document-uri(/))"/>
                     </xsl:if>
                     <xsl:if test="./s:content/s:meta/d:toDo or ./s:content/s:meta/d:todo">
-                        <s:list>
-                            <s:item>
-                                <s:link>
-                                    <s:text>Open Tasks</s:text>
-                                    <s:url>#net-splitcells-content-todo</s:url>
-                                </s:link>
-                            </s:item>
-                        </s:list>
+                        <s:chapter>
+                            <s:title>Metadata</s:title>
+                            <s:list>
+                                <s:item>
+                                    <s:link>
+                                        <s:text>Open Tasks</s:text>
+                                        <s:url>#net-splitcells-content-todo</s:url>
+                                    </s:link>
+                                </s:item>
+                            </s:list>
+                        </s:chapter>
                     </xsl:if>
                     <s:chapter>
                         <s:title>Relevant Local Path Context</s:title>
