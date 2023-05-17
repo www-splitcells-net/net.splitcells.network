@@ -24,6 +24,7 @@ import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.utils.StreamUtils;
+import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtensionMerger;
@@ -196,8 +197,8 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Optional<String> title(String path, ProjectsRenderer projectsRenderer) {
-        return renderer.title(path, projectsRenderer);
+    public Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer) {
+        return renderer.metaData(path, projectsRenderer, this);
     }
 
     @Override

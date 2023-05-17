@@ -17,6 +17,7 @@ package net.splitcells.website.server.projects;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
@@ -25,6 +26,7 @@ import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.Renderer;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.RenderingValidator;
 import net.splitcells.website.server.Server;
 import net.splitcells.website.server.Config;
@@ -46,6 +48,7 @@ import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithSimplePath;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
@@ -301,6 +304,24 @@ public class ProjectsRendererI implements ProjectsRenderer {
     @Override
     public List<ProjectRenderer> projectRenderers() {
         return renderers;
+    }
+
+    @Override
+    public Optional<PageMetaData> metaData(String path) {
+        final var metaData = renderers.stream()
+                .map(r -> r.metaData(path, this))
+                .filter(m -> m.isPresent())
+                .collect(toList());
+        if (metaData.isEmpty()) {
+            return Optional.empty();
+        }
+        if (metaData.size() > 1) {
+            throw executionException("Expecting at most 1 meta data entries but found "
+                    + metaData.size()
+                    + " instead: "
+                    + metaData);
+        }
+        return metaData.get(0);
     }
 
     @Override

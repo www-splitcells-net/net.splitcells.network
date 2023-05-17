@@ -24,6 +24,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
@@ -54,14 +55,15 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
     }
 
     @Override
-    public Optional<String> title(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    public Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         final var rendering = projectRendererExtensions.stream()
-                .map(e -> e.title(path, projectsRenderer, projectRenderer))
+                .map(e -> e.metaData(path, projectsRenderer, projectRenderer))
                 .filter(Optional::isPresent)
                 .map(Optional::orElseThrow)
                 .collect(Lists.toList());
         if (rendering.size() > 1) {
             final var matchedExtensions = rendering.stream()
+                    .map(PageMetaData::path)
                     .reduce((a, b) -> a + ", " + b)
                     .orElseThrow();
             throw new RuntimeException("Multiple matches are present: "

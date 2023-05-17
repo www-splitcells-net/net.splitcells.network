@@ -26,6 +26,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import org.w3c.dom.Document;
 
@@ -45,6 +46,7 @@ import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.utils.StreamUtils.emptyStream;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.project.renderer.PageMetaData.pageMetaData;
 
 /**
  * Projects the file tree located "src/main/xml/" of the project's folder.
@@ -64,12 +66,44 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    public Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        final var xmlPath = xmlPath(path, projectsRenderer, projectRenderer);
+        if (xmlPath.isPresent()) {
+            final var metaData = pageMetaData(path);
+            final var document = Xml.parse(readString(xmlPath.get()));
+            if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
+                final var metaElement = optionalDirectChildElementsByName
+                        (document.getDocumentElement(), "meta", NameSpaces.SEW);
+                if (metaElement.isPresent()) {
+                    final var titleElement = optionalDirectChildElementsByName
+                            (metaElement.get(), "title", NameSpaces.SEW);
+                    if (titleElement.isPresent()) {
+                        metaData.withTitle(Optional.of(titleElement.get().getTextContent()));
+                    }
+                }
+            }
+            return Optional.of(metaData);
+        }
+        return Optional.empty();
+    }
+
+    private Optional<Path> xmlPath(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
             final var xmlFile = projectRenderer
                     .projectFolder()
                     .resolve("src/main/xml")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
+            if (is_file(xmlFile)) {
+                return Optional.of(xmlFile);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        if (path.endsWith(".html")) {
+            final var xmlPath = xmlPath(path, projectsRenderer, projectRenderer);
             final var pathFolder = StreamUtils.stream(path.split("/"))
                     .filter(s -> !s.isEmpty())
                     .collect(toList())
@@ -77,8 +111,8 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
             final var layoutConfig = layoutConfig(path)
                     .withLocalPathContext(projectsRenderer.config().layoutPerspective()
                             .map(l -> subtree(l, pathFolder)));
-            if (is_file(xmlFile)) {
-                return renderFile(path, readString(xmlFile), projectRenderer, projectsRenderer, layoutConfig);
+            if (xmlPath.isPresent()) {
+                return renderFile(path, readString(xmlPath.get()), projectRenderer, projectsRenderer, layoutConfig);
             } else {
                 final var sumXmlFile = projectRenderer
                         .projectFolder()
@@ -86,8 +120,8 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                         .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
                 if (is_file(sumXmlFile)) {
                     return renderFile(path, "<start xmlns=\"http://splitcells.net/den.xsd\">"
-                            + readString(sumXmlFile)
-                            + "</start>"
+                                    + readString(sumXmlFile)
+                                    + "</start>"
                             , projectRenderer
                             , projectsRenderer
                             , layoutConfig);
