@@ -121,7 +121,7 @@ public class ProjectRendererI implements ProjectRenderer {
         // TODO MOVE
         this.renderer.registerExtension(commonMarkReadmeRenderer())
                 .registerExtension(commonMarkChangelogRenderer())
-                .registerExtension(userCommandRenderer())
+                // .registerExtension(userCommandRenderer()) // TODO This renderer does not work.
                 .registerExtension(commonMarkExtension())
                 .registerExtension(csvRenderer())
                 .registerExtension(jacocoReportRenderer())
