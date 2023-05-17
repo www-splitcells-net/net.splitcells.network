@@ -24,6 +24,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -53,14 +54,14 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         final var rendering = projectRendererExtensions.stream()
-                .map(e -> e.renderFile(path, projectRenderer, config))
+                .map(e -> e.renderFile(path, projectsRenderer, projectRenderer))
                 .filter(e -> e.isPresent())
                 .collect(Lists.toList());
         if (rendering.size() > 1) {
             final var matchedExtensions = projectRendererExtensions.stream()
-                    .filter(r -> r.renderFile(path, projectRenderer, config).isPresent())
+                    .filter(r -> r.renderFile(path, projectsRenderer, projectRenderer).isPresent())
                     .map(Object::toString)
                     .reduce((a, b) -> a + ", " + b)
                     .orElseThrow();

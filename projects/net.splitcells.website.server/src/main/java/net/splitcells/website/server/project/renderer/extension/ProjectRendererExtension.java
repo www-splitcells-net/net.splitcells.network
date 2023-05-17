@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * TODO Do not only test {@link #projectPaths(ProjectRenderer)},
@@ -49,7 +50,9 @@ public interface ProjectRendererExtension {
      * @return
      */
     @Deprecated
-    Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config);
+    default Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+        throw notImplementedYet();
+    }
 
     /**
      * Renders a file for a given {@code path}.
