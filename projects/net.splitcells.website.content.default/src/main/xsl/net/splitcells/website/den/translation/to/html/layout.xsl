@@ -342,6 +342,25 @@ window.onload = function() {
                             </s:paragraph>
                         </s:chapter>
                     </xsl:if>
+                    <xsl:if test="./s:content/s:meta/s:relevant-parent-pages">
+                        <s:chapter>
+                            <s:title>Parent Pages</s:title>
+                            <ol>
+                                <xsl:for-each select="./s:content/s:meta/s:relevant-parent-pages/*">
+                                    <li>
+                                        <a>
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of
+                                                        select="s:default-root-relative-url(./@path)"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of
+                                                    select="./@title"/>
+                                        </a>
+                                    </li>
+                                </xsl:for-each>
+                            </ol>
+                        </s:chapter>
+                    </xsl:if>
                     <xsl:if test="$column_1_tmp != ''">
                         <s:chapter>
                             <s:title>Outline</s:title>
