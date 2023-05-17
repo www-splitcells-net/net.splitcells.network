@@ -301,23 +301,4 @@ public class Config {
     public Optional<Path> xmlSchema() {
         return xmlSchema;
     }
-
-    public Set<String> relevantParentPages(String path) {
-        final Set<String> relevantParentPages = setOfUniques();
-        final var pathElements = listWithValuesOf(path.split("/"));
-        while (pathElements.hasElements()) {
-            pathElements.removeAt(pathElements.size() - 1);
-            pathElements.withAppended("index.html");
-            final var potentialPage = layoutPerspective.orElseThrow().pathOfDenValueTree
-                    (pathElements.stream().reduce("", (a, b) -> a + "/" + b).substring(1));
-            if (potentialPage.isPresent()) {
-                final var parentPage = potentialPage.orElseThrow().stream()
-                        .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())
-                        .reduce("", (a, b) -> a + "/" + b);
-                relevantParentPages.with(parentPage);
-            }
-            pathElements.removeAt(pathElements.size() - 1);
-        }
-        return relevantParentPages;
-    }
 }

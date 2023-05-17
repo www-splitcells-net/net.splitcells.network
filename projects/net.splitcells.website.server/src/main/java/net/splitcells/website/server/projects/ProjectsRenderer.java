@@ -25,6 +25,10 @@ import net.splitcells.website.server.project.RenderingResult;
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
+import static net.splitcells.dem.lang.namespace.NameSpaces.NAME;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public interface ProjectsRenderer {
@@ -103,4 +107,23 @@ public interface ProjectsRenderer {
      * @return This is the rendered String.
      */
     Optional<RenderingResult> renderContent(String content, LayoutConfig metaContent);
+
+    default Set<String> relevantParentPages(String path) {
+        final Set<String> relevantParentPages = setOfUniques();
+        final var pathElements = listWithValuesOf(path.split("/"));
+        while (pathElements.hasElements()) {
+            pathElements.removeAt(pathElements.size() - 1);
+            pathElements.withAppended("index.html");
+            final var potentialPage = config().layoutPerspective().orElseThrow().pathOfDenValueTree
+                    (pathElements.stream().reduce("", (a, b) -> a + "/" + b).substring(1));
+            if (potentialPage.isPresent()) {
+                final var parentPage = potentialPage.orElseThrow().stream()
+                        .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())
+                        .reduce("", (a, b) -> a + "/" + b);
+                relevantParentPages.with(parentPage);
+            }
+            pathElements.removeAt(pathElements.size() - 1);
+        }
+        return relevantParentPages;
+    }
 }
