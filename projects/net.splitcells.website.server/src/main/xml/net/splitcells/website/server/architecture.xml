@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd">
+    <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
+        <title>Website Server Architecture</title>
+    </meta>
+    <image xl:href="architecture.svg"/>
+</article>
