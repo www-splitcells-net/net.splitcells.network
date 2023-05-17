@@ -16,16 +16,21 @@
 package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.website.server.Config;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 /**
- * Provides a path system, where every object is mapped to a path and the content of the object can be queried
+ * <p>TODO This interface is deprecated.
+ * Some of its methods will have to be moved into {@link ProjectRenderer}.</p>
+ * <p>Provides a path system, where every object is mapped to a path and the content of the object can be queried
  * by the path.
  * Note that there is no guarantee,
- * that accessing an object does not change it.
+ * that accessing an object does not change it.</p>
  */
+@Deprecated
 public interface Renderer {
 
     /**
@@ -54,9 +59,10 @@ public interface Renderer {
     /**
      * TODO Use {@link Path} objects instead of {@link String}s.
      *
-     * @param path Absolute Path To Be Rendered
+     * @param path             Absolute Path To Be Rendered
      * @return This is the rendering result, if the path is supported.
      */
+    @Deprecated
     Optional<RenderingResult> render(String path);
 
     /**
