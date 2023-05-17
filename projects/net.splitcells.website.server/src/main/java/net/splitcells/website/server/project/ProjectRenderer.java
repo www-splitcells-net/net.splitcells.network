@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.project;
 
+import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.projects.ProjectsRenderer;
@@ -65,7 +66,9 @@ public interface ProjectRenderer extends Renderer {
 
     Path projectFolder();
 
-    Optional<String> title(String path, ProjectsRenderer projectsRenderer);
+    default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer) {
+        return Optional.empty();
+    }
 
     @Deprecated
     Optional<byte[]> renderString(String arg);

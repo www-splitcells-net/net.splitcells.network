@@ -20,6 +20,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
@@ -54,7 +55,7 @@ public interface ProjectRendererExtension {
         throw notImplementedYet();
     }
 
-    default Optional<String> title(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         return Optional.empty();
     }
 

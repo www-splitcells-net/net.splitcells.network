@@ -21,6 +21,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.project.renderer.PageMetaData;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -34,13 +35,13 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 public interface ProjectsRenderer {
     /**
      * <p>
-     *     Creates all meta info maybe required for rendering.
-     *     This method is called by all rendering methods, that render all files at once, by default,
-     *     except, if otherwise explicitly stated in the arguments.</p>
+     * Creates all meta info maybe required for rendering.
+     * This method is called by all rendering methods, that render all files at once, by default,
+     * except, if otherwise explicitly stated in the arguments.</p>
      * <p>
-     *     So normally, this method does not have to be called explicitly.
-     *     This is not the case for rendering methods, that only render single paths
-     *     like {@link #render(String)}.
+     * So normally, this method does not have to be called explicitly.
+     * This is not the case for rendering methods, that only render single paths
+     * like {@link #render(String)}.
      * </p>
      */
     void build();
@@ -93,6 +94,8 @@ public interface ProjectsRenderer {
     @Deprecated
     List<ProjectRenderer> projectRenderers();
 
+    Optional<PageMetaData> metaData(String path);
+
     @Deprecated
     Optional<byte[]> renderHtmlBodyContent(String bodyContent
             , Optional<String> title
@@ -108,8 +111,8 @@ public interface ProjectsRenderer {
      */
     Optional<RenderingResult> renderContent(String content, LayoutConfig metaContent);
 
-    default Set<String> relevantParentPages(String path) {
-        final Set<String> relevantParentPages = setOfUniques();
+    default Set<PageMetaData> relevantParentPages(String path) {
+        final Set<PageMetaData> relevantParentPages = setOfUniques();
         final var pathElements = listWithValuesOf(path.split("/"));
         while (pathElements.hasElements()) {
             pathElements.removeAt(pathElements.size() - 1);
@@ -119,8 +122,10 @@ public interface ProjectsRenderer {
             if (potentialPage.isPresent()) {
                 final var parentPage = potentialPage.orElseThrow().stream()
                         .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())
-                        .reduce("", (a, b) -> a + "/" + b);
-                relevantParentPages.with(parentPage);
+                        .reduce("", (a, b) -> a + "/" + b)
+                        .substring(1);
+                final var potentialMetaData = metaData(parentPage);
+                potentialMetaData.ifPresent(relevantParentPages::with);
             }
             pathElements.removeAt(pathElements.size() - 1);
         }
