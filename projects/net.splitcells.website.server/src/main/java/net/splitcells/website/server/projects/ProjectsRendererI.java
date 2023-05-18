@@ -316,10 +316,10 @@ public class ProjectsRendererI implements ProjectsRenderer {
             return Optional.empty();
         }
         if (metaData.size() > 1) {
-            throw executionException("Expecting at most 1 meta data entries but found "
+            domsole().appendWarning(executionException("Expecting at most 1 meta data entries but found "
                     + metaData.size()
                     + " instead: "
-                    + metaData);
+                    + metaData));
         }
         return metaData.get(0);
     }
