@@ -143,7 +143,7 @@ public class World {
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Y))
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                            .forAll(goodCompany(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .forAll(hasGoodCompany(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(survives(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Y))
@@ -271,15 +271,15 @@ public class World {
     /**
      * Determines if the player {@code playerValue},
      * has 2-3 neighbouring positions with the same {@code playerValue} given a {@link TimeSteps} during the start.
-     * {@link #goodCompany} can only be calculated, if the start and end time of the center position is present.
+     * {@link #hasGoodCompany} can only be calculated, if the start and end time of the center position is present.
      */
-    private static Rater goodCompany(int playerValue
+    private static Rater hasGoodCompany(int playerValue
             , Attribute<Integer> playerAttribute
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
                 , playerCount -> 2 <= playerCount && playerCount <= 3
-                , "goodCompany");
+                , "has good company");
     }
 }
