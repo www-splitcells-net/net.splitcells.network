@@ -90,7 +90,7 @@ public class RaterBasedOnLineGroup implements Rater {
     }
 
     public static RaterBasedOnLineGroup groupRouter(GroupRouter rater, String name) {
-        return groupRouter(rater, (a, b, c) -> rater.toString(), name);
+        return groupRouter(rater, (a, b, c) -> name, name);
     }
 
     public static RaterBasedOnLineGroup groupRouter(GroupRouter rater, SimpleDescriptor simpleDescriptor, String name) {
