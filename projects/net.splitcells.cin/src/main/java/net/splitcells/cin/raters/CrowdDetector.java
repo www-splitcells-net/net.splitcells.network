@@ -40,8 +40,6 @@ public class CrowdDetector {
     public static Rater crowdDetector(int playerValue
             , Attribute<Integer> playerAttribute
             , Attribute<Integer> timeAttribute
-            , Attribute<Integer> xCoordinate
-            , Attribute<Integer> yCoordinate
             , Predicate<Long> crowdClassifier
             , String name) {
         return groupRouter((lines, children) -> {
@@ -55,35 +53,11 @@ public class CrowdDetector {
                     .collect(toList());
             final var startTime = timeValues.get(0);
             final var incomingConstraintGroup = lines.unorderedLines().get(0).value(INCOMING_CONSTRAINT_GROUP);
-            final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
-            final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
-            final var centerStartPosition = lineValues.stream()
+            final var startCrowdSize = lineValues.stream()
                     .filter(l -> l.value(timeAttribute).equals(startTime))
-                    .filter(l -> l.value(xCoordinate).equals(centerXPosition))
-                    .filter(l -> l.value(yCoordinate).equals(centerYPosition))
-                    .findFirst();
-            if (centerStartPosition.isEmpty()) {
-                return updateWithNoCost(ratingEvent, lines, incomingConstraintGroup);
-            }
-            final var centerEndPosition = lineValues
-                    .stream()
-                    .filter(l -> l.value(timeAttribute).equals(startTime + 1))
-                    .filter(l -> l.value(xCoordinate).equals(centerXPosition))
-                    .filter(l -> l.value(yCoordinate).equals(centerYPosition))
-                    .findFirst();
-            if (centerEndPosition.isEmpty()) {
-                return updateWithNoCost(ratingEvent, lines, incomingConstraintGroup);
-            }
-            final var startPlayer = centerStartPosition.get().value(playerAttribute);
-            if (startPlayer != playerValue) {
-                return updateWithNoCost(ratingEvent, lines, incomingConstraintGroup);
-            }
-            final var playerCount = lineValues.stream()
-                    .filter(l -> startTime.equals(l.value(timeAttribute)))
-                    .map(l -> l.value(playerAttribute))
-                    .filter(line -> line.equals(startPlayer))
+                    .filter(l -> l.value(playerAttribute).equals(playerValue))
                     .count();
-            if (crowdClassifier.test(playerCount)) {
+            if (crowdClassifier.test(startCrowdSize)) {
                 lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
@@ -100,16 +74,6 @@ public class CrowdDetector {
             }
             return ratingEvent;
         }, name);
-    }
-
-    private static RatingEvent updateWithNoCost(RatingEvent ratingEvent, Table lines, GroupId incomingConstraintGroup) {
-        lines.unorderedLinesStream()
-                .forEach(line -> ratingEvent.updateRating_withReplacement(line
-                        , localRating()
-                                .withPropagationTo(list())
-                                .withRating(noCost())
-                                .withResultingGroupId(incomingConstraintGroup)));
-        return ratingEvent;
     }
 
     private CrowdDetector() {
