@@ -148,17 +148,17 @@ public class PositionClusters implements Rater {
         final int yAbs = absolute(yVal);
         if (xVal < 0) {
             xCoord = xVal + modulus(xAbs - 1, 3);
-            xCoordCenter = xCoord - 1;
+            xCoordCenter = xCoord - 1 + xCenterOffset;
         } else {
             xCoord = xVal - modulus(xVal, 3);
-            xCoordCenter = xCoord + 1;
+            xCoordCenter = xCoord + 1 - xCenterOffset;
         }
         if (yVal < 0) {
             yCoord = yVal + modulus(yAbs - 1, 3);
-            yCoordCenter = yCoord - 1;
+            yCoordCenter = yCoord - 1 + yCenterOffset;
         } else {
             yCoord = yVal - modulus(yVal, 3);
-            yCoordCenter = yCoord + 1;
+            yCoordCenter = yCoord + 1 - yCenterOffset;
         }
         final RatingEvent rating = ratingEvent();
         final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
