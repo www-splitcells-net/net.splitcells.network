@@ -234,7 +234,7 @@ public class World {
                 (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue, "isDead");
     }
 
-    private static Rater isAlive(int playerValue
+    public static Rater isAlive(int playerValue
             , Attribute<Integer> playerAttribute
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
