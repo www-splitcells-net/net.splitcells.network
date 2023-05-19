@@ -15,10 +15,12 @@
  */
 package net.splitcells.cin.raters;
 
+import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 
 import java.util.function.BiPredicate;
+import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -39,7 +41,7 @@ public class PlayerValuePersistenceClassifier {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate
-            , BiPredicate<Integer, Integer> classifier
+            , BiPredicate<Stream<Line>, Stream<Line>> classifier
             , String name) {
         return groupRouter((lines, children) -> {
             final var ratingEvent = ratingEvent();
@@ -54,45 +56,16 @@ public class PlayerValuePersistenceClassifier {
             final var incomingConstraintGroup = lines.orderedLine(0).value(INCOMING_CONSTRAINT_GROUP);
             final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
             final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
-            final var centerStartPosition = lineValues.stream()
+            final var centerStartPositions = lineValues.stream()
                     .filter(l -> l.value(timeAttribute).equals(startTime))
                     .filter(l -> l.value(xCoordinate).equals(centerXPosition))
-                    .filter(l -> l.value(yCoordinate).equals(centerYPosition))
-                    .findFirst();
-            if (centerStartPosition.isEmpty()) {
-                lines.unorderedLinesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
-                        , localRating()
-                                .withPropagationTo(list())
-                                .withRating(noCost())
-                                .withResultingGroupId(incomingConstraintGroup)));
-                return ratingEvent;
-            }
-            final var centerEndPosition = lineValues
+                    .filter(l -> l.value(yCoordinate).equals(centerYPosition));
+            final var centerEndPositions = lineValues
                     .stream()
                     .filter(l -> l.value(timeAttribute).equals(startTime + 1))
                     .filter(l -> l.value(xCoordinate).equals(centerXPosition))
-                    .filter(l -> l.value(yCoordinate).equals(centerYPosition))
-                    .findFirst();
-            final var startPlayer = centerStartPosition.get().value(playerAttribute);
-            if (startPlayer != playerValue) {
-                lines.unorderedLinesStream()
-                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
-                                , localRating()
-                                        .withPropagationTo(list())
-                                        .withRating(noCost())
-                                        .withResultingGroupId(incomingConstraintGroup)));
-                return ratingEvent;
-            }
-            if (centerEndPosition.isEmpty()) {
-                lines.unorderedLinesStream().forEach(line -> ratingEvent.updateRating_withReplacement(line
-                        , localRating()
-                                .withPropagationTo(children)
-                                .withRating(noCost())
-                                .withResultingGroupId(incomingConstraintGroup)));
-                return ratingEvent;
-            }
-            final var endPlayer = centerEndPosition.get().value(playerAttribute);
-            if (classifier.test(playerValue, endPlayer)) {
+                    .filter(l -> l.value(yCoordinate).equals(centerYPosition));
+            if (classifier.test(centerStartPositions, centerEndPositions)) {
                 lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()

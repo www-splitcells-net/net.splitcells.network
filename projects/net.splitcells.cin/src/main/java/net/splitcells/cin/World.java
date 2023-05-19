@@ -231,7 +231,9 @@ public class World {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue, "isDead");
+                (centerStartPositions, centerEndPositions) -> !centerStartPositions
+                        .anyMatch(l -> l.value(playerAttribute) == playerValue)
+                , "isDead");
     }
 
     public static Rater isAlive(int playerValue
@@ -240,7 +242,8 @@ public class World {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                (startPlayerValue, endPlayerValue) -> startPlayerValue == playerValue, "isAlive");
+                (centerStartPositions, centerEndPositions) -> centerStartPositions
+                        .anyMatch(l -> l.value(playerAttribute) == playerValue), "isAlive");
     }
 
     private static Rater revivalCondition(int playerValue
@@ -259,7 +262,9 @@ public class World {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
-                , (startPlayerValue, endPlayerValue) -> endPlayerValue == playerValue && startPlayerValue != playerValue
+                , (centerStartPositions, centerEndPositions) ->
+                        !centerStartPositions.anyMatch(l -> l.value(playerAttribute) == playerValue)
+                                && centerEndPositions.anyMatch(l -> l.value(playerAttribute) == playerValue)
                 , "reproduction");
     }
 
