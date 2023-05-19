@@ -49,6 +49,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
  * than this {@link Rater} applies to the group.
  * This way it is possible, to create different rules to different players.</p>
  */
+@Deprecated
 public class IsAlive implements Rater {
     public static Rater isAlive(int playerValue
             , Attribute<Integer> playerAttribute
