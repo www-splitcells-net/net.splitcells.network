@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.raters.PositionClusters.groupNameOfPositionCluster;
+import static net.splitcells.cin.raters.PositionClusters.positionClustering;
 import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
@@ -27,6 +28,38 @@ import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROU
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 public class PositionClustersTest {
+
+    @Test
+    public void testAllPositionClusterOfSinglePosition() {
+        final var x = attribute(Integer.class, "x");
+        final var y = attribute(Integer.class, "y");
+        final var testSubject = defineProblem("testTopRightPositionCluster")
+                .withDemandAttributes(x, y)
+                .withDemands(list(list(2, 2)))
+                .withSupplyAttributes()
+                .withSupplies(list(list()))
+                .withConstraint(c -> {
+                    c.forAll(positionClustering(x, y)).forAll();
+                    return c;
+                })
+                .toProblem()
+                .asSolution();
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
+        testSubject.constraint().child(0).child(0).lineProcessing()
+                .columnView(RESULTING_CONSTRAINT_GROUP)
+                .values()
+                .mapped(g -> g.name().orElseThrow())
+                .assertEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 1, 0, 0)
+                        , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 3, 0, 1)
+                        , FOR_ALL.value() + " " + groupNameOfPositionCluster(3, 3, 1, 1)
+                        , FOR_ALL.value() + " " + groupNameOfPositionCluster(3, 1, 1, 0)
+                        , FOR_ALL.value() + " " + groupNameOfPositionCluster(3, 2, 1, -1)
+                        , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 2, 0, -1)
+                        , FOR_ALL.value() + " " + groupNameOfPositionCluster(2, 2, -1, -1)
+                        , FOR_ALL.value() + " " + groupNameOfPositionCluster(2, 1, -1, 0)
+                        , FOR_ALL.value() + " " + groupNameOfPositionCluster(2, 3, -1, 1)));
+    }
+
     @Test
     public void testTopRightPositionCluster() {
         final var x = attribute(Integer.class, "x");
