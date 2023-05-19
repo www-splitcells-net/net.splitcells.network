@@ -63,14 +63,14 @@ public class DiesTest {
                 .toProblem()
                 .asSolution();
         onlineLinearInitialization().optimize(testSubject);
-        testSubject.constraint().childrenView().get(0)
-                .childrenView().get(0)
-                .childrenView().get(0)
+        testSubject.constraint().child(0)
+                .child(0)
+                .child(0)
                 .lineProcessing().unorderedLines().requireSizeOf(3);
-        testSubject.constraint().childrenView().get(0)
-                .childrenView().get(0)
-                .childrenView().get(0)
-                .childrenView().get(0)
+        testSubject.constraint().child(0)
+                .child(0)
+                .child(0)
+                .child(0)
                 .lineProcessing().unorderedLines().requireSizeOf(3);
         testSubject.constraint().rating().requireEqualsTo(noCost());
     }
@@ -103,14 +103,14 @@ public class DiesTest {
                 .toProblem()
                 .asSolution();
         onlineLinearInitialization().optimize(testSubject);
-        testSubject.constraint().childrenView().get(0)
-                .childrenView().get(0)
-                .childrenView().get(0)
+        testSubject.constraint().child(0)
+                .child(0)
+                .child(0)
                 .lineProcessing().unorderedLines().requireSizeOf(2);
-        testSubject.constraint().childrenView().get(0)
-                .childrenView().get(0)
-                .childrenView().get(0)
-                .childrenView().get(0)
+        testSubject.constraint().child(0)
+                .child(0)
+                .child(0)
+                .child(0)
                 .lineProcessing().unorderedLines().requireSizeOf(0);
         testSubject.constraint().rating().requireEqualsTo(cost(2));
     }
