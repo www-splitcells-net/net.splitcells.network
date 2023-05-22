@@ -55,21 +55,51 @@ public interface Solution extends Problem, SolutionView {
         return optimizeOnlineWithFunction(s -> optimization.optimize(s));
     }
 
+    /**
+     * @param optimization
+     * @param config
+     * @return
+     * @deprecated This should done by via an {@link OnlineOptimization} wrapper and not via the {@link Solution} interface,
+     * in order to not clutter the interface.
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimize(OnlineOptimization optimization, OptimizationConfig config) {
         return optimizeOnlineWithFunction(s -> optimization.optimize(s), config);
     }
 
+    /**
+     * @param optimizationFunction
+     * @return
+     * @deprecated This should done by via an {@link OnlineOptimization} wrapper and not via the {@link Solution} interface,
+     * in order to not clutter the interface.
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimizeWithFunction(OfflineOptimization optimizationFunction) {
         return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal());
     }
 
+    /**
+     * @param optimizationFunction
+     * @return
+     * @deprecated This should done by via an {@link OnlineOptimization} wrapper and not via the {@link Solution} interface,
+     * in order to not clutter the interface.
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimizeOnlineWithFunction(OnlineOptimization optimizationFunction) {
         return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal());
     }
 
+    /**
+     * @param optimizationFunction
+     * @param config
+     * @return
+     * @deprecated This should done by via an {@link OnlineOptimization} wrapper and not via the {@link Solution} interface,
+     * in order to not clutter the interface.
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimizeOnlineWithFunction(OnlineOptimization optimizationFunction, OptimizationConfig config) {
         return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal(), config);
@@ -93,8 +123,9 @@ public interface Solution extends Problem, SolutionView {
      * @param optimizationFunction
      * @param continuationCondition
      * @return
-     * @deprecated This is deprecated, because this method checks automatically, if the {@code optimizationFunction} did nothing and thereby aborts the executions.
-     * This should done by {@code continuationCondition} instead explicitly.
+     * @deprecated This is deprecated, because this method checks automatically,
+     * if the {@code optimizationFunction} did nothing and thereby aborts the executions.
+     * This should done by via an {@link OnlineOptimization} wrapper and not via the {@link Solution} interface.
      */
     @Deprecated
     @ReturnsThis
@@ -111,6 +142,14 @@ public interface Solution extends Problem, SolutionView {
         return this;
     }
 
+    /**
+     * @param optimizationFunction
+     * @param continuationCondition
+     * @return
+     * @deprecated This should done by via an {@link OnlineOptimization} wrapper and not via the {@link Solution} interface,
+     * in order to not clutter the interface.
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimizeWithMethod(OnlineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
         int i = 0;
@@ -121,6 +160,14 @@ public interface Solution extends Problem, SolutionView {
         return this;
     }
 
+    /**
+     * @param optimizationFunction
+     * @param continuationCondition
+     * @param config
+     * @return
+     * @deprecated This should done by via an {@link OnlineOptimization} wrapper and not via the {@link Solution} interface,
+     * in order to not clutter the interface.
+     */
     @Deprecated
     @ReturnsThis
     default Solution optimizeWithFunction(OnlineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition, OptimizationConfig config) {
@@ -154,6 +201,14 @@ public interface Solution extends Problem, SolutionView {
         return this;
     }
 
+    /**
+     * @param optimizationFunction
+     * @param config
+     * @return
+     * @deprecated This should done by via an {@link OnlineOptimization} wrapper and not via the {@link Solution} interface,
+     * in order to not clutter the interface.
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimizeWithFunction(OnlineOptimization optimizationFunction, OptimizationConfig config) {
         if (config.recordHistory()) {
