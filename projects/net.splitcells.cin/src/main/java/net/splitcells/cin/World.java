@@ -143,17 +143,17 @@ public class World {
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Y))
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                            .forAll(hasGoodCompany(1, VALUE, WORLD_TIME))
+                            .forAll(hasGoodCompany(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(survives(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Y))
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                            .forAll(crowded(1, VALUE, WORLD_TIME))
+                            .forAll(crowded(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
                     r.forAll(overlappingTimeSteps(WORLD_TIME))
                             .forAll(positionClustering(POSITION_X, POSITION_Y))
                             .forAll(isDead(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                            .forAll(revivalCondition(1, VALUE, WORLD_TIME))
+                            .forAll(revivalCondition(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(reproduction(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
                     return r;
                 }).toProblem()
@@ -207,8 +207,10 @@ public class World {
 
     private static Rater crowded(int playerValue
             , Attribute<Integer> playerAttribute
-            , Attribute<Integer> timeAttribute) {
-        return crowdDetector(playerValue, playerAttribute, timeAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
                 , playerCount -> playerCount < 3
                 , "crowded");
     }
@@ -248,8 +250,10 @@ public class World {
 
     private static Rater revivalCondition(int playerValue
             , Attribute<Integer> playerAttribute
-            , Attribute<Integer> timeAttribute) {
-        return crowdDetector(playerValue, playerAttribute, timeAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
                 , playerCount -> playerCount == 3
                 , "revivalCondition");
     }
@@ -273,8 +277,10 @@ public class World {
      */
     private static Rater hasGoodCompany(int playerValue
             , Attribute<Integer> playerAttribute
-            , Attribute<Integer> timeAttribute) {
-        return crowdDetector(playerValue, playerAttribute, timeAttribute
+            , Attribute<Integer> timeAttribute
+            , Attribute<Integer> xCoordinate
+            , Attribute<Integer> yCoordinate) {
+        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
                 , playerCount -> 2 == playerCount || playerCount == 3
                 , "has good company");
     }

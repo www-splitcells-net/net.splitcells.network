@@ -19,6 +19,7 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.Gel;
 
 import static net.splitcells.cin.raters.CrowdDetector.crowdDetector;
+import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -35,13 +36,15 @@ public class CrowdDetectorTest {
     public void test() {
         final var player = attribute(Integer.class, "player");
         final var time = attribute(Integer.class, "time");
+        final var xCoord = attribute(Integer.class, "x-coordinate");
+        final var yCoord = attribute(Integer.class, "y-coordinate");
         final var testSubject = Gel.defineProblem("testProposeViaConstraintPath")
-                .withDemandAttributes(player)
-                .withDemands(list(list(1)
-                        , list(1)
-                        , list(1)
-                        , list(1)
-                        , list(1)
+                .withDemandAttributes(player, xCoord, yCoord)
+                .withDemands(list(list(1, 0, 0)
+                        , list(1, 0, 0)
+                        , list(1, 0, 0)
+                        , list(1, 0, 0)
+                        , list(1, 0, 0)
                 ))
                 .withSupplyAttributes(time)
                 .withSupplies(list(list(2)
@@ -51,7 +54,8 @@ public class CrowdDetectorTest {
                         , list(1)
                 ))
                 .withConstraint(q -> {
-                    q.then(crowdDetector(1, player, time, s -> s == 2, "test"));
+                    q.forAll(positionClusters(xCoord, yCoord))
+                            .then(crowdDetector(1, player, time, xCoord, yCoord, s -> s == 2, "test"));
                     return q;
                 })
                 .toProblem()
@@ -68,6 +72,51 @@ public class CrowdDetectorTest {
         testSubject.allocate(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
+        testSubject.constraint().rating().requireEqualsTo(cost(5));
+    }
+
+    @UnitTest
+    public void testIgnoranceOfCenterPosition() {
+        final var player = attribute(Integer.class, "player");
+        final var time = attribute(Integer.class, "time");
+        final var xCoord = attribute(Integer.class, "x-coordinate");
+        final var yCoord = attribute(Integer.class, "y-coordinate");
+        final var testSubject = Gel.defineProblem("testProposeViaConstraintPath")
+                .withDemandAttributes(player, xCoord, yCoord)
+                .withDemands(list(list(1, 1, 1)
+                        , list(1, 1, 1)
+                        , list(1, 1, 1)
+                        , list(1, 1, 1)
+                        , list(1, 1, 1)
+                ))
+                .withSupplyAttributes(time)
+                .withSupplies(list(list(2)
+                        , list(1)
+                        , list(2)
+                        , list(1)
+                        , list(1)
+                ))
+                .withConstraint(q -> {
+                    q.forAll(positionClusters(xCoord, yCoord))
+                            .then(crowdDetector(1, player, time, xCoord, yCoord, s -> s == 2, "test"));
+                    return q;
+                })
+                .toProblem()
+                .asSolution();
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
+        testSubject.constraint().rating().requireEqualsTo(cost(1));
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
+        testSubject.constraint().rating().requireEqualsTo(cost(2));
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
+        testSubject.constraint().rating().requireEqualsTo(cost(3));
+        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+                , testSubject.suppliesFree().orderedLine(0));
+        testSubject.constraint().rating().requireEqualsTo(cost(4));
         testSubject.allocate(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(5));
