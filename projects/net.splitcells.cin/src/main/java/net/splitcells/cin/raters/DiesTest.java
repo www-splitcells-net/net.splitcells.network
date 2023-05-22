@@ -66,12 +66,16 @@ public class DiesTest {
         testSubject.constraint().child(0)
                 .child(0)
                 .child(0)
-                .lineProcessing().unorderedLines().requireSizeOf(3);
+                .lineProcessing()
+                .unorderedLines()
+                .requireSizeOf(3);
         testSubject.constraint().child(0)
                 .child(0)
                 .child(0)
                 .child(0)
-                .lineProcessing().unorderedLines().requireSizeOf(3);
+                .lineProcessing()
+                .unorderedLines()
+                .requireSizeOf(3);
         testSubject.constraint().rating().requireEqualsTo(noCost());
     }
 
