@@ -39,14 +39,14 @@ public class PlayerValuePersistenceClassifier {
     /**
      * Checks if a time step of a position adheres to a certain rules.
      *
-     * @param playerValue Currently, this is not used.
-     * @param playerAttribute Currently, this is not used.
-     * @param timeAttribute This {@link Attribute} contains the time of an allocation.
-     * @param xCoordinate This {@link Attribute} contains the x coordinate of an allocation.
-     * @param yCoordinate This {@link Attribute} contains the y coordinate of an allocation.
+     * @param playerValue              Currently, this is not used.
+     * @param playerAttribute          Currently, this is not used.
+     * @param timeAttribute            This {@link Attribute} contains the time of an allocation.
+     * @param xCoordinate              This {@link Attribute} contains the x coordinate of an allocation.
+     * @param yCoordinate              This {@link Attribute} contains the y coordinate of an allocation.
      * @param centerPositionClassifier Checks whether the center positions of the start and end {@link Line}s
      *                                 adhere to a rule.
-     * @param name This is a descriptive name for the {@link Rater}.
+     * @param name                     This is a descriptive name for the {@link Rater}.
      * @return
      */
     public static Rater playerValuePersistenceClassifier(int playerValue
@@ -87,6 +87,16 @@ public class PlayerValuePersistenceClassifier {
                                         .withResultingGroupId(incomingConstraintGroup)));
             } else {
                 lines.unorderedLinesStream()
+                        .filter(l -> !l.value(LINE).value(xCoordinate).equals(centerXPosition)
+                                || !l.value(LINE).value(yCoordinate).equals(centerYPosition))
+                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                                , localRating()
+                                        .withPropagationTo(list())
+                                        .withRating(noCost())
+                                        .withResultingGroupId(incomingConstraintGroup)));
+                lines.unorderedLinesStream()
+                        .filter(l -> l.value(LINE).value(xCoordinate).equals(centerXPosition))
+                        .filter(l -> l.value(LINE).value(yCoordinate).equals(centerYPosition))
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
                                         .withPropagationTo(list())

@@ -16,12 +16,66 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.constraint.Constraint;
 
+import static net.splitcells.cin.raters.Dies.dies;
+import static net.splitcells.cin.raters.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
+import static net.splitcells.cin.raters.PositionClusters.positionClusters;
+import static net.splitcells.cin.raters.TimeSteps.timeSteps;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
+import static net.splitcells.gel.Gel.defineProblem;
+import static net.splitcells.gel.constraint.Constraint.RATING;
+import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.rating.type.Cost.noCost;
+import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class PlayerValuePersistenceClassifierTest {
     @UnitTest
     public void testIllegalDefaultConstructor() {
         requireIllegalDefaultConstructor(PlayerValuePersistenceClassifier.class);
+    }
+
+    @UnitTest
+    public void testCostOfDefianceNeighbour() {
+        final var time = attribute(Integer.class, "time");
+        final var playerValue = attribute(Integer.class, "playerValue");
+        final var xCoordinate = attribute(Integer.class, "xCoordinate");
+        final var yCoordinate = attribute(Integer.class, "yCoordinate");
+        final var testSubject = defineProblem("testTimeEvenSteps")
+                .withDemandAttributes(time, playerValue, xCoordinate, yCoordinate)
+                .withDemands(list(list(0, 1, 1, 1)
+                        , list(1, 0, 1, 1)
+                        , list(1, 0, 2, 2)
+                ))
+                .withSupplyAttributes()
+                .withSupplies(list(list()
+                        , list()
+                        , list()))
+                .withConstraint(c -> {
+                    c.forAll(timeSteps(time))
+                            .forAll(positionClusters(xCoordinate, yCoordinate))
+                            .then(playerValuePersistenceClassifier(1, playerValue, time, xCoordinate, yCoordinate,
+                                    (startPlayerValues, endPlayerValues)
+                                            -> startPlayerValues.anyMatch(s -> s.value(playerValue) == 1)
+                                            && endPlayerValues.anyMatch(e -> e.value(playerValue) == 1)
+                                    , "survives"));
+                    return c;
+                })
+                .toProblem()
+                .asSolution();
+        onlineLinearInitialization().optimize(testSubject);
+        testSubject.constraint().rating().requireEqualsTo(cost(2));
+        testSubject.constraint()
+                .child(0)
+                .child(0)
+                .child(0)
+                .lineProcessing()
+                .columnView(RATING)
+                .values()
+                .requireContainsOneOf(cost(1)
+                        , cost(1)
+                        , noCost());
     }
 }
