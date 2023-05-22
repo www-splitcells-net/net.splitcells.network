@@ -219,7 +219,9 @@ public class World {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
-                , Thing::equals
+                , (startPlayerValues, endPlayerValues)
+                        -> startPlayerValues.anyMatch(s -> s.value(playerAttribute) == playerValue)
+                        && endPlayerValues.anyMatch(s -> s.value(playerAttribute) == playerValue)
                 , "survives");
     }
 
