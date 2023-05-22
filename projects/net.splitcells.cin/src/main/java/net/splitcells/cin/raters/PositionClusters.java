@@ -138,34 +138,53 @@ public class PositionClusters implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
-        final var xVal = addition.value(LINE).value(xAttribute) + xCenterOffset;
-        final var yVal = addition.value(LINE).value(yAttribute) + yCenterOffset;
-        final int xCoord;
-        final int xCoordCenter;
-        final int yCoord;
-        final int yCoordCenter;
-        final int xAbs = absolute(xVal);
-        final int yAbs = absolute(yVal);
+        final int xValWithoutOffset;
+        final int yValWithoutOffset;
+        final var xVal = addition.value(LINE).value(xAttribute);
+        final var yVal = addition.value(LINE).value(yAttribute);
         if (xVal < 0) {
-            xCoord = xVal + modulus(xAbs - 1, 3);
-            xCoordCenter = xCoord - 1 + xCenterOffset;
+            xValWithoutOffset = xVal - xCenterOffset;
         } else {
-            xCoord = xVal - modulus(xVal, 3);
-            xCoordCenter = xCoord + 1 - xCenterOffset;
+            xValWithoutOffset = xVal + xCenterOffset;
         }
-        if (yVal < 0) {
-            yCoord = yVal + modulus(yAbs - 1, 3);
-            yCoordCenter = yCoord - 1 + yCenterOffset;
+        if (xVal < 0) {
+            yValWithoutOffset = yVal - yCenterOffset;
         } else {
-            yCoord = yVal - modulus(yVal, 3);
-            yCoordCenter = yCoord + 1 - yCenterOffset;
+            yValWithoutOffset = yVal + yCenterOffset;
+        }
+        /* The coordinates for the corner of the position cluster, that points to the (0,0) position.
+         * These coordinates have no offset.
+         */
+        final int xCoordInner;
+        final int yCoordInner;
+        /*
+         * The coordinates for the center of the position cluster.
+         * These coordinates have the offset.
+         */
+        final int xCoordCenter;
+        final int yCoordCenter;
+        final int xAbs = absolute(xValWithoutOffset);
+        final int yAbs = absolute(yValWithoutOffset);
+        if (xValWithoutOffset < 0) {
+            xCoordInner = xValWithoutOffset + modulus(xAbs - 1, 3);
+            xCoordCenter = xCoordInner - 1 + xCenterOffset;
+        } else {
+            xCoordInner = xValWithoutOffset - modulus(xValWithoutOffset, 3);
+            xCoordCenter = xCoordInner + 1 - xCenterOffset;
+        }
+        if (yValWithoutOffset < 0) {
+            yCoordInner = yValWithoutOffset + modulus(yAbs - 1, 3);
+            yCoordCenter = yCoordInner - 1 + yCenterOffset;
+        } else {
+            yCoordInner = yValWithoutOffset - modulus(yValWithoutOffset, 3);
+            yCoordCenter = yCoordInner + 1 - yCenterOffset;
         }
         final RatingEvent rating = ratingEvent();
         final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
         final var positionGroup = positionGroups
                 .computeIfAbsent(incomingGroup, icg -> map())
-                .computeIfAbsent(xCoord, x -> map())
-                .computeIfAbsent(yCoord, y -> group(incomingGroup, groupNameOfPositionCluster(xCoordCenter, yCoordCenter, xCenterOffset, yCenterOffset)
+                .computeIfAbsent(xCoordInner, x -> map())
+                .computeIfAbsent(yCoordInner, y -> group(incomingGroup, groupNameOfPositionCluster(xCoordCenter, yCoordCenter, xCenterOffset, yCenterOffset)
                         , typedMap().withAssignment(PositionClustersCenterX.class, xCoordCenter)
                                 .withAssignment(PositionClustersCenterY.class, yCoordCenter)));
         rating.additions().put(addition, localRating()
