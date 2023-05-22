@@ -148,7 +148,7 @@ public class TimeSteps implements Rater {
                     groupName = NO_TIME_STEP_GROUP + " with uneven start time";
                 }
                 rating.additions().put(addition, localRating()
-                        .withPropagationTo(children)
+                        .withPropagationTo(list())
                         .withRating(noCost())
                         .withResultingGroupId(
                                 noTimeStepGroups.computeIfAbsent(incomingGroup, ig -> group(ig, groupName))));

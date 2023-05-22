@@ -60,7 +60,7 @@ public class LonelinessTest {
                 .asSolution();
         testSubject.allocate(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
-        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
+        testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireEmpty();
         testSubject.allocate(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.allocate(testSubject.demandsFree().orderedLine(0)
