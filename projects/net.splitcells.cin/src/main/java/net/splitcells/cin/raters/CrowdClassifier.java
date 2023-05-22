@@ -69,8 +69,8 @@ public class CrowdClassifier {
             final var startCrowdSize = lineValues.stream()
                     .filter(l -> l.value(timeAttribute).equals(startTime))
                     .filter(l -> l.value(playerAttribute).equals(playerValue))
-                    .filter(l -> !l.value(xCoordinate).equals(centerXPosition))
-                    .filter(l -> !l.value(yCoordinate).equals(centerYPosition))
+                    .filter(l -> !l.value(xCoordinate).equals(centerXPosition)
+                            || !l.value(yCoordinate).equals(centerYPosition))
                     .count();
             if (crowdClassifier.test(startCrowdSize)) {
                 lines.unorderedLinesStream()
