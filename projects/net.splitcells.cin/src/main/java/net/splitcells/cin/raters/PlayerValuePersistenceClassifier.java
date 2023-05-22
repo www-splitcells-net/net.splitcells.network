@@ -36,12 +36,25 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class PlayerValuePersistenceClassifier {
 
+    /**
+     * Checks if a time step of a position adheres to a certain rules.
+     *
+     * @param playerValue Currently, this is not used.
+     * @param playerAttribute Currently, this is not used.
+     * @param timeAttribute This {@link Attribute} contains the time of an allocation.
+     * @param xCoordinate This {@link Attribute} contains the x coordinate of an allocation.
+     * @param yCoordinate This {@link Attribute} contains the y coordinate of an allocation.
+     * @param centerPositionClassifier Checks whether the center positions of the start and end {@link Line}s
+     *                                 adhere to a rule.
+     * @param name This is a descriptive name for the {@link Rater}.
+     * @return
+     */
     public static Rater playerValuePersistenceClassifier(int playerValue
             , Attribute<Integer> playerAttribute
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate
-            , BiPredicate<Stream<Line>, Stream<Line>> classifier
+            , BiPredicate<Stream<Line>, Stream<Line>> centerPositionClassifier
             , String name) {
         return groupRouter((lines, children) -> {
             final var ratingEvent = ratingEvent();
@@ -65,7 +78,7 @@ public class PlayerValuePersistenceClassifier {
                     .filter(l -> l.value(timeAttribute).equals(startTime + 1))
                     .filter(l -> l.value(xCoordinate).equals(centerXPosition))
                     .filter(l -> l.value(yCoordinate).equals(centerYPosition));
-            if (classifier.test(centerStartPositions, centerEndPositions)) {
+            if (centerPositionClassifier.test(centerStartPositions, centerEndPositions)) {
                 lines.unorderedLinesStream()
                         .forEach(line -> ratingEvent.updateRating_withReplacement(line
                                 , localRating()
