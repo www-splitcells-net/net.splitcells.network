@@ -29,7 +29,10 @@ public class Dies {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                (startPlayerValue, endPlayerValue) -> !Thing.equals(startPlayerValue, endPlayerValue), "dies");
+                (startPlayerValues, endPlayerValues)
+                        -> startPlayerValues.anyMatch(s -> s.value(playerAttribute) == playerValue)
+                        && endPlayerValues.noneMatch(e -> e.value(playerAttribute) == playerValue)
+                , "dies");
     }
 
     private Dies() {
