@@ -75,7 +75,7 @@ public class World {
                         repairConfig().withRepairCompliants(false)
                                 .withDemandSelector(DemandSelectors.demandSelector(true
                                         , list(currentWorldHistory.constraint()
-                                                , currentWorldHistory.constraint().childrenView().get(0))))));
+                                                , currentWorldHistory.constraint().child(0))))));
             }, "World history optimization", LogLevel.INFO);
             reportRuntime(() -> {
                 network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
