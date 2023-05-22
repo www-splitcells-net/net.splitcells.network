@@ -15,11 +15,8 @@
  */
 package net.splitcells.cin.raters;
 
-import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
-import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import java.util.function.Predicate;
 
@@ -35,7 +32,7 @@ import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
-public class CrowdDetector {
+public class CrowdClassifier {
 
     /**
      * Classifies center position of player according to the number of neighbours with the same player value.
@@ -49,7 +46,7 @@ public class CrowdDetector {
      * @param name
      * @return
      */
-    public static Rater crowdDetector(int playerValue
+    public static Rater crowdClassifier(int playerValue
             , Attribute<Integer> playerAttribute
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
@@ -94,7 +91,7 @@ public class CrowdDetector {
         }, name);
     }
 
-    private CrowdDetector() {
+    private CrowdClassifier() {
         throw constructorIllegal();
     }
 }

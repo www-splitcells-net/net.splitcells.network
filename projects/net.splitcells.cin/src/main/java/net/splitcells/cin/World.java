@@ -16,7 +16,6 @@
 package net.splitcells.cin;
 
 import net.splitcells.cin.raters.TimeSteps;
-import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.GelDev;
@@ -34,7 +33,7 @@ import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
-import static net.splitcells.cin.raters.CrowdDetector.crowdDetector;
+import static net.splitcells.cin.raters.CrowdClassifier.crowdClassifier;
 import static net.splitcells.cin.raters.Dies.dies;
 import static net.splitcells.cin.raters.Loneliness.loneliness;
 import static net.splitcells.cin.raters.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
@@ -210,7 +209,7 @@ public class World {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
-        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
+        return crowdClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
                 , playerCount -> playerCount < 3
                 , "crowded");
     }
@@ -253,7 +252,7 @@ public class World {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
-        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
+        return crowdClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
                 , playerCount -> playerCount == 3
                 , "revivalCondition");
     }
@@ -280,7 +279,7 @@ public class World {
             , Attribute<Integer> timeAttribute
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
-        return crowdDetector(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
+        return crowdClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
                 , playerCount -> 2 == playerCount || playerCount == 3
                 , "has good company");
     }

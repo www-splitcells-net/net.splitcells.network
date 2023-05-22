@@ -18,7 +18,7 @@ package net.splitcells.cin.raters;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.Gel;
 
-import static net.splitcells.cin.raters.CrowdDetector.crowdDetector;
+import static net.splitcells.cin.raters.CrowdClassifier.crowdClassifier;
 import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
@@ -26,10 +26,10 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
-public class CrowdDetectorTest {
+public class CrowdClassifierTest {
     @UnitTest
     public void testIllegalDefaultConstructor() {
-        requireIllegalDefaultConstructor(CrowdDetector.class);
+        requireIllegalDefaultConstructor(CrowdClassifier.class);
     }
 
     @UnitTest
@@ -55,7 +55,7 @@ public class CrowdDetectorTest {
                 ))
                 .withConstraint(q -> {
                     q.forAll(positionClusters(xCoord, yCoord))
-                            .then(crowdDetector(1, player, time, xCoord, yCoord, s -> s == 2, "test"));
+                            .then(crowdClassifier(1, player, time, xCoord, yCoord, s -> s == 2, "test"));
                     return q;
                 })
                 .toProblem()
@@ -100,7 +100,7 @@ public class CrowdDetectorTest {
                 ))
                 .withConstraint(q -> {
                     q.forAll(positionClusters(xCoord, yCoord))
-                            .then(crowdDetector(1, player, time, xCoord, yCoord, s -> s == 2, "test"));
+                            .then(crowdClassifier(1, player, time, xCoord, yCoord, s -> s == 2, "test"));
                     return q;
                 })
                 .toProblem()
