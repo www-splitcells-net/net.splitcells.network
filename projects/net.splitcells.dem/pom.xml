@@ -7,29 +7,28 @@
     <parent>
         <groupId>net.splitcells</groupId>
         <artifactId>pom-java-defaults</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
     <dependencies>
         <dependency>
             <groupId>net.splitcells</groupId>
             <artifactId>dem.api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
             <artifactId>dem.ext</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.github.javaparser</groupId>
             <artifactId>javaparser-symbol-solver-core</artifactId>
-            <version>3.22.0</version>
         </dependency>
     </dependencies>
     <profiles>
         <profile>
-            <!-- Used for grammar parsing. -->
+            <!-- Used to generate grammar parser. -->
             <id>antlr4</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -41,12 +40,10 @@
                 <dependency>
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr4-runtime</artifactId>
-                    <version>${antlr.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr4</artifactId>
-                    <version>${antlr.version}</version>
                 </dependency>
             </dependencies>
             <build>
