@@ -72,7 +72,7 @@ public class World {
             reportRuntime(() -> {
                 network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
                 network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
-                        repairConfig().withRepairCompliants(false)
+                        repairConfig().withRepairCompliants(true)
                                 .withDemandSelector(DemandSelectors.demandSelector(true
                                         , list(currentWorldHistory.constraint()
                                                 , currentWorldHistory.constraint().child(0))))));
