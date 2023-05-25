@@ -15,3 +15,5 @@ target/
 .pydevproject
 
 .vagrant/
+# The following is created by Maven during bild.
+.flattened-pom.xml
