@@ -18,7 +18,6 @@ package net.splitcells.gel.solution.optimization.primitive.repair;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.gel.constraint.Constraint;
@@ -34,7 +33,6 @@ import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.proposal.ProposalProcessor.propose;
-import static net.splitcells.gel.proposal.Proposals.proposal;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class DemandSelectors {
@@ -52,6 +50,7 @@ public class DemandSelectors {
      *                         Otherwise, only defying {@link Line}s are considered.
      * @return
      */
+    @Deprecated
     public static DemandSelector demandSelector(boolean repairCompliants) {
         return (Constraint constraintGrouping, Solution solution) -> {
             final Map<GroupId, Set<Line>> demandGrouping = map();
@@ -99,14 +98,11 @@ public class DemandSelectors {
      * where {@link GroupId}s are considered,
      * that contain defying {@link Line}s.
      *
-     * @param repairCompliants          If set to true, selects all {@link Line}s of a given {@link GroupId},
-     *                                  if it contains at least one defying {@link Line}.
-     *                                  Otherwise, only defying {@link Line}s are considered.
      * @param restrictingConstraintPath Uses this {@link Query#constraintPath} in order to guide the selection via
      *                                  {@link Constraint#propose(Proposal)}.
      * @return
      */
-    public static DemandSelector demandSelector(boolean repairCompliants, List<Constraint> restrictingConstraintPath) {
+    public static DemandSelector demandSelector(DemandSelectorsConfig config, List<Constraint> restrictingConstraintPath) {
         return (Constraint constraintGrouping, Solution solution) -> {
             final Map<GroupId, Set<Line>> demandGrouping = map();
             final Map<GroupId, Set<Line>> defianceCache = Maps.map();
@@ -127,8 +123,12 @@ public class DemandSelectors {
                      * It reimplements part of {@link ConstraintGroupBasedOfflineRepair#freeDefyingGroupOfConstraintGroup}.
                      */
                     .filter(processing -> {
-                        if (!repairCompliants) {
-                            return !processing.value(RATING).equalz(noCost());
+                        if (!config.repairCompliants()) {
+                            if (config.useCompleteRating()) {
+                                return !solution.constraint().rating(processing.value(Constraint.LINE)).equalz(noCost());
+                            } else {
+                                return !processing.value(RATING).equalz(noCost());
+                            }
                         }
                         return true;
                     })
