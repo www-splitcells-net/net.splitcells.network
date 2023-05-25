@@ -24,9 +24,9 @@ public class RepairConfig {
     }
 
     private int numberOfGroupsSelectedPerDefiance = 1;
-    private int minimum_constraint_group_path = 1;
+    private int minimumConstraintGroupPath = 1;
 
-    private FluentGroupSelector groupSelector = GroupSelectors.groupSelector(randomness(), minimum_constraint_group_path
+    private FluentGroupSelector groupSelector = GroupSelectors.groupSelector(randomness(), minimumConstraintGroupPath
             , numberOfGroupsSelectedPerDefiance);
     private SupplySelector supplySelector = SupplySelectors.supplySelector();
 
