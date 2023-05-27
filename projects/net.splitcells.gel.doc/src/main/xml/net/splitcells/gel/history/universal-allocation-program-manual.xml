@@ -4,6 +4,10 @@
          xmlns:xlink="http://www.w3.org/1999/xlink"
          xmlns="http://splitcells.net/sew.xsd"
          xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
     <meta>
         <title>Universal Allocation Program Manual</title>
         <title_detailed>Universal Allocation Program Manual</title_detailed>

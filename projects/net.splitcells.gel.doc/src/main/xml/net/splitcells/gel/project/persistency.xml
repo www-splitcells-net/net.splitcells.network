@@ -8,6 +8,10 @@
         xmlns="http://splitcells.net/den.xsd"
         xmlns:p="http://splitcells.net/private.xsd"
         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
     <objective>Make it possible to persist the state of a Gel execution.
         It allows to analyse Gel's execution better.
         It could also be used a bases for compatibility to other Gel implementations, versions and other

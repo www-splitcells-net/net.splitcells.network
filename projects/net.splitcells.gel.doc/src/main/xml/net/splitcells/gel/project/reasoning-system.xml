@@ -8,6 +8,10 @@
         xmlns="http://splitcells.net/den.xsd"
         xmlns:p="http://splitcells.net/private.xsd"
         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
     <name>Reasoning System</name>
     <optimization>
         <objective>Create a system which extracts and validates statements regarding a solution or a problem.
