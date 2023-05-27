@@ -213,7 +213,7 @@ public class DatabaseI implements Database {
         return addTranslated(lineValues, line.index());
     }
 
-    protected Line addTranslated(List<Object> lineValues, int index) {
+    private Line addTranslated(List<Object> lineValues, int index) {
         if (TRACING) {
             domsole().append(
                     event("addTranslatingAt." + Database.class.getSimpleName()
@@ -253,7 +253,7 @@ public class DatabaseI implements Database {
     /**
      * TODO Move this to an utility class.
      */
-    protected static void extend_content_to(List<?> list, int targetMaximalIndex) {
+    private static void extend_content_to(List<?> list, int targetMaximalIndex) {
         while (list.size() < targetMaximalIndex + 1) {
             list.add(null);
         }
