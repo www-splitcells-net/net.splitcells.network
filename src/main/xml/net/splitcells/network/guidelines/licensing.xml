@@ -217,7 +217,12 @@
         <chapter>
             <title>Citation Metadata</title>
             <paragraph>
-                Metadata like references to documents, containing info about the author's name, the title, etc.,
+                Metadata like references to documents via
+                <link>
+                    <text>BibTeX</text>
+                    <url>http://www.bibtex.org/</url>
+                </link>
+                , containing info about the author's name, the title, etc.,
                 is licensed like any other info in this project.
                 In most places such info does not seem to be protected by copyright or
                 have appropriate exceptions in copyright law.
