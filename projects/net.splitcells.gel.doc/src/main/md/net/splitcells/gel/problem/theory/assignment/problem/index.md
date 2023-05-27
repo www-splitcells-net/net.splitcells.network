@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Assignment Problems
 An assignment problem requires that demands are assigned to supplies.
 For a given assignment set \\(X\\) the assignment problem's \\(valid\\) function

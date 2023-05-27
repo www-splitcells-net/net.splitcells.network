@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Introduction to the Generic Allocator
 If you encounter an unknown word or phrase you can look up some of this at this
 [dictionary](../../../../../../../../src/main/md/net/splitcells/network/dictionary.md).

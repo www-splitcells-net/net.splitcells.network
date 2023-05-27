@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Multidimensional Assignment Problems
 In multidimensional assignment problems multiple supply sets are present
 and each demand is allocated to at least one supply in each set.
