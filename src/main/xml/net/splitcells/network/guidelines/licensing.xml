@@ -215,6 +215,23 @@
     <chapter>
         <title>Licensing Implementation</title>
         <chapter>
+            <title>Citation Metadata</title>
+            <paragraph>
+                Metadata like references to documents, containing info about the author's name, the title, etc.,
+                is licensed like any other info in this project.
+                In most places such info does not seem to be protected by copyright or
+                have appropriate exceptions in copyright law.
+                Otherwise, it would not be possible to have multiple articles referencing the same
+                third party document by using the same reference string.
+            </paragraph>
+            <paragraph>
+                This means, that even so document references would be licensed under the EPL-2.0,
+                others probably can use these document references and ignore the licensing of these.
+                This effect is desired,
+                because there are no positives to prevent others from using references freely.
+            </paragraph>
+        </chapter>
+        <chapter>
             <title>Notice File</title>
             <paragraph>
                 This file states the project and contains the licensing and attributions of the
