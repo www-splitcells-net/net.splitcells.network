@@ -40,4 +40,10 @@ public class Integers {
             throw executionException("Ints should be equals, but are not: " + a + ", " + b);
         }
     }
+
+    public static void requireNotNegative(int a) {
+        if (a < 0) {
+            throw executionException("Int mustn't be positive, but is: " + a);
+        }
+    }
 }

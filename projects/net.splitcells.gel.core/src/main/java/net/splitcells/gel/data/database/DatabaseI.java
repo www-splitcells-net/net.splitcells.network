@@ -18,13 +18,19 @@ package net.splitcells.gel.data.database;
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
+import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
+import static net.splitcells.dem.data.atom.Integers.requireNotNegative;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
+import static net.splitcells.dem.lang.Xml.event;
+import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.CommonFunctions.removeAny;
-import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -32,18 +38,20 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.atom.DescribedBool;
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
@@ -159,21 +167,20 @@ public class DatabaseI implements Database {
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(headerView().contains(attribute))
-                    .describedAs(attributes.stream()
+            describedBool(headerView().contains(attribute)
+                    , () -> attributes.stream()
                             .map(a -> a.name() + ", ")
                             .reduce((a, b) -> a + b)
                             .orElse("")
                             + ": " + attribute.name())
-                    .isTrue();
-            assertThat(typed_column_index.containsKey(attribute))
-                    .describedAs(attribute.name() + " is not present in "
+                    .required();
+            describedBool(typed_column_index.containsKey(attribute)
+                    , () -> attribute.name() + " is not present in "
                             + typed_column_index.keySet().stream()
                             .map(a -> a.name())
                             .reduce((a, b) -> a + ", " + b)
-                            .orElseThrow()
-                    )
-                    .isTrue();
+                            .orElseThrow())
+                    .required();
         }
         try {
             return (Column<T>) columns.get(typed_column_index.get(attribute));
@@ -219,7 +226,7 @@ public class DatabaseI implements Database {
             );
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(lineValues.size()).isEqualTo(headerView().size());
+            requireEqualInts(lineValues.size(), headerView().size());
             require(indexesOfFree.contains(index) || index >= rawLines.size());
             range(0, lineValues.size()).forEach(i -> attributes.get(i).assertArgumentCompatibility(lineValues.get(i)));
         }
@@ -276,10 +283,12 @@ public class DatabaseI implements Database {
     @Override
     public void remove(int lineIndex) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(indexesOfFree).doesNotContain(lineIndex);
-            assertThat(lineIndex).isNotNegative();
-            assert lineIndex < rawLines.size() : lineIndex + ":" + rawLines.size() + path();
-            assertThat(rawLines.get(lineIndex)).isNotNull();
+            indexesOfFree.requireAbsenceOf(lineIndex);
+            requireNotNegative(lineIndex);
+            if (lineIndex >= rawLines.size()) {
+                throw executionException(lineIndex + ":" + rawLines.size() + path());
+            }
+            requireNotNull(rawLines.get(lineIndex));
             lines.hasOnlyOnce(rawLines.get(lineIndex));
             columns.forEach(column -> {
                 assert lineIndex < column.size();
