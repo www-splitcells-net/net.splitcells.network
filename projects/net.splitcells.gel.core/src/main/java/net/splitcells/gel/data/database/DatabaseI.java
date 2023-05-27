@@ -17,6 +17,7 @@ package net.splitcells.gel.data.database;
 
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
@@ -43,6 +44,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.atom.DescribedBool;
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
@@ -291,10 +293,10 @@ public class DatabaseI implements Database {
             requireNotNull(rawLines.get(lineIndex));
             lines.hasOnlyOnce(rawLines.get(lineIndex));
             columns.forEach(column -> {
-                assert lineIndex < column.size();
-                assert rawLines.size() == column.size();
+                require(lineIndex < column.size());
+                requireEqualInts(rawLines.size(), column.size());
             });
-            assert lineIndex < rawLines.size();
+            require(lineIndex < rawLines.size());
         }
         final var removalFrom = rawLines.get(lineIndex);
         beforeRemovalSubscriber.forEach(subscriber -> subscriber.registerBeforeRemoval(removalFrom));
