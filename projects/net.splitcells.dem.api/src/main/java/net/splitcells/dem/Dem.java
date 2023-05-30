@@ -129,11 +129,11 @@ public class Dem {
     private static Environment initializeProcess(Class<?> programRepresentative,
                                                  Consumer<Environment> configurator) {
         final var rVal = EnvironmentI.create(programRepresentative);
-        rVal.init();
         // IDEA Invalidate write access to configuration through down casting after configuration via a wrapper.
         configurator.accept(rVal);
         CURRENT.set(rVal);
         logStaticFlags();
+        rVal.init();
         return rVal;
     }
 
