@@ -15,7 +15,6 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
-import net.splitcells.dem.lang.annotations.Secret;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.function.Function;
@@ -26,7 +25,7 @@ import java.util.function.Function;
 public interface Configuration extends ConfigurationV {
 
     @ReturnsThis
-    default <T> Configuration with_inited_option(Class<? extends Option<T>> key) {
+    default <T> Configuration withInitedOption(Class<? extends Option<T>> key) {
         try {
             return withConfigValue(key, key.getDeclaredConstructor().newInstance().defaultValue());
         } catch (Exception e) {

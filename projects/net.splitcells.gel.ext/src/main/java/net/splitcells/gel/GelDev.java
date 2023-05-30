@@ -22,15 +22,12 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.ContentType;
-import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.dem.resource.host.ProcessHostPath;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.solution.Solutions;
-import net.splitcells.gel.test.functionality.ColloquiumPlanningTest;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerService;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -44,14 +41,11 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.Files.readFileAsString;
-import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.GelEnv.process;
 import static net.splitcells.website.Projects.projectsRenderer;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
-import static net.splitcells.website.server.project.validator.SourceValidatorViaSchema.validatorViaSchema;
 
 public final class GelDev {
     private GelDev() {
@@ -81,7 +75,7 @@ public final class GelDev {
     }
 
     public static void configureForWebserver(Environment env) {
-        env.config().with_inited_option(ServerService.class);
+        env.config().withInitedOption(ServerService.class);
         env.config().configValue(Databases.class)
                 .withConnector(database -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
                     @Override
