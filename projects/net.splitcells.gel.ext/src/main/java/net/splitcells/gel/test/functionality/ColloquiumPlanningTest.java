@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.test.functionality;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.IsDeterministic;
@@ -80,7 +81,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
 
     @CapabilityTest
     public void testRandomInstanceSolving() {
-        analyseProcess(() -> {
+        Dem.process(() -> {
             final var testSubject = randomColloquiumPlanning
                     (88
                             , 177
@@ -118,7 +119,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
      */
     @CapabilityTest
     public void testComplexity() {
-        analyseProcess(() -> {
+        Dem.process(() -> {
             final var testSubject = randomColloquiumPlanning
                     (88
                             , 177

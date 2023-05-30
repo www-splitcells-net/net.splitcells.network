@@ -21,10 +21,13 @@ import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.ContentType;
+import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.solution.Solutions;
@@ -40,7 +43,10 @@ import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
+import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.GelEnv.process;
 import static net.splitcells.website.Projects.projectsRenderer;
@@ -57,9 +63,17 @@ public final class GelDev {
     }
 
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
-        return GelEnv.analyseProcess(() -> {
-            Dem.process(program);
-        }, standardDeveloperConfigurator().andThen(configurator));
+        return Dem.process(program
+                , standardDeveloperConfigurator()
+                        .andThen(setupProcessRepo())
+                        .andThen(configurator));
+    }
+
+    public static Consumer<Environment> setupProcessRepo() {
+        return config -> {
+            Files.createDirectory(environment().config().configValue(ProcessPath.class));
+            writeToFile(environment().config().configValue(ProcessPath.class).resolve("index.xml"), Xml.rElement(SEW, "article"));
+        };
     }
 
     public static Consumer<Environment> standardDeveloperConfigurator() {
