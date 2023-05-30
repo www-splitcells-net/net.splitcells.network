@@ -43,6 +43,7 @@ import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.resource.communication.interaction.LogLevel.INFO;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.Time.reportRuntime;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -65,11 +66,13 @@ public class World {
         GelDev.process(() -> {
             final var network = network();
             final var currentWorldHistory = worldHistory(WORLD_HISTORY, list(), list());
-            network.withNode(WORLD_HISTORY, currentWorldHistory);
-            initWorldHistory(currentWorldHistory);
-            allocateGlider(currentWorldHistory);
-            allocateRestAsDead(currentWorldHistory);
-            currentWorldHistory.init();
+            reportRuntime(() -> {
+                network.withNode(WORLD_HISTORY, currentWorldHistory);
+                initWorldHistory(currentWorldHistory);
+                allocateGlider(currentWorldHistory);
+                allocateRestAsDead(currentWorldHistory);
+                currentWorldHistory.init();
+            },"Initialize world history.", INFO);
             reportRuntime(() -> {
                 network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
                 network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
@@ -82,10 +85,10 @@ public class World {
                                                 , currentWorldHistory.constraint().child(0))))
                                 .withGroupSelector(rootConstraint -> list(list(rootConstraint)))
                 ));
-            }, "World history optimization", LogLevel.INFO);
+            }, "World history optimization", INFO);
             reportRuntime(() -> {
                 network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
-            }, "createStandardAnalysis", LogLevel.INFO);
+            }, "createStandardAnalysis", INFO);
 
         }, env -> {
         });
