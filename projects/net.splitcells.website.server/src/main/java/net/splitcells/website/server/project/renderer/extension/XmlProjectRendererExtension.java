@@ -108,10 +108,10 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                     .filter(s -> !s.isEmpty())
                     .collect(toList())
                     .withRemovedFromBehind(0);
-            final var layoutConfig = layoutConfig(path)
-                    .withLocalPathContext(projectsRenderer.config().layoutPerspective()
-                            .map(l -> subtree(l, pathFolder)));
             if (xmlPath.isPresent()) {
+                final var layoutConfig = layoutConfig(path)
+                        .withLocalPathContext(projectsRenderer.config().layoutPerspective()
+                                .map(l -> subtree(l, pathFolder)));
                 return renderFile(path, readString(xmlPath.get()), projectRenderer, projectsRenderer, layoutConfig);
             } else {
                 final var sumXmlFile = projectRenderer
@@ -119,6 +119,9 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                         .resolve("src/main/sum.xml")
                         .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
                 if (is_file(sumXmlFile)) {
+                    final var layoutConfig = layoutConfig(path)
+                            .withLocalPathContext(projectsRenderer.config().layoutPerspective()
+                                    .map(l -> subtree(l, pathFolder)));
                     return renderFile(path, "<start xmlns=\"http://splitcells.net/den.xsd\">"
                                     + readString(sumXmlFile)
                                     + "</start>"
