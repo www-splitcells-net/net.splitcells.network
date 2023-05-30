@@ -72,7 +72,6 @@ public final class GelDev {
     public static Consumer<Environment> setupProcessRepo() {
         return config -> {
             Files.createDirectory(environment().config().configValue(ProcessPath.class));
-            writeToFile(environment().config().configValue(ProcessPath.class).resolve("index.xml"), Xml.rElement(SEW, "article"));
         };
     }
 
