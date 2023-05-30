@@ -16,6 +16,7 @@
 package net.splitcells.dem.environment;
 
 import net.splitcells.dem.environment.config.framework.Configuration;
+import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
@@ -27,7 +28,7 @@ import net.splitcells.dem.resource.communication.Flushable;
  * Thereby, the whole environment configuration could be modelled as a table,
  * which would simplify the visualization.
  */
-public interface Environment extends EnvironmentV, Closeable, Flushable {
+public interface Environment extends EnvironmentV, Service {
 
 	/**
 	 * It is not allowed to be called multiple times.

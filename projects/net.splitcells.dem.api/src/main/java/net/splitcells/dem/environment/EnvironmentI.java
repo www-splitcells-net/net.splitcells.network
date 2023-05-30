@@ -20,6 +20,7 @@ import net.splitcells.dem.environment.config.ProgramLocalIdentity;
 import net.splitcells.dem.environment.config.ProgramRepresentative;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.environment.config.framework.Configuration;
+import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.dem.resource.host.ProcessPath;
@@ -44,6 +45,14 @@ public class EnvironmentI implements Environment {
         config.configValue(ProgramLocalIdentity.class);
         config.configValue(IsDeterministic.class);
         config.configValue(ProcessPath.class);
+    }
+
+    @Override
+    public void start() {
+        config.process(Service.class, s -> {
+            s.start();
+            return s;
+        });
     }
 
     @Override
