@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource.host;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.framework.OptionI;
 
@@ -24,7 +25,8 @@ import java.nio.file.Paths;
 import static net.splitcells.dem.Dem.environment;
 
 /**
- * IDEA Only use target folder during development.
+ * <p>This path points to the folder.
+ * The Folder contains the files of the process created by {@link Dem#process}.</p>
  */
 public class ProcessPath extends OptionI<Path> {
     public ProcessPath() {
