@@ -140,8 +140,8 @@ public class Dem {
                                                  Consumer<Environment> configurator) {
         final var rVal = EnvironmentI.create(programRepresentative);
         // IDEA Invalidate write access to configuration through down casting after configuration via a wrapper.
-        configurator.accept(rVal);
         CURRENT.set(rVal);
+        configurator.accept(rVal);
         logStaticFlags();
         rVal.init();
         return rVal;
