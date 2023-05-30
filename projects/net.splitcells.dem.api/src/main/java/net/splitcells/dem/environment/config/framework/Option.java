@@ -16,7 +16,7 @@
 package net.splitcells.dem.environment.config.framework;
 
 /**
- * Every implementation has to have a public default constructor.
+ * Every implementation has to have a public default constructor and needs to be thread safe.
  * <p>
  * TODO Check if every option has public constructor without arguments.
  * <p>
