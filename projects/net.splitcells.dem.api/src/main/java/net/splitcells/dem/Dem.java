@@ -78,6 +78,18 @@ public class Dem {
     }
 
     /**
+     * It is assumed, that {@link #initializeProcess(Class, Consumer)} )} or
+     * similar is already called before on the current thread.
+     *
+     * @param program This is the code, that the thread executes.
+     */
+    public static void executeThread(Runnable program) {
+        final var thread = new Thread(program);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    /**
      * Defines and executes a program.
      * <p>
      * TODO Support stacking.
@@ -88,6 +100,7 @@ public class Dem {
         ProcessResult processResult = processResult();
         Thread root = new Thread(() -> {
             final var processEnvironment = initializeProcess(program.getClass(), configurator);
+            processEnvironment.start();
             try {
                 // TOFIX Does not write log file on short programs that throws an exception.
                 program.run();
