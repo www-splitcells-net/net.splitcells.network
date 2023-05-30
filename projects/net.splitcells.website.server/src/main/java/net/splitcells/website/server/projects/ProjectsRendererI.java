@@ -70,7 +70,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class ProjectsRendererI implements ProjectsRenderer {
 
-    private static final String LAYOUT_PATH = "/net/splitcells/website/layout/build";
+    private static final String LAYOUT_PATH = "/net/splitcells/website/layout/build.html";
 
     public static ProjectsRendererI projectsRenderer(String name
             , ProjectRenderer fallbackRenderer
