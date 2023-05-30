@@ -16,6 +16,7 @@
 package net.splitcells.cin;
 
 import net.splitcells.cin.raters.TimeSteps;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.gel.GelDev;
@@ -40,6 +41,7 @@ import static net.splitcells.cin.raters.PlayerValuePersistenceClassifier.playerV
 import static net.splitcells.cin.raters.PositionClusters.positionClustering;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
+import static net.splitcells.dem.Dem.waitIndefinitely;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -72,7 +74,7 @@ public class World {
                 allocateGlider(currentWorldHistory);
                 allocateRestAsDead(currentWorldHistory);
                 currentWorldHistory.init();
-            },"Initialize world history.", INFO);
+            }, "Initialize world history.", INFO);
             reportRuntime(() -> {
                 network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
                 network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
@@ -89,7 +91,7 @@ public class World {
             reportRuntime(() -> {
                 network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
             }, "createStandardAnalysis", INFO);
-
+            waitIndefinitely();
         }, env -> {
         });
     }

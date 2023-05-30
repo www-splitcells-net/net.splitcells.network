@@ -25,6 +25,7 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
+import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.interaction.LogLevel;
 import net.splitcells.website.server.project.RenderingResult;
@@ -37,148 +38,186 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.interaction.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
  * TODO Create and use server interface, instead of implementation.
  */
 @JavaLegacyArtifact
 public class Server {
+
+    private Server() {
+        throw constructorIllegal();
+    }
+
     /**
      * TODO This is code duplication.
      *
      * @param renderer renderer
      */
-    public void serveToHttpAt(Function<String, Optional<RenderingResult>> renderer, Config config) {
-        {
-            System.setProperty("vertx.disableFileCaching", "true");
-            System.setProperty("vertx.maxEventLoopExecuteTime", "1000000");
-            System.setProperty("log4j.rootLogger", "DEBUG, stdout");
-            Vertx vertx = Vertx.vertx(new VertxOptions()
-                    .setMaxEventLoopExecuteTimeUnit(SECONDS)
-                    .setMaxEventLoopExecuteTime(60L)
-                    .setBlockedThreadCheckInterval(60_000L));
-            final var deploymentOptions = new DeploymentOptions()
-                    .setMaxWorkerExecuteTimeUnit(SECONDS)
-                    .setMaxWorkerExecuteTime(60L);
-            vertx.deployVerticle(new AbstractVerticle() {
-                @Override
-                public void start() {
-                    // TODO Errors are not logged.
-                    final var webServerOptions = new HttpServerOptions();
-                    if (config.isSecured()) {
-                        webServerOptions.setLogActivity(true)//
-                                .setSsl(true)//
+    public static Service serveToHttpAt(Function<String, Optional<RenderingResult>> renderer, Config config) {
+        return new Service() {
+            Vertx vertx;
+
+            @Override
+            public void flush() {
+
+            }
+
+            @Override
+            public void close() {
+                vertx.close();
+            }
+
+            @Override
+            public void start() {
+                System.setProperty("vertx.disableFileCaching", "true");
+                System.setProperty("vertx.maxEventLoopExecuteTime", "1000000");
+                System.setProperty("log4j.rootLogger", "DEBUG, stdout");
+                vertx = Vertx.vertx(new VertxOptions()
+                        .setMaxEventLoopExecuteTimeUnit(SECONDS)
+                        .setMaxEventLoopExecuteTime(60L)
+                        .setBlockedThreadCheckInterval(60_000L));
+                final var deploymentOptions = new DeploymentOptions()
+                        .setMaxWorkerExecuteTimeUnit(SECONDS)
+                        .setMaxWorkerExecuteTime(60L);
+                vertx.deployVerticle(new AbstractVerticle() {
+                    @Override
+                    public void start() {
+                        // TODO Errors are not logged.
+                        final var webServerOptions = new HttpServerOptions();
+                        if (config.isSecured()) {
+                            webServerOptions.setLogActivity(true)//
+                                    .setSsl(true)//
+                                    .setKeyCertOptions(new PfxOptions()
+                                            .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                            .setPassword(config.sslKeystorePassword().orElseThrow()))
+                                    .setTrustOptions(new PfxOptions()
+                                            .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                            .setPassword(config.sslKeystorePassword().orElseThrow()));
+                        } else {
+                            domsole().append(perspective("Webserver is not secured!"), WARNING);
+                        }
+                        webServerOptions.setPort(config.openPort());
+                        final var router = Router.router(vertx);
+                        router.route("/favicon.ico").handler(a -> {
+                        });
+                        router.route("/*").handler(routingContext -> {
+                            HttpServerResponse response = routingContext.response();
+                            vertx.<byte[]>executeBlocking((promise) -> {
+                                try {
+                                    final String requestPath;
+                                    if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
+                                        requestPath = "index.html";
+                                    } else {
+                                        requestPath = routingContext.request().path();
+                                    }
+                                    final var result = renderer.apply(java.net.URLDecoder.decode(requestPath, StandardCharsets.UTF_8.name()));
+                                    if (result.isPresent()) {
+                                        response.putHeader("content-type", result.get().getFormat());
+                                        promise.complete(result.get().getContent());
+                                    } else {
+                                        promise.fail("Could not render path:" + requestPath);
+                                    }
+                                } catch (Exception e) {
+                                    domsole().appendError(e);
+                                    throw new RuntimeException(e);
+                                }
+                            }, (result) -> {
+                                if (result.failed()) {
+                                    domsole().append(perspective(result.cause().toString()), LogLevel.ERROR);
+                                    domsole().appendError(result.cause());
+                                    response.setStatusCode(500);
+                                    response.end();
+                                } else {
+                                    response.end(Buffer.buffer().appendBytes(result.result()));
+                                }
+                            });
+                        });
+                        router.errorHandler(500, e -> {
+                            domsole().appendError(e.failure());
+                        });
+                        final var server = vertx.createHttpServer(webServerOptions);//
+                        server.requestHandler(router);//
+                        server.listen();
+                    }
+                }, deploymentOptions);
+            }
+        };
+    }
+
+    public static Service serveAsAuthenticatedHttpsAt(Function<String, Optional<RenderingResult>> renderer, Config config) {
+        return new Service() {
+            Vertx vertx;
+
+            @Override
+            public void start() {
+                System.setProperty("vertx.disableFileCaching", "true");
+                System.setProperty("log4j.rootLogger", "DEBUG, stdout");
+                vertx = Vertx.vertx();
+                vertx.deployVerticle(new AbstractVerticle() {
+                    @Override
+                    public void start() {
+                        // TODO Errors are not logged.
+                        final var webServerOptions = new HttpServerOptions()
+                                .setSsl(true)
                                 .setKeyCertOptions(new PfxOptions()
                                         .setPath(config.sslKeystoreFile().orElseThrow().toString())
                                         .setPassword(config.sslKeystorePassword().orElseThrow()))
                                 .setTrustOptions(new PfxOptions()
                                         .setPath(config.sslKeystoreFile().orElseThrow().toString())
-                                        .setPassword(config.sslKeystorePassword().orElseThrow()));
-                    } else {
-                        domsole().append(perspective("Webserver is not secured!"), WARNING);
-                    }
-                    webServerOptions.setPort(config.openPort());
-                    final var router = Router.router(vertx);
-                    router.route("/favicon.ico").handler(a -> {
-                    });
-                    router.route("/*").handler(routingContext -> {
-                        HttpServerResponse response = routingContext.response();
-                        vertx.<byte[]>executeBlocking((promise) -> {
-                            try {
+                                        .setPassword(config.sslKeystorePassword().orElseThrow()))
+                                .setClientAuth(ClientAuth.REQUIRED)
+                                .setLogActivity(true)
+                                .setPort(config.openPort());
+                        final var router = Router.router(vertx);
+                        router.route("/favicon.ico").handler(a -> {
+                        });
+                        router.route("/*").handler(routingContext -> {
+                            HttpServerResponse response = routingContext.response();
+                            vertx.<byte[]>executeBlocking((promise) -> {
                                 final String requestPath;
                                 if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
                                     requestPath = "index.html";
                                 } else {
                                     requestPath = routingContext.request().path();
                                 }
-                                final var result = renderer.apply(java.net.URLDecoder.decode(requestPath, StandardCharsets.UTF_8.name()));
+                                final var result = renderer.apply(requestPath);
                                 if (result.isPresent()) {
                                     response.putHeader("content-type", result.get().getFormat());
                                     promise.complete(result.get().getContent());
                                 } else {
                                     promise.fail("Could not render path:" + requestPath);
                                 }
-                            } catch (Exception e) {
-                                domsole().appendError(e);
-                                throw new RuntimeException(e);
-                            }
-                        }, (result) -> {
-                            if (result.failed()) {
-                                domsole().append(perspective(result.cause().toString()), LogLevel.ERROR);
-                                domsole().appendError(result.cause());
-                                response.setStatusCode(500);
-                                response.end();
-                            } else {
-                                response.end(Buffer.buffer().appendBytes(result.result()));
-                            }
+                            }, (result) -> {
+                                if (result.failed()) {
+                                    domsole().appendError(result.cause());
+                                    response.setStatusCode(500);
+                                    response.end();
+                                } else {
+                                    response.end(Buffer.buffer().appendBytes(result.result()));
+                                }
+                            });
                         });
-                    });
-                    router.errorHandler(500, e -> {
-                        domsole().appendError(e.failure());
-                    });
-                    final var server = vertx.createHttpServer(webServerOptions);//
-                    server.requestHandler(router);//
-                    server.listen();
-                }
-            }, deploymentOptions);
-        }
-    }
-
-    public void serveAsAuthenticatedHttpsAt(Function<String, Optional<RenderingResult>> renderer, Config config) {
-        System.setProperty("vertx.disableFileCaching", "true");
-        System.setProperty("log4j.rootLogger", "DEBUG, stdout");
-        Vertx vertx = Vertx.vertx();
-        vertx.deployVerticle(new AbstractVerticle() {
-            @Override
-            public void start() {
-                // TODO Errors are not logged.
-                final var webServerOptions = new HttpServerOptions()
-                        .setSsl(true)
-                        .setKeyCertOptions(new PfxOptions()
-                                .setPath(config.sslKeystoreFile().orElseThrow().toString())
-                                .setPassword(config.sslKeystorePassword().orElseThrow()))
-                        .setTrustOptions(new PfxOptions()
-                                .setPath(config.sslKeystoreFile().orElseThrow().toString())
-                                .setPassword(config.sslKeystorePassword().orElseThrow()))
-                        .setClientAuth(ClientAuth.REQUIRED)
-                        .setLogActivity(true)
-                        .setPort(config.openPort());
-                final var router = Router.router(vertx);
-                router.route("/favicon.ico").handler(a -> {
+                        router.errorHandler(500, e -> {
+                            domsole().appendError(e.failure());
+                        });
+                        final var server = vertx.createHttpServer(webServerOptions);//
+                        server.requestHandler(router);//
+                        server.listen();
+                    }
                 });
-                router.route("/*").handler(routingContext -> {
-                    HttpServerResponse response = routingContext.response();
-                    vertx.<byte[]>executeBlocking((promise) -> {
-                        final String requestPath;
-                        if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
-                            requestPath = "index.html";
-                        } else {
-                            requestPath = routingContext.request().path();
-                        }
-                        final var result = renderer.apply(requestPath);
-                        if (result.isPresent()) {
-                            response.putHeader("content-type", result.get().getFormat());
-                            promise.complete(result.get().getContent());
-                        } else {
-                            promise.fail("Could not render path:" + requestPath);
-                        }
-                    }, (result) -> {
-                        if (result.failed()) {
-                            domsole().appendError(result.cause());
-                            response.setStatusCode(500);
-                            response.end();
-                        } else {
-                            response.end(Buffer.buffer().appendBytes(result.result()));
-                        }
-                    });
-                });
-                router.errorHandler(500, e -> {
-                    domsole().appendError(e.failure());
-                });
-                final var server = vertx.createHttpServer(webServerOptions);//
-                server.requestHandler(router);//
-                server.listen();
             }
-        });
+
+            @Override
+            public void close() {
+                vertx.close();
+            }
+
+            @Override
+            public void flush() {
+
+            }
+        };
     }
 }

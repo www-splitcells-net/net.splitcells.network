@@ -16,12 +16,12 @@
 package net.splitcells.website;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import static net.splitcells.dem.Dem.waitIndefinitely;
 import static net.splitcells.dem.resource.Files.readFileAsString;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.website.Projects.projectsRenderer;
@@ -45,7 +45,9 @@ public class BareMinimumRendering {
                     .withXmlSchema(Optional.empty())
                     .withIsSecured(false)
                     .withDetailedXslMenu(Optional.of(readFileAsString(Paths.get("projects/net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/detailed-menu.xsl")))))
-                    .serveToHttpAt();
+                    .httpServer()
+                    .start();
+            waitIndefinitely();
         });
     }
 }

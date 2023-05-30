@@ -32,6 +32,7 @@ import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.solution.Solutions;
 import net.splitcells.gel.test.functionality.ColloquiumPlanningTest;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.ServerService;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.renderer.DiscoverableMediaRenderer;
@@ -63,57 +64,7 @@ public final class GelDev {
 
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
         return GelEnv.analyseProcess(() -> {
-            Dem.process(program, () -> {
-                // TODO This is a hack, because the webserver still depends on private documents, in order to render the website.
-                final var publicProjectRepository = userHome(
-                        "Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network/projects");
-                final var privateProjectRepository = userHome("Documents/projects/net.splitcells.martins.avots.support.system/private");
-                final var xslLib = publicProjectRepository.resolve(
-                        "net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/");
-                final var validator = validatorViaSchema(
-                        publicProjectRepository.resolve("net.splitcells.website.server").resolve("src/main/xsd/den.xsd"));
-                final var config = Config.create()
-                        .withOpenPort(8448)
-                        .withIsSecured(false)
-                        .withSiteFolder(Optional.of(userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network/projects/").toString()))
-                        .withDetailedXslMenu(Optional.of(readFileAsString(userHome("Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/src/main/resources/detailed-menu.xsl"))))
-                        .withCssFiles(list("net/splitcells/website/css/theme.white.variables.css"
-                                , "net/splitcells/website/css/basic.themed.css"
-                                , "net/splitcells/website/css/basic.css"
-                                , "net/splitcells/website/css/den.css"
-                                , "net/splitcells/website/css/layout.default.css"
-                                , "net/splitcells/martins/avots/website/css/theme.css"));
-                projectsRenderer(publicProjectRepository, "public"
-                        , projectRenderer(
-                                "public", privateProjectRepository.resolve("net.splitcells.martins.avots.website/")
-                                , xslLib
-                                , privateProjectRepository
-                                        .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                , "/"
-                                , validator
-                                , config)
-                        , list(projectRenderer("public"
-                                        , privateProjectRepository.resolve("net.splitcells.martins.avots.website/")
-                                        , xslLib
-                                        , privateProjectRepository
-                                                .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                        , "/"
-                                        , validator
-                                        , config)
-                                , projectRenderer("public"
-                                        , privateProjectRepository.resolve(
-                                                "/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/")
-                                        , xslLib
-                                        , privateProjectRepository
-                                                .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
-                                        , "/"
-                                        , validator
-                                        , config)
-                                , Dem.configValue(ObjectsRenderer.class)
-                                , Dem.configValue(ObjectsMediaRenderer.class))
-                        , validator
-                        , config).serveToHttpAt();
-            });
+            Dem.process(program);
         }, standardDeveloperConfigurator().andThen(configurator));
     }
 
@@ -130,6 +81,7 @@ public final class GelDev {
     }
 
     public static void configureForWebserver(Environment env) {
+        env.config().with_inited_option(ServerService.class);
         env.config().configValue(Databases.class)
                 .withConnector(database -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
                     @Override

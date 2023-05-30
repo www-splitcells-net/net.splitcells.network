@@ -49,37 +49,37 @@ public class ObjectsRendererI implements ProjectRenderer {
         return Path.of("/invalid/");
     }
 
-    public ObjectsRendererI withObject(DiscoverableRenderer object) {
+    public synchronized ObjectsRendererI withObject(DiscoverableRenderer object) {
         objects.put(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow()), object);
         return this;
     }
 
     @Override
-    public Optional<byte[]> renderString(String arg) {
+    public synchronized Optional<byte[]> renderString(String arg) {
         domsole().append(getClass().getName() + "#renderString not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
-    public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path, Config config) {
+    public synchronized Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path, Config config) {
         domsole().append(getClass().getName() + "#renderHtmlBodyContent not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
-    public Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config) {
+    public synchronized Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config) {
         domsole().append(getClass().getName() + "#renderXml not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
-    public Optional<byte[]> renderRawXml(String xml, Config config) {
+    public synchronized Optional<byte[]> renderRawXml(String xml, Config config) {
         domsole().append(ObjectsRendererI.class.getName() + "#renderRawXml not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
-    public Set<Path> projectPaths() {
+    public synchronized Set<Path> projectPaths() {
         return objects.keySet().stream().map(p -> {
                     final var ps = p.toString();
                     if (ps.startsWith("/")) {
@@ -92,17 +92,17 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Set<Path> relevantProjectPaths() {
+    public synchronized Set<Path> relevantProjectPaths() {
         return Sets.setOfUniques(objects.keySet());
     }
 
     @Override
-    public Optional<RenderingResult> render(String argPath) {
+    public synchronized Optional<RenderingResult> render(String argPath) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<RenderingResult> render(String argPath, Config config, ProjectRenderer projectRenderer) {
+    public synchronized Optional<RenderingResult> render(String argPath, Config config, ProjectRenderer projectRenderer) {
         final var path = Path.of(argPath);
         if (objects.containsKey(path)) {
             final var object = objects.get(path);

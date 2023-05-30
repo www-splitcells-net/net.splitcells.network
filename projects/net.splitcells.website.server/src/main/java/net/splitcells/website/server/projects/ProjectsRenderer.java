@@ -17,7 +17,7 @@ package net.splitcells.website.server.projects;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -64,13 +64,13 @@ public interface ProjectsRenderer {
      * TODO This belongs to a dedicated class.
      */
     @Deprecated
-    void serveToHttpAt();
+    Service httpServer();
 
     /**
      * TODO This belongs to a dedicated class.
      */
     @Deprecated
-    void serveAsAuthenticatedHttpsAt();
+    Service AuthenticatedHttpsServer();
 
     /**
      * Renders the file of the given {@param path}.

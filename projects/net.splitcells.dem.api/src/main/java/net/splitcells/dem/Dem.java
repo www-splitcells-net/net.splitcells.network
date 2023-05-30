@@ -56,13 +56,10 @@ public class Dem {
     private static final InheritableThreadLocal<Environment> CURRENT = new InheritableThreadLocal<Environment>();
 
     /**
-     * TODO This is a hack.
-     *
-     * @param program program
-     * @return return
+     * <p>Pauses/freezes the current thread.</p>
+     * <p>TODO This is a hack.</p>
      */
-    public static void process(Runnable... program) {
-        asList(program).forEach(p -> new Thread(p).start());
+    public static void waitIndefinitely() {
         try {
             new Semaphore(1).acquire(2);
         } catch (InterruptedException e) {

@@ -18,6 +18,7 @@ package net.splitcells.website.server.projects;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
@@ -141,15 +142,15 @@ public class ProjectsRendererI implements ProjectsRenderer {
     }
 
     @Override
-    public void serveToHttpAt() {
+    public Service httpServer() {
         build();
-        new Server().serveToHttpAt(requestPath -> render(requestPath), config);
+        return Server.serveToHttpAt(requestPath -> render(requestPath), config);
     }
 
     @Override
-    public void serveAsAuthenticatedHttpsAt() {
+    public Service AuthenticatedHttpsServer() {
         build();
-        new Server().serveAsAuthenticatedHttpsAt(requestPath -> render(requestPath), config);
+        return Server.serveAsAuthenticatedHttpsAt(requestPath -> render(requestPath), config);
     }
 
     @Deprecated
