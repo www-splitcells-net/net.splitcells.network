@@ -221,7 +221,7 @@ public class World {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return crowdClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
-                , playerCount -> playerCount < 3
+                , playerCount -> playerCount > 3
                 , "crowded");
     }
 
