@@ -73,8 +73,8 @@ public class World {
                 network.withNode(WORLD_HISTORY, currentWorldHistory);
                 initWorldHistory(currentWorldHistory);
                 allocateGlider(currentWorldHistory);
-                allocateRestAsDead(currentWorldHistory);
                 currentWorldHistory.init();
+                allocateRestAsDead(currentWorldHistory);
             }, "Initialize world history.", INFO);
             reportRuntime(() -> {
                 network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
