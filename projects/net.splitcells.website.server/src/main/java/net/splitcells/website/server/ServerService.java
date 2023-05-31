@@ -81,6 +81,9 @@ public class ServerService extends ResourceOptionI<Service> {
                                     , "/"
                                     , validator
                                     , config)
+                            /* TODO The config should only be read during service start,
+                             * in order to be sure, that the config is set up.
+                             */
                             , Dem.configValue(ObjectsRenderer.class)
                             , Dem.configValue(ObjectsMediaRenderer.class))
                     , validator
