@@ -148,7 +148,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
     }
 
     @Override
-    public Service AuthenticatedHttpsServer() {
+    public Service authenticatedHttpsServer() {
         build();
         return Server.serveAsAuthenticatedHttpsAt(requestPath -> render(requestPath), config);
     }

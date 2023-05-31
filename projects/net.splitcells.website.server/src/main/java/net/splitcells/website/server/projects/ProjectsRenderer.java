@@ -70,7 +70,7 @@ public interface ProjectsRenderer {
      * TODO This belongs to a dedicated class.
      */
     @Deprecated
-    Service AuthenticatedHttpsServer();
+    Service authenticatedHttpsServer();
 
     /**
      * Renders the file of the given {@param path}.
