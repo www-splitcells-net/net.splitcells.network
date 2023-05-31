@@ -45,6 +45,10 @@ public class Proposals implements Proposal {
                 , database("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
     }
 
+    /**
+     *
+     * @return These {@link Allocations} are proposed in order to get a better {@link Solution}.
+     */
     @Override
     public Allocations proposedAllocations() {
         return proposedAllocations;
@@ -55,6 +59,9 @@ public class Proposals implements Proposal {
         return contextAllocations;
     }
 
+    /**
+     * @return The {@link Solution} for which this is generated for.
+     */
     @Override
     public Solution subject() {
         return subject;
