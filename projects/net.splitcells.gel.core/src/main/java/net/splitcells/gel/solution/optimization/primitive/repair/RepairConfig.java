@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.solution.optimization.primitive.repair;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 
@@ -45,6 +46,16 @@ public class RepairConfig {
 
     public FluentGroupSelector groupSelector() {
         return groupSelector;
+    }
+
+    /**
+     * Sets {@link #groupSelector()} in such a way,
+     * that only the root {@link net.splitcells.gel.constraint.Constraint} is selected.
+     *
+     * @return The current {@link RepairConfig} state.
+     */
+    public RepairConfig withGroupSelectorOfRoot() {
+        return withGroupSelector(rootConstraint -> list(list(rootConstraint)));
     }
 
     public RepairConfig withGroupSelector(FluentGroupSelector groupSelector) {

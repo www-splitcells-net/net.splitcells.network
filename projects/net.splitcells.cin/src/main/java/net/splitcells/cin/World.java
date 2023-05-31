@@ -82,12 +82,11 @@ public class World {
                         repairConfig()
                                 .withRepairCompliants(false)
                                 .withDemandSelector(demandSelector(demandSelectorsConfig()
-                                                        .withRepairCompliants(false)
-                                                        .withUseCompleteRating(true)
-                                                , list(currentWorldHistory.constraint()
-                                                        , currentWorldHistory.constraint().child(0))))
-                                .withGroupSelector(rootConstraint -> list(list(rootConstraint)))
-                ));
+                                                .withRepairCompliants(false)
+                                                .withUseCompleteRating(true)
+                                        , list(currentWorldHistory.constraint()
+                                                , currentWorldHistory.constraint().child(0))))
+                                .withGroupSelectorOfRoot()));
             }, "World history optimization", INFO);
             reportRuntime(() -> {
                 network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
