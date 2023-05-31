@@ -53,6 +53,7 @@ import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValu
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
+import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.demandSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectorsConfig.demandSelectorsConfig;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 import static net.splitcells.sep.Network.network;
@@ -78,13 +79,13 @@ public class World {
             reportRuntime(() -> {
                 network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
                 network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
-                        repairConfig().withRepairCompliants(false)
-                                .withDemandSelector(DemandSelectors.demandSelector(
-                                        demandSelectorsConfig()
-                                                .withRepairCompliants(false)
-                                                .withUseCompleteRating(true)
-                                        , list(currentWorldHistory.constraint()
-                                                , currentWorldHistory.constraint().child(0))))
+                        repairConfig()
+                                .withRepairCompliants(false)
+                                .withDemandSelector(demandSelector(demandSelectorsConfig()
+                                                        .withRepairCompliants(false)
+                                                        .withUseCompleteRating(true)
+                                                , list(currentWorldHistory.constraint()
+                                                        , currentWorldHistory.constraint().child(0))))
                                 .withGroupSelector(rootConstraint -> list(list(rootConstraint)))
                 ));
             }, "World history optimization", INFO);
