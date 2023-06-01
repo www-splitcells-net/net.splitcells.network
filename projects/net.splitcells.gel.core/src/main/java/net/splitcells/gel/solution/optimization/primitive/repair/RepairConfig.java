@@ -32,6 +32,7 @@ public class RepairConfig {
     private SupplySelector supplySelector = SupplySelectors.supplySelector();
 
     private boolean repairCompliants = true;
+    private boolean freeDefyingGroupOfConstraintGroup = true;
 
     private DemandSelector demandSelector = DemandSelectors.demandSelector(repairCompliants);
 
@@ -83,5 +84,18 @@ public class RepairConfig {
 
     public DemandSelector demandSelector() {
         return demandSelector;
+    }
+
+    /**
+     * @return If false the repair algorithm will only repair the selected demands.
+     * Otherwise, the repair will extend the demand selection based on their respective groups.
+     */
+    public boolean freeDefyingGroupOfConstraintGroup() {
+        return freeDefyingGroupOfConstraintGroup;
+    }
+
+    public RepairConfig withFreeDefyingGroupOfConstraintGroup(boolean arg) {
+        freeDefyingGroupOfConstraintGroup = arg;
+        return this;
     }
 }

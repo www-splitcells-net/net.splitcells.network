@@ -81,6 +81,7 @@ public class World {
                 network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
                         repairConfig()
                                 .withRepairCompliants(false)
+                                .withFreeDefyingGroupOfConstraintGroup(false)
                                 .withDemandSelector(demandSelector(demandSelectorsConfig()
                                                 .withRepairCompliants(false)
                                                 .withUseCompleteRating(true)

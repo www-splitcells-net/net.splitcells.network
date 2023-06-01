@@ -103,13 +103,15 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     private final FluentGroupSelector groupSelector;
     private final SupplySelector supplySelector;
     private final boolean repairCompliants;
+    private boolean freeDefyingGroupOfConstraintGroup = true;
 
 
-    protected ConstraintGroupBasedRepair(RepairConfig repairConfig) {
+    private ConstraintGroupBasedRepair(RepairConfig repairConfig) {
         groupSelector = repairConfig.groupSelector();
         supplySelector = repairConfig.supplySelector();
         repairCompliants = repairConfig.repairCompliants();
         demandSelector = repairConfig.demandSelector();
+        freeDefyingGroupOfConstraintGroup = repairConfig.freeDefyingGroupOfConstraintGroup();
     }
 
     @Override
@@ -142,35 +144,37 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     }
 
     public void freeDefyingGroupOfConstraintGroup(Solution solution, Constraint constraint) {
-        final var incomingGroups = Sets.setOfUniques
-                (constraint
-                        .lineProcessing()
-                        .columnView(INCOMING_CONSTRAINT_GROUP)
-                        .values());
-        incomingGroups
-                .stream()
-                .filter(group -> !constraint.defying(group).isEmpty())
-                .map(group -> constraint
-                        .lineProcessing()
-                        .columnView(INCOMING_CONSTRAINT_GROUP)
-                        .lookup(group)
-                        .columnView(LINE)
-                        .values())
-                .flatMap(streamOfLineList -> streamOfLineList.stream())
-                .distinct()
-                .filter(allocation -> {
-                    if (!repairCompliants) {
-                        return !constraint
-                                .lineProcessing()
-                                .columnView(LINE)
-                                .lookup(allocation)
-                                .unorderedLines()
-                                .get(0)
-                                .value(RATING)
-                                .equalz(noCost());
-                    }
-                    return true;
-                })
-                .forEach(solution::remove);
+        if (freeDefyingGroupOfConstraintGroup) {
+            final var incomingGroups = Sets.setOfUniques
+                    (constraint
+                            .lineProcessing()
+                            .columnView(INCOMING_CONSTRAINT_GROUP)
+                            .values());
+            incomingGroups
+                    .stream()
+                    .filter(group -> !constraint.defying(group).isEmpty())
+                    .map(group -> constraint
+                            .lineProcessing()
+                            .columnView(INCOMING_CONSTRAINT_GROUP)
+                            .lookup(group)
+                            .columnView(LINE)
+                            .values())
+                    .flatMap(streamOfLineList -> streamOfLineList.stream())
+                    .distinct()
+                    .filter(allocation -> {
+                        if (!repairCompliants) {
+                            return !constraint
+                                    .lineProcessing()
+                                    .columnView(LINE)
+                                    .lookup(allocation)
+                                    .unorderedLines()
+                                    .get(0)
+                                    .value(RATING)
+                                    .equalz(noCost());
+                        }
+                        return true;
+                    })
+                    .forEach(solution::remove);
+        }
     }
 }
