@@ -155,7 +155,7 @@ public interface SolutionView extends ProblemView {
         writeToFile(targetFolder.resolve("constraint.rating.xml"), constraint().rating().toDom());
         writeToFile(targetFolder.resolve("constraint.state.xml"), constraint().toDom());
         writeToFile(targetFolder.resolve("demands.fods"), demands().toFods());
-        writeToFile(targetFolder.resolve("demands.free.fod"), demandsFree().toFods());
+        writeToFile(targetFolder.resolve("demands.free.fods"), demandsFree().toFods());
         writeToFile(targetFolder.resolve("demands.used.fods"), demandsUsed().toFods());
         writeToFile(targetFolder.resolve("supplies.fods"), supplies().toFods());
         writeToFile(targetFolder.resolve("supplies.free.fods"), suppliesFree().toFods());
