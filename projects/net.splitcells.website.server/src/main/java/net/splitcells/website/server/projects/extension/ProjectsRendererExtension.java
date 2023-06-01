@@ -34,6 +34,7 @@ public interface ProjectsRendererExtension {
     }
 
     /**
+     * The paths are relative to the website's {@link Config#rootPath()}.
      * 
      * @param projectsRendererI
      * @return Set of paths relative to {@link Config#rootPath()}.
@@ -41,6 +42,7 @@ public interface ProjectsRendererExtension {
     Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRendererI);
 
     /**
+     * The paths are relative to the website's {@link Config#rootPath()}.
      *
      * @param projectsRendererI
      * @return Set of paths relative to {@link Config#rootPath()}.
