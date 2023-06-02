@@ -16,10 +16,7 @@
 package net.splitcells.cin;
 
 import net.splitcells.cin.raters.TimeSteps;
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.gel.GelDev;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -27,8 +24,6 @@ import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors;
 
 import java.util.Optional;
 
@@ -41,22 +36,14 @@ import static net.splitcells.cin.raters.PlayerValuePersistenceClassifier.playerV
 import static net.splitcells.cin.raters.PositionClusters.positionClustering;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
-import static net.splitcells.dem.Dem.waitIndefinitely;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.resource.communication.interaction.LogLevel.INFO;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.dem.utils.Time.reportRuntime;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
-import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.demandSelector;
-import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectorsConfig.demandSelectorsConfig;
-import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
-import static net.splitcells.sep.Network.network;
 
 public class World {
     public static final String WORLD_HISTORY = "world-history";
@@ -65,52 +52,20 @@ public class World {
     public static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-y");
     public static final Attribute<Integer> VALUE = attribute(Integer.class, "value");
 
-    public static void main(String... args) {
-        GelDev.process(() -> {
-            final var network = network();
-            final var currentWorldHistory = worldHistory(WORLD_HISTORY, list(), list());
-            reportRuntime(() -> {
-                network.withNode(WORLD_HISTORY, currentWorldHistory);
-                initWorldHistory(currentWorldHistory);
-                allocateGlider(currentWorldHistory);
-                currentWorldHistory.init();
-                allocateRestAsDead(currentWorldHistory);
-            }, "Initialize world history.", INFO);
-            reportRuntime(() -> {
-                network.withOptimization(WORLD_HISTORY, onlineLinearInitialization());
-                network.withOptimization(WORLD_HISTORY, constraintGroupBasedRepair(
-                        repairConfig()
-                                .withRepairCompliants(false)
-                                .withFreeDefyingGroupOfConstraintGroup(false)
-                                .withDemandSelector(demandSelector(demandSelectorsConfig()
-                                                .withRepairCompliants(false)
-                                                .withUseCompleteRating(true)
-                                        , list(currentWorldHistory.constraint()
-                                                , currentWorldHistory.constraint().child(0))))
-                                .withGroupSelectorOfRoot()));
-            }, "World history optimization", INFO);
-            reportRuntime(() -> {
-                network.process(WORLD_HISTORY, SolutionView::createStandardAnalysis);
-            }, "createStandardAnalysis", INFO);
-            waitIndefinitely();
-        }, env -> {
-        });
-    }
-
-    private static void initWorldHistory(Solution world) {
+    public static void initWorldHistory(Solution world) {
         worldsTimeSpace(0, 1, 0, 10, 0, 10)
                 .forEach(world.demands()::addTranslated);
         values(0, 1, 0, 10, 0, 10, 0, 1)
                 .forEach(world.supplies()::addTranslated);
     }
 
-    private static void allocateRestAsDead(Solution worldHistory) {
+    public static void allocateRestAsDead(Solution worldHistory) {
         final var freeDemands = worldHistory.demandsFree().unorderedLinesStream().collect(toList());
         final var playerSupply = worldHistory.suppliesFree().lookup(VALUE, 0).unorderedLinesStream().collect(toList());
         freeDemands.forEach(d -> worldHistory.allocate(d, playerSupply.removeAt(0)));
     }
 
-    private static void allocateGlider(Solution worldHistory) {
+    public static void allocateGlider(Solution worldHistory) {
         worldHistory.allocate(worldHistory.demandsFree()
                         .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 1)
