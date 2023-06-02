@@ -16,6 +16,7 @@
 package net.splitcells.cin;
 
 import net.splitcells.cin.raters.TimeSteps;
+import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -24,6 +25,7 @@ import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
+import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 import java.util.Optional;
 
@@ -43,7 +45,10 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.demandSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectorsConfig.demandSelectorsConfig;
+import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
 public class World {
     public static final String WORLD_HISTORY = "world-history";
@@ -51,11 +56,41 @@ public class World {
     public static final Attribute<Integer> POSITION_X = attribute(Integer.class, "position-x");
     public static final Attribute<Integer> POSITION_Y = attribute(Integer.class, "position-y");
     public static final Attribute<Integer> VALUE = attribute(Integer.class, "value");
+    public static final int MIN_X = 0;
+    public static final int MAX_X = 10;
+    public static final int MIN_Y = 0;
+    public static final int MAX_Y = 10;
+    public static final int START_TIME = 0;
+
+    public static OnlineOptimization worldOptimizer(Solution currentWorldHistory) {
+        return constraintGroupBasedRepair(
+                repairConfig()
+                        .withRepairCompliants(false)
+                        .withFreeDefyingGroupOfConstraintGroup(false)
+                        .withDemandSelector(demandSelector(demandSelectorsConfig()
+                                        .withRepairCompliants(false)
+                                        .withUseCompleteRating(true)
+                                , list(currentWorldHistory.constraint()
+                                        , currentWorldHistory.constraint().child(0))))
+                        .withGroupSelectorOfRoot());
+    }
 
     public static void initWorldHistory(Solution world) {
-        worldsTimeSpace(0, 1, 0, 10, 0, 10)
+        worldsTimeSpace(START_TIME, START_TIME + 1, MIN_X, MAX_X, MIN_Y, MAX_Y)
                 .forEach(world.demands()::addTranslated);
-        values(0, 1, 0, 10, 0, 10, 0, 1)
+        values(START_TIME, START_TIME + 1, MIN_X, MAX_X, MIN_Y, MAX_Y, 0, 1)
+                .forEach(world.supplies()::addTranslated);
+    }
+
+    public static void addNextTime(Solution world) {
+        final int currentTime = world.allocations().columnView(WORLD_TIME)
+                .values()
+                .stream()
+                .max(Comparators.ASCENDING_INTEGERS)
+                .orElseThrow();
+        worldsTimeSpace(currentTime + 1, MIN_X, MAX_X, MIN_Y, MAX_Y)
+                .forEach(world.demands()::addTranslated);
+        values(currentTime, currentTime, MIN_X, MAX_X, MIN_Y, MAX_Y, 0, 1)
                 .forEach(world.supplies()::addTranslated);
     }
 
@@ -137,6 +172,18 @@ public class World {
                 rangeClosed(startX, endX).forEach(x ->
                         rangeClosed(startY, endY).forEach(y ->
                                 worldsTimeSpace.add(list(time, x, y)))));
+        return worldsTimeSpace;
+    }
+
+    private static List<List<Object>> worldsTimeSpace(Integer time
+            , Integer startX
+            , Integer endX
+            , Integer startY
+            , Integer endY) {
+        final List<List<Object>> worldsTimeSpace = list();
+        rangeClosed(startX, endX).forEach(x ->
+                rangeClosed(startY, endY).forEach(y ->
+                        worldsTimeSpace.add(list(time, x, y))));
         return worldsTimeSpace;
     }
 

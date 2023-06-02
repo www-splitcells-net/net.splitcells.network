@@ -67,8 +67,8 @@ public class Network {
     }
 
     @ReturnsThis
-    public Network withExecution(String argumentKey, Function<Solution, Solution> execution) {
-        solutions.put(argumentKey, execution.apply(solutions.get(argumentKey)));
+    public Network withExecution(String argumentKey, Consumer<Solution> execution) {
+        execution.accept(solutions.get(argumentKey));
         return this;
     }
 
@@ -97,7 +97,6 @@ public class Network {
     public Network withOptimization(String argumentKey, OnlineOptimization optimization) {
         return withExecution(argumentKey, s -> {
             optimization.optimize(s);
-            return s;
         });
     }
 
@@ -105,7 +104,6 @@ public class Network {
     public Network withOptimization(String argumentKey, OnlineOptimization optimization, OptimizationConfig config) {
         return withExecution(argumentKey, s -> {
             s.optimize(optimization, config);
-            return s;
         });
     }
 
