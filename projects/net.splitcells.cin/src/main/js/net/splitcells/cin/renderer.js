@@ -49,7 +49,7 @@ if ( window != undefined) {
     worldVariables.render_latest_time = urlParams.get('render_latest_time');
 }
 
-if (worldVariables.debug_enabled === 'true') {
+if (worldVariables.debug_enabled == 1) {
     scene.add(new THREE.AxesHelper(5)); // https://threejs.org/docs/#api/en/helpers/AxesHelper
 }
 
@@ -161,7 +161,22 @@ function addLightToScene() {
 }
 
 function worldScenesObject_add(sceneObject) {
+    scene.add(sceneObject);
     worldSceneObjects.push(sceneObject);
+}
+
+function worldScenesObject_remove_by_index(i) {
+    scene.remove(worldSceneObjects[i]);
+    worldSceneObjects.splice(i, 1);
+}
+
+function worldScenesObject_clear() {
+    let size = worldSceneObjects.length;
+    for (var i = 0; i < size; i++) {
+        if (worldSceneObjects[i] != undefined) {
+            worldScenesObject_remove_by_index(i);
+        }
+    }
 }
 
 function worldSceneObject_get_random() {
@@ -203,7 +218,6 @@ function worldSceneObjects_import(updatedData) {
             // material.wireframeLinecap = 'square';
             const cube = new THREE.Mesh(geometry, material);
             cube.position.set(1 * row[1], 0, 1 * row[2]);
-            scene.add(cube);
             worldScenesObject_add(cube);
         }
     }
@@ -326,6 +340,7 @@ function continuously_load_latest_time_loop() {
                 , dynamicTyping: true
                 , complete: async function (results) {
                     worldSceneObjects_import(results.data);
+                    worldScenesObject_clear();
                     camera_focus_worldSceneObject_nearest();
                     sleep_for_ms(1000).then(() => continuously_load_latest_time_loop());
                 }
