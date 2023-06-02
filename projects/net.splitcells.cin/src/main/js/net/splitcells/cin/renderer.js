@@ -311,7 +311,7 @@ function continuously_load_latest_time() {
                     camera_position_initialize();
                     window.addEventListener("gamepadconnected", gamepad.connect);
                     window.addEventListener("gamepaddisconnected", gamepad.disconnect);
-                    sleep_for_ms(500).then(() => continuously_load_latest_time());
+                    sleep_for_ms(1000).then(() => continuously_load_latest_time());
                 }
              });
 }
