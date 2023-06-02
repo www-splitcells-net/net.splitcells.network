@@ -40,7 +40,7 @@
    return Math.floor(Math.random() * Math.floor(max));
     }
  function showOneOfChildren(node) {
- 	let child=node.childNodes[getRandomInt(node.childNodes.length)];
+ 	let child = node.childNodes[getRandomInt(node.childNodes.length)];
  	let i = 0;
  	while (!child.hasOwnProperty('style') && i < 10) {
  	    ++i;
