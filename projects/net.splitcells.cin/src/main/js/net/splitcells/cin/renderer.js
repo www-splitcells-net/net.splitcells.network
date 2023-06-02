@@ -13,7 +13,13 @@ var worldSceneObjects = [];
 var worldVariables = {
     camera_focus_current: undefined,
     debug_enabled: undefined,
-    render_specific_time: undefined, // When world data is imported, only data is processed, that is for the time `renderSpecificTime`.
+    // When world data is imported, only data of this time is processed. This shows the world at that specific time.
+    render_specific_time: undefined,
+    /* When world data is imported, only data of the latest time is processed.
+     * Most of the time, this shows the currently predicted world's state for the furthest point in the future.
+     * Some times, this will show the world's state at the current time.
+     */
+    render_latest_time: true,
     world_import_from: undefined
 };
 const worldSceneObjectDefaultColor = 0x7D7D7D;
@@ -40,6 +46,7 @@ if ( window != undefined) {
     worldVariables.world_import_from = world_import_from;
     worldVariables.debug_enabled = urlParams.get('debug_enabled');
     worldVariables.render_specific_time = urlParams.get('render_specific_time');
+    worldVariables.render_latest_time = urlParams.get('render_latest_time');
 }
 
 if (worldVariables.debug_enabled === 'true') {
@@ -164,10 +171,27 @@ function worldSceneObject_get_random() {
 
 function worldSceneObjects_import(updatedData) {
     let rowIndex;
+    let latestTime = undefined;
+    if (worldVariables.render_latest_time == 1) {
+        latestTime = 0;
+        for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
+            let rowTime = updatedData[rowIndex][0];
+            if (rowTime > latestTime) {
+                latestTime = rowTime;
+            }
+        }
+        console.log('Rendering latest time of '.concat(latestTime, '.'));
+    }
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
         let row = updatedData[rowIndex];
         if (worldVariables.render_specific_time != undefined) {
             if (row[0] != worldVariables.render_specific_time) {
+                continue;
+            }
+        }
+        if (worldVariables.render_latest_time == 1) {
+            let rowTime = updatedData[rowIndex][0];
+            if (rowTime != latestTime) {
                 continue;
             }
         }
@@ -274,6 +298,30 @@ function camera_position_initialize() {
     worldVariables.camera_focus_current = chosenFocus;
 }
 
+function continuously_load_latest_time() {
+    Papa.parse("/net/splitcells/run/world-history/allocations/world-history/world-history.csv"
+            , {
+                download: true
+                , worker: false
+                , dynamicTyping: true
+                , complete: async function (results) {
+                    worldSceneObjects_import(results.data);
+                    addLightToScene();
+                    listenToInput();
+                    camera_position_initialize();
+                    window.addEventListener("gamepadconnected", gamepad.connect);
+                    window.addEventListener("gamepaddisconnected", gamepad.disconnect);
+                    sleep_for_ms(500).then(() => continuously_load_latest_time());
+                }
+             });
+}
+
+function sleep_for_ms(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+sleep_for_ms(500);
+
 // State only function calls in this section.
 
 if (worldVariables.world_import_from == undefined) {
@@ -292,20 +340,7 @@ if (worldVariables.world_import_from == undefined) {
             }  
         });
 } else if (worldVariables.world_import_from === 'live') {
-    Papa.parse("/net/splitcells/run/world-history/allocations/world-history/world-history.csv"
-        , {
-            download: true
-            , worker: false
-            , dynamicTyping: true
-            , complete: function (results) {
-                worldSceneObjects_import(results.data);
-                addLightToScene();
-                listenToInput();
-                camera_position_initialize();
-                window.addEventListener("gamepadconnected", gamepad.connect);
-                window.addEventListener("gamepaddisconnected", gamepad.disconnect);
-            }  
-        });
+    continuously_load_latest_time();
 }
 
 update();
