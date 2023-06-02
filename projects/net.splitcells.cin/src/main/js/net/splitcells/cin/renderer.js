@@ -225,6 +225,10 @@ function camera_focus_worldSceneObject_to_left() {
     camera_focus_worldSceneObject_nearest_on_condition((nextObject, camera_focus_current) => nextObject.position.x < camera_focus_current.position.x);
 }
 
+function camera_focus_worldSceneObject_nearest() {
+    camera_focus_worldSceneObject_nearest_on_condition((nextObject, camera_focus_current) => true);
+    }
+
 function camera_focus_worldSceneObject_nearest_on_condition(condition) {
     let camera_focus_current = worldVariables.camera_focus_current;
     if (camera_focus_current != undefined) {
@@ -309,9 +313,21 @@ function continuously_load_latest_time() {
                     addLightToScene();
                     listenToInput();
                     camera_position_initialize();
-                    window.addEventListener("gamepadconnected", gamepad.connect);
-                    window.addEventListener("gamepaddisconnected", gamepad.disconnect);
-                    sleep_for_ms(1000).then(() => continuously_load_latest_time());
+                    sleep_for_ms(1000).then(() => continuously_load_latest_time_loop());
+                }
+             });
+}
+
+function continuously_load_latest_time_loop() {
+    Papa.parse("/net/splitcells/run/world-history/allocations/world-history/world-history.csv"
+            , {
+                download: true
+                , worker: false
+                , dynamicTyping: true
+                , complete: async function (results) {
+                    worldSceneObjects_import(results.data);
+                    camera_focus_worldSceneObject_nearest();
+                    sleep_for_ms(1000).then(() => continuously_load_latest_time_loop());
                 }
              });
 }
@@ -320,10 +336,9 @@ function sleep_for_ms(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
-sleep_for_ms(500);
-
 // State only function calls in this section.
-
+window.addEventListener("gamepadconnected", gamepad.connect);
+window.addEventListener("gamepaddisconnected", gamepad.disconnect);
 if (worldVariables.world_import_from == undefined) {
     Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
         , {
@@ -335,9 +350,7 @@ if (worldVariables.world_import_from == undefined) {
                 addLightToScene();
                 listenToInput();
                 camera_position_initialize();
-                window.addEventListener("gamepadconnected", gamepad.connect);
-                window.addEventListener("gamepaddisconnected", gamepad.disconnect);
-            }  
+            }
         });
 } else if (worldVariables.world_import_from === 'live') {
     continuously_load_latest_time();
