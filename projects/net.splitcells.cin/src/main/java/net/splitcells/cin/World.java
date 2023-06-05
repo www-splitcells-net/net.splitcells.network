@@ -93,8 +93,8 @@ public class World {
         require(times.size() > 2);
         final var minTime = times.firstValue().orElseThrow();
         final var currentTime = times.lastValue().orElseThrow();
-        final var obsoleteDemands = world.allocations().demands().lookup(WORLD_TIME, minTime).unorderedLines();
-        obsoleteDemands.forEach(od -> world.demands().remove(od));
+        /* TODO final var obsoleteDemands = world.allocations().demands().lookup(WORLD_TIME, minTime).unorderedLines();
+        obsoleteDemands.forEach(od -> world.demands().remove(od));*/
         worldsTimeSpace(currentTime + 1, MIN_X, MAX_X, MIN_Y, MAX_Y)
                 .forEach(world.demands()::addTranslated);
         values(currentTime, currentTime, MIN_X, MAX_X, MIN_Y, MAX_Y, 0, 1)
