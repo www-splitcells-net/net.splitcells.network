@@ -78,7 +78,7 @@ public class LookupI<T> implements Lookup<T> {
     private void register_beforeAddition_atComplexContent(T addition, int index) {
         complexContent.forEach((predicate, lookupTable) -> {
             if (predicate.test(addition)) {
-                lookupTable.register(table.rawLinesView().get(index));
+                lookupTable.register(table.rawLine(index));
             }
         });
     }
