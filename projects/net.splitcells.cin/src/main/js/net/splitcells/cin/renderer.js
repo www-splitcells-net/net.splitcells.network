@@ -20,7 +20,9 @@ var worldVariables = {
      * Some times, this will show the world's state at the current time.
      */
     render_latest_time: true,
-    world_import_from: undefined
+    world_import_from: undefined,
+    load_time_last: undefined,
+    load_data_function:  undefined
 };
 const worldSceneObjectDefaultColor = 0x7D7D7D;
 const worldSceneObjectHighlightedColor = 0x8D8D8D;
@@ -39,7 +41,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.enablePan = false;
 
-if ( window != undefined) {
+if (window != undefined) {
     const browserUrl = window.location.search;
     const urlParams = new URLSearchParams(browserUrl);
     const world_import_from = urlParams.get('world_import_from');
@@ -113,11 +115,19 @@ var gamepad = {
 
 // Define only functions in this section.
 
-function update(currentTime) {
-    requestAnimationFrame(update);
+function render_loop(currentTime) {
+    if (worldVariables.load_time_last === undefined) {
+        worldVariables.load_time_last = currentTime;
+    }
+    let numberOfSecondsSince = (currentTime - worldVariables.load_time_last);
+    if (numberOfSecondsSince > 1000) {
+        worldVariables.load_time_last = currentTime;
+        load_loop();
+    }
     update_by_gamepad(currentTime);
     renderer.render(scene, camera);
     controls.update();
+    requestAnimationFrame(render_loop);
 }
 
 function update_by_gamepad(currentTime) {
@@ -205,7 +215,7 @@ function worldSceneObjects_import(updatedData) {
             }
         }
         if (worldVariables.render_latest_time == 1) {
-            let rowTime = updatedData[rowIndex][0];
+            let rowTime = row[0];
             if (rowTime != latestTime) {
                 continue;
             }
@@ -316,35 +326,21 @@ function camera_position_initialize() {
     worldVariables.camera_focus_current = chosenFocus;
 }
 
-function continuously_load_latest_time() {
-    Papa.parse("/net/splitcells/run/world-history/allocations/world-history/world-history.csv"
-            , {
-                download: true
-                , worker: false
-                , dynamicTyping: true
-                , complete: async function (results) {
-                    worldSceneObjects_import(results.data);
-                    addLightToScene();
-                    listenToInput();
-                    camera_position_initialize();
-                    sleep_for_ms(1000).then(() => continuously_load_latest_time_loop());
-                }
-             });
+function load_init() {
+    worldVariables.last_load_function((results) => {
+        worldSceneObjects_import(results.data);
+        addLightToScene();
+        listenToInput();
+        camera_position_initialize();
+    });
 }
 
-function continuously_load_latest_time_loop() {
-    Papa.parse("/net/splitcells/run/world-history/allocations/world-history/world-history.csv"
-            , {
-                download: true
-                , worker: false
-                , dynamicTyping: true
-                , complete: async function (results) {
-                    worldSceneObjects_import(results.data);
-                    worldScenesObject_clear();
-                    camera_focus_worldSceneObject_nearest();
-                    sleep_for_ms(1000).then(() => continuously_load_latest_time_loop());
-                }
-             });
+function load_loop() {
+    worldVariables.last_load_function((results) => {
+        worldScenesObject_clear();
+        worldSceneObjects_import(results.data);
+        camera_focus_worldSceneObject_nearest();
+    });
 }
 
 function sleep_for_ms(milliseconds) {
@@ -355,20 +351,23 @@ function sleep_for_ms(milliseconds) {
 window.addEventListener("gamepadconnected", gamepad.connect);
 window.addEventListener("gamepaddisconnected", gamepad.disconnect);
 if (worldVariables.world_import_from == undefined) {
-    Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
-        , {
-            download: true
-            , worker: false
-            , dynamicTyping: true
-            , complete: function (results) {
-                worldSceneObjects_import(results.data);
-                addLightToScene();
-                listenToInput();
-                camera_position_initialize();
-            }
-        });
+    worldVariables.last_load_function = (completeFunction) => {
+            Papa.parse("https://raw.githubusercontent.com/www-splitcells-net/net.splitcells.cin.log/master/src/main/csv/net/splitcells/cin/log/world/main/index.csv"
+                , {
+                    download: true
+                    , worker: false
+                    , dynamicTyping: true
+                    , complete: completeFunction});
+        }
 } else if (worldVariables.world_import_from === 'live') {
-    continuously_load_latest_time();
+    worldVariables.last_load_function = (completeFunction) => {
+        Papa.parse("/net/splitcells/run/world-history/allocations/world-history/world-history.csv"
+            , {
+                download: true
+                , worker: false
+                , dynamicTyping: true
+                , complete: completeFunction});
+    }
 }
-
-update();
+load_init();
+render_loop();
