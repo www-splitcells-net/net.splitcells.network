@@ -58,22 +58,24 @@ public class PlayerValuePersistenceClassifier {
             , String name) {
         return groupRouter((lines, children) -> {
             final var ratingEvent = ratingEvent();
-            final var lineValues = lines.columnView(LINE).values();
-            final var timeValues = lineValues
+            final var startTime = lines.columnView(LINE)
                     .stream()
                     .map(l -> l.value(timeAttribute))
                     .distinct()
                     .sorted(ASCENDING_INTEGERS)
-                    .collect(toList());
-            final var startTime = timeValues.get(0);
-            final var incomingConstraintGroup = lines.orderedLine(0).value(INCOMING_CONSTRAINT_GROUP);
+                    .findFirst().orElseThrow();
+            final var incomingConstraintGroup = lines.unorderedLinesStream()
+                    .findFirst()
+                    .orElseThrow()
+                    .value(INCOMING_CONSTRAINT_GROUP);
             final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
             final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
-            final var centerStartPositions = lineValues.stream()
+            final var centerStartPositions = lines.columnView(LINE)
+                    .stream()
                     .filter(l -> l.value(timeAttribute).equals(startTime))
                     .filter(l -> l.value(xCoordinate).equals(centerXPosition))
                     .filter(l -> l.value(yCoordinate).equals(centerYPosition));
-            final var centerEndPositions = lineValues
+            final var centerEndPositions = lines.columnView(LINE)
                     .stream()
                     .filter(l -> l.value(timeAttribute).equals(startTime + 1))
                     .filter(l -> l.value(xCoordinate).equals(centerXPosition))
