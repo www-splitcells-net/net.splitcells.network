@@ -63,18 +63,17 @@ import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
 
 /**
- * TODO Use constraint system for database queries regularly.
- * <p>
- * TODO Create non incremental constraint system as an alternative and double check.
- * <p>
- * TODO Use  parallelization.
- * <p>
- * IDEA Render constraint tree to HTML.
- * <p>
- * IDEA Combine the constraint system with theorem proofing.
- * <p>
- * TODO Implement {@link Constraint} graph as a table for better external compatibility and as a basis for side
- * effect free constraint tree (this is only required for side effect freedom in case of loops).
+ * <p>TODO Use constraint system for database queries regularly.</p>
+ * <p>TODO Create non incremental constraint system as an alternative and double check.</p>
+ * <p>TODO Use  parallelization.</p>
+ * <p>TODO IDEA Render constraint tree to HTML.</p>
+ * <p>TODO IDEA Combine the constraint system with theorem proofing.</p>
+ * <p>TODO Implement {@link Constraint} graph as a table for better external compatibility and as a basis for side
+ * effect free constraint tree (this is only required for side effect freedom in case of loops).</p>
+ * <p>TODO IDEA Create performance analyser for {@link Constraint} tree.
+ * For instance, this could log and check, how many values are recalculated in the tree,
+ * for a new allocation or a removal of such on average.
+ * </p>
  */
 public interface Constraint extends DatabaseSynchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
     Attribute<Line> LINE = attribute(Line.class, "line");
