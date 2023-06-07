@@ -2,22 +2,13 @@
 
 <div align="center">
   <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" style="width: 50%; display: block; margin: 1em;"/>
-  <p>Together we are more than the sum of our cells.</p>
 </div>
 
-## Introduction
-
-We provide an open source ecosystem centered around optimization and operations research.
-The main project is the [Generic Allocator](http://splitcells.net/net/splitcells/gel/index.html),
-which is a constraint satisfaction solver based on the assignment problem model.
-
-An overview of the projects can be found [here](https://splitcells.net/net/splitcells/network/overview.html).
-Some of them are not strictly related to optimization and can be used in other contexts as well.
-[OS State Interface](https://splitcells.net/net/splitcells/os/state/interface/README.html) is a good example of such.
-
-You have your own open source optimization software? How about working together? 
+> Together we are more than the sum of our cells.
 
 ## Where to start?
+🥅 Understand the [objectives](https://splitcells.net/net/splitcells/network/objectives.html) of the project.
+
 🪧 Get to know the main [features](https://splitcells.net/net/splitcells/network/advertisement.html).
 
 🚀 [Model and optimize problems.](http://splitcells.net/net/splitcells/gel/index.html)
@@ -64,44 +55,6 @@ You have your own open source optimization software? How about working together?
 [![REUSE status](https://api.reuse.software/badge/github.com/www-splitcells-net/net.splitcells.network)](https://api.reuse.software/info/github.com/www-splitcells-net/net.splitcells.network)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6588/badge)](https://bestpractices.coreinfrastructure.org/projects/6588)
 [![CodeQL-Analysis](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/www-splitcells-net/net.splitcells.network/actions/workflows/codeql-analysis.yml)
-## Project Cluster Structure
-This project is meant to be part of a cluster, with a certain filesystem structure in mind.
-The cluster's filesystem consists of a folder containing repositories without nesting:
-```
-Project Cluster
-├── net.splitcells.network
-│   └── projects
-│       ├── net.splitcells.dem
-│       ├── net.splitcells.gel
-│       ├── net.splitcells.os.state.interface
-│       ├── net.splitcells.system
-│       └── ...
-├── net.splitcells.network.log
-├── net.splitcells.os.state.interface.lib.gpl.2
-├── net.splitcells.os.state.interface.lib.gpl.3
-└── ...
-```
-> This image illustrates the networks structure by showing relevant parts of the filesystem.
-
-* [net.splitcells.network](http://splitcells.net):
-  This repository integrates all projects, repositories and hosting services, that are part of the network.
-  * [dem](./projects/net.splitcells.dem/README.md): Provides a standardized fundament for Java projects.
-  * [gel](./projects/net.splitcells.gel/README.md): This framework delivers optimization capabilities.
-  * [os.state.interface](./projects/net.splitcells.os.state.interface/README.md):
-    The projects helps the user to organize and execute commands in the terminal via dependency injection.
-  * [system](./projects/net.splitcells.system/README.md):
-    Manages all integrated subprojects of the network.
-    In particular, it can be used to build all integrated projects.
-* **Related projects/repositories**:
-  Related projects are located in repositories, which are at the same folder as the
-  [net.splitcells.network](http://splitcells.net) project. 
-  These projects are not inside this repository and are managed more independently.
-  They may be managed by users with [OS state interface](./projects/net.splitcells.os.state.interface/README.md).
-  It is recommended to not nest repositories.
-  * `net.splitcells.network.log` contains data like benchmark results.
-  * `net.splitcells.os.state.interface.lib.*` are command repositories,
-    that can be used independently or can be registered to an installation
-    of `net.splitcells.os.state.interface`.
 ## Infrastructure
 * Rendered Documentation via [a personal website](https://splitcells.net/net/splitcells/network/README.html)
 * Tickets are managed [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?type=classic)) for the community,

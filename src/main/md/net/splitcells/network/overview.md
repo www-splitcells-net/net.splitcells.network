@@ -1,29 +1,83 @@
-<a href="https://github.com/mermaid-js/mermaid-cli">Mermaid Overview Graph:</a>
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
+# Project Structure Overview
+## Project Relations
+This <a href="https://github.com/mermaid-js/mermaid-cli">Mermaid overview graph</a> shows
+the simplified relations between the projects.
+An arrow from project A to project B means,
+that either A provides something to B or that A interacts with B.
+Keep in mind, that project A providing project B with things,
+does not necessarily mean,
+that A is a dependency of B.
+For instance, `repo.process` manages git repos,
+but the git repos themselves do not require `repo.process`.
+
+The general idea behind this overview is,
+that the more downward the viewer looks,
+the more and more the projects represent end products,
+instead of foundational modules.
 
 <div align="center">
     <code class="mermaid">
 graph TD
     developer --> Network
-    Network --> repos
-    repos --> git
+    Osi --> repo.process
+    repo.process --> git
     Network --> Osi
     Network --> Blog
     Dem --> Worker
-    Blog --> Sew
-    Osi --> Pom
-    Osi --> OsiLib(lib)
+    Blog --> splitcells.net
+    Network --> Pom
+    Osi --> Osi.lib
     Pom --> Dem
-    Sew --> Gel
     Gel --> Sep
-    Worker --> Sew
+    Worker --> Webserver
     Sep --> Cin
-    Sew --> splitcells.net
-    Sew --> logs
+    Webserver --> splitcells.net
+    Webserver --> Gel
+    Webserver --> logs
     splitcells.net --> user
     </code>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 
-----
-* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
-* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+## Project And Repo Cluster Structure
+This project is meant to be part of a cluster, with a certain filesystem structure in mind.
+The cluster's filesystem consists of a folder containing repositories with minimal repo nesting:
+```
+Project Cluster
+├── net.splitcells.network
+│   └── projects
+│       ├── net.splitcells.dem
+│       ├── net.splitcells.gel
+│       ├── net.splitcells.os.state.interface
+│       ├── net.splitcells.system
+│       └── ...
+├── net.splitcells.network.log
+├── net.splitcells.os.state.interface.lib.gpl.2
+├── net.splitcells.os.state.interface.lib.gpl.3
+└── ...
+```
+> This image illustrates the networks structure by showing relevant parts of the filesystem.
+
+* [net.splitcells.network](http://splitcells.net):
+  This repository integrates all projects, repositories and hosting services, that are part of the primary network.
+    * [dem](./projects/net.splitcells.dem/README.md): Provides a standardized fundament for Java projects.
+    * [gel](./projects/net.splitcells.gel/README.md): This framework delivers optimization capabilities.
+    * [os.state.interface](./projects/net.splitcells.os.state.interface/README.md):
+      The projects helps the user to organize and execute commands in the terminal via dependency injection.
+    * [system](./projects/net.splitcells.system/README.md):
+      Manages all integrated subprojects of the network.
+      In particular, it can be used to use all integrated projects as a dependency.
+* **Related projects/repositories**:
+  Related projects are located in repositories, which are at the same folder as the
+  [net.splitcells.network](http://splitcells.net) project.
+  These projects are not inside this repository and are managed more independently.
+  They may be managed by users with [OS state interface](./projects/net.splitcells.os.state.interface/README.md).
+  It is recommended to not nest repositories.
+    * `net.splitcells.network.log` contains data like benchmark results.
+    * `net.splitcells.os.state.interface.lib.*` are command repositories,
+      that can be used independently or can be registered to an installation
+      of `net.splitcells.os.state.interface`.

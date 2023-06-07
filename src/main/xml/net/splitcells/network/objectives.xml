@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://splitcells.net/sew.xsd">
+    <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
+        <title>Splitcells Network's Objective
+        </title>
+    </meta>
+    <paragraph>
+        We provide an open source ecosystem centered around optimization and operations research.
+        The main project is the
+        <link>
+            <text>Generic Allocator</text>
+            <url>http://splitcells.net/net/splitcells/gel/index.html</url>
+        </link>
+        ,
+        which is a constraint satisfaction solver based on the assignment problem model.
+    </paragraph>
+    <paragraph>An overview of the projects can be found
+        <link>
+            <text>here</text>
+            <url>https://splitcells.net/net/splitcells/network/overview.html</url>
+        </link>
+        .
+        Some of them are not strictly related to optimization and can be used in other contexts as well.
+        <link>
+            <text>OS State Interface</text>
+            <url>https://splitcells.net/net/splitcells/os/state/interface/README.html</url>
+        </link>
+        is a good example of such.
+    </paragraph>
+    <paragraph>You have your own open source optimization software? How about working together?</paragraph>
+</article>
