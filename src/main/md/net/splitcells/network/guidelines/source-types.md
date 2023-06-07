@@ -33,6 +33,14 @@ For example, it is a good idea to write READMEs in the CommonMark format,
 so they can easily be read on git hosters like [sourcehut](https://sourcehut.org/)
 and [Github](https://github.com/).
 
+CommonMark itself is not suitable as a primary file format,
+[as does not seem to have a formal grammar](https://talk.commonmark.org/t/commonmark-formal-grammar/46/26)
+and it seems there is no intention to have one.
+This reduces the portability of CommonMark converter implementations
+(which is also a problem for XSL in this project).
+In other words, it is easier to convert a generic tree structure file format to CommonMark,
+than the other way around.
+
 Secondary supported file formats should be omitted,
 if there is not a good reason for using them.
 The reason for this is the fact,
