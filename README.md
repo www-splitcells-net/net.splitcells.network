@@ -2,9 +2,8 @@
 
 <div align="center">
   <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.jpg" style="width: 50%; display: block; margin: 1em;"/>
+  <p>Together we are more than the sum of our cells.</p>
 </div>
-
-> Together we are more than the sum of our cells.
 
 ## Where to start?
 🥅 Understand the [objectives](https://splitcells.net/net/splitcells/network/objectives.html) of the project.
