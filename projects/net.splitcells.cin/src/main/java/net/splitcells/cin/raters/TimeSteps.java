@@ -112,11 +112,11 @@ public class TimeSteps implements Rater {
             rating.additions().put(addition, localRating);
         } else {
             final var startTimePresent = linesOfGroup.columnView(LINE)
-                    .lookup(l -> l.value(timeAttribute).equals(startTime))
-                    .isPresent();
+                    .stream()
+                    .anyMatch(l -> l.value(timeAttribute).equals(startTime));
             final var endTimePresent = linesOfGroup.columnView(LINE)
-                    .lookup(l -> l.value(timeAttribute).equals(endTime))
-                    .isPresent();
+                    .stream()
+                    .anyMatch(l -> l.value(timeAttribute).equals(endTime));
             final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
             if (startTimePresent && endTimePresent) {
                 final var timeStep = startTimeToTimeStepGroup.computeIfAbsent(startTime
@@ -176,8 +176,9 @@ public class TimeSteps implements Rater {
         }
         final var removalOfLastTimeElement = linesOfGroup
                 .columnView(LINE)
-                .lookup(l -> l.value(timeAttribute).equals(timeValue))
-                .size() == 1;
+                .stream()
+                .filter(l -> l.value(timeAttribute).equals(timeValue))
+                .count() == 1;
         final var incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
         if (removalOfLastTimeElement) {
             startTimeToTimeStepGroup.remove(startTime);
