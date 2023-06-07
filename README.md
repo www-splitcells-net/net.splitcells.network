@@ -1,7 +1,7 @@
 # net.splitcells.network
 
 <div align="center">
-  <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.for.readme.svg" style="display: block; margin: 1em;"/>
+  <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.for.readme.svg" style="width: 100%; display: block; margin: 1em;"/>
   <p>Together we are more than the sum of our cells.</p>
 </div>
 
