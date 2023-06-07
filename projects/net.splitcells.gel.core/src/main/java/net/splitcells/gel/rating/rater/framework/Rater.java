@@ -58,7 +58,12 @@ public interface Rater extends PubliclyTyped<Rater>
         , Domable {
 
     /**
-     * Calculates the {@link Rating} updates of the given {@code linesOfGroup}.
+     * <p>Calculates the {@link Rating} updates of the given {@code linesOfGroup}.</p>
+     * <p>TODO Is lines parameter not obsolete because of lineProcessing parameter?
+     * Note, that the return value of this function requires elements of lines.
+     * This could be provided via lineProcessing,
+     * if it was a view on the allocations.
+     * </p>
      *
      * @param lines          The already present lines of the group after the addition.
      *                       The {@link Table#headerView()} of this is the same as of {@link Constraint#lines()}.
