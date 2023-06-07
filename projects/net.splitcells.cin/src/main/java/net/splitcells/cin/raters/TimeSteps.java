@@ -38,6 +38,9 @@ import static net.splitcells.dem.utils.MathUtils.sign;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.constraint.Constraint.PROPAGATION_TO;
+import static net.splitcells.gel.constraint.Constraint.RATING;
+import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
@@ -45,6 +48,12 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class TimeSteps implements Rater {
     public static final String NO_TIME_STEP_GROUP = "no-time-step-group";
+    /**
+     * Option that tries to improve the performance,
+     * when set to true,
+     * but does not do achieve a better runtime in practice.
+     */
+    private static final boolean AVOID_LOOKUPS = false;
 
     public static String timeStepId(int startTime, int endTime) {
         return startTime + " -> " + endTime;
@@ -126,20 +135,41 @@ public class TimeSteps implements Rater {
                         .withRating(noCost())
                         .withResultingGroupId(timeStep);
                 rating.additions().put(addition, localRating);
-                linesOfGroup.columnView(LINE)
-                        .lookup(l -> l.value(timeAttribute).equals(startTime))
-                        .unorderedLinesStream()
-                        .filter(l -> l.index() != addition.index())
-                        .forEach(l -> {
-                            rating.updateRating_withReplacement(l, localRating);
-                        });
-                linesOfGroup.columnView(LINE)
-                        .lookup(l -> l.value(timeAttribute).equals(endTime))
-                        .unorderedLinesStream()
-                        .filter(l -> l.index() != addition.index())
-                        .forEach(l -> {
-                            rating.updateRating_withReplacement(l, localRating);
-                        });
+                if (AVOID_LOOKUPS) {
+                    ratingsBeforeAddition.unorderedLinesStream()
+                            .filter(l -> l.value(LINE).value(timeAttribute).equals(startTime))
+                            .filter(l -> l.value(LINE).index() != addition.value(LINE).index())
+                            .filter(l -> !l.value(RATING).equalz(noCost())
+                                    || !l.value(PROPAGATION_TO).equals(children)
+                                    || !l.value(RESULTING_CONSTRAINT_GROUP).equals(timeStep))
+                            .forEach(l -> rating.updateRating_withReplacement(
+                                    linesOfGroup.lookup(LINE, l.value(LINE)).orderedLine(0)
+                                    , localRating));
+                    ratingsBeforeAddition.unorderedLinesStream()
+                            .filter(l -> l.value(LINE).value(timeAttribute).equals(endTime))
+                            .filter(l -> l.value(LINE).index() != addition.value(LINE).index())
+                            .filter(l -> !l.value(RATING).equalz(noCost())
+                                    || !l.value(PROPAGATION_TO).equals(children)
+                                    || !l.value(RESULTING_CONSTRAINT_GROUP).equals(timeStep))
+                            .forEach(l -> rating.updateRating_withReplacement(
+                                    linesOfGroup.lookup(LINE, l.value(LINE)).orderedLine(0)
+                                    , localRating));
+                } else {
+                    linesOfGroup.columnView(LINE)
+                            .lookup(l -> l.value(timeAttribute).equals(startTime))
+                            .unorderedLinesStream()
+                            .filter(l -> l.index() != addition.index())
+                            .forEach(l -> {
+                                rating.updateRating_withReplacement(l, localRating);
+                            });
+                    linesOfGroup.columnView(LINE)
+                            .lookup(l -> l.value(timeAttribute).equals(endTime))
+                            .unorderedLinesStream()
+                            .filter(l -> l.index() != addition.index())
+                            .forEach(l -> {
+                                rating.updateRating_withReplacement(l, localRating);
+                            });
+                }
             } else {
                 final String groupName;
                 if (this.isStartTimeEven) {
@@ -182,22 +212,51 @@ public class TimeSteps implements Rater {
         final var incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
         if (removalOfLastTimeElement) {
             startTimeToTimeStepGroup.remove(startTime);
-            linesOfGroup
-                    .columnView(LINE)
-                    .lookup(l -> l.value(timeAttribute).equals(startTime))
-                    .unorderedLinesStream()
-                    .forEach(l -> rating.updateRating_withReplacement(l, localRating()
-                            .withPropagationTo(children)
-                            .withRating(noCost())
-                            .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
-            linesOfGroup
-                    .columnView(LINE)
-                    .lookup(l -> l.value(timeAttribute).equals(startTime + 1))
-                    .unorderedLinesStream()
-                    .forEach(l -> rating.updateRating_withReplacement(l, localRating()
-                            .withPropagationTo(children)
-                            .withRating(noCost())
-                            .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
+            if (AVOID_LOOKUPS) {
+                ratingsBeforeRemoval.unorderedLinesStream()
+                        .filter(l -> l.value(LINE).value(timeAttribute).equals(startTime))
+                        //.filter(l -> l.value(LINE).index() != removal.value(LINE).index())
+                        .filter(l -> !l.value(RATING).equalz(noCost())
+                                || !l.value(PROPAGATION_TO).equals(children)
+                                || !l.value(RESULTING_CONSTRAINT_GROUP).equals(noTimeStepGroups.get(incomingGroup)))
+                        .forEach(l -> rating.updateRating_withReplacement(linesOfGroup
+                                        .lookup(LINE, l.value(LINE))
+                                        .orderedLine(0)
+                                , localRating()
+                                        .withPropagationTo(children)
+                                        .withRating(noCost())
+                                        .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
+                ratingsBeforeRemoval.unorderedLinesStream()
+                        .filter(l -> l.value(LINE).value(timeAttribute).equals(startTime + 1))
+                        //.filter(l -> l.value(LINE).index() != removal.value(LINE).index())
+                        .filter(l -> !l.value(RATING).equalz(noCost())
+                                || !l.value(PROPAGATION_TO).equals(children)
+                                || !l.value(RESULTING_CONSTRAINT_GROUP).equals(noTimeStepGroups.get(incomingGroup)))
+                        .forEach(l -> rating.updateRating_withReplacement(linesOfGroup
+                                        .lookup(LINE, l.value(LINE))
+                                        .orderedLine(0)
+                                , localRating()
+                                        .withPropagationTo(children)
+                                        .withRating(noCost())
+                                        .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
+            } else {
+                linesOfGroup
+                        .columnView(LINE)
+                        .lookup(l -> l.value(timeAttribute).equals(startTime))
+                        .unorderedLinesStream()
+                        .forEach(l -> rating.updateRating_withReplacement(l, localRating()
+                                .withPropagationTo(children)
+                                .withRating(noCost())
+                                .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
+                linesOfGroup
+                        .columnView(LINE)
+                        .lookup(l -> l.value(timeAttribute).equals(startTime + 1))
+                        .unorderedLinesStream()
+                        .forEach(l -> rating.updateRating_withReplacement(l, localRating()
+                                .withPropagationTo(children)
+                                .withRating(noCost())
+                                .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
+            }
         }
         if (ENFORCING_UNIT_CONSISTENCY && linesOfGroup.size() == 1) {
             startTimeToTimeStepGroup.requireEmpty();
