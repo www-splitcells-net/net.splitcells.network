@@ -13,26 +13,22 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.dem.resource.communication.interaction;
+package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.ListWA;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.PerspectiveI;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.resource.communication.Closeable;
-import net.splitcells.dem.resource.communication.Flushable;
 import org.w3c.dom.Node;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
-import static net.splitcells.dem.resource.communication.interaction.LogMessageI.logMessage;
+import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 

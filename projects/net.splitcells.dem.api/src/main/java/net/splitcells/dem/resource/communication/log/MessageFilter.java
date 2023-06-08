@@ -17,11 +17,10 @@ package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.communication.interaction.LogMessage;
 
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 
 /**
  * TODO RENAME This is not a filter but a selector.

@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.dem.resource.communication.interaction;
+package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListWA;
@@ -33,7 +33,7 @@ import java.util.function.Predicate;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
-import static net.splitcells.dem.resource.communication.interaction.Pdsui.pdsui;
+import static net.splitcells.dem.resource.communication.log.Pdsui.pdsui;
 import static net.splitcells.dem.resource.Files.createDirectory;
 
 /**

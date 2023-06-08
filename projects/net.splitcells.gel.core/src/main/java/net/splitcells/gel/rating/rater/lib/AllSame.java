@@ -16,12 +16,7 @@
 package net.splitcells.gel.rating.rater.lib;
 
 import net.splitcells.dem.data.order.Comparators;
-import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -35,7 +30,6 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineGroup.groupRater;

@@ -17,12 +17,11 @@ package net.splitcells.website.server.projects;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.Renderer;

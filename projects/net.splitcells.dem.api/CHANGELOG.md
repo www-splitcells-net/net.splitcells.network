@@ -8,6 +8,9 @@
      because it was not used.
   3. Delete obsolete interface `net.splitcells.dem.resource.communication.interaction.Sui`,
      because it has no function anymore as the previous classes were removed.
+  4. Move content of `net.splitcells.dem.resource.communication.interaction` to
+     `net.splitcells.dem.resource.communication.log`,
+     in order to simplify package structure.
 * **2023-03-25** `Set#remove(Object)` will throw an exception,
   if the given Object is not present inside the set.
   In this case there is a higher probability, that the developer made a programming mistake,

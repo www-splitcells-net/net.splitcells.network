@@ -19,7 +19,7 @@ import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;

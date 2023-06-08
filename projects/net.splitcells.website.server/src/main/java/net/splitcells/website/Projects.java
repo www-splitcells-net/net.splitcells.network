@@ -17,17 +17,15 @@ package net.splitcells.website;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
-import net.splitcells.website.server.project.validator.SourceValidatorViaSchema;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.validator.SourceValidator;
 
 import java.nio.file.Path;
-import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.isDirectory;

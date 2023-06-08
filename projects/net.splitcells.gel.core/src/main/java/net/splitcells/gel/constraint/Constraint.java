@@ -43,7 +43,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;

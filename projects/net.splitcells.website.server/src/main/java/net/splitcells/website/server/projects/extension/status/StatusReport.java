@@ -15,7 +15,7 @@
  */
 package net.splitcells.website.server.projects.extension.status;
 
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 
 public class StatusReport {
 

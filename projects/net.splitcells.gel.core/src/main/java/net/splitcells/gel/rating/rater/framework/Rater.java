@@ -23,7 +23,7 @@ import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;

@@ -27,7 +27,7 @@ import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.RenderingResult;
 
 import java.nio.charset.StandardCharsets;
@@ -36,7 +36,7 @@ import java.util.function.Function;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.interaction.LogLevel.WARNING;
+import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 

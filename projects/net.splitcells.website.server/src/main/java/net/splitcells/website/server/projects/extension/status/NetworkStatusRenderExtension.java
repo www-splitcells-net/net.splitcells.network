@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.ContentType;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.HostName;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.Config;

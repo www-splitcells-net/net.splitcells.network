@@ -27,7 +27,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
-import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.common.Language.EMPTY_STRING;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;

@@ -17,10 +17,9 @@ package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.environment.resource.Console;
 import net.splitcells.dem.environment.resource.ResourceOptionI;
-import net.splitcells.dem.resource.communication.interaction.Ui;
 
 import static net.splitcells.dem.Dem.environment;
-import static net.splitcells.dem.resource.communication.interaction.Pdsui.pdsui;
+import static net.splitcells.dem.resource.communication.log.Pdsui.pdsui;
 
 /**
  * <p>TODO Create compact and standardize log format.

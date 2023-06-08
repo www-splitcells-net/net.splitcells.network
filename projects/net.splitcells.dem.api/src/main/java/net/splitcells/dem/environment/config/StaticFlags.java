@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.environment.config;
 
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;

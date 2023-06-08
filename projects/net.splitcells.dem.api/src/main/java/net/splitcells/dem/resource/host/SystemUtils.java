@@ -18,8 +18,7 @@ package net.splitcells.dem.resource.host;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.dem.utils.ConstructorIllegal;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 
 import java.io.*;
 import java.nio.file.Path;

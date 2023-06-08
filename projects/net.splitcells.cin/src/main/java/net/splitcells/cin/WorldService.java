@@ -26,7 +26,7 @@ import static net.splitcells.cin.World.initWorldHistory;
 import static net.splitcells.cin.World.worldHistory;
 import static net.splitcells.cin.World.worldOptimizer;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.communication.interaction.LogLevel.INFO;
+import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.utils.Time.reportRuntime;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.sep.Network.network;

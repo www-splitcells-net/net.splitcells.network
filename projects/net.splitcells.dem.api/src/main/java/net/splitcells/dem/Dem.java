@@ -30,11 +30,10 @@ import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
-import static java.util.Arrays.asList;
 import static net.splitcells.dem.ProcessResult.processResult;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
-import static net.splitcells.dem.resource.communication.interaction.LogLevel.UNKNOWN_ERROR;
+import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 
 /**

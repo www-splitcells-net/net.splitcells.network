@@ -15,11 +15,9 @@
  */
 package net.splitcells.website.server.project.validator;
 
-import net.splitcells.dem.environment.config.ProgramName;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.HostName;
 import net.splitcells.dem.utils.CommonFunctions;
-import net.splitcells.network.worker.Logger;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.RenderingResult;
@@ -32,7 +30,6 @@ import java.util.regex.Pattern;
 
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.network.worker.Logger.logger;
 

@@ -22,8 +22,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
-import net.splitcells.dem.utils.StreamUtils;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
@@ -56,7 +55,6 @@ import static net.splitcells.website.server.project.renderer.extension.Javascrip
 import static net.splitcells.website.server.project.renderer.extension.ProjectRendererExtensionMerger.rendererMerger;
 import static net.splitcells.website.server.project.renderer.extension.ResourceProjectRendererExtension.resourceRenderer;
 import static net.splitcells.website.server.project.renderer.extension.TextProjectRendererExtension.textExtension;
-import static net.splitcells.website.server.project.renderer.extension.UserCommandProjectRendererExtension.userCommandRenderer;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.extension.XmlProjectRendererExtension.xmlRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkBuildProjectRendererExtension.commonMarkBuildRenderer;

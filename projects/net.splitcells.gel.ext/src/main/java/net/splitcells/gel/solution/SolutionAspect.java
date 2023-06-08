@@ -15,14 +15,13 @@
  */
 package net.splitcells.gel.solution;
 
-import net.bytebuddy.implementation.bytecode.Throw;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
@@ -35,7 +34,6 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
-import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;

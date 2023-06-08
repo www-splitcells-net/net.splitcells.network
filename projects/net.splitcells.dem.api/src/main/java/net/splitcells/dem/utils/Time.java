@@ -16,7 +16,7 @@
 package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

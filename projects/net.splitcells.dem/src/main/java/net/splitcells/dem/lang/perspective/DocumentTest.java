@@ -16,7 +16,7 @@
 package net.splitcells.dem.lang.perspective;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.resource.communication.interaction.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 

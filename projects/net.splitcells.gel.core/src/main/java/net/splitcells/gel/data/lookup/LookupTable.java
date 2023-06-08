@@ -29,7 +29,7 @@ import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.interaction.LogLevel.DEBUG;
+import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
