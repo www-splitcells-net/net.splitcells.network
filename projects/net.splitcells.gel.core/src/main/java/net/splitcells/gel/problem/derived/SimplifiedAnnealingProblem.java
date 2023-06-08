@@ -211,7 +211,7 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public List<Column<Object>> columnsView() {
+    public ListView<Column<Object>> columnsView() {
         return originalSolution.columnsView();
     }
 

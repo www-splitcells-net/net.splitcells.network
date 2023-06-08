@@ -371,7 +371,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public List<Column<Object>> columnsView() {
+    public ListView<Column<Object>> columnsView() {
         return allocations.columnsView();
     }
 

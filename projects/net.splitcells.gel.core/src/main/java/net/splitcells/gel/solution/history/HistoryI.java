@@ -517,7 +517,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public List<Column<Object>> columnsView() {
+    public ListView<Column<Object>> columnsView() {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }

@@ -71,6 +71,7 @@ public class DatabaseI implements Database {
     private final List<Attribute<Object>> attributes;
     private final List<Attribute<? extends Object>> attributes2;
     private final List<Column<Object>> columns = list();
+    private final ListView<Column<Object>> columnsView = listView(columns);
     private final Map<Attribute<?>, Integer> typed_column_index = map();
     private final Set<Line> lines = setOfUniques();
     private final List<Line> rawLines = list();
@@ -326,8 +327,8 @@ public class DatabaseI implements Database {
      * @return
      */
     @Override
-    public List<Column<Object>> columnsView() {
-        return listWithValuesOf(columns);
+    public ListView<Column<Object>> columnsView() {
+        return columnsView;
     }
 
     @Override

@@ -204,7 +204,7 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
-    public List<Column<Object>> columnsView() {
+    public ListView<Column<Object>> columnsView() {
         return database.columnsView();
     }
 

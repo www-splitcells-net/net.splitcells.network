@@ -56,7 +56,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
 
     <T> ColumnView<T> columnView(Attribute<T> attribute);
 
-    List<Column<Object>> columnsView();
+    ListView<Column<Object>> columnsView();
 
     /**
      * @return List containing every {@link Line}, where {@link List#indexOf(Object)} matches {@link Line#index()}.

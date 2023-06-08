@@ -244,7 +244,7 @@ public class HistoryRef implements History {
     }
 
     @Override
-    public List<Column<Object>> columnsView() {
+    public ListView<Column<Object>> columnsView() {
         return history.columnsView();
     }
 

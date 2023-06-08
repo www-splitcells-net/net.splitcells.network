@@ -224,7 +224,7 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public List<Column<Object>> columnsView() {
+    public ListView<Column<Object>> columnsView() {
         return this.problem.columnsView();
     }
 

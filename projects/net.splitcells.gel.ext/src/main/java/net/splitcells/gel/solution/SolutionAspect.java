@@ -256,7 +256,7 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public List<Column<Object>> columnsView() {
+    public ListView<Column<Object>> columnsView() {
         return solution.columnsView();
     }
 

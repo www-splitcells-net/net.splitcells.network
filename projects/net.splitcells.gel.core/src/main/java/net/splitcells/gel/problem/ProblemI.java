@@ -215,7 +215,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public List<Column<Object>> columnsView() {
+    public ListView<Column<Object>> columnsView() {
         return this.allocations.columnsView();
     }
 
