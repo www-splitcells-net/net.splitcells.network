@@ -1,8 +1,11 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
-* **2023-06-06** Delete obsolete class `net.splitcells.dem.lang.perspective.PerspectiveXmlRenderer`,
-  because it was not used.
+* **2023-06-06 \#248**
+  1. Delete obsolete class `net.splitcells.dem.lang.perspective.PerspectiveXmlRenderer`,
+     because it was not used.
+  2. Delete obsolete classes `net.splitcells.dem.resource.communication.interaction.Dsui & DsuiTest`,
+     because it was not used.
 * **2023-03-25** `Set#remove(Object)` will throw an exception,
   if the given Object is not present inside the set.
   In this case there is a higher probability, that the developer made a programming mistake,
