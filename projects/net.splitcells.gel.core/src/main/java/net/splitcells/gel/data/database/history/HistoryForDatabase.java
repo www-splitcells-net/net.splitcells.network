@@ -43,6 +43,10 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.database.history.DatabaseEventType.ADDITION;
 import static net.splitcells.gel.data.database.history.DatabaseEventType.REMOVAL;
 
+/**
+ * TODO This is an experimental implementation of {@link History} for {@link Database} instead of {@link Allocations}.
+ * This is probably not working yet.
+ */
 public class HistoryForDatabase implements History {
 
     public static final Attribute<DatabaseEventType> DATABASE_EVENT_TYPE = attribute(DatabaseEventType.class, "database-event-type");
