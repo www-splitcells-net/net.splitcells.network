@@ -71,7 +71,8 @@ public class Loneliness implements Rater {
                     .sorted(ASCENDING_INTEGERS)
                     .collect(toList());
             final var startTime = timeValues.get(0);
-            final var incomingConstraintGroup = lines.unorderedLines().get(0).value(INCOMING_CONSTRAINT_GROUP);
+            final var incomingConstraintGroup = lines.unorderedLinesStream().findFirst().orElseThrow()
+                    .value(INCOMING_CONSTRAINT_GROUP);
             final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
             final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
             final var centerStartPosition = lineValues.stream()
@@ -172,7 +173,8 @@ public class Loneliness implements Rater {
                 .sorted(ASCENDING_INTEGERS)
                 .collect(toList());
         final var startTime = timeValues.get(0);
-        final var incomingConstraintGroup = lines.unorderedLines().get(0).value(INCOMING_CONSTRAINT_GROUP);
+        final var incomingConstraintGroup = lines.unorderedLinesStream().findFirst().orElseThrow()
+                .value(INCOMING_CONSTRAINT_GROUP);
         final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
         final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
         final Optional<Line> centerStartPosition;
