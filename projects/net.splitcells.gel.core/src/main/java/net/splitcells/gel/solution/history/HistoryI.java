@@ -59,7 +59,8 @@ import org.w3c.dom.Node;
 import java.util.function.Supplier;
 
 /**
- * TODO Limit or disable meta data in order to improve runtime performance.
+ * <p>TODO TOFIX The variable isRegisterEventIsEnabled is used incorrectly.</p>
+ * <p>TODO Limit or disable meta data in order to improve runtime performance.</p>
  */
 public class HistoryI implements History {
 
@@ -587,6 +588,12 @@ public class HistoryI implements History {
     @Override
     public boolean isRegisterEventIsEnabled() {
         return isRegisterEventIsEnabled;
+    }
+
+    @Override
+    public History withRegisterEventIsEnabled(boolean arg) {
+        isRegisterEventIsEnabled = arg;
+        return this;
     }
 
     @Override

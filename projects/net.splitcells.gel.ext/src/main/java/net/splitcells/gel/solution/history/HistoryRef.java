@@ -88,6 +88,12 @@ public class HistoryRef implements History {
     }
 
     @Override
+    public History withRegisterEventIsEnabled(boolean arg) {
+        history.withRegisterEventIsEnabled(arg);
+        return this;
+    }
+
+    @Override
     public History withLogNaturalArgumentation(boolean logNaturalArgumentation) {
         return history.withLogNaturalArgumentation(logNaturalArgumentation);
     }

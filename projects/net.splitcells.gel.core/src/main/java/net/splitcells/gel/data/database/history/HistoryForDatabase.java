@@ -265,6 +265,11 @@ public class HistoryForDatabase implements History {
     }
 
     @Override
+    public History withRegisterEventIsEnabled(boolean arg) {
+        throw notImplementedYet();
+    }
+
+    @Override
     public Object identity() {
         return this;
     }

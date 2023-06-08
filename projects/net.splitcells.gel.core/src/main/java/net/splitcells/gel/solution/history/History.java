@@ -126,6 +126,16 @@ public interface History extends Allocations, AfterAdditionSubscriber, BeforeRem
      */
     boolean isRegisterEventIsEnabled();
 
+    /**
+     * Signals, if this should record changes to the tracked {@link Solution}.
+     * This is an alternative to {@link #processWithHistory} and similar,
+     * but without the use of lambdas.
+     *
+     * @param arg This is the new value for the option.
+     * @return this
+     */
+    History withRegisterEventIsEnabled(boolean arg);
+
     History withLogNaturalArgumentation(boolean logNaturalArgumentation);
 
     /**
