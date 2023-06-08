@@ -1,6 +1,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-06-08 #170** `Table#columnsView` now returns a view of the list,
+  instead of a writeable copy,
+  in order to improve the runtime performance.
 * **2023-04-12 #170** Rename `Table#line(int)` to `Table#orderedLine(int)` in order to avoid misunderstandings by avoiding ambiguity.
 * **2023-04-07**
   1. Rename `Table#lines` to `Table#unorderedLines` in order to avoid programmer errors.
