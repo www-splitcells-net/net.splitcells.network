@@ -6,6 +6,8 @@
      because it was not used.
   2. Delete obsolete classes `net.splitcells.dem.resource.communication.interaction.Dsui & DsuiTest`,
      because it was not used.
+  3. Delete obsolete interface `net.splitcells.dem.resource.communication.interaction.Sui`,
+     because it has no function anymore as the previous classes were removed.
 * **2023-03-25** `Set#remove(Object)` will throw an exception,
   if the given Object is not present inside the set.
   In this case there is a higher probability, that the developer made a programming mistake,

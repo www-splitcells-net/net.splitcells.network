@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource.communication.interaction;
 
+import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
@@ -42,7 +43,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YE
  * In other words, this may be should be implemented as a general
  * functionality in order to provide one message one line logs.
  */
-public interface Ui extends Sui<LogMessage<Perspective>>, Resource {
+public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
 
     default Ui append(String name) {
         return append(logMessage(perspective(name), NO_CONTEXT, LogLevel.DEBUG));
