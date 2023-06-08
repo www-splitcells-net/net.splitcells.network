@@ -15,15 +15,20 @@
  */
 package net.splitcells.gel.data.database;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
@@ -245,5 +250,65 @@ public class DatabaseMetaAspect implements Database {
     @Override
     public List<Line> orderedLines() {
         return database.orderedLines();
+    }
+
+    @Override
+    public Stream<Line> unorderedLinesStream() {
+        return database.unorderedLinesStream();
+    }
+
+    @Override
+    public boolean contains(Line line) {
+        return database.contains(line);
+    }
+
+    @Override
+    public List<Line> unorderedLines() {
+        return database.unorderedLines();
+    }
+
+    @Override
+    public Stream<Line> orderedLinesStream() {
+        return database.orderedLinesStream();
+    }
+
+    @Override
+    public Set<List<Object>> distinctLineValues() {
+        return database.distinctLineValues();
+    }
+
+    @Override
+    public Line rawLine(int index) {
+        return database.rawLine(index);
+    }
+
+    @Override
+    public Line orderedLine(int n) {
+        return database.orderedLine(n);
+    }
+
+    @Override
+    public String toCSV() {
+        return database.toCSV();
+    }
+
+    @Override
+    public <T> Table lookup(Attribute<T> attribute, T value) {
+        return database.lookup(attribute, value);
+    }
+
+    @Override
+    public Stream<Line> lookupEquals(List<Object> values) {
+        return database.lookupEquals(values);
+    }
+
+    @Override
+    public Perspective toHtmlTable() {
+        return database.toHtmlTable();
+    }
+
+    @Override
+    public Element toFods() {
+        return database.toFods();
     }
 }
