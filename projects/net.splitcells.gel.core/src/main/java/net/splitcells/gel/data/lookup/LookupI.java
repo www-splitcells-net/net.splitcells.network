@@ -24,6 +24,7 @@ import static net.splitcells.gel.data.lookup.LookupTable.lookupTable;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.data.table.Line;
@@ -38,6 +39,11 @@ import net.splitcells.gel.data.table.attribute.Attribute;
  * @param <T>
  */
 public class LookupI<T> implements Lookup<T> {
+
+    /**
+     * TODO This needs to be tested and probably only enabled for only some {@link LookupI}.
+     */
+    private static final boolean EXPERIMENTAL_SPEED_UP = false;
 
     public static <T> Lookup<T> lookupI(Table table, Attribute<T> attribute) {
         return new LookupI<>(table, attribute);
@@ -89,14 +95,29 @@ public class LookupI<T> implements Lookup<T> {
             requireNotNull(content.get(removal).rawLinesView().get(index));
         }
         final var line = table.rawLine(index);
-        content.get(removal).removeRegistration(line);
-        complexContent.forEach((predicate, lookupTable) -> {
-            if (predicate.test(removal)) {
-                lookupTable.removeRegistration(table.rawLinesView().get(index));
-            }
-        });
+        final var affectedLookupTable = content.get(removal);
+        affectedLookupTable.removeRegistration(line);
+        final var complexLookupTablesToRemove = Lists.<Predicate<T>>list();
+        if (EXPERIMENTAL_SPEED_UP) {
+            complexContent.forEach((predicate, lookupTable) -> {
+                if (predicate.test(removal)) {
+                    lookupTable.removeRegistration(table.rawLinesView().get(index));
+                    if (lookupTable.isEmpty()) {
+                        complexLookupTablesToRemove.add(predicate);
+                    }
+                }
+            });
+            // garbage collection
+            complexLookupTablesToRemove.forEach(complexContent::remove);
+        } else {
+            complexContent.forEach((predicate, lookupTable) -> {
+                if (predicate.test(removal)) {
+                    lookupTable.removeRegistration(table.rawLinesView().get(index));
+                }
+            });
+        }
         // garbage collection
-        if (content.get(removal).isEmpty()) {
+        if (affectedLookupTable.isEmpty()) {
             content.remove(removal);
         }
     }
