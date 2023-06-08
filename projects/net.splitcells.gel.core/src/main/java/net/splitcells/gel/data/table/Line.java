@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.data.table;
 
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
@@ -39,12 +40,12 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 public interface Line extends Domable {
 
     static List<?> concat(Line... lines) {
-        final List<Object> concatination = list();
+        final List<Object> concatenation = list();
         for (var line : lines) {
-            line.context().headerView()
-                    .forEach(attribute -> concatination.add(line.value(attribute)));
+            final var columns = line.context().columnsView();
+            range(0, columns.size()).forEach(i -> concatenation.add(columns.get(i).get(line.index())));
         }
-        return concatination;
+        return concatenation;
     }
 
     <T> T value(Attribute<T> attribute);
