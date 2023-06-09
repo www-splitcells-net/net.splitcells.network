@@ -26,7 +26,7 @@
     </list>
     <paragraph>
         The sub project Crisis Network (Cin) is the main playground in order to demonstrate and evaluate the results.
-        It is a game, that allows one inject optimization problems into a shared world,
+        It is a game, that allows one to inject optimization problems into a shared world,
         in order to create a system with an enormous amount of complexity,
         thereby bringing the modelers and solvers to its limits and beyond.
     </paragraph>
