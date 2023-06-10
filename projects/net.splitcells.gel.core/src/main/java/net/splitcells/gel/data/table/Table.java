@@ -38,6 +38,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.table.attribute.IndexedAttribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import org.apache.commons.csv.CSVFormat;

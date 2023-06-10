@@ -32,6 +32,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.table.attribute.IndexedAttribute;
 
 /**
  * TODO {@link Line}s and {@link Table}s should be typed. Use a meta {@link Attribute}, which
@@ -49,6 +50,8 @@ public interface Line extends Domable {
     }
 
     <T> T value(Attribute<T> attribute);
+
+    <T> T value(IndexedAttribute<T> attribute);
 
     /**
      * Minimize usage of index as it is prone to errors.

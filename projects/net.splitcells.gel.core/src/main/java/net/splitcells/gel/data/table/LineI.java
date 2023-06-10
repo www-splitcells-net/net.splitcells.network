@@ -28,6 +28,7 @@ import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.PerspectiveI;
+import net.splitcells.gel.data.table.attribute.IndexedAttribute;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import net.splitcells.dem.lang.dom.Domable;
@@ -49,6 +50,11 @@ public class LineI implements Line {
     @Override
     public <T> T value(Attribute<T> attribute) {
         return context.columnView(requireNotNull(attribute)).get(index);
+    }
+
+    @Override
+    public <T> T value(IndexedAttribute<T> attribute) {
+        return (T) context.columnsView().get(attribute.headerIndex()).get(index);
     }
 
     @Override

@@ -125,7 +125,7 @@ public class DatabaseTest extends TestSuiteI {
         final var line = mock(Line.class);
         final var context = voidDatabase;
         when(line.context()).thenReturn(context);
-        when(line.value(any())).thenReturn(1);
+        when(line.value(any(Attribute.class))).thenReturn(1);
         when(line.index()).thenReturn(2);
         requireEquals(voidDatabase.addTranslated(list()).index(), 0);
         requireEquals(voidDatabase.add(line).index(), 2);
