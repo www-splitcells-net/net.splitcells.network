@@ -15,10 +15,9 @@
  */
 package net.splitcells.gel.data.database;
 
-import static java.util.Arrays.asList;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
-import java.util.Collection;
-
+import net.splitcells.dem.data.set.SetT;
 import net.splitcells.gel.data.table.Line;
 
 @FunctionalInterface
@@ -26,11 +25,11 @@ public interface AfterAdditionSubscriber {
 
     void registerAddition(Line line);
 
-    default void register_addition(Collection<Line> lines) {
+    default void register_addition(SetT<Line> lines) {
         lines.forEach(line -> registerAddition(line));
     }
 
     default void register_addition(Line... lines) {
-        register_addition(asList(lines));
+        register_addition(listWithValuesOf(lines));
     }
 }

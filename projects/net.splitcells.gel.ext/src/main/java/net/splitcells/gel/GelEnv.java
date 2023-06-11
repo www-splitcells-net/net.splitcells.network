@@ -22,7 +22,6 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.allocation.Allocationss;
-import net.splitcells.gel.data.allocations.AllocationsIRefFactory;
 import net.splitcells.gel.data.database.DatabaseMetaAspect;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.lookup.LookupFactory;
@@ -72,7 +71,6 @@ public final class GelEnv {
         return env -> {
             env.config()
                     .withConfigValue(Histories.class, new HistoryRefFactory())
-                    .withConfigValue(Allocationss.class, new AllocationsIRefFactory())
                     .withConfigValue(Lookups.class, new LookupIFactory());
             env.config().configValue(Databases.class).withAspect(DatabaseMetaAspect::databaseIRef);
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);

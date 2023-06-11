@@ -15,10 +15,17 @@
  */
 package net.splitcells.gel.data.allocation;
 
-import static java.util.Objects.requireNonNull;
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
+import static net.splitcells.dem.lang.Xml.event;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -26,19 +33,26 @@ import static net.splitcells.dem.data.set.list.Lists.concat;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.common.Language.ALLOCATE;
+import static net.splitcells.gel.common.Language.ALLOCATION;
+import static net.splitcells.gel.common.Language.DEMAND;
+import static net.splitcells.gel.common.Language.PATH_ACCESS_SYMBOL;
+import static net.splitcells.gel.common.Language.REMOVE;
+import static net.splitcells.gel.common.Language.SUPPLY;
 import static net.splitcells.gel.data.database.Databases.database2;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
-import java.util.Map;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
@@ -50,33 +64,47 @@ import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 
+/**
+ * <p>{@link #demandsUsed()} ()} and {@link #demandsFree()} contain all {@link Line} of {@link #demands()}.</p>
+ * <p>Line removal from {@link #demands_free} and {@link #supplies_free} has no subscriptions,
+ * because {@link Database} lines can be remove from the {@link Allocations} completely
+ * or they can be moved to the respectively used tables.</p>
+ * <p>TODO Fix {@link #demandOfAllocation(Line)} by using {@link #demands_used}.</p>
+ * <p>TODO Fix {@link #supplyOfAllocation} by using {@link #supplies_used}.<p/>
+ * <p>TODO IDEA Support for multiple {@link #path}. In this case paths with demand and supplies as base.<p/>
+ * <p>TODO Define {@link #path} as an convention regarding the meaning of demands and supplies.</p>
+ */
 public class AllocationsI implements Allocations {
-    protected final String names;
-    protected final Database allocations;
 
-    protected final List<AfterAdditionSubscriber> additionSubscriptions = list();
-    protected final List<BeforeRemovalSubscriber> beforeRemovalSubscriptions = list();
-    protected final List<BeforeRemovalSubscriber> afterRemovalSubscriptions = list();
+    public static Allocations allocations(String name, Database demands, Database supplies) {
+        return new AllocationsI(name, demands, supplies);
+    }
 
-    protected final Database supplies;
-    protected final Database supplies_used;
-    protected final Database supplies_free;
+    private final String names;
+    private final Database allocations;
 
-    protected final Database demands;
-    protected final Database demands_used;
-    protected final Database demands_free;
+    private final List<AfterAdditionSubscriber> additionSubscriptions = list();
+    private final List<BeforeRemovalSubscriber> beforeRemovalSubscriptions = list();
+    private final List<BeforeRemovalSubscriber> afterRemovalSubscriptions = list();
 
-    protected final Map<Integer, Integer> allocationsIndex_to_usedDemandIndex = map();
-    protected final Map<Integer, Integer> allocationsIndex_to_usedSupplyIndex = map();
+    private final Database supplies;
+    private final Database supplies_used;
+    private final Database supplies_free;
 
-    protected final Map<Integer, Set<Integer>> usedDemandIndexes_to_allocationIndexes = map();
-    protected final Map<Integer, Set<Integer>> usedSupplyIndexes_to_allocationIndexes = map();
+    private final Database demands;
+    private final Database demands_used;
+    private final Database demands_free;
 
-    protected final Map<Integer, Set<Integer>> usedDemandsIndex_to_usedSuppliesIndex = map();
-    protected final Map<Integer, Set<Integer>> usedSupplyIndex_to_usedDemandsIndex = map();
+    private final Map<Integer, Integer> allocationsIndex_to_usedDemandIndex = map();
+    private final Map<Integer, Integer> allocationsIndex_to_usedSupplyIndex = map();
 
-    @Deprecated
-    protected AllocationsI(String name, Database demand, Database supply) {
+    private final Map<Integer, Set<Integer>> usedDemandIndexes_to_allocationIndexes = map();
+    private final Map<Integer, Set<Integer>> usedSupplyIndexes_to_allocationIndexes = map();
+
+    private final Map<Integer, Set<Integer>> usedDemandsIndex_to_usedSuppliesIndex = map();
+    private final Map<Integer, Set<Integer>> usedSupplyIndex_to_usedDemandsIndex = map();
+
+    private AllocationsI(String name, Database demand, Database supply) {
         this.names = name;
         allocations = database2(Language.ALLOCATIONS.value() + "/" + name, demand, concat(demand.headerView(), supply.headerView()));
         // TODO Remove code and comment duplications.
@@ -102,7 +130,7 @@ public class AllocationsI implements Allocations {
             });
         }
         {
-            this.supplies = requireNonNull(supply);
+            this.supplies = requireNotNull(supply);
             supplies_free = database2("supply-free", this, supply.headerView());
             supplies_used = database2("supply-used", this, supply.headerView());
             supply.rawLinesView().forEach(supplies_free::add);
@@ -159,6 +187,67 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Line allocate(Line demand, Line supply) {
+        if (TRACING) {
+            requireNotNull(demand, "Cannot allocate without demand.");
+            requireNotNull(supply, "Cannot allocate without supply.");
+            domsole().append
+                    (event(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Allocations.class.getSimpleName()
+                                    , path().toString()
+                                    , Xml.elementWithChildren(DEMAND.value(), demand.toDom())
+                                    , Xml.elementWithChildren(SUPPLY.value(), supply.toDom()))
+                            , this
+                            , DEBUG
+                    );
+        }
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            list(demand.context()).requireContainsOneOf(demands_free, demands);
+            list(demand.context()).requireContainsOneOf(demands_free, demands);
+            list(supply.context()).requireContainsOneOf(supplies, supplies_free);
+            if (demand.index() < demands.rawLinesView().size()) {
+                requireNotNull(demands.rawLinesView().get(demand.index()));
+            } else if (demand.index() < demands_free.rawLinesView().size()) {
+                requireNotNull(demands_free.rawLinesView().get(demand.index()));
+            } else if (demand.index() < demands_used.rawLinesView().size()) {
+                requireNotNull(demands_used.rawLinesView().get(demand.index()));
+            } else {
+                throw executionException("A demand with such an index is not known");
+            }
+            if (supply.index() < supplies.rawLinesView().size()) {
+                requireNotNull(supplies.rawLinesView().get(supply.index()));
+            } else if (supply.index() < supplies_free.rawLinesView().size()) {
+                requireNotNull(supplies_free.rawLinesView().get(supply.index()));
+            } else if (supply.index() < supplies_used.rawLinesView().size()) {
+                requireNotNull(supplies_used.rawLinesView().get(supply.index()));
+            } else {
+                throw executionException("A supply with such an index is not known");
+            }
+            list(supply.context()).requireContainsOneOf(supplies, supplies_free, supplies_used);
+            list(demand.context()).requireContainsOneOf(demands, demands_free, demands_used);
+            {
+                // Multiple allocations per supply or demand are allowed.
+                boolean valid = false;
+                if (demand.index() < demands_used.rawLinesView().size()) {
+                    valid |= demands_used.rawLinesView().get(demand.index()) != null;
+                    if (demand.index() < demands_free.rawLinesView().size()) {
+                        valid |= demands_free.rawLinesView().get(demand.index()) != null;
+                    }
+                } else if (demand.index() < demands_free.rawLinesView().size()) {
+                    valid |= demands_free.rawLinesView().get(demand.index()) != null;
+                    if (demand.index() < demands_used.rawLinesView().size()) {
+                        valid |= demands_used.rawLinesView().get(demand.index()) != null;
+                    }
+                } else {
+                    throw new IllegalArgumentException();
+                }
+                assert valid;
+                /**
+                 * TODO The same for supplies;
+                 * <p/>
+                 * TODO Test if the right tables contain the suppy and if other tables do not
+                 * contain these {@link Table}
+                 */
+            }
+        }
         final var allocation = allocations.addTranslated(Line.concat(demand, supply));
         if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
             supplies_used.add(supply);
@@ -228,6 +317,31 @@ public class AllocationsI implements Allocations {
     public void remove(Line allocation) {
         final var demand = demandOfAllocation(allocation);
         final var supply = supplyOfAllocation(allocation);
+        if (TRACING) {
+            domsole().append
+                    (Xml.event(REMOVE.value()
+                                            + PATH_ACCESS_SYMBOL.value()
+                                            + Allocations.class.getSimpleName()
+                                    , path().toString()
+                                    , Xml.elementWithChildren(ALLOCATION.value()
+                                            , allocation.toDom())
+                                    , Xml.elementWithChildren(DEMAND.value()
+                                            , demand.toDom())
+                                    , Xml.elementWithChildren(SUPPLY.value()
+                                            , supply.toDom()))
+                            , this
+                            , DEBUG
+                    );
+        }
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            list(demand.context()).requireContainsOneOf(demands, demands_used);
+            list(supply.context()).requireContainsOneOf(supplies, supplies_used);
+            requireEquals(allocation.context(), allocations);
+            usedDemandIndexes_to_allocationIndexes.get(demand.index()).requirePresenceOf(allocation.index());
+            usedSupplyIndexes_to_allocationIndexes.get(supply.index()).requirePresenceOf(allocation.index());
+            requireEquals(allocationsIndex_to_usedDemandIndex.get(allocation.index()), demand.index());
+            requireEquals(allocationsIndex_to_usedSupplyIndex.get(allocation.index()), supply.index());
+        }
         beforeRemovalSubscriptions.forEach(subscriber -> subscriber.registerBeforeRemoval(allocation));
         allocations.remove(allocation);
         // TODO Make following code a remove subscription to allocations.
@@ -286,8 +400,11 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public <T> ColumnView<T> columnView(Attribute<T> attributes) {
-        return allocations.columnView(attributes);
+    public <T> ColumnView<T> columnView(Attribute<T> attribute) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            require(demands.headerView().contains(attribute) || supplies.headerView().contains(attribute));
+        }
+        return allocations.columnView(attribute);
     }
 
     @Override
@@ -322,20 +439,31 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Set<Line> allocationsOfSupply(Line supply) {
-        final Set<Line> allocationsOfSupply = setOfUniques();
-        try {
-            usedSupplyIndexes_to_allocationIndexes
-                    .get(supply.index())
-                    .forEach(allocationIndex ->
-                            allocationsOfSupply.add(allocations.rawLinesView().get(allocationIndex)));
-        } catch (RuntimeException e) {
-            throw e;
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
+                throw executionException(perspective("No allocations for the given supply are present.")
+                        .withProperty("supply index", "" + supply.index())
+                        .withProperty("context path", "" + supply.context().path())
+                );
+            }
         }
+        final Set<Line> allocationsOfSupply = setOfUniques();
+        usedSupplyIndexes_to_allocationIndexes
+                .get(supply.index())
+                .forEach(allocationIndex ->
+                        allocationsOfSupply.add(allocations.rawLinesView().get(allocationIndex)));
         return allocationsOfSupply;
     }
 
     @Override
     public Set<Line> allocationsOfDemand(Line demand) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            try {
+                setOfUniques(usedDemandIndexes_to_allocationIndexes.keySet()).requirePresenceOf(demand.index());
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+        }
         final Set<Line> allocationsOfDemand = setOfUniques();
         usedDemandIndexes_to_allocationIndexes
                 .get(demand.index())
@@ -346,7 +474,7 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Line allocationOf(LinePointer demand, LinePointer supply) {
-        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
             usedDemandIndexes_to_allocationIndexes
                     .get(demand.index())
                     .assertSizeIs(1);
@@ -361,7 +489,7 @@ public class AllocationsI implements Allocations {
                     .get(supply.index())
                     .iterator()
                     .next();
-            assertThat(demandLine).isEqualTo(supplyLine);
+            Integers.requireEqualInts(demandLine, supplyLine);
         }
         return allocations.rawLine(
                 usedDemandIndexes_to_allocationIndexes
@@ -411,8 +539,8 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Line lookupEquals(Attribute<Line> atribūts, Line cits) {
-        return allocations.lookupEquals(atribūts, cits);
+    public Line lookupEquals(Attribute<Line> attribute, Line other) {
+        return allocations.lookupEquals(attribute, other);
     }
 
     @Override

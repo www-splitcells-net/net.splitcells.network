@@ -39,7 +39,7 @@ public class AllocationsIFactory implements AllocationsFactory {
 
     @Override
     public Allocations allocations(String name, Database demands, Database supplies) {
-        return new AllocationsI(name, demands, supplies);
+        return AllocationsI.allocations(name, demands, supplies);
     }
 
     @Override

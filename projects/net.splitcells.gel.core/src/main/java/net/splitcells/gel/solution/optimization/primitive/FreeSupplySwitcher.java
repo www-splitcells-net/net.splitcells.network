@@ -104,7 +104,7 @@ public class FreeSupplySwitcher implements OfflineOptimization {
                                     , solution
                                             .supplies()
                                             .rawLine
-                                                    (randomness.integer(0, solution.suppliesFree().size()))
+                                                    (randomness.integer(0, solution.suppliesFree().size() - 1))
                                             .toLinePointer()
                             ));
         }
