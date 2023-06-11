@@ -49,8 +49,29 @@ public interface Line extends Domable {
         return concatenation;
     }
 
+    /**
+     * <p>Retrieves a value associated with this {@link Line} and {@link Attribute}.
+     * In order for this to work,
+     * {@link #context()} needs to contain this {@link Attribute} in its {@link Table#headerView()}.</p>
+     * <p>If possible, {@link #value(IndexedAttribute)} should be used instead,
+     * in order to get a better runtime performance.</p>
+     *
+     * @param attribute Identifies, which value of a {@link Line} should be retrieved.
+     * @return This is the value of the attribute.
+     * @param <T> This is the type of the value and the type parameter of the attribute.
+     */
     <T> T value(Attribute<T> attribute);
 
+    /**
+     * <p>Retrieves a value associated with this {@link Line} and {@link Attribute}.
+     * In order for this to work,
+     * {@link #context()} needs to contain this {@link IndexedAttribute#attribute()} in its {@link Table#headerView()}
+     * at the same position as {@link IndexedAttribute#headerIndex()}.</p>
+     *
+     * @param attribute  Identifies, which value of a {@link Line} should be retrieved.
+     * @return This is the value of the attribute.
+     * @param <T> This is the type of the value and the type parameter of the attribute.
+     */
     <T> T value(IndexedAttribute<T> attribute);
 
     /**
