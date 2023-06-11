@@ -239,6 +239,7 @@ public class DatabaseI implements Database {
             });
         }
         indexesOfFree.delete(index);
+        // TODO Wouldn't the size of the header be more important in order to detect errors?
         range(0, lineValues.size()).forEach(i -> columns.get(i).set(index, lineValues.get(i)));
         ++size;
         final var line = LineI.line(this, index);
