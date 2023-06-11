@@ -54,6 +54,7 @@
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
+* **2023-06-11 ##170**: Introduce IndexedAttribute in order to access values of Lines faster.
 * **2023-04-13 ##170**: Extend Query with optional value containing the Allocations the Query is being applied to.
   This allows one to create constraints,
   that depend on the supply and demand Tables of allocations of the given problem.
