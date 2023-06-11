@@ -85,6 +85,7 @@
     because it tried to open a website with the most common URL.
     In other words `https://localhost:8443/index.html` becomes `https://localhost:8443`.
 ### Minor Changes
+* **2023-06-11 \#s140**: Publish repo of `net.splitcells.symbiosis`.
 * **2022-12-05** [**\#s118 Speed up SourceHut build via m2 cache**](https://todo.sr.ht/~splitcells-net/net.splitcells.network/118):
   The new repo `net.splitcells.network.m2` is created, that contains a Maven m2 repo.
   This m2 repo is used in order to build Maven projects locally.
