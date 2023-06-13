@@ -19,10 +19,7 @@
         </item>
         <item>Enable the user to understand the results given a solver and an optimization system.</item>
         <item>Develop new optimization algorithms.</item>
-        <item>
-            Provide compatibility between different optimization systems.
-            You have your own open source optimization software? How about working together?
-        </item>
+        <item>Provide compatibility between different optimization systems.</item>
     </list>
     <paragraph>
         The sub project Crisis Network (Cin) is the main playground in order to demonstrate and evaluate the results.
