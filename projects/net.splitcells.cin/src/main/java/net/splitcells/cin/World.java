@@ -143,23 +143,21 @@ public class World {
                 .withSupplies(supplies)
                 .withConstraint(r -> {
                     r.then(commitmentAdherence(WORLD_TIME));
-                    r.forAll(overlappingTimeSteps(WORLD_TIME))
-                            .forAll(positionClustering(POSITION_X, POSITION_Y))
+                    final var positionTimeSteps = r.forAll(overlappingTimeSteps(WORLD_TIME))
+                            .forAll(positionClustering(POSITION_X, POSITION_Y));
+                    positionTimeSteps
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .forAll(loneliness(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
-                    r.forAll(overlappingTimeSteps(WORLD_TIME))
-                            .forAll(positionClustering(POSITION_X, POSITION_Y))
+                    positionTimeSteps
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .forAll(hasGoodCompany(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(survives(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
-                    r.forAll(overlappingTimeSteps(WORLD_TIME))
-                            .forAll(positionClustering(POSITION_X, POSITION_Y))
+                    positionTimeSteps
                             .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .forAll(crowded(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
-                    r.forAll(overlappingTimeSteps(WORLD_TIME))
-                            .forAll(positionClustering(POSITION_X, POSITION_Y))
+                    positionTimeSteps
                             .forAll(isDead(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .forAll(revivalCondition(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
                             .then(reproduction(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
