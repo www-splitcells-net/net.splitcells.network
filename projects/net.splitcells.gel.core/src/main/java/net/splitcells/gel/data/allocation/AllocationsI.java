@@ -250,11 +250,11 @@ public class AllocationsI implements Allocations {
         }
         final var allocation = allocations.addTranslated(Line.concat(demand, supply));
         if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
-            supplies_used.add(supply);
+            supplies_used.addWithSameHeaderPrefix(supply);
             supplies_free.remove(supply);
         }
         if (!usedDemandIndexes_to_allocationIndexes.containsKey(demand.index())) {
-            demands_used.add(demand);
+            demands_used.addWithSameHeaderPrefix(demand);
             demands_free.remove(demand);
         }
         {
@@ -380,11 +380,11 @@ public class AllocationsI implements Allocations {
         allocationsIndex_to_usedSupplyIndex.remove(allocation.index());
         if (!usedDemandsIndex_to_usedSuppliesIndex.containsKey(demand.index())) {
             demands_used.remove(demand);
-            demands_free.add(demand);
+            demands_free.addWithSameHeaderPrefix(demand);
         }
         if (!usedSupplyIndex_to_usedDemandsIndex.containsKey(supply.index())) {
             supplies_used.remove(supply);
-            supplies_free.add(supply);
+            supplies_free.addWithSameHeaderPrefix(supply);
         }
         afterRemovalSubscriptions.forEach(listener -> listener.registerBeforeRemoval(allocation));
     }
