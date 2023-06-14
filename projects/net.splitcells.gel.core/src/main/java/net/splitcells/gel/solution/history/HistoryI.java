@@ -327,6 +327,11 @@ public class HistoryI implements History {
     }
 
     @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        throw notImplementedYet();
+    }
+
+    @Override
     public void remove(int indexes) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);

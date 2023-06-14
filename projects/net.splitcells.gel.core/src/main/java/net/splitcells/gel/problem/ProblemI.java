@@ -163,6 +163,11 @@ public class ProblemI implements Problem {
         return this.allocations.add(line);
     }
 
+    @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        return allocations.addWithSameHeaderPrefix(line);
+    }
+
     @Deprecated
     @Override
     public void remove(final int allocationIndex) {

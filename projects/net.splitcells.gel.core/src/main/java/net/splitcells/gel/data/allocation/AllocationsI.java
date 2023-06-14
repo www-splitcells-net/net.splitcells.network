@@ -314,6 +314,11 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        throw notImplementedYet();
+    }
+
+    @Override
     public void remove(Line allocation) {
         final var demand = demandOfAllocation(allocation);
         final var supply = supplyOfAllocation(allocation);

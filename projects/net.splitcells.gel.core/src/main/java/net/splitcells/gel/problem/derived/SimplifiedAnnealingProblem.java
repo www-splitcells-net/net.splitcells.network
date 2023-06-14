@@ -171,6 +171,11 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        return originalSolution.addWithSameHeaderPrefix(line);
+    }
+
+    @Override
     public void remove(int lineIndex) {
         originalSolution.remove(lineIndex);
     }

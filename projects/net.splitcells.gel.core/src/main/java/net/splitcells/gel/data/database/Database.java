@@ -47,7 +47,26 @@ public interface Database extends Table {
 
     Line addTranslated(List<? extends Object> values);
 
+    /**
+     * Adds a new {@link Line} to this {@link Database} at the same index, as {@link Line#index()}.
+     * The new {@link Line}'s value will be queried from the given {@link Line}.
+     *
+     * @param line The index and the values of the new {@link Line}.
+     * @return The newly created {@link Line}.
+     */
     Line add(Line line);
+
+    /**
+     * This is a faster version of {@link #add(Line)}.
+     * The speed is achieved by requiring the {@link Table#headerView()} of this {@link Database} to be a prefix
+     * to the {@link Table#headerView()} of the given {@link Line#context()}.
+     * In other words, all {@link Table#headerView()}'s {@link Attribute}s of this {@link Database},
+     * need to be present at the same location in {@link Table#headerView()} of the {@link Line#context()}.
+     *
+     * @param line
+     * @return
+     */
+    Line addWithSameHeaderPrefix(Line line);
 
     /**
      * This is done to make queries on {@link Database},

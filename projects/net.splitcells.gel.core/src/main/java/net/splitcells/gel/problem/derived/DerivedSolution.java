@@ -177,6 +177,11 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        return allocations.addWithSameHeaderPrefix(line);
+    }
+
+    @Override
     public void remove(int lineIndex) {
         allocations.remove(lineIndex);
     }

@@ -136,6 +136,11 @@ public class HistoryForDatabase implements History {
     }
 
     @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        throw notImplementedYet();
+    }
+
+    @Override
     public void remove(int indexes) {
         throw notImplementedYet();
     }

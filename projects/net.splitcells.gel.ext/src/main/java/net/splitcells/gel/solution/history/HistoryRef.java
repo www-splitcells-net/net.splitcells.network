@@ -204,6 +204,11 @@ public class HistoryRef implements History {
     }
 
     @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        return history.addWithSameHeaderPrefix(line);
+    }
+
+    @Override
     public void remove(int lineIndex) {
         history.remove(lineIndex);
     }

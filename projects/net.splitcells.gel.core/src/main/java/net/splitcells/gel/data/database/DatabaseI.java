@@ -203,6 +203,17 @@ public class DatabaseI implements Database {
     }
 
     @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        final List<Object> lineValues = list();
+        final var lineColumns = line.context().columnsView();
+        final var lineIndex = line.index();
+        range(0, attributes.size()).forEach(i -> {
+            lineValues.add(lineColumns.get(i).get(lineIndex));
+        });
+        return addTranslated(lineValues, line.index());
+    }
+
+    @Override
     public Line add(Line line) {
         final List<Object> lineValues = list();
         range(0, attributes.size()).forEach(i -> {

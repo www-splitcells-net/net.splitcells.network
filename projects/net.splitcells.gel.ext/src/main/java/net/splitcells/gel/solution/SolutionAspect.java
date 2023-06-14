@@ -151,6 +151,11 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        return solution.addWithSameHeaderPrefix(line);
+    }
+
+    @Override
     public void remove(int lineIndex) {
         solution.remove(lineIndex);
     }

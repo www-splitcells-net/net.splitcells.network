@@ -173,6 +173,11 @@ public class SolutionI implements Solution {
         return this.problem.add(line);
     }
 
+    @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        return problem.addWithSameHeaderPrefix(line);
+    }
+
     @SuppressWarnings("all")
     public void remove(final int lineIndex) {
         this.problem.remove(lineIndex);

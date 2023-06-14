@@ -101,6 +101,11 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
+    public Line addWithSameHeaderPrefix(Line line) {
+        return database.addWithSameHeaderPrefix(line);
+    }
+
+    @Override
     public void remove(int lineIndex) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (database.rawLinesView().size() <= lineIndex) {
