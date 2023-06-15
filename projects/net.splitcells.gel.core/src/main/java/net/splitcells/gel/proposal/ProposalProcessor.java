@@ -41,8 +41,8 @@ public class ProposalProcessor {
         final var proposal = proposal(subject);
         subject.allocations().unorderedLinesStream()
                 .forEach(a -> {
-                    final var origDemand = subject.allocations().demandOfAllocation(a);
-                    final var origSupply = subject.allocations().supplyOfAllocation(a);
+                    final var origDemand = subject.allocations().demandOfAssignment(a);
+                    final var origSupply = subject.allocations().supplyOfAssignment(a);
                     final var demand = proposal.conextAllocations().demands().add(origDemand);
                     final var supply = proposal.conextAllocations().supplies().add(origSupply);
                     proposal.conextAllocations().assign(demand, supply);

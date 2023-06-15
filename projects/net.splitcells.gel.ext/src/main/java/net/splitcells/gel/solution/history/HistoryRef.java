@@ -164,23 +164,23 @@ public class HistoryRef implements History {
     }
 
     @Override
-    public Line demandOfAllocation(Line allocation) {
-        return history.demandOfAllocation(allocation);
+    public Line demandOfAssignment(Line allocation) {
+        return history.demandOfAssignment(allocation);
     }
 
     @Override
-    public Line supplyOfAllocation(Line allocation) {
-        return history.supplyOfAllocation(allocation);
+    public Line supplyOfAssignment(Line allocation) {
+        return history.supplyOfAssignment(allocation);
     }
 
     @Override
-    public Set<Line> allocationsOfSupply(Line supply) {
-        return history.allocationsOfSupply(supply);
+    public Set<Line> assignmentsOfSupply(Line supply) {
+        return history.assignmentsOfSupply(supply);
     }
 
     @Override
-    public Set<Line> allocationsOfDemand(Line demand) {
-        return history.allocationsOfDemand(demand);
+    public Set<Line> assignmentsOfDemand(Line demand) {
+        return history.assignmentsOfDemand(demand);
     }
 
     @Override

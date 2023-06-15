@@ -56,17 +56,17 @@ public class AssignmentsTest extends TestSuiteI {
         testSubject.assign(testSubject.demands().rawLine(0)
                 , testSubject.supplies().rawLine(2));
         testSubject.unorderedLines().requireSizeOf(6);
-        final var multipleAllocationsPerDemands = testSubject.allocationsOfDemand(testSubject.demands().rawLine(0));
+        final var multipleAllocationsPerDemands = testSubject.assignmentsOfDemand(testSubject.demands().rawLine(0));
         multipleAllocationsPerDemands.requireSetSizeOf(4);
         multipleAllocationsPerDemands
                 .mapped(Line::values)
                 .requireContentsOf(list(list(0, 0), list(0, 0), list(0, 1), list(0, 2)));
-        final var oneAllocationsPerDemands1 = testSubject.allocationsOfDemand(testSubject.demands().rawLine(1));
+        final var oneAllocationsPerDemands1 = testSubject.assignmentsOfDemand(testSubject.demands().rawLine(1));
         oneAllocationsPerDemands1.requireSetSizeOf(1);
         oneAllocationsPerDemands1
                 .mapped(Line::values)
                 .requireContentsOf(list(list(1, 1)));
-        final var oneAllocationsPerDemands2 = testSubject.allocationsOfDemand(testSubject.demands().rawLine(2));
+        final var oneAllocationsPerDemands2 = testSubject.assignmentsOfDemand(testSubject.demands().rawLine(2));
         oneAllocationsPerDemands2.requireSetSizeOf(1);
         oneAllocationsPerDemands2
                 .mapped(Line::values)
@@ -92,7 +92,7 @@ public class AssignmentsTest extends TestSuiteI {
         final var supplies = database();
         final var allocations = allocations("test", demands, supplies);
         allocations.subscribeToAfterAdditions(
-                allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
+                allocation -> requireNotNull(allocations.demandOfAssignment(allocation)));
         allocations.assign
                 (demands.addTranslated(list())
                         , supplies.addTranslated(list()));
@@ -104,7 +104,7 @@ public class AssignmentsTest extends TestSuiteI {
         final var supplies = database();
         final var allocations = allocations("test", demands, supplies);
         allocations.subscribeToBeforeRemoval
-                (allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
+                (allocation -> requireNotNull(allocations.demandOfAssignment(allocation)));
         allocations.remove(
                 allocations.assign
                         (demands.addTranslated(list())
@@ -119,7 +119,7 @@ public class AssignmentsTest extends TestSuiteI {
             final var supplies = database();
             final var allocations = allocations("test", demands, supplies);
             allocations.subscribeToAfterRemoval
-                    (allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
+                    (allocation -> requireNotNull(allocations.demandOfAssignment(allocation)));
             allocations.remove(
                     allocations.assign
                             (demands.addTranslated(list())

@@ -324,7 +324,7 @@ public class SchoolCourseSchedulingTest {
                         }
                         newFreeCoursesOfId.addAll(freeCoursesByGroupId.get(freeCourseGroupId));
                         for (final var sameCourseInstance : sameCourseInstances) {
-                            final var sameSubjectCourseDemand = solution.demandOfAllocation(sameCourseInstance);
+                            final var sameSubjectCourseDemand = solution.demandOfAssignment(sameCourseInstance);
                             newFreeCoursesOfId.add(sameSubjectCourseDemand);
                             solution.remove(sameCourseInstance);
                         }
@@ -437,7 +437,7 @@ public class SchoolCourseSchedulingTest {
                                     }
                                 });
                                 final var retainedAllocatedHours = solution.lookup(COURSE_ID, course).unorderedLines().stream()
-                                        .filter(l -> !freeSlots.contains(solution.demandOfAllocation(l)))
+                                        .filter(l -> !freeSlots.contains(solution.demandOfAssignment(l)))
                                         .map(l -> l.value(ALLOCATED_HOURS))
                                         .reduce((a, b) -> a + b)
                                         .orElse(0);

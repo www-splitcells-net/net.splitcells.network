@@ -81,12 +81,12 @@ public class UsedSupplySwitcher implements OfflineOptimization {
                 return list();
             }
             final var usedDemandA = solution.demands().orderedLine(selectionA);
-            final var oldAllocationA = solution.allocationsOfDemand(usedDemandA).iterator().next();
-            final var usedSupplyA = solution.supplyOfAllocation(oldAllocationA);
+            final var oldAllocationA = solution.assignmentsOfDemand(usedDemandA).iterator().next();
+            final var usedSupplyA = solution.supplyOfAssignment(oldAllocationA);
 
             final var usedDemandB = solution.demands().orderedLine(selectionB);
-            final var oldAllocationB = solution.allocationsOfDemand(usedDemandB).iterator().next();
-            final var usedSupplyB = solution.supplyOfAllocation(oldAllocationB);
+            final var oldAllocationB = solution.assignmentsOfDemand(usedDemandB).iterator().next();
+            final var usedSupplyB = solution.supplyOfAssignment(oldAllocationB);
 
             final var usedDemandAPointer = usedDemandA.toLinePointer();
             final var usedDemandBPointer = usedDemandB.toLinePointer();

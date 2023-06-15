@@ -146,23 +146,23 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Line demandOfAllocation(Line allocation) {
-        return assignments.demandOfAllocation(allocation);
+    public Line demandOfAssignment(Line allocation) {
+        return assignments.demandOfAssignment(allocation);
     }
 
     @Override
-    public Line supplyOfAllocation(Line allocation) {
-        return assignments.supplyOfAllocation(allocation);
+    public Line supplyOfAssignment(Line allocation) {
+        return assignments.supplyOfAssignment(allocation);
     }
 
     @Override
-    public Set<Line> allocationsOfSupply(Line supply) {
-        return assignments.allocationsOfSupply(supply);
+    public Set<Line> assignmentsOfSupply(Line supply) {
+        return assignments.assignmentsOfSupply(supply);
     }
 
     @Override
-    public Set<Line> allocationsOfDemand(Line demand) {
-        return assignments.allocationsOfDemand(demand);
+    public Set<Line> assignmentsOfDemand(Line demand) {
+        return assignments.assignmentsOfDemand(demand);
     }
 
     @Override

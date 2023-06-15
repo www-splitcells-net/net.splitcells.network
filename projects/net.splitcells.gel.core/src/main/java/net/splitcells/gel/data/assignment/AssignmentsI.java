@@ -66,8 +66,8 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
  * <p>Line removal from {@link #demands_free} and {@link #supplies_free} has no subscriptions,
  * because {@link Database} lines can be remove from the {@link Assignments} completely
  * or they can be moved to the respectively used tables.</p>
- * <p>TODO Fix {@link #demandOfAllocation(Line)} by using {@link #demands_used}.</p>
- * <p>TODO Fix {@link #supplyOfAllocation} by using {@link #supplies_used}.<p/>
+ * <p>TODO Fix {@link #demandOfAssignment(Line)} by using {@link #demands_used}.</p>
+ * <p>TODO Fix {@link #supplyOfAssignment} by using {@link #supplies_used}.<p/>
  * <p>TODO IDEA Support for multiple {@link #path}. In this case paths with demand and supplies as base.<p/>
  * <p>TODO Define {@link #path} as an convention regarding the meaning of demands and supplies.</p>
  */
@@ -289,13 +289,13 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public Line demandOfAllocation(Line allocation) {
+    public Line demandOfAssignment(Line allocation) {
         return demands.rawLinesView()
                 .get(allocationsIndex_to_usedDemandIndex.get(allocation.index()));
     }
 
     @Override
-    public Line supplyOfAllocation(Line allocation) {
+    public Line supplyOfAssignment(Line allocation) {
         return supplies.rawLinesView()
                 .get(allocationsIndex_to_usedSupplyIndex.get(allocation.index()));
     }
@@ -317,8 +317,8 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public void remove(Line allocation) {
-        final var demand = demandOfAllocation(allocation);
-        final var supply = supplyOfAllocation(allocation);
+        final var demand = demandOfAssignment(allocation);
+        final var supply = supplyOfAssignment(allocation);
         if (TRACING) {
             domsole().append
                     (Xml.event(REMOVE.value()
@@ -440,7 +440,7 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public Set<Line> allocationsOfSupply(Line supply) {
+    public Set<Line> assignmentsOfSupply(Line supply) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
                 throw executionException(perspective("No allocations for the given supply are present.")
@@ -458,7 +458,7 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public Set<Line> allocationsOfDemand(Line demand) {
+    public Set<Line> assignmentsOfDemand(Line demand) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             try {
                 setOfUniques(usedDemandIndexes_to_allocationIndexes.keySet()).requirePresenceOf(demand.index());

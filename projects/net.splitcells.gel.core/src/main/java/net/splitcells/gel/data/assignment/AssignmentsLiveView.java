@@ -17,6 +17,7 @@ package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.database.Database;
 
@@ -67,27 +68,29 @@ public interface AssignmentsLiveView extends Table {
     /**
      * Determines the demand of the given allocation.
      * 
-     * @param allocation Element of {@link #demands()}.
+     * @param assignment Element of {@link #demands()}.
      * @return
      */
-    Line demandOfAllocation(Line allocation);
+    Line demandOfAssignment(Line assignment);
 
     /**
-     * Determines the supply of a given allocation.
+     * <p>Determines the supply of a given allocation.</p>
      * 
-     * @param allocation Element of {@link #supplies()}.
+     * @param assignment Element of {@link #supplies()}.
      * @return
      */
-    Line supplyOfAllocation(Line allocation);
+    Line supplyOfAssignment(Line assignment);
 
-    Set<Line> allocationsOfSupply(Line supply);
+    Line anyAssignmentOf(LinePointer demand, LinePointer supply);
 
-    Set<Line> allocationsOfDemand(Line demand);
+    Set<Line> assignmentsOfSupply(Line supply);
 
-    default Set<Line> supply_of_demand(Line demand) {
+    Set<Line> assignmentsOfDemand(Line demand);
+
+    default Set<Line> suppliesOfDemand(Line demand) {
         final Set<Line> suppliesOfDemands = setOfUniques();
-        allocationsOfDemand(demand)
-                .forEach(allocation -> suppliesOfDemands.add(supplyOfAllocation(allocation)));
+        assignmentsOfDemand(demand)
+                .forEach(allocation -> suppliesOfDemands.add(supplyOfAssignment(allocation)));
         return suppliesOfDemands;
     }
 }

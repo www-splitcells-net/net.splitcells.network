@@ -226,23 +226,23 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Line demandOfAllocation(Line allocation) {
-        return solution.demandOfAllocation(allocation);
+    public Line demandOfAssignment(Line allocation) {
+        return solution.demandOfAssignment(allocation);
     }
 
     @Override
-    public Line supplyOfAllocation(Line allocation) {
-        return solution.supplyOfAllocation(allocation);
+    public Line supplyOfAssignment(Line allocation) {
+        return solution.supplyOfAssignment(allocation);
     }
 
     @Override
-    public Set<Line> allocationsOfSupply(Line supply) {
-        return solution.allocationsOfSupply(supply);
+    public Set<Line> assignmentsOfSupply(Line supply) {
+        return solution.assignmentsOfSupply(supply);
     }
 
     @Override
-    public Set<Line> allocationsOfDemand(Line demand) {
-        return solution.allocationsOfDemand(demand);
+    public Set<Line> assignmentsOfDemand(Line demand) {
+        return solution.assignmentsOfDemand(demand);
     }
 
     @Override

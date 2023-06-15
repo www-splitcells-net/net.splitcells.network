@@ -115,8 +115,8 @@ public class HistoryI implements History {
                     = demands().addTranslated(list(
                     moveLastEventIdForward()
                     , allocations(ADDITION
-                            , solution.demandOfAllocation(allocationValues)
-                            , solution.supplyOfAllocation(allocationValues))));
+                            , solution.demandOfAssignment(allocationValues)
+                            , solution.supplyOfAssignment(allocationValues))));
             assignments.assign(allocation, this.supplies().addTranslated(list(metaData)));
         } else {
             if (!synchronizes) {
@@ -137,8 +137,8 @@ public class HistoryI implements History {
                     = demands().addTranslated(list(
                     moveLastEventIdForward()
                     , allocations(REMOVAL
-                            , solution.demandOfAllocation(removal)
-                            , solution.supplyOfAllocation(removal))));
+                            , solution.demandOfAssignment(removal)
+                            , solution.supplyOfAssignment(removal))));
             assignments.assign(allocation, this.supplies().addTranslated(list(metaData)));
         } else {
             if (!synchronizes) {
@@ -444,47 +444,47 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line demandOfAllocation(Line allocation) {
+    public Line demandOfAssignment(Line allocation) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return assignments.demandOfAllocation(allocation);
+        return assignments.demandOfAssignment(allocation);
     }
 
     @Override
-    public Line supplyOfAllocation(Line allocation) {
+    public Line supplyOfAssignment(Line allocation) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return assignments.supplyOfAllocation(allocation);
+        return assignments.supplyOfAssignment(allocation);
     }
 
     @Override
-    public Set<Line> allocationsOfSupply(Line supply) {
+    public Set<Line> assignmentsOfSupply(Line supply) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return assignments.allocationsOfSupply(supply);
+        return assignments.assignmentsOfSupply(supply);
     }
 
     @Override
-    public Set<Line> allocationsOfDemand(Line demand) {
+    public Set<Line> assignmentsOfDemand(Line demand) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return assignments.allocationsOfDemand(demand);
+        return assignments.assignmentsOfDemand(demand);
     }
 
     @Override

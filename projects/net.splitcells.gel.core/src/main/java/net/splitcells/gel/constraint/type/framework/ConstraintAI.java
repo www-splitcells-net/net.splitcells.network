@@ -190,7 +190,7 @@ public abstract class ConstraintAI implements Constraint {
         final Set<Line> complying = setOfUniques();
         allocations.forEach(allocation -> {
             if (rating(group, allocation.value(LINE)).equalz(noCost())) {
-                complying.add(lineProcessing.demandOfAllocation(allocation).value(LINE));
+                complying.add(lineProcessing.demandOfAssignment(allocation).value(LINE));
             }
         });
         return complying;
@@ -200,7 +200,7 @@ public abstract class ConstraintAI implements Constraint {
         final net.splitcells.dem.data.set.Set<Line> defying = setOfUniques();
         allocations.forEach(allocation -> {
             if (!rating(group, allocation.value(LINE)).equalz(noCost())) {
-                defying.add(lineProcessing.demandOfAllocation(allocation).value(LINE));
+                defying.add(lineProcessing.demandOfAssignment(allocation).value(LINE));
             }
         });
         return defying;

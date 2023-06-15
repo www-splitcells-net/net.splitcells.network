@@ -87,7 +87,7 @@ public class DemandSelectors {
                         } else {
                             group = demandGrouping.get(processing.getKey());
                         }
-                        group.with(solution.demandOfAllocation(processing.getValue()));
+                        group.with(solution.demandOfAssignment(processing.getValue()));
                     });
             return demandGrouping;
         };
@@ -133,7 +133,7 @@ public class DemandSelectors {
                         return true;
                     })
                     .filter(processing -> {
-                        final var demandProcessing = solution.demandOfAllocation(processing.value(Constraint.LINE));
+                        final var demandProcessing = solution.demandOfAssignment(processing.value(Constraint.LINE));
                         final var proposal = propose(solution, restrictingConstraintPath, list(demandProcessing));
                         final var hasRelevantProposal = proposal
                                 .proposedAllocations()
@@ -157,7 +157,7 @@ public class DemandSelectors {
                         } else {
                             group = demandGrouping.get(processing.getKey());
                         }
-                        group.with(solution.demandOfAllocation(processing.getValue()));
+                        group.with(solution.demandOfAssignment(processing.getValue()));
                     });
             return demandGrouping;
         };

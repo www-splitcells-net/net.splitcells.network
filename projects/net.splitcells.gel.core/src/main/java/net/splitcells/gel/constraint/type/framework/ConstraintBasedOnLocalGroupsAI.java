@@ -79,7 +79,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
 
     protected void processRatingEvent(RatingEvent ratingEvent) {
         ratingEvent.removal().forEach(removal ->
-                lineProcessing.allocationsOfDemand(removal).forEach(lineProcessing::remove));
+                lineProcessing.assignmentsOfDemand(removal).forEach(lineProcessing::remove));
         ratingEvent.additions().forEach((line, resultUpdate) -> {
             final var r = addResult(resultUpdate);
             int i = r.index();

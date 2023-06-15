@@ -129,18 +129,18 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public Line demandOfAllocation(final Line allocation) {
-        return this.problem.demandOfAllocation(allocation);
+    public Line demandOfAssignment(final Line allocation) {
+        return this.problem.demandOfAssignment(allocation);
     }
 
     @SuppressWarnings("all")
-    public Line supplyOfAllocation(final Line allocation) {
-        return this.problem.supplyOfAllocation(allocation);
+    public Line supplyOfAssignment(final Line allocation) {
+        return this.problem.supplyOfAssignment(allocation);
     }
 
     @SuppressWarnings("all")
-    public Set<Line> allocationsOfSupply(final Line supply) {
-        return this.problem.allocationsOfSupply(supply);
+    public Set<Line> assignmentsOfSupply(final Line supply) {
+        return this.problem.assignmentsOfSupply(supply);
     }
 
     @SuppressWarnings("all")
@@ -154,13 +154,13 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public Set<Line> allocationsOfDemand(final Line demand) {
-        return this.problem.allocationsOfDemand(demand);
+    public Set<Line> assignmentsOfDemand(final Line demand) {
+        return this.problem.assignmentsOfDemand(demand);
     }
 
     @SuppressWarnings("all")
-    public Set<Line> supply_of_demand(final Line demand) {
-        return this.problem.supply_of_demand(demand);
+    public Set<Line> suppliesOfDemand(final Line demand) {
+        return this.problem.suppliesOfDemand(demand);
     }
 
     @SuppressWarnings("all")

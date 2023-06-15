@@ -119,18 +119,18 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Line demandOfAllocation(final Line allocation) {
-        return this.assignments.demandOfAllocation(allocation);
+    public Line demandOfAssignment(final Line allocation) {
+        return this.assignments.demandOfAssignment(allocation);
     }
 
     @Override
-    public Line supplyOfAllocation(final Line allocation) {
-        return this.assignments.supplyOfAllocation(allocation);
+    public Line supplyOfAssignment(final Line allocation) {
+        return this.assignments.supplyOfAssignment(allocation);
     }
 
     @Override
-    public Set<Line> allocationsOfSupply(final Line supply) {
-        return this.assignments.allocationsOfSupply(supply);
+    public Set<Line> assignmentsOfSupply(final Line supply) {
+        return this.assignments.assignmentsOfSupply(supply);
     }
 
     @Override
@@ -144,13 +144,13 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Set<Line> allocationsOfDemand(final Line demand) {
-        return this.assignments.allocationsOfDemand(demand);
+    public Set<Line> assignmentsOfDemand(final Line demand) {
+        return this.assignments.assignmentsOfDemand(demand);
     }
 
     @Override
-    public Set<Line> supply_of_demand(final Line demand) {
-        return this.assignments.supply_of_demand(demand);
+    public Set<Line> suppliesOfDemand(final Line demand) {
+        return this.assignments.suppliesOfDemand(demand);
     }
 
     @Override

@@ -191,22 +191,22 @@ public class HistoryForDatabase implements History {
     }
 
     @Override
-    public Line demandOfAllocation(Line allocation) {
+    public Line demandOfAssignment(Line allocation) {
         throw notImplementedYet();
     }
 
     @Override
-    public Line supplyOfAllocation(Line allocation) {
+    public Line supplyOfAssignment(Line allocation) {
         throw notImplementedYet();
     }
 
     @Override
-    public Set<Line> allocationsOfSupply(Line supply) {
+    public Set<Line> assignmentsOfSupply(Line supply) {
         throw notImplementedYet();
     }
 
     @Override
-    public Set<Line> allocationsOfDemand(Line demand) {
+    public Set<Line> assignmentsOfDemand(Line demand) {
         throw notImplementedYet();
     }
 

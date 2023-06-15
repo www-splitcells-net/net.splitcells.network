@@ -42,8 +42,8 @@ public class LinearDeinitializer implements OfflineOptimization {
                     list(
                             optimizationEvent
                                     (REMOVAL
-                                            , solution.demandOfAllocation(allocation).toLinePointer()
-                                            , solution.supplyOfAllocation(allocation).toLinePointer()));
+                                            , solution.demandOfAssignment(allocation).toLinePointer()
+                                            , solution.supplyOfAssignment(allocation).toLinePointer()));
         }
         return list();
     }

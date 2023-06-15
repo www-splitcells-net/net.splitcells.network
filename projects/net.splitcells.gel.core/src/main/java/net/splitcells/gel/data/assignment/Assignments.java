@@ -17,15 +17,16 @@ package net.splitcells.gel.data.assignment;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.LinePointer;
 
 /**
- * <p>Allows multiple assignments for each demand.</p>
+ * <p>Allows multiple assignments for each one of {@link #demands()} and for each one of {@link #supplies()}.</p>
  * <p>
  * {@link Discoverable#path()} of {@link Assignments} start with the {@link Discoverable#path()} of the demand
  * and end with {@link net.splitcells.gel.common.Language#ALLOCATIONS}.
@@ -36,7 +37,7 @@ import net.splitcells.gel.data.table.LinePointer;
  * This also does reduce code duplication.
  * </p>
  */
-public interface Assignments extends Database, AssignmentsLiveView {
+public interface Assignments extends Allocations {
     Line assign(Line demand, Line supply);
 
     /**
@@ -51,13 +52,22 @@ public interface Assignments extends Database, AssignmentsLiveView {
         assignmentsOf(demand, supply).forEach(this::remove);
     }
 
+    /**
+     * Throws a {@link RuntimeException}, if there is more than one allocation for the demand and supply combination.
+     *
+     * @param demand
+     * @param supply
+     */
+    @Override
+    default void deallocate(Line demand, Line supply) {
+        throw notImplementedYet();
+    }
+
     default Set<Line> assignmentsOf(Line demand, Line supply) {
-        final var allocationsOf = allocationsOfSupply(supply);
-        return allocationsOfDemand(demand)
+        final var allocationsOf = assignmentsOfSupply(supply);
+        return assignmentsOfDemand(demand)
                 .stream()
                 .filter(allocationsOf::contains)
                 .collect(toSetOfUniques());
     }
-
-    Line anyAssignmentOf(LinePointer demand, LinePointer supply);
 }

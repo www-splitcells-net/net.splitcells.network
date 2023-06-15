@@ -186,7 +186,7 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
                     } else {
                         group = demandGrouping.get(processing.getKey());
                     }
-                    group.with(solution.demandOfAllocation(processing.getValue()));
+                    group.with(solution.demandOfAssignment(processing.getValue()));
                 });
         return demandGrouping;
     }
@@ -231,8 +231,8 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
                 })
                 .map(allocation -> optimizationEvent
                         (REMOVAL
-                                , solution.demandOfAllocation(allocation).toLinePointer()
-                                , solution.supplyOfAllocation(allocation).toLinePointer()))
+                                , solution.demandOfAssignment(allocation).toLinePointer()
+                                , solution.supplyOfAssignment(allocation).toLinePointer()))
                 .collect(toList());
     }
 }

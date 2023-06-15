@@ -140,23 +140,23 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public Line demandOfAllocation(Line allocation) {
-        return originalSolution.demandOfAllocation(allocation);
+    public Line demandOfAssignment(Line allocation) {
+        return originalSolution.demandOfAssignment(allocation);
     }
 
     @Override
-    public Line supplyOfAllocation(Line allocation) {
-        return originalSolution.supplyOfAllocation(allocation);
+    public Line supplyOfAssignment(Line allocation) {
+        return originalSolution.supplyOfAssignment(allocation);
     }
 
     @Override
-    public Set<Line> allocationsOfSupply(Line supply) {
-        return originalSolution.allocationsOfSupply(supply);
+    public Set<Line> assignmentsOfSupply(Line supply) {
+        return originalSolution.assignmentsOfSupply(supply);
     }
 
     @Override
-    public Set<Line> allocationsOfDemand(Line demand) {
-        return originalSolution.allocationsOfDemand(demand);
+    public Set<Line> assignmentsOfDemand(Line demand) {
+        return originalSolution.assignmentsOfDemand(demand);
     }
 
     @Override

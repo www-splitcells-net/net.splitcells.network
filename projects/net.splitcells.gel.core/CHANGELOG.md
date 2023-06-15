@@ -1,9 +1,15 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
-* **2023-06-15 #170** Rename `net.splitcells.gel.data.allocation.Allocation*`
-  to `net.splitcells.gel.data.assignment.Assignment*`,
-  which is more in line with the name of the core model problem the assignment problem.
+* **2023-06-15 #170**
+  1. Rename `net.splitcells.gel.data.allocation.Allocation*`
+    to `net.splitcells.gel.data.assignment.Assignment*`,
+    which is more in line with the name of the core model problem the assignment problem.
+  2. Provide new Allocations interface, that is the foundation of the Assignments interface.
+    The key difference is, that the Allocations only allows one assignment for each demand and
+    for each supply.
+    This interface can be used instead, in order to improve the performance,
+    if an appropriate usage is possible.
 * **2023-06-08 #170** `Table#columnsView` now returns a view of the list,
   instead of a writeable copy,
   in order to improve the runtime performance.

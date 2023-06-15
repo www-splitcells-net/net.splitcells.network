@@ -85,8 +85,8 @@ public class FreeSupplySwitcher implements OfflineOptimization {
             if (processedDemands.contains(usedDemandPointer)) {
                 return list();
             }
-            final var allocation = solution.allocationsOfDemand(usedDemand).iterator().next();
-            final var usedSupply = solution.supplyOfAllocation(allocation);
+            final var allocation = solution.assignmentsOfDemand(usedDemand).iterator().next();
+            final var usedSupply = solution.supplyOfAssignment(allocation);
             final var usedSupplyPointer = usedSupply.toLinePointer();
             if (processedSupplies.contains(usedSupplyPointer)) {
                 return list();
