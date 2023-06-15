@@ -18,6 +18,8 @@ package net.splitcells.gel.data.allocation;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
@@ -28,15 +30,38 @@ import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import org.w3c.dom.Node;
 
+import static net.splitcells.dem.data.set.list.ListI.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.data.database.Databases.database;
 
 public class AllocationsI implements Allocations {
 
-    public static Allocations allocations() {
-        return new AllocationsI();
+    public static Allocations allocations(String name, Discoverable parent
+            , List<Attribute<?>> demandHeader
+            , List<Attribute<?>> supplyHeader) {
+        return new AllocationsI(name, parent, demandHeader, supplyHeader);
     }
-    private AllocationsI() {
 
+    private final String name;
+    private final Discoverable parent;
+    private final Database allocations;
+    /**
+     * Maps {@link Line#index()} of {@link #allocations} to {@link AllocationState},
+     * in order to determine, which data is present.
+     */
+    private final List<AllocationState> allocationsStates = list();
+    private final List<Attribute<?>> demandHeader;
+    private final List<Attribute<?>> supplyHeader;
+
+    private AllocationsI(String name, Discoverable parent
+            , List<Attribute<?>> demandHeader
+            , List<Attribute<?>> supplyHeader) {
+        this.name = name;
+        this.parent = parent;
+        this.demandHeader = demandHeader;
+        this.supplyHeader = supplyHeader;
+        allocations = database(name, parent, listWithValuesOf(demandHeader).withAppended(supplyHeader));
     }
 
     @Override
@@ -151,7 +176,7 @@ public class AllocationsI implements Allocations {
 
     @Override
     public List<Attribute<Object>> headerView() {
-        throw notImplementedYet();
+        return allocations.headerView();
     }
 
     @Override
