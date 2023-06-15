@@ -66,17 +66,17 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Object identity() {
-        throw notImplementedYet();
+        return allocations.identity();
     }
 
     @Override
     public Node toDom() {
-        throw notImplementedYet();
+        return allocations.toDom();
     }
 
     @Override
     public List<String> path() {
-        throw notImplementedYet();
+        return allocations.path();
     }
 
     @Override
@@ -161,17 +161,17 @@ public class AllocationsI implements Allocations {
 
     @Override
     public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
-        throw notImplementedYet();
+        allocations.subscribeToAfterAdditions(subscriber);
     }
 
     @Override
     public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
-        throw notImplementedYet();
+        allocations.subscribeToBeforeRemoval(subscriber);
     }
 
     @Override
     public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        throw notImplementedYet();
+        allocations.subscribeToAfterRemoval(subscriber);
     }
 
     @Override
@@ -181,36 +181,36 @@ public class AllocationsI implements Allocations {
 
     @Override
     public List<Attribute<? extends Object>> headerView2() {
-        throw notImplementedYet();
+        return allocations.headerView2();
     }
 
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
-        throw notImplementedYet();
+        return allocations.columnView(attribute);
     }
 
     @Override
     public ListView<Column<Object>> columnsView() {
-        throw notImplementedYet();
+        return allocations.columnsView();
     }
 
     @Override
     public ListView<Line> rawLinesView() {
-        throw notImplementedYet();
+        return allocations.rawLinesView();
     }
 
     @Override
     public int size() {
-        throw notImplementedYet();
+        return allocations.size();
     }
 
     @Override
     public List<Line> rawLines() {
-        throw notImplementedYet();
+        return allocations.rawLines();
     }
 
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
-        throw notImplementedYet();
+        return allocations.lookupEquals(attribute, values);
     }
 }
