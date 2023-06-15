@@ -33,6 +33,10 @@ import org.w3c.dom.Node;
 import static net.splitcells.dem.data.set.list.ListI.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.data.allocation.AllocationState.ALLOCATION_PRESENT;
+import static net.splitcells.gel.data.allocation.AllocationState.ONLY_DEMAND_PRESENT;
+import static net.splitcells.gel.data.allocation.AllocationState.ONLY_SUPPLY_PRESENT;
+import static net.splitcells.gel.data.allocation.AllocationStateLookup.allocationStateLookup;
 import static net.splitcells.gel.data.database.Databases.database;
 
 public class AllocationsI implements Allocations {
@@ -50,9 +54,16 @@ public class AllocationsI implements Allocations {
      * Maps {@link Line#index()} of {@link #allocations} to {@link AllocationState},
      * in order to determine, which data is present.
      */
-    private final List<AllocationState> allocationsStates = list();
+    private final List<AllocationState> allocationStates = list();
     private final List<Attribute<?>> demandHeader;
     private final List<Attribute<?>> supplyHeader;
+
+    private final Database demands;
+    private final Database freeDemands;
+    private final Database usedDemands;
+    private final Database supplies;
+    private final Database freeSupplies;
+    private final Database usedSupplies;
 
     private AllocationsI(String name, Discoverable parent
             , List<Attribute<?>> demandHeader
@@ -62,6 +73,28 @@ public class AllocationsI implements Allocations {
         this.demandHeader = demandHeader;
         this.supplyHeader = supplyHeader;
         allocations = database(name, parent, listWithValuesOf(demandHeader).withAppended(supplyHeader));
+        demands = allocationStateLookup(allocations, line -> {
+            final var allocationState = allocationStates.get(line.index());
+            return allocationState.equals(ALLOCATION_PRESENT)
+                    || allocationState.equals(ONLY_DEMAND_PRESENT);
+        }, demandHeader);
+        freeDemands = allocationStateLookup(allocations
+                , line -> allocationStates.get(line.index()).equals(ONLY_DEMAND_PRESENT)
+                , demandHeader);
+        usedDemands = allocationStateLookup(allocations
+                , line -> allocationStates.get(line.index()).equals(ALLOCATION_PRESENT)
+                , demandHeader);
+        supplies = allocationStateLookup(allocations, line -> {
+            final var allocationState = allocationStates.get(line.index());
+            return allocationState.equals(ALLOCATION_PRESENT)
+                    || allocationState.equals(ONLY_DEMAND_PRESENT);
+        }, supplyHeader);
+        freeSupplies = allocationStateLookup(allocations
+                , line -> allocationStates.get(line.index()).equals(ONLY_SUPPLY_PRESENT)
+                , supplyHeader);
+        usedSupplies = allocationStateLookup(allocations
+                , line -> allocationStates.get(line.index()).equals(ALLOCATION_PRESENT)
+                , supplyHeader);
     }
 
     @Override
