@@ -15,16 +15,13 @@
  */
 package net.splitcells.cin.raters;
 
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.constraint.Constraint;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.World.isAlive;
 import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -50,17 +47,17 @@ public class IsAliveTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
+        testSubject.assign(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
+        testSubject.assign(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0), testSubject.suppliesUsed().orderedLine(0));
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0), testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
@@ -95,7 +92,7 @@ public class IsAliveTest {
                 .toProblem()
                 .asSolution();
         rangeClosed(1, 5).forEach(i ->
-                testSubject.allocate(testSubject.demandsFree()
+                testSubject.assign(testSubject.demandsFree()
                         .orderedLine(0), testSubject.suppliesFree().orderedLine(0)));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(5);
         testSubject.constraint().child(0).lineProcessing().unorderedLines().requireSizeOf(5);
@@ -143,7 +140,7 @@ public class IsAliveTest {
                 .toProblem()
                 .asSolution();
         rangeClosed(1, 5).forEach(i ->
-                testSubject.allocate(testSubject.demandsFree()
+                testSubject.assign(testSubject.demandsFree()
                         .orderedLine(0), testSubject.suppliesFree().orderedLine(0)));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(5);
         testSubject.constraint().child(0).lineProcessing().unorderedLines().requireSizeOf(5);
@@ -182,12 +179,12 @@ public class IsAliveTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
+        testSubject.assign(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireEmpty();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
+        testSubject.assign(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(2);

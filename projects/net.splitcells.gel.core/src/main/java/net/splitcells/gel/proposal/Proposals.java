@@ -15,14 +15,10 @@
  */
 package net.splitcells.gel.proposal;
 
-import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.allocation.Allocations;
-import net.splitcells.gel.data.allocation.AllocationsI;
-import net.splitcells.gel.data.allocation.Allocationss;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.solution.Solution;
 
-import static net.splitcells.gel.data.allocation.Allocationss.allocations;
+import static net.splitcells.gel.data.assignment.Assignmentss.allocations;
 import static net.splitcells.gel.data.database.Databases.database;
 
 public class Proposals implements Proposal {
@@ -32,31 +28,31 @@ public class Proposals implements Proposal {
     }
 
     private final Solution subject;
-    private final Allocations proposedAllocations;
-    private final Allocations contextAllocations;
+    private final Assignments proposedAssignments;
+    private final Assignments contextAssignments;
 
     private Proposals(Solution subject) {
         this.subject = subject;
-        this.proposedAllocations = allocations("proposed-allocations"
+        this.proposedAssignments = allocations("proposed-allocations"
                 , database("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , database("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
-        this.contextAllocations = allocations("context-allocations"
+        this.contextAssignments = allocations("context-allocations"
                 , database("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , database("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
     }
 
     /**
      *
-     * @return These {@link Allocations} are proposed in order to get a better {@link Solution}.
+     * @return These {@link Assignments} are proposed in order to get a better {@link Solution}.
      */
     @Override
-    public Allocations proposedAllocations() {
-        return proposedAllocations;
+    public Assignments proposedAllocations() {
+        return proposedAssignments;
     }
 
     @Override
-    public Allocations conextAllocations() {
-        return contextAllocations;
+    public Assignments conextAllocations() {
+        return contextAssignments;
     }
 
     /**

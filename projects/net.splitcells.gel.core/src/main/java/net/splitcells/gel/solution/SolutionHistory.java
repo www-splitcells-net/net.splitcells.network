@@ -15,9 +15,9 @@
  */
 package net.splitcells.gel.solution;
 
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 
-public interface SolutionHistory extends Allocations {
+public interface SolutionHistory extends Assignments {
 
 	Solution subject();
 }

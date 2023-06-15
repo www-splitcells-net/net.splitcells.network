@@ -18,7 +18,7 @@ package net.splitcells.gel.data.database.history;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
@@ -37,14 +37,14 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.common.Language.DATABASE_HISTORY;
 import static net.splitcells.gel.common.Language.EVENTS;
 import static net.splitcells.gel.common.Language.HISTORIC_VALUES;
-import static net.splitcells.gel.data.allocation.Allocationss.allocations;
+import static net.splitcells.gel.data.assignment.Assignmentss.allocations;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.database.history.DatabaseEventType.ADDITION;
 import static net.splitcells.gel.data.database.history.DatabaseEventType.REMOVAL;
 
 /**
- * TODO This is an experimental implementation of {@link History} for {@link Database} instead of {@link Allocations}.
+ * TODO This is an experimental implementation of {@link History} for {@link Database} instead of {@link Assignments}.
  * This is probably not working yet.
  */
 public class HistoryForDatabase implements History {
@@ -60,7 +60,7 @@ public class HistoryForDatabase implements History {
     private static final String ERROR_HISTORY_INCONSISTENT = "History is inconsistent.";
 
     private final Database database;
-    private Allocations history;
+    private Assignments history;
 
     private HistoryForDatabase(Database database) {
         history = allocations(DATABASE_HISTORY.value(),
@@ -75,14 +75,14 @@ public class HistoryForDatabase implements History {
     public void registerAddition(Line addition) {
         final var addedLine = history.demands().addTranslated(addition.values());
         final var eventType = history.supplies().addTranslated(list(addition.index(), ADDITION));
-        history.allocate(addedLine, eventType);
+        history.assign(addedLine, eventType);
     }
 
     @Override
     public void registerBeforeRemoval(Line removal) {
         final var removedLine = history.demands().addTranslated(removal.values());
         final var eventType = history.supplies().addTranslated(list(removal.index(), REMOVAL));
-        history.allocate(removedLine, eventType);
+        history.assign(removedLine, eventType);
     }
 
     @Override
@@ -151,12 +151,12 @@ public class HistoryForDatabase implements History {
     }
 
     @Override
-    public Line allocate(Line demand, Line supply) {
+    public Line assign(Line demand, Line supply) {
         throw notImplementedYet();
     }
 
     @Override
-    public Line allocationOf(LinePointer demand, LinePointer supply) {
+    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         throw notImplementedYet();
     }
 

@@ -284,7 +284,7 @@ public class SchoolCourseSchedulingTest {
                                     .filter(Optional::isPresent)
                                     .map(Optional::get)
                                     .findFirst()
-                                    .ifPresent(fittingSupply -> solution.allocate(demandOfStudentSubject, fittingSupply));
+                                    .ifPresent(fittingSupply -> solution.assign(demandOfStudentSubject, fittingSupply));
                         }
                     }
                 }
@@ -364,7 +364,7 @@ public class SchoolCourseSchedulingTest {
                                     .lookup(TEACH_SUBJECT_SUITABILITY, freeCourseSubject)
                                     .unorderedLines();
                             if (!teacherCapacity.isEmpty()) {
-                                solution.allocate(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
+                                solution.assign(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
                             }
                         }
                     }

@@ -101,7 +101,7 @@ public class AllSame {
                                     .findFirst()
                                     .orElseThrow();
                             final var proposedSupply = proposal.proposedAllocations().suppliesFree().add(fittingSupply);
-                            proposal.proposedAllocations().allocate(df, proposedSupply);
+                            proposal.proposedAllocations().assign(df, proposedSupply);
                         }
                     });
                 } else if (values.size() > 1) {

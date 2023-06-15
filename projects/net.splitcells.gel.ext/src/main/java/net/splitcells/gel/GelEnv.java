@@ -18,13 +18,8 @@ package net.splitcells.gel;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.ProcessResult;
 import net.splitcells.dem.environment.Environment;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.gel.data.allocation.Allocationss;
 import net.splitcells.gel.data.database.DatabaseMetaAspect;
 import net.splitcells.gel.data.database.Databases;
-import net.splitcells.gel.data.lookup.LookupFactory;
 import net.splitcells.gel.data.lookup.LookupIFactory;
 import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.solution.SolutionAspect;
@@ -34,8 +29,6 @@ import net.splitcells.gel.solution.history.HistoryRefFactory;
 
 import java.util.function.Consumer;
 
-import static net.splitcells.dem.Dem.environment;
-import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 

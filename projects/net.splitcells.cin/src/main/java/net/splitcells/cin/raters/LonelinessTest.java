@@ -21,7 +21,6 @@ import static net.splitcells.cin.raters.Loneliness.loneliness;
 import static net.splitcells.cin.raters.PositionClusters.positionClusters;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDeinitializer.onlineLinearDeinitializer;
@@ -58,23 +57,23 @@ public class LonelinessTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireEmpty();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .childrenView().get(0)
                 .lineProcessing().unorderedLines().requireSizeOf(4);
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0)
                 .childrenView().get(0)

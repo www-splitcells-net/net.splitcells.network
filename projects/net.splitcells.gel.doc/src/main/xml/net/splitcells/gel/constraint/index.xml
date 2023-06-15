@@ -16,7 +16,7 @@
             </toDo>
             <idea>
                 <idea>Support incremental and stateless constraint processing.</idea>
-                <idea>Implement derived lines, where the lines derived from allocations are created and
+                <idea>Implement derived lines, where the lines derived from assignments are created and
                     propagated.
                 </idea>
             </idea>

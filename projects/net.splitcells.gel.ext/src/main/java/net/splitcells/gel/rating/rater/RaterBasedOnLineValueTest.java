@@ -52,19 +52,19 @@ public class RaterBasedOnLineValueTest {
                 .toProblem()
                 .asSolution();
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
-        testSubjectContainer.allocate(testSubjectContainer.demandsFree().rawLine(0)
+        testSubjectContainer.assign(testSubjectContainer.demandsFree().rawLine(0)
                 , testSubjectContainer.suppliesFree().rawLine(0));
-        testSubjectContainer.allocate(testSubjectContainer.demandsFree().rawLine(1)
+        testSubjectContainer.assign(testSubjectContainer.demandsFree().rawLine(1)
                 , testSubjectContainer.suppliesFree().rawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(11));
         testSubjectContainer.remove(testSubjectContainer.rawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(1));
         testSubjectContainer.remove(testSubjectContainer.rawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
-        testSubjectContainer.allocate(testSubjectContainer.demandsFree().rawLine(0)
+        testSubjectContainer.assign(testSubjectContainer.demandsFree().rawLine(0)
                 , testSubjectContainer.suppliesFree().rawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(1));
-        testSubjectContainer.allocate(testSubjectContainer.demandsFree().rawLine(1)
+        testSubjectContainer.assign(testSubjectContainer.demandsFree().rawLine(1)
                 , testSubjectContainer.suppliesFree().rawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(11));
     }

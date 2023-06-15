@@ -64,19 +64,19 @@ public class TimeStepsTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -85,9 +85,9 @@ public class TimeStepsTest {
                 .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"
                         , FOR_ALL.value() + " " + timeStepId(0, 1)
                         , FOR_ALL.value() + " " + timeStepId(0, 1)));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -98,7 +98,7 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(0, 1)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -110,7 +110,7 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0),
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -121,7 +121,7 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0),
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -131,7 +131,7 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0),
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -140,7 +140,7 @@ public class TimeStepsTest {
                 .assertEquals(list(FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0),
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -148,14 +148,14 @@ public class TimeStepsTest {
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0),
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0),
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -192,19 +192,19 @@ public class TimeStepsTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -213,7 +213,7 @@ public class TimeStepsTest {
                 .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(1, 2)));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -223,7 +223,7 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -234,7 +234,7 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -246,7 +246,7 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0)
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -257,7 +257,7 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0)
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -267,7 +267,7 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0)
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -276,7 +276,7 @@ public class TimeStepsTest {
                 .assertEquals(list(FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0)
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
@@ -284,14 +284,14 @@ public class TimeStepsTest {
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"
                         , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0)
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
-        testSubject.deallocate(testSubject.demandsUsed().orderedLine(0)
+        testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)

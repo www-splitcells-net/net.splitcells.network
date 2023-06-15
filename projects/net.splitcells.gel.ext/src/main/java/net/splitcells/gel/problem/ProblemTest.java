@@ -70,7 +70,7 @@ class ProblemTest {
                 .requireEqualsTo(EQUAL);
         final Line firstAllocation;
         {
-            firstAllocation = solution.allocate
+            firstAllocation = solution.assign
                     (solution.demandsFree().rawLinesView().get(0)
                             , solution.suppliesFree().rawLinesView().get(0));
             requireEqualInts(solution.size(), 1);
@@ -83,7 +83,7 @@ class ProblemTest {
         }
         final Line secondAllocation;
         {
-            secondAllocation = solution.allocate
+            secondAllocation = solution.assign
                     (solution.demandsFree().rawLinesView().get(1)
                             , solution.suppliesFree().rawLinesView().get(1));
             requireEqualInts(solution.size(), 2);

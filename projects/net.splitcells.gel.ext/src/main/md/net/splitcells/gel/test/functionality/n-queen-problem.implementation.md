@@ -46,9 +46,9 @@ final var problemBuilder = Gel.defineProblem();
 
 First, the data of the problem needs to be defined,
 otherwise there is nothing that can be optimized.
-Every problem is modeled as a set of allocations between demands and supplies.
+Every problem is modeled as a set of assignments between demands and supplies.
 Every allocation pairs one demand and one supply.
-The set of all allocations is the actual solution.
+The set of all assignments is the actual solution.
 
 The demands and supplies are the data of the problem.
 Both sets are modeled as tables with explicitly typed columns,
@@ -64,9 +64,9 @@ No two attributes are allowed to have the same name.
 This does not only apply to the demand and supply tables on their own.
 An Attribute's name needs to be unique across the demands and supplies.
 The reason for this, is the fact,
-that the set of all allocations is also modeled as a table and
+that the set of all assignments is also modeled as a table and
 represents the assigned values of the demand and supply set.
-In other words, the allocations table works like a join of 2 tables in SQL.
+In other words, the assignments table works like a join of 2 tables in SQL.
 The following code defines the data format,
 but uses the not yet defined variables `demands` and `suipplies` for the
 actual values for an overview with less clutter:
@@ -124,7 +124,7 @@ Such complex constraints have a tendency to look like database queries.
 The constraint definition ends, when the modified builder is returned.
 
 Keep in mind, that the constraint defines rules,
-that apply to the allocations table:
+that apply to the assignments table:
 ```
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.raterBasedOnLineValue;

@@ -17,7 +17,6 @@ package net.splitcells.gel.solution.optimization.primitive;
 
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair;
-import net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
@@ -94,7 +93,7 @@ public class ConstraintGroupBasedRepairTest {
                     , freeDemandGroups -> currentSolution -> {
                         freeDemandGroups.entrySet().forEach(freeGroup -> {
                             freeGroup.getValue().forEach(freeDemand -> {
-                                currentSolution.allocate(freeDemand, currentSolution.suppliesFree().unorderedLines().get(0));
+                                currentSolution.assign(freeDemand, currentSolution.suppliesFree().unorderedLines().get(0));
                             });
                         });
                     }

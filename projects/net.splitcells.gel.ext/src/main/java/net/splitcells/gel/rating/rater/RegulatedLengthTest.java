@@ -46,11 +46,11 @@ public class RegulatedLengthTest {
                 .toProblem()
                 .asSolution();
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
-        testSubjectContainer.allocate(testSubjectContainer.demandsFree().rawLine(0)
+        testSubjectContainer.assign(testSubjectContainer.demandsFree().rawLine(0)
                 , testSubjectContainer.suppliesFree().rawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
 
-        testSubjectContainer.allocate(testSubjectContainer.demandsFree().rawLine(1)
+        testSubjectContainer.assign(testSubjectContainer.demandsFree().rawLine(1)
                 , testSubjectContainer.suppliesFree().rawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(7));
 
@@ -60,11 +60,11 @@ public class RegulatedLengthTest {
         testSubjectContainer.remove(testSubjectContainer.rawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(noCost());
 
-        testSubjectContainer.allocate(testSubjectContainer.demandsFree().rawLine(1)
+        testSubjectContainer.assign(testSubjectContainer.demandsFree().rawLine(1)
                 , testSubjectContainer.suppliesFree().rawLine(1));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(4));
 
-        testSubjectContainer.allocate(testSubjectContainer.demandsFree().rawLine(0)
+        testSubjectContainer.assign(testSubjectContainer.demandsFree().rawLine(0)
                 , testSubjectContainer.suppliesFree().rawLine(0));
         assertThat(testSubjectContainer.constraint().rating()).isEqualTo(cost(7));
     }

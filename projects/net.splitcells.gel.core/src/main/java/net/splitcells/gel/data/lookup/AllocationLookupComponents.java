@@ -17,10 +17,10 @@ package net.splitcells.gel.data.lookup;
 
 import java.util.function.Predicate;
 
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 
 public interface AllocationLookupComponents<T> extends LookupComponents<T> {
-	Allocations lookup(T value);
+	Assignments lookup(T value);
 
-	Allocations lookup(Predicate<T> predicate);
+	Assignments lookup(Predicate<T> predicate);
 }

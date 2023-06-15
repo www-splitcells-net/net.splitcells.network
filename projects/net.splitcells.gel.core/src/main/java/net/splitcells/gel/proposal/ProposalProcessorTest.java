@@ -52,7 +52,7 @@ public class ProposalProcessorTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demands().orderedLine(0)
+        testSubject.assign(testSubject.demands().orderedLine(0)
                 , testSubject.supplies().orderedLine(0));
         final var testProposal = propose(testSubject, constraintPath, testSubject.demandsFree().unorderedLines());
         testProposal.proposedAllocations().unorderedLines().requireSizeOf(1);

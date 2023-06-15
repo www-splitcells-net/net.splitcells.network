@@ -16,7 +16,6 @@
 package net.splitcells.cin;
 
 import net.splitcells.cin.raters.TimeSteps;
-import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -104,11 +103,11 @@ public class World {
     public static void allocateRestAsDead(Solution worldHistory) {
         final var freeDemands = worldHistory.demandsFree().unorderedLinesStream().collect(toList());
         final var playerSupply = worldHistory.suppliesFree().lookup(VALUE, 0).unorderedLinesStream().collect(toList());
-        freeDemands.forEach(d -> worldHistory.allocate(d, playerSupply.removeAt(0)));
+        freeDemands.forEach(d -> worldHistory.assign(d, playerSupply.removeAt(0)));
     }
 
     public static void allocateGlider(Solution worldHistory) {
-        worldHistory.allocate(worldHistory.demandsFree()
+        worldHistory.assign(worldHistory.demandsFree()
                         .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 1)
                         .lookup(POSITION_Y, 2)
@@ -116,7 +115,7 @@ public class World {
                 , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)
                         .orderedLine(0));
-        worldHistory.allocate(worldHistory.demandsFree()
+        worldHistory.assign(worldHistory.demandsFree()
                         .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 2)
                         .lookup(POSITION_Y, 2)
@@ -124,7 +123,7 @@ public class World {
                 , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)
                         .orderedLine(0));
-        worldHistory.allocate(worldHistory.demandsFree()
+        worldHistory.assign(worldHistory.demandsFree()
                         .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 3)
                         .lookup(POSITION_Y, 2)

@@ -24,7 +24,7 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.event.Allocation;
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -53,12 +53,12 @@ import java.util.function.Supplier;
  * because there is no previous state from the perspective of the timeline.
  * In other words, the first state is implicitly recorded by the history,
  * whereas the following states are explicitly recorded.</p>
- * <p>TODO There does not seem to be a need, for this to be an {@link Allocations} instead of {@link Table}.
+ * <p>TODO There does not seem to be a need, for this to be an {@link Assignments} instead of {@link Table}.
  * Unfortunately, this fact degrades the performance.</p>
  * <p>IDEA History should only contain primary demand/supply references and no references to used or unused demand/supply,
  * in order to preserve line pointer validity.</p>
  */
-public interface History extends Allocations, AfterAdditionSubscriber, BeforeRemovalSubscriber {
+public interface History extends Assignments, AfterAdditionSubscriber, BeforeRemovalSubscriber {
     Attribute<Integer> ALLOCATION_ID = attribute(Integer.class, "allocation-id");
     Attribute<Allocation> ALLOCATION_EVENT = attribute(Allocation.class, "allocation-event");
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");

@@ -16,19 +16,18 @@
 package net.splitcells.gel.problem;
 
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.data.allocation.Allocations;
-import net.splitcells.gel.data.allocation.AllocationsLiveView;
+import net.splitcells.gel.data.assignment.Assignments;
+import net.splitcells.gel.data.assignment.AssignmentsLiveView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
-import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 
 import java.util.function.Function;
 
-public interface ProblemView extends AllocationsLiveView {
+public interface ProblemView extends AssignmentsLiveView {
 
     Constraint constraint();
 
-    Allocations allocations();
+    Assignments allocations();
 
     DerivedSolution derived(Function<Rating, Rating> derivation);
 }

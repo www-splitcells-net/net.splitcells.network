@@ -34,7 +34,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.ForAlls;
@@ -53,7 +53,7 @@ public class QueryI implements Query {
         return new QueryI(constraint, setOfUniques(constraint.injectionGroup()), Optional.of(constraint));
     }
 
-    public static Query query(Constraint constraint, Allocations subject) {
+    public static Query query(Constraint constraint, Assignments subject) {
         return new QueryI(constraint, setOfUniques(constraint.injectionGroup()), Optional.of(constraint), subject);
     }
 
@@ -90,7 +90,7 @@ public class QueryI implements Query {
      */
     private final List<Constraint> constraintPath;
     private final Set<GroupId> groups;
-    private final Optional<Allocations> subject;
+    private final Optional<Assignments> subject;
 
     private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root) {
         this.currentInjectionGroups = currentInjectionGroups;
@@ -103,7 +103,7 @@ public class QueryI implements Query {
         subject = Optional.empty();
     }
 
-    private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root, Allocations subject) {
+    private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root, Assignments subject) {
         this.currentInjectionGroups = currentInjectionGroups;
         this.groups = groups;
         this.root = root;
@@ -122,7 +122,7 @@ public class QueryI implements Query {
         subject = Optional.empty();
     }
 
-    private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath, Allocations subject) {
+    private QueryI(Constraint currentInjectionGroups, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath, Assignments subject) {
         this.currentInjectionGroups = currentInjectionGroups;
         this.groups = groups;
         this.root = root;
@@ -162,7 +162,7 @@ public class QueryI implements Query {
     }
 
     @Override
-    public Optional<Allocations> subject() {
+    public Optional<Assignments> subject() {
         return subject;
     }
 

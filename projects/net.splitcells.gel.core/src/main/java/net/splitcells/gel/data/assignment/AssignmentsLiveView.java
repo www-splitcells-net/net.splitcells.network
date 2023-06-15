@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.allocation;
+package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.gel.data.table.Line;
@@ -23,7 +23,7 @@ import net.splitcells.gel.data.database.Database;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
-public interface AllocationsLiveView extends Table {
+public interface AssignmentsLiveView extends Table {
     /**
      * Returns a {@link Database} of all supplies.
      * The {@link Line#index()} of one supply is the same across this database, {@link #suppliesFree()} and {@link #suppliesUsed()}

@@ -25,15 +25,13 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.framework.LocalRating;
-import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -128,7 +126,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Allocations lineProcessing() {
+    public Assignments lineProcessing() {
         throw notImplementedYet();
     }
 

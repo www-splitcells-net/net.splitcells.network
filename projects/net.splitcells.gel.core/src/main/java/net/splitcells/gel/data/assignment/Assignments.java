@@ -13,23 +13,21 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.allocation;
+package net.splitcells.gel.data.assignment;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.LinePointer;
-import net.splitcells.gel.data.table.attribute.Attribute;
 
 /**
+ * <p>Allows multiple assignments for each demand.</p>
  * <p>
- * {@link Discoverable#path()} of {@link Allocations} start with the {@link Discoverable#path()} of the demand
+ * {@link Discoverable#path()} of {@link Assignments} start with the {@link Discoverable#path()} of the demand
  * and end with {@link net.splitcells.gel.common.Language#ALLOCATIONS}.
  * </p>
  * <p>
@@ -38,8 +36,8 @@ import net.splitcells.gel.data.table.attribute.Attribute;
  * This also does reduce code duplication.
  * </p>
  */
-public interface Allocations extends Database, AllocationsLiveView {
-    Line allocate(Line demand, Line supply);
+public interface Assignments extends Database, AssignmentsLiveView {
+    Line assign(Line demand, Line supply);
 
     /**
      * Removes all allocations,
@@ -49,11 +47,11 @@ public interface Allocations extends Database, AllocationsLiveView {
      * @param demand Demand of the allocations to be removed.
      * @param supply Supply of the allocations to be removed.
      */
-    default void deallocate(Line demand, Line supply) {
-        allocationsOf(demand, supply).forEach(this::remove);
+    default void undoAssignment(Line demand, Line supply) {
+        assignmentsOf(demand, supply).forEach(this::remove);
     }
 
-    default Set<Line> allocationsOf(Line demand, Line supply) {
+    default Set<Line> assignmentsOf(Line demand, Line supply) {
         final var allocationsOf = allocationsOfSupply(supply);
         return allocationsOfDemand(demand)
                 .stream()
@@ -61,5 +59,5 @@ public interface Allocations extends Database, AllocationsLiveView {
                 .collect(toSetOfUniques());
     }
 
-    Line allocationOf(LinePointer demand, LinePointer supply);
+    Line anyAssignmentOf(LinePointer demand, LinePointer supply);
 }

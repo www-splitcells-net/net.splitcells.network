@@ -46,7 +46,7 @@ public class SupplySelectors {
                     if (freeSupplies.hasElements()) {
                         final var supplySelection = freeSupplies.get(indexSelector.apply(freeSupplies.size() - 1));
                         demandsUsed.add(demand);
-                        solution.allocate(demand, supplySelection);
+                        solution.assign(demand, supplySelection);
                     } else {
                         throw executionException("No free supplies available for repair.");
                     }
@@ -72,7 +72,7 @@ public class SupplySelectors {
                         solution.history().processWithoutHistory(() -> {
                             range(0, distinctFreeSupplies.size()).forEach(i -> {
                                 final var freeSupply = distinctFreeSupplies.get(i);
-                                final var allocation = solution.allocate(freeDemand, freeSupply);
+                                final var allocation = solution.assign(freeDemand, freeSupply);
                                 final var nextRating = solution.constraint().rating();
                                 solution.remove(allocation);
                                 if (bestSupply.isEmpty()) {
@@ -88,7 +88,7 @@ public class SupplySelectors {
                         });
                         if (!bestSupply.isEmpty() && bestSupply.get(0) != null) {
                             final var freeSupplyValues = bestSupply.get(0).values();
-                            solution.allocate(freeDemand, bestSupply.get(0));
+                            solution.assign(freeDemand, bestSupply.get(0));
                             distinctFreeSupplies.removeAt(distinctIndex.get(0));
                             solution.suppliesFree()
                                     .lookupEquals(freeSupplyValues)

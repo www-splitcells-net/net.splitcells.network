@@ -124,13 +124,13 @@ public class HistoryRef implements History {
     }
 
     @Override
-    public Line allocate(Line demand, Line supply) {
-        return history.allocate(demand, supply);
+    public Line assign(Line demand, Line supply) {
+        return history.assign(demand, supply);
     }
 
     @Override
-    public Line allocationOf(LinePointer demand, LinePointer supply) {
-        return history.allocationOf(demand, supply);
+    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
+        return history.anyAssignmentOf(demand, supply);
     }
 
     @Override

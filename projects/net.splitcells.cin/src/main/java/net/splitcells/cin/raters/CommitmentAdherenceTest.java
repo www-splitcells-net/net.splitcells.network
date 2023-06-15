@@ -45,7 +45,7 @@ public class CommitmentAdherenceTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demands().orderedLine(0)
+        testSubject.assign(testSubject.demands().orderedLine(0)
                 , testSubject.supplies().orderedLine(0));
         testSubject.init();
         final var testProposal = propose(testSubject, constraintPath, testSubject.demands().unorderedLines());

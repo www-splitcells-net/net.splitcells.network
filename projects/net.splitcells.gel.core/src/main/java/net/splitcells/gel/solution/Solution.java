@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.solution;
 
-import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
@@ -25,7 +24,6 @@ import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
@@ -276,7 +274,7 @@ public interface Solution extends Problem, SolutionView {
     @ReturnsThis
     default Solution optimize(OptimizationEvent event, OptimizationParameters parameters) {
         if (event.stepType().equals(ADDITION)) {
-            this.allocate(
+            this.assign(
                     demandsFree().rawLine(event.demand().interpret().orElseThrow().index()),
                     suppliesFree().rawLine(event.supply().interpret().orElseThrow().index()));
         } else if (event.stepType().equals(REMOVAL)) {
@@ -287,7 +285,7 @@ public interface Solution extends Problem, SolutionView {
                     return this;
                 }
             }
-            remove(allocationsOf
+            remove(assignmentsOf
                     (demandBeforeRemoval.orElseThrow()
                             , supplyBeforeRemoval.orElseThrow())
                     .iterator()

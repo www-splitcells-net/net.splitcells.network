@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -29,14 +29,14 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class TemplateAdherence implements Rater {
 
-    public static Rater templateAdherence(Table template, Allocations subject) {
+    public static Rater templateAdherence(Table template, Assignments subject) {
         return new TemplateAdherence(template, subject);
     }
 
     private final Table template;
-    private final Allocations subject;
+    private final Assignments subject;
 
-    private TemplateAdherence(Table template, Allocations subject) {
+    private TemplateAdherence(Table template, Assignments subject) {
         this.template = template;
         this.subject = subject;
         throw notImplementedYet();

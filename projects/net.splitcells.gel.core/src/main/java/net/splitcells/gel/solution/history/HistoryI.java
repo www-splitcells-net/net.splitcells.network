@@ -35,20 +35,19 @@ import static net.splitcells.gel.solution.history.meta.type.AllocationNaturalArg
 import static net.splitcells.gel.solution.history.meta.type.AllocationRating.allocationRating;
 import static net.splitcells.gel.solution.history.meta.type.CompleteRating.completeRating;
 
-import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
-import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.allocation.Allocationss;
+import net.splitcells.gel.data.assignment.Assignmentss;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation;
@@ -73,14 +72,14 @@ public class HistoryI implements History {
 
     private final Solution solution;
     private int lastEventId = -1;
-    private Allocations allocations;
+    private Assignments assignments;
     private boolean isRegisterEventIsEnabled = false;
     private boolean isHistoryConsistent = false;
     private boolean synchronizes = false;
     private boolean logNaturalArgumentation = false;
 
     private HistoryI(Solution solution) {
-        allocations = Allocationss.allocations
+        assignments = Assignmentss.allocations
                 (HISTORY.value()
                         , Databases.database
                                 (EVENT.value()
@@ -118,7 +117,7 @@ public class HistoryI implements History {
                     , allocations(ADDITION
                             , solution.demandOfAllocation(allocationValues)
                             , solution.supplyOfAllocation(allocationValues))));
-            allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
+            assignments.assign(allocation, this.supplies().addTranslated(list(metaData)));
         } else {
             if (!synchronizes) {
                 isHistoryConsistent = true;
@@ -140,7 +139,7 @@ public class HistoryI implements History {
                     , allocations(REMOVAL
                             , solution.demandOfAllocation(removal)
                             , solution.supplyOfAllocation(removal))));
-            allocations.allocate(allocation, this.supplies().addTranslated(list(metaData)));
+            assignments.assign(allocation, this.supplies().addTranslated(list(metaData)));
         } else {
             if (!synchronizes) {
                 isHistoryConsistent = true;
@@ -163,17 +162,17 @@ public class HistoryI implements History {
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
             require(index >= -1);
-            if (allocations.size() > 0) {
-                require(index <= allocations.size() - 1);
+            if (assignments.size() > 0) {
+                require(index <= assignments.size() - 1);
             }
         }
-        if (allocations.size() == 0 && index == -1) {
+        if (assignments.size() == 0 && index == -1) {
             return;
         }
-        if (allocations.size() - 1 == index) {
+        if (assignments.size() - 1 == index) {
             return;
         }
-        if (allocations.size() == 0) {
+        if (assignments.size() == 0) {
             if (ENFORCING_UNIT_CONSISTENCY) {
                 requireEqualInts(index, -1);
             }
@@ -181,11 +180,11 @@ public class HistoryI implements History {
         }
         isRegisterEventIsEnabled = false;
         /**
-         * Omit unnecessary allocations to {@link #allocations},
+         * Omit unnecessary allocations to {@link #assignments},
          * when allocations are removed from {@link #solution} during reset.
          */
         final var indexToReversal = reverse
-                (rangeClosed(index, allocations.size() - 1)
+                (rangeClosed(index, assignments.size() - 1)
                         .boxed()
                         .filter(i -> i != -1)
                         .filter(i -> i != index)
@@ -213,7 +212,7 @@ public class HistoryI implements History {
 
     private void resetToInOrder(List<Integer> indexes) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            if (allocations.size() != 0) {
+            if (assignments.size() != 0) {
                 indexes.requireAnyContent();
             } else {
                 indexes.requireEmptySet();
@@ -225,13 +224,13 @@ public class HistoryI implements History {
     private void resetLast() {
         synchronizes = true;
         if (ENFORCING_UNIT_CONSISTENCY) {
-            allocations.columnView(ALLOCATION_ID)
-                    .lookup(allocations.size() - 1)
+            assignments.columnView(ALLOCATION_ID)
+                    .lookup(assignments.size() - 1)
                     .unorderedLines()
                     .requireSizeOf(1);
         }
-        final var index = allocations.size() - 1;
-        final var eventToRemove = allocations.columnView(ALLOCATION_ID)
+        final var index = assignments.size() - 1;
+        final var eventToRemove = assignments.columnView(ALLOCATION_ID)
                 .lookup(index)
                 .unorderedLinesStream()
                 .findFirst()
@@ -239,11 +238,11 @@ public class HistoryI implements History {
                 .value(ALLOCATION_EVENT);
         final var eventType = eventToRemove.type();
         if (eventType.equals(ADDITION)) {
-            solution.remove(solution.allocationOf
+            solution.remove(solution.anyAssignmentOf
                     (eventToRemove.demand().toLinePointer()
                             , eventToRemove.supply().toLinePointer()));
         } else if (eventType.equals(REMOVAL)) {
-            solution.allocate
+            solution.assign
                     (eventToRemove.demand().toLinePointer().interpret(solution.demands()).orElseThrow()
                             , eventToRemove.supply().toLinePointer().interpret(solution.supplies()).orElseThrow());
         } else {
@@ -255,15 +254,15 @@ public class HistoryI implements History {
 
     private void resetLastRemoval(int index) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            allocations.unorderedLines().requireSizeOf(index + 1);
+            assignments.unorderedLines().requireSizeOf(index + 1);
             try {
-                allocations.columnView(ALLOCATION_ID).lookup(index + 1).unorderedLines().requireEmptySet();
-                allocations.columnView(ALLOCATION_ID).lookup(index).unorderedLines().requireSizeOf(1);
+                assignments.columnView(ALLOCATION_ID).lookup(index + 1).unorderedLines().requireEmptySet();
+                assignments.columnView(ALLOCATION_ID).lookup(index).unorderedLines().requireSizeOf(1);
             } catch (Throwable t) {
                 throw new RuntimeException(t);
             }
         }
-        removal_(allocations.columnView(ALLOCATION_ID).lookup(index).unorderedLinesStream().findFirst().orElseThrow());
+        removal_(assignments.columnView(ALLOCATION_ID).lookup(index).unorderedLinesStream().findFirst().orElseThrow());
     }
 
     /**
@@ -274,7 +273,7 @@ public class HistoryI implements History {
      * @param line
      */
     private void removal_(Line line) {
-        allocations.remove(line);
+        assignments.remove(line);
         --lastEventId;
     }
 
@@ -291,17 +290,17 @@ public class HistoryI implements History {
 
     @Override
     public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
-        allocations.subscribeToAfterAdditions(subscriber);
+        assignments.subscribeToAfterAdditions(subscriber);
     }
 
     @Override
     public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
-        allocations.subscribeToBeforeRemoval(subscriber);
+        assignments.subscribeToBeforeRemoval(subscriber);
     }
 
     @Override
     public void subscribeToAfterRemoval(BeforeRemovalSubscriber beforeRemovalSubscriber) {
-        allocations.subscribeToAfterRemoval(beforeRemovalSubscriber);
+        assignments.subscribeToAfterRemoval(beforeRemovalSubscriber);
     }
 
     @Override
@@ -342,7 +341,7 @@ public class HistoryI implements History {
         if (size() != indexes + 1) {
             throw notImplementedYet();
         }
-        allocations.remove(rawLinesView().get(indexes));
+        assignments.remove(rawLinesView().get(indexes));
     }
 
     @Override
@@ -357,7 +356,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line allocate(Line demand, Line supply) {
+    public Line assign(Line demand, Line supply) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
@@ -368,14 +367,14 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line allocationOf(LinePointer demand, LinePointer supply) {
+    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return this.allocations.allocationOf(demand, supply);
+        return this.assignments.anyAssignmentOf(demand, supply);
     }
 
     @Override
@@ -386,7 +385,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.supplies();
+        return assignments.supplies();
     }
 
     @Override
@@ -397,7 +396,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.suppliesUsed();
+        return assignments.suppliesUsed();
     }
 
     @Override
@@ -408,7 +407,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.suppliesFree();
+        return assignments.suppliesFree();
     }
 
     @Override
@@ -419,7 +418,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.demands();
+        return assignments.demands();
     }
 
     @Override
@@ -430,7 +429,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.demandsUsed();
+        return assignments.demandsUsed();
     }
 
     @Override
@@ -441,7 +440,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.demandsFree();
+        return assignments.demandsFree();
     }
 
     @Override
@@ -452,7 +451,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.demandOfAllocation(allocation);
+        return assignments.demandOfAllocation(allocation);
     }
 
     @Override
@@ -463,7 +462,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.supplyOfAllocation(allocation);
+        return assignments.supplyOfAllocation(allocation);
     }
 
     @Override
@@ -474,7 +473,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.allocationsOfSupply(supply);
+        return assignments.allocationsOfSupply(supply);
     }
 
     @Override
@@ -485,7 +484,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.allocationsOfDemand(demand);
+        return assignments.allocationsOfDemand(demand);
     }
 
     @Override
@@ -496,7 +495,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.headerView();
+        return assignments.headerView();
     }
 
     @Override
@@ -507,7 +506,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.headerView2();
+        return assignments.headerView2();
     }
 
     @Override
@@ -518,7 +517,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.columnView(attribute);
+        return assignments.columnView(attribute);
     }
 
     @Override
@@ -529,7 +528,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.columnsView();
+        return assignments.columnsView();
     }
 
     @Override
@@ -540,7 +539,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.rawLinesView();
+        return assignments.rawLinesView();
     }
 
     @Override
@@ -551,7 +550,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.size();
+        return assignments.size();
     }
 
     @Override
@@ -562,7 +561,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.rawLines();
+        return assignments.rawLines();
     }
 
     @Override
@@ -573,7 +572,7 @@ public class HistoryI implements History {
         if (isHistoryConsistent) {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
-        return allocations.lookupEquals(attribute, other);
+        return assignments.lookupEquals(attribute, other);
     }
 
     @Override
@@ -583,7 +582,7 @@ public class HistoryI implements History {
 
     @Override
     public List<String> path() {
-        return allocations.path();
+        return assignments.path();
     }
 
     public boolean isHistoryConsistent() {

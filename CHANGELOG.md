@@ -556,7 +556,7 @@
   `repo.repair`,
   which got a breaking change previously in order to improve
   and standardize argument parsing.
-* **2021-12-10**: **\#138** Remove temporary duplicate allocations during
+* **2021-12-10**: **\#138** Remove temporary duplicate assignments during
   HistoryI reset, in order to improve performance.
 * **2021-12-05**: Fix implementation and runtime check of `HistoryI#resetTo`.
 * **2021-12-05**: `Ordered#compare_to` now does not always double-check

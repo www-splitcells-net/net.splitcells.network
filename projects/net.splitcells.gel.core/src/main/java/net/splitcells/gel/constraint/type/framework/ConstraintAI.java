@@ -30,7 +30,7 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.common.Language.EMPTY_STRING;
-import static net.splitcells.gel.data.allocation.Allocationss.allocations;
+import static net.splitcells.gel.data.assignment.Assignmentss.allocations;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.lineRating;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
@@ -45,6 +45,7 @@ import java.util.stream.Stream;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -62,7 +63,6 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.QueryI;
-import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
@@ -75,7 +75,7 @@ public abstract class ConstraintAI implements Constraint {
     private final List<Discoverable> contexts = list();
     protected final Database lines;
     protected final Database results;
-    protected final Allocations lineProcessing;
+    protected final Assignments lineProcessing;
     protected final Map<GroupId, Rating> groupProcessing = map();
 
     @Deprecated
@@ -307,7 +307,7 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public Allocations lineProcessing() {
+    public Assignments lineProcessing() {
         return lineProcessing;
     }
 

@@ -23,7 +23,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
@@ -131,13 +131,13 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Line allocate(Line demand, Line supply) {
-        return solution.allocate(demand, supply);
+    public Line assign(Line demand, Line supply) {
+        return solution.assign(demand, supply);
     }
 
     @Override
-    public Line allocationOf(LinePointer demand, LinePointer supply) {
-        return solution.allocationOf(demand, supply);
+    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
+        return solution.anyAssignmentOf(demand, supply);
     }
 
     @Override
@@ -186,7 +186,7 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Allocations allocations() {
+    public Assignments allocations() {
         return solution.allocations();
     }
 

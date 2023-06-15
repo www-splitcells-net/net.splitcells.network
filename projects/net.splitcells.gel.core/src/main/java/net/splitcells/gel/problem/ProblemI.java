@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
@@ -31,7 +32,6 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 import org.w3c.dom.Element;
@@ -46,17 +46,17 @@ import static net.splitcells.gel.problem.derived.DerivedSolution.derivedSolution
 public class ProblemI implements Problem {
 
     private final Constraint constraint;
-    private final Allocations allocations;
+    private final Assignments assignments;
     private Solution asSolution;
 
-    public static Problem problem(Allocations allocations, Constraint constraint) {
-        final var problem = new ProblemI(allocations, constraint);
+    public static Problem problem(Assignments assignments, Constraint constraint) {
+        final var problem = new ProblemI(assignments, constraint);
         problem.synchronize(constraint);
         return problem;
     }
 
-    private ProblemI(Allocations allocations, Constraint constraint) {
-        this.allocations = allocations;
+    private ProblemI(Assignments assignments, Constraint constraint) {
+        this.assignments = assignments;
         this.constraint = constraint;
     }
 
@@ -66,8 +66,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Allocations allocations() {
-        return allocations;
+    public Assignments allocations() {
+        return assignments;
     }
 
     @Override
@@ -80,216 +80,216 @@ public class ProblemI implements Problem {
 
     @Override
     public DerivedSolution derived(Function<Rating, Rating> derivation) {
-        return derivedSolution(() -> list(), allocations, constraint, derivation);
+        return derivedSolution(() -> list(), assignments, constraint, derivation);
     }
 
     @Override
     public Database supplies() {
-        return this.allocations.supplies();
+        return this.assignments.supplies();
     }
 
     @Override
     public Database suppliesUsed() {
-        return this.allocations.suppliesUsed();
+        return this.assignments.suppliesUsed();
     }
 
     @Override
     public Database suppliesFree() {
-        return this.allocations.suppliesFree();
+        return this.assignments.suppliesFree();
     }
 
     @Override
     public Database demands() {
-        return this.allocations.demands();
+        return this.assignments.demands();
     }
 
     @Override
     public Database demandsUsed() {
-        return this.allocations.demandsUsed();
+        return this.assignments.demandsUsed();
     }
 
     @Override
     public Database demandsFree() {
-        return this.allocations.demandsFree();
+        return this.assignments.demandsFree();
     }
 
     @Override
-    public Line allocate(final Line demand, final Line supply) {
-        return this.allocations.allocate(demand, supply);
+    public Line assign(final Line demand, final Line supply) {
+        return this.assignments.assign(demand, supply);
     }
 
     @Override
     public Line demandOfAllocation(final Line allocation) {
-        return this.allocations.demandOfAllocation(allocation);
+        return this.assignments.demandOfAllocation(allocation);
     }
 
     @Override
     public Line supplyOfAllocation(final Line allocation) {
-        return this.allocations.supplyOfAllocation(allocation);
+        return this.assignments.supplyOfAllocation(allocation);
     }
 
     @Override
     public Set<Line> allocationsOfSupply(final Line supply) {
-        return this.allocations.allocationsOfSupply(supply);
+        return this.assignments.allocationsOfSupply(supply);
     }
 
     @Override
-    public Set<Line> allocationsOf(final Line demand, final Line supply) {
-        return this.allocations.allocationsOf(demand, supply);
+    public Set<Line> assignmentsOf(final Line demand, final Line supply) {
+        return this.assignments.assignmentsOf(demand, supply);
     }
 
     @Override
-    public Line allocationOf(LinePointer demand, LinePointer supply) {
-        return allocations.allocationOf(demand, supply);
+    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
+        return assignments.anyAssignmentOf(demand, supply);
     }
 
     @Override
     public Set<Line> allocationsOfDemand(final Line demand) {
-        return this.allocations.allocationsOfDemand(demand);
+        return this.assignments.allocationsOfDemand(demand);
     }
 
     @Override
     public Set<Line> supply_of_demand(final Line demand) {
-        return this.allocations.supply_of_demand(demand);
+        return this.assignments.supply_of_demand(demand);
     }
 
     @Override
     public Line addTranslated(List<?> values) {
-        return this.allocations.addTranslated(values);
+        return this.assignments.addTranslated(values);
     }
 
     @Override
     public Line add(final Line line) {
-        return this.allocations.add(line);
+        return this.assignments.add(line);
     }
 
     @Override
     public Line addWithSameHeaderPrefix(Line line) {
-        return allocations.addWithSameHeaderPrefix(line);
+        return assignments.addWithSameHeaderPrefix(line);
     }
 
     @Deprecated
     @Override
     public void remove(final int allocationIndex) {
-        this.allocations.remove(allocationIndex);
+        this.assignments.remove(allocationIndex);
     }
 
     @Override
     public void remove(final Line line) {
-        this.allocations.remove(line);
+        this.assignments.remove(line);
     }
 
     @Override
     public void replace(final Line newLine) {
-        this.allocations.replace(newLine);
+        this.assignments.replace(newLine);
     }
 
     @Override
     public void synchronize(DatabaseSynchronization subscriber) {
-        this.allocations.synchronize(subscriber);
+        this.assignments.synchronize(subscriber);
     }
 
     @Override
     public void subscribeToAfterAdditions(final AfterAdditionSubscriber subscriber) {
-        this.allocations.subscribeToAfterAdditions(subscriber);
+        this.assignments.subscribeToAfterAdditions(subscriber);
     }
 
     @Override
     public void subscribeToBeforeRemoval(final BeforeRemovalSubscriber subscriber) {
-        this.allocations.subscribeToBeforeRemoval(subscriber);
+        this.assignments.subscribeToBeforeRemoval(subscriber);
     }
 
     @Override
     public void subscribeToAfterRemoval(final BeforeRemovalSubscriber subscriber) {
-        this.allocations.subscribeToAfterRemoval(subscriber);
+        this.assignments.subscribeToAfterRemoval(subscriber);
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return this.allocations.headerView();
+        return this.assignments.headerView();
     }
 
     @Override
     public List<Attribute<? extends Object>> headerView2() {
-        return this.allocations.headerView2();
+        return this.assignments.headerView2();
     }
 
     @Override
     public <T extends Object> ColumnView<T> columnView(final Attribute<T> attribute) {
-        return this.allocations.<T>columnView(attribute);
+        return this.assignments.<T>columnView(attribute);
     }
 
     @Override
     public ListView<Column<Object>> columnsView() {
-        return this.allocations.columnsView();
+        return this.assignments.columnsView();
     }
 
     @Deprecated
     public ListView<Line> rawLinesView() {
-        return this.allocations.rawLinesView();
+        return this.assignments.rawLinesView();
     }
 
     @Override
     public boolean contains(final Line line) {
-        return this.allocations.contains(line);
+        return this.assignments.contains(line);
     }
 
     @Override
     public List<Line> unorderedLines() {
-        return this.allocations.unorderedLines();
+        return this.assignments.unorderedLines();
     }
 
     @Override
     public Line rawLine(final int index) {
-        return this.allocations.rawLine(index);
+        return this.assignments.rawLine(index);
     }
 
     @Override
     public int size() {
-        return this.allocations.size();
+        return this.assignments.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.allocations.isEmpty();
+        return this.assignments.isEmpty();
     }
 
     @Override
     public boolean hasContent() {
-        return this.allocations.hasContent();
+        return this.assignments.hasContent();
     }
 
     @Override
     public List<Line> rawLines() {
-        return this.allocations.rawLines();
+        return this.assignments.rawLines();
     }
 
     public String toCSV() {
-        return this.allocations.toCSV();
+        return this.assignments.toCSV();
     }
 
     @Override
     public Line lookupEquals(final Attribute<Line> attribute, final Line value) {
-        return this.allocations.lookupEquals(attribute, value);
+        return this.assignments.lookupEquals(attribute, value);
     }
 
     @Override
     public Element toFods() {
-        return this.allocations.toFods();
+        return this.assignments.toFods();
     }
 
     @Override
     public List<String> path() {
-        return this.allocations.path();
+        return this.assignments.path();
     }
 
     public Node toDom() {
-        return this.allocations.toDom();
+        return this.assignments.toDom();
     }
 
     @Override
     public Perspective toPerspective() {
-        return allocations.toPerspective();
+        return assignments.toPerspective();
     }
 
     @Override

@@ -16,7 +16,6 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
-import org.junit.jupiter.api.Test;
 
 import static net.splitcells.cin.World.WORLD_HISTORY;
 import static net.splitcells.cin.World.worldHistory;
@@ -32,7 +31,7 @@ public class WorldTest {
         testSubject.demands().addTranslated(list(1, 0, 0));
         testSubject.supplies().addTranslated(list(0));
         testSubject.supplies().addTranslated(list(0));
-        testSubject.allocate(testSubject.demands().orderedLine(0)
+        testSubject.assign(testSubject.demands().orderedLine(0)
                 , testSubject.supplies().orderedLine(0));
         testSubject.init();
         final var testProposal = propose(testSubject

@@ -1,6 +1,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-06-15 #170** Rename `net.splitcells.gel.data.allocation.Allocation*`
+  to `net.splitcells.gel.data.assignment.Assignment*`,
+  which is more in line with the name of the core model problem the assignment problem.
 * **2023-06-08 #170** `Table#columnsView` now returns a view of the list,
   instead of a writeable copy,
   in order to improve the runtime performance.
@@ -59,7 +62,7 @@
 * **2023-06-11 ##170**: Introduce IndexedAttribute in order to access values of Lines faster.
 * **2023-04-13 ##170**: Extend Query with optional value containing the Allocations the Query is being applied to.
   This allows one to create constraints,
-  that depend on the supply and demand Tables of allocations of the given problem.
+  that depend on the supply and demand Tables of assignments of the given problem.
 * **2023-03-17 ##170**: Introduce `HistoryForDatabase` for debugging purposes.
   An instance can be connected to a given database via the `DatabaseFactory`,
   which can be viewed via the webserver in order to understand how the content of the given database was created.
@@ -67,7 +70,7 @@
 GelDev.process(() -> {
    [Actual Code]
 }, env -> env.config().configValue(Databases.class).withConnector(d -> {
-   if (d.path().equals(list("conway-s-game-of-life", "Propagation", "ForAll", "6", "Propagation", "ForAll", "0", "Propagation", "ForAll", "isDead", "ForAll", ".lines", "allocations/linesProcessing", "linesProcessing", "demands-free"))) {
+   if (d.path().equals(list("conway-s-game-of-life", "Propagation", "ForAll", "6", "Propagation", "ForAll", "0", "Propagation", "ForAll", "isDead", "ForAll", ".lines", "assignments/linesProcessing", "linesProcessing", "demands-free"))) {
       historyForDatabase(d);
    }
 }));
@@ -77,7 +80,7 @@ GelDev.process(() -> {
   1. Deprecate `LinearInitialization` and prefer using `OnlineLinearInitialization` for better performance.
   2. Solution optimization now supports an `OptimizationConfig`,
      which simplifies future backward-compatible changes to the Solution interface.
-* **2022-06-03** **\#8**: The history interface for allocations defines now a `toAnalysisFods` method,
+* **2022-06-03** **\#8**: The history interface for assignments defines now a `toAnalysisFods` method,
   that creates an alternative more searchable version of `Table#toFods`.
   The new version has dedicated columns for fields of complex attributes.
   This makes it easier to search for events in the optimization history by i.e. demand or supply attributes.

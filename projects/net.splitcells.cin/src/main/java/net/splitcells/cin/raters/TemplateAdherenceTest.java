@@ -42,11 +42,11 @@ public class TemplateAdherenceTest {
                 .withConstraint(r -> r.forAll(templateAdherence(template, r.subject().orElseThrow())))
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
+        testSubject.assign(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(1));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
+        testSubject.assign(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(1));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
+        testSubject.assign(testSubject.demandsFree().orderedLine(0), testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(2));
         testSubject.orderedLines().requireSizeOf(3);
         testSubject.remove(testSubject.orderedLine(0));

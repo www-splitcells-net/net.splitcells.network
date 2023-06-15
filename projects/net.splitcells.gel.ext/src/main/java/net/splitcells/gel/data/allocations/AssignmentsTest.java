@@ -17,7 +17,6 @@ package net.splitcells.gel.data.allocations;
 
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.Line;
 
 import static java.util.stream.IntStream.rangeClosed;
@@ -25,11 +24,11 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
-import static net.splitcells.gel.data.allocation.Allocationss.allocations;
+import static net.splitcells.gel.data.assignment.Assignmentss.allocations;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
-public class AllocationsTest extends TestSuiteI {
+public class AssignmentsTest extends TestSuiteI {
 
     @UnitTest
     public void testMultipleAllocationsPerDemand() {
@@ -44,17 +43,17 @@ public class AllocationsTest extends TestSuiteI {
         supplies.addTranslated(list(1));
         supplies.addTranslated(list(2));
         final var testSubject = allocations("testMultipleAllocationsPerDemand", demands, supplies);
-        testSubject.allocate(testSubject.demands().rawLine(0)
+        testSubject.assign(testSubject.demands().rawLine(0)
                 , testSubject.supplies().rawLine(0));
-        testSubject.allocate(testSubject.demands().rawLine(0)
+        testSubject.assign(testSubject.demands().rawLine(0)
                 , testSubject.supplies().rawLine(0));
-        testSubject.allocate(testSubject.demands().rawLine(1)
+        testSubject.assign(testSubject.demands().rawLine(1)
                 , testSubject.supplies().rawLine(1));
-        testSubject.allocate(testSubject.demands().rawLine(0)
+        testSubject.assign(testSubject.demands().rawLine(0)
                 , testSubject.supplies().rawLine(1));
-        testSubject.allocate(testSubject.demands().rawLine(2)
+        testSubject.assign(testSubject.demands().rawLine(2)
                 , testSubject.supplies().rawLine(2));
-        testSubject.allocate(testSubject.demands().rawLine(0)
+        testSubject.assign(testSubject.demands().rawLine(0)
                 , testSubject.supplies().rawLine(2));
         testSubject.unorderedLines().requireSizeOf(6);
         final var multipleAllocationsPerDemands = testSubject.allocationsOfDemand(testSubject.demands().rawLine(0));
@@ -81,7 +80,7 @@ public class AllocationsTest extends TestSuiteI {
         final var supplies = database();
         final var allocations = allocations("test", demands, supplies);
         rangeClosed(1, 10).forEach(i -> {
-            final var allocation = allocations.allocate(demands.addTranslated(list()), supplies.addTranslated(list()));
+            final var allocation = allocations.assign(demands.addTranslated(list()), supplies.addTranslated(list()));
             allocations.remove(allocation);
         });
         allocations.rawLinesView().requireSizeOf(1);
@@ -94,7 +93,7 @@ public class AllocationsTest extends TestSuiteI {
         final var allocations = allocations("test", demands, supplies);
         allocations.subscribeToAfterAdditions(
                 allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
-        allocations.allocate
+        allocations.assign
                 (demands.addTranslated(list())
                         , supplies.addTranslated(list()));
     }
@@ -107,7 +106,7 @@ public class AllocationsTest extends TestSuiteI {
         allocations.subscribeToBeforeRemoval
                 (allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
         allocations.remove(
-                allocations.allocate
+                allocations.assign
                         (demands.addTranslated(list())
                                 , supplies.addTranslated(list()))
         );
@@ -122,7 +121,7 @@ public class AllocationsTest extends TestSuiteI {
             allocations.subscribeToAfterRemoval
                     (allocation -> requireNotNull(allocations.demandOfAllocation(allocation)));
             allocations.remove(
-                    allocations.allocate
+                    allocations.assign
                             (demands.addTranslated(list())
                                     , supplies.addTranslated(list()))
             );
@@ -146,12 +145,12 @@ public class AllocationsTest extends TestSuiteI {
         testSubject.demands().unorderedLines().requireSizeOf(2);
         testSubject.supplies().unorderedLines().requireSizeOf(2);
         final var firstAllocation = testSubject
-                .allocate(testSubject.demands().rawLinesView().get(0)
+                .assign(testSubject.demands().rawLinesView().get(0)
                         , testSubject.supplies().rawLinesView().get(0));
         requireEquals(firstAllocation.value(demandAttribute), 1.0);
         requireEquals(firstAllocation.value(supplyAttribute), 2);
         final var secondAllocation = testSubject
-                .allocate(testSubject.demands().rawLinesView().get(1)
+                .assign(testSubject.demands().rawLinesView().get(1)
                         , testSubject.supplies().rawLinesView().get(1));
         requireEquals(secondAllocation.value(demandAttribute), 3.0);
         requireEquals(secondAllocation.value(supplyAttribute), 4);

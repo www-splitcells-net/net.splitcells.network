@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.allocation;
+package net.splitcells.gel.data.assignment;
 
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
@@ -43,16 +43,13 @@ import static net.splitcells.gel.data.database.Databases.database2;
 
 import java.util.stream.Stream;
 
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
@@ -67,17 +64,17 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 /**
  * <p>{@link #demandsUsed()} ()} and {@link #demandsFree()} contain all {@link Line} of {@link #demands()}.</p>
  * <p>Line removal from {@link #demands_free} and {@link #supplies_free} has no subscriptions,
- * because {@link Database} lines can be remove from the {@link Allocations} completely
+ * because {@link Database} lines can be remove from the {@link Assignments} completely
  * or they can be moved to the respectively used tables.</p>
  * <p>TODO Fix {@link #demandOfAllocation(Line)} by using {@link #demands_used}.</p>
  * <p>TODO Fix {@link #supplyOfAllocation} by using {@link #supplies_used}.<p/>
  * <p>TODO IDEA Support for multiple {@link #path}. In this case paths with demand and supplies as base.<p/>
  * <p>TODO Define {@link #path} as an convention regarding the meaning of demands and supplies.</p>
  */
-public class AllocationsI implements Allocations {
+public class AssignmentsI implements Assignments {
 
-    public static Allocations allocations(String name, Database demands, Database supplies) {
-        return new AllocationsI(name, demands, supplies);
+    public static Assignments allocations(String name, Database demands, Database supplies) {
+        return new AssignmentsI(name, demands, supplies);
     }
 
     private final String names;
@@ -104,7 +101,7 @@ public class AllocationsI implements Allocations {
     private final Map<Integer, Set<Integer>> usedDemandsIndex_to_usedSuppliesIndex = map();
     private final Map<Integer, Set<Integer>> usedSupplyIndex_to_usedDemandsIndex = map();
 
-    private AllocationsI(String name, Database demand, Database supply) {
+    private AssignmentsI(String name, Database demand, Database supply) {
         this.names = name;
         allocations = database2(Language.ALLOCATIONS.value() + "/" + name, demand, concat(demand.headerView(), supply.headerView()));
         // TODO Remove code and comment duplications.
@@ -186,12 +183,12 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Line allocate(Line demand, Line supply) {
+    public Line assign(Line demand, Line supply) {
         if (TRACING) {
             requireNotNull(demand, "Cannot allocate without demand.");
             requireNotNull(supply, "Cannot allocate without supply.");
             domsole().append
-                    (event(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Allocations.class.getSimpleName()
+                    (event(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Assignments.class.getSimpleName()
                                     , path().toString()
                                     , Xml.elementWithChildren(DEMAND.value(), demand.toDom())
                                     , Xml.elementWithChildren(SUPPLY.value(), supply.toDom()))
@@ -326,7 +323,7 @@ public class AllocationsI implements Allocations {
             domsole().append
                     (Xml.event(REMOVE.value()
                                             + PATH_ACCESS_SYMBOL.value()
-                                            + Allocations.class.getSimpleName()
+                                            + Assignments.class.getSimpleName()
                                     , path().toString()
                                     , Xml.elementWithChildren(ALLOCATION.value()
                                             , allocation.toDom())
@@ -478,7 +475,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Line allocationOf(LinePointer demand, LinePointer supply) {
+    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             usedDemandIndexes_to_allocationIndexes
                     .get(demand.index())
@@ -510,7 +507,7 @@ public class AllocationsI implements Allocations {
 
     @Override
     public String toString() {
-        return Allocations.class.getSimpleName() + path().toString();
+        return Assignments.class.getSimpleName() + path().toString();
     }
 
     @Override
@@ -520,7 +517,7 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Element toDom() {
-        final var dom = Xml.elementWithChildren(Allocations.class.getSimpleName());
+        final var dom = Xml.elementWithChildren(Assignments.class.getSimpleName());
         dom.appendChild(textNode(path().toString()));
         rawLinesView().stream()
                 .filter(line -> line != null)
@@ -530,7 +527,7 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Perspective toPerspective() {
-        final var dom = perspective(Allocations.class.getSimpleName());
+        final var dom = perspective(Assignments.class.getSimpleName());
         dom.withChild(perspective(path().toString()));
         rawLinesView().stream()
                 .filter(line -> line != null)
@@ -555,8 +552,8 @@ public class AllocationsI implements Allocations {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Allocations) {
-            final var castedArg = (Allocations) arg;
+        if (arg instanceof Assignments) {
+            final var castedArg = (Assignments) arg;
             return identity().equals(castedArg.identity());
         }
         throw executionException("Invalid argument type: " + arg);

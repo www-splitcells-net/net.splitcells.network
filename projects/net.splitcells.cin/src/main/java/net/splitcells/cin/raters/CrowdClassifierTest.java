@@ -60,19 +60,19 @@ public class CrowdClassifierTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(1));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(2));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(3));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(noCost());
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(5));
     }
@@ -105,19 +105,19 @@ public class CrowdClassifierTest {
                 })
                 .toProblem()
                 .asSolution();
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(1));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(2));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(3));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(4));
-        testSubject.allocate(testSubject.demandsFree().orderedLine(0)
+        testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().rating().requireEqualsTo(cost(5));
     }

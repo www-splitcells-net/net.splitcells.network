@@ -16,37 +16,37 @@
 package net.splitcells.gel.proposal;
 
 import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.solution.Solution;
 
 /**
- * {@link #proposedAllocations} proposes {@link net.splitcells.gel.data.table.Line}s for {@link Allocations}.
- * Any one of {@link Allocations#demands()} can have a number of {@link Allocations#supplies()} elements and
- * therefore one of {@link Allocations#demands()} can have multiple elements of {@link Allocations#supplies()},
+ * {@link #proposedAllocations} proposes {@link net.splitcells.gel.data.table.Line}s for {@link Assignments}.
+ * Any one of {@link Assignments#demands()} can have a number of {@link Assignments#supplies()} elements and
+ * therefore one of {@link Assignments#demands()} can have multiple elements of {@link Assignments#supplies()},
  * that are part of a plausible {@link Solution} according to this {@link Proposal}.
- * {@link Allocations#demands()} and {@link Allocations#supplies()} of {@link #proposedAllocations} are corresponding
- * subsets of the {@link #subject()}'s {@link Allocations#demands()} and {@link Allocations#supplies()}.
+ * {@link Assignments#demands()} and {@link Assignments#supplies()} of {@link #proposedAllocations} are corresponding
+ * subsets of the {@link #subject()}'s {@link Assignments#demands()} and {@link Assignments#supplies()}.
  */
 public interface Proposal {
 
     /**
-     * @return Set of {@link Allocations} proposed for the given {@link #subject()},
+     * @return Set of {@link Assignments} proposed for the given {@link #subject()},
      * in order to get a better {@link Solution}.
      * With this often the domain of the demands is represented,
      * when one compares this concept to the constraint satisfaction problem.
      */
-    Allocations proposedAllocations();
+    Assignments proposedAllocations();
 
     /**
-     * @return Set of {@link Allocations}, for which not the proposals are generated,
+     * @return Set of {@link Assignments}, for which not the proposals are generated,
      * but which provide context for the demands,
      * that need supplies proposed in {@link #proposedAllocations()}.
      * Often the {@link Line}s of {@link #proposedAllocations()} are in the same {@link GroupId}
      * as the lines of {@link #conextAllocations()},
      * This makes it easier to implement {@link Proposal}s for {@link net.splitcells.gel.rating.rater.framework.Rater}s.
      */
-    Allocations conextAllocations();
+    Assignments conextAllocations();
 
     Solution subject();
 }

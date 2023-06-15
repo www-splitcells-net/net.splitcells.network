@@ -21,7 +21,7 @@ import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.data.allocation.Allocationss.allocations;
+import static net.splitcells.gel.data.assignment.Assignmentss.allocations;
 
 import static net.splitcells.gel.problem.ProblemI.problem;
 
@@ -30,11 +30,10 @@ import java.util.function.Function;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.QueryI;
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -61,7 +60,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     private Optional<String> name = Optional.empty();
 
     private Constraint constraint;
-    private Allocations allocations;
+    private Assignments assignments;
 
     protected SolutionBuilder(String name) {
         this.name = Optional.of(name);
@@ -81,7 +80,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     @Override
     public Problem toProblem() {
-        return problem(allocations, constraint);
+        return problem(assignments, constraint);
     }
 
     private void initAllocations() {
@@ -96,7 +95,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
             supplies.forEach(supply -> s.addTranslated(supply));
             return s;
         });
-        allocations = allocations(
+        assignments = allocations(
                 name.orElse(Solution.class.getSimpleName())
                 , problemsDemands
                 , problemsSupplies);
@@ -119,14 +118,14 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
         if (name.isPresent()) {
             path.withAppended(name.get());
         }
-        return withConstraint(builder.apply(QueryI.query(forAll(Optional.of(discoverable(path))), allocations)).currentConstraint());
+        return withConstraint(builder.apply(QueryI.query(forAll(Optional.of(discoverable(path))), assignments)).currentConstraint());
     }
 
     @Override
     public ProblemGenerator withConstraints(List<Function<Query, Query>> builders) {
         initAllocations();
         final var root = forAll();
-        builders.forEach(b -> b.apply(QueryI.query(root, allocations)));
+        builders.forEach(b -> b.apply(QueryI.query(root, assignments)));
         return withConstraint(root);
     }
 

@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.utils.random.Randomness;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
@@ -29,9 +30,7 @@ import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.type.Optimality;
 import net.splitcells.gel.solution.history.History;
 import org.w3c.dom.Node;
@@ -66,16 +65,16 @@ public class SimplifiedAnnealingProblem implements Solution {
                 , randomness);
     }
 
-    protected SimplifiedAnnealingProblem(Allocations allocations, Constraint originalConstraint
+    protected SimplifiedAnnealingProblem(Assignments assignments, Constraint originalConstraint
             , Function<Integer, Double> temperatureFunction) {
-        this(allocations, originalConstraint, temperatureFunction, randomness());
+        this(assignments, originalConstraint, temperatureFunction, randomness());
     }
 
-    protected SimplifiedAnnealingProblem(Allocations allocations, Constraint originalConstraint
+    protected SimplifiedAnnealingProblem(Assignments assignments, Constraint originalConstraint
             , Function<Integer, Double> temperatureFunction
             , Randomness randomness) {
         originalSolution = derivedSolution(() -> list()
-                , allocations
+                , assignments
                 , s -> derivation(originalConstraint
                         , rating -> s.history().supplyWithHistory(() -> {
                             if (randomness.truthValue(temperatureFunction.apply(s.history().size()))) {
@@ -101,13 +100,13 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public Line allocate(Line demand, Line supply) {
-        return originalSolution.allocate(demand, supply);
+    public Line assign(Line demand, Line supply) {
+        return originalSolution.assign(demand, supply);
     }
 
     @Override
-    public Line allocationOf(LinePointer demand, LinePointer supply) {
-        return originalSolution.allocationOf(demand, supply);
+    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
+        return originalSolution.anyAssignmentOf(demand, supply);
     }
 
     @Override
@@ -251,7 +250,7 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public Allocations allocations() {
+    public Assignments allocations() {
         return originalSolution.allocations();
     }
 

@@ -13,15 +13,19 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.allocation;
+package net.splitcells.gel.data.assignment;
 
-
-import net.splitcells.dem.environment.resource.Resource;
-import net.splitcells.dem.resource.AspectOrientedConstructor;
-import net.splitcells.dem.resource.communication.Closeable;
-import net.splitcells.dem.resource.communication.Flushable;
+import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.gel.data.database.Database;
 
-public interface AllocationsFactory extends Resource, AspectOrientedConstructor<Allocations> {
-    Allocations allocations(String name, Database demands, Database supply);
+import static net.splitcells.dem.Dem.environment;
+
+public class Assignmentss extends ResourceOptionI<AssignmentsFactory> {
+    public Assignmentss() {
+        super(() -> new AssignmentsIFactory());
+    }
+
+    public static Assignments allocations(String name, Database demands, Database supplies) {
+        return environment().config().configValue(Assignmentss.class).allocations(name, demands, supplies);
+    }
 }

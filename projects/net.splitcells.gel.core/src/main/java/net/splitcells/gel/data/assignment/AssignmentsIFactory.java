@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.allocation;
+package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
@@ -23,9 +23,9 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.resource.AspectOrientedConstructorBase.aspectOrientedConstructor;
 
-public class AllocationsIFactory implements AllocationsFactory {
+public class AssignmentsIFactory implements AssignmentsFactory {
 
-    private final AspectOrientedConstructorBase<Allocations> aspects = aspectOrientedConstructor();
+    private final AspectOrientedConstructorBase<Assignments> aspects = aspectOrientedConstructor();
 
     @Override
     public void close() {
@@ -38,8 +38,8 @@ public class AllocationsIFactory implements AllocationsFactory {
     }
 
     @Override
-    public Allocations allocations(String name, Database demands, Database supplies) {
-        return AllocationsI.allocations(name, demands, supplies);
+    public Assignments allocations(String name, Database demands, Database supplies) {
+        return AssignmentsI.allocations(name, demands, supplies);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class AllocationsIFactory implements AllocationsFactory {
     }
 
     @Override
-    public Allocations joinAspects(Allocations arg) {
+    public Assignments joinAspects(Assignments arg) {
         return aspects.joinAspects(arg);
     }
 }

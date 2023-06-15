@@ -19,7 +19,7 @@ import java.util.Optional;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -39,9 +39,9 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 public interface Query {
 
     /**
-     * @return The {@link Allocations} on which the {@link Query} is applied to.
+     * @return The {@link Assignments} on which the {@link Query} is applied to.
      */
-    Optional<Allocations> subject();
+    Optional<Assignments> subject();
 
     Query forAll(Attribute<?> args);
 

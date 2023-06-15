@@ -43,16 +43,16 @@ public class OnlineLinearInitialization implements OnlineOptimization {
             final var freeSupplies = solution.suppliesFree().orderedLines();
             int i = 0;
             while (freeDemands.hasElements() && freeSupplies.hasElements()) {
-                solution.allocate(freeDemands.get(i++), freeSupplies.get(i++));
+                solution.assign(freeDemands.get(i++), freeSupplies.get(i++));
             }
         } else {
             while (solution.demandsFree().hasContent() && solution.suppliesFree().hasContent()) {
                 if (IMPROVE_RUNTIME_GET_NEXT_LINE_BY_STREAM) {
                     // TODO Create faster version of initialization, based on 2 unordered streams.
-                    solution.allocate(solution.demandsFree().orderedLinesStream().findFirst().orElseThrow()
+                    solution.assign(solution.demandsFree().orderedLinesStream().findFirst().orElseThrow()
                             , solution.suppliesFree().orderedLinesStream().findFirst().orElseThrow());
                 } else {
-                    solution.allocate(solution.demandsFree().orderedLine(0)
+                    solution.assign(solution.demandsFree().orderedLine(0)
                             , solution.suppliesFree().orderedLine(0));
                 }
             }

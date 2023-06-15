@@ -15,9 +15,9 @@
  */
 package net.splitcells.gel.problem;
 
-import net.splitcells.gel.data.allocation.Allocations;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.solution.Solution;
 
-public interface Problem extends Allocations, ProblemView {
+public interface Problem extends Assignments, ProblemView {
 	Solution asSolution();
 }

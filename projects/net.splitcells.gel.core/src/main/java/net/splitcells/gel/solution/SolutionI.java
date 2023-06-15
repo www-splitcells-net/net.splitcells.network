@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.rating.framework.Rating;
@@ -28,7 +29,6 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.data.allocation.Allocations;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
@@ -79,7 +79,7 @@ public class SolutionI implements Solution {
     }
 
     @Override
-    public Allocations allocations() {
+    public Assignments allocations() {
         return problem.allocations();
     }
 
@@ -124,8 +124,8 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public Line allocate(final Line demand, final Line supply) {
-        return this.problem.allocate(demand, supply);
+    public Line assign(final Line demand, final Line supply) {
+        return this.problem.assign(demand, supply);
     }
 
     @SuppressWarnings("all")
@@ -144,13 +144,13 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public Set<Line> allocationsOf(final Line demand, final Line supply) {
-        return this.problem.allocationsOf(demand, supply);
+    public Set<Line> assignmentsOf(final Line demand, final Line supply) {
+        return this.problem.assignmentsOf(demand, supply);
     }
 
     @Override
-    public Line allocationOf(LinePointer demand, LinePointer supply) {
-        return this.problem.allocationOf(demand, supply);
+    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
+        return this.problem.anyAssignmentOf(demand, supply);
     }
 
     @SuppressWarnings("all")

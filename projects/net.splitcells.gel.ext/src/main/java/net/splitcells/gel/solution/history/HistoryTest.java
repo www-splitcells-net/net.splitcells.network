@@ -67,7 +67,7 @@ public class HistoryTest {
                 .toProblem()
                 .asSolution();
         testSubject.history().processWithHistory(() -> {
-            testSubject.allocate(
+            testSubject.assign(
                     testSubject.demands().rawLine(0)
                     , testSubject.supplies().rawLine(0));
             testSubject.history().resetTo(-1);
@@ -93,7 +93,7 @@ public class HistoryTest {
                 .toProblem()
                 .asSolution();
         solution.history().processWithHistory(() -> {
-            rangeClosed(0, 3).forEach(i -> solution.allocate
+            rangeClosed(0, 3).forEach(i -> solution.assign
                     (solution.demands().rawLine(i)
                             , solution.supplies().rawLine(i)));
             solution.history().unorderedLines().requireSizeOf(4);
@@ -116,7 +116,7 @@ public class HistoryTest {
         solution.history().processWithHistory(() -> {
             solution.history().unorderedLines().requireSizeOf(0);
             {
-                solution.allocate
+                solution.assign
                         (solution.demands().rawLine(0)
                                 , solution.supplies().rawLine(0));
                 solution.history().unorderedLines().requireSizeOf(1);
@@ -151,7 +151,7 @@ public class HistoryTest {
                 .toProblem()
                 .asSolution();
         solution.history().processWithHistory(() -> {
-            final var demandValue = solution.allocate
+            final var demandValue = solution.assign
                     (solution.demands().rawLine(0)
                             , solution.supplies().rawLine(0));
             requireEquals(solution

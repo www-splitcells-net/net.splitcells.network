@@ -15,21 +15,15 @@
  */
 package net.splitcells.gel.data.table;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.TestSuiteI;
-import net.splitcells.gel.data.allocation.Allocations;
-import net.splitcells.gel.data.database.DatabaseI;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.assignment.Assignments;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestFactory;
 
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Mocking.anyInt;
-import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.data.database.DatabaseI.databaseI;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -41,7 +35,7 @@ import static org.mockito.Mockito.mock;
 public final class TableTest extends TestSuiteI {
 
     /**
-     * TODO Use {@link Allocations}.
+     * TODO Use {@link Assignments}.
      */
     @Tag(UNIT_TEST)
     @TestFactory
@@ -50,7 +44,7 @@ public final class TableTest extends TestSuiteI {
     }
 
     /**
-     * TODO Use {@link Allocations}.
+     * TODO Use {@link Assignments}.
      */
     @Tag(UNIT_TEST)
     @TestFactory
