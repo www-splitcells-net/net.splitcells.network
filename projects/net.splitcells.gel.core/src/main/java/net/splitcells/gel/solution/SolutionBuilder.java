@@ -21,7 +21,7 @@ import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.data.assignment.Assignmentss.allocations;
+import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 
 import static net.splitcells.gel.problem.ProblemI.problem;
 
@@ -95,7 +95,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
             supplies.forEach(supply -> s.addTranslated(supply));
             return s;
         });
-        assignments = allocations(
+        assignments = assignments(
                 name.orElse(Solution.class.getSimpleName())
                 , problemsDemands
                 , problemsSupplies);

@@ -38,8 +38,8 @@ public class AssignmentsIFactory implements AssignmentsFactory {
     }
 
     @Override
-    public Assignments allocations(String name, Database demands, Database supplies) {
-        return AssignmentsI.allocations(name, demands, supplies);
+    public Assignments assignments(String name, Database demands, Database supplies) {
+        return AssignmentsI.assignments(name, demands, supplies);
     }
 
     @Override

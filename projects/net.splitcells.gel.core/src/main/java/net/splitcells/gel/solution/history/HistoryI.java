@@ -79,7 +79,7 @@ public class HistoryI implements History {
     private boolean logNaturalArgumentation = false;
 
     private HistoryI(Solution solution) {
-        assignments = Assignmentss.allocations
+        assignments = Assignmentss.assignments
                 (HISTORY.value()
                         , Databases.database
                                 (EVENT.value()

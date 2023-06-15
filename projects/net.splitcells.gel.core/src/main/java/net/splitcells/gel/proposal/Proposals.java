@@ -18,7 +18,7 @@ package net.splitcells.gel.proposal;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.solution.Solution;
 
-import static net.splitcells.gel.data.assignment.Assignmentss.allocations;
+import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
 
 public class Proposals implements Proposal {
@@ -33,10 +33,10 @@ public class Proposals implements Proposal {
 
     private Proposals(Solution subject) {
         this.subject = subject;
-        this.proposedAssignments = allocations("proposed-allocations"
+        this.proposedAssignments = assignments("proposed-allocations"
                 , database("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , database("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
-        this.contextAssignments = allocations("context-allocations"
+        this.contextAssignments = assignments("context-allocations"
                 , database("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , database("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
     }

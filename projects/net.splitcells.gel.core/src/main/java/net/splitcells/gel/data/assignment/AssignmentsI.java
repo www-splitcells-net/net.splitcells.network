@@ -73,7 +73,7 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
  */
 public class AssignmentsI implements Assignments {
 
-    public static Assignments allocations(String name, Database demands, Database supplies) {
+    public static Assignments assignments(String name, Database demands, Database supplies) {
         return new AssignmentsI(name, demands, supplies);
     }
 

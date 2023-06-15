@@ -30,7 +30,7 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.common.Language.EMPTY_STRING;
-import static net.splitcells.gel.data.assignment.Assignmentss.allocations;
+import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.lineRating;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
@@ -95,7 +95,7 @@ public abstract class ConstraintAI implements Constraint {
         }
         results = Databases.database("results", parentPath, list(RESULTING_CONSTRAINT_GROUP, RATING, PROPAGATION_TO));
         lines = Databases.database(name + ".lines", parentPath, list(LINE, INCOMING_CONSTRAINT_GROUP));
-        lineProcessing = allocations("linesProcessing", lines, results);
+        lineProcessing = assignments("linesProcessing", lines, results);
         lineProcessing.subscribeToAfterAdditions(ConstraintAI::propagateAddition);
         lineProcessing.subscribeToBeforeRemoval(ConstraintAI::propagateRemoval);
         lines.subscribeToAfterAdditions(this::processLineAddition);

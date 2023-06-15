@@ -37,7 +37,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.common.Language.DATABASE_HISTORY;
 import static net.splitcells.gel.common.Language.EVENTS;
 import static net.splitcells.gel.common.Language.HISTORIC_VALUES;
-import static net.splitcells.gel.data.assignment.Assignmentss.allocations;
+import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.database.history.DatabaseEventType.ADDITION;
@@ -63,7 +63,7 @@ public class HistoryForDatabase implements History {
     private Assignments history;
 
     private HistoryForDatabase(Database database) {
-        history = allocations(DATABASE_HISTORY.value(),
+        history = assignments(DATABASE_HISTORY.value(),
                 database(HISTORIC_VALUES.value(), database, database.headerView2())
                 , database(EVENTS.value(), database, list(LINE_INDEX, DATABASE_EVENT_TYPE)));
         this.database = database;

@@ -21,5 +21,5 @@ import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.gel.data.database.Database;
 
 public interface AssignmentsFactory extends Resource, AspectOrientedConstructor<Assignments> {
-    Assignments allocations(String name, Database demands, Database supply);
+    Assignments assignments(String name, Database demands, Database supply);
 }

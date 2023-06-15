@@ -25,7 +25,7 @@ public class Assignmentss extends ResourceOptionI<AssignmentsFactory> {
         super(() -> new AssignmentsIFactory());
     }
 
-    public static Assignments allocations(String name, Database demands, Database supplies) {
-        return environment().config().configValue(Assignmentss.class).allocations(name, demands, supplies);
+    public static Assignments assignments(String name, Database demands, Database supplies) {
+        return environment().config().configValue(Assignmentss.class).assignments(name, demands, supplies);
     }
 }
