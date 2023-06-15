@@ -87,7 +87,7 @@ public class AllocationsI implements Allocations {
         supplies = allocationStateLookup(allocations, line -> {
             final var allocationState = allocationStates.get(line.index());
             return allocationState.equals(ALLOCATION_PRESENT)
-                    || allocationState.equals(ONLY_DEMAND_PRESENT);
+                    || allocationState.equals(ONLY_SUPPLY_PRESENT);
         }, supplyHeader);
         freeSupplies = allocationStateLookup(allocations
                 , line -> allocationStates.get(line.index()).equals(ONLY_SUPPLY_PRESENT)
