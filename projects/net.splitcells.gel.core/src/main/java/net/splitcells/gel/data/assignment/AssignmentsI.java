@@ -78,7 +78,7 @@ public class AssignmentsI implements Assignments {
     }
 
     private final String names;
-    private final Database allocations;
+    private final Database assignments;
 
     private final List<AfterAdditionSubscriber> additionSubscriptions = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriptions = list();
@@ -103,7 +103,7 @@ public class AssignmentsI implements Assignments {
 
     private AssignmentsI(String name, Database demand, Database supply) {
         this.names = name;
-        allocations = database2(Language.ALLOCATIONS.value() + "/" + name, demand, concat(demand.headerView(), supply.headerView()));
+        assignments = database2(Language.ALLOCATIONS.value() + "/" + name, demand, concat(demand.headerView(), supply.headerView()));
         // TODO Remove code and comment duplications.
         {
             this.demands = demand;
@@ -115,7 +115,7 @@ public class AssignmentsI implements Assignments {
                 if (usedDemandIndexes_to_allocationIndexes.containsKey(removalOf.index())) {
                     listWithValuesOf(
                             usedDemandIndexes_to_allocationIndexes.get(removalOf.index()))
-                            .forEach(allocationOfDemand -> remove(allocations.rawLinesView().get(allocationOfDemand)));
+                            .forEach(allocationOfDemand -> remove(assignments.rawLinesView().get(allocationOfDemand)));
                 }
                 if (demands_free.contains(removalOf)) {
                     demands_free.remove(removalOf);
@@ -139,7 +139,7 @@ public class AssignmentsI implements Assignments {
                     listWithValuesOf
                             (usedSupplyIndexes_to_allocationIndexes.get(removalOf.index()))
                             .forEach(allocationsOfSupply
-                                    -> remove(allocations.rawLinesView().get(allocationsOfSupply)));
+                                    -> remove(assignments.rawLinesView().get(allocationsOfSupply)));
                 }
                 if (supplies_free.contains(removalOf)) {
                     supplies_free.remove(removalOf);
@@ -245,7 +245,7 @@ public class AssignmentsI implements Assignments {
                  */
             }
         }
-        final var allocation = allocations.addTranslated(Line.concat(demand, supply));
+        final var allocation = assignments.addTranslated(Line.concat(demand, supply));
         if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
             supplies_used.addWithSameHeaderPrefix(supply);
             supplies_free.remove(supply);
@@ -338,14 +338,14 @@ public class AssignmentsI implements Assignments {
         if (ENFORCING_UNIT_CONSISTENCY) {
             list(demand.context()).requireContainsOneOf(demands, demands_used);
             list(supply.context()).requireContainsOneOf(supplies, supplies_used);
-            requireEquals(allocation.context(), allocations);
+            requireEquals(allocation.context(), assignments);
             usedDemandIndexes_to_allocationIndexes.get(demand.index()).requirePresenceOf(allocation.index());
             usedSupplyIndexes_to_allocationIndexes.get(supply.index()).requirePresenceOf(allocation.index());
             requireEquals(allocationsIndex_to_usedDemandIndex.get(allocation.index()), demand.index());
             requireEquals(allocationsIndex_to_usedSupplyIndex.get(allocation.index()), supply.index());
         }
         beforeRemovalSubscriptions.forEach(subscriber -> subscriber.registerBeforeRemoval(allocation));
-        allocations.remove(allocation);
+        assignments.remove(allocation);
         // TODO Make following code a remove subscription to allocations.
         {
             allocationsIndex_to_usedDemandIndex.remove(allocation.index());
@@ -393,12 +393,12 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return allocations.headerView();
+        return assignments.headerView();
     }
 
     @Override
     public List<Attribute<? extends Object>> headerView2() {
-        return allocations.headerView2();
+        return assignments.headerView2();
     }
 
     @Override
@@ -406,12 +406,12 @@ public class AssignmentsI implements Assignments {
         if (ENFORCING_UNIT_CONSISTENCY) {
             require(demands.headerView().contains(attribute) || supplies.headerView().contains(attribute));
         }
-        return allocations.columnView(attribute);
+        return assignments.columnView(attribute);
     }
 
     @Override
     public ListView<Line> rawLinesView() {
-        return allocations.rawLinesView();
+        return assignments.rawLinesView();
     }
 
     @Override
@@ -421,13 +421,13 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public int size() {
-        return allocations.size();
+        return assignments.size();
     }
 
     @Override
     public void remove(int lineIndex) {
         try {
-            remove(allocations.rawLinesView().get(lineIndex));
+            remove(assignments.rawLinesView().get(lineIndex));
         } catch (Exception e) {
             throw e;
         }
@@ -453,7 +453,7 @@ public class AssignmentsI implements Assignments {
         usedSupplyIndexes_to_allocationIndexes
                 .get(supply.index())
                 .forEach(allocationIndex ->
-                        allocationsOfSupply.add(allocations.rawLinesView().get(allocationIndex)));
+                        allocationsOfSupply.add(assignments.rawLinesView().get(allocationIndex)));
         return allocationsOfSupply;
     }
 
@@ -470,7 +470,7 @@ public class AssignmentsI implements Assignments {
         usedDemandIndexes_to_allocationIndexes
                 .get(demand.index())
                 .forEach(allocationIndex ->
-                        allocationsOfDemand.add(allocations.rawLinesView().get(allocationIndex)));
+                        allocationsOfDemand.add(assignments.rawLinesView().get(allocationIndex)));
         return allocationsOfDemand;
     }
 
@@ -493,7 +493,7 @@ public class AssignmentsI implements Assignments {
                     .next();
             Integers.requireEqualInts(demandLine, supplyLine);
         }
-        return allocations.rawLine(
+        return assignments.rawLine(
                 usedDemandIndexes_to_allocationIndexes
                         .get(demand.index())
                         .iterator()
@@ -502,7 +502,7 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public ListView<Column<Object>> columnsView() {
-        return allocations.columnsView();
+        return assignments.columnsView();
     }
 
     @Override
@@ -512,7 +512,7 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
-        return allocations.path().withAppended(names);
+        return assignments.path().withAppended(names);
     }
 
     @Override
@@ -542,7 +542,7 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line other) {
-        return allocations.lookupEquals(attribute, other);
+        return assignments.lookupEquals(attribute, other);
     }
 
     @Override
@@ -566,6 +566,6 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public Stream<Line> orderedLinesStream() {
-        return allocations.orderedLinesStream();
+        return assignments.orderedLinesStream();
     }
 }
