@@ -180,7 +180,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         final var normalizedSlash = path.replaceAll("//+", "/");
         final String rootMatched;
         if (config.possibleRootIndex().contains(normalizedSlash)) {
-            rootMatched = config.rootIndex();
+            return normalizedSlash;
         } else {
             rootMatched = normalizedSlash;
         }
