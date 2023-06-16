@@ -301,6 +301,7 @@ statement
             statement_finally?
     | Keyword_if Brace_round_open expression Brace_round_closed
     	Brace_curly_open statement+ Brace_curly_closed statement_if_else?
+    | Keyword_if Brace_round_open expression Brace_round_closed statement
     | javadoc
     | Keyword_throw expression Semicolon
     | Keyword_return (expression | reference | name Operator_plus Equals expression | name Hyphen_minus Equals expression)? Semicolon
