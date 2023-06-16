@@ -352,11 +352,12 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
      * @param proposal Already present proposal.
      * @return Adjustment to the proposal, so that the given proposal is compliant with this {@link Constraint}.
      */
-    default Proposal propose(Proposal proposal) {
+    Proposal propose(Proposal proposal);
+    /*default Proposal propose(Proposal proposal) {
         if (StaticFlags.WARNING) {
             domsole().append(getClass() + " does not implement `Constraint#propose(Proposal)`.", LogLevel.WARNING);
         }
         return proposal;
-    }
+    }*/
 
 }

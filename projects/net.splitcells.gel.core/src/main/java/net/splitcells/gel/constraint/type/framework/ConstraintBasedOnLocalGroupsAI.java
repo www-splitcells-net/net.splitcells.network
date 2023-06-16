@@ -16,13 +16,16 @@
 package net.splitcells.gel.constraint.type.framework;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
@@ -31,30 +34,45 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 
-@Deprecated
-public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
-    protected final Rater rater;
+public class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
 
-    @Deprecated
-    protected ConstraintBasedOnLocalGroupsAI(Function<Constraint, Rater> raterFactory, Optional<Discoverable> parent) {
+    public static ConstraintBasedOnLocalGroupsAI constraintBasedOnLocalGroupsAI(Function<Constraint, Rater> raterFactory, Optional<Discoverable> parent, BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation) {
+        return new ConstraintBasedOnLocalGroupsAI(raterFactory, parent, localNaturalArgumentation);
+    }
+
+    public static ConstraintBasedOnLocalGroupsAI constraintBasedOnLocalGroupsAI(Rater rater, String name, Optional<Discoverable> parent, BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation) {
+        return new ConstraintBasedOnLocalGroupsAI(rater, name, parent, localNaturalArgumentation);
+    }
+
+    public static ConstraintBasedOnLocalGroupsAI constraintBasedOnLocalGroupsAI(Rater rater, Optional<Discoverable> parent, BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation) {
+        return new ConstraintBasedOnLocalGroupsAI(rater, parent, localNaturalArgumentation);
+    }
+
+    public static ConstraintBasedOnLocalGroupsAI constraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name, Optional<Discoverable> parent, BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation) {
+        return new ConstraintBasedOnLocalGroupsAI(standardGroup, rater, name, parent, localNaturalArgumentation);
+    }
+
+    private final Rater rater;
+    private final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation;
+
+    private ConstraintBasedOnLocalGroupsAI(Function<Constraint, Rater> raterFactory, Optional<Discoverable> parent, BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation) {
         super(Constraint.standardGroup(), parent);
         rater = raterFactory.apply(this);
+        this.localNaturalArgumentation = localNaturalArgumentation;
     }
 
-    @Deprecated
-    protected ConstraintBasedOnLocalGroupsAI(Rater rater, String name, Optional<Discoverable> parent) {
-        this(Constraint.standardGroup(), rater, name, parent);
+    private ConstraintBasedOnLocalGroupsAI(Rater rater, String name, Optional<Discoverable> parent, BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation) {
+        this(Constraint.standardGroup(), rater, name, parent, localNaturalArgumentation);
     }
 
-    @Deprecated
-    protected ConstraintBasedOnLocalGroupsAI(Rater rater, Optional<Discoverable> parent) {
-        this(Constraint.standardGroup(), rater, "", parent);
+    private ConstraintBasedOnLocalGroupsAI(Rater rater, Optional<Discoverable> parent, BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation) {
+        this(Constraint.standardGroup(), rater, "", parent, localNaturalArgumentation);
     }
 
-    @Deprecated
-    protected ConstraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name, Optional<Discoverable> parent) {
+    private ConstraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name, Optional<Discoverable> parent, BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation) {
         super(standardGroup, name, parent);
         this.rater = rater;
+        this.localNaturalArgumentation = localNaturalArgumentation;
     }
 
     @Override
@@ -77,7 +95,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
                                 .lookup(incomingGroup)));
     }
 
-    protected void processRatingEvent(RatingEvent ratingEvent) {
+    private void processRatingEvent(RatingEvent ratingEvent) {
         ratingEvent.removal().forEach(removal ->
                 lineProcessing.assignmentsOfDemand(removal).forEach(lineProcessing::remove));
         ratingEvent.additions().forEach((line, resultUpdate) -> {
@@ -95,7 +113,7 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     }
 
     @Override
-    protected void processLinesBeforeRemoval(GroupId incomingGroup, Line removal) {
+    public void processLinesBeforeRemoval(GroupId incomingGroup, Line removal) {
         processRatingEvent(
                 rater.rating_before_removal(
                         lines.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)
@@ -109,6 +127,11 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
                         , childrenView()
                         , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
         super.processLinesBeforeRemoval(incomingGroup, removal);
+    }
+
+    @Override
+    public String localNaturalArgumentation(Report report) {
+        return null;
     }
 
     @Override
@@ -127,5 +150,14 @@ public abstract class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
     @Override
     public Proposal propose(Proposal proposal) {
         return rater.propose(proposal);
+    }
+
+    @Override
+    public Class<? extends Constraint> type() {
+        throw notImplementedYet();
+    }
+
+    public Rater rater() {
+        return rater;
     }
 }

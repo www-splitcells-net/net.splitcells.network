@@ -27,6 +27,7 @@ import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
@@ -158,6 +159,11 @@ public final class Derivation implements Constraint {
     @Override
     public void init(Solution solution) {
         derivationTarget.init(solution);
+    }
+
+    @Override
+    public Proposal propose(Proposal proposal) {
+        return derivationTarget.propose(proposal);
     }
 
     @Override
