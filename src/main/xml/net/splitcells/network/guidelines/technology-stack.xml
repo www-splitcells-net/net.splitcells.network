@@ -35,15 +35,16 @@
         <title>Recommended Default Software Stacks</title>
         <paragraph>The following software stacks are currently recommended:</paragraph>
         <list>
+            <item>Ansible for remote computer configuration</item>
             <item>
                 <link>
                     <post>net/splitcells/os/state/interface/shell.software</post>
-                    <text>Shell Software</text>
+                    <text>Shell Software</text> for simple software integration
                 </link>
             </item>
-            <item>Java 11</item>
-            <item>Maven 3</item>
-            <item>Python 3</item>
+            <item>Python 3 for complex software integration</item>
+            <item>Maven 3 as the build system for the main programs</item>
+            <item>Java 11 as the programming language for the main programs</item>
         </list>
     </chapter>
 </article>
