@@ -28,13 +28,13 @@ import static net.splitcells.gel.rating.rater.lib.classification.ForAllWithCondi
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllAttributeValues.forAllAttributeValues;
 
 public class ForAllFactory {
-    protected static final ForAllFactory INSTANCE = new ForAllFactory();
+    private static final ForAllFactory INSTANCE = new ForAllFactory();
 
     public static ForAllFactory instance() {
         return INSTANCE;
     }
 
-    protected ForAllFactory() {
+    private ForAllFactory() {
 
     }
 

@@ -48,11 +48,11 @@ public class ForAll extends ConstraintBasedOnLocalGroupsAI {
         return constraintAspect(new ForAll(classifier));
     }
 
-    protected ForAll(Rater classifier) {
+    private ForAll(Rater classifier) {
         super(raterBasedGrouping(classifier), Optional.empty());
     }
 
-    protected ForAll(Rater classifier, Optional<Discoverable> parent) {
+    private ForAll(Rater classifier, Optional<Discoverable> parent) {
         super(raterBasedGrouping(classifier), parent);
     }
 
@@ -66,7 +66,7 @@ public class ForAll extends ConstraintBasedOnLocalGroupsAI {
     }
 
     @Override
-    protected String localNaturalArgumentation(Report report) {
+    public String localNaturalArgumentation(Report report) {
         final var raterBasedOnGrouping = rater.casted(RaterBasedOnGrouping.class);
         if (raterBasedOnGrouping.isPresent()) {
             if (raterBasedOnGrouping.get().classifier().type().equals(Propagation.class)) {
