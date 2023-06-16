@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Source Type Guidelines
 ## Used Standards
 ### Primary Used File Formats
@@ -75,7 +79,3 @@ In the best case only one format is present per file.
 If multiple formats are needed for one file,
 try creating multiple files with the
 same file name suffix and one format for each such file.
-
-----
-* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
-* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
