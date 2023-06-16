@@ -22,6 +22,7 @@ Changes are now written to the root changelog instead.
 
 ## Unreleased
 ### Major Changes
+* **2023-06-16** [**\#245** Notify users of `echo.error` call by default.](https://github.com/www-splitcells-net/net.splitcells.network/issues/245)
 * **2023-03-26** [**\#s109** `repo.process` should not create the folder of missing sub repos by default.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/119)
   If `--command-for-missing` is not set or is set as `exit 1`,
   the folder
