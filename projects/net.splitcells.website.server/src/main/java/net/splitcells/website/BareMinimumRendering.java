@@ -39,7 +39,6 @@ public class BareMinimumRendering {
     public static void main(String... args) {
         Dem.process(() -> {
             projectsRenderer(Config.create()
-                    .withRootPath("/net/splitcells/network/")
                     .withMainProjectRepositoryPath(Paths.get("projects"))
                     .withOpenPort(8080)
                     .withXmlSchema(Optional.empty())
