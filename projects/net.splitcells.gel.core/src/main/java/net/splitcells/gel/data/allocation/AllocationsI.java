@@ -18,7 +18,6 @@ package net.splitcells.gel.data.allocation;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
@@ -26,7 +25,6 @@ import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import org.w3c.dom.Node;
 
@@ -59,11 +57,11 @@ public class AllocationsI implements Allocations {
     private final List<Attribute<?>> supplyHeader;
 
     private final Database demands;
-    private final Database freeDemands;
-    private final Database usedDemands;
+    private final Database demandsFree;
+    private final Database demandsUsed;
     private final Database supplies;
-    private final Database freeSupplies;
-    private final Database usedSupplies;
+    private final Database suppliesFree;
+    private final Database suppliesUsed;
 
     private AllocationsI(String name, Discoverable parent
             , List<Attribute<?>> demandHeader
@@ -78,10 +76,10 @@ public class AllocationsI implements Allocations {
             return allocationState.equals(ALLOCATION_PRESENT)
                     || allocationState.equals(ONLY_DEMAND_PRESENT);
         }, demandHeader);
-        freeDemands = allocationStateLookup(allocations
+        demandsFree = allocationStateLookup(allocations
                 , line -> allocationStates.get(line.index()).equals(ONLY_DEMAND_PRESENT)
                 , demandHeader);
-        usedDemands = allocationStateLookup(allocations
+        demandsUsed = allocationStateLookup(allocations
                 , line -> allocationStates.get(line.index()).equals(ALLOCATION_PRESENT)
                 , demandHeader);
         supplies = allocationStateLookup(allocations, line -> {
@@ -89,10 +87,10 @@ public class AllocationsI implements Allocations {
             return allocationState.equals(ALLOCATION_PRESENT)
                     || allocationState.equals(ONLY_SUPPLY_PRESENT);
         }, supplyHeader);
-        freeSupplies = allocationStateLookup(allocations
+        suppliesFree = allocationStateLookup(allocations
                 , line -> allocationStates.get(line.index()).equals(ONLY_SUPPLY_PRESENT)
                 , supplyHeader);
-        usedSupplies = allocationStateLookup(allocations
+        suppliesUsed = allocationStateLookup(allocations
                 , line -> allocationStates.get(line.index()).equals(ALLOCATION_PRESENT)
                 , supplyHeader);
     }
@@ -114,32 +112,32 @@ public class AllocationsI implements Allocations {
 
     @Override
     public Database supplies() {
-        throw notImplementedYet();
+        return supplies;
     }
 
     @Override
     public Database suppliesUsed() {
-        throw notImplementedYet();
+        return suppliesUsed;
     }
 
     @Override
     public Database suppliesFree() {
-        throw notImplementedYet();
+        return suppliesFree;
     }
 
     @Override
     public Database demands() {
-        throw notImplementedYet();
+        return demands;
     }
 
     @Override
     public Database demandsUsed() {
-        throw notImplementedYet();
+        return demandsUsed;
     }
 
     @Override
     public Database demandsFree() {
-        throw notImplementedYet();
+        return demandsFree;
     }
 
     @Override
