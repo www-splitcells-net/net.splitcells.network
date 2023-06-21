@@ -307,7 +307,7 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Override
-    public Assignments lineProcessing() {
+    public Table lineProcessing() {
         return lineProcessing;
     }
 
