@@ -117,30 +117,6 @@ public class LineI implements Line {
     }
 
     @Override
-    public Element toDom() {
-        final var dom = Xml.elementWithChildren(Line.class.getSimpleName());
-        dom.appendChild(Xml.elementWithChildren(INDEX.value(), textNode("" + index)));
-        context.headerView().forEach(attribute -> {
-            final var value = context.columnView(attribute).get(index);
-            final Node domValue;
-            if (value == null) {
-                domValue = textNode("");
-            } else {
-                if (value instanceof Domable) {
-                    domValue = ((Domable) value).toDom();
-                } else {
-                    domValue = textNode(value.toString());
-                }
-            }
-            final var valueElement = Xml.elementWithChildren(VALUE.value());
-            valueElement.setAttribute(TYPE.value(), attribute.name());
-            valueElement.appendChild(domValue);
-            dom.appendChild(valueElement);
-        });
-        return dom;
-    }
-
-    @Override
     public int hashCode() {
         return Thing.hashCode(index(), context());
     }

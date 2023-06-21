@@ -17,6 +17,7 @@ package net.splitcells.gel.data.table;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.*;
+import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -33,6 +34,8 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.attribute.IndexedAttribute;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * TODO {@link Line}s and {@link Table}s should be typed. Use a meta {@link Attribute}, which
@@ -57,8 +60,8 @@ public interface Line extends Domable {
      * in order to get a better runtime performance.</p>
      *
      * @param attribute Identifies, which value of a {@link Line} should be retrieved.
+     * @param <T>       This is the type of the value and the type parameter of the attribute.
      * @return This is the value of the attribute.
-     * @param <T> This is the type of the value and the type parameter of the attribute.
      */
     <T> T value(Attribute<T> attribute);
 
@@ -68,9 +71,9 @@ public interface Line extends Domable {
      * {@link #context()} needs to contain this {@link IndexedAttribute#attribute()} in its {@link Table#headerView()}
      * at the same position as {@link IndexedAttribute#headerIndex()}.</p>
      *
-     * @param attribute  Identifies, which value of a {@link Line} should be retrieved.
+     * @param attribute Identifies, which value of a {@link Line} should be retrieved.
+     * @param <T>       This is the type of the value and the type parameter of the attribute.
      * @return This is the value of the attribute.
-     * @param <T> This is the type of the value and the type parameter of the attribute.
      */
     <T> T value(IndexedAttribute<T> attribute);
 
@@ -139,5 +142,29 @@ public interface Line extends Domable {
             perspective.withChild(valuePerspective);
         });
         return perspective;
+    }
+
+    @Override
+    default Element toDom() {
+        final var dom = Xml.elementWithChildren(Line.class.getSimpleName());
+        dom.appendChild(Xml.elementWithChildren(INDEX.value(), textNode("" + index())));
+        context().headerView().forEach(attribute -> {
+            final var value = context().columnView(attribute).get(index());
+            final Node domValue;
+            if (value == null) {
+                domValue = textNode("");
+            } else {
+                if (value instanceof Domable) {
+                    domValue = ((Domable) value).toDom();
+                } else {
+                    domValue = textNode(value.toString());
+                }
+            }
+            final var valueElement = Xml.elementWithChildren(VALUE.value());
+            valueElement.setAttribute(TYPE.value(), attribute.name());
+            valueElement.appendChild(domValue);
+            dom.appendChild(valueElement);
+        });
+        return dom;
     }
 }
