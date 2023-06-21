@@ -229,7 +229,7 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public ListView<Column<Object>> columnsView() {
+    public ListView<ColumnView<Object>> columnsView() {
         return this.problem.columnsView();
     }
 

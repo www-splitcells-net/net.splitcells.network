@@ -46,6 +46,7 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.table.column.ColumnView;
 import org.w3c.dom.Element;
 import net.splitcells.dem.data.set.list.Lists;
 
@@ -65,7 +66,7 @@ public class LookupTable implements Table {
     private final String name;
     private final Set<Integer> content = setOfUniques();
     private final List<Column<Object>> columns;
-    private final List<Column<Object>> columnsView;
+    private final List<ColumnView<Object>> columnsView;
     private final List<Line> rawLinesCache = list();
     private final Map<Integer, Line> rawLinesHashedCache = map();
 
@@ -103,7 +104,8 @@ public class LookupTable implements Table {
         columns = table.headerView().stream()
                 .map(attribute -> LookupColumn.lookupColumn(this, attribute))
                 .collect(toList());
-        columnsView = listWithValuesOf(columns);
+        columnsView = Lists.<ColumnView<Object>>list();
+        columnsView.addAll(columns);
         this.useExperimentalRawLineCache = useExperimentalRawLineCache;
     }
 
@@ -293,7 +295,7 @@ public class LookupTable implements Table {
     }
 
     @Override
-    public List<Column<Object>> columnsView() {
+    public List<ColumnView<Object>> columnsView() {
         return columnsView;
     }
 

@@ -501,7 +501,7 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public ListView<Column<Object>> columnsView() {
+    public ListView<ColumnView<Object>> columnsView() {
         return assignments.columnsView();
     }
 

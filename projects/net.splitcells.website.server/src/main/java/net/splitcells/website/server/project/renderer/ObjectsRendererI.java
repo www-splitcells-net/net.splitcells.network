@@ -23,6 +23,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -61,7 +62,10 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     @Override
-    public synchronized Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path, Config config) {
+    public synchronized Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title
+            , Optional<String> path
+            , Config config
+            , ProjectsRenderer projectsRenderer) {
         domsole().append(getClass().getName() + "#renderHtmlBodyContent not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
@@ -102,7 +106,7 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     @Override
-    public synchronized Optional<RenderingResult> render(String argPath, Config config, ProjectRenderer projectRenderer) {
+    public synchronized Optional<RenderingResult> render(String argPath, ProjectsRenderer projectsRenderer) {
         final var path = Path.of(argPath);
         if (objects.containsKey(path)) {
             final var object = objects.get(path);
@@ -112,10 +116,10 @@ public class ObjectsRendererI implements ProjectRenderer {
             } else {
                 relativeArgPath = argPath;
             }
-            return Optional.of(renderingResult(projectRenderer.renderHtmlBodyContent(object.render()
+            return Optional.of(renderingResult(projectsRenderer.renderHtmlBodyContent(object.render()
                             , object.title()
                             , Optional.of(relativeArgPath)
-                            , config).orElseThrow()
+                            , projectsRenderer.config()).orElseThrow()
                     , TEXT_HTML.toString()));
         }
         return Optional.empty();

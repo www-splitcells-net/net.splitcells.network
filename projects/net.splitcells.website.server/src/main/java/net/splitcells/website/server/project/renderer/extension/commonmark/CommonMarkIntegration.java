@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -48,7 +49,8 @@ public class CommonMarkIntegration {
     private CommonMarkIntegration() {
     }
 
-    public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config) {
+    public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config
+            , ProjectsRenderer projectsRenderer) {
         final Optional<String> title;
         final String contentToRender;
         if (arg.startsWith(LICENSE_HEADER)) {
@@ -68,7 +70,8 @@ public class CommonMarkIntegration {
                 .renderHtmlBodyContent(renderer.render(parsed)
                         , title
                         , Optional.of(path)
-                        , config)
+                        , config
+                        , projectsRenderer)
                 .orElseThrow();
     }
 

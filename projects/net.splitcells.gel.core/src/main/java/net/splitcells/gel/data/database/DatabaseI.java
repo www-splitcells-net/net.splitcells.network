@@ -72,6 +72,7 @@ public class DatabaseI implements Database {
     private final List<Attribute<? extends Object>> attributes2;
     private final List<Column<Object>> columns = list();
     private final ListView<Column<Object>> columnsView = listView(columns);
+    private final ListView<ColumnView<Object>> columnsViewView;
     private final Map<Attribute<?>, Integer> typed_column_index = map();
     private final Set<Line> lines = setOfUniques();
     private final List<Line> rawLines = list();
@@ -114,6 +115,9 @@ public class DatabaseI implements Database {
         columns.forEach(this::subscribeToBeforeRemoval);
         attributes2 = list();
         attributes2.addAll(attributes);
+        final List<ColumnView<Object>> columnsViewViewList = list();
+        columns.forEach(c -> columnsViewViewList.add(c));
+        columnsViewView = listView(columnsViewViewList);
     }
 
     public static Database databaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
@@ -339,8 +343,8 @@ public class DatabaseI implements Database {
      * @return
      */
     @Override
-    public ListView<Column<Object>> columnsView() {
-        return columnsView;
+    public ListView<ColumnView<Object>> columnsView() {
+        return columnsViewView;
     }
 
     @Override

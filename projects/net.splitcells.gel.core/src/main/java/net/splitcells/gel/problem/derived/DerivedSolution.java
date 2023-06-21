@@ -221,7 +221,7 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public ListView<Column<Object>> columnsView() {
+    public ListView<ColumnView<Object>> columnsView() {
         return assignments.columnsView();
     }
 

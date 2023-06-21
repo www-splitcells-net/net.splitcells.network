@@ -226,7 +226,7 @@ public class HistoryForDatabase implements History {
     }
 
     @Override
-    public ListView<Column<Object>> columnsView() {
+    public ListView<ColumnView<Object>> columnsView() {
         return history.columnsView();
     }
 

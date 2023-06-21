@@ -220,7 +220,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public ListView<Column<Object>> columnsView() {
+    public ListView<ColumnView<Object>> columnsView() {
         return this.assignments.columnsView();
     }
 

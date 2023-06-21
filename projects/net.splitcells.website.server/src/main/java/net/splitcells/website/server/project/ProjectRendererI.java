@@ -35,6 +35,9 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
+import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.UTF_8;
 import static net.splitcells.dem.resource.Files.fileExists;
@@ -351,22 +354,42 @@ public class ProjectRendererI implements ProjectRenderer {
     public Optional<byte[]> renderHtmlBodyContent(String bodyContent
             , Optional<String> title
             , Optional<String> path
-            , Config config) {
-        final var content = Xml.rElement(NameSpaces.SEW, "article");
-        final var htmlBodyContent = Xml.rElement(NameSpaces.SEW, "html-body-content");
+            , Config config
+            , ProjectsRenderer projectsRenderer) {
+        final var content = Xml.rElement(SEW, "article");
+        final var htmlBodyContent = Xml.rElement(SEW, "html-body-content");
         htmlBodyContent.appendChild(Xml.textNode(MARKER));
         content.appendChild(htmlBodyContent);
-        final var metaElement = Xml.elementWithChildren(NameSpaces.SEW, "meta");
+        final var metaElement = elementWithChildren(SEW, "meta");
         content.appendChild(metaElement);
         if (title.isPresent()) {
-            final var titleElement = Xml.elementWithChildren(NameSpaces.SEW, "title");
+            final var titleElement = elementWithChildren(SEW, "title");
             metaElement.appendChild(titleElement);
             titleElement.appendChild(Xml.textNode(title.get()));
         }
         if (path.isPresent()) {
-            final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
+            final var pathElement = elementWithChildren(SEW, "path");
             pathElement.appendChild(Xml.textNode(path.get().toString()));
             metaElement.appendChild(pathElement);
+        }
+        if (path.isPresent()) {
+            final var relevantParentPages = projectsRenderer.relevantParentPages(path.get());
+            if (relevantParentPages.hasElements()) {
+
+                final var container = optionalDirectChildElementsByName(metaElement, "relevant-parent-pages", SEW)
+                        .orElseGet(() -> {
+                            final var element = elementWithChildren(SEW, "relevant-parent-pages");
+                            metaElement.appendChild(element);
+                            return element;
+                        });
+                relevantParentPages.forEach(m -> {
+                    final var parent = elementWithChildren(SEW, "parent");
+                    parent.setAttribute("path", m.path());
+                    parent.setAttribute("title", m.title().orElse(path.get()));
+                    container.appendChild(parent);
+                });
+                metaElement.appendChild(container);
+            }
         }
         final var contentAsString = Xml.toPrettyString(content);
         domsole().append(perspective(contentAsString), LogLevel.DEBUG);
@@ -386,24 +409,24 @@ public class ProjectRendererI implements ProjectRenderer {
         if (xml.startsWith(XML_HEADER)) {
             xml = xml.substring(XML_HEADER.length());
         }
-        final var layoutConfigElement = Xml.rElement(NameSpaces.SEW, "layout.config");
+        final var layoutConfigElement = Xml.rElement(SEW, "layout.config");
         {
-            final var pathElement = Xml.elementWithChildren(NameSpaces.SEW, "path");
+            final var pathElement = elementWithChildren(SEW, "path");
             pathElement.appendChild(Xml.textNode(layoutConfig.path()));
             layoutConfigElement.appendChild(pathElement);
         }
         layoutConfig.title().ifPresent(title -> {
-            final var titleElement = Xml.elementWithChildren(NameSpaces.SEW, "title");
+            final var titleElement = elementWithChildren(SEW, "title");
             titleElement.appendChild(Xml.textNode(layoutConfig.title().get()));
             layoutConfigElement.appendChild(titleElement);
         });
         {
-            final var contentElement = Xml.elementWithChildren(NameSpaces.SEW, "content");
+            final var contentElement = elementWithChildren(SEW, "content");
             contentElement.appendChild(Xml.textNode(MARKER));
             layoutConfigElement.appendChild(contentElement);
         }
         layoutConfig.localPathContext().ifPresent(localPathContext -> {
-            final var pathContext = Xml.elementWithChildren(NameSpaces.SEW, "path.context");
+            final var pathContext = elementWithChildren(SEW, "path.context");
             pathContext.appendChild(Xml.textNode(PATH_CONTEXT_MARKER));
             layoutConfigElement.appendChild(pathContext);
         });

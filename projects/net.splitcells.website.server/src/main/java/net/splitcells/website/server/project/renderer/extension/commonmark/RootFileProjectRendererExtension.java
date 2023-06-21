@@ -23,6 +23,7 @@ import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtension;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -50,13 +51,14 @@ public class RootFileProjectRendererExtension implements ProjectRendererExtensio
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         final var readmePath = projectRenderer.projectFolder().resolve(rootFile + ".md");
         if (path.endsWith(rootFile + ".html")) {
             if (Files.is_file(readmePath)) {
                 final var pathContent = readString(readmePath);
                 return Optional.of(
-                        renderingResult(renderer.render(pathContent, projectRenderer, path, config)
+                        renderingResult(renderer.render(pathContent, projectRenderer, path, projectsRenderer.config()
+                                        , projectsRenderer)
                                 , HTML_TEXT.codeName()));
             }
         }

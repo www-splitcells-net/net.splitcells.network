@@ -223,7 +223,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public ListView<Column<Object>> columnsView() {
+    public ListView<ColumnView<Object>> columnsView() {
         return allocations.columnsView();
     }
 

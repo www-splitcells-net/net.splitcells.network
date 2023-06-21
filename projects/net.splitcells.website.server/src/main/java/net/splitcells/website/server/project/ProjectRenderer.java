@@ -81,7 +81,8 @@ public interface ProjectRenderer extends Renderer {
     Optional<byte[]> renderHtmlBodyContent(String bodyContent
             , Optional<String> title
             , Optional<String> path
-            , @Deprecated Config config);
+            , @Deprecated Config config
+            , ProjectsRenderer projectsRenderer);
 
     /**
      * This is the main rendering method for documents of a project.

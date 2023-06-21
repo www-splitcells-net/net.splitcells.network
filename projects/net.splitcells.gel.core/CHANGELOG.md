@@ -5,6 +5,11 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-06-21 #170** `Table#columnsView` now only returns a read-only access to the columns,
+  in order to enable faster alternative Database implementations,
+  that do not have writeable columns.
+  Also, writeable access to the columns via the public interface was never planned.
+  Especially, in the Table interface, that is thought to be a read-only interface.
 * **2023-06-15 #170**
   1. Rename `net.splitcells.gel.data.allocation.Allocation*`
     to `net.splitcells.gel.data.assignment.Assignment*`,

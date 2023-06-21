@@ -116,7 +116,7 @@ public class AllocationStateLookup implements Database {
     }
 
     @Override
-    public ListView<Column<Object>> columnsView() {
+    public ListView<ColumnView<Object>> columnsView() {
         throw notImplementedYet();
     }
 

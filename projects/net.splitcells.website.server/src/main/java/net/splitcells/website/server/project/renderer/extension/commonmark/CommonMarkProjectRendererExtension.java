@@ -22,6 +22,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtension;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -45,13 +46,13 @@ public class CommonMarkProjectRendererExtension implements ProjectRendererExtens
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
             final var commonMarkFile = projectRenderer.projectFolder().resolve("src/main").resolve("md")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".md");
             if (is_file(commonMarkFile)) {
                 final var pathContent = readString(commonMarkFile);
-                return Optional.of(renderingResult(renderer.render(pathContent, projectRenderer, path, config)
+                return Optional.of(renderingResult(renderer.render(pathContent, projectRenderer, path, projectsRenderer.config(), projectsRenderer)
                         , HTML_TEXT.codeName()));
             }
         }
