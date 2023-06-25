@@ -18,7 +18,9 @@
 
 🤝 Collaborate large decision-making networks.
 
-🗞️️ Get an insight into our thoughts via our [blog](https://splitcells-net.srht.site/) ([also on Gemini](gemini://splitcells-net.srht.site)), [Mastodon/Fosstodon](https://fosstodon.org/@splitcells) and programming progress via our [changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
+🗞️️ Get an insights via our [blog](https://splitcells-net.srht.site/) ([also on Gemini](gemini://splitcells-net.srht.site)), [Mastodon/Fosstodon](https://fosstodon.org/@splitcells),
+the project's history
+and our [changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
 
 🦉 Get a [bird's-eye project view](https://splitcells.net/net/splitcells/network/overview.html).
 
