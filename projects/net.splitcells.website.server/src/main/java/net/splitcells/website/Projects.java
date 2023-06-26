@@ -224,6 +224,18 @@ public class Projects {
         } else {
             domsole().append("Project 'net.splitcells.network.log' does not exist.", LogLevel.WARNING);
         }
+        if (isDirectory(integratedProjectRepositories.resolve("../../net.splitcells.symbiosis/"))) {
+            projectRenderers.add(projectRenderer
+                    (profile
+                            , integratedProjectRepositories.resolve("../../net.splitcells.symbiosis/")
+                            , xslLib
+                            , integratedProjectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/html")
+                            , "/"
+                            , sourceValidator
+                            , config));
+        } else {
+            domsole().append("Project 'net.splitcells.symbiosis' does not exist.", LogLevel.WARNING);
+        }
         return projectRenderers;
     }
 }
