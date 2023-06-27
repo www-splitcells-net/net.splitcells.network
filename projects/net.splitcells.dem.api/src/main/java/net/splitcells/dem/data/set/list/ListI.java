@@ -18,11 +18,10 @@ package net.splitcells.dem.data.set.list;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 @JavaLegacyArtifact
 public class ListI<T> extends ArrayList<T> implements List<T> {
-	public static <T> List<T> list() {
+	public static <T> List<T> _list() {
 		return new ListI<>();
 	}
 	/**

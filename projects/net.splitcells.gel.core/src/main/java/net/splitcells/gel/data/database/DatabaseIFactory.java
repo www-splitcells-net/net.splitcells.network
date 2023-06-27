@@ -25,7 +25,6 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static net.splitcells.dem.data.set.list.ListI.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.AspectOrientedConstructorBase.aspectOrientedConstructor;
 import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConstructor;

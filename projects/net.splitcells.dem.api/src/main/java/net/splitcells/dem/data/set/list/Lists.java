@@ -16,7 +16,6 @@
 package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
-import net.splitcells.dem.utils.ConstructorIllegal;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
@@ -49,7 +48,7 @@ public final class Lists {
     }
 
     public static <T> List<T> list() {
-        return ListI.list();
+        return ListI._list();
     }
 
     @JavaLegacyBody
@@ -68,7 +67,7 @@ public final class Lists {
     @SafeVarargs
     @JavaLegacyBody
     public static <T> List<T> list(T... args) {
-        final var list = ListI.<T>list();
+        final var list = ListI.<T>_list();
         list.addAll(java.util.Arrays.asList(args));
         return list;
     }

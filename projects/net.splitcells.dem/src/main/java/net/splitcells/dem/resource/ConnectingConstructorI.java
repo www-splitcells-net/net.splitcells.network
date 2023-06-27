@@ -19,7 +19,8 @@ import net.splitcells.dem.data.set.list.List;
 
 import java.util.function.Consumer;
 
-import static net.splitcells.dem.data.set.list.ListI.list;
+import static net.splitcells.dem.data.set.list.ListI._list;
+import static net.splitcells.dem.data.set.list.Lists.list;
 
 public class ConnectingConstructorI<T> implements ConnectingConstructor<T> {
 
