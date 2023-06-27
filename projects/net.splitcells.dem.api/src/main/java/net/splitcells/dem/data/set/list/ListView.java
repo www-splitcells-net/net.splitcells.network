@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * TODO Extend interface with functional write methods: https://www.vavr.io/vavr-docs/#_list
@@ -70,5 +71,13 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing {
         if (size() != arg) {
             throw executionException("List should be size of " + arg + " but has size of " + size() + " instead: " + this);
         }
+    }
+
+    default void assertEquals(List<T> arg) {
+        assertThat(this).isEqualTo(arg);
+    }
+
+    default T requireLastValue() {
+        return get(size() - 1);
     }
 }

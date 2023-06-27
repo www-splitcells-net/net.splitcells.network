@@ -194,7 +194,7 @@ public class HistoryRef implements History {
     }
 
     @Override
-    public Line addTranslated(List<?> values) {
+    public Line addTranslated(ListView<?> values) {
         return history.addTranslated(values);
     }
 

@@ -61,7 +61,7 @@ public class AllocationStateLookup implements Database {
     }
 
     @Override
-    public Line addTranslated(List<?> values) {
+    public Line addTranslated(ListView<?> values) {
         throw notImplementedYet();
     }
 

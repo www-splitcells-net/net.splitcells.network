@@ -24,6 +24,7 @@ import org.w3c.dom.Node;
 import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 
 public class LineWithValues implements Line {
 
@@ -65,5 +66,10 @@ public class LineWithValues implements Line {
     @Override
     public Table context() {
         return context;
+    }
+
+    @Override
+    public ListView<Object> values() {
+        return values;
     }
 }

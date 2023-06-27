@@ -160,7 +160,7 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public Line addTranslated(List<?> values) {
+    public Line addTranslated(ListView<?> values) {
         return originalSolution.addTranslated(values);
     }
 

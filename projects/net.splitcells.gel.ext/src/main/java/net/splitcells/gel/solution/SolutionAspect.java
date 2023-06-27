@@ -141,7 +141,7 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Line addTranslated(List<?> values) {
+    public Line addTranslated(ListView<?> values) {
         return solution.addTranslated(values);
     }
 

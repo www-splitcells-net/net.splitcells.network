@@ -27,6 +27,7 @@ import static net.splitcells.gel.common.Language.TYPE;
 import static net.splitcells.gel.common.Language.VALUE;
 import static net.splitcells.gel.data.table.LinePointerI.linePointer;
 
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
@@ -113,7 +114,7 @@ public interface Line extends Domable {
         return values().equals(other.values());
     }
 
-    default List<Object> values() {
+    default ListView<Object> values() {
         return context()
                 .headerView()
                 .stream()

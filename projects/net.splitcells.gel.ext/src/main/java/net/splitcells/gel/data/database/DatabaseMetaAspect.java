@@ -127,7 +127,7 @@ public class DatabaseMetaAspect implements Database {
      * TODO REMOVE Code duplication of {@link DatabaseMetaAspect#addTranslated} methods.
      */
     @Override
-    public Line addTranslated(List<? extends Object> lineValues) {
+    public Line addTranslated(ListView<? extends Object> lineValues) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             /**
              * TODO Check for {@link Attribute} compatibility and not Class compatibility.
@@ -303,7 +303,7 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
-    public Stream<Line> lookupEquals(List<Object> values) {
+    public Stream<Line> lookupEquals(ListView<Object> values) {
         return database.lookupEquals(values);
     }
 

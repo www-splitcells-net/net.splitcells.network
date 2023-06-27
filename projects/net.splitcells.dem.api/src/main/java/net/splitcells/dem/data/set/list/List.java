@@ -86,10 +86,6 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         return Optional.of(get(size() - 1));
     }
 
-    default T requireLastValue() {
-        return get(size() - 1);
-    }
-
     default Optional<T> firstValue() {
         if (isEmpty()) {
             return Optional.empty();
@@ -113,10 +109,6 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     default List<T> shuffle(Randomness rnd) {
         Collections.shuffle(this, rnd.asRandom());
         return this;
-    }
-
-    default void assertEquals(List<T> arg) {
-        assertThat(this).isEqualTo(arg);
     }
 
     /**

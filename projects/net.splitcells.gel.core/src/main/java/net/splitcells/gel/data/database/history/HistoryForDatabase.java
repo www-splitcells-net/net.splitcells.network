@@ -126,7 +126,7 @@ public class HistoryForDatabase implements History {
     }
 
     @Override
-    public Line addTranslated(List<?> values) {
+    public Line addTranslated(ListView<?> values) {
         throw notImplementedYet();
     }
 

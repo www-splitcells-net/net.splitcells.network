@@ -154,7 +154,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Line addTranslated(List<?> values) {
+    public Line addTranslated(ListView<?> values) {
         return this.assignments.addTranslated(values);
     }
 

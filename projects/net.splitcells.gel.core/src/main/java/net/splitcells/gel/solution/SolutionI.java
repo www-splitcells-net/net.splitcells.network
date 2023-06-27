@@ -164,7 +164,7 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public Line addTranslated(final List<?> values) {
+    public Line addTranslated(final ListView<?> values) {
         return this.problem.addTranslated(values);
     }
 

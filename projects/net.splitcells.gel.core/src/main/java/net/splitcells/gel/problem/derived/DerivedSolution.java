@@ -166,7 +166,7 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Line addTranslated(List<?> values) {
+    public Line addTranslated(ListView<?> values) {
         return assignments.addTranslated(values);
     }
 

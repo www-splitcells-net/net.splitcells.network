@@ -301,7 +301,7 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public Line addTranslated(List<?> values) {
+    public Line addTranslated(ListView<?> values) {
         throw notImplementedYet();
     }
 

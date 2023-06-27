@@ -274,7 +274,7 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public Line addTranslated(List<? extends Object> lineValues) {
+    public Line addTranslated(ListView<? extends Object> lineValues) {
         final int lineIndex;
         final Line line;
         if (indexesOfFree.isEmpty()) {

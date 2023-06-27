@@ -304,7 +304,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line addTranslated(List<?> values) {
+    public Line addTranslated(ListView<?> values) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }

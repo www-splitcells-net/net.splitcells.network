@@ -220,7 +220,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
      */
     Line lookupEquals(Attribute<Line> attribute, Line values);
 
-    default Stream<Line> lookupEquals(List<Object> values) {
+    default Stream<Line> lookupEquals(ListView<Object> values) {
         return unorderedLines().stream()
                 .filter(line -> range(0, headerView().size())
                         .mapToObj(i -> Thing.equals(values.get(i), line.value(headerView().get(i))))

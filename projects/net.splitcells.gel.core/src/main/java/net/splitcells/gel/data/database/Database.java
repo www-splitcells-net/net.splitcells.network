@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
@@ -45,7 +46,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  */
 public interface Database extends Table {
 
-    Line addTranslated(List<? extends Object> values);
+    Line addTranslated(ListView<? extends Object> values);
 
     /**
      * Adds a new {@link Line} to this {@link Database} at the same index, as {@link Line#index()}.

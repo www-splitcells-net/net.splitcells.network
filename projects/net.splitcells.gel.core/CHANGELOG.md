@@ -5,6 +5,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-06-27 #170** `Line#values()` are now read only, in order to allow more performant code,
+  by not requiring lines to provide a new copy of line values for every `Line#values()` call. 
 * **2023-06-21 #170** `Table#columnsView` now only returns a read-only access to the columns,
   in order to enable faster alternative Database implementations,
   that do not have writeable columns.
