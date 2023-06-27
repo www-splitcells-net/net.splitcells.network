@@ -33,6 +33,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JavaLegacyArtifact
 public interface Set<T> extends java.util.Set<T>, SetT<T> {
 
+    default T removeAny() {
+        final T rVal = iterator().next();
+        remove(rVal);
+        return rVal;
+    }
+
     default boolean add(T e) {
         if (contains(e)) {
             throw new IllegalArgumentException("Element " + e + " already present in " + this);
@@ -84,7 +90,7 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
     }
 
     void ensureRemoved(T arg);
-    
+
     default void delete(T arg) {
         if (!remove(arg)) {
             throw new IllegalArgumentException("" + arg);

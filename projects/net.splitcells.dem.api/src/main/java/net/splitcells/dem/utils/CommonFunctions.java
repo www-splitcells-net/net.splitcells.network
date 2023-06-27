@@ -52,12 +52,6 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 @JavaLegacyArtifact
 public class CommonFunctions {
 
-    public static <T> T removeAny(Set<T> arg) {
-        final T rVal = arg.iterator().next();
-        arg.remove(rVal);
-        return rVal;
-    }
-
     public static int hashCode(Object... args) {
         return Objects.hash(args);
     }

@@ -30,7 +30,6 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
-import static net.splitcells.dem.utils.CommonFunctions.removeAny;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -283,7 +282,7 @@ public class DatabaseI implements Database {
             rawLines.add(line);
             range(0, lineValues.size()).forEach(i -> columns.get(i).add(lineValues.get(i)));
         } else {
-            lineIndex = removeAny(indexesOfFree);
+            lineIndex = indexesOfFree.removeAny();
             range(0, lineValues.size()).forEach(i -> columns.get(i).set(lineIndex, lineValues.get(i)));
             line = LineI.line(this, lineIndex);
             rawLines.set(lineIndex, line);
