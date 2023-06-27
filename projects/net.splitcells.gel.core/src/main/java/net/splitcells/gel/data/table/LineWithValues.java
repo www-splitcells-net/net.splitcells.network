@@ -28,16 +28,16 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 
 public class LineWithValues implements Line {
 
-    public static Line lineWithValues(Table context, ListView<Object> values, int index) {
+    public static Line lineWithValues(Table context, ListView<?> values, int index) {
         return new LineWithValues(context, values, index);
     }
 
     private final Table context;
     private final ListView<Attribute<Object>> header;
-    private final ListView<Object> values;
+    private final ListView<?> values;
     private final int index;
 
-    private LineWithValues(Table context, ListView<Object> values, int index) {
+    private LineWithValues(Table context, ListView<?> values, int index) {
         this.context = context;
         this.values = values;
         this.index = index;
@@ -70,6 +70,6 @@ public class LineWithValues implements Line {
 
     @Override
     public ListView<Object> values() {
-        return values;
+        return (ListView<Object>) values;
     }
 }
