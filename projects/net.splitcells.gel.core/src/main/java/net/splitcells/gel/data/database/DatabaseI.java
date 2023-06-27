@@ -357,24 +357,6 @@ public class DatabaseI implements Database {
     }
 
     @Override
-    public Element toDom() {
-        final var dom = elementWithChildren(Database.class.getSimpleName());
-        rawLinesView().stream()
-                .filter(rinda -> rinda != null)
-                .forEach(rinda -> dom.appendChild(rinda.toDom()));
-        return dom;
-    }
-
-    @Override
-    public Perspective toPerspective() {
-        final var dom = perspective(Database.class.getSimpleName());
-        rawLinesView().stream()
-                .filter(line -> line != null)
-                .forEach(line -> dom.withChild(line.toPerspective()));
-        return dom;
-    }
-
-    @Override
     public List<Line> rawLines() {
         return listWithValuesOf(rawLines);
     }

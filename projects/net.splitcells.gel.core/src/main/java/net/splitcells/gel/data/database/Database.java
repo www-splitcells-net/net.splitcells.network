@@ -17,12 +17,17 @@ package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
+import static net.splitcells.dem.lang.Xml.elementWithChildren;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -119,4 +124,22 @@ public interface Database extends Table {
      */
     @Deprecated
     void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber);
+
+    @Override
+    default Node toDom() {
+        final var dom = elementWithChildren(getClass().getSimpleName());
+        rawLinesView().stream()
+                .filter(line -> line != null)
+                .forEach(line -> dom.appendChild(line.toDom()));
+        return dom;
+    }
+
+    @Override
+    default Perspective toPerspective() {
+        final var dom = perspective(getClass().getSimpleName());
+        rawLinesView().stream()
+                .filter(line -> line != null)
+                .forEach(line -> dom.withChild(line.toPerspective()));
+        return dom;
+    }
 }
