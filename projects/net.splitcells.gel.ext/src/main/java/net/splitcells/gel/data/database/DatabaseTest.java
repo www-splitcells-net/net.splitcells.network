@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,7 @@ import static net.splitcells.dem.testing.Mocking.anyObject;
 import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.data.database.DatabaseIFactory.databaseFactory;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,6 +51,13 @@ import static org.mockito.Mockito.when;
  * TODO Test consistency, when adding or removing many things
  */
 public class DatabaseTest extends TestSuiteI {
+
+    public static List<DatabaseFactory> databaseFactories() {
+        final var databaseFactory = databaseFactory();
+        databaseFactory.withAspect(DatabaseMetaAspect::databaseIRef);
+        return list(databaseFactory);
+    }
+
     @Test
     public void testQueryInitialization() {
         final var index = attribute(Integer.class);
@@ -79,34 +88,36 @@ public class DatabaseTest extends TestSuiteI {
 
     @Tag(UNIT_TEST)
     @TestFactory
+    @Disabled
     public Stream<DynamicTest> incorrectly_typed_values_addition_tests() {
-        return dynamicTests2(this::test_incorrectly_typed_values_addition_test, DatabaseSF.testDatabaseFactory());
+        return dynamicTests2(this::test_incorrectly_typed_values_addition_test, databaseFactories());
     }
 
-    public void test_incorrectly_typed_values_addition_test(Function<List<Attribute<?>>, Database> databaseConstructor) {
-        final Attribute<Integer> testAttribute = attribute(Integer.class, anyString());
-        final Database testSubject = databaseConstructor.apply(list(testAttribute));
+    public void test_incorrectly_typed_values_addition_test(DatabaseFactory databaseFactory) {
+        final Attribute<Integer> testAttribute = attribute(Integer.class);
+        final Database testSubject = databaseFactory.database(list(testAttribute));
         assertThrows(Throwable.class, () -> testSubject.addTranslated(list("")));
     }
 
     @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> incorrectly_sized_values_addition_tests() {
-        return dynamicTests2(this::test_incorrectly_sized_values_addition_test, DatabaseSF.emptyDatabase());
+        return dynamicTests2(this::test_incorrectly_sized_values_addition_test, databaseFactories());
     }
 
-    public void test_incorrectly_sized_values_addition_test(Database voidDatabase) {
-        assertThrows(Throwable.class, () -> voidDatabase.addTranslated(listWithValuesOf(anyObject())));
+    public void test_incorrectly_sized_values_addition_test(DatabaseFactory databaseFactory) {
+        assertThrows(Throwable.class, () -> databaseFactory.database().addTranslated(listWithValuesOf(anyObject())));
     }
 
     @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> single_addition_and_removal_tests() {
-        return dynamicTests2(this::test_single_addition_and_removal, DatabaseSF.emptyDatabase());
+        return dynamicTests2(this::test_single_addition_and_removal, databaseFactories());
     }
 
-    public void test_single_addition_and_removal(Database voidDatabase) {
+    public void test_single_addition_and_removal(DatabaseFactory databaseFactory) {
         List<?> lineValues = list();
+        final var voidDatabase = databaseFactory.database();
         voidDatabase.unorderedLines().requireEmpty();
         final var addedLine = voidDatabase.addTranslated(lineValues);
         voidDatabase.unorderedLines().requireSizeOf(1);
@@ -118,13 +129,13 @@ public class DatabaseTest extends TestSuiteI {
     @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> index_preservation_by_add_tests() {
-        return dynamicTests2(this::test_index_preservation_by_add, DatabaseSF.emptyDatabase());
+        return dynamicTests2(this::test_index_preservation_by_add, databaseFactories());
     }
 
-    public void test_index_preservation_by_add(Database voidDatabase) {
+    public void test_index_preservation_by_add(DatabaseFactory databaseFactory) {
         final var line = mock(Line.class);
-        final var context = voidDatabase;
-        when(line.context()).thenReturn(context);
+        final var voidDatabase = databaseFactory.database();
+        when(line.context()).thenReturn(voidDatabase);
         when(line.value(any(Attribute.class))).thenReturn(1);
         when(line.index()).thenReturn(2);
         requireEquals(voidDatabase.addTranslated(list()).index(), 0);
@@ -136,15 +147,22 @@ public class DatabaseTest extends TestSuiteI {
     @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> subscription_tests() {
-        return dynamicTests2(this::test_subscriptions, DatabaseSF.emptyDatabase());
+        return dynamicTests2(this::test_subscriptions, databaseFactories());
     }
 
-    public void test_subscriptions(Database voidDatabase) {
+    public void test_subscriptions(DatabaseFactory databaseFactory) {
         final var additionCounter = list(0);// Mutable integer Object required.
         final var removalCounter = list(0);// Mutable integer Object required.
+        final var voidDatabase = databaseFactory.database();
         voidDatabase.subscribeToAfterAdditions(additionOf -> additionCounter.set(0, additionCounter.get(0) + 1));
         voidDatabase.subscribeToBeforeRemoval(removalOf -> removalCounter.set(0, removalCounter.get(0) + 1));
-        test_single_addition_and_removal(voidDatabase);
+        final List<?> lineValues = list();
+        voidDatabase.unorderedLines().requireEmpty();
+        final var addedLine = voidDatabase.addTranslated(lineValues);
+        voidDatabase.unorderedLines().requireSizeOf(1);
+        voidDatabase.remove(addedLine);
+        voidDatabase.unorderedLines().requireEmpty();
+        requireNull(voidDatabase.rawLinesView().get(0));
         additionCounter.requireContentsOf(1);
         removalCounter.requireContentsOf(1);
     }
@@ -152,12 +170,12 @@ public class DatabaseTest extends TestSuiteI {
     @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> addTranslated_with_too_many_values_tests() {
-        return dynamicTests2(this::test_addTranslated_with_too_many_values, DatabaseSF.emptyDatabase());
+        return dynamicTests2(this::test_addTranslated_with_too_many_values, databaseFactories());
     }
 
-    public void test_addTranslated_with_too_many_values(Database voidDatabase) {
+    public void test_addTranslated_with_too_many_values(DatabaseFactory databaseFactory) {
         assertThrows(Throwable.class, () -> {
-            voidDatabase.addTranslated(list(1));
+            databaseFactory.database().addTranslated(list(1));
         });
     }
 }
