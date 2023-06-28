@@ -16,10 +16,8 @@
 package net.splitcells.gel.data.database.linebased;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
@@ -27,18 +25,16 @@ import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.ColumnView;
-import org.w3c.dom.Node;
 
 import java.util.Optional;
 
 import static java.util.stream.IntStream.range;
-import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.LineWithValues.lineWithValues;
 
-public class LineBasedDatabaseI implements Database {
+public class LineBasedDatabase implements Database {
 
     private final String name;
     private final Optional<Discoverable> parent;
@@ -53,10 +49,10 @@ public class LineBasedDatabaseI implements Database {
     private final Set<Integer> indexesOfFree = setOfUniques();
 
     public static Database lineBasedDatabase(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
-        return new LineBasedDatabaseI(name, parent, attributes);
+        return new LineBasedDatabase(name, parent, attributes);
     }
 
-    private LineBasedDatabaseI(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
+    private LineBasedDatabase(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
         this.name = name;
         this.parent = parent;
         this.attributes = attributes;
