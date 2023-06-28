@@ -47,6 +47,14 @@ public interface DatabaseFactory extends AspectOrientedResource<Database>, Conne
 
     Database database2(String name, Discoverable parent, List<Attribute<Object>> attributes);
 
+    /**
+     * TODO REMOVE This method just makes {@link DatabaseFactory} unnecessary complex.
+     *
+     * @param attributes
+     * @param linesValues
+     * @return
+     */
+    @Deprecated
     Database database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues);
 
     @Deprecated
