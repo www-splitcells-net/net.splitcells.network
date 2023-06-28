@@ -40,6 +40,7 @@ import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.data.database.DatabaseIFactory.databaseFactory;
 import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.database.linebased.LineBasedDatabaseFactory.lineBasedDatabaseFactory;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -53,9 +54,9 @@ import static org.mockito.Mockito.when;
 public class DatabaseTest extends TestSuiteI {
 
     public static List<DatabaseFactory> databaseFactories() {
-        final var databaseFactory = databaseFactory();
-        databaseFactory.withAspect(DatabaseMetaAspect::databaseIRef);
-        return list(databaseFactory);
+        final var databaseFactories = list(databaseFactory(), lineBasedDatabaseFactory());
+        databaseFactories.forEach(df -> df.withAspect(DatabaseMetaAspect::databaseIRef));
+        return databaseFactories;
     }
 
     @Test
