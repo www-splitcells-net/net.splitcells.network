@@ -22,6 +22,8 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.utils.StreamUtils;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
@@ -40,8 +42,10 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.database.linebased.LineBasedColumn.lineBasedColumn;
 import static net.splitcells.gel.data.table.LineWithValues.lineWithValues;
 
@@ -57,8 +61,10 @@ public class LineBasedDatabase implements Database {
     private final List<ColumnView<Object>> columnsView = list();
     private final List<AfterAdditionSubscriber> additionSubscriber = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
+    private final List<BeforeRemovalSubscriber> afterRemovalSubscriber = list();
     private final Set<Integer> indexesOfFree = setOfUniques();
     private final Map<Attribute<?>, Integer> typedColumnIndex = map();
+    private Optional<Constraint> constraint = Optional.empty();
 
     public static Database lineBasedDatabase(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
         return new LineBasedDatabase(name, parent, attributes);
@@ -73,6 +79,8 @@ public class LineBasedDatabase implements Database {
         columns = attributes.mapped(a -> lineBasedColumn(this, a));
         columnsView.addAll(columns);
         range(0, attributes.size()).forEach(i -> typedColumnIndex.put(attributes.get(i), i));
+        columns.forEach(this::subscribeToAfterAdditions);
+        columns.forEach(this::subscribeToBeforeRemoval);
 
     }
 
@@ -141,6 +149,7 @@ public class LineBasedDatabase implements Database {
         rawLines.set(lineIndex, null);
         lines.remove(removalFrom);
         indexesOfFree.add(lineIndex);
+        afterRemovalSubscriber.forEach(subscriber -> subscriber.registerBeforeRemoval(removalFrom));
     }
 
     @Override
@@ -160,7 +169,7 @@ public class LineBasedDatabase implements Database {
 
     @Override
     public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        throw notImplementedYet();
+        afterRemovalSubscriber.add(subscriber);
     }
 
     @Override
@@ -222,5 +231,30 @@ public class LineBasedDatabase implements Database {
     @Override
     public Stream<Line> orderedLinesStream() {
         return rawLines.stream().filter(e -> e != null);
+    }
+
+    @Override
+    public Query query() {
+        if (constraint.isEmpty()) {
+            final var constraintRoot = forAll();
+            synchronize(constraintRoot);
+            constraint = Optional.of(constraintRoot);
+            unorderedLinesStream().forEach(constraintRoot::registerAddition);
+        }
+        return constraint.get().query();
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof Database) {
+            final var castedArg = (Database) arg;
+            return identity() == castedArg.identity();
+        }
+        throw executionException("Invalid argument type: " + arg);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
