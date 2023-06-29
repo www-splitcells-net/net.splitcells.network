@@ -87,15 +87,21 @@ public class LineBasedDatabase implements Database {
 
     @Override
     public Line add(Line argLine) {
-        final var newLine = lineWithValues(this, argLine.values(), argLine.index());
+        final List<Object> values = list();
+        attributes.forEach(a -> values.add(argLine.value(a)));
+        return addTranslated(values, argLine.index());
+    }
+
+    private Line addTranslated(ListView<?> values, int index) {
+        final var newLine = lineWithValues(this, values, index);
         final var rawLinesSize = rawLines.size();
-        if (rawLinesSize > argLine.index()) {
-            indexesOfFree.remove(argLine.index());
+        if (rawLinesSize > index) {
+            indexesOfFree.remove(index);
             rawLines.set(newLine.index(), newLine);
-        } else if (rawLinesSize == argLine.index()) {
+        } else if (rawLinesSize == index) {
             rawLines.add(newLine);
         } else {
-            range(rawLinesSize, argLine.index()).forEach(i -> {
+            range(rawLinesSize, index).forEach(i -> {
                 indexesOfFree.add(i);
                 rawLines.add(null);
             });
