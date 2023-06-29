@@ -18,6 +18,7 @@ package net.splitcells.gel.data.table.column;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.lookup.LookupComponents;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -28,6 +29,7 @@ public interface ColumnView<T> extends ListView<T>, LookupComponents<T> {
      *
      * @return This is a {@link List} of all values in this {@link ColumnView}.
      * It does not contain all {@link Line} of the corresponding {@link Table}.
+     * The values have the same order, as the corresponding {@link Database#orderedLines()}.
      */
     default List<T> values() {
         final List<T> values = Lists.<T>list();

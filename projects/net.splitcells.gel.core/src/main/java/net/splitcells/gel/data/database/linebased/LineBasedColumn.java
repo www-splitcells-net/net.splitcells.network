@@ -71,17 +71,17 @@ public class LineBasedColumn<T> implements Column<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return table.unorderedLinesStream().map(l -> l.value(attribute)).iterator();
+        return table.orderedLinesStream().map(l -> l.value(attribute)).iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return table.unorderedLinesStream().map(l -> l.value(attribute)).collect(toList()).toArray();
+        return table.orderedLinesStream().map(l -> l.value(attribute)).collect(toList()).toArray();
     }
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return table.unorderedLinesStream().map(l -> l.value(attribute)).collect(toList()).toArray(a);
+        return table.orderedLinesStream().map(l -> l.value(attribute)).collect(toList()).toArray(a);
     }
 
     @Override
