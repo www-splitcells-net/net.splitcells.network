@@ -13,23 +13,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.dem.testing.annotations;
+package net.splitcells.dem.data.set.list;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import net.splitcells.dem.testing.annotations.UnitTest;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import static net.splitcells.dem.data.set.list.Lists.list;
 
-import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
-
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Tag(UNIT_TEST)
-@Test
-@JavaLegacyArtifact
-public @interface UnitTest {
+public class ListTest {
+    @UnitTest
+    public void testWithRemovedUntilExcludedIndex() {
+        list(1, 2, 3, 4, 5, 6, 7).withRemovedUntilExcludedIndex(3).requireEqualityTo(list(1, 2));
+    }
 }

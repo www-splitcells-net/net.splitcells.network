@@ -22,6 +22,6 @@ import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstru
 public class TestTypesTest {
     @UnitTest
     public void testIllegalDefaultConstructor() {
-        requireIllegalDefaultConstructor(TestTypes.class);
+        Assertions.requireIllegalDefaultConstructor(TestTypes.class);
     }
 }
