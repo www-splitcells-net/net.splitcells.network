@@ -120,4 +120,11 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     default void prepareForSizeOf(int targetSize) {
 
     }
+
+    default List<T> withRemovedUntilExcludedIndex(int excludedIndex) {
+        while (size() >= excludedIndex) {
+            withRemovedFromBehind(0);
+        }
+        return this;
+    }
 }
