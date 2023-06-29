@@ -43,6 +43,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.assignment.Assignments;
@@ -77,14 +78,19 @@ public abstract class ConstraintAI implements Constraint {
     protected final Database results;
     protected final Assignments lineProcessing;
     protected final Map<GroupId, Rating> groupProcessing = map();
+    private final Class<? extends Constraint> type;
+
 
     @Deprecated
-    protected ConstraintAI(GroupId injectionGroup, Optional<Discoverable> parent) {
-        this(injectionGroup, "", parent);
+    protected ConstraintAI(GroupId injectionGroup, Optional<Discoverable> parent
+            , Class<? extends Constraint> type) {
+        this(injectionGroup, "", parent, type);
     }
 
     @Deprecated
-    protected ConstraintAI(GroupId injectionGroup, String name, Optional<Discoverable> parent) {
+    protected ConstraintAI(GroupId injectionGroup, String name, Optional<Discoverable> parent
+            , Class<? extends Constraint> type) {
+        this.type = type;
         this.injectionGroup = injectionGroup;
         final Discoverable parentPath;
         if (parent.isPresent()) {
@@ -102,8 +108,8 @@ public abstract class ConstraintAI implements Constraint {
     }
 
     @Deprecated
-    protected ConstraintAI(Optional<Discoverable> parent) {
-        this(Constraint.standardGroup(), parent);
+    protected ConstraintAI(Optional<Discoverable> parent, Class<? extends Constraint> type) {
+        this(Constraint.standardGroup(), parent, type);
     }
 
     @Override
@@ -557,5 +563,10 @@ public abstract class ConstraintAI implements Constraint {
 
     public Optional<Discoverable> mainContext() {
         return mainContext;
+    }
+
+    @Override
+    public Class<? extends Constraint> type() {
+        return type;
     }
 }

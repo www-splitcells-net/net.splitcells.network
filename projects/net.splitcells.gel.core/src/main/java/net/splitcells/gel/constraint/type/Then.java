@@ -72,11 +72,14 @@ public class Then implements Constraint {
     private Then(Rater rater, Optional<Discoverable> parent) {
         constraint = constraintBasedOnLocalGroupsAI(rater, rater.name()
                 , parent.map(d -> d.child(Lists.list(rater.name())))
-                , LOCAL_NATURAL_ARGUMENTATION);
+                , LOCAL_NATURAL_ARGUMENTATION
+                , Then.class);
     }
 
     private Then(Rater rater) {
-        constraint = constraintBasedOnLocalGroupsAI(rater, rater.name(), Optional.empty(), LOCAL_NATURAL_ARGUMENTATION);
+        constraint = constraintBasedOnLocalGroupsAI(rater, rater.name(), Optional.empty()
+                , LOCAL_NATURAL_ARGUMENTATION
+                , Then.class);
     }
 
     @Override

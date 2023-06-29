@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.constraint.type;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.framework.ConstraintAspect.constraintAspect;
 import static net.splitcells.gel.constraint.type.framework.ConstraintBasedOnLocalGroupsAI.constraintBasedOnLocalGroupsAI;
 import static net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGrouping.raterBasedGrouping;
@@ -78,7 +79,7 @@ public class ForAll implements Constraint {
 
     public static Constraint forAll(Rater classifier, Optional<Discoverable> parent) {
         return constraintAspect(new ForAll(classifier
-                , parent.map(d -> d.child(Lists.list(classifier.name())))
+                , parent.map(d -> d.child(list(classifier.name())))
         ));
     }
 
@@ -90,11 +91,15 @@ public class ForAll implements Constraint {
     private final ConstraintBasedOnLocalGroupsAI constraint;
 
     private ForAll(Rater classifier) {
-        constraint = constraintBasedOnLocalGroupsAI(raterBasedGrouping(classifier), Optional.empty(), LOCAL_NATURAL_ARGUMENTATION);
+        final var rater = raterBasedGrouping(classifier);
+        constraint = constraintBasedOnLocalGroupsAI(rater, Optional.empty()
+                , LOCAL_NATURAL_ARGUMENTATION
+                , ForAll.class);
     }
 
     private ForAll(Rater classifier, Optional<Discoverable> parent) {
-        constraint = constraintBasedOnLocalGroupsAI(raterBasedGrouping(classifier), parent, LOCAL_NATURAL_ARGUMENTATION);
+        final var rater = raterBasedGrouping(classifier);
+        constraint = constraintBasedOnLocalGroupsAI(rater, parent, LOCAL_NATURAL_ARGUMENTATION, ForAll.class);
     }
 
     public Rater classification() {
