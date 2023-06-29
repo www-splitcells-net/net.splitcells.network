@@ -80,4 +80,15 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing {
     default T requireLastValue() {
         return get(size() - 1);
     }
+
+    default ListView<T> getRemovedUntilExcludedIndex(int excludedIndex) {
+        if (size() == excludedIndex) {
+            return this;
+        }
+        final var list = Lists.listWithValuesOf(this);
+        while (list.size() >= excludedIndex) {
+            list.withRemovedFromBehind(0);
+        }
+        return this;
+    }
 }

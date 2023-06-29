@@ -24,4 +24,9 @@ public class ListTest {
     public void testWithRemovedUntilExcludedIndex() {
         list(1, 2, 3, 4, 5, 6, 7).withRemovedUntilExcludedIndex(3).requireEqualityTo(list(1, 2));
     }
+
+    @UnitTest
+    public void testGetRemovedUntilExcludedIndex() {
+        list(1, 2, 3, 4, 5, 6, 7, 8, 9).withRemovedUntilExcludedIndex(6).requireEqualityTo(list(1, 2, 3, 4, 5));
+    }
 }
