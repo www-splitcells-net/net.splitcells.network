@@ -23,13 +23,13 @@ import net.splitcells.gel.data.table.Line;
 @FunctionalInterface
 public interface AfterAdditionSubscriber {
 
-    void registerAddition(Line line);
+    void registerAddition(Line addition);
 
-    default void register_addition(SetT<Line> lines) {
-        lines.forEach(line -> registerAddition(line));
+    default void register_addition(SetT<Line> additions) {
+        additions.forEach(addition -> registerAddition(addition));
     }
 
-    default void register_addition(Line... lines) {
-        register_addition(listWithValuesOf(lines));
+    default void register_addition(Line... additions) {
+        register_addition(listWithValuesOf(additions));
     }
 }
