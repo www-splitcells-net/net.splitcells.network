@@ -113,8 +113,8 @@ public class LineBasedDatabase implements Database {
     }
 
     @Override
-    public Line addWithSameHeaderPrefix(Line line) {
-        throw notImplementedYet();
+    public Line addWithSameHeaderPrefix(Line argLine) {
+        return addTranslated(argLine.values().getRemovedUntilExcludedIndex(attributes.size()), argLine.index());
     }
 
     @Override
