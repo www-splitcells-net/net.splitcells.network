@@ -45,7 +45,6 @@ public class LineBasedDatabase implements Database {
 
     private final List<AfterAdditionSubscriber> additionSubscriber = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
-    private final List<BeforeRemovalSubscriber> afterRemovalSubscriber = list();
     private final Set<Integer> indexesOfFree = setOfUniques();
 
     public static Database lineBasedDatabase(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
@@ -74,12 +73,12 @@ public class LineBasedDatabase implements Database {
     public Line addTranslated(ListView<? extends Object> values) {
         final Line newLine;
         if (indexesOfFree.isEmpty()) {
+            newLine = lineWithValues(this, values, rawLines.size());
+            rawLines.add(newLine);
+        } else {
             final int lineIndex = indexesOfFree.removeAny();
             newLine = lineWithValues(this, values, lineIndex);
             rawLines.set(lineIndex, newLine);
-        } else {
-            newLine = lineWithValues(this, values, rawLines.size());
-            rawLines.add(newLine);
         }
         lines.add(newLine);
         additionSubscriber.forEach(subscriber -> subscriber.registerAddition(newLine));
@@ -114,22 +113,26 @@ public class LineBasedDatabase implements Database {
 
     @Override
     public void remove(int lineIndex) {
-        throw notImplementedYet();
+        final var removalFrom = rawLines.get(lineIndex);
+        beforeRemovalSubscriber.forEach(subscriber -> subscriber.registerBeforeRemoval(removalFrom));
+        rawLines.set(lineIndex, null);
+        lines.remove(removalFrom);
+        indexesOfFree.add(lineIndex);
     }
 
     @Override
     public void remove(Line line) {
-        throw notImplementedYet();
+        remove(line.index());
     }
 
     @Override
     public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
-        throw notImplementedYet();
+        additionSubscriber.add(subscriber);
     }
 
     @Override
     public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
-        throw notImplementedYet();
+        beforeRemovalSubscriber.add(subscriber);
     }
 
     @Override
@@ -139,12 +142,12 @@ public class LineBasedDatabase implements Database {
 
     @Override
     public List<Attribute<Object>> headerView() {
-        throw notImplementedYet();
+        return attributes;
     }
 
     @Override
     public List<Attribute<? extends Object>> headerView2() {
-        throw notImplementedYet();
+        return attributes2;
     }
 
     @Override
