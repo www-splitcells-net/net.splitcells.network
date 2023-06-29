@@ -21,6 +21,11 @@ import net.splitcells.dem.lang.perspective.Perspective;
 
 @JavaLegacyArtifact
 public class ExecutionException extends RuntimeException {
+
+    public static ExecutionException unsupportedOperation() {
+        return executionException("Unsupported operation");
+    }
+
     /**
      * TODO Support {@link net.splitcells.dem.lang.perspective.Perspective} as message.
      *
