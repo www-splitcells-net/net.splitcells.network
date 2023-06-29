@@ -18,20 +18,31 @@ package net.splitcells.gel.data.database.linebased;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.table.column.ColumnI;
 import net.splitcells.gel.data.table.column.ColumnView;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
+import static net.splitcells.gel.data.database.linebased.LineBasedColumn.lineBasedColumn;
 import static net.splitcells.gel.data.table.LineWithValues.lineWithValues;
 
 public class LineBasedDatabase implements Database {
@@ -42,10 +53,12 @@ public class LineBasedDatabase implements Database {
     private final List<Attribute<? extends Object>> attributes2;
     private final List<Line> rawLines = list();
     private final Set<Line> lines = setOfUniques();
-
+    private final List<LineBasedColumn<Object>> columns;
+    private final List<ColumnView<Object>> columnsView = list();
     private final List<AfterAdditionSubscriber> additionSubscriber = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
     private final Set<Integer> indexesOfFree = setOfUniques();
+    private final Map<Attribute<?>, Integer> typedColumnIndex = map();
 
     public static Database lineBasedDatabase(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
         return new LineBasedDatabase(name, parent, attributes);
@@ -57,6 +70,10 @@ public class LineBasedDatabase implements Database {
         this.attributes = attributes;
         this.attributes2 = list();
         attributes2.addAll(attributes);
+        columns = attributes.mapped(a -> lineBasedColumn(this, a));
+        columnsView.addAll(columns);
+        range(0, attributes.size()).forEach(i -> typedColumnIndex.put(attributes.get(i), i));
+
     }
 
     @Override
@@ -158,12 +175,12 @@ public class LineBasedDatabase implements Database {
 
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
-        throw notImplementedYet();
+        return (ColumnView<T>) columns.get(typedColumnIndex.get(attribute));
     }
 
     @Override
     public ListView<ColumnView<Object>> columnsView() {
-        throw notImplementedYet();
+        return columnsView;
     }
 
     @Override
@@ -182,7 +199,28 @@ public class LineBasedDatabase implements Database {
     }
 
     @Override
-    public Line lookupEquals(Attribute<Line> attribute, Line values) {
-        throw notImplementedYet();
+    public Line lookupEquals(Attribute<Line> attribute, Line line) {
+        return lines.stream()
+                .filter(otherLine -> otherLine.value(attribute).index() == line.index())
+                .reduce(ensureSingle())
+                .orElseThrow();
+    }
+
+    @Override
+    public Stream<Line> unorderedLinesStream() {
+        return lines.stream();
+    }
+
+    @Override
+    public List<Line> orderedLines() {
+        return rawLines.stream()
+                .filter(e -> e != null)
+                .collect(toList());
+
+    }
+
+    @Override
+    public Stream<Line> orderedLinesStream() {
+        return rawLines.stream().filter(e -> e != null);
     }
 }
