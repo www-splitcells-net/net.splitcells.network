@@ -153,7 +153,7 @@ public class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
 
     @Override
     public String localNaturalArgumentation(Report report) {
-        return null;
+        return localNaturalArgumentation.apply(this, report);
     }
 
     @Override
