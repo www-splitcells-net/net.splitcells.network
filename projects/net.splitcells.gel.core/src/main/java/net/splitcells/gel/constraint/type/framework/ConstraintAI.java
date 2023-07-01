@@ -34,6 +34,7 @@ import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.lineRating;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.RoutingResult.routingResult;
+import static net.splitcells.gel.data.table.attribute.IndexedAttribute.indexedAttribute;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,7 +44,6 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.assignment.Assignments;
@@ -54,6 +54,7 @@ import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.constraint.intermediate.data.RoutingRating;
+import net.splitcells.gel.data.table.attribute.IndexedAttribute;
 import org.assertj.core.api.Assertions;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
@@ -80,6 +81,12 @@ public abstract class ConstraintAI implements Constraint {
     protected final Map<GroupId, Rating> groupProcessing = map();
     private final Class<? extends Constraint> type;
 
+    private final IndexedAttribute<Line> lineIndex;
+    private final IndexedAttribute<List<Constraint>> propagationToIndex;
+    private final IndexedAttribute<GroupId> incomingConstraintGroupIndex;
+    private final IndexedAttribute<GroupId> resultingConstraintGroupIndex;
+    private final IndexedAttribute<Rating> ratingIndex;
+
 
     @Deprecated
     protected ConstraintAI(GroupId injectionGroup, Optional<Discoverable> parent
@@ -102,9 +109,15 @@ public abstract class ConstraintAI implements Constraint {
         results = Databases.database("results", parentPath, list(RESULTING_CONSTRAINT_GROUP, RATING, PROPAGATION_TO));
         lines = Databases.database(name + ".lines", parentPath, list(LINE, INCOMING_CONSTRAINT_GROUP));
         lineProcessing = assignments("linesProcessing", lines, results);
-        lineProcessing.subscribeToAfterAdditions(ConstraintAI::propagateAddition);
-        lineProcessing.subscribeToBeforeRemoval(ConstraintAI::propagateRemoval);
+        lineProcessing.subscribeToAfterAdditions(this::propagateAddition);
+        lineProcessing.subscribeToBeforeRemoval(this::propagateRemoval);
         lines.subscribeToAfterAdditions(this::processLineAddition);
+        lineIndex = indexedAttribute(LINE, lineProcessing);
+        propagationToIndex = indexedAttribute(PROPAGATION_TO, lineProcessing);
+        incomingConstraintGroupIndex = indexedAttribute(INCOMING_CONSTRAINT_GROUP, lineProcessing);
+        resultingConstraintGroupIndex = indexedAttribute(RESULTING_CONSTRAINT_GROUP, lineProcessing);
+        ratingIndex = indexedAttribute(RATING, lineProcessing);
+
     }
 
     @Deprecated
@@ -169,18 +182,18 @@ public abstract class ConstraintAI implements Constraint {
         suppliesToRemove.forEach(freeSupply -> results.remove(freeSupply));
     }
 
-    private static void propagateAddition(Line addition) {
-        addition.value(PROPAGATION_TO).forEach(child ->
+    private void propagateAddition(Line addition) {
+        addition.value(propagationToIndex).forEach(child ->
                 child.registerAdditions
-                        (addition.value(RESULTING_CONSTRAINT_GROUP)
-                                , addition.value(LINE)));
+                        (addition.value(resultingConstraintGroupIndex)
+                                , addition.value(lineIndex)));
     }
 
-    private static void propagateRemoval(Line removal) {
-        removal.value(PROPAGATION_TO).forEach(child ->
+    private void propagateRemoval(Line removal) {
+        removal.value(propagationToIndex).forEach(child ->
                 child.registerBeforeRemoval
-                        (removal.value(RESULTING_CONSTRAINT_GROUP)
-                                , removal.value(LINE)));
+                        (removal.value(resultingConstraintGroupIndex)
+                                , removal.value(lineIndex)));
     }
 
     @Override
@@ -195,8 +208,8 @@ public abstract class ConstraintAI implements Constraint {
     public Set<Line> complying(GroupId group, Set<Line> allocations) {
         final Set<Line> complying = setOfUniques();
         allocations.forEach(allocation -> {
-            if (rating(group, allocation.value(LINE)).equalz(noCost())) {
-                complying.add(lineProcessing.demandOfAssignment(allocation).value(LINE));
+            if (rating(group, allocation.value(lineIndex)).equalz(noCost())) {
+                complying.add(lineProcessing.demandOfAssignment(allocation).value(lineIndex));
             }
         });
         return complying;
@@ -205,8 +218,8 @@ public abstract class ConstraintAI implements Constraint {
     public net.splitcells.dem.data.set.Set<Line> defying(GroupId group, Set<Line> allocations) {
         final net.splitcells.dem.data.set.Set<Line> defying = setOfUniques();
         allocations.forEach(allocation -> {
-            if (!rating(group, allocation.value(LINE)).equalz(noCost())) {
-                defying.add(lineProcessing.demandOfAssignment(allocation).value(LINE));
+            if (!rating(group, allocation.value(lineIndex)).equalz(noCost())) {
+                defying.add(lineProcessing.demandOfAssignment(allocation).value(lineIndex));
             }
         });
         return defying;
@@ -234,10 +247,10 @@ public abstract class ConstraintAI implements Constraint {
         final var routingRating = RoutingRating.create();
         lineProcessing.rawLinesView().forEach(line -> {
             if (line != null
-                    && group.equals(line.value(INCOMING_CONSTRAINT_GROUP))
+                    && group.equals(line.value(incomingConstraintGroupIndex))
                     && lineSelector.test(line)) {
-                routingRating.ratingComponents().add(line.value(RATING));
-                line.value(Constraint.PROPAGATION_TO).forEach(child -> {
+                routingRating.ratingComponents().add(line.value(ratingIndex));
+                line.value(propagationToIndex).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
                     if (!routingRating.children_to_groups().containsKey(child)) {
                         groupsOfChild = setOfUniques();
@@ -245,7 +258,7 @@ public abstract class ConstraintAI implements Constraint {
                     } else {
                         groupsOfChild = routingRating.children_to_groups().get(child);
                     }
-                    groupsOfChild.add(line.value(RESULTING_CONSTRAINT_GROUP));
+                    groupsOfChild.add(line.value(resultingConstraintGroupIndex));
                 });
             }
         });
@@ -256,8 +269,8 @@ public abstract class ConstraintAI implements Constraint {
         final var routingRating = RoutingRating.create();
         lines.forEach(line -> {
             if (line != null) {
-                routingRating.ratingComponents().add(line.value(RATING));
-                line.value(Constraint.PROPAGATION_TO).forEach(child -> {
+                routingRating.ratingComponents().add(line.value(ratingIndex));
+                line.value(propagationToIndex).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
                     if (!routingRating.children_to_groups().containsKey(child)) {
                         groupsOfChild = setOfUniques();
@@ -265,7 +278,7 @@ public abstract class ConstraintAI implements Constraint {
                     } else {
                         groupsOfChild = routingRating.children_to_groups().get(child);
                     }
-                    groupsOfChild.add(line.value(RESULTING_CONSTRAINT_GROUP));
+                    groupsOfChild.add(line.value(resultingConstraintGroupIndex));
                 });
             }
         });
@@ -297,7 +310,7 @@ public abstract class ConstraintAI implements Constraint {
     public Set<Line> allocationsOf(GroupId group) {
         final Set<Line> allocations = setOfUniques();
         lineProcessing.rawLinesView().forEach(line -> {
-            if (line != null && line.value(INCOMING_CONSTRAINT_GROUP).equals(group)) {
+            if (line != null && line.value(incomingConstraintGroupIndex).equals(group)) {
                 allocations.add(line);
             }
         });
@@ -326,7 +339,7 @@ public abstract class ConstraintAI implements Constraint {
         return lineProcessing()
                 .rawLinesView()
                 .get(line.index())
-                .value(RESULTING_CONSTRAINT_GROUP);
+                .value(resultingConstraintGroupIndex);
     }
 
     @Override
