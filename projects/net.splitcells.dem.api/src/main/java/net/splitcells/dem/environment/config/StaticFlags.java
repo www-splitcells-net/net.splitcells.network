@@ -83,13 +83,16 @@ public final class StaticFlags {
         }
     }
 
+    /**
+     * This method logs, whether the settings have some notable bad side effects.
+     */
     public static void logStaticFlags() {
         final var staticFlagsOverridden = perspective("static-flags-overridden");
-        if (INLINE_STANDARD_FACTORIES) {
-            staticFlagsOverridden.withText("`" + INLINE_STANDARD_FACTORIES_KEY + "` set to `true`.");
+        if (!INLINE_STANDARD_FACTORIES) {
+            staticFlagsOverridden.withText("`" + INLINE_STANDARD_FACTORIES_KEY + "` set to `false` and therefore the best performance is not achieved.");
         }
-        if (ENFORCING_UNIT_CONSISTENCY) {
-            staticFlagsOverridden.withText("`" + ENFORCING_UNIT_CONSISTENCY_KEY + "` set to `true`.");
+        if (!ENFORCING_UNIT_CONSISTENCY) {
+            staticFlagsOverridden.withText("`" + ENFORCING_UNIT_CONSISTENCY_KEY + "` set to `false` and therefore simple errors are not checked.");
         }
         if (staticFlagsOverridden.children().hasElements()) {
             domsole().append(staticFlagsOverridden, LogLevel.WARNING);

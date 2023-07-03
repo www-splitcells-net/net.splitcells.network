@@ -141,8 +141,9 @@ public class Dem {
         // IDEA Invalidate write access to configuration through down casting after configuration via a wrapper.
         CURRENT.set(rVal);
         configurator.accept(rVal);
-        logStaticFlags();
         rVal.init();
+        // Logging is done, when the logging is set up.
+        logStaticFlags();
         return rVal;
     }
 
