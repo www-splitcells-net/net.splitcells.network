@@ -69,6 +69,10 @@ import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
 
+/**
+ * TODO TOFIX {@link #path()} was hacked together, without quality control.
+ * Create test case for {@link #path()} and make it nice.
+ */
 @Deprecated
 public abstract class ConstraintAI implements Constraint {
     private final GroupId injectionGroup;
@@ -101,7 +105,7 @@ public abstract class ConstraintAI implements Constraint {
         this.injectionGroup = injectionGroup;
         final Discoverable parentPath;
         if (parent.isPresent()) {
-            parentPath = () -> parent.get().path().withAppended(getClass().getSimpleName());
+            parentPath = () -> parent.get().path().withAppended(type.getSimpleName());
             mainContext = parent;
         } else {
             parentPath = this;

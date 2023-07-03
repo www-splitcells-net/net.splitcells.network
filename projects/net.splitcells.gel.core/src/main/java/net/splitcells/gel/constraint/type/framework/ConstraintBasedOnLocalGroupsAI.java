@@ -161,7 +161,7 @@ public class ConstraintBasedOnLocalGroupsAI extends ConstraintAI {
         return mainContext
                 .map(context -> context.path())
                 .orElseGet(() -> list())
-                .withAppended(this.getClass().getSimpleName());
+                .withAppended(type().getSimpleName());
     }
 
     @Override
