@@ -13,13 +13,13 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.cin.raters;
+package net.splitcells.cin.raters.deprecated;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
 
-import static net.splitcells.cin.raters.Loneliness.loneliness;
-import static net.splitcells.cin.raters.PositionClusters.positionClusters;
-import static net.splitcells.cin.raters.TimeSteps.timeSteps;
+import static net.splitcells.cin.raters.deprecated.Loneliness.loneliness;
+import static net.splitcells.cin.raters.deprecated.PositionClusters.positionClusters;
+import static net.splitcells.cin.raters.deprecated.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;

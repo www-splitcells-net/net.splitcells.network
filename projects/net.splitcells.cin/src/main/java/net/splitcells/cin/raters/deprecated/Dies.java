@@ -13,13 +13,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.cin.raters;
+package net.splitcells.cin.raters.deprecated;
 
-import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 
-import static net.splitcells.cin.raters.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
+import static net.splitcells.cin.raters.deprecated.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public class Dies {

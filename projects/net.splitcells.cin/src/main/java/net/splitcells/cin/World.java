@@ -15,7 +15,7 @@
  */
 package net.splitcells.cin;
 
-import net.splitcells.cin.raters.TimeSteps;
+import net.splitcells.cin.raters.deprecated.TimeSteps;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -30,13 +30,13 @@ import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
-import static net.splitcells.cin.raters.CrowdClassifier.crowdClassifier;
-import static net.splitcells.cin.raters.Dies.dies;
-import static net.splitcells.cin.raters.Loneliness.loneliness;
-import static net.splitcells.cin.raters.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
-import static net.splitcells.cin.raters.PositionClusters.positionClustering;
-import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
-import static net.splitcells.cin.raters.TimeSteps.timeSteps;
+import static net.splitcells.cin.raters.deprecated.CrowdClassifier.crowdClassifier;
+import static net.splitcells.cin.raters.deprecated.Dies.dies;
+import static net.splitcells.cin.raters.deprecated.Loneliness.loneliness;
+import static net.splitcells.cin.raters.deprecated.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
+import static net.splitcells.cin.raters.deprecated.PositionClusters.positionClustering;
+import static net.splitcells.cin.raters.deprecated.TimeSteps.overlappingTimeSteps;
+import static net.splitcells.cin.raters.deprecated.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
