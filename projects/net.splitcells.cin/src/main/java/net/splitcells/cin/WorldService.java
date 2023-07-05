@@ -20,7 +20,7 @@ import net.splitcells.gel.solution.SolutionView;
 
 import static net.splitcells.cin.World.WORLD_HISTORY;
 import static net.splitcells.cin.World.addNextTime;
-import static net.splitcells.cin.World.allocateGlider;
+import static net.splitcells.cin.World.allocateBlinker;
 import static net.splitcells.cin.World.allocateRestAsDead;
 import static net.splitcells.cin.World.initWorldHistory;
 import static net.splitcells.cin.World.worldHistory;
@@ -39,7 +39,7 @@ public class WorldService {
             reportRuntime(() -> {
                 network.withNode(WORLD_HISTORY, currentWorldHistory);
                 initWorldHistory(currentWorldHistory);
-                allocateGlider(currentWorldHistory);
+                allocateBlinker(currentWorldHistory);
                 currentWorldHistory.init();
                 allocateRestAsDead(currentWorldHistory);
             }, "Initialize world history.", INFO);

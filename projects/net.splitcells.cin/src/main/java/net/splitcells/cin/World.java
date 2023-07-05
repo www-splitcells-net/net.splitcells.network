@@ -107,7 +107,7 @@ public class World {
         freeDemands.forEach(d -> worldHistory.assign(d, playerSupply.removeAt(0)));
     }
 
-    public static void allocateGlider(Solution worldHistory) {
+    public static void allocateBlinker(Solution worldHistory) {
         worldHistory.assign(worldHistory.demandsFree()
                         .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 1)
@@ -148,7 +148,7 @@ public class World {
                 .toProblem()
                 .asSolution();
     }
-    
+
     @Deprecated
     public static Solution worldHistory(String name, List<List<Object>> demands, List<List<Object>> supplies) {
         // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
