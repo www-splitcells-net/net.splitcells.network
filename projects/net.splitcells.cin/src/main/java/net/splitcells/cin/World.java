@@ -136,7 +136,8 @@ public class World {
 
     public static Solution worldHistory(String name, List<List<Object>> demands, List<List<Object>> supplies) {
         // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
-        if (true) {
+        if (false) {
+            // TODO
             return defineProblem(name)
                     .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
                     .withDemands(demands)
