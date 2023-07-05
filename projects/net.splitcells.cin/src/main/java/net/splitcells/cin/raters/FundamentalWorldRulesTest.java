@@ -57,13 +57,22 @@ public class FundamentalWorldRulesTest {
                 .withAppended(listOfShallowCopies(list(0), 3 * 4))
                 .withAppended(listOfShallowCopies(list(1), 2 * 3))
                 .forEach(testSubject.supplies()::addTranslated);
+        allocateBlinker(testSubject);
     }
 
     private void allocateBlinker(Solution worldHistory) {
         worldHistory.assign(worldHistory.demandsFree()
                         .lookup(WORLD_TIME, 0)
+                        .lookup(POSITION_X, 0)
+                        .lookup(POSITION_Y, 1)
+                        .orderedLine(0)
+                , worldHistory.suppliesFree()
+                        .lookup(VALUE, 1)
+                        .orderedLine(0));
+        worldHistory.assign(worldHistory.demandsFree()
+                        .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 1)
-                        .lookup(POSITION_Y, 2)
+                        .lookup(POSITION_Y, 1)
                         .orderedLine(0)
                 , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)
@@ -71,15 +80,7 @@ public class FundamentalWorldRulesTest {
         worldHistory.assign(worldHistory.demandsFree()
                         .lookup(WORLD_TIME, 0)
                         .lookup(POSITION_X, 2)
-                        .lookup(POSITION_Y, 2)
-                        .orderedLine(0)
-                , worldHistory.suppliesFree()
-                        .lookup(VALUE, 1)
-                        .orderedLine(0));
-        worldHistory.assign(worldHistory.demandsFree()
-                        .lookup(WORLD_TIME, 0)
-                        .lookup(POSITION_X, 3)
-                        .lookup(POSITION_Y, 2)
+                        .lookup(POSITION_Y, 1)
                         .orderedLine(0)
                 , worldHistory.suppliesFree()
                         .lookup(VALUE, 1)

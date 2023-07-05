@@ -27,8 +27,10 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class FundamentalWorldRules implements Rater {
     public static Rater fundamentalWorldRules(Attribute<Integer> worldTime
@@ -62,7 +64,10 @@ public class FundamentalWorldRules implements Rater {
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
         domsole().appendUnimplementedWarning(getClass());
         final var ratingEvent = ratingEvent();
-        ratingEvent.addRating_viaAddition(addition, localRating());
+        final var localRating = localRating().withRating(noCost())
+                .withPropagationTo(children)
+                .withResultingGroupId(addition.value(INCOMING_CONSTRAINT_GROUP));
+        ratingEvent.addRating_viaAddition(addition, localRating);
         return ratingEvent;
     }
 
