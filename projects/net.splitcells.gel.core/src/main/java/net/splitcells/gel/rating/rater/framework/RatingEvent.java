@@ -71,6 +71,10 @@ public interface RatingEvent {
 
     Set<Line> removal();
 
+    default void addRating_viaAddition(Line line, LocalRating localRating) {
+        additions().put(line, localRating);
+    }
+
     default void addRating_viaAddition(Line subject
             , Rating additionalRating
             , List<Constraint> children
