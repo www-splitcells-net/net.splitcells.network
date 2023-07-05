@@ -33,6 +33,11 @@ You can try to decrease the likelihood of breaking a certain feature,
 by contributing an appropriate test case/suite for this feature.
 Regardless of that, keep in mind, that there is no guarantee of backwards
 compatibility.
+
+TODO: Consider declaring backward compatibility a nice to have feature, instead of an absolute goal.
+If backward compatibility is not guaranteed, an migration guideline should be provided.
+Maybe via OpenRewrite for Java code?
+The reasoning behind this is the maintenance burden without other relevant positive side effects.
 ## Helpful Notes
 ### Browsing Repository in Browser
 When browsing the repo in the web some browser addons/extension might help

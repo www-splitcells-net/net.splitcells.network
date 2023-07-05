@@ -14,6 +14,13 @@
     <meta>
         <title>Origin of The Project Generic Allocator</title>
         <description>This post explains how the Generic Allocator (Gel) project came to light.</description>
+        <d:toDo>
+            Reason why assignment model was chosen at all.
+            <d:toDo>University internship</d:toDo>
+            <d:toDo>Deprecated university projects</d:toDo>
+            <d:toDo>CSP versus assignment model</d:toDo>
+        </d:toDo>
+        <d:toDo>Why not use Optaplanner or Timefold instead.</d:toDo>
         <d:toDo>Link to version history/changelog.</d:toDo>
     </meta>
     <chapter>
