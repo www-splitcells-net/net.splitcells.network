@@ -134,53 +134,52 @@ public class World {
                         .orderedLine(0));
     }
 
+    public static Solution worldHistory2(String name, List<List<Object>> demands, List<List<Object>> supplies) {
+        return defineProblem(name)
+                .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
+                .withDemands(demands)
+                .withSupplyAttributes(VALUE)
+                .withSupplies(supplies)
+                .withConstraint(r -> {
+                    r.then(commitmentAdherence(WORLD_TIME));
+                    r.then(fundamentalWorldRules(WORLD_TIME, POSITION_X, POSITION_Y, VALUE));
+                    return r;
+                })
+                .toProblem()
+                .asSolution();
+    }
+    
+    @Deprecated
     public static Solution worldHistory(String name, List<List<Object>> demands, List<List<Object>> supplies) {
         // The name is made so it is portable and easily used as file name in websites, which makes linking easier.
-        if (false) {
-            // TODO
-            return defineProblem(name)
-                    .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
-                    .withDemands(demands)
-                    .withSupplyAttributes(VALUE)
-                    .withSupplies(supplies)
-                    .withConstraint(r -> {
-                        r.then(commitmentAdherence(WORLD_TIME));
-                        r.then(fundamentalWorldRules(WORLD_TIME, POSITION_X, POSITION_Y, VALUE));
-                        return r;
-                    })
-                    .toProblem()
-                    .asSolution();
-        } else {
-            // TODO REMOVE
-            return defineProblem(name)
-                    .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
-                    .withDemands(demands)
-                    .withSupplyAttributes(VALUE)
-                    .withSupplies(supplies)
-                    .withConstraint(r -> {
-                        r.then(commitmentAdherence(WORLD_TIME));
-                        final var positionTimeSteps = r.forAll(overlappingTimeSteps(WORLD_TIME))
-                                .forAll(positionClustering(POSITION_X, POSITION_Y));
-                        positionTimeSteps
-                                .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                                .forAll(loneliness(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                                .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
-                        positionTimeSteps
-                                .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                                .forAll(hasGoodCompany(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                                .then(survives(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
-                        positionTimeSteps
-                                .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                                .forAll(crowded(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                                .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
-                        positionTimeSteps
-                                .forAll(isDead(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                                .forAll(revivalCondition(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
-                                .then(reproduction(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
-                        return r;
-                    }).toProblem()
-                    .asSolution();
-        }
+        return defineProblem(name)
+                .withDemandAttributes(WORLD_TIME, POSITION_X, POSITION_Y)
+                .withDemands(demands)
+                .withSupplyAttributes(VALUE)
+                .withSupplies(supplies)
+                .withConstraint(r -> {
+                    r.then(commitmentAdherence(WORLD_TIME));
+                    final var positionTimeSteps = r.forAll(overlappingTimeSteps(WORLD_TIME))
+                            .forAll(positionClustering(POSITION_X, POSITION_Y));
+                    positionTimeSteps
+                            .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .forAll(loneliness(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
+                    positionTimeSteps
+                            .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .forAll(hasGoodCompany(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .then(survives(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
+                    positionTimeSteps
+                            .forAll(isAlive(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .forAll(crowded(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .then(dies(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
+                    positionTimeSteps
+                            .forAll(isDead(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .forAll(revivalCondition(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y))
+                            .then(reproduction(1, VALUE, WORLD_TIME, POSITION_X, POSITION_Y));
+                    return r;
+                }).toProblem()
+                .asSolution();
     }
 
     private static List<List<Object>> worldsTimeSpace(Integer startTime
