@@ -17,6 +17,9 @@ package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
+import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public final class Lists {
@@ -70,6 +73,12 @@ public final class Lists {
         final var list = ListI.<T>_list();
         list.addAll(java.util.Arrays.asList(args));
         return list;
+    }
+
+    public static <T> List<List<T>> listOfShallowCopies(List<T> element, int numberOfCopies) {
+        final List<List<T>> listOfShallowCopies = list();
+        rangeClosed(1, numberOfCopies).forEach(i -> listOfShallowCopies.add(listWithValuesOf(element)));
+        return listOfShallowCopies;
     }
 
 }
