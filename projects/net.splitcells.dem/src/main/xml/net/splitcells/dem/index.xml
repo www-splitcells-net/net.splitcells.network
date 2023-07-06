@@ -12,50 +12,18 @@
         <scheduling>
             <queues>
                 <priority>
-                    <toDo>Clean up guide lines.</toDo>
-                    <toDo>Clean up ConfigurationI.
-                        <toDo>Create to validate framework.</toDo>
-                    </toDo>
-                    <toDo>Support deterministic mode.
-                        <toDo>Maps</toDo>
-                        <toDo>Sets</toDo>
-                    </toDo>
-                    <toDo>Create echo paging, when Domsole outputs to file.</toDo>
-                    <toDo>Fix up code guide lines.</toDo>
-                    <toDo>Make unit tests.</toDo>
                     <toDo xl:href="https://www.heise.de/developer/meldung/Fuzzing-fuer-alle-Google-verwandelt-ClusterFuzz-in-ein-Open-Source-Projekt-4301744.html">
                         Use fuzzy testing.
                     </toDo>
-                    <toDo>Simple aspect oriented programming.
-                        <toDo>Check consistency.</toDo>
-                        <toDo>Implement test injection.</toDo>
-                    </toDo>
-                    <toDo>Console should print message asynchronously.</toDo>
+                    <toDo>Implement test injection.</toDo>
+                    <toDo>Console should print message asynchronously or use a framework.</toDo>
                     <toDo>Implement test injection and recursive test injection.</toDo>
                     <toDo>Create functional effect system.</toDo>
-                    <idea>Create BNF grammar for XML and check files with it, instead of using XSD.</idea>
-                    <toDo>Create a mode, which makes dependency injection fast via a standard value.
-                        <toDo>Create a resource class, that marks a resource as supporting such functionality.</toDo>
-                    </toDo>
                     <toDo>Define XML schemas for own format and ensure compliance.</toDo>
                     <toDo>Split Dem into core, merger and Java bootstrapping subproject.</toDo>
                 </priority>
             </queues>
-            <service xl:href="compatibilty-and-portability.xml"/>
         </scheduling>
-        <unscheduled>
-            <toDo>Why are certain things done? i.e. object factory with static
-                interface
-            </toDo>
-            <toDo>Split class functionality into different independent classes for dependency,
-                configuration and resource management.
-            </toDo>
-            <idea>Implement static interface.</idea>
-            <toDo>
-                Standardize usage of down and up casting.
-                <toDo>Covariance and Contravariance</toDo>
-            </toDo>
-        </unscheduled>
         <objective>
             <objective>Support automatic refactoring.</objective>
             <objective>Provide an environment for programs that acts as an generic interface
@@ -104,8 +72,6 @@
     <val name="logging">
         <solution>There is no differences between logs and console output.
         </solution>
-        <toDo>End of log does not contain closing tag.</toDo>
-        <toDo>Increase logging speed by making logging asynchronous.</toDo>
     </val>
     <val name="side-effects">
         <toDo>Create program system as effect system.
@@ -133,16 +99,5 @@
                 </s:chapter>
             </s:chapter>
         </s:article>
-    </val>
-    <val name="support">
-        <val name="programming.languages">
-            <toDo>Transpile Java programs to Javascript and execute inside website.
-                <toDo xl:href="https://www.mirkosertic.de/blog/2017/06/compiling-bytecode-to-javascript/"/>
-                <toDo xl:href="https://github.com/appcypher/awesome-wasm-langs#java"/>
-                <toDo xl:href="https://github.com/konsoletyper/teavm"/>
-                <toDo xl:href="https://github.com/i-net-software/JWebAssembly"/>
-                <toDo xl:href="https://github.com/mirkosertic/Bytecoder"/>
-            </toDo>
-        </val>
     </val>
 </project>
