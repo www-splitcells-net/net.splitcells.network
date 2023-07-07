@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xl="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/den.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xmlns:s="http://splitcells.net/sew.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:n="http://splitcells.net/natural.xsd"
+         xmlns:e="http://splitcells.net/sen.xsd">
+    <name>Dependency Manager</name>
+    <name>dem</name>
+    <scheduling>
+        <queues>
+            <priority>
+                <toDo xl:href="https://www.heise.de/developer/meldung/Fuzzing-fuer-alle-Google-verwandelt-ClusterFuzz-in-ein-Open-Source-Projekt-4301744.html">
+                    Use fuzzy testing.
+                </toDo>
+                <toDo>Implement test injection.</toDo>
+                <toDo>Console should print message asynchronously or use a framework.</toDo>
+                <toDo>Implement test injection and recursive test injection.</toDo>
+                <toDo>Create functional effect system.</toDo>
+                <toDo>Define XML schemas for own format and ensure compliance.</toDo>
+                <toDo>Split Dem into core, merger and Java bootstrapping subproject.</toDo>
+            </priority>
+        </queues>
+    </scheduling>
+    <val name="logging">
+        <solution>There is no differences between logs and console output.
+        </solution>
+    </val>
+    <val name="side-effects">
+        <toDo>Create program system as effect system.
+            <toDo>Create event processor.
+                <toDo>Create event queue at processor.</toDo>
+            </toDo>
+            <toDo>Event processor executor.</toDo>
+        </toDo>
+        <s:article>
+            <s:chapter>
+                <s:title>Side Effects</s:title>
+                <s:paragraph>Secondary side effects are parts of the programs which are undefined.
+                    Primary side effects are modeled side effects that are explicitly caused by the program.
+                </s:paragraph>
+                <s:paragraph>Configuration of secondary effects are done with
+                    secondary effects or the executor of the programs.
+                    Configuration of primary effects are done via program arguments or the executor.
+                </s:paragraph>
+                <s:chapter>
+                    <s:title>Program Dependencies</s:title>
+                    <s:paragraph>There are runtime dependencies and compile time dependencies.
+                        Runtime dependencies are arguments and configurations
+                        for primary and secondary side effects.
+                    </s:paragraph>
+                </s:chapter>
+            </s:chapter>
+        </s:article>
+    </val>
+</project>
