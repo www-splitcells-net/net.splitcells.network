@@ -389,9 +389,9 @@ public abstract class ConstraintAI implements Constraint {
                     .unorderedLines()
                     .forEach(line -> ratings.appendChild(line.toDom()));
         }
-        childrenView().forEach(bērns ->
+        childrenView().forEach(child ->
                 dom.appendChild(
-                        bērns.toDom(
+                        child.toDom(
                                 setOfUniques(results
                                         .columnView(RESULTING_CONSTRAINT_GROUP)
                                         .values()))));
