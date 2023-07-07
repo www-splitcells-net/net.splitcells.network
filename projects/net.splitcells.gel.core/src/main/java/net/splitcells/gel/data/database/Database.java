@@ -46,8 +46,17 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * These indexes would point to a complex or dynamic object
  * in an appropriate additional storage.
  * In order to make this possible with a good performance the interface
- * needs to support primitive types without casting.
- * </p>>
+ * needs to support primitive types without casting.</p>
+ * <p>TODO Create a {@link Database} implementation with in-memory SQL backend (i.e. H2 database) as prerequisite,
+ * for example, to GPU backed {@link Database} implementations.
+ * This prerequisite would be a comparably easy undertaking compared to a GPU backed {@link Database},
+ * because of the SQL language.
+ * Therefore a SQL backed database could show problems,
+ * that would be present for GPU backed {@link Database} as well,
+ * which would be easier to tackle in the SQL context compared to the GPU context.
+ * Keep in mind,
+ * that it makes sense to create more than alternative implementations for {@link Database} in these cases,
+ * as otherwise the performance increase is very limited.</p>
  */
 public interface Database extends Table {
 
