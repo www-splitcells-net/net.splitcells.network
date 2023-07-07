@@ -24,6 +24,8 @@ TODO Instead of "./.net.splitcells.os.state.interface.repo/subs.json" use the
      The reason for this migration is the fact,
      that the JSON format is too complex yet
      and unnecessary hard to process.
+     Maybe use an executable like "./bin/repo.subs.sh" instead, in order to support as much as possible
+     (i.e. this could be used in order to make repo process compatible to git submodules).
 TODO Improve documentation and make it friendly to new users.
 TODO Remove duplicate code.
 TODO Support moving child repositories semi-automatically.
@@ -33,6 +35,8 @@ TODO Make it possible to `repo.synchronize` etc. all branches of a repo.
      Create a new peer meta repo, that contains the names of all deleted branches.
      Beware that different branches can be created over time with the same name.
      The meta repo therefore needs to store some commit info as well and not just the name of the deleted branch.
+TODO Maybe repo process should support just being a wrapper around git submodules,
+     that provides easy workflows.
 """
 
 __author__ = "Mārtiņš Avots"
