@@ -15,16 +15,11 @@
  */
 package net.splitcells.gel.data.table;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.attribute.IndexedAttribute;
-import org.w3c.dom.Node;
-
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 
 public class LineWithValues implements Line {
 

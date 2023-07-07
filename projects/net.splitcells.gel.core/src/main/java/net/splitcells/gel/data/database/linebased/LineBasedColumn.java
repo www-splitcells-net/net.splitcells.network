@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.data.database.linebased;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.lookup.Lookup;
@@ -27,7 +28,6 @@ import net.splitcells.gel.data.table.column.Column;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 import java.util.function.Predicate;
