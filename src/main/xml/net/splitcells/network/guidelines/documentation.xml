@@ -10,10 +10,14 @@
         <title>Documentation Guidelines</title>
     </meta>
     <paragraph>Documentation links syntax to semantics or represents meta data.
-        A single point of entry should be provided from where every part of the documentation is reachable.
-        Multiple points of additional entries may be provided.
-        It should be possible to render all documentation as one site, were everything can be easily accessed
-        and searched.
+        At least one single point of entry should be provided from where every part of the documentation is reachable.
+        The main point of entry should contain or link to the project's objectives.
+        Each objective should have a link, that provides access to the user's and programmer's manuals
+        relevant for the objectives.
+    </paragraph>
+    <paragraph>
+        It should be possible to render all documentation as one site, were everything can be easily accessed and
+        searched.
     </paragraph>
     <chapter>
         <title>Documentation Types</title>
