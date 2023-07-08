@@ -15,8 +15,7 @@
  */
 package net.splitcells.gel.constraint.type.framework;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toSet;
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -45,7 +44,10 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
@@ -73,7 +75,6 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
-import org.assertj.core.api.Assertions;
 import org.w3c.dom.Element;
 
 /**
@@ -107,12 +108,12 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     private final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation;
     private final GroupId injectionGroup;
     private final net.splitcells.dem.data.set.list.List<Constraint> children = list();
-    protected Optional<Discoverable> mainContext = Optional.empty();
+    private Optional<Discoverable> mainContext = Optional.empty();
     private final List<Discoverable> contexts = list();
-    protected final Database lines;
-    protected final Database results;
-    protected final Assignments lineProcessing;
-    protected final Map<GroupId, Rating> groupProcessing = map();
+    private final Database lines;
+    private final Database results;
+    private final Assignments lineProcessing;
+    private final Map<GroupId, Rating> groupProcessing = map();
     private final Class<? extends Constraint> type;
 
     private final IndexedAttribute<Line> lineIndex;
@@ -275,7 +276,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     public void registerBeforeRemoval(GroupId injectionGroup, Line removal) {
         // TODO Move this to a different project.
         if (ENFORCING_UNIT_CONSISTENCY) {
-            Assertions.assertThat(removal.isValid()).isTrue();
+            require(removal.isValid());
         }
         processLinesBeforeRemoval(injectionGroup, removal);
         lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
@@ -306,7 +307,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
 
     @Override
     public Constraint withChildren(Constraint... children) {
-        asList(children).forEach(child -> {
+        Lists.list(children).forEach(child -> {
             this.children.add(child);
             child.addContext(this);
         });
@@ -552,7 +553,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                                                 .unorderedLines()
                                                 .stream()
                                                 .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP))
-                                                .collect(toSet()))
+                                                .collect(toSetOfUniques()))
                                         .flatMap(resultingGroupings -> resultingGroupings.stream())
                                         .collect(toSetOfUniques()))));
         return dom;
@@ -585,7 +586,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                                                 .unorderedLines()
                                                 .stream()
                                                 .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP))
-                                                .collect(toSet()))
+                                                .collect(toSetOfUniques()))
                                         .flatMap(resultingGroupings -> resultingGroupings.stream())
                                         .collect(toSetOfUniques()))));
         return dom;
