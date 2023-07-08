@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 echo '-Dnet.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY=false'
 echo '-Dnet.splitcells.dem.environment.config.StaticFlags.TELLING_STORY=false'
 echo '-Dnet.splitcells.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES=true'

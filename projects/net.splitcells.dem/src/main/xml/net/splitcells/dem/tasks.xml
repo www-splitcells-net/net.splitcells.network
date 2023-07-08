@@ -6,6 +6,10 @@
          xmlns:g="http://splitcells.net/gal.xsd" xmlns:foaf="http://xmlns.com/foaf/0.1/"
          xmlns:n="http://splitcells.net/natural.xsd"
          xmlns:e="http://splitcells.net/sen.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
     <name>Dependency Manager</name>
     <name>dem</name>
     <scheduling>
