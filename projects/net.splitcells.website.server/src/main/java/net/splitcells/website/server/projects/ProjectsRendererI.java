@@ -329,7 +329,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , Optional<String> title
             , Optional<String> path
             , Config config) {
-        return renderers.get(0).renderHtmlBodyContent(bodyContent, title, path, config, this);
+        return fallbackRenderer.renderHtmlBodyContent(bodyContent, title, path, config, this);
     }
 
     @Override

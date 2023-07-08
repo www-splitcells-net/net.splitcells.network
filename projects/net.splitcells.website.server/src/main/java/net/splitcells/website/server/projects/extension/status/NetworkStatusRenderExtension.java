@@ -39,6 +39,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.utils.CommonFunctions.asString;
 import static net.splitcells.dem.utils.CommonFunctions.getBytes;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -51,7 +52,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     private static final String STATUS_DOCUMENT_PATH = "net/splitcells/network/status.html";
     private static final String STATUS_PATH = "net/splitcells/network/status.csv";
     private static final Path RUNTIME_FOLDER = Path.of("net/splitcells/network/logger/builder/runtime");
-    
+
     private static final int DAY_WARNING_THRESHOLD = 30;
 
     public static NetworkStatusRenderExtension networkStatusRenderExtension() {
@@ -89,7 +90,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                         }
                     });
             final var linkValidityStatusReport = linkValidityStatus();
-            if (linkValidityStatusReport.logLevel().equals(LogLevel.INFO)) {
+            if (linkValidityStatusReport.logLevel().equals(INFO)) {
                 successfulStatuses.append(linkValidityStatusReport.report());
             } else if (linkValidityStatusReport.logLevel().equals(LogLevel.WARNING)) {
                 disruptedStatuses.append(linkValidityStatusReport.report());
@@ -127,11 +128,14 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                             if (LocalDate.now().minusDays(7).isAfter(localDate)) {
                                 logLevels.withAppended(LogLevel.WARNING);
                             } else {
-                                logLevels.withAppended(LogLevel.INFO);
+                                logLevels.withAppended(INFO);
                             }
                         }
                     });
             logLevels.sort(naturalComparator());
+            if (logLevels.isEmpty()) {
+                return Optional.of(renderingResult(getBytes(INFO.name(), ContentType.UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
+            }
             final var statusLevel = logLevels.get(0);
             return Optional.of(renderingResult(getBytes(statusLevel.name(), ContentType.UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
         }
@@ -159,7 +163,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                 .map(Double::parseDouble)
                 .orElse(0d);
         if (currentInvalidLinkCount.equals(historyMinimum)) {
-            return statusReport(LogLevel.INFO
+            return statusReport(INFO
                     , "<li><a href=\""
                             + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
                             + config().configValue(HostName.class)
