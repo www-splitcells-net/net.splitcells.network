@@ -23,8 +23,7 @@ can be found.
 # Common Use Cases
 > It's all about advertisement.
 
-The command `repo.process` provides a `--help` flag,
-with all details regarding all command flags.
+[There is an help page describing all flags](repo.process.help.md).
 
 The following contains a small gallery of use cases,
 in order to get a feeling,
