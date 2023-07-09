@@ -38,7 +38,7 @@ repo.process --command='git remote add GitHub git@github.com:www-splitcells-net/
 ```
 Alternatively, there is also a way, to do this more independently from Git.
 This has the advantage of being independent of the underlying VCS.
-Also, the concrete underlying implementation of updating the remote, can be changed later,
+This way, the concrete underlying implementation of updating the remote, can be changed later,
 without adjusting the command itself.
 This may be important, if such scripts are maintained for a longer period of time or
 if errors are found in the git commands itself.
@@ -54,8 +54,6 @@ repo.clone.into.current ssh://some-user@computer.local:/home/some-user/repos
 A bug is preventing the peer repos being cloned.
 So the following does not work at the moment.
 ```
-repo.clone git@github.com:www-splitcells-net/net.splitcells.network.git
-repo.clone git@gitlab.com:splitcells-net/net.splitcells.network.git
 repo.clone git@git.sr.ht:~splitcells-net/net.splitcells.network
 ```
 The nice thing about this, is the fact,
@@ -69,8 +67,9 @@ This is especially useful for decentralized backups or when many projects need t
 The necessary meta info should be stored as simple and portable as possible.
 In the simplest and still practical scenario only the relative paths of the sub repos and its possible remote servers has to be stored.
 
-The program support a dry mode,
-where an SH script is generated.
+TODO: The program supports a dry mode,
+where an SH script is generated,
+that contains all commands needed in order to achieve a certain goal.
 ## Recommended Repo Organization
 Support processing a tree of repositories (meta repo) and therefore allow working on all repos as one
 (i.e. in order to backup everything).
@@ -102,8 +101,7 @@ Java package name convention is a good start for that.
 
 The repo process is shell centric.
 Every interaction with the VCS directly and many other interactions are done via shell calls.
-This makes it possible, to replace every command completely,
-but makes the integration of these commands more costly.
+This makes it possible, to replace every command completely.
 
 All actions done via repo process and co,
 is done on the current branch by default,
