@@ -3,10 +3,23 @@
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
 # The Repo Process
+
 * [There is an help page describing all flags](repo.process.help.md).
 * [Use cases](repo.process.examples.md).
 
+# Introduction
 > What is this?
+ 
+Illustration of an exemplary repo structure:
+```
+User home folder
+└── Documents
+    ├── main-repo
+    │   ├── sub-repo-1
+    │   └── sub-repo-2
+    ├── peer-repo-1
+    └── peer-repo-2
+```
 
 Repo process (`repo.process` is the name in the shell) is a command,
 that enables one to iterate over a set of repos,
