@@ -30,6 +30,50 @@
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/main/java</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/antlr4</directory>
+            </resource>
+            <resource>
+                <directory>src/main/bash</directory>
+            </resource>
+            <resource>
+                <directory>src/main/hugo.md</directory>
+            </resource>
+            <resource>
+                <directory>src/main/html</directory>
+            </resource>
+            <resource>
+                <directory>src/main/js</directory>
+            </resource>
+            <resource>
+                <directory>src/main/md</directory>
+            </resource>
+            <resource>
+                <directory>src/main/python</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/svg</directory>
+            </resource>
+            <resource>
+                <directory>src/main/txt</directory>
+            </resource>
+            <resource>
+                <directory>src/main/xml</directory>
+            </resource>
+            <resource>
+                <directory>src/main/xml-pom</directory>
+            </resource>
+            <resource>
+                <directory>src/main/xsd</directory>
+            </resource>
+            <resource>
+                <directory>src/main/xsl</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <inherited>true</inherited>
