@@ -17,8 +17,10 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -36,11 +38,21 @@ public class FileSystems implements FileSystem {
     }
 
     @Override
-    public InputStream newInputStream(Path path) {
+    public InputStream inputStream(Path path) {
         try {
             return java.nio.file.Files.newInputStream(rootPath.resolve(path));
         } catch (IOException e) {
             throw executionException(e);
         }
+    }
+
+    @Override
+    public FileSystem writeToFile(Path path, byte[] content) {
+        try (final var writer = new FileOutputStream(rootPath.resolve(path).toFile())) {
+            writer.write(content);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return this;
     }
 }

@@ -15,9 +15,20 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.lang.annotations.ReturnsThis;
+
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 public interface FileSystem {
-    InputStream newInputStream(Path path);
+    InputStream inputStream(Path path);
+
+    @ReturnsThis
+    FileSystem writeToFile(Path path, byte[] content);
+
+    @ReturnsThis
+    default FileSystem writeToFile(Path path, String content) {
+        return writeToFile(path, content.getBytes(StandardCharsets.UTF_8));
+    }
 }
