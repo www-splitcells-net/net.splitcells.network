@@ -15,5 +15,9 @@
  */
 package net.splitcells.dem.resource;
 
+import java.io.InputStream;
+import java.nio.file.Path;
+
 public interface FileSystem {
+    InputStream newInputStream(Path path);
 }
