@@ -35,8 +35,13 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * Some additional methods for the java.nio.file.Files class.
+ *
+ * @Deprecated This class is an integration to OS functionality.
+ * OS functionality should not be used in code directly most of the time.
+ * Use {@link FileSystem} instead.
  */
 @JavaLegacyArtifact
+@Deprecated
 public interface Files {
 
     static void createDirectory(Path directory) {
