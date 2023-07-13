@@ -16,6 +16,8 @@
 package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.resource.FileSystem;
+import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -27,6 +29,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Files.newInputStream;
 import static net.splitcells.dem.resource.Paths.generateFolderPath;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
@@ -50,6 +53,7 @@ public class FileStructureTransformer {
     private final Path xslLibs;
     private final String transformerXsl;
     private final Function<String, Optional<String>> config;
+    private final FileSystem xslLibsFileSystem;
 
     private FileStructureTransformer(Path fileStructureRoot
             , Path xslLibs
@@ -61,6 +65,7 @@ public class FileStructureTransformer {
         this.xslLibs = xslLibs;
         this.transformerXsl = transformerXsl;
         this.config = config;
+        xslLibsFileSystem = fileSystemOnLocalHost(xslLibs);
     }
 
     public String transform(List<String> path) {
@@ -90,7 +95,7 @@ public class FileStructureTransformer {
     private XslTransformer transformer() {
         try {
             return new XslTransformer
-                    (newInputStream(xslLibs.resolve(transformerXsl))
+                    (xslLibsFileSystem.inputStream(Paths.path(transformerXsl))
                             , pathBasedUriResolver(xslLibs, config::apply));
         } catch (Exception e) {
             throw new RuntimeException(e);
