@@ -16,6 +16,7 @@
 package net.splitcells.website.server.translation.to.html;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.resource.FileSystem;
 
 import static java.nio.file.Files.newInputStream;
 
@@ -35,14 +36,14 @@ import javax.xml.transform.stream.StreamSource;
 @JavaLegacyArtifact
 public class PathBasedUriResolver implements URIResolver {
 
-    public static PathBasedUriResolver pathBasedUriResolver(Path folder, Function<String, Optional<String>> extension) {
+    public static PathBasedUriResolver pathBasedUriResolver(FileSystem folder, Function<String, Optional<String>> extension) {
         return new PathBasedUriResolver(folder, extension);
     }
 
-    private final Path folder;
+    private final FileSystem folder;
     private final Function<String, Optional<String>> extension;
 
-    private PathBasedUriResolver(Path folder, Function<String, Optional<String>> extension) {
+    private PathBasedUriResolver(FileSystem folder, Function<String, Optional<String>> extension) {
         this.folder = folder;
         this.extension = extension;
     }
@@ -77,7 +78,9 @@ public class PathBasedUriResolver implements URIResolver {
                  */
                 path = Paths.get(href);
             } else {
-                path = folder.resolve(href);
+                final var rVal = new StreamSource(folder.inputStream(Paths.get(href)));
+                rVal.setSystemId(Paths.get(href).toString());
+                return rVal;
             }
             final var rVal = new StreamSource(newInputStream(path));
             /*

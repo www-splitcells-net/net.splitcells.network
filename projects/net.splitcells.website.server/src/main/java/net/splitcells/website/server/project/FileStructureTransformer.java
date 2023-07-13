@@ -96,7 +96,7 @@ public class FileStructureTransformer {
         try {
             return new XslTransformer
                     (xslLibsFileSystem.inputStream(Paths.path(transformerXsl))
-                            , pathBasedUriResolver(xslLibs, config::apply));
+                            , pathBasedUriResolver(xslLibsFileSystem, config::apply));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
