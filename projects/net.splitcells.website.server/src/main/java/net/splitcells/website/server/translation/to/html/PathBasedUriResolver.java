@@ -22,6 +22,7 @@ import static java.nio.file.Files.newInputStream;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,15 +37,19 @@ import javax.xml.transform.stream.StreamSource;
 @JavaLegacyArtifact
 public class PathBasedUriResolver implements URIResolver {
 
-    public static PathBasedUriResolver pathBasedUriResolver(FileSystem folder, Function<String, Optional<String>> extension) {
-        return new PathBasedUriResolver(folder, extension);
+    public static PathBasedUriResolver pathBasedUriResolver(FileSystem folder, FileSystem configFiles
+            , Function<String, Optional<String>> extension) {
+        return new PathBasedUriResolver(folder, extension, configFiles);
     }
 
     private final FileSystem folder;
+    private final FileSystem configFiles;
     private final Function<String, Optional<String>> extension;
 
-    private PathBasedUriResolver(FileSystem folder, Function<String, Optional<String>> extension) {
+    private PathBasedUriResolver(FileSystem folder, Function<String, Optional<String>> extension
+            , FileSystem configFiles) {
         this.folder = folder;
+        this.configFiles = configFiles;
         this.extension = extension;
     }
 
@@ -52,6 +57,7 @@ public class PathBasedUriResolver implements URIResolver {
     public Source resolve(String href, String base) throws TransformerException {
         try {
             final var extensionResult = extension.apply(href);
+            final InputStream inputStream;
             if (extensionResult.isPresent()) {
                 final var extensionResolution = new StreamSource
                         (new ByteArrayInputStream(extensionResult.get().getBytes(StandardCharsets.UTF_8)));
@@ -62,27 +68,27 @@ public class PathBasedUriResolver implements URIResolver {
                 extensionResolution.setSystemId(Paths.get(href).toString());
                 return extensionResolution;
             }
-            final Path path;
             if (href.startsWith("/net.splitcells.website/current/xml")) {
                 /*
                  * It is expected, that the website server is executed in a project.
                  * This project may contain configs at `/src/main/xml//net.splitcells.website/current/xml/**`.
                  * TODO The current implementation for this is a hack.
                  */
-                path = Paths.get("./src/main/xml/" + href.substring("/net.splitcells.website/current/xml".length()));
+                inputStream = configFiles.inputStream(net.splitcells.dem.resource.Paths
+                        .path(href.substring("/net.splitcells.website/current/xml".length())));
             } else if (Paths.get(href).isAbsolute()) {
                 /*
                  * Absolute path are resolved to the host's filesystem.
                  * TODO Remove this, because this will only cause problems in future.
                  * Keep in mind, that this functionality is currently used in `variable.location.xsl`.
                  */
-                path = Paths.get(href);
+                inputStream = newInputStream(Paths.get(href));
             } else {
                 final var rVal = new StreamSource(folder.inputStream(Paths.get(href)));
                 rVal.setSystemId(Paths.get(href).toString());
                 return rVal;
             }
-            final var rVal = new StreamSource(newInputStream(path));
+            final var rVal = new StreamSource(inputStream);
             /*
              * Setting systemId to the underlying file in order to resolve relative paths
              * used in the return value.
