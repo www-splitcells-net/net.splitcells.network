@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource;
 
+import net.bytebuddy.implementation.bytecode.Throw;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;
@@ -27,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
@@ -43,6 +45,20 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 @JavaLegacyArtifact
 @Deprecated
 public interface Files {
+
+    static void processInTemporaryFolder(Consumer<Path> process) {
+        try {
+            final var temporaryFolder = java.nio.file.Files.createTempDirectory(null);
+            try {
+                process.accept(temporaryFolder);
+            } catch (RuntimeException ex) {
+                Files.deleteDirectory(temporaryFolder);
+                throw ex;
+            }
+        } catch (IOException e) {
+            throw executionException(e);
+        }
+    }
 
     static void createDirectory(Path directory) {
         try {
