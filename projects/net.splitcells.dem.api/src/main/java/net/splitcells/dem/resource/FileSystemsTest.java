@@ -28,11 +28,28 @@ public class FileSystemsTest {
     @IntegrationTest
     public void testInputStream() {
         final var testData = "78t789tb912dfrf";
+        final var testPath = Path.of("test-data.txt");
         Files.processInTemporaryFolder(path -> {
             final var testSubject = fileSystemOnLocalHost(path);
-            testSubject.writeToFile(Path.of("testData.txt"), testData);
+            testSubject.writeToFile(testPath, testData);
             try {
-                requireEquals(new String(testSubject.inputStream(Path.of("testData.txt")).readAllBytes())
+                requireEquals(new String(testSubject.inputStream(testPath).readAllBytes())
+                        , testData);
+            } catch (IOException e) {
+                throw executionException(e);
+            }
+        });
+    }
+
+    @IntegrationTest
+    public void testInputStreamWithFolder() {
+        final var testData = "78t789tb912dfrf";
+        final var testPath = Path.of("test-folder/test-file.txt");
+        Files.processInTemporaryFolder(path -> {
+            final var testSubject = fileSystemOnLocalHost(path);
+            testSubject.writeToFile(testPath, testData);
+            try {
+                requireEquals(new String(testSubject.inputStream(testPath).readAllBytes())
                         , testData);
             } catch (IOException e) {
                 throw executionException(e);

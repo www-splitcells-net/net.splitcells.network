@@ -48,7 +48,11 @@ public class FileSystems implements FileSystem {
 
     @Override
     public FileSystem writeToFile(Path path, byte[] content) {
-        try (final var writer = new FileOutputStream(rootPath.resolve(path).toFile())) {
+        final var targetPath = rootPath.resolve(path);
+        if (path.getParent() != null) {
+            Files.createDirectory(targetPath.getParent());
+        }
+        try (final var writer = new FileOutputStream(targetPath.toFile())) {
             writer.write(content);
         } catch (Exception e) {
             throw new RuntimeException(e);
