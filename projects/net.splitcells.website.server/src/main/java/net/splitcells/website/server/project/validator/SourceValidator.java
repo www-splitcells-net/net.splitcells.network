@@ -23,5 +23,5 @@ public interface SourceValidator {
 
     SourceValidator VOID_VALIDATOR = arg -> Optional.empty();
 
-    Optional<String> validate(Path validationSubject);
+    Optional<String> validate(String validationSubject);
 }

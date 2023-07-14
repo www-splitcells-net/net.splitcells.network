@@ -25,6 +25,9 @@ import java.nio.file.Path;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
+/**
+ * TODO IDEA Disallow any direct access to the hosts local file system in core source code.
+ */
 @JavaLegacyArtifact
 public class FileSystems implements FileSystem {
     public static FileSystem fileSystemOnLocalHost(Path rootPath) {

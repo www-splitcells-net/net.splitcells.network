@@ -36,48 +36,26 @@ import static net.splitcells.website.server.translation.to.html.PathBasedUriReso
 
 public class FileStructureTransformer {
 
-    public static FileStructureTransformer fileStructureTransformer(Path fileStructureRoot
-            , FileSystem xslLibs
+    public static FileStructureTransformer fileStructureTransformer(FileSystem xslLibs
             , String transformerXsl
             , SourceValidator sourceValidator
             , Function<String, Optional<String>> config) {
-        return new FileStructureTransformer(fileStructureRoot, xslLibs, transformerXsl, sourceValidator, config);
+        return new FileStructureTransformer(xslLibs, transformerXsl, sourceValidator, config);
     }
 
-    private final Path fileStructureRoot;
-    private final Path loggingProject = Paths.path(System.getProperty("user.home")
-            + "/connections/tmp.storage/net.splitcells.dem");
     private final SourceValidator sourceValidator;
     private final String transformerXsl;
     private final Function<String, Optional<String>> config;
     private final FileSystem xslLibs;
 
-    private FileStructureTransformer(Path fileStructureRoot
-            , FileSystem xslLibs
+    private FileStructureTransformer(FileSystem xslLibs
             , String transformerXsl
             , SourceValidator sourceValidator
             , Function<String, Optional<String>> config) {
-        this.fileStructureRoot = fileStructureRoot;
         this.sourceValidator = sourceValidator;
         this.transformerXsl = transformerXsl;
         this.config = config;
         this.xslLibs = xslLibs;
-    }
-
-    public String transform(List<String> path) {
-        return transform(Paths.path(fileStructureRoot, path));
-    }
-
-    public String transform(Path file) {
-
-        sourceValidator.validate(file).ifPresent(error -> {
-            final var loggingFolder = loggingProject.resolve("src/main/txt")
-                    .resolve(fileStructureRoot.relativize(file).getParent());
-            generateFolderPath(loggingFolder);
-            appendToFile(loggingFolder.resolve(file.getFileName() + ".errors.txt"), error);
-            domsole().append(perspective(error, STRING), LogLevel.ERROR);
-        });
-        return new String(transformer().transform(file));
     }
 
     /**
@@ -101,6 +79,9 @@ public class FileStructureTransformer {
     }
 
     public String transform(String content) {
+        sourceValidator.validate(content).ifPresent(error -> {
+            domsole().append(perspective(error, STRING), LogLevel.ERROR);
+        });
         return transformer().transform(content);
     }
 }

@@ -160,8 +160,7 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     private FileStructureTransformer createRenderer() {
-        return fileStructureTransformer(projectSrcFolder.resolve("xml")
-                , xslLibs
+        return fileStructureTransformer(xslLibs
                 , "main." + profile + ".xsl"
                 , sourceValidator
                 , p -> {
