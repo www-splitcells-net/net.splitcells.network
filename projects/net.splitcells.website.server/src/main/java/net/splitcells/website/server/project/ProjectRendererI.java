@@ -311,7 +311,7 @@ public class ProjectRendererI implements ProjectRenderer {
             if (fileExists(absolutePath)) {
                 // System.out.println("Rendering: " + path);
                 return Optional.of(renderer()
-                        .transform(absolutePath)
+                        .transform(Files.readFileAsString(absolutePath))
                         .getBytes(UTF_8.codeName()));
             }
             // System.out.println("Reading artifact: " + path);
