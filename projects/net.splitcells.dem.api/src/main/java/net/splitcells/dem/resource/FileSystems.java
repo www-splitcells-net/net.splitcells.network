@@ -27,6 +27,11 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * TODO IDEA Disallow any direct access to the hosts local file system in core source code.
+ * Even access over this interface should not be allowed.
+ * Instead, access to the local file system should only be injected and only limited to things,
+ * that are really needed.
+ * Otherwise, it will be hard to avoid random access to the local file system,
+ * which makes it hard to ensure the programs portability.
  */
 @JavaLegacyArtifact
 public class FileSystems implements FileSystem {
