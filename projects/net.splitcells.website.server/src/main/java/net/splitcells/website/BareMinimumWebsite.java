@@ -29,6 +29,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.Dem.waitIndefinitely;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Files.readFileAsString;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
@@ -55,7 +56,7 @@ public class BareMinimumWebsite {
             final var xslLib = Paths.get("projects/net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/");
             final var projectRenderer = projectRenderer("public"
                     , Paths.get("projects/net.splitcells.website.content.minimal/")
-                    , xslLib
+                    , fileSystemOnLocalHost(xslLib)
                     , Paths.get("projects/net.splitcells.website.content.default/src/main/resources/html")
                     , "/"
                     , VOID_VALIDATOR

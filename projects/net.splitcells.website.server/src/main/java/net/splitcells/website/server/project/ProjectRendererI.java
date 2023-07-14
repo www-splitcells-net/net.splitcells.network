@@ -21,6 +21,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.ContentType;
+import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.renderer.PageMetaData;
@@ -88,7 +89,7 @@ public class ProjectRendererI implements ProjectRenderer {
 
     private final Path projectFolder;
     private final Path projectSrcFolder;
-    private final Path xslLibs;
+    private final FileSystem xslLibs;
     private final Path resources;
     private final String resourceRootPath;
     private final boolean flatRepository;
@@ -103,7 +104,7 @@ public class ProjectRendererI implements ProjectRenderer {
     private final Config config;
     private Optional<FileStructureTransformer> transformer = Optional.empty();
 
-    protected ProjectRendererI(String renderer, Path projectSrcFolder, Path xslLibs, Path resources, String resourceRootPath
+    protected ProjectRendererI(String renderer, Path projectSrcFolder, FileSystem xslLibs, Path resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
             , SourceValidator sourceValidator

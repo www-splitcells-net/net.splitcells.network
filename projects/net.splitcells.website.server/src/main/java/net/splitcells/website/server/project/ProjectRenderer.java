@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.project;
 
+import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
@@ -38,7 +39,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  */
 public interface ProjectRenderer extends Renderer {
 
-    static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
+    static ProjectRenderer projectRenderer(String renderer, Path projectFolder, FileSystem xslLibs, Path resources
             , String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
@@ -52,7 +53,7 @@ public interface ProjectRenderer extends Renderer {
                 , config);
     }
 
-    static ProjectRenderer projectRenderer(String renderer, Path projectFolder, Path xslLibs, Path resources
+    static ProjectRenderer projectRenderer(String renderer, Path projectFolder, FileSystem xslLibs, Path resources
             , String resourceRootPath
             , SourceValidator sourceValidator
             , Config config) {

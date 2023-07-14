@@ -17,7 +17,6 @@ package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.FileSystem;
-import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -30,7 +29,6 @@ import java.util.function.Function;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
-import static net.splitcells.dem.resource.Files.newInputStream;
 import static net.splitcells.dem.resource.Paths.generateFolderPath;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.CommonFunctions.appendToFile;
@@ -39,7 +37,7 @@ import static net.splitcells.website.server.translation.to.html.PathBasedUriReso
 public class FileStructureTransformer {
 
     public static FileStructureTransformer fileStructureTransformer(Path fileStructureRoot
-            , Path xslLibs
+            , FileSystem xslLibs
             , String transformerXsl
             , SourceValidator sourceValidator
             , Function<String, Optional<String>> config) {
@@ -50,22 +48,20 @@ public class FileStructureTransformer {
     private final Path loggingProject = Paths.path(System.getProperty("user.home")
             + "/connections/tmp.storage/net.splitcells.dem");
     private final SourceValidator sourceValidator;
-    private final Path xslLibs;
     private final String transformerXsl;
     private final Function<String, Optional<String>> config;
-    private final FileSystem xslLibsFileSystem;
+    private final FileSystem xslLibs;
 
     private FileStructureTransformer(Path fileStructureRoot
-            , Path xslLibs
+            , FileSystem xslLibs
             , String transformerXsl
             , SourceValidator sourceValidator
             , Function<String, Optional<String>> config) {
         this.fileStructureRoot = fileStructureRoot;
         this.sourceValidator = sourceValidator;
-        this.xslLibs = xslLibs;
         this.transformerXsl = transformerXsl;
         this.config = config;
-        xslLibsFileSystem = fileSystemOnLocalHost(xslLibs);
+        this.xslLibs = xslLibs;
     }
 
     public String transform(List<String> path) {
@@ -95,8 +91,8 @@ public class FileStructureTransformer {
     private XslTransformer transformer() {
         try {
             return new XslTransformer
-                    (xslLibsFileSystem.inputStream(Paths.path(transformerXsl))
-                            , pathBasedUriResolver(xslLibsFileSystem
+                    (xslLibs.inputStream(Paths.path(transformerXsl))
+                            , pathBasedUriResolver(xslLibs
                             , fileSystemOnLocalHost(Path.of("./src/main/xml/"))
                             , config::apply));
         } catch (Exception e) {

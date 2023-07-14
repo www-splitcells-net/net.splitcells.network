@@ -25,6 +25,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.Dem.executeThread;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Files.readFileAsString;
 import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
@@ -58,7 +59,7 @@ public class ServerService extends ResourceOptionI<Service> {
             return projectsRenderer(publicProjectRepository, "public"
                     , projectRenderer(
                             "public", privateProjectRepository.resolve("net.splitcells.martins.avots.website/")
-                            , xslLib
+                            , fileSystemOnLocalHost(xslLib)
                             , privateProjectRepository
                                     .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                             , "/"
@@ -66,7 +67,7 @@ public class ServerService extends ResourceOptionI<Service> {
                             , config)
                     , list(projectRenderer("public"
                                     , privateProjectRepository.resolve("net.splitcells.martins.avots.website/")
-                                    , xslLib
+                                    , fileSystemOnLocalHost(xslLib)
                                     , privateProjectRepository
                                             .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                     , "/"
@@ -75,7 +76,7 @@ public class ServerService extends ResourceOptionI<Service> {
                             , projectRenderer("public"
                                     , privateProjectRepository.resolve(
                                             "/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/")
-                                    , xslLib
+                                    , fileSystemOnLocalHost(xslLib)
                                     , privateProjectRepository
                                             .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                                     , "/"
