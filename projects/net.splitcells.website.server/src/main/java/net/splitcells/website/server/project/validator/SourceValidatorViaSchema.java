@@ -50,8 +50,8 @@ public class SourceValidatorViaSchema implements SourceValidator {
     }
 
     @Override
-    public Optional<String> validate(Path validationSubject) {
-        Source xmlFile = new StreamSource(validationSubject.toFile());
+    public Optional<String> validate(String validationSubject) {
+        Source xmlFile = new StreamSource(validationSubject);
         // TODO schemaFactory.setProperty("http://saxon.sf.net/feature/xsd-version", "1.1");
         try {
             xmlValidator.validate(xmlFile);
