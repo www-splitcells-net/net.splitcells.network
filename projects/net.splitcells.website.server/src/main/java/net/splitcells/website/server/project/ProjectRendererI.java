@@ -103,24 +103,24 @@ public class ProjectRendererI implements ProjectRenderer {
     private final Config config;
     private Optional<FileStructureTransformer> transformer = Optional.empty();
 
-    protected ProjectRendererI(String renderer, Path projectSrcFolder, FileSystem xslLibs, Path resources, String resourceRootPath
+    protected ProjectRendererI(String renderer, FileSystem projectSrcFolder, FileSystem xslLibs, FileSystem resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
             , SourceValidator sourceValidator
-            , Path projectFolder
+            , FileSystem projectFolder
             , Config config) {
         if (resourceRootPath.isEmpty()) {
             throw executionException("resourceRootPath is not allowed to be empty. It has to at least be `/`.");
         }
         this.typedFolder = typedFolder;
         this.profile = renderer;
-        this.projectSrcFolder = fileSystemOnLocalHost(projectSrcFolder);
+        this.projectSrcFolder = projectSrcFolder;
         this.xslLibs = xslLibs;
-        this.resources = fileSystemOnLocalHost(resources);
+        this.resources = resources;
         this.resourceRootPath = resourceRootPath;
         this.flatRepository = flatRepository;
         this.sourceValidator = sourceValidator;
-        this.projectFolder = fileSystemOnLocalHost(projectFolder);
+        this.projectFolder = projectFolder;
         this.config = config;
         // TODO MOVE
         this.renderer.registerExtension(commonMarkReadmeRenderer())

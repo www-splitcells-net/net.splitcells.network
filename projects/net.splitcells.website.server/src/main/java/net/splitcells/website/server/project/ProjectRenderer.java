@@ -27,6 +27,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
@@ -45,11 +46,15 @@ public interface ProjectRenderer extends Renderer {
             , boolean flatRepository
             , SourceValidator sourceValidator
             , Config config) {
-        return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
+        return new ProjectRendererI(renderer
+                , fileSystemOnLocalHost(projectFolder.resolve("src/main"))
+                , xslLibs
+                , fileSystemOnLocalHost(resources)
+                , resourceRootPath
                 , true
                 , false
                 , sourceValidator
-                , projectFolder
+                , fileSystemOnLocalHost(projectFolder)
                 , config);
     }
 
@@ -57,11 +62,15 @@ public interface ProjectRenderer extends Renderer {
             , String resourceRootPath
             , SourceValidator sourceValidator
             , Config config) {
-        return new ProjectRendererI(renderer, projectFolder.resolve("src/main"), xslLibs, resources, resourceRootPath
+        return new ProjectRendererI(renderer
+                , fileSystemOnLocalHost(projectFolder.resolve("src/main"))
+                , xslLibs
+                , fileSystemOnLocalHost(resources)
+                , resourceRootPath
                 , true
                 , false
                 , sourceValidator
-                , projectFolder
+                , fileSystemOnLocalHost(projectFolder)
                 , config);
     }
 
