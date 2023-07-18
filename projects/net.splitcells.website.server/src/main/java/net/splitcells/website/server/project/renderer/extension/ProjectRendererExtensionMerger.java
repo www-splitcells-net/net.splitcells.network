@@ -32,7 +32,6 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>

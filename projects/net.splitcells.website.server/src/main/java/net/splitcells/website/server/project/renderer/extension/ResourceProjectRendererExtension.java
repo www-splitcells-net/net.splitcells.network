@@ -18,7 +18,6 @@ package net.splitcells.website.server.project.renderer.extension;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.resource.ContentType;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -27,9 +26,6 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.resource.Files.isDirectory;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Files.readFileAsBytes;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 /**
@@ -48,11 +44,8 @@ public class ResourceProjectRendererExtension implements ProjectRendererExtensio
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
-        final var requestedFile = projectRenderer
-                .projectFolder()
-                .resolve("src/main/resources/html/")
-                .resolve(path);
-        if (is_file(requestedFile)) {
+        final var requestedFile = Path.of("src/main/resources/html/").resolve(path);
+        if (projectRenderer.projectFileSystem().isFile(requestedFile)) {
             final String format;
             if (path.endsWith(".svg")) {
                 format = "image/svg+xml";
@@ -65,7 +58,8 @@ public class ResourceProjectRendererExtension implements ProjectRendererExtensio
             } else {
                 format = HTML_TEXT.codeName();
             }
-            return Optional.of(renderingResult(readFileAsBytes(requestedFile), format));
+            return Optional.of(renderingResult(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
+                    , format));
         }
         return Optional.empty();
     }
@@ -73,13 +67,11 @@ public class ResourceProjectRendererExtension implements ProjectRendererExtensio
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer
-                .projectFolder()
-                .resolve("src/main/resources/html/");
-        if (isDirectory(sourceFolder)) {
-            Files.walk_recursively(sourceFolder)
-                    .filter(Files::is_file)
-                    .map(file -> sourceFolder.relativize(file.getParent().resolve(file.getFileName().toString())))
+        final var htmlPath = Path.of("src/main/resources/html/");
+        if (projectRenderer.projectFileSystem().isDirectory(htmlPath)) {
+            projectRenderer.projectFileSystem().walkRecursively(htmlPath)
+                    .filter(p -> projectRenderer.projectFileSystem().isFile(p))
+                    .map(htmlPath::relativize)
                     .forEach(projectPaths::addAll);
         }
         return projectPaths;

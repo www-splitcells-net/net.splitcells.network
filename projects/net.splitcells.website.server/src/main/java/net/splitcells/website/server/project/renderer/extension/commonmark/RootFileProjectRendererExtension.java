@@ -17,8 +17,6 @@ package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.Files;
-import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -30,8 +28,6 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
@@ -52,10 +48,10 @@ public class RootFileProjectRendererExtension implements ProjectRendererExtensio
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
-        final var readmePath = projectRenderer.projectFolder().resolve(rootFile + ".md");
+        final var readmePath = Path.of(rootFile + ".md");
         if (path.endsWith(rootFile + ".html")) {
-            if (Files.is_file(readmePath)) {
-                final var pathContent = readString(readmePath);
+            if (projectRenderer.projectFileSystem().isFile(readmePath)) {
+                final var pathContent = projectRenderer.projectFileSystem().readString(readmePath);
                 return Optional.of(
                         renderingResult(renderer.render(pathContent, projectRenderer, path, projectsRenderer.config()
                                         , projectsRenderer)
@@ -67,7 +63,7 @@ public class RootFileProjectRendererExtension implements ProjectRendererExtensio
 
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        if (is_file(projectRenderer.projectFolder().resolve(rootFile + ".md"))) {
+        if (projectRenderer.projectFileSystem().isFile(Path.of(rootFile + ".md"))) {
             LayoutUtils.extendPerspectiveWithPath(layout
                     , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve(rootFile + ".html"));
         }
@@ -77,7 +73,7 @@ public class RootFileProjectRendererExtension implements ProjectRendererExtensio
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> projectPaths = setOfUniques();
-        if (is_file(projectRenderer.projectFolder().resolve(rootFile + ".md"))) {
+        if (projectRenderer.projectFileSystem().isFile(Path.of(rootFile + ".md"))) {
             if (projectRenderer.resourceRootPath().length() == 0) {
                 projectPaths.add(Path.of(rootFile + ".html"));
             } else {

@@ -19,8 +19,6 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.Paths;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -29,8 +27,6 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.resource.Files.isDirectory;
-import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class CsvChartProjectRendererExtension implements ProjectRendererExtension {
@@ -45,16 +41,14 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (path.endsWith("csv.html")) {
             final var csvPath = path.substring(0, path.lastIndexOf(".csv.html")) + ".csv";
-            final var requestedFile = projectRenderer
-                    .projectFolder()
-                    .resolve("src/main/csv/")
-                    .resolve(csvPath);
-            if (is_file(requestedFile)) {
+            final var requestedFile = Path.of("src/main/csv/").resolve(csvPath);
+
+            if (projectRenderer.projectFileSystem().isFile(requestedFile)) {
                 final var content = Xml.rElement(NameSpaces.SEW, "csv-chart-lines");
                 final var contentsPath = Xml.elementWithChildren(NameSpaces.SEW, "path");
                 contentsPath.appendChild(Xml.textNode("/" + csvPath));
                 content.appendChild(contentsPath);
-                content.appendChild(Xml.textNode(Paths.readString(requestedFile)));
+                content.appendChild(Xml.textNode(projectRenderer.projectFileSystem().readString(requestedFile)));
 
                 final var page = Xml.rElement(NameSpaces.SEW, "article");
                 final var metaElement = Xml.rElement(NameSpaces.SEW, "meta");
@@ -73,12 +67,10 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer
-                .projectFolder()
-                .resolve("src/main/csv/");
-        if (isDirectory(sourceFolder)) {
-            Files.walk_recursively(sourceFolder)
-                    .filter(Files::is_file)
+        final var sourceFolder = Path.of("src/main/csv/");
+        if (projectRenderer.projectFileSystem().isDirectory(sourceFolder)) {
+            projectRenderer.projectFileSystem().walkRecursively(sourceFolder)
+                    .filter(projectRenderer.projectFileSystem()::isFile)
                     .map(file -> sourceFolder.relativize(
                             file.getParent()
                                     .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix

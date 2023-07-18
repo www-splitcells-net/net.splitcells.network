@@ -17,6 +17,7 @@ package net.splitcells.website;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -196,7 +197,7 @@ public class Projects {
         );
         if (Dem.configValue(RenderUserStateRepo.class)) {
             projectRenderers.withAppended(projectRenderer(profile
-                    , net.splitcells.dem.resource.Paths.usersStateFiles()
+                    , Files.usersStateFiles()
                     , fileSystemOnLocalHost(xslLib)
                     , integratedProjectRepositories.resolve("net.splitcells.martins.avots.website/src/main/resources/html")
                     , "/"

@@ -15,11 +15,19 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.stream.IntStream;
 
+import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -54,6 +62,24 @@ public class FileSystemsTest {
             } catch (IOException e) {
                 throw executionException(e);
             }
+        });
+    }
+
+    @IntegrationTest
+    public void testWalkRecursively() {
+        final var testData = list("78t789tb912dfrf", "123124");
+        final var testPath = list(Path.of("root/test-folder/test-file.txt")
+                , Path.of("root/another-folder/test-file.txt"));
+        Files.processInTemporaryFolder(path -> {
+            final var testSubject = fileSystemOnLocalHost(path);
+            range(0, testData.size()).forEach(i -> testSubject.writeToFile(testPath.get(i), testData.get(i)));
+            testSubject.walkRecursively(Path.of("root/")).collect(toSetOfUniques())
+                    .requireContentsOf(setOfUniques(
+                            Path.of("root")
+                            , Path.of("root/test-folder")
+                            , Path.of("root/test-folder/test-file.txt")
+                            , Path.of("root/another-folder")
+                            , Path.of("root/another-folder/test-file.txt")));
         });
     }
 }

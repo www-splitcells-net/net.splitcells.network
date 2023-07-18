@@ -17,32 +17,25 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.utils.StreamUtils;
-import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
-import org.w3c.dom.Document;
 
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.environment.resource.Console.CONSOLE_FILE_NAME;
 import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.lang.perspective.Den.subtree;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Paths.readString;
+import static net.splitcells.dem.resource.Paths.removeFileSuffix;
 import static net.splitcells.dem.utils.StreamUtils.emptyStream;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
@@ -70,7 +63,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
         final var xmlPath = xmlPath(path, projectsRenderer, projectRenderer);
         if (xmlPath.isPresent()) {
             final var metaData = pageMetaData(path);
-            final var document = Xml.parse(readString(xmlPath.get()));
+            final var document = Xml.parse(projectRenderer.projectFileSystem().readString(xmlPath.get()));
             if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
                 final var metaElement = optionalDirectChildElementsByName
                         (document.getDocumentElement(), "meta", NameSpaces.SEW);
@@ -89,11 +82,9 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
 
     private Optional<Path> xmlPath(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
-            final var xmlFile = projectRenderer
-                    .projectFolder()
-                    .resolve("src/main/xml")
+            final var xmlFile = Path.of("src/main/xml")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
-            if (is_file(xmlFile)) {
+            if (projectRenderer.projectFileSystem().isFile(xmlFile)) {
                 return Optional.of(xmlFile);
             }
         }
@@ -112,18 +103,17 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                 final var layoutConfig = layoutConfig(path)
                         .withLocalPathContext(projectsRenderer.config().layoutPerspective()
                                 .map(l -> subtree(l, pathFolder)));
-                return renderFile(path, readString(xmlPath.get()), projectRenderer, projectsRenderer, layoutConfig);
+                return renderFile(path, projectRenderer.projectFileSystem().readString(xmlPath.get())
+                        , projectRenderer, projectsRenderer, layoutConfig);
             } else {
-                final var sumXmlFile = projectRenderer
-                        .projectFolder()
-                        .resolve("src/main/sum.xml")
+                final var sumXmlFile = Path.of("src/main/sum.xml")
                         .resolve(path.substring(0, path.lastIndexOf(".html")) + ".xml");
-                if (is_file(sumXmlFile)) {
+                if (projectRenderer.projectFileSystem().isFile(sumXmlFile)) {
                     final var layoutConfig = layoutConfig(path)
                             .withLocalPathContext(projectsRenderer.config().layoutPerspective()
                                     .map(l -> subtree(l, pathFolder)));
                     return renderFile(path, "<start xmlns=\"http://splitcells.net/den.xsd\">"
-                                    + readString(sumXmlFile)
+                                    + projectRenderer.projectFileSystem().readString(sumXmlFile)
                                     + "</start>"
                             , projectRenderer
                             , projectsRenderer
@@ -192,15 +182,13 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer.projectFolder().resolve("src/main").resolve("xml");
+        final var sourceFolder = Path.of("src/main/xml");
         // TODO Move this code block into a function, in order to avoid
-        if (Files.isDirectory(sourceFolder)) {
-            Files.walk_recursively(sourceFolder)
-                    .filter(Files::fileExists)
-                    .map(file -> sourceFolder.relativize(
-                            file.getParent()
-                                    .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
-                                            (file.getFileName().toString()) + ".html")))
+        if (projectRenderer.projectFileSystem().isDirectory(sourceFolder)) {
+            projectRenderer.projectFileSystem().walkRecursively(sourceFolder)
+                    .filter(p -> projectRenderer.projectFileSystem().isFile(p))
+                    .map(file -> sourceFolder.relativize(file.getParent()
+                            .resolve(removeFileSuffix(file.getFileName().toString()) + ".html")))
                     .forEach(projectPaths::addAll);
         }
         projectSumXlPaths(projectRenderer).forEach(projectPaths::addAll);
@@ -208,14 +196,12 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
     }
 
     private Stream<Path> projectSumXlPaths(ProjectRenderer projectRenderer) {
-        final var sumXmlFolder = projectRenderer.projectFolder().resolve("src/main").resolve("sum.xml");
-        if (Files.isDirectory(sumXmlFolder)) {
-            return Files.walk_recursively(sumXmlFolder)
-                    .filter(Files::fileExists)
-                    .map(file -> sumXmlFolder.relativize(
-                            file.getParent()
-                                    .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
-                                            (file.getFileName().toString()) + ".html")));
+        final var sumXmlFolder = Path.of("src/main/sum.xml");
+        if (projectRenderer.projectFileSystem().isDirectory(sumXmlFolder)) {
+            return projectRenderer.projectFileSystem().walkRecursively(sumXmlFolder)
+                    .filter(projectRenderer.projectFileSystem()::isFile)
+                    .map(file -> sumXmlFolder.relativize(file.getParent()
+                            .resolve(removeFileSuffix(file.getFileName().toString()) + ".html")));
         }
         return emptyStream();
     }

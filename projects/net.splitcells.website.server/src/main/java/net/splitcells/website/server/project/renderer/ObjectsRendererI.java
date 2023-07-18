@@ -18,6 +18,7 @@ package net.splitcells.website.server.project.renderer;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
@@ -30,6 +31,7 @@ import java.util.Optional;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
@@ -46,8 +48,8 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Path projectFolder() {
-        return Path.of("/invalid/");
+    public FileSystem projectFileSystem() {
+        return fileSystemOnLocalHost(Path.of("/invalid/"));
     }
 
     public synchronized ObjectsRendererI withObject(DiscoverableRenderer object) {

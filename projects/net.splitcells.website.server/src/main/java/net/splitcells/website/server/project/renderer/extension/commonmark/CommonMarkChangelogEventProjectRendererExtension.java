@@ -20,6 +20,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.ContentType;
+import net.splitcells.website.Projects;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -32,8 +33,6 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
@@ -44,15 +43,19 @@ public class CommonMarkChangelogEventProjectRendererExtension implements Project
         return new CommonMarkChangelogEventProjectRendererExtension();
     }
 
+    private static final Path CHANGELOG = Path.of("CHANGELOG.md");
+
     private final CommonMarkIntegration renderer = commonMarkIntegration();
+
 
     private CommonMarkChangelogEventProjectRendererExtension() {
     }
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
-        if (path.endsWith("CHANGELOG.events.html") && is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
-            final var pathContent = readString(projectRenderer.projectFolder().resolve("CHANGELOG.md"));
+        if (path.endsWith("CHANGELOG.events.html")
+                && projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
+            final var pathContent = projectRenderer.projectFileSystem().readString(CHANGELOG);
             final var events = renderer.events(pathContent, projectRenderer, path, config);
             try {
                 return Optional.of(
@@ -66,8 +69,9 @@ public class CommonMarkChangelogEventProjectRendererExtension implements Project
     }
 
     public List<Event> extractEvent(String path, ProjectRenderer projectRenderer, Config config) {
-        if (path.endsWith("CHANGELOG.events.html") && is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
-            final var pathContent = readString(projectRenderer.projectFolder().resolve("CHANGELOG.md"));
+        if (path.endsWith("CHANGELOG.events.html")
+                && projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
+            final var pathContent = projectRenderer.projectFileSystem().readString(CHANGELOG);
             return renderer.events(pathContent, projectRenderer, path, config);
         }
         return list();
@@ -86,7 +90,7 @@ public class CommonMarkChangelogEventProjectRendererExtension implements Project
 
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        if (is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
+        if (projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
             LayoutUtils.extendPerspectiveWithPath(layout
                     , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("CHANGELOG.events.html"));
         }
@@ -96,8 +100,9 @@ public class CommonMarkChangelogEventProjectRendererExtension implements Project
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> projectPaths = setOfUniques();
-        if (is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
-            projectPaths.add(Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("CHANGELOG.events.html"));
+        if (projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
+            projectPaths.add(Path.of(projectRenderer.resourceRootPath()
+                    .substring(1)).resolve("CHANGELOG.events.html"));
         }
         return projectPaths;
     }

@@ -19,7 +19,6 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -49,19 +48,15 @@ public class TextProjectRendererExtension implements ProjectRendererExtension {
         Optional<Path> fileToRender = Optional.empty();
         if (path.endsWith(".html")) {
             // TODO This should return the raw text file.
-            final var textFile = projectRenderer
-                    .projectFolder()
-                    .resolve("src/main/txt")
+            final var textFile = Path.of("src/main/txt")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".txt");
-            if (Files.is_file(textFile)) {
+            if (projectRenderer.projectFileSystem().isFile(textFile)) {
                 fileToRender = Optional.of(textFile);
             }
         } else {
-            final var textFile = projectRenderer
-                    .projectFolder()
-                    .resolve("src/main/txt")
+            final var textFile = Path.of("src/main/txt")
                     .resolve(path);
-            if (Files.is_file(textFile)) {
+            if (projectRenderer.projectFileSystem().isFile(textFile)) {
                 fileToRender = Optional.of(textFile);
             }
         }
@@ -72,7 +67,7 @@ public class TextProjectRendererExtension implements ProjectRendererExtension {
             pathElement.appendChild(Xml.textNode(path));
             metaElement.appendChild(pathElement);
             content.appendChild(metaElement);
-            content.appendChild(Xml.textNode(Paths.readString(fileToRender.get())));
+            content.appendChild(Xml.textNode(projectRenderer.projectFileSystem().readString(fileToRender.get())));
             return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(content), config).orElseThrow()
                     , HTML_TEXT.codeName()));
         }
@@ -82,19 +77,18 @@ public class TextProjectRendererExtension implements ProjectRendererExtension {
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer.projectFolder().resolve("src/main").resolve("txt");
-        if (Files.isDirectory(sourceFolder)) {
-                Files.walk_recursively(sourceFolder)
-                        .filter(Files::is_file)
-                        .map(file -> sourceFolder.relativize(
-                                file.getParent()
-                                        .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
-                                                (file.getFileName().toString()) + ".html")))
-                        .forEach(projectPaths::addAll);
-                Files.walk_recursively(sourceFolder)
-                        .filter(Files::is_file)
-                        .map(file -> sourceFolder.relativize(file.getParent().resolve(file.getFileName().toString())))
-                        .forEach(projectPaths::addAll);
+        final var sourceFolder = Path.of("src/main/txt");
+        if (projectRenderer.projectFileSystem().isDirectory(sourceFolder)) {
+            projectRenderer.projectFileSystem().walkRecursively(sourceFolder)
+                    .filter(projectRenderer.projectFileSystem()::isFile)
+                    .map(file -> sourceFolder.relativize(file.getParent()
+                            .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
+                                    (file.getFileName().toString()) + ".html")))
+                    .forEach(projectPaths::addAll);
+            projectRenderer.projectFileSystem().walkRecursively(sourceFolder)
+                    .filter(projectRenderer.projectFileSystem()::isFile)
+                    .map(file -> sourceFolder.relativize(file.getParent().resolve(file.getFileName().toString())))
+                    .forEach(projectPaths::addAll);
         }
         return projectPaths;
     }

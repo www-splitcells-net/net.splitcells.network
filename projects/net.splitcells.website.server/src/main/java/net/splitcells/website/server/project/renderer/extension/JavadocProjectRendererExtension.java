@@ -17,7 +17,6 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -26,14 +25,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.resource.Files.isDirectory;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Files.readFileAsBytes;
 import static net.splitcells.website.Formats.CSS;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 /**
- * Renders the Javadoc of projects at `{@link ProjectRenderer#projectFolder()}/javadoc/*`,
+ * Renders the Javadoc of projects at `{@link ProjectRenderer#projectFileSystem()}/javadoc/*`,
  * if a Javadoc build is located at `{@link ProjectRenderer#resourceRootPath2()}/target/site/apidocs`.
  */
 public class JavadocProjectRendererExtension implements ProjectRendererExtension {
@@ -51,18 +47,20 @@ public class JavadocProjectRendererExtension implements ProjectRendererExtension
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (("/" + path).startsWith(projectRenderer.resourceRootPath2().resolve(RENDERED_JAVADOC_FOLDER).toString())) {
-            final var requestedFile = projectRenderer
-                    .projectFolder()
-                    .resolve(SOURCE_JAVADOC_FOLDER)
-                    .resolve(projectRenderer.resourceRootPath2().resolve(RENDERED_JAVADOC_FOLDER).relativize(Path.of("/" + path + "/")));
-            if (is_file(requestedFile)) {
+            final var requestedFile = Path.of(SOURCE_JAVADOC_FOLDER)
+                    .resolve(projectRenderer
+                            .resourceRootPath2()
+                            .resolve(RENDERED_JAVADOC_FOLDER)
+                            .relativize(Path.of("/" + path + "/")));
+            if (projectRenderer.projectFileSystem().isFile(requestedFile)) {
                 final String format;
                 if (path.endsWith(".css")) {
                     format = CSS.toString();
                 } else {
                     format = HTML_TEXT.codeName();
                 }
-                return Optional.of(renderingResult(readFileAsBytes(requestedFile), format));
+                return Optional.of(renderingResult(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
+                        , format));
             }
         }
         return Optional.empty();
@@ -71,13 +69,11 @@ public class JavadocProjectRendererExtension implements ProjectRendererExtension
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer
-                .projectFolder()
-                .resolve(SOURCE_JAVADOC_FOLDER);
+        final var sourceFolder = Path.of(SOURCE_JAVADOC_FOLDER);
         // Last substring map converts the absolute path to relative one.
-        if (isDirectory(sourceFolder)) {
-            Files.walk_recursively(sourceFolder)
-                    .filter(Files::is_file)
+        if (projectRenderer.projectFileSystem().isDirectory(sourceFolder)) {
+            projectRenderer.projectFileSystem().walkRecursively(sourceFolder)
+                    .filter(projectRenderer.projectFileSystem()::isFile)
                     .map(file -> sourceFolder.relativize(file.getParent().resolve(file.getFileName().toString())))
                     .map(path -> projectRenderer.resourceRootPath2().resolve(RENDERED_JAVADOC_FOLDER).resolve(path))
                     .map(path -> Path.of(path.toString().substring(1)))
@@ -89,10 +85,8 @@ public class JavadocProjectRendererExtension implements ProjectRendererExtension
     @Override
     public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer
-                .projectFolder()
-                .resolve(SOURCE_JAVADOC_FOLDER);
-        if (isDirectory(sourceFolder)) {
+        final var sourceFolder = Path.of(SOURCE_JAVADOC_FOLDER);
+        if (projectRenderer.projectFileSystem().isDirectory(sourceFolder)) {
             projectPaths.add(
                     Path.of(projectRenderer
                             .resourceRootPath2()

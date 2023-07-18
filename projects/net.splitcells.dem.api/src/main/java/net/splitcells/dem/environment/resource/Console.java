@@ -20,9 +20,8 @@ import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.resource.Paths;
+import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.Sender;
-import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 
 import java.io.FileNotFoundException;
@@ -56,7 +55,7 @@ public final class Console extends ResourceOptionI<Sender<String>> {
 
             if (environment().config().configValue(IsEchoToFile.class)) {
                 var consolePath
-                        = Paths.usersStateFiles().resolve("src/main/sum.xml")
+                        = Files.usersStateFiles().resolve("src/main/sum.xml")
                         .resolve(Dem.configValue(ProgramName.class).replace('.', '/'))
                         .resolve("console")
                         .resolve(

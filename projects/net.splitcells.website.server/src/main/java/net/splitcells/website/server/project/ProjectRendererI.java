@@ -22,6 +22,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystem;
+import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.renderer.PageMetaData;
@@ -41,6 +42,7 @@ import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.UTF_8;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Files.fileExists;
 import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.resource.Files.is_file;
@@ -83,11 +85,11 @@ public class ProjectRendererI implements ProjectRenderer {
     private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
     @Override
-    public Path projectFolder() {
+    public FileSystem projectFileSystem() {
         return projectFolder;
     }
 
-    private final Path projectFolder;
+    private final FileSystem projectFolder;
     private final Path projectSrcFolder;
     private final FileSystem xslLibs;
     private final Path resources;
@@ -121,7 +123,7 @@ public class ProjectRendererI implements ProjectRenderer {
         this.resourceRootPath = resourceRootPath;
         this.flatRepository = flatRepository;
         this.sourceValidator = sourceValidator;
-        this.projectFolder = projectFolder;
+        this.projectFolder = fileSystemOnLocalHost(projectFolder);
         this.config = config;
         // TODO MOVE
         this.renderer.registerExtension(commonMarkReadmeRenderer())

@@ -7,6 +7,7 @@ package net.splitcells.website.server.project.renderer;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
@@ -18,6 +19,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
 public class ObjectsMediaRendererI implements ProjectRenderer {
@@ -34,8 +36,8 @@ public class ObjectsMediaRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Path projectFolder() {
-        return Path.of("/invalid/");
+    public FileSystem projectFileSystem() {
+        return fileSystemOnLocalHost(Path.of("/invalid/"));
     }
 
     public ObjectsMediaRendererI withMediaObject(DiscoverableMediaRenderer object) {

@@ -20,9 +20,12 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 public interface FileSystem {
     InputStream inputStream(Path path);
+
+    String readString(Path path);
 
     @ReturnsThis
     FileSystem writeToFile(Path path, byte[] content);
@@ -31,4 +34,14 @@ public interface FileSystem {
     default FileSystem writeToFile(Path path, String content) {
         return writeToFile(path, content.getBytes(StandardCharsets.UTF_8));
     }
+
+    boolean isFile(Path path);
+
+    boolean isDirectory(Path path);
+
+    Stream<Path> walkRecursively(Path path);
+
+    byte[] readFileAsBytes(Path path);
+
+    FileSystem subFileSystem(Path path);
 }

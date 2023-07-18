@@ -17,7 +17,6 @@ package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -29,12 +28,12 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.resource.Paths.readString;
-import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
 public class CommonMarkChangelogProjectRendererExtension implements ProjectRendererExtension {
+
+    private static final Path CHANGELOG = Path.of("CHANGELOG.md");
 
     public static CommonMarkChangelogProjectRendererExtension commonMarkChangelogRenderer() {
         return new CommonMarkChangelogProjectRendererExtension();
@@ -47,8 +46,8 @@ public class CommonMarkChangelogProjectRendererExtension implements ProjectRende
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
-        if (path.endsWith("CHANGELOG.html") && is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
-            final var pathContent = readString(projectRenderer.projectFolder().resolve("CHANGELOG.md"));
+        if (path.endsWith("CHANGELOG.html") && projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
+            final var pathContent = projectRenderer.projectFileSystem().readString(CHANGELOG);
             return Optional.of(
                     renderingResult(renderer.render(pathContent, projectRenderer, path, projectsRenderer.config(), projectsRenderer)
                             , HTML_TEXT.codeName()));
@@ -58,9 +57,10 @@ public class CommonMarkChangelogProjectRendererExtension implements ProjectRende
 
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        if (is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
+        if (projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
             LayoutUtils.extendPerspectiveWithPath(layout
-                    , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("CHANGELOG.html"));
+                    , Path.of(projectRenderer.resourceRootPath().substring(1))
+                            .resolve("CHANGELOG.html"));
         }
         return layout;
     }
@@ -68,8 +68,9 @@ public class CommonMarkChangelogProjectRendererExtension implements ProjectRende
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final Set<Path> projectPaths = setOfUniques();
-        if (is_file(projectRenderer.projectFolder().resolve("CHANGELOG.md"))) {
-            projectPaths.add(Path.of(projectRenderer.resourceRootPath().substring(1)).resolve("CHANGELOG.html"));
+        if (projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
+            projectPaths.add(Path.of(projectRenderer.resourceRootPath().substring(1))
+                    .resolve("CHANGELOG.html"));
         }
         return projectPaths;
     }

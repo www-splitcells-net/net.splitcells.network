@@ -15,7 +15,6 @@
  */
 package net.splitcells.website.server.project;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.log.LogLevel;
@@ -29,9 +28,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
-import static net.splitcells.dem.resource.Paths.generateFolderPath;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
-import static net.splitcells.dem.utils.CommonFunctions.appendToFile;
 import static net.splitcells.website.server.translation.to.html.PathBasedUriResolver.pathBasedUriResolver;
 
 public class FileStructureTransformer {

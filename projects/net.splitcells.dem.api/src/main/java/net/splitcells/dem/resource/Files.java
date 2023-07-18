@@ -16,6 +16,7 @@
 package net.splitcells.dem.resource;
 
 import net.bytebuddy.implementation.bytecode.Throw;
+import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;
@@ -27,7 +28,6 @@ import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -198,5 +198,44 @@ public interface Files {
     @Deprecated
     static boolean fileExists(Path path) {
         return java.nio.file.Files.isRegularFile(path);
+    }
+
+    static String readString(Path path) {
+        try {
+            return java.nio.file.Files.readString(path);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not read file: " + path, e);
+        }
+    }
+
+    static void copyFileFrom(Path source, Path target) {
+        try {
+            com.google.common.io.Files.copy(source.toFile(), target.toFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static void generateFolderPath(Path targetFolderDescription) {
+        try {
+            createDirectories(targetFolderDescription);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * <p>Folder containing the user's temporary (`~/.local/state/<ProgramName>`) files for this program based on {@link ProgramName}.
+     * This is based on the <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG Base Directory Specification</a>.
+     * The format there should abide by the <a href="https://splitcells.net/net/splitcells/network/guidelines/filesystem.html">Software Project File System Standards</a>.
+     * </p>
+     * <p>By execution this method the corresponding folders are created, if these are not already present.</p>
+     *
+     * @return Returns the user's state files.
+     */
+    static Path usersStateFiles() {
+        final var usersStateFiles = Paths.userHome().resolve(".local/state/net.splitcells.dem");
+        generateFolderPath(usersStateFiles);
+        return usersStateFiles;
     }
 }

@@ -15,25 +15,10 @@
  */
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
-import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.Files;
-import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.LayoutUtils;
-import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtension;
-import net.splitcells.website.server.project.RenderingResult;
 
-import java.nio.file.Path;
-import java.util.Optional;
-
-import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.resource.Paths.readString;
-import static net.splitcells.dem.resource.Files.is_file;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
-import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.RootFileProjectRendererExtension.rootFileProjectRendererExtension;
 
 public class CommonMarkReadmeProjectRendererExtension {

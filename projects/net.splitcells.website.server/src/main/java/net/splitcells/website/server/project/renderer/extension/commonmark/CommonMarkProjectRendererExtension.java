@@ -17,8 +17,6 @@ package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.resource.Files;
-import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtension;
@@ -30,8 +28,6 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Paths.readString;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class CommonMarkProjectRendererExtension implements ProjectRendererExtension {
@@ -48,10 +44,10 @@ public class CommonMarkProjectRendererExtension implements ProjectRendererExtens
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
-            final var commonMarkFile = projectRenderer.projectFolder().resolve("src/main").resolve("md")
+            final var commonMarkFile = Path.of("src/main/md")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".md");
-            if (is_file(commonMarkFile)) {
-                final var pathContent = readString(commonMarkFile);
+            if (projectRenderer.projectFileSystem().isFile(commonMarkFile)) {
+                final var pathContent = projectRenderer.projectFileSystem().readString(commonMarkFile);
                 return Optional.of(renderingResult(renderer.render(pathContent, projectRenderer, path, projectsRenderer.config(), projectsRenderer)
                         , HTML_TEXT.codeName()));
             }
@@ -62,10 +58,10 @@ public class CommonMarkProjectRendererExtension implements ProjectRendererExtens
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer.projectFolder().resolve("src/main").resolve("md");
-        if (Files.isDirectory(sourceFolder)) {
-            Files.walk_recursively(sourceFolder)
-                    .filter(Files::is_file)
+        final var sourceFolder = Path.of("src/main/md");
+        if (projectRenderer.projectFileSystem().isDirectory(sourceFolder)) {
+            projectRenderer.projectFileSystem().walkRecursively(sourceFolder)
+                    .filter(projectRenderer.projectFileSystem()::isFile)
                     .map(file -> sourceFolder.relativize(
                             file.getParent()
                                     .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix

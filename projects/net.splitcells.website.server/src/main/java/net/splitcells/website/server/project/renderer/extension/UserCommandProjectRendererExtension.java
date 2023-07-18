@@ -18,7 +18,8 @@ package net.splitcells.website.server.project.renderer.extension;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.resource.FileSystem;
+import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutRenderer;
 import net.splitcells.website.server.project.LayoutUtils;
@@ -32,8 +33,6 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.Paths.userHome;
-import static net.splitcells.dem.resource.Files.isDirectory;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
@@ -47,7 +46,8 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
     }
 
     private static final String RENDERING_PATH = "net/splitcells/os/state/interface/installed/index.html";
-    private static final Path BIN_FOLDER = userHome().resolve("bin/net.splitcells.os.state.interface.commands.managed/");
+    private static final Path BIN_FOLDER_PATH = Path.of("bin/net.splitcells.os.state.interface.commands.managed/");
+    private static final FileSystem BIN_FOLDER = FileSystems.userHome();
 
     private UserCommandProjectRendererExtension() {
 
@@ -60,16 +60,15 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
      */
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
-        if (RENDERING_PATH.equals(path) && isDirectory(BIN_FOLDER)) {
+        if (RENDERING_PATH.equals(path) && BIN_FOLDER.isDirectory(BIN_FOLDER_PATH)) {
             final var layout = perspective(NameSpaces.VAL, NameSpaces.DEN);
             try {
 
-                Files.walk_recursively(BIN_FOLDER).forEach(command -> {
+                BIN_FOLDER.walkRecursively(BIN_FOLDER_PATH).forEach(command -> {
                             final var commandName = listWithValuesOf(command.getFileName().toString().split("\\."));
                             // Filters commands installed via 'command.managed.install'.
                             if (!commandName.lastValue().get().matches("[0-9]+")) {
-                                LayoutRenderer.extend(layout
-                                        , commandName, NameSpaces.DEN);
+                                LayoutRenderer.extend(layout, commandName, NameSpaces.DEN);
                             }
                         }
                 );
@@ -84,9 +83,8 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
 
     @Override
     public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
-        if (isDirectory(BIN_FOLDER)) {
-            LayoutUtils.extendPerspectiveWithPath(layout
-                    , Path.of(RENDERING_PATH));
+        if (BIN_FOLDER.isDirectory(BIN_FOLDER_PATH)) {
+            LayoutUtils.extendPerspectiveWithPath(layout, Path.of(RENDERING_PATH));
         }
         return layout;
     }

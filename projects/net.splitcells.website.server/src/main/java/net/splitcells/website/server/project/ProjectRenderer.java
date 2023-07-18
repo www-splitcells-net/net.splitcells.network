@@ -65,7 +65,7 @@ public interface ProjectRenderer extends Renderer {
                 , config);
     }
 
-    Path projectFolder();
+    FileSystem projectFileSystem();
 
     default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer) {
         return Optional.empty();

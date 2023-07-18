@@ -17,7 +17,6 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -25,9 +24,6 @@ import net.splitcells.website.server.project.RenderingResult;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static net.splitcells.dem.resource.Files.isDirectory;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Files.readFileAsBytes;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class JavascriptProjectRendererExtension implements ProjectRendererExtension {
@@ -41,13 +37,12 @@ public class JavascriptProjectRendererExtension implements ProjectRendererExtens
 
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
-        final var requestedFile = projectRenderer
-                .projectFolder()
-                .resolve("src/main/js/")
+        final var requestedFile = Path.of("src/main/js/")
                 .resolve(path);
-        if (is_file(requestedFile)) {
+        if (projectRenderer.projectFileSystem().isFile(requestedFile)) {
             try {
-                return Optional.of(renderingResult(readFileAsBytes(requestedFile), "text/javascript"));
+                return Optional.of(renderingResult(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
+                        , "text/javascript"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -58,13 +53,11 @@ public class JavascriptProjectRendererExtension implements ProjectRendererExtens
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer
-                .projectFolder()
-                .resolve("src/main/js/");
-        if (isDirectory(sourceFolder)) {
+        final var sourceFolder = Path.of("src/main/js/");
+        if (projectRenderer.projectFileSystem().isDirectory(sourceFolder)) {
             try {
-                Files.walk_recursively(sourceFolder)
-                        .filter(Files::fileExists)
+                projectRenderer.projectFileSystem().walkRecursively(sourceFolder)
+                        .filter(projectRenderer.projectFileSystem()::isFile)
                         .map(file -> sourceFolder.relativize(file.getParent().resolve(file.getFileName().toString())))
                         .forEach(projectPaths::addAll);
             } catch (Exception e) {

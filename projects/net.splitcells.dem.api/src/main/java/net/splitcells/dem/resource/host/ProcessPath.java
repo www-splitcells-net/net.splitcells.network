@@ -16,13 +16,10 @@
 package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.resource.Files;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static net.splitcells.dem.Dem.environment;
 
 /**
  * <p>This path points to the folder.
@@ -30,6 +27,6 @@ import static net.splitcells.dem.Dem.environment;
  */
 public class ProcessPath extends OptionI<Path> {
     public ProcessPath() {
-        super(() -> net.splitcells.dem.resource.Paths.usersStateFiles());
+        super(() -> Files.usersStateFiles());
     }
 }

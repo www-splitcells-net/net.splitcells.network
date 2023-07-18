@@ -17,7 +17,6 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.RenderingResult;
@@ -26,9 +25,6 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.resource.Files.isDirectory;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Files.readFileAsBytes;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public class JacocoReportProjectRendererExtension implements ProjectRendererExtension {
@@ -43,13 +39,14 @@ public class JacocoReportProjectRendererExtension implements ProjectRendererExte
     @Override
     public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (("/" + path).startsWith(projectRenderer.resourceRootPath2().resolve("jacoco-report").toString())) {
-            final var requestedFile = projectRenderer
-                    .projectFolder()
-                    .resolve("target/site/jacoco/")
-                    .resolve(projectRenderer.resourceRootPath2().resolve("jacoco-report").relativize(Path.of("/" + path + "/")));
-            if (is_file(requestedFile)) {
+            final var requestedFile = Path.of("target/site/jacoco/")
+                    .resolve(projectRenderer.resourceRootPath2().resolve("jacoco-report")
+                            .relativize(Path.of("/" + path + "/")));
+            if (projectRenderer.projectFileSystem().isFile(requestedFile)) {
                 try {
-                    return Optional.of(renderingResult(readFileAsBytes(requestedFile), HTML_TEXT.codeName()));
+                    return Optional.of(
+                            renderingResult(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
+                                    , HTML_TEXT.codeName()));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -61,13 +58,11 @@ public class JacocoReportProjectRendererExtension implements ProjectRendererExte
     @Override
     public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
-        final var sourceFolder = projectRenderer
-                .projectFolder()
-                .resolve("target/site/jacoco/");
-        if (isDirectory(sourceFolder)) {
+        final var sourceFolder = Path.of("target/site/jacoco/");
+        if (projectRenderer.projectFileSystem().isDirectory(sourceFolder)) {
             // Last substring map converts the absolute path to relative one.
-            Files.walk_recursively(sourceFolder)
-                    .filter(Files::is_file)
+            projectRenderer.projectFileSystem().walkRecursively(sourceFolder)
+                    .filter(projectRenderer.projectFileSystem()::isFile)
                     .map(file -> sourceFolder.relativize(file.getParent().resolve(file.getFileName().toString())))
                     .map(path -> projectRenderer.resourceRootPath2().resolve("jacoco-report").resolve(path))
                     .map(path -> Path.of(path.toString().substring(1)))

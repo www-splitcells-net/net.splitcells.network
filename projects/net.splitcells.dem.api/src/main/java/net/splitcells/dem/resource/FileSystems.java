@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -37,6 +38,10 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 public class FileSystems implements FileSystem {
     public static FileSystem fileSystemOnLocalHost(Path rootPath) {
         return new FileSystems(rootPath);
+    }
+
+    public static FileSystem userHome() {
+        return fileSystemOnLocalHost(Paths.userHome());
     }
 
     private final Path rootPath;
@@ -55,6 +60,15 @@ public class FileSystems implements FileSystem {
     }
 
     @Override
+    public String readString(Path path) {
+        try {
+            return java.nio.file.Files.readString(rootPath.resolve(path));
+        } catch (IOException e) {
+            throw executionException("Could not read file: " + path, e);
+        }
+    }
+
+    @Override
     public FileSystem writeToFile(Path path, byte[] content) {
         final var targetPath = rootPath.resolve(path);
         if (path.getParent() != null) {
@@ -63,8 +77,41 @@ public class FileSystems implements FileSystem {
         try (final var writer = new FileOutputStream(targetPath.toFile())) {
             writer.write(content);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw executionException(e);
         }
         return this;
+    }
+
+    @Override
+    public boolean isFile(Path path) {
+        return java.nio.file.Files.isRegularFile(rootPath.resolve(path));
+    }
+
+    @Override
+    public boolean isDirectory(Path path) {
+        return java.nio.file.Files.isDirectory(rootPath.resolve(path));
+    }
+
+    @Override
+    public Stream<Path> walkRecursively(Path path) {
+        try {
+            return java.nio.file.Files.walk(rootPath.resolve(path)).map(rootPath::relativize);
+        } catch (IOException e) {
+            throw executionException(e);
+        }
+    }
+
+    @Override
+    public byte[] readFileAsBytes(Path path) {
+        try {
+            return java.nio.file.Files.readAllBytes(rootPath.resolve(path));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public FileSystem subFileSystem(Path path) {
+        return fileSystemOnLocalHost(this.rootPath.resolve(path));
     }
 }
