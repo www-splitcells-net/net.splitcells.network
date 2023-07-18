@@ -233,6 +233,7 @@ public interface Files {
      *
      * @return Returns the user's state files.
      */
+    @Deprecated
     static Path usersStateFiles() {
         final var usersStateFiles = Paths.userHome().resolve(".local/state/net.splitcells.dem");
         generateFolderPath(usersStateFiles);

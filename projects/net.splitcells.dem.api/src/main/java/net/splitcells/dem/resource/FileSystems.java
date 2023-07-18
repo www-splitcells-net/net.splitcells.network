@@ -27,18 +27,24 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
- * TODO IDEA Disallow any direct access to the hosts local file system in core source code.
+ * <p>TODO Move all file access instances specific to a computer to this class.</p>
+ * <p>TODO IDEA Disallow any direct access to the hosts local file system in core source code.
  * Even access over this interface should not be allowed.
  * Instead, access to the local file system should only be injected and only limited to things,
  * that are really needed.
  * Otherwise, it will be hard to avoid random access to the local file system,
- * which makes it hard to ensure the programs portability.
+ * which makes it hard to ensure the programs portability.</p>
  */
 @JavaLegacyArtifact
 public class FileSystems implements FileSystem {
     public static FileSystem fileSystemOnLocalHost(Path rootPath) {
         return new FileSystems(rootPath);
     }
+
+    public static FileSystem usersStateFiles() {
+        return fileSystemOnLocalHost(Files.usersStateFiles());
+    }
+
 
     public static FileSystem userHome() {
         return fileSystemOnLocalHost(Paths.userHome());
