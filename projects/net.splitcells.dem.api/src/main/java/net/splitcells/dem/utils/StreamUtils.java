@@ -19,6 +19,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Collections;
 import java.util.function.BinaryOperator;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -38,6 +39,14 @@ public final class StreamUtils {
 
     public static <T> Stream<T> concat(Stream<T> a, Stream<T> b) {
         return java.util.stream.Stream.concat(a, b);
+    }
+
+    public static <T> Stream<T> concat(Stream<T> a, Stream<T>... b) {
+        var concatination = a;
+        for (int i = 0; i < b.length; ++i) {
+            concatination = java.util.stream.Stream.concat(concatination, b[i]);
+        }
+        return concatination;
     }
 
     public static <T> Stream<T> stream(T[] content) {
