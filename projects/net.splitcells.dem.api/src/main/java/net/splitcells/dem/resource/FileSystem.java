@@ -35,9 +35,13 @@ public interface FileSystem {
         return writeToFile(path, content.getBytes(StandardCharsets.UTF_8));
     }
 
+    boolean exists();
+
     boolean isFile(Path path);
 
     boolean isDirectory(Path path);
+
+    Stream<Path> walkRecursively();
 
     Stream<Path> walkRecursively(Path path);
 

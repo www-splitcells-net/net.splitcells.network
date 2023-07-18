@@ -25,6 +25,7 @@ import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
@@ -33,6 +34,7 @@ import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -43,11 +45,6 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.UTF_8;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
-import static net.splitcells.dem.resource.Files.fileExists;
-import static net.splitcells.dem.resource.Files.isDirectory;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Files.readFileAsBytes;
-import static net.splitcells.dem.resource.Files.readFileAsString;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -90,9 +87,9 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     private final FileSystem projectFolder;
-    private final Path projectSrcFolder;
+    private final FileSystem projectSrcFolder;
     private final FileSystem xslLibs;
-    private final Path resources;
+    private final FileSystem resources;
     private final String resourceRootPath;
     private final boolean flatRepository;
     private final String profile;
@@ -117,9 +114,9 @@ public class ProjectRendererI implements ProjectRenderer {
         }
         this.typedFolder = typedFolder;
         this.profile = renderer;
-        this.projectSrcFolder = projectSrcFolder;
+        this.projectSrcFolder = fileSystemOnLocalHost(projectSrcFolder);
         this.xslLibs = xslLibs;
-        this.resources = resources;
+        this.resources = fileSystemOnLocalHost(resources);
         this.resourceRootPath = resourceRootPath;
         this.flatRepository = flatRepository;
         this.sourceValidator = sourceValidator;
@@ -249,7 +246,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 return artifactResult;
             } else if (path.endsWith(".csv")) {
                 final var file = resolveSourceFolder(path, "csv");
-                if (fileExists(file)) {
+                if (projectSrcFolder.isFile(file)) {
                     return Optional.of(renderingResult(Files.readFileAsBytes(file), "text/csv"));
                 } else {
                     return Optional.empty();
@@ -305,15 +302,15 @@ public class ProjectRendererI implements ProjectRenderer {
         try {
 
             final var sourcePath = path.substring(0, path.length() - suffix.length() - 1) + ".xml";
-            final var absolutePath = resolveSourceFolder(sourcePath, "xml");
+            final var convertedPath = resolveSourceFolder(sourcePath, "xml");
             // System.out.println("Rendering: " + path);
             // System.out.println("Rendering Relative Resource: " + sourcePath);
             // System.out.println("Rendering Absolute Resource: " + absolutePath);
             // TODO HACK Use optional instead of manual file checking.
-            if (fileExists(absolutePath)) {
+            if (projectSrcFolder.isFile(convertedPath)) {
                 // System.out.println("Rendering: " + path);
                 return Optional.of(renderer()
-                        .transform(Files.readFileAsString(absolutePath))
+                        .transform(projectSrcFolder.readString(convertedPath))
                         .getBytes(UTF_8.codeName()));
             }
             // System.out.println("Reading artifact: " + path);
@@ -339,13 +336,13 @@ public class ProjectRendererI implements ProjectRenderer {
         }
         if (typedFolder) {
             try {
-                return projectSrcFolder.resolve(type).resolve(java.net.URLDecoder.decode(projectPath, "UTF-8"));
+                return Path.of(type).resolve(java.net.URLDecoder.decode(projectPath, "UTF-8"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else {
             try {
-                return projectSrcFolder.resolve(java.net.URLDecoder.decode(projectPath, "UTF-8"));
+                return Path.of(java.net.URLDecoder.decode(projectPath, "UTF-8"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -459,12 +456,10 @@ public class ProjectRendererI implements ProjectRenderer {
 
     private Optional<byte[]> renderTextFile(String path) {
         try {
-            final var absolutePath = resolveSourceFolder(path, "txt");
-            if (fileExists(absolutePath)) {
+            final var convertedPath = resolveSourceFolder(path, "txt");
+            if (projectSrcFolder.isFile(convertedPath)) {
                 final var content = Xml.rElement(NameSpaces.NATURAL, "text");
-                content.appendChild
-                        (Xml.textNode
-                                (readFileAsString(absolutePath)));
+                content.appendChild(Xml.textNode(projectSrcFolder.readString(convertedPath)));
                 return Optional.of(renderer()
                         .transform(Xml.toPrettyString(content))
                         .getBytes(UTF_8.codeName()));
@@ -476,24 +471,24 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     private Optional<byte[]> readSrc(String srcType, String path) {
-        final var resourcePath = this.projectSrcFolder.resolve(srcType).resolve(path);
-        if (!is_file(resourcePath)) {
+        final var resourcePath = Path.of(srcType).resolve(path);
+        if (!projectSrcFolder.isFile(resourcePath)) {
             return Optional.empty();
         }
         try {
-            return Optional.of(readFileAsBytes(resourcePath));
+            return Optional.of(projectSrcFolder.readFileAsBytes(resourcePath));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     private Optional<byte[]> readArtifact(String path) {
-        final var resourcePath = resources.resolve(path);
-        if (!is_file(resourcePath)) {
+        final var resourcePath = Path.of(path);
+        if (!resources.isFile(resourcePath)) {
             return Optional.empty();
         }
         try {
-            return Optional.of(readFileAsBytes(resourcePath));
+            return Optional.of(resources.readFileAsBytes(resourcePath));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -504,8 +499,9 @@ public class ProjectRendererI implements ProjectRenderer {
         return resourceRootPath;
     }
 
+    @Deprecated
     private static void extendProjectLayout(Perspective layout, Path folder, boolean replaceFileSuffix) {
-        if (isDirectory(folder)) {
+        if (Files.isDirectory(folder)) {
             try {
                 Files.walk_recursively(folder)
                         .filter(Files::fileExists)
@@ -529,50 +525,36 @@ public class ProjectRendererI implements ProjectRenderer {
     @Override
     public Set<Path> projectPaths() {
         final Set<Path> projectPaths = setOfUniques();
-        {
-            final var renderedDocumentPaths = list
-                    (projectSrcFolder.resolve("txt"))
-                    .stream()
-                    .filter(folder -> Files.isDirectory(folder))
-                    .map(folder -> {
-                        try {
-                            return Files.walk_recursively(folder)
-                                    .filter(Files::fileExists)
-                                    .map(file -> {
-                                        return folder.relativize(
-                                                file.getParent()
-                                                        .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
-                                                                (file.getFileName().toString() + ".html"))
-                                        );
-                                    });
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }).reduce((a, b) -> concat(a, b));
-            if (renderedDocumentPaths.isPresent()) {
-                renderedDocumentPaths.get().forEach(projectPaths::add);
-            }
+        if (projectSrcFolder.exists()) {
+            projectSrcFolder.walkRecursively()
+                    .filter(projectSrcFolder::isFile)
+                    .forEach(projectPaths::add);
         }
-        {
-            final var resourcePaths = list
-                    (resources
-                            , projectSrcFolder.resolve("html")
-                            , projectSrcFolder.resolve("svg"))
-                    .stream()
-                    .filter(folder -> Files.isDirectory(folder))
-                    .map(folder -> {
-                        try {
-                            return Files.walk_recursively(folder)
-                                    .filter(Files::fileExists)
-                                    .map(file -> folder.relativize(file));
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
+        if (projectSrcFolder.isDirectory(Path.of("html"))) {
+            projectSrcFolder.subFileSystem(Path.of("html"))
+                    .walkRecursively()
+                    .filter(projectSrcFolder::isFile)
+                    .forEach(projectPaths::add);
+        }
+        if (projectSrcFolder.isDirectory(Path.of("svg"))) {
+            projectSrcFolder.subFileSystem(Path.of("svg"))
+                    .walkRecursively()
+                    .filter(projectSrcFolder::isFile)
+                    .forEach(projectPaths::add);
+        }
+        if (projectSrcFolder.isDirectory(Path.of("txt"))) {
+            projectSrcFolder.subFileSystem(Path.of("txt"))
+                    .walkRecursively()
+                    .map(p -> {
+                        if (p.getParent() == null) {
+                            return Path.of(p.getFileName().toString() + ".html");
                         }
-                    }).reduce((a, b) -> concat(a, b));
-
-            if (resourcePaths.isPresent()) {
-                resourcePaths.get().forEach(projectPaths::add);
-            }
+                        return p.getParent()
+                                .resolve(net.splitcells.dem.resource.Paths.removeFileSuffix
+                                        (p.getFileName().toString() + ".html"));
+                    })
+                    .filter(projectSrcFolder::isFile)
+                    .forEach(projectPaths::add);
         }
         projectPaths.addAll(renderer.projectPaths(this));
         return projectPaths;

@@ -93,6 +93,15 @@ public class FileSystems implements FileSystem {
     }
 
     @Override
+    public Stream<Path> walkRecursively() {
+        try {
+            return java.nio.file.Files.walk(rootPath).map(rootPath::relativize);
+        } catch (IOException e) {
+            throw executionException(e);
+        }
+    }
+
+    @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
             return java.nio.file.Files.walk(rootPath.resolve(path)).map(rootPath::relativize);
@@ -113,5 +122,10 @@ public class FileSystems implements FileSystem {
     @Override
     public FileSystem subFileSystem(Path path) {
         return fileSystemOnLocalHost(this.rootPath.resolve(path));
+    }
+
+    @Override
+    public boolean exists() {
+        return java.nio.file.Files.isDirectory(rootPath);
     }
 }
