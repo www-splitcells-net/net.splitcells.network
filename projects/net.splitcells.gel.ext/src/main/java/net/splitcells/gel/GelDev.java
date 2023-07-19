@@ -48,7 +48,6 @@ import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.GelEnv.process;
 import static net.splitcells.website.Projects.projectsRenderer;
-import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 public final class GelDev {

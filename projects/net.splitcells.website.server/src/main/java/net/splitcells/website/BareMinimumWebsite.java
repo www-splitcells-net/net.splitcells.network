@@ -55,9 +55,9 @@ public class BareMinimumWebsite {
                     .withDetailedXslMenu(Optional.of(readFileAsString(Paths.get("projects/net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/detailed-menu.xsl"))));
             final var xslLib = Paths.get("projects/net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/");
             final var projectRenderer = projectRenderer("public"
-                    , Paths.get("projects/net.splitcells.website.content.minimal/")
+                    , fileSystemOnLocalHost(Paths.get("projects/net.splitcells.website.content.minimal/"))
                     , fileSystemOnLocalHost(xslLib)
-                    , Paths.get("projects/net.splitcells.website.content.default/src/main/resources/html")
+                    , fileSystemOnLocalHost(Paths.get("projects/net.splitcells.website.content.default/src/main/resources/html"))
                     , "/"
                     , VOID_VALIDATOR
                     , config);

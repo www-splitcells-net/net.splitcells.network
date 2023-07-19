@@ -58,27 +58,27 @@ public class ServerService extends ResourceOptionI<Service> {
                             , "net/splitcells/martins/avots/website/css/theme.css"));
             return projectsRenderer(publicProjectRepository, "public"
                     , projectRenderer(
-                            "public", privateProjectRepository.resolve("net.splitcells.martins.avots.website/")
+                            "public", fileSystemOnLocalHost(privateProjectRepository.resolve("net.splitcells.martins.avots.website/"))
                             , fileSystemOnLocalHost(xslLib)
-                            , privateProjectRepository
-                                    .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                            , fileSystemOnLocalHost(privateProjectRepository
+                                    .resolve("net.splitcells.martins.avots.website/src/main/resources/html"))
                             , "/"
                             , validator
                             , config)
                     , list(projectRenderer("public"
-                                    , privateProjectRepository.resolve("net.splitcells.martins.avots.website/")
+                                    , fileSystemOnLocalHost(privateProjectRepository.resolve("net.splitcells.martins.avots.website/"))
                                     , fileSystemOnLocalHost(xslLib)
-                                    , privateProjectRepository
-                                            .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                    , fileSystemOnLocalHost(privateProjectRepository
+                                            .resolve("net.splitcells.martins.avots.website/src/main/resources/html"))
                                     , "/"
                                     , validator
                                     , config)
                             , projectRenderer("public"
-                                    , privateProjectRepository.resolve(
-                                            "/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/")
+                                    , fileSystemOnLocalHost(privateProjectRepository.resolve(
+                                            "/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/private/net.splitcells.martins.avots.website/"))
                                     , fileSystemOnLocalHost(xslLib)
-                                    , privateProjectRepository
-                                            .resolve("net.splitcells.martins.avots.website/src/main/resources/html")
+                                    , fileSystemOnLocalHost(privateProjectRepository
+                                            .resolve("net.splitcells.martins.avots.website/src/main/resources/html"))
                                     , "/"
                                     , validator
                                     , config)

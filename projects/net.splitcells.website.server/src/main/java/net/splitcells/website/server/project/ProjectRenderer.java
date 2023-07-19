@@ -40,37 +40,39 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  */
 public interface ProjectRenderer extends Renderer {
 
-    static ProjectRenderer projectRenderer(String renderer, Path projectFolder, FileSystem xslLibs, Path resources
+    static ProjectRenderer projectRenderer(String renderer, FileSystem projectFolder, FileSystem xslLibs
+            , FileSystem resources
             , String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
             , SourceValidator sourceValidator
             , Config config) {
         return new ProjectRendererI(renderer
-                , fileSystemOnLocalHost(projectFolder.resolve("src/main"))
+                , projectFolder.subFileSystem("src/main")
                 , xslLibs
-                , fileSystemOnLocalHost(resources)
+                , resources
                 , resourceRootPath
                 , true
                 , false
                 , sourceValidator
-                , fileSystemOnLocalHost(projectFolder)
+                , projectFolder
                 , config);
     }
 
-    static ProjectRenderer projectRenderer(String renderer, Path projectFolder, FileSystem xslLibs, Path resources
+    static ProjectRenderer projectRenderer(String renderer, FileSystem projectFolder, FileSystem xslLibs
+            , FileSystem resources
             , String resourceRootPath
             , SourceValidator sourceValidator
             , Config config) {
         return new ProjectRendererI(renderer
-                , fileSystemOnLocalHost(projectFolder.resolve("src/main"))
+                , projectFolder // fileSystemOnLocalHost(projectFolder.resolve("src/main"))
                 , xslLibs
-                , fileSystemOnLocalHost(resources)
+                , resources // fileSystemOnLocalHost(resources)
                 , resourceRootPath
                 , true
                 , false
                 , sourceValidator
-                , fileSystemOnLocalHost(projectFolder)
+                , projectFolder // fileSystemOnLocalHost(projectFolder)
                 , config);
     }
 

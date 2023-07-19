@@ -48,4 +48,8 @@ public interface FileSystem {
     byte[] readFileAsBytes(Path path);
 
     FileSystem subFileSystem(Path path);
+
+    default FileSystem subFileSystem(String path) {
+        return this.subFileSystem(Path.of(path));
+    }
 }

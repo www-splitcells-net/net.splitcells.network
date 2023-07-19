@@ -36,9 +36,9 @@ public class TextProjectRendererExtensionTest {
     public void testLayout() {
         final var testSubject = projectRenderer
                 ("public"
-                        , Path.of(".")
+                        , fileSystemOnLocalHost(Path.of("."))
                         , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
-                        , Path.of("net.splitcells.website.content.default/src/main/resources/html")
+                        , fileSystemOnLocalHost(Path.of("net.splitcells.website.content.default/src/main/resources/html"))
                         , "/net/splitcells/dem"
                         , a -> Optional.empty()
                         , Config.create());
@@ -50,9 +50,9 @@ public class TextProjectRendererExtensionTest {
     public void testRawLayout() {
         final var testSubject = projectRenderer
                 ("public"
-                        , Path.of("../..")
+                        , fileSystemOnLocalHost(Path.of("../.."))
                         , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
-                        , Path.of("net.splitcells.website.content.default/src/main/resources/html")
+                        , fileSystemOnLocalHost(Path.of("net.splitcells.website.content.default/src/main/resources/html"))
                         , "/"
                         , a -> Optional.empty()
                         , Config.create());
