@@ -41,6 +41,10 @@ public interface FileSystem {
 
     boolean isDirectory(Path path);
 
+    default boolean isDirectory(String path) {
+        return isDirectory(Path.of(path));
+    }
+
     Stream<Path> walkRecursively();
 
     Stream<Path> walkRecursively(Path path);
