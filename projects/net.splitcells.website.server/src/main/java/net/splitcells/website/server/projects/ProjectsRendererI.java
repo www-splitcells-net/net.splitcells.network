@@ -43,10 +43,8 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.Files.generateFolderPath;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Paths.path;
-import static net.splitcells.dem.resource.Files.createDirectory;
-import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithSimplePath;
@@ -80,14 +78,14 @@ public class ProjectsRendererI implements ProjectsRenderer {
 
     @Override
     public void build() {
-        final var generatedFiles = Paths.get("target", "generated");
-        Files.createDirectory(generatedFiles);
-        writeToFile(generatedFiles.resolve("generation.style.xml")
+        final var generatedFilesPath = Paths.get("target", "generated");
+        final var generatedFiles = fileSystemOnLocalHost(generatedFilesPath);
+        Files.createDirectory(generatedFilesPath);
+        generatedFiles.writeToFile(Path.of("generation.style.xml")
                 , "<val xmlns=\"http://splitcells.net/den.xsd\">"
                         + config.generationStyle()
                         + "</val>");
-        writeToFile(generatedFiles.resolve("layout." + profile + ".xml"), createLayout().toDom());
-        generateFolderPath(Paths.get("target", "generated"));
+        generatedFiles.writeToFile(Path.of("layout." + profile + ".xml"), createLayout().toXmlString());
     }
 
     private Perspective createLayout() {
@@ -131,7 +129,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 .forEach(path -> {
                     try {
                         final var targetPath = path(target, path.substring(1));
-                        createDirectory(targetPath.getParent());
+                        Files.createDirectory(targetPath.getParent());
                         Files.writeToFile(targetPath, render(path).orElseThrow().getContent());
                     } catch (Exception e) {
                         throw new RuntimeException(target.toString() + path, e);
