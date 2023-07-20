@@ -38,6 +38,7 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2023-07-12 \#249** Provide file system API in order to not to rely on Paths specific to the operation system.
 * **2023-02-19** **\#170**: Log if most runtime performant settings are not active.
 * **2023-02-19** **\#10**: Create DescribedBool for assertions with descriptions.
 * **2023-02-02** **\#170**: Create container for arbitrary typed values with a type safe interface.
