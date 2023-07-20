@@ -23,11 +23,20 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 /**
- * <p>Provides access to files, that is not specific to the operation system.
- * When one works with {@link java.nio.file.Path} and {@link java.nio.file.Files},
- * the current path (denoted as `./`) and the root path is always specific to the operation system.
- * This can lead to overly complex path handling,
- * </p>
+ * <p>When one works with {@link java.nio.file.Path} and {@link java.nio.file.Files} directly,
+ * the current path (denoted as `./`) and the root path is always specific to the operation system and
+ * the current process of the operation system.
+ * This can lead to overly complex path handling, which is prone to errors.
+ * Especially when one considers, how {@link java.nio.file.Path#resolve(Path)} works
+ * with absolute paths.</p>
+ * <p>The {@link FileSystem} tries to avoid this situation, by providing access to files,
+ * that is not specific to the operation system and by only working with simplified paths.</p>
+ * <p>The basic idea is, to only work with basic relative paths, that have no parent notations (= `../`).
+ * Every time the user uses a path, the respective current folder or filesystem has to be specified.
+ * This creates a situation, where for every purpose a file system is provided.
+ * These are isolated from each other.
+ * Thereby, different things like the config files or cache files can be handled via different file systems.
+ * In the ideal case, the actual storage of these file is only configured and thereby interchangeable.</p>
  * <p>TODO Only allow a narrow subset of all possible paths by default.
  * Especially, don't allow pointing outside the file system via `../` and
  * discourage any usage of `..` and absolute paths.
