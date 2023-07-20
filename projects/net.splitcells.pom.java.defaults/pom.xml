@@ -73,6 +73,18 @@
             <resource>
                 <directory>src/main/xsl</directory>
             </resource>
+            <resource>
+                <directory>./</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>BUILD.*</include>
+                    <include>CHANGELOG.*</include>
+                    <include>CONTRIBUTING.*</include>
+                    <include>DEVELOPMENT.*</include>
+                    <include>README.*</include>
+                    <include>NOTICE.*</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>
