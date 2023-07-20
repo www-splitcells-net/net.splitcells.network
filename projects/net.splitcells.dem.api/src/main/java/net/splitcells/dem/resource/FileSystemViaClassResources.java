@@ -53,7 +53,7 @@ public class FileSystemViaClassResources implements FileSystem {
 
     @Override
     public boolean exists() {
-        throw notImplementedYet();
+        return true;
     }
 
     @Override

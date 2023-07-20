@@ -19,6 +19,7 @@ import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -36,5 +37,10 @@ public class FileSystemViaClassResourcesTest {
         requireEquals(fileSystemViaClassResources(FileSystemViaClassResourcesTest.class)
                         .readString("net/splitcells/dem/api/test-file.txt")
                 , "This is a test file of the 20th of July 2023.");
+    }
+
+    @IntegrationTest
+    public void testExists() {
+        require(fileSystemViaClassResources(FileSystemViaClassResourcesTest.class).exists());
     }
 }
