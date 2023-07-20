@@ -40,6 +40,8 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2023-07-12 \#249** Implement FileSystemViaClassResources in order to provide FileSystem API for class resources.
+  This can be used in order to provide file systems via jar files.
 * **2023-07-12 \#249** Provide file system API in order to not to rely on Paths specific to the operation system.
 * **2023-02-19** **\#170**: Log if most runtime performant settings are not active.
 * **2023-02-19** **\#10**: Create DescribedBool for assertions with descriptions.
