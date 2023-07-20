@@ -5,6 +5,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-07-13 \#249** Migrate Java's Path API usage to new FileSystem API,
+  in order to support operation system unspecific deployment.
 * **2023-06-06 \#248**
   1. Delete obsolete class `net.splitcells.dem.lang.perspective.PerspectiveXmlRenderer`,
      because it was not used.
