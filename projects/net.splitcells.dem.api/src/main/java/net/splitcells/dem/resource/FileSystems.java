@@ -42,7 +42,13 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
  * Instead, access to the local file system should only be injected and only limited to things,
  * that are really needed.
  * Otherwise, it will be hard to avoid random access to the local file system,
- * which makes it hard to ensure the programs portability.</p>
+ * which makes it hard to ensure the programs portability.
+ * In other words, provide {@link FileSystems} instances to the local file system of the operation system
+ * via configuration and to via direct manual instance creation.
+ * For this something like a registry is required,
+ * where one can list such instances
+ * Maybe {@link net.splitcells.dem.environment.config.framework.Configuration} can be used for this.
+ * This does not apply to code, that only provides integration to the operation system.</p>
  */
 @JavaLegacyArtifact
 public class FileSystems implements FileSystem {
