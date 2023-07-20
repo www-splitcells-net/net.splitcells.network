@@ -27,6 +27,15 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
+ * <p>Provides access to files, that is not specific to the operation system.
+ * When one works with {@link java.nio.file.Path} and {@link java.nio.file.Files},
+ * the current path (denoted as `./`) and the root path is always specific to the operation system.
+ * This can lead to overly complex path handling,
+ * </p>
+ * <p>TODO Only allow a narrow subset of all possible paths by default.
+ * Especially, don't allow pointing outside the file system via `../` and
+ * discourage any usage of `..` and absolute paths.
+ * </p>
  * <p>TODO Move all file access instances specific to a computer to this class.</p>
  * <p>TODO IDEA Disallow any direct access to the hosts local file system in core source code.
  * Even access over this interface should not be allowed.
