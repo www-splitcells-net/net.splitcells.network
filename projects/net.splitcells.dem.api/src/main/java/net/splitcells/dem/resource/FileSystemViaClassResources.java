@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -42,7 +43,7 @@ public class FileSystemViaClassResources implements FileSystem {
 
     @Override
     public String readString(Path path) {
-        throw notImplementedYet();
+        return readAsString(clazz.getResourceAsStream("/" + path.toString()));
     }
 
     @Override

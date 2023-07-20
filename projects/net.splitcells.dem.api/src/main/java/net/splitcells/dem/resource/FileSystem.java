@@ -30,6 +30,10 @@ public interface FileSystem {
 
     InputStream inputStream(Path path);
 
+    default String readString(String path) {
+        return readString(Path.of(path));
+    }
+
     String readString(Path path);
 
     @ReturnsThis
