@@ -23,6 +23,11 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 public interface FileSystem {
+
+    default InputStream inputStream(String path) {
+        return inputStream(Path.of(path));
+    }
+
     InputStream inputStream(Path path);
 
     String readString(Path path);

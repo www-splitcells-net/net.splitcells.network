@@ -18,6 +18,7 @@ package net.splitcells.dem.resource;
 import net.bytebuddy.implementation.bytecode.Throw;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;
 
@@ -238,5 +239,14 @@ public interface Files {
         final var usersStateFiles = Paths.userHome().resolve(".local/state/net.splitcells.dem");
         generateFolderPath(usersStateFiles);
         return usersStateFiles;
+    }
+
+    @JavaLegacyBody
+    static String readAsString(InputStream inputStream) {
+        try {
+            return new String(inputStream.readAllBytes());
+        } catch (IOException e) {
+            throw executionException(e);
+        }
     }
 }
