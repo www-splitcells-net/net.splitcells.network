@@ -22,6 +22,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
+/**
+ * <p>Provides access to files, that is not specific to the operation system.
+ * When one works with {@link java.nio.file.Path} and {@link java.nio.file.Files},
+ * the current path (denoted as `./`) and the root path is always specific to the operation system.
+ * This can lead to overly complex path handling,
+ * </p>
+ * <p>TODO Only allow a narrow subset of all possible paths by default.
+ * Especially, don't allow pointing outside the file system via `../` and
+ * discourage any usage of `..` and absolute paths.
+ * </p>
+ */
 public interface FileSystem {
 
     default InputStream inputStream(String path) {
