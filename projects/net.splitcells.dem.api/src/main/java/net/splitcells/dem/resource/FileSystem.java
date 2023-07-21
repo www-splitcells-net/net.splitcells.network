@@ -42,19 +42,7 @@ import java.util.stream.Stream;
  * discourage any usage of `..` and absolute paths.
  * </p>
  */
-public interface FileSystem {
-
-    default InputStream inputStream(String path) {
-        return inputStream(Path.of(path));
-    }
-
-    InputStream inputStream(Path path);
-
-    default String readString(String path) {
-        return readString(Path.of(path));
-    }
-
-    String readString(Path path);
+public interface FileSystem extends FileSystemView {
 
     @ReturnsThis
     FileSystem writeToFile(Path path, byte[] content);
@@ -63,26 +51,6 @@ public interface FileSystem {
     default FileSystem writeToFile(Path path, String content) {
         return writeToFile(path, content.getBytes(StandardCharsets.UTF_8));
     }
-
-    boolean exists();
-
-    default boolean isFile(String path) {
-        return isFile(Path.of(path));
-    }
-
-    boolean isFile(Path path);
-
-    boolean isDirectory(Path path);
-
-    default boolean isDirectory(String path) {
-        return isDirectory(Path.of(path));
-    }
-
-    Stream<Path> walkRecursively();
-
-    Stream<Path> walkRecursively(Path path);
-
-    byte[] readFileAsBytes(Path path);
 
     FileSystem subFileSystem(Path path);
 
