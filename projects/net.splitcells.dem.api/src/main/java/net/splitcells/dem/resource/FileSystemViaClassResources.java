@@ -25,8 +25,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 /**
  * Provides an {@link FileSystem} API for {@link Class#getResource(String)}.
  */
-public class FileSystemViaClassResources implements FileSystem {
-    public static FileSystem fileSystemViaClassResources(Class<?> clazz) {
+public class FileSystemViaClassResources implements FileSystemView {
+    public static FileSystemView fileSystemViaClassResources(Class<?> clazz) {
         return new FileSystemViaClassResources(clazz);
     }
 
@@ -44,11 +44,6 @@ public class FileSystemViaClassResources implements FileSystem {
     @Override
     public String readString(Path path) {
         return readAsString(clazz.getResourceAsStream("/" + path.toString()));
-    }
-
-    @Override
-    public FileSystem writeToFile(Path path, byte[] content) {
-        throw notImplementedYet();
     }
 
     @Override
@@ -78,11 +73,6 @@ public class FileSystemViaClassResources implements FileSystem {
 
     @Override
     public byte[] readFileAsBytes(Path path) {
-        throw notImplementedYet();
-    }
-
-    @Override
-    public FileSystem subFileSystem(Path path) {
         throw notImplementedYet();
     }
 }
