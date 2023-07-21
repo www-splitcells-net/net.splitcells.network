@@ -58,7 +58,7 @@ public class FileSystemViaClassResources implements FileSystem {
 
     @Override
     public boolean isFile(Path path) {
-        throw notImplementedYet();
+        return clazz.getResourceAsStream("/" + path.toString()) != null;
     }
 
     @Override

@@ -66,6 +66,10 @@ public interface FileSystem {
 
     boolean exists();
 
+    default boolean isFile(String path) {
+        return isFile(Path.of(path));
+    }
+
     boolean isFile(Path path);
 
     boolean isDirectory(Path path);

@@ -43,4 +43,10 @@ public class FileSystemViaClassResourcesTest {
     public void testExists() {
         require(fileSystemViaClassResources(FileSystemViaClassResourcesTest.class).exists());
     }
+
+    @IntegrationTest
+    public void testIsFile() {
+        final var testSubject= fileSystemViaClassResources(FileSystemViaClassResourcesTest.class);
+        require(testSubject.isFile("net/splitcells/dem/api/test-file.txt"));
+    }
 }
