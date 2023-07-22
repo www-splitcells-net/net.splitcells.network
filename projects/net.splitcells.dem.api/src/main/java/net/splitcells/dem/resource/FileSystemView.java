@@ -52,6 +52,10 @@ public interface FileSystemView {
 
     Stream<Path> walkRecursively();
 
+    default Stream<Path> walkRecursively(String path) {
+        return walkRecursively(Path.of(path));
+    }
+
     Stream<Path> walkRecursively(Path path);
 
     byte[] readFileAsBytes(Path path);
