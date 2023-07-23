@@ -94,7 +94,7 @@ public interface SetT<T> extends Collection<T> {
     default void requireContentsOf(T... content) {
         StreamUtils.stream(content).forEach(c -> {
             if (!contains(c)) {
-                throw executionException("Set should contents in any order, but does not: set="
+                throw executionException("Set should contain following contents in any order, but does not: set="
                         + this
                         + ", contents="
                         + content);
