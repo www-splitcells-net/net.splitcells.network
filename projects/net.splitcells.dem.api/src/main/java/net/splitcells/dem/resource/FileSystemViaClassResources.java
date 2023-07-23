@@ -15,16 +15,27 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.nio.file.Path;
+import java.util.jar.JarFile;
 import java.util.stream.Stream;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.readAsString;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * Provides an {@link FileSystem} API for {@link Class#getResource(String)}.
  */
+@JavaLegacyArtifact
 public class FileSystemViaClassResources implements FileSystemView {
     public static FileSystemView fileSystemViaClassResources(Class<?> clazz) {
         return new FileSystemViaClassResources(clazz);
@@ -68,7 +79,43 @@ public class FileSystemViaClassResources implements FileSystemView {
 
     @Override
     public Stream<Path> walkRecursively(Path path) {
-        throw notImplementedYet();
+        try {
+            final var resourcePath = clazz.getClassLoader().getResource("/" + path + "/");
+            if (resourcePath == null) {
+                return Stream.empty();
+            }
+            if ("jar".equals(resourcePath.getProtocol())) {
+                try {
+                    final var dirURL = FileSystemViaClassResources.class.getResource("/net/");
+                    final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
+                    final var jarEntries = new JarFile(URLDecoder.decode(jarPath, UTF_8))
+                            .entries()
+                            .asIterator();
+                    final List<Path> walk = list();
+                    while (jarEntries.hasNext()) {
+                        walk.withAppended(Path.of((jarEntries.next().getRealName())));
+                    }
+                    return walk.stream();
+                } catch (Throwable e) {
+                    throw executionException(e);
+                }
+            } else {
+                final var iterator = clazz.getClassLoader().getResources("/" + path + "/").asIterator();
+                final List<URL> walk = list();
+                while (iterator.hasNext()) {
+                    walk.withAppended(iterator.next());
+                }
+                return walk.stream().map(url -> {
+                    try {
+                        return Path.of(url.toURI());
+                    } catch (URISyntaxException e) {
+                        throw executionException(e);
+                    }
+                });
+            }
+        } catch (Throwable e) {
+            throw executionException(e);
+        }
     }
 
     @Override
