@@ -15,11 +15,12 @@
  */
 package net.splitcells.dem.resource;
 
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
-import net.splitcells.dem.testing.annotations.UnitTest;
+
+import java.nio.file.Path;
 
 import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -46,7 +47,23 @@ public class FileSystemViaClassResourcesTest {
 
     @IntegrationTest
     public void testIsFile() {
-        final var testSubject= fileSystemViaClassResources(FileSystemViaClassResourcesTest.class);
+        final var testSubject = fileSystemViaClassResources(FileSystemViaClassResourcesTest.class);
         require(testSubject.isFile("net/splitcells/dem/api/test-file.txt"));
+    }
+
+    public static void main(String... args) {
+        new FileSystemViaClassResourcesTest().testWalkRecursively();
+    }
+
+    @IntegrationTest
+    public void testWalkRecursively() {
+        fileSystemViaClassResources(FileSystemViaClassResourcesTest.class)
+                .walkRecursively("net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively")
+                .collect(toList())
+                .requireContentsOf(Path.of("1")
+                        , Path.of("1/2")
+                        , Path.of("1/2/3")
+                        , Path.of("1/2/3/test.txt")
+                );
     }
 }
