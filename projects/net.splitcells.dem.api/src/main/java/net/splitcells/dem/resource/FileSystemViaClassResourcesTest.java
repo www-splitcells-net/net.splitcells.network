@@ -57,13 +57,15 @@ public class FileSystemViaClassResourcesTest {
 
     @IntegrationTest
     public void testWalkRecursively() {
+        final var rootPath = "net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/";
         fileSystemViaClassResources(FileSystemViaClassResourcesTest.class)
-                .walkRecursively("net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively")
+                .walkRecursively(rootPath)
                 .collect(toList())
-                .requireContentsOf(Path.of("1")
-                        , Path.of("1/2")
-                        , Path.of("1/2/3")
-                        , Path.of("1/2/3/test.txt")
+                .requireContentsOf(Path.of(rootPath)
+                        , Path.of(rootPath + "1")
+                        , Path.of(rootPath + "1/2")
+                        , Path.of(rootPath + "1/2/3")
+                        , Path.of(rootPath + "1/2/3/test.txt")
                 );
     }
 }
