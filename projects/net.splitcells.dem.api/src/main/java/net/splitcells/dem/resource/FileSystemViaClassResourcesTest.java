@@ -51,10 +51,6 @@ public class FileSystemViaClassResourcesTest {
         require(testSubject.isFile("net/splitcells/dem/api/test-file.txt"));
     }
 
-    public static void main(String... args) {
-        new FileSystemViaClassResourcesTest().testWalkRecursively();
-    }
-
     @IntegrationTest
     public void testWalkRecursively() {
         final var rootPath = "net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/";

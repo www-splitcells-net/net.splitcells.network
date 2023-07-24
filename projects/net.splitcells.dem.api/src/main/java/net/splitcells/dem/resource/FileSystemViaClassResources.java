@@ -17,6 +17,7 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.StringUtils;
 
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -29,8 +30,10 @@ import java.util.stream.Stream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.readAsString;
+import static net.splitcells.dem.resource.Files.walk_recursively;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.StringUtils.removePrefix;
 
 /**
  * Provides an {@link FileSystem} API for {@link Class#getResource(String)}.
@@ -80,7 +83,7 @@ public class FileSystemViaClassResources implements FileSystemView {
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
-            final var resourcePath = clazz.getClassLoader().getResource("/" + path + "/");
+            final var resourcePath = clazz.getClassLoader().getResource(path + "/");
             if (resourcePath == null) {
                 return Stream.empty();
             }
@@ -100,17 +103,13 @@ public class FileSystemViaClassResources implements FileSystemView {
                     throw executionException(e);
                 }
             } else {
-                final var iterator = clazz.getClassLoader().getResources("/" + path + "/").asIterator();
-                final List<URL> walk = list();
-                while (iterator.hasNext()) {
-                    walk.withAppended(iterator.next());
-                }
-                return walk.stream().map(url -> {
-                    try {
-                        return Path.of(url.toURI());
-                    } catch (URISyntaxException e) {
-                        throw executionException(e);
-                    }
+                final var rootPathStr = Path.of(clazz.getClassLoader().getResource("./").toURI())
+                        .toString()
+                        .replace("test-classes", "classes")
+                        + "/";
+                final var startPath = Path.of(clazz.getClassLoader().getResource(path + "/").toURI());
+                return walk_recursively(startPath).map(p -> {
+                    return Path.of(removePrefix(rootPathStr, p.toString()));
                 });
             }
         } catch (Throwable e) {

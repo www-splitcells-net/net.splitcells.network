@@ -17,14 +17,26 @@ package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
 public class StringUtils {
     private StringUtils() {
         throw constructorIllegal();
     }
+
     public static String partOf(String arg, String delimiter, int part) {
         return arg.split(delimiter)[part];
+    }
+
+    public static String removePrefix(String prefix, String target) {
+        if (target.startsWith(prefix)) {
+            return target.substring(prefix.length());
+        }
+        throw executionException(perspective("`target` does not start with `prefix`.")
+                .withProperty("prefix", prefix)
+                .withProperty("target", target));
     }
 }
