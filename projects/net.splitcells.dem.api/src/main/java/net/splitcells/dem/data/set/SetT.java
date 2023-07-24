@@ -28,6 +28,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
@@ -97,7 +98,7 @@ public interface SetT<T> extends Collection<T> {
                 throw executionException("Set should contain following contents in any order, but does not: set="
                         + this
                         + ", contents="
-                        + content);
+                        + listWithValuesOf(content));
             }
         });
     }
