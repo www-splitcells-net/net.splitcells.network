@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.ContentType;
-import net.splitcells.dem.resource.FileSystem;
+import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
@@ -82,14 +82,14 @@ public class ProjectRendererI implements ProjectRenderer {
     private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
     @Override
-    public FileSystem projectFileSystem() {
+    public FileSystemView projectFileSystem() {
         return projectFolder;
     }
 
-    private final FileSystem projectFolder;
-    private final FileSystem projectSrcFolder;
-    private final FileSystem xslLibs;
-    private final FileSystem resources;
+    private final FileSystemView projectFolder;
+    private final FileSystemView projectSrcFolder;
+    private final FileSystemView xslLibs;
+    private final FileSystemView resources;
     private final String resourceRootPath;
     private final boolean flatRepository;
     private final String profile;
@@ -103,11 +103,11 @@ public class ProjectRendererI implements ProjectRenderer {
     private final Config config;
     private Optional<FileStructureTransformer> transformer = Optional.empty();
 
-    protected ProjectRendererI(String renderer, FileSystem projectSrcFolder, FileSystem xslLibs, FileSystem resources, String resourceRootPath
+    protected ProjectRendererI(String renderer, FileSystemView projectSrcFolder, FileSystemView xslLibs, FileSystemView resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
             , SourceValidator sourceValidator
-            , FileSystem projectFolder
+            , FileSystemView projectFolder
             , Config config) {
         if (resourceRootPath.isEmpty()) {
             throw executionException("resourceRootPath is not allowed to be empty. It has to at least be `/`.");
@@ -531,19 +531,19 @@ public class ProjectRendererI implements ProjectRenderer {
                     .forEach(projectPaths::add);
         }
         if (projectSrcFolder.isDirectory(Path.of("html"))) {
-            projectSrcFolder.subFileSystem(Path.of("html"))
+            projectSrcFolder.subFileSystemView("html")
                     .walkRecursively()
                     .filter(projectSrcFolder::isFile)
                     .forEach(projectPaths::add);
         }
         if (projectSrcFolder.isDirectory(Path.of("svg"))) {
-            projectSrcFolder.subFileSystem(Path.of("svg"))
+            projectSrcFolder.subFileSystemView("svg")
                     .walkRecursively()
                     .filter(projectSrcFolder::isFile)
                     .forEach(projectPaths::add);
         }
         if (projectSrcFolder.isDirectory(Path.of("txt"))) {
-            projectSrcFolder.subFileSystem(Path.of("txt"))
+            projectSrcFolder.subFileSystemView("txt")
                     .walkRecursively()
                     .map(p -> {
                         if (p.getParent() == null) {

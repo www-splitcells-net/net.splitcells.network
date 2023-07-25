@@ -7,7 +7,7 @@ package net.splitcells.website.server.project.renderer;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.resource.FileSystem;
+import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
@@ -36,7 +36,7 @@ public class ObjectsMediaRendererI implements ProjectRenderer {
     }
 
     @Override
-    public FileSystem projectFileSystem() {
+    public FileSystemView projectFileSystem() {
         return fileSystemOnLocalHost(Path.of("/invalid/"));
     }
 

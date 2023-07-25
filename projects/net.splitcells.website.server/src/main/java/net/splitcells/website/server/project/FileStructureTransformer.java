@@ -15,7 +15,8 @@
  */
 package net.splitcells.website.server.project;
 
-import net.splitcells.dem.resource.FileSystem;
+import net.splitcells.dem.resource.FileSystemView;
+import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -33,7 +34,7 @@ import static net.splitcells.website.server.translation.to.html.PathBasedUriReso
 
 public class FileStructureTransformer {
 
-    public static FileStructureTransformer fileStructureTransformer(FileSystem xslLibs
+    public static FileStructureTransformer fileStructureTransformer(FileSystemView xslLibs
             , String transformerXsl
             , SourceValidator sourceValidator
             , Function<String, Optional<String>> config) {
@@ -43,9 +44,9 @@ public class FileStructureTransformer {
     private final SourceValidator sourceValidator;
     private final String transformerXsl;
     private final Function<String, Optional<String>> config;
-    private final FileSystem xslLibs;
+    private final FileSystemView xslLibs;
 
-    private FileStructureTransformer(FileSystem xslLibs
+    private FileStructureTransformer(FileSystemView xslLibs
             , String transformerXsl
             , SourceValidator sourceValidator
             , Function<String, Optional<String>> config) {
@@ -68,7 +69,7 @@ public class FileStructureTransformer {
             return new XslTransformer
                     (xslLibs.inputStream(Paths.path(transformerXsl))
                             , pathBasedUriResolver(xslLibs
-                            , fileSystemOnLocalHost(Path.of("./src/main/xml/"))
+                            , FileSystems.fileSystemOnLocalHost(Path.of("./src/main/xml/"))
                             , config::apply));
         } catch (Exception e) {
             throw new RuntimeException(e);

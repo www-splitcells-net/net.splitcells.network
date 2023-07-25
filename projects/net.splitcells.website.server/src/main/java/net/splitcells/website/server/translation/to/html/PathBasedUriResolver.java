@@ -17,6 +17,7 @@ package net.splitcells.website.server.translation.to.html;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.FileSystem;
+import net.splitcells.dem.resource.FileSystemView;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -33,17 +34,17 @@ import javax.xml.transform.stream.StreamSource;
 @JavaLegacyArtifact
 public class PathBasedUriResolver implements URIResolver {
 
-    public static PathBasedUriResolver pathBasedUriResolver(FileSystem folder, FileSystem configFiles
+    public static PathBasedUriResolver pathBasedUriResolver(FileSystemView folder, FileSystemView configFiles
             , Function<String, Optional<String>> extension) {
         return new PathBasedUriResolver(folder, extension, configFiles);
     }
 
-    private final FileSystem folder;
-    private final FileSystem configFiles;
+    private final FileSystemView folder;
+    private final FileSystemView configFiles;
     private final Function<String, Optional<String>> extension;
 
-    private PathBasedUriResolver(FileSystem folder, Function<String, Optional<String>> extension
-            , FileSystem configFiles) {
+    private PathBasedUriResolver(FileSystemView folder, Function<String, Optional<String>> extension
+            , FileSystemView configFiles) {
         this.folder = folder;
         this.configFiles = configFiles;
         this.extension = extension;

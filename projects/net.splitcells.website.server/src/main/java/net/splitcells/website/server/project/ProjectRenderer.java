@@ -15,7 +15,7 @@
  */
 package net.splitcells.website.server.project;
 
-import net.splitcells.dem.resource.FileSystem;
+import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
@@ -40,15 +40,15 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  */
 public interface ProjectRenderer extends Renderer {
 
-    static ProjectRenderer projectRenderer(String renderer, FileSystem projectFolder, FileSystem xslLibs
-            , FileSystem resources
+    static ProjectRenderer projectRenderer(String renderer, FileSystemView projectFolder, FileSystemView xslLibs
+            , FileSystemView resources
             , String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
             , SourceValidator sourceValidator
             , Config config) {
         return new ProjectRendererI(renderer
-                , projectFolder.subFileSystem("src/main")
+                , projectFolder.subFileSystemView("src/main")
                 , xslLibs
                 , resources
                 , resourceRootPath
@@ -59,8 +59,8 @@ public interface ProjectRenderer extends Renderer {
                 , config);
     }
 
-    static ProjectRenderer projectRenderer(String renderer, FileSystem projectFolder, FileSystem xslLibs
-            , FileSystem resources
+    static ProjectRenderer projectRenderer(String renderer, FileSystemView projectFolder, FileSystemView xslLibs
+            , FileSystemView resources
             , String resourceRootPath
             , SourceValidator sourceValidator
             , Config config) {
@@ -76,7 +76,7 @@ public interface ProjectRenderer extends Renderer {
                 , config);
     }
 
-    FileSystem projectFileSystem();
+    FileSystemView projectFileSystem();
 
     default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer) {
         return Optional.empty();
