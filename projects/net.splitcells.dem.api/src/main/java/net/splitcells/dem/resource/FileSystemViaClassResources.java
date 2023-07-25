@@ -121,4 +121,8 @@ public class FileSystemViaClassResources implements FileSystemView {
     public byte[] readFileAsBytes(Path path) {
         throw notImplementedYet();
     }
+
+    public FileSystemView subFileSystemView(String path) {
+        throw notImplementedYet();
+    }
 }

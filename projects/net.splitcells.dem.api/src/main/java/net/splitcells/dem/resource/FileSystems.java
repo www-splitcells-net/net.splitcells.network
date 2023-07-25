@@ -132,6 +132,11 @@ public class FileSystems implements FileSystem {
     }
 
     @Override
+    public FileSystemView subFileSystemView(String path) {
+        return subFileSystem(Path.of(path));
+    }
+
+    @Override
     public FileSystem subFileSystem(Path path) {
         return fileSystemOnLocalHost(this.rootPath.resolve(path));
     }
