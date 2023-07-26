@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>website.server</artifactId>
+            <artifactId>dem</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>
