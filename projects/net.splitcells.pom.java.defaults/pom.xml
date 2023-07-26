@@ -30,59 +30,6 @@
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/main/java</testSourceDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/antlr4</directory>
-            </resource>
-            <resource>
-                <directory>src/main/bash</directory>
-            </resource>
-            <resource>
-                <directory>src/main/hugo.md</directory>
-            </resource>
-            <resource>
-                <directory>src/main/html</directory>
-            </resource>
-            <resource>
-                <directory>src/main/js</directory>
-            </resource>
-            <resource>
-                <directory>src/main/md</directory>
-            </resource>
-            <resource>
-                <directory>src/main/python</directory>
-            </resource>
-            <resource>
-                <directory>src/main/svg</directory>
-            </resource>
-            <resource>
-                <directory>src/main/txt</directory>
-            </resource>
-            <resource>
-                <directory>src/main/xml</directory>
-            </resource>
-            <resource>
-                <directory>src/main/xml-pom</directory>
-            </resource>
-            <resource>
-                <directory>src/main/xsd</directory>
-            </resource>
-            <resource>
-                <directory>src/main/xsl</directory>
-            </resource>
-            <resource>
-                <directory>./</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>BUILD.*</include>
-                    <include>CHANGELOG.*</include>
-                    <include>CONTRIBUTING.*</include>
-                    <include>DEVELOPMENT.*</include>
-                    <include>README.*</include>
-                    <include>NOTICE.*</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <!-- This makes it easier to execute a Java program from command line via `mvn exec:java -Dexec.mainClass=[...]`. -->
@@ -239,7 +186,10 @@
         <profile>
             <id>resources-source</id>
             <!-- This is used in order to provide content and files to the webserver via jars,
-            instead of the file system.-->
+            instead of the file system. -->
+            <!-- The dedicated `${basedir}/target/classes/${groupId}.${artifactId}.resources` folder is used,
+            in order to avoid mixing resource files with binary execution files.
+            This in turn makes resource processing easier. -->
             <activation>
                 <property>
                     <name>!resources-source</name>
@@ -251,16 +201,235 @@
                         <artifactId>maven-resources-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>copy-resources</id>
+                                <id>resources-source-antlr4</id>
                                 <phase>validate</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/src/main/resources</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/antlr4</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/antlr4</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-bash</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/bash</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/bash</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-hugo.md</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/hugo.md</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/hugo.md</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-html</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/html</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/html</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-js</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/js</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/js</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-md</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/md</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/md</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-python</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/python</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/python</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-resources</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/resources</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/resources</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-svg</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/svg</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/svg</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-txt</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/txt</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/txt</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-xml</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/xml</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/xml</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-xml-pom</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/xml-pom</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/xml-pom</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-xsd</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/xsd</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/xml-pom</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-xsl</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/xsl</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/xsl</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-root-resources</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>./</directory>
+                                            <filtering>true</filtering>
+                                            <includes>
+                                                <include>BUILD.*</include>
+                                                <include>CHANGELOG.*</include>
+                                                <include>CONTRIBUTING.*</include>
+                                                <include>DEVELOPMENT.*</include>
+                                                <include>README.*</include>
+                                                <include>NOTICE.*</include>
+                                            </includes>
                                         </resource>
                                     </resources>
                                 </configuration>
