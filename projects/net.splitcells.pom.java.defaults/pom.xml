@@ -53,9 +53,6 @@
                 <directory>src/main/python</directory>
             </resource>
             <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
                 <directory>src/main/svg</directory>
             </resource>
             <resource>
@@ -233,6 +230,40 @@
                                 <goals>
                                     <goal>copy-dependencies</goal>
                                 </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>resources-source</id>
+            <!-- This is used in order to provide content and files to the webserver via jars,
+            instead of the file system.-->
+            <activation>
+                <property>
+                    <name>!resources-source</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/src/main/resources</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/resources</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
