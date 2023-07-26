@@ -89,6 +89,7 @@ public class FileSystemViaClassResources implements FileSystemView {
             }
             if ("jar".equals(resourcePath.getProtocol())) {
                 try {
+                    final var pathStr = path.toString();
                     final var dirURL = FileSystemViaClassResources.class.getResource("/net/");
                     final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
                     final var jarEntries = new JarFile(URLDecoder.decode(jarPath, UTF_8))
@@ -98,7 +99,13 @@ public class FileSystemViaClassResources implements FileSystemView {
                     while (jarEntries.hasNext()) {
                         walk.withAppended(Path.of((jarEntries.next().getRealName())));
                     }
-                    return walk.stream();
+                    /*
+                     * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
+                     * in order to avoid walking through it, even it is not request.
+                     * For example, without this hack requesting `net/splitcells/` would result in getting
+                     * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
+                     */
+                    return walk.stream().filter(w -> w.startsWith(pathStr));
                 } catch (Throwable e) {
                     throw executionException(e);
                 }
