@@ -39,6 +39,11 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>website.content.default</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>

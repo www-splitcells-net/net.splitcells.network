@@ -15,7 +15,9 @@
  */
 package net.splitcells.website;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.website.content.defaults.DefaultContent;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -23,6 +25,7 @@ import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -62,8 +65,9 @@ public class ProjectsViaJar {
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories
             , SourceValidator sourceValidator
             , Config config) {
+        ;
         return projectRenderer(profile
-                , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/"))
+                , configValue(DefaultContent.class)
                 , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
                 , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/content"))
                 , "/"
