@@ -94,21 +94,23 @@ public class FileSystemViaClassResources implements FileSystemView {
                     final var pathStr = prefix + path.toString();
                     final var dirURL = FileSystemViaClassResources.class.getResource("/net/");
                     final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
-                    final var jarEntries = new JarFile(URLDecoder.decode(jarPath, UTF_8))
-                            .entries()
-                            .asIterator();
-                    final List<Path> walk = list();
-                    while (jarEntries.hasNext()) {
-                        walk.withAppended(Path.of((jarEntries.next().getRealName())));
+                    try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
+                        final var jarEntries = jarFile
+                                .entries()
+                                .asIterator();
+                        final List<Path> walk = list();
+                        while (jarEntries.hasNext()) {
+                            walk.withAppended(Path.of((jarEntries.next().getRealName())));
+                        }
+                        /*
+                         * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
+                         * in order to avoid walking through it, even it is not request.
+                         * For example, without this hack requesting `net/splitcells/` would result in getting
+                         * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
+                         */
+                        return walk.stream().filter(w -> w.startsWith(pathStr))
+                                .map(w -> Path.of(w.toString().substring(prefix.length())));
                     }
-                    /*
-                     * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
-                     * in order to avoid walking through it, even it is not request.
-                     * For example, without this hack requesting `net/splitcells/` would result in getting
-                     * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
-                     */
-                    return walk.stream().filter(w -> w.startsWith(pathStr))
-                            .map(w -> Path.of(w.toString().substring(prefix.length())));
                 } catch (Throwable e) {
                     throw executionException(e);
                 }
