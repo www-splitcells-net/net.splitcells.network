@@ -64,4 +64,11 @@ public class FileSystemViaClassResourcesTest {
                         , Path.of(rootPath + "1/2/3/test.txt")
                 );
     }
+
+    @IntegrationTest
+    public void testSubFileSystemView() {
+        final var testSubject = fileSystemViaClassResources(FileSystemViaClassResourcesTest.class)
+                .subFileSystemView("net/splitcells");
+        require(testSubject.isFile("dem/api/test-file.txt"));
+    }
 }

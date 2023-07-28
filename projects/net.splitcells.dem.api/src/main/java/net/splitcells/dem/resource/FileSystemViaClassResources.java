@@ -41,13 +41,15 @@ import static net.splitcells.dem.utils.StringUtils.removePrefix;
 @JavaLegacyArtifact
 public class FileSystemViaClassResources implements FileSystemView {
     public static FileSystemView fileSystemViaClassResources(Class<?> clazz) {
-        return new FileSystemViaClassResources(clazz);
+        return new FileSystemViaClassResources(clazz, "");
     }
 
+    private final String prefix;
     private final Class<?> clazz;
 
-    private FileSystemViaClassResources(Class<?> clazz) {
+    private FileSystemViaClassResources(Class<?> clazz, String prefix) {
         this.clazz = clazz;
+        this.prefix = prefix;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class FileSystemViaClassResources implements FileSystemView {
 
     @Override
     public boolean isFile(Path path) {
-        return clazz.getResourceAsStream("/" + path.toString()) != null;
+        return clazz.getResourceAsStream(prefix + "/" + path.toString()) != null;
     }
 
     @Override
@@ -130,6 +132,7 @@ public class FileSystemViaClassResources implements FileSystemView {
     }
 
     public FileSystemView subFileSystemView(String path) {
-        throw notImplementedYet();
+        return new FileSystemViaClassResources(clazz, prefix + "/" + path
+                .replaceAll("//", "/"));
     }
 }
