@@ -187,7 +187,7 @@
             <id>resources-source</id>
             <!-- This is used in order to provide content and files to the webserver via jars,
             instead of the file system. -->
-            <!-- The dedicated `${basedir}/target/classes/${groupId}.${artifactId}.resources` folder is used,
+            <!-- The dedicated `${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources` folder is used,
             in order to avoid mixing resource files with binary execution files.
             This in turn makes resource processing easier. -->
             <activation>
@@ -207,7 +207,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/antlr4</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/antlr4</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/antlr4</directory>
@@ -222,7 +222,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/bash</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/bash</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/bash</directory>
@@ -237,7 +237,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/hugo.md</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/hugo.md</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/hugo.md</directory>
@@ -252,7 +252,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/html</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/html</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/html</directory>
@@ -267,7 +267,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/js</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/js</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/js</directory>
@@ -282,7 +282,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/md</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/md</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/md</directory>
@@ -297,7 +297,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/python</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/python</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/python</directory>
@@ -312,7 +312,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/resources</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/resources</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/resources</directory>
@@ -327,7 +327,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/svg</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/svg</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/svg</directory>
@@ -342,7 +342,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/txt</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/txt</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/txt</directory>
@@ -357,7 +357,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/xml</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/xml</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/xml</directory>
@@ -372,7 +372,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/xml-pom</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/xml-pom</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/xml-pom</directory>
@@ -387,7 +387,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/xsd</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/xsd</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/xml-pom</directory>
@@ -402,7 +402,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/src/main/xsl</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/xsl</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/xsl</directory>
@@ -417,7 +417,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/classes/${groupId}.${artifactId}.resources/</outputDirectory>
+                                    <outputDirectory>${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>./</directory>
