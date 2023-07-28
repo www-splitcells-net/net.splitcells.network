@@ -38,6 +38,10 @@ public class ProjectsViaJar {
         throw constructorIllegal();
     }
 
+    public static void main(String... args) {
+        projectsRenderer(Config.create());
+    }
+
     public static ProjectsRendererI projectsRenderer(Config config) {
         final var profile = "public";
         final var projectsRepository = config.mainProjectRepositoryPath().orElse(Path.of("../"));
@@ -65,11 +69,10 @@ public class ProjectsViaJar {
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories
             , SourceValidator sourceValidator
             , Config config) {
-        ;
         return projectRenderer(profile
                 , configValue(DefaultContent.class)
-                , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
-                , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/content"))
+                , configValue(DefaultContent.class).subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                , configValue(DefaultContent.class).subFileSystemView("net.splitcells.website.content.default/src/main/resources/content")
                 , "/"
                 , sourceValidator
                 , config);
