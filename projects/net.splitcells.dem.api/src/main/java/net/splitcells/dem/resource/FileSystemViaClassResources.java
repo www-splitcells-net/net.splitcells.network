@@ -17,11 +17,8 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.utils.StringUtils;
 
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.util.jar.JarFile;
@@ -40,26 +37,52 @@ import static net.splitcells.dem.utils.StringUtils.removePrefix;
  */
 @JavaLegacyArtifact
 public class FileSystemViaClassResources implements FileSystemView {
+
+    /**
+     * <p>Often, it is expected that resources of a jar are located under
+     * `${project.groupId}.${project.artifactId}.resources/` inside the given jar.
+     * This method recreates this folder name.</p>
+     * <p>Such a sub folder is used in order to ensure,
+     * that the only resources present in them are those, that are deliberately placed there.
+     * Otherwise, files like `META-INF/MANIFEST.MF` and `** /*.java` would add noise to the resource file structure.
+     * This in turn, could be critical for operations such as {@link FileSystemView#walkRecursively(String)}.
+     * </p>
+     *
+     * @param groupdId
+     * @param artifiactId
+     * @return
+     */
+    public static String resourceBasePath(String groupdId, String artifiactId) {
+        return groupdId + "." + artifiactId + ".resources/";
+    }
+
     public static FileSystemView fileSystemViaClassResources(Class<?> clazz) {
         return new FileSystemViaClassResources(clazz, "");
     }
 
-    private final String prefix;
+    public static FileSystemView fileSystemViaClassResources(Class<?> clazz, String basePath) {
+        return new FileSystemViaClassResources(clazz, basePath);
+    }
+
+    /**
+     * All files accessed via paths has {@link #basePath} as the prefix for these paths.
+     */
+    private final String basePath;
     private final Class<?> clazz;
 
-    private FileSystemViaClassResources(Class<?> clazz, String prefix) {
+    private FileSystemViaClassResources(Class<?> clazz, String basePath) {
         this.clazz = clazz;
-        this.prefix = prefix;
+        this.basePath = basePath;
     }
 
     @Override
     public InputStream inputStream(Path path) {
-        return clazz.getResourceAsStream("/" + prefix + path.toString());
+        return clazz.getResourceAsStream("/" + basePath + path.toString());
     }
 
     @Override
     public String readString(Path path) {
-        return readAsString(clazz.getResourceAsStream("/" + prefix + path.toString()));
+        return readAsString(clazz.getResourceAsStream("/" + basePath + path.toString()));
     }
 
     @Override
@@ -69,7 +92,7 @@ public class FileSystemViaClassResources implements FileSystemView {
 
     @Override
     public boolean isFile(Path path) {
-        return clazz.getResourceAsStream("/" + prefix + path.toString()) != null;
+        return clazz.getResourceAsStream("/" + basePath + path.toString()) != null;
     }
 
     @Override
@@ -85,13 +108,13 @@ public class FileSystemViaClassResources implements FileSystemView {
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
-            final var resourcePath = clazz.getClassLoader().getResource(prefix + path + "/");
+            final var resourcePath = clazz.getClassLoader().getResource(basePath + path + "/");
             if (resourcePath == null) {
                 return Stream.empty();
             }
             if ("jar".equals(resourcePath.getProtocol())) {
                 try {
-                    final var pathStr = prefix + path.toString();
+                    final var pathStr = basePath + path.toString();
                     final var dirURL = FileSystemViaClassResources.class.getResource("/net/");
                     final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
                     try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
@@ -109,17 +132,17 @@ public class FileSystemViaClassResources implements FileSystemView {
                          * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
                          */
                         return walk.stream().filter(w -> w.startsWith(pathStr))
-                                .map(w -> Path.of(w.toString().substring(prefix.length())));
+                                .map(w -> Path.of(w.toString().substring(basePath.length())));
                     }
                 } catch (Throwable e) {
                     throw executionException(e);
                 }
             } else {
-                final var rootPathStr = Path.of(clazz.getClassLoader().getResource(prefix + "./").toURI())
+                final var rootPathStr = Path.of(clazz.getClassLoader().getResource(basePath + "./").toURI())
                         .toString()
                         .replace("test-classes", "classes")
                         + "/";
-                final var startPath = Path.of(clazz.getClassLoader().getResource(prefix + path + "/").toURI());
+                final var startPath = Path.of(clazz.getClassLoader().getResource(basePath + path + "/").toURI());
                 return walk_recursively(startPath).map(p -> Path.of(removePrefix(rootPathStr, p.toString())));
             }
         } catch (Throwable e) {
@@ -133,6 +156,6 @@ public class FileSystemViaClassResources implements FileSystemView {
     }
 
     public FileSystemView subFileSystemView(String path) {
-        return new FileSystemViaClassResources(clazz, (prefix + path + "/").replaceAll("//", "/"));
+        return new FileSystemViaClassResources(clazz, (basePath + path + "/").replaceAll("//", "/"));
     }
 }
