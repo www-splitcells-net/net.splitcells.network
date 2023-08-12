@@ -19,9 +19,11 @@ import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
+import static net.splitcells.dem.resource.FileSystemViaClassResources.resourceBasePath;
 
 public class DefaultContent extends OptionI<FileSystemView> {
     public DefaultContent() {
-        super(() -> fileSystemViaClassResources(DefaultContent.class));
+        super(() -> fileSystemViaClassResources(DefaultContent.class
+                , resourceBasePath("net.splitcells", "website.content.default")));
     }
 }
