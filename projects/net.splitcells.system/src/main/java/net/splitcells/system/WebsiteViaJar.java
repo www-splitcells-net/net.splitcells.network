@@ -47,8 +47,7 @@ public class WebsiteViaJar {
         return projectsRenderer(projectsRepository
                 , profile
                 , fallbackProjectRenderer(profile, projectsRepository, validator, config)
-                , list(projectRenderer
-                        (profile
+                , list(projectRenderer(profile
                                 , configValue(net.splitcells.dem.FileSystem.class)
                                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
                                         .subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
@@ -56,7 +55,17 @@ public class WebsiteViaJar {
                                         .subFileSystemView("net.splitcells.website.content.default/src/main/resources/html")
                                 , "/net/splitcells/dem"
                                 , validator
-                                , config))
+                                , config)
+                        , projectRenderer(profile
+                                , configValue(net.splitcells.network.FileSystem.class)
+                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                                        .subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                                        .subFileSystemView("net.splitcells.website.content.default/src/main/resources/html")
+                                , "/net/splitcells/network"
+                                , validator
+                                , config)
+                )
                 , validator
                 , config);
     }

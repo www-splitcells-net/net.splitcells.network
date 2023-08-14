@@ -12,4 +12,11 @@
         <version>${revision}</version>
         <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
+    <dependencies>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>dem</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 </project>
