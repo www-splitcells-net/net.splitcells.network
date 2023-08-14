@@ -36,7 +36,7 @@ public class CommonMarkProjectRendererExtensionTest {
     public void testCommonMarkLayout() {
         final var testSubject = projectRenderer
                 ("public"
-                        , fileSystemOnLocalHost(Path.of("../.."))
+                        , fileSystemOnLocalHost(Path.of("../net.splitcells.network"))
                         , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
                         , fileSystemOnLocalHost(Path.of("net.splitcells.website.content.default/src/main/resources/html"))
                         , "/net/splitcells/"
