@@ -21,9 +21,9 @@ import net.splitcells.dem.resource.FileSystemView;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.resourceBasePath;
 
-public class DefaultContent extends OptionI<FileSystemView> {
-    public DefaultContent() {
-        super(() -> fileSystemViaClassResources(DefaultContent.class
+public class FileSystem extends OptionI<FileSystemView> {
+    public FileSystem() {
+        super(() -> fileSystemViaClassResources(FileSystem.class
                 , resourceBasePath("net.splitcells", "website.content.default")));
     }
 }

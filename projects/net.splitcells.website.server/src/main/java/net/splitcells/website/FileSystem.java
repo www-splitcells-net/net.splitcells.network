@@ -23,9 +23,9 @@ import java.util.function.Supplier;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.resourceBasePath;
 
-public class Content extends OptionI<FileSystemView> {
-    public Content(Supplier<FileSystemView> arg_default_value) {
-        super(() -> fileSystemViaClassResources(Content.class
+public class FileSystem extends OptionI<FileSystemView> {
+    public FileSystem(Supplier<FileSystemView> arg_default_value) {
+        super(() -> fileSystemViaClassResources(FileSystem.class
                 , resourceBasePath("net.splitcells", "website.server")));
     }
 }
