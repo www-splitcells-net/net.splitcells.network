@@ -21,9 +21,11 @@ import net.splitcells.dem.resource.FileSystemView;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
+import static net.splitcells.dem.resource.FileSystemViaClassResources.resourceBasePath;
 
 public class FileSystem extends OptionI<FileSystemView> {
     public FileSystem() {
-        super(() -> fileSystemViaClassResources(FileSystem.class));
+        super(() -> fileSystemViaClassResources(FileSystem.class
+                , resourceBasePath("net.splitcells", "dem")));
     }
 }
