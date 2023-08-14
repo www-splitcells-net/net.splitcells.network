@@ -16,6 +16,7 @@
 package net.splitcells.system;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.website.Content;
 import net.splitcells.website.content.defaults.DefaultContent;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -43,8 +44,8 @@ public class WebsiteViaJar {
     public static ProjectsRendererI projectsRenderer(Config config) {
         final var profile = "public";
         final var projectsRepository = config.mainProjectRepositoryPath().orElse(Path.of("../"));
-        final var validator = config.xmlSchema().map(s -> (SourceValidator) validatorViaSchema(s))
-                .orElse(VOID_VALIDATOR);
+        final var validator = VOID_VALIDATOR;
+        // TODO config.xmlSchema().map(s -> (SourceValidator) validatorViaSchema(s)).orElse(VOID_VALIDATOR);
         return projectsRenderer(projectsRepository
                 , profile
                 , fallbackProjectRenderer(profile, projectsRepository, validator, config)
