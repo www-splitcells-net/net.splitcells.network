@@ -16,8 +16,7 @@
 package net.splitcells.system;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.website.Content;
-import net.splitcells.website.content.defaults.DefaultContent;
+import net.splitcells.website.content.defaults.FileSystem;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -30,7 +29,6 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
-import static net.splitcells.website.server.project.validator.SourceValidatorViaSchema.validatorViaSchema;
 
 public class WebsiteViaJar {
     private WebsiteViaJar() {
@@ -49,7 +47,16 @@ public class WebsiteViaJar {
         return projectsRenderer(projectsRepository
                 , profile
                 , fallbackProjectRenderer(profile, projectsRepository, validator, config)
-                , list()
+                , list(projectRenderer
+                        (profile
+                                , configValue(net.splitcells.dem.FileSystem.class)
+                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                                        .subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                                        .subFileSystemView("net.splitcells.website.content.default/src/main/resources/html")
+                                , "/net/splitcells/dem"
+                                , validator
+                                , config))
                 , validator
                 , config);
     }
@@ -69,9 +76,11 @@ public class WebsiteViaJar {
             , SourceValidator sourceValidator
             , Config config) {
         return projectRenderer(profile
-                , configValue(DefaultContent.class)
-                , configValue(DefaultContent.class).subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                , configValue(DefaultContent.class).subFileSystemView("net.splitcells.website.content.default/src/main/resources/content")
+                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                        .subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                        .subFileSystemView("net.splitcells.website.content.default/src/main/resources/content")
                 , "/"
                 , sourceValidator
                 , config);
