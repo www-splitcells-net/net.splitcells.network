@@ -49,6 +49,11 @@ public class Config {
     private Optional<String> sslKeystorePassword = Optional.of("password");
     private Optional<Path> sslKeystoreFile = Optional.of(Paths.get("target/keystore.p12"));
 
+    /**
+     * TODO Use variable for storing the contents of the XSD in order to be file system independent,
+     * instead of using a path to the XSD.
+     */
+    @Deprecated
     private Optional<Path> xmlSchema = Optional.of(net.splitcells.dem.resource.Paths.path("src/main/xsd/den.xsd"));
 
     /**
@@ -298,6 +303,7 @@ public class Config {
         return this;
     }
 
+    @Deprecated
     public Optional<Path> xmlSchema() {
         return xmlSchema;
     }
