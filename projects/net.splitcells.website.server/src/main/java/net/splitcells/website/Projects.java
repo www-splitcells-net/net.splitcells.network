@@ -116,7 +116,7 @@ public class Projects {
                                 , config)
                 , projectRenderer
                         (profile
-                                , integratedProjectRepo.subFileSystem("../")
+                                , integratedProjectRepo.subFileSystem("net.splitcells.network/")
                                 , xslLib
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/network"

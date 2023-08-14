@@ -26,6 +26,7 @@
         <module>../net.splitcells.website.content.default</module>
         <module>../net.splitcells.website.content.minimal</module>
         <module>../net.splitcells.sep</module>
+        <module>../net.splitcells.network</module>
         <module>../net.splitcells.network.blog</module>
         <module>../net.splitcells.network.worker</module>
         <module>../net.splitcells.cin</module>
