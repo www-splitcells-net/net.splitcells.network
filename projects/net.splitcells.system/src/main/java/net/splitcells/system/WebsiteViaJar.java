@@ -13,9 +13,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website;
+package net.splitcells.system;
 
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.website.content.defaults.DefaultContent;
 import net.splitcells.website.server.Config;
@@ -27,14 +26,13 @@ import java.nio.file.Path;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
 import static net.splitcells.website.server.project.validator.SourceValidatorViaSchema.validatorViaSchema;
 
-public class ProjectsViaJar {
-    private ProjectsViaJar() {
+public class WebsiteViaJar {
+    private WebsiteViaJar() {
         throw constructorIllegal();
     }
 
