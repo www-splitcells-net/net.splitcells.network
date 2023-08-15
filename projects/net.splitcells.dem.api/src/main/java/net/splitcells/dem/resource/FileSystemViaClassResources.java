@@ -91,9 +91,19 @@ public class FileSystemViaClassResources implements FileSystemView {
         return true;
     }
 
+    /**
+     * On directories {@link Class#getResourceAsStream(String)} returns a list of sub folders,
+     * if the given argument is a folder.
+     * Therefore, the path is checked, if the given path has no children,
+     * in order to ensure, that the given path is no folder.
+     *
+     * @param path
+     * @return
+     */
     @Override
     public boolean isFile(Path path) {
-        return clazz.getResourceAsStream("/" + basePath + path.toString()) != null;
+        return clazz.getResourceAsStream("/" + basePath + path.toString()) != null
+                && walkRecursively(path).count() == 1;
     }
 
     @Override
