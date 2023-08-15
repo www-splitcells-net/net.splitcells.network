@@ -24,7 +24,7 @@ import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystem
 import static net.splitcells.dem.resource.FileSystemViaClassResources.resourceBasePath;
 
 public class FileSystem extends OptionI<FileSystemView> {
-    public FileSystem(Supplier<FileSystemView> arg_default_value) {
+    public FileSystem() {
         super(() -> fileSystemViaClassResources(FileSystem.class
                 , resourceBasePath("net.splitcells", "website.server")));
     }
