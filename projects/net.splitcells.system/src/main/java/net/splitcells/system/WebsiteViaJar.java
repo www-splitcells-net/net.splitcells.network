@@ -42,6 +42,8 @@ public class WebsiteViaJar {
                 .withAdditionalProject(configValue(net.splitcells.dem.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.network.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.gel.doc.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.gel.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.gel.FileSystemExt.class))
         );
     }
 
