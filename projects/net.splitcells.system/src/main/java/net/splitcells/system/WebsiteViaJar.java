@@ -40,7 +40,9 @@ public class WebsiteViaJar {
     public static void main(String... args) {
         projectsRenderer(Config.create()
                 .withAdditionalProject(configValue(net.splitcells.dem.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.network.FileSystem.class)));
+                .withAdditionalProject(configValue(net.splitcells.network.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.gel.doc.FileSystem.class))
+        );
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {

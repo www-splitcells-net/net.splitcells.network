@@ -33,5 +33,10 @@
             <artifactId>network</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>gel.doc</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>
