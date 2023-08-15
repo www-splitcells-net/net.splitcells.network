@@ -17,6 +17,7 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.StreamUtils;
 
 import java.io.InputStream;
 import java.net.URLDecoder;
@@ -97,12 +98,12 @@ public class FileSystemViaClassResources implements FileSystemView {
 
     @Override
     public boolean isDirectory(Path path) {
-        throw notImplementedYet();
+        return walkRecursively(path).findAny().isPresent();
     }
 
     @Override
     public Stream<Path> walkRecursively() {
-        throw notImplementedYet();
+        return walkRecursively(Path.of(basePath + "/"));
     }
 
     @Override
