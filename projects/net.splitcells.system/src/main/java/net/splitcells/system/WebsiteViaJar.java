@@ -36,7 +36,11 @@ public class WebsiteViaJar {
     }
 
     public static void main(String... args) {
-        projectsRenderer(Config.create()
+        projectsRenderer(config());
+    }
+
+    public static Config config() {
+        return Config.create()
                 .withAdditionalProject(configValue(net.splitcells.cin.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.dem.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.dem.ApiFileSystem.class))
@@ -48,8 +52,7 @@ public class WebsiteViaJar {
                 .withAdditionalProject(configValue(net.splitcells.os.state.interfaces.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.system.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.website.FileSystem.class))
-        );
+                .withAdditionalProject(configValue(net.splitcells.website.FileSystem.class));
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {
