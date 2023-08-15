@@ -16,6 +16,7 @@
 package net.splitcells.system;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.website.content.defaults.FileSystem;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -26,6 +27,7 @@ import java.nio.file.Path;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
@@ -36,7 +38,9 @@ public class WebsiteViaJar {
     }
 
     public static void main(String... args) {
-        projectsRenderer(Config.create());
+        projectsRenderer(Config.create()
+                .withAdditionalProject(configValue(net.splitcells.dem.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.network.FileSystem.class)));
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {
@@ -44,28 +48,22 @@ public class WebsiteViaJar {
         final var projectsRepository = config.mainProjectRepositoryPath().orElse(Path.of("../"));
         final var validator = VOID_VALIDATOR;
         // TODO config.xmlSchema().map(s -> (SourceValidator) validatorViaSchema(s)).orElse(VOID_VALIDATOR);
+        final var additionalProjectRenderers = config.additionalProjects().stream()
+                .map(project ->
+                        projectRenderer(profile
+                                , project
+                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                                        .subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                                        .subFileSystemView("net.splitcells.website.content.default/src/main/resources/html")
+                                , "/"
+                                , validator
+                                , config))
+                .collect(toList());
         return projectsRenderer(projectsRepository
                 , profile
                 , fallbackProjectRenderer(profile, projectsRepository, validator, config)
-                , list(projectRenderer(profile
-                                , configValue(net.splitcells.dem.FileSystem.class)
-                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                                        .subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                                        .subFileSystemView("net.splitcells.website.content.default/src/main/resources/html")
-                                , "/net/splitcells/dem"
-                                , validator
-                                , config)
-                        , projectRenderer(profile
-                                , configValue(net.splitcells.network.FileSystem.class)
-                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                                        .subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                                        .subFileSystemView("net.splitcells.website.content.default/src/main/resources/html")
-                                , "/net/splitcells/network"
-                                , validator
-                                , config)
-                )
+                , additionalProjectRenderers
                 , validator
                 , config);
     }

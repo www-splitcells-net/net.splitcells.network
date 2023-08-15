@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
@@ -133,6 +134,8 @@ public class Config {
      * The content should be processable by XSL.
      */
     private Optional<String> detailedXslMenu = Optional.empty();
+
+    private List<FileSystemView> additionalProjects = list();
 
     private Config() {
     }
@@ -306,5 +309,14 @@ public class Config {
     @Deprecated
     public Optional<Path> xmlSchema() {
         return xmlSchema;
+    }
+
+    public List<FileSystemView> additionalProjects() {
+        return additionalProjects;
+    }
+
+    public Config withAdditionalProject(FileSystemView project) {
+        additionalProjects.add(project);
+        return this;
     }
 }
