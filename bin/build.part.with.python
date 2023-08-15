@@ -14,5 +14,5 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
 chmod +x ./bin/*
-cd ../net.splitcells.os.state.interface
+cd projects/net.splitcells.os.state.interface
     ./bin/test.routine
