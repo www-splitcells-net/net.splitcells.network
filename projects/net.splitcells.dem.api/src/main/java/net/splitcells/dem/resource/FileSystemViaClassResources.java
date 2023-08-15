@@ -112,7 +112,9 @@ public class FileSystemViaClassResources implements FileSystemView {
             if (resourcePath == null) {
                 return Stream.empty();
             }
-            if ("jar".equals(resourcePath.getProtocol())) {
+            if ("jar".equals(resourcePath.getProtocol())
+                    && !"file".equals(FileSystemViaClassResources.class.getResource("/net/").getProtocol())
+            ) {
                 try {
                     final var pathStr = basePath + path.toString();
                     final var dirURL = FileSystemViaClassResources.class.getResource("/net/");
@@ -138,7 +140,11 @@ public class FileSystemViaClassResources implements FileSystemView {
                     throw executionException(e);
                 }
             } else {
-                final var rootPathStr = Path.of(clazz.getClassLoader().getResource(basePath + "./").toURI())
+                final var resource = clazz.getClassLoader().getResource(basePath + "./");
+                if (resource == null) {
+                    return StreamUtils.emptyStream();
+                }
+                final var rootPathStr = Path.of(resource.toURI())
                         .toString()
                         .replace("test-classes", "classes")
                         + "/";
