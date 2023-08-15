@@ -7,10 +7,10 @@
             SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
             SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
         -->
-        <title>Test Guidelines</title>
+        <title>net.splitcells.Test Guidelines</title>
     </meta>
     <chapter>
-        <title>Test Complexity Scopes</title>
+        <title>net.splitcells.Test Complexity Scopes</title>
         <paragraph>Every project should provide for each test complexity scope a dedicated project command,
             if there are such tests present.
             The command <quote>bin/text.everything</quote> can be created in order to execute every test.

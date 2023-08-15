@@ -38,5 +38,15 @@
             <artifactId>gel.doc</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>os.state.interface</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>os.state.interface.lib</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

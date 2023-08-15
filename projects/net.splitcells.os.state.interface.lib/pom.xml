@@ -9,15 +9,15 @@
     <artifactId>os.state.interface.lib</artifactId>
     <parent>
         <groupId>net.splitcells</groupId>
-        <artifactId>pom-java-minimal</artifactId>
+        <artifactId>pom-java-defaults</artifactId>
         <version>${revision}</version>
-        <relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
+        <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
-    <build>
-        <resources>
-            <resource>
-                <directory>src</directory>
-            </resource>
-        </resources>
-    </build>
+    <dependencies>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>dem</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -58,7 +58,7 @@ lexer grammar Java11Lexer;
     		| 'import java.util.Optional;'
     		| 'import java.util.regex.Pattern;'
     		| 'import java.util.stream.Stream;'
-    		| 'import org.junit.jupiter.api.Test;'
+    		| 'import org.junit.jupiter.api.net.splitcells.Test;'
     		| 'import org.junit.jupiter.api.Tag;'
     		| 'import org.junit.jupiter.api.TestFactory;'
     		| 'import static org.assertj.core.api.Assertions.assertThat;'

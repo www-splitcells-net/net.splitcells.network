@@ -251,7 +251,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.net.splitcells.Test;
 
 import java.nio.file.Path;
 
@@ -282,7 +282,7 @@ public class NQueenProblemTest {
     public static final Attribute<Integer> COLUMN = attribute(Integer.class, "column");
     public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
 
-    @Test
+    @net.splitcells.Test
     public void test() {
         final var testSubject = nQueenProblem(8, 8).asSolution();
         backtracking().optimize(testSubject);

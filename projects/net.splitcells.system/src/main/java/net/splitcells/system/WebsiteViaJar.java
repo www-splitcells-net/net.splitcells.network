@@ -16,8 +16,6 @@
 package net.splitcells.system;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.website.content.defaults.FileSystem;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -39,11 +37,18 @@ public class WebsiteViaJar {
 
     public static void main(String... args) {
         projectsRenderer(Config.create()
+                .withAdditionalProject(configValue(net.splitcells.cin.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.dem.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.network.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.dem.ApiFileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.gel.doc.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.gel.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.gel.FileSystemExt.class))
+                .withAdditionalProject(configValue(net.splitcells.network.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.network.worker.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.os.state.interfaces.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.system.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.website.FileSystem.class))
         );
     }
 
