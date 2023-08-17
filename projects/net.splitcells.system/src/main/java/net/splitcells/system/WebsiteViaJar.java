@@ -65,9 +65,9 @@ public class WebsiteViaJar {
                         projectRenderer(profile
                                 , project
                                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                                        .subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                        .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                                        .subFileSystemView("net.splitcells.website.content.default/src/main/resources/html")
+                                        .subFileSystemView("src/main/resources/html")
                                 , "/"
                                 , validator
                                 , config))
@@ -85,10 +85,7 @@ public class WebsiteViaJar {
             , List<ProjectRenderer> additionalProjects
             , SourceValidator sourceValidator
             , Config config) {
-        final var xslLib = projectRepository
-                .resolve("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/");
-        return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects
-                , config);
+        return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, config);
     }
 
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories
@@ -97,9 +94,9 @@ public class WebsiteViaJar {
         return projectRenderer(profile
                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                        .subFileSystemView("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                        .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                        .subFileSystemView("net.splitcells.website.content.default/src/main/resources/content")
+                        .subFileSystemView("src/main/resources/content")
                 , "/"
                 , sourceValidator
                 , config);
