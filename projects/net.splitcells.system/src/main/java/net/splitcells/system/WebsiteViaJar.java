@@ -53,7 +53,8 @@ public class WebsiteViaJar {
                 .withAdditionalProject(configValue(net.splitcells.os.state.interfaces.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.system.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.website.FileSystem.class));
+                .withAdditionalProject(configValue(net.splitcells.website.FileSystem.class))
+                .withAdditionalProject(configValue(net.splitcells.website.content.defaults.FileSystem.class));
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {
