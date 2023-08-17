@@ -5,6 +5,7 @@
 * Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2023-08-17 \#249** Provide default value for `net.splitcells.website.server.Config#detailedXslMenu`.
 * **2023-04-14 \#241** [Adjust projects to the project partitioning guidelines](https://github.com/www-splitcells-net/net.splitcells.network/issues/241):
   1. Rename `net.splitcells.dem.core` to `net.splitcells.dem.ext`.
   2. Rename `net.splitcells.dem.merger` to `net.splitcells.dem.api`.
