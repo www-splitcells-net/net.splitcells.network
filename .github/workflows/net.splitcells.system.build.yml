@@ -37,7 +37,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          cd $GITHUB_WORKSPACE/projects/net.splitcells.system.root
+          cd "$GITHUB_WORKSPACE"
           echo $GITHUB_WORKSPACE
           export test_codecov=1
           ./bin/build.part.with.python
