@@ -22,6 +22,7 @@ import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -36,7 +37,7 @@ public class WebsiteViaJar {
     }
 
     public static void main(String... args) {
-        projectsRenderer(config());
+        projectsRenderer(config()).serveTo(Paths.get("target/test"));
     }
 
     public static Config config() {
