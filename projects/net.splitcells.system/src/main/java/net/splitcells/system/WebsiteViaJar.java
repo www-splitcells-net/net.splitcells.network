@@ -23,6 +23,7 @@ import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -54,7 +55,9 @@ public class WebsiteViaJar {
                 .withAdditionalProject(configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.system.FileSystem.class))
                 .withAdditionalProject(configValue(net.splitcells.website.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.website.content.defaults.FileSystem.class));
+                .withAdditionalProject(configValue(net.splitcells.website.content.defaults.FileSystem.class))
+                .withDetailedXslMenu(Optional.of(configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                        .readString("src/main/xsl/net/splitcells/website/detailed-menu.xsl")));
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {
