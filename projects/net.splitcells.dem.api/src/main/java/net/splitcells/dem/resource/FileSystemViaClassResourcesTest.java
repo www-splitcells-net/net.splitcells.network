@@ -130,4 +130,12 @@ public class FileSystemViaClassResourcesTest {
         ).subFileSystemView("src/main/resources/net/splitcells");
         require(testSubject.isFile("dem/api/test-file.txt"));
     }
+
+    @IntegrationTest
+    public void testReadFileAsBytes() {
+        final var testSubject = fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                , resourceBasePath("net.splitcells", "dem.api"));
+        requireEquals(new String(testSubject.readFileAsBytes("src/main/resources/net/splitcells/dem/api/test-file.txt"))
+                , "This is a test file of the 20th of July 2023.");
+    }
 }

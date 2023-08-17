@@ -60,5 +60,9 @@ public interface FileSystemView {
 
     byte[] readFileAsBytes(Path path);
 
+    default byte[] readFileAsBytes(String path) {
+        return readFileAsBytes(Path.of(path));
+    }
+
     FileSystemView subFileSystemView(String path);
 }

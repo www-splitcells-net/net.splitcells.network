@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.utils.StreamUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.file.Path;
@@ -169,7 +170,11 @@ public class FileSystemViaClassResources implements FileSystemView {
 
     @Override
     public byte[] readFileAsBytes(Path path) {
-        throw notImplementedYet();
+        try {
+            return clazz.getResourceAsStream("/" + basePath + path.toString()).readAllBytes();
+        } catch (IOException e) {
+            throw executionException(e);
+        }
     }
 
     public FileSystemView subFileSystemView(String path) {
