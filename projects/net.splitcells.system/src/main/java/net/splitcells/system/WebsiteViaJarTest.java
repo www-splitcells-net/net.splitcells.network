@@ -15,7 +15,10 @@
  */
 package net.splitcells.system;
 
+import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
+
+import java.nio.file.Paths;
 
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 
@@ -23,5 +26,10 @@ public class WebsiteViaJarTest {
     @UnitTest
     public void testIllegalConstructor() {
         requireIllegalDefaultConstructor(WebsiteViaJar.class);
+    }
+
+    @IntegrationTest
+    public void testServingWebsiteToFolder() {
+        WebsiteViaJar.projectsRenderer(WebsiteViaJar.config()).serveTo(Paths.get("target/test"));
     }
 }

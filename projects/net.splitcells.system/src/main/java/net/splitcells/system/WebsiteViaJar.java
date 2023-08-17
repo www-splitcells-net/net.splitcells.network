@@ -37,10 +37,6 @@ public class WebsiteViaJar {
         throw constructorIllegal();
     }
 
-    public static void main(String... args) {
-        projectsRenderer(config()).serveTo(Paths.get("target/test"));
-    }
-
     public static Config config() {
         return Config.create()
                 .withAdditionalProject(configValue(net.splitcells.cin.FileSystem.class))
