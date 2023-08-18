@@ -22,6 +22,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+
 /**
  * <p>When one works with {@link java.nio.file.Path} and {@link java.nio.file.Files} directly,
  * the current path (denoted as `./`) and the root path is always specific to the operation system and
@@ -48,6 +50,11 @@ public interface FileSystem extends FileSystemView {
     FileSystem writeToFile(Path path, byte[] content);
 
     @ReturnsThis
+    default FileSystem writeToFile(String path, byte[] content) {
+        return writeToFile(Path.of(path), content);
+    }
+
+    @ReturnsThis
     default FileSystem writeToFile(Path path, String content) {
         return writeToFile(path, content.getBytes(StandardCharsets.UTF_8));
     }
@@ -56,5 +63,9 @@ public interface FileSystem extends FileSystemView {
 
     default FileSystem subFileSystem(String path) {
         return this.subFileSystem(Path.of(path));
+    }
+
+    default FileSystem createDirectoryPath(String path) {
+        throw notImplementedYet();
     }
 }

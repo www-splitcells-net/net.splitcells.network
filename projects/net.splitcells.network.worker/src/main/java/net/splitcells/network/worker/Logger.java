@@ -35,10 +35,6 @@ import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
-import static net.splitcells.dem.resource.Files.appendToFile;
-import static net.splitcells.dem.resource.Files.createDirectory;
-import static net.splitcells.dem.resource.Files.is_file;
-import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
 /**
@@ -60,41 +56,39 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 public class Logger implements TestExecutionListener {
 
     public static Logger logger() {
-        return logger(config().configValue(ProjectsFolder.class).resolve("net.splitcells.network.log"));
+        return logger(config().configValue(NetworkLog.class));
     }
 
-    private static Logger logger(Path networkProject) {
+    private static Logger logger(FileSystem networkProject) {
         return new Logger(networkProject);
     }
 
     private static final String BUILDER_RUNTIME_LOG = "net/splitcells/network/logger/builder/runtime";
 
-    private final Path logProject;
+    private final FileSystem logProject;
     private final Map<TestIdentifier, Long> testToStartTime = map();
 
-    private Logger(Path logProject) {
+    private Logger(FileSystem logProject) {
         this.logProject = logProject;
     }
 
-    public void logExecutionResults(String subject, String executor, LocalDate localDate, String resultType, double result) {
-        final var projectPath = logProject
-                .resolve("src/main/" + CSV.codeName())
-                .resolve(subject)
-                .resolve(executor + "." + CSV.codeName());
-        createDirectory(logProject.resolve(projectPath).getParent());
-        if (!is_file(projectPath)) {
-            writeToFile(projectPath, ("Date," + resultType + Files.newLine()).getBytes(StandardCharsets.UTF_8));
+    public void logExecutionResults(String subject, String executor, LocalDate localDate, String resultType
+            , double result) {
+        final var projectFolder = "src/main/" + CSV.codeName() + "/" + subject + "/";
+        logProject.createDirectoryPath(projectFolder);
+        final var projectPath = projectFolder + executor + "." + CSV.codeName();
+        if (logProject.isFile(projectPath)) {
+            logProject.writeToFile(projectPath
+                    , ("Date," + resultType + Files.newLine()).getBytes(StandardCharsets.UTF_8));
         }
-        appendToFile(projectPath, (localDate + "," + result + Files.newLine()).getBytes(StandardCharsets.UTF_8));
+        logProject.writeToFile(Path.of(projectPath)
+                , (localDate + "," + result + Files.newLine()).getBytes(StandardCharsets.UTF_8));
     }
 
     public String readExecutionResults(String subject, String executor) {
-        final var projectPath = logProject
-                .resolve("src/main/" + CSV.codeName())
-                .resolve(subject)
-                .resolve(executor + "." + CSV.codeName());
-        createDirectory(logProject.resolve(projectPath).getParent());
-        return Files.readFileAsString(projectPath);
+        final var projectFolder = "src/main/" + CSV.codeName() + "/" + subject + "/";
+        logProject.createDirectoryPath(projectFolder);
+        return logProject.readString(projectFolder + executor + "." + CSV.codeName());
     }
 
     @Override
@@ -143,14 +137,14 @@ public class Logger implements TestExecutionListener {
      * TODO TOFIX This does not work, because PATH and things like the git config are not available during the execution in the shell.
      * The reason for this is unknown.
      * In order to fix this, the executing shell script calling this logger executes the committing shell command by itself instead.
-     *
+     * <p>
      * Some systems may not have added an OS state interface installation to the PATH environmental variable of non-interactive shells.
      * Therefore, the standard `~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin` command is used,
      * in order to extend the PATH variable accordingly only inside the current shell session.
      */
     @Deprecated
     public void commit() {
-        domsole().append("`Logger#commit` is not implemented." ,LogLevel.ERROR);
+        domsole().append("`Logger#commit` is not implemented.", LogLevel.ERROR);
         // TODO TOFIX SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", networkProject);
     }
 
