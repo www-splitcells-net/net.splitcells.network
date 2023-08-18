@@ -50,41 +50,54 @@ public class FileSystemInMemory implements FileSystem {
 
     @Override
     public String readString(Path path) {
-        throw notImplementedYet();
+        domsole().appendUnimplementedWarning(FileSystemInMemory.class);
+        return "";
     }
 
     @Override
     public boolean exists() {
-        throw notImplementedYet();
+        domsole().appendUnimplementedWarning(FileSystemInMemory.class);
+        return false;
     }
 
     @Override
     public boolean isFile(Path path) {
-        throw notImplementedYet();
+        domsole().appendUnimplementedWarning(FileSystemInMemory.class);
+        return false;
     }
 
     @Override
     public boolean isDirectory(Path path) {
-        throw notImplementedYet();
+        domsole().appendUnimplementedWarning(FileSystemInMemory.class);
+        return false;
     }
 
     @Override
     public Stream<Path> walkRecursively() {
-        throw notImplementedYet();
+        domsole().appendUnimplementedWarning(FileSystemInMemory.class);
+        return Stream.empty();
     }
 
     @Override
     public Stream<Path> walkRecursively(Path path) {
-        throw notImplementedYet();
+        domsole().appendUnimplementedWarning(FileSystemInMemory.class);
+        return Stream.empty();
     }
 
     @Override
     public byte[] readFileAsBytes(Path path) {
-        throw notImplementedYet();
+        domsole().appendUnimplementedWarning(FileSystemInMemory.class);
+        return new byte[]{};
     }
 
     @Override
     public FileSystemView subFileSystemView(String path) {
+        domsole().appendUnimplementedWarning(FileSystemInMemory.class);
+        return this;
+    }
+
+    @Override
+    public FileSystem createDirectoryPath(String path) {
         domsole().appendUnimplementedWarning(FileSystemInMemory.class);
         return this;
     }
