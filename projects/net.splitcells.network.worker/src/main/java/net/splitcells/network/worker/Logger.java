@@ -18,6 +18,7 @@ package net.splitcells.network.worker;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import org.junit.platform.engine.TestExecutionResult;
@@ -59,23 +60,20 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 public class Logger implements TestExecutionListener {
 
     public static Logger logger() {
-        return logger(config().configValue(ProjectsFolder.class).resolve("net.splitcells.network")
-                , config().configValue(ProjectsFolder.class).resolve("net.splitcells.network.log"));
+        return logger(config().configValue(ProjectsFolder.class).resolve("net.splitcells.network.log"));
     }
 
-    private static Logger logger(Path logProject, Path networkProject) {
-        return new Logger(logProject, networkProject);
+    private static Logger logger(Path networkProject) {
+        return new Logger(networkProject);
     }
 
     private static final String BUILDER_RUNTIME_LOG = "net/splitcells/network/logger/builder/runtime";
 
     private final Path logProject;
-    private final Path networkProject;
     private final Map<TestIdentifier, Long> testToStartTime = map();
 
-    private Logger(Path networkProject, Path logProject) {
+    private Logger(Path logProject) {
         this.logProject = logProject;
-        this.networkProject = networkProject;
     }
 
     public void logExecutionResults(String subject, String executor, LocalDate localDate, String resultType, double result) {
