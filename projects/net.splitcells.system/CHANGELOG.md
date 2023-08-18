@@ -3,7 +3,7 @@
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
 # Changelog
-The changelog format can be found [here](../net.splitcells.network/src/main/md/net/splitcells/network/guidelines/changelog.md).
+The changelog format can be found [here](../net.splitcells.network/src/main/md/net/splitcells/network/guidelines/standard-usage/changelog.md).
 ## [Unreleased]
 
 ### Minor Changes
