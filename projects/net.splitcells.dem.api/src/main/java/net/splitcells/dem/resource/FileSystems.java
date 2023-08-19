@@ -20,11 +20,14 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
+import static java.nio.file.Files.createDirectories;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * <p>TODO Move all file access instances specific to a computer to this class.</p>
@@ -60,6 +63,16 @@ public class FileSystems implements FileSystem {
 
     private FileSystems(Path rootPath) {
         this.rootPath = rootPath;
+    }
+
+    @Override
+    public FileSystem createDirectoryPath(String path) {
+        try {
+            createDirectories(Path.of(path));
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+        return this;
     }
 
     @Override
