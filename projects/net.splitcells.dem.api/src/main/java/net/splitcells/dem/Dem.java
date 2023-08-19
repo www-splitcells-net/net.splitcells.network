@@ -105,7 +105,16 @@ public class Dem {
                 // TODO Somehow mark this error specially, so its clear, that this error caused execution failure.
                 Domsole.domsole().appendError(t);
                 processResult.hasError(true);
-                throw t;
+                /** Note that thread should handle all exceptions,
+                 * because some are using {@link Thread#getThreadGroup()} and {@link ThreadGroup#},
+                 * in order to interpret any {@link Thread} with an uncaught exception,
+                 * as a program failure.
+                 * This can cause unwanted problems for program integration for example via shell scripts.
+                 *
+                 * @see https://github.com/mojohaus/exec-maven-plugin/blob/d97517868b0fc7a70abee9eb36d43fca6451766d/src/main/java/org/codehaus/mojo/exec/ExecJavaMojo.java#L351
+                 * where Maven exec:java can cause exit code != 0,
+                 * if any thread has uncaught exceptions.
+                 */
             } finally {
                 processEnvironment.config().withConfigValue(EndTime.class, Optional.of(ZonedDateTime.now()));
                 processEnvironment.close();
