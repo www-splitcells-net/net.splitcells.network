@@ -98,7 +98,9 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
     default Ui appendError(Throwable throwable) {
         try {
             final var error = perspective("error");
-            error.withProperty("message", throwable.getMessage());
+            if (throwable.getMessage() != null) {
+                error.withProperty("message", throwable.getMessage());
+            }
             {
                 final var stackTraceValue = new java.io.StringWriter();
                 final var stackTracePrinter = new java.io.PrintWriter(stackTraceValue);
