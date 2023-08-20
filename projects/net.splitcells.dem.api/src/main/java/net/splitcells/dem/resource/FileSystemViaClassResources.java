@@ -93,10 +93,14 @@ public class FileSystemViaClassResources implements FileSystemView {
     }
 
     /**
-     * On directories {@link Class#getResourceAsStream(String)} returns a list of sub folders,
+     * <p>On directories {@link Class#getResourceAsStream(String)} returns a list of sub folders,
      * if the given argument is a folder.
      * Therefore, the path is checked, if the given path has no children,
-     * in order to ensure, that the given path is no folder.
+     * in order to ensure, that the given path is no folder.</p>
+     * <p>TODO Query the list of all files in the resources of the class loader and check its content with the argument.
+     * This can be done by reading the root resource path,
+     * because on folders the {@link Class#getResourceAsStream(String)} returns a list of sub folders.
+     * </p>
      *
      * @param path
      * @return
@@ -104,7 +108,7 @@ public class FileSystemViaClassResources implements FileSystemView {
     @Override
     public boolean isFile(Path path) {
         return clazz.getResourceAsStream("/" + basePath + path.toString()) != null
-                && walkRecursively(path).count() == 1;
+                && walkRecursively(path).count() <= 1;
     }
 
     @Override
