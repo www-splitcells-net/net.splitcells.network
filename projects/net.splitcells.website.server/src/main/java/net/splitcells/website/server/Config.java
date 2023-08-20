@@ -149,7 +149,7 @@ public class Config {
             + "   <xsl:variable name=\"net-splitcells-website-server-config-menu-detailed\"/>\n"
             + "</xsl:stylesheet>");
 
-    private List<FileSystemView> additionalProjects = list();
+    private List<ProjectConfig> additionalProjects = list();
 
     private Config() {
     }
@@ -325,11 +325,11 @@ public class Config {
         return xmlSchema;
     }
 
-    public List<FileSystemView> additionalProjects() {
+    public List<ProjectConfig> additionalProjects() {
         return additionalProjects;
     }
 
-    public Config withAdditionalProject(FileSystemView project) {
+    public Config withAdditionalProject(ProjectConfig project) {
         additionalProjects.add(project);
         return this;
     }

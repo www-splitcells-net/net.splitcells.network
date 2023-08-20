@@ -17,6 +17,7 @@ package net.splitcells.system;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.ProjectConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.projects.ProjectsRendererI;
@@ -29,6 +30,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.website.server.ProjectConfig.projectConfig;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
 
@@ -39,19 +41,32 @@ public class WebsiteViaJar {
 
     public static Config config() {
         return Config.create()
-                .withAdditionalProject(configValue(net.splitcells.cin.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.dem.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.dem.ApiFileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.gel.doc.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.gel.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.gel.FileSystemExt.class))
-                .withAdditionalProject(configValue(net.splitcells.network.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.network.worker.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.os.state.interfaces.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.system.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.website.FileSystem.class))
-                .withAdditionalProject(configValue(net.splitcells.website.content.defaults.FileSystem.class))
+                .withAdditionalProject(projectConfig("/net/splitcells/cin/"
+                        , configValue(net.splitcells.cin.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/dem/"
+                        , configValue(net.splitcells.dem.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/dem/"
+                        , configValue(net.splitcells.dem.ApiFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/"
+                        , configValue(net.splitcells.gel.doc.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/"
+                        , configValue(net.splitcells.gel.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/"
+                        , configValue(net.splitcells.gel.FileSystemExt.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/network/",
+                        configValue(net.splitcells.network.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/network/worker/",
+                        configValue(net.splitcells.network.worker.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/",
+                        configValue(net.splitcells.os.state.interfaces.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/lib/",
+                        configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/system/"
+                        , configValue(net.splitcells.system.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/website/",
+                        configValue(net.splitcells.website.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/"
+                        , configValue(net.splitcells.website.content.defaults.FileSystem.class)))
                 .withDetailedXslMenu(Optional.of(configValue(net.splitcells.website.content.defaults.FileSystem.class)
                         .readString("src/main/xsl/net/splitcells/website/detailed-menu.xsl")));
     }
@@ -64,12 +79,12 @@ public class WebsiteViaJar {
         final var additionalProjectRenderers = config.additionalProjects().stream()
                 .map(project ->
                         projectRenderer(profile
-                                , project
+                                , project.projectFiles()
                                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
                                         .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
                                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
                                         .subFileSystemView("src/main/resources/html")
-                                , "/"
+                                , project.rootPath()
                                 , validator
                                 , config))
                 .collect(toList());
