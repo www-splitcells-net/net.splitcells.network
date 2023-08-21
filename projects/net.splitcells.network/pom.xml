@@ -19,4 +19,40 @@
             <version>${revision}</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>resources-source-network</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>../../</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>BUILD.md</include>
+                                        <include>CHANGELOG.md</include>
+                                        <include>CONTRIBUTING.md</include>
+                                        <include>DEVELOPMENT.md</include>
+                                        <include>LICENSE.md</include>
+                                        <include>NOTICE.md</include>
+                                        <include>README.md</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
