@@ -53,18 +53,18 @@ public class WebsiteViaJar {
                         , configValue(net.splitcells.gel.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/"
                         , configValue(net.splitcells.gel.FileSystemExt.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/network/",
-                        configValue(net.splitcells.network.FileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/network/worker/",
-                        configValue(net.splitcells.network.worker.FileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/",
-                        configValue(net.splitcells.os.state.interfaces.FileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/lib/",
-                        configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/network/"
+                        , configValue(net.splitcells.network.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/network/worker/"
+                        , configValue(net.splitcells.network.worker.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/"
+                        , configValue(net.splitcells.os.state.interfaces.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/lib/"
+                        , configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/system/"
                         , configValue(net.splitcells.system.FileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/website/",
-                        configValue(net.splitcells.website.FileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/website/"
+                        , configValue(net.splitcells.website.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/"
                         , configValue(net.splitcells.website.content.defaults.FileSystem.class)))
                 .withDetailedXslMenu(Optional.of(configValue(net.splitcells.website.content.defaults.FileSystem.class)
