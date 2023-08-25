@@ -94,6 +94,11 @@ public class Config {
      */
     private List<String> cssFiles = list();
     /**
+     * Lists all JavaScript files, that should be used for the layouts.
+     * These JavaScripts will be placed at the end of the layout and therefore loaded last.
+     */
+    private List<String> jsBackgroundFiles = list();
+    /**
      * TODO This does not seem to be used actively anymore.
      * It was used for some specific resources,
      * but this way of resource loading should probably not be used anymore,
@@ -332,5 +337,19 @@ public class Config {
     public Config withAdditionalProject(ProjectConfig project) {
         additionalProjects.add(project);
         return this;
+    }
+
+    public Config withJsBackgroundFiles(List<String> args) {
+        jsBackgroundFiles = args;
+        return this;
+    }
+
+    public Config withAdditionalJsBackgroundFiles(String arg) {
+        jsBackgroundFiles.add(arg);
+        return this;
+    }
+
+    public List<String> jsBackgroundFiles() {
+        return jsBackgroundFiles;
     }
 }
