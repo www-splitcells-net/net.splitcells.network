@@ -96,6 +96,7 @@ public class Config {
     /**
      * Lists all JavaScript files, that should be used for the layouts.
      * These JavaScripts will be placed at the end of the layout and therefore loaded last.
+     * These files are loaded in the given order.
      */
     private List<String> jsBackgroundFiles = list();
     /**
