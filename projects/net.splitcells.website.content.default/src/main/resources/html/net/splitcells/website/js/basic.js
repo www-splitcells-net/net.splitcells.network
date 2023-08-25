@@ -40,25 +40,25 @@
    return Math.floor(Math.random() * Math.floor(max));
     }
  function showOneOfChildren(node) {
-  	let child=node.childNodes[getRandomInt(node.childNodes.length)];
-  	let i = 0;
-  	while (!child.hasOwnProperty('style') && i < 10) {
-  	    ++i;
-  	    child=node.childNodes[getRandomInt(node.childNodes.length)];
-  	    }
-  	if (!child.hasOwnProperty('style')) {
-  	    return;
-  	    }
-  	child.style.display = 'inherit';
-  	child.style.visibility = 'inherit';
-  	}
-function unshowAllChildren(node) {
-    for (var i = 0; i < node.childNodes.length; i++) {
-        if (node.childNodes[i].hasOwnProperty('style')) {
-            unshowElement(node.childNodes[i]);
-            }
-        }
-    }
+ 	let child = node.childNodes[getRandomInt(node.childNodes.length)];
+ 	let i = 0;
+ 	while (!child.hasOwnProperty('style') && i < 10) {
+ 	    ++i;
+ 	    child=node.childNodes[getRandomInt(node.childNodes.length)];
+ 	    }
+ 	if (!child.hasOwnProperty('style')) {
+ 	    return;
+ 	    }
+ 	child.style.display = 'inherit';
+ 	child.style.visibility = 'inherit';
+ 	}
+ function unshowAllChildren(node) {
+     for (var i = 0; i < node.childNodes.length; i++) {
+         if (node.childNodes[i].hasOwnProperty('style')) {
+             unshowElement(node.childNodes[i]);
+             }
+         }
+     }
 function unshowByCssClass(cssClass) {
     hide(cssClass);
     undisplay(cssClass);

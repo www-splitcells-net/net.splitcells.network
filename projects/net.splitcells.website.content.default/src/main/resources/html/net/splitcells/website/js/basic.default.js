@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
- * which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
- * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
- */
 function change_menu_visibility() {
 	var change_menu_content_elements = document.getElementsByClassName('change_menu_content');
 	for (var i = 0; i < change_menu_content_elements.length; i++) {
@@ -36,7 +21,7 @@ function addapt_menu_visibility() {
 	show_contentCell();
 	}
 function hide_contentCell() {
-	var contentCell_elements = document.getElementsByClassName('net-splitcells-content-main');
+	var contentCell_elements = document.getElementsByClassName('contentCell');
 	for (var i = 0; i < contentCell_elements.length; i++) {
 		contentCell_elements[i].style.setProperty('visibility', 'hidden', 'important');
 		contentCell_elements[i].style.setProperty('display', 'none', 'important');
@@ -54,7 +39,7 @@ function hide_menu() {
 		}
 	}
 function show_contentCell() {
-	var contentCell_elements = document.getElementsByClassName('net-splitcells-content-main');
+	var contentCell_elements = document.getElementsByClassName('contentCell');
 	for (var i = 0; i < contentCell_elements.length; i++) {
 		contentCell_elements[i].style.setProperty('visibility', 'visible', 'important');
 		contentCell_elements[i].style.setProperty('display', 'flex', 'important');
