@@ -68,7 +68,9 @@ public class WebsiteViaJar {
                 .withAdditionalProject(projectConfig("/"
                         , configValue(net.splitcells.website.content.defaults.FileSystem.class)))
                 .withDetailedXslMenu(Optional.of(configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                        .readString("src/main/xsl/net/splitcells/website/detailed-menu.xsl")));
+                        .readString("src/main/xsl/net/splitcells/website/detailed-menu.xsl")))
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js");
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {
