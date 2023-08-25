@@ -796,16 +796,28 @@ window.onload = function() {
                             </div>
                         </main>
                         <footer class="Standard_p5 topLightShadow"/>
-                        <script type="text/javascript" charset="utf-8">
-                            <xsl:attribute name="src">
-                                <xsl:value-of select="s:root-relative-url('/js/basic.js')"/>
-                            </xsl:attribute>
-                        </script>
-                        <script type="text/javascript" charset="utf-8">
-                            <xsl:attribute name="src">
-                                <xsl:value-of select="s:root-relative-url('/js/basic.default.js')"/>
-                            </xsl:attribute>
-                        </script>
+                        <xsl:choose>
+                            <xsl:when test="document('/net/splitcells/website/server/config/js/background-files.xml')">
+                                <xsl:for-each
+                                        select="document('/net/splitcells/website/server/config/js/background-files.xml')/d:val/*">
+                                    <xsl:variable name="jsBackgroundFile">
+                                        <xsl:value-of select="."/>
+                                    </xsl:variable>
+                                    <xsl:element name="script">
+                                        <xsl:attribute name="type">
+                                            <xsl:value-of select="'text/javascript'"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute name="charset">
+                                            <xsl:value-of select="'utf-8'"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute name="src">
+                                            <xsl:value-of
+                                                    select="s:default-root-relative-url($jsBackgroundFile)"/>
+                                        </xsl:attribute>
+                                    </xsl:element>
+                                </xsl:for-each>
+                            </xsl:when>
+                        </xsl:choose>
                         <xsl:element name="script">
                             <xsl:attribute name="type">
                                 <xsl:value-of select="'text/javascript'"/>
@@ -818,7 +830,6 @@ window.onload = function() {
                                 <xsl:value-of
                                         select="s:root-relative-url('/js/syntaxhighlighter.white/syntaxhighlighter.js')"/>
                             </xsl:attribute>
-
                         </xsl:element>
                         <xsl:if test="./s:redirect">
                             <xsl:variable name="redirect.target">

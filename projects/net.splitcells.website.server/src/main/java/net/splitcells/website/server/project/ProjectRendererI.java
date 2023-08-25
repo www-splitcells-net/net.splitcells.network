@@ -191,6 +191,13 @@ public class ProjectRendererI implements ProjectRenderer {
                                         .map(css -> "<val>" + css + "</val>")
                                         .reduce("", (a, b) -> a + b) +
                                 "</val>");
+                    } else if ("/net/splitcells/website/server/config/js/background-files.xml".equals(p) &&
+                            config.jsBackgroundFiles().hasElements()) {
+                        return Optional.of("<val xmlns=\"http://splitcells.net/den.xsd\">" +
+                                config.jsBackgroundFiles().stream()
+                                        .map(js -> "<val>" + js + "</val>")
+                                        .reduce("", (a, b) -> a + b) +
+                                "</val>");
                     }
                     return Optional.empty();
                 });
