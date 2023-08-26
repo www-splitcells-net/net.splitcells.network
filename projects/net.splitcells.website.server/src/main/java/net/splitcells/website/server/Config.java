@@ -306,6 +306,12 @@ public class Config {
         return this;
     }
 
+    @ReturnsThis
+    public Config withAdditionalCssFile(String arg) {
+        cssFiles.add(arg);
+        return this;
+    }
+
     public List<String> cssFiles() {
         return cssFiles;
     }

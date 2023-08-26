@@ -70,7 +70,13 @@ public class WebsiteViaJar {
                 .withDetailedXslMenu(Optional.of(configValue(net.splitcells.website.content.defaults.FileSystem.class)
                         .readString("src/main/xsl/net/splitcells/website/detailed-menu.xsl")))
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
-                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js");
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js")
+                .withAdditionalCssFile("net/splitcells/website/css/theme.white.variables.css")
+                .withAdditionalCssFile("net/splitcells/website/css/basic.themed.css")
+                .withAdditionalCssFile("net/splitcells/website/css/basic.css")
+                .withAdditionalCssFile("net/splitcells/website/css/den.css")
+                .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
+                .withAdditionalCssFile("net/splitcells/website/css/theme.css");
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {

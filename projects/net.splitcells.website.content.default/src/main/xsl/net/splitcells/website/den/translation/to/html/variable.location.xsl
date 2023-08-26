@@ -29,7 +29,7 @@
     </xsl:variable>
     <xsl:variable name="site-instance-root-path-default"
                   select="concat($site-instance-host-root-path, '')"/>
-    <xsl:variable name="site_instance_purl" select="concat($site-instance-host-root-path, 'net/splitcells/martins/avots/website/')"/>
+    <xsl:variable name="site_instance_purl" select="concat($site-instance-host-root-path, 'net/splitcells/website/')"/>
     <xsl:variable name="site_generic_asset_purl" select="$site_instance_purl"/>
     <xsl:variable name="site_generic_asset_burl"
                   select="concat($site_domain, $site_generic_asset_purl)"/>

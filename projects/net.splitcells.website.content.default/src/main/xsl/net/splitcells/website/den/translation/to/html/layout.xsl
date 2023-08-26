@@ -240,24 +240,24 @@ window.onload = function() {
                         </link>
                         <link rel="icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/images/icon.svg')"/>
+                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="alternate icon">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/images/icon.svg')"/>
+                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="mask-icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/images/icon.svg')"/>
+                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <meta name="viewport" content="width=device-width, initial-scale=1"/>
                         <link rel="apple-touch-icon">
                             <!-- Some Mobile browsers only support pngs as favicons. -->
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/images/icon.png')"/>
+                                <xsl:value-of select="s:root-relative-url('icons/icon.png')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css"
@@ -446,24 +446,24 @@ window.onload = function() {
                         </link>
                         <link rel="icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/images/icon.svg')"/>
+                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="alternate icon">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/images/icon.svg')"/>
+                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="mask-icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/images/icon.svg')"/>
+                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <meta name="viewport" content="width=device-width, initial-scale=1"/>
                         <link rel="apple-touch-icon">
                             <!-- Some Mobile browsers only support pngs as favicons. -->
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('/images/icon.png')"/>
+                                <xsl:value-of select="s:root-relative-url('icons/icon.png')"/>
                             </xsl:attribute>
                         </link>
                         <title>
