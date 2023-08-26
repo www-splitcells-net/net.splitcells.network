@@ -192,7 +192,7 @@ main {
 	box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-1);
 	}
 .net-splitcells-main-button-project-logo {
-    	background-image: url(/net/splitcells/martins/avots/website/images/icon.svg);
+    	background-image: url(/net/splitcells/website/icons/icon.svg);
     	background-size: 100%;
         min-width: 2em;
         max-width: 2em;
