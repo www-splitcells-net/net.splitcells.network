@@ -818,19 +818,6 @@ window.onload = function() {
                                 </xsl:for-each>
                             </xsl:when>
                         </xsl:choose>
-                        <xsl:element name="script">
-                            <xsl:attribute name="type">
-                                <xsl:value-of select="'text/javascript'"/>
-                            </xsl:attribute>
-                            <xsl:attribute name="charset">
-                                <xsl:value-of select="'utf-8'"/>
-                            </xsl:attribute>
-                            <xsl:attribute name="src">
-                                <!-- TODO Multiple theme support -->
-                                <xsl:value-of
-                                        select="s:root-relative-url('/js/syntaxhighlighter.white/syntaxhighlighter.js')"/>
-                            </xsl:attribute>
-                        </xsl:element>
                         <xsl:if test="./s:redirect">
                             <xsl:variable name="redirect.target">
                                 <xsl:call-template name="link.target">
