@@ -434,7 +434,10 @@ window.onload = function() {
                         <meta http-equiv="Pragma" content="no-cache"/>
                         <meta http-equiv="Expires" content="0"/>
                         <script type="text/javascript" charset="utf-8">
-                            /* Disable all cookie functionality. */
+                            /* Disable all cookie functionality.
+                            * This should make it impossible, to read or write cookies in the browser.
+                            * This should also prevent read and write access to cookies via external frameworks.
+                            */
                             document.__defineGetter__("cookie", function() { return '';} );
                             document.__defineSetter__("cookie", function() { return '';} );
                         </script>
