@@ -232,6 +232,7 @@ window.onload = function() {
                             document.__defineGetter__("cookie", function() { return '';} );
                             document.__defineSetter__("cookie", function() { return '';} );
                         </script>
+                        <script type="text/javascript" charset="utf-8" src=""/>
                         <link rel="image_src" type="image/svg+xml">
                             <xsl:attribute name="href">
                                 <xsl:value-of
@@ -441,6 +442,18 @@ window.onload = function() {
                             document.__defineGetter__("cookie", function() { return '';} );
                             document.__defineSetter__("cookie", function() { return '';} );
                         </script>
+                        <xsl:element name="script">
+                            <xsl:attribute name="type">
+                                <xsl:value-of select="'text/javascript'"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="charset">
+                                <xsl:value-of select="'utf-8'"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="src">
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/js/startup.js')"/>
+                            </xsl:attribute>
+                        </xsl:element>
                         <link rel="image_src" type="image/svg+xml">
                             <xsl:attribute name="href">
                                 <xsl:value-of
@@ -572,6 +585,9 @@ window.onload = function() {
                                                     </xsl:attribute>
                                                     Privacy Policy
                                                 </a>
+                                                <div class="net-splitcells-error-status-indicator net-splitcells-button-inline"
+                                                     style="visibility: hidden; display: none;">Error
+                                                </div>
                                                 <div class="net-splitcells-space-filler"></div>
                                                 <div class="net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
                                                      onclick="javascript: fullScreenEnable();
