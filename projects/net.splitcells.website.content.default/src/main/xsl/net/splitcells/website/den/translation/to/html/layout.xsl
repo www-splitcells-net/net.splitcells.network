@@ -865,10 +865,6 @@ window.onload = function() {
                                         select="concat('window.location.href=', $apostroph, $redirect.target, $apostroph)"/>
                             </xsl:element>
                         </xsl:if>
-                        <script id="MathJax-script"
-                                src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-                                integrity="sha384-Wuix6BuhrWbjDBs24bXrjf4ZQ5aFeFWBuKkFekO2t8xFU0iNaLQfp2K6/1Nxveei"
-                                crossorigin="anonymous"></script>
                         <script type="text/javascript">
                             function enableStylesheet (node) {
                             node.media =
@@ -904,8 +900,8 @@ window.onload = function() {
                             checkAvailibility('net-splitcells-website-log-error');
                         </script>
                         <!-- Integration of https://www.mathjax.org. TODO Use local copy in future. -->
-                        <script type="text/x-mathjax-config">
-                            MathJax = {
+                        <script type="text/javascript">
+                            Window.MathJax = {
                             tex: {
                             inlineMath: [['$', '$'], ["\\(", "\\)"]],
                             processEscapes: true,
