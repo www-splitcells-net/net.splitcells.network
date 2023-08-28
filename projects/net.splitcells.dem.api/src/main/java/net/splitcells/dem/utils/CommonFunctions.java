@@ -27,11 +27,13 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.nio.channels.FileLock;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
@@ -127,12 +129,17 @@ public class CommonFunctions {
         }
     }
 
+    @SafeVarargs
+    private static <T> T[] createArray(int capacity, T... dummyArray) {
+        return Arrays.copyOf(dummyArray, capacity);
+    }
+
     /**
      * TODO variadic argument support
      */
     @JavaLegacyBody
     public static <T extends Object> T[] concat(T[] a, T[] b) {
-        final T[] rVal = (T[]) new Object[a.length + b.length];
+        final T[] rVal = CommonFunctions.<T>createArray(a.length + b.length);
         int current_index = 0;
 
         for (int i = 0; i < a.length; i++) {
