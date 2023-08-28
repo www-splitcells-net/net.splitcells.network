@@ -13,6 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
+// TODO This is deprecated and a duplication of `net/splitcells/website/js/basic.js`.
 // general html/css/javascript functions
 /* RENAME elementId -> css_class
  * RENAME elementId_elements
