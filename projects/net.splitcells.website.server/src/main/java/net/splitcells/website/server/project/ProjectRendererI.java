@@ -57,6 +57,7 @@ import static net.splitcells.website.server.project.renderer.extension.JavadocPr
 import static net.splitcells.website.server.project.renderer.extension.JavascriptProjectRendererExtension.javascriptRenderer;
 import static net.splitcells.website.server.project.renderer.extension.ProjectRendererExtensionMerger.rendererMerger;
 import static net.splitcells.website.server.project.renderer.extension.ResourceProjectRendererExtension.resourceRenderer;
+import static net.splitcells.website.server.project.renderer.extension.SvgProjectRendererExtension.svgRenderer;
 import static net.splitcells.website.server.project.renderer.extension.TextProjectRendererExtension.textExtension;
 import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 import static net.splitcells.website.server.project.renderer.extension.XmlProjectRendererExtension.xmlRenderer;
@@ -89,6 +90,12 @@ public class ProjectRendererI implements ProjectRenderer {
     private final FileSystemView projectFolder;
     private final FileSystemView projectSrcFolder;
     private final FileSystemView xslLibs;
+
+    /**
+     * TODO It is unclear, for what this is useful.
+     * Keep in mind that it makes hard to load files of projects via this variable.
+     */
+    @Deprecated
     private final FileSystemView resources;
     private final String resourceRootPath;
     private final boolean flatRepository;
@@ -140,7 +147,8 @@ public class ProjectRendererI implements ProjectRenderer {
                 .registerExtension(commonMarkDevelopmentRenderer())
                 .registerExtension(commonMarkBuildRenderer())
                 .registerExtension(rootFileProjectRendererExtension("LICENSE"))
-                .registerExtension(rootFileProjectRendererExtension("NOTICE"));
+                .registerExtension(rootFileProjectRendererExtension("NOTICE"))
+                .registerExtension(svgRenderer());
         if (config.cacheRenderers()) {
             transformer = Optional.of(createRenderer());
         }
