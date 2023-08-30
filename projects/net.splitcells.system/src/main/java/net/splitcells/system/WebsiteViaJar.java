@@ -16,14 +16,13 @@
 package net.splitcells.system;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.ext.FileSystemExt;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.ProjectConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
@@ -52,7 +51,7 @@ public class WebsiteViaJar {
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/"
                         , configValue(net.splitcells.gel.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/"
-                        , configValue(net.splitcells.gel.FileSystemExt.class)))
+                        , configValue(FileSystemExt.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/"
                         , configValue(net.splitcells.network.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/worker/"
