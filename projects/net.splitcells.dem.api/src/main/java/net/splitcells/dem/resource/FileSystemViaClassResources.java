@@ -35,7 +35,10 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.removePrefix;
 
 /**
- * Provides an {@link FileSystem} API for {@link Class#getResource(String)}.
+ * <p>Provides an {@link FileSystem} API for {@link Class#getResource(String)}.</p>
+ * <p>Never place multiple {@link FileSystemViaClassResources} at the same package across modules or jars,
+ * but with a different class name,
+ * because this will create hard to debug problems while accessing files.</p>
  */
 @JavaLegacyArtifact
 public class FileSystemViaClassResources implements FileSystemView {
