@@ -23,7 +23,7 @@ import static net.splitcells.dem.resource.FileSystemViaClassResources.resourceBa
 
 public class FileSystemExt extends OptionI<FileSystemView> {
     public FileSystemExt() {
-        super(() -> fileSystemViaClassResources(FileSystem.class
+        super(() -> fileSystemViaClassResources(FileSystemExt.class
                 , resourceBasePath("net.splitcells", "gel.ext")));
     }
 }
