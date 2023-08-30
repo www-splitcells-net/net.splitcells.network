@@ -108,6 +108,16 @@ public class FileSystemViaClassResourcesTest {
     }
 
     @IntegrationTest
+    public void testWalkRecursivelyOnFile() {
+        final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt";
+        fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                , resourceBasePath("net.splitcells", "dem.api")
+        ).walkRecursively(rootPath)
+                .collect(toList())
+                .requireContentsOf(Path.of(rootPath));
+    }
+
+    @IntegrationTest
     public void testWalkRecursivelyForSubFileSystem() {
         final var rootPath = "testWalkRecursively/";
         fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
