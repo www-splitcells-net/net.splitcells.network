@@ -48,5 +48,10 @@
             <artifactId>os.state.interface.lib</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>gel.ext</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

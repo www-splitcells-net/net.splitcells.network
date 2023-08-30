@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>ext</artifactId>
+            <artifactId>gel.ext</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>
