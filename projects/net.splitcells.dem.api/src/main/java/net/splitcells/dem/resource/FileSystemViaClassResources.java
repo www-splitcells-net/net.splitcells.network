@@ -131,32 +131,40 @@ public class FileSystemViaClassResources implements FileSystemView {
             if (resourcePath == null) {
                 return Stream.empty();
             }
-            if ("jar".equals(resourcePath.getProtocol())
-                    && !"file".equals(FileSystemViaClassResources.class.getResource("/net/").getProtocol())
-            ) {
-                try {
-                    final var pathStr = basePath + path.toString();
-                    final var dirURL = FileSystemViaClassResources.class.getResource("/net/");
-                    final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
-                    try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
-                        final var jarEntries = jarFile
-                                .entries()
-                                .asIterator();
-                        final List<Path> walk = list();
-                        while (jarEntries.hasNext()) {
-                            walk.withAppended(Path.of((jarEntries.next().getRealName())));
+            if ("jar".equals(resourcePath.getProtocol())) {
+                if (!"file".equals(FileSystemViaClassResources.class.getResource("/net/").getProtocol())) {
+                    try {
+                        final var pathStr = basePath + path.toString();
+                        final var dirURL = FileSystemViaClassResources.class.getResource("/net/");
+                        final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
+                        try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
+                            final var jarEntries = jarFile
+                                    .entries()
+                                    .asIterator();
+                            final List<Path> walk = list();
+                            while (jarEntries.hasNext()) {
+                                walk.withAppended(Path.of((jarEntries.next().getRealName())));
+                            }
+                            /*
+                             * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
+                             * in order to avoid walking through it, even it is not request.
+                             * For example, without this hack requesting `net/splitcells/` would result in getting
+                             * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
+                             */
+                            return walk.stream().filter(w -> w.startsWith(pathStr))
+                                    .map(w -> Path.of(w.toString().substring(basePath.length())));
                         }
-                        /*
-                         * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
-                         * in order to avoid walking through it, even it is not request.
-                         * For example, without this hack requesting `net/splitcells/` would result in getting
-                         * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
-                         */
-                        return walk.stream().filter(w -> w.startsWith(pathStr))
-                                .map(w -> Path.of(w.toString().substring(basePath.length())));
+                    } catch (Throwable e) {
+                        throw executionException(e);
                     }
-                } catch (Throwable e) {
-                    throw executionException(e);
+                } else {
+                    final var resource = clazz.getClassLoader().getResource(basePath + "./");
+                    if (resource == null) {
+                        return StreamUtils.emptyStream();
+                    }
+                    final var rootPathStr = Path.of(resource.toURI()) + "/";
+                    final var startPath = Path.of(clazz.getClassLoader().getResource(basePath + path + "/").toURI());
+                    return walk_recursively(startPath).map(p -> Path.of(removePrefix(rootPathStr, p.toString())));
                 }
             } else {
                 final var resource = clazz.getClassLoader().getResource(basePath + "./");
@@ -170,9 +178,11 @@ public class FileSystemViaClassResources implements FileSystemView {
                 final var startPath = Path.of(clazz.getClassLoader().getResource(basePath + path + "/").toURI());
                 return walk_recursively(startPath).map(p -> Path.of(removePrefix(rootPathStr, p.toString())));
             }
-        } catch (Throwable e) {
+        } catch (
+                Throwable e) {
             throw executionException(e);
         }
+
     }
 
     @Override
