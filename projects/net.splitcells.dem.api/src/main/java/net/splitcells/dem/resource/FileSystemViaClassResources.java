@@ -110,8 +110,14 @@ public class FileSystemViaClassResources implements FileSystemView {
      */
     @Override
     public boolean isFile(Path path) {
-        return clazz.getResourceAsStream("/" + basePath + path.toString()) != null
-                && walkRecursively(path).count() <= 1;
+        return clazz.getResourceAsStream(normalize("/" + basePath + path)) != null
+                && walkRecursively(path)
+                .filter(p -> !path.toString().equals(p.toString()))
+                .count() == 0;
+    }
+
+    private String normalize(String path) {
+        return path.replace("./", "").replace("//", "/");
     }
 
     @Override
