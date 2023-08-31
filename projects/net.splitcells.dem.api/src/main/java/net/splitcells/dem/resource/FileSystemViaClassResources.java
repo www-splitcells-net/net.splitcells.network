@@ -165,13 +165,28 @@ public class FileSystemViaClassResources implements FileSystemView {
                         throw executionException(e);
                     }
                 } else {
-                    final var resource = clazz.getClassLoader().getResource(basePath + "./");
-                    if (resource == null) {
-                        return StreamUtils.emptyStream();
+                    final var pathStrWithoutProtocols = resourcePath.toURI().toString().substring(9);
+                    final var jarPath = pathStrWithoutProtocols.substring(0, pathStrWithoutProtocols.indexOf("!"));
+                    try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
+                        final var jarEntries = jarFile
+                                .entries()
+                                .asIterator();
+                        final List<Path> walk = list();
+                        while (jarEntries.hasNext()) {
+                            walk.withAppended(Path.of((jarEntries.next().getRealName())));
+                        }
+                        /*
+                         * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
+                         * in order to avoid walking through it, even it is not request.
+                         * For example, without this hack requesting `net/splitcells/` would result in getting
+                         * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
+                         */
+                        return walk.stream().filter(w -> w.startsWith(basePath + path))
+                                .map(w -> Path.of("./" + (w + "/")
+                                        .replace("//", "/")
+                                        .toString()
+                                        .substring(basePath.length())));
                     }
-                    final var rootPathStr = Path.of(resource.toURI()) + "/";
-                    final var startPath = Path.of(clazz.getClassLoader().getResource(basePath + path + "/").toURI());
-                    return walk_recursively(startPath).map(p -> Path.of(removePrefix(rootPathStr, p.toString())));
                 }
             } else {
                 // Checks if base path is present.
