@@ -167,6 +167,7 @@ public class FileSystemViaClassResources implements FileSystemView {
                     return walk_recursively(startPath).map(p -> Path.of(removePrefix(rootPathStr, p.toString())));
                 }
             } else {
+                // Checks if base path is present.
                 final var resource = clazz.getClassLoader().getResource(basePath + "./");
                 if (resource == null) {
                     return StreamUtils.emptyStream();
