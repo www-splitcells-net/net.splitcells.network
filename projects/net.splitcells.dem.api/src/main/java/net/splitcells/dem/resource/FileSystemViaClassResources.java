@@ -201,8 +201,7 @@ public class FileSystemViaClassResources implements FileSystemView {
                 final var startPath = Path.of(clazz.getClassLoader().getResource(basePath + path + "/").toURI());
                 return walk_recursively(startPath).map(p -> Path.of(removePrefix(rootPathStr, p.toString())));
             }
-        } catch (
-                Throwable e) {
+        } catch (Throwable e) {
             throw executionException(e);
         }
 
