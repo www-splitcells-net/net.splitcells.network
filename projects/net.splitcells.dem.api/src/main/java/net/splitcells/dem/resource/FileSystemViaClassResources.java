@@ -133,7 +133,8 @@ public class FileSystemViaClassResources implements FileSystemView {
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
-            final var resourcePath = clazz.getClassLoader().getResource(basePath + path + "/");
+            final var resourcePath = clazz.getClassLoader()
+                    .getResource(normalize((basePath + path + "/")));
             if (resourcePath == null) {
                 return Stream.empty();
             }
