@@ -62,7 +62,7 @@ public class WebsiteViaJar {
                         , configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/system/"
                         , configValue(net.splitcells.system.FileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/website/"
+                .withAdditionalProject(projectConfig("/"
                         , configValue(net.splitcells.website.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/"
                         , configValue(net.splitcells.website.content.defaults.FileSystem.class)))
