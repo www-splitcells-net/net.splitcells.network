@@ -121,7 +121,7 @@ public class FileSystemViaClassResources implements FileSystemView {
 
     @Override
     public Stream<Path> walkRecursively() {
-        return walkRecursively(Path.of(basePath + "/"));
+        return walkRecursively(Path.of("/"));
     }
 
     @Override
