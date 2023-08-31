@@ -540,11 +540,6 @@ public class ProjectRendererI implements ProjectRenderer {
     @Override
     public Set<Path> projectPaths() {
         final Set<Path> projectPaths = setOfUniques();
-        if (projectSrcFolder.exists()) {
-            projectSrcFolder.walkRecursively()
-                    .filter(projectSrcFolder::isFile)
-                    .forEach(projectPaths::add);
-        }
         if (projectSrcFolder.isDirectory(Path.of("html"))) {
             projectSrcFolder.subFileSystemView("html")
                     .walkRecursively()
