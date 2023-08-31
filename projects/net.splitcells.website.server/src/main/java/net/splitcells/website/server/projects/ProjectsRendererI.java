@@ -120,7 +120,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         projectsPaths().stream()
                 .map(path -> config.rootPath() + path.toString())
                 .map(path -> {
-                    // TODO This is an hack.
+                    // TODO This is a hack.
                     if (path.endsWith(".md")) {
                         return net.splitcells.dem.resource.Paths.removeFileSuffix(path) + ".html";
                     }
