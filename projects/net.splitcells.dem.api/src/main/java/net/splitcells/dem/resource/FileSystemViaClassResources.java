@@ -181,7 +181,7 @@ public class FileSystemViaClassResources implements FileSystemView {
                          * For example, without this hack requesting `net/splitcells/` would result in getting
                          * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
                          */
-                        return walk.stream().filter(w -> w.startsWith(basePath + path))
+                        return walk.stream().filter(w -> w.startsWith(normalize(basePath + path)))
                                 .map(w -> Path.of("./" + (w + "/")
                                         .replace("//", "/")
                                         .toString()
