@@ -17,8 +17,11 @@ __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 import argparse
 import subprocess
 import logging
+from os import environ
 
 if __name__ == '__main__':
+	if environ.get('log_level') == 'debug':
+		logging.basicConfig(level=logging.DEBUG)
 	argsParser = argparse.ArgumentParser(
 		description="""Deploys the build process to a different server.
 
