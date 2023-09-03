@@ -144,6 +144,7 @@ public class FileSystemViaClassResources implements FileSystemView {
                         final var pathStr = basePath + path.toString();
                         final var dirURL = FileSystemViaClassResources.class.getResource("/net/");
                         final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
+                        // The jar is provided by the class loader, and thereby this jar is trusted.
                         try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
                             final var jarEntries = jarFile
                                     .entries()
@@ -167,6 +168,7 @@ public class FileSystemViaClassResources implements FileSystemView {
                 } else {
                     final var pathStrWithoutProtocols = resourcePath.toURI().toString().substring(9);
                     final var jarPath = pathStrWithoutProtocols.substring(0, pathStrWithoutProtocols.indexOf("!"));
+                    // The jar is provided by the class loader, and thereby this jar is trusted.
                     try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
                         final var jarEntries = jarFile
                                 .entries()
