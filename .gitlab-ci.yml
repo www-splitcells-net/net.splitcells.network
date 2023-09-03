@@ -1,9 +1,11 @@
 net-splitcells-os-state-interface-test:
+  when: manual # Disabled in order to not waste resources of GitLab, as CI runs on other platforms already.
   image: python:3.7
   script:
     - cd projects/net.splitcells.system.root
     - ./bin/build.part.with.python
 test:
+  when: manual # Disabled in order to not waste resources of GitLab, as CI runs on other platforms already.
   image: maven:3.6.3-openjdk-11
   script:
     - cd ..
