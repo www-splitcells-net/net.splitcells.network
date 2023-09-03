@@ -83,6 +83,10 @@ Chart.js:
 * License: MIT
 * [Source Code](https://github.com/chartjs/Chart.js)
 
+chartjs-plugin-datasource:
+* License: MIT
+* [Source Code](https://nagix.github.io/chartjs-plugin-datasource)
+
 OpenJDK:
 * License: GNU General Public License, version 2, with the Classpath Exception 
 

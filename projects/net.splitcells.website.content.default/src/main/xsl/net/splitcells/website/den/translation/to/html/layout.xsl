@@ -120,12 +120,9 @@
                 <s:license>standard</s:license>
                 <s:publication_date/>
                 <s:content>
-                    <x:script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"
-                              integrity="sha384-QzN1ywg2QLsf72ZkgRHgjkB/cfI4Dqjg6RJYQUqH6Wm8qp/MvmEYn+2NBsLnhLkr"
-                              crossorigin="anonymous"></x:script>
-                    <x:script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"
-                              integrity="sha384-kIEAusBlq9L2f7r93+YiKyBVQaEQ67ZEdFrh7Vr1RWAb1Pb0Qa+H2FeUmU2/r7ek"
-                              crossorigin="anonymous"></x:script>
+
+                    <x:script src="/net/splitcells/website/js/chart.js"></x:script>
+                    <x:script src="/net/splitcells/website/js/chartjs-plugin-datasource.js"></x:script>
                     <x:canvas id="myChart"></x:canvas>
                     <x:script type="text/javascript">
                         <![CDATA[
