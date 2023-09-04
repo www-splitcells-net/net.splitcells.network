@@ -42,6 +42,13 @@ These have their own copyright and licensing.
 * MathJax:
   * License: Apache 2.0 License
   * Site: https://www.mathjax.org/
+* Chart.js:
+  * License: MIT
+  * [Source Code](https://github.com/chartjs/Chart.js)
+* chartjs-plugin-datasource:
+  * License: MIT
+  * [Source Code](https://nagix.github.io/chartjs-plugin-datasource)
+
 * [License files/text](./src/main/txt/net/splitcells/network/legal/licenses)
 
 ## Third Party Dependencies

@@ -905,13 +905,8 @@ window.onload = function() {
                             }
                             }
                         </script>
-                        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"
-                                integrity="sha384-WSLBwI+Q8tqRHaC+f1sjS/FVv5cWp7VAfrGB17HLfZlXhbp5F/RPVP7bYVHtiAWE"
-                                crossorigin="anonymous"></script>
                         <script id="MathJax-script" async=""
-                                src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-                                integrity="sha384-Wuix6BuhrWbjDBs24bXrjf4ZQ5aFeFWBuKkFekO2t8xFU0iNaLQfp2K6/1Nxveei"
-                                crossorigin="anonymous"></script>
+                                src="/net/splitcells/website/js/tex-mml-chtml.js"></script>
                         <script type="text/javascript" charset="utf-8">
                             <xsl:attribute name="src">
                                 <xsl:value-of select="s:root-relative-url('/js/status-render.js')"/>
