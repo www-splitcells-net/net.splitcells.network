@@ -326,3 +326,8 @@ swaylock
 ping
 * License: BSD-3
 * Source: https://github.com/iputils/iputils/blob/master/LICENSE
+
+Spring-Boot
+* Description: Used in order to create a uber jar.
+* License: Apache License, Version 2.0
+* Source: https://github.com/spring-projects/spring-boot

@@ -184,6 +184,34 @@
             </build>
         </profile>
         <profile>
+            <id>uber-jar</id>
+            <activation>
+                <property>
+                    <name>uber.jar</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>2.7.15</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>spring-boot</classifier>
+                                    <mainClass>net.splitcells.network.distro.Distro</mainClass>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>resources-source</id>
             <!-- This is used in order to provide content and files to the webserver via jars,
             instead of the file system. -->
