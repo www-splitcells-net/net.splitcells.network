@@ -794,8 +794,8 @@
     </xsl:template>
     <xsl:template match="s:csv-chart-lines">
         <!-- TODO This hack assumes 2 rows. In future additional columns should create new lines. -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
+        <x:script src="/net/splitcells/website/js/chart.js"></x:script>
+        <x:script src="/net/splitcells/website/js/chartjs-plugin-datasource.js"></x:script>
         <canvas id="myChart"></canvas>
         <script type="text/javascript">
             <![CDATA[
