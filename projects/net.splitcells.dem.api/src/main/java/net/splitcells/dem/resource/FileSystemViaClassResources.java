@@ -100,6 +100,8 @@ public class FileSystemViaClassResources implements FileSystemView {
      * if the given argument is a folder.
      * Therefore, the path is checked, if the given path has no children,
      * in order to ensure, that the given path is no folder.</p>
+     * <p>Empty folders return an empty string via {@link Class#getResourceAsStream(String)}.
+     * Therefore, empty files and empty folders are not supported nad are considered to not exist.</p>
      * <p>TODO Query the list of all files in the resources of the class loader and check its content with the argument.
      * This can be done by reading the root resource path,
      * because on folders the {@link Class#getResourceAsStream(String)} returns a list of sub folders.
@@ -110,7 +112,9 @@ public class FileSystemViaClassResources implements FileSystemView {
      */
     @Override
     public boolean isFile(Path path) {
-        return clazz.getResourceAsStream(normalize("/" + basePath + path)) != null
+        final var inputStream = clazz.getResourceAsStream(normalize("/" + basePath + path));
+        return inputStream != null
+                && Files.readAsString(inputStream).length() != 0
                 && walkRecursively(path)
                 .filter(p -> !path.toString().equals(p.toString()))
                 .count() == 0;
