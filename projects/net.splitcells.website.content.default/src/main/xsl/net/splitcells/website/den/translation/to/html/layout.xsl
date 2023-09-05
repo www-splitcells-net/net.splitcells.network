@@ -238,24 +238,24 @@ window.onload = function() {
                         </link>
                         <link rel="icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="alternate icon">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="mask-icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <meta name="viewport" content="width=device-width, initial-scale=1"/>
                         <link rel="apple-touch-icon">
                             <!-- Some Mobile browsers only support pngs as favicons. -->
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('icons/icon.png')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.png')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css"
@@ -459,24 +459,24 @@ window.onload = function() {
                         </link>
                         <link rel="icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="alternate icon">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="mask-icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('icons/icon.svg')"/>
+                                <xsl:value-of select="s:default-root-relative-url(net/splitcells/website/'icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <meta name="viewport" content="width=device-width, initial-scale=1"/>
                         <link rel="apple-touch-icon">
                             <!-- Some Mobile browsers only support pngs as favicons. -->
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:root-relative-url('icons/icon.png')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.png')"/>
                             </xsl:attribute>
                         </link>
                         <title>
@@ -892,8 +892,8 @@ window.onload = function() {
                             .forEach(disableStylesheet);*/
                         </script>
                         <script type="text/javascript">
-                            apply_to_elements_of('advertise-one-of', function(element){unshowAllChildren(element);});
-                            apply_to_elements_of('advertise-one-of', function(element){showOneOfChildren(element);});
+                            // TODO REMOVE apply_to_elements_of('advertise-one-of', function(element){unshowAllChildren(element);});
+                            // TODO REMOVE apply_to_elements_of('advertise-one-of', function(element){showOneOfChildren(element);});
                             checkAvailibility('net-splitcells-website-log-error');
                         </script>
                         <!-- Integration of https://www.mathjax.org. TODO Use local copy in future. -->
@@ -906,10 +906,10 @@ window.onload = function() {
                             }
                         </script>
                         <script id="MathJax-script" async=""
-                                src="/net/splitcells/website/js/tex-mml-chtml.js"></script>
+                                src="/net/splitcells/website/js/math-jax/es5/tex-mml-chtml.js"></script>
                         <script type="text/javascript" charset="utf-8">
                             <xsl:attribute name="src">
-                                <xsl:value-of select="s:root-relative-url('/js/status-render.js')"/>
+                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/js/status-render.js')"/>
                             </xsl:attribute>
                         </script>
                     </body>
