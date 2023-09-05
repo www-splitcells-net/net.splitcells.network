@@ -243,6 +243,8 @@ public class ProjectRendererI implements ProjectRenderer {
                 return readArtifact(path).map(r -> renderingResult(r, "image/jpg"));
             } else if (path.endsWith(".css")) {
                 return readArtifact(path).map(r -> renderingResult(r, "text/css"));
+            } else if (path.endsWith(".woff")) {
+                return readArtifact(path).map(r -> renderingResult(r, "font/woff"));
             } else if (path.endsWith(".js")) {
                 return readArtifact(path).map(r -> renderingResult(r, "text/javascript"));
             } else if (path.endsWith(".html")) {
