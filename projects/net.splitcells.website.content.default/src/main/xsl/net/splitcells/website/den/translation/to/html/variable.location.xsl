@@ -11,6 +11,7 @@
                   select="'http://splitcells.net'"/>
     <!-- purl = pseudo url = root relative url -->
     <!-- TODO REMOVE This is the base path to the main additional resources. -->
+    <!-- TODO RENAME site_instance_burl -->
 
     <xsl:variable name="site_instance_burl"
                   select="concat('http://', $site_domain)"/>
@@ -27,9 +28,12 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
+    <!-- TODO Remove `site-instance-root-path-default`, `site_instance_purl`, `site_generic_asset_purl`
+    and `site_generic_asset_burl`,
+    because these only create problems. -->
     <xsl:variable name="site-instance-root-path-default"
                   select="concat($site-instance-host-root-path, '')"/>
-    <xsl:variable name="site_instance_purl" select="concat($site-instance-host-root-path, 'net/splitcells/website/')"/>
+    <xsl:variable name="site_instance_purl" select="concat($site-instance-host-root-path, 'net/splitcells/martins/avots/website/')"/>
     <xsl:variable name="site_generic_asset_purl" select="$site_instance_purl"/>
     <xsl:variable name="site_generic_asset_burl"
                   select="concat($site_domain, $site_generic_asset_purl)"/>

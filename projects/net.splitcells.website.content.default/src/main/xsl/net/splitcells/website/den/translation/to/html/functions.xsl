@@ -13,6 +13,7 @@
 				select="concat($site-instance-root-path-default, $default-layout-relative-path)" />
 	</xsl:function>
 	<xsl:function name="s:root-relative-url">
+		<!-- TODO REMOVE -->
 		<xsl:param name="layout-relative-path" />
 		<xsl:value-of
 			select="concat($site_instance_purl, $layout-relative-path)" />
