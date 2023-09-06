@@ -13,18 +13,6 @@
     </meta>
     <content>
         <option>
-            <name>Impressum</name>
-            <page>/net/splitcells/martins/avots/website//legal/impressum</page>
-        </option>
-        <option>
-            <name>Licensing</name>
-            <page>/net/splitcells/martins/avots/website//legal/licensing</page>
-        </option>
-        <option>
-            <name>Privacy Policy</name>
-            <page>/net/splitcells/martins/avots/website//legal/privacy-policy</page>
-        </option>
-        <option>
             <name>Global Changelog</name>
             <page>/net/splitcells/CHANGELOG.global</page>
         </option>

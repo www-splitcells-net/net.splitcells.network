@@ -154,6 +154,10 @@ public class Config {
             + "                xmlns:ns=\"http://splitcells.net/namespace.xsd\">\n"
             + "   <xsl:variable name=\"net-splitcells-website-server-config-menu-detailed\"/>\n"
             + "</xsl:stylesheet>");
+
+    /**
+     * Defines the content of the menu for the main tab on the page.
+     */
     private Optional<String> xslWindowMenu = Optional.of("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<xsl:stylesheet version=\"2.0\" xmlns:s=\"http://splitcells.net/sew.xsd\"\n"
             + "                xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
