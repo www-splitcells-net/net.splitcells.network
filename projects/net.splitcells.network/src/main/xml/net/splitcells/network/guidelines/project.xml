@@ -63,9 +63,10 @@
                 where the split is done implicitly:
             </paragraph>
             <list>
-                <item>Core: the core contains the minimal implementation to get the project running.</item>
+                <item>Implementation (Impl): the implementation contains the minimal implementation to get the project running.</item>
                 <item>API: establishes a common vocabulary and interfaces of the project.
-                    It has the authority to define and verify every core feature and the interface of the project.
+                    It has the authority to define and verify every implementation feature and
+                    the interface of the project.
                     It therefore should contain the test suite of the project.
                 </item>
                 <item>Extension (Ext): Contains alternative implementations, plugins, extensions, etc. for the project.
@@ -115,7 +116,7 @@
                 different factory configurations in one program with one class loader.
                 Maybe this feature is worth the distinction, and maybe not.
                 One of these 2 approaches are sometimes needed,
-                in order to move code to the core project.
+                in order to move code to the implementation project.
             </paragraph>
         </chapter>
         <chapter>
@@ -124,7 +125,9 @@
                 as originally the project partitioning was much more oriented towards access control, complexity
                 management and security.
                 Later it was adapted for software projects.
-                The original project partitioning naming scheme is still sometimes used:
+                The original project partitioning naming scheme is still used for projects,
+                where access control, complexity management and security are more important,
+                than the interface/language that is established by an software project:
             </paragraph>
             <list>
                 <item>Core: contains the core subject.</item>
