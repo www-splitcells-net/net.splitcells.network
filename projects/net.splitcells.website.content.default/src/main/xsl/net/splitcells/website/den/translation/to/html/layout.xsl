@@ -233,7 +233,7 @@ window.onload = function() {
                         <link rel="image_src" type="image/svg+xml">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('images/license.standard/thumbnail/small/starting-to-learn-how-to-draw-a-face.jpg')"/>
+                                        select="s:default-root-relative-url('net/splitcells/website/images/thumbnail/small/starting-to-learn-how-to-draw-a-face.jpg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="icon" type="image/svg+xml">
@@ -454,7 +454,7 @@ window.onload = function() {
                         <link rel="image_src" type="image/svg+xml">
                             <xsl:attribute name="href">
                                 <xsl:value-of
-                                        select="s:root-relative-url('images/license.standard/thumbnail/small/starting-to-learn-how-to-draw-a-face.jpg')"/>
+                                        select="s:default-root-relative-url('net/splitcells/website/images/thumbnail/small/starting-to-learn-how-to-draw-a-face.jpg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="icon" type="image/svg+xml">
@@ -656,13 +656,13 @@ window.onload = function() {
                                         <a class="net-splitcells-button net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
-                                                        select="s:root-relative-url('/index.html')"/>
+                                                        select="s:default-root-relative-url('net/splitcells/network/README.html')"/>
                                             </xsl:attribute>
                                         </a>
                                         <a class="net-splitcells-button">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
-                                                        select="s:root-relative-url('/index.html')"/>
+                                                        select="s:default-root-relative-url('net/splitcells/network/README.html')"/>
                                             </xsl:attribute>
                                             <xsl:value-of select="$siteName"/>
                                         </a>
