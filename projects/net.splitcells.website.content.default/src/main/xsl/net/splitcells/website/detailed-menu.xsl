@@ -21,7 +21,7 @@
             <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
                 <xsl:attribute name="href">
                     <xsl:value-of
-                            select="concat($site-instance-host-root-path, 'net/splitcells/website/main-menu.html')"/>
+                            select="s:default-root-relative-url('net/splitcells/website/main-menu.html')"/>
                 </xsl:attribute>
                 Main Menu
             </a>
@@ -42,30 +42,10 @@
                 <s:title>Sections</s:title>
                 <a class="net-splitcells-button net-splitcells-component-priority-3">
                     <xsl:attribute name="href">
-                        <xsl:value-of select="s:root-relative-url('/info/contact.html')"/>
-                    </xsl:attribute>
-                    Contact
-                </a>
-                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                    <xsl:attribute name="href">
                         <xsl:value-of
-                                select="s:root-relative-url('/legal/licensing.html')"/>
-                    </xsl:attribute>
-                    Licensing
-                </a>
-                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:root-relative-url('/index.html')"/>
+                                select="s:default-root-relative-url('net/splitcells/network/README.html')"/>
                     </xsl:attribute>
                     Main Page
-                </a>
-                <a class="net-splitcells-button net-splitcells-component-priority-3">
-                    <xsl:attribute name="href">
-                        <xsl:value-of
-                                select="s:root-relative-url('/legal/privacy-policy.html')"/>
-                    </xsl:attribute>
-                    Privacy Policy
                 </a>
             </s:chapter>
         </xsl:variable>
