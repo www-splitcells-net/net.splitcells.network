@@ -258,10 +258,10 @@ public class ProjectsRendererI implements ProjectsRenderer {
     @Override
     public Set<Path> projectsPaths() {
         if (config.mutableProjectsPath()) {
-            return calculateProjectsPaths();
+            return calculateProjectsPaths().with(Path.of(LAYOUT_PATH.substring(1)));
         }
         if (projectPathsCache.isEmpty()) {
-            projectPathsCache = Optional.of(calculateProjectsPaths());
+            projectPathsCache = Optional.of(calculateProjectsPaths().with(Path.of(LAYOUT_PATH.substring(1))));
         }
         return projectPathsCache.get();
     }
