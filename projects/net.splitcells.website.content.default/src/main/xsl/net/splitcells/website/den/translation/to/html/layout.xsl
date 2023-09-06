@@ -707,41 +707,6 @@ window.onload = function() {
                                     <div class="splitcells-net-window-menu-line-2"></div>
                                 </div>
                                 <div class="net-splitcells-menu net-splitcells-priority-4">
-                                    <a class="net-splitcells-button net-splitcells-component-priority-3"
-                                       href="#content">Content
-                                    </a>
-                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                        <xsl:attribute name="href">
-                                            <xsl:value-of select="s:root-relative-url('/legal/impressum.html')"/>
-                                        </xsl:attribute>
-                                        Impressum
-                                    </a>
-                                    <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
-                                        <xsl:attribute name="href">
-                                            <xsl:value-of
-                                                    select="concat($site-instance-host-root-path, 'net/splitcells/website/main-menu.html')"/>
-                                        </xsl:attribute>
-                                        Main Menu
-                                    </a>
-                                    <a class="net-splitcells-button net-splitcells-component-priority-3">
-                                        <xsl:attribute name="href">
-                                            <xsl:value-of select="s:root-relative-url('/legal/privacy-policy.html')"/>
-                                        </xsl:attribute>
-                                        Privacy Policy
-                                    </a>
-                                    <div class="messages">
-                                        <h3>Messages</h3>
-                                        <div class="noScriptMessage TextCell text_error">- Activate Javascript in order
-                                            to enable all functions of this site.
-                                        </div>
-                                        <br/>
-                                    </div>
-                                    <a class="net-splitcells-button net-splitcells-component-priority-3 net-splitcells-network-status">
-                                        <xsl:attribute name="href">
-                                            <xsl:value-of
-                                                    select="s:default-root-relative-url('net/splitcells/network/status.html')"/>
-                                        </xsl:attribute>
-                                    </a>
                                     <xsl:copy-of select="$net-splitcells-website-server-config-menu-detailed"/>
                                     <h3>Metadata About This Document</h3>
                                     <p>Unless otherwise noted, the
