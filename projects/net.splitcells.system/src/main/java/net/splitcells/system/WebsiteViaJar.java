@@ -68,6 +68,8 @@ public class WebsiteViaJar {
                         , configValue(net.splitcells.website.content.defaults.FileSystem.class)))
                 .withDetailedXslMenu(Optional.of(configValue(net.splitcells.website.content.defaults.FileSystem.class)
                         .readString("src/main/xsl/net/splitcells/website/detailed-menu.xsl")))
+                .withXslWindowMenu(Optional.of(configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                        .readString("src/main/xsl/net/splitcells/website/window-menu.xsl")))
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js")
                 .withAdditionalCssFile("net/splitcells/website/css/theme.white.variables.css")

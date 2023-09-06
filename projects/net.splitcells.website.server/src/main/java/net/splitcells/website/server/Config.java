@@ -154,6 +154,21 @@ public class Config {
             + "                xmlns:ns=\"http://splitcells.net/namespace.xsd\">\n"
             + "   <xsl:variable name=\"net-splitcells-website-server-config-menu-detailed\"/>\n"
             + "</xsl:stylesheet>");
+    private Optional<String> xslWindowMenu = Optional.of("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            + "<xsl:stylesheet version=\"2.0\" xmlns:s=\"http://splitcells.net/sew.xsd\"\n"
+            + "                xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
+            + "                xmlns=\"http://www.w3.org/1999/xhtml\"\n"
+            + "                xmlns:x=\"http://www.w3.org/1999/xhtml\"\n"
+            + "                xmlns:d=\"http://splitcells.net/den.xsd\"\n"
+            + "                xmlns:p=\"http://splitcells.net/private.xsd\"\n"
+            + "                xmlns:m=\"http://www.w3.org/1998/Math/MathML\"\n"
+            + "                xmlns:r=\"http://splitcells.net/raw.xsd\"\n"
+            + "                xmlns:n=\"http://splitcells.net/natural.xsd\"\n"
+            + "                xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\"\n"
+            + "                xmlns:xl=\"http://www.w3.org/1999/xlink\"\n"
+            + "                xmlns:ns=\"http://splitcells.net/namespace.xsd\">\n"
+            + "   <xsl:variable name=\"net-splitcells-website-server-config-window-menu\"/>\n"
+            + "</xsl:stylesheet>");
 
     private List<ProjectConfig> additionalProjects = list();
 
@@ -358,5 +373,14 @@ public class Config {
 
     public List<String> jsBackgroundFiles() {
         return jsBackgroundFiles;
+    }
+
+    public Config withXslWindowMenu(Optional<String> arg) {
+        this.xslWindowMenu = arg;
+        return this;
+    }
+
+    public Optional<String> xslWindowMenu() {
+        return xslWindowMenu;
     }
 }

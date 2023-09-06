@@ -32,6 +32,7 @@
     <xsl:include href="variable.location.project.xsl"/>
     <xsl:include href="variable.location.xsl"/>
     <xsl:include href="/net/splitcells/website/server/config/menu/detailed.xsl"/>
+    <xsl:include href="/net/splitcells/website/server/config/window/menu.xsl"/>
     <!-- Following templates are only applied if previous templates did not match. -->
     <xsl:include href="layout.xsl"/>
 </xsl:stylesheet>

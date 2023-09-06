@@ -548,43 +548,7 @@ window.onload = function() {
                                     <article>
                                         <div class="splitcells-net-window-menu">
                                             <div class="splitcells-net-line net-splitcells-component-priority-3">
-                                                <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
-                                                    <xsl:attribute name="href">
-                                                        <xsl:value-of
-                                                                select="s:root-relative-url('/index.html')"/>
-                                                    </xsl:attribute>
-                                                </a>
-                                                <a class="net-splitcells-button-inline">
-                                                    <xsl:attribute name="href">
-                                                        <xsl:value-of
-                                                                select="s:root-relative-url('/dedicated-menu-page.html')"/>
-                                                    </xsl:attribute>
-                                                    Menu
-                                                </a>
-                                                <a class="net-splitcells-button-inline net-splitcells-premature">
-                                                    <xsl:attribute name="href">
-                                                        <xsl:value-of
-                                                                select="s:root-relative-url('/premature-content.html')"/>
-                                                    </xsl:attribute>
-                                                    Tabs
-                                                </a>
-                                                <a class="net-splitcells-button-inline">
-                                                    <xsl:attribute name="href">
-                                                        <xsl:value-of
-                                                                select="s:root-relative-url('/legal/impressum.html')"/>
-                                                    </xsl:attribute>
-                                                    Impressum
-                                                </a>
-                                                <a class="net-splitcells-button-inline">
-                                                    <xsl:attribute name="href">
-                                                        <xsl:value-of
-                                                                select="s:root-relative-url('/legal/privacy-policy.html')"/>
-                                                    </xsl:attribute>
-                                                    Privacy Policy
-                                                </a>
-                                                <div class="net-splitcells-error-status-indicator net-splitcells-button-inline"
-                                                     style="visibility: hidden; display: none;">Error
-                                                </div>
+                                                <xsl:copy-of select="$net-splitcells-website-server-config-window-menu"/>
                                                 <div class="net-splitcells-space-filler"></div>
                                                 <div class="net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
                                                      onclick="javascript: fullScreenEnable();

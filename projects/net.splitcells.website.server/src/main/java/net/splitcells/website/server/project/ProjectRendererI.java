@@ -192,6 +192,8 @@ public class ProjectRendererI implements ProjectRenderer {
                                         + "</val>");
                     } else if ("/net/splitcells/website/server/config/menu/detailed.xsl".equals(p)) {
                         return config.detailedXslMenu();
+                    } else if ("/net/splitcells/website/server/config/window/menu.xsl".equals(p)) {
+                        return config.xslWindowMenu();
                     } else if ("/net/splitcells/website/server/config/css/files.xml".equals(p) &&
                             config.cssFiles().hasElements()) {
                         return Optional.of("<val xmlns=\"http://splitcells.net/den.xsd\">" +
