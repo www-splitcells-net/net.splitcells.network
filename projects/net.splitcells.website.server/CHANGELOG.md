@@ -24,7 +24,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
-* **2023-09-06: \#249** The menu at the top bar can now be configured via `Config#xslWindowMenu`.
+* **2023-09-06: \#249**
+    1. The menu at the top bar can now be configured via `Config#xslWindowMenu`.
+    2. Tests can now be executed by requesting the page `net/splitcells/website/test.html`. 
 * **2023-05-17: \#s86**
   1. Deprecate Renderer interface.
   2. Make sub renderer interfaces ProjectRenderer, ProjectsRenderer and ProjectRendererExtension more uniform.
