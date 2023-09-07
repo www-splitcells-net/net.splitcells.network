@@ -112,6 +112,9 @@ public class Config {
      * with a path not starting with {@link #rootPath} will not return anything.
      */
     private String rootPath = "/";
+    /**
+     * This is the root index file of the website.
+     */
     private String rootIndex = "/index.html";
     /**
      * List of paths, that are equivalent to {@link #rootIndex}.
