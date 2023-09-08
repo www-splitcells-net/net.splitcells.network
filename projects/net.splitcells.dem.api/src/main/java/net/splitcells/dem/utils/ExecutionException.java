@@ -40,6 +40,10 @@ public class ExecutionException extends RuntimeException {
         return new ExecutionException(message.toXmlString());
     }
 
+    public static ExecutionException executionException(Perspective message, Throwable t) {
+        return new ExecutionException(message.toXmlString(), t);
+    }
+
     public static ExecutionException executionException(String message, Throwable t) {
         return new ExecutionException(message, t);
     }
