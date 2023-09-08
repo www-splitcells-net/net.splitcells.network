@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.resource.Files.walk_recursively;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -87,7 +88,15 @@ public class FileSystemViaClassResources implements FileSystemView {
 
     @Override
     public String readString(Path path) {
-        return readAsString(clazz.getResourceAsStream("/" + basePath + path.toString()));
+        final var resourcePath = ("/" + basePath + path.toString()).replace("\\", "/");
+        try {
+            return readAsString(clazz.getResourceAsStream(resourcePath));
+        } catch (Throwable th) {
+            throw executionException(perspective("Could not read file from class path resources:")
+                            .withProperty("path requested", path.toString())
+                            .withProperty("calculated resource path", resourcePath)
+                    , th);
+        }
     }
 
     @Override
