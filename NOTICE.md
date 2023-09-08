@@ -336,3 +336,8 @@ Launch 4J
 * Description: Create executable single file program.
 * License: BSD 3-Clause and MIT License
 * Website: https://launch4j.sourceforge.net/
+
+FlatLaf
+* License: Apache 2.0 License
+* Source code: https://github.com/JFormDesigner/FlatLaf
+* Website: https://www.formdev.com/flatlaf/
