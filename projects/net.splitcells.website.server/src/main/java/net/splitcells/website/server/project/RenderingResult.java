@@ -15,6 +15,8 @@
  */
 package net.splitcells.website.server.project;
 
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+
 public class RenderingResult {
     public static RenderingResult renderingResult(byte[] content, String format) {
         return new RenderingResult(content, format);
@@ -34,5 +36,13 @@ public class RenderingResult {
 
     public String getFormat() {
         return format;
+    }
+
+    @Override
+    public String toString() {
+        return perspective("RenderingResult:")
+                .withProperty("format", format)
+                .withProperty("content", new String(content))
+                .toXmlString();
     }
 }

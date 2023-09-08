@@ -253,7 +253,14 @@ public class ProjectsRendererI implements ProjectsRenderer {
     }
 
     private Optional<RenderingResult> validateRenderingResult(Optional<RenderingResult> renderingResult, Path requestedPath) {
-        renderingValidator.validate(renderingResult, this, requestedPath);
+        try {
+            renderingValidator.validate(renderingResult, this, requestedPath);
+        } catch (Throwable th) {
+            domsole().appendWarning(perspective("Could not validate rendering result:")
+                            .withProperty("rendering result", renderingResult.toString())
+                            .withProperty("requested path", requestedPath.toString())
+                    , th);
+        }
         return renderingResult;
     }
 
