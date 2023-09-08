@@ -139,4 +139,15 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
         }
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
     }
+
+    default Ui appendWarning(Perspective message, Throwable throwable) {
+        final var throwablePerspective = perspective("throwable");
+        throwablePerspective.withProperty("message", throwable.getMessage());
+        {
+            final var stackTraceValue = new java.io.StringWriter();
+            throwable.printStackTrace(new java.io.PrintWriter(stackTraceValue));
+            throwablePerspective.withProperty("stack-trace", stackTraceValue.toString());
+        }
+        return append(logMessage(message.withChild(throwablePerspective), NO_CONTEXT, LogLevel.CRITICAL));
+    }
 }
