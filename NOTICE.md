@@ -331,3 +331,8 @@ Spring-Boot
 * Description: Used in order to create a uber jar.
 * License: Apache License, Version 2.0
 * Source: https://github.com/spring-projects/spring-boot
+
+Launch 4J
+* Description: Create executable single file program.
+* License: BSD 3-Clause and MIT License
+* Website: https://launch4j.sourceforge.net/
