@@ -1,3 +1,6 @@
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+ * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ */
 // Three.js API doc: https://threejs.org/docs/
 // Papa Parse: https://www.papaparse.com/
 // Architecture: define all base variables first and than operate on these only via methods.
