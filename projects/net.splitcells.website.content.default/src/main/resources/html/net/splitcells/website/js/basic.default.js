@@ -1,3 +1,6 @@
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+ * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ */
 function change_menu_visibility() {
 	var change_menu_content_elements = document.getElementsByClassName('change_menu_content');
 	for (var i = 0; i < change_menu_content_elements.length; i++) {
