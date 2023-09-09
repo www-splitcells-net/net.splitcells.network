@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Building The Splitcells Network Project
 2 repositories are needed in order to build the software:
 * `git@github.com:www-splitcells-net/net.splitcells.network.git`

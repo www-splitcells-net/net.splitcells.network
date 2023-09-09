@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Contributing to Splitcells Network
 * [Licensing](./LICENSE.md) and [License Notices](./NOTICE.md) of This Project
 * [Source Code Guidelines](https://splitcells.net/net/splitcells/network/guidelines/index.html)

@@ -49,3 +49,31 @@ License: Apache-2.0
 Files: projects/net.splitcells.dem.api/src/main/resources/net/splitcells/dem/api/test-file.txt
 Copyright: Contributors To The `net.splitcells.*` Projects
 License: EPL-2.0 OR GPL-2.0-or-later
+
+Files: README.md
+Copyright: Contributors To The `net.splitcells.*` Projects
+License: EPL-2.0 OR GPL-2.0-or-later
+
+Files: .builds/*
+Copyright: Contributors To The `net.splitcells.*` Projects
+License: EPL-2.0 OR GPL-2.0-or-later
+
+Files: .config/*
+Copyright: Contributors To The `net.splitcells.*` Projects
+License: EPL-2.0 OR GPL-2.0-or-later
+
+Files: .github/*
+Copyright: Contributors To The `net.splitcells.*` Projects
+License: EPL-2.0 OR GPL-2.0-or-later
+
+Files: .lgtm.yml
+Copyright: Contributors To The `net.splitcells.*` Projects
+License: EPL-2.0 OR GPL-2.0-or-later
+
+Files: .gitlab-ci.yml
+Copyright: Contributors To The `net.splitcells.*` Projects
+License: EPL-2.0 OR GPL-2.0-or-later
+
+Files: LICENSES-other/*
+Copyright: See the files' content.
+License: LicenseRef-NSID
