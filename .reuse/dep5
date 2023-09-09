@@ -10,11 +10,11 @@ Source: https://splitcells.net
 # License: ...
 
 
-Files: src/main/txt/net/splitcells/network/legal/licenses/*
+Files: projects/net.splitcells.network/src/main/txt/net/splitcells/network/legal/licenses/*
 Copyright: See the files' content.
 License: LicenseRef-NSID
 
-Files: src/main/txt/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.txt
+Files: projects/net.splitcells.network/src/main/txt/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.txt
 Copyright: See the files' content.
 License: LicenseRef-NSID
 
