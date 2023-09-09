@@ -307,6 +307,10 @@ listed source code repository logs.
                 where this info is present and easily notable.
                 Maybe the short only SPDX version will be enough in the future.
             </paragraph>
+            <code_block><![CDATA[/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+ * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ */]]></code_block>
+            <blockquote>This is the license header template for Javascript files.</blockquote>
             <code_block><![CDATA[# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ]]></code_block>
