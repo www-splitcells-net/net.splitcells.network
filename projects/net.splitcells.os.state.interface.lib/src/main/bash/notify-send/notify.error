@@ -12,5 +12,5 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
-notify-send --urgency=critical "$@"
+notify-send --urgency=critical "'$*'"
 	# notify-send seems to be licensed under the LGPL 2.1 and allows linking during runtime: https://github.com/GNOME/libnotify/blob/master/COPYING

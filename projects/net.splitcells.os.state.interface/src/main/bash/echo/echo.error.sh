@@ -16,7 +16,7 @@
 # TODO Other commands do not filter echoed errors correctly anymore.
 
 echo.line.current.clear
->&2 echo "error" $@
+>&2 echo "error" "$@"
 
 if [ -z "$echo_error_notifies_user" ]
 then
