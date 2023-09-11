@@ -343,5 +343,10 @@ Launch 4J
 
 FlatLaf
 * License: Apache 2.0 License
-* Source code: https://github.com/JFormDesigner/FlatLaf
+* Source Code: https://github.com/JFormDesigner/FlatLaf
 * Website: https://www.formdev.com/flatlaf/
+
+MigLayout
+* License: BSD or GPL
+* Source Code: https://github.com/mikaelgrev/miglayout
+* Website: https://www.miglayout.com/
