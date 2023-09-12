@@ -140,6 +140,10 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
     }
 
+    default Ui appendWarning(String message, Throwable throwable) {
+        return appendWarning(perspective(message), throwable);
+    }
+
     default Ui appendWarning(Perspective message, Throwable throwable) {
         final var throwablePerspective = perspective("throwable");
         throwablePerspective.withProperty("message", throwable.getMessage());
