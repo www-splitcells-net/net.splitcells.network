@@ -143,11 +143,12 @@ public class ProjectRendererI implements ProjectRenderer {
                 .registerExtension(textExtension())
                 .registerExtension(resourceRenderer())
                 .registerExtension(csvChartRenderer())
-                .registerExtension(commonMarkContributingRenderer())
-                .registerExtension(commonMarkDevelopmentRenderer())
-                .registerExtension(commonMarkBuildRenderer())
                 .registerExtension(rootFileProjectRendererExtension("LICENSE"))
                 .registerExtension(rootFileProjectRendererExtension("NOTICE"))
+                .registerExtension(rootFileProjectRendererExtension("DEVELOPMENT"))
+                .registerExtension(rootFileProjectRendererExtension("BUILD"))
+                .registerExtension(rootFileProjectRendererExtension("CONTRIBUTING"))
+
                 .registerExtension(svgRenderer());
         if (config.cacheRenderers()) {
             transformer = Optional.of(createRenderer());
