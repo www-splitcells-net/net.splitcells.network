@@ -12,3 +12,7 @@ tasks:
       mvn clean install
       cd ../net.splitcells.network
       bin/build.part.with.java
+triggers:
+  - action: email
+    condition: failure
+    to: martins.avots@splitcells.net
