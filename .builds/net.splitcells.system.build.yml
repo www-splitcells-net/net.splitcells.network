@@ -5,11 +5,10 @@ packages:
   - python3
 sources:
   - https://git.sr.ht/~splitcells-net/net.splitcells.network
-  - https://git.sr.ht/~splitcells-net/net.splitcells.network.m2
   - https://git.sr.ht/~splitcells-net/net.splitcells.network.bom
 tasks:
   - build: |
       cd net.splitcells.network.bom
-      mvn clean install -Dmaven.repo.local=../net.splitcells.network.m2/src/main/m2 --offline
-      cd ../net.splitcells.network/projects/net.splitcells.system.root
-      ./bin/build.offline
+      mvn clean install
+      cd ../net.splitcells.network
+      bin/build.part.with.java
