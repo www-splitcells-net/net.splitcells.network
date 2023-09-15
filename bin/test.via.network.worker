@@ -4,6 +4,7 @@
 set -e
 startTime=$(date +%s)
 networkProjectFolder=$(pwd)
+rm -rf  ~/.m2/repository/net/splitcells/ # Ensure, that local m2 cache, does not hide an error.
 echo 'Some logs of the build are located at `../net.splitcells.network.log/target`.'
 cd ../net.splitcells.network.bom
     mvn clean install
