@@ -2,6 +2,11 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
+echo 'This functionality is not actively maintained anymore.'
+echo
+echo 'There were 2 reasons to support building the software without external repos and with a local m2 repo instead:'
+echo '* Ensure, that all dependencies are known.'
+echo '* Ensure, that the core software has a minimal set of dependencies.'
 chmod +x ./bin/*
 export JAVA_VERSION=11 # This is required on FreeBSD, if an older Java version is set as default.
 mvn --settings projects/net.splitcells.network/src/main/xml-pom/net/splitcells/network/build-with-github-snapshot.pom.xml \
