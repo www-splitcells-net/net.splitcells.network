@@ -28,12 +28,17 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 public class IsAliveTest {
 
+    private static final String PLAYER = "player";
+    private static final String TIME = "time";
+    private static final String X_COORDINATE = "x-coordinate";
+    private static final String Y_COORDINATE = "y-coordinate";
+
     @UnitTest
     public void testAlive() {
-        final var player = attribute(Integer.class, "player");
-        final var time = attribute(Integer.class, "time");
-        final var xCoord = attribute(Integer.class, "x-coordinate");
-        final var yCoord = attribute(Integer.class, "y-coordinate");
+        final var player = attribute(Integer.class, PLAYER);
+        final var time = attribute(Integer.class, TIME);
+        final var xCoord = attribute(Integer.class, X_COORDINATE);
+        final var yCoord = attribute(Integer.class, Y_COORDINATE);
         final var testSubject = defineProblem("testAlive")
                 .withDemandAttributes(player, time, xCoord, yCoord)
                 .withDemands(list(list(1, 0, 1, 1), list(1, 1, 1, 1)))
@@ -66,11 +71,11 @@ public class IsAliveTest {
 
     @UnitTest
     public void testAliveWithMultipleCenterStartPositions() {
-        final var player = attribute(Integer.class, "player");
-        final var time = attribute(Integer.class, "time");
-        final var xCoord = attribute(Integer.class, "x-coordinate");
-        final var yCoord = attribute(Integer.class, "y-coordinate");
-        final var testSubject = defineProblem("testAlive")
+        final var player = attribute(Integer.class, PLAYER);
+        final var time = attribute(Integer.class, TIME);
+        final var xCoord = attribute(Integer.class, X_COORDINATE);
+        final var yCoord = attribute(Integer.class, Y_COORDINATE);
+        final var testSubject = defineProblem("testAliveWithMultipleCenterStartPositions")
                 .withDemandAttributes(player, time, xCoord, yCoord)
                 .withDemands(list(list(0, 0, 1, 1)
                         , list(0, 0, 1, 1)
@@ -114,11 +119,11 @@ public class IsAliveTest {
 
     @UnitTest
     public void testDeadWithMultipleCenterStartPositions() {
-        final var player = attribute(Integer.class, "player");
-        final var time = attribute(Integer.class, "time");
-        final var xCoord = attribute(Integer.class, "x-coordinate");
-        final var yCoord = attribute(Integer.class, "y-coordinate");
-        final var testSubject = defineProblem("testAlive")
+        final var player = attribute(Integer.class, PLAYER);
+        final var time = attribute(Integer.class, TIME);
+        final var xCoord = attribute(Integer.class, X_COORDINATE);
+        final var yCoord = attribute(Integer.class, Y_COORDINATE);
+        final var testSubject = defineProblem("testDeadWithMultipleCenterStartPositions")
                 .withDemandAttributes(player, time, xCoord, yCoord)
                 .withDemands(list(list(0, 0, 1, 1)
                         , list(0, 0, 1, 1)
@@ -162,10 +167,10 @@ public class IsAliveTest {
 
     @UnitTest
     public void testDead() {
-        final var player = attribute(Integer.class, "player");
-        final var time = attribute(Integer.class, "time");
-        final var xCoord = attribute(Integer.class, "x-coordinate");
-        final var yCoord = attribute(Integer.class, "y-coordinate");
+        final var player = attribute(Integer.class, PLAYER);
+        final var time = attribute(Integer.class, TIME);
+        final var xCoord = attribute(Integer.class, X_COORDINATE);
+        final var yCoord = attribute(Integer.class, Y_COORDINATE);
         final var testSubject = defineProblem("testDead")
                 .withDemandAttributes(player, time, xCoord, yCoord)
                 .withDemands(list(list(0, 0, 1, 1), list(1, 1, 1, 1)))
