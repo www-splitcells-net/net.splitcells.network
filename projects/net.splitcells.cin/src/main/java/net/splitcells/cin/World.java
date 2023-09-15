@@ -43,6 +43,7 @@ import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
@@ -53,6 +54,10 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSe
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
 public class World {
+
+    private World() {
+        throw constructorIllegal();
+    }
     public static final String WORLD_HISTORY = "world-history";
     public static final Attribute<Integer> WORLD_TIME = attribute(Integer.class, "world-time");
     public static final Attribute<Integer> POSITION_X = attribute(Integer.class, "position-x");
