@@ -47,7 +47,10 @@ options {
     tokenVocab=Java11Lexer;
 }
 source_unit /* This is the root node. Root nodes should be placed on the start of the document. */
-    : (.)*? Keysymbol_at Keyword_JavaLegacyArtifact (.)*? EOF
+    : /* This rule breaks all error messages of the parser.
+       * In order to get a normal error message, one has to disable this rule manually.
+       */
+        (.)*? Keysymbol_at Keyword_JavaLegacyArtifact (.)*? EOF
     | license_declaration package_declaration import_declaration* class_definition
     	EOF
     | license_declaration package_declaration import_declaration* interface_definition
@@ -57,7 +60,7 @@ source_unit /* This is the root node. Root nodes should be placed on the start o
     | license_declaration package_declaration import_declaration* annotation_definition
         EOF
     | license_declaration package_declaration import_declaration* enum_definition
-            	EOF
+       EOF
     ;
 access
     : inline_comment? Dot type_argument? name call_arguments access? inline_comment?
