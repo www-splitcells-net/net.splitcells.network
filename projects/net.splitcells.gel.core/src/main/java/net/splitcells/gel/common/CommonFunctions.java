@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.common;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -23,6 +25,11 @@ import java.util.Set;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
+/**
+ * TODO Move this to the appropriate collection interfaces.
+ */
+@JavaLegacyArtifact
+@Deprecated
 public class CommonFunctions {
 
 	private CommonFunctions() {
