@@ -6,7 +6,7 @@
     -->
     <modelVersion>4.0.0</modelVersion>
     <artifactId>dem.api</artifactId>
-    <name>Dependency Manager Merger</name>
+    <name>Dependency Manager API</name>
     <parent>
         <groupId>net.splitcells</groupId>
         <artifactId>pom-java-defaults</artifactId>
