@@ -345,3 +345,8 @@ FlatLaf
 * License: Apache 2.0 License
 * Source Code: https://github.com/JFormDesigner/FlatLaf
 * Website: https://www.formdev.com/flatlaf/
+
+Eclipse Platform
+
+* License: EPL-2.0
+* Source Code: https://github.com/eclipse-platform
