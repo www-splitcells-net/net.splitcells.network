@@ -246,7 +246,7 @@ public interface Perspective extends PerspectiveView {
     }
 
     default String toXmlString() {
-        return toXmlString(true);
+        return toXmlString(false);
     }
 
     /**

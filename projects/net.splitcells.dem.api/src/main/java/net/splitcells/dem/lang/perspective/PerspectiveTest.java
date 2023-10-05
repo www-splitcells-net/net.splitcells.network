@@ -29,7 +29,7 @@ public class PerspectiveTest {
         final var content = perspective("content", SEW);
         content.withChild(perspective("deck", SEW));
         article.withChild(content);
-        requireEquals(article.toXmlString()
+        requireEquals(article.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
     }
 }
