@@ -246,38 +246,70 @@ public interface Perspective extends PerspectiveView {
     }
 
     default String toXmlString() {
+        return toXmlString(true);
+    }
+
+    /**
+     * TODO Use a config object in order to get finer control on the printing of namespace attributes
+     * and XML namespace prefixes.
+     *
+     * @param withNameSpaceAttribute If this is set to true,
+     *                               the current namespace will be added to the root via `xmlns="[...]"`,
+     *                               if the {@link NameSpace} is not {@link NameSpaces#HTML}, {@link NameSpaces#STRING},
+     *                               {@link NameSpaces#NATURAL} or {@link NameSpaces#DEN}.
+     * @return
+     */
+    default String toXmlString(boolean withNameSpaceAttribute) {
         String xmlString = "";
         if (name().isBlank()) {
             return "<empty/>";
         } else if (!_VALID_XML_NAME.matcher(name()).matches()) {
             xmlString += "<val name=\"" + xmlName() + "\">";
-            xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+            xmlString += children().stream()
+                    .map(p -> p.toXmlString(false))
+                    .reduce((a, b) -> a + b).orElse("");
             xmlString += "</val>";
         } else if (nameSpace().equals(HTML)) {
             if (children().isEmpty()) {
                 xmlString += "<" + name() + "/>";
             } else {
                 xmlString += "<" + name() + ">";
-                xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+                xmlString += children().stream()
+                        .map(p -> p.toXmlString(false))
+                        .reduce((a, b) -> a + b).orElse("");
                 xmlString += "</" + name() + ">";
             }
         } else if (nameSpace().equals(STRING)) {
             xmlString += xmlName();
-            xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+            xmlString += children().stream()
+                    .map(p -> p.toXmlString(false))
+                    .reduce((a, b) -> a + b).orElse("");
         } else if (nameSpace().equals(NATURAL) || nameSpace().equals(DEN)) {
             if (children().isEmpty()) {
                 xmlString += "<" + name() + "/>";
             } else {
                 xmlString += "<" + name() + ">";
-                xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+                xmlString += children().stream()
+                        .map(p -> p.toXmlString(false))
+                        .reduce((a, b) -> a + b).orElse("");
                 xmlString += "</" + name() + ">";
             }
         } else {
             if (children().isEmpty()) {
-                xmlString += "<" + name() + "/>";
+                if (withNameSpaceAttribute) {
+                    xmlString += "<" + name() + " xmlns=\"" + nameSpace().uri() + "\"/>";
+                } else {
+                    xmlString += "<" + name() + "/>";
+                }
             } else {
-                xmlString += "<" + name() + ">";
-                xmlString += children().stream().map(Perspective::toXmlString).reduce((a, b) -> a + b).orElse("");
+                if (withNameSpaceAttribute) {
+                    xmlString += "<" + name() + " xmlns=\"" + nameSpace().uri() + "\">";
+                } else {
+                    xmlString += "<" + name() + ">";
+                }
+                xmlString += children().stream()
+                        .map(p -> p.toXmlString(false))
+                        .reduce((a, b) -> a + b).orElse("");
                 xmlString += "</" + name() + ">";
             }
         }
