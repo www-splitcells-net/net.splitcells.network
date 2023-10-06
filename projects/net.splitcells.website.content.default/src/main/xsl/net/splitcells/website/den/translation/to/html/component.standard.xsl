@@ -369,10 +369,20 @@
                 <!-- TODO what to do when no status -->
                 <!-- REMOVE duplicate onclick but do not let whole area react on click? -->
                 <xsl:variable name="link">
-                    <xsl:text>document.location.href='</xsl:text>
-                    <xsl:apply-templates
-                            select="concat($site_instance_purl, s:string-remove-whitespace(./s:location), '.html')"/>
-                    <xsl:text>'</xsl:text>
+                    <xsl:choose>
+                        <xsl:when test="./s:location">
+                            <xsl:apply-templates
+                                    select="concat($site_instance_purl, s:string-remove-whitespace(./s:location), '.html')"/>
+                            <xsl:text>'</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="./s:path">
+                            <xsl:copy-of
+                                    select="replace(concat($site-instance-host-root-path, s:string-remove-whitespace(./s:path), '.html'), '//', '/')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:message terminate="true"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:variable>
                 <xsl:element name="div">
                     <xsl:attribute name="class">standardborder Standard_highlighted highlightedShortSummary
@@ -390,7 +400,9 @@
                         </xsl:choose>
                     </xsl:attribute>
                     <xsl:attribute name="onclick">
+                        <xsl:text>document.location.href='</xsl:text>
                         <xsl:copy-of select="translate(normalize-space($link), ' ', '')"/>
+                        <xsl:text>'</xsl:text>
                     </xsl:attribute>
                     <xsl:element name="div">
                         <xsl:choose>
@@ -411,9 +423,7 @@
                                     margin-left: .5em;
                                 </xsl:attribute>
                                 <xsl:attribute name="href">
-                                    <xsl:copy-of select="$site_instance_purl"/>
-                                    <xsl:copy-of
-                                            select="concat(s:string-remove-whitespace(./s:location/node()), '.html')"/>
+                                    <xsl:value-of select="$link"/>
                                 </xsl:attribute>
                                 <xsl:value-of select="$title"/>
                             </xsl:element>
