@@ -179,6 +179,8 @@ public class Config {
 
     private List<ProjectConfig> additionalProjects = list();
 
+    private List<ProgramConfig> programConfigs = list();
+
     private Config() {
     }
 
@@ -389,5 +391,14 @@ public class Config {
 
     public Optional<String> xslWindowMenu() {
         return xslWindowMenu;
+    }
+
+    public List<ProgramConfig> programConfigs() {
+        return programConfigs;
+    }
+
+    public Config withAdditionalProgramConfig(ProgramConfig programConfig) {
+        programConfigs.add(programConfig);
+        return this;
     }
 }
