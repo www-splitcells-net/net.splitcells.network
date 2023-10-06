@@ -32,4 +32,13 @@ public class PerspectiveTest {
         requireEquals(article.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
     }
+
+    @UnitTest
+    public void testWithPath() {
+        final var testSubject = perspective("article", SEW)
+                .withPath(perspective("content", SEW)
+                        , perspective("deck", SEW));
+        requireEquals(testSubject.toXmlString(true)
+                , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
+    }
 }

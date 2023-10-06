@@ -140,6 +140,11 @@ public interface Perspective extends PerspectiveView {
         return Optional.of(children.get(0));
     }
 
+    default Perspective withChildren(Perspective... argChildren) {
+        Stream.of(argChildren).forEach(children()::add);
+        return this;
+    }
+
     default Perspective withChildren(List<Perspective> argChildren) {
         argChildren.forEach(children()::add);
         return this;
@@ -185,6 +190,16 @@ public interface Perspective extends PerspectiveView {
     @ReturnsThis
     default Perspective withPath(Perspective path, String propertyName, NameSpace nameSpace) {
         return withPath(this, path, propertyName, nameSpace);
+    }
+
+    default Perspective withPath(Perspective... path) {
+        var current = this;
+        for (int i = 0; i < path.length; ++i) {
+            final var next = path[i];
+            current.withChild(next);
+            current = next;
+        }
+        return this;
     }
 
     private static Perspective withPath(Perspective current, Perspective path, String propertyName, NameSpace nameSpace) {
@@ -263,7 +278,7 @@ public interface Perspective extends PerspectiveView {
         String xmlString = "";
         if (name().isBlank()) {
             return "<empty/>";
-        } else if (!_VALID_XML_NAME.matcher(name()).matches()) {
+        } else if (!_VALID_XML_NAME.matcher(name()).matches() && !nameSpace().equals(STRING)) {
             xmlString += "<val name=\"" + xmlName() + "\">";
             xmlString += children().stream()
                     .map(p -> p.toXmlString(false))
