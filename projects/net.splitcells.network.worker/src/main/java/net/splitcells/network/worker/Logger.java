@@ -36,6 +36,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.network.worker.Repositories.repository;
 
 /**
  * <p>Logs the runtime of tests into a project folder
@@ -145,6 +146,7 @@ public class Logger implements TestExecutionListener {
     @Deprecated
     public void commit() {
         domsole().append("`Logger#commit` is not implemented.", LogLevel.ERROR);
+        repository(Path.of("../../../net.splitcells.network.log")).commitAll();
         // TODO TOFIX SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", networkProject);
     }
 

@@ -10,6 +10,11 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 * **2022-10-21**: **\#162** Move project command `bin/execute` and `bin/execute.extensive.tester` to the `net.splitcells.system` project,
      in order to ensure, that all tests are executed.
 ### Minor Changes
+* **2023-10-07 \#254**: Commit runtime data via JGit instead of git via a shell.
+    This makes using git inside worker easier.
+    It is also a preparation for making the network a portable program,
+    that also could be used for bootstrapping deployments.
+    See \#259 for more details.
 * **2022-03-20**: **\#162** Create network worker project (`projects/net.splitcells.network.worker`).
 ### Patches
 * **2023-10-07: \#257 Recover network log data and fix data loss bug:**
