@@ -25,7 +25,3 @@ endTime=$(date +%s)
 completionRuntimeFolder=$networkProjectFolder/../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/runtime/complete/
 mkdir -p "$completionRuntimeFolder"
 echo runTime=$(($endTime - startTime)) >> "$completionRuntimeFolder/$(hostname).csv"
-cd ../../../net.splitcells.network.log
-    # Normally this is done via the Java code in 'bin/execute'.
-    # Under some conditions this does not work, because git cannot find the 'user.name' or 'user.email' config.
-    # repo.commit.all
