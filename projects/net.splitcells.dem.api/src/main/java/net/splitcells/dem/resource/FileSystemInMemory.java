@@ -38,6 +38,12 @@ public class FileSystemInMemory implements FileSystem {
     }
 
     @Override
+    public FileSystem appendToFile(Path path, byte[] content) {
+        domsole().appendUnimplementedWarning(FileSystemInMemory.class);
+        return this;
+    }
+
+    @Override
     public FileSystem subFileSystem(Path path) {
         domsole().appendUnimplementedWarning(FileSystemInMemory.class);
         return this;

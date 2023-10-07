@@ -50,6 +50,9 @@ public interface FileSystem extends FileSystemView {
     FileSystem writeToFile(Path path, byte[] content);
 
     @ReturnsThis
+    FileSystem appendToFile(Path path, byte[] content);
+
+    @ReturnsThis
     default FileSystem writeToFile(String path, byte[] content) {
         return writeToFile(Path.of(path), content);
     }

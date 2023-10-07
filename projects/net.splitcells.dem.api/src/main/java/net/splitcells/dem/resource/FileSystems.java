@@ -108,6 +108,20 @@ public class FileSystems implements FileSystem {
     }
 
     @Override
+    public FileSystem appendToFile(Path path, byte[] content) {
+        final var targetPath = rootPath.resolve(path);
+        if (path.getParent() != null) {
+            Files.createDirectory(targetPath.getParent());
+        }
+        try (final var writer = new FileOutputStream(targetPath.toFile(), true)) {
+            writer.write(content);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return this;
+    }
+
+    @Override
     public boolean isFile(Path path) {
         return java.nio.file.Files.isRegularFile(rootPath.resolve(path));
     }

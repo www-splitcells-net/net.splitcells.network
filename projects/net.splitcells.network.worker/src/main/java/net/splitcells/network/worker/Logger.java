@@ -77,11 +77,11 @@ public class Logger implements TestExecutionListener {
         final var projectFolder = "src/main/" + CSV.codeName() + "/" + subject + "/";
         logProject.createDirectoryPath(projectFolder);
         final var projectPath = projectFolder + executor + "." + CSV.codeName();
-        if (logProject.isFile(projectPath)) {
-            logProject.writeToFile(projectPath
+        if (!logProject.isFile(projectPath)) {
+            logProject.writeToFile(Path.of(projectPath)
                     , ("Date," + resultType + Files.newLine()).getBytes(StandardCharsets.UTF_8));
         }
-        logProject.writeToFile(Path.of(projectPath)
+        logProject.appendToFile(Path.of(projectPath)
                 , (localDate + "," + result + Files.newLine()).getBytes(StandardCharsets.UTF_8));
     }
 
