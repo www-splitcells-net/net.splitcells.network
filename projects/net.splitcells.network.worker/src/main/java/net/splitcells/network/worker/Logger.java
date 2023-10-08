@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.FileSystem;
+import net.splitcells.dem.resource.FileSystemInMemory;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import org.junit.platform.engine.TestExecutionResult;
@@ -146,7 +147,12 @@ public class Logger implements TestExecutionListener {
     @Deprecated
     public void commit() {
         domsole().append("`Logger#commit` is not implemented.", LogLevel.ERROR);
-        repository(Path.of("../../../net.splitcells.network.log")).commitAll();
+        if (!(logProject instanceof FileSystemInMemory)) {
+            /* TODO This instance of hack prevents error for filesystem,
+             * that do not support write operations or do not contain the corresponding git repo.
+             */
+            repository(Path.of("../../../net.splitcells.network.log")).commitAll();
+        }
         // TODO TOFIX SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", networkProject);
     }
 
