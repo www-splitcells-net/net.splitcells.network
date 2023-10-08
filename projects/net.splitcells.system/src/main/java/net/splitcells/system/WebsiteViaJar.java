@@ -29,6 +29,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
@@ -77,7 +78,11 @@ public class WebsiteViaJar {
                 .withAdditionalCssFile("net/splitcells/website/css/basic.css")
                 .withAdditionalCssFile("net/splitcells/website/css/den.css")
                 .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
-                .withAdditionalCssFile("net/splitcells/website/css/theme.css");
+                .withAdditionalCssFile("net/splitcells/website/css/theme.css")
+                .withAdditionalProgramConfig(programConfig("Splitcells Network"
+                        , "/net/splitcells/network/README")
+                        .withLogoPath(Optional.of("community.2016.12.11.chrom.0.dina4.jpg"))
+                        .withDescription(Optional.of("We provide an open source ecosystem centered around optimization and operations research.")));
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {
