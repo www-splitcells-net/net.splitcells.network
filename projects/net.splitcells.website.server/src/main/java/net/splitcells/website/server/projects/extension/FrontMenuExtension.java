@@ -84,7 +84,7 @@ public class FrontMenuExtension implements ProjectsRendererExtension {
     @Override
     public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         if (projectsRendererI.config().programConfigs().isEmpty()) return setOfUniques();
-        return setOfUniques(Path.of(path(projectsRendererI.config())));
+        return setOfUniques(Path.of(path(projectsRendererI.config()).substring(1)));
     }
 
     private String path(Config config) {
