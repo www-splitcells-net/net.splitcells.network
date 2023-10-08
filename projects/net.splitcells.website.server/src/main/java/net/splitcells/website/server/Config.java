@@ -401,4 +401,9 @@ public class Config {
         programConfigs.add(programConfig);
         return this;
     }
+
+    public Config clearAdditionalProgramConfigs() {
+        programConfigs.clear();
+        return this;
+    }
 }
