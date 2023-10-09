@@ -22,6 +22,6 @@ call_arguments_element
 call_arguments_next
     : Comma call_arguments_element
     ;
-demands_definition: Keyword_demands Equals function_call;
+demands_definition: Keyword_demands Equals function_call Semicolon;
 function_call: Name call_arguments;
-supplies_definition: Keyword_supplies Equals function_call;
+supplies_definition: Keyword_supplies Equals function_call Semicolon;
