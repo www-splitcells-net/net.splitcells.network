@@ -10,8 +10,6 @@ Brace_round_closed: ')';
 Comma: ',';
 Dot: '.';
 Equals: '=';
-Keyword_demands: 'demands';
-Keyword_supplies: 'supplies';
 Name: NamePrefix NameSuffix*;
 Semicolon: ';';
 Whitespace: [ \t\r\n]+;
