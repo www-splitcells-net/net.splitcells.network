@@ -7,6 +7,19 @@ lexer grammar ProblemLexer;
  }
 Brace_round_open: '(';
 Brace_round_closed: ')';
+Comma: ',';
+Dot: '.';
+Equals: '=';
+Keyword_demands: 'demands';
+Keyword_supplies: 'supplies';
+Name: NamePrefix NameSuffix*;
+Semicolon: ';';
 Whitespace: [ \t\r\n]+;
 
-fragment Name: [a-zA-Z_][a-zA-Z0-9_]*;
+fragment NamePrefix: [a-zA-Z_];
+fragment NameSuffix: [a-zA-Z0-9_];
+
+/* Tokens Of Last Resort */
+	WS:
+		/* Ignore whitespace. */
+    	[ \t\r\n]+ -> skip;
