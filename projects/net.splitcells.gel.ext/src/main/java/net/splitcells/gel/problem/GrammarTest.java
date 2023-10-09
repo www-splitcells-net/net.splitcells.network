@@ -25,8 +25,8 @@ import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 public class GrammarTest {
     @UnitTest
-    public void testDemandDefinition() {
-        final var testData = "demands=forAll();";
+    public void test() {
+        final var testData = "demands=forAll().then();";
         final var lexer = new net.splitcells.gel.ext.problem.ProblemLexer(CharStreams.fromString(testData));
         final var parser = new net.splitcells.gel.ext.problem.ProblemParser(new CommonTokenStream(lexer));
         final var testResult = parser.source_unit();
@@ -34,5 +34,7 @@ public class GrammarTest {
                 , "demands");
         requireEquals(testResult.variable_definition().function_call().Name().getText()
                 , "forAll");
+        requireEquals(testResult.variable_definition().function_call().access().Name().getText()
+                , "then");
     }
 }
