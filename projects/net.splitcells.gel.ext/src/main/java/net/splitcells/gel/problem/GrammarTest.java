@@ -30,7 +30,17 @@ public class GrammarTest {
         final var lexer = new net.splitcells.gel.ext.problem.ProblemLexer(CharStreams.fromString(testData));
         final var parser = new net.splitcells.gel.ext.problem.ProblemParser(new CommonTokenStream(lexer));
         final var testResult = parser.source_unit();
-        requireEquals(testResult.demand_definition().function_call().Name().getText()
+        requireEquals(testResult.demands_definition().function_call().Name().getText()
+                , "forAll");
+    }
+
+    @UnitTest
+    public void testSupplyDefinition() {
+        final var testData = "supplies=forAll();";
+        final var lexer = new net.splitcells.gel.ext.problem.ProblemLexer(CharStreams.fromString(testData));
+        final var parser = new net.splitcells.gel.ext.problem.ProblemParser(new CommonTokenStream(lexer));
+        final var testResult = parser.source_unit();
+        requireEquals(testResult.supplies_definition().function_call().Name().getText()
                 , "forAll");
     }
 }
