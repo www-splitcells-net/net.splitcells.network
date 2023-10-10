@@ -15,9 +15,11 @@
  */
 package net.splitcells.gel.problem;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import org.antlr.v4.runtime.*;
 
+import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.problem.ProblemParser.parseProblem;
 
@@ -44,5 +46,14 @@ public class ProblemParserTest {
                 + "constraints=forAll(b).then(allSame(c));"
                 + "name=\"testParseProblem\";";
         parseProblem(testData);
+    }
+
+    @UnitTest
+    public void testInvalidDemandAttribute() {
+        final var testData = "demands={a=invalid_attribute()};"
+                + "supplies={};"
+                + "constraints=forAll(a);"
+                + "name=\"testInvalidDemandAttribute\";";
+        assertThrows(Throwable.class, () -> parseProblem(testData));
     }
 }
