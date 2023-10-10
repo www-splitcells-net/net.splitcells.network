@@ -46,7 +46,7 @@ public class ProblemParser {
         final var supplies = database(supplyAttributes);
         final var assignments = assignments(name, demands, supplies);
         problem(assignments, constraints);
-        throw notImplementedYet();
+        return null;
     }
 
     private ProblemParser() {

@@ -12,6 +12,7 @@ Brace_curly_closed: '}';
 Comma: ',';
 Dot: '.';
 Equals: '=';
+Integer: [-+]?[0-9]+;
 Name: NamePrefix NameSuffix*;
 Semicolon: ';';
 String: '"' [a-zA-Z0-9_]* '"';
@@ -20,7 +21,5 @@ Whitespace: [ \t\r\n]+;
 fragment NamePrefix: [a-zA-Z_];
 fragment NameSuffix: [a-zA-Z0-9_];
 
-/* Tokens Of Last Resort */
-	WS:
-		/* Ignore whitespace. */
-    	[ \t\r\n]+ -> skip;
+/* Ignore whitespace. */
+WS: [ \t\r\n]+ -> skip;
