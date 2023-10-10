@@ -14,11 +14,13 @@ call_arguments
     : Brace_round_open Brace_round_closed
     | Brace_round_open call_arguments_element call_arguments_next* Brace_round_closed
     ;
-call_arguments_element
-    : Name
-    ;
-call_arguments_next
-    : Comma call_arguments_element
-    ;
+call_arguments_element: Name;
+call_arguments_next: Comma call_arguments_element;
 function_call: Name call_arguments access?;
-variable_definition: Name Equals function_call Semicolon;
+function_call_list
+    : Brace_curly_open function_call function_call_list_element* Brace_curly_closed
+    | Brace_curly_open Brace_curly_closed;
+function_call_list_element: Comma function_call;
+variable_definition
+    : Name Equals function_call Semicolon
+    | Name Equals function_call Semicolon;

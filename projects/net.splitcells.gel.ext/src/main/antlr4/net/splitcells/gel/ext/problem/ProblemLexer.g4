@@ -7,6 +7,8 @@ lexer grammar ProblemLexer;
  }
 Brace_round_open: '(';
 Brace_round_closed: ')';
+Brace_curly_open: '{';
+Brace_curly_closed: '}';
 Comma: ',';
 Dot: '.';
 Equals: '=';

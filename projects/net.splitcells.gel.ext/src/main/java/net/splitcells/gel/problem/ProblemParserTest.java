@@ -15,15 +15,13 @@
  */
 package net.splitcells.gel.problem;
 
-import net.splitcells.dem.data.atom.Thing;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.gel.problem.ProblemParser.parseProblem;
 
-public class GrammarTest {
+public class ProblemParserTest {
     @UnitTest
     public void test() {
         final var testData = "demands=forAll().then();";
@@ -36,5 +34,13 @@ public class GrammarTest {
                 , "forAll");
         requireEquals(testResult.variable_definition().function_call().access().Name().getText()
                 , "then");
+    }
+
+    @UnitTest
+    public void testParseProblem() {
+        final var testData = "demands={a=int,b=string}"
+                + "supplies={c=float}"
+                + "constraints=forAll(a).then(hasSize(2));"
+                + "constraints=forAll(b).then(allSame(c));";
     }
 }
