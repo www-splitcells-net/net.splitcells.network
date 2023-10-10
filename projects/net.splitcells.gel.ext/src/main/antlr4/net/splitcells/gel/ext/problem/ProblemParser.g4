@@ -16,7 +16,8 @@ call_arguments
     ;
 call_arguments_element
     : Name
-    | Integer;
+    | Integer
+    | function_call;
 call_arguments_next: Comma call_arguments_element;
 function_call: Name call_arguments access*;
 function_call_list
