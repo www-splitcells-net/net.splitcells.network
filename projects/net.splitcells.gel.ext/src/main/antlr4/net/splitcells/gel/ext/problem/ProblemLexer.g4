@@ -14,6 +14,7 @@ Dot: '.';
 Equals: '=';
 Name: NamePrefix NameSuffix*;
 Semicolon: ';';
+String: '"' [a-zA-Z0-9_]* '"';
 Whitespace: [ \t\r\n]+;
 
 fragment NamePrefix: [a-zA-Z_];

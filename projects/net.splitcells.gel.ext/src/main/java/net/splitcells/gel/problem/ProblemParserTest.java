@@ -28,11 +28,11 @@ public class ProblemParserTest {
         final var lexer = new net.splitcells.gel.ext.problem.ProblemLexer(CharStreams.fromString(testData));
         final var parser = new net.splitcells.gel.ext.problem.ProblemParser(new CommonTokenStream(lexer));
         final var testResult = parser.source_unit();
-        requireEquals(testResult.variable_definition().Name().getText()
+        requireEquals(testResult.variable_definition().get(0).Name().getText()
                 , "demands");
-        requireEquals(testResult.variable_definition().function_call().Name().getText()
+        requireEquals(testResult.variable_definition().get(0).function_call().Name().getText()
                 , "forAll");
-        requireEquals(testResult.variable_definition().function_call().access().Name().getText()
+        requireEquals(testResult.variable_definition().get(0).function_call().access().get(0).Name().getText()
                 , "then");
     }
 

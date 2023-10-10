@@ -16,11 +16,13 @@
 package net.splitcells.gel.problem;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
@@ -33,7 +35,11 @@ public class ProblemParser {
         final var parser = new net.splitcells.gel.ext.problem.ProblemParser(new CommonTokenStream(lexer));
         final var source_unit = parser.source_unit();
         final var constraints = forAll();
-        final var name = "TODO";
+        final var names = source_unit.variable_definition().stream()
+                .filter(vd -> vd.Name().getText().equals("name"))
+                .collect(toList());
+        names.requireSizeOf(1);
+        final var name = names.get(0).getText();
         final List<Attribute<? extends Object>> demandAttributes = list();
         final List<Attribute<? extends Object>> supplyAttributes = list();
         final var demands = database(demandAttributes);
