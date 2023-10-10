@@ -35,8 +35,9 @@ public class ProblemParser {
         final var parser = new net.splitcells.gel.ext.problem.ProblemParser(new CommonTokenStream(lexer));
         final var source_unit = parser.source_unit();
         final var constraints = forAll();
-        final var names = source_unit.variable_definition().stream()
-                .filter(vd -> vd.Name().getText().equals("name"))
+        final var names = source_unit.statement().stream()
+                .filter(vd -> vd.variable_definition() != null)
+                .filter(vd -> vd.variable_definition().Name().getText().equals("name"))
                 .collect(toList());
         names.requireSizeOf(1);
         final var name = names.get(0).getText();

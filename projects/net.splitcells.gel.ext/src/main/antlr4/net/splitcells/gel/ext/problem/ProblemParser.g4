@@ -8,7 +8,7 @@ options {
 @header {
     package net.splitcells.gel.ext.problem;
 }
-source_unit: variable_definition+;
+source_unit: statement+;
 access: Dot Name call_arguments access?;
 call_arguments
     : Brace_round_open Brace_round_closed
@@ -26,9 +26,11 @@ function_call_list
 function_call_list_element: Comma function_call;
 map
     : Brace_curly_open Brace_curly_closed
-    | Brace_curly_open variable_definition* Brace_curly_closed;
+    | Brace_curly_open variable_definition statement_reversed* Brace_curly_closed;
+statement: variable_definition Semicolon;
+statement_reversed: Semicolon variable_definition;
 variable_definition
-    : Name Equals function_call Semicolon
-    | Name Equals String Semicolon
-    | Name Equals map Semicolon;
+    : Name Equals function_call
+    | Name Equals String
+    | Name Equals map;
 

@@ -28,18 +28,18 @@ public class ProblemParserTest {
         final var lexer = new net.splitcells.gel.ext.problem.ProblemLexer(CharStreams.fromString(testData));
         final var parser = new net.splitcells.gel.ext.problem.ProblemParser(new CommonTokenStream(lexer));
         final var testResult = parser.source_unit();
-        requireEquals(testResult.variable_definition().get(0).Name().getText()
+        requireEquals(testResult.statement().get(0).variable_definition().Name().getText()
                 , "demands");
-        requireEquals(testResult.variable_definition().get(0).function_call().Name().getText()
+        requireEquals(testResult.statement().get(0).variable_definition().function_call().Name().getText()
                 , "forAll");
-        requireEquals(testResult.variable_definition().get(0).function_call().access().get(0).Name().getText()
+        requireEquals(testResult.statement().get(0).variable_definition().function_call().access().get(0).Name().getText()
                 , "then");
     }
 
     @UnitTest
     public void testParseProblem() {
-        final var testData = "demands={a=int();b=string();};"
-                + "supplies={c=float();};"
+        final var testData = "demands={a=int();b=string()};"
+                + "supplies={c=float()};"
                 + "constraints=forAll(a).then(hasSize(2));"
                 + "constraints=forAll(b).then(allSame(c));"
                 + "name=\"testParseProblem\";";
