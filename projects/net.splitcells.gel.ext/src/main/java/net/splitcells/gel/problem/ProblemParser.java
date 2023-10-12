@@ -61,6 +61,21 @@ public class ProblemParser {
                 .add(parseAttribute(da.variable_definition().Name().getText()
                         , da.variable_definition().function_call().Name().getText())));
         final List<Attribute<? extends Object>> supplyAttributes = list();
+        final var supplyDefinition = source_unit.statement().stream()
+                .filter(vd -> vd.variable_definition() != null)
+                .filter(vd -> vd.variable_definition().Name().getText().equals("supplies"))
+                .collect(toList());
+        supplyDefinition.requireSizeOf(1);
+        final var firstSupplyAttribute = supplyDefinition.get(0).variable_definition().map().variable_definition();
+        if (firstSupplyAttribute != null) {
+            supplyAttributes.add(
+                    parseAttribute(firstSupplyAttribute.Name().getText()
+                            , firstSupplyAttribute.function_call().Name().getText()));
+        }
+        final var additionalSupplyAttributes = supplyDefinition.get(0).variable_definition().map().statement_reversed();
+        additionalSupplyAttributes.forEach(sa -> supplyAttributes
+                .add(parseAttribute(sa.variable_definition().Name().getText()
+                        , sa.variable_definition().function_call().Name().getText())));
         final var demands = database(demandAttributes);
         final var supplies = database(supplyAttributes);
         final var assignments = assignments(name, demands, supplies);

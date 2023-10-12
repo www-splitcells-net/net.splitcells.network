@@ -56,4 +56,13 @@ public class ProblemParserTest {
                 + "name=\"testInvalidDemandAttribute\";";
         assertThrows(Throwable.class, () -> parseProblem(testData));
     }
+
+    @UnitTest
+    public void testInvalidSupplyAttribute() {
+        final var testData = "demands={};"
+                + "supplies={a=invalid_attribute()};"
+                + "constraints=forAll(a);"
+                + "name=\"testInvalidDemandAttribute\";";
+        assertThrows(Throwable.class, () -> parseProblem(testData));
+    }
 }
