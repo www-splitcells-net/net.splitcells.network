@@ -27,7 +27,9 @@ function_call_list_element: Comma function_call;
 map
     : Brace_curly_open Brace_curly_closed
     | Brace_curly_open variable_definition statement_reversed* Brace_curly_closed;
-statement: variable_definition Semicolon;
+statement
+    : variable_definition Semicolon
+    | function_call Semicolon;
 statement_reversed: Semicolon variable_definition;
 variable_definition
     : Name Equals function_call

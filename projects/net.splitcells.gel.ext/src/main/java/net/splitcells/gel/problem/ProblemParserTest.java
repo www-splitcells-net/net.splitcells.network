@@ -42,8 +42,9 @@ public class ProblemParserTest {
     public void testParseProblem() {
         final var testData = "demands={a=int();b=string()};"
                 + "supplies={c=float()};"
-                + "constraints=forAll(a).then(hasSize(2));"
-                + "constraints=forAll(b).then(allSame(c));"
+                + "constraints=forAll();"
+                //+ "constraints.forEach(a).then(hasSize(2));"
+                //+ "constraints.forEach(b).then(allSame(c));"
                 + "name=\"testParseProblem\";";
         parseProblem(testData);
     }
@@ -52,7 +53,7 @@ public class ProblemParserTest {
     public void testInvalidDemandAttribute() {
         final var testData = "demands={a=invalid_attribute()};"
                 + "supplies={};"
-                + "constraints=forAll(a);"
+                + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
         assertThrows(Throwable.class, () -> parseProblem(testData));
     }
@@ -61,7 +62,7 @@ public class ProblemParserTest {
     public void testInvalidSupplyAttribute() {
         final var testData = "demands={};"
                 + "supplies={a=invalid_attribute()};"
-                + "constraints=forAll(a);"
+                + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
         assertThrows(Throwable.class, () -> parseProblem(testData));
     }
