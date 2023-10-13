@@ -23,8 +23,18 @@ if __name__ == '__main__':
 		, dest = 'remoteRepo'
 		, required = True
 		, help = 'This is the URL of the remote repository, from which missing repos are cloned.')
+	# First the repair is executed by ignoring peer repos,
+	# as these often cause problems,
+	# when peer or sub repos are deleted.
 	commandToExecute = "repo.process"\
 		+ " --command 'exit'"\
+		+ " --command-for-missing 'command.managed.execute disjunction repo.clone.into.current "\
+		+ parser.parse_args().remoteRepo + "/$subRepo'"
+	logging.debug("Executing: " + commandToExecute)
+	subprocess.call(commandToExecute, shell='True')
+	commandToExecute = "repo.process"\
+		+ " --command 'exit'"\
+		+ " --ignore-peer-repos 'false'"\
 		+ " --command-for-missing 'command.managed.execute disjunction repo.clone.into.current "\
 		+ parser.parse_args().remoteRepo + "/$subRepo'"
 	logging.debug("Executing: " + commandToExecute)

@@ -16,8 +16,6 @@ TODO Repo process should have an optional flag in order to only process the curr
      This would than be used in order to execute complex commands on the current repo first and than on its sub repos.
      For example the command "repo.process 'repo.repair [...] && repo.remote.set [...] && repo.pull [...]'",
      would than work more reliable, when the remote server deletes sub repos at arbitrary times.
-TODO Ignore peer repos with explicit flag and via environment (net_splitcells_os_state_interface_repo_process_repo_peer_disabled).
-     Ignoring peers is required in order to synchronize meta repos more reliably automatically.
 TODO Instead of "./.net.splitcells.os.state.interface.repo/subs.json" use the
      more simple "./.net.splitcells.os.state.interface.repo/subs.txt",
      which needs to be defined yet.
@@ -61,26 +59,27 @@ def execute(relativePath, host, command):
 		logging.error('	Error processing repository with return code ' + str(returnCode) + '.')
 		return False
 	return True
-def process(relativePath, host, command, commandForMissing, commandForUnknown, commandForCurrent, commandForChildren):
+def process(relativePath, host, command, commandForMissing, commandForUnknown, commandForCurrent, commandForChildren, ignorePeerRepos):
 	if not execute(relativePath, host.replace('$peerRepo', ''), command):
 		return False
-	peerListPath = Path('./bin/net.splitcells.osi.repos.peers')
-	if peerListPath.is_file() and environ.get('net_splitcells_os_state_interface_repo_process_repo_peer_disabled') != '1':
-		peers = subprocess.run([peerListPath], stdout=subprocess.PIPE)
-		for peerRepo in peers.stdout.decode('utf-8').split("\n"):
-			if peerRepo.strip() != "":
-				subRepoPath = Path('../' + peerRepo)
-				returnCode = processSub(relativePath + '/../' + peerRepo
-										, host
-										, re.sub('/[a-z\.]*/../', '/', command.replace('$peerRepo', '/../' + peerRepo))
-										, commandForMissing
-										, commandForUnknown
-										, commandForCurrent
-										, commandForChildren
-										, peerRepo
-										, subRepoPath)
-				if not returnCode:
-					return returnCode
+	if ignorePeerRepos != 'false':
+		peerListPath = Path('./bin/net.splitcells.osi.repos.peers')
+		if peerListPath.is_file() and environ.get('net_splitcells_os_state_interface_repo_process_repo_peer_disabled') != '1':
+			peers = subprocess.run([peerListPath], stdout=subprocess.PIPE)
+			for peerRepo in peers.stdout.decode('utf-8').split("\n"):
+				if peerRepo.strip() != "":
+					subRepoPath = Path('../' + peerRepo)
+					returnCode = processSub(relativePath + '/../' + peerRepo
+											, host
+											, re.sub('/[a-z\.]*/../', '/', command.replace('$peerRepo', '/../' + peerRepo))
+											, commandForMissing
+											, commandForUnknown
+											, commandForCurrent
+											, commandForChildren
+											, peerRepo
+											, subRepoPath)
+					if not returnCode:
+						return returnCode
 	command = command.replace('$peerRepo', '')
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 	if subListPath.is_file():
@@ -163,6 +162,7 @@ if __name__ == '__main__':
 	parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
 	parser.add_argument('--command-for-current', dest='commandForCurrent', required=False) # TODO What is the purpose of this?
 	parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
+	parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
 	parsedArgs = parser.parse_args()
-	if not process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command, parsedArgs.commandForMissing, parsedArgs.commandForUnknown, parsedArgs.commandForCurrent, parsedArgs.commandForChildren):
+	if not process(parsedArgs.relativePath, parsedArgs.host, parsedArgs.command, parsedArgs.commandForMissing, parsedArgs.commandForUnknown, parsedArgs.commandForCurrent, parsedArgs.commandForChildren, parsedArgs.ignorePeerRepos):
 		exit(1)
