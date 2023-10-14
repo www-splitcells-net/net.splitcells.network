@@ -20,9 +20,9 @@ import org.antlr.v4.runtime.*;
 
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.gel.problem.ProblemParser3.parseProblem;
+import static net.splitcells.gel.problem.ProblemParser.parseProblem;
 
-public class ProblemParser3Test {
+public class ProblemParserTest {
     @UnitTest
     public void test() {
         final var testData = "demands=forAll().then();";
@@ -45,7 +45,6 @@ public class ProblemParser3Test {
                 //+ "constraints.forEach(a).then(hasSize(2));"
                 //+ "constraints.forEach(b).then(allSame(c));"
                 + "name=\"testParseProblem\";";
-        ProblemParser2.parseProblem(testData);
         parseProblem(testData);
     }
 
