@@ -3,7 +3,7 @@ lexer grammar ProblemLexer;
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
  @header {
-     package net.splitcells.gel.ext.problem;
+     package net.splitcells.gel.ext.problem.antlr4;
  }
 Brace_round_open: '(';
 Brace_round_closed: ')';

@@ -73,7 +73,7 @@
                             </includes>
                             <visitor>true</visitor>
                             <listener>true</listener>
-                            <outputDirectory>target/antlr4</outputDirectory>
+                            <outputDirectory>target/antlr4/net/splitcells/gel/ext/problem/antlr4</outputDirectory>
                         </configuration>
                         <executions>
                             <execution>

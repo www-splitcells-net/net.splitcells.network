@@ -15,20 +15,19 @@
  */
 package net.splitcells.gel.problem;
 
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import org.antlr.v4.runtime.*;
 
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.gel.problem.ProblemParser.parseProblem;
+import static net.splitcells.gel.problem.ProblemParser3.parseProblem;
 
-public class ProblemParserTest {
+public class ProblemParser3Test {
     @UnitTest
     public void test() {
         final var testData = "demands=forAll().then();";
-        final var lexer = new net.splitcells.gel.ext.problem.ProblemLexer(CharStreams.fromString(testData));
-        final var parser = new net.splitcells.gel.ext.problem.ProblemParser(new CommonTokenStream(lexer));
+        final var lexer = new net.splitcells.gel.ext.problem.antlr4.ProblemLexer(CharStreams.fromString(testData));
+        final var parser = new net.splitcells.gel.ext.problem.antlr4.ProblemParser(new CommonTokenStream(lexer));
         final var testResult = parser.source_unit();
         requireEquals(testResult.statement().get(0).variable_definition().Name().getText()
                 , "demands");

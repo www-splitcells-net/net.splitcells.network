@@ -6,7 +6,7 @@ options {
     tokenVocab=ProblemLexer;
 }
 @header {
-    package net.splitcells.gel.ext.problem;
+    package net.splitcells.gel.ext.problem.antlr4;
 }
 source_unit: statement+;
 access: Dot Name call_arguments access?;

@@ -16,15 +16,11 @@
 package net.splitcells.gel.problem;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.attribute.AttributeI;
-import net.splitcells.gel.ext.problem.ProblemParser.Variable_definitionContext;
+import net.splitcells.gel.ext.problem.antlr4.ProblemParser.Variable_definitionContext;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -38,11 +34,10 @@ import static net.splitcells.gel.constraint.type.ForAlls.forEach;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
-import static net.splitcells.gel.problem.ProblemI.problem;
 
-public class ProblemParser {
+public class ProblemParser3 {
     public static Problem parseProblem(String arg) {
-        new ProblemParser(arg);
+        new ProblemParser3(arg);
         return null;
     }
 
@@ -110,9 +105,9 @@ public class ProblemParser {
         }
     }
 
-    private ProblemParser(String arg) {
-        final var lexer = new net.splitcells.gel.ext.problem.ProblemLexer(CharStreams.fromString(arg));
-        final var parser = new net.splitcells.gel.ext.problem.ProblemParser(new CommonTokenStream(lexer));
+    private ProblemParser3(String arg) {
+        final var lexer = new net.splitcells.gel.ext.problem.antlr4.ProblemLexer(CharStreams.fromString(arg));
+        final var parser = new net.splitcells.gel.ext.problem.antlr4.ProblemParser(new CommonTokenStream(lexer));
         final var source_unit = parser.source_unit();
         final var names = source_unit.statement().stream()
                 .filter(vd -> vd.variable_definition() != null)
