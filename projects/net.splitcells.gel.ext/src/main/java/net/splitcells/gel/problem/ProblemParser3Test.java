@@ -45,6 +45,7 @@ public class ProblemParser3Test {
                 //+ "constraints.forEach(a).then(hasSize(2));"
                 //+ "constraints.forEach(b).then(allSame(c));"
                 + "name=\"testParseProblem\";";
+        ProblemParser2.parseProblem(testData);
         parseProblem(testData);
     }
 
