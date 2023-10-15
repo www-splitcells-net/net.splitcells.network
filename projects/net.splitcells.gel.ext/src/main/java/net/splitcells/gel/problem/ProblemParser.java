@@ -52,13 +52,13 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
                 throw executionException("Demands are not allowed to be defined multiple times.");
             }
             final List<Attribute<? extends Object>> demandAttributes = list();
-            final var firstDemandAttribute = ctx.map().variable_definition();
+            final var firstDemandAttribute = ctx.block_statement().variable_definition();
             if (firstDemandAttribute != null) {
                 demandAttributes.add(
                         parseAttribute(firstDemandAttribute.Name().getText()
                                 , firstDemandAttribute.function_call().Name().getText()));
             }
-            final var additionalDemandAttributes = ctx.map().statement_reversed();
+            final var additionalDemandAttributes = ctx.block_statement().statement_reversed();
             additionalDemandAttributes.forEach(da -> demandAttributes
                     .add(parseAttribute(da.variable_definition().Name().getText()
                             , da.variable_definition().function_call().Name().getText())));
@@ -68,13 +68,13 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
                 throw executionException("Supplies are not allowed to be defined multiple times.");
             }
             final List<Attribute<? extends Object>> supplyAttributes = list();
-            final var firstSupplyAttribute = ctx.map().variable_definition();
+            final var firstSupplyAttribute = ctx.block_statement().variable_definition();
             if (firstSupplyAttribute != null) {
                 supplyAttributes.add(
                         parseAttribute(firstSupplyAttribute.Name().getText()
                                 , firstSupplyAttribute.function_call().Name().getText()));
             }
-            final var additionalSupplyAttributes = ctx.map().statement_reversed();
+            final var additionalSupplyAttributes = ctx.block_statement().statement_reversed();
             additionalSupplyAttributes.forEach(sa -> supplyAttributes
                     .add(parseAttribute(sa.variable_definition().Name().getText()
                             , sa.variable_definition().function_call().Name().getText())));
@@ -91,19 +91,19 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
             throw executionException("Function chaining is not supported for constraint definition yet.");
         }
         if (constraintName.equals("forAll")) {
-            if (variableDefinition.function_call().call_arguments().call_arguments_element() != null) {
+            if (variableDefinition.function_call().function_call_arguments().function_call_arguments_element() != null) {
                 throw executionException("ForAll does not support arguments");
             }
             return forAll();
         } else if (constraintName.equals("forEach")) {
-            if (variableDefinition.function_call().call_arguments().call_arguments_element() != null
-                    && variableDefinition.function_call().call_arguments().call_arguments_next().isEmpty()) {
-                if (!variableDefinition.function_call().call_arguments().call_arguments_element().function_call().isEmpty()) {
+            if (variableDefinition.function_call().function_call_arguments().function_call_arguments_element() != null
+                    && variableDefinition.function_call().function_call_arguments().function_call_arguments_next().isEmpty()) {
+                if (!variableDefinition.function_call().function_call_arguments().function_call_arguments_element().function_call().isEmpty()) {
                     throw executionException("Function call argument are not supported for forEach constraint.");
                 }
                 final var attributeName = variableDefinition.function_call()
-                        .call_arguments()
-                        .call_arguments_element()
+                        .function_call_arguments()
+                        .function_call_arguments_element()
                         .Name()
                         .getText();
                 final var demandAttributeMatches = demands.headerView().stream()
@@ -123,7 +123,7 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
                 }
                 return forEach(matchedAttribute);
             }
-            if (!variableDefinition.function_call().call_arguments().call_arguments_next().isEmpty()) {
+            if (!variableDefinition.function_call().function_call_arguments().function_call_arguments_next().isEmpty()) {
                 throw executionException("ForEach does not support multiple arguments.");
             }
             throw executionException("Invalid program state.");
