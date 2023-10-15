@@ -55,8 +55,6 @@ source_unit /* This is the root node. Root nodes should be placed on the start o
     	EOF
     | license_declaration package_declaration import_declaration* interface_definition
         EOF
-    | license_declaration package_declaration import_declaration* interface_definition
-    	EOF
     | license_declaration package_declaration import_declaration* annotation_definition
         EOF
     | license_declaration package_declaration import_declaration* enum_definition
