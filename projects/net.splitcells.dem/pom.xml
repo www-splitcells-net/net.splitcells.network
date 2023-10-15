@@ -66,21 +66,38 @@
                         <groupId>org.antlr</groupId>
                         <artifactId>antlr4-maven-plugin</artifactId>
                         <version>${antlr.version}</version>
-                        <configuration>
-                            <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/code</sourceDirectory>
-                            <includes>
-                                <include>Java11Lexer.g4</include>
-                                <include>Java11Parser.g4</include>
-                            </includes>
-                            <visitor>true</visitor>
-                            <listener>true</listener>
-                            <outputDirectory>target/antlr4</outputDirectory>
-                        </configuration>
                         <executions>
                             <execution>
+                                <id>antlr4-generate-java-grammar</id>
                                 <goals>
                                     <goal>antlr4</goal>
                                 </goals>
+                                <configuration>
+                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/code</sourceDirectory>
+                                    <includes>
+                                        <include>Java11Lexer.g4</include>
+                                        <include>Java11Parser.g4</include>
+                                    </includes>
+                                    <visitor>true</visitor>
+                                    <listener>true</listener>
+                                    <outputDirectory>target/antlr4/net/splitcells/dem/source/code/anltr4</outputDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>antlr4-generate-den-grammar</id>
+                                <goals>
+                                    <goal>antlr4</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/lang/perspective/antlr4</sourceDirectory>
+                                    <includes>
+                                        <include>DenLexer.g4</include>
+                                        <include>DenParser.g4</include>
+                                    </includes>
+                                    <visitor>true</visitor>
+                                    <listener>true</listener>
+                                    <outputDirectory>target/antlr4/net/splitcells/dem/lang/perspective/antlr4</outputDirectory>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>

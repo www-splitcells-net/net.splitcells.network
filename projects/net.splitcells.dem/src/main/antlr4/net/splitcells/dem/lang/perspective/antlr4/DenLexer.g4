@@ -1,10 +1,10 @@
-lexer grammar ProblemLexer;
+lexer grammar DenLexer;
 /* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
- @header {
-     package net.splitcells.gel.ext.problem.antlr4;
- }
+@header {
+    package net.splitcells.dem.lang.perspective.antlr4;
+}
 Brace_round_open: '(';
 Brace_round_closed: ')';
 Brace_curly_open: '{';

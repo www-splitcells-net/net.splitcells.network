@@ -4,7 +4,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.ext.problem.antlr4.ProblemParserBaseVisitor;
+import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -18,7 +18,7 @@ import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
-public class ProblemParser extends ProblemParserBaseVisitor<Problem> {
+public class ProblemParser extends DenParserBaseVisitor<Problem> {
 
     private String name;
 
@@ -27,20 +27,20 @@ public class ProblemParser extends ProblemParserBaseVisitor<Problem> {
     private Constraint constraints;
 
     public static Problem parseProblem(String arg) {
-        final var lexer = new net.splitcells.gel.ext.problem.antlr4.ProblemLexer(CharStreams.fromString(arg));
-        final var parser = new net.splitcells.gel.ext.problem.antlr4.ProblemParser(new CommonTokenStream(lexer));
+        final var lexer = new net.splitcells.dem.lang.perspective.antlr4.DenLexer(CharStreams.fromString(arg));
+        final var parser = new net.splitcells.dem.lang.perspective.antlr4.DenParser(new CommonTokenStream(lexer));
         return new ProblemParser().visitSource_unit(parser.source_unit());
     }
 
     @Override
-    public Problem visitSource_unit(net.splitcells.gel.ext.problem.antlr4.ProblemParser.Source_unitContext ctx) {
+    public Problem visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext ctx) {
         visitChildren(ctx);
         final var assignments = assignments(name, demands, supplies);
         return null;
     }
 
     @Override
-    public Problem visitVariable_definition(net.splitcells.gel.ext.problem.antlr4.ProblemParser.Variable_definitionContext ctx) {
+    public Problem visitVariable_definition(net.splitcells.dem.lang.perspective.antlr4.DenParser.Variable_definitionContext ctx) {
         final var ctxName = ctx.Name().getText();
         if (ctxName.equals("name")) {
             if (name != null) {
@@ -85,7 +85,7 @@ public class ProblemParser extends ProblemParserBaseVisitor<Problem> {
         return null;
     }
 
-    private Constraint parseConstraint(net.splitcells.gel.ext.problem.antlr4.ProblemParser.Variable_definitionContext variableDefinition) {
+    private Constraint parseConstraint(net.splitcells.dem.lang.perspective.antlr4.DenParser.Variable_definitionContext variableDefinition) {
         final var constraintName = variableDefinition.function_call().Name().getText();
         if (!variableDefinition.function_call().access().isEmpty()) {
             throw executionException("Function chaining is not supported for constraint definition yet.");

@@ -1,12 +1,12 @@
-parser grammar ProblemParser;
+parser grammar DenParser;
 /* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-options {
-    tokenVocab=ProblemLexer;
-}
 @header {
-    package net.splitcells.gel.ext.problem.antlr4;
+    package net.splitcells.dem.lang.perspective.antlr4;
+}
+options {
+    tokenVocab=DenLexer;
 }
 source_unit: statement+;
 access: Dot Name call_arguments access?;
@@ -35,4 +35,3 @@ variable_definition
     : Name Equals function_call
     | Name Equals String
     | Name Equals map;
-
