@@ -138,10 +138,10 @@ enum_members
     | class_member
     ;
 enum_values
-	: Javadoc? name call_arguments? enum_values_next? Semicolon
+	: Javadoc? annotation? name call_arguments? enum_values_next? Semicolon
 	;
 enum_values_next
-    : Comma Javadoc? name call_arguments? enum_values_next?
+    : Comma Javadoc? annotation? name call_arguments? enum_values_next?
     ;
 expression
     : integer
