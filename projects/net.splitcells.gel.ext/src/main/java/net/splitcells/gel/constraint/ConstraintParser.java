@@ -19,12 +19,17 @@ import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.problem.ProblemI;
 
+import java.util.List;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
+import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.ForAlls.forEach;
 
@@ -35,36 +40,48 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
         return new ConstraintParser(assignments).visitSource_unit(sourceUnit);
     }
 
-    private Optional<Query> constraints = Optional.empty();
+    private final Query parentConstraint;
+    private Optional<Query> nextConstraint = Optional.empty();
     private final Assignments assignments;
 
     private ConstraintParser(Assignments assignmentsArg) {
         assignments = assignmentsArg;
+        parentConstraint = query(forAll(Optional.of(NO_CONTEXT)));
+    }
+
+    private ConstraintParser(Assignments assignmentsArg, Query parentConstraintArg) {
+        assignments = assignmentsArg;
+        parentConstraint = parentConstraintArg;
     }
 
     @Override
     public Constraint visitVariable_definition(DenParser.Variable_definitionContext ctx) {
-        return visitChildren(ctx);
+        if (ctx.Name().equals("constraints")) {
+            visitFunction_call(ctx.function_call());
+        }
+        return parentConstraint.root().orElseThrow();
     }
 
-    private Constraint parseConstraint(DenParser.Function_callContext functionCall) {
-        final var constraintName = functionCall.Name().getText();
-        if (!functionCall.access().isEmpty()) {
-            throw executionException("Function chaining is not supported for constraint definition yet.");
-        }
-        if (constraintName.equals("forAll")) {
-            if (functionCall.function_call_arguments().function_call_arguments_element() != null) {
+    @Override
+    public Constraint visitAccess(DenParser.AccessContext access) {
+        nextConstraint = Optional.of(parseConstraint(access.Name().getText(), access.function_call_arguments()));
+        return null;
+    }
+
+    private Query parseConstraint(String constraintType, DenParser.Function_call_argumentsContext arguments) {
+        final Query parsedConstraint;
+        if (constraintType.equals("forAll")) {
+            if (arguments.function_call_arguments_element() != null) {
                 throw executionException("ForAll does not support arguments");
             }
-            return forAll();
-        } else if (constraintName.equals("forEach")) {
-            if (functionCall.function_call_arguments().function_call_arguments_element() != null
-                    && functionCall.function_call_arguments().function_call_arguments_next().isEmpty()) {
-                if (!functionCall.function_call_arguments().function_call_arguments_element().function_call().isEmpty()) {
+            parsedConstraint = parentConstraint.forAll();
+        } else if (constraintType.equals("forEach")) {
+            if (arguments.function_call_arguments_element() != null
+                    && arguments.function_call_arguments_next().isEmpty()) {
+                if (!arguments.function_call_arguments_element().function_call().isEmpty()) {
                     throw executionException("Function call argument are not supported for forEach constraint.");
                 }
-                final var attributeName = functionCall
-                        .function_call_arguments()
+                final var attributeName = arguments
                         .function_call_arguments_element()
                         .Name()
                         .getText();
@@ -72,14 +89,28 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
                         .filter(da -> da.name().equals(attributeName))
                         .collect(toList());
                 attributeMatches.requireSizeOf(1);
-                return forEach(attributeMatches.get(0));
+                parsedConstraint = parentConstraint.forAll(attributeMatches.get(0));
             }
-            if (!functionCall.function_call_arguments().function_call_arguments_next().isEmpty()) {
+            if (!arguments.function_call_arguments_next().isEmpty()) {
                 throw executionException("ForEach does not support multiple arguments.");
             }
             throw executionException("Invalid program state.");
         } else {
-            throw executionException("Unknown constraint name: " + constraintName);
+            throw executionException("Unknown constraint name: " + constraintType);
         }
+        return parsedConstraint;
+    }
+
+    @Override
+    public Constraint visitFunction_call(DenParser.Function_callContext functionCall) {
+        nextConstraint = Optional.of(parseConstraint(functionCall.Name().getText()
+                , functionCall.function_call_arguments()));
+        var currentChildConstraint = nextConstraint.orElseThrow();
+        for (final var access : functionCall.access()) {
+            final var childConstraintParser = new ConstraintParser(assignments, currentChildConstraint);
+            childConstraintParser.visitAccess(access);
+            currentChildConstraint = childConstraintParser.nextConstraint.orElseThrow();
+        }
+        return null;
     }
 }

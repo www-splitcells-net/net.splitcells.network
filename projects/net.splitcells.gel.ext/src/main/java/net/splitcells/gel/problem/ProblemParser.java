@@ -36,14 +36,14 @@ import static net.splitcells.gel.constraint.type.ForAlls.forEach;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.problem.ProblemI.problem;
 
 public class ProblemParser extends DenParserBaseVisitor<Problem> {
 
-    private Optional<String> name;
+    private Optional<String> name = Optional.empty();
 
     private Optional<Database> demands = Optional.empty();
     private Optional<Database> supplies = Optional.empty();
-    private Optional<Constraint> constraints = Optional.empty();
 
     public static Problem parseProblem(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.antlr4.DenLexer(CharStreams.fromString(arg));
@@ -55,8 +55,7 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
     public Problem visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
         final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
-        parseConstraint(sourceUnit, assignments);
-        return null;
+        return problem(assignments, parseConstraint(sourceUnit, assignments));
     }
 
     @Override
