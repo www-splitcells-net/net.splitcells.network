@@ -37,12 +37,16 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
 
     public static Constraint parseConstraint(DenParser.Source_unitContext sourceUnit
             , Assignments assignments) {
-        return new ConstraintParser(assignments).visitSource_unit(sourceUnit);
+        final var parser = new ConstraintParser(assignments);
+        parser.visitSource_unit(sourceUnit);
+        return parser.constraintRoot.orElseThrow();
     }
 
     private final Query parentConstraint;
     private Optional<Query> nextConstraint = Optional.empty();
     private final Assignments assignments;
+
+    private Optional<Constraint> constraintRoot = Optional.empty();
 
     private ConstraintParser(Assignments assignmentsArg) {
         assignments = assignmentsArg;
@@ -59,7 +63,8 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
         if (ctx.Name().equals("constraints")) {
             visitFunction_call(ctx.function_call());
         }
-        return parentConstraint.root().orElseThrow();
+        constraintRoot = Optional.of(parentConstraint.root().orElseThrow());
+        return constraintRoot.orElseThrow();
     }
 
     @Override
