@@ -20,6 +20,8 @@ import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -33,7 +35,7 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
         return new ConstraintParser(assignments).visitSource_unit(sourceUnit);
     }
 
-    private Query constraints;
+    private Optional<Query> constraints = Optional.empty();
     private final Assignments assignments;
 
     private ConstraintParser(Assignments assignmentsArg) {

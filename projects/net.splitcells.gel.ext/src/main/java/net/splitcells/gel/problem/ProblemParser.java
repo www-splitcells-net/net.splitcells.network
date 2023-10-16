@@ -24,6 +24,8 @@ import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -37,11 +39,11 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 public class ProblemParser extends DenParserBaseVisitor<Problem> {
 
-    private String name;
+    private Optional<String> name;
 
-    private Database demands;
-    private Database supplies;
-    private Constraint constraints;
+    private Optional<Database> demands = Optional.empty();
+    private Optional<Database> supplies = Optional.empty();
+    private Optional<Constraint> constraints = Optional.empty();
 
     public static Problem parseProblem(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.antlr4.DenLexer(CharStreams.fromString(arg));
@@ -52,7 +54,7 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
     @Override
     public Problem visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
-        final var assignments = assignments(name, demands, supplies);
+        final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
         parseConstraint(sourceUnit, assignments);
         return null;
     }
@@ -61,12 +63,12 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
     public Problem visitVariable_definition(net.splitcells.dem.lang.perspective.antlr4.DenParser.Variable_definitionContext ctx) {
         final var ctxName = ctx.Name().getText();
         if (ctxName.equals("name")) {
-            if (name != null) {
+            if (name.isPresent()) {
                 throw executionException("Names are not allowed to be defined multiple times.");
             }
-            name = ctxName;
+            name = Optional.of(ctxName);
         } else if (ctxName.equals("demands")) {
-            if (demands != null) {
+            if (demands.isPresent()) {
                 throw executionException("Demands are not allowed to be defined multiple times.");
             }
             final List<Attribute<? extends Object>> demandAttributes = list();
@@ -80,9 +82,9 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
             additionalDemandAttributes.forEach(da -> demandAttributes
                     .add(parseAttribute(da.variable_definition().Name().getText()
                             , da.variable_definition().function_call().Name().getText())));
-            demands = database(demandAttributes);
+            demands = Optional.of(database(demandAttributes));
         } else if (ctxName.equals("supplies")) {
-            if (supplies != null) {
+            if (supplies.isPresent()) {
                 throw executionException("Supplies are not allowed to be defined multiple times.");
             }
             final List<Attribute<? extends Object>> supplyAttributes = list();
@@ -96,7 +98,7 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
             additionalSupplyAttributes.forEach(sa -> supplyAttributes
                     .add(parseAttribute(sa.variable_definition().Name().getText()
                             , sa.variable_definition().function_call().Name().getText())));
-            supplies = database(supplyAttributes);
+            supplies = Optional.of(database(supplyAttributes));
         }
         return null;
     }
