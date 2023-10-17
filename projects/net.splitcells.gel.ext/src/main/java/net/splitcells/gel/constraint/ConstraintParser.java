@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -78,7 +79,7 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
         final Query parsedConstraint;
         if (constraintType.equals("forAll")) {
             if (arguments.function_call_arguments_element() != null) {
-                throw executionException("ForAll does not support arguments");
+                throw executionException("ForAll does not support arguments: " + arguments.getText());
             }
             parsedConstraint = parentConstraint.forAll();
         } else if (constraintType.equals("forEach")) {
@@ -88,7 +89,8 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
                 // TODO FIX
                 if (arguments.function_call_arguments_element().function_call() != null
                         && !arguments.function_call_arguments_element().function_call().isEmpty()) {
-                    throw executionException("Function call argument are not supported for forEach constraint.");
+                    throw executionException("Function call arguments are not supported for forEach constraint: "
+                            + arguments.getText());
                 }
                 final var attributeName = arguments
                         .function_call_arguments_element()
@@ -101,19 +103,21 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
                 return parentConstraint.forAll(attributeMatches.get(0));
             }
             if (!arguments.function_call_arguments_next().isEmpty()) {
-                throw executionException("ForEach does not support multiple arguments.");
+                throw executionException("ForEach does not support multiple arguments: " + arguments.getText());
             }
             throw executionException("Invalid program state.");
         } else if (constraintType.equals("then")) {
             if (arguments.function_call_arguments_element() == null) {
-                throw executionException("Then constraint requires at least one argument.");
+                throw executionException("Then constraint requires at least one argument: " + arguments.getText());
             }
             if (arguments.function_call_arguments_element().function_call() != null) {
                 return parentConstraint.then(parseRater(arguments.function_call_arguments_element().function_call()));
             }
-            throw executionException("Could not parse argument of then constraint.");
+            throw executionException("Could not parse argument of then constraint: " + arguments.getText());
         } else {
-            throw executionException("Unknown constraint name: " + constraintType);
+            throw executionException(perspective("Unknown constraint name:")
+                    .withProperty("constraintType", constraintType)
+                    .withProperty("arguments", arguments.getText()));
         }
         return parsedConstraint;
     }
@@ -127,6 +131,26 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
             final var childConstraintParser = new ConstraintParser(assignments, currentChildConstraint);
             childConstraintParser.visitAccess(access);
             currentChildConstraint = childConstraintParser.nextConstraint.orElseThrow();
+        }
+        return null;
+    }
+
+    @Override
+    public Constraint visitStatement(DenParser.StatementContext statement) {
+        if (statement.variable_definition() != null) {
+            return visitVariable_definition(statement.variable_definition());
+        } else if (statement.function_call() != null
+                && statement.function_call().Name().equals("constraints")) {
+            if (statement.function_call().access().isEmpty()) {
+                throw executionException(perspective("Empty constraint is not allowed: ") + statement.getText());
+            }
+            var currentChildConstraint = nextConstraint.orElseThrow();
+            for (final var access : statement.function_call().access()) {
+                final var childConstraintParser = new ConstraintParser(assignments, currentChildConstraint);
+                childConstraintParser.visitAccess(access);
+                currentChildConstraint = childConstraintParser.nextConstraint.orElseThrow();
+            }
+            return null;
         }
         return null;
     }
