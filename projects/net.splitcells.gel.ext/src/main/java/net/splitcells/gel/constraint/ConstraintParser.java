@@ -32,6 +32,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.ForAlls.forEach;
+import static net.splitcells.gel.rating.rater.RaterParser.parseRater;
 
 public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
 
@@ -60,7 +61,7 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
 
     @Override
     public Constraint visitVariable_definition(DenParser.Variable_definitionContext ctx) {
-        if (ctx.Name().equals("constraints")) {
+        if (ctx.Name().getText().equals("constraints")) {
             visitFunction_call(ctx.function_call());
         }
         constraintRoot = Optional.of(parentConstraint.root().orElseThrow());
@@ -83,7 +84,10 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
         } else if (constraintType.equals("forEach")) {
             if (arguments.function_call_arguments_element() != null
                     && arguments.function_call_arguments_next().isEmpty()) {
-                if (!arguments.function_call_arguments_element().function_call().isEmpty()) {
+
+                // TODO FIX
+                if (arguments.function_call_arguments_element().function_call() != null
+                        && !arguments.function_call_arguments_element().function_call().isEmpty()) {
                     throw executionException("Function call argument are not supported for forEach constraint.");
                 }
                 final var attributeName = arguments
@@ -94,12 +98,20 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
                         .filter(da -> da.name().equals(attributeName))
                         .collect(toList());
                 attributeMatches.requireSizeOf(1);
-                parsedConstraint = parentConstraint.forAll(attributeMatches.get(0));
+                return parentConstraint.forAll(attributeMatches.get(0));
             }
             if (!arguments.function_call_arguments_next().isEmpty()) {
                 throw executionException("ForEach does not support multiple arguments.");
             }
             throw executionException("Invalid program state.");
+        } else if (constraintType.equals("then")) {
+            if (arguments.function_call_arguments_element() == null) {
+                throw executionException("Then constraint requires at least one argument.");
+            }
+            if (arguments.function_call_arguments_element().function_call() != null) {
+                return parentConstraint.then(parseRater(arguments.function_call_arguments_element().function_call()));
+            }
+            throw executionException("Could not parse argument of then constraint.");
         } else {
             throw executionException("Unknown constraint name: " + constraintType);
         }
