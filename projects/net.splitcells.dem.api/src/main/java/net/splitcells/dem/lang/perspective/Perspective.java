@@ -464,4 +464,31 @@ public interface Perspective extends PerspectiveView {
         }
         return Optional.of(path);
     }
+
+    default Optional<List<Perspective>> pathOfValueTree(String... stringPath) {
+        return pathOfValueTree(listWithValuesOf(stringPath));
+    }
+
+    /**
+     * The {@link NameSpace} of the {@link Perspective} is ignored in this method.
+     *
+     * @param stringPath List of {@link Perspective#name()} describing a path starting with {@code this}.
+     * @return The list of {@link Perspective} corresponding to a path
+     */
+    default Optional<List<Perspective>> pathOfValueTree(List<String> stringPath) {
+        final List<Perspective> path = listWithValuesOf();
+        Perspective currentNode = this;
+        while (stringPath.hasElements()) {
+            final var currentPathElement = stringPath.remove(0);
+            final var nextPathPerspective = currentNode.children().stream()
+                    .filter(c -> c.name().equals(currentPathElement))
+                    .findFirst();
+            if (nextPathPerspective.isEmpty()) {
+                return Optional.empty();
+            }
+            currentNode = nextPathPerspective.orElseThrow();
+            path.withAppended(currentNode);
+        }
+        return Optional.of(path);
+    }
 }

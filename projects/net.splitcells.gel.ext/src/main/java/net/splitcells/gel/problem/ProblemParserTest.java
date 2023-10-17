@@ -15,11 +15,16 @@
  */
 package net.splitcells.gel.problem;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.constraint.type.ForAll;
+import net.splitcells.gel.constraint.type.Then;
 import org.antlr.v4.runtime.*;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
 import static net.splitcells.gel.problem.ProblemParser.parseProblem;
 
 public class ProblemParserTest {
@@ -41,11 +46,21 @@ public class ProblemParserTest {
     public void testParseProblem() {
         final var testData = "demands={a=int();b=string()};"
                 + "supplies={c=float()};"
-                + "constraints=forAll();"
+                + "constraints=forEach(a).then(hasSize(2));"
                 //+ "constraints.forEach(a).then(hasSize(2));"
                 //+ "constraints.forEach(b).then(allSame(c));"
                 + "name=\"testParseProblem\";";
-        parseProblem(testData);
+        final var testSubject = parseProblem(testData);
+        final var forEachA = testSubject.constraint().child(0);
+        requireEquals(forEachA.type(), ForAll.class);
+        requirePresenceOf(forEachA.arguments().get(0).toPerspective().pathOfValueTree(
+                "for-all-attribute-values"
+                , "attribute"
+                , "Attribute"
+                , "name"
+                , "a"));
+        final var thenHasSize2 = forEachA.child(0);
+        requireEquals(thenHasSize2.type(), Then.class);
     }
 
     @UnitTest

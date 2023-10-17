@@ -19,6 +19,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.lang.reflect.Constructor;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -32,6 +33,12 @@ public class Assertions {
     public static <T> void assertComplies(T subject, Predicate<T> constraint, String description) {
         if (constraint.test(subject)) {
             throw executionException(description);
+        }
+    }
+
+    public static <T> void requirePresenceOf(Optional<T> arg) {
+        if (arg.isEmpty()) {
+            throw executionException("Optional content is required, but not present.");
         }
     }
 

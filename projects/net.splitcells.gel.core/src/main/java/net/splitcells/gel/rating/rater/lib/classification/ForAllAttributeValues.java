@@ -16,6 +16,7 @@
 package net.splitcells.gel.rating.rater.lib.classification;
 
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -27,6 +28,7 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -124,5 +126,10 @@ public class ForAllAttributeValues implements Rater {
     @Override
     public String toString() {
         return ForAllAttributeValues.class.getSimpleName() + "-" + attribute.name();
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective("for-all-attribute-values").withProperty("attribute", attribute.toPerspective());
     }
 }
