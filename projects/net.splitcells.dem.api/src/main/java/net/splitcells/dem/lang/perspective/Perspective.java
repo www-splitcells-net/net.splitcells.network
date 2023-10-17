@@ -22,6 +22,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
+import org.assertj.core.api.Assertions;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -437,10 +438,24 @@ public interface Perspective extends PerspectiveView {
         return this;
     }
 
+    /**
+     * TODO Move this functionality into {@link #pathOfValueTree(PathQueryConfig, List)}.
+     *
+     * @param stringPath
+     * @return
+     */
+    @Deprecated
     default Optional<List<Perspective>> pathOfDenValueTree(String stringPath) {
         return pathOfDenValueTree(listWithValuesOf(stringPath.split("/")));
     }
 
+    /**
+     * TODO Move this functionality into {@link #pathOfValueTree(PathQueryConfig, List)}.
+     *
+     * @param stringPath
+     * @return
+     */
+    @Deprecated
     default Optional<List<Perspective>> pathOfDenValueTree(List<String> stringPath) {
         final List<Perspective> path = listWithValuesOf();
         Perspective currentNode = this;
@@ -466,7 +481,11 @@ public interface Perspective extends PerspectiveView {
     }
 
     default Optional<List<Perspective>> pathOfValueTree(String... stringPath) {
-        return pathOfValueTree(listWithValuesOf(stringPath));
+        return pathOfValueTree(PathQueryConfig.pathQueryConfig(), listWithValuesOf(stringPath));
+    }
+
+    default Optional<List<Perspective>> pathOfValueTree(PathQueryConfig config, String... stringPath) {
+        return pathOfValueTree(config, listWithValuesOf(stringPath));
     }
 
     /**
@@ -475,9 +494,14 @@ public interface Perspective extends PerspectiveView {
      * @param stringPath List of {@link Perspective#name()} describing a path starting with {@code this}.
      * @return The list of {@link Perspective} corresponding to a path
      */
-    default Optional<List<Perspective>> pathOfValueTree(List<String> stringPath) {
+    default Optional<List<Perspective>> pathOfValueTree(PathQueryConfig config, List<String> stringPath) {
         final List<Perspective> path = listWithValuesOf();
         Perspective currentNode = this;
+        if (config.checkRootNode()) {
+            if (!name().equals(stringPath.remove(0))) {
+                return Optional.empty();
+            }
+        }
         while (stringPath.hasElements()) {
             final var currentPathElement = stringPath.remove(0);
             final var nextPathPerspective = currentNode.children().stream()

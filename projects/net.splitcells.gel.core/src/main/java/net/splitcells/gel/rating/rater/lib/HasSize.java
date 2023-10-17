@@ -27,6 +27,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -165,5 +166,10 @@ public class HasSize implements Rater {
     @Override
     public String toString() {
         return getClass().getSimpleName() + ", " + targetSize;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective("has-size").withProperty("target-size", targetSize + "");
     }
 }

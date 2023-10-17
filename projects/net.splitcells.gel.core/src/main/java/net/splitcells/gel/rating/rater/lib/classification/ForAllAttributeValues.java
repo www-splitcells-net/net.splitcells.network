@@ -44,6 +44,8 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 @Deprecated
 public class ForAllAttributeValues implements Rater {
+    public static final String FOR_ALL_ATTRIBUTE_VALUES = "for-all-attribute-values";
+
     public static ForAllAttributeValues forAllAttributeValues(final Attribute<?> attribute) {
         return new ForAllAttributeValues(attribute);
     }

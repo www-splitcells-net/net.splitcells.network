@@ -54,13 +54,19 @@ public class ProblemParserTest {
         final var forEachA = testSubject.constraint().child(0);
         requireEquals(forEachA.type(), ForAll.class);
         requirePresenceOf(forEachA.arguments().get(0).toPerspective().pathOfValueTree(
-                "for-all-attribute-values"
+                "rater-based-on-grouping"
+                , "grouping"
+                , "for-all-attribute-values"
                 , "attribute"
                 , "Attribute"
                 , "name"
                 , "a"));
         final var thenHasSize2 = forEachA.child(0);
         requireEquals(thenHasSize2.type(), Then.class);
+        requirePresenceOf(thenHasSize2.arguments().get(0).toPerspective().pathOfValueTree(
+                "has-size"
+                , "target-size"
+                , "2"));
     }
 
     @UnitTest
