@@ -45,12 +45,4 @@
             <version>${revision}</version>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <!-- This repository should be considered last. -->
-            <!-- Used for:<groupId>com.github.sys1yagi.mastodon4j</groupId> <artifactId>mastodon4j</artifactId> -->
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
 </project>
