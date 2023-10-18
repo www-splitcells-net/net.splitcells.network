@@ -140,11 +140,11 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
         if (statement.variable_definition() != null) {
             return visitVariable_definition(statement.variable_definition());
         } else if (statement.function_call() != null
-                && statement.function_call().Name().equals("constraints")) {
+                && statement.function_call().Name().getText().equals("constraints")) {
             if (statement.function_call().access().isEmpty()) {
                 throw executionException(perspective("Empty constraint is not allowed: ") + statement.getText());
             }
-            var currentChildConstraint = nextConstraint.orElseThrow();
+            var currentChildConstraint = parentConstraint;
             for (final var access : statement.function_call().access()) {
                 final var childConstraintParser = new ConstraintParser(assignments, currentChildConstraint);
                 childConstraintParser.visitAccess(access);

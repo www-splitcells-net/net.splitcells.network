@@ -47,8 +47,7 @@ public class ProblemParserTest {
         final var testData = "demands={a=int();b=string()};"
                 + "supplies={c=float()};"
                 + "constraints=forEach(a).then(hasSize(2));"
-                //+ "constraints.forEach(a).then(hasSize(2));"
-                //+ "constraints.forEach(b).then(allSame(c));"
+                + "constraints().forEach(b).then(allSame(c));"
                 + "name=\"testParseProblem\";";
         final var testSubject = parseProblem(testData);
         final var forEachA = testSubject.constraint().child(0);
@@ -67,6 +66,16 @@ public class ProblemParserTest {
                 "has-size"
                 , "target-size"
                 , "2"));
+        final var forEachB = testSubject.constraint().child(1);
+        requireEquals(forEachB.type(), ForAll.class);
+        requirePresenceOf(forEachB.arguments().get(0).toPerspective().pathOfValueTree(
+                "rater-based-on-grouping"
+                , "grouping"
+                , "for-all-attribute-values"
+                , "attribute"
+                , "Attribute"
+                , "name"
+                , "b"));
     }
 
     @UnitTest

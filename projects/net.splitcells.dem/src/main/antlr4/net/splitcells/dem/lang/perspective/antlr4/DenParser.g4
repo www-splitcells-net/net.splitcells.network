@@ -13,7 +13,7 @@ access: Dot Name function_call_arguments access?;
 block_statement
     : Brace_curly_open Brace_curly_closed
     | Brace_curly_open variable_definition statement_reversed* Brace_curly_closed;
-function_call: Name function_call_arguments access*;
+function_call: Name function_call_arguments? access?;
 function_call_arguments
     : Brace_round_open Brace_round_closed
     | Brace_round_open function_call_arguments_element function_call_arguments_next* Brace_round_closed
