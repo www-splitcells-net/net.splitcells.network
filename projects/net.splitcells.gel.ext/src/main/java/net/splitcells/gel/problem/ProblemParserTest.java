@@ -38,7 +38,7 @@ public class ProblemParserTest {
                 , "demands");
         requireEquals(testResult.statement().get(0).variable_definition().function_call().Name().getText()
                 , "forAll");
-        requireEquals(testResult.statement().get(0).variable_definition().function_call().access().get(0).Name().getText()
+        requireEquals(testResult.statement().get(0).variable_definition().function_call().access().Name().getText()
                 , "then");
     }
 
@@ -76,6 +76,14 @@ public class ProblemParserTest {
                 , "Attribute"
                 , "name"
                 , "b"));
+        final var thenAllSameC = forEachB.child(0);
+        requireEquals(thenAllSameC.type(), Then.class);
+        requirePresenceOf(thenAllSameC.arguments().get(0).toPerspective().pathOfValueTree(
+                "all-same"
+                , "attribute"
+                , "Attribute"
+                , "name"
+                , "c"));
     }
 
     @UnitTest

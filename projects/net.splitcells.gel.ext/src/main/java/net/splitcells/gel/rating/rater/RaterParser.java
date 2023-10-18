@@ -19,19 +19,24 @@ import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.lib.AllSame;
 import net.splitcells.gel.rating.rater.lib.HasSize;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 
 public class RaterParser extends DenParserBaseVisitor<Rater> {
-    public static Rater parseRater(DenParser.Function_callContext functionCall) {
-        return new RaterParser().visitFunction_call(functionCall);
+    public static Rater parseRater(DenParser.Function_callContext functionCall, Assignments assignments) {
+        return new RaterParser(assignments).visitFunction_call(functionCall);
     }
 
-    private RaterParser() {
+    private final Assignments assignments;
 
+    private RaterParser(Assignments assignmentsArg) {
+        assignments = assignmentsArg;
     }
 
     @Override
@@ -45,7 +50,13 @@ public class RaterParser extends DenParserBaseVisitor<Rater> {
                         .getText());
                 return hasSize(argument);
             }
+        } else if (functionCall.Name().getText().equals("allSame")) {
+            final var firstArgument = functionCall.function_call_arguments().function_call_arguments_element();
+            if (firstArgument.Name() != null) {
+                return allSame(assignments.attributeByName(firstArgument.Name().getText()));
+
+            }
         }
-        throw executionException("Unknown rater function.");
+        throw executionException("Unknown rater function: " + functionCall.getText());
     }
 }

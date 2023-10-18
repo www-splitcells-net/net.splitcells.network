@@ -18,6 +18,7 @@ package net.splitcells.gel.rating.rater.lib;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
@@ -32,6 +33,7 @@ import net.splitcells.gel.rating.rater.framework.*;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -187,5 +189,10 @@ public class RaterBasedOnLineGroup implements Rater {
     @Override
     public Proposal propose(Proposal proposal) {
         return rater.propose(proposal);
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return simpleDescriptor.toPerspective();
     }
 }

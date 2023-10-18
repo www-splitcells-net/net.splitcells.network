@@ -293,4 +293,11 @@ public interface Table extends Discoverable, Domable, Identifiable {
     static boolean referToSameData(Table a, Table b) {
         return a.path().equals(b.path());
     }
+
+    default Attribute<? extends Object> attributeByName(String name) {
+        return headerView().stream()
+                .filter(da -> da.name().equals(name))
+                .findFirst()
+                .orElseThrow();
+    }
 }

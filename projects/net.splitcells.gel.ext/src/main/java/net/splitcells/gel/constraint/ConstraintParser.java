@@ -72,6 +72,10 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
     @Override
     public Constraint visitAccess(DenParser.AccessContext access) {
         nextConstraint = Optional.of(parseConstraint(access.Name().getText(), access.function_call_arguments()));
+        if (access.access() != null) {
+            final var childConstraintParser = new ConstraintParser(assignments, nextConstraint.orElseThrow());
+            childConstraintParser.visitAccess(access.access());
+        }
         return null;
     }
 
@@ -111,7 +115,7 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
                 throw executionException("Then constraint requires at least one argument: " + arguments.getText());
             }
             if (arguments.function_call_arguments_element().function_call() != null) {
-                return parentConstraint.then(parseRater(arguments.function_call_arguments_element().function_call()));
+                return parentConstraint.then(parseRater(arguments.function_call_arguments_element().function_call(), assignments));
             }
             throw executionException("Could not parse argument of then constraint: " + arguments.getText());
         } else {
@@ -126,11 +130,9 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
     public Constraint visitFunction_call(DenParser.Function_callContext functionCall) {
         nextConstraint = Optional.of(parseConstraint(functionCall.Name().getText()
                 , functionCall.function_call_arguments()));
-        var currentChildConstraint = nextConstraint.orElseThrow();
-        for (final var access : functionCall.access()) {
-            final var childConstraintParser = new ConstraintParser(assignments, currentChildConstraint);
-            childConstraintParser.visitAccess(access);
-            currentChildConstraint = childConstraintParser.nextConstraint.orElseThrow();
+        if (functionCall.access() != null) {
+            final var childConstraintParser = new ConstraintParser(assignments, nextConstraint.orElseThrow());
+            childConstraintParser.visitAccess(functionCall.access());
         }
         return null;
     }
@@ -144,11 +146,9 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
             if (statement.function_call().access().isEmpty()) {
                 throw executionException(perspective("Empty constraint is not allowed: ") + statement.getText());
             }
-            var currentChildConstraint = parentConstraint;
-            for (final var access : statement.function_call().access()) {
-                final var childConstraintParser = new ConstraintParser(assignments, currentChildConstraint);
-                childConstraintParser.visitAccess(access);
-                currentChildConstraint = childConstraintParser.nextConstraint.orElseThrow();
+            if (statement.function_call().access() != null) {
+                final var childConstraintParser = new ConstraintParser(assignments, parentConstraint);
+                childConstraintParser.visitAccess(statement.function_call().access());
             }
             return null;
         }
