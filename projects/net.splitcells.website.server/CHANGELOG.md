@@ -24,6 +24,7 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2023-10-19: \#252** Add `projectsRendererExtensions` to Config in order dynamically add extension to the server.
 * **2023-09-06: \#249**
     1. The menu at the top bar can now be configured via `Config#xslWindowMenu`.
     2. Tests can now be executed by requesting the page `net/splitcells/website/test.html`. 

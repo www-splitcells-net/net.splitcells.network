@@ -176,6 +176,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         this.fallbackRenderer = fallbackRenderer;
         this.renderers = renderers;
         this.config = config;
+        config.projectsRendererExtensions().forEach(extension::withRegisteredExtension);
     }
 
     private String normalizedPath(String path) {

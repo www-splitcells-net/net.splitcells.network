@@ -15,14 +15,11 @@
  */
 package net.splitcells.website.server;
 
-import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,8 +28,6 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
-import static net.splitcells.dem.lang.namespace.NameSpaces.NAME;
 
 /**
  * TODO IDEA Use string and enum based mapping as a backend,
@@ -180,6 +175,7 @@ public class Config {
     private List<ProjectConfig> additionalProjects = list();
 
     private List<ProgramConfig> programConfigs = list();
+    private List<ProjectsRendererExtension> projectsRendererExtension = list();
 
     private Config() {
     }
@@ -405,5 +401,14 @@ public class Config {
     public Config clearAdditionalProgramConfigs() {
         programConfigs.clear();
         return this;
+    }
+
+    public Config withAdditionalProjectsRendererExtension(ProjectsRendererExtension arg) {
+        projectsRendererExtensions().add(arg);
+        return this;
+    }
+
+    public List<ProjectsRendererExtension> projectsRendererExtensions() {
+        return projectsRendererExtension;
     }
 }
