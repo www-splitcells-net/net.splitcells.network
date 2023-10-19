@@ -53,6 +53,8 @@ public class WebsiteViaJar {
                         , configValue(net.splitcells.gel.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/"
                         , configValue(FileSystemExt.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/ui/"
+                        , configValue(net.splitcells.gel.ui.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/"
                         , configValue(net.splitcells.network.FileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/worker/"
