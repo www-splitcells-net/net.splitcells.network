@@ -88,6 +88,10 @@ ol > ol {
 	color: var(--foreground-color-priority-1);
 	box-shadow: 0.2em 0.2em 0.2em -0.2em var(--shadow-color-priority-1);
     }
+textarea.net-splitcells-component-priority-0 {
+    box-shadow: inset 0 0 .3em 0 #555;
+    padding: .5em;
+}
 .net-splitcells-component-priority-2 .heading,
 .net-splitcells-component-priority-2 h2 {
     background-color: var(--background-color-priority-1);
