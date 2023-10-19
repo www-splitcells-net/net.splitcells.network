@@ -13,7 +13,10 @@
         SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
-    <!-- Defines the standard html layout. -->
+    <!-- Defines the standard html layout.
+        Do not normalize spaces by default via a generic template,
+        as not normalized space can be important for things like the default content of a textarea HTML element.
+    -->
     <!-- TODO s:root-relative-url(
     TODO Use only css classes with net-splitcells prefix for best portability.
     TODO PERFORMANCE Do not import libraries which are not needed.

@@ -586,10 +586,7 @@
         </xsl:element>
         <xsl:text></xsl:text>
     </xsl:template>
-    <xsl:template match="text()">
-        <!-- Selects everything which is a text node. -->
-        <xsl:copy-of select="normalize-space(.)"/>
-    </xsl:template>
+
     <xsl:template name="strip_tag">
         <xsl:param name="input_node"/>
         <xsl:for-each select="$input_node">
@@ -672,11 +669,6 @@
             </s:tree>
         </xsl:variable>
         <xsl:apply-templates select="$tmp"/>
-    </xsl:template>
-    <!-- The following _2_ templates remove all unnecessary line breaks and whitespaces. It also normalizes whitespaces between
-        spaces. -->
-    <xsl:template match="*/text()[normalize-space()]">
-        <xsl:copy-of select="normalize-space()"/>
     </xsl:template>
     <xsl:template match="*/text()[not(normalize-space())]">
         <xsl:value-of select="."/>
