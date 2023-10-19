@@ -13,27 +13,23 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.constraint;
+package net.splitcells.gel.ui;
 
 import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.problem.ProblemI;
 
-import java.util.List;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
-import static net.splitcells.dem.object.Discoverable.discoverable;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.constraint.type.ForAlls.forEach;
-import static net.splitcells.gel.rating.rater.RaterParser.parseRater;
+import static net.splitcells.gel.ui.RaterParser.parseRater;
 
 public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
 

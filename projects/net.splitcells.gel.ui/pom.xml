@@ -5,19 +5,19 @@
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>gel</artifactId>
-    <name>Generic Allocator</name>
+    <artifactId>gel.ui</artifactId>
+    <name>Generic Allocator User Interface</name>
     <parent>
         <groupId>net.splitcells</groupId>
         <artifactId>pom-java-defaults</artifactId>
         <version>${revision}</version>
         <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
-    <packaging>pom</packaging>
-    <modules>
-        <module>../net.splitcells.gel.core</module>
-        <module>../net.splitcells.gel.ext</module>
-        <module>../net.splitcells.gel.doc</module>
-        <module>../net.splitcells.gel.quickstart</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>gel.core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 </project>

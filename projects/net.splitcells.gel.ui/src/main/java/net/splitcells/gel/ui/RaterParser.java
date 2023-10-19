@@ -13,16 +13,13 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.rating.rater;
+package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
-import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.rating.rater.framework.Rater;
-import net.splitcells.gel.rating.rater.lib.AllSame;
-import net.splitcells.gel.rating.rater.lib.HasSize;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;

@@ -23,7 +23,11 @@
         <module>projects/net.splitcells.dem.api</module>
         <module>projects/net.splitcells.dem.ext</module>
         <module>projects/net.splitcells.dem</module>
-        <module>projects/net.splitcells.gel</module>
+        <module>projects/net.splitcells.gel.core</module>
+        <module>projects/net.splitcells.gel.ext</module>
+        <module>projects/net.splitcells.gel.ui</module>
+        <module>projects/net.splitcells.gel.doc</module>
+        <module>projects/net.splitcells.gel.quickstart</module>
         <module>projects/net.splitcells.os.state.interface</module>
         <module>projects/net.splitcells.os.state.interface.lib</module>
         <module>projects/net.splitcells.website.server</module>

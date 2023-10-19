@@ -13,19 +13,18 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.problem;
+package net.splitcells.gel.ui;
 
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.Then;
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 
-import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
-import static net.splitcells.gel.problem.ProblemParser.parseProblem;
+import static net.splitcells.gel.ui.ProblemParser.parseProblem;
 
 public class ProblemParserTest {
     @UnitTest
