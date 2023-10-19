@@ -79,10 +79,14 @@ public class WebsiteViaJar {
                 .withAdditionalCssFile("net/splitcells/website/css/den.css")
                 .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
                 .withAdditionalCssFile("net/splitcells/website/css/theme.css")
-                .withAdditionalProgramConfig(programConfig("Splitcells Network"
+                .withAdditionalProgramConfig(programConfig("Splitcells Network Documentation"
                         , "/net/splitcells/network/README")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
-                        .withDescription(Optional.of("We provide an open source ecosystem centered around optimization and operations research.")));
+                        .withDescription(Optional.of("We provide an open source ecosystem centered around optimization and operations research.")))
+                .withAdditionalProgramConfig(programConfig("Generic Allocation Editor"
+                        , "/net/splitcells/gel/ui/editor")
+                        .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
+                        .withDescription(Optional.of("Define and solve assignment problems.")));
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {
