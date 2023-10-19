@@ -464,12 +464,13 @@
                                 <xsl:text>width: 50%; overflow: hidden; background-size: 100% auto; background-repeat: no-repeat; background-image: url('</xsl:text>
                                 <xsl:choose>
                                     <xsl:when test="./s:logos/*[1]/@license">
+                                        <!-- TODO REMOVE This is legacy code. -->
                                         <xsl:copy-of
                                                 select="s:image_thumbnail_medium_location(./s:logos/*[1]/@license , ./s:logos/*[1])"/>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:copy-of
-                                                select="s:image_thumbnail_medium_location('standard' , ./s:logos/*[1])"/>
+                                                select="replace(concat($site-instance-host-root-path, ./s:logos/*[1]), '//', '/')"/>
                                     </xsl:otherwise>
                                 </xsl:choose>
                                 <xsl:text>');</xsl:text>

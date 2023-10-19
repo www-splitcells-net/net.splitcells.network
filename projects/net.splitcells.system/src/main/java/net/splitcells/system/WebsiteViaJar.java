@@ -81,7 +81,7 @@ public class WebsiteViaJar {
                 .withAdditionalCssFile("net/splitcells/website/css/theme.css")
                 .withAdditionalProgramConfig(programConfig("Splitcells Network"
                         , "/net/splitcells/network/README")
-                        .withLogoPath(Optional.of("community.2016.12.11.chrom.0.dina4.jpg"))
+                        .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
                         .withDescription(Optional.of("We provide an open source ecosystem centered around optimization and operations research.")));
     }
 
