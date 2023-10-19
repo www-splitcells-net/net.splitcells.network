@@ -13,4 +13,26 @@
         <title>Generic Allocation Editor</title>
         <description>Define and solve assignment problems.</description>
     </meta>
+    <chapter>
+        <title>Problem Definition</title>
+        <x:textarea class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none;"
+        ><![CDATA[demands={a=int();b=string()};
+supplies={c=float()};
+constraints=forEach(a).then(hasSize(2));
+constraints().forEach(b).then(allSame(c));
+name="testParseProblem";
+]]></x:textarea>
+    </chapter>
+    <chapter>
+        <title>Problem Data</title>
+        <chapter>
+            <title>Demands</title>
+        </chapter>
+        <chapter>
+            <title>Supplies</title>
+        </chapter>
+    </chapter>
+    <chapter>
+        <title>Solutions</title>
+    </chapter>
 </article>
